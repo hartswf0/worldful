@@ -1215,10 +1215,35 @@
   }
 
   /* ============ READER ACTIONS ============ */
-  function openReaderAtWorld(id) {
-    document.getElementById('reader-overlay-view').style.display = 'block';
-    jumpReaderToId(id);
-    setupReaderScrollSpy();
+    function openReaderAtWorld(id) {
+    const overlay = document.getElementById('reader-overlay-view');
+    overlay.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    
+    setTimeout(() => {
+      jumpReaderToId(id, true);
+      setupReaderScrollSpy();
+    }, 40);
+  }
+
+  function closeReaderModal() {
+    document.getElementById('reader-overlay-view').style.display = 'none';
+    document.body.style.overflow = '';
+    closeSideMarginalia();
+  }
+
+  function jumpReaderToId(id, instant = false) {
+    currentReaderId = id;
+    const overlay = document.getElementById('reader-overlay-view');
+    const target = document.getElementById('monograph-block-' + id);
+    if (target) {
+      if (instant) {
+        target.scrollIntoView({ behavior: 'auto', block: 'start' });
+      } else {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      updateReaderTopLabel(id);
+    }
   }
 
   function closeReaderModal() {
