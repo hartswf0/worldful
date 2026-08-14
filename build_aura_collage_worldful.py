@@ -545,126 +545,107 @@ html_template = """<!DOCTYPE html>
     font-family:var(--mono); font-size:.54rem; letter-spacing:.2em; color:var(--ink-soft); line-height:1.8;
   }
 
+  
   /* =========================================================
-     MOBILE REFLOW WITH FULL COLLAGE PRESERVATION & TEXT AURAS
+     MOBILE READER MASTER OVERHAUL (100% FULL WIDTH, ZERO VOID)
      ========================================================= */
-  @media (max-width:960px) {
-    .marginalia { display:none; }
+  @media (max-width: 960px) {
+    #reader-overlay-view {
+      position: fixed; inset: 0; z-index: 200;
+      background: var(--paper); overflow-y: auto;
+      width: 100vw; max-width: 100vw;
+    }
     
-    /* Sleek single-row mobile header */
-    header.site-header {
-      padding:1rem 1.2rem;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      border-bottom:1px solid var(--hair);
+    /* Sleek Minimalist Mobile Reader Top Bar */
+    .reader-header-bar {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 16px; background: rgba(235, 230, 218, 0.98);
+      border-bottom: 1px solid var(--hair); backdrop-filter: blur(8px);
+      height: 52px; width: 100%;
     }
-    .brand-block .name { font-size:.75rem; letter-spacing:.18em; }
-    .brand-block .sub { display:none; }
-    
-    nav.main-nav-bar {
-      display:flex;
-      gap:1.2rem;
-      overflow-x:auto;
-      white-space:nowrap;
-      scrollbar-width:none;
-      -webkit-overflow-scrolling:touch;
-      padding:4px 0;
+    .reader-header-bar .cta {
+      margin: 0; padding: 6px 12px; font-size: .65rem; min-width: 0; letter-spacing: .15em;
     }
-    nav.main-nav-bar::-webkit-scrollbar { display:none; }
-    nav.main-nav-bar a { font-size:.62rem; letter-spacing:.16em; }
-
-    .search-button span { display:none; }
-    .search-button .dot { display:none; }
-
-    /* Mobile Hero Layout with FULL COLLAGE depth & text auras */
-    .hero {
-      display:flex;
-      flex-direction:column;
-      padding:2rem 1.4rem 2rem;
-      min-height:0;
-      position:relative;
-      overflow:hidden;
+    #reader-top-plate-label {
+      font-size: .72rem; font-weight: 700; color: var(--red);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 58vw;
+      text-align: right;
     }
-    .hero-left {
-      padding-left:0;
-      max-width:100%;
-      position:relative;
-      z-index:30;
-    }
-    h1.main-masthead {
-      font-size:clamp(3.8rem, 19vw, 5.6rem);
-      line-height:.92;
-      letter-spacing:.02em;
-    }
-    .thesis { font-size:1.05rem; line-height:1.6; letter-spacing:.2em; }
-    .lede { font-size:1.15rem; line-height:1.5; margin-top:1.2rem; }
-    .cta { width:100%; justify-content:center; margin-top:1.8rem; }
-    .route { display:none; }
-
-    /* MOBILE COLLAGE ELEMENTS - RE-POSITIONED WITH DEPTH & ZERO CLASH */
-    .piece { position:absolute; }
-    
-    /* Moai head subtly on left background */
-    .moai-strip {
-      left:-2.5rem; top:16rem; width:130px; height:240px; z-index:5; opacity:.65;
-    }
-    .moai-strip .cap { display:none; }
-
-    /* Summer Tanager bird card on top-right */
-    .bird {
-      left:auto; right:0.5rem; top:2rem; width:140px; z-index:15; transform:rotate(3deg);
-    }
-    .bird .ph { height:120px; }
-
-    /* Field Note card angled below the CTA */
-    .fieldnote {
-      position:relative; left:auto; top:auto; width:100%; margin:2.2rem 0 0; z-index:20; transform:rotate(-1deg);
+    .reader-header-bar > div:last-child {
+      display: none !important;
     }
 
-    /* Ansel Adams Valley photo framed beneath the field note */
-    .valley {
-      position:relative; left:auto; top:auto; width:100%; margin:1.6rem 0 0; z-index:20; transform:rotate(1deg);
+    /* Layout & Grid: Strictly 1-Column 100% Full Width */
+    .reader-layout {
+      display: block !important;
+      width: 100% !important; max-width: 100% !important;
+      margin: 0 !important; border-top: none;
     }
-    .valley .ph { height:200px; }
-
-    /* Tracks, Stamp & Language scrap in mobile row */
-    .mobile-scrap-row {
-      display:flex !important;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      margin-top:1.6rem;
-      position:relative;
-      z-index:20;
+    .reader-nav-col {
+      display: none !important;
     }
-    .tracks {
-      position:relative; left:auto; top:auto; width:65%; transform:rotate(-1deg);
+    .reader-main-col {
+      display: block !important;
+      width: 100% !important; max-width: 100% !important;
+      padding: 20px 18px 140px !important;
+      box-sizing: border-box !important;
     }
-    .stamp {
-      position:relative; left:auto; top:auto; width:85px; transform:rotate(-6deg);
+
+    .monograph-world-block {
+      width: 100% !important; max-width: 100% !important;
+      padding-bottom: 50px; margin-bottom: 50px;
+      box-sizing: border-box !important;
     }
-    .plate,.map-strip,.map-lens,.map-left,.station,.lang-scrap { display:none; }
 
-    /* Worlds Grid on Mobile */
-    .worlds { margin:2rem 0 0; padding:1.8rem 1.2rem 0; }
-    .world-grid { grid-template-columns:1fr; gap:1.4rem; }
-    .world .fig { height:210px; }
-    .world .fig .ph img { transform:scale(1.52); object-position:center 25%; }
+    /* Archival Coordinates Header (Clean 2-line flex layout) */
+    .monograph-archival-header {
+      display: flex; flex-direction: column; gap: 4px; align-items: flex-start;
+      font-family: var(--mono); font-size: .62rem; letter-spacing: .12em;
+      color: var(--ink-soft); line-height: 1.4;
+      border-bottom: 1px dashed var(--hair); padding-bottom: 8px; margin-bottom: 16px;
+    }
 
-    /* Reader Monograph on Mobile */
-    .reader-header-bar { padding:10px 14px; }
-    .reader-nav-col { display:none; }
-    .reader-main-col { padding:24px 16px 140px; }
-    .monograph-aphorism-card { font-size:1.1rem; padding:12px 14px; margin-bottom:20px; }
-    .monograph-prose-text { font-size:1.08rem; line-height:1.85; text-align:left; }
+    /* Heroic Plate: 100% Full Width Edge-to-Edge */
+    .monograph-hero-plate-box {
+      width: 100% !important; max-width: 100% !important; margin: 12px 0 20px !important;
+    }
+    .monograph-plate-image {
+      width: 100% !important; max-width: 100% !important; height: auto !important;
+      display: block !important; border-radius: 2px;
+      filter: contrast(116%) brightness(96%) grayscale(100%) sepia(14%) !important;
+    }
 
+    /* Full Width Aphorism Callout Card */
+    .monograph-aphorism-card {
+      width: 100% !important; max-width: 100% !important; box-sizing: border-box !important;
+      font-size: 1.14rem !important; line-height: 1.6 !important;
+      padding: 14px 18px !important; margin-bottom: 24px !important;
+      border-left: 3px solid var(--red) !important; background: var(--paper-hi) !important;
+    }
+
+    /* Fluid Monograph Prose: Full Width, High-Legibility Typography */
+    .monograph-prose-text {
+      width: 100% !important; max-width: 100% !important;
+      font-size: 1.12rem !important; line-height: 1.85 !important;
+      color: var(--ink) !important; text-align: left !important;
+      box-sizing: border-box !important;
+    }
+    .monograph-prose-text p {
+      margin-bottom: 18px !important; text-indent: 1.2em !important;
+    }
+    .monograph-prose-text p:first-of-type {
+      text-indent: 0 !important;
+    }
+
+    /* Full Width Slide-Out Marginalia Drawer */
     #side-marginalia-drawer {
-      width:100%; right:-100%; top:48px; height:calc(100vh - 48px); padding:18px 16px;
+      width: 100vw !important; max-width: 100vw !important; right: -100vw;
+      top: 52px; height: calc(100vh - 52px);
+      padding: 18px 16px 60px !important; box-sizing: border-box !important;
     }
   }
 
-  .mobile-scrap-row { display:none; }
 </style>
 </head>
 <body>
