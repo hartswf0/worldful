@@ -22,7 +22,7 @@
     --ink-soft: #57503f;
     --ink-faint:#8a8170;
     --red:      #9e2318;
-    --tape:     rgba(199,178,132,.55);
+    --tape:     rgba(199,178,132,.65);
     --hair:     rgba(33,29,24,.25);
     --hair-faint: rgba(33,29,24,.12);
     
@@ -43,10 +43,10 @@
     -webkit-font-smoothing:antialiased;
   }
 
-  /* Grain + Vignette Texture */
+  /* Genuine Tactile Paper Grain + Vignette Texture */
   body::after {
     content:""; position:fixed; inset:0; z-index:70; pointer-events:none; opacity:.45; mix-blend-mode:multiply;
-    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0.45 0 0 0 0 0.42 0 0 0 0 0.36 0 0 0 0.26 0'/></filter><rect width='220' height='220' filter='url(%23n)'/></svg>");
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0.45 0 0 0 0 0.42 0 0 0 0 0.36 0 0 0 0 0.26 0'/></filter><rect width='220' height='220' filter='url(%23n)'/></svg>");
   }
   body::before {
     content:""; position:fixed; inset:0; z-index:69; pointer-events:none;
@@ -79,35 +79,41 @@
     min-height:100vh;
   }
 
-  /* ---------- Archival Photo Treatment ---------- */
-  .ph { position:relative; overflow:hidden; background:var(--paper-lo); }
+  /* ---------- Tactile Archival Photo & Print Treatments ---------- */
+  .ph {
+    position:relative; overflow:hidden; background:var(--paper-lo);
+    isolation:isolate;
+  }
   .ph img {
     display:block; width:100%; height:100%; object-fit:cover;
     mix-blend-mode:multiply;
-    filter:grayscale(1) sepia(.28) contrast(1.04) brightness(1.02);
+    filter:grayscale(1) sepia(.24) contrast(1.08) brightness(1.01);
   }
   .ph::after {
     content:""; position:absolute; inset:0; pointer-events:none;
-    background:radial-gradient(120% 120% at 50% 45%,transparent 60%,rgba(48,38,22,.25) 100%);
+    background:radial-gradient(120% 120% at 50% 45%,transparent 60%,rgba(48,38,22,.22) 100%),
+               url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.45 0 0 0 0 0.42 0 0 0 0 0.36 0 0 0 0 0.22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.3'/%3E%3C/svg%3E");
+    mix-blend-mode:multiply;
   }
   .mapimg img {
-    filter:grayscale(1) sepia(.5) contrast(.95) brightness(1.06);
+    filter:grayscale(1) sepia(.48) contrast(1.02) brightness(1.04);
     mix-blend-mode:multiply;
   }
   .frame {
     background:#f0ebde; padding:9px 9px 10px;
     box-shadow:3px 5px 12px rgba(40,32,18,.35);
+    position:relative;
   }
   .tape {
     position:absolute; width:84px; height:24px; background:var(--tape);
     box-shadow:0 1px 2px rgba(60,45,20,.25); z-index:5; mix-blend-mode:multiply;
   }
-  .torn { filter:drop-shadow(2px 3px 4px rgba(40,32,18,.26)); }
+  .torn { filter:drop-shadow(2px 4px 6px rgba(40,32,18,.32)); }
   .torn-clip {
     clip-path:polygon(2% 3%,9% 0,22% 2%,37% 0,52% 3%,66% 1%,81% 3%,93% 0,100% 5%,99% 22%,100% 41%,98% 58%,100% 74%,98% 90%,94% 100%,79% 98%,63% 100%,48% 97%,31% 100%,16% 98%,4% 100%,0 88%,2% 71%,0 52%,2% 33%,0 15%);
   }
 
-  /* ---------- Marginalia ---------- */
+  /* ---------- Marginalia Coordinates ---------- */
   .marginalia { position:absolute; inset:0; pointer-events:none; z-index:6; }
   .m-vert {
     position:absolute; font-family:var(--mono); font-size:.6rem; letter-spacing:.28em; color:var(--ink-soft);
@@ -182,7 +188,7 @@
 
   .piece { position:absolute; }
 
-  /* Moai Strip (Torn) */
+  /* Moai Heads (Wikipedia Photo with Paper Texture & Torn Edge) */
   .moai-strip { left:-.6rem; top:9rem; width:180px; height:340px; z-index:4; transform:rotate(-.6deg); }
   .moai-strip .ph { width:100%; height:100%; }
   .moai-strip .cap {
@@ -190,11 +196,11 @@
     letter-spacing:.22em; color:var(--ink-faint);
   }
 
-  /* Map scrap behind left column */
+  /* Dufour Map Left */
   .map-left { left:3rem; top:27rem; width:250px; height:190px; z-index:2; opacity:.9; transform:rotate(1.2deg); }
   .map-left .ph { width:100%; height:100%; }
 
-  /* Bird Specimen Photo */
+  /* Summer Tanager Bird Specimen */
   .bird { left:53%; top:5.6rem; width:190px; z-index:9; transform:rotate(1.6deg); }
   .bird .ph { height:170px; }
   .bird .tape { left:50%; top:-12px; transform:translateX(-50%) rotate(-3deg); }
@@ -211,13 +217,13 @@
   .fieldnote .dl { font-family:var(--mono); font-size:.53rem; letter-spacing:.26em; color:var(--ink-soft); margin-top:1rem; }
   .fieldnote .dv { font-family:var(--hand); font-size:1.05rem; margin-top:.3rem; }
 
-  /* Valley Photo */
+  /* Snake River Valley Photo (Ansel Adams) */
   .valley { left:71%; top:8.6rem; width:280px; z-index:7; transform:rotate(.7deg); }
   .valley .ph { height:230px; }
   .valley .tape { left:50%; top:-13px; transform:translateX(-50%) rotate(-2deg); }
   .valley .cap { font-family:var(--mono); font-size:.5rem; letter-spacing:.2em; color:var(--ink-soft); padding-top:.55rem; display:flex; justify-content:space-between; }
 
-  /* Plate Card */
+  /* Plate 27 Scale Card */
   .plate {
     right:1.6rem; top:5.2rem; width:180px; z-index:6; background:linear-gradient(170deg,#efe9da,#e2dac6);
     padding:1rem; box-shadow:2px 3px 8px rgba(40,32,18,.28);
@@ -226,7 +232,7 @@
   .plate .row { font-size:.66rem; letter-spacing:.06em; margin-top:.45rem; color:var(--ink-soft); }
   .plate .scale { font-size:.58rem; margin-top:.8rem; color:var(--ink-soft); }
 
-  /* Right Map Strip */
+  /* Right Brienz Dufour Map Strip */
   .map-strip { right:0; top:19rem; width:230px; height:330px; z-index:2; opacity:.95; }
   .map-strip .ph { width:100%; height:100%; }
 
@@ -346,12 +352,40 @@
   .monograph-hero-plate-box {
     width:100%; margin:12px 0 24px; position:relative;
   }
+
+  /* Dynamic Plate Display Modes: LITHOGRAPH PULP (default), CRISP ARCHIVE, RAW PHOTO */
   .monograph-plate-image {
     width:100%; max-width:960px; display:block;
     mix-blend-mode:multiply;
     -webkit-mask-image:radial-gradient(ellipse at center, rgba(0,0,0,1) 88%, rgba(0,0,0,0) 100%);
     mask-image:radial-gradient(ellipse at center, rgba(0,0,0,1) 88%, rgba(0,0,0,0) 100%);
     filter:contrast(106%) brightness(99%);
+    transition:all .3s ease;
+  }
+  body.mode-crisp .monograph-plate-image {
+    mix-blend-mode:normal;
+    -webkit-mask-image:none;
+    mask-image:none;
+    filter:contrast(116%) brightness(98%) grayscale(100%) sepia(18%);
+  }
+  body.mode-raw .monograph-plate-image {
+    mix-blend-mode:normal;
+    -webkit-mask-image:none;
+    mask-image:none;
+    filter:none;
+  }
+
+  /* Mode Switcher Buttons */
+  .mode-switch-bar {
+    display:flex; align-items:center; gap:8px;
+    font-family:var(--mono); font-size:.65rem; color:var(--ink-soft);
+  }
+  .mode-chip {
+    background:none; border:1px solid var(--hair); padding:3px 8px;
+    font-family:var(--mono); font-size:.65rem; color:var(--ink); cursor:pointer;
+  }
+  .mode-chip.active {
+    background:var(--red); color:var(--paper-hi); border-color:var(--red); font-weight:700;
   }
 
   .monograph-invariant-box {
@@ -470,7 +504,7 @@
     </button>
   </header>
 
-  <!-- ==================== VIEW 1: WORLDS (HERO + 34 CARDS) ==================== -->
+  <!-- ==================== VIEW 1: WORLDS (HERO + 34 SPECIMEN CARDS) ==================== -->
   <div id="tab-worlds-view" class="view-panel-tab active">
 
     <section class="hero">
@@ -493,27 +527,27 @@
         </a>
       </div>
 
-      <!-- Moai Strip -->
+      <!-- Moai Heads (Local Wikimedia Archival Asset) -->
       <div class="piece moai-strip torn">
         <div class="ph torn-clip">
-          <img src="readable_book/assets/images/plate_01.png" alt="Moai Stone Heads">
+          <img src="readable_book/assets/images/wiki/moai_heads.jpg" alt="Moai Stone Heads">
         </div>
         <div class="cap">FIG. 1 — TURNED HEADS</div>
       </div>
 
-      <!-- Map Left -->
+      <!-- Dufour Map Left -->
       <div class="piece map-left torn">
         <div class="ph mapimg torn-clip">
-          <img src="readable_book/assets/images/plate_00.png" alt="Dufour Survey Map">
+          <img src="readable_book/assets/images/wiki/dufour_map_left.jpg" alt="Dufour Survey Map 1845">
         </div>
       </div>
 
-      <!-- Bird -->
+      <!-- Summer Tanager Red Bird -->
       <div class="piece bird">
         <span class="tape"></span>
         <div class="frame">
           <div class="ph">
-            <img src="readable_book/assets/images/plate_33.png" alt="Summer Tanager Specimen">
+            <img src="readable_book/assets/images/wiki/summer_tanager.jpg" alt="Summer Tanager Specimen">
           </div>
           <div class="cap">SPECIMEN — PIRANGA RUBRA</div>
         </div>
@@ -527,12 +561,12 @@
         <div class="dv">12. IV. 23</div>
       </div>
 
-      <!-- Valley Photo -->
+      <!-- Snake River Valley Photo (Ansel Adams) -->
       <div class="piece valley">
         <span class="tape"></span>
         <div class="frame">
           <div class="ph">
-            <img src="readable_book/assets/images/plate_27.png" alt="The Closed Valley">
+            <img src="readable_book/assets/images/wiki/snake_river_valley.jpg" alt="Snake River Valley — Ansel Adams">
           </div>
           <div class="cap"><span>THE CLOSED VALLEY</span><span>PL. 27</span></div>
         </div>
@@ -546,17 +580,17 @@
         <div class="scale">Scale 1 : 1,000,000<br>Kilometres</div>
       </div>
 
-      <!-- Map Strip -->
+      <!-- Right Brienz Dufour Map Strip -->
       <div class="piece map-strip torn">
         <div class="ph mapimg torn-clip">
-          <img src="readable_book/assets/images/plate_08.png" alt="Brienz Survey Strip">
+          <img src="readable_book/assets/images/wiki/dufour_map_right.jpg" alt="Brienz Survey Strip">
         </div>
       </div>
 
       <!-- Map Lens -->
       <div class="piece map-lens" aria-hidden="true">
         <div class="ph mapimg">
-          <img src="readable_book/assets/images/plate_08.png" alt="" style="object-position:30% 60%">
+          <img src="readable_book/assets/images/wiki/dufour_map_right.jpg" alt="" style="object-position:30% 60%">
         </div>
         <svg viewBox="0 0 140 140" fill="none">
           <circle cx="70" cy="70" r="68" stroke="#8a8170" stroke-width="1.5"/>
@@ -620,7 +654,7 @@
       </div>
     </section>
 
-    <!-- 34 WORLDS GRID -->
+    <!-- 34 WORLDS SPECIMEN CARDS -->
     <section class="worlds" id="worlds">
       <div class="worlds-head">
         <h2>WORLDS</h2><span class="mark">+</span>
@@ -740,8 +774,13 @@
         PLATE 0 &bull; THE CROSSING
       </div>
     </div>
-    <div style="font-family:var(--mono); font-size:.65rem; color:var(--ink-soft); letter-spacing:.2em;">
-      TYPEWRITER FIELD MONOGRAPH
+
+    <!-- Image Display Mode Switcher -->
+    <div class="mode-switch-bar">
+      <span>PLATE RENDERING:</span>
+      <button class="mode-chip active" id="btn-mode-paper" onclick="setImageDisplayMode('paper')">PULP BLEND</button>
+      <button class="mode-chip" id="btn-mode-crisp" onclick="setImageDisplayMode('crisp')">CRISP ARCHIVE</button>
+      <button class="mode-chip" id="btn-mode-raw" onclick="setImageDisplayMode('raw')">RAW PHOTO</button>
     </div>
   </div>
 
@@ -861,7 +900,6 @@
     stream.innerHTML = CHAPTERS.map(ch => {
       let parsed = marked.parse(ch.prose);
 
-      // Convert concepts into interactive side-drawer hyperlinks
       ch.terms.forEach(t => {
         const reg = new RegExp(`\\b(${t})\\b`, 'gi');
         parsed = parsed.replace(reg, `<span class="concept-link" onclick="openConceptSideDrawer('${t.replace(/'/g, "\\\'")}', ${ch.id})">$1</span>`);
@@ -956,6 +994,23 @@
 
   function closeSideMarginalia() {
     document.getElementById('side-marginalia-drawer').classList.remove('open');
+  }
+
+  /* ============ IMAGE DISPLAY MODE SWITCHER ============ */
+  function setImageDisplayMode(mode) {
+    document.body.classList.remove('mode-paper', 'mode-crisp', 'mode-raw');
+    document.querySelectorAll('.mode-chip').forEach(b => b.classList.remove('active'));
+    
+    if (mode === 'crisp') {
+      document.body.classList.add('mode-crisp');
+      document.getElementById('btn-mode-crisp').classList.add('active');
+    } else if (mode === 'raw') {
+      document.body.classList.add('mode-raw');
+      document.getElementById('btn-mode-raw').classList.add('active');
+    } else {
+      document.body.classList.add('mode-paper');
+      document.getElementById('btn-mode-paper').classList.add('active');
+    }
   }
 
   /* ============ READER ACTIONS ============ */
