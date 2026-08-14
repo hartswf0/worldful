@@ -1265,51 +1265,68 @@ html_template = """<!DOCTYPE html>
   }
 
   /* ============ READER ACTIONS ============ */
+  
+  let isNavigating = false;
+
   function openReaderAtWorld(id) {
-    document.getElementById('reader-overlay-view').style.display = 'block';
-    jumpReaderToId(id);
-    setupReaderScrollSpy();
+    const overlay = document.getElementById('reader-overlay-view');
+    overlay.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    
+    isNavigating = true;
+    jumpReaderToId(id, true);
+    
+    setTimeout(() => {
+      jumpReaderToId(id, true);
+      isNavigating = false;
+      setupReaderScrollSpy();
+    }, 60);
   }
 
   function closeReaderModal() {
     document.getElementById('reader-overlay-view').style.display = 'none';
+    document.body.style.overflow = '';
     closeSideMarginalia();
   }
 
-  function jumpReaderToId(id) {
+  function jumpReaderToId(id, instant = false) {
     currentReaderId = id;
+    const overlay = document.getElementById('reader-overlay-view');
     const target = document.getElementById('monograph-block-' + id);
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth' });
+    if (target && overlay) {
+      const targetTop = target.offsetTop - 48;
+      if (instant) {
+        overlay.scrollTop = targetTop;
+      } else {
+        overlay.scrollTo({ top: targetTop, behavior: 'smooth' });
+      }
       updateReaderTopLabel(id);
     }
   }
 
-  function updateReaderTopLabel(id) {
-    const ch = CHAPTERS.find(c => c.id === id);
-    if (!ch) return;
-    document.getElementById('reader-top-plate-label').innerText = `PLATE ${ch.roman} \u2022 ${ch.title}`;
-
-    document.querySelectorAll('#reader-nav-target > div').forEach(d => d.style.background = 'none');
-    const activeSide = document.getElementById('reader-side-link-' + id);
-    if (activeSide) {
-      activeSide.style.background = 'var(--paper-hi)';
-      activeSide.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-    }
-  }
-
   function setupReaderScrollSpy() {
-    const blocks = document.querySelectorAll('.monograph-world-block');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const id = parseInt(entry.target.getAttribute('data-id'));
-          updateReaderTopLabel(id);
+    const overlay = document.getElementById('reader-overlay-view');
+    if (!overlay) return;
+
+    overlay.onscroll = () => {
+      if (isNavigating) return;
+      const blocks = document.querySelectorAll('.monograph-world-block');
+      const scrollPos = overlay.scrollTop + 120;
+      
+      for (let i = blocks.length - 1; i >= 0; i--) {
+        const block = blocks[i];
+        if (block.offsetTop <= scrollPos) {
+          const id = parseInt(block.getAttribute('data-id'));
+          if (id !== currentReaderId) {
+            currentReaderId = id;
+            updateReaderTopLabel(id);
+          }
+          break;
         }
-      });
-    }, { rootMargin: "-15% 0px -75% 0px" });
-    blocks.forEach(b => observer.observe(b));
+      }
+    };
   }
+
 
   /* ============ SEARCH ENGINE ============ */
   function setupSearch() {
