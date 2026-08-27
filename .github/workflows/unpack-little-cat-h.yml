@@ -1,0 +1,48 @@
+name: Unpack Little Cat H
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/unpack-little-cat-h.yml
+
+permissions:
+  contents: write
+
+jobs:
+  deploy-book:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Unpack the finished book
+        shell: bash
+        run: |
+          set -euo pipefail
+          ZIP="little-cat-h/LITTLE_CAT_H_FINAL_SIMPLE_SITE.zip"
+          test -f "$ZIP"
+          rm -rf /tmp/little-cat-h-book
+          mkdir -p /tmp/little-cat-h-book
+          unzip -q "$ZIP" -d /tmp/little-cat-h-book
+          test -f /tmp/little-cat-h-book/little-cat-h/index.html
+          cp -a /tmp/little-cat-h-book/little-cat-h/. little-cat-h/
+          echo "Unpacked files:"
+          find little-cat-h -maxdepth 2 -type f | sort
+
+      - name: Commit deployed reader
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add little-cat-h
+          if git diff --cached --quiet; then
+            echo "Nothing to commit"
+          else
+            git commit -m "Deploy Little Cat H reader"
+            git push origin main
+          fi
