@@ -4,6 +4,8 @@ A picture book about AI slop, the people who explain it, and the moment the mop 
 
 Read: https://hartswf0.github.io/worldful/little-cat-h/
 
-The reader is phone-first. Swipe left or right to turn pages. BACK and NEXT live below the artwork. READ narrates the book and continues directly through the factual postscript after `Actually—`. The PDF button builds the complete book in the browser.
+PDF: https://hartswf0.github.io/worldful/little-cat-h/little-cat-h-and-the-great-pink-splat.pdf
 
-Sharing uses a large Open Graph and Twitter preview image plus the Great Pink Splat favicon.
+Swipe left or right to turn pages. BACK and NEXT stay below the artwork. READ narrates the book and continues through the factual postscript after `Actually—`.
+
+Sharing uses `preview.jpg` and the Great Pink Splat favicon.
