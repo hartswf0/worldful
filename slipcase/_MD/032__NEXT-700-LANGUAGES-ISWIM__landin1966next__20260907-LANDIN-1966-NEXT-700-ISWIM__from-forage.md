@@ -1,0 +1,85 @@
+ZETTEL
+
+ID: 20260907-LANDIN-1966-NEXT-700-ISWIM
+
+TITLE:
+Programming languages divide into an abstract semantic core and arbitrary syntactic sugar.
+
+SOURCE:
+Landin, P. J. — "The Next 700 Programming Languages" — Communications of the ACM — 1966 — Vol. 9, No. 3, pp. 157–159.
+
+PASSAGE:
+[QUOTE]
+"Most programming languages are largely alternatives to one another. The differences between them are largely differences of syntax, or as I prefer to call it, differences of 'sugar'... Any programming language can be thought of as consisting of two parts: the phrase-structure rules that determine the physical appearance of programs, and an abstract semantic apparatus based on the evaluation of functional relationships."
+
+RESEARCH OBJECT:
+The demarcation between surface syntactical convention ("syntactic sugar") and the underlying evaluation algebra that performs the actual state transitions.
+
+LOCAL MOVE:
+Landin establishes ISWIM ("If You See What I Mean") to demonstrate that hundreds of ad-hoc commercial programming dialects are mere decorative costuming around Church's lambda calculus enriched with auxiliary imperative assignment operators.
+
+SOURCE TERMS:
+syntactic sugar; ISWIM; applicative structure; phrase-structure; semantic apparatus; evaluation; Church's lambda notation.
+
+WHAT BECAME STRANGE:
+In language model programming, the entire enterprise has inverted: instead of translating natural language into an unvarnished applicative core, natural language has itself become the syntax, while the evaluation machine is a non-deterministic matrix of billions of float16 weights.
+
+QUESTION:
+What is the "abstract semantic apparatus" of a prompt if its syntactic surface is fluid natural prose?
+
+DEEPER QUESTION:
+Can declarative prompt engineering ever achieve the compositionality of functional evaluation if words do not possess fixed denotational semantics?
+
+MECHANISM:
+Expression E parsed via phrase-structure rules:
+1. Syntactic Desugaring: E -> Applicative Core Expression A.
+2. Abstract Evaluation: Run SECD Machine (Stack, Environment, Code, Dump) on A.
+3. Denotational convergence: A denotes a unique value in domain V.
+
+FORMAL SHIFT:
+<PROGRAM TEXT IN ARBITRARY SYNTAX>
+→ <DESUGARED LAMBDA EXPRESSION>
+→ [SECD ABSTRACT EVALUATION]
+→ <DENOTED COMPUTATIONAL OBJECT>
+
+SOURCE FORMALISM:
+E ::= x | \x.E | E E' | let x = E in E' | E where x = E'
+
+OUR FORMALIZATION:
+[OUR FORMALIZATION — NOT SOURCE SYNTAX]
+Prompt(T) = Sugar(T) \circ Core_Semantics
+where Core_Semantics = Top_k(Softmax(W \cdot Emb(T)))
+
+TENSION:
+Landin assumes that desugaring preserves mathematical equivalence deterministically; natural language prompts change their entire latent trajectory when a single synonym or punctuation mark is exchanged.
+
+MISSING:
+The memory and storage boundary: Landin's pure applicative core struggled with stateful imperative side effects (necessitating J-operators).
+
+BOUNDARY:
+Landin's separation holds strictly for deterministic formal languages; it does not account for architectures where the parsing mechanism and the evaluation mechanism are the same dense neural tensor.
+
+CITATION TRAIL:
+Knuth, Donald E. (1984), "Literate Programming"; Abelson, Harold and Sussman, Gerald Jay (1985), Structure and Interpretation of Computer Programs.
+
+TEST:
+Construct a suite of 50 prompts with identical logical specifications expressed in 50 distinct "syntactic sugar" forms (Pythonic, pseudo-code, bureaucratic prose, JSON, Shakespearean verse). Measure the semantic variance in latent representation across different model weights.
+
+PLATFORM:
+[[game-03-program]]
+
+LINKS:
+[[game-01-instruction]]
+[[game-03-program]]
+[[game-10-edit]]
+
+BIBTEX:
+@article{landin1966next,
+  author    = {Peter J. Landin},
+  title     = {The Next 700 Programming Languages},
+  journal   = {Communications of the ACM},
+  volume    = {9},
+  number    = {3},
+  pages     = {157--166},
+  year      = {1966}
+}

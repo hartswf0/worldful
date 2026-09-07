@@ -1,0 +1,35 @@
+================================================================================
+SLIPCASE — PORTABLE RESEARCH FIELD: REBUILD & VERIFICATION INSTRUCTIONS
+================================================================================
+
+HOW TO VERIFY THE ARCHIVE DETERMINISTICALLY:
+
+1. CHECKPAYLOAD HASHES:
+   Run Python in this directory to verify every .txt payload against ZETTELS.json:
+
+   python3 -c '
+   import json, hashlib, os
+   with open("ZETTELS.json") as f:
+       cards = json.load(f)
+   for c in cards:
+       with open(c["filename"], "rb") as fp:
+           data = fp.read().strip()
+       h = hashlib.sha256(data).hexdigest()
+       assert h == c["sha256"], f"Mismatch in {c["filename"]}"
+   print("ALL 44 PAYLOAD HASHES VERIFIED DETERMINISTICALLY.")
+   '
+
+2. REBUILD SCRIPT EXECUTION:
+   The complete generator suite is preserved in `WAYS TO WRITE/slipcase_builder/`.
+   Executing `python3 WAYS TO WRITE/slipcase_builder/01_cards_and_graph.py` followed
+   by subsequent builder modules regenerates all indexes, mirrors, graph records,
+   and visual artifacts from the source zettels.
+
+3. PDF RECOMPILATION:
+   The scholarly paper can be recompiled using headless Chrome:
+   "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+     --headless --disable-gpu --no-pdf-header-footer \
+     --print-to-pdf=knife_and_actuator_operative_limits_of_description__2026-09-07.pdf \
+     knife_and_actuator_operative_limits_of_description__2026-09-07.html
+
+================================================================================
