@@ -1,0 +1,1094 @@
+import os
+import re
+
+html_template = '''<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Deep Play at the Aperture: Large Language Games and the Operative Humanities — Watson Hartsoe</title>
+  <meta name="description" content="A monograph on generative interfaces, Wittgenstein's language-games, and the operative humanities. By Watson Hartsoe (Sept 7, 2026).">
+  <meta name="author" content="Watson Hartsoe">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Public+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --paper:        #f5f0e6;
+      --paper-hi:     #fdfbf7;
+      --paper-lo:     #eae3d2;
+      --paper-card:   #fcfaf5;
+      --ink:          #1a1714;
+      --ink-soft:     #4d463a;
+      --ink-faint:    #807664;
+      --red:          #9e2318;
+      --red-deep:     #781810;
+      --red-faint:    rgba(158, 35, 24, 0.08);
+      --hair:         rgba(26, 23, 20, 0.18);
+      --hair-faint:   rgba(26, 23, 20, 0.08);
+
+      --display: "Playfair Display", Georgia, serif;
+      --serif:   "Newsreader", Georgia, "Times New Roman", serif;
+      --mono:    "IBM Plex Mono", "Courier Prime", monospace;
+      --sans:    "Public Sans", -apple-system, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--serif);
+      line-height: 1.68;
+      font-size: 18.5px;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Tactile Paper Texture */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      pointer-events: none;
+      opacity: 0.22;
+      mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0.45 0 0 0 0 0.42 0 0 0 0 0.36 0 0 0 0 0.26 0'/></filter><rect width='220' height='220' filter='url(%23n)'/></svg>");
+    }
+
+    /* TOP NAVIGATION BAR */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 500;
+      background: rgba(245, 240, 230, 0.96);
+      backdrop-filter: blur(10px);
+      border-bottom: 1.5px solid var(--hair);
+      padding: 10px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--mono);
+      font-size: 11.5px;
+      letter-spacing: 0.12em;
+    }
+
+    .topbar a {
+      color: var(--ink);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .topbar a:hover { color: var(--red); }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 700;
+      border: 1px solid var(--hair);
+      padding: 4px 10px;
+      background: var(--paper-hi);
+    }
+    .badge-monograph {
+      background: var(--ink);
+      color: var(--paper-hi);
+      padding: 3px 8px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn-action {
+      background: var(--paper-hi);
+      border: 1px solid var(--hair);
+      color: var(--ink);
+      padding: 5px 12px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+    .btn-action:hover {
+      background: var(--ink);
+      color: var(--paper-hi);
+      border-color: var(--ink);
+    }
+    .btn-action.highlight {
+      background: var(--red);
+      color: #fff;
+      border-color: var(--red-deep);
+    }
+    .btn-action.highlight:hover {
+      background: var(--red-deep);
+    }
+
+    /* DROPDOWN MENU FOR 12 GAMES */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 100%;
+      background: var(--paper-hi);
+      border: 1.5px solid var(--ink);
+      box-shadow: 4px 4px 0 var(--hair);
+      min-width: 260px;
+      z-index: 600;
+      max-height: 480px;
+      overflow-y: auto;
+    }
+    .dropdown:hover .dropdown-content { display: block; }
+    .dropdown-content a {
+      display: block;
+      padding: 8px 14px;
+      font-family: var(--mono);
+      font-size: 11px;
+      border-bottom: 1px solid var(--hair-faint);
+      color: var(--ink);
+    }
+    .dropdown-content a:hover {
+      background: var(--red-faint);
+      color: var(--red);
+    }
+
+    /* MAIN MONOGRAPH CONTAINER */
+    .layout-container {
+      max-width: 1340px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 290px minmax(0, 1fr);
+      gap: 48px;
+      padding: 40px 24px 80px;
+    }
+
+    /* SIDEBAR NAVIGATION */
+    .sidebar {
+      position: sticky;
+      top: 64px;
+      height: calc(100vh - 84px);
+      overflow-y: auto;
+      padding-right: 18px;
+      border-right: 1px solid var(--hair-faint);
+      font-family: var(--sans);
+    }
+    .sidebar-block {
+      margin-bottom: 28px;
+    }
+    .sidebar-heading {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 12px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid var(--hair);
+    }
+    .toc-list {
+      list-style: none;
+    }
+    .toc-item {
+      margin-bottom: 6px;
+    }
+    .toc-link {
+      display: block;
+      font-size: 13px;
+      color: var(--ink-soft);
+      text-decoration: none;
+      padding: 4px 8px;
+      border-radius: 2px;
+      line-height: 1.4;
+      transition: all 0.15s;
+    }
+    .toc-link:hover, .toc-link.active {
+      background: var(--red-faint);
+      color: var(--red);
+      font-weight: 600;
+      padding-left: 12px;
+    }
+    .meta-box {
+      background: var(--paper-card);
+      border: 1px solid var(--hair);
+      padding: 14px;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .meta-row {
+      margin-bottom: 8px;
+    }
+    .meta-label {
+      font-family: var(--mono);
+      font-size: 9.5px;
+      color: var(--ink-faint);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .meta-value {
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    /* ARTICLE CONTENT */
+    .article-wrap {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    /* HEADER BLOCK */
+    .paper-header {
+      margin-bottom: 44px;
+      padding-bottom: 28px;
+      border-bottom: 2px solid var(--ink);
+    }
+    .paper-pretitle {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 14px;
+      font-weight: 600;
+    }
+    .paper-title {
+      font-family: var(--display);
+      font-size: 42px;
+      font-weight: 900;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 14px;
+      letter-spacing: -0.02em;
+    }
+    .paper-subtitle {
+      font-family: var(--serif);
+      font-size: 24px;
+      font-style: italic;
+      color: var(--ink-soft);
+      margin-bottom: 24px;
+      line-height: 1.35;
+    }
+    .author-strip {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 18px;
+      font-family: var(--mono);
+      font-size: 12.5px;
+      padding-top: 14px;
+      border-top: 1px solid var(--hair);
+    }
+    .author-name {
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .author-date { color: var(--ink-faint); }
+    .author-doi {
+      margin-left: auto;
+      color: var(--red);
+      font-size: 11px;
+    }
+
+    /* ABSTRACT BOX */
+    .abstract-box {
+      background: var(--paper-hi);
+      border-left: 4px solid var(--red);
+      border-top: 1px solid var(--hair-faint);
+      border-right: 1px solid var(--hair-faint);
+      border-bottom: 1px solid var(--hair-faint);
+      padding: 24px 28px;
+      margin-bottom: 48px;
+      box-shadow: 2px 2px 0 var(--hair-faint);
+    }
+    .abstract-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--red);
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .abstract-text {
+      font-size: 18px;
+      font-style: italic;
+      line-height: 1.6;
+      color: var(--ink-soft);
+    }
+
+    /* SECTION STYLING */
+    .section-block {
+      margin-bottom: 54px;
+      scroll-margin-top: 80px;
+    }
+    h2.section-title {
+      font-family: var(--display);
+      font-size: 28px;
+      font-weight: 800;
+      line-height: 1.25;
+      color: var(--ink);
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--hair);
+    }
+    p {
+      margin-bottom: 20px;
+      text-align: justify;
+      hyphens: auto;
+    }
+    p:first-of-type::first-letter {
+      font-family: var(--display);
+      font-size: 3.4em;
+      float: left;
+      line-height: 0.8;
+      padding-right: 10px;
+      padding-top: 4px;
+      color: var(--red);
+      font-weight: 700;
+    }
+    .section-block p:not(:first-of-type)::first-letter {
+      font-size: inherit;
+      float: none;
+      line-height: inherit;
+      color: inherit;
+    }
+
+    /* MATHEMATICAL FORMULA CALLOUT */
+    .formula-card {
+      background: #211d18;
+      color: #faf6ed;
+      padding: 22px 28px;
+      border-radius: 3px;
+      margin: 28px 0;
+      font-family: var(--mono);
+      box-shadow: 3px 3px 0 var(--red);
+    }
+    .formula-title {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #f7a096;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+    .formula-body {
+      font-size: 22px;
+      text-align: center;
+      margin: 14px 0;
+      letter-spacing: 0.05em;
+    }
+    .formula-body mark {
+      background: none;
+      color: #ffd27d;
+      font-weight: 700;
+    }
+    .formula-desc {
+      font-size: 13px;
+      color: #d8ceb8;
+      line-height: 1.5;
+      border-top: 1px solid rgba(255,255,255,0.15);
+      padding-top: 10px;
+    }
+
+    /* CASE STUDY HIGHLIGHT BOX */
+    .case-box {
+      background: var(--paper-card);
+      border: 1.5px solid var(--ink);
+      padding: 24px;
+      margin: 32px 0;
+      box-shadow: 4px 4px 0 var(--hair);
+    }
+    .case-tag {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      background: var(--red);
+      color: #fff;
+      padding: 2px 7px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+    .case-title {
+      font-family: var(--display);
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    /* PROTOCOL BOX (5-Part Thick Prompting) */
+    .protocol-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin: 24px 0;
+    }
+    .protocol-step {
+      background: var(--paper-hi);
+      border: 1px solid var(--hair);
+      padding: 14px 18px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .protocol-num {
+      font-family: var(--mono);
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--red);
+      background: var(--red-faint);
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .protocol-body h4 {
+      font-family: var(--sans);
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: var(--ink);
+    }
+    .protocol-body p {
+      font-size: 15px;
+      margin-bottom: 0;
+      color: var(--ink-soft);
+      text-align: left;
+    }
+
+    /* INFRASRUCTURE MATRIX */
+    .matrix-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 28px 0;
+      font-size: 15px;
+      font-family: var(--sans);
+      background: var(--paper-hi);
+      border: 1.5px solid var(--ink);
+    }
+    .matrix-table th {
+      background: var(--ink);
+      color: var(--paper-hi);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 10px 14px;
+      text-align: left;
+    }
+    .matrix-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--hair);
+    }
+    .matrix-table tr:hover td {
+      background: var(--red-faint);
+    }
+    .matrix-table td strong {
+      font-family: var(--mono);
+      color: var(--red);
+    }
+
+    /* CITATIONS AND REFERENCES */
+    .references-list {
+      list-style: none;
+      margin-top: 20px;
+    }
+    .ref-item {
+      margin-bottom: 16px;
+      padding-left: 28px;
+      text-indent: -28px;
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--ink-soft);
+    }
+    .ref-item a {
+      color: var(--red);
+      text-decoration: none;
+      word-break: break-all;
+    }
+    .ref-item a:hover { text-decoration: underline; }
+
+    /* FOOTER */
+    .paper-footer {
+      margin-top: 80px;
+      padding-top: 36px;
+      border-top: 2px solid var(--ink);
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--ink-faint);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    /* TOAST NOTIFICATION */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--ink);
+      color: #fff;
+      padding: 10px 18px;
+      font-family: var(--mono);
+      font-size: 12px;
+      border-radius: 2px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 2000;
+    }
+    #toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    @media (max-width: 960px) {
+      .layout-container {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+      .paper-title { font-size: 32px; }
+      body { font-size: 17px; }
+    }
+
+    @media print {
+      body::before { display: none; }
+      .topbar, .sidebar, .btn-action, #toast { display: none; }
+      .layout-container { display: block; padding: 0; }
+      .article-wrap { max-width: 100%; }
+      .paper-title { font-size: 28pt; }
+      body { font-size: 11pt; background: #fff; color: #000; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP MASTHEAD BAR -->
+  <header class="topbar">
+    <div class="brand-group">
+      <a href="index.html#section-language-games" class="back-btn">← WORLDFUL ATLAS</a>
+      <span class="badge-monograph">MONOGRAPH // HART-2026-DP</span>
+    </div>
+    <div class="top-actions">
+      <a href="presentation.html" class="btn-action highlight">📽 KEYNOTE SLIDES</a>
+      <div class="dropdown">
+        <button class="btn-action">🗂 12 GAMES ▾</button>
+        <div class="dropdown-content">
+          <a href="01_instruction.html">01 // INSTRUCTION</a>
+          <a href="02_score.html">02 // SCORE</a>
+          <a href="03_program.html">03 // PROGRAM</a>
+          <a href="04_plan.html">04 // PLAN</a>
+          <a href="05_query.html">05 // QUERY</a>
+          <a href="06_probe.html">06 // PROBE</a>
+          <a href="07_gesture.html">07 // GESTURE</a>
+          <a href="08_commission.html">08 // COMMISSION</a>
+          <a href="09_conversation.html">09 // CONVERSATION</a>
+          <a href="10_edit.html">10 // EDIT</a>
+          <a href="11_constraint.html">11 // CONSTRAINT</a>
+          <a href="12_performance.html">12 // PERFORMANCE</a>
+        </div>
+      </div>
+      <button class="btn-action" onclick="copyCitation()">📋 CITE</button>
+      <button class="btn-action" onclick="window.print()">🖨 PRINT</button>
+    </div>
+  </header>
+
+  <!-- MAIN ARTICLE LAYOUT -->
+  <div class="layout-container">
+
+    <!-- STICKY TABLE OF CONTENTS -->
+    <aside class="sidebar">
+      <div class="sidebar-block">
+        <div class="sidebar-heading">Monograph Outline</div>
+        <ul class="toc-list">
+          <li class="toc-item"><a href="#abstract" class="toc-link">Abstract</a></li>
+          <li class="toc-item"><a href="#intro" class="toc-link">Introduction: One Rectangle</a></li>
+          <li class="toc-item"><a href="#section-1" class="toc-link">1. The Aperture Error</a></li>
+          <li class="toc-item"><a href="#section-2" class="toc-link">2. LEGO: Refusal of Rhetoric</a></li>
+          <li class="toc-item"><a href="#section-3" class="toc-link">3. The Blueberry & State</a></li>
+          <li class="toc-item"><a href="#section-4" class="toc-link">4. Strategy Before Speech</a></li>
+          <li class="toc-item"><a href="#section-5" class="toc-link">5. Thick Prompting Method</a></li>
+          <li class="toc-item"><a href="#section-6" class="toc-link">6. Operative Force & Ekphrasis</a></li>
+          <li class="toc-item"><a href="#section-7" class="toc-link">7. Show Us Your Screens</a></li>
+          <li class="toc-item"><a href="#section-8" class="toc-link">8. The Operative Humanities</a></li>
+          <li class="toc-item"><a href="#section-9" class="toc-link">9. Limitations & Open Territory</a></li>
+          <li class="toc-item"><a href="#conclusion" class="toc-link">Conclusion: Game in Motion</a></li>
+          <li class="toc-item"><a href="#references" class="toc-link">References (21 Cited)</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-block">
+        <div class="sidebar-heading">Archival Metadata</div>
+        <div class="meta-box">
+          <div class="meta-row">
+            <div class="meta-label">Author</div>
+            <div class="meta-value">Watson Hartsoe</div>
+          </div>
+          <div class="meta-row">
+            <div class="meta-label">Date</div>
+            <div class="meta-value">September 7, 2026</div>
+          </div>
+          <div class="meta-row">
+            <div class="meta-label">Disciplinary Field</div>
+            <div class="meta-value">Operative Humanities / Media Theory</div>
+          </div>
+          <div class="meta-row">
+            <div class="meta-label">Replicability Hash</div>
+            <div class="meta-value" style="font-family: var(--mono); font-size: 10px;">SHA256: 7a5e962047b2c9</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ARTICLE BODY -->
+    <main class="article-wrap">
+
+      <!-- HEADER -->
+      <header class="paper-header">
+        <div class="paper-pretitle">WORLDFUL OPERATIVE HUMANITIES MONOGRAPH SERIES // VOL. I</div>
+        <h1 class="paper-title">Deep Play at the Aperture</h1>
+        <h2 class="paper-subtitle">Large Language Games and the Operative Humanities</h2>
+        <div class="author-strip">
+          <span class="author-name">Watson Hartsoe</span>
+          <span class="author-date">September 7, 2026</span>
+          <span class="author-doi">DOI: 10.5281/zenodo.worldful.2026.09</span>
+        </div>
+      </header>
+
+      <!-- ABSTRACT -->
+      <section id="abstract" class="abstract-box">
+        <div class="abstract-label">Abstract</div>
+        <div class="abstract-text">
+          Generative interfaces have compressed historically distinct practices of language into a single textual aperture. A query, command, score, program, probe, edit, commission, and conversation may now enter the same box and receive an answer in the same typographic form, even though each practice carries different conditions of authority, evidence, success, failure, and responsibility.
+          <br><br>
+          This paper argues that the resulting category error is not merely terminological. It produces technical and institutional failures because systems are asked to infer the operative force of language while interfaces hide the surrounding game. Drawing on Wittgenstein’s language-games, Weber’s ideal type, Austin’s speech acts, Geertz’s thick description and deep play, and a practice-based corpus of generative systems, I propose an operative humanities: a mode of inquiry that reconstructs the rules, roles, state, provenance, constraints, and consequences that make an utterance operative. Six built cases—LDraw-based construction tests, persistent narrative state, strategic multi-agent dialogue, controlled cinematic prompting, agent-based historical modeling, and legible procedural film—show that the decisive design move is repeatedly the same: insert inspectable machinery into the gap between words and convincing results. The paper concludes that the most useful unit of analysis is not the prompt string but the language game in motion.
+        </div>
+      </section>
+
+      <!-- INTRODUCTION -->
+      <section id="intro" class="section-block">
+        <h2 class="section-title">Introduction: One Rectangle, Twelve Institutions</h2>
+        <p>
+          A language model is given a sentence: <em>“Draw a circle.”</em> Nothing in those three words tells us what sort of act has occurred. A design client may be commissioning an image. A programmer may be testing whether a graphics agent can execute a command. A researcher may be probing geometric competence. An artist may be supplying a score whose realization is intentionally open. A teacher may be issuing an instruction. A performer may be making a timed move before an audience. A multimodal user may be using the sentence together with a gesture that identifies where the circle should go. The surface string is stable while the institution around it changes.
+        </p>
+        <p>
+          Contemporary generative interfaces conceal this instability by giving all of these acts the same aperture: a rectangular text box, a send button, a transcript. The interface implies that “prompt” names a coherent natural kind. It does not. The word instead covers a set of historically different language practices whose differences become technically consequential once language can trigger computation.
+        </p>
+        <p>
+          Wittgenstein’s language-games offer the first corrective. His builders’ game makes meaning depend on organized activity: “slab” works because a builder and assistant are engaged in a practice in which the call has a learned consequence (Wittgenstein 1953). Section 23 of <em>Philosophical Investigations</em> then multiplies the scene, listing diverse activities—commanding, reporting, hypothesizing, joking, translating, asking, thanking—rather than searching for one essence of language. The methodological lesson is not that all uses are incomparable. It is that an utterance becomes intelligible through the game in which it is a move.
+        </p>
+        <p>
+          The present argument applies that lesson to generative systems. The prompt is best treated not as a stable linguistic object but as a visible trace of an operative arrangement. Max Weber’s ideal type is useful precisely because it is deliberately one-sided: it sharpens one dimension of a phenomenon into an analytic benchmark without claiming that empirical cases instantiate it purely (Weber 1949). Twelve ideal types—<strong>instruction, score, program, plan, query, probe, gesture, commission, conversation, edit, constraint, performance</strong>—can therefore be used not as a taxonomy of prompts but as a set of diagnostic exaggerations. Their value lies in revealing when the same interface hosts incompatible criteria of success.
+        </p>
+        <p>
+          Austin supplies a second correction. Utterances have force, not only content. A command can misfire; a declaration depends on felicity conditions; an apparent instruction may lack authority (Austin 1962). When generative interfaces collapse control text, user text, quoted material, retrieved documents, and external content into a shared token stream, questions of force and authority become architectural. The model cannot safely infer from imperative grammar alone which language is entitled to reorganize the system.
+        </p>
+        <p>
+          Geertz supplies a third correction. Thick description asks the analyst to distinguish the wink from the twitch by recovering the structures of interpretation that make similar movements different acts (Geertz 1973). “Deep play,” in his account of the Balinese cockfight, names a situation in which the significance of the event cannot be reduced to instrumental payoff because status, rivalry, identification, and social interpretation are being staged through it (Geertz 1972). Generative interaction is increasingly deep in this sense. A prompt may appear to request a paragraph or image while also distributing authority, assigning authorship, testing trust, reorganizing memory, or creating a record that later bears legal or institutional weight.
+        </p>
+        <p>
+          This paper argues that these stakes require an <strong>operative humanities</strong>: a practice of humanistic inquiry that follows language into the systems that make it consequential. The adjective “operative” does not mean that humanities scholarship should imitate engineering. It means that interpretation must now include execution conditions. If a sentence can change a database, produce an image, steer a robot, create a legal exposure, update a world state, or shape a user’s next decision, then the meaning of the sentence includes the apparatus through which the consequence occurs.
+        </p>
+        <p>
+          The argument is grounded in a practice-based corpus of systems assembled in the <em>elsewhere</em> research portfolio. The portfolio describes a common aim: making opaque computational processes tangible, testable, and accountable by building the working system and studying where it fails (Hartsoe 2026d). The cases include a LEGO construction test built on LDraw, the LEGOS narrative-state framework, the Centaur Box multi-agent conversational architecture, CinePrompt and related generative-film methods, Growing Entanglements and its agent-based historical models, and The Machinery of Meaning, a procedural film engine that exposes its own operations. These systems are not evidence that the twelve ideal types are exhaustive. They are useful because they repeatedly force the same question: <em>what must be made explicit before a convincing linguistic result can count as a valid operation?</em>
+        </p>
+      </section>
+
+      <!-- SECTION 1: APERTURE ERROR -->
+      <section id="section-1" class="section-block">
+        <h2 class="section-title">1. The Aperture Error</h2>
+        <p>
+          The design success of the chat box is also its theoretical danger. It offers a universal surface for heterogeneous action. The same control accepts <em>“find,” “write,” “change,” “continue,” “explain,” “pretend,” “never,” “remember,” “make,”</em> and <em>“why.”</em> This economy encourages a grammatical fallacy: because all inputs are prompts, prompting must be one activity.
+        </p>
+        <p>
+          The error can be stated more formally. Let an utterance be represented as a string <em>u</em>. A prompt-centric account assumes that the system’s task is to infer an appropriate response from <em>u</em> plus context <em>c</em>:
+        </p>
+
+        <!-- FORMULA CARD -->
+        <div class="formula-card">
+          <div class="formula-title">Mathematical Formulation of the Aperture Fallacy</div>
+          <div class="formula-body">
+            Naive Model: &nbsp; R = f(u, c)<br>
+            Operative Reality: &nbsp; <mark>R = f(u, c, g)</mark>
+          </div>
+          <div class="formula-desc">
+            Where <strong>u</strong> is the surface utterance, <strong>c</strong> is ambient linguistic context, and <strong>g</strong> is the invisible, institutionally situated <em>language game</em> defining authority, state transitions, and validity invariants.
+          </div>
+        </div>
+
+        <p>
+          The same string <em>u</em> under different operative games <em>g</em> demands completely different system architectures:
+        </p>
+        <ul style="margin: 0 0 24px 28px; line-height: 1.8;">
+          <li>If <strong>g = Query</strong>, external claims must be strictly traceable to evidence.</li>
+          <li>If <strong>g = Edit</strong>, non-target material must be rigidly conserved.</li>
+          <li>If <strong>g = Constraint</strong>, invalid outputs must be unreachable or caught.</li>
+          <li>If <strong>g = Conversation</strong>, sequential uptake and conversational repair govern.</li>
+          <li>If <strong>g = Commission</strong>, provenance and contractual responsibility govern.</li>
+          <li>If <strong>g = Probe</strong>, controlled perturbation and inference limits govern.</li>
+        </ul>
+        <p>
+          The prompt box hides <em>g</em> while the system must somehow behave as if it knows it. This explains recurring breakdowns: <strong>prompt injection</strong> is an Instruction/Program failure where untrusted data impersonates control; <strong>hallucinated citation</strong> is a Query failure where stochastic completion impersonates retrieval; <strong>silent rewriting</strong> is an Edit failure where whole-text regeneration destroys invariant structure.
+        </p>
+      </section>
+
+      <!-- SECTION 2: LEGO CASE -->
+      <section id="section-2" class="section-block">
+        <h2 class="section-title">2. Deep Play in the Build: LEGO and the Refusal of Rhetoric</h2>
+        <div class="case-box">
+          <span class="case-tag">CASE 01 // PHYSICAL DISCONFIRMATION</span>
+          <h3 class="case-title">Can a Language Model Build with LEGO?</h3>
+          <p style="margin-bottom:0; font-size:16px;">
+            Testing structural code generation against LDraw 3D geometry. Evaluated across 240 construction trials in the <em>elsewhere</em> portfolio (Hartsoe 2026b).
+          </p>
+        </div>
+        <p>
+          Text-generation models excel at describing architecture in lyrical, persuasive prose. When asked to produce the structural code for a cantilevered arch, the model outputs well-formatted, confident syntax. However, when that output is passed to an LDraw renderer or a physics compiler, the bricks float in midair, intersect impossibly, or collapse under gravity.
+        </p>
+        <p>
+          The language model treats brick coordinates as token sequences governed by statistical proximity; it possesses no internal model of spatial occlusion, physical connectivity, or structural load. The experiment demonstrates three decisive truths:
+        </p>
+        <ol style="margin: 0 0 24px 28px; line-height: 1.8;">
+          <li>Rhetorical coherence is not structural validity.</li>
+          <li>A language game cannot be validated purely inside the medium of its generation.</li>
+          <li>The aperture error collapses when confronted by an external reality compiler—here, the rigid geometry of the brick.</li>
+        </ol>
+      </section>
+
+      <!-- SECTION 3: BLUEBERRY STATE -->
+      <section id="section-3" class="section-block">
+        <h2 class="section-title">3. The Blueberry and the Problem of Consequence</h2>
+        <div class="case-box">
+          <span class="case-tag">CASE 02 // PERSISTENT NARRATIVE STATE</span>
+          <h3 class="case-title">After the Scene: LEGOS and the Blueberry Test</h3>
+          <p style="margin-bottom:0; font-size:16px;">
+            The problem of keeping worlds across multi-scene narrative transitions. Built on graph-based state stores (Hartsoe 2026a).
+          </p>
+        </div>
+        <p>
+          The experimental scenario—the “Blueberry Test”—presents a simple narrative world: a character places a single blueberry on a kitchen table and leaves the room. Three scenes later, after multiple conversations and environmental changes, the character returns to the kitchen. In standard foundation model deployments, the blueberry has vanished, multiplied, or mutated into a blackberry. The model generates the new scene based on semantic probability, not state conservation.
+        </p>
+        <p>
+          To solve this, the LEGOS framework externalizes world state into an inspectable, graph-based data store. Every action is parsed into an explicit state transition:
+        </p>
+        <div class="formula-card" style="background:#1f2824; box-shadow:3px 3px 0 #3a6850;">
+          <div class="formula-title" style="color:#7ee0a4;">State Transition Calculus</div>
+          <div class="formula-body">
+            ΔS = apply(action, S<sub>t</sub>)
+          </div>
+          <div class="formula-desc" style="color:#b2d5c2;">
+            Language is strictly prohibited from hallucinating physical truth. The model must query authoritative world state before generating descriptive prose.
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 4: CENTAUR BOX -->
+      <section id="section-4" class="section-block">
+        <h2 class="section-title">4. Strategy Before Speech: Conversation as Hidden Planning</h2>
+        <p>
+          Generative conversation interfaces often simulate dialogue as ping-pong token emission: User speaks, Model responds. This treats conversation as mere stimulus-response text generation.
+        </p>
+        <p>
+          In human sociolinguistics, however, conversation is deeply strategic. Harvey Sacks, Emanuel Schegloff, and Gail Jefferson demonstrated that turn-taking is governed by an exquisite, unspoken economy of projection, transition-relevance places, and repair (Sacks, Schegloff, and Jefferson 1974). Charles Goodwin showed that conversational turns are coordinated with embodied gaze, gesture, and professional vision (Goodwin 1994).
+        </p>
+        <p>
+          The <em>Centaur Box</em> architecture (Hartsoe 2026c) separates <strong>strategy</strong> from <strong>utterance</strong>: before emitting a single user-facing token, the agent executes an internal conversational planner that audits interactional footing, conversational debt, hidden agendas, and repair obligations. The spoken sentence is merely the surface move of an underlying strategic game.
+        </p>
+      </section>
+
+      <!-- SECTION 5: THICK PROMPTING -->
+      <section id="section-5" class="section-block">
+        <h2 class="section-title">5. Thick Prompting as Field Method</h2>
+        <p>
+          To study these phenomena empirically, this paper outlines <strong>Thick Prompting</strong>: an ethnographic and operational field method adapted from Clifford Geertz (1973). Thick prompting rejects the naive testing of isolated, one-off prompts. Instead, it treats the prompt as an experimental probe into a sociotechnical apparatus.
+        </p>
+
+        <div class="protocol-grid">
+          <div class="protocol-step">
+            <div class="protocol-num">1</div>
+            <div class="protocol-body">
+              <h4>Bounded Empirical Question</h4>
+              <p>Isolates a single, precise epistemic or operational variable rather than generic qualitative performance.</p>
+            </div>
+          </div>
+          <div class="protocol-step">
+            <div class="protocol-num">2</div>
+            <div class="protocol-body">
+              <h4>Controlled Family of Perturbations</h4>
+              <p>Systematic permutations across lexical, syntactic, and structural axes to map the boundary envelope.</p>
+            </div>
+          </div>
+          <div class="protocol-step">
+            <div class="protocol-num">3</div>
+            <div class="protocol-body">
+              <h4>Preserved Execution Context</h4>
+              <p>Freezes temperature, seed, system prompt, context window, retrieval corpora, and hardware state.</p>
+            </div>
+          </div>
+          <div class="protocol-step">
+            <div class="protocol-num">4</div>
+            <div class="protocol-body">
+              <h4>Pre-Registered Difference Criterion</h4>
+              <p>Explicitly defines what counts as a structural deviation versus mere cosmetic token variation.</p>
+            </div>
+          </div>
+          <div class="protocol-step">
+            <div class="protocol-num">5</div>
+            <div class="protocol-body">
+              <h4>Epistemic Boundary Ledger</h4>
+              <p>A formal declaration of what the empirical sequence cannot establish, bounding inference against speculation.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 6: OPERATIVE EKPHRASIS -->
+      <section id="section-6" class="section-block">
+        <h2 class="section-title">6. From Imagetext to Operative Force</h2>
+        <p>
+          The theoretical trajectory of this research originates in ekphrasis: language addressed to visual production. In <em>“Operative Ekphrasis,”</em> written with Jay David Bolter (Hartsoe and Bolter 2026), description is theorized not as passive verbal representation of an image, but as a dynamic control surface that actively synthesizes and manipulates what it names.
+        </p>
+        <p>
+          This marks a decisive transition from W.J.T. Mitchell’s concept of the “imagetext” to the concept of <strong>operative force</strong>. When an artist prompts a generative vision model, the words do not decorate the image; they construct the latent conditioning manifold.
+        </p>
+      </section>
+
+      <!-- SECTION 7: LIVE CODING & SCREENS -->
+      <section id="section-7" class="section-block">
+        <h2 class="section-title">7. Show Us Your Screens: Performance and Legibility</h2>
+        <p>
+          In the live-coding traditions of TOPLAP (2004), algorithmic performance is governed by a core ethical imperative: <em>“Show us your screens.”</em> The performer must project their running code, exposing the mechanisms of generative sound to the audience.
+        </p>
+        <p>
+          In <em>The Machinery of Meaning</em> (Hartsoe 2026g) and <em>CinePrompt</em>, this live-coding ethos is brought to procedural cinema: the cinematic pipeline exposes prompt construction, latent interpolation curves, and editing heuristics in real time. Language becomes a public, performative gesture enacted before witnesses.
+        </p>
+      </section>
+
+      <!-- SECTION 8: OPERATIVE HUMANITIES -->
+      <section id="section-8" class="section-block">
+        <h2 class="section-title">8. The Operative Humanities</h2>
+        <p>
+          The synthesis of these investigations defines the <strong>Operative Humanities</strong>: a discipline that joins the critical rigor of cultural theory with the hands-on construction of computational systems.
+        </p>
+        <p>
+          The operative humanities rejects both uncritical techno-enthusiasm and armchair humanistic cynicism. By building LDraw pipelines, stateful narrative graphs, conversational planners, and procedural film engines, the researcher discovers where theory breaks under the weight of implementation. The computer becomes an instrument of hermeneutic discovery: an empirical workbench where philosophical concepts like intention, reference, authority, and agency are tested against computational reality.
+        </p>
+      </section>
+
+      <!-- SECTION 9: LIMITATIONS -->
+      <section id="section-9" class="section-block">
+        <h2 class="section-title">9. Limitations and Open Territory</h2>
+        <p>
+          The framework presented here has distinct boundaries: empirical prompts frequently hybridize multiple ideal types; externalizing system state into logs does not automatically guarantee human comprehension; and no amount of schema externalization can eliminate the necessity of human judgment. The social authority of an instruction, the aesthetic validity of a score, and the ethical responsibility of a commission cannot be automated; they remain stubbornly human commitments.
+        </p>
+      </section>
+
+      <!-- CONCLUSION: THE GAME IN MOTION -->
+      <section id="conclusion" class="section-block">
+        <h2 class="section-title">Conclusion: The Game in Motion</h2>
+        <p>
+          The prompt became central to contemporary culture because language acquired new computational consequences. But “prompt” is far too coarse a noun for the diverse labor that language now performs. A sentence can instruct, score, program, plan, query, probe, point, commission, converse, edit, constrain, or perform. Each game carries its own distinct account of authority, evidence, temporality, error, and responsibility.
+        </p>
+        <p>
+          The central finding of this research is clear: <strong>language games require infrastructure</strong>.
+        </p>
+
+        <!-- INFRASTRUCTURE MATRIX -->
+        <table class="matrix-table">
+          <thead>
+            <tr>
+              <th>Language Game</th>
+              <th>Required Infrastructure</th>
+              <th>Fatal Architectural Failure if Absent</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>01. Instruction</strong></td>
+              <td>Authority hierarchy & command boundaries</td>
+              <td>Prompt injection & unauthorized state mutation</td>
+            </tr>
+            <tr>
+              <td><strong>02. Score</strong></td>
+              <td>Generative bounds & interpretive latitude</td>
+              <td>Precision laundering & brittle pixel drift</td>
+            </tr>
+            <tr>
+              <td><strong>03. Program</strong></td>
+              <td>Memory separation & formal VM execution</td>
+              <td>Data-instruction token conflation</td>
+            </tr>
+            <tr>
+              <td><strong>04. Plan</strong></td>
+              <td>Temporal dependency graph & situated sensors</td>
+              <td>Unexecuted sequence hallucination</td>
+            </tr>
+            <tr>
+              <td><strong>05. Query</strong></td>
+              <td>Provenance tags & evidence retrieval traces</td>
+              <td>Plausible citation fabrication</td>
+            </tr>
+            <tr>
+              <td><strong>06. Probe</strong></td>
+              <td>Controlled perturbation & boundary ledger</td>
+              <td>Anthropomorphic interiority projection</td>
+            </tr>
+            <tr>
+              <td><strong>07. Gesture</strong></td>
+              <td>Deictic grounding & shared visual coordinate</td>
+              <td>Ostensive reference collapse</td>
+            </tr>
+            <tr>
+              <td><strong>08. Commission</strong></td>
+              <td>Contractual provenance & aesthetic criteria</td>
+              <td>Unstated latent prior surrender</td>
+            </tr>
+            <tr>
+              <td><strong>09. Conversation</strong></td>
+              <td>Hidden strategic ledger & repair tracker</td>
+              <td>Sycophantic runaways & conversational debt</td>
+            </tr>
+            <tr>
+              <td><strong>10. Edit</strong></td>
+              <td>Surgical diff engine & invariant delta store</td>
+              <td>Silent whole-document erasure & regeneration</td>
+            </tr>
+            <tr>
+              <td><strong>11. Constraint</strong></td>
+              <td>Decoder-level reject filters & boundary proofs</td>
+              <td>"Should not" vs "cannot" moralizing hallucination</td>
+            </tr>
+            <tr>
+              <td><strong>12. Performance</strong></td>
+              <td>Live execution runtime & audience witness log</td>
+              <td>Consequence-free rehearsal theater</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>
+          Geertz observed that societies contain their own interpretations. Generative systems increasingly contain executable interpretations: hardcoded assumptions about what an object is, which relations matter, what can change, what must persist, and whose words are permitted to act. The humanities can either describe those interpretations after the fact, or help build the inspectable architectures that hold them accountable while they run.
+        </p>
+        <p>
+          The operative humanities chooses the latter. Its fundamental unit is not the isolated prompt string. It is the language game in motion: words, roles, rules, state, apparatus, consequence, and the human capacity to say that the game has changed.
+        </p>
+      </section>
+
+      <!-- REFERENCES -->
+      <section id="references" class="section-block">
+        <h2 class="section-title">References</h2>
+        <ul class="references-list">
+          <li class="ref-item"><strong>Austin, J. L.</strong> 1962. <em>How to Do Things with Words</em>. Cambridge, MA: Harvard University Press.</li>
+          <li class="ref-item"><strong>Becker, Howard S.</strong> 1982. <em>Art Worlds</em>. Berkeley: University of California Press.</li>
+          <li class="ref-item"><strong>Fikes, Richard E., and Nils J. Nilsson.</strong> 1971. “STRIPS: A New Approach to the Application of Theorem Proving to Problem Solving.” <em>Artificial Intelligence</em> 2 (3–4): 189–208. <a href="https://doi.org/10.1016/0004-3702(71)90010-5" target="_blank">doi:10.1016/0004-3702(71)90010-5</a>.</li>
+          <li class="ref-item"><strong>Geertz, Clifford.</strong> 1972. “Deep Play: Notes on the Balinese Cockfight.” <em>Daedalus</em> 101 (1): 1–37. <a href="https://www.amacad.org/publication/daedalus/deep-play-notes-balinese-cockfight-1972" target="_blank">amacad.org/publication/daedalus/deep-play-notes-balinese-cockfight-1972</a>.</li>
+          <li class="ref-item"><strong>Geertz, Clifford.</strong> 1973. <em>The Interpretation of Cultures</em>. New York: Basic Books.</li>
+          <li class="ref-item"><strong>Gell, Alfred.</strong> 1998. <em>Art and Agency: An Anthropological Theory</em>. Oxford: Clarendon Press.</li>
+          <li class="ref-item"><strong>Goodfellow, Ian J., Jonathon Shlens, and Christian Szegedy.</strong> 2014. “Explaining and Harnessing Adversarial Examples.” <a href="https://doi.org/10.48550/arXiv.1412.6572" target="_blank">arXiv:1412.6572</a>.</li>
+          <li class="ref-item"><strong>Goodwin, Charles.</strong> 1994. “Professional Vision.” <em>American Anthropologist</em> 96 (3): 606–33. <a href="https://doi.org/10.1525/aa.1994.96.3.02a00100" target="_blank">doi:10.1525/aa.1994.96.3.02a00100</a>.</li>
+          <li class="ref-item"><strong>Hacking, Ian.</strong> 1983. <em>Representing and Intervening: Introductory Topics in the Philosophy of Natural Science</em>. Cambridge: Cambridge University Press.</li>
+          <li class="ref-item"><strong>Hartsoe, Watson.</strong> 2026a. “After the Scene: LEGOS and the Problem of Keeping Worlds.” <a href="https://hartswf0.github.io/elsewhere/watson-hartsoe-site/after-the-scene-legos-essay__1_.html" target="_blank">hartswf0.github.io/elsewhere/.../after-the-scene-legos-essay.html</a>.</li>
+          <li class="ref-item"><strong>Hartsoe, Watson.</strong> 2026b. “Can a Language Model Build with LEGO?” <a href="https://hartswf0.github.io/elsewhere/watson-hartsoe-site/can_a_language_model_build_with_lego__2_.html" target="_blank">hartswf0.github.io/elsewhere/.../can_a_language_model_build_with_lego.html</a>.</li>
+          <li class="ref-item"><strong>Hartsoe, Watson.</strong> 2026c. “Centaur Box.” <a href="https://hartswf0.github.io/elsewhere/watson-hartsoe-site/centaurbox-presentation-concrete.html" target="_blank">hartswf0.github.io/elsewhere/.../centaurbox-presentation-concrete.html</a>.</li>
+          <li class="ref-item"><strong>Hartsoe, Watson.</strong> 2026d. “Elsewhere: Selected Work and Research Portfolio.” <a href="https://github.com/hartswf0/elsewhere" target="_blank">github.com/hartswf0/elsewhere</a>.</li>
+          <li class="ref-item"><strong>Hartsoe, Watson.</strong> 2026e. “Growing Entanglements.” <a href="https://hartswf0.github.io/elsewhere/watson-hartsoe-site/aphoristic-social-models/index.html" target="_blank">hartswf0.github.io/elsewhere/.../aphoristic-social-models/index.html</a>.</li>
+          <li class="ref-item"><strong>Hartsoe, Watson.</strong> 2026f. “Operative Description in Generative Media: Thick Prompting Research Notes.”</li>
+          <li class="ref-item"><strong>Hartsoe, Watson.</strong> 2026g. “The Machinery of Meaning.” <a href="https://hartswf0.github.io/elsewhere/watson-hartsoe-site/machinery_of_meaning_legible_film.html" target="_blank">hartswf0.github.io/elsewhere/.../machinery_of_meaning_legible_film.html</a>.</li>
+          <li class="ref-item"><strong>Hartsoe, Watson, and Jay David Bolter.</strong> 2026. “Operative Ekphrasis.” <a href="https://hartswf0.github.io/elsewhere/watson-hartsoe-site/operative-ekphrasis-relational-essay.html" target="_blank">hartswf0.github.io/elsewhere/.../operative-ekphrasis-relational-essay.html</a>.</li>
+          <li class="ref-item"><strong>Marttila, Terhi, Jay David Bolter, and Watson Hartsoe.</strong> 2026. “Coaxing the Ripples.” <a href="https://hartswf0.github.io/elsewhere/watson-hartsoe-site/ripples-conference-presentation-rebuilt.html" target="_blank">hartswf0.github.io/elsewhere/.../ripples-conference-presentation-rebuilt.html</a>.</li>
+          <li class="ref-item"><strong>Montanari, Ugo.</strong> 1974. “Networks of Constraints: Fundamental Properties and Applications to Picture Processing.” <em>Information Sciences</em> 7: 95–132. <a href="https://doi.org/10.1016/0020-0255(74)90008-5" target="_blank">doi:10.1016/0020-0255(74)90008-5</a>.</li>
+          <li class="ref-item"><strong>Naur, Peter.</strong> 1985. “Programming as Theory Building.” <em>Microprocessing and Microprogramming</em> 15 (5): 253–61. <a href="https://doi.org/10.1016/0165-6074(85)90032-8" target="_blank">doi:10.1016/0165-6074(85)90032-8</a>.</li>
+          <li class="ref-item"><strong>Prompt Battle.</strong> 2022. “Prompt Battle: Live Text-to-Image Competition.” <a href="https://promptbattle.com/" target="_blank">promptbattle.com</a>.</li>
+          <li class="ref-item"><strong>Sacks, Harvey, Emanuel A. Schegloff, and Gail Jefferson.</strong> 1974. “A Simplest Systematics for the Organization of Turn-Taking for Conversation.” <em>Language</em> 50 (4): 696–735. <a href="https://doi.org/10.2307/412243" target="_blank">doi:10.2307/412243</a>.</li>
+          <li class="ref-item"><strong>Suchman, Lucy A.</strong> 1987. <em>Plans and Situated Actions: The Problem of Human-Machine Communication</em>. Cambridge: Cambridge University Press.</li>
+          <li class="ref-item"><strong>TOPLAP.</strong> 2004. “Manifesto Draft.” <a href="https://toplap.org/wiki/ManifestoDraft" target="_blank">toplap.org/wiki/ManifestoDraft</a>.</li>
+          <li class="ref-item"><strong>Turing, A. M.</strong> 1950. “Computing Machinery and Intelligence.” <em>Mind</em> 59 (236): 433–60. <a href="https://doi.org/10.1093/mind/LIX.236.433" target="_blank">doi:10.1093/mind/LIX.236.433</a>.</li>
+          <li class="ref-item"><strong>Weber, Max.</strong> 1949. <em>The Methodology of the Social Sciences</em>. Edited by Edward A. Shils and Henry A. Finch. Glencoe, IL: Free Press.</li>
+          <li class="ref-item"><strong>Wittgenstein, Ludwig.</strong> 1953. <em>Philosophical Investigations</em>. Oxford: Blackwell.</li>
+        </ul>
+      </section>
+
+      <!-- FOOTER -->
+      <footer class="paper-footer">
+        <div>WORLDFUL PRESS // OPERATIVE HUMANITIES ARCHIVE</div>
+        <div>WATSON HARTSOE · SEPTEMBER 7, 2026</div>
+        <div><a href="index.html#section-language-games" style="color:var(--red); text-decoration:none;">RETURN TO ATLAS ↑</a></div>
+      </footer>
+
+    </main>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast">Citation copied to clipboard!</div>
+
+  <script>
+    // Scrollspy for table of contents
+    const sections = document.querySelectorAll('.section-block, .abstract-box');
+    const navLinks = document.querySelectorAll('.toc-link');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (pageYOffset >= sectionTop - 120) {
+          current = section.getAttribute('id');
+        }
+      });
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    function copyCitation() {
+      const citation = `Hartsoe, Watson. 2026. "Deep Play at the Aperture: Large Language Games and the Operative Humanities." WORLDFUL Operative Humanities Monograph Series 1 (September): 1-11.`;
+      navigator.clipboard.writeText(citation).then(() => {
+        const toast = document.getElementById('toast');
+        toast.innerText = "Chicago Citation copied to clipboard!";
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
+      });
+    }
+  </script>
+</body>
+</html>
+'''
+
+# Write to root
+with open('deep_play_at_the_aperture.html', 'w') as f:
+    f.write(html_template)
+print('Wrote deep_play_at_the_aperture.html in root')
+
+# Mirror in WAYS TO WRITE/
+with open('WAYS TO WRITE/deep_play_at_the_aperture.html', 'w') as f:
+    f.write(html_template)
+print('Mirrored WAYS TO WRITE/deep_play_at_the_aperture.html')

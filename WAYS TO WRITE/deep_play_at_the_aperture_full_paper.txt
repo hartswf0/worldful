@@ -1,0 +1,459 @@
+Deep Play at the Aperture
+Large Language Games and the Operative Humanities
+Watson Hartsoe
+September 7, 2026
+Abstract
+Generative interfaces have compressed historically distinct practices of language into a single
+textual aperture. A query, command, score, program, probe, edit, commission, and conversation
+may now enter the same box and receive an answer in the same typographic form, even though
+each practice carries different conditions of authority, evidence, success, failure, and responsibility.
+This paper argues that the resulting category error is not merely terminological. It produces
+technical and institutional failures because systems are asked to infer the operative force of
+language while interfaces hide the surrounding game. Drawing on Wittgenstein’s language-games,
+Weber’s ideal type, Austin’s speech acts, Geertz’s thick description and deep play, and a practicebased corpus of generative systems, I propose an operative humanities: a mode of inquiry that
+reconstructs the rules, roles, state, provenance, constraints, and consequences that make an
+utterance operative. Six built cases - LDraw-based construction tests, persistent narrative state,
+strategic multi-agent dialogue, controlled cinematic prompting, agent-based historical modeling,
+and legible procedural film - show that the decisive design move is repeatedly the same: insert
+inspectable machinery into the gap between words and convincing results. The paper concludes
+that the most useful unit of analysis is not the prompt string but the language game in motion.
+
+Introduction: One Rectangle, Twelve Institutions
+A language model is given a sentence: “Draw a circle.” Nothing in those three words tells us what
+sort of act has occurred. A design client may be commissioning an image. A programmer may be
+testing whether a graphics agent can execute a command. A researcher may be probing geometric
+competence. An artist may be supplying a score whose realization is intentionally open. A teacher
+may be issuing an instruction. A performer may be making a timed move before an audience. A
+multimodal user may be using the sentence together with a gesture that identifies where the circle
+should go. The surface string is stable while the institution around it changes.
+Contemporary generative interfaces conceal this instability by giving all of these acts the same
+aperture: a rectangular text box, a send button, a transcript. The interface implies that “prompt”
+names a coherent natural kind. It does not. The word instead covers a set of historically different
+language practices whose differences become technically consequential once language can trigger
+computation.
+Wittgenstein’s language-games offer the first corrective. His builders’ game makes meaning depend
+on organized activity: “slab” works because a builder and assistant are engaged in a practice in which
+the call has a learned consequence. (Wittgenstein 1953) Section 23 of Philosophical Investigations
+then multiplies the scene, listing diverse activities - commanding, reporting, hypothesizing, joking,
+translating, asking, thanking - rather than searching for one essence of language. The methodological
+1
+
+lesson is not that all uses are incomparable. It is that an utterance becomes intelligible through the
+game in which it is a move.
+The present argument applies that lesson to generative systems. The prompt is best treated not as
+a stable linguistic object but as a visible trace of an operative arrangement. Max Weber’s ideal type
+is useful precisely because it is deliberately one-sided: it sharpens one dimension of a phenomenon
+into an analytic benchmark without claiming that empirical cases instantiate it purely. (Weber
+1949) Twelve ideal types - instruction, score, program, plan, query, probe, gesture, commission,
+conversation, edit, constraint, performance - can therefore be used not as a taxonomy of prompts
+but as a set of diagnostic exaggerations. Their value lies in revealing when the same interface hosts
+incompatible criteria of success.
+Austin supplies a second correction. Utterances have force, not only content. A command can
+misfire; a declaration depends on felicity conditions; an apparent instruction may lack authority.
+(Austin 1962) When generative interfaces collapse control text, user text, quoted material, retrieved
+documents, and external content into a shared token stream, questions of force and authority become
+architectural. The model cannot safely infer from imperative grammar alone which language is
+entitled to reorganize the system.
+Geertz supplies a third correction. Thick description asks the analyst to distinguish the wink from
+the twitch by recovering the structures of interpretation that make similar movements different
+acts. (Geertz 1973) “Deep play,” in his account of the Balinese cockfight, names a situation in
+which the significance of the event cannot be reduced to instrumental payoff because status, rivalry,
+identification, and social interpretation are being staged through it. (Geertz 1972) Generative
+interaction is increasingly deep in this sense. A prompt may appear to request a paragraph or
+image while also distributing authority, assigning authorship, testing trust, reorganizing memory, or
+creating a record that later bears legal or institutional weight.
+This paper argues that these stakes require an operative humanities: a practice of humanistic
+inquiry that follows language into the systems that make it consequential. The adjective “operative”
+does not mean that humanities scholarship should imitate engineering. It means that interpretation
+must now include execution conditions. If a sentence can change a database, produce an image,
+steer a robot, create a legal exposure, update a world state, or shape a user’s next decision, then
+the meaning of the sentence includes the apparatus through which the consequence occurs.
+The argument is grounded in a practice-based corpus of systems assembled in the elsewhere research
+portfolio. The portfolio describes a common aim: making opaque computational processes tangible,
+testable, and accountable by building the working system and studying where it fails. (Hartsoe
+2026d) The cases include a LEGO construction test built on LDraw, the LEGOS narrative-state
+framework, the Centaur Box multi-agent conversational architecture, CinePrompt and related
+generative-film methods, Growing Entanglements and its agent-based historical models, and The
+Machinery of Meaning, a procedural film engine that exposes its own operations. These systems are
+not evidence that the twelve ideal types are exhaustive. They are useful because they repeatedly
+force the same question: what must be made explicit before a convincing linguistic result can count
+as a valid operation?
+
+1. The Aperture Error
+The design success of the chat box is also its theoretical danger. It offers a universal surface for
+heterogeneous action. The same control accepts “find,” “write,” “change,” “continue,” “explain,”
+2
+
+“pretend,” “never,” “remember,” “make,” and “why.” This economy encourages a grammatical
+fallacy: because all inputs are prompts, prompting must be one activity.
+The error can be stated more formally. Let an utterance be represented as a string u. A promptcentric account assumes that the system’s task is to infer an appropriate response from u plus
+context c:
+R = f (u, c).
+But the decisive variable is often not additional context in the ordinary sense. It is the operative
+game g that assigns roles, authority, valid moves, evidentiary standards, state transitions, and
+success conditions:
+R = f (u, c, g).
+The same u under different g can demand different system architectures. If g is Query, external
+claims should be traceable to evidence. If g is Edit, non-target material should be conserved. If g
+is Constraint, invalid outputs should be unreachable or detected. If g is Conversation, sequential
+uptake and repair matter. If g is Commission, provenance and responsibility matter. If g is Probe,
+controlled variation and inference limits matter. The prompt box hides g while the system must
+somehow behave as if it knows it.
+This is more than a UX complaint. It explains recurring failures that appear unrelated when
+described at the level of model output. Prompt injection is an Instruction/Program failure because
+data acquires the appearance of control. Hallucinated citations are Query failures because generation
+impersonates retrieval. Silent rewriting is an Edit failure because regeneration violates conservation.
+Long-horizon narrative drift is a Program/Edit failure because state is not independently maintained.
+Overly rigid natural-language prompting is a Score failure because interpretive latitude is mistaken
+for error. Anthropomorphic overreading is a Probe/Conversation failure because elicited discourse
+is treated as evidence of interiority.
+The useful engineering response is not a larger system prompt that tells the model to be careful about
+all of these at once. The response is to externalize the conditions the game requires. Provenance
+tags, validators, retrieval traces, explicit state stores, constrained decoders, diff viewers, planner logs,
+and capability boundaries are examples of such externalization. They move part of the language
+game from model interpretation into inspectable structure.
+The humanistic response is equally concrete. Instead of asking only what the prompt “means,”
+reconstruct the practical scene that gives it force. Who is speaking? Under what authority? To
+what artifact or world state? What would count as success? What evidence could defeat the answer?
+What prior commitments must survive? What part of the act is visible in the transcript and what
+part occurs in hidden machinery? These are questions of interpretation, but they are interpretation
+under operational pressure.
+
+2. Deep Play in the Build: LEGO and the Refusal of Rhetoric
+The LDraw experiment provides the clearest instance because plastic bricks do not negotiate with
+fluent prose. Can a Language Model Build with LEGO? begins from a deliberately humiliating
+3
+
+distinction: “A picture is cheap.” A generated image can look like a LEGO truck without specifying
+legal parts, exact placements, orientations, connections, or an assemblable sequence. (Hartsoe
+2026b)
+LDraw makes the claim falsifiable by representing construction as text. A line can name a part, color,
+coordinates, and a transformation matrix. This appears to vindicate the idea that language can
+become program. But the experiment immediately introduces a hierarchy of validation. Syntactic
+validity only proves that the system wrote LDraw. A legal file may still describe collision, unsupported
+geometry, disconnected parts, or an assembly that cannot be physically completed.
+This is the difference between instruction, program, query, and constraint condensed into one toy.
+“Build a red truck” is an instruction only if a legitimate execution relation exists. The LDraw file
+is program-like because its text denotes explicit transformations and objects. The question “is it
+buildable?” is a query because the answer must be accountable to something outside rhetorical
+fluency. Buildability is a constraint because some states should be excluded rather than merely
+discouraged.
+The case exposes a recurrent habit in generative AI evaluation: success is often measured at the level
+where the model is strongest and the world is weakest. If the benchmark scores visual resemblance,
+the model can win by looking right. If the task is physical assembly, a different evidentiary regime
+is required. The work’s importance therefore lies less in LEGO than in the epistemology of external
+resistance. A useful generative system needs a place where its rhetoric stops.
+Constraint theory makes this technically precise. Montanari’s classic account treats constraints as
+relations capable of reducing a search space. (Montanari 1974) A hard constraint changes reachability.
+Natural-language prompting, by contrast, usually changes probability. “Do not place unsupported
+bricks” may reduce failures without making unsupported states impossible. The distinction between
+“should not” and “cannot” is therefore an architectural property, not a linguistic nuance.
+The humanities question enters at the boundary of formalization. Which constraints define building?
+Gravity, collision, catalog legality, hand accessibility, aesthetic convention, structural strength, or
+the culturally learned sense of what counts as a LEGO technique? The more serious the benchmark
+becomes, the more it discovers that “buildable” is not one property but a practice. The operative
+humanities does not weaken the test by saying everything is interpretive. It strengthens the test by
+identifying which interpretation has been operationalized.
+
+3. The Blueberry and the Problem of Consequence
+If the brick supplies material resistance, the blueberry supplies temporal resistance. Coaxing the
+Ripples begins with a bird eating a berry that later returns untouched. (Marttila, Bolter, and
+Hartsoe 2026) The error is small enough to be comic and large enough to diagnose a fundamental
+problem: generation can produce an event without preserving what the event changed.
+The ordinary response is to call this memory failure. That is too weak. A system may retrieve the
+earlier sentence perfectly and still fail to know which propositions remain active, which relations
+changed, and which branch of a narrative they belong to. Memory retrieves traces. State governs
+consequence.
+The Ripples grammar - entity, vector, ripple - treats the world as a field of relations rather than a
+stream of independent sentences. After the Scene and LEGOS extend the same wager by moving
+
+4
+
+narrative state outside prose: people, places, desires, obstacles, changes, and resolutions become
+explicit handles that can be traced, forked, and restored. (Hartsoe 2026a)
+This is where Naur’s theory-building account of programming becomes unexpectedly humanistic. A
+program is not merely a text whose syntax a machine can execute. It embodies a theory of how the
+domain works. (Naur 1985) A narrative-state engine similarly embodies a theory of what counts as
+a consequential fact. If a key is destroyed, the system must represent the destruction as something
+later generation is not free to erase casually. The model’s prose is no longer sovereign over the world
+it describes.
+Such systems necessarily make cuts. They decide that this entity, relation, commitment, or causal
+fact deserves explicit persistence while another remains implicit in language. The model of the
+world is therefore also an interpretation of the world. This is precisely why humanities expertise
+matters. The question is not whether state should be formalized, but how the formalization changes
+what can be remembered, contradicted, or made consequential.
+The operative humanities treats that cut as evidence. What did the designer decide to store? Which
+changes require explicit transitions? What kinds of ambiguity are permitted? Which contradictions
+are flagged rather than silently repaired? The model architecture becomes a readable theory of
+significance.
+
+4. Strategy Before Speech: Conversation as Hidden Planning
+The transcript has another way of lying by omission. It shows the utterance that occurred and
+hides the options that did not.
+Centaur Box makes the hidden field explicit. A conversational turn is processed through memo,
+observer model, planner, selector, draft, send, and adjudication. Multiple candidate acts can be
+generated before one appears as the public reply. (Hartsoe 2026c) The line in the transcript is
+therefore a residue of planning.
+Classical planning research formalized the relation among current state, goal state, and operators.
+STRIPS is canonical because it attempts to find a sequence of operators that transforms an initial
+world model into one satisfying a goal formula. (Fikes and Nilsson 1971) Suchman’s critique is
+canonical because it shows how badly plan-centered accounts can misdescribe situated action when
+the world’s contingencies are treated as noise rather than constitutive resources. (Suchman 1987)
+Centaur Box recreates the argument at the scale of dialogue. The system can plan, but each public
+reply changes the next situation. The gatekeeper’s refusal is not an error in execution; it is new
+evidence. The planner must therefore remain subordinate to interaction.
+Conversation analysis supplies the social machinery. Turn-taking is locally managed and sensitive
+to recipient design; a later turn displays an interpretation of an earlier one. (Sacks, Schegloff,
+and Jefferson 1974) Centaur Box adds a computational layer: each role responds not to the other
+directly but to a current model of the other. This means that a conversation can recursively stabilize
+a mistaken representation. A model that infers hostility may produce guarded moves that elicit
+guarded replies and then treat those replies as confirmation.
+The technical imperative is to expose the model-update loop. What evidence changed the user
+model? Which candidate acts were rejected? Why was one selected? When did the planner revise
+
+5
+
+the goal rather than merely rephrase the strategy? The humanistic imperative is to read these
+structures as part of the interaction rather than as neutral implementation detail.
+The road not taken is part of the transcript because it defines the significance of the road that was
+taken.
+
+5. Thick Prompting as Field Method
+The twelve ideal types would be weak if they only renamed familiar interface behaviors. Their
+methodological value appears when they support controlled comparison.
+The surrounding dissertation work defines thick prompting as iterative, comparative prompting
+under controlled variation, with logging, comparison tables, interpretive criteria, and explicit limits.
+(Hartsoe 2026f) This is a narrower and more defensible claim than the broad proposition that
+all prompting is world-building. The distinction matters: the twelve games can function as an
+analytic instrument without becoming the dissertation’s entire ontology. The archived research
+notes explicitly defer WorldText and broad taxonomy-building from the core proposal architecture,
+keeping operative description and thick prompting as the method spine. (Hartsoe 2026f)
+Thick prompting can be understood as an ethnographic adaptation to black-box generative systems.
+It does not produce “thick” evidence by writing longer prompts. It produces thickness by varying
+conditions and preserving the traces required to interpret differences.
+A minimal thick-prompting sequence has five elements:
+1. a bounded question about system behavior;
+2. a controlled family of prompt variations;
+3. preserved outputs and execution conditions;
+4. an explicit criterion for what counts as a meaningful difference;
+5. a statement of what the sequence cannot establish.
+This resembles experimental probing more than prompt optimization. Turing’s imitation game
+replaced an essence question with an operational situation. (Turing 1950) Hacking’s philosophy of
+experiment emphasizes intervention as a way of learning what representation alone cannot settle.
+(Hacking 1983) Adversarial examples show how carefully designed perturbations reveal boundaries
+invisible under ordinary inputs. (Goodfellow, Shlens, and Szegedy 2014)
+But generative prompting adds a reflexive complication: the linguistic probe can scaffold the very
+behavior it purports to measure. A question about machine fear may create a local discourse
+in which fearful first-person language is the most plausible continuation. The analyst therefore
+needs matched probes, negative controls, contrary framings, and session resets. The point is not to
+eliminate interpretation but to make the inference proportional to the trace.
+Growing Entanglements offers a parallel method at the scale of historical simulation. Seven agentbased models are not treated as seven answers to Captain Cook’s death. Each is an apparatus that
+isolates a mechanism, and the difference among runs becomes data about what each ontology can
+see. (Hartsoe 2026e) Changing a parameter tests sensitivity; changing the ontology tests the cut
+through which the historical field is being represented.
+This is an operative version of Geertz’s thick description. The analyst does not merely add context
+around a computational result. The analyst reconstructs the structures that made that result
+available: model, prompt, state, selection rule, evidence source, and failure criterion.
+6
+
+6. From Imagetext to Operative Force
+The broader theoretical trajectory of the work begins in ekphrasis: language addressed to visual
+production. Operative Ekphrasis, written with Jay David Bolter, treats description as a control
+surface that participates in producing what it names. (Hartsoe and Bolter 2026) The important
+shift is from representation to operation.
+This claim becomes stronger when it is not universalized. Not every description becomes operative
+merely because it is sent to a model. Operativity is achieved through an arrangement: model,
+interface, permissions, generative medium, state, constraints, and human uptake. The prompt is
+one component in a causal chain.
+The distinction answers a common objection from technical readers. “Prompts are just inputs”
+is true at one level and inadequate at another. A shell command is also an input; so is a SQL
+query, a legal filing, a theatrical cue, and a medical order. The analytic question is what institution
+interprets the input and what transitions the institution permits it to trigger.
+It also answers a common risk in humanities writing about AI. If “language becomes executable”
+is treated as a metaphor, the argument can float free of engineering detail. The practice-based
+cases prevent that escape. LDraw specifies parts and transformations. LEGOS externalizes state.
+Centaur Box logs candidate moves and updates profiles. CinePrompt distinguishes invariants from
+variables. Growing Entanglements instantiates explicit agent rules. Machinery of Meaning exposes
+its own procedural sequence. Operative force is not an atmosphere around the prompt. It is built.
+
+7. Show Us Your Screens: Performance and Legibility
+The Machinery of Meaning supplies the final case because it makes inspection itself aesthetic. The
+portfolio calls it a procedural film engine that can be read while it runs. (Hartsoe 2026g) Its
+code stages question, example, source proposition, diagram, and citation as timed elements. The
+procedure is part of the viewing experience.
+Live coding offers a useful lineage. TOPLAP’s manifesto demands that screens be visible and
+algorithms exposed alongside their outcomes. (TOPLAP 2004) Prompt Battle similarly turns
+text-to-image control into public competition in which timing, failure, and recovery become part of
+what an audience judges. (Prompt Battle 2022)
+This matters methodologically because generative artifacts erase their own production history. A
+compelling image can hide twenty failed attempts; a fluent answer can hide retrieval failures and
+rejected drafts; a successful agent action can hide dangerous candidate plans. If evaluation begins
+at the final output, the architecture has already disappeared.
+The operative humanities therefore treats legibility as a design value. Logs, diffs, source maps, state
+views, rejected candidates, constraint violations, and provenance markers are not merely debugging
+conveniences. They are interpretive surfaces. They allow the human participant to reconstruct why
+the system acted as it did and which alternatives remained possible.
+Legibility does not mean total transparency. A neural model cannot be made fully inspectable by
+adding a dashboard. Nor does more telemetry automatically produce understanding. Goodwin’s
+account of professional vision reminds us that seeing is organized by practices of highlighting and
+coding. (Goodwin 1994) The interface decides what counts as a visible feature. The goal is therefore
+
+7
+
+not maximal exposure but accountable selection: show the structures that materially govern the
+language game.
+
+8. The Operative Humanities
+The six cases point toward a common research program. In each, a generative system becomes more
+interpretable when some part of the language game is externalized:
+• LEGO externalizes validity into a formal representation and physical checks.
+• LEGOS externalizes consequence into persistent world state.
+• Centaur Box externalizes strategy into candidate acts, profiles, and selection traces.
+• CinePrompt externalizes interpretation into invariants, variables, and refusal criteria.
+• Growing Entanglements externalizes modeling assumptions into explicit mechanisms.
+• Machinery of Meaning externalizes procedure into the visible temporal surface.
+The shared move is not “add structure.” It is make the conditions of operative force available
+for inspection and refusal.
+This is where the term operative humanities earns its place. Traditional humanistic interpretation
+is often caricatured by engineers as post hoc commentary on artifacts after the real system has
+already been built. The cases here suggest a different division of labor. Humanistic distinctions can
+become architectural requirements.
+If Austin teaches that force depends on felicity conditions, provenance and authority need explicit
+representation. If conversation analysis teaches that meaning is sequential, turn history and repair
+should not be flattened into isolated messages. If textual scholarship teaches that revision is a
+history of differences, editing interfaces should show semantic deltas. If anthropology teaches
+that a wink differs from a twitch through social context, multimodal systems should preserve the
+referential field rather than only extracted labels. If art sociology teaches that making is distributed,
+generative provenance should track delegation rather than oscillate opportunistically between “tool”
+and “agent.” (Becker 1982; Gell 1998)
+Technical thinkers cannot dismiss these as “soft” concerns without changing the task. The questions
+determine what the system must store, validate, expose, and refuse. Humanities concepts become
+design constraints because language has entered execution pipelines.
+Humanists cannot remain satisfied with critique at the level of discourse either. Once a claim is
+operational, the critic must be willing to follow it into schemas, matrices, event loops, state machines,
+retrieval indexes, and model traces. Otherwise the most consequential interpretive decisions remain
+hidden under implementation detail.
+The operative humanities is therefore neither engineering with literary citations nor criticism
+with screenshots. It is the study and construction of systems in which cultural distinctions have
+computational consequences.
+
+9. Limitations and Open Territory
+The twelve language games are ideal types, not empirical species. Real sessions frequently contain
+several at once. A request to “shorten this paragraph and tell me what your edit reveals about the
+argument” combines Edit, Probe, and Conversation. A cinematic prompt may be Score, Commission,
+8
+
+and Performance depending on how it is used. The framework should therefore be evaluated by
+whether it reveals consequential differences, not whether annotators can force every utterance into
+one box.
+The current evidence is also practice-based and selective. The elsewhere corpus was built to
+investigate particular problems in generative media, not sampled to represent all prompt use.
+Several language games are richly instantiated - Probe, Constraint, Program, Edit - while others,
+especially Gesture and Query in their pure forms, are thinner. This asymmetry is itself evidence
+about the research practice but limits generalization.
+The archival dissertation note introduces a productive contradiction. It narrows the formal research
+contribution to operative description and thick prompting, explicitly deferring broader WorldText
+and taxonomy claims. (Hartsoe 2026f) The present paper should therefore be read as a working
+theoretical extension, not as evidence that the dissertation has already adopted a twelve-part
+architecture.
+There are also technical limits to “making the game explicit.” Semantic constraints, social authority,
+authorship, relevance, and conversational reciprocity cannot be perfectly encoded. The framework
+should not become a fantasy that every cultural ambiguity can be converted into a schema. Residual
+human theory remains necessary precisely because the system’s explicit model is always a cut
+through a larger practice.
+Finally, the operative humanities must avoid a new transparency ideology. More logs can create
+new forms of opacity. A hundred telemetry panels may make a system less interpretable than one
+carefully chosen state transition. The measure is not volume of disclosure but whether a person can
+reconstruct consequential action and identify where inference exceeds evidence.
+
+Conclusion: The Game in Motion
+The prompt became important because language acquired new consequences. But “prompt” is
+too coarse a noun for the work those consequences now perform. A sentence can instruct, score,
+program, plan, query, probe, point, commission, converse, edit, constrain, or perform. Each game
+carries a different account of authority, evidence, temporality, error, and responsibility.
+The single chat aperture hides these differences. That hiding is productive when it lets people move
+fluidly across tasks. It is dangerous when the system’s architectural guarantees do not move with
+them.
+The most consequential lesson from the built cases is therefore not that prompts need better wording.
+It is that language games need infrastructure. A world needs state. A query needs evidence. An
+edit needs a delta. A constraint needs enforcement. A conversation needs sequence. A commission
+needs provenance. A probe needs controls. An instruction needs authority. A performance needs an
+event trace.
+Geertz wrote that societies contain their own interpretations. Generative systems increasingly
+contain executable interpretations: encoded assumptions about what an object is, which relation
+matters, what can change, what must persist, and whose words may act. The humanities can either
+describe those interpretations after the fact or help make them inspectable while they run.
+The operative humanities chooses the latter. Its fundamental unit is not the prompt string. It is
+the language game in motion: words, roles, rules, state, apparatus, consequence, and the human
+9
+
+capacity to say that the game has changed.
+
+Appendix A — Assembly Instrument
+The exact publication assembly prompt is preserved in _PROMPTS/2026-09-07__SLIPCASE-ASSEMBLY-PROMPT.txt
+in the package root and embedded in index.html under PROMPTS. This appendix deliberately
+points to that preserved payload rather than abbreviating it.
+
+Appendix B — Making History
+The package-level making history is preserved in 000__MAKING_HISTORY.txt. In summary: userprovided and user-library materials were preserved as evidence; public repository materials and
+scholarly source metadata were retrieved; the twelve essays, graph, arrangements, source maps, and
+this paper were derived in the present run; deterministic hashes, counts, PDF rendering, and ZIP
+integrity were tool-verified; no human review is claimed.
+
+Appendix C — Replication Path
+Start with index.html or 000__START_HERE.txt. Immutable zettel payloads live at the ZIP
+root and are mirrored byte-for-byte in _MD/. ZETTELS.json, NODES.jsonl, and RELATIONS.jsonl
+provide machine-readable reconstruction state. _SLIPCASE/rebuild.py regenerates the derived
+HTML/SVG reading surfaces from packaged data and verifies the manifest. 000__RETURN_PATH.txt
+records the checkpoint identity and rejoin phrase.
+Austin, J. L. 1962. How to Do Things with Words. Cambridge, MA: Harvard University Press.
+Becker, Howard S. 1982. Art Worlds. Berkeley: University of California Press.
+Fikes, Richard E., and Nils J. Nilsson. 1971. “STRIPS: A New Approach to the Application
+of Theorem Proving to Problem Solving.” Artificial Intelligence 2 (3-4): 189–208. https:
+//doi.org/10.1016/0004-3702(71)90010-5.
+Geertz, Clifford. 1972. “Deep Play: Notes on the Balinese Cockfight.” Daedalus 101 (1): 1–37.
+https://www.amacad.org/publication/daedalus/deep-play-notes-balinese-cockfight-1972.
+———. 1973. The Interpretation of Cultures. New York: Basic Books.
+Gell, Alfred. 1998. Art and Agency: An Anthropological Theory. Oxford: Clarendon Press.
+Goodfellow, Ian J., Jonathon Shlens, and Christian Szegedy. 2014. “Explaining and Harnessing
+Adversarial Examples.” https://doi.org/10.48550/arXiv.1412.6572.
+Goodwin, Charles. 1994. “Professional Vision.” American Anthropologist 96 (3): 606–33. https:
+//doi.org/10.1525/aa.1994.96.3.02a00100.
+Hacking, Ian. 1983. Representing and Intervening: Introductory Topics in the Philosophy of Natural
+Science. Cambridge: Cambridge University Press.
+Hartsoe, Watson. 2026a. “After the Scene: LEGOS and the Problem of Keeping Worlds.” https:
+//hartswf0.github.io/elsewhere/watson-hartsoe-site/after-the-scene-legos-essay__1_.html.
+———. 2026b. “Can a Language Model Build with LEGO?” https://hartswf0.github.io/elsewhere
+/watson-hartsoe-site/can_a_language_model_build_with_lego__2_.html.
+———. 2026c. “Centaur Box.” https://hartswf0.github.io/elsewhere/watson-hartsoe-site/centaurbox-presentation-concrete.html.
+———. 2026d. “Elsewhere: Selected Work and Research Portfolio.” https://github.com/hartswf0/
+elsewhere.
+10
+
+———. 2026e. “Growing Entanglements.” https://hartswf0.github.io/elsewhere/watson-hartsoesite/aphoristic-social-models/index.html.
+———. 2026f. “Operative Description in Generative Media: Thick Prompting Research Notes.”
+———. 2026g. “The Machinery of Meaning.” https://hartswf0.github.io/elsewhere/watson-hartsoesite/machinery_of_meaning_legible_film.html.
+Hartsoe, Watson, and Jay David Bolter. 2026. “Operative Ekphrasis.” https://hartswf0.github.io/e
+lsewhere/watson-hartsoe-site/operative-ekphrasis-relational-essay.html.
+Marttila, Terhi, Jay David Bolter, and Watson Hartsoe. 2026. “Coaxing the Ripples.” https://hart
+swf0.github.io/elsewhere/watson-hartsoe-site/ripples-conference-presentation-rebuilt.html.
+Montanari, Ugo. 1974. “Networks of Constraints: Fundamental Properties and Applications
+to Picture Processing.” Information Sciences 7: 95–132. https://doi.org/10.1016/00200255(74)90008-5.
+Naur, Peter. 1985. “Programming as Theory Building.” Microprocessing and Microprogramming 15
+(5): 253–61. https://doi.org/10.1016/0165-6074(85)90032-8.
+Prompt Battle. 2022. “Prompt Battle: Live Text-to-Image Competition.” https://promptbattle.c
+om/.
+Sacks, Harvey, Emanuel A. Schegloff, and Gail Jefferson. 1974. “A Simplest Systematics for the
+Organization of Turn-Taking for Conversation.” Language 50 (4): 696–735. https://doi.org/10.2
+307/412243.
+Suchman, Lucy A. 1987. Plans and Situated Actions: The Problem of Human-Machine Communication. Cambridge: Cambridge University Press.
+TOPLAP. 2004. “Manifesto Draft.” https://toplap.org/wiki/ManifestoDraft.
+Turing, A. M. 1950. “Computing Machinery and Intelligence.” Mind 59 (236): 433–60. https:
+//doi.org/10.1093/mind/LIX.236.433.
+Weber, Max. 1949. The Methodology of the Social Sciences. Edited by Edward A. Shils and Henry
+A. Finch. Glencoe, IL: Free Press.
+Wittgenstein, Ludwig. 1953. Philosophical Investigations. Oxford: Blackwell.
+
+11
+
+
