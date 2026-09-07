@@ -1122,10 +1122,10 @@ html_template = """<!DOCTYPE html>
 
     <div class="mode-toggles">
       <button class="btn-mode active" id="btnModeEssay" onclick="switchViewMode('essay')">
-        📖 THOUGHT ESSAY
+        [ THOUGHT ESSAY ]
       </button>
       <button class="btn-mode accent-red" id="btnModePres" onclick="switchViewMode('presentation')">
-        🖥️ KEYNOTE DECK
+        [ KEYNOTE DECK ]
       </button>
     </div>
   </header>
@@ -1133,7 +1133,7 @@ html_template = """<!DOCTYPE html>
   <!-- DIAL SWITCHER (DECK 00 + GAMES 01-12) -->
   <nav class="dial-bar" id="dialBar">
     <button class="dial-btn keynote-btn active" data-id="00" onclick="selectGame('00')">
-      ★ KEYNOTE: DEEP PLAY AT THE APERTURE
+      [ KEYNOTE ] DEEP PLAY AT THE APERTURE
     </button>
     <!-- Games 01-12 buttons populated via JS -->
   </nav>
@@ -1219,7 +1219,7 @@ html_template = """<!DOCTYPE html>
       `).join('');
       dialBar.innerHTML = `
         <button class="dial-btn keynote-btn ${currentSelectedId === '00' ? 'active' : ''}" data-id="00" onclick="selectGame('00')">
-          ★ KEYNOTE: DEEP PLAY AT THE APERTURE
+          [ KEYNOTE ] DEEP PLAY AT THE APERTURE
         </button>
         ${gameButtons}
       `;
