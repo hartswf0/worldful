@@ -7,10 +7,11 @@ TITLE:
 The Same Symbolic Pattern Can Describe a World and Organize Action Toward One
 
 SOURCE:
-Clifford Geertz - “Religion as a Cultural System” - 1966 / reprinted in The Interpretation of Cultures - 1973. ([Anthrocervone](https://www.anthrocervone.org/?utm_source=chatgpt.com))
+Clifford Geertz - “Religion as a Cultural System” - 1966 / reprinted in The Interpretation of Cultures - 1973. ([Anthrocervone](https://www.anthrocervone.org/?utm_source=chatgpt.com)) ([Canonical Link](https://monoskop.org/images/5/54/Geertz_Clifford_The_Interpretation_of_Cultures_Selected_Essays.pdf))
 
 PASSAGE:
-Geertz distinguishes “models of” from “models for” and emphasizes their intertransposability in symbolic systems.
+[QUOTE]
+"Cultural patterns have an intrinsic double aspect: they give meaning, that is, objective conceptual form, to social and psychological reality both by shaping themselves to it and by shaping it to themselves. They are models of reality and models for reality." — Clifford Geertz, Religion as a Cultural System, The Interpretation of Cultures, p. 93 (1973)
 
 RESEARCH OBJECT:
 The reversible role of representations in generative interaction.

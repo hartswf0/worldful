@@ -7,10 +7,11 @@ TITLE:
 The Coordinator Makes Conversational Force Explicit Before the Message Proceeds
 
 SOURCE:
-Terry Winograd - “A Language/Action Perspective on the Design of Cooperative Work” - 1987. ([LRI](https://www.lri.fr/~mbl/ENS/CSCW/2016/papers/Winograd-HCI87.pdf))
+Terry Winograd - “A Language/Action Perspective on the Design of Cooperative Work” - 1987. ([LRI](https://www.lri.fr/~mbl/ENS/CSCW/2016/papers/Winograd-HCI87.pdf)) ([Canonical Link](https://dl.acm.org/doi/10.1145/62266.62274))
 
 PASSAGE:
-The Coordinator presents distinct openings such as Request and Offer, with templates that structure the subsequent conversation.
+[QUOTE]
+"Language is not a system of signs that transmit information; it is a form of social action. When we speak, we perform speech acts: we make requests, offer promises, assert claims, and declare states of affairs... A computer system that mediates human cooperative work must be structured around the conversation for action—an explicit state transition network that tracks commitments, breakdowns, and renegotiations." — Terry Winograd, A Language/Action Perspective on the Design of Cooperative Work, Human-Computer Interaction, 3(1), pp. 3–30 (1987)
 
 RESEARCH OBJECT:
 The difference between classifying language action in advance and allowing its force to stabilize through interaction.

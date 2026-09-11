@@ -10,7 +10,8 @@ SOURCE:
 Susan Leigh Star and James R. Griesemer - “Institutional Ecology, ‘Translations’ and Boundary Objects” - 1989. ([DOI](https://doi.org/10.1177/030631289019003001?utm_source=chatgpt.com))
 
 PASSAGE:
-Star and Griesemer begin from a structural tension: scientific work requires cooperation among actors with divergent viewpoints; standardization and boundary objects help translate across those viewpoints.
+[QUOTE]
+"Boundary objects are objects which are both plastic enough to adapt to local needs and the constraints of the several parties employing them, yet robust enough to maintain a common identity across sites. They are weakly structured in common use, and become strongly structured in individual-site use." — Susan Leigh Star and James R. Griesemer, Institutional Ecology, Translations' and Boundary Objects, Social Studies of Science, 19(3), pp. 387–420 (1989)
 
 RESEARCH OBJECT:
 Whether Brooksian conceptual integrity requires shared concepts or only sufficiently coordinated interfaces.

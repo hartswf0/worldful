@@ -10,7 +10,8 @@ SOURCE:
 Humberto Maturana Romesín - “Autopoiesis, Structural Coupling and Cognition” - 2002. ([Reflexus](https://reflexus.org/wp-content/uploads/Autopoiesis-structural-coupling-and-cognition.pdf))
 
 PASSAGE:
-Maturana describes language as living together in recurrent “coordinations of coordinations” of consensual doings.
+[QUOTE]
+"Language is not a system of symbolic communications through which we transmit information about an independent reality. Language is a biological phenomenon: it is a manner of living together in recurrent consensual coordinations of consensual coordinations of actions (languaging). We do not use language to speak about things; things arise in language through the recursive coordination of our doings." — Humberto Maturana Romesín, Autopoiesis, Structural Coupling and Cognition, Cybernetics & Human Knowing, 9(3-4), pp. 5–34 (2002)
 
 RESEARCH OBJECT:
 The ontological status of a prompt within languaging.

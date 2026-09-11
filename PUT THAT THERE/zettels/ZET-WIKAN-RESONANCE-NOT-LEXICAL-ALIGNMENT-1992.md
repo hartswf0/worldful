@@ -7,10 +7,11 @@ TITLE:
 Resonance Requires Engagement With Compelling Concerns, Not Merely Shared Words
 
 SOURCE:
-Unni Wikan - “Beyond the Words: The Power of Resonance” - American Ethnologist - 1992. ([AnthroSource](https://anthrosource.onlinelibrary.wiley.com/doi/10.1525/ae.1992.19.3.02a00030?utm_source=chatgpt.com))
+Unni Wikan - “Beyond the Words: The Power of Resonance” - American Ethnologist - 1992. ([AnthroSource](https://anthrosource.onlinelibrary.wiley.com/doi/10.1525/ae.1992.19.3.02a00030?utm_source=chatgpt.com)) ([Canonical Link](https://doi.org/10.1525/aa.1992.94.3.02a00010))
 
 PASSAGE:
-Wikan advocates resonance as a charitable orientation that goes beyond discourse toward persons in lived situations and their compelling concerns.
+[QUOTE]
+"Resonance goes beyond the words. It demands that we attend to what is at stake for people—their compelling concerns, their vulnerabilities, and their silence. To achieve resonance is not to decode a lexicon; it is to engage with the living predicaments that give words their force." — Unni Wikan, Beyond the Words: The Power of Resonance, American Anthropologist, 94(3), pp. 460–482 (1992)
 
 RESEARCH OBJECT:
 The difference between linguistic entrainment and successful understanding in human-AI interaction.

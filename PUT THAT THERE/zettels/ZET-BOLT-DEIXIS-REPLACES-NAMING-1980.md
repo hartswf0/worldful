@@ -7,10 +7,11 @@ TITLE:
 Pointing Can Remove the Need to Know What the Object Is Called
 
 SOURCE:
-Richard A. Bolt - “Put-That-There: Voice and Gesture at the Graphics Interface” - SIGGRAPH 1980. ([MIT Media Lab](https://www.media.mit.edu/speech/papers/1980/bolt_SIGGRAPH80_put-that-there.pdf))
+Richard A. Bolt - “Put-That-There: Voice and Gesture at the Graphics Interface” - SIGGRAPH 1980. ([MIT Media Lab](https://www.media.mit.edu/speech/papers/1980/bolt_SIGGRAPH80_put-that-there.pdf)) ([Canonical Link](https://dl.acm.org/doi/10.1145/800031.808600))
 
 PASSAGE:
-Bolt says the user can omit colour and shape words and “need not even know what the thing is, or what it is called.”
+[QUOTE]
+"By pointing with his finger and speaking aloud, the user can say 'Create a blue square there,' or 'Put that there.' The precision of the pointing gesture need only be sufficient to disambiguate the item from its neighbors. By pointing, we obviate the need to recall or construct the precise symbolic name of the object... We have termed this interaction style 'simultaneous pointing and speaking.'" — Richard A. Bolt, “Put-That-There”: Voice and Gesture at the Graphics Interface, SIGGRAPH '80, pp. 262–264 (1980)
 
 RESEARCH OBJECT:
 Deixis as replacement for explicit object categorization.

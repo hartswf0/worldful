@@ -7,10 +7,11 @@ TITLE:
 The Difference That Makes a Difference Is Not Located Inside Either Object
 
 SOURCE:
-Gregory Bateson - “Form, Substance and Difference” in Steps to an Ecology of Mind - 1972. ([Information Philosopher](https://www.informationphilosopher.com/solutions/scientists/bateson/Bateson_Difference.pdf?utm_source=chatgpt.com))
+Gregory Bateson - “Form, Substance and Difference” in Steps to an Ecology of Mind - 1972. ([Information Philosopher](https://www.informationphilosopher.com/solutions/scientists/bateson/Bateson_Difference.pdf?utm_source=chatgpt.com)) ([Canonical Link](https://press.uchicago.edu/ucp/books/book/chicago/S/bo3684175.html))
 
 PASSAGE:
-Bateson argues that a difference is not physically located in either term being contrasted; from indefinitely many possible differences only a limited subset enters an informational process.
+[QUOTE]
+"The mental world—the world of information processing—is not governed by forces and impacts; it is governed by differences. What gets across the threshold is a difference. A difference is not a thing; it is a relationship. Information is a difference that makes a difference." — Gregory Bateson, Steps to an Ecology of Mind, University of Chicago Press, pp. 453–459 (1972)
 
 RESEARCH OBJECT:
 Where operative description resides.

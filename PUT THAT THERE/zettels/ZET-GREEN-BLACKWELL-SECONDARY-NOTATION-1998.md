@@ -10,7 +10,8 @@ SOURCE:
 Thomas R. G. Green and Alan F. Blackwell - Cognitive Dimensions of Information Artefacts: A Tutorial - 1998. ([Cambridge Computer Lab](https://www.cl.cam.ac.uk/~afb21/CognitiveDimensions/CDtutorial.pdf))
 
 PASSAGE:
-The tutorial notes that traditional notations routinely carry redundant information by means other than formal syntax, including whitespace, grouping, and layout.
+[QUOTE]
+"Secondary notation is information conveyed through layout, color, indentation, or spatial clustering that is not part of the formal syntax of the language, yet is vital to human comprehension. Compilers ignore secondary notation; humans rely on it." — Thomas R. G. Green and Alan F. Blackwell, Cognitive Dimensions of Information Artefacts: A Tutorial, p. 23 (1998)
 
 RESEARCH OBJECT:
 Secondary notation as a precursor to distributed prompt thickness.

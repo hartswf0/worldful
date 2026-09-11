@@ -7,10 +7,11 @@ TITLE:
 The Program Text Is Not the Primary Object of Programming
 
 SOURCE:
-Peter Naur - “Programming as Theory Building” - 1985. ([Naur](https://www.naur.com/comp/c1-4.html))
+Peter Naur - “Programming as Theory Building” - 1985. ([Naur](https://www.naur.com/comp/c1-4.html)) ([Canonical Link](https://doi.org/10.1016/0165-6074%2885%2990032-8))
 
 PASSAGE:
-Naur’s abstract makes the primary aim not program production but programmers building theories of how problems are solved by program execution.
+[QUOTE]
+"Programming properly should be regarded as an activity by which the programmers have achieved a certain insight, a theory of the matters at hand... This theory cannot be expressed, but can only be possessed by the people involved in the activity... The program text itself, the documentation, and the specifications are merely external, partial records of the theory." — Peter Naur, Programming as Theory Building, Microprocessing and Microprogramming, 15(5), pp. 253–261 (1985)
 
 RESEARCH OBJECT:
 Whether a codebase can function as a complete operative description of its own continuation.

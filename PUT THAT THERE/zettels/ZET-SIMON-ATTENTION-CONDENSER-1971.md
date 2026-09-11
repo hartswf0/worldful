@@ -7,10 +7,11 @@ TITLE:
 An Information System Conserves Attention Only If It Withholds or Condenses More Than It Emits
 
 SOURCE:
-Herbert A. Simon - “Designing Organizations for an Information-Rich World” - 1971. ([Gwern](https://gwern.net/doc/design/1971-simon.pdf))
+Herbert A. Simon - “Designing Organizations for an Information-Rich World” - 1971. ([Gwern](https://gwern.net/doc/design/1971-simon.pdf)) ([Canonical Link](https://doi.org/10.2307/3382902))
 
 PASSAGE:
-Simon argues that an information-processing subsystem conserves organizational attention only when it absorbs more information than it produces, and calls such a system an information condenser.
+[QUOTE]
+"In an information-rich world, the wealth of information means a dearth of something else: a scarcity of whatever it is that information consumes. What information consumes is rather obvious: it consumes the attention of its recipients. Hence a wealth of information creates a poverty of attention and a need to allocate that attention efficiently among the overabundance of information sources that might consume it." — Herbert A. Simon, Designing Organizations for an Information-Rich World, p. 40 (1971)
 
 RESEARCH OBJECT:
 AI as an attention-conserving intermediary rather than merely an information generator.

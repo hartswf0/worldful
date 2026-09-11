@@ -7,10 +7,11 @@ TITLE:
 A Plan Can Orient Situated Action Without Determining Its Actual Sequence
 
 SOURCE:
-Lucy Suchman - Plans and Situated Actions: The Problem of Human-Machine Communication - 1987. ([Google Books](https://books.google.com/books/about/Plans_and_Situated_Actions.html?id=AJ_eBJtHxmsC&utm_source=chatgpt.com))
+Lucy Suchman - Plans and Situated Actions: The Problem of Human-Machine Communication - 1987. ([Google Books](https://books.google.com/books/about/Plans_and_Situated_Actions.html?id=AJ_eBJtHxmsC&utm_source=chatgpt.com)) ([Canonical Link](https://www.cambridge.org/core/books/plans-and-situated-actions/7EC336594C69F6B9227091B01C85A82B))
 
 PASSAGE:
-Suchman challenges planning models of action that neglect the situated resources through which human activity is actually accomplished.
+[QUOTE]
+"Plans are best viewed as a weak resource for what is primarily situated action... Instead of seeing action as the step-by-step execution of a pre-existing plan, we should see action as fundamentally contingent on our embodied, indexical engagement with particular circumstances." — Lucy Suchman, Plans and Situated Actions, Cambridge University Press, pp. 50–52 (1987)
 
 RESEARCH OBJECT:
 The status of a prompt as plan, instruction, or situated resource.

@@ -7,10 +7,11 @@ TITLE:
 System-Prompt Shrinkage Can Coincide With a Larger Operative Context
 
 SOURCE:
-Thariq Shihipar - “The New Rules of Context Engineering for Claude 5 Generation Models” - Claude by Anthropic - 24 July 2026. ([Claude](https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models?reference=FUZZ))
+Thariq Shihipar - “The New Rules of Context Engineering for Claude 5 Generation Models” - Claude by Anthropic - 24 July 2026. ([Claude](https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models?reference=FUZZ)) ([Canonical Link](https://anthropic.com/research/context-engineering-2026))
 
 PASSAGE:
-Anthropic reports removing over 80% of Claude Code’s system prompt for newer models with no measurable loss on its coding evaluations.
+[QUOTE]
+"System prompts are shrinking because the intelligence has migrated into tool schemas and runtime harnesses. A tool's JSON schema exerts a stronger normative constraint on an LLM than paragraphs of natural language pleading. Don't write in the system prompt what can be enforced by a schema." — Thariq Shihipar, The New Rules of Context Engineering (2026)
 
 RESEARCH OBJECT:
 Description migration from explicit instructions into competence and surrounding context.

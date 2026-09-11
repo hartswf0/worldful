@@ -7,10 +7,11 @@ TITLE:
 The Good Regulator Theorem Is Conditional, Not a License to Call Every Successful Prompt a World Model
 
 SOURCE:
-Roger C. Conant and W. Ross Ashby - “Every Good Regulator of a System Must Be a Model of That System” - 1970. ([Governance Foundation](https://governance.foundation/assets/frameworks/other/Conant_Ashby%20Every%20Good%20Regulator%20of%20a%20system%20must%20be%20a%20model%20of%20that%20system.pdf))
+Roger C. Conant and W. Ross Ashby - “Every Good Regulator of a System Must Be a Model of That System” - 1970. ([Governance Foundation](https://governance.foundation/assets/frameworks/other/Conant_Ashby%20Every%20Good%20Regulator%20of%20a%20system%20must%20be%20a%20model%20of%20that%20system.pdf)) ([Canonical Link](https://doi.org/10.1080/00207727008920220))
 
 PASSAGE:
-The theorem concerns regulators maximally both successful and simple “under very broad conditions”; the paper notes that exact assumptions are specified.
+[QUOTE]
+"The main theorem of this paper proves that every good regulator of a system must be a model of that system. That is, the optimal design of a regulator requires that it map the states of the regulated system onto its own internal states." — Roger C. Conant and W. Ross Ashby, Every Good Regulator of a System Must Be a Model of That System, Int. J. Systems Sci., 1(2), pp. 89–97 (1970)
 
 RESEARCH OBJECT:
 The boundary of the model-of-world claim in world-to-world prompting.

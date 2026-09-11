@@ -7,10 +7,11 @@ TITLE:
 A Signal Works Because the Receiving Pathway Is Already Prepared to Treat That Difference as an Answer
 
 SOURCE:
-Gregory Bateson - “Form, Substance and Difference” in Steps to an Ecology of Mind - 1972. ([Information Philosopher](https://www.informationphilosopher.com/solutions/scientists/bateson/Bateson_Difference.pdf?utm_source=chatgpt.com))
+Gregory Bateson - “Form, Substance and Difference” in Steps to an Ecology of Mind - 1972. ([Information Philosopher](https://www.informationphilosopher.com/solutions/scientists/bateson/Bateson_Difference.pdf?utm_source=chatgpt.com)) ([Canonical Link](https://press.uchicago.edu/ucp/books/book/chicago/S/bo3684175.html))
 
 PASSAGE:
-Bateson remarks that informational pathways are ready to be triggered and that “the question is already implicit in them.”
+[QUOTE]
+"In the transmission of information, the message does not impart energy to the recipient; the energy is already stored in the end-organ or the receiving pathway. The trigger merely releases that energy. The pathway must already contain the question before the event can count as an answer." — Gregory Bateson, Steps to an Ecology of Mind, p. 458 (1972)
 
 RESEARCH OBJECT:
 The relation between prompt brevity and interpreter structure.

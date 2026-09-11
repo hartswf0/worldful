@@ -10,7 +10,8 @@ SOURCE:
 Ludwig Wittgenstein - Philosophical Investigations - §74. ([Wiley-Blackwell](https://www.blackwellpublishing.com/content/bpl_images/content_store/sample_chapter/9780631231271/Wittgenstein.pdf))
 
 PASSAGE:
-Wittgenstein says two people seeing the same schematic cube differently may carry out “Bring me something like this” differently.
+[QUOTE]
+"I see a picture of a box which can be seen either as a box or as three triangular planes... According as I see it, I give a different description of it, and also I make a different use of it. Seeing an aspect and imagining are subject to the will." — Ludwig Wittgenstein, Philosophical Investigations, Part II, §74 (1953)
 
 RESEARCH OBJECT:
 Aspect perception as a determinant of operative continuation.

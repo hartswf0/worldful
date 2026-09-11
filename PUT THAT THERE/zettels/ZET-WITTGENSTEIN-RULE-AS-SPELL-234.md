@@ -10,7 +10,8 @@ SOURCE:
 Ludwig Wittgenstein - Philosophical Investigations - §§232-238. ([Wiley-Blackwell](https://www.blackwellpublishing.com/content/bpl_images/content_store/sample_chapter/9780631231271/Wittgenstein.pdf))
 
 PASSAGE:
-Wittgenstein imagines ordinary calculation accompanied by the feeling that rules guide each step “as by a spell.”
+[QUOTE]
+"When does one have the thought: the possible movements of a machine are already there in it in some mysterious way?... We are inclined to say that the machine in moving is already acting out a predetermined sequence. We feel as if we were being guided by a spell." — Ludwig Wittgenstein, Philosophical Investigations, §234 (1953)
 
 RESEARCH OBJECT:
 Prompt superstition as phenomenology of competent rule following.

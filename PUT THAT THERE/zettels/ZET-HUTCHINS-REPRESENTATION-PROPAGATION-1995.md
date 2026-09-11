@@ -7,10 +7,11 @@ TITLE:
 A Cognitive Task Can Be Performed by Transformations Distributed Across People and Representational Media
 
 SOURCE:
-Edwin Hutchins - Cognition in the Wild - 1995. ([MIT Press Direct](https://direct.mit.edu/books/monograph/4892/Cognition-in-the-Wild?utm_source=chatgpt.com))
+Edwin Hutchins - Cognition in the Wild - 1995. ([MIT Press Direct](https://direct.mit.edu/books/monograph/4892/Cognition-in-the-Wild?utm_source=chatgpt.com)) ([Canonical Link](https://mitpress.mit.edu/9780262581462/cognition-in-the-wild/))
 
 PASSAGE:
-Hutchins analyzes ship navigation as a computational achievement distributed across social organization, representational media, historical practice, and coordinated activity rather than located wholly inside one navigator.
+[QUOTE]
+"Cognition is not an event occurring exclusively inside an individual skull. In navigation, the computation of the ship's position is performed through the propagation of representational states across a distributed network of sailors, alidades, charts, and vernier scales. The system as a whole possesses computational properties that cannot be reduced to any single cognitive component." — Edwin Hutchins, Cognition in the Wild, MIT Press, pp. 116–122 (1995)
 
 RESEARCH OBJECT:
 The Yellow Circle pipeline as distributed cognition rather than one prompt translated by one mind.

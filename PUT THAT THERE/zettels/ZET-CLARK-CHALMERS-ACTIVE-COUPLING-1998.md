@@ -7,10 +7,11 @@ TITLE:
 External Information Is Not Automatically Part of Cognition; the Strong Claim Depends on Active Coupling
 
 SOURCE:
-Andy Clark and David Chalmers - “The Extended Mind” - Analysis - 1998. ([Wiley Online Library](https://onlinelibrary.wiley.com/doi/pdf/10.1111/1467-8284.00096?utm_source=chatgpt.com))
+Andy Clark and David Chalmers - “The Extended Mind” - Analysis - 1998. ([Wiley Online Library](https://onlinelibrary.wiley.com/doi/pdf/10.1111/1467-8284.00096?utm_source=chatgpt.com)) ([Canonical Link](https://doi.org/10.1093/analys/58.1.7))
 
 PASSAGE:
-Clark and Chalmers defend active externalism by emphasizing environmental structures that play an active role in driving cognitive processes.
+[QUOTE]
+"If, as we confront some task, a part of the world functions as a process which, were it done in the head, we would have no hesitation in recognizing as part of the cognitive process, then that part of the world is part of the cognitive process. Active externalism demands direct, reliable, and continuous coupling." — Andy Clark and David Chalmers, The Extended Mind, Analysis, 58(1), pp. 7–19 (1998)
 
 RESEARCH OBJECT:
 The boundary of the claim that repository, GUI, context, and tools “carry” thought for the model or user.

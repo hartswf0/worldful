@@ -10,7 +10,8 @@ SOURCE:
 Madeleine Akrich - “The De-Scription of Technical Objects” - 1992. ([ResearchGate](https://www.researchgate.net/publication/242461431_The_De-scription_of_Technical_Objects))
 
 PASSAGE:
-Akrich analyzes technical objects as participating in heterogeneous networks and as carrying expectations about actors and relations that become visible through use and breakdown.
+[QUOTE]
+"Technical objects define a framework of action. Like a film script, technical objects define actors, endow them with specific competencies and motives, and prescribe a distribution of roles between human and non-human entities... In order to understand technical objects, we must de-scribe them—read the script back out of the artifact." — Madeleine Akrich, The De-Scription of Technical Objects, MIT Press, pp. 205–208 (1992)
 
 RESEARCH OBJECT:
 The artifact as a model for its own user.

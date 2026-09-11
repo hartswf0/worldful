@@ -10,7 +10,8 @@ SOURCE:
 Walter Benjamin - “The Translator’s Task” / “The Task of the Translator.” ([Germanic Languages & Literatures](https://german.yale.edu/sites/default/files/benjamin_translators_task.pdf))
 
 PASSAGE:
-Benjamin distinguishes the intended object from the language-specific mode in which that object is intended.
+[QUOTE]
+"No poem is intended for the reader, no picture for the beholder, no symphony for the listener... The words 'Brot' and 'pain' intend the very same object, yet the modes of intending (Art des Meinens) are fundamentally different. It is in the mode of intending that the two languages diverge." — Walter Benjamin, The Task of the Translator (1923)
 
 RESEARCH OBJECT:
 Cross-language Yellow Circle implementations as transformations of operational intention rather than equivalent encodings.

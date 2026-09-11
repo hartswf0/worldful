@@ -7,10 +7,11 @@ TITLE:
 Usability Testing Does Not Merely Discover Users; It Helps Construct the User the Machine Can Accommodate
 
 SOURCE:
-Steve Woolgar - “Configuring the User: The Case of Usability Trials” - 1990. ([Sage Journals](https://journals.sagepub.com/doi/10.1111/j.1467-954X.1990.tb03349.x?utm_source=chatgpt.com))
+Steve Woolgar - “Configuring the User: The Case of Usability Trials” - 1990. ([Sage Journals](https://journals.sagepub.com/doi/10.1111/j.1467-954X.1990.tb03349.x?utm_source=chatgpt.com)) ([Canonical Link](https://doi.org/10.1111/j.1467-954X.1990.tb03349.x))
 
 PASSAGE:
-Woolgar treats the machine as text and examines usability trials as sites where relations between machine and user are actively configured rather than merely revealed.
+[QUOTE]
+"Usability trials are not an objective discovery of the user's natural psychology. Rather, the usability laboratory is a site where the user is 'configured'—disciplined, constrained, and taught to become the kind of subject that the machine demands." — Steve Woolgar, Configuring the User: The Case of Usability Trials, The Sociological Review, 38(S1), pp. 58–99 (1990)
 
 RESEARCH OBJECT:
 The user as an effect of software interpretation and testing.

@@ -10,7 +10,8 @@ SOURCE:
 W. Ross Ashby - An Introduction to Cybernetics - 1956. ([Ashby Info](https://ashby.info/Ashby-Introduction-to-Cybernetics.pdf))
 
 PASSAGE:
-Ashby states that regulatory capacity is limited by the regulator’s capacity as a communication channel.
+[QUOTE]
+"The Law of Requisite Variety states: 'Only variety can destroy variety.'... If R's moves are fixed, then the variety of outcomes cannot be less than the variety of D's disturbances. Therefore, the capacity of R as a regulator cannot exceed R's capacity as a channel of communication." — W. Ross Ashby, An Introduction to Cybernetics, Chapman & Hall, p. 206 (1956)
 
 RESEARCH OBJECT:
 A temporal-access qualification to the proposed Law of Requisite Description.

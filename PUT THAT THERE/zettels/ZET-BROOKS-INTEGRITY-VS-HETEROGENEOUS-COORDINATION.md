@@ -10,7 +10,8 @@ SOURCE:
 Frederick P. Brooks Jr. - The Mythical Man-Month - 1975. ([CMU School of Computer Science](https://www.cs.cmu.edu/afs/cs/academic/class/15712-s19/www/papers/mythicalmanmonth00fred.pdf))
 
 PASSAGE:
-Brooks argues that system design should reflect one coherent set of design ideas rather than many independent, uncoordinated ones.
+[QUOTE]
+"I believe that conceptual integrity is the most important consideration in system design. It is better to have a system omit certain anomalous features and improvements, but to reflect one set of design ideas, than to have one which contains many good but uncoordinated and independent ideas... The design must proceed from one mind, or from a very small number of agreeing resonant minds." — Frederick P. Brooks Jr., The Mythical Man-Month, Addison-Wesley, pp. 42–44 (1975)
 
 RESEARCH OBJECT:
 The level at which shared conceptual language is actually required in software.

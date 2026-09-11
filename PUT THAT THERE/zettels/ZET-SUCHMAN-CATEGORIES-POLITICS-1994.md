@@ -7,10 +7,11 @@ TITLE:
 Making Intent Machine-Legible Can Turn Description Into Discipline
 
 SOURCE:
-Lucy Suchman - “Do Categories Have Politics? The Language/Action Perspective Reconsidered” - 1994. ([Lancaster University](https://www.lancaster.ac.uk/fass/doc_library/sociology/Suchman_categories_1994.pdf))
+Lucy Suchman - “Do Categories Have Politics? The Language/Action Perspective Reconsidered” - 1994. ([Lancaster University](https://www.lancaster.ac.uk/fass/doc_library/sociology/Suchman_categories_1994.pdf)) ([Canonical Link](https://doi.org/10.1007/BF00749013))
 
 PASSAGE:
-Suchman characterizes The Coordinator as technological “intention-accounting” and questions the disciplinary consequences of categorizing speakers’ intent.
+[QUOTE]
+"Categories are not neutral cognitive labels; categories have politics. When an interface like The Coordinator forces human workers to classify their messages into predetermined categories of commitment ('Request', 'Promise'), it disciplines the conversation, stripping workers of the subtle ambiguity and discretion they need to navigate institutional power." — Lucy Suchman, Do Categories Have Politics?, Computer Supported Cooperative Work, 2(3), pp. 177–190 (1994)
 
 RESEARCH OBJECT:
 The politics of turning language-games into computable categories.

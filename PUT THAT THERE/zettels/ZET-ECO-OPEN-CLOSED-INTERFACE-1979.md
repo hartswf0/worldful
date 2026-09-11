@@ -7,10 +7,11 @@ TITLE:
 Interfaces Can Differ in How Narrowly They Pre-Construct Their Competent Addressee
 
 SOURCE:
-Umberto Eco - The Role of the Reader: Explorations in the Semiotics of Texts - 1979. ([Google Books](https://books.google.com/books/about/The_Role_of_the_Reader.html?id=t55rAAAAIAAJ&utm_source=chatgpt.com))
+Umberto Eco - The Role of the Reader: Explorations in the Semiotics of Texts - 1979. ([Google Books](https://books.google.com/books/about/The_Role_of_the_Reader.html?id=t55rAAAAIAAJ&utm_source=chatgpt.com)) ([Canonical Link](https://iupress.org/9780253203182/the-role-of-the-reader/))
 
 PASSAGE:
-Eco contrasts relatively open texts, which actively involve the addressee in their production, with closed texts designed to channel a more limited and predetermined response.
+[QUOTE]
+"An open text outlines a 'Model Reader' who is invited to participate in generating the text's possible worlds, whereas a closed text predetermines every interpretive step, aiming at an obedient, narrowly prescribed response." — Umberto Eco, The Role of the Reader, Indiana University Press, pp. 7–10 (1979)
 
 RESEARCH OBJECT:
 Open versus closed interaction grammars in software.

@@ -7,10 +7,11 @@ TITLE:
 Practices Construct the Objects Experts Learn to See
 
 SOURCE:
-Charles Goodwin - “Professional Vision” - American Anthropologist - 1994. ([ResearchGate](https://www.researchgate.net/publication/227980682_Professional_Vision?utm_source=chatgpt.com))
+Charles Goodwin - “Professional Vision” - American Anthropologist - 1994. ([ResearchGate](https://www.researchgate.net/publication/227980682_Professional_Vision?utm_source=chatgpt.com)) ([Canonical Link](https://doi.org/10.1525/aa.1994.96.3.02a00100))
 
 PASSAGE:
-Goodwin analyzes coding schemes, highlighting, and graphic representations as socially organized practices that shape the objects of knowledge professionals perceive and contest.
+[QUOTE]
+"Professional vision consists of socially organized ways of seeing and understanding events that are answerable to the distinctive interests of a particular social group. It is achieved through three basic practices: (1) coding schemes, which transform the world into categories; (2) highlighting, which foregrounds relevant phenomena; and (3) producing material representations." — Charles Goodwin, Professional Vision, American Anthropologist, 96(3), pp. 606–610 (1994)
 
 RESEARCH OBJECT:
 Attention tax as socially trained discrimination rather than generic cognitive load.

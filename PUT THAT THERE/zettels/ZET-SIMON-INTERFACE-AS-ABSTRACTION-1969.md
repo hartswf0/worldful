@@ -7,10 +7,11 @@ TITLE:
 A Simple Interface Can Hide Radical Differences in Inner Mechanism While Preserving Outer Function
 
 SOURCE:
-Herbert A. Simon - The Sciences of the Artificial - 1969/1996. ([MIT Press](https://mitpress.mit.edu/9780262190510/the-sciences-of-the-artificial/?utm_source=chatgpt.com))
+Herbert A. Simon - The Sciences of the Artificial - 1969/1996. ([MIT Press](https://mitpress.mit.edu/9780262190510/the-sciences-of-the-artificial/?utm_source=chatgpt.com)) ([Canonical Link](https://mitpress.mit.edu/9780262691918/the-sciences-of-the-artificial/))
 
 PASSAGE:
-Simon treats the artifact as an interface between inner and outer environments and argues that relative simplicity of this interface can provide abstraction and generality even when very different inner systems realize the same function.
+[QUOTE]
+"An artifact can be thought of as a meeting point—an 'interface' in today's terms—between an 'inner' environment, the substance and organization of the artifact itself, and an 'outer' environment, the surroundings in which it operates... We can often predict behavior from knowledge of the system's goals and its outer environment, with only minimal assumptions about the inner environment." — Herbert A. Simon, The Sciences of the Artificial, MIT Press, pp. 6–7 (1969)
 
 RESEARCH OBJECT:
 Why radically different Yellow Circle programs can produce one stable outward artifact.

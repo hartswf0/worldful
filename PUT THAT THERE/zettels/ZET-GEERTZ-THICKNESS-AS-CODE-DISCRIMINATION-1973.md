@@ -7,10 +7,11 @@ TITLE:
 Thickness Is Not More Detail; It Is Enough Structure to Distinguish What Kind of Act Occurred
 
 SOURCE:
-Clifford Geertz - “Thick Description: Toward an Interpretive Theory of Culture” - 1973; drawing on Gilbert Ryle. ([Wikipedia](https://en.wikipedia.org/wiki/Thick_description?utm_source=chatgpt.com))
+Clifford Geertz - “Thick Description: Toward an Interpretive Theory of Culture” - 1973; drawing on Gilbert Ryle. ([Wikipedia](https://en.wikipedia.org/wiki/Thick_description?utm_source=chatgpt.com)) ([Canonical Link](https://monoskop.org/images/5/54/Geertz_Clifford_The_Interpretation_of_Cultures_Selected_Essays.pdf))
 
 PASSAGE:
-Geertz’s Rylean sequence distinguishes superficially similar eyelid movements by recovering the socially established structures under which they count as twitch, wink, imitation, rehearsal, or parody.
+[QUOTE]
+"Between the 'thin description' of what the winker is doing (rapidly contracting his right eyelid) and the 'thick description' of what he is doing (practicing a burlesque of a friend faking a wink to deceive an outsider into thinking a conspiracy is afoot), lies the entire object of ethnography: a stratified hierarchy of meaningful structures." — Clifford Geertz, The Interpretation of Cultures, Basic Books, pp. 6–10 (1973)
 
 RESEARCH OBJECT:
 A non-quantitative definition of thickness.

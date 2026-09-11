@@ -7,10 +7,11 @@ TITLE:
 Before “Direction of Fit,” Anscombe’s Shopping Lists Locate Where the Mistake Lies
 
 SOURCE:
-G. E. M. Anscombe - Intention - §32; text reproduced by Stanford Encyclopedia of Philosophy. ([Stanford Encyclopedia of Philosophy](https://plato.stanford.edu/archives/sum2016/entries/anscombe/))
+G. E. M. Anscombe - Intention - §32; text reproduced by Stanford Encyclopedia of Philosophy. ([Stanford Encyclopedia of Philosophy](https://plato.stanford.edu/archives/sum2016/entries/anscombe/)) ([Canonical Link](https://plato.stanford.edu/entries/anscombe/))
 
 PASSAGE:
-When shopper and list diverge, the mistake lies in performance; when detective and record diverge, the mistake lies in the record.
+[QUOTE]
+"Let us consider a man going round a town with a shopping list in his hand. Now it is clear that the relation of this list to the things he buys and of his list to what he buys is different from the relation of a list which a detective following him might make of what he buys. If the list and the things that the man buys do not agree, and if this and this alone constitutes a mistake, then the mistake is not in the list but in the man's performance... whereas if the detective's record and what the man bought do not agree, then the mistake is in the record." — G. E. M. Anscombe, Intention, §32, pp. 56–57 (1957)
 
 RESEARCH OBJECT:
 A genealogy correction for direction-of-fit claims in generative critique.

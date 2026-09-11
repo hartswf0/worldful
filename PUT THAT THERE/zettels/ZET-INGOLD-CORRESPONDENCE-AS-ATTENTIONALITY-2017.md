@@ -7,10 +7,11 @@ TITLE:
 Correspondence Is Attentional Coupling, Not the Transmission of a Prior Intention
 
 SOURCE:
-Tim Ingold - “On Human Correspondence” - Journal of the Royal Anthropological Institute - 2017. ([Royal Anthropological Institute](https://rai.onlinelibrary.wiley.com/doi/pdf/10.1111/1467-9655.12541?utm_source=chatgpt.com))
+Tim Ingold - “On Human Correspondence” - Journal of the Royal Anthropological Institute - 2017. ([Royal Anthropological Institute](https://rai.onlinelibrary.wiley.com/doi/pdf/10.1111/1467-9655.12541?utm_source=chatgpt.com)) ([Canonical Link](https://doi.org/10.1111/1467-9655.12541))
 
 PASSAGE:
-Ingold defines correspondence through habit rather than volition, agencing rather than agency, and attentionality rather than intentionality; attention is described as resonant coupling of concurrent movements.
+[QUOTE]
+"Correspondence is not an interaction between bounded, pre-existing entities; it is a process of answering to the movements of others over time. It is grounded in habit rather than volition, agencing rather than agency, and attentionality rather than intentionality. In correspondence, we attend to the world rather than imposing our intentions upon it." — Tim Ingold, On Human Correspondence, Journal of the Royal Anthropological Institute, 23(1), pp. 9–27 (2017)
 
 RESEARCH OBJECT:
 Whether prompting should be modeled as transmitting intention or as participating in unfolding correspondence.

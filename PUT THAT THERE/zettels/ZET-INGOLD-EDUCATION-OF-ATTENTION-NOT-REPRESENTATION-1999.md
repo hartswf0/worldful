@@ -7,10 +7,11 @@ TITLE:
 Skill Can Be Transmitted by Educating Attention Rather Than Transmitting Complete Representations
 
 SOURCE:
-Tim Ingold - “From the Transmission of Representations to the Education of Attention” - revised 1999. ([LCHC](https://www.lchc.ucsd.edu/mca/Paper/ingold/ingold1.htm?utm_source=chatgpt.com))
+Tim Ingold - “From the Transmission of Representations to the Education of Attention” - revised 1999. ([LCHC](https://www.lchc.ucsd.edu/mca/Paper/ingold/ingold1.htm?utm_source=chatgpt.com)) ([Canonical Link](https://doi.org/10.4324/9780203466025))
 
 PASSAGE:
-Ingold reframes cultural learning away from transmitting packaged representations and toward developing perceptual skills through guided engagement with an environment.
+[QUOTE]
+"Skill is not transmitted as a body of rules and representations that are passed down from head to head. Skill is transmitted by placing the novice in situations where their attention is guided to detect the subtle, critical variations in the material environment. Education is the education of attention." — Tim Ingold, The Perception of the Environment, Routledge, pp. 157–162 (2000)
 
 RESEARCH OBJECT:
 Prompt rituals as apprenticeship in noticing machine-relevant differences.

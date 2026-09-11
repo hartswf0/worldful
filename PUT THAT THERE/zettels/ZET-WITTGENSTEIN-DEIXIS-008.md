@@ -10,7 +10,8 @@ SOURCE:
 Ludwig Wittgenstein - Philosophical Investigations - §8. ([Wiley-Blackwell](https://www.blackwellpublishing.com/content/bpl_images/content_store/sample_chapter/9780631231271/Wittgenstein.pdf))
 
 PASSAGE:
-The expanded builder language adds “there” and “this,” used with pointing gestures, plus colour samples and commands such as “d-slab-there.”
+[QUOTE]
+"Let us now consider an expansion of language (2). Besides the four words 'block', 'pillar', etc., let it contain a series of words used as the shopkeeper used the numerals (it may be the series of letters of the alphabet); further, two words, which may be 'there' and 'this' (because this roughly indicates their purpose), and which are used in connection with a pointing gesture; and finally a number of colour samples. A gives an order like: 'd—slab—there'. At the same time he shows the assistant a colour sample, and when he says 'there' he points to a place on the building site. From the stock of slabs B takes one which is of the colour of the sample, and brings it to the place indicated by A." — Ludwig Wittgenstein, Philosophical Investigations, §8 (1953)
 
 RESEARCH OBJECT:
 The formal resemblance between Wittgenstein’s expanded builder language and Put-That-There.

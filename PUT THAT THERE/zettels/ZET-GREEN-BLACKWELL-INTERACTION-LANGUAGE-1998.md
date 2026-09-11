@@ -10,7 +10,8 @@ SOURCE:
 Thomas R. G. Green and Alan F. Blackwell - Cognitive Dimensions of Information Artefacts: A Tutorial - 1998. ([Cambridge Computer Lab](https://www.cl.cam.ac.uk/~afb21/CognitiveDimensions/CDtutorial.pdf))
 
 PASSAGE:
-The tutorial models interactive artefacts as controlled by an “interaction language” whose commands construct or modify information structures.
+[QUOTE]
+"An information artefact is a tool that provides an environment for manipulating notations... Every interactive artefact can be modeled as having an interaction language, through which the user commands changes to the stored information structure." — Thomas R. G. Green and Alan F. Blackwell, Cognitive Dimensions of Information Artefacts: A Tutorial, p. 5 (1998)
 
 RESEARCH OBJECT:
 The genealogy of GUI-as-language and attention tax.

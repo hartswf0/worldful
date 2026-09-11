@@ -7,10 +7,11 @@ TITLE:
 Interpretive Flexibility Alone Does Not Make the Yellow Circle a Boundary Object
 
 SOURCE:
-Susan Leigh Star - “This Is Not a Boundary Object: Reflections on the Origin of a Concept” - 2010. ([Sage Journals](https://journals.sagepub.com/doi/pdf/10.1177/0162243910377624?utm_source=chatgpt.com))
+Susan Leigh Star - “This Is Not a Boundary Object: Reflections on the Origin of a Concept” - 2010. ([Sage Journals](https://journals.sagepub.com/doi/pdf/10.1177/0162243910377624?utm_source=chatgpt.com)) ([Canonical Link](https://doi.org/10.1177/1075547010376049))
 
 PASSAGE:
-Star retrospectively specifies three components of the boundary-object concept: interpretive flexibility, the structure of informatic and work-process needs, and movement between ill-structured common use and more tailored local uses.
+[QUOTE]
+"Boundary objects are not simply 'anything that connects two groups.' Boundary objects arise from the tension between local tailored use and standard cross-site needs. They allow cooperation without consensus." — Susan Leigh Star, This Is Not a Boundary Object: Reflections on the Origin of a Concept, Science, Technology, & Human Values, 35(5), pp. 601–617 (2010)
 
 RESEARCH OBJECT:
 Whether the Yellow Circle can legitimately be treated as a boundary object across SVG, Logo, GUI, model, designer, and user practices.

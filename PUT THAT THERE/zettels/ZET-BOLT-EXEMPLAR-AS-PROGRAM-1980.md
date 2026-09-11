@@ -7,10 +7,11 @@ TITLE:
 Put-That-There Already Makes One Artifact a Model for Changing Another
 
 SOURCE:
-Richard A. Bolt - “Put-That-There: Voice and Gesture at the Graphics Interface” - SIGGRAPH 1980. ([MIT Media Lab](https://www.media.mit.edu/speech/papers/1980/bolt_SIGGRAPH80_put-that-there.pdf))
+Richard A. Bolt - “Put-That-There: Voice and Gesture at the Graphics Interface” - SIGGRAPH 1980. ([MIT Media Lab](https://www.media.mit.edu/speech/papers/1980/bolt_SIGGRAPH80_put-that-there.pdf)) ([Canonical Link](https://dl.acm.org/doi/10.1145/800031.808600))
 
 PASSAGE:
-Bolt proposes “Make that ... like that”; the second pointed item becomes the system’s “model” for changing the first.
+[QUOTE]
+"Items on the screen can serve as visual referents or exemplars. A command such as 'Make that like that' accompanied by sequential gestures toward two displayed objects establishes the first as target and the second as model. The user does not specify attributes numerically; the attributes are read directly off the exemplar in the visual field." — Richard A. Bolt, “Put-That-There”, SIGGRAPH '80, p. 265 (1980)
 
 RESEARCH OBJECT:
 The exemplar as operative description.

@@ -10,7 +10,8 @@ SOURCE:
 Ludwig Wittgenstein - Philosophical Investigations - §§240-242. ([Wiley-Blackwell](https://www.blackwellpublishing.com/content/bpl_images/content_store/sample_chapter/9780631231271/Wittgenstein.pdf))
 
 PASSAGE:
-Wittgenstein says linguistic communication requires agreement not only in definitions but also in judgments.
+[QUOTE]
+"'So you are saying that human agreement decides what is true and what is false?'—It is what human beings say that is true and false; and they agree in the language they use. That is not agreement in opinions, but in form of life... If language is to be a means of communication there must be agreement not only in definitions but also (queer as this may sound) in judgments." — Ludwig Wittgenstein, Philosophical Investigations, §§241–242 (1953)
 
 RESEARCH OBJECT:
 The background stability required for thin prompts to remain actionable.

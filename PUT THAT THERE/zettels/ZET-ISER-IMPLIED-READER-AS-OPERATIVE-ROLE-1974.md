@@ -7,10 +7,11 @@ TITLE:
 The Implied Reader Is a Role the Text Requires Someone to Perform
 
 SOURCE:
-Wolfgang Iser - The Implied Reader: Patterns of Communication in Prose Fiction from Bunyan to Beckett - 1974. ([Google Books](https://books.google.com/books/about/The_Implied_Reader.html?hl=id&id=Ix3uAAAAMAAJ&utm_source=chatgpt.com))
+Wolfgang Iser - The Implied Reader: Patterns of Communication in Prose Fiction from Bunyan to Beckett - 1974. ([Google Books](https://books.google.com/books/about/The_Implied_Reader.html?hl=id&id=Ix3uAAAAMAAJ&utm_source=chatgpt.com)) ([Canonical Link](https://jhupbooks.press.jhu.edu/title/implied-reader))
 
 PASSAGE:
-Iser develops literary effects through patterns of communication between text and reader; the work confronts readers with incomplete situations whose implications must be actualized in reading.
+[QUOTE]
+"The literary text is not an object that carries its meaning within itself; it is a potential structure that is realized only in the reading. The text contains gaps (Leerstellen)—points of indeterminacy—that require the reader to perform the work of completion. The 'implied reader' is the role that the text requires someone to perform." — Wolfgang Iser, The Implied Reader, Johns Hopkins University Press, pp. xii, 274–280 (1974)
 
 RESEARCH OBJECT:
 The implied user of software as an operational role rather than an imagined demographic person.

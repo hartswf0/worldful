@@ -10,7 +10,8 @@ SOURCE:
 Ben Shneiderman - “Direct Manipulation: A Step Beyond Programming Languages” - IEEE Computer - 1983. ([Department of Computer Science](https://www.cs.umd.edu/~ben/papers/Shneiderman1983Direct.pdf))
 
 PASSAGE:
-Shneiderman centers visibility, rapid reversible incremental action, and replacement of complex command syntax by manipulation of the object of interest.
+[QUOTE]
+"The central ideas of direct manipulation are: (1) continuous representation of the objects and actions of interest, (2) physical actions or presses of labeled buttons instead of complex syntax, and (3) rapid, incremental, reversible operations whose impact on the object of interest is immediately visible." — Ben Shneiderman, Direct Manipulation: A Step Beyond Programming Languages, IEEE Computer, 16(8), pp. 57–69 (1983)
 
 RESEARCH OBJECT:
 Whether GUIs abolish language or relocate its distinctions.
