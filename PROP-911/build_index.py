@@ -349,6 +349,73 @@ def generate_html():
     font-weight: 700; font-size: 0.82rem; padding: 10px 18px; border-radius: 2px;
     box-shadow: 0 4px 18px rgba(0,0,0,0.5); display: none;
   }
+
+  /* COMPREHENSIVE MOBILE RESPONSIVENESS */
+  @media (max-width: 768px) {
+    .top-nav {
+      padding: 10px 14px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 0.75rem;
+      width: 100%;
+    }
+    .wrap {
+      padding: 0 14px;
+    }
+    header.hero {
+      padding: 36px 0 28px;
+    }
+    h1.hero-title {
+      font-size: clamp(28px, 7.5vw, 44px);
+      line-height: 1.05;
+    }
+    p.hero-desc {
+      font-size: 16px;
+      line-height: 1.4;
+    }
+    .hero-metrics {
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .metric-card {
+      padding: 10px 12px;
+    }
+    .metric-val {
+      font-size: 1.15rem;
+    }
+    .decks-grid {
+      grid-template-columns: 1fr;
+    }
+    .cineosis-grid {
+      grid-template-columns: 1fr;
+    }
+    .sec-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      margin: 36px 0 18px;
+    }
+    .sec-badge {
+      align-self: flex-start;
+    }
+    .dual-calendar-grid {
+      grid-template-columns: 1fr;
+    }
+    .composer-form {
+      grid-template-columns: 1fr;
+    }
+    pre, code {
+      word-break: break-word;
+      white-space: pre-wrap;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -362,14 +429,14 @@ def generate_html():
     <span style="opacity:0.4">|</span>
     <span style="color:var(--amber); font-weight:700;">PROP-911 // DUAL CALENDAR &amp; CINEOSIS</span>
   </div>
-  <div class="nav-links">
-    <a href="#dual-calendar">POEM &amp; CALENDAR</a>
-    <a href="#put-that-there">PUT THAT THERE</a>
-    <a href="#proposal-decks">PROPOSAL DECKS</a>
-    <a href="#cineosis">44 CINEOSIS OPERATIONS</a>
-    <a href="#composer">PROMPT COMPOSER</a>
-    <a href="../yellow_pages.html">YELLOW PROMPTS &rarr;</a>
-  </div>
+      <div class="nav-links">
+      <a href="monte-bolt.html" style="color:var(--teal); font-weight:700; border:1px solid var(--teal); padding:2px 8px; border-radius:2px; background:var(--teal-dim);">★ MONTE-BOLT</a>
+      <a href="#dual-calendar">I. Calendar</a>
+      <a href="#cineosis">II. 44 Ops</a>
+      <a href="#proposal-decks">III. Decks</a>
+      <a href="#prompt-composer">IV. Prompt Engine</a>
+      <a href="../yellow_pages.html">Yellow Prompts &nearr;</a>
+    </div>
 </nav>
 
 <div class="wrap">
@@ -709,6 +776,22 @@ A word crosses. Comes back changed. Still lands.
     </div>
 
     <div class="decks-grid">
+      <!-- HERO INSTRUMENT: MONTE-BOLT -->
+      <div class="deck-card" style="border: 2px solid var(--teal); background: rgba(25, 230, 200, 0.05); grid-column: 1 / -1;">
+        <div>
+          <span class="deck-tag" style="background:var(--teal-dim); color:var(--teal); font-weight:800;">★ MASTER SLIDE COMPARATOR &amp; PRESENTER</span>
+          <h3 style="margin-top:10px; font-size:1.35rem; color:#fff;">MONTE · BOLT — Multi-Deck Presentation &amp; Comparison Instrument</h3>
+          <p style="font-size:0.92rem; line-height:1.5; color:var(--cream); margin-top:6px;">
+            Inspired by Odyssey Timeline &amp; Monte, and Richard Bolt's deictic direct manipulation. View all 7 presentation versions side by side in synchronized lanes, inspect cross-version slide diffs, drag-and-drop / swap slides, build custom curated decks, and present in a high-res fullscreen presenter with laser spotlight and speaker cues. Fully legible on mobile!
+          </p>
+        </div>
+        <div class="deck-actions" style="margin-top:16px;">
+          <a href="monte-bolt.html" class="deck-btn" style="background:var(--teal); color:#000; font-weight:800;" target="_blank">
+            <span>LAUNCH MONTE-BOLT INSTRUMENT</span> <span>&nearr;</span>
+          </a>
+        </div>
+      </div>
+
       <!-- DECK 1: FINAL 4 -->
       <div class="deck-card" style="border-top:4px solid var(--red);">
         <div>

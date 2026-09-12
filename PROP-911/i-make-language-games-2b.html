@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>I make language games — Watson Hartsoe</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 :root{--ink:#000;--paper:#fff;--teal:#19e6c8;--amber:#ffd23f;--red:#ff2e2e;--blue:#3b82f6}
@@ -71,6 +72,76 @@ footer{position:absolute;bottom:2.5vh;left:6vw;font-size:.68em;max-width:72vw}
 .legend i{display:inline-block;width:11px;height:11px;margin-right:6px;vertical-align:-1px}
 @media (prefers-reduced-motion:reduce){.readings span{transition:none}.ring .tok{display:none}}
 @media (min-width:720px){.card{grid-template-columns:1fr 1fr;gap:1.2vh 4vw}.card .full{grid-column:1/-1}}
+
+/* MOBILE LEGIBILITY ENHANCEMENTS */
+@media (max-width: 768px) {
+  html, body { height: 100% !important; overflow: auto !important; touch-action: pan-y !important; font-size: 14px !important; }
+  #deck { height: 100% !important; overflow-y: auto !important; scroll-snap-type: none !important; -webkit-overflow-scrolling: touch !important; padding-bottom: 60px !important; }
+  section {
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    height: auto !important;
+    scroll-snap-align: none !important;
+    padding: 50px 18px 60px 18px !important;
+    justify-content: flex-start !important;
+    border-bottom: 2px solid #000 !important;
+  }
+  .kind { top: 14px !important; left: 18px !important; font-size: 11px !important; font-weight: 600 !important; }
+  .n { top: 14px !right: 18px !important; font-size: 11px !important; font-weight: 600 !important; }
+  footer { position: static !important; margin-top: 24px !important; font-size: 12px !important; max-width: 100% !important; }
+  
+  h1 { font-size: clamp(26px, 7vw, 40px) !important; max-width: 100% !important; line-height: 1.1 !important; margin-bottom: 12px !important; }
+  h2 { font-size: clamp(20px, 5.5vw, 30px) !important; max-width: 100% !important; line-height: 1.15 !important; margin-bottom: 12px !important; }
+  .big { font-size: clamp(28px, 8vw, 44px) !important; line-height: 1.1 !important; margin-bottom: 14px !important; }
+  p { max-width: 100% !important; font-size: 14px !important; line-height: 1.5 !important; }
+  
+  .card { grid-template-columns: 1fr !important; gap: 14px !important; }
+  .lin { font-size: 12.5px !important; line-height: 1.5 !important; }
+  .inv { font-size: 12.5px !important; padding: 8px 10px !important; line-height: 1.35 !important; }
+  .sq { font-size: 14px !important; max-width: 100% !important; }
+  
+  .heat { overflow-x: auto !important; display: block !important; padding-bottom: 10px !important; }
+  .heat .r { position: sticky !important; left: 0 !important; background: #fff !important; z-index: 2 !important; min-width: 110px !important; }
+  
+  .ring { width: min(80vw, 260px) !important; height: min(80vw, 260px) !important; margin: 14px auto !important; }
+  .ring.mini { position: static !important; margin: 14px auto 0 !important; width: 180px !important; height: 180px !important; }
+  .desc { width: 100% !important; height: auto !important; }
+
+  /* MOBILE NAV */
+  #mob-nav {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-top: 2px solid #000;
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 12px max(4px, env(safe-area-inset-bottom));
+    z-index: 200;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+  }
+  #mob-nav button {
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    min-height: 34px;
+    touch-action: manipulation;
+  }
+  #mob-ind { font-weight: 700; font-size: 12px; }
+}
+@media (min-width: 769px) {
+  #mob-nav { display: none !important; }
+}
+
 </style>
 </head>
 <body>
@@ -223,5 +294,29 @@ deck.addEventListener('scroll',()=>{i=Math.round(deck.scrollTop/deck.clientHeigh
 const rs=[...document.querySelectorAll('.readings span')];let ri=0;
 if(!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)) setInterval(()=>{rs[ri].classList.remove('on');ri=(ri+1)%rs.length;rs[ri].classList.add('on');},1600);
 </script>
+
+<nav id="mob-nav" aria-label="Mobile Navigation">
+  <button onclick="go(i-1)">‹ PREV</button>
+  <span id="mob-ind">01 / 46</span>
+  <button onclick="go(i+1)">NEXT ›</button>
+</nav>
+<script>
+function update2bNav() {
+  const ind = document.getElementById('mob-ind');
+  if (ind && typeof secs !== 'undefined') {
+    ind.textContent = String(i + 1).padStart(2, '0') + ' / ' + String(secs.length).padStart(2, '0');
+  }
+}
+const _origGo = typeof go === 'function' ? go : null;
+if (_origGo) {
+  go = function(k) {
+    _origGo(k);
+    update2bNav();
+  };
+}
+document.addEventListener('DOMContentLoaded', update2bNav);
+setTimeout(update2bNav, 300);
+</script>
+
 </body>
 </html>

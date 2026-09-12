@@ -1,0 +1,1646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<title>I MAKE LANGUAGE GAMES // Deductive Defense Spine</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="alternate icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0a0c'/%3E%3Ccircle cx='16' cy='16' r='10' stroke='%2319e6c8' stroke-width='4' fill='none'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Public+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #09090c;
+  --surface: #121217;
+  --card: #181820;
+  --border: rgba(255, 255, 255, 0.12);
+  --border-bright: rgba(255, 255, 255, 0.28);
+  
+  --ink: #f4f4f7;
+  --ink-dim: #9494a3;
+  --ink-faint: #5a5a6a;
+  
+  --cyan: #19e6c8;
+  --cyan-dim: rgba(25, 230, 200, 0.15);
+  --amber: #ffd23f;
+  --amber-dim: rgba(255, 210, 63, 0.15);
+  --red: #ff3b30;
+  
+  --mono: 'IBM Plex Mono', monospace;
+  --sans: 'Public Sans', -apple-system, sans-serif;
+  --display: 'Anton', impact, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  touch-action: pan-y;
+}
+
+/* APP SHELL */
+#deck-viewport {
+  width: 100%; height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* TOP BAR */
+#top-bar {
+  height: 48px;
+  background: rgba(18, 18, 23, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  z-index: 100;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--cyan);
+}
+
+.brand-badge {
+  background: var(--cyan);
+  color: #000;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.top-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ctrl-btn {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--ink-dim);
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-family: var(--mono);
+  font-size: 10px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.15s ease;
+}
+
+.ctrl-btn:hover, .ctrl-btn:active {
+  background: var(--cyan-dim);
+  color: var(--cyan);
+  border-color: var(--cyan);
+}
+
+.pacing-timer {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--amber);
+  background: var(--amber-dim);
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 210, 63, 0.3);
+}
+
+/* SLIDE STAGE */
+#stage {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  transform: scale(0.98);
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.slide.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+/* SLIDE HEADER */
+.slide-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 14px;
+  flex-shrink: 0;
+}
+
+.sh-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sh-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.sh-num {
+  color: var(--cyan);
+  background: var(--cyan-dim);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.sh-kind {
+  color: var(--amber);
+}
+
+.sh-title {
+  font-family: var(--display);
+  font-size: clamp(24px, 4.5vw, 42px);
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  line-height: 1.05;
+}
+
+.sh-sub {
+  font-family: var(--mono);
+  font-size: clamp(10px, 1.8vw, 13px);
+  color: var(--ink-dim);
+  letter-spacing: 0.05em;
+}
+
+/* RADAR PILL */
+.radar-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 4px 10px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.radar-svg {
+  width: 44px;
+  height: 44px;
+}
+
+.radar-labels {
+  font-family: var(--mono);
+  font-size: 9px;
+  line-height: 1.4;
+  color: var(--ink-dim);
+}
+
+.radar-labels span {
+  display: block;
+}
+
+.radar-labels .val-w { color: var(--cyan); }
+.radar-labels .val-g { color: var(--amber); }
+.radar-labels .val-b { color: #3b82f6; }
+
+/* SLIDE BODY */
+.slide-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* THEORETICAL ANCHOR BAR */
+.theory-bar {
+  margin-top: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 3px solid var(--cyan);
+  padding: 8px 14px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-dim);
+  border-radius: 0 6px 6px 0;
+  flex-shrink: 0;
+}
+
+.theory-bar strong {
+  color: var(--cyan);
+}
+
+/* COMPONENTS STYLES */
+.thesis-display {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.hero-callout {
+  background: linear-gradient(135deg, rgba(25, 230, 200, 0.08), rgba(18, 18, 23, 0.9));
+  border: 1px solid var(--cyan);
+  padding: 24px;
+  border-radius: 12px;
+}
+
+.hero-callout .prefix {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--cyan);
+  letter-spacing: 0.1em;
+}
+
+.thesis-text {
+  font-size: clamp(20px, 3.5vw, 32px);
+  font-weight: 800;
+  line-height: 1.25;
+  margin-top: 6px;
+}
+
+.thesis-text mark {
+  background: transparent;
+  color: var(--cyan);
+  text-decoration: underline text-decoration-color: var(--cyan);
+}
+
+.thesis-trio {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.trio-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.trio-card.highlight {
+  border-color: var(--cyan);
+  background: var(--cyan-dim);
+}
+
+.trio-tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 800;
+  color: var(--ink-faint);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.trio-card.highlight .trio-tag {
+  color: var(--cyan);
+}
+
+.trio-card h4 {
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: var(--ink);
+}
+
+.trio-card p {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--ink-dim);
+}
+
+/* ELEPHANT SLIDE */
+.elephant-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .elephant-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.elephant-diagram {
+  position: relative;
+  min-height: 240px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.elephant-core {
+  background: radial-gradient(circle, rgba(255, 210, 63, 0.25) 0%, rgba(24, 24, 32, 0.9) 70%);
+  border: 2px dashed var(--amber);
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.core-label {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--amber);
+}
+
+.core-sub {
+  font-size: 9px;
+  color: var(--ink-dim);
+  letter-spacing: 0.05em;
+  margin-top: 4px;
+}
+
+.blind-man {
+  position: absolute;
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.bm-1 { top: 12px; left: 16px; }
+.bm-2 { top: 12px; right: 16px; }
+.bm-3 { bottom: 12px; left: 16px; }
+.bm-4 { bottom: 12px; right: 16px; }
+.bm-5 { top: 48%; left: 8px; transform: translateY(-50%); }
+.bm-6 { top: 48%; right: 8px; transform: translateY(-50%); }
+
+.elephant-caption h4 {
+  font-family: var(--display);
+  font-size: 20px;
+  color: var(--amber);
+  margin-bottom: 8px;
+}
+
+.elephant-caption p {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-dim);
+}
+
+/* DUCK RABBIT ANOMALY */
+.anomaly-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  text-align: center;
+}
+
+.prompt-pill {
+  background: var(--surface);
+  border: 1px solid var(--cyan);
+  padding: 8px 18px;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.prompt-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--cyan);
+  font-weight: 700;
+}
+
+.prompt-pill code {
+  font-family: var(--mono);
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.interactive-duck-rabbit {
+  width: 100%;
+  max-width: 580px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.idr-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.3);
+  overflow-x: auto;
+}
+
+.idr-tab {
+  flex: 1;
+  padding: 10px 12px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--ink-dim);
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.idr-tab.active {
+  color: var(--cyan);
+  border-bottom-color: var(--cyan);
+  background: var(--cyan-dim);
+}
+
+.idr-viewport {
+  padding: 24px;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.idr-sub {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-dim);
+  background: rgba(0,0,0,0.4);
+  padding: 4px 12px;
+  border-radius: 4px;
+}
+
+.anomaly-footer {
+  font-size: 12px;
+  color: var(--ink-dim);
+}
+
+/* WINK VS BLINK */
+.wink-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  align-items: center;
+}
+
+@media (min-width: 640px) {
+  .wink-grid {
+    grid-template-columns: 1fr auto 1fr;
+  }
+}
+
+.wink-vs {
+  font-family: var(--display);
+  font-size: 24px;
+  color: var(--ink-faint);
+  text-align: center;
+}
+
+.wink-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.wink-card.highlight {
+  border-color: var(--cyan);
+  background: linear-gradient(180deg, var(--cyan-dim), var(--surface));
+}
+
+.wc-header {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--ink-dim);
+  margin-bottom: 8px;
+}
+
+.wink-card.highlight .wc-header {
+  color: var(--cyan);
+}
+
+.wc-visual {
+  font-family: var(--mono);
+  font-size: 28px;
+  color: var(--amber);
+  margin-bottom: 12px;
+}
+
+.wink-card p {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--ink-dim);
+  margin-bottom: 6px;
+}
+
+.wink-card strong {
+  color: var(--ink);
+}
+
+/* BEFLIX */
+.beflix-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .beflix-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.beflix-code {
+  background: #000;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+  font-family: var(--mono);
+}
+
+.code-title {
+  font-size: 10px;
+  color: var(--amber);
+  font-weight: 700;
+  margin-bottom: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 4px;
+}
+
+.beflix-code pre {
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--cyan);
+}
+
+.beflix-grid-demo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.pixel-matrix {
+  display: grid;
+  grid-template-columns: repeat(12, 14px);
+  grid-template-rows: repeat(12, 14px);
+  gap: 2px;
+  background: #050507;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.px-dot {
+  width: 14px;
+  height: 14px;
+  background: #181820;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.px-dot.lit {
+  background: var(--cyan);
+  box-shadow: 0 0 6px var(--cyan);
+}
+
+.beflix-caption {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-dim);
+}
+
+/* LDRAW */
+.ldraw-split {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .ldraw-split {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.ldraw-syntax {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 14px;
+  border-radius: 8px;
+}
+
+.syntax-badge {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 800;
+  color: var(--cyan);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.ldraw-syntax pre {
+  background: #000;
+  padding: 10px;
+  border-radius: 6px;
+  font-family: var(--mono);
+  font-size: 10px;
+  line-height: 1.45;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.ldraw-why {
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--ink-dim);
+}
+
+.ldraw-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: #0c0c10;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.brick-isometric {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.brick {
+  padding: 10px 24px;
+  border-radius: 4px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 800;
+  box-shadow: 0 6px 0 rgba(0,0,0,0.5);
+  text-align: center;
+}
+
+.b-red {
+  background: #e53935;
+  color: #fff;
+  border-bottom: 4px solid #b71c1c;
+}
+
+.b-green {
+  background: #43a047;
+  color: #fff;
+  border-bottom: 4px solid #1b5e20;
+}
+
+.correspondence-pills {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--cyan);
+}
+
+/* KNOWLES HOUSE OF DUST */
+.knowles-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .knowles-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.fluxus-box {
+  background: #0a0a0e;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 24px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.stanza {
+  font-family: var(--mono);
+  font-size: clamp(14px, 2.5vw, 18px);
+  line-height: 1.6;
+  color: #fff;
+  letter-spacing: 0.05em;
+}
+
+.stanza-sub {
+  margin-top: 14px;
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--amber);
+}
+
+.knowles-analysis h4 {
+  font-family: var(--display);
+  font-size: 20px;
+  color: var(--cyan);
+  margin-bottom: 8px;
+}
+
+.knowles-analysis p {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-dim);
+  margin-bottom: 10px;
+}
+
+/* SHRDLU */
+.shrdlu-display {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.dialogue-card {
+  background: #000;
+  border: 1px solid var(--border);
+  padding: 16px;
+  border-radius: 8px;
+  font-family: var(--mono);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.speaker {
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.speaker.user {
+  color: var(--cyan);
+}
+
+.speaker.system {
+  color: var(--amber);
+}
+
+.shrdlu-rule h4 {
+  font-family: var(--display);
+  font-size: 18px;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.shrdlu-rule p {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--ink-dim);
+}
+
+/* BOLT PUT THAT THERE */
+.bolt-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.bolt-diagram {
+  background: var(--surface);
+  border: 1px solid var(--cyan);
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.utterance {
+  font-family: var(--mono);
+  font-size: clamp(18px, 3.5vw, 26px);
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 14px;
+}
+
+.deictic-token {
+  color: var(--amber);
+  border-bottom: 2px solid var(--amber);
+}
+
+.deictic-vectors {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--cyan);
+}
+
+.bolt-takeaway h4 {
+  font-family: var(--display);
+  font-size: 18px;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.bolt-takeaway p {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--ink-dim);
+}
+
+/* WORD WORLD BRIDGE */
+.bridge-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+@media (min-width: 640px) {
+  .bridge-grid {
+    grid-template-columns: 1fr auto 1fr;
+  }
+}
+
+.bridge-direction {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 16px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.bd-title {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--cyan);
+  margin-bottom: 6px;
+}
+
+.bd-arrow {
+  font-size: 18px;
+  color: var(--cyan);
+  margin-bottom: 6px;
+}
+
+.bd-desc {
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--ink-dim);
+}
+
+.bridge-center {
+  background: var(--card);
+  border: 2px solid var(--amber);
+  padding: 12px 16px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.bridge-core {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--amber);
+}
+
+.bridge-tag {
+  font-size: 9px;
+  color: var(--ink-dim);
+  letter-spacing: 0.05em;
+  margin-top: 2px;
+}
+
+/* WORLDTEXT STACK */
+.worldtext-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.stack-layer {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 14px 18px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.layer-1 { border-color: var(--cyan); background: var(--cyan-dim); }
+.layer-2 { border-color: var(--amber); background: var(--amber-dim); }
+.layer-3 { border-color: rgba(255,255,255,0.15); }
+
+.l-name {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.layer-1 .l-name { color: var(--cyan); }
+.layer-2 .l-name { color: var(--amber); }
+
+.l-desc {
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--ink-dim);
+}
+
+.wt-sub {
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--ink-dim);
+  margin-top: 10px;
+}
+
+/* MUYBRIDGE FILMSTRIP */
+.muybridge-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.filmstrip-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+  background: #000;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+.frame {
+  background: #16161e;
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 14px 6px;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--cyan);
+  border-radius: 4px;
+}
+
+.frame small {
+  font-size: 8px;
+  color: var(--ink-faint);
+  display: block;
+  margin-top: 4px;
+}
+
+.muybridge-critique h4 {
+  font-family: var(--display);
+  font-size: 20px;
+  color: var(--amber);
+  margin-bottom: 6px;
+}
+
+.muybridge-critique p {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--ink-dim);
+  margin-bottom: 6px;
+}
+
+/* CHAPTERS GRID */
+.chapters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.ch-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 12px;
+  border-radius: 6px;
+}
+
+.ch-box.highlight {
+  border-color: var(--cyan);
+  background: var(--cyan-dim);
+}
+
+.ch-num {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 800;
+  color: var(--cyan);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.ch-box h4 {
+  font-size: 12px;
+  margin-bottom: 4px;
+  color: var(--ink);
+}
+
+.ch-box p {
+  font-size: 10px;
+  line-height: 1.35;
+  color: var(--ink-dim);
+}
+
+/* INVARIANT */
+.invariant-display {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.inv-hero {
+  background: linear-gradient(135deg, rgba(255, 210, 63, 0.1), rgba(18, 18, 23, 0.95));
+  border: 1px solid var(--amber);
+  padding: 24px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.inv-badge {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--amber);
+  letter-spacing: 0.1em;
+}
+
+.inv-quote {
+  font-family: var(--display);
+  font-size: clamp(22px, 4vw, 36px);
+  color: #fff;
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+  margin-top: 8px;
+}
+
+.inv-quote mark {
+  background: transparent;
+  color: var(--amber);
+}
+
+.inv-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.inv-col {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 14px;
+  border-radius: 8px;
+}
+
+.inv-col.highlight {
+  border-color: var(--cyan);
+  background: var(--cyan-dim);
+}
+
+.inv-col h4 {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 800;
+  margin-bottom: 6px;
+  color: var(--ink);
+}
+
+.inv-col.highlight h4 {
+  color: var(--cyan);
+}
+
+.inv-col p {
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--ink-dim);
+}
+
+/* SPEAKER DRAWER */
+#speaker-drawer {
+  position: absolute;
+  bottom: 56px;
+  left: 0; right: 0;
+  max-height: 50vh;
+  background: rgba(14, 14, 18, 0.96);
+  backdrop-filter: blur(16px);
+  border-top: 2px solid var(--cyan);
+  box-shadow: 0 -10px 30px rgba(0,0,0,0.7);
+  z-index: 150;
+  transform: translateY(105%);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+#speaker-drawer.open {
+  transform: translateY(0);
+}
+
+.drawer-header {
+  height: 40px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  flex-shrink: 0;
+}
+
+.drawer-title {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--cyan);
+  letter-spacing: 0.08em;
+}
+
+.drawer-close {
+  background: transparent;
+  border: none;
+  color: var(--ink-dim);
+  font-family: var(--mono);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.drawer-content {
+  padding: 16px;
+  overflow-y: auto;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink);
+  white-space: pre-wrap;
+  font-family: var(--sans);
+}
+
+/* BOTTOM NAV BAR */
+#bottom-bar {
+  height: 56px;
+  background: rgba(18, 18, 23, 0.98);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  z-index: 100;
+  gap: 10px;
+}
+
+.nav-btn {
+  height: 38px;
+  padding: 0 14px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.nav-btn:active {
+  background: var(--cyan-dim);
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+.scrubber-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.scrubber-slider {
+  width: 100%;
+  -webkit-appearance: none;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.15);
+  outline: none;
+}
+
+.scrubber-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--cyan);
+  cursor: pointer;
+  box-shadow: 0 0 10px var(--cyan);
+}
+
+.scrubber-info {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--ink-dim);
+}
+
+.scrubber-info .cur {
+  color: var(--cyan);
+}
+
+/* KEYBOARD HINT */
+.kbd-hint {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .kbd-hint {
+    display: block;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-faint);
+  }
+}
+</style>
+</head>
+<body>
+
+<div id="deck-viewport">
+  <!-- TOP BAR -->
+  <header id="top-bar">
+    <div class="brand">
+      <span class="brand-badge">PROP-911</span>
+      <span>MONTE · BOLT // DEDUCTIVE DEFENSE</span>
+    </div>
+    
+    <div class="top-controls">
+      <div class="pacing-timer" id="pacing-timer">30:00</div>
+      <button class="ctrl-btn" id="btn-timer-toggle" onclick="toggleTimer()">▶ START</button>
+      <button class="ctrl-btn" onclick="toggleNotesDrawer()">NOTES [N]</button>
+      <button class="ctrl-btn" onclick="toggleFullscreen()">⛶</button>
+    </div>
+  </header>
+
+  <!-- SLIDE STAGE -->
+  <main id="stage">
+    <!-- Slides will be rendered here by JS -->
+  </main>
+
+  <!-- SPEAKER NOTES DRAWER -->
+  <div id="speaker-drawer">
+    <div class="drawer-header">
+      <span class="drawer-title" id="drawer-slide-title">SPEAKER DEFENSE SCRIPT</span>
+      <button class="drawer-close" onclick="toggleNotesDrawer()">✕</button>
+    </div>
+    <div class="drawer-content" id="drawer-notes-text">
+      <!-- Speaker script will appear here -->
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV BAR -->
+  <footer id="bottom-bar">
+    <button class="nav-btn" onclick="prevSlide()">‹ PREV</button>
+    
+    <div class="scrubber-wrap">
+      <input type="range" class="scrubber-slider" id="deck-slider" min="0" max="13" value="0" oninput="seekSlide(this.value)">
+      <div class="scrubber-info">
+        <span class="cur" id="counter-cur">01</span> / <span id="counter-total">14</span> · <span id="slide-kind-badge">THESIS</span>
+      </div>
+    </div>
+    
+    <button class="nav-btn" onclick="nextSlide()">NEXT ›</button>
+  </footer>
+</div>
+
+<script>
+const slides = [{"id": "landmark-01", "index": 0, "num": "01", "kind": "THESIS", "headline": "WHAT IS A PROMPT? A LANGUAGE-GAME.", "subhead": "OPERATIVE HUMANITIES IN AN AGE OF LATENT MODELS", "triad": {"w": 9, "g": 4, "b": 5}, "thesis_claim": "The prompt is not an instruction string; it is a move in a language-game.", "theoretical_anchor": "Wittgenstein (\u00a72 Builders' Slab): Language is an activity in a form of life, not ostensive naming.", "body_html": "\n        <div class=\"thesis-display\">\n          <div class=\"hero-callout\">\n            <span class=\"prefix\">CENTRAL THESIS //</span>\n            <h2 class=\"thesis-text\">A prompt is not a command sent to a machine.<br><mark>A prompt is a language-game.</mark></h2>\n          </div>\n          <div class=\"thesis-trio\">\n            <div class=\"trio-card\">\n              <span class=\"trio-tag\">TRAP A</span>\n              <h4>Instructional Folk Theory</h4>\n              <p>Treats prompt as an imperative programming routine. Fails when latent weights shift across model releases.</p>\n            </div>\n            <div class=\"trio-card\">\n              <span class=\"trio-tag\">TRAP B</span>\n              <h4>Critical Folk Theory</h4>\n              <p>Treats prompt as an opaque bias box for sociological hand-wringing. Leaves technical mechanics unaddressed.</p>\n            </div>\n            <div class=\"trio-card highlight\">\n              <span class=\"trio-tag\">OUR METHOD</span>\n              <h4>Operative Humanities</h4>\n              <p>Prompting as an operative language art situated in an ongoing, verifiable correspondence between text and world.</p>\n            </div>\n          </div>\n        </div>\n        ", "note": "[Grounded pause; make direct eye contact with the committee.]\n\nMembers of the committee: this dissertation addresses one fundamental question: What is a prompt?\n\nRight now, industry and academia are trapped in two dead ends. On one side, prompt engineering treats the prompt as an imperative instruction\u2014a piece of code sent to a computer. On the other side, critical AI treats the prompt as an opaque black box for sociological commentary. \n\nBoth fail for the same reason: they treat language as a conveyor belt for pre-formed thoughts. \n\nMy thesis is deductive: A prompt is not an instruction string; a prompt is a Wittgensteinian language-game. In the 30 minutes ahead, I will trace this claim through an empirical progression of game mechanics\u2014from Ken Knowlton's 1963 2D dot-grid to 3D LDraw geometry, and finally to Worldtext as an operative bridge between language and generative worlds."}, {"id": "landmark-02", "index": 1, "num": "02", "kind": "THE ELEPHANT", "headline": "THE ELEPHANT & THE BICYCLE", "subhead": "LATENT SPACE AND INTERPRETIVE FLEXIBILITY", "triad": {"w": 7, "g": 9, "b": 4}, "thesis_claim": "The prompt is unstable because the latent space underneath it shifts across every model release.", "theoretical_anchor": "Wiebe Bijker (SCOT): Interpretive flexibility before social closure. The parable of the Blind Men and the Elephant.", "body_html": "\n        <div class=\"elephant-grid\">\n          <div class=\"elephant-diagram\">\n            <div class=\"elephant-core\">\n              <span class=\"core-label\">LATENT SPACE</span>\n              <span class=\"core-sub\">THE ELEPHANT IN THE ROOM</span>\n            </div>\n            <div class=\"blind-man bm-1\">\"It's an instruction!\" <small>(Engineer)</small></div>\n            <div class=\"blind-man bm-2\">\"It's magic / alchemy!\" <small>(Influencer)</small></div>\n            <div class=\"blind-man bm-3\">\"It's plagiarism!\" <small>(IP Lawyer)</small></div>\n            <div class=\"blind-man bm-4\">\"It's lazy cheating!\" <small>(Educator)</small></div>\n            <div class=\"blind-man bm-5\">\"It will kill us all!\" <small>(Doomer)</small></div>\n            <div class=\"blind-man bm-6\">\"It's an art form!\" <small>(Practitioner)</small></div>\n          </div>\n          <div class=\"elephant-caption\">\n            <h4>Bijker's Bicycle in 1885 vs. The Prompt in 2026</h4>\n            <p>In the 1880s, the bicycle had no fixed identity: it was an acrobatic thrill-machine (High-Wheeler) and an unsafe death-trap before stabilizing as the Safety Bicycle. The prompt is currently undergoing this exact interpretive flexibility. Every model release changes the ground underneath the utterance.</p>\n          </div>\n        </div>\n        ", "note": "[Transition to the core problem of instability.]\n\nLook at how the prompt is discussed today. It is the classic parable of the blind men and the elephant. \nTo the engineer, it is an instruction. To the venture capitalist, it is magic. To the copyright attorney, it is plagiarism. To the teacher, it is laziness. To the doomer, it is an existential threat.\n\nThe elephant in the room is the latent space. And the prompt is what Wiebe Bijker, in the social construction of technology, identified during the early development of the bicycle: an artifact in radical interpretive flexibility. \n\nWhen you prompt GPT-4, and then Claude 3.5, and then Gemini, the identical phrase produces divergent worlds because the prompt is not an invariant token\u2014it is a probe into a dynamic cultural and statistical substrate."}, {"id": "landmark-03", "index": 2, "num": "03", "kind": "ANOMALY", "headline": "DRAW A CIRCLE.", "subhead": "THE DUCK-RABBIT OF PROMPTING", "triad": {"w": 9, "g": 6, "b": 6}, "thesis_claim": "The exact same four words instantiate completely distinct language-games depending on the operative substrate.", "theoretical_anchor": "Wittgenstein (Duck-Rabbit / Gestalt Shift): Seeing-as. The utterance has no intrinsic meaning outside its grammar of action.", "body_html": "\n        <div class=\"anomaly-container\">\n          <div class=\"prompt-pill\">\n            <span class=\"prompt-label\">PROMPT:</span>\n            <code>\"Draw a circle.\"</code>\n          </div>\n          <div class=\"interactive-duck-rabbit\" id=\"circle-demo\">\n            <div class=\"idr-tabs\">\n              <button class=\"idr-tab active\" onclick=\"switchCircleGame('svg')\">1. SVG CODE</button>\n              <button class=\"idr-tab\" onclick=\"switchCircleGame('ascii')\">2. ASCII MATRIX</button>\n              <button class=\"idr-tab\" onclick=\"switchCircleGame('diffusion')\">3. 2D DIFFUSION</button>\n              <button class=\"idr-tab\" onclick=\"switchCircleGame('turtle')\">4. TURTLE DEIXIS</button>\n            </div>\n            <div class=\"idr-viewport\" id=\"circle-viewport\">\n              <svg width=\"180\" height=\"180\" viewBox=\"0 0 100 100\">\n                <circle cx=\"50\" cy=\"50\" r=\"40\" stroke=\"#19e6c8\" stroke-width=\"4\" fill=\"none\" />\n              </svg>\n              <div class=\"idr-sub\">GAME: Declarative Vector Geometry &lt;circle cx=\"50\" cy=\"50\" r=\"40\"/&gt;</div>\n            </div>\n          </div>\n          <p class=\"anomaly-footer\">Same four tokens. Four completely incompatible language-games with different criteria of success and failure.</p>\n        </div>\n        ", "note": "[Demonstrate the interactive anomaly.]\n\nHere is the minimal illustrative example. Four words: 'Draw a circle.'\n\nIf I speak this to an SVG generator, success is a mathematical coordinate pair and a radius: declarative geometry.\nIf I speak it to an ASCII terminal, success is a discrete raster of asterisks: typographic spatialization.\nIf I speak it to a diffusion model, success is a photorealistic rendering of a chalkboard or an oil painting: statistical latent interpolation.\nIf I speak it to Seymour Papert's Logo turtle, success is a procedural loop: 'REPEAT 360 [ FORWARD 1 RIGHT 1 ]'.\n\nWittgenstein called this the duck-rabbit. You do not discover what 'Draw a circle' means by analyzing the English lexicon. You discover it by observing the game that gives those words their continuation."}, {"id": "landmark-04", "index": 3, "num": "04", "kind": "THIN / THICK", "headline": "WINK VS. BLINK", "subhead": "FROM THIN INSTRUCTION TO THICK PROMPTING", "triad": {"w": 6, "g": 10, "b": 4}, "thesis_claim": "A thin prompt treats language as a physical contraction; a thick prompt acknowledges the social and cultural web of significance.", "theoretical_anchor": "Gilbert Ryle & Clifford Geertz: Thick description. A blink is an involuntary twitch; a wink is a conspiratorial communication.", "body_html": "\n        <div class=\"wink-grid\">\n          <div class=\"wink-card thin\">\n            <div class=\"wc-header\">THIN PROMPTING (THE BLINK)</div>\n            <div class=\"wc-visual\">[ \u00b7 ]</div>\n            <p><strong>Physical Signal:</strong> Sending characters across an API socket.</p>\n            <p><strong>Folk Theory:</strong> 'If I write the magic incantation, the machine obeys.'</p>\n            <p><strong>Failure:</strong> Model drift, brittle outputs, zero explanatory power.</p>\n          </div>\n          <div class=\"wink-vs\">VS</div>\n          <div class=\"wink-card thick highlight\">\n            <div class=\"wc-header\">THICK PROMPTING (THE WINK)</div>\n            <div class=\"wc-visual\">[ ;) ]</div>\n            <p><strong>Enculturated Gesture:</strong> Navigating shared historical priors and genre conventions.</p>\n            <p><strong>Operative Theory:</strong> 'The prompt establishes an agreement in action within a cultural system.'</p>\n            <p><strong>Success:</strong> Longitudinal correspondence, reproducible constraints, interpretive control.</p>\n          </div>\n        </div>\n        ", "note": "[Bring in Gilbert Ryle and Clifford Geertz without losing momentum.]\n\nIn 1968, Gilbert Ryle posed the distinction between a twitch of the eyelid and a wink. Physically, they are indistinguishable: a rapid contraction of the eyelid. But an ethnographer who records only the physical movement misses the entire event. \n\nClifford Geertz took this into anthropology as 'Thick Description.' The wink is a conspiratorial signal, understood only within a web of cultural significance.\n\nPrompt engineering is currently obsessed with the blink\u2014the mechanical token string. My dissertation establishes 'Thick Prompting.' When you prompt a modern foundation model, you are never issuing an isolated instruction. You are winking at a vast, pre-trained cultural archive. The words work only because they evoke shared forms of life."}, {"id": "landmark-05", "index": 4, "num": "05", "kind": "2D DISCRETE GRID", "headline": "DRAW MULTIPLE CIRCLES: BEFLIX (1963)", "subhead": "KEN KNOWLTON AND DRAWING WITH LANGUAGE", "triad": {"w": 8, "g": 4, "b": 9}, "thesis_claim": "The transition from natural language to discrete visual execution requires an explicit, inspectable grid.", "theoretical_anchor": "Ken Knowlton (Bell Labs, 1963): BEFLIX (Bell Flicks), the first computer animation language.", "body_html": "\n        <div class=\"beflix-container\">\n          <div class=\"beflix-code\">\n            <div class=\"code-title\">BEFLIX INSTRUCTION STREAM // 1963</div>\n            <pre><code>C   KEN KNOWLTON / BELL LABS\n    DRAW C (25, 40) RAD 12\n    FILL C (25, 40) PAINT 7\n    DRAW C (60, 40) RAD 12\n    FILL C (60, 40) PAINT 7\n    STEP 24 FRAMES</code></pre>\n          </div>\n          <div class=\"beflix-grid-demo\">\n            <div class=\"pixel-matrix\" id=\"beflix-canvas\">\n              <!-- 8x8 dot matrix rendered via CSS grid -->\n            </div>\n            <div class=\"beflix-caption\">Discrete 2D Dot Matrix: Continuation is verifiable and inspectable.</div>\n          </div>\n        </div>\n        ", "note": "[First historic landmark: Ken Knowlton's BEFLIX.]\n\nNow we move from theory into our historical spine.\nIf 'Draw a circle' is the anomaly, how did computer science first solve drawing with language?\n\nIn 1963 at Bell Labs, Ken Knowlton created BEFLIX\u2014short for Bell Flicks. \nKnowlton did not attempt natural language ambiguity. He defined a discrete 2D dot grid on an IBM 7094. Look at the syntax: 'DRAW C (25, 40) RAD 12'. \n\nThis is our first landmark: the rules of continuation are completely visible. There is no latent hallucination. The relationship between the linguistic instruction and the phosphor dot on the CRT tube is 1-to-1. \n\nWhy do we start here? Because before we can understand diffusion models in 2026, we must understand the mechanics of the discrete 2D language-game."}, {"id": "landmark-06", "index": 5, "num": "06", "kind": "3D SYMBOLIC GEOMETRY", "headline": "LDRAW (1995): DISCRETE GENERATIVE BRICKS", "subhead": "WHY DISCRETE SYNTAX BEATS BLACK-BOX GUIS", "triad": {"w": 8, "g": 5, "b": 10}, "thesis_claim": "LDraw demonstrates longitudinal correspondence across layers: human attention, symbolic code, and 3D output.", "theoretical_anchor": "James Jessiman (1995) & Tim Ingold: Longitudinal correspondence through material resistance.", "body_html": "\n        <div class=\"ldraw-split\">\n          <div class=\"ldraw-syntax\">\n            <span class=\"syntax-badge\">LDRAW LANGUAGE SPECIFICATION</span>\n            <pre><code>0 LEGO BRICK 2 x 4\n1 4  0 0 0  1 0 0  0 1 0  0 0 1  3001.dat\n1 2  0 24 0 1 0 0  0 1 0  0 0 1  3003.dat\n0 // 1 = subfile ref\n0 // 4 = color red, 2 = color green\n0 // matrix = orientation & translation</code></pre>\n            <p class=\"ldraw-why\"><strong>Why LDraw instead of Blender/Unreal?</strong> Blender requires opaque GUI mouse-events. LDraw is pure text syntax that compiles directly into spatial reality.</p>\n          </div>\n          <div class=\"ldraw-preview\">\n            <div class=\"brick-isometric\">\n              <div class=\"brick b-red\">2x4 RED SLAB</div>\n              <div class=\"brick b-green\">2x2 GREEN STUD</div>\n            </div>\n            <div class=\"correspondence-pills\">\n              <span>HUMAN ATTENTION</span> \u2794 <span>TEXT SYNTAX</span> \u2794 <span>3D STRUCTURE</span> \u2794 <span>REVISION</span>\n            </div>\n          </div>\n        </div>\n        ", "note": "[Second landmark: James Jessiman's LDraw and Tim Ingold's Correspondence.]\n\nNow we step from 2D into 3D. \nWhy do I use LDraw in my dissertation instead of Blender or Unreal Engine? \n\nBecause if an agent or human uses Blender, the research gets lost in hundreds of opaque GUI clicks, floating dialogs, and hidden Python APIs. LDraw, invented by James Jessiman in 1995, is an open-source, discrete text format for LEGO bricks. \n\nLook at that single line: '1 4 0 0 0 1 0 0 0 1 0 0 0 1 3001.dat'.\nIt is discrete, human-readable, and machine-executable. \n\nHere we bring in anthropologist Tim Ingold. Ingold argues that making is not imposing an intellectual form onto passive matter; it is a process of correspondence\u2014a dance of attention and resistance. When you prompt in LDraw, the prompt is constrained by the physical geometry of the bricks. If a brick cannot interlock, the game refuses to continue."}, {"id": "landmark-07", "index": 6, "num": "07", "kind": "EKPHRASIS", "headline": "ALISON KNOWLES: HOUSE OF DUST (1967)", "subhead": "COMBINATORIAL EKPHRASIS IN EARLY COMPUTING", "triad": {"w": 6, "g": 6, "b": 8}, "thesis_claim": "Generative prompting inherits the lineage of Fluxus combinatorial scores, not traditional literature.", "theoretical_anchor": "Alison Knowles & James Tenney: A House of Dust. Hannes Bajohr: Ekphrasis as description of absent spatial artifacts.", "body_html": "\n        <div class=\"knowles-container\">\n          <div class=\"fluxus-box\">\n            <div class=\"stanza\">\n              A HOUSE OF DUST<br>\n              ON OPEN GROUND<br>\n              USING NATURAL LIGHT<br>\n              INHABITED BY FRIENDS AND ENEMIES\n            </div>\n            <div class=\"stanza-sub\">Iteration #0429 // Compiled on IBM 7090 Fortran</div>\n          </div>\n          <div class=\"knowles-analysis\">\n            <h4>Constraint Without Exhaustion</h4>\n            <p>Knowles did not describe a real house. She wrote a four-slot combinatorial score: <em>Material \u2794 Location \u2794 Light Source \u2794 Inhabitants</em>.</p>\n            <p>This is classical <strong>ekphrasis</strong>: language that conjures a vivid, absent space. It is the direct precursor to modern text-to-image prompting.</p>\n          </div>\n        </div>\n        ", "note": "[Third landmark: Alison Knowles' House of Dust and Ekphrasis.]\n\nIn 1967, Fluxus artist Alison Knowles, working with composer James Tenney on an IBM 7090, wrote *A House of Dust*. It is one of the earliest computer-generated literary works in history.\n\nFour slots:\nA house of [MATERIAL] / in [LOCATION] / using [LIGHTING] / inhabited by [PEOPLE].\n\nThis is what literary theorist Hannes Bajohr calls ekphrasis: language describing an absent image or space. Every Midjourney or DALL-E prompt you see today\u2014'A cybernetic palace made of glass in a neon storm'\u2014is simply Alison Knowles with 100 billion parameters. \n\nIt is a combinatorial score. But notice its limitation: it is purely descriptive. It does not manipulate an active world. For that, we need deixis."}, {"id": "landmark-08", "index": 7, "num": "08", "kind": "DEIXIS 1", "headline": "WINOGRAD'S SHRDLU (1970)", "subhead": "NATURAL LANGUAGE IN AN OPERABLE BLOCKS-WORLD", "triad": {"w": 9, "g": 5, "b": 8}, "thesis_claim": "Natural language gains meaning when it resolves ambiguity against an active physical microworld.", "theoretical_anchor": "Terry Winograd (MIT, 1970): Understanding Natural Language in the SHRDLU Blocks World.", "body_html": "\n        <div class=\"shrdlu-display\">\n          <div class=\"dialogue-card\">\n            <div class=\"speaker user\">USER: Pick up a big red block.</div>\n            <div class=\"speaker system\">SHRDLU: I don't understand which red block you mean: the tall one or the flat one?</div>\n            <div class=\"speaker user\">USER: The one that is sitting on the blue pyramid.</div>\n            <div class=\"speaker system\">SHRDLU: OK. [Mechanical arm clears obstacles and lifts block.]</div>\n          </div>\n          <div class=\"shrdlu-rule\">\n            <h4>From Description to Negotiation</h4>\n            <p>SHRDLU proved that natural language cannot be parsed purely as syntax trees. It must resolve against a spatial state. Words like 'the one' or 'big' require situational indexicality.</p>\n          </div>\n        </div>\n        ", "note": "[Fourth landmark: Terry Winograd's SHRDLU.]\n\nIn 1970 at MIT, Terry Winograd created SHRDLU. \nInstead of Knowles' passive poetry, Winograd gave the computer a virtual table of colored blocks and a robotic arm.\n\nWhen the user typed 'Pick up a big red block,' SHRDLU replied: 'I don't understand which red block you mean.' \nLanguage became a negotiation. Meaning was no longer an isolated string; it was bound to the state of the table.\n\nThis is the exact shift from Ekphrasis to Deixis. Language is no longer just painting a picture; language is pointing into an operable world."}, {"id": "landmark-09", "index": 8, "num": "09", "kind": "DEIXIS 2", "headline": "RICHARD BOLT: 'PUT THAT THERE' (1980)", "subhead": "MULTIMODAL DEIXIS AT MIT ARCHITECTURE MACHINE GROUP", "triad": {"w": 7, "g": 6, "b": 9}, "thesis_claim": "The prompt reaches completion only when linguistic indexicals are resolved by spatial gesture.", "theoretical_anchor": "Richard Bolt (MIT AMG, 1980): 'Put-That-There': Voice and Gesture at the Graphics Interface.", "body_html": "\n        <div class=\"bolt-container\">\n          <div class=\"bolt-diagram\">\n            <div class=\"utterance\">\n              \"PUT <span class=\"deictic-token\">[THAT]</span> <span class=\"deictic-token\">[THERE]</span>\"\n            </div>\n            <div class=\"deictic-vectors\">\n              <div class=\"vector-arm v1\">\u2794 GESTURE VECTOR: (x: 320, y: 140)</div>\n              <div class=\"vector-arm v2\">\u2794 GESTURE VECTOR: (x: 840, y: 620)</div>\n            </div>\n          </div>\n          <div class=\"bolt-takeaway\">\n            <h4>The Death of the Monomodal Prompt</h4>\n            <p>Bolt proved 45 years ago that 'THAT' and 'THERE' are empty placeholders without physical spatial coordinate resolution. A prompt is inherently multimodal and deictic.</p>\n          </div>\n        </div>\n        ", "note": "[Fifth landmark: Richard Bolt's 'Put That There'.]\n\nTen years after SHRDLU, Richard Bolt at the MIT Architecture Machine Group\u2014the precursor to the Media Lab\u2014built 'Put-That-There'.\n\nSitting in the media room with a Polhemus magnetic wrist tracker and speech recognition, the user pointed at the wall and said: 'Put that... there.'\n\nWithout the wrist coordinate, the word 'THAT' has zero semantic content. Without the second pointing gesture, 'THERE' is a blank. \n\nThis is what linguistics calls deixis: pointing. Bolt demonstrated that prompting is never just text. It is an indexical vector pointing into a computational field. That is why our modern interface is named MONTE \u00b7 BOLT."}, {"id": "landmark-10", "index": 9, "num": "10", "kind": "WORD <-> WORLD", "headline": "THE BIDIRECTIONAL BRIDGE", "subhead": "WORD-TO-WORLD AND WORLD-TO-WORD", "triad": {"w": 7, "g": 7, "b": 9}, "thesis_claim": "Operative humanities requires an oscillation: generating worlds from words, and reading words from worlds.", "theoretical_anchor": "Tenenbaum, Wong et al. (Probabilistic World Models) & Nelson Goodman (Ways of Worldmaking).", "body_html": "\n        <div class=\"bridge-grid\">\n          <div class=\"bridge-direction\">\n            <div class=\"bd-title\">WORD \u2794 WORLD</div>\n            <div class=\"bd-arrow\">\u25bc</div>\n            <div class=\"bd-desc\">Generative Instantiation (Ekphrasis / Diffusion / LDraw compilation). Language generates spatial state.</div>\n          </div>\n          <div class=\"bridge-center\">\n            <div class=\"bridge-core\">WORLDTEXT BRIDGE</div>\n            <p class=\"bridge-tag\">Bidirectional Correspondence</p>\n          </div>\n          <div class=\"bridge-direction\">\n            <div class=\"bd-title\">WORLD \u2794 WORD</div>\n            <div class=\"bd-arrow\">\u25b2</div>\n            <div class=\"bd-desc\">Vision Readback / Forensic Inspection. The machine describes its own state back to the human.</div>\n          </div>\n        </div>\n        ", "note": "[The theoretical core: Word-to-World and World-to-Word.]\n\nNow we synthesize the bridge.\nIn cognitive science, Josh Tenenbaum and Lionel Wong talk about Word Models versus World Models.\n\nMy dissertation formalizes this as a two-way bridge:\nWord-to-World is generative instantiation: language creates a state.\nWorld-to-Word is visual readback: the model inspects the state and translates it back into language.\n\nWhen human and model enter this loop, prompting ceases to be a one-shot slot machine. It becomes an operative conversation\u2014a continuous calibration of attention and correspondence."}, {"id": "landmark-11", "index": 10, "num": "11", "kind": "WORLDTEXT", "headline": "WORLDTEXT AS OPERATIVE GAME ENGINE", "subhead": "REPLACING UNREAL WITH DISCRETE SYMBOLIC TEXT ENGINES", "triad": {"w": 8, "g": 7, "b": 10}, "thesis_claim": "Worldtext functions as a lightweight, transparent engine where text directly executes spatial simulations.", "theoretical_anchor": "Operative Humanities: Building instruments rather than writing mere commentary.", "body_html": "\n        <div class=\"worldtext-stack\">\n          <div class=\"stack-layer layer-1\">\n            <span class=\"l-name\">LAYER 3 // WORLDTEXT RUNTIME</span>\n            <span class=\"l-desc\">Discrete spatial coordinates, collision bounds, state machines (Pure Text / HTML / LDraw).</span>\n          </div>\n          <div class=\"stack-layer layer-2\">\n            <span class=\"l-name\">LAYER 2 // PROMPT CORRESPONDENCE LOOP</span>\n            <span class=\"l-desc\">Thick prompting, deictic pointing, and error recovery between human and model.</span>\n          </div>\n          <div class=\"stack-layer layer-3\">\n            <span class=\"l-name\">LAYER 1 // FOUNDATION MODEL LATENT SPACE</span>\n            <span class=\"l-desc\">Underlying cultural priors, stochastic token probabilities, multimodal vision-language weights.</span>\n          </div>\n        </div>\n        <p class=\"wt-sub\">Unlike Unreal Engine\u2014which requires 100GB binaries and proprietary C++ pipelines\u2014Worldtext is transparent, archivable, and verifiable in standard browser engines.</p>\n        ", "note": "[The technical contribution: Worldtext.]\n\nThis brings us to the central artifact of my dissertation: Worldtext.\n\nWhy replace Unreal Engine or Unity with Worldtext? \nBecause game engines like Unreal are proprietary, multi-gigabyte black boxes. You cannot verify their language-games. \n\nWorldtext is an open, symbolic architecture where text, spatial coordinates, and execution states remain readable in standard open web formats. It allows humanities scholars, artists, and computer scientists to inspect every frame of the correspondence loop."}, {"id": "landmark-12", "index": 11, "num": "12", "kind": "HISTORICAL HORIZON", "headline": "NOT CINEMA YET: THE ZOETROPE & MUYBRIDGE", "subhead": "HISTORICIZING GENERATIVE AI IN 2026", "triad": {"w": 5, "g": 8, "b": 9}, "thesis_claim": "Generative video and world models are not finished cinema; they are 1878 chronophotography.", "theoretical_anchor": "Eadweard Muybridge (1878): The Horse in Motion. The pre-cinematic era of discrete shutters and provisional illusion.", "body_html": "\n        <div class=\"muybridge-container\">\n          <div class=\"filmstrip-grid\">\n            <div class=\"frame f1\">FRAME 01<br><small>SHUTTER OPEN</small></div>\n            <div class=\"frame f2\">FRAME 02<br><small>HOOVES CLEAR</small></div>\n            <div class=\"frame f3\">FRAME 03<br><small>SUSPENSION</small></div>\n            <div class=\"frame f4\">FRAME 04<br><small>DESCENT</small></div>\n            <div class=\"frame f5\">FRAME 05<br><small>IMPACT</small></div>\n            <div class=\"frame f6\">FRAME 06<br><small>REPETITION</small></div>\n          </div>\n          <div class=\"muybridge-critique\">\n            <h4>The Myth of Turnkey AI Cinema</h4>\n            <p>Anyone who tells you that generative AI is already a cinema engine is selling snake oil. We are in 1878 with Muybridge and the Zoetrope. We are studying persistence of vision, frame registration, and shutter mechanics.</p>\n            <p>Our struggle is not to pretend we have Hollywood in a text box; our noble struggle is to master the discrete mechanics of the language-game.</p>\n          </div>\n        </div>\n        ", "note": "[Fend off the hype trap: Not Cinema Yet.]\n\nLet me address the commercial hype directly. \nEvery day, venture-backed startups claim that prompt-to-video has replaced cinema. \n\nThis is historically illiterate. We are not in the cinema era of generative AI. We are in 1878. We are Eadweard Muybridge setting up tripwires at Palo Alto to see if all four hooves of a galloping horse leave the ground. We are spinning a cardboard Zoetrope in a Victorian parlor.\n\nWe have discrete frames, hallucinated physics, and provisional shutter illusions. Anyone who tells you this is finished cinema does not understand cinema or computation. \n\nThis dissertation embraces the Zoetrope era. We are not asking AI to hallucinate a blockbuster; we are mapping the foundational mechanics of the shutter."}, {"id": "landmark-13", "index": 12, "num": "13", "kind": "DISSERTATION ARCHITECTURE", "headline": "OPERATIVE HUMANITIES: THE 6 CHAPTERS", "subhead": "RESEARCH QUESTIONS, EMPIRICAL RIGOR, AND METHOD", "triad": {"w": 8, "g": 9, "b": 9}, "thesis_claim": "The dissertation presents six operative chapters organized around verifiable language-game experiments.", "theoretical_anchor": "Operative Humanities: Moving beyond passive critique to computational making and empirical falsifiability.", "body_html": "\n        <div class=\"chapters-grid\">\n          <div class=\"ch-box\">\n            <span class=\"ch-num\">CH 01</span>\n            <h4>The Blind Men & the Bicycle</h4>\n            <p>Latent space as the elephant; SCOT and interpretive flexibility of the prompt.</p>\n          </div>\n          <div class=\"ch-box\">\n            <span class=\"ch-num\">CH 02</span>\n            <h4>The Language-Game (\u00a72)</h4>\n            <p>Wittgenstein's builders, meaning as continuation, prompts as game mechanics.</p>\n          </div>\n          <div class=\"ch-box\">\n            <span class=\"ch-num\">CH 03</span>\n            <h4>From Ekphrasis to Deixis</h4>\n            <p>Knowles' House of Dust \u2794 Winograd's SHRDLU \u2794 Bolt's Put That There.</p>\n          </div>\n          <div class=\"ch-box\">\n            <span class=\"ch-num\">CH 04</span>\n            <h4>The Ladder of Correspondence</h4>\n            <p>2D BEFLIX to 3D LDraw: Why discrete symbolic syntax beats black-box GUIs.</p>\n          </div>\n          <div class=\"ch-box\">\n            <span class=\"ch-num\">CH 05</span>\n            <h4>Worldtext & Thick Prompting</h4>\n            <p>Bidirectional bridge (Word \u2794 World \u2794 Word); prompt battles as empirical benchmarks.</p>\n          </div>\n          <div class=\"ch-box highlight\">\n            <span class=\"ch-num\">CH 06</span>\n            <h4>Beyond the Zoetrope</h4>\n            <p>Operative humanities as an enduring discipline for the age of generative models.</p>\n          </div>\n        </div>\n        ", "note": "[Present the dissertation structure with absolute clarity.]\n\nHere is how the dissertation is organized across six operative chapters:\n\nChapter 1 establishes the problem: Latent space as the elephant, and the prompt as Bijker's bicycle in pre-closure flux.\nChapter 2 lays the theoretical foundation: Wittgenstein's \u00a72 Builders' Game and the prompt as a game mechanic.\nChapter 3 maps the historical pivot: From literary ekphrasis in Knowles to spatial deixis in Winograd and Bolt.\nChapter 4 provides the empirical experiments: The ladder of correspondence from 2D BEFLIX to 3D LDraw.\nChapter 5 demonstrates Worldtext and Thick Prompting: The bidirectional bridge and prompt battles as empirical benchmarks.\nChapter 6 concludes with the future: Beyond the Zoetrope\u2014establishing Operative Humanities as a rigorous maker-discipline.\n\nThis is not a personal passion project. Every chapter is anchored in public historical benchmarks, repeatable code archives, and falsifiable drift boundaries."}, {"id": "landmark-14", "index": 13, "num": "14", "kind": "SOVEREIGN INVARIANT", "headline": "ASK WHAT GAME GIVES THOSE WORDS THEIR FORCE.", "subhead": "THE CLOSING PHILOSOPHICAL INVARIANT", "triad": {"w": 10, "g": 8, "b": 7}, "thesis_claim": "The prompt has no sovereign meaning outside the operative game that sustains it.", "theoretical_anchor": "Wittgenstein (\u00a743): The meaning of a word is its use in the language. The struggle for a noble, rigorous future.", "body_html": "\n        <div class=\"invariant-display\">\n          <div class=\"inv-hero\">\n            <span class=\"inv-badge\">THE SOVEREIGN INVARIANT //</span>\n            <h2 class=\"inv-quote\">\"NEVER ASK WHAT A PROMPT MEANS IN THE ABSTRACT.<br><mark>ASK WHAT GAME GIVES THOSE WORDS THEIR FORCE.</mark>\"</h2>\n          </div>\n          <div class=\"inv-columns\">\n            <div class=\"inv-col\">\n              <h4>NOT PASSIVE CRITIQUE</h4>\n              <p>We do not sit on the sidelines lamenting algorithmic bias with folk theories.</p>\n            </div>\n            <div class=\"inv-col\">\n              <h4>NOT BLIND HYPE</h4>\n              <p>We do not bow to corporate press releases promising turnkey AI magic.</p>\n            </div>\n            <div class=\"inv-col highlight\">\n              <h4>OPERATIVE HUMANITIES</h4>\n              <p>We build the language-games. We trace the correspondence. We claim the future of language arts.</p>\n            </div>\n          </div>\n        </div>\n        ", "note": "[Closing crescendo: 30 seconds of pure conviction.]\n\nI leave the committee with our sovereign invariant:\nNever ask what a prompt means in the abstract. \nAsk what game gives those words their force.\n\nWe do not have to choose between cynical, whiny folk critique and Silicon Valley hype. \nThere is a noble future to struggle on behalf of: an operative humanities where language remains the supreme instrument of human thought, imagination, and worldmaking. \n\nI make language games. Thank you, and I welcome your questions."}];
+
+let currentIdx = 0;
+let timerSeconds = 30 * 60;
+let timerRunning = false;
+let timerInterval = null;
+
+function renderRadarSVG(triad) {
+  const w = triad ? triad.w || 5 : 5;
+  const g = triad ? triad.g || 5 : 5;
+  const b = triad ? triad.b || 5 : 5;
+  
+  // Center is (22, 22), max radius 18
+  const cx = 22, cy = 22, maxR = 18;
+  
+  // 3 vertices:
+  // Top: Wittgenstein (0 deg / up: x=cx, y=cy - r)
+  // Bottom-Right: Geertz (120 deg: x=cx + r*cos(30), y=cy + r*sin(30))
+  // Bottom-Left: Bajohr/Ingold (240 deg: x=cx - r*cos(30), y=cy + r*sin(30))
+  
+  const rw = (w / 10) * maxR;
+  const rg = (g / 10) * maxR;
+  const rb = (b / 10) * maxR;
+  
+  const pxW = cx;
+  const pyW = cy - rw;
+  
+  const pxG = cx + rg * Math.cos(Math.PI / 6);
+  const pyG = cy + rg * Math.sin(Math.PI / 6);
+  
+  const pxB = cx - rb * Math.cos(Math.PI / 6);
+  const pyB = cy + rb * Math.sin(Math.PI / 6);
+  
+  return `
+  <div class="radar-pill" title="Epistemic Triad: Wittgenstein §2 (${w}), Geertz (${g}), Bajohr/Ingold (${b})">
+    <svg class="radar-svg" viewBox="0 0 44 44">
+      <polygon points="22,4 37.6,31 6.4,31" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+      <polygon points="22,13 29.8,26.5 14.2,26.5" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <polygon points="${pxW.toFixed(1)},${pyW.toFixed(1)} ${pxG.toFixed(1)},${pyG.toFixed(1)} ${pxB.toFixed(1)},${pyB.toFixed(1)}" 
+               fill="rgba(25,230,200,0.3)" stroke="#19e6c8" stroke-width="1.5"/>
+    </svg>
+    <div class="radar-labels">
+      <span class="val-w">W:${w}</span>
+      <span class="val-g">G:${g}</span>
+      <span class="val-b">B:${b}</span>
+    </div>
+  </div>`;
+}
+
+function initSlides() {
+  const stage = document.getElementById('stage');
+  stage.innerHTML = '';
+  
+  slides.forEach((s, idx) => {
+    const el = document.createElement('section');
+    el.className = `slide ${idx === 0 ? 'active' : ''}`;
+    el.id = `slide-${idx}`;
+    
+    const radar = renderRadarSVG(s.triad);
+    
+    el.innerHTML = `
+      <header class="slide-header">
+        <div class="sh-left">
+          <div class="sh-meta">
+            <span class="sh-num">${s.num}</span>
+            <span class="sh-kind">${s.kind}</span>
+          </div>
+          <h1 class="sh-title">${s.headline}</h1>
+          <p class="sh-sub">${s.subhead || ''}</p>
+        </div>
+        ${radar}
+      </header>
+      
+      <div class="slide-body">
+        ${s.body_html}
+      </div>
+      
+      <footer class="theory-bar">
+        <strong>THEORETICAL ANCHOR //</strong> ${s.theoretical_anchor}
+      </footer>
+    `;
+    stage.appendChild(el);
+  });
+  
+  updateUI();
+  initBeflixGrid();
+}
+
+function goToSlide(idx) {
+  if (idx < 0 || idx >= slides.length) return;
+  
+  const prev = document.querySelector('.slide.active');
+  if (prev) prev.classList.remove('active');
+  
+  currentIdx = idx;
+  const next = document.getElementById(`slide-${currentIdx}`);
+  if (next) next.classList.add('active');
+  
+  updateUI();
+}
+
+function nextSlide() {
+  if (currentIdx < slides.length - 1) goToSlide(currentIdx + 1);
+}
+
+function prevSlide() {
+  if (currentIdx > 0) goToSlide(currentIdx - 1);
+}
+
+function seekSlide(val) {
+  goToSlide(parseInt(val, 10));
+}
+
+function updateUI() {
+  const s = slides[currentIdx];
+  document.getElementById('counter-cur').textContent = String(currentIdx + 1).padStart(2, '0');
+  document.getElementById('counter-total').textContent = String(slides.length).padStart(2, '0');
+  document.getElementById('deck-slider').value = currentIdx;
+  document.getElementById('slide-kind-badge').textContent = s.kind;
+  
+  document.getElementById('drawer-slide-title').textContent = `[SLIDE ${s.num}] ${s.kind} — ${s.headline}`;
+  document.getElementById('drawer-notes-text').textContent = s.note || 'No notes for this slide.';
+}
+
+function toggleNotesDrawer() {
+  const d = document.getElementById('speaker-drawer');
+  d.classList.toggle('open');
+}
+
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen().catch(() => {});
+  } else {
+    document.exitFullscreen().catch(() => {});
+  }
+}
+
+// Interactive Duck-Rabbit Switcher
+window.switchCircleGame = function(game) {
+  const vp = document.getElementById('circle-viewport');
+  const tabs = document.querySelectorAll('.idr-tab');
+  tabs.forEach(t => t.classList.remove('active'));
+  
+  if (game === 'svg') {
+    tabs[0].classList.add('active');
+    vp.innerHTML = `
+      <svg width="180" height="180" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="40" stroke="#19e6c8" stroke-width="4" fill="none" />
+      </svg>
+      <div class="idr-sub">GAME: Declarative Vector Geometry &lt;circle cx="50" cy="50" r="40"/&gt;</div>
+    `;
+  } else if (game === 'ascii') {
+    tabs[1].classList.add('active');
+    vp.innerHTML = `
+      <pre style="font-family:var(--mono); color:var(--cyan); font-size:12px; line-height:1.2;">
+       ******       
+    **        **    
+  **            **  
+ **              ** 
+ **              ** 
+  **            **  
+    **        **    
+       ******       </pre>
+      <div class="idr-sub">GAME: Typographic Grid Continuation (Raster Characters)</div>
+    `;
+  } else if (game === 'diffusion') {
+    tabs[2].classList.add('active');
+    vp.innerHTML = `
+      <div style="width:160px; height:160px; border-radius:50%; background:radial-gradient(circle, #ffd23f 20%, #ff3b30 60%, #000 100%); box-shadow:0 0 20px rgba(255,210,63,0.4);"></div>
+      <div class="idr-sub">GAME: Statistical Latent Space Interpolation (Diffusion Illusion)</div>
+    `;
+  } else if (game === 'turtle') {
+    tabs[3].classList.add('active');
+    vp.innerHTML = `
+      <div style="font-family:var(--mono); color:#fff; font-size:13px; text-align:left; background:#000; padding:12px; border-radius:6px; border:1px solid var(--border);">
+        <span style="color:var(--amber);">TO CIRCLE</span><br>
+        &nbsp;&nbsp;REPEAT 360 [<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;FORWARD 1<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;RIGHT 1<br>
+        &nbsp;&nbsp;]<br>
+        <span style="color:var(--amber);">END</span>
+      </div>
+      <div class="idr-sub">GAME: Procedural Deixis (Seymour Papert LOGO)</div>
+    `;
+  }
+};
+
+// BEFLIX 12x12 Interactive Canvas
+function initBeflixGrid() {
+  const canvas = document.getElementById('beflix-canvas');
+  if (!canvas) return;
+  canvas.innerHTML = '';
+  for (let r = 0; r < 12; r++) {
+    for (let c = 0; c < 12; c++) {
+      const dot = document.createElement('div');
+      dot.className = 'px-dot';
+      
+      // Initial circle pattern
+      const dist = Math.sqrt(Math.pow(r - 5.5, 2) + Math.pow(c - 5.5, 2));
+      if (Math.abs(dist - 4) < 1.1) {
+        dot.classList.add('lit');
+      }
+      
+      dot.onclick = () => dot.classList.toggle('lit');
+      canvas.appendChild(dot);
+    }
+  }
+}
+
+// Pacing Timer
+function toggleTimer() {
+  const btn = document.getElementById('btn-timer-toggle');
+  if (timerRunning) {
+    clearInterval(timerInterval);
+    timerRunning = false;
+    btn.textContent = '▶ START';
+  } else {
+    timerRunning = true;
+    btn.textContent = '⏸ PAUSE';
+    timerInterval = setInterval(() => {
+      if (timerSeconds > 0) {
+        timerSeconds--;
+        const m = Math.floor(timerSeconds / 60);
+        const s = timerSeconds % 60;
+        const el = document.getElementById('pacing-timer');
+        el.textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+        if (timerSeconds < 300) {
+          el.style.color = 'var(--red)';
+          el.style.background = 'rgba(255, 59, 48, 0.2)';
+        }
+      } else {
+        clearInterval(timerInterval);
+      }
+    }, 1000);
+  }
+}
+
+// Touch swipe gestures
+let touchStartX = 0;
+let touchStartY = 0;
+document.addEventListener('touchstart', e => {
+  touchStartX = e.changedTouches[0].screenX;
+  touchStartY = e.changedTouches[0].screenY;
+}, { passive: true });
+
+document.addEventListener('touchend', e => {
+  const diffX = e.changedTouches[0].screenX - touchStartX;
+  const diffY = e.changedTouches[0].screenY - touchStartY;
+  if (Math.abs(diffX) > 50 && Math.abs(diffX) > Math.abs(diffY)) {
+    if (diffX < 0) nextSlide();
+    else prevSlide();
+  }
+}, { passive: true });
+
+// Keyboard navigation
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+    e.preventDefault();
+    nextSlide();
+  } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+    e.preventDefault();
+    prevSlide();
+  } else if (e.key === 'n' || e.key === 'N') {
+    toggleNotesDrawer();
+  } else if (e.key === 'f' || e.key === 'F') {
+    toggleFullscreen();
+  }
+});
+
+// Launch
+window.addEventListener('DOMContentLoaded', initSlides);
+</script>
+</body>
+</html>

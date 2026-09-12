@@ -327,4 +327,4 @@ Begin.
 
 Same sun.
 
-Different grammar. BASED ON 
+Different grammar. BASED ON this style of light/camera lens 
