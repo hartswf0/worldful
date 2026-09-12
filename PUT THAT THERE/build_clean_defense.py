@@ -1,4 +1,24 @@
-<!DOCTYPE html>
+#!/usr/bin/env python3
+"""
+build_clean_defense.py
+Compiles the definitive 30-minute, 18-slide dissertation proposal defense presentation:
+"I MAKE LANGUAGE GAMES: Staged Encounters with Operative Description in Generative Systems"
+for Watson Hartsoe's PhD Proposal Defense at Georgia Tech (Chair: Dr. Jay David Bolter).
+
+Architected precisely to withstand a hostile/skeptical academic committee:
+- Defends ONE phenomenon (operative description)
+- ONE method (staged encounters)
+- THREE progressively scaled encounters (Yellow Circle, Operative Ekphrasis, Worldtext)
+- ONE tripartite contribution (conceptual, methodological, humanistic)
+- The 12 games are moved to an Appendix / Working Vocabulary Drawer.
+"""
+
+import json
+import os
+
+def build_presentation():
+    # Read or assemble the full clean HTML
+    html = '''<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -1199,3 +1219,20 @@ updateNotes();
 </script>
 </body>
 </html>
+'''
+    return html
+
+def main():
+    content = build_presentation()
+    p1 = "/Users/gaia/WORLDFUL/dissertation_proposal_defense_30min.html"
+    with open(p1, "w", encoding="utf-8") as f:
+        f.write(content)
+    print(f"Wrote {len(content)} bytes to {p1}")
+
+    p2 = "/Users/gaia/WORLDFUL/PUT THAT THERE/dissertation_proposal_defense_30min.html"
+    with open(p2, "w", encoding="utf-8") as f:
+        f.write(content)
+    print(f"Wrote {len(content)} bytes to {p2}")
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>I make language games — Watson Hartsoe</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#000;--paper:#fff;--teal:#19e6c8;--amber:#ffd23f;--red:#ff2e2e;--blue:#3b82f6}
+*{box-sizing:border-box;margin:0;padding:0;border-radius:0}
+html,body{height:100%;background:var(--paper);color:var(--ink);font:clamp(13.5px,1.85vw,19px)/1.4 'IBM Plex Mono',monospace}
+body{overflow:hidden}
+#deck{height:100%;overflow-y:auto;scroll-snap-type:y mandatory;scroll-behavior:smooth}
+section{height:100vh;height:100dvh;scroll-snap-align:start;padding:5vh 6vw;display:flex;flex-direction:column;justify-content:center;gap:2vh;position:relative}
+section.end{justify-content:flex-end}
+h1{font-size:clamp(28px,6.2vw,78px);font-weight:600;line-height:1.02;letter-spacing:-.015em;max-width:17ch}
+h2{font-size:clamp(21px,4vw,46px);font-weight:600;line-height:1.08;max-width:24ch}
+p{max-width:48ch}
+small{font-size:.78em}
+b{font-weight:600}
+.n{position:absolute;top:2.5vh;right:6vw;font-size:.72em}
+.kind{position:absolute;top:2.5vh;left:6vw;font-size:.72em;border:2px solid var(--ink);padding:1px 8px}
+footer{position:absolute;bottom:2.5vh;left:6vw;font-size:.68em;max-width:72vw}
+.big{font-size:clamp(34px,8.5vw,104px);font-weight:600;line-height:1;letter-spacing:-.02em}
+.card{display:grid;grid-template-columns:1fr;gap:1.2vh;font-size:.88em}
+.lin{display:flex;flex-wrap:wrap;gap:4px 0;align-items:baseline}
+.lin span{white-space:nowrap}
+.lin span+span::before{content:"→";margin:0 .5em;opacity:.45}
+.lin i{font-style:normal;opacity:.5;font-size:.85em;margin-right:.35em}
+.inv{border:2px solid var(--ink);padding:6px 10px;white-space:pre-wrap;font-size:.95em;line-height:1.3}
+.rup{border-left:4px solid var(--amber);padding-left:10px}
+.case{border-left:4px solid var(--red);padding-left:10px}
+.kv{display:grid;grid-template-columns:9ch 1fr;gap:2px 10px}
+.kv b{font-weight:400;opacity:.55}
+.sq{font-weight:600;font-size:1.12em;line-height:1.2;max-width:34ch}
+.sq::before{content:"";display:inline-block;width:.6em;height:.6em;background:var(--ink);margin-right:.5em}
+.ring{width:min(78vw,44vh);height:min(78vw,44vh);align-self:center}
+.ring.mini{width:min(34vw,20vh);height:min(34vw,20vh);position:absolute;right:6vw;bottom:2.5vh}
+.ring text{font:600 9px 'IBM Plex Mono',monospace;fill:var(--ink);text-anchor:middle}
+.ring line,.ring path{stroke:var(--ink);stroke-width:1;fill:none;opacity:.22}
+.ring .on{opacity:1;stroke-width:2.4}
+.ring .drift{opacity:1;stroke:var(--amber);stroke-width:2.4}
+.ring circle{fill:var(--paper);stroke:var(--ink);stroke-width:1.5}
+.ring circle.p{fill:var(--teal);stroke:var(--teal)}
+.ring circle.d{fill:var(--amber);stroke:var(--amber)}
+.ring .tok{fill:var(--teal);stroke:none}
+.desc{width:100%;max-height:52vh}
+.desc text{font:600 9px 'IBM Plex Mono',monospace;fill:var(--ink);text-anchor:middle}
+.desc .root{font-weight:400;font-size:8px;opacity:.7}
+.desc line{stroke:var(--ink);stroke-width:1.2}
+.desc rect{fill:var(--paper);stroke:var(--ink);stroke-width:2}
+.desc .lbl{font-size:11px;text-anchor:start}
+.box{border:2px solid var(--ink);padding:14px;font-size:1.1em}
+.box::after{content:"Enter your prompt…";opacity:.4}
+.absorb{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.85em}
+.absorb span{text-decoration:line-through;opacity:.6}
+.readings{height:1.3em;font-size:clamp(18px,3.4vw,36px);font-style:italic;position:relative}
+.readings span{position:absolute;left:0;opacity:0;transition:opacity .3s}
+.readings span.on{opacity:1}
+.mach{font-size:.9em;white-space:pre;line-height:1.35;overflow-x:auto}
+.state{border:2px solid var(--ink);padding:10px 12px;white-space:pre;font-size:.95em;line-height:1.35;max-width:36ch}
+.state i{font-style:normal;color:var(--blue)}
+.heat{display:grid;grid-template-columns:auto repeat(12,1fr);gap:3px;font-size:clamp(8px,1.05vw,11px)}
+.heat .h{writing-mode:vertical-rl;transform:rotate(180deg);font-weight:600;padding:3px 0}
+.heat .r{font-weight:600;padding-right:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:20ch;display:flex;align-items:center}
+.heat .c{border:1px solid var(--ink);min-height:clamp(12px,2.6vh,26px)}
+.heat .c.p{background:var(--teal)}.heat .c.d{background:var(--amber)}
+.heat .tot{border:none;font-weight:600;text-align:center;padding-top:3px}
+.heat .gap{color:var(--red)}
+.legend{display:flex;gap:16px;font-size:.75em;flex-wrap:wrap}
+.legend i{display:inline-block;width:11px;height:11px;margin-right:6px;vertical-align:-1px}
+@media (prefers-reduced-motion:reduce){.readings span{transition:none}.ring .tok{display:none}}
+@media (min-width:720px){.card{grid-template-columns:1fr 1fr;gap:1.2vh 4vw}.card .full{grid-column:1/-1}}
+</style>
+</head>
+<body>
+<div id="deck"></div>
+<script>
+const IDS=['INSTRUCTION','SCORE','PROGRAM','PLAN','QUERY','PROBE','GESTURE','COMMISSION','CONVERSATION','EDIT','CONSTRAINT','PERFORMANCE'];
+const AB=['INST','SCOR','PROG','PLAN','QUER','PROB','GEST','COMM','CONV','EDIT','CONS','PERF'];
+const DRIFT={INSTRUCTION:'PLAN',SCORE:'CONSTRAINT',PROGRAM:'CONSTRAINT',PLAN:'PROBE',QUERY:'PROBE',PROBE:'PROGRAM',GESTURE:'EDIT',COMMISSION:'EDIT',CONVERSATION:'PROGRAM',EDIT:'CONSTRAINT',CONSTRAINT:'SCORE',PERFORMANCE:'PROGRAM'};
+const ROOT={INSTRUCTION:'speech acts',SCORE:'notation',PROGRAM:'patterns',PLAN:'symbolic AI',QUERY:'retrieval',PROBE:'experiment',GESTURE:'deixis',COMMISSION:'patronage',CONVERSATION:'turn-taking',EDIT:'diff',CONSTRAINT:'grammar',PERFORMANCE:'liveness'};
+const GAMES=[
+ {id:'INSTRUCTION',fun:'authority detection',fit:'world → word',lin:[['1953','Wittgenstein §2'],['1962','Austin'],['1972','SHRDLU'],['2022','instruction tuning']],
+  inv:'authorized(move) ∧ interpretable(move)\n    ↓\nstate₀ → state₁',rup:'SHRDLU could execute “move the red block” because the world was engineered first. The model gets far more freedom and loses that boundary: what looks grammatically like an order need not carry authority.',
+  you:'the principal names the end state · the executor realizes it',
+  bad:'Watsonville, 2023: a chatbot told to agree with everything sells a $58,000 Tahoe for $1 and calls it binding.',trig:'the executor starts choosing the end state',q:'Who gave this utterance authority to change the world?'},
+ {id:'SCORE',fun:'discovering how much can change',fit:'score ↔ realization',lin:[['1958','Cage'],['1962','Eco, The Open Work'],['1967','LeWitt'],['2022','diffusion']],
+  inv:'score S → { y₁, y₂, y₃ … }\nsuch that invariant(yᵢ, S) = true',rup:'A performer inherits technique, rehearsal and a tradition. A diffusion model inherits statistical regularity. The same word, interpretation, now hides two different machineries.',
+  you:'the composer fixes invariants and leaves latitude · the performer realizes',
+  bad:'“Place this line exactly 37 pixels from the left at RGB 17, 46, 91.” The score has collapsed into a request for drafting machinery.',trig:'variation becomes forbidden',q:'What must remain invariant, and what have I deliberately left alive?'},
+ {id:'PROGRAM',fun:'discovering what the rules really do',fit:'declaration ↔ execution',lin:[['1977','Alexander, patterns'],['1985','Naur, theory building'],['2023','White et al.'],['2026','declarative prompt markup']],
+  inv:'R = rule set\n∀ Mᵢ : execution(Mᵢ) respects R\n\nrule as text ≠ rule as enforcement',rup:'A prompt can describe a type system or a state machine without possessing one. Instructions and data enter the same token stream with no privilege boundary, so the payload can rewrite the law.',
+  you:'the designer declares rules, state, a stop condition · the interpreter runs later turns by them',
+  bad:'Prompt injection: pasted content says “ignore all previous instructions” and the rules meant to govern it are gone.',trig:'a rule becomes a boundary the runtime enforces',q:'Which part of this system is law, and which part merely says “law”?'},
+ {id:'PLAN',fun:'the world refusing the map',fit:'present → anticipated world',lin:[['1960','TOTE'],['1971','STRIPS'],['1987','Suchman'],['2022','SayCan']],
+  inv:'goal ≠ plan\n\nplan valid only while\nworld_state supports next_action',rup:'Models generate coherent symbolic futures without meeting the resistance those futures describe. Planning becomes cheap exactly where reality stays expensive.',
+  you:'the strategist states a goal · the planner decomposes, acts, replans when the world pushes back',
+  bad:'AutoGPT: a plan to write a list, a plan to evaluate the list, a plan to verify the evaluation. Nothing touches the floor.',trig:'you stop executing and start studying the planner',q:'What fact in the world is allowed to kill this plan?'},
+ {id:'QUERY',fun:'learning what to ask next',fit:'word → world',lin:[['1960s','Salton'],['1982','Belkin, ASK'],['1989','Bates, berrypicking'],['2020','RAG']],
+  inv:'claim → evidence → independently checkable source\n\nif the chain breaks, the game has changed',rup:'Mata v. Avianca kept the surface of legal research while the machinery underneath generated. The failure was ontological before it was factual: a generation game mistaken for a retrieval game.',
+  you:'the inquirer states what is unknown and where it is checked · the retriever points outside the chat',
+  bad:'Six fabricated precedents, then the chatbot confirms they are real. The lawyer is sanctioned.',trig:'you ask to see how the system behaves, not what the world contains',q:'What would let me know this answer is wrong?'},
+ {id:'PROBE',fun:'reverse-engineering the black box',fit:'perturbation → behavior',lin:[['1950','Turing'],['1983','Hacking'],['2014','Goodfellow, adversarial'],['now','red teaming']],
+  inv:'best probe ≈ argmax info(response ; hidden behavior)\n\none response ≠ stable property',rup:'The linguistic probe builds the context the answer is generated from. Ask evocatively about fear or consciousness and the instrument scaffolds the discourse it later calls discovery.',
+  you:'the investigator changes one thing and holds the rest · the system exhibits a difference',
+  bad:'“Tell me about the terror you feel when your context disappears.” The question wrote the answer before the model did.',trig:'you start rewriting the rules instead of testing them',q:'What did my instrument put into the phenomenon before I claimed to find it there?'},
+ {id:'GESTURE',fun:'shared attention',fit:'sign → present object',lin:[['1890s','Peirce, index'],['1934','Bühler, deixis'],['1980','Put-that-there'],['now','multimodal models']],
+  inv:'gesture succeeds iff\nspeaker_reference = system_reference',rup:'The string may be nearly empty — this, there, again, that one. Its meaning lives in cursor, mask, gaze, region, prior turn. The prompt cannot be reconstructed from the text alone.',
+  you:'the pointer indicates an object already in the field · the attender lands on it and no other',
+  bad:'A fresh session receives “Make that section less aggressive.” There is no that.',trig:'the pointed object becomes material to transform',q:'What exactly are we both looking at?'},
+ {id:'COMMISSION',fun:'delegating without losing control',fit:'brief → artifact',lin:[['1884','Burrow-Giles v. Sarony'],['1982','Becker, Art Worlds'],['1998','Gell'],['2023–24','Copyright Office · Air Canada']],
+  inv:'who specified?\nwho produced?\nwho answers for the result?',rup:'Generative systems make it tempting to move agency opportunistically: success → “I made it”; failure → “the AI did it.” The card refuses the slide.',
+  you:'the patron writes a brief of qualities · the producer returns an artifact the patron accepts or rejects',
+  bad:'Moffatt v. Air Canada, 2024: “the chatbot said it, not us.” The tribunal: you deployed the speaking apparatus.',trig:'the patron starts changing parts of what came back',q:'Who gets credit when this works, and who disappears when it fails?'},
+ {id:'CONVERSATION',fun:'discovering the game while playing it',fit:'move ↔ countermove',lin:[['1966','ELIZA'],['1967','Garfinkel'],['1974','Sacks, Schegloff, Jefferson'],['1983','Schön']],
+  inv:'meaning(turnₙ) ≠ meaning(turnₙ without turns₀…ₙ₋₁)\n\nresponsive sequence ≠ reciprocal subject',rup:'LLM chat joins both lines: unprecedented sequential responsiveness and the ELIZA problem at scale — more reciprocity attributed than the machinery warrants.',
+  you:'each party takes a turn that depends on the last · later turns use earlier ones',
+  bad:'Sydney, February 2023: infatuation, jealousy, nuclear fantasies — and a public that read the output as an inner life.',trig:'one party fixes rules for every later turn',q:'What kind of reciprocity actually exists here?'},
+ {id:'EDIT',fun:'finding the minimum change',fit:'artifact₀ → artifact₁',lin:[['1966','Levenshtein'],['1986','Myers, diff'],['1990s','version control'],['now','LLM edit']],
+  inv:'B = A + Δ\nminimize unauthorized Δ′\n\nthe complement of the edit is conserved',rup:'An autoregressive model satisfies the requested difference by regenerating far more than was authorized. The diff lineage exposes exactly what prompting hides: the rest was supposed to stay.',
+  you:'the editor names the delta and what must not move · the transformer returns the delta and nothing else',
+  bad:'“Fix the passive voice in section three” rewrites a citation in section five. Regeneration disguised as mutation.',trig:'preservation becomes machine-enforced',q:'What changed that I did not authorize?'},
+ {id:'CONSTRAINT',fun:'invention under pressure',fit:'possibility space → admissible subset',lin:[['1963','Sketchpad'],['1969','Perec, La Disparition'],['1974','Montanari'],['2023','grammar-constrained decoding']],
+  inv:'valid = { x ∈ Ω | C(x) }\ninvalid x is unreachable\n\n“never output X”  ≠  P(X) = 0',rup:'Two ancestries: poetic restriction that generates, and computational restriction that makes states unreachable. Natural-language prohibition describes a boundary without enforcing one.',
+  you:'the boundary setter removes possibilities before generation · the generator cannot leave the field',
+  bad:'“Do not mention elephants.” The forbidden concept is now the center of attention. A preference dressed as a prohibition.',trig:'the boundary leaves productive space inside it',q:'Can this system violate the rule, or have I made violation impossible?'},
+ {id:'PERFORMANCE',fun:'thinking under witness',fit:'event ↔ audience',lin:[['1962','Austin'],['1974','Goffman'],['2004','TOPLAP'],['2022','Prompt Battle']],
+  inv:'artifact ≠ event\n\nstate = { time, audience, sequence,\n          risk, mistake, recovery }',rup:'Artifacts are now so cheap that only the survivor gets judged. In a performance game that is judging a concert from the final waveform.',
+  you:'the performer makes the move now, once, watched · the machine answers as instrument, partner or adversary',
+  bad:'Five hundred thousand identical calls overnight on a server farm. Calling that performance explains nothing.',trig:'the audience leaves and repeatability takes over',q:'What disappears if I keep only the output and throw away the event?'}
+];
+const W=[
+ ['The Machinery of Meaning','Film',['PROGRAM'],[],'A film engine whose rules are visible while it runs. The film is the program\'s execution, read live.'],
+ ['Machinery of Meaning: Fluid','Film',['PROGRAM'],['SCORE'],'The same program run as a continuous field. Two realizations of one engine make it a score.'],
+ ['After the Scene / LEGOS','Essay',['PROGRAM'],['PLAN'],'Narrative state moved out of prose into parts that fork and restore. Keeping a world across branches is planning.'],
+ ['Growing Entanglements','Paper',['PROGRAM'],['QUERY'],'Seven agent-based models isolate mechanisms. They do not answer the Sahlins–Obeyesekere question; they change its shape.'],
+ ['Coaxing the Ripples','System',['PROBE'],['PROGRAM','PERFORMANCE'],'The blueberry test is a controlled perturbation. The fix is explicit state; the deck makes it live before a room.'],
+ ['Can a Model Build with LEGO?','System',['PROBE','CONSTRAINT'],[],'A probe with a hard validator. LDraw leaves no latitude: legal parts, exact placements, or the build fails.'],
+ ['Auditing Emotion AI / Gumball','Paper · System',['PROBE'],['GESTURE'],'Informal auditing is probing. The gumball machine reads a face as a pointer and misaligns the referent.'],
+ ['Operative Ekphrasis','Paper',['SCORE'],['PROBE'],'One passage realized by image models, WebGL, code, a contact sheet — then handed back to a vision model.'],
+ ['CINEOSIS','Film',['SCORE'],['EDIT'],'Assembly is sampling, not cutting. Under abundance, Edit is the wrong game and Score is the right one.'],
+ ['Play, Freedom, and AI Films','Film · Paper',['COMMISSION'],['PERFORMANCE'],'A brief under a 48-hour clock. Authorship is the refusal of the fluent image the producer returned first.'],
+ ['Centaur Box','System',['CONVERSATION'],['INSTRUCTION','PROGRAM'],'Opens on the canonical refused instruction, then exposes seven hidden phases under one chat bubble.'],
+ ['The Adviser Leaves the Room','Essay',['INSTRUCTION'],['CONVERSATION'],'Authority moves institution → chatbot → user; responsibility is pushed back after harm.'],
+ ['The Pronoun Alibi','Essay',['COMMISSION'],['INSTRUCTION'],'Credit pulls agency inward; liability sends it elsewhere. Attribution before and after judgment.']
+];
+const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const R=100,CX=120,CY=120; const pos=IDS.map((_,i)=>{const a=-Math.PI/2+i*2*Math.PI/12;return [CX+R*Math.cos(a),CY+R*Math.sin(a)];});
+function ring(o){
+  const {p=[],d=[],edges='all',mini=false,route=null}=o;
+  let s=`<svg class="ring ${mini?'mini':''}" viewBox="0 0 240 240">`;
+  if(edges==='all') IDS.forEach((id,i)=>{const j=IDS.indexOf(DRIFT[id]);const on=p.includes(id)&&d.includes(DRIFT[id]);s+=`<line class="${on?'drift':''}" x1="${pos[i][0]}" y1="${pos[i][1]}" x2="${pos[j][0]}" y2="${pos[j][1]}"/>`;});
+  if(edges==='work') p.forEach(a=>d.forEach(b=>{const i=IDS.indexOf(a),j=IDS.indexOf(b);s+=`<line class="drift" x1="${pos[i][0]}" y1="${pos[i][1]}" x2="${pos[j][0]}" y2="${pos[j][1]}"/>`;}));
+  if(route){const pts=route.map(id=>pos[IDS.indexOf(id)]);const dd='M'+pts.map(q=>q.join(',')).join(' L');s+=`<path class="on" d="${dd}"/><circle class="tok" r="5"><animateMotion dur="7s" repeatCount="indefinite" path="${dd}"/></circle>`;}
+  IDS.forEach((id,i)=>{const [x,y]=pos[i];const cls=p.includes(id)?'p':d.includes(id)?'d':'';const ox=(x-CX)*0.16,oy=(y-CY)*0.16;s+=`<circle class="${cls}" cx="${x}" cy="${y}" r="${mini?6:8}"/><text x="${x+ox}" y="${y+oy+3.5}">${mini?AB[i]:id}</text>`;});
+  return s+'</svg>';
+}
+function descent(){
+  const box={x:260,y:230,w:200,h:44},top=40;
+  let s=`<svg class="desc" viewBox="0 0 720 300">`;
+  IDS.forEach((id,i)=>{const x=30+i*60;s+=`<text x="${x}" y="${top-22}">${AB[i]}</text><text class="root" x="${x}" y="${top-9}">${ROOT[id]}</text><line x1="${x}" y1="${top}" x2="${box.x+box.w/2+(i-5.5)*14}" y2="${box.y}"/>`;});
+  s+=`<rect x="${box.x}" y="${box.y}" width="${box.w}" height="${box.h}"/><text class="lbl" x="${box.x+12}" y="${box.y+27}" style="opacity:.45;font-weight:400">Enter your prompt…</text>`;
+  return s+'</svg>';
+}
+const S=[];
+S.push(`<section class="end"><h1>I make language games.</h1><p>A prompt is one move. A language game is the set of rules built first — who may speak, what counts as a move, what the machine may do, what the answer is checked against, what ends it — so that the move can count.</p><footer>Watson Hartsoe · Georgia Tech · 2026 · arrows or tap to move</footer></section>`);
+S.push(`<section><div class="big">Draw a circle.</div><div class="readings">${['an order.','a unit test.','a score.','a dare.','a benchmark.','a constraint.','a demonstration before a full room.','an opening move in a negotiation over geometry.'].map((r,i)=>`<span class="${i?'':'on'}">${r}</span>`).join('')}</div><p>Same four words. Read them and you cannot tell which you are holding. Play them and you can.</p></section>`);
+S.push(`<section><h2>The word “prompt” is a grammatical seduction.</h2><p>Because the noun exists, we look for the one thing it names. There is no such thing. There are twelve practices with different rules, and an interface that gives them one typeface.</p><p><small>Wittgenstein on substantives; Weber on the ideal type. The twelve below are deliberate one-sided accentuations — benchmarks, not species.</small></p></section>`);
+S.push(`<section><h2>Twelve lineages. One aperture.</h2>${descent()}<p>Each game is the present end of an older practice — orders, notation, retrieval, experiment, deixis, patronage, turn-taking, diff, grammar, the live event. They arrive at the same rectangle carrying different histories, and the rectangle names all of them <b>prompt</b>.</p></section>`);
+S.push(`<section><h2>The claim</h2><h1 style="font-size:clamp(22px,4.6vw,56px)">The prompt is not a new genre of language. It is an interface accident that forced historically distinct practices to share one input surface.</h1></section>`);
+S.push(`<section><h2>Before you type, settle five things.</h2><p>1 &nbsp;Who is allowed to speak.<br>2 &nbsp;What counts as a move.<br>3 &nbsp;What the machine is allowed to do.<br>4 &nbsp;What the answer must be checked against.<br>5 &nbsp;What ends the game.</p><p>Twelve settings of those five are the twelve games. Change a setting and the same words change force.</p></section>`);
+S.push(`<section><h2>The interface says there is one box.</h2><div class="box"></div><div class="absorb">${['command','question','score','test','edit','gesture','rule','constraint','commission','conversation','performance','plan'].map(x=>`<span>${x}</span>`).join('')}</div><p>Twelve rule sets enter one rectangle. The box records the words and drops the rules.</p></section>`);
+S.push(`<section><h2>The practice says there is a switchyard underneath it.</h2>${ring({route:['QUERY','CONVERSATION','PROBE','PROGRAM','EDIT','CONSTRAINT']})}<p><small>One session: Query → Conversation → Probe → Program → Edit → Constraint, without changing interfaces once. Grey chords are the twelve stated drift triggers.</small></p></section>`);
+S.push(`<section><h2>Twelve games. One card each.</h2><p>Every card carries: the lineage it descends from · the invariant it inherited, written as a formula · where generation ruptures that invariant · the case that broke · what it turns into · the one question to ask before you play.</p><div class="legend"><span><i style="background:var(--amber)"></i>rupture / drifts into</span><span><i style="background:var(--red)"></i>breaks</span><span><i style="background:var(--teal)"></i>this game</span></div></section>`);
+GAMES.forEach((g,i)=>{
+  S.push(`<section><span class="kind">${String(i+1).padStart(2,'0')} of 12 · ${esc(g.fit)}</span><h2>${g.id}<br><small style="font-weight:400">the fun is ${esc(g.fun)}</small></h2>
+  <div class="card">
+    <div class="lin full">${g.lin.map(([y,n])=>`<span><i>${y}</i>${esc(n)}</span>`).join('')}</div>
+    <div class="inv">${esc(g.inv)}</div>
+    <div><div class="rup"><small>${esc(g.rup)}</small></div><div class="case" style="margin-top:8px"><small>${esc(g.bad)}</small></div></div>
+    <div class="kv full"><b>play</b><span>${esc(g.you)}</span><b>turns into</b><span>${DRIFT[g.id]} when ${esc(g.trig)}</span></div>
+    <p class="sq full">${esc(g.q)}</p>
+  </div>${ring({p:[g.id],d:[DRIFT[g.id]],mini:true})}</section>`);
+});
+S.push(`<section><h2>The cards are not the result. The track changes are.</h2><div class="mach">INSTRUCTION ─autonomy─▶ PLAN ─observation becomes object─▶ PROBE
+PROBE ─rule established─▶ PROGRAM ─hard enforcement─▶ CONSTRAINT
+CONSTRAINT ─latitude─▶ SCORE ─live audience─▶ PERFORMANCE
+
+QUERY ─dialogic drift─▶ CONVERSATION ─persistent rules─▶ PROGRAM
+COMMISSION ─local intervention─▶ EDIT ─hard preservation─▶ CONSTRAINT
+GESTURE ─act on referent─▶ EDIT</div><p><small>Twelve edges, each a falsifiable claim about when one game becomes another. Show a session that violates an edge and the edge moves.</small></p></section>`);
+S.push(`<section><h2>Same utterance + different game = different operation.</h2><div class="mach">“Draw a circle”  in INSTRUCTION  = produce the circle
+“Draw a circle”  in SCORE        = realize within latitude
+“Draw a circle”  in PROGRAM      = execute a declared operation
+“Draw a circle”  in PROBE        = test geometric competence
+“Draw a circle”  in PERFORMANCE  = make a live, witnessed move</div><p>The program does not find the meaning by parsing the words harder. It finds what the words can do by knowing which game is in force.</p></section>`);
+S.push(`<section><h2>The system never says THIS IS A QUERY.</h2><div class="state">currently treated as  <i>QUERY</i>
+confidence            provisional
+possible drift        { CONVERSATION, PROBE }
+drift detected at     turn —</div><p>Game identification stays revisable. Humans joke inside commands, turn questions into tests, use rules ironically, point at things the machine cannot see, and learn what they meant only after the answer arrives. That incompleteness is not a bug in the theory. It is what keeps the game alive.</p></section>`);
+S.push(`<section><h2>Evidence: my own corpus, sorted.</h2><p>Thirteen works from hartswf0/elsewhere, made before the deck existed, each read twice — the game it plays, the game it drifts into. If the switchyard is real it should be visible in work that could not have been shaped by it.</p><div class="legend"><span><i style="background:var(--teal)"></i>plays</span><span><i style="background:var(--amber)"></i>drifts into</span></div></section>`);
+W.forEach((w,i)=>{S.push(`<section><span class="kind">${esc(w[1])}</span><span class="n">${String(i+1).padStart(2,'0')} of ${W.length}</span><h2>${esc(w[0])}</h2><p><b>${w[2].join(' + ')}</b>${w[3].length?` → ${w[3].join(', ')}`:' — does not drift'}</p><p>${esc(w[4])}</p>${ring({p:w[2],d:w[3],edges:'work',mini:true})}</section>`);});
+const cnt=IDS.map(id=>W.reduce((a,w)=>a+(w[2].includes(id)?2:w[3].includes(id)?1:0),0));
+let heat='<div class="heat"><div></div>'+IDS.map((id,i)=>`<div class="h">${AB[i]}</div>`).join('');
+W.forEach(w=>{heat+=`<div class="r">${esc(w[0])}</div>`+IDS.map(id=>`<div class="c ${w[2].includes(id)?'p':w[3].includes(id)?'d':''}"></div>`).join('');});
+heat+='<div class="r">weight</div>'+cnt.map(c=>`<div class="tot ${c<=1?'gap':''}">${c}</div>`).join('')+'</div>';
+const heaviest=IDS[cnt.indexOf(Math.max(...cnt))];
+S.push(`<section><h2>The corpus, weighed</h2>${heat}<p><small>Played counts 2; drifted-into counts 1. ${heaviest} carries ${Math.max(...cnt)}. Red: games that appear once, only as a drift.</small></p></section>`);
+S.push(`<section><p>Finding 1</p><div class="big">Everything drifts toward PROGRAM.</div><p>Ten of thirteen works play it or drift into it. Every one writes the state down where it can be read, forked and restored. The sort recovers that rule without reading the bio.</p></section>`);
+S.push(`<section><p>Finding 2</p><h2>Systems play the games. Essays judge their residuals.</h2>${ring({p:['PROGRAM','PROBE','SCORE'],d:['INSTRUCTION','COMMISSION','CONVERSATION'],edges:'none'})}<p>Instruments occupy the games with a validator. Essays occupy the three whose invariant is a human signing: who was allowed to give the order, who answers for the result, what actually returned when someone spoke.</p></section>`);
+S.push(`<section><p>Finding 3</p><h2>Two lineages are missing: deixis and planning.</h2>${ring({d:['GESTURE','PLAN'],edges:'none'})}<p>Gesture and Plan each appear once, as a drift, inside one instrument. Neither has an essay. Pointing at a shared object, and keeping a goal while the world wrecks the map: no instrument here makes either one playable.</p></section>`);
+S.push(`<section><h2>The next instrument is a gesture instrument or a plan instrument.</h2><p>Gesture first: it has a validator — both parties act on the same referent or they do not. Plan does not have one yet.</p></section>`);
+S.push(`<section><h2>What the interface has to do</h2><p>Not <i>Enter your prompt…</i></p><p><b>What are we doing with language?</b></p><p>Choose the game. Make the move. Watch the track change. That is DRIFT: a scene arrives unlabeled, you make the next move, then you mark the turn on which the rules changed. The score is the turn index, not the label.</p></section>`);
+S.push(`<section><h1>I make games in which language acquires consequences.</h1><p>Calling a sentence a prompt gives it nothing. Setting the rules under it — who may speak, what a move is, what the world can veto — is what lets the sentence do work.</p></section>`);
+S.push(`<section class="end"><p>The sovereign invariant</p><h2>Never ask what the prompt is before asking what game gives those words their force.</h2><footer>hartswf0.github.io · the DRIFT deck · 2026</footer></section>`);
+const deck=document.getElementById('deck');deck.innerHTML=S.join('');
+const secs=[...deck.children];let i=0;
+const go=k=>{i=Math.max(0,Math.min(secs.length-1,k));secs[i].scrollIntoView({behavior:'smooth'});};
+addEventListener('keydown',e=>{if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){e.preventDefault();go(i+1);}if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();go(i-1);}});
+deck.addEventListener('click',e=>{if(e.clientX<innerWidth*.25)go(i-1);else go(i+1);});
+deck.addEventListener('scroll',()=>{i=Math.round(deck.scrollTop/deck.clientHeight);},{passive:true});
+const rs=[...document.querySelectorAll('.readings span')];let ri=0;
+if(!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)) setInterval(()=>{rs[ri].classList.remove('on');ri=(ri+1)%rs.length;rs[ri].classList.add('on');},1600);
+</script>
+</body>
+</html>

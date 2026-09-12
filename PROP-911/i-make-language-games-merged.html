@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#fff"><title>I make language games — WHAT IS A PROMPT?</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='white'/%3E%3Crect x='9' y='9' width='46' height='46' fill='none' stroke='black' stroke-width='4'/%3E%3Ccircle cx='32' cy='32' r='7' fill='%2319e6c8'/%3E%3C/svg%3E">
+<style>
+:root{--ink:#000;--paper:#fff;--teal:#19e6c8;--amber:#ffd23f;--red:#ff2e2e}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#fff;color:#000;font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace}body{touch-action:none}
+.slide{position:fixed;inset:0;display:none;grid-template-rows:42px minmax(0,1fr) auto;background:#fff}.slide.on{display:grid}
+.cap{display:flex;align-items:center;justify-content:space-between;padding:0 4vw;border-bottom:2px solid #000;font-size:11px;letter-spacing:.14em}.kind{border:2px solid #000;padding:2px 8px}.num{font-weight:600}
+.body{min-height:0;position:relative;display:flex;align-items:center;justify-content:center;padding:3vh 6vw;overflow:hidden}
+footer{border-top:2px solid #000;padding:9px 4vw max(11px,env(safe-area-inset-bottom));display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:start;font-size:10px;line-height:1.38}.src a{color:#000;font-weight:600;text-decoration:none;border-bottom:1px solid #000;white-space:nowrap}
+h1{font-size:clamp(52px,10vw,145px);line-height:.84;letter-spacing:-.06em;margin:0}.hero{width:100%}.lede{font-size:clamp(22px,4vw,50px);margin:28px 0 0}
+.huge{font-size:clamp(48px,9vw,132px);font-weight:600;letter-spacing:-.05em;position:absolute;top:22%}.cycling{position:absolute;bottom:22%;left:6vw;font-size:clamp(22px,3.5vw,48px);font-style:italic}.cycling span{display:none}.cycling .on{display:block}
+.claimbig{font-size:clamp(38px,6.8vw,94px);font-weight:600;line-height:.94;letter-spacing:-.045em;text-align:center}.subclaim{position:absolute;bottom:31%;font-size:clamp(16px,2vw,28px);font-style:italic}.inputbox{position:absolute;bottom:15%;width:min(600px,75%);border:2px solid #000;padding:13px;opacity:.55}.strike{position:absolute;bottom:6%;font-size:11px;text-decoration:line-through;opacity:.5;text-align:center}
+.builders{display:grid;grid-template-columns:auto 90px 250px;align-items:center;gap:24px}.voice{font-size:clamp(64px,12vw,165px);font-weight:600;letter-spacing:-.06em}.arr{font-size:72px}.brick{width:240px;height:90px;background:#ddd;border:3px solid #000;box-shadow:18px 18px 0 #999;transform:skewY(-4deg)}.under{position:absolute;bottom:4%;font-style:italic;font-size:clamp(15px,2vw,25px);text-align:center;width:88%}
+.mediaFrame{height:min(65vh,680px);max-width:70vw;display:grid;place-items:center}.mediaFrame img{max-width:100%;max-height:100%;object-fit:contain}.mediaFrame.black{background:#000}.mediaFrame.score{max-width:58vw}.roundish img{border-radius:50%}.sideword{position:absolute;right:4vw;bottom:14%;width:28vw;font-size:clamp(24px,4vw,60px);font-weight:600;line-height:.98}.smallside{font-size:clamp(18px,2.6vw,34px)}
+.putgrid{width:min(1100px,92%);display:grid;grid-template-columns:1fr 1.3fr;gap:8vw;align-items:center}.put{font-size:clamp(72px,11vw,150px);font-weight:600;line-height:.74;letter-spacing:-.07em}.deixis{display:grid;gap:44px}.deixis div{border-top:4px solid #000;padding-top:8px}.deixis b{font-size:clamp(25px,4vw,55px)}.deixis span{display:block;margin-top:6px;font-style:italic}
+.eyes{display:flex;align-items:center;gap:7vw}.eye{width:min(30vw,360px);height:min(16vw,190px);border:8px solid #000;border-radius:55% 45%;display:grid;place-items:center;transform:rotate(-4deg)}.pupil{width:70px;height:70px;border-radius:50%;background:#000}.wink{width:min(30vw,360px);height:20px;border-top:8px solid #000;transform:rotate(-5deg)}.neq{font-size:65px;font-weight:600}.labels{position:absolute;bottom:7%;display:grid;grid-template-columns:1fr 1fr;gap:16vw;text-align:center;font-style:italic}
+.thin{font-size:clamp(46px,8vw,110px);font-weight:600;position:absolute;top:22%}.down{font-size:50px}.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;position:absolute;bottom:20%;max-width:85%}.chips b{border:2px solid #000;padding:10px 15px;font-size:12px;letter-spacing:.1em}
+.browser{width:min(1180px,92vw);height:min(66vh,690px);border:2px solid #000;background:#fff;box-shadow:12px 12px 0 #ddd}.browserbar{height:28px;border-bottom:2px solid #000;display:flex;align-items:center;gap:6px;padding:0 8px;font-size:9px}.browserbar i{width:8px;height:8px;border-radius:50%;background:#000}.browserbar span{margin-left:5px;opacity:.6}.browser iframe{border:0;width:100%;height:calc(100% - 28px)}
+.three{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:2vw;align-items:center;text-align:center;width:min(1150px,96%);font-size:clamp(30px,5vw,70px);font-weight:600;line-height:.88;letter-spacing:-.05em}.three b{font-size:60px;font-weight:400}
+.switch{position:relative;width:min(700px,75vh);aspect-ratio:1/1;display:grid;place-items:center}.centerbox{width:180px;height:90px;border:3px solid #000;display:grid;place-items:center;text-align:center;font-weight:600;background:#fff;z-index:2}.orbit{position:absolute;inset:0}.orbit span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(var(--a)) translateY(-270px) rotate(calc(-1 * var(--a)));font-size:10px;font-weight:600}
+.gamegrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:min(1100px,94%);height:min(68vh,680px)}.gcard{border:2px solid #000;padding:16px;display:flex;flex-direction:column;gap:8px;overflow:hidden}.gcard h3{font-size:clamp(20px,2.5vw,34px);margin:0}.gcard em{font-size:11px;opacity:.55}.gcard p{font-size:11px;margin:0;opacity:.7}.gcard strong{font-size:clamp(12px,1.4vw,17px);margin-top:auto}
+.mach{white-space:pre-wrap;font-size:clamp(14px,2vw,25px);line-height:1.65;width:min(1120px,94%)}.bigmach{font-size:clamp(16px,2.4vw,31px);line-height:1.85}
+.videotitle{position:absolute;top:4%;left:6%;font-size:clamp(24px,4vw,54px);font-weight:600}.video{width:min(1120px,92vw);height:min(60vh,620px);background:#000;box-shadow:12px 12px 0 #ddd;margin-top:6vh}.video iframe{width:100%;height:100%;border:0}
+.fourpipe{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;gap:12px;align-items:center;width:min(1200px,96%)}.fourpipe div{border:2px solid #000;padding:20px 14px;min-height:140px;display:flex;flex-direction:column;justify-content:center}.fourpipe b{font-size:clamp(15px,2vw,25px)}.fourpipe span{font-size:10px;margin-top:8px;opacity:.55}.fourpipe i{font-size:30px;font-style:normal}.quote{position:absolute;bottom:5%;font-size:clamp(16px,2.3vw,30px);font-style:italic}
+.twobrowsers{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:min(1000px,90%)}.sitecard{border:3px solid #000;padding:40px;text-decoration:none;color:#000;min-height:250px;display:flex;flex-direction:column;justify-content:center}.sitecard b{font-size:clamp(30px,5vw,70px)}.sitecard span{font-style:italic;margin-top:12px}
+.turn{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:5vw;width:min(1000px,90%);text-align:center}.turn div{border:3px solid #000;padding:36px 20px}.turn b{font-size:clamp(28px,5vw,65px)}.turn span{display:block;font-size:11px;margin-top:10px}.turn i{font-size:50px;font-style:normal}.turn .hot{background:var(--teal)}
+.definition{display:grid;grid-template-columns:auto auto 1fr;gap:3vw;align-items:center;width:min(1150px,94%)}.prompt{font-size:clamp(54px,10vw,140px);font-weight:600;letter-spacing:-.07em}.eq{font-size:80px}.defs{display:grid;gap:4px}.defs b{border-bottom:2px solid #000;font-size:clamp(20px,3vw,42px);padding:3px 0}.final{position:absolute;bottom:6%;font-style:italic;font-size:clamp(18px,2.7vw,35px)}.last{font-size:clamp(42px,7vw,98px)}
+#dots{position:fixed;right:12px;top:50%;transform:translateY(-50%);z-index:30;display:flex;flex-direction:column;gap:4px}#dots button{width:6px;height:6px;padding:0;border:0;border-radius:50%;background:#bbb;cursor:pointer}#dots button.on{background:#000;transform:scale(1.5)}#controls{position:fixed;left:12px;bottom:8px;z-index:30;font-size:8px;opacity:.35;letter-spacing:.1em}
+@media(max-width:760px){
+.slide{grid-template-rows:34px minmax(0,1fr) auto}.cap{padding:0 10px;font-size:8px}footer{padding:7px 10px 9px;grid-template-columns:1fr;font-size:8px;gap:3px}.body{padding:1.5vh 12px 1vh}
+.builders{grid-template-columns:1fr;justify-items:center;gap:7px}.arr{transform:rotate(90deg);font-size:35px}.brick{width:145px;height:52px}.mediaFrame{height:48vh;max-width:94vw}.sideword{right:5vw;bottom:4%;width:90vw;font-size:18px;text-align:right}
+.putgrid{grid-template-columns:1fr;gap:8px}.put{font-size:65px}.deixis{grid-template-columns:1fr 1fr;gap:8px}.deixis b{font-size:22px}.eye{border-width:4px}.pupil{width:32px;height:32px}.wink{border-top-width:4px}.labels{font-size:9px;gap:8vw}
+.browser,.video{width:96vw;height:48vh;box-shadow:5px 5px 0 #ddd}.three{font-size:17px;gap:5px}.three b{font-size:22px}.orbit span{transform:translate(-50%,-50%) rotate(var(--a)) translateY(-41vw) rotate(calc(-1 * var(--a)));font-size:7px}.centerbox{width:120px;height:60px;font-size:10px}.switch{width:90vw}
+.gamegrid{grid-template-columns:1fr;height:auto;max-height:65vh;overflow:auto}.gcard{padding:9px}.fourpipe{grid-template-columns:1fr 1fr}.fourpipe i{display:none}.fourpipe div{min-height:80px;padding:10px}.quote{font-size:13px}.twobrowsers{grid-template-columns:1fr}.sitecard{min-height:120px;padding:20px}
+.turn{gap:8px}.turn div{padding:18px 8px}.turn i{font-size:24px}.definition{grid-template-columns:1fr;text-align:center;gap:6px}.eq{font-size:30px}.defs{grid-template-columns:1fr 1fr}.defs b{font-size:15px}#dots,#controls{display:none}}
+</style></head><body>
+<section class="slide" data-i="1">
+<div class="cap"><span class="kind">THESIS</span><span class="num">01</span></div>
+<div class="body"><div class="hero"><h1>I make<br>language games.</h1><p class="lede">What is a prompt?</p></div></div>
+<footer><div class="foot">Calling a sentence a “prompt” explains almost nothing. Its force comes from the game in which it is played.</div><div class="src"></div></footer>
+</section><section class="slide" data-i="2">
+<div class="cap"><span class="kind">ANOMALY</span><span class="num">02</span></div>
+<div class="body"><div class="huge">Draw a circle.</div><div class="cycling" id="cycling"><span class="on">an order.</span><span>a unit test.</span><span>a score.</span><span>a dare.</span><span>a benchmark.</span><span>a constraint.</span><span>a demonstration.</span><span>an opening move in a negotiation over geometry.</span></div></div>
+<footer><div class="foot">Same four words. Read them and you cannot tell which game is in force. Play them and you can.</div><div class="src"></div></footer>
+</section><section class="slide" data-i="3">
+<div class="cap"><span class="kind">CLAIM</span><span class="num">03</span></div>
+<div class="body"><div class="claimbig">THE PROMPT IS NOT<br>A NEW GENRE OF LANGUAGE.</div><div class="subclaim">Historically different practices were forced through one input surface.</div><div class="inputbox">Enter your prompt…</div><div class="strike">command · question · score · test · edit · gesture · rule · constraint · commission · conversation · performance · plan</div></div>
+<footer><div class="foot">The prompt is an interface accident: twelve practices arrive at the same rectangle carrying different histories, while the rectangle names all of them “prompt.”</div><div class="src"></div></footer>
+</section><section class="slide" data-i="4">
+<div class="cap"><span class="kind">LANGUAGE GAME</span><span class="num">04</span></div>
+<div class="body"><div class="builders"><div class="voice">SLAB!</div><div class="arr">→</div><div class="brick"></div></div><div class="under">Meaning is the competent continuation of an activity.</div></div>
+<footer><div class="foot">Wittgenstein’s builder and assistant do not need a dictionary definition of “slab” at the moment of use. The utterance counts because the language-game establishes roles, objects, and the expected next move.</div><div class="src"><a href="https://plato.stanford.edu/entries/wittgenstein/#LangGameFamiRese" target="_blank" rel="noopener">SOURCE ↗</a></div></footer>
+</section><section class="slide" data-i="5">
+<div class="cap"><span class="kind">MICROWORLD</span><span class="num">05</span></div>
+<div class="body"><div class="mediaFrame black"><img src="https://www.digitec.ch/im/Files/7/7/1/3/5/5/8/2/SHRDLU%20Demo21.png?impolicy=teaser&resizeHeight=568&resizeWidth=1136" alt="SHRDLU block world"></div><div class="sideword">PICK UP A BIG RED BLOCK.</div></div>
+<footer><div class="foot">Winograd’s command works because the world has been engineered first: a bounded ontology, manipulable objects, relations, memory, and plans. The prompt is text plus a world capable of resolving it.</div><div class="src"><a href="http://hci.stanford.edu/winograd/shrdlu/" target="_blank" rel="noopener">SOURCE ↗</a></div></footer>
+</section><section class="slide" data-i="6">
+<div class="cap"><span class="kind">DEIXIS</span><span class="num">06</span></div>
+<div class="body"><div class="putgrid"><div class="put">PUT<br>THAT<br>THERE.</div><div class="deixis"><div><b>THAT</b><span>gesture binds object</span></div><div><b>THERE</b><span>gesture binds destination</span></div></div></div><div class="under">The prompt cannot be reconstructed from the transcript alone.</div></div>
+<footer><div class="foot">Bolt, Schmandt, and Hulteen combine speech, gesture, context, and feedback. “That” and “there” are almost empty strings until a body points.</div><div class="src"><a href="https://www-prod.media.mit.edu/publications/put-that-there-voice-and-gesture-at-the-graphics-interface/" target="_blank" rel="noopener">SOURCE ↗</a></div></footer>
+</section><section class="slide" data-i="7">
+<div class="cap"><span class="kind">DESCRIPTION GAME</span><span class="num">07</span></div>
+<div class="body"><div class="mediaFrame"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/Blind_men_and_elephant.png" alt="Blind men and elephant"></div><div class="sideword smallside">Every description selects a world.</div></div>
+<footer><div class="foot">The blind-men-and-elephant parable is useful as a model of partial description: each account is locally warranted yet structurally incomplete. Prompting determines which relations become available to an executor.</div><div class="src"><a href="https://commons.wikimedia.org/wiki/File:Blind_men_and_elephant.png" target="_blank" rel="noopener">SOURCE ↗</a></div></footer>
+</section><section class="slide" data-i="8">
+<div class="cap"><span class="kind">RYLE</span><span class="num">08</span></div>
+<div class="body"><div class="eyes"><div class="eye"><div class="pupil"></div></div><div class="neq">≠</div><div class="wink"></div></div><div class="labels"><span>eyelid contraction</span><span>coded signal to an accomplice</span></div></div>
+<footer><div class="foot">Ryle’s distinction, taken up by Geertz, shows why surface description is not enough. Identical visible movement can instantiate different acts because intention, code, recipient, and situation differ.</div><div class="src"><a href="https://plato.stanford.edu/entries/ryle/" target="_blank" rel="noopener">SOURCE ↗</a></div></footer>
+</section><section class="slide" data-i="9">
+<div class="cap"><span class="kind">GEERTZ</span><span class="num">09</span></div>
+<div class="body"><div class="mediaFrame"><img src="https://i1.sndcdn.com/artworks-M0D4fWXtHYG7i27m-XURhUA-t500x500.jpg" alt="Balinese cockfight"></div><div class="sideword smallside">The event is also status, kinship, wager, masculinity, danger, play.</div></div>
+<footer><div class="foot">Geertz’s cockfight is not a request for more adjectives. Thick description reconstructs the structures through which an event becomes intelligible to participants.</div><div class="src"><a href="https://direct.mit.edu/daed/article/134/4/56/27395/Deep-play-notes-on-the-Balinese-cockfight" target="_blank" rel="noopener">SOURCE ↗</a></div></footer>
+</section><section class="slide" data-i="10">
+<div class="cap"><span class="kind">PROPOSAL</span><span class="num">10</span></div>
+<div class="body"><div class="thin">MAKE A HOUSE.</div><div class="down">↓</div><div class="chips"><b>WORLD</b><b>RELATIONS</b><b>ROLES</b><b>CONSTRAINTS</b><b>TEST</b></div><div class="under">Not more adjectives. More of the situation.</div></div>
+<footer><div class="foot">Thick prompting exposes the context that makes a continuation legible: what world is in force, who or what acts, what relations hold, what must remain invariant, and what would count as success.</div><div class="src"></div></footer>
+</section><section class="slide" data-i="11">
+<div class="cap"><span class="kind">SCORE</span><span class="num">11</span></div>
+<div class="body"><div class="mediaFrame score"><img src="https://www.fondazionebonotto.org/admin/download/file/5192b51_fxm04151a.jpg" alt="George Brecht Drip Music"></div><div class="sideword smallside">Constraint without exhaustion.</div></div>
+<footer><div class="foot">Brecht’s event score is a better analogy for many prompts than “program”: it fixes an invariant while leaving latitude to performer and situation.</div><div class="src"><a href="https://www.getty.edu/publications/scores/06/commentary/" target="_blank" rel="noopener">SOURCE ↗</a></div></footer>
+</section><section class="slide" data-i="12">
+<div class="cap"><span class="kind">GENERATIVE DESCRIPTION</span><span class="num">12</span></div>
+<div class="body"><div class="mediaFrame"><img src="https://fonderiedarling.org/assets/components/phpthumbof/cache/5-CalArts-Interaction-GRANDE_ajuste%CC%81e.13c9a9a62628337b53fe28ad9064243b.jpg" alt="House of Dust"></div><div class="sideword smallside">poem → building → inhabitants → events</div></div>
+<footer><div class="foot">Knowles and Tenney turn a computer-generated permutation poem into inhabitable architecture. It is a clean historical bridge from generated description to lived spatial consequence.</div><div class="src"><a href="https://fonderiedarling.org/THE-HOUSE-OF-DUST" target="_blank" rel="noopener">SOURCE ↗</a></div></footer>
+</section><section class="slide" data-i="13">
+<div class="cap"><span class="kind">OPERATIVE EKPHRASIS</span><span class="num">13</span></div>
+<div class="body"><div class="mediaFrame roundish"><img src="https://images.squarespace-cdn.com/content/v1/57125c2c2b8dde54a34b537f/202b4507-3a7e-49af-a8c5-40c3cd27b869/1B38F583-AE26-4C7C-8001-69754C224AA9-1068x1055.jpeg?format=1500w" alt="Shield of Achilles reconstruction"></div><div class="sideword smallside">description → reconstruction</div></div>
+<footer><div class="foot">Classical ekphrasis makes an absent object present through words. Operative ekphrasis asks what changes when description becomes input to a process that constructs, alters, or navigates what is described.</div><div class="src"><a href="https://www.britishmuseum.org/collection/object/H_1833-1012-1" target="_blank" rel="noopener">SOURCE ↗</a></div></footer>
+</section><section class="slide" data-i="14">
+<div class="cap"><span class="kind">IMAGETEXT</span><span class="num">14</span></div>
+<div class="body"><div class="mediaFrame"><img src="https://www.theboxla.com/images/pics/5703_poemfield-3_web.jpg" alt="Poemfield"></div><div class="sideword smallside">word = image = data = motion</div></div>
+<footer><div class="foot">VanDerBeek and Knowlton’s Poemfields are unusually literal imagetexts: lexical material is simultaneously read, seen, encoded, and moved by a computational process.</div><div class="src"><a href="https://archive.transmediale.de/content/poemfield-no-2" target="_blank" rel="noopener">SOURCE ↗</a></div></footer>
+</section><section class="slide" data-i="15">
+<div class="cap"><span class="kind">OPERATION DESCRIBE</span><span class="num">15</span></div>
+<div class="body"><div class="browser"><div class="browserbar"><i></i><i></i><i></i><span>operative-builder-trace.html</span></div><iframe src="https://hartswf0.github.io/gunnars-depot.html/operative-builder-trace.html" title="Operative Builder Trace"></iframe></div></div>
+<footer><div class="foot">A description gains operational force only inside an apparatus that can interpret it, expose consequences, compare those consequences with a reference, and admit revision. This is a loop, not a spell.</div><div class="src"><a href="https://hartswf0.github.io/gunnars-depot.html/operative-builder-trace.html" target="_blank" rel="noopener">SOURCE ↗</a></div></footer>
+</section><section class="slide" data-i="16">
+<div class="cap"><span class="kind">WORD → WORLD</span><span class="num">16</span></div>
+<div class="body"><div class="three"><div>NATURAL<br>LANGUAGE</div><b>→</b><div>PROBABILISTIC<br>PROGRAM</div><b>→</b><div>WORLD<br>MODEL</div></div><div class="under">The tug-of-war example constructs the model sentence by sentence.</div></div>
+<footer><div class="foot">From Word Models to World Models makes the contemporary wager explicit: language can map into a probabilistic language of thought that supports inference about a constructed world.</div><div class="src"><a href="https://arxiv.org/abs/2306.12672" target="_blank" rel="noopener">SOURCE ↗</a></div></footer>
+</section><section class="slide" data-i="17">
+<div class="cap"><span class="kind">SWITCHYARD</span><span class="num">17</span></div>
+<div class="body"><div class="switch"><div class="centerbox">ENTER YOUR<br>PROMPT…</div><div class="orbit"><span style="--a:0deg">INSTRUCTION</span><span style="--a:30deg">SCORE</span><span style="--a:60deg">PROGRAM</span><span style="--a:90deg">PLAN</span><span style="--a:120deg">QUERY</span><span style="--a:150deg">PROBE</span><span style="--a:180deg">GESTURE</span><span style="--a:210deg">COMMISSION</span><span style="--a:240deg">CONVERSATION</span><span style="--a:270deg">EDIT</span><span style="--a:300deg">CONSTRAINT</span><span style="--a:330deg">PERFORMANCE</span></div></div></div>
+<footer><div class="foot">The twelve categories from the original language-games deck are ideal types, not species. The same session can drift among them without changing interfaces.</div><div class="src"></div></footer>
+</section><section class="slide" data-i="18">
+<div class="cap"><span class="kind">FOUR GAMES</span><span class="num">18</span></div>
+<div class="body"><div class="gamegrid"><article class="gcard"><h3>INSTRUCTION</h3><em>world → word</em><p>Wittgenstein §2 → Austin → SHRDLU → instruction tuning</p><strong>Who gave this utterance authority to change the world?</strong></article><article class="gcard"><h3>SCORE</h3><em>score ↔ realization</em><p>Cage → Eco → LeWitt → diffusion</p><strong>What must remain invariant, and what have I deliberately left alive?</strong></article><article class="gcard"><h3>PROGRAM</h3><em>declaration ↔ execution</em><p>Alexander → Naur → prompt programming</p><strong>Which part is law, and which part merely says “law”?</strong></article><article class="gcard"><h3>PLAN</h3><em>present → anticipated world</em><p>TOTE → STRIPS → Suchman → SayCan</p><strong>What fact in the world is allowed to kill this plan?</strong></article></div></div>
+<footer><div class="foot">Compressed from the original twelve-card analysis: each game inherits a different lineage, invariant, failure mode, and criterion for a successful move.</div><div class="src"></div></footer>
+</section><section class="slide" data-i="19">
+<div class="cap"><span class="kind">FOUR GAMES</span><span class="num">19</span></div>
+<div class="body"><div class="gamegrid"><article class="gcard"><h3>QUERY</h3><em>word → world</em><p>Salton → Belkin → Bates → RAG</p><strong>What would let me know this answer is wrong?</strong></article><article class="gcard"><h3>PROBE</h3><em>perturbation → behavior</em><p>Turing → Hacking → adversarial tests → red teaming</p><strong>What did my instrument put into the phenomenon before I claimed to find it?</strong></article><article class="gcard"><h3>GESTURE</h3><em>sign → present object</em><p>Peirce → Bühler → Put That There → multimodal models</p><strong>What exactly are we both looking at?</strong></article><article class="gcard"><h3>COMMISSION</h3><em>brief → artifact</em><p>Burrow-Giles → Becker → Gell → generative AI</p><strong>Who gets credit when this works, and who disappears when it fails?</strong></article></div></div>
+<footer><div class="foot">Compressed from the original twelve-card analysis: each game inherits a different lineage, invariant, failure mode, and criterion for a successful move.</div><div class="src"></div></footer>
+</section><section class="slide" data-i="20">
+<div class="cap"><span class="kind">FOUR GAMES</span><span class="num">20</span></div>
+<div class="body"><div class="gamegrid"><article class="gcard"><h3>CONVERSATION</h3><em>move ↔ countermove</em><p>ELIZA → Garfinkel → conversation analysis → chat</p><strong>What kind of reciprocity actually exists here?</strong></article><article class="gcard"><h3>EDIT</h3><em>artifact₀ → artifact₁</em><p>Levenshtein → diff → version control → LLM edit</p><strong>What changed that I did not authorize?</strong></article><article class="gcard"><h3>CONSTRAINT</h3><em>Ω → admissible subset</em><p>Sketchpad → Perec → constraint solving → grammar decoding</p><strong>Can this system violate the rule, or have I made violation impossible?</strong></article><article class="gcard"><h3>PERFORMANCE</h3><em>event ↔ audience</em><p>Austin → Goffman → live coding → prompt battle</p><strong>What disappears if I keep only the output and throw away the event?</strong></article></div></div>
+<footer><div class="foot">Compressed from the original twelve-card analysis: each game inherits a different lineage, invariant, failure mode, and criterion for a successful move.</div><div class="src"></div></footer>
+</section><section class="slide" data-i="21">
+<div class="cap"><span class="kind">DRIFT</span><span class="num">21</span></div>
+<div class="body"><div class="mach">INSTRUCTION ─ autonomy ─▶ PLAN ─ observation becomes object ─▶ PROBE
+PROBE ─ rule established ─▶ PROGRAM ─ hard enforcement ─▶ CONSTRAINT
+CONSTRAINT ─ latitude ─▶ SCORE ─ live audience ─▶ PERFORMANCE
+
+QUERY ─ dialogic drift ─▶ CONVERSATION ─ persistent rules ─▶ PROGRAM
+COMMISSION ─ local intervention ─▶ EDIT ─ hard preservation ─▶ CONSTRAINT
+GESTURE ─ act on referent ─▶ EDIT</div></div>
+<footer><div class="foot">The research object is the track change: when does the same interaction stop being one language-game and become another?</div><div class="src"></div></footer>
+</section><section class="slide" data-i="22">
+<div class="cap"><span class="kind">DIFFERENTIAL</span><span class="num">22</span></div>
+<div class="body"><div class="mach bigmach">“Draw a circle”  in INSTRUCTION  = produce the circle
+“Draw a circle”  in SCORE        = realize within latitude
+“Draw a circle”  in PROGRAM      = execute a declared operation
+“Draw a circle”  in PROBE        = test geometric competence
+“Draw a circle”  in PERFORMANCE  = make a live, witnessed move</div></div>
+<footer><div class="foot">Meaning is not recovered by parsing the string harder. The operative force comes from knowing which game is in force.</div><div class="src"></div></footer>
+</section><section class="slide" data-i="23">
+<div class="cap"><span class="kind">NEGOTIATION</span><span class="num">23</span></div>
+<div class="body"><div class="videotitle">CENTaur Box</div><div class="video"><iframe src="https://www.youtube.com/embed/hdTEJSyZahs?rel=0&modestbranding=1" title="Thinking Outside the AI Box: The Centaur Box Experiment" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div></div>
+<footer><div class="foot">Thinking Outside the AI Box: The Centaur Box Experiment — Prompting is recursive negotiation: human and AI update against gatekeepers, criteria, and each other.</div><div class="src"><a href="https://www.youtube.com/watch?v=hdTEJSyZahs" target="_blank" rel="noopener">SOURCE ↗</a></div></footer>
+</section><section class="slide" data-i="24">
+<div class="cap"><span class="kind">WORD → WORLD</span><span class="num">24</span></div>
+<div class="body"><div class="videotitle">WAGYO</div><div class="video"><iframe src="https://www.youtube.com/embed/yZ_IZS9_pfI?rel=0&modestbranding=1" title="Wagyo: The AI chat canvas that transforms words into worlds" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div></div>
+<footer><div class="foot">Wagyo: The AI chat canvas that transforms words into worlds — A useful project case because the transition from language to a manipulable world is visible rather than inferred.</div><div class="src"><a href="https://www.youtube.com/watch?v=yZ_IZS9_pfI" target="_blank" rel="noopener">SOURCE ↗</a></div></footer>
+</section><section class="slide" data-i="25">
+<div class="cap"><span class="kind">MULTIMODAL CONSTRUCTION</span><span class="num">25</span></div>
+<div class="body"><div class="videotitle">SUPER MARIO N64</div><div class="video"><iframe src="https://www.youtube.com/embed/h-OGQ_dDJ4c?rel=0&modestbranding=1" title="AI Made Super Mario N64: A Text-to-3D &amp; Text-to-Music Teaser!" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div></div>
+<footer><div class="foot">AI Made Super Mario N64: A Text-to-3D &amp; Text-to-Music Teaser! — One linguistic surface branches into geometry, visual form, and musical structure.</div><div class="src"><a href="https://www.youtube.com/watch?v=h-OGQ_dDJ4c" target="_blank" rel="noopener">SOURCE ↗</a></div></footer>
+</section><section class="slide" data-i="26">
+<div class="cap"><span class="kind">CORRESPONDENCE</span><span class="num">26</span></div>
+<div class="body"><div class="fourpipe"><div><b>LDRAW TEXT</b><span>positions · colors · orientations</span></div><i>→</i><div><b>3D GEOMETRY</b><span>compiled structure</span></div><i>→</i><div><b>IMAGE</b><span>geometry seeds generation</span></div><i>→</i><div><b>VIDEO</b><span>motion from constrained frames</span></div></div><div class="quote">“The difference between playing a slot machine and using a printing press.”</div></div>
+<footer><div class="foot">WAG makes a methodological move: put an inspectable representation between intention and generation so correspondence can be checked before style and motion are synthesized.</div><div class="src"><a href="https://hartswf0.github.io/halfworld/halfworld-index.html" target="_blank" rel="noopener">SOURCE ↗</a></div></footer>
+</section><section class="slide" data-i="27">
+<div class="cap"><span class="kind">WORLDTEXT</span><span class="num">27</span></div>
+<div class="body"><div class="browser"><div class="browserbar"><i></i><i></i><i></i><span>halfworld-index.html</span></div><iframe src="https://hartswf0.github.io/halfworld/halfworld-index.html" title="Halfworld"></iframe></div></div>
+<footer><div class="foot">HALFWORLD treats character, scene, score, and world as addressable structures rather than a final image. Language can act at several layers of the world.</div><div class="src"><a href="https://hartswf0.github.io/halfworld/halfworld-index.html" target="_blank" rel="noopener">SOURCE ↗</a></div></footer>
+</section><section class="slide" data-i="28">
+<div class="cap"><span class="kind">WORLDTEXT</span><span class="num">28</span></div>
+<div class="body"><div class="browser"><div class="browserbar"><i></i><i></i><i></i><span>odyssey-halfworld</span></div><iframe src="https://hartswf0.github.io/odyssey-halfworld/index.html" title="Odyssey Halfworld"></iframe></div></div>
+<footer><div class="foot">The Odyssey case makes language/game/world relations visible through characters, scenes, performance, and persistent structure rather than through a single generation.</div><div class="src"><a href="https://hartswf0.github.io/odyssey-halfworld/index.html" target="_blank" rel="noopener">SOURCE ↗</a></div></footer>
+</section><section class="slide" data-i="29">
+<div class="cap"><span class="kind">SCORE / MUSIC</span><span class="num">29</span></div>
+<div class="body"><div class="twobrowsers"><a class="sitecard" href="https://hartswf0.github.io/moto/all-time.html" target="_blank"><b>ALL-TIME</b><span>score · timing · performance</span></a><a class="sitecard" href="https://hartswf0.github.io/k2.html/inner-ear.html" target="_blank"><b>INNER EAR</b><span>language · hearing · musical realization</span></a></div><div class="under">Prompting changes when the executor is musical rather than pictorial.</div></div>
+<footer><div class="foot">These cases keep the argument from collapsing into image generation. A score game asks about timing, repetition, interpretation, and liveness.</div><div class="src"><a href="https://hartswf0.github.io/k2.html/inner-ear.html" target="_blank" rel="noopener">SOURCE ↗</a></div></footer>
+</section><section class="slide" data-i="30">
+<div class="cap"><span class="kind">IMAGETEXT → WORLDTEXT</span><span class="num">30</span></div>
+<div class="body"><div class="turn"><div><b>IMAGETEXT</b><span>word and image are mutually implicated</span></div><i>→</i><div class="hot"><b>WORLDTEXT</b><span>language and operable world become mutually addressable</span></div></div><div class="under">The world can answer back with evidence.</div></div>
+<footer><div class="foot">Worldtext is not “text-to-image plus 3D.” It names a correspondence loop: language alters a structured world; the world exposes consequences; those consequences condition the next linguistic move.</div><div class="src"></div></footer>
+</section><section class="slide" data-i="31">
+<div class="cap"><span class="kind">WORKING DEFINITION</span><span class="num">31</span></div>
+<div class="body"><div class="definition"><div class="prompt">PROMPT</div><div class="eq">=</div><div class="defs"><b>MOVE</b><b>GAME</b><b>SITUATION</b><b>EXECUTOR</b><b>TEST</b></div></div><div class="final">Prompting is negotiation over correspondence.</div></div>
+<footer><div class="foot">A prompt is an operational description offered as a move inside a language-game to an interpreter capable of producing a continuation whose adequacy can be judged.</div><div class="src"></div></footer>
+</section><section class="slide" data-i="32">
+<div class="cap"><span class="kind">SOVEREIGN INVARIANT</span><span class="num">32</span></div>
+<div class="body"><div class="claimbig last">ASK WHAT GAME<br>GIVES THOSE WORDS<br>THEIR FORCE.</div></div>
+<footer><div class="foot">The research program shifts attention from better strings to the rules, roles, representations, executors, and tests that make strings consequential.</div><div class="src"></div></footer>
+</section>
+<div id="dots"></div><div id="controls">← → / SPACE · F fullscreen · swipe</div>
+<script>
+const slides=[...document.querySelectorAll('.slide')],dots=document.getElementById('dots');
+let i=Math.max(0,Math.min(slides.length-1,(parseInt(location.hash.slice(1))||1)-1));
+slides.forEach((s,n)=>{let b=document.createElement('button');b.onclick=()=>go(n);dots.appendChild(b)});
+const ds=[...dots.children];
+function render(){slides.forEach((s,n)=>s.classList.toggle('on',n===i));ds.forEach((d,n)=>d.classList.toggle('on',n===i));history.replaceState(null,'','#'+(i+1))}
+function go(n){i=Math.max(0,Math.min(slides.length-1,n));render()}
+addEventListener('keydown',e=>{if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){e.preventDefault();go(i+1)}else if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();go(i-1)}else if(e.key==='Home')go(0);else if(e.key==='End')go(slides.length-1);else if(e.key.toLowerCase()==='f'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen?.()}});
+let x0=null,y0=null;addEventListener('touchstart',e=>{x0=e.touches[0].clientX;y0=e.touches[0].clientY},{passive:true});addEventListener('touchend',e=>{if(x0===null)return;let dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy)*1.2)go(i+(dx<0?1:-1));x0=y0=null},{passive:true});
+const rs=[...document.querySelectorAll('#cycling span')];let ri=0;if(rs.length&&!matchMedia('(prefers-reduced-motion: reduce)').matches)setInterval(()=>{rs[ri].classList.remove('on');ri=(ri+1)%rs.length;rs[ri].classList.add('on')},1500);
+render();
+</script></body></html>
