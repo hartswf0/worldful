@@ -1,0 +1,3557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Great Khan's Atlas — Italo Calvino's Invisible Cities</title>
+<style>
+  :root {
+    --ebony-deep: #130f0b;
+    --ebony-mid: #1d1711;
+    --ebony-warm: #2a2118;
+    --ebony-grain: #382c20;
+    --vellum-bright: #f7efe0;
+    --vellum-main: #efe3cb;
+    --vellum-aged: #e3d2b2;
+    --vellum-shadow: #cfb992;
+    --ink-obsidian: #1f1812;
+    --ink-sepia: #3e3023;
+    --ink-muted: #695540;
+    --brass-dim: #8c6928;
+    --brass-gold: #c4963c;
+    --brass-bright: #e3ba63;
+    --cinnabar: #9e2a2b;
+    --cinnabar-glow: #c93b3b;
+    --verdigris: #2f665e;
+    --lapis: #26486b;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Baskerville, "Book Antiqua", Georgia, serif;
+    --mono: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--ebony-deep);
+    color: var(--ink-obsidian);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: var(--serif);
+    background:
+      radial-gradient(circle at 50% 0%, rgba(196, 150, 60, 0.12), transparent 55%),
+      repeating-linear-gradient(
+        90deg,
+        #15100c 0px,
+        #18120e 3px,
+        #130e0a 7px,
+        #1b1510 12px
+      );
+    color: var(--vellum-main);
+    padding: 18px;
+    line-height: 1.55;
+  }
+
+  body.loupe-open {
+    overflow: hidden;
+  }
+
+  /* Outer Ebony & Brass Marquetry Frame */
+  .imperial-codex {
+    max-width: 1400px;
+    margin: 0 auto;
+    border: 2px solid var(--brass-dim);
+    background: var(--ebony-mid);
+    box-shadow:
+      0 24px 70px rgba(0, 0, 0, 0.78),
+      inset 0 0 0 4px var(--ebony-deep),
+      inset 0 0 0 5px rgba(196, 150, 60, 0.38);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Portolan Masthead */
+  .masthead {
+    position: relative;
+    padding: 34px 36px 28px;
+    background:
+      radial-gradient(ellipse at 50% 35%, rgba(239, 227, 203, 0.07), transparent 70%),
+      linear-gradient(180deg, #1b1510 0%, #130f0b 100%);
+    border-bottom: 2px solid var(--brass-dim);
+    overflow: hidden;
+  }
+
+  .portolan-rhumbs {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0.24;
+  }
+
+  .masthead-inner {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 112px 1fr auto;
+    gap: 26px;
+    align-items: center;
+  }
+
+  .compass-emblem {
+    width: 108px;
+    height: 108px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .compass-emblem svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.65));
+  }
+
+  .masthead-kicker {
+    font-family: var(--mono);
+    font-size: 0.73rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--brass-bright);
+    margin-bottom: 6px;
+  }
+
+  .masthead h1 {
+    margin: 0;
+    font-size: clamp(1.75rem, 3.1vw, 2.75rem);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--vellum-bright);
+    line-height: 1.15;
+  }
+
+  .masthead-subtitle {
+    margin: 8px 0 0;
+    font-size: 1.02rem;
+    font-style: italic;
+    color: var(--vellum-aged);
+    max-width: 760px;
+  }
+
+  .telemetry-plinth {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(136px, 1fr));
+    gap: 10px;
+    background: rgba(19, 15, 11, 0.85);
+    border: 1px solid rgba(196, 150, 60, 0.42);
+    padding: 12px 14px;
+  }
+
+  .telemetry-cell {
+    padding: 6px 10px;
+    border-left: 2px solid var(--brass-gold);
+  }
+
+  .telemetry-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--vellum-shadow);
+  }
+
+  .telemetry-value {
+    font-size: 1.16rem;
+    font-weight: 700;
+    color: var(--vellum-bright);
+    margin-top: 2px;
+  }
+
+  .telemetry-value .accent-seal {
+    color: #ef6b63;
+  }
+
+  /* Chessboard Parallelogram Section */
+  .chess-pavilion {
+    background: linear-gradient(180deg, #19130e 0%, #211912 100%);
+    border-bottom: 2px solid var(--brass-dim);
+    padding: 26px 32px 30px;
+  }
+
+  .section-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .section-title {
+    margin: 0;
+    font-size: 1.28rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--brass-bright);
+  }
+
+  .section-note {
+    font-size: 0.92rem;
+    font-style: italic;
+    color: var(--vellum-aged);
+  }
+
+  .chess-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 360px;
+    gap: 22px;
+    align-items: start;
+  }
+
+  .board-scroll {
+    overflow-x: auto;
+    padding-bottom: 6px;
+  }
+
+  .inlay-board {
+    min-width: 720px;
+    border: 3px solid var(--brass-dim);
+    background: #120d09;
+    padding: 10px;
+    box-shadow: inset 0 0 24px rgba(0, 0, 0, 0.85);
+  }
+
+  .board-col-headers {
+    display: grid;
+    grid-template-columns: 74px repeat(11, minmax(52px, 1fr));
+    gap: 2px;
+    margin-bottom: 4px;
+  }
+
+  .board-col-head {
+    font-family: var(--mono);
+    font-size: 0.64rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    text-align: center;
+    padding: 6px 2px;
+    color: var(--vellum-aged);
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid rgba(196, 150, 60, 0.35);
+    cursor: pointer;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+  }
+
+  .board-col-head:hover,
+  .board-col-head.is-active {
+    color: var(--brass-bright);
+    background: rgba(196, 150, 60, 0.16);
+  }
+
+  .board-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .board-row {
+    display: grid;
+    grid-template-columns: 74px repeat(11, minmax(52px, 1fr));
+    gap: 2px;
+  }
+
+  .board-row-label {
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    color: var(--brass-bright);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 7px;
+    background: rgba(196, 150, 60, 0.07);
+    border-right: 1px solid rgba(196, 150, 60, 0.3);
+  }
+
+  .chess-sq {
+    height: 36px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    transition: transform 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease;
+  }
+
+  .chess-sq.sq-ebony {
+    background: repeating-linear-gradient(12deg, #1b1510 0px, #211913 4px, #17110d 8px);
+  }
+
+  .chess-sq.sq-ivory {
+    background: repeating-linear-gradient(-8deg, #32271c 0px, #382c20 5px, #2d2319 10px);
+  }
+
+  .chess-sq.sq-empty {
+    opacity: 0.42;
+  }
+
+  .chess-sq.sq-city {
+    cursor: pointer;
+    opacity: 1;
+    border-color: rgba(196, 150, 60, 0.32);
+    color: var(--vellum-main);
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    padding: 0;
+  }
+
+  .chess-sq.sq-city.sq-ivory {
+    background: linear-gradient(145deg, #efe2c6 0%, #dcc79f 100%);
+    color: var(--ink-obsidian);
+  }
+
+  .chess-sq.sq-city.sq-ebony {
+    background: linear-gradient(145deg, #2a2017 0%, #1c150f 100%);
+    color: var(--vellum-bright);
+  }
+
+  .chess-sq.sq-city:hover,
+  .chess-sq.sq-city:focus-visible,
+  .chess-sq.sq-city.is-selected {
+    transform: scale(1.08);
+    z-index: 4;
+    border-color: var(--brass-bright);
+    box-shadow: 0 0 0 2px rgba(227, 186, 99, 0.55), 0 4px 12px rgba(0, 0, 0, 0.65);
+    outline: none;
+  }
+
+  .chess-sq.sq-city.is-dimmed {
+    opacity: 0.25;
+  }
+
+  .chess-sq.sq-sealed {
+    border-color: var(--brass-bright);
+    box-shadow: inset 0 0 0 1px var(--brass-bright), 0 0 12px rgba(196, 150, 60, 0.35);
+  }
+
+  .chess-sq.sq-sealed::after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--cinnabar-glow);
+    box-shadow: 0 0 6px rgba(201, 59, 59, 0.9);
+  }
+
+  .sq-num {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .sq-rank-sub {
+    font-size: 0.56rem;
+    opacity: 0.72;
+    margin-left: 2px;
+  }
+
+  /* Wood-grain Chess Inspector Plinth */
+  .inspector-plinth {
+    background:
+      radial-gradient(circle at 100% 0%, rgba(196, 150, 60, 0.12), transparent 60%),
+      var(--vellum-main);
+    color: var(--ink-obsidian);
+    border: 2px solid var(--brass-gold);
+    padding: 18px 20px;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5);
+  }
+
+  .inspector-kicker {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .inspector-title {
+    margin: 6px 0 2px;
+    font-size: 1.48rem;
+    color: var(--ink-obsidian);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .inspector-epithet {
+    margin: 0 0 10px;
+    font-style: italic;
+    font-size: 0.92rem;
+    color: var(--cinnabar);
+    font-weight: 600;
+  }
+
+  .inspector-copy {
+    margin: 10px 0 12px;
+    font-size: 0.88rem;
+    color: var(--ink-sepia);
+  }
+
+  .inspector-meta {
+    border-top: 1px solid rgba(62, 48, 35, 0.22);
+    padding-top: 10px;
+    font-family: var(--mono);
+    font-size: 0.71rem;
+    color: var(--ink-sepia);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .inspector-actions {
+    margin-top: 12px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  /* Tactile 3-Plate Switcher (Image / Map / Capsule) */
+  .plate-switcher {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border: 1px solid var(--brass-dim);
+    background: var(--ebony-mid);
+    margin: 8px 0 8px;
+  }
+
+  .plate-tab {
+    font-family: var(--mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 6px 4px;
+    border: none;
+    border-right: 1px solid rgba(196, 150, 60, 0.28);
+    background: transparent;
+    color: var(--vellum-aged);
+    cursor: pointer;
+    transition: background 0.12s ease, color 0.12s ease;
+  }
+
+  .plate-tab:last-child {
+    border-right: none;
+  }
+
+  .plate-tab:hover {
+    color: var(--vellum-bright);
+    background: rgba(196, 150, 60, 0.14);
+  }
+
+  .plate-tab.is-active {
+    background: var(--brass-gold);
+    color: var(--ebony-deep);
+    font-weight: 700;
+  }
+
+  .plate-stage {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    background: #17120d;
+    border: 1px solid var(--brass-dim);
+    overflow: hidden;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .plate-stage img.live-plate-img {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    cursor: zoom-in;
+    opacity: 0;
+    transition: transform 0.24s ease, opacity 0.2s ease;
+  }
+
+  .plate-stage.plate-loaded img.live-plate-img {
+    opacity: 1;
+  }
+
+  .plate-stage.is-map-plate.plate-loaded {
+    background: #f4ead5;
+  }
+
+  .plate-stage.is-map-plate img.live-plate-img {
+    object-fit: contain;
+    padding: 4px;
+    background: #f4ead5;
+  }
+
+  .plate-stage:hover img.live-plate-img {
+    transform: scale(1.03);
+  }
+
+  .loupe-trigger-chip {
+    position: absolute;
+    z-index: 3;
+    bottom: 7px;
+    right: 7px;
+    font-family: var(--mono);
+    font-size: 0.63rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    background: rgba(19, 15, 11, 0.86);
+    color: var(--brass-bright);
+    border: 1px solid var(--brass-gold);
+    cursor: pointer;
+    display: none;
+  }
+
+  .plate-stage.plate-loaded .loupe-trigger-chip {
+    display: inline-block;
+  }
+
+  .loupe-trigger-chip:hover {
+    background: var(--cinnabar);
+    color: var(--vellum-bright);
+    border-color: var(--cinnabar);
+  }
+
+  .plate-capsule-panel {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    padding: 12px 14px;
+    background:
+      radial-gradient(circle at 80% 20%, rgba(196, 150, 60, 0.18), transparent 65%),
+      linear-gradient(155deg, #211912 0%, #15100b 100%);
+    color: var(--vellum-bright);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .capsule-kicker {
+    font-family: var(--mono);
+    font-size: 0.63rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brass-bright);
+  }
+
+  .capsule-desc {
+    font-size: 0.81rem;
+    color: var(--vellum-aged);
+    margin: 6px 0;
+    line-height: 1.42;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .capsule-btn-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .uncharted-plate-etching {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background:
+      repeating-linear-gradient(-45deg, rgba(62, 48, 35, 0.05) 0px, rgba(62, 48, 35, 0.05) 2px, transparent 2px, transparent 8px),
+      #e6d7b9;
+    color: var(--ink-muted);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .uncharted-plate-etching .etch-kind {
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-sepia);
+    margin-top: 6px;
+    font-weight: 700;
+  }
+
+  .uncharted-plate-etching .etch-path {
+    font-family: var(--mono);
+    font-size: 0.61rem;
+    color: var(--ink-muted);
+    margin-top: 3px;
+    word-break: break-all;
+  }
+
+  /* Warm Parchment Folio Body */
+  .parchment-sanctum {
+    background:
+      radial-gradient(circle at 15% 10%, rgba(255, 251, 240, 0.55), transparent 45%),
+      radial-gradient(circle at 85% 80%, rgba(196, 150, 60, 0.14), transparent 50%),
+      var(--vellum-main);
+    color: var(--ink-obsidian);
+    padding: 28px 34px 44px;
+  }
+
+  /* Navigation & Filter Controls */
+  .codex-controls {
+    background: var(--vellum-bright);
+    border: 1px solid var(--vellum-shadow);
+    box-shadow: inset 0 0 0 2px rgba(196, 150, 60, 0.18);
+    padding: 16px 18px;
+    margin-bottom: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .controls-top-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .mode-tabs {
+    display: inline-flex;
+    flex-wrap: wrap;
+    border: 1px solid var(--ink-muted);
+    background: var(--vellum-aged);
+  }
+
+  .mode-btn {
+    font-family: var(--serif);
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 8px 14px;
+    border: none;
+    background: transparent;
+    color: var(--ink-sepia);
+    cursor: pointer;
+    border-right: 1px solid rgba(62, 48, 35, 0.25);
+  }
+
+  .mode-btn:last-child {
+    border-right: none;
+  }
+
+  .mode-btn.is-active {
+    background: var(--ebony-mid);
+    color: var(--brass-bright);
+  }
+
+  .search-and-seal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .search-input {
+    font-family: var(--serif);
+    font-size: 0.92rem;
+    padding: 7px 12px;
+    min-width: 220px;
+    border: 1px solid var(--ink-muted);
+    background: #fffcf5;
+    color: var(--ink-obsidian);
+  }
+
+  .seal-toggle-btn {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 8px 11px;
+    border: 1px solid var(--cinnabar);
+    background: transparent;
+    color: var(--cinnabar);
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  .seal-toggle-btn.is-active {
+    background: var(--cinnabar);
+    color: var(--vellum-bright);
+  }
+
+  .pill-ribbon {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .ribbon-label {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-muted);
+    margin-right: 4px;
+  }
+
+  .filter-pill {
+    font-family: var(--mono);
+    font-size: 0.71rem;
+    padding: 4px 9px;
+    border: 1px solid rgba(62, 48, 35, 0.32);
+    background: var(--vellum-main);
+    color: var(--ink-sepia);
+    cursor: pointer;
+  }
+
+  .filter-pill:hover {
+    border-color: var(--ink-obsidian);
+  }
+
+  .filter-pill.is-active {
+    background: var(--ebony-warm);
+    color: var(--brass-bright);
+    border-color: var(--ebony-warm);
+  }
+
+  /* Chapter Folios & Frame Dialogues */
+  .chapter-block {
+    margin-bottom: 42px;
+    border-top: 2px solid var(--ink-obsidian);
+    padding-top: 22px;
+  }
+
+  .chapter-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .chapter-numeral {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cinnabar);
+    font-weight: 700;
+  }
+
+  .chapter-heading {
+    margin: 2px 0 0;
+    font-size: 1.65rem;
+    color: var(--ink-obsidian);
+  }
+
+  .chapter-tally {
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    color: var(--ink-muted);
+  }
+
+  /* Kublai & Marco Frame Dialogue Scrolls */
+  .dialogue-scroll {
+    background: linear-gradient(90deg, #211912 0%, #2b2118 50%, #211912 100%);
+    color: var(--vellum-main);
+    border-left: 4px solid var(--brass-gold);
+    border-right: 4px solid var(--brass-gold);
+    padding: 16px 22px;
+    margin: 14px 0 20px;
+    box-shadow: 0 6px 18px rgba(31, 24, 18, 0.16);
+  }
+
+  .dialogue-scroll.closing-frame {
+    margin: 20px 0 6px;
+    border-left-color: var(--cinnabar);
+    border-right-color: var(--cinnabar);
+  }
+
+  .dialogue-rubric {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--brass-bright);
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .dialogue-text {
+    margin: 0;
+    font-style: italic;
+    font-size: 0.98rem;
+    color: var(--vellum-bright);
+    line-height: 1.6;
+  }
+
+  /* City Folio Grid */
+  .city-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+  }
+
+  .city-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 16px 16px 15px;
+    transition: transform 0.16s ease, box-shadow 0.16s ease;
+  }
+
+  .city-card.is-sealed {
+    background: linear-gradient(165deg, #fffdf7 0%, #f5ead4 100%);
+    border: 2px solid var(--brass-gold);
+    box-shadow:
+      0 8px 22px rgba(31, 24, 18, 0.16),
+      inset 0 0 0 2px rgba(196, 150, 60, 0.25);
+  }
+
+  .city-card.is-sealed:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      0 14px 28px rgba(31, 24, 18, 0.24),
+      inset 0 0 0 2px var(--brass-gold);
+  }
+
+  .city-card.is-uncharted {
+    background: rgba(227, 210, 178, 0.62);
+    border: 1px dashed rgba(62, 48, 35, 0.45);
+    color: var(--ink-sepia);
+  }
+
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+
+  .card-coords {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .wax-seal {
+    font-family: var(--mono);
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 2px;
+  }
+
+  .wax-seal.sealed {
+    background: var(--cinnabar);
+    color: var(--vellum-bright);
+    box-shadow: 0 2px 6px rgba(158, 42, 43, 0.4);
+  }
+
+  .wax-seal.uncharted {
+    background: rgba(62, 48, 35, 0.11);
+    color: var(--ink-muted);
+  }
+
+  .card-title-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 3px;
+  }
+
+  .series-sigil {
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
+  }
+
+  .card-city-name {
+    margin: 0;
+    font-size: 1.32rem;
+    letter-spacing: 0.03em;
+    color: var(--ink-obsidian);
+  }
+
+  .card-city-name a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid var(--brass-gold);
+  }
+
+  .card-city-name a:hover {
+    color: var(--cinnabar);
+    border-bottom-color: var(--cinnabar);
+  }
+
+  .card-epithet {
+    margin: 2px 0 6px;
+    font-size: 0.87rem;
+    font-style: italic;
+    font-weight: 600;
+    color: var(--ink-sepia);
+  }
+
+  .card-inscription {
+    margin: 0 0 12px;
+    font-size: 0.85rem;
+    color: var(--ink-sepia);
+    line-height: 1.48;
+  }
+
+  .card-footer {
+    border-top: 1px solid rgba(62, 48, 35, 0.18);
+    padding-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .jdom-badge {
+    font-family: var(--mono);
+    font-size: 0.67rem;
+    color: var(--verdigris);
+    font-weight: 600;
+  }
+
+  .uncharted-path {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--ink-muted);
+  }
+
+  .portal-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 0.71rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 6px 11px;
+    background: var(--ebony-mid);
+    color: var(--brass-bright);
+    border: 1px solid var(--brass-gold);
+    cursor: pointer;
+    transition: background 0.14s ease, color 0.14s ease;
+  }
+
+  .portal-btn:hover,
+  .portal-btn:focus-visible {
+    background: var(--cinnabar);
+    color: var(--vellum-bright);
+    border-color: var(--cinnabar);
+  }
+
+  .secondary-btn {
+    font-family: var(--mono);
+    font-size: 0.69rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 6px 10px;
+    background: transparent;
+    color: var(--ink-obsidian);
+    border: 1px solid var(--ink-muted);
+    cursor: pointer;
+  }
+
+  .secondary-btn:hover {
+    background: rgba(31, 24, 18, 0.09);
+  }
+
+  .empty-filter-state {
+    padding: 36px;
+    text-align: center;
+    border: 1px dashed var(--ink-muted);
+    font-style: italic;
+    color: var(--ink-sepia);
+  }
+
+  .colophon {
+    background: var(--ebony-deep);
+    color: var(--vellum-shadow);
+    border-top: 2px solid var(--brass-dim);
+    padding: 18px 34px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+  }
+
+  /* Full-Screen Archival Plate Loupe Modal */
+  .archival-loupe-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: rgba(11, 8, 6, 0.92);
+    backdrop-filter: blur(4px);
+    display: none;
+    flex-direction: column;
+    padding: 18px;
+  }
+
+  .archival-loupe-backdrop.is-open {
+    display: flex;
+  }
+
+  .loupe-shell {
+    max-width: 1360px;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    border: 2px solid var(--brass-gold);
+    background: var(--ebony-deep);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    box-shadow: 0 28px 90px rgba(0, 0, 0, 0.9);
+    overflow: hidden;
+  }
+
+  .loupe-topbar {
+    background: var(--ebony-mid);
+    border-bottom: 1px solid var(--brass-dim);
+    padding: 12px 18px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .loupe-heading-group {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .loupe-city-title {
+    margin: 0;
+    font-size: 1.35rem;
+    color: var(--vellum-bright);
+  }
+
+  .loupe-city-sub {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--brass-bright);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .loupe-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .loupe-btn {
+    font-family: var(--mono);
+    font-size: 0.71rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    padding: 6px 11px;
+    border: 1px solid rgba(196, 150, 60, 0.45);
+    background: #231b14;
+    color: var(--vellum-main);
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .loupe-btn:hover,
+  .loupe-btn.is-active {
+    background: var(--brass-gold);
+    color: var(--ebony-deep);
+    border-color: var(--brass-bright);
+    font-weight: 700;
+  }
+
+  .loupe-close-btn {
+    background: var(--cinnabar);
+    border-color: var(--cinnabar-glow);
+    color: var(--vellum-bright);
+    font-weight: 700;
+  }
+
+  .loupe-viewport {
+    position: relative;
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+      radial-gradient(circle at 50% 50%, #241c15 0%, #110d09 100%);
+    padding: 18px;
+  }
+
+  .loupe-viewport.map-paper {
+    background:
+      radial-gradient(circle at 50% 50%, #f6edd9 0%, #dfd0b0 100%);
+  }
+
+  .loupe-media-wrap {
+    transition: transform 0.15s ease-out;
+    transform-origin: center center;
+    max-width: 100%;
+    max-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .loupe-media-wrap img {
+    max-width: 100%;
+    max-height: calc(100vh - 190px);
+    box-shadow: 0 14px 44px rgba(0, 0, 0, 0.65);
+    border: 1px solid rgba(196, 150, 60, 0.5);
+    display: block;
+  }
+
+  .loupe-iframe {
+    width: 100%;
+    height: 100%;
+    min-height: 520px;
+    border: 1px solid var(--brass-dim);
+    background: #0e0b08;
+  }
+
+  .loupe-footer {
+    background: var(--ebony-mid);
+    border-top: 1px solid var(--brass-dim);
+    padding: 10px 18px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--mono);
+    font-size: 0.71rem;
+    color: var(--vellum-aged);
+  }
+
+  @media (max-width: 1024px) {
+    .masthead-inner {
+      grid-template-columns: 84px 1fr;
+    }
+    .telemetry-plinth {
+      grid-column: 1 / -1;
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .chess-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    body { padding: 6px; }
+    .masthead { padding: 20px 16px; }
+    .masthead-inner { grid-template-columns: 1fr; gap: 14px; }
+    .compass-emblem { width: 72px; height: 72px; }
+    .telemetry-plinth { grid-template-columns: repeat(2, 1fr); }
+    .chess-pavilion, .parchment-sanctum { padding: 18px 14px; }
+    .search-input { min-width: 100%; }
+    .city-grid { grid-template-columns: 1fr; }
+    .archival-loupe-backdrop { padding: 6px; }
+  }
+</style>
+</head>
+<body>
+<div class="imperial-codex">
+  <!-- Imperial Portolan Masthead -->
+  <header class="masthead">
+    <svg class="portolan-rhumbs" viewBox="0 0 1400 240" preserveAspectRatio="none" aria-hidden="true">
+      <g stroke="#c4963c" stroke-width="0.6" fill="none">
+        <line x1="90" y1="120" x2="1400" y2="10" />
+        <line x1="90" y1="120" x2="1400" y2="65" />
+        <line x1="90" y1="120" x2="1400" y2="120" />
+        <line x1="90" y1="120" x2="1400" y2="175" />
+        <line x1="90" y1="120" x2="1400" y2="230" />
+        <line x1="90" y1="120" x2="620" y2="0" />
+        <line x1="90" y1="120" x2="620" y2="240" />
+        <circle cx="90" cy="120" r="95" stroke-dasharray="3 4" />
+        <circle cx="90" cy="120" r="190" stroke-dasharray="2 6" />
+        <circle cx="90" cy="120" r="340" stroke-dasharray="1 7" />
+      </g>
+    </svg>
+
+    <div class="masthead-inner">
+      <div class="compass-emblem" aria-hidden="true">
+        <svg viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="54" fill="#17120d" stroke="#c4963c" stroke-width="1.5" />
+          <circle cx="60" cy="60" r="47" fill="none" stroke="#8c6928" stroke-width="0.8" stroke-dasharray="2 3" />
+          <g stroke="#c4963c" stroke-width="0.8">
+            <line x1="60" y1="6" x2="60" y2="114" />
+            <line x1="6" y1="60" x2="114" y2="60" />
+            <line x1="22" y1="22" x2="98" y2="98" />
+            <line x1="98" y1="22" x2="22" y2="98" />
+          </g>
+          <polygon points="60,10 67,52 60,46 53,52" fill="#9e2a2b" stroke="#e3ba63" stroke-width="0.8" />
+          <polygon points="60,110 67,68 60,74 53,68" fill="#c4963c" />
+          <polygon points="10,60 52,53 46,60 52,67" fill="#c4963c" />
+          <polygon points="110,60 68,53 74,60 68,67" fill="#c4963c" />
+          <polygon points="26,26 55,49 49,55" fill="#8c6928" />
+          <polygon points="94,26 65,49 71,55" fill="#8c6928" />
+          <polygon points="26,94 55,71 49,65" fill="#8c6928" />
+          <polygon points="94,94 65,71 71,65" fill="#8c6928" />
+          <circle cx="60" cy="60" r="7" fill="#efe3cb" stroke="#17120d" stroke-width="2" />
+          <circle cx="60" cy="60" r="2.5" fill="#9e2a2b" />
+        </svg>
+      </div>
+
+      <div>
+        <div class="masthead-kicker">Imperial Cartographic Codex · Italo Calvino (1972)</div>
+        <h1>The Great Khan’s Atlas</h1>
+        <p class="masthead-subtitle">
+          “The Great Khan owns an atlas whose drawings depict the terrestrial globe all at once… illustrated plates, surveyed maps, and living architectural capsules.”
+        </p>
+      </div>
+
+      <div class="telemetry-plinth" aria-label="Atlas Telemetry">
+        <div class="telemetry-cell">
+          <div class="telemetry-label">Illuminated</div>
+          <div class="telemetry-value"><span class="accent-seal" id="stat-sealed">0</span> / 55</div>
+        </div>
+        <div class="telemetry-cell">
+          <div class="telemetry-label">Triptych Plates</div>
+          <div class="telemetry-value">Img · Map · App</div>
+        </div>
+        <div class="telemetry-cell">
+          <div class="telemetry-label">Matrix</div>
+          <div class="telemetry-value">IX × 11</div>
+        </div>
+        <div class="telemetry-cell">
+          <div class="telemetry-label">Anti-Trude Max</div>
+          <div class="telemetry-value" id="stat-jdom">0.00 &lt; 0.35</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Ebony & Boxwood Parallelogram Chessboard -->
+  <section class="chess-pavilion" aria-labelledby="matrix-heading">
+    <div class="section-bar">
+      <h2 class="section-title" id="matrix-heading">Kublai’s Ebony &amp; Ivory Parallelogram</h2>
+      <span class="section-note">15 combinatorial wavefronts × 11 thematic series · Click any square to inspect its Image, Map &amp; Interactive Capsule</span>
+    </div>
+
+    <div class="chess-layout">
+      <div class="board-scroll">
+        <div class="inlay-board" role="grid" aria-label="55 Invisible Cities Parallelogram Matrix">
+          <div class="board-col-headers" id="board-col-headers"></div>
+          <div class="board-grid" id="board-grid"></div>
+        </div>
+      </div>
+
+      <aside class="inspector-plinth" id="inspector-plinth" aria-live="polite"></aside>
+    </div>
+  </section>
+
+  <!-- Warm Parchment Folios: Chapters, Series & Frame Dialogues -->
+  <main class="parchment-sanctum">
+    <section class="codex-controls" aria-label="Atlas Filters and Perspectives">
+      <div class="controls-top-row">
+        <div class="mode-tabs" role="tablist" aria-label="Atlas Organization Mode">
+          <button type="button" class="mode-btn is-active" data-mode="chapters" role="tab" aria-selected="true">
+            IX Chapters &amp; Dialogues
+          </button>
+          <button type="button" class="mode-btn" data-mode="series" role="tab" aria-selected="false">
+            11 Thematic Diagonals
+          </button>
+          <button type="button" class="mode-btn" data-mode="dialogues" role="tab" aria-selected="false">
+            Kublai &amp; Marco Only
+          </button>
+        </div>
+
+        <div class="search-and-seal">
+          <div class="mode-tabs" role="group" aria-label="Global Default Plate View">
+            <button type="button" class="mode-btn is-active" data-global-plate="image" title="Set all cards to City Image (image.png)">Plate: Image</button>
+            <button type="button" class="mode-btn" data-global-plate="map" title="Set all cards to Cartographic Map (map.png)">Plate: Map</button>
+            <button type="button" class="mode-btn" data-global-plate="capsule" title="Set all cards to Interactive Capsule (index.html)">Plate: Capsule</button>
+          </div>
+          <input
+            type="search"
+            id="search-input"
+            class="search-input"
+            placeholder="Search city, stone, or motif…"
+            aria-label="Search cities by name, stone, or motif"
+          />
+          <button type="button" id="seal-only-btn" class="seal-toggle-btn" aria-pressed="false">
+            Sealed Only (<span id="btn-sealed-count">0</span>)
+          </button>
+        </div>
+      </div>
+
+      <div class="pill-ribbon" id="chapter-pills"></div>
+      <div class="pill-ribbon" id="series-pills"></div>
+    </section>
+
+    <div id="folio-stage"></div>
+  </main>
+
+  <footer class="colophon">
+    <span>GREAT KHAN’S ATLAS · LEDGER v1.1 · PLATES: IMAGE.PNG + MAP.SVG/PNG + INDEX.HTML</span>
+    <span id="colophon-stamp">Anti-Trude Morphological Ceiling: J_dom &lt; 0.35</span>
+  </footer>
+</div>
+
+<!-- Full-Screen Archival Plate Loupe Modal -->
+<div class="archival-loupe-backdrop" id="archival-loupe" role="dialog" aria-modal="true" aria-labelledby="loupe-title">
+  <div class="loupe-shell">
+    <div class="loupe-topbar">
+      <div class="loupe-heading-group">
+        <h2 class="loupe-city-title" id="loupe-title">City Plate</h2>
+        <span class="loupe-city-sub" id="loupe-sub">Chapter I · Memory 1</span>
+      </div>
+
+      <div class="loupe-controls">
+        <button type="button" class="loupe-btn" data-loupe-plate="image" title="Shortcut: 1">1 · City Image</button>
+        <button type="button" class="loupe-btn" data-loupe-plate="map" title="Shortcut: 2 (High-DPI Copperplate Map)">2 · Carto Map (PNG)</button>
+        <button type="button" class="loupe-btn" data-loupe-plate="map_svg" title="Embedded SVG Map">Map (SVG)</button>
+        <button type="button" class="loupe-btn" data-loupe-plate="capsule" title="Shortcut: 3">3 · Live Capsule</button>
+        <span style="color:#8c6928">|</span>
+        <button type="button" class="loupe-btn" data-loupe-zoom="1">1× Fit</button>
+        <button type="button" class="loupe-btn" data-loupe-zoom="1.75">1.75×</button>
+        <button type="button" class="loupe-btn" data-loupe-zoom="2.75">2.75× Loupe</button>
+        <a class="loupe-btn" id="loupe-standalone-link" href="#">Open Standalone &nearr;</a>
+        <button type="button" class="loupe-btn loupe-close-btn" id="loupe-close-btn" aria-label="Close Archival Loupe">Esc &times;</button>
+      </div>
+    </div>
+
+    <div class="loupe-viewport" id="loupe-viewport"></div>
+
+    <div class="loupe-footer">
+      <span id="loupe-caption">Use keys 1 / 2 / 3 to switch plates, +/- to zoom, ← / → to step through cities, Esc to close.</span>
+      <div>
+        <button type="button" class="loupe-btn" id="loupe-prev-btn">&larr; Prev City</button>
+        <button type="button" class="loupe-btn" id="loupe-next-btn">Next City &rarr;</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/*__ATLAS_STATE_START__*/
+const ATLAS_COMMITTED_STATE = {
+  "updated_at": "2026-11-11T13:16:59Z",
+  "committed": {
+    "10_isaura": {
+      "city_id": "10_isaura",
+      "status": "COMMITTED",
+      "rev": "6c5601ed347c4dc243d1bdead26801a794e9f02bf080dfea7777b34aab430902",
+      "sha256": "6c5601ed347c4dc243d1bdead26801a794e9f02bf080dfea7777b34aab430902",
+      "j_dom": 0.0,
+      "nearest_city": null,
+      "token_count": 169,
+      "href": "../cities/10_isaura/index.html",
+      "map_svg": "../cities/10_isaura/map.svg",
+      "map_png": "../cities/10_isaura/map.png",
+      "image_png": "../cities/10_isaura/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Tall vertical geological-hydraulic cross-section, rotary borehole drilling rig, shallow-water cavern wave solver, dual-religion theological lens instrument, plus Royal Plate Guild hand-colored copperplate cartography (ma",
+      "committed_at": "2026-11-11T01:29:21Z"
+    },
+    "09_zirma": {
+      "city_id": "09_zirma",
+      "status": "COMMITTED",
+      "rev": "6870602d8044",
+      "sha256": "6870602d8044ba1027ab283a07dd6ed6a621d1e618dc585e72a1b5c12a28e092",
+      "j_dom": 0.0,
+      "nearest_city": "10_isaura",
+      "token_count": 236,
+      "href": "../cities/09_zirma/index.html",
+      "map_svg": "../cities/09_zirma/map.svg",
+      "map_png": "../cities/09_zirma/map.png",
+      "image_png": "../cities/09_zirma/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Stereoscopic witness-discrepancy & typographic woodblock/rotogravure stamp-overprint press",
+      "committed_at": "2026-11-11T01:29:22Z"
+    },
+    "05_anastasia": {
+      "city_id": "05_anastasia",
+      "status": "COMMITTED",
+      "rev": "f0f4484dd523",
+      "sha256": "f0f4484dd5235708fee73f53703beadfc3a17cf52b8d0b134dff5f2967644855",
+      "j_dom": 0.0,
+      "nearest_city": "09_zirma",
+      "token_count": 242,
+      "href": "../cities/05_anastasia/index.html",
+      "map_svg": "../cities/05_anastasia/map.svg",
+      "map_png": "../cities/05_anastasia/map.png",
+      "image_png": "../cities/05_anastasia/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "",
+      "committed_at": "2026-11-11T01:29:46Z"
+    },
+    "01_diomira": {
+      "city_id": "01_diomira",
+      "status": "COMMITTED",
+      "rev": "5bf76d86275e23d2312f350b303583796f1b93f0caffa2d5a709bbfc36c027e4",
+      "sha256": "5bf76d86275e23d2312f350b303583796f1b93f0caffa2d5a709bbfc36c027e4",
+      "j_dom": 0.0,
+      "nearest_city": "05_anastasia",
+      "token_count": 248,
+      "href": "../cities/01_diomira/index.html",
+      "map_svg": "../cities/01_diomira/map.svg",
+      "map_png": "../cities/01_diomira/map.png",
+      "image_png": "../cities/01_diomira/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Interactive dusk-chronometer & lead-engraved architectural elevation with procedural WebAudio crystal/brass/vocal-formant synthesis, accompanied by a bespoke 60-cupola topological plan (map.svg + map.png) and supersample",
+      "committed_at": "2026-11-11T01:30:25Z"
+    },
+    "07_zora": {
+      "city_id": "07_zora",
+      "status": "COMMITTED",
+      "rev": "49db71b11065",
+      "sha256": "382b1a37e64541ae1e0e4deb85d7919251a5088750a3bbdcdbd00466d912a798",
+      "j_dom": 0.0022,
+      "nearest_city": "05_anastasia",
+      "token_count": 222,
+      "href": "../cities/07_zora/index.html",
+      "map_svg": "../cities/07_zora/map.svg",
+      "map_png": "../cities/07_zora/map.png",
+      "image_png": "../cities/07_zora/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "",
+      "committed_at": "2026-11-11T01:35:22Z"
+    },
+    "08_despina": {
+      "city_id": "08_despina",
+      "status": "COMMITTED",
+      "rev": "b4d84e67231d",
+      "sha256": "b4d84e67231db2e70931679cfaa5a067160b4daad1c1232f57e2a19636973383",
+      "j_dom": 0.0,
+      "nearest_city": "01_diomira",
+      "token_count": 259,
+      "href": "../cities/08_despina/index.html",
+      "map_svg": "../cities/08_despina/map.svg",
+      "map_png": "../cities/08_despina/map.png",
+      "image_png": "../cities/08_despina/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Bi-stable optical/silhouette horizon instrument without a neutral middle truth + Hand-Colored Copperplate Border Map & Fine-Art City Plate",
+      "committed_at": "2026-11-11T01:38:35Z"
+    },
+    "06_tamara": {
+      "city_id": "06_tamara",
+      "status": "COMMITTED",
+      "rev": "c291ccb25fa5",
+      "sha256": "fb637e83e9c4452bd5ef069d79d72bba3e11a5b5a7220cdd675376fd79ad8a1a",
+      "j_dom": 0.0,
+      "nearest_city": "01_diomira",
+      "token_count": 245,
+      "href": "../cities/06_tamara/index.html",
+      "map_svg": "../cities/06_tamara/map.svg",
+      "map_png": "../cities/06_tamara/map.png",
+      "image_png": "../cities/06_tamara/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Xylographic woodcut & rubricated emblem-book street-corridor with recursive peelable plates, Royal Plate Guild copperplate cartography & architectural painting folio, and a gaze-dwell pareidolia cloud-augury horizon",
+      "committed_at": "2026-11-11T01:41:04Z"
+    },
+    "04_zaira": {
+      "city_id": "04_zaira",
+      "status": "COMMITTED",
+      "rev": "251c97d9fa16595b0a69638e3c63777d0a451a75c7e3452e94fce7808cce78b2",
+      "sha256": "251c97d9fa16595b0a69638e3c63777d0a451a75c7e3452e94fce7808cce78b2",
+      "j_dom": 0.0,
+      "nearest_city": "01_diomira",
+      "token_count": 143,
+      "href": "../cities/04_zaira/index.html",
+      "map_svg": "../cities/04_zaira/map.svg",
+      "map_png": "../cities/04_zaira/map.png",
+      "image_png": "../cities/04_zaira/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Palimpsest chiromancy & brass surveyor's proportional caliper etching over expanding sponge-bastions, accompanied by 16th-century copperplate cartography (map.png / map.svg) and fine-art architectural plate (image.png)",
+      "committed_at": "2026-11-11T01:41:04Z"
+    },
+    "16_zobeide": {
+      "city_id": "16_zobeide",
+      "status": "COMMITTED",
+      "rev": "043b63f7b4dbf10f5efffa1d0b06e3fe8bba03e87f8e7da90aada6efbec03e04",
+      "sha256": "043b63f7b4dbf10f5efffa1d0b06e3fe8bba03e87f8e7da90aada6efbec03e04",
+      "j_dom": 0.0,
+      "nearest_city": "01_diomira",
+      "token_count": 206,
+      "href": "../cities/16_zobeide/index.html",
+      "map_svg": "../cities/16_zobeide/map.svg",
+      "map_png": "../cities/16_zobeide/map.png",
+      "image_png": "../cities/16_zobeide/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Interactive Moonlit Skein Pursuit & Masonry Amnesia Calcifier with Procedural Footstep-to-Drone WebAudio",
+      "committed_at": "2026-11-11T06:12:42Z"
+    },
+    "13_zoe": {
+      "city_id": "13_zoe",
+      "status": "COMMITTED",
+      "rev": "abee62ced2d81edc33e7345bbcdd355a94a43c7b0b8d45b8ae7eef07d49f45a9",
+      "sha256": "abee62ced2d81edc33e7345bbcdd355a94a43c7b0b8d45b8ae7eef07d49f45a9",
+      "j_dom": 0.0,
+      "nearest_city": "01_diomira",
+      "token_count": 152,
+      "href": "../cities/13_zoe/index.html",
+      "map_svg": "../cities/13_zoe/map.svg",
+      "map_png": "../cities/13_zoe/map.png",
+      "image_png": "../cities/13_zoe/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Toroidal architectural cutaway continuum, zoning-chalk boundary dissolution solver, 9-act simultaneous derangement & migration stage, polyphonic procedural WebAudio, plus Royal Plate Guild copperplate cartography (map.pn",
+      "committed_at": "2026-11-11T06:12:43Z"
+    },
+    "02_isidora": {
+      "city_id": "02_isidora",
+      "status": "COMMITTED",
+      "rev": "23d89b2239deebb8b5758165c40deb2297add01c492a8d6c5cbbeaab89311f20",
+      "sha256": "23d89b2239deebb8b5758165c40deb2297add01c492a8d6c5cbbeaab89311f20",
+      "j_dom": 0.0023,
+      "nearest_city": "07_zora",
+      "token_count": 208,
+      "href": "../cities/02_isidora/index.html",
+      "map_svg": "../cities/02_isidora/map.svg",
+      "map_png": "../cities/02_isidora/map.png",
+      "image_png": "../cities/02_isidora/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "",
+      "committed_at": "2026-11-11T06:14:12Z"
+    },
+    "11_maurilia": {
+      "city_id": "11_maurilia",
+      "status": "COMMITTED",
+      "rev": "60867da550398ea87f5a3d64cd5b859ec934a0272f56e3e9873dd31dc011ef0d",
+      "sha256": "60867da550398ea87f5a3d64cd5b859ec934a0272f56e3e9873dd31dc011ef0d",
+      "j_dom": 0.0023,
+      "nearest_city": "02_isidora",
+      "token_count": 230,
+      "href": "../cities/11_maurilia/index.html",
+      "map_svg": "../cities/11_maurilia/map.svg",
+      "map_png": "../cities/11_maurilia/map.png",
+      "image_png": "../cities/11_maurilia/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Interactive Stereopticon & Retroactive-Grace Optical Comparator with WebAudio Transit/Phantom-Brass Crossfade & Subterranean/Celestial Departed-Gods Stratum",
+      "committed_at": "2026-11-11T06:16:31Z"
+    },
+    "21_olivia": {
+      "city_id": "21_olivia",
+      "status": "COMMITTED",
+      "rev": "718f706efe37f55b10e32b37139c9b91f31dc49a00e6ea00795111ba6b23bd51",
+      "sha256": "718f706efe37f55b10e32b37139c9b91f31dc49a00e6ea00795111ba6b23bd51",
+      "j_dom": 0.0045,
+      "nearest_city": "07_zora",
+      "token_count": 228,
+      "href": "../cities/21_olivia/index.html",
+      "map_svg": "../cities/21_olivia/map.svg",
+      "map_png": "../cities/21_olivia/map.png",
+      "image_png": "../cities/21_olivia/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Pierced Alabaster Mullion Screen & Causal Ontological Duplicity Prism (Dual-Plane Canvas + Synchronized Filigree/Lathe WebAudio)",
+      "committed_at": "2026-11-11T06:20:02Z"
+    },
+    "03_dorothea": {
+      "city_id": "03_dorothea",
+      "status": "COMMITTED",
+      "rev": "f3566f5372d3a6c9af7135a401247677f7750c69a94f6c02d4e3664465b95ac0",
+      "sha256": "f3566f5372d3a6c9af7135a401247677f7750c69a94f6c02d4e3664465b95ac0",
+      "j_dom": 0.0,
+      "nearest_city": "01_diomira",
+      "token_count": 134,
+      "href": "../cities/03_dorothea/index.html",
+      "map_svg": "../cities/03_dorothea/map.svg",
+      "map_png": "../cities/03_dorothea/map.png",
+      "image_png": "../cities/03_dorothea/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "",
+      "committed_at": "2026-11-11T06:21:09Z"
+    },
+    "12_fedora": {
+      "city_id": "12_fedora",
+      "status": "COMMITTED",
+      "rev": "ed8a229473584b70639b6f3d8728a0a06488f8d03b60c528dc53f62bbdf4f4fa",
+      "sha256": "ed8a229473584b70639b6f3d8728a0a06488f8d03b60c528dc53f62bbdf4f4fa",
+      "j_dom": 0.0042,
+      "nearest_city": "07_zora",
+      "token_count": 256,
+      "href": "../cities/12_fedora/index.html",
+      "map_svg": "../cities/12_fedora/map.svg",
+      "map_png": "../cities/12_fedora/map.png",
+      "image_png": "../cities/12_fedora/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Split architectural cast-iron museum & refractive cobalt lens instrument pairing an oblique gray-granite urban mutation canvas (`FedoraStoneNecessity`) with a spherical-caustic crystal globe gallery & live blue counterfa",
+      "committed_at": "2026-11-11T06:21:23Z"
+    },
+    "14_zenobia": {
+      "city_id": "14_zenobia",
+      "status": "COMMITTED",
+      "rev": "79350de41fd92518fe85a8ba6e87b6acf244c8f84bb133cf3e559eef05acd52e",
+      "sha256": "79350de41fd92518fe85a8ba6e87b6acf244c8f84bb133cf3e559eef05acd52e",
+      "j_dom": 0.0026,
+      "nearest_city": "02_isidora",
+      "token_count": 179,
+      "href": "../cities/14_zenobia/index.html",
+      "map_svg": "../cities/14_zenobia/map.svg",
+      "map_png": "../cities/14_zenobia/map.png",
+      "image_png": "../cities/14_zenobia/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Interactive multi-altitude bamboo-and-zinc stilt trusswork loom over dry ochre mesa coupled to a generative Happy-Life Desire Recombinator that sublimates every attempt at flat-ground founding into higher, more intricate",
+      "committed_at": "2026-11-11T06:22:12Z"
+    },
+    "22_sophronia": {
+      "city_id": "22_sophronia",
+      "status": "COMMITTED",
+      "rev": "ae55c5270b6e02fa4fe0af6c4bf13b702c603696eba82816446a2382ad23dadf",
+      "sha256": "ae55c5270b6e02fa4fe0af6c4bf13b702c603696eba82816446a2382ad23dadf",
+      "j_dom": 0.008,
+      "nearest_city": "21_olivia",
+      "token_count": 150,
+      "href": "../cities/22_sophronia/index.html",
+      "map_svg": "../cities/22_sophronia/map.svg",
+      "map_png": "../cities/22_sophronia/map.png",
+      "image_png": "../cities/22_sophronia/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Sophronia consists of two half-cities: a carnival fairground and a metropolis of stone, marble, and cement. Against every expectation, the carnival half is bedrock-permanent and refuses every rigging wrench, whereas the ",
+      "committed_at": "2026-11-11T06:22:12Z"
+    },
+    "24_zemrude": {
+      "city_id": "24_zemrude",
+      "status": "COMMITTED",
+      "rev": "d20a79b165ca830b28829c29eb8a8bb2ef2579e80ed6e23d5063dae54eff81fd",
+      "sha256": "d20a79b165ca830b28829c29eb8a8bb2ef2579e80ed6e23d5063dae54eff81fd",
+      "j_dom": 0.0,
+      "nearest_city": "01_diomira",
+      "token_count": 208,
+      "href": "../cities/24_zemrude/index.html",
+      "map_svg": "../cities/24_zemrude/map.svg",
+      "map_png": "../cities/24_zemrude/map.png",
+      "image_png": "../cities/24_zemrude/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Vertical Gaze-Inclination & Asymmetric Habit-Ratchet Architectural Section with Procedural Flute-Whistle / Gutter-Well WebAudio",
+      "committed_at": "2026-11-11T06:22:25Z"
+    },
+    "31_esmeralda": {
+      "city_id": "31_esmeralda",
+      "status": "COMMITTED",
+      "rev": "197492b2e78df31206611c38cc863a5e6f050e9ed2da306bd6d8da718b607cde",
+      "sha256": "197492b2e78df31206611c38cc863a5e6f050e9ed2da306bd6d8da718b607cde",
+      "j_dom": 0.0,
+      "nearest_city": "01_diomira",
+      "token_count": 149,
+      "href": "../cities/31_esmeralda/index.html",
+      "map_svg": "../cities/31_esmeralda/map.svg",
+      "map_png": "../cities/31_esmeralda/map.png",
+      "image_png": "../cities/31_esmeralda/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "While Esmeralda's intersecting canals, stepped cambered-bridge streets, discontinuous cat/lover ridgepoles, and rat/gunpowder smuggler sewers can all be fixed onto a map in four colored inks to yield inexhaustible non-re",
+      "committed_at": "2026-11-11T06:23:09Z"
+    },
+    "17_hypatia": {
+      "city_id": "17_hypatia",
+      "status": "COMMITTED",
+      "rev": "3a139fd24fb09762c95e3a903587ac5f79dbf052db083814df9d68adc61d511b",
+      "sha256": "3a139fd24fb09762c95e3a903587ac5f79dbf052db083814df9d68adc61d511b",
+      "j_dom": 0.0035,
+      "nearest_city": "22_sophronia",
+      "token_count": 135,
+      "href": "../cities/17_hypatia/index.html",
+      "map_svg": "../cities/17_hypatia/map.svg",
+      "map_png": "../cities/17_hypatia/map.png",
+      "image_png": "../cities/17_hypatia/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Interactive Semiotic Refraction Codex & Split-Plane Architectural Prism with Procedural Canvas Elevations and WebAudio Flute-Harp / Quarry-Chain / Sky-Rigging Synthesis",
+      "committed_at": "2026-11-11T06:23:20Z"
+    },
+    "29_leandra": {
+      "city_id": "29_leandra",
+      "status": "COMMITTED",
+      "rev": "294d21cf6827e818ef5483b2cdb8b5dd8e87b5f0036fbcbd010cad5302deccd0",
+      "sha256": "294d21cf6827e818ef5483b2cdb8b5dd8e87b5f0036fbcbd010cad5302deccd0",
+      "j_dom": 0.0131,
+      "nearest_city": "16_zobeide",
+      "token_count": 259,
+      "href": "../cities/29_leandra/index.html",
+      "map_svg": "../cities/29_leandra/map.svg",
+      "map_png": "../cities/29_leandra/map.png",
+      "image_png": "../cities/29_leandra/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Interactive Nocturnal Tenement Cutaway, Family-Relocation Trunk Ledger & Wall-Stethoscope WebAudio Duet Synthesizer",
+      "committed_at": "2026-11-11T06:23:48Z"
+    },
+    "20_valdrada": {
+      "city_id": "20_valdrada",
+      "status": "COMMITTED",
+      "rev": "c6cd724ac0481fc5b9a4fb9fdd9513924b298e2447ec76e5b757ea537197ae72",
+      "sha256": "c6cd724ac0481fc5b9a4fb9fdd9513924b298e2447ec76e5b757ea537197ae72",
+      "j_dom": 0.0031,
+      "nearest_city": "17_hypatia",
+      "token_count": 186,
+      "href": "../cities/20_valdrada/index.html",
+      "map_svg": "../cities/20_valdrada/map.svg",
+      "map_png": "../cities/20_valdrada/map.png",
+      "image_png": "../cities/20_valdrada/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Catoptric split-elevation architectural diptych & asymmetric ontological value ledger across an exact horizontal lake waterline, coupled with melodic/phase-inverted WebAudio canons and archival copperplate/tempera plates",
+      "committed_at": "2026-11-11T06:24:58Z"
+    },
+    "15_euphemia": {
+      "city_id": "15_euphemia",
+      "status": "COMMITTED",
+      "rev": "517de9a8ffcf7285fb91f8a3549a4f9b1fd2a19efcd3bf179620c3222870836e",
+      "sha256": "517de9a8ffcf7285fb91f8a3549a4f9b1fd2a19efcd3bf179620c3222870836e",
+      "j_dom": 0.0,
+      "nearest_city": "01_diomira",
+      "token_count": 151,
+      "href": "../cities/15_euphemia/index.html",
+      "map_svg": "../cities/15_euphemia/map.svg",
+      "map_png": "../cities/15_euphemia/map.png",
+      "image_png": "../cities/15_euphemia/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Tri-phase Caravanserai Brass Balance, Nocturnal Seven-Fire Story Ring & Palimpsest Return-Voyage Memory Chest with procedural WebAudio",
+      "committed_at": "2026-11-11T06:26:55Z"
+    },
+    "26_octavia": {
+      "city_id": "26_octavia",
+      "status": "COMMITTED",
+      "rev": "8b6439a7b34ec0253e560a4946efe61a45207e0ba9fc9ffab8ed985f84200ee5",
+      "sha256": "8b6439a7b34ec0253e560a4946efe61a45207e0ba9fc9ffab8ed985f84200ee5",
+      "j_dom": 0.0,
+      "nearest_city": "01_diomira",
+      "token_count": 139,
+      "href": "../cities/26_octavia/index.html",
+      "map_svg": "../cities/26_octavia/map.svg",
+      "map_png": "../cities/26_octavia/map.png",
+      "image_png": "../cities/26_octavia/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Spider-web catenary city suspended between two sheer granite mountain crests over 840 feet of cloud-drifted abyss: ropes, iron chains, and 44 wooden-tie catwalks support all 14 downward-hanging Calvino stones while upwar",
+      "committed_at": "2026-11-11T06:27:15Z"
+    },
+    "32_phyllis": {
+      "city_id": "32_phyllis",
+      "status": "COMMITTED",
+      "rev": "ee440bcaf98c57814858d304f23819b610c8924ae7447b583912e2bff15cc303",
+      "sha256": "ee440bcaf98c57814858d304f23819b610c8924ae7447b583912e2bff15cc303",
+      "j_dom": 0.0,
+      "nearest_city": "01_diomira",
+      "token_count": 158,
+      "href": "../cities/32_phyllis/index.html",
+      "map_svg": "../cities/32_phyllis/map.svg",
+      "map_png": "../cities/32_phyllis/map.png",
+      "image_png": "../cities/32_phyllis/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Interactive Venetian-oriental architectural elevation & progressive chalk-bleaching ocular palimpsest with Scarlatti harpsichord/bell-to-chalk-step WebAudio synthesis",
+      "committed_at": "2026-11-11T06:28:50Z"
+    },
+    "45_olinda": {
+      "city_id": "45_olinda",
+      "status": "COMMITTED",
+      "rev": "1a5d34c561f704ab66372abafb0a94f048f6e7945a1fde909099e949db9ce03f",
+      "sha256": "1a5d34c561f704ab66372abafb0a94f048f6e7945a1fde909099e949db9ce03f",
+      "j_dom": 0.0033,
+      "nearest_city": "17_hypatia",
+      "token_count": 168,
+      "href": "../cities/45_olinda/index.html",
+      "map_svg": "../cities/45_olinda/map.svg",
+      "map_png": "../cities/45_olinda/map.png",
+      "image_png": "../cities/45_olinda/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Draggable brass optical loupe (1x-64x) resolving a pinhead nucleus of 8 miniature civic features coupled to an annual tree-ring cambium expansion engine stretching older cities into outer circumferential girdles.",
+      "committed_at": "2026-11-11T06:30:58Z"
+    },
+    "28_baucis": {
+      "city_id": "28_baucis",
+      "status": "COMMITTED",
+      "rev": "b39206aa71e93d65398b73346a58218a93137d30723822e3a5cbbe0fba11fbf5",
+      "sha256": "b39206aa71e93d65398b73346a58218a93137d30723822e3a5cbbe0fba11fbf5",
+      "j_dom": 0.0031,
+      "nearest_city": "17_hypatia",
+      "token_count": 190,
+      "href": "../cities/28_baucis/index.html",
+      "map_svg": "../cities/28_baucis/map.svg",
+      "map_png": "../cities/28_baucis/map.png",
+      "image_png": "../cities/28_baucis/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Split-altitude cloud-stilt architectural panorama coupled to a live steerable downward brass spyglass/telescope microscope (1x/8x/24x/64x) and aeolian-woodland WebAudio synthesizer",
+      "committed_at": "2026-11-11T06:31:53Z"
+    },
+    "34_adelma": {
+      "city_id": "34_adelma",
+      "status": "COMMITTED",
+      "rev": "b29bcaaf0011373ca8371360630f99c5bd73b1727931f0dffc825d6bab91ce8e",
+      "sha256": "b29bcaaf0011373ca8371360630f99c5bd73b1727931f0dffc825d6bab91ce8e",
+      "j_dom": 0.0045,
+      "nearest_city": "16_zobeide",
+      "token_count": 240,
+      "href": "../cities/34_adelma/index.html",
+      "map_svg": "../cities/34_adelma/map.svg",
+      "map_png": "../cities/34_adelma/map.png",
+      "image_png": "../cities/34_adelma/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Interactive Dusk Wholesale Fish-Market Wharf, Kaleidoscopic Bereavement Threshold & Reciprocal Staring-Gaze Mirror with Procedural Harbor Bell/Wave/Sigh WebAudio",
+      "committed_at": "2026-11-11T06:32:44Z"
+    },
+    "25_aglaura": {
+      "city_id": "25_aglaura",
+      "status": "COMMITTED",
+      "rev": "fdd0125267856996a860208bee16aa3312b78a279757bf8deed0757ffdbec063",
+      "sha256": "fdd0125267856996a860208bee16aa3312b78a279757bf8deed0757ffdbec063",
+      "j_dom": 0.0126,
+      "nearest_city": "12_fedora",
+      "token_count": 228,
+      "href": "../cities/25_aglaura/index.html",
+      "map_svg": "../cities/25_aglaura/map.svg",
+      "map_png": "../cities/25_aglaura/map.png",
+      "image_png": "../cities/25_aglaura/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "The Aglaura that is spoken has all the compact solidity needed to exist—even though its ancient proverbial virtues, faults, eccentricities, and rules have inverted over time so nothing said of it is true—whereas the colo",
+      "committed_at": "2026-11-11T06:33:19Z"
+    },
+    "30_melania": {
+      "city_id": "30_melania",
+      "status": "COMMITTED",
+      "rev": "fa3f84abf51e48fe0b6c584b249733d9b4fe5d7cf188f1ed0505532fa2f2f56d",
+      "sha256": "fa3f84abf51e48fe0b6c584b249733d9b4fe5d7cf188f1ed0505532fa2f2f56d",
+      "j_dom": 0.0,
+      "nearest_city": "01_diomira",
+      "token_count": 196,
+      "href": "../cities/30_melania/index.html",
+      "map_svg": "../cities/30_melania/map.svg",
+      "map_png": "../cities/30_melania/map.png",
+      "image_png": "../cities/30_melania/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "",
+      "committed_at": "2026-11-11T06:34:11Z"
+    },
+    "27_ersilia": {
+      "city_id": "27_ersilia",
+      "status": "COMMITTED",
+      "rev": "3f77516c341e86315b6c7902e8bdce921cdc4d7a8395cf0d65dae12b28e241ab",
+      "sha256": "3f77516c341e86315b6c7902e8bdce921cdc4d7a8395cf0d65dae12b28e241ab",
+      "j_dom": 0.0023,
+      "nearest_city": "34_adelma",
+      "token_count": 194,
+      "href": "../cities/27_ersilia/index.html",
+      "map_svg": "../cities/27_ersilia/map.svg",
+      "map_png": "../cities/27_ersilia/map.png",
+      "image_png": "../cities/27_ersilia/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Interactive axonometric house-corner string-tensioning loom, live street-corridor BFS permeability solver, plucked Karplus-Strong cord acoustics, and exodus-dismantling ruin topology engine",
+      "committed_at": "2026-11-11T06:36:31Z"
+    },
+    "38_eusapia": {
+      "city_id": "38_eusapia",
+      "status": "COMMITTED",
+      "rev": "4c4e7e52b399e03d9f254647cc989c75c2bbaf44589b978fa8b0cddef2f362a5",
+      "sha256": "4c4e7e52b399e03d9f254647cc989c75c2bbaf44589b978fa8b0cddef2f362a5",
+      "j_dom": 0.0,
+      "nearest_city": "01_diomira",
+      "token_count": 117,
+      "href": "../cities/38_eusapia/index.html",
+      "map_svg": "../cities/38_eusapia/map.svg",
+      "map_png": "../cities/38_eusapia/map.png",
+      "image_png": "../cities/38_eusapia/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Stratigraphic twin-cross-section Canvas2D + Confraternity vertical shaft state machine + causal mimesis-inversion ledger in custom <eusapia-*> DOM vocabulary",
+      "committed_at": "2026-11-11T06:36:53Z"
+    },
+    "33_pyrrha": {
+      "city_id": "33_pyrrha",
+      "status": "COMMITTED",
+      "rev": "813ddf20b3a9cefa2b0786804cf5f12422709349d917ef96db98f798be1a6773",
+      "sha256": "813ddf20b3a9cefa2b0786804cf5f12422709349d917ef96db98f798be1a6773",
+      "j_dom": 0.0117,
+      "nearest_city": "16_zobeide",
+      "token_count": 226,
+      "href": "../cities/33_pyrrha/index.html",
+      "map_svg": "../cities/33_pyrrha/map.svg",
+      "map_png": "../cities/33_pyrrha/map.png",
+      "image_png": "../cities/33_pyrrha/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Biphasic Nominal-Rupture Architectural & Acoustic Apparatus (Canvas + WebAudio + Quarantine Ocular)",
+      "committed_at": "2026-11-11T06:37:43Z"
+    },
+    "23_eutropia": {
+      "city_id": "23_eutropia",
+      "status": "COMMITTED",
+      "rev": "a052b1bc8c5f826e771fec3bb328d1d3d3c3dc1f52df1b59460b3e485a79cf65",
+      "sha256": "a052b1bc8c5f826e771fec3bb328d1d3d3c3dc1f52df1b59460b3e485a79cf65",
+      "j_dom": 0.0,
+      "nearest_city": "01_diomira",
+      "token_count": 209,
+      "href": "../cities/23_eutropia/index.html",
+      "map_svg": "../cities/23_eutropia/map.svg",
+      "map_png": "../cities/23_eutropia/map.png",
+      "image_png": "../cities/23_eutropia/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Interactive 2.5D Rolling-Plateau Chessboard Panorama & Mercury Permutation-Isomorphism Proof Ledger with 4-Voice Musical-Chair Canon WebAudio",
+      "committed_at": "2026-11-11T06:38:40Z"
+    },
+    "39_beersheba": {
+      "city_id": "39_beersheba",
+      "status": "COMMITTED",
+      "rev": "d6ef56a38ef72eed0a0b54bf1b153312b6d0704fbe827d14c0a2ae5bfb8adbf2",
+      "sha256": "d6ef56a38ef72eed0a0b54bf1b153312b6d0704fbe827d14c0a2ae5bfb8adbf2",
+      "j_dom": 0.0,
+      "nearest_city": "01_diomira",
+      "token_count": 185,
+      "href": "../cities/39_beersheba/index.html",
+      "map_svg": "../cities/39_beersheba/map.svg",
+      "map_png": "../cities/39_beersheba/map.png",
+      "image_png": "../cities/39_beersheba/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Vertical Triad Cosmology Observatory & Avarice-Release Escapement Valve",
+      "committed_at": "2026-11-11T12:54:45Z"
+    },
+    "37_clarice": {
+      "city_id": "37_clarice",
+      "status": "COMMITTED",
+      "rev": "e980ec8ea0a518ed4af2aac7e8c3c5b31292615ecd88f2a9b33560805ef57955",
+      "sha256": "e980ec8ea0a518ed4af2aac7e8c3c5b31292615ecd88f2a9b33560805ef57955",
+      "j_dom": 0.0,
+      "nearest_city": "01_diomira",
+      "token_count": 224,
+      "href": "../cities/37_clarice/index.html",
+      "map_svg": "../cities/37_clarice/map.svg",
+      "map_png": "../cities/37_clarice/map.png",
+      "image_png": "../cities/37_clarice/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Stratified spolia palimpsest & irreversible epoch-permutation collider where nine indestructible Calvino relics causally exchange sacred Museum vitrines and beggar chicken-run utilities across plague-chrysalis and butter",
+      "committed_at": "2026-11-11T12:56:31Z"
+    },
+    "40_leonia": {
+      "city_id": "40_leonia",
+      "status": "COMMITTED",
+      "rev": "9964d6113eea5728252679697b8ffc33b3b11f9023493a6738b74045dc46bc39",
+      "sha256": "9964d6113eea5728252679697b8ffc33b3b11f9023493a6738b74045dc46bc39",
+      "j_dom": 0.0089,
+      "nearest_city": "25_aglaura",
+      "token_count": 227,
+      "href": "../cities/40_leonia/index.html",
+      "map_svg": "../cities/40_leonia/map.svg",
+      "map_png": "../cities/40_leonia/map.png",
+      "image_png": "../cities/40_leonia/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Interactive Canvas2D caldera plan and stratigraphic crater cross-section with procedural WebAudio morning chime, angelic dustcart rite, and zero-decay avalanche physics in a 100% bespoke hyphenated DOM.",
+      "committed_at": "2026-11-11T12:56:32Z"
+    },
+    "42_argia": {
+      "city_id": "42_argia",
+      "status": "COMMITTED",
+      "rev": "013f1768e36034421e2e62cedbc0609e37586a18b8c6c03dd7611192bdd2a9bb",
+      "sha256": "013f1768e36034421e2e62cedbc0609e37586a18b8c6c03dd7611192bdd2a9bb",
+      "j_dom": 0.0,
+      "nearest_city": "01_diomira",
+      "token_count": 222,
+      "href": "../cities/42_argia/index.html",
+      "map_svg": "../cities/42_argia/map.svg",
+      "map_png": "../cities/42_argia/map.png",
+      "image_png": "../cities/42_argia/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "",
+      "committed_at": "2026-11-11T12:56:32Z"
+    },
+    "36_moriana": {
+      "city_id": "36_moriana",
+      "status": "COMMITTED",
+      "rev": "a179808aa3712d09bdc21ad604ad998766b1abd0fa841f9ca6d2ae4c8fc87975",
+      "sha256": "a179808aa3712d09bdc21ad604ad998766b1abd0fa841f9ca6d2ae4c8fc87975",
+      "j_dom": 0.0,
+      "nearest_city": "01_diomira",
+      "token_count": 221,
+      "href": "../cities/36_moriana/index.html",
+      "map_svg": "../cities/36_moriana/map.svg",
+      "map_png": "../cities/36_moriana/map.png",
+      "image_png": "../cities/36_moriana/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Zero-thickness two-sided paper-foil projective theater (<moriana-paper-foil>) where semicircular bay azimuth theta collapses illusory alabaster/aquarium perspective to a 0mm razor edge at 90deg and unfolds soot-blackened",
+      "committed_at": "2026-11-11T12:57:05Z"
+    },
+    "35_eudoxia": {
+      "city_id": "35_eudoxia",
+      "status": "COMMITTED",
+      "rev": "66816b5b8b97f02f6ad3e4ec197348d121743e724193f5bedc1a844a3dbd9630",
+      "sha256": "66816b5b8b97f02f6ad3e4ec197348d121743e724193f5bedc1a844a3dbd9630",
+      "j_dom": 0.0103,
+      "nearest_city": "12_fedora",
+      "token_count": 236,
+      "href": "../cities/35_eudoxia/index.html",
+      "map_svg": "../cities/35_eudoxia/map.svg",
+      "map_png": "../cities/35_eudoxia/map.png",
+      "image_png": "../cities/35_eudoxia/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Reversible Astrological Loom & Homeomorphic Stain Diptych (Canvas 2D Knot-Weave Magnifier + Crumbling Alley Topography + Pythagorean Oud/Astral WebAudio)",
+      "committed_at": "2026-11-11T12:57:23Z"
+    },
+    "44_trude": {
+      "city_id": "44_trude",
+      "status": "COMMITTED",
+      "rev": "b6c0cbf651570bdfc542e8a7413201cbafcabd28154bf4a84b59ba1b3e112389",
+      "sha256": "b6c0cbf651570bdfc542e8a7413201cbafcabd28154bf4a84b59ba1b3e112389",
+      "j_dom": 0.0032,
+      "nearest_city": "17_hypatia",
+      "token_count": 178,
+      "href": "../cities/44_trude/index.html",
+      "map_svg": "../cities/44_trude/map.svg",
+      "map_png": "../cities/44_trude/map.png",
+      "image_png": "../cities/44_trude/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "",
+      "committed_at": "2026-11-11T12:57:24Z"
+    },
+    "52_marozia": {
+      "city_id": "52_marozia",
+      "status": "COMMITTED",
+      "rev": "7d775462b2d0b30f9fce9df1b56600be202e03e280d1de7de441a62f36135536",
+      "sha256": "7d775462b2d0b30f9fce9df1b56600be202e03e280d1de7de441a62f36135536",
+      "j_dom": 0.0033,
+      "nearest_city": "17_hypatia",
+      "token_count": 171,
+      "href": "../cities/52_marozia/index.html",
+      "map_svg": "../cities/52_marozia/map.svg",
+      "map_png": "../cities/52_marozia/map.png",
+      "image_png": "../cities/52_marozia/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Two-Arcade Oblique Parallax Aperture & Sibylline Rat-Swallow Coexistence Diptych: oppressive subterranean leaden rat-tunnels with batlike umbrellas and cheese-pack scrambles parting like crystal and transparent gauze int",
+      "committed_at": "2026-11-11T12:58:07Z"
+    },
+    "46_laudomia": {
+      "city_id": "46_laudomia",
+      "status": "COMMITTED",
+      "rev": "daeb0640c89a68ba1664d3b9b985f1336e6a9da697fa0a4135024a2adaaa3294",
+      "sha256": "daeb0640c89a68ba1664d3b9b985f1336e6a9da697fa0a4135024a2adaaa3294",
+      "j_dom": 0.0,
+      "nearest_city": "01_diomira",
+      "token_count": 292,
+      "href": "../cities/46_laudomia/index.html",
+      "map_svg": "../cities/46_laudomia/map.svg",
+      "map_png": "../cities/46_laudomia/map.png",
+      "image_png": "../cities/46_laudomia/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Triple architectural chamber triptych (Living arcades, Stone-Slab Necropolis, Porous Sponge-Marble Unborn Domes) morphing causally into a claustrophobic Stadium-Funnel Amphitheater and an Unturned Finite-Grain Hourglass.",
+      "committed_at": "2026-11-11T13:00:21Z"
+    },
+    "19_chloe": {
+      "city_id": "19_chloe",
+      "status": "COMMITTED",
+      "rev": "9a5c430f3e87ac693391d89c67fbea0b0f1dc78bf8da2c06178de1892e5b3869",
+      "sha256": "9a5c430f3e87ac693391d89c67fbea0b0f1dc78bf8da2c06178de1892e5b3869",
+      "j_dom": 0.0,
+      "nearest_city": "01_diomira",
+      "token_count": 205,
+      "href": "../cities/19_chloe/index.html",
+      "map_svg": "../cities/19_chloe/map.svg",
+      "map_png": "../cities/19_chloe/map.png",
+      "image_png": "../cities/19_chloe/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Rain-arcade silhouette shadow-theater & live 1-second combinatoric sightline star-raycaster with sul-ponticello string harmonic WebAudio",
+      "committed_at": "2026-11-11T13:03:30Z"
+    },
+    "18_armilla": {
+      "city_id": "18_armilla",
+      "status": "COMMITTED",
+      "rev": "6841a3003adb8905e24466fdc23eef554bb1cd7273a000fd85684c7b44720da0",
+      "sha256": "6841a3003adb8905e24466fdc23eef554bb1cd7273a000fd85684c7b44720da0",
+      "j_dom": 0.0023,
+      "nearest_city": "33_pyrrha",
+      "token_count": 212,
+      "href": "../cities/18_armilla/index.html",
+      "map_svg": "../cities/18_armilla/map.svg",
+      "map_png": "../cities/18_armilla/map.png",
+      "image_png": "../cities/18_armilla/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Interactive axonometric hydraulic pipe-cathedral against open cerulean sky—zero walls, ceilings, or floors—coupled to sunlit parabolic water-arc physics, prismatic mist rainbows, joyful naiad silhouettes on sky-perched p",
+      "committed_at": "2026-11-11T13:03:31Z"
+    },
+    "54_theodora": {
+      "city_id": "54_theodora",
+      "status": "COMMITTED",
+      "rev": "df4eee7a50d562a7e03850030e109e2cbca65b65e2aab4aa1391b82cb31f2bb7",
+      "sha256": "df4eee7a50d562a7e03850030e109e2cbca65b65e2aab4aa1391b82cb31f2bb7",
+      "j_dom": 0.0,
+      "nearest_city": "01_diomira",
+      "token_count": 219,
+      "href": "../cities/54_theodora/index.html",
+      "map_svg": "../cities/54_theodora/map.svg",
+      "map_png": "../cities/54_theodora/map.png",
+      "image_png": "../cities/54_theodora/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Three-tier limestone-to-cement architectural cross-section and interactive trophic-cascade ledger paired with illuminated medieval bestiary vellum folios and procedural WebAudio.",
+      "committed_at": "2026-11-11T13:03:31Z"
+    },
+    "51_cecilia": {
+      "city_id": "51_cecilia",
+      "status": "COMMITTED",
+      "rev": "936cf26e33ed64d6b0ccb24077ff0647266a39a9b97bf763a319f0a888eb6d75",
+      "sha256": "936cf26e33ed64d6b0ccb24077ff0647266a39a9b97bf763a319f0a888eb6d75",
+      "j_dom": 0.0,
+      "nearest_city": "01_diomira",
+      "token_count": 251,
+      "href": "../cities/51_cecilia/index.html",
+      "map_svg": "../cities/51_cecilia/map.svg",
+      "map_png": "../cities/51_cecilia/map.png",
+      "image_png": "../cities/51_cecilia/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Topological Pasture-to-Asphalt Palimpsest & Goatherd Bell Compass: double-exposed Canvas 2D continuous street sprawl engulfing named Mediterranean pastures into concrete traffic islands, paired with bespoke <cecilia-*> a",
+      "committed_at": "2026-11-11T13:03:31Z"
+    },
+    "43_thekla": {
+      "city_id": "43_thekla",
+      "status": "COMMITTED",
+      "rev": "2732084fc2af724c23becfc16ce116eca18e30c14f1cda4742082de88f5b9bfa",
+      "sha256": "2732084fc2af724c23becfc16ce116eca18e30c14f1cda4742082de88f5b9bfa",
+      "j_dom": 0.0027,
+      "nearest_city": "17_hypatia",
+      "token_count": 234,
+      "href": "../cities/43_thekla/index.html",
+      "map_svg": "../cities/43_thekla/map.svg",
+      "map_png": "../cities/43_thekla/map.png",
+      "image_png": "../cities/43_thekla/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Kinetic Canvas2D perpetual timber-and-iron scaffolding elevation coupled with a solar-elevation armistice chronometer, nocturnal 1:1 starry blueprint plumb-line projector, and dual daytime carpenter-foley / nocturnal ast",
+      "committed_at": "2026-11-11T13:03:31Z"
+    },
+    "53_penthesilea": {
+      "city_id": "53_penthesilea",
+      "status": "COMMITTED",
+      "rev": "df5d04690529f896b82c751e138aecf92455c27bd2e797fd204f48ff0d09dec5",
+      "sha256": "df5d04690529f896b82c751e138aecf92455c27bd2e797fd204f48ff0d09dec5",
+      "j_dom": 0.0063,
+      "nearest_city": "33_pyrrha",
+      "token_count": 255,
+      "href": "../cities/53_penthesilea/index.html",
+      "map_svg": "../cities/53_penthesilea/map.svg",
+      "map_png": "../cities/53_penthesilea/map.png",
+      "image_png": "../cities/53_penthesilea/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "",
+      "committed_at": "2026-11-11T13:03:32Z"
+    },
+    "47_perinthia": {
+      "city_id": "47_perinthia",
+      "status": "COMMITTED",
+      "rev": "1352b619d80c2d6e2fc71ee19ced412c52073e2e25ddf09ca635f0b7740fd0f9",
+      "sha256": "1352b619d80c2d6e2fc71ee19ced412c52073e2e25ddf09ca635f0b7740fd0f9",
+      "j_dom": 0.0,
+      "nearest_city": "01_diomira",
+      "token_count": 210,
+      "href": "../cities/47_perinthia/index.html",
+      "map_svg": "../cities/47_perinthia/map.svg",
+      "map_png": "../cities/47_perinthia/map.png",
+      "image_png": "../cities/47_perinthia/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Dual-plane brass astrolabe & solstice cardo-decumanus founding instrument coupled to a subterranean brick-cellar teratological cutaway and two-horn observatory dilemma ledger",
+      "committed_at": "2026-11-11T13:04:21Z"
+    },
+    "55_berenice": {
+      "city_id": "55_berenice",
+      "status": "COMMITTED",
+      "rev": "c5712cfb477ad1771861d8660743cd8e4681670178f90e43ae109212931e7e72",
+      "sha256": "c5712cfb477ad1771861d8660743cd8e4681670178f90e43ae109212931e7e72",
+      "j_dom": 0.0037,
+      "nearest_city": "17_hypatia",
+      "token_count": 135,
+      "href": "../cities/55_berenice/index.html",
+      "map_svg": "../cities/55_berenice/map.svg",
+      "map_png": "../cities/55_berenice/map.png",
+      "image_png": "../cities/55_berenice/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Nested concentric cross-section & logarithmic fractal seed-microscope enacting Unjust and Just Berenices wrapped simultaneously inside a single instant via triglyph-concealed iron gears, attic counterweight wires, parent",
+      "committed_at": "2026-11-11T13:04:21Z"
+    },
+    "49_raissa": {
+      "city_id": "49_raissa",
+      "status": "COMMITTED",
+      "rev": "a595819de626a22f1aa65f30b8d75caa215fc97a0dc59ee53b921feefed83a2a",
+      "sha256": "a595819de626a22f1aa65f30b8d75caa215fc97a0dc59ee53b921feefed83a2a",
+      "j_dom": 0.0,
+      "nearest_city": "01_diomira",
+      "token_count": 212,
+      "href": "../cities/49_raissa/index.html",
+      "map_svg": "../cities/49_raissa/map.svg",
+      "map_png": "../cities/49_raissa/map.png",
+      "image_png": "../cities/49_raissa/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Slate-and-zinc multi-chamber cutaway of grim Raissa overlaid at every continuous second with a darting 10-node golden catenary joy filament, millisecond freeze-shutter proof, causal link stepper, and francolin parchment ",
+      "committed_at": "2026-11-11T13:05:30Z"
+    },
+    "50_andria": {
+      "city_id": "50_andria",
+      "status": "COMMITTED",
+      "rev": "b6fabd97e7f80b5714fc085d3c921d626dfc5b71f0ae3f97566703debed92f6a",
+      "sha256": "b6fabd97e7f80b5714fc085d3c921d626dfc5b71f0ae3f97566703debed92f6a",
+      "j_dom": 0.0,
+      "nearest_city": "01_diomira",
+      "token_count": 303,
+      "href": "../cities/50_andria/index.html",
+      "map_svg": "../cities/50_andria/map.svg",
+      "map_png": "../cities/50_andria/map.png",
+      "image_png": "../cities/50_andria/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Split Renaissance Travertine Planetary-Boulevard Planimetry & Brass Observatory Telescope Dome with Prudence Balance Scale",
+      "committed_at": "2026-11-11T13:07:40Z"
+    },
+    "41_irene": {
+      "city_id": "41_irene",
+      "status": "COMMITTED",
+      "rev": "b5f308cd383b95b17a025234e368af94c978934df7b30571f1eab82d11ce8516",
+      "sha256": "b5f308cd383b95b17a025234e368af94c978934df7b30571f1eab82d11ce8516",
+      "j_dom": 0.0045,
+      "nearest_city": "08_despina",
+      "token_count": 183,
+      "href": "../cities/41_irene/index.html",
+      "map_svg": "../cities/41_irene/map.svg",
+      "map_png": "../cities/41_irene/map.png",
+      "image_png": "../cities/41_irene/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Twilight plateau-escarpment atmospheric horizon and elevation-coupled nominal dissolution gate: observer vantage on the windy crag brink parts valley mist sponges to reveal pink glow, suspension bridges, and wind-borne s",
+      "committed_at": "2026-11-11T13:08:12Z"
+    },
+    "48_procopia": {
+      "city_id": "48_procopia",
+      "status": "COMMITTED",
+      "rev": "9d48929b76c4c9611f988e891443ae63b67f89fa544c604b0ae949dd7959d6d0",
+      "sha256": "9d48929b76c4c9611f988e891443ae63b67f89fa544c604b0ae949dd7959d6d0",
+      "j_dom": 0.0027,
+      "nearest_city": "17_hypatia",
+      "token_count": 238,
+      "href": "../cities/48_procopia/index.html",
+      "map_svg": "../cities/48_procopia/map.svg",
+      "map_png": "../cities/48_procopia/map.png",
+      "image_png": "../cities/48_procopia/image.png",
+      "map_png_dims": [
+        1600,
+        1200
+      ],
+      "image_png_dims": [
+        1600,
+        1000
+      ],
+      "medium": "Single-frame annual return casement & step-back inn room",
+      "committed_at": "2026-11-11T13:16:59Z"
+    }
+  }
+};
+/*__ATLAS_STATE_END__*/
+
+const SERIES_META = [
+  { index: 1, key: "memory", short: "Memory", name: "Cities & Memory", italian: "Le città e la memoria", accent: "#9e5a2b" },
+  { index: 2, key: "desire", short: "Desire", name: "Cities & Desire", italian: "Le città e il desiderio", accent: "#a63429" },
+  { index: 3, key: "signs", short: "Signs", name: "Cities & Signs", italian: "Le città e i segni", accent: "#8a6d1f" },
+  { index: 4, key: "thin", short: "Thin", name: "Thin Cities", italian: "Le città sottili", accent: "#2f665e" },
+  { index: 5, key: "trading", short: "Trading", name: "Trading Cities", italian: "Le città e gli scambi", accent: "#7d4e24" },
+  { index: 6, key: "eyes", short: "Eyes", name: "Cities & Eyes", italian: "Le città e gli occhi", accent: "#26486b" },
+  { index: 7, key: "names", short: "Names", name: "Cities & Names", italian: "Le città e il nome", accent: "#66426e" },
+  { index: 8, key: "dead", short: "Dead", name: "Cities & the Dead", italian: "Le città e i morti", accent: "#4d453e" },
+  { index: 9, key: "sky", short: "Sky", name: "Cities & the Sky", italian: "Le città e il cielo", accent: "#1e4470" },
+  { index: 10, key: "continuous", short: "Continuous", name: "Continuous Cities", italian: "Le città continue", accent: "#6e5233" },
+  { index: 11, key: "hidden", short: "Hidden", name: "Hidden Cities", italian: "Le città nascoste", accent: "#7c2d3b" }
+];
+
+const FRAME_DIALOGUES = [
+  {
+    chapter: 1, roman: "I",
+    title: "The Ruined Twilight & The Mute Pageant of Emblems",
+    emblem: "Saddlebag Relics & Twilight Lantern",
+    opening: "Kublai Khan senses his boundless empire is an endless, formless ruin; only in Marco Polo’s accounts can he discern, through walls and towers destined to crumble, the filigree of a design so subtle it escapes the termites’ gnawing.",
+    closing: "Ignorant of the Levantine tongues, newly arrived Marco expresses himself with objects from his saddlebags—ostrich plumes, quartz, chessmen—and silent leaps; even after learning Tartar words, each mute emblem stays stamped in the Khan’s mind."
+  },
+  {
+    chapter: 2, roman: "II",
+    title: "The Negative Mirror of Elsewhere",
+    emblem: "Bronze Mirror & Rising Hand",
+    opening: "Does the traveler journey to recover his past or find his future? Marco answers that elsewhere is a negative mirror: the traveler recognizes the little that is his, discovering the much he has not had and will never have.",
+    closing: "As words grow more precise for listing ports and customs, a deeper silence opens between Emperor and Venetian: eyes closed on cushions, each imagines cities from the movement of a hand raised in shadow or the tilt of a palm."
+  },
+  {
+    chapter: 3, roman: "III",
+    title: "The Dreamed Harbor & The Vessel That Never Sails",
+    emblem: "Marble Steps & Unmoored Galley",
+    opening: "Kublai describes a city he saw in a dream—quays of white stone, marble steps descending into green water—and asks Marco to find it. Marco warns: if such a city of pure departure existed, no one would ever embark from it.",
+    closing: "Cities, like dreams, are built of desires and fears, even when the thread of their discourse is secret, their rules absurd, their perspectives deceitful, and everything conceals something else."
+  },
+  {
+    chapter: 4, roman: "IV",
+    title: "The Model of Norms & The Model of Exceptions",
+    emblem: "Amber Pipe & Porcelain Pavilion",
+    opening: "Smoking amber pipes on majolica tiles, Kublai proposes deducing all possible cities from a single model city of norms; Marco proposes a model made solely of exceptions and contradictions, subtracting anomalies until reaching a city that exists.",
+    closing: "As dusk settles beneath the palace magnolias, Marco notes that it is not the voice that commands the story: it is the ear—Kublai’s listening shapes the walls, harbors, and spires of every voyage."
+  },
+  {
+    chapter: 5, roman: "V",
+    title: "The Line of the Arch & The Weightless Empire",
+    emblem: "Keystone Arch & Majolica Squares",
+    opening: "Marco describes a bridge stone by stone. “Which is the stone that supports the bridge?” Kublai asks. “Not one stone or another,” Marco answers, “but the line of the arch that they form.” “Why speak of the stones?” “Without stones there is no arch.”",
+    closing: "Arranging wares on the checkered floor tiles like pieces in chess, Marco shows Kublai that conquest need no longer march across provinces; the Khan begins dreaming of possessing an empire lighter than smoke."
+  },
+  {
+    chapter: 6, roman: "VI",
+    title: "Every City Is Implicitly Venice",
+    emblem: "Lagoon Reflection & Twin Hammocks",
+    opening: "“Sire, now I have told you about all the cities I know.” “There is still one of which you never speak: Venice.” Marco smiles: “Every time I describe a city I am saying something about Venice—to distinguish other cities’ qualities I must start from a first city that remains implicit.”",
+    closing: "Swinging side by side in garden hammocks, Emperor and Envoy let whole afternoons pass in motionless silence, imagining themselves entering or leaving gates on the turn of an eyelash or smoke drifting in the wind."
+  },
+  {
+    chapter: 7, roman: "VII",
+    title: "The Garden of Magnolias & The Illusion of Being There",
+    emblem: "Magnolia Shade & Splintered Shutter",
+    opening: "Kublai doubts whether provinces, embassies, or cities exist beyond the palace wall: perhaps the world is covered in a single wasteland and only two men converse forever in an evening garden.",
+    closing: "Marco counters with the inverse hypothesis: perhaps there is no garden and no emperor—only two ragged scavengers sifting rubbish at dusk, gesturing over scraps and dreaming of Kublai Khan and Marco Polo."
+  },
+  {
+    chapter: 8, roman: "VIII",
+    title: "The Ebony Chessboard & The Grain of the Wood",
+    emblem: "Ebony Rook & Wood-Grain Rings",
+    opening: "Contemplating his empire through chess, Kublai reduces campaigns and cities to black ebony and white ivory squares until conquest leaves nothing at all: a bare square of planed wood—Nothingness.",
+    closing: "Marco bends over that single empty wooden square and reads its ring-grain: a knot left by a larval burrow in a drought year, ebony trunks lashed into rafts floating downriver, women leaning from windows—the living world reborn inside the cipher."
+  },
+  {
+    chapter: 9, roman: "IX",
+    title: "The Great Khan’s Atlas & What Is Not Inferno",
+    emblem: "Imperial Folio & Compass Rose",
+    opening: "The Great Khan owns an Atlas whose folios depict all terrestrial cities—Troy, Samarkand, Kyoto, Amsterdam, New York—alongside promised Utopias and dystopian nightmares yet unnamed.",
+    closing: "“The inferno of the living is already here,” Marco concludes. “Seek and learn to recognize who and what, in the midst of the inferno, are not inferno, then make them endure, give them space.”"
+  }
+];
+
+const CITIES = [
+  [1,"01_diomira","Diomira",1,"I",1,"memory",1,"Sixty Silver Domes & September Dusk","Lead-paved streets, crystal theater, and crowing golden cock awaken secret envy only when September stall lamps ignite together and a voice cries from a terrace."],
+  [2,"02_isidora","Isidora",1,"I",1,"memory",2,"Seashell Spirals & The Wall of Old Men","Spiral staircases encrusted with shells, violins, telescopes, and cockfights fulfill the dreamed city—save that the traveler arrives old, where desires are already memories."],
+  [3,"03_dorothea","Dorothea",1,"I",2,"desire",1,"Four Green Canals & Morning Trumpets","A closed combinatoric ledger of four aluminum towers, seven drawbridges, and nine trading quarters—or one youth morning’s banners opening every possible future."],
+  [4,"04_zaira","Zaira",1,"I",1,"memory",3,"High Bastions & The Sponge of Scars","Zinc roofs never speak their past aloud, yet every span—lamppost to cobbles, railing to alley, torn net to dock—swells the sponge-city with relational memory."],
+  [5,"05_anastasia","Anastasia",1,"I",2,"desire",2,"Concentric Canals & The Agate Yoke","Soaring kites and cherry-wood fires awaken every desire at once, yet eight hours faceting agate and onyx turns lived desire into contented lapidary servitude."],
+  [6,"06_tamara","Tamara",1,"I",3,"signs",1,"The Thick Coating of Street Emblems","Streets read like written pages of scales, pincers, and golden miters; one departs having scanned every sign without ever glimpsing Tamara beneath."],
+  [7,"07_zora","Zora",1,"I",1,"memory",4,"The Honeycomb Mnemonic Frozen Still","Arranged point by point so no one could forget her copper clock or glass fountain, Zora was forced to stay motionless to be remembered, and vanished."],
+  [8,"08_despina","Despina",1,"I",2,"desire",3,"Two Deserts: Vessel & Saddled Camel","To the camel driver on the plateau Despina rises as a steamer ship; to the sailor in sea mist her domes and wind-pumps appear as a desert camel."],
+  [9,"09_zirma","Zirma",1,"I",3,"signs",2,"Redundant Dirigibles, Tattoos & Pumas","Blind men shouting in arcades, lunatics on cornices, girls with pumas: Zirma repeats its signs so memory can catch hold and let the city exist."],
+  [10,"10_isaura","Isaura",1,"I",4,"thin",1,"A Thousand Wells Over the Black Lake","Rising vertically in bucket chains, windlasses, and rooftop windmills over a subterranean lake, Isaura splits its gods between dark water and suspended pulleys."],
+  [11,"11_maurilia","Maurilia",2,"II",1,"memory",5,"Sepia Postcards of a Vanished Grace","Magnificent Maurilia invites comparison with old postcards of a provincial bandstand whose grace exists only now—two distinct cities sharing one name."],
+  [12,"12_fedora","Fedora",2,"II",2,"desire",4,"The Metal Museum of Crystal Globes","Inside gray stone Fedora, countless crystal globes preserve the blue miniature models of every ideal Fedora once desired before time altered her."],
+  [13,"13_zoe","Zoe",2,"II",3,"signs",3,"Indivisible Existence Without Thresholds","Where palace and bazaar, shrine and tavern look interchangeable, the traveler wanders Zoe unable to separate inside from outside."],
+  [14,"14_zenobia","Zenobia",2,"II",4,"thin",2,"Bamboo Stilts & Pulleys on Dry Ground","Perched high on pilings with crossed ladders, zinc roofs, and weathervanes over dry earth, Zenobia grows step by step from sheer lived contentment."],
+  [15,"15_euphemia","Euphemia",2,"II",5,"trading",1,"Solstice Campfires of Bartered Memory","Merchants of seven nations gather at every equinox not merely for ginger and pistachios, but to trade personal memories around night fires."],
+  [16,"16_zobeide","Zobeide",3,"III",2,"desire",5,"Moonlit Trap Built Around a Lost Dream","Strangers who dreamed the same fleeing woman built walls and arcades to block her escape, leaving an ugly white trap where the dream was forgotten."],
+  [17,"17_hypatia","Hypatia",3,"III",3,"signs",4,"Inverted Signs: Lagoons & Libraries","In Hypatia the shift lies in language: magnolia gardens hold drowned suicides, parchment libraries hide opium pipes, and philosophers bowl on tombs."],
+  [18,"18_armilla","Armilla",3,"III",4,"thin",3,"Forest of Water Pipes & Sunlit Nymphs","Wall-less and floor-less, Armilla rises as slender plumbing risers, porcelain tubs, and gleaming taps inhabited by bathing water-nymphs."],
+  [19,"19_chloe","Chloe",3,"III",5,"trading",2,"Chaste Parasols & Silent Fantasies","Strangers never speak or touch in chaste Chloe, yet sheltering together from rain ignites a silent carousel of glances and unconsummated passion."],
+  [20,"20_valdrada","Valdrada",3,"III",6,"eyes",1,"Asymmetrical Twins Across Lake Water","Every act on Valdrada’s balconies repeats inverted in the lake below, locking the twin cities in loveless, hyper-vigilant reflection."],
+  [21,"21_olivia","Olivia",4,"IV",3,"signs",5,"White Peacocks & Soot: Lying Things","Filigree cushions and peacocks cannot be spoken without soot-smeared flywheels—for falsehood is never in words; it is in things."],
+  [22,"22_sophronia","Sophronia",4,"IV",4,"thin",4,"Permanent Ferris Wheel, Nomadic Marble","Each year workers pack up the marble banks, ministries, and monuments onto trailers, leaving behind the permanent carnival half-city of Sophronia."],
+  [23,"23_eutropia","Eutropia",4,"IV",5,"trading",3,"Vacant Sister Cities & Traded Lives","Citizens cure weariness by migrating en masse to the next empty Eutropia on the plateau, swapping jobs and spouses while repeating the same civic play."],
+  [24,"24_zemrude","Zemrude",4,"IV",6,"eyes",2,"Whistling Sills Above, Gutters Below","Beheld upward, Zemrude flutters with curtains and fountains; dragged downward by habit, she shrinks into cellar grates and damp fish-scales."],
+  [25,"25_aglaura","Aglaura",4,"IV",7,"names",1,"Imprisoned Inside Ancient Discourse","Observed Aglaura fades unspoken while the proverbial Aglaura recited by citizens traps the living city inside its own durable name."],
+  [26,"26_octavia","Octavia",5,"V",4,"thin",5,"Spider-Web City Over the Mountain Void","Suspended from ropes, chains, and trapezes across a chasm, Octavia’s inhabitants live more mindfully knowing the net will hold only so long."],
+  [27,"27_ersilia","Ersilia",5,"V",5,"trading",4,"Webs of Colored Relationship Strings","Citizens stretch white and black strings between houses for bonds of blood and trade, then dismantle the walls, leaving pure labyrinths of cord."],
+  [28,"28_baucis","Baucis",5,"V",6,"eyes",3,"Flamingo Stilts Above Untouched Woods","Hidden above the clouds on slender stilts, citizens peer through spyglasses at foliage below, contemplating with joy their own absence on earth."],
+  [29,"29_leandra","Leandra",5,"V",7,"names",2,"Night Quarrels of Penates & Lares","Portable trunk-gods and cellar-floor gods bicker all night in Leandra’s kitchens over whether the city lives in ancestral roots or migrating heirs."],
+  [30,"30_melania","Melania",5,"V",8,"dead",1,"Ceaseless Dialogue Across Mortal Masks","Soldier, parasite, father, and lover keep arguing across centuries as dying citizens are replaced one by one inside Melania’s unbroken chorus."],
+  [31,"31_esmeralda","Esmeralda",6,"VI",5,"trading",5,"Intersecting Canals, Bridges & Swallows","Waterways, catwalks, conspirators’ sewers, and rooftop cat paths braid so densely that no traveler ever crosses Esmeralda twice the same way."],
+  [32,"32_phyllis","Phyllis",6,"VI",6,"eyes",4,"Nine Bridges Fading Into Habit’s Gaze","Dazzling on arrival with nine bridges and onion domes, Phyllis erases itself before daily habit, surviving only in unexpected corner glances."],
+  [33,"33_pyrrha","Pyrrha",6,"VI",7,"names",3,"Fortified Name Lost to Windy Silos","Seeing real Pyrrha’s rusty harbor cranes and tobacco silos forever overwrites the high-walled, deep-welled Pyrrha once sheltered in its name."],
+  [34,"34_adelma","Adelma",6,"VI",8,"dead",2,"Feverish Docks of Familiar Dead Faces","Every stevedore and fishmonger met at dusk resembles someone who has died, until the traveler wonders if he too is a ghost in Adelma."],
+  [35,"35_eudoxia","Eudoxia",6,"VI",9,"sky",1,"Starry Geometry Woven in a Carpet","Inside chaotic braying alleys rests a symmetrical carpet whose arabesques mirror both Eudoxia’s hidden proportions and the revolving firmament."],
+  [36,"36_moriana","Moriana",7,"VII",6,"eyes",5,"Alabaster Portal & Rusty Sheet-Metal","Coral columns and glass dancers flip around one corner into soot and tin—Moriana has only an obverse and reverse, thin as a sheet of paper."],
+  [37,"37_clarice","Clarice",7,"VII",7,"names",4,"Shuffled Capitals of Unknown Origin","Ruined and rebuilt across ages, Clarice recombines broken marble urns and capitals in a museum cult of an unreachable first Clarice."],
+  [38,"38_eusapia","Eusapia",7,"VII",8,"dead",3,"Underground Necropolis Leading the Quick","Below ground, posed skeletons feast and play trumpets—until hooded caretakers bring innovations up from the dead for living Eusapia to copy."],
+  [39,"39_beersheba","Beersheba",7,"VII",9,"sky",2,"Celestial Jewel & Generous Scrap-Twin","Hoarding gold to imitate a dreamed diamond heaven, citizens never suspect the true celestial Beersheba glows with discarded peels and free joy."],
+  [40,"40_leonia","Leonia",7,"VII",10,"continuous",1,"Daily Reinvention Ringed by Eternal Trash","Unwrapping fresh goods each dawn while hurling yesterday’s things outside, Leonia sits ringed by mountain ranges of indestructible refuse."],
+  [41,"41_irene","Irene",8,"VIII",7,"names",5,"Twilight Plateau Glimpse From Afar","Buzzing faintly with lights on the valley floor, Irene is a name for a city magnetizing travelers outside; entered, she would become another city."],
+  [42,"42_argia","Argia",8,"VIII",8,"dead",4,"Packed Damp Clay Where Air Should Be","Every stairwell and bedroom in subterranean Argia is packed solid with earth instead of air, pressed motionless beneath rocky strata."],
+  [43,"43_thekla","Thekla",8,"VIII",9,"sky",3,"Perpetual Scaffolding & Starry Blueprint","Plank fences and cranes never come down lest ruin begin; when night falls over the worksite, builders point to the stars as Thekla’s blueprint."],
+  [44,"44_trude","Trude",8,"VIII",10,"continuous",2,"Identical Airports Without Beginning or End","Every street, hotel, and yellow-green garden repeats unchanged across the globe; flying out of Trude lands you only in another Trude."],
+  [45,"45_olinda","Olinda",8,"VIII",11,"hidden",1,"Pinpoint Lens Expanding Like Tree-Rings","Through a magnifying glass, a microscopic point reveals tiny plazas and roofs expanding concentrically from within while keeping old Olindas intact."],
+  [46,"46_laudomia","Laudomia",9,"IX",8,"dead",5,"Hourglass of Living, Dead & Unborn","Flanked by vast necropolis avenues and hollow marble niches of the unborn, living Laudomia counts its grains trickling toward silence."],
+  [47,"47_perinthia","Perinthia",9,"IX",9,"sky",4,"Perfect Zodiac Birthing Hidden Monsters","Founded by astronomers’ exact celestial math yet filled with monstrous births, Perinthia questions whether monsters are heaven’s true harmony."],
+  [48,"48_procopia","Procopia",9,"IX",10,"continuous",3,"Cornfield Window Packed With Smiles","Each year lifting the inn curtain reveals twice as many gentle round faces filling ditch, field, and sky until twenty-six layers fill the room."],
+  [49,"49_raissa","Raissa",9,"IX",11,"hidden",2,"Invisible Thread of Joy Inside Sorrow","Even as sad Raissa wrings its hands, a child laughs at a leaping dog and a mason sings, stitching an unseen happy city through the gloom."],
+  [50,"50_andria","Andria",9,"IX",9,"sky",5,"Planetary Streets & Mutual Revolutions","Aligned to planetary orbits, Andria weighs every new river-port with calm confidence, knowing earthly changes alter the constellations in turn."],
+  [51,"51_cecilia","Cecilia",9,"IX",10,"continuous",4,"Goatherd Wandering Mingled Pastures","Traveler and goatherd meet decades later grazing goats among traffic islands without exits: the places have mingled; Cecilia is everywhere."],
+  [52,"52_marozia","Marozia",9,"IX",11,"hidden",3,"Tunnels of the Rat & Wings of Swallow","Two cities inhabit Marozia—the leaden burrow of rats and the vaulting flight of swallows glimpsed in sudden transparent arcs of air."],
+  [53,"53_penthesilea","Penthesilea",9,"IX",10,"continuous",5,"Pale Soup of Outskirts Without Center","Hours of tollbooths, cement yards, and carnival lots lead nowhere inward and nowhere out: Penthesilea is nothing but its own periphery."],
+  [54,"54_theodora","Theodora",9,"IX",11,"hidden",4,"Library Sphinxes Reclaiming Aseptic Stone","Having exterminated every rat, condor, and fly, sleeping Theodora wakes to cellar folios unsealing griffons, chimeras, and hydras."],
+  [55,"55_berenice","Berenice",9,"IX",11,"hidden",5,"Infinite Nested Seeds of Just & Unjust","Hidden inside corrupt Berenice ticks an austere city of the just—already gestating the pride of a new unjust Berenice, and inside that another just seed."]
+].map(([number, id, name, chapter, chapter_roman, series_index, series_key, series_rank, epithet, inscription]) => ({
+  number,
+  nn: String(number).padStart(2, "0"),
+  id,
+  name,
+  chapter,
+  chapter_roman,
+  series_index,
+  series_key,
+  series_name: SERIES_META[series_index - 1].name,
+  series_short: SERIES_META[series_index - 1].short,
+  series_accent: SERIES_META[series_index - 1].accent,
+  series_rank,
+  row: (series_index - 1) + (series_rank - 1),
+  col: series_index - 1,
+  href: `../cities/${id}/index.html`,
+  map_svg: `../cities/${id}/map.svg`,
+  map_png: `../cities/${id}/map.png`,
+  image_png: `../cities/${id}/image.png`,
+  epithet,
+  inscription
+}));
+
+const WAVEFRONT_CHAPTER_LABELS = [
+  "Ch. I · a", "Ch. I · b", "Ch. I · c", "Ch. I · d",
+  "Ch. II", "Ch. III", "Ch. IV", "Ch. V", "Ch. VI", "Ch. VII", "Ch. VIII",
+  "Ch. IX · a", "Ch. IX · b", "Ch. IX · c", "Ch. IX · d"
+];
+
+let committedMap = Object.assign({}, (ATLAS_COMMITTED_STATE && ATLAS_COMMITTED_STATE.committed) || {});
+
+const state = {
+  mode: "chapters",        // "chapters" | "series" | "dialogues"
+  chapterFilter: "all",    // "all" | 1..9
+  seriesFilter: "all",     // "all" | series_key
+  sealedOnly: false,
+  query: "",
+  selectedCityId: "01_diomira",
+  inspectorPlate: "image", // "image" | "map" | "capsule"
+  globalPlate: "image",    // default per-card plate tab
+  cardPlates: {},          // overrides per cityId: "image" | "map" | "capsule"
+  loupeOpen: false,
+  loupeCityId: "01_diomira",
+  loupePlate: "image",     // "image" | "map" | "map_png" | "capsule"
+  loupeZoom: 1
+};
+
+function getCardPlate(cityId) {
+  if (state.cardPlates[cityId]) return state.cardPlates[cityId];
+  const c = getCommitInfo(cityId);
+  if (c && Array.isArray(c.missing_plates) && c.missing_plates.length > 0) {
+    if (state.globalPlate === "image" && c.missing_plates.includes("image.png")) {
+      return c.missing_plates.includes("map.png") ? "capsule" : "map";
+    }
+    if (state.globalPlate === "map" && c.missing_plates.includes("map.png")) {
+      return c.missing_plates.includes("image.png") ? "capsule" : "image";
+    }
+  }
+  return state.globalPlate;
+}
+
+function sigilSVG(seriesKey, color) {
+  const stroke = color || "#3e3023";
+  const glyphs = {
+    memory: `<circle cx="14" cy="14" r="10" fill="none" stroke="${stroke}" stroke-width="1.5"/><path d="M9 17 A5 5 0 0 1 19 17 M14 6 V12 M11 9 H17" fill="none" stroke="${stroke}" stroke-width="1.4"/>`,
+    desire: `<polygon points="14,3 24,14 14,25 4,14" fill="none" stroke="${stroke}" stroke-width="1.5"/><circle cx="14" cy="14" r="3.5" fill="none" stroke="${stroke}" stroke-width="1.4"/>`,
+    signs: `<rect x="5" y="5" width="18" height="18" fill="none" stroke="${stroke}" stroke-width="1.5"/><path d="M9 10 H19 M9 14 H16 M9 18 H19" stroke="${stroke}" stroke-width="1.4"/>`,
+    thin: `<line x1="8" y1="24" x2="11" y2="5" stroke="${stroke}" stroke-width="1.5"/><line x1="20" y1="24" x2="17" y2="5" stroke="${stroke}" stroke-width="1.5"/><path d="M7 9 H21 M9 15 H19" stroke="${stroke}" stroke-width="1.2"/>`,
+    trading: `<path d="M5 9 L23 20 M23 9 L5 20 M14 4 V24" stroke="${stroke}" stroke-width="1.4"/><circle cx="14" cy="14" r="3" fill="${stroke}"/>`,
+    eyes: `<path d="M3 14 Q14 5 25 14 Q14 23 3 14 Z" fill="none" stroke="${stroke}" stroke-width="1.5"/><circle cx="14" cy="14" r="3.5" fill="${stroke}"/>`,
+    names: `<path d="M7 5 H19 L22 8 V23 H7 Z" fill="none" stroke="${stroke}" stroke-width="1.5"/><circle cx="14.5" cy="15" r="3" fill="none" stroke="${stroke}" stroke-width="1.3"/>`,
+    dead: `<path d="M8 5 H20 L14 14 L20 23 H8 L14 14 Z" fill="none" stroke="${stroke}" stroke-width="1.5"/>`,
+    sky: `<circle cx="14" cy="14" r="10" fill="none" stroke="${stroke}" stroke-width="1.2" stroke-dasharray="2 2"/><polygon points="14,5 16,12 23,14 16,16 14,23 12,16 5,14 12,12" fill="none" stroke="${stroke}" stroke-width="1.3"/>`,
+    continuous: `<circle cx="10.5" cy="14" r="5.5" fill="none" stroke="${stroke}" stroke-width="1.5"/><circle cx="17.5" cy="14" r="5.5" fill="none" stroke="${stroke}" stroke-width="1.5"/>`,
+    hidden: `<circle cx="14" cy="14" r="10" fill="none" stroke="${stroke}" stroke-width="1.5"/><circle cx="14" cy="14" r="6" fill="none" stroke="${stroke}" stroke-width="1.3"/><circle cx="14" cy="14" r="2.2" fill="${stroke}"/>`
+  };
+  return `<svg class="series-sigil" viewBox="0 0 28 28" aria-hidden="true">${glyphs[seriesKey] || glyphs.memory}</svg>`;
+}
+
+function escapeHTML(str) {
+  return String(str || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function getCommitInfo(cityId) {
+  return committedMap[cityId] || null;
+}
+
+function getPlatePaths(city) {
+  const c = getCommitInfo(city.id);
+  return {
+    href: (c && c.href) || city.href,
+    map_svg: (c && c.map_svg) || city.map_svg,
+    map_png: (c && c.map_png) || city.map_png,
+    image_png: (c && c.image_png) || city.image_png
+  };
+}
+
+function matchesFilter(city) {
+  if (state.sealedOnly && !getCommitInfo(city.id)) return false;
+  if (state.chapterFilter !== "all" && city.chapter !== Number(state.chapterFilter)) return false;
+  if (state.seriesFilter !== "all" && city.series_key !== state.seriesFilter) return false;
+  if (state.query) {
+    const q = state.query.toLowerCase();
+    const hay = `${city.nn} ${city.name} ${city.series_name} ${city.epithet} ${city.inscription}`.toLowerCase();
+    if (!hay.includes(q)) return false;
+  }
+  return true;
+}
+
+function renderPlateWidget(city, activePlate, scopeAttr) {
+  const commit = getCommitInfo(city.id);
+  const paths = getPlatePaths(city);
+  const isMap = activePlate === "map";
+
+  const tabsHTML = `
+    <div class="plate-switcher" role="tablist" aria-label="Plates for ${escapeHTML(city.name)}">
+      <button type="button" class="plate-tab ${activePlate === "image" ? "is-active" : ""}" ${scopeAttr}="${city.id}" data-plate-val="image">City Image</button>
+      <button type="button" class="plate-tab ${activePlate === "map" ? "is-active" : ""}" ${scopeAttr}="${city.id}" data-plate-val="map">Carto Map</button>
+      <button type="button" class="plate-tab ${activePlate === "capsule" ? "is-active" : ""}" ${scopeAttr}="${city.id}" data-plate-val="capsule">Capsule</button>
+    </div>
+  `;
+
+  if (activePlate === "image" || isMap) {
+    const primarySrc = isMap ? paths.map_png : paths.image_png;
+    const plateName = isMap ? "map.png" : "image.png";
+    const isPendingQuota = Boolean(
+      commit &&
+      commit.plates_status === "PENDING_IMAGE_GENERATOR_QUOTA" &&
+      Array.isArray(commit.missing_plates) &&
+      commit.missing_plates.includes(plateName)
+    );
+    const kindText = isPendingQuota
+      ? `${isMap ? "Copperplate Map" : "Illustrated City Plate"} · Pending Quota (${commit.quota_reset_utc || "2026-11-11T06:21:14Z"})`
+      : isMap
+        ? "Copperplate Map (Awaiting Royal Plate)"
+        : "Illustrated City Plate (Awaiting Royal Plate)";
+    const altText = isMap
+      ? `Cartographic map of ${city.name}`
+      : `Illustrated plate of ${city.name}`;
+    const chipLabel = isMap ? "Map Loupe &oplus;" : "Loupe &oplus;";
+
+    return `
+      ${tabsHTML}
+      <div class="plate-stage ${isMap ? "is-map-plate" : ""}" data-open-loupe="${city.id}" data-open-plate="${activePlate}">
+        <div class="uncharted-plate-etching">
+          ${sigilSVG(city.series_key, city.series_accent)}
+          <div class="etch-kind">${escapeHTML(kindText)}</div>
+          <div class="etch-path">${escapeHTML(primarySrc)}</div>
+          ${commit ? `<a class="portal-btn" href="${escapeHTML(paths.href)}" style="margin-top:6px;">Launch Capsule &rarr;</a>` : ""}
+        </div>
+        <img
+          class="live-plate-img"
+          src="${escapeHTML(primarySrc)}"
+          alt="${escapeHTML(altText)}"
+          loading="lazy"
+          onload="this.parentElement.classList.add('plate-loaded')"
+          onerror="this.remove()"
+          data-open-loupe="${city.id}"
+          data-open-plate="${activePlate}"
+        />
+        <button type="button" class="loupe-trigger-chip" data-open-loupe="${city.id}" data-open-plate="${activePlate}">
+          ${chipLabel}
+        </button>
+      </div>
+    `;
+  }
+
+  if (!commit) {
+    return `
+      ${tabsHTML}
+      <div class="plate-stage" data-open-loupe="${city.id}" data-open-plate="capsule">
+        <div class="uncharted-plate-etching">
+          ${sigilSVG(city.series_key, city.series_accent)}
+          <div class="etch-kind">Interactive Architectural Capsule (Awaiting Seal)</div>
+          <div class="etch-path">${escapeHTML(paths.href)}</div>
+        </div>
+      </div>
+    `;
+  }
+
+  const mediumText = commit.medium || city.inscription;
+  return `
+    ${tabsHTML}
+    <div class="plate-stage">
+      <div class="plate-capsule-panel">
+        <div>
+          <div class="capsule-kicker">Anti-Trude Verified · J_dom ${Number(commit.j_dom || 0).toFixed(3)}</div>
+          <p class="capsule-desc">${escapeHTML(mediumText)}</p>
+        </div>
+        <div class="capsule-btn-row">
+          <a class="portal-btn" href="${escapeHTML(paths.href)}">Launch Capsule &rarr;</a>
+          <button type="button" class="loupe-btn" data-open-loupe="${city.id}" data-open-plate="capsule">Preview in Loupe</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function updateTelemetry() {
+  const commits = Object.values(committedMap);
+  const sealedCount = commits.length;
+  let maxJ = 0;
+  for (const c of commits) {
+    if (typeof c.j_dom === "number" && c.j_dom > maxJ) maxJ = c.j_dom;
+  }
+  document.getElementById("stat-sealed").textContent = String(sealedCount);
+  document.getElementById("btn-sealed-count").textContent = String(sealedCount);
+  document.getElementById("stat-jdom").textContent = `${maxJ.toFixed(2)} < 0.35`;
+
+  if (sealedCount > 0 && !getCommitInfo(state.selectedCityId)) {
+    const firstSealed = CITIES.find(c => Boolean(getCommitInfo(c.id)));
+    if (firstSealed) state.selectedCityId = firstSealed.id;
+  }
+}
+
+function renderBoard() {
+  const colHeaders = document.getElementById("board-col-headers");
+  let headHTML = `<div class="board-col-head" style="cursor:default">Wave</div>`;
+  for (const s of SERIES_META) {
+    const active = state.seriesFilter === s.key ? "is-active" : "";
+    headHTML += `<button type="button" class="board-col-head ${active}" data-series-col="${s.key}" title="Filter diagonal: ${escapeHTML(s.name)}">${escapeHTML(s.short)}</button>`;
+  }
+  colHeaders.innerHTML = headHTML;
+
+  const byCoord = new Map();
+  for (const c of CITIES) {
+    byCoord.set(`${c.row}:${c.col}`, c);
+  }
+
+  const grid = document.getElementById("board-grid");
+  let rowsHTML = "";
+  for (let r = 0; r < 15; r++) {
+    rowsHTML += `<div class="board-row" role="row">`;
+    rowsHTML += `<div class="board-row-label"><span>${WAVEFRONT_CHAPTER_LABELS[r]}</span></div>`;
+    for (let c = 0; c < 11; c++) {
+      const parity = (r + c) % 2 === 0 ? "sq-ebony" : "sq-ivory";
+      const city = byCoord.get(`${r}:${c}`);
+      if (!city) {
+        rowsHTML += `<div class="chess-sq ${parity} sq-empty" role="gridcell" aria-hidden="true"></div>`;
+      } else {
+        const commit = getCommitInfo(city.id);
+        const sealedCls = commit ? "sq-sealed" : "";
+        const selectedCls = state.selectedCityId === city.id ? "is-selected" : "";
+        const dimmedCls = matchesFilter(city) ? "" : "is-dimmed";
+        const statusWord = commit ? `SEALED (J_dom ${Number(commit.j_dom || 0).toFixed(3)})` : "Awaiting Envoy Seal";
+        rowsHTML += `
+          <button
+            type="button"
+            class="chess-sq ${parity} sq-city ${sealedCls} ${selectedCls} ${dimmedCls}"
+            data-city-id="${city.id}"
+            role="gridcell"
+            title="${city.nn} ${escapeHTML(city.name)} — ${escapeHTML(city.series_name)} ${city.series_rank} (${statusWord})"
+            aria-label="City ${city.nn} ${escapeHTML(city.name)}, ${statusWord}"
+          >
+            <span class="sq-num">${city.nn}</span><span class="sq-rank-sub">·${city.series_rank}</span>
+          </button>`;
+      }
+    }
+    rowsHTML += `</div>`;
+  }
+  grid.innerHTML = rowsHTML;
+}
+
+function renderInspector() {
+  const city = CITIES.find(c => c.id === state.selectedCityId) || CITIES[0];
+  const commit = getCommitInfo(city.id);
+  const paths = getPlatePaths(city);
+  const plinth = document.getElementById("inspector-plinth");
+
+  plinth.innerHTML = `
+    <div class="inspector-kicker">
+      <span>Chapter ${city.chapter_roman} · ${escapeHTML(city.series_name)} ${city.series_rank}</span>
+      <span>#${city.nn} / 55</span>
+    </div>
+    <h3 class="inspector-title">
+      ${sigilSVG(city.series_key, city.series_accent)}
+      <span>${escapeHTML(city.name)}</span>
+    </h3>
+    <p class="inspector-epithet">${escapeHTML(city.epithet)}</p>
+
+    ${renderPlateWidget(city, state.inspectorPlate, "data-insp-plate")}
+
+    <p class="inspector-copy">${escapeHTML(city.inscription)}</p>
+    <div class="inspector-meta">
+      <div><strong>Status:</strong> ${commit ? "ILLUMINATED &amp; PLATES SEALED" : "Awaiting SCION Envoy Seal"}</div>
+      ${commit ? `
+        <div><strong>Anti-Trude J_dom:</strong> ${Number(commit.j_dom || 0).toFixed(4)} &lt; 0.35 ${commit.nearest_city ? `(vs ${escapeHTML(commit.nearest_city)})` : "(initial landmark)"}</div>
+        <div><strong>Plates:</strong> ${
+          commit.plates_status === "PENDING_IMAGE_GENERATOR_QUOTA" && Array.isArray(commit.missing_plates) && commit.missing_plates.length
+            ? `Capsule Sealed · Pending Quota (${escapeHTML(commit.missing_plates.join(", "))} @ ${escapeHTML(commit.quota_reset_utc || "2026-11-11T06:21:14Z")})`
+            : "image.png · map.svg · map.png · index.html"
+        }</div>
+      ` : `
+        <div><strong>Target:</strong> ${escapeHTML(paths.href)}</div>
+      `}
+    </div>
+    <div class="inspector-actions">
+      ${commit ? `
+        <a class="portal-btn" href="${escapeHTML(paths.href)}">Enter ${escapeHTML(city.name)} &rarr;</a>
+        <button type="button" class="secondary-btn" data-open-loupe="${city.id}" data-open-plate="${state.inspectorPlate}">Archival Loupe</button>
+      ` : ""}
+      <button type="button" class="secondary-btn" id="jump-to-card-btn">Locate in Folio</button>
+    </div>
+  `;
+
+  const jumpBtn = document.getElementById("jump-to-card-btn");
+  if (jumpBtn) {
+    jumpBtn.addEventListener("click", () => {
+      if (state.mode === "dialogues") {
+        state.mode = "chapters";
+        syncControlButtons();
+        renderFolios();
+      }
+      const target = document.getElementById(`folio-${city.id}`);
+      if (target) target.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  }
+}
+
+function renderFilterPills() {
+  const chContainer = document.getElementById("chapter-pills");
+  let chHTML = `<span class="ribbon-label">Chapters:</span>`;
+  chHTML += `<button type="button" class="filter-pill ${state.chapterFilter === "all" ? "is-active" : ""}" data-ch="all">All IX</button>`;
+  for (const d of FRAME_DIALOGUES) {
+    const active = Number(state.chapterFilter) === d.chapter ? "is-active" : "";
+    chHTML += `<button type="button" class="filter-pill ${active}" data-ch="${d.chapter}">Ch. ${d.roman}</button>`;
+  }
+  chContainer.innerHTML = chHTML;
+
+  const sContainer = document.getElementById("series-pills");
+  let sHTML = `<span class="ribbon-label">Series:</span>`;
+  sHTML += `<button type="button" class="filter-pill ${state.seriesFilter === "all" ? "is-active" : ""}" data-series="all">All 11</button>`;
+  for (const s of SERIES_META) {
+    const active = state.seriesFilter === s.key ? "is-active" : "";
+    sHTML += `<button type="button" class="filter-pill ${active}" data-series="${s.key}">${escapeHTML(s.short)}</button>`;
+  }
+  sContainer.innerHTML = sHTML;
+}
+
+function renderCityCard(city) {
+  const commit = getCommitInfo(city.id);
+  const paths = getPlatePaths(city);
+  const cardCls = commit ? "is-sealed" : "is-uncharted";
+  const activePlate = getCardPlate(city.id);
+
+  return `
+    <article class="city-card ${cardCls}" id="folio-${city.id}" data-card-city="${city.id}">
+      <div>
+        <div class="card-top">
+          <span class="card-coords">City ${city.nn} · Ch. ${city.chapter_roman} · ${escapeHTML(city.series_short)} ${city.series_rank}</span>
+          ${commit
+            ? `<span class="wax-seal sealed">Sealed</span>`
+            : `<span class="wax-seal uncharted">Uncharted</span>`
+          }
+        </div>
+        <div class="card-title-row">
+          ${sigilSVG(city.series_key, city.series_accent)}
+          <h4 class="card-city-name">
+            ${commit
+              ? `<a href="${escapeHTML(paths.href)}">${escapeHTML(city.name)}</a>`
+              : `${escapeHTML(city.name)}`
+            }
+          </h4>
+        </div>
+        <p class="card-epithet">${escapeHTML(city.epithet)}</p>
+
+        ${renderPlateWidget(city, activePlate, "data-card-plate")}
+
+        <p class="card-inscription">${escapeHTML(city.inscription)}</p>
+      </div>
+
+      <div class="card-footer">
+        ${commit ? `
+          <span class="jdom-badge" title="Morphological Jaccard similarity against prior cities">
+            J_dom ${Number(commit.j_dom || 0).toFixed(3)} · rev ${escapeHTML(String(commit.rev || commit.sha256 || "").slice(0, 7))}
+          </span>
+          <div style="display:flex;gap:6px;align-items:center;">
+            <button type="button" class="secondary-btn" data-open-loupe="${city.id}" data-open-plate="${activePlate}">Loupe</button>
+            <a class="portal-btn" href="${escapeHTML(paths.href)}">Enter &rarr;</a>
+          </div>
+        ` : `
+          <span class="uncharted-path">Awaiting envoy · ${escapeHTML(city.id)}</span>
+          <button type="button" class="secondary-btn" data-open-loupe="${city.id}" data-open-plate="${activePlate}">Folio Spec</button>
+        `}
+      </div>
+    </article>
+  `;
+}
+
+function renderFolios() {
+  const stage = document.getElementById("folio-stage");
+
+  if (state.mode === "dialogues") {
+    const frames = FRAME_DIALOGUES.filter(d =>
+      state.chapterFilter === "all" || d.chapter === Number(state.chapterFilter)
+    );
+    stage.innerHTML = frames.map(d => `
+      <section class="chapter-block" id="chapter-${d.chapter}">
+        <div class="chapter-header">
+          <div>
+            <div class="chapter-numeral">Chapter ${d.roman} · Frame Dialogue</div>
+            <h3 class="chapter-heading">${escapeHTML(d.title)}</h3>
+          </div>
+          <span class="chapter-tally">Emblem: ${escapeHTML(d.emblem)}</span>
+        </div>
+        <div class="dialogue-scroll">
+          <div class="dialogue-rubric"><span>Opening Pavilion Threshold</span><span>Ch. ${d.roman} · Proem</span></div>
+          <p class="dialogue-text">${escapeHTML(d.opening)}</p>
+        </div>
+        <div class="dialogue-scroll closing-frame">
+          <div class="dialogue-rubric"><span>Closing Pavilion Coda</span><span>Ch. ${d.roman} · Envoy</span></div>
+          <p class="dialogue-text">${escapeHTML(d.closing)}</p>
+        </div>
+      </section>
+    `).join("");
+    return;
+  }
+
+  if (state.mode === "series") {
+    let html = "";
+    for (const s of SERIES_META) {
+      if (state.seriesFilter !== "all" && state.seriesFilter !== s.key) continue;
+      const matching = CITIES.filter(c => c.series_key === s.key && matchesFilter(c));
+      if (matching.length === 0) continue;
+      const sealedInSeries = matching.filter(c => Boolean(getCommitInfo(c.id))).length;
+      html += `
+        <section class="chapter-block" id="series-${s.key}">
+          <div class="chapter-header">
+            <div>
+              <div class="chapter-numeral">Diagonal Series ${s.index} of 11 · ${escapeHTML(s.italian)}</div>
+              <h3 class="chapter-heading">${escapeHTML(s.name)}</h3>
+            </div>
+            <span class="chapter-tally">${sealedInSeries} / ${matching.length} Illuminated</span>
+          </div>
+          <div class="city-grid">
+            ${matching.map(renderCityCard).join("")}
+          </div>
+        </section>
+      `;
+    }
+    stage.innerHTML = html || `<div class="empty-filter-state">No invisible cities match the active cartographic filter.</div>`;
+    return;
+  }
+
+  let html = "";
+  for (const d of FRAME_DIALOGUES) {
+    if (state.chapterFilter !== "all" && Number(state.chapterFilter) !== d.chapter) continue;
+    const chCities = CITIES.filter(c => c.chapter === d.chapter && matchesFilter(c));
+    if (chCities.length === 0 && (state.sealedOnly || state.seriesFilter !== "all" || state.query)) {
+      continue;
+    }
+    const totalInChapter = CITIES.filter(c => c.chapter === d.chapter).length;
+    const sealedInChapter = CITIES.filter(c => c.chapter === d.chapter && Boolean(getCommitInfo(c.id))).length;
+
+    html += `
+      <section class="chapter-block" id="chapter-${d.chapter}">
+        <div class="chapter-header">
+          <div>
+            <div class="chapter-numeral">Chapter ${d.roman} · ${totalInChapter} Cities</div>
+            <h3 class="chapter-heading">${escapeHTML(d.title)}</h3>
+          </div>
+          <span class="chapter-tally">${sealedInChapter} / ${totalInChapter} Sealed · ${escapeHTML(d.emblem)}</span>
+        </div>
+
+        <div class="dialogue-scroll">
+          <div class="dialogue-rubric">
+            <span>Kublai Khan &amp; Marco Polo — Opening Frame</span>
+            <span>Chapter ${d.roman}</span>
+          </div>
+          <p class="dialogue-text">${escapeHTML(d.opening)}</p>
+        </div>
+
+        <div class="city-grid">
+          ${chCities.map(renderCityCard).join("")}
+        </div>
+
+        <div class="dialogue-scroll closing-frame">
+          <div class="dialogue-rubric">
+            <span>Kublai Khan &amp; Marco Polo — Closing Frame</span>
+            <span>Emblem: ${escapeHTML(d.emblem)}</span>
+          </div>
+          <p class="dialogue-text">${escapeHTML(d.closing)}</p>
+        </div>
+      </section>
+    `;
+  }
+  stage.innerHTML = html || `<div class="empty-filter-state">No sealed or matching cities yet under this filter. Toggle “Sealed Only” or reset filters to view all 55 coordinates.</div>`;
+}
+
+function renderLoupe() {
+  const modal = document.getElementById("archival-loupe");
+  modal.classList.toggle("is-open", state.loupeOpen);
+  document.body.classList.toggle("loupe-open", state.loupeOpen);
+  if (!state.loupeOpen) {
+    document.getElementById("loupe-viewport").innerHTML = "";
+    return;
+  }
+
+  const city = CITIES.find(c => c.id === state.loupeCityId) || CITIES[0];
+  const commit = getCommitInfo(city.id);
+  const paths = getPlatePaths(city);
+
+  document.getElementById("loupe-title").textContent = `${city.nn} · ${city.name}`;
+  document.getElementById("loupe-sub").textContent =
+    `Chapter ${city.chapter_roman} · ${city.series_name} ${city.series_rank} · ${commit ? `SEALED (J_dom ${Number(commit.j_dom || 0).toFixed(4)})` : "AWAITING ENVOY SEAL"}`;
+
+  const standaloneLink = document.getElementById("loupe-standalone-link");
+  if (state.loupePlate === "map") standaloneLink.href = paths.map_png;
+  else if (state.loupePlate === "map_svg") standaloneLink.href = paths.map_svg;
+  else if (state.loupePlate === "image") standaloneLink.href = paths.image_png;
+  else standaloneLink.href = paths.href;
+  standaloneLink.style.display = (commit || state.loupePlate !== "capsule") ? "inline-block" : "none";
+
+  document.querySelectorAll("[data-loupe-plate]").forEach(btn => {
+    btn.classList.toggle("is-active", btn.getAttribute("data-loupe-plate") === state.loupePlate);
+  });
+  document.querySelectorAll("[data-loupe-zoom]").forEach(btn => {
+    btn.classList.toggle("is-active", Number(btn.getAttribute("data-loupe-zoom")) === state.loupeZoom);
+  });
+
+  const vp = document.getElementById("loupe-viewport");
+  vp.classList.toggle("map-paper", state.loupePlate === "map" || state.loupePlate === "map_svg");
+
+  const reservedHTML = `
+    <div class="loupe-reserved-placard" style="max-width:620px;padding:32px;background:#efe3cb;color:#1f1812;border:2px solid #c4963c;text-align:center;">
+      <div style="font-family:var(--mono);font-size:0.74rem;text-transform:uppercase;letter-spacing:0.14em;color:#9e2a2b;">${
+        commit && commit.plates_status === "PENDING_IMAGE_GENERATOR_QUOTA"
+          ? `Royal Plate Pending Quota (${escapeHTML(commit.quota_reset_utc || "2026-11-11T06:21:14Z")})`
+          : "Folio Coordinate Reserved"
+      }</div>
+      <h3 style="margin:8px 0;font-size:1.65rem;">${escapeHTML(city.name)}</h3>
+      <p style="font-style:italic;color:#3e3023;">${escapeHTML(city.epithet)}</p>
+      <p style="color:#3e3023;line-height:1.55;">${escapeHTML(city.inscription)}</p>
+      <div style="font-family:var(--mono);font-size:0.72rem;color:#695540;margin-top:14px;">
+        Indexed Plates:<br/>
+        ${escapeHTML(paths.image_png)}<br/>
+        ${escapeHTML(paths.map_png)} · ${escapeHTML(paths.map_svg)}<br/>
+        ${escapeHTML(paths.href)}
+      </div>
+      ${commit ? `<div style="margin-top:16px;"><a class="portal-btn" href="${escapeHTML(paths.href)}">Launch Interactive Capsule &rarr;</a></div>` : ""}
+    </div>
+  `;
+
+  if (state.loupePlate === "capsule") {
+    if (!commit) {
+      vp.innerHTML = reservedHTML;
+    } else {
+      vp.innerHTML = `<iframe class="loupe-iframe" src="${escapeHTML(paths.href)}" title="Interactive Capsule: ${escapeHTML(city.name)}"></iframe>`;
+    }
+    return;
+  }
+
+  const imgSrc =
+    state.loupePlate === "map" ? paths.map_png :
+    state.loupePlate === "map_svg" ? paths.map_svg :
+    paths.image_png;
+
+  vp.innerHTML = `
+    <div class="loupe-media-wrap" style="transform: scale(${state.loupeZoom});">
+      <img
+        src="${escapeHTML(imgSrc)}"
+        alt="${escapeHTML(city.name)} — ${escapeHTML(state.loupePlate)}"
+        onerror="this.parentElement.style.display='none';this.parentElement.nextElementSibling.style.display='block';"
+      />
+    </div>
+    <div style="display:none;">${reservedHTML}</div>
+  `;
+}
+
+function openLoupe(cityId, plate) {
+  state.loupeCityId = cityId;
+  state.loupePlate = plate || "image";
+  state.loupeZoom = 1;
+  state.loupeOpen = true;
+  renderLoupe();
+}
+
+function stepLoupeCity(delta) {
+  const idx = CITIES.findIndex(c => c.id === state.loupeCityId);
+  const nextIdx = (idx + delta + CITIES.length) % CITIES.length;
+  state.loupeCityId = CITIES[nextIdx].id;
+  state.loupeZoom = 1;
+  renderLoupe();
+}
+
+function syncControlButtons() {
+  document.querySelectorAll("[data-mode]").forEach(btn => {
+    const active = btn.getAttribute("data-mode") === state.mode;
+    btn.classList.toggle("is-active", active);
+    btn.setAttribute("aria-selected", active ? "true" : "false");
+  });
+  document.querySelectorAll("[data-global-plate]").forEach(btn => {
+    btn.classList.toggle("is-active", btn.getAttribute("data-global-plate") === state.globalPlate);
+  });
+  const sealBtn = document.getElementById("seal-only-btn");
+  sealBtn.classList.toggle("is-active", state.sealedOnly);
+  sealBtn.setAttribute("aria-pressed", state.sealedOnly ? "true" : "false");
+}
+
+function renderAll() {
+  updateTelemetry();
+  renderFilterPills();
+  renderBoard();
+  renderInspector();
+  renderFolios();
+  if (state.loupeOpen) renderLoupe();
+}
+
+document.addEventListener("click", (e) => {
+  if (e.target.closest("a[href]")) return;
+  const openLoupeEl = e.target.closest("[data-open-loupe]");
+  if (openLoupeEl) {
+    openLoupe(
+      openLoupeEl.getAttribute("data-open-loupe"),
+      openLoupeEl.getAttribute("data-open-plate") || "image"
+    );
+    return;
+  }
+
+  const cardPlateBtn = e.target.closest("[data-card-plate]");
+  if (cardPlateBtn) {
+    const cid = cardPlateBtn.getAttribute("data-card-plate");
+    state.cardPlates[cid] = cardPlateBtn.getAttribute("data-plate-val");
+    renderFolios();
+    return;
+  }
+
+  const inspPlateBtn = e.target.closest("[data-insp-plate]");
+  if (inspPlateBtn) {
+    state.inspectorPlate = inspPlateBtn.getAttribute("data-plate-val");
+    renderInspector();
+    return;
+  }
+
+  const globalPlateBtn = e.target.closest("[data-global-plate]");
+  if (globalPlateBtn) {
+    state.globalPlate = globalPlateBtn.getAttribute("data-global-plate");
+    state.inspectorPlate = state.globalPlate;
+    state.cardPlates = {};
+    syncControlButtons();
+    renderInspector();
+    renderFolios();
+    return;
+  }
+
+  const loupePlateBtn = e.target.closest("[data-loupe-plate]");
+  if (loupePlateBtn) {
+    state.loupePlate = loupePlateBtn.getAttribute("data-loupe-plate");
+    state.loupeZoom = 1;
+    renderLoupe();
+    return;
+  }
+
+  const loupeZoomBtn = e.target.closest("[data-loupe-zoom]");
+  if (loupeZoomBtn) {
+    state.loupeZoom = Number(loupeZoomBtn.getAttribute("data-loupe-zoom")) || 1;
+    renderLoupe();
+    return;
+  }
+
+  const sq = e.target.closest("[data-city-id]");
+  if (sq) {
+    state.selectedCityId = sq.getAttribute("data-city-id");
+    renderBoard();
+    renderInspector();
+    return;
+  }
+
+  const colBtn = e.target.closest("[data-series-col]");
+  if (colBtn) {
+    const key = colBtn.getAttribute("data-series-col");
+    state.seriesFilter = state.seriesFilter === key ? "all" : key;
+    renderAll();
+    return;
+  }
+
+  const modeBtn = e.target.closest("[data-mode]");
+  if (modeBtn) {
+    state.mode = modeBtn.getAttribute("data-mode");
+    syncControlButtons();
+    renderFolios();
+    return;
+  }
+
+  const chPill = e.target.closest("[data-ch]");
+  if (chPill) {
+    state.chapterFilter = chPill.getAttribute("data-ch");
+    renderAll();
+    return;
+  }
+
+  const sPill = e.target.closest("[data-series]");
+  if (sPill) {
+    state.seriesFilter = sPill.getAttribute("data-series");
+    renderAll();
+    return;
+  }
+
+  if (e.target.id === "archival-loupe") {
+    state.loupeOpen = false;
+    renderLoupe();
+  }
+});
+
+document.getElementById("loupe-close-btn").addEventListener("click", () => {
+  state.loupeOpen = false;
+  renderLoupe();
+});
+document.getElementById("loupe-prev-btn").addEventListener("click", () => stepLoupeCity(-1));
+document.getElementById("loupe-next-btn").addEventListener("click", () => stepLoupeCity(1));
+
+document.addEventListener("keydown", (e) => {
+  if (!state.loupeOpen) return;
+  if (e.key === "Escape") {
+    state.loupeOpen = false;
+    renderLoupe();
+  } else if (e.key === "ArrowLeft") {
+    stepLoupeCity(-1);
+  } else if (e.key === "ArrowRight") {
+    stepLoupeCity(1);
+  } else if (e.key === "1") {
+    state.loupePlate = "image"; state.loupeZoom = 1; renderLoupe();
+  } else if (e.key === "2") {
+    state.loupePlate = "map"; state.loupeZoom = 1; renderLoupe();
+  } else if (e.key === "3") {
+    state.loupePlate = "capsule"; state.loupeZoom = 1; renderLoupe();
+  } else if (e.key === "+" || e.key === "=") {
+    state.loupeZoom = Math.min(3.5, +(state.loupeZoom + 0.5).toFixed(2)); renderLoupe();
+  } else if (e.key === "-") {
+    state.loupeZoom = Math.max(1, +(state.loupeZoom - 0.5).toFixed(2)); renderLoupe();
+  }
+});
+
+document.getElementById("seal-only-btn").addEventListener("click", () => {
+  state.sealedOnly = !state.sealedOnly;
+  syncControlButtons();
+  renderAll();
+});
+
+document.getElementById("search-input").addEventListener("input", (e) => {
+  state.query = e.target.value.trim();
+  renderBoard();
+  renderFolios();
+});
+
+if (window.location.protocol === "http:" || window.location.protocol === "https:") {
+  fetch("./manifest.json", { cache: "no-store" })
+    .then(r => (r.ok ? r.json() : null))
+    .then(data => {
+      if (data && data.committed && typeof data.committed === "object") {
+        committedMap = data.committed;
+        renderAll();
+      }
+    })
+    .catch(() => {});
+}
+
+renderAll();
+</script>
+</body>
+</html>

@@ -1,0 +1,3280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Zenobia — Thin Cities II</title>
+<style>
+:root {
+  --zenobia-umber: #19110B;
+  --zenobia-umber-deep: #120C08;
+  --zenobia-terracotta: #C47A45;
+  --zenobia-sienna: #8F512B;
+  --zenobia-bamboo: #D6B162;
+  --zenobia-amber: #9F7833;
+  --zenobia-zinc: #6E858E;
+  --zenobia-zinc-mist: #A9BEC5;
+  --zenobia-vermilion: #D8524B;
+  --zenobia-saffron: #E5A33B;
+  --zenobia-parchment: #F3EAD6;
+  --zenobia-parchment-dim: rgba(243, 234, 214, 0.78);
+  --zenobia-hairline: rgba(214, 177, 98, 0.28);
+  --zenobia-serif: 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+  --zenobia-mono: 'SF Mono', 'Menlo', 'Consolas', monospace;
+}
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body {
+  margin: 0; padding: 0; width: 100%; height: 100%;
+  overflow: hidden; background: var(--zenobia-umber);
+  color: var(--zenobia-parchment); font-family: var(--zenobia-serif);
+  -webkit-font-smoothing: antialiased; user-select: none;
+}
+zenobia-stilt-loom {
+  display: grid; width: 100vw; height: 100vh; height: 100dvh;
+  grid-template-columns: minmax(0, 1fr) 416px;
+  grid-template-rows: minmax(0, 1fr); overflow: hidden;
+  background: radial-gradient(circle at 38% 24%, #2A1D13 0%, var(--zenobia-umber) 72%);
+}
+zenobia-elevation-bay {
+  display: grid; grid-template-rows: auto minmax(0, 1fr) auto;
+  min-width: 0; min-height: 0; overflow: hidden;
+  border-right: 1px solid var(--zenobia-hairline);
+}
+zenobia-wind-crown {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center; gap: 10px; padding: 6px 12px;
+  background: rgba(18, 12, 8, 0.94); border-bottom: 1px solid var(--zenobia-hairline); min-width: 0;
+}
+zenobia-city-sigil { display: inline-flex; align-items: baseline; gap: 7px; min-width: 0; }
+zenobia-series-tag {
+  font-family: var(--zenobia-mono); font-size: 10px; letter-spacing: 0.1em;
+  color: var(--zenobia-terracotta); text-transform: uppercase; white-space: nowrap;
+}
+zenobia-title-glyph {
+  font-size: 15.5px; font-weight: 700; letter-spacing: 0.12em;
+  color: var(--zenobia-bamboo); white-space: nowrap;
+}
+zenobia-telemetry-ribbon {
+  display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap; min-width: 0;
+}
+zenobia-metric-pill {
+  display: inline-flex; align-items: baseline; gap: 4px;
+  padding: 2px 7px; border-radius: 3px;
+  background: rgba(110, 133, 142, 0.14); border: 1px solid rgba(169, 190, 197, 0.26);
+  font-family: var(--zenobia-mono); font-size: 10px; white-space: nowrap;
+}
+zenobia-metric-key { color: var(--zenobia-zinc-mist); }
+zenobia-metric-val { color: var(--zenobia-bamboo); font-weight: 600; }
+zenobia-crown-actions { display: inline-flex; align-items: center; gap: 6px; }
+dry-mesa-pilings {
+  display: grid; grid-template-rows: minmax(0, 1fr) auto;
+  width: 100%; height: 100%; min-width: 0; min-height: 0; overflow: hidden;
+}
+zenobia-canvas-well {
+  display: block; position: relative; width: 100%; height: 100%; min-width: 0; min-height: 0; overflow: hidden;
+}
+canvas.zenobia-truss-canvas {
+  display: block; width: 100%; height: 100%; cursor: crosshair; touch-action: manipulation;
+}
+belvedere-altitude-rail {
+  display: flex; flex-direction: column; justify-content: space-between;
+  position: absolute; left: 6px; top: 8px; height: min(210px, calc(100% - 64px)); width: 52px;
+  padding: 5px 4px; pointer-events: none;
+  background: linear-gradient(180deg, rgba(25,17,11,0.78), rgba(25,17,11,0.48));
+  border-left: 2px solid var(--zenobia-bamboo); border-radius: 0 4px 4px 0;
+}
+altitude-stratum-tick {
+  display: block; font-family: var(--zenobia-mono); font-size: 8.5px;
+  line-height: 1.15; color: var(--zenobia-zinc-mist);
+}
+altitude-mean-needle {
+  display: block; padding: 2px 3px; border-radius: 2px;
+  background: rgba(216, 82, 75, 0.26); border: 1px solid var(--zenobia-saffron);
+  font-family: var(--zenobia-mono); font-size: 8.5px; font-weight: 700; color: var(--zenobia-parchment);
+}
+piling-footing-augur {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center; gap: 2px 12px; padding: 6px 12px;
+  background: rgba(22, 15, 10, 0.96); border-top: 1px solid rgba(214, 177, 98, 0.36);
+  border-left: 3px solid var(--zenobia-terracotta);
+}
+augur-header-row {
+  display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; min-width: 0;
+}
+augur-stone-badge {
+  font-family: var(--zenobia-mono); font-size: 9px; text-transform: uppercase;
+  letter-spacing: 0.07em; color: var(--zenobia-saffron);
+}
+augur-altitude-tag {
+  font-family: var(--zenobia-mono); font-size: 9.5px; font-weight: 700; color: var(--zenobia-zinc-mist);
+}
+augur-stone-title {
+  font-size: 12px; font-weight: 700; color: var(--zenobia-bamboo);
+}
+augur-stone-note {
+  grid-column: 1 / -1; display: block; font-size: 10.8px; line-height: 1.26; color: var(--zenobia-parchment-dim);
+}
+augur-mesa-proof {
+  font-family: var(--zenobia-mono); font-size: 9.5px; color: var(--zenobia-terracotta); white-space: nowrap;
+}
+hanging-catwalk-rig {
+  display: grid; grid-template-columns: repeat(9, minmax(0, 1fr));
+  gap: 5px; align-items: stretch; padding: 6px 8px;
+  background: rgba(18, 12, 8, 0.97); border-top: 1px solid var(--zenobia-hairline);
+}
+catwalk-action-key, dream-prompt-chip, zenobia-folio-tab {
+  display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+  cursor: pointer; border-radius: 4px; transition: background 120ms ease, border-color 120ms ease;
+}
+catwalk-action-key {
+  padding: 5px 4px; background: rgba(214, 177, 98, 0.08);
+  border: 1px solid rgba(214, 177, 98, 0.32); color: var(--zenobia-parchment);
+  font-size: 10.5px; line-height: 1.15; text-align: center; min-width: 0;
+}
+catwalk-action-key:hover, dream-prompt-chip:hover, zenobia-folio-tab:hover {
+  background: rgba(214, 177, 98, 0.2); border-color: var(--zenobia-bamboo);
+}
+catwalk-action-key:focus-visible, dream-prompt-chip:focus-visible, zenobia-folio-tab:focus-visible, desire-axis-rail:focus-visible {
+  outline: 2px solid var(--zenobia-saffron); outline-offset: 1px;
+}
+rig-keycap {
+  display: inline-block; padding: 1px 4px; border-radius: 2px;
+  background: rgba(196, 122, 69, 0.28); border: 1px solid rgba(229, 163, 59, 0.48);
+  font-family: var(--zenobia-mono); font-size: 9px; font-weight: 700; color: var(--zenobia-saffron);
+  flex-shrink: 0;
+}
+rig-keylabel {
+  display: inline-block; white-space: normal; line-height: 1.16; word-break: break-word;
+}
+catwalk-action-key.zenobia-crown-btn { padding: 3px 7px; font-size: 10px; }
+catwalk-action-key.zenobia-flat-key { border-color: rgba(216, 82, 75, 0.52); background: rgba(216, 82, 75, 0.11); }
+happiness-recombinator {
+  display: flex; flex-direction: column; justify-content: space-between;
+  gap: 6px; padding: 10px 12px; height: 100%; min-width: 0; min-height: 0;
+  overflow-y: auto; overflow-x: hidden;
+  background: linear-gradient(180deg, rgba(28, 19, 12, 0.98) 0%, rgba(19, 13, 9, 0.99) 100%);
+}
+recombinator-rubric-bar {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 6px;
+  padding-bottom: 4px; border-bottom: 1px solid var(--zenobia-hairline);
+}
+recombinator-heading { font-size: 14px; font-weight: 700; color: var(--zenobia-bamboo); letter-spacing: 0.04em; }
+recombinator-gen-ledger { font-family: var(--zenobia-mono); font-size: 10px; color: var(--zenobia-saffron); }
+dream-prompt-lattice {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 5px;
+}
+dream-prompt-chip {
+  justify-content: flex-start; align-items: center; padding: 5px 7px; min-width: 0;
+  background: rgba(110, 133, 142, 0.12); border: 1px solid rgba(169, 190, 197, 0.28);
+  color: var(--zenobia-parchment); font-size: 10.6px; text-align: left;
+}
+dream-prompt-chip.zenobia-flat-attempt {
+  background: rgba(196, 122, 69, 0.15); border-color: rgba(216, 82, 75, 0.55);
+}
+dream-prompt-chip.zenobia-is-active {
+  background: rgba(214, 177, 98, 0.24); border-color: var(--zenobia-bamboo);
+  box-shadow: inset 0 0 0 1px rgba(229, 163, 59, 0.45);
+}
+desire-axes-manifold {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 5px;
+}
+desire-axis-vernier {
+  display: flex; flex-direction: column; gap: 3px; padding: 4px 7px;
+  background: rgba(255, 255, 255, 0.025); border: 1px solid rgba(214, 177, 98, 0.22);
+  border-radius: 4px; min-width: 0;
+}
+desire-axis-head { display: flex; align-items: center; justify-content: space-between; gap: 4px; font-size: 10px; }
+desire-axis-name { color: var(--zenobia-zinc-mist); line-height: 1.15; }
+desire-axis-readout { font-family: var(--zenobia-mono); font-size: 9.5px; color: var(--zenobia-bamboo); }
+desire-axis-rail {
+  display: block; position: relative; width: 100%; height: 8px; border-radius: 5px;
+  background: rgba(110, 133, 142, 0.24); border: 1px solid rgba(169, 190, 197, 0.28);
+  cursor: ew-resize; overflow: hidden; touch-action: none;
+}
+desire-axis-bar {
+  display: block; height: 100%; width: 55%;
+  background: linear-gradient(90deg, var(--zenobia-terracotta), var(--zenobia-bamboo));
+}
+dream-sketch-frame {
+  display: flex; flex-direction: column; gap: 3px; padding: 4px 6px;
+  background: rgba(12, 8, 5, 0.72); border: 1px solid rgba(110, 133, 142, 0.34); border-radius: 4px;
+}
+canvas.zenobia-sketch-canvas { display: block; width: 100%; height: 82px; }
+sublimation-tally-badge {
+  display: flex; align-items: center; justify-content: space-between; gap: 6px;
+  font-family: var(--zenobia-mono); font-size: 9.5px; color: var(--zenobia-saffron);
+}
+desire-recombination-note {
+  display: block; padding: 6px 8px;
+  background: rgba(196, 122, 69, 0.09); border-left: 3px solid var(--zenobia-bamboo);
+  border-radius: 0 4px 4px 0; font-size: 11px; line-height: 1.32; color: var(--zenobia-parchment);
+}
+desire-taxonomy-seal {
+  display: flex; flex-direction: column; gap: 2px; padding: 6px 8px;
+  background: rgba(110, 133, 142, 0.11); border: 1px solid rgba(169, 190, 197, 0.32);
+  border-radius: 4px;
+}
+taxonomy-binary-reject {
+  display: block; font-family: var(--zenobia-mono); font-size: 9.5px;
+  color: var(--zenobia-vermilion); letter-spacing: 0.02em;
+}
+taxonomy-true-stratum {
+  display: block; font-size: 11px; font-weight: 700; color: var(--zenobia-bamboo); line-height: 1.22;
+}
+taxonomy-foil-stratum {
+  display: block; font-size: 9.8px; color: var(--zenobia-zinc-mist); line-height: 1.18;
+}
+zenobia-plate-drawer {
+  display: flex; align-items: center; justify-content: center;
+  position: fixed; inset: 0; z-index: 60; padding: 14px;
+  background: rgba(12, 8, 5, 0.9); backdrop-filter: blur(5px);
+}
+zenobia-plate-sheet {
+  display: grid; grid-template-rows: auto minmax(0, 1fr); gap: 8px;
+  width: min(1180px, 100%); height: min(740px, 100%); padding: 10px 12px;
+  background: var(--zenobia-umber-deep); border: 1px solid var(--zenobia-bamboo);
+  border-radius: 6px; overflow: hidden;
+}
+zenobia-plate-topbar {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;
+}
+zenobia-plate-rubric {
+  font-family: var(--zenobia-mono); font-size: 11px; letter-spacing: 0.08em;
+  color: var(--zenobia-bamboo); text-transform: uppercase;
+}
+zenobia-plate-tabs { display: inline-flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+zenobia-folio-tab {
+  padding: 4px 8px; font-family: var(--zenobia-mono); font-size: 10px;
+  background: rgba(214, 177, 98, 0.09); border: 1px solid rgba(214, 177, 98, 0.34);
+  color: var(--zenobia-parchment);
+}
+zenobia-folio-tab.zenobia-is-active {
+  background: rgba(214, 177, 98, 0.28); border-color: var(--zenobia-bamboo); color: var(--zenobia-saffron);
+}
+zenobia-folio-tab.zenobia-close-tab { border-color: rgba(216, 82, 75, 0.55); color: #F7C7C3; }
+zenobia-plate-gallery {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;
+  min-height: 0; overflow: hidden;
+}
+zenobia-plate-gallery[data-view="map"], zenobia-plate-gallery[data-view="plate"] {
+  grid-template-columns: minmax(0, 1fr);
+}
+zenobia-plate-gallery[data-view="map"] #zenobia-leaf-city,
+zenobia-plate-gallery[data-view="plate"] #zenobia-leaf-map { display: none; }
+zenobia-plate-leaf {
+  display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: 5px;
+  min-height: 0; padding: 6px; background: rgba(25, 17, 11, 0.85);
+  border: 1px solid rgba(169, 190, 197, 0.25); border-radius: 4px; overflow: hidden;
+}
+zenobia-plate-viewport {
+  display: flex; align-items: center; justify-content: center;
+  min-height: 0; overflow: auto; background: #0E0906; border-radius: 3px;
+}
+img.zenobia-plate-img {
+  display: block; max-width: 100%; max-height: 100%; object-fit: contain;
+  transform-origin: center center; transition: transform 160ms ease;
+}
+zenobia-plate-gallery[data-zoom="1.8"] img.zenobia-plate-img { transform: scale(1.8); }
+zenobia-plate-caption {
+  display: block; font-family: var(--zenobia-mono); font-size: 9.5px;
+  line-height: 1.25; color: var(--zenobia-zinc-mist);
+}
+@media (max-width: 900px) {
+  zenobia-stilt-loom {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 49dvh) minmax(0, 51dvh);
+  }
+  zenobia-elevation-bay { border-right: none; border-bottom: 1px solid var(--zenobia-hairline); }
+  zenobia-wind-crown {
+    grid-template-columns: minmax(0, 1fr) auto; gap: 3px 6px; padding: 4px 7px;
+  }
+  zenobia-series-tag { font-size: 8.5px; }
+  zenobia-title-glyph { font-size: 13px; letter-spacing: 0.08em; }
+  zenobia-telemetry-ribbon {
+    grid-column: 1 / -1; grid-row: 2;
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; width: 100%;
+  }
+  zenobia-metric-pill { justify-content: space-between; padding: 1px 5px; font-size: 8.8px; }
+  catwalk-action-key.zenobia-crown-btn { padding: 2px 5px; font-size: 9px; }
+  belvedere-altitude-rail { width: 42px; left: 4px; top: 4px; height: min(112px, calc(100% - 36px)); padding: 3px; }
+  altitude-stratum-tick, altitude-mean-needle { font-size: 7.5px; }
+  piling-footing-augur { grid-template-columns: minmax(0, 1fr); gap: 1px; padding: 4px 8px; }
+  augur-stone-badge, augur-altitude-tag { font-size: 8px; }
+  augur-stone-title { font-size: 10px; }
+  augur-stone-note { font-size: 9px; line-height: 1.18; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+  augur-mesa-proof { font-size: 8px; }
+  hanging-catwalk-rig {
+    grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 3px; padding: 4px 5px;
+  }
+  catwalk-action-key { padding: 3px 2px; font-size: 8.8px; gap: 2px; }
+  rig-keycap { padding: 1px 3px; font-size: 8px; }
+  happiness-recombinator { gap: 4px; padding: 5px 8px; }
+  recombinator-rubric-bar { padding-bottom: 2px; }
+  recombinator-heading { font-size: 11.5px; }
+  recombinator-gen-ledger { font-size: 9px; }
+  dream-prompt-lattice { gap: 3px; }
+  dream-prompt-chip { padding: 3px 5px; font-size: 9px; gap: 4px; }
+  desire-axes-manifold { gap: 3px; }
+  desire-axis-vernier { padding: 2px 5px; gap: 2px; }
+  desire-axis-head { font-size: 8.8px; }
+  desire-axis-readout { font-size: 8.5px; }
+  desire-axis-rail { height: 6px; }
+  dream-sketch-frame { padding: 3px 5px; gap: 2px; }
+  canvas.zenobia-sketch-canvas { height: 68px; }
+  sublimation-tally-badge { font-size: 8.5px; }
+  desire-recombination-note { padding: 4px 6px; font-size: 9.2px; line-height: 1.2; }
+  desire-taxonomy-seal { padding: 3px 6px; gap: 1px; }
+  taxonomy-binary-reject { font-size: 8.2px; }
+  taxonomy-true-stratum { font-size: 9.3px; }
+  taxonomy-foil-stratum { font-size: 8.2px; }
+  zenobia-plate-gallery { grid-template-columns: minmax(0, 1fr); overflow-y: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+</style>
+</head>
+<body>
+<zenobia-stilt-loom class="zenobia-loom" id="zenobia-loom">
+  <zenobia-elevation-bay class="zenobia-elevation-bay">
+    <zenobia-wind-crown class="zenobia-wind-crown">
+      <zenobia-city-sigil class="zenobia-city-sigil">
+        <zenobia-series-tag class="zenobia-series-tag">Thin Cities · II</zenobia-series-tag>
+        <zenobia-title-glyph class="zenobia-title-glyph">ZENOBIA</zenobia-title-glyph>
+      </zenobia-city-sigil>
+      <zenobia-telemetry-ribbon class="zenobia-telemetry-ribbon">
+        <zenobia-metric-pill class="zenobia-metric-pill">
+          <zenobia-metric-key class="zenobia-metric-key">Alt</zenobia-metric-key>
+          <zenobia-metric-val class="zenobia-metric-val" id="zenobia-stat-alt">29.1m</zenobia-metric-val>
+        </zenobia-metric-pill>
+        <zenobia-metric-pill class="zenobia-metric-pill">
+          <zenobia-metric-key class="zenobia-metric-key">Mesa H₂O</zenobia-metric-key>
+          <zenobia-metric-val class="zenobia-metric-val" id="zenobia-stat-moisture">0%</zenobia-metric-val>
+        </zenobia-metric-pill>
+        <zenobia-metric-pill class="zenobia-metric-pill">
+          <zenobia-metric-key class="zenobia-metric-key">Cisterns</zenobia-metric-key>
+          <zenobia-metric-val class="zenobia-metric-val" id="zenobia-stat-barrels">11</zenobia-metric-val>
+        </zenobia-metric-pill>
+        <zenobia-metric-pill class="zenobia-metric-pill">
+          <zenobia-metric-key class="zenobia-metric-key">Catwalks</zenobia-metric-key>
+          <zenobia-metric-val class="zenobia-metric-val" id="zenobia-stat-catwalks">10</zenobia-metric-val>
+        </zenobia-metric-pill>
+      </zenobia-telemetry-ribbon>
+      <zenobia-crown-actions class="zenobia-crown-actions">
+        <catwalk-action-key class="zenobia-crown-btn" role="button" tabindex="0" data-action="mute" aria-label="Toggle Bamboo Chimes and Wind Audio">
+          <rig-keycap class="zenobia-keycap">M</rig-keycap>
+          <rig-keylabel class="zenobia-keylabel" id="zenobia-crown-mute">Audio</rig-keylabel>
+        </catwalk-action-key>
+        <catwalk-action-key class="zenobia-crown-btn" role="button" tabindex="0" data-action="plates" aria-label="Open Royal Plate Guild Folio">
+          <rig-keycap class="zenobia-keycap">P</rig-keycap>
+          <rig-keylabel class="zenobia-keylabel">Plates</rig-keylabel>
+        </catwalk-action-key>
+      </zenobia-crown-actions>
+    </zenobia-wind-crown>
+
+    <dry-mesa-pilings class="zenobia-mesa-stage" id="zenobia-mesa-stage">
+      <zenobia-canvas-well class="zenobia-canvas-well" id="zenobia-canvas-well">
+        <canvas id="zenobia-truss-canvas" class="zenobia-truss-canvas" aria-label="Zenobia high pilings, bamboo and zinc houses, crossing balconies, ladders, hanging sidewalks, cone belvederes, hoisted barrels, pulleys, cranes, fish poles, weathervanes, and silk ribbons above dry ochre mesa"></canvas>
+        <belvedere-altitude-rail class="zenobia-altitude-rail" aria-label="Elevation above dry mesa">
+          <altitude-stratum-tick class="zenobia-alt-tick">48m Cone</altitude-stratum-tick>
+          <altitude-stratum-tick class="zenobia-alt-tick">34m Span</altitude-stratum-tick>
+          <altitude-mean-needle class="zenobia-alt-needle" id="zenobia-alt-needle">29.1m</altitude-mean-needle>
+          <altitude-stratum-tick class="zenobia-alt-tick">18m Truss</altitude-stratum-tick>
+          <altitude-stratum-tick class="zenobia-alt-tick">0m Dry</altitude-stratum-tick>
+        </belvedere-altitude-rail>
+      </zenobia-canvas-well>
+      <piling-footing-augur class="zenobia-footing-augur" id="zenobia-augur" aria-live="polite">
+        <augur-header-row class="zenobia-augur-head">
+          <augur-stone-badge class="zenobia-augur-badge" id="zenobia-augur-kind">HIGH PILINGS · CLICK STAGE TO INSPECT</augur-stone-badge>
+          <augur-altitude-tag class="zenobia-augur-alt" id="zenobia-augur-alt">+29.1m</augur-altitude-tag>
+          <augur-stone-title class="zenobia-augur-title" id="zenobia-augur-title">Bamboo &amp; Oxidized-Zinc Superstructures Aloft</augur-stone-title>
+        </augur-header-row>
+        <augur-mesa-proof class="zenobia-augur-proof" id="zenobia-augur-proof">Ground Moisture: 0% · Dry Mesa · Flood Marks: 0</augur-mesa-proof>
+        <augur-stone-note class="zenobia-augur-note" id="zenobia-augur-note">Perched on seasoned pilings of uneven heights over baked plateau clay; nobody remembers why the founders raised Zenobia above dry ground.</augur-stone-note>
+      </piling-footing-augur>
+    </dry-mesa-pilings>
+
+    <hanging-catwalk-rig class="zenobia-catwalk-rig" role="toolbar" aria-label="Zenobia stilt trusswork controls">
+      <catwalk-action-key class="zenobia-rig-key" role="button" tabindex="0" data-action="elevate" title="Elevate Stilts [E]"><rig-keycap class="zenobia-keycap">E</rig-keycap><rig-keylabel class="zenobia-keylabel">Elevate</rig-keylabel></catwalk-action-key>
+      <catwalk-action-key class="zenobia-rig-key" role="button" tabindex="0" data-action="catwalk" title="Span Catwalk [C]"><rig-keycap class="zenobia-keycap">C</rig-keycap><rig-keylabel class="zenobia-keylabel">Catwalk</rig-keylabel></catwalk-action-key>
+      <catwalk-action-key class="zenobia-rig-key" role="button" tabindex="0" data-action="barrels" title="Hoist Water Barrels [B]"><rig-keycap class="zenobia-keycap">B</rig-keycap><rig-keylabel class="zenobia-keylabel">Barrels</rig-keylabel></catwalk-action-key>
+      <catwalk-action-key class="zenobia-rig-key" role="button" tabindex="0" data-action="footing" title="Probe Dry Footings [F]"><rig-keycap class="zenobia-keycap">F</rig-keycap><rig-keylabel class="zenobia-keylabel">Footings</rig-keylabel></catwalk-action-key>
+      <catwalk-action-key class="zenobia-rig-key" role="button" tabindex="0" data-action="gust" title="Plateau Gust [W]"><rig-keycap class="zenobia-keycap">W</rig-keycap><rig-keylabel class="zenobia-keylabel">Gust</rig-keylabel></catwalk-action-key>
+      <catwalk-action-key class="zenobia-rig-key zenobia-flat-key" role="button" tabindex="0" data-action="ground" title="Attempt Flat Reset [G]"><rig-keycap class="zenobia-keycap">G</rig-keycap><rig-keylabel class="zenobia-keylabel">Flat Reset</rig-keylabel></catwalk-action-key>
+      <catwalk-action-key class="zenobia-rig-key" role="button" tabindex="0" data-action="mute" title="Toggle Bamboo Chimes [M]"><rig-keycap class="zenobia-keycap">M</rig-keycap><rig-keylabel class="zenobia-keylabel" id="zenobia-mute-label">Chimes</rig-keylabel></catwalk-action-key>
+      <catwalk-action-key class="zenobia-rig-key" role="button" tabindex="0" data-action="reset" title="Reset Zenobia [R]"><rig-keycap class="zenobia-keycap">R</rig-keycap><rig-keylabel class="zenobia-keylabel">Reset</rig-keylabel></catwalk-action-key>
+      <catwalk-action-key class="zenobia-rig-key" role="button" tabindex="0" data-action="plates" title="Open Royal Plates [P]"><rig-keycap class="zenobia-keycap">P</rig-keycap><rig-keylabel class="zenobia-keylabel">Plates</rig-keylabel></catwalk-action-key>
+    </hanging-catwalk-rig>
+  </zenobia-elevation-bay>
+
+  <happiness-recombinator class="zenobia-recombinator" id="zenobia-recombinator" aria-label="Happy-Life Desire Recombinator">
+    <recombinator-rubric-bar class="zenobia-recomb-head">
+      <recombinator-heading class="zenobia-recomb-title">Describe a Happy Life</recombinator-heading>
+      <recombinator-gen-ledger class="zenobia-gen-ledger" id="zenobia-gen-ledger">Gen 0 · +0.0m</recombinator-gen-ledger>
+    </recombinator-rubric-bar>
+
+    <dream-prompt-lattice class="zenobia-prompt-grid" id="zenobia-prompt-grid">
+      <dream-prompt-chip class="zenobia-prompt-chip zenobia-flat-attempt" role="button" tabindex="0" data-key="1" data-prompt="flat_courtyard"><rig-keycap class="zenobia-keycap">1</rig-keycap><rig-keylabel class="zenobia-keylabel">Attempt Flat Stone Town</rig-keylabel></dream-prompt-chip>
+      <dream-prompt-chip class="zenobia-prompt-chip zenobia-flat-attempt" role="button" tabindex="0" data-key="2" data-prompt="harbor_quay"><rig-keycap class="zenobia-keycap">2</rig-keycap><rig-keylabel class="zenobia-keylabel">Attempt Earthbound Avenues</rig-keylabel></dream-prompt-chip>
+      <dream-prompt-chip class="zenobia-prompt-chip" role="button" tabindex="0" data-key="3" data-prompt="crossed_balconies"><rig-keycap class="zenobia-keycap">3</rig-keycap><rig-keylabel class="zenobia-keylabel">Dream Crossing Balconies</rig-keylabel></dream-prompt-chip>
+      <dream-prompt-chip class="zenobia-prompt-chip" role="button" tabindex="0" data-key="4" data-prompt="cone_belvederes"><rig-keycap class="zenobia-keycap">4</rig-keycap><rig-keylabel class="zenobia-keylabel">Dream High Cone Belvederes</rig-keylabel></dream-prompt-chip>
+      <dream-prompt-chip class="zenobia-prompt-chip" role="button" tabindex="0" data-key="5" data-prompt="ribbons_and_poles"><rig-keycap class="zenobia-keycap">5</rig-keycap><rig-keylabel class="zenobia-keylabel">Dream Vanes, Poles &amp; Ribbons</rig-keylabel></dream-prompt-chip>
+      <dream-prompt-chip class="zenobia-prompt-chip" role="button" tabindex="0" data-key="6" data-prompt="inhabitant_confession"><rig-keycap class="zenobia-keycap">6</rig-keycap><rig-keylabel class="zenobia-keylabel">Ask a Zenobian About Happiness</rig-keylabel></dream-prompt-chip>
+    </dream-prompt-lattice>
+
+    <desire-axes-manifold class="zenobia-axes-grid" id="zenobia-axes-grid">
+      <desire-axis-vernier class="zenobia-axis-card" data-axis-slot="0">
+        <desire-axis-head class="zenobia-axis-head"><desire-axis-name class="zenobia-axis-name">Pilings</desire-axis-name><desire-axis-readout class="zenobia-axis-readout">56%</desire-axis-readout></desire-axis-head>
+        <desire-axis-rail class="zenobia-axis-rail" role="slider" tabindex="0" aria-label="Desire axis 1" aria-valuemin="0" aria-valuemax="100" aria-valuenow="56"><desire-axis-bar class="zenobia-axis-bar"></desire-axis-bar></desire-axis-rail>
+      </desire-axis-vernier>
+      <desire-axis-vernier class="zenobia-axis-card" data-axis-slot="1">
+        <desire-axis-head class="zenobia-axis-head"><desire-axis-name class="zenobia-axis-name">Catwalks</desire-axis-name><desire-axis-readout class="zenobia-axis-readout">58%</desire-axis-readout></desire-axis-head>
+        <desire-axis-rail class="zenobia-axis-rail" role="slider" tabindex="0" aria-label="Desire axis 2" aria-valuemin="0" aria-valuemax="100" aria-valuenow="58"><desire-axis-bar class="zenobia-axis-bar"></desire-axis-bar></desire-axis-rail>
+      </desire-axis-vernier>
+      <desire-axis-vernier class="zenobia-axis-card" data-axis-slot="2">
+        <desire-axis-head class="zenobia-axis-head"><desire-axis-name class="zenobia-axis-name">Belvederes</desire-axis-name><desire-axis-readout class="zenobia-axis-readout">54%</desire-axis-readout></desire-axis-head>
+        <desire-axis-rail class="zenobia-axis-rail" role="slider" tabindex="0" aria-label="Desire axis 3" aria-valuemin="0" aria-valuemax="100" aria-valuenow="54"><desire-axis-bar class="zenobia-axis-bar"></desire-axis-bar></desire-axis-rail>
+      </desire-axis-vernier>
+      <desire-axis-vernier class="zenobia-axis-card" data-axis-slot="3">
+        <desire-axis-head class="zenobia-axis-head"><desire-axis-name class="zenobia-axis-name">Vanes &amp; Ribbons</desire-axis-name><desire-axis-readout class="zenobia-axis-readout">60%</desire-axis-readout></desire-axis-head>
+        <desire-axis-rail class="zenobia-axis-rail" role="slider" tabindex="0" aria-label="Desire axis 4" aria-valuemin="0" aria-valuemax="100" aria-valuenow="60"><desire-axis-bar class="zenobia-axis-bar"></desire-axis-bar></desire-axis-rail>
+      </desire-axis-vernier>
+    </desire-axes-manifold>
+
+    <dream-sketch-frame class="zenobia-sketch-frame">
+      <canvas id="zenobia-sketch-canvas" class="zenobia-sketch-canvas" aria-label="Desire permutation elevation schematic"></canvas>
+      <sublimation-tally-badge class="zenobia-sublim-badge">
+        <zenobia-metric-key class="zenobia-metric-key" id="zenobia-sublim-count">Flat Attempts Sublimated: 0</zenobia-metric-key>
+        <zenobia-metric-val class="zenobia-metric-val" id="zenobia-gain-readout">Mean 29.1m (+0.0m)</zenobia-metric-val>
+      </sublimation-tally-badge>
+    </dream-sketch-frame>
+
+    <desire-recombination-note class="zenobia-dream-note" id="zenobia-dream-note" aria-live="polite">
+      Choose [1] or [2] to attempt founding a flat town on solid ground—and watch desire lift every block back onto higher pilings, ladders, and swaying catwalks.
+    </desire-recombination-note>
+
+    <desire-taxonomy-seal class="zenobia-taxonomy-seal" id="zenobia-taxonomy-seal">
+      <taxonomy-binary-reject class="zenobia-tax-reject" id="zenobia-tax-reject">✗ False Binary Rejected: Happy vs. Unhappy Cities</taxonomy-binary-reject>
+      <taxonomy-true-stratum class="zenobia-tax-affirm" id="zenobia-tax-affirm">✓ Cities That Continue Through Years &amp; Changes to Give Form to Desires</taxonomy-true-stratum>
+      <taxonomy-foil-stratum class="zenobia-tax-foil" id="zenobia-tax-foil">Opposed to: Cities in Which Desires Erase the City or Are Erased by It</taxonomy-foil-stratum>
+    </desire-taxonomy-seal>
+  </happiness-recombinator>
+</zenobia-stilt-loom>
+
+<zenobia-plate-drawer class="zenobia-plate-drawer" id="zenobia-plate-drawer" hidden role="dialog" aria-modal="true" aria-label="Royal Plate Guild Archival Folio for Zenobia">
+  <zenobia-plate-sheet class="zenobia-plate-sheet">
+    <zenobia-plate-topbar class="zenobia-plate-topbar">
+      <zenobia-plate-rubric class="zenobia-plate-rubric">Royal Plate Guild · Zenobia Archival Folio</zenobia-plate-rubric>
+      <zenobia-plate-tabs class="zenobia-plate-tabs">
+        <zenobia-folio-tab class="zenobia-folio-tab zenobia-is-active" role="button" tabindex="0" data-plate-view="diptych">Diptych</zenobia-folio-tab>
+        <zenobia-folio-tab class="zenobia-folio-tab" role="button" tabindex="0" data-plate-view="map">Cartographic Map</zenobia-folio-tab>
+        <zenobia-folio-tab class="zenobia-folio-tab" role="button" tabindex="0" data-plate-view="plate">Architectural Plate</zenobia-folio-tab>
+        <zenobia-folio-tab class="zenobia-folio-tab" role="button" tabindex="0" id="zenobia-loupe-btn" data-plate-action="zoom">[Z] Loupe 1.0×</zenobia-folio-tab>
+        <zenobia-folio-tab class="zenobia-folio-tab zenobia-close-tab" role="button" tabindex="0" id="zenobia-plate-close" data-plate-action="close">[Esc] Close</zenobia-folio-tab>
+      </zenobia-plate-tabs>
+    </zenobia-plate-topbar>
+    <zenobia-plate-gallery class="zenobia-plate-gallery" id="zenobia-plate-gallery" data-view="diptych" data-zoom="1">
+      <zenobia-plate-leaf class="zenobia-plate-leaf" id="zenobia-leaf-map">
+        <zenobia-plate-viewport class="zenobia-plate-viewport">
+          <img class="zenobia-plate-img" id="zenobia-map-img" src="map.png" alt="Cartographic survey of Zenobia on high pilings over dry cracked mesa">
+        </zenobia-plate-viewport>
+        <zenobia-plate-caption class="zenobia-plate-caption" id="zenobia-map-caption">Plate I · Survey of High Pilings, Crossing Platforms &amp; Hanging Sidewalks Over Dry Mesa (1600×1200)</zenobia-plate-caption>
+      </zenobia-plate-leaf>
+      <zenobia-plate-leaf class="zenobia-plate-leaf" id="zenobia-leaf-city">
+        <zenobia-plate-viewport class="zenobia-plate-viewport">
+          <img class="zenobia-plate-img" id="zenobia-city-img" src="image.png" alt="Architectural elevation of Zenobia bamboo and oxidized-zinc stilt houses, cone belvederes, and hoisted water barrels">
+        </zenobia-plate-viewport>
+        <zenobia-plate-caption class="zenobia-plate-caption" id="zenobia-city-caption">Plate II · Bamboo &amp; Oxidized-Zinc Houses, Cone Belvederes, Hoisted Cisterns, Pulleys &amp; Ribbons (1600×1000)</zenobia-plate-caption>
+      </zenobia-plate-leaf>
+    </zenobia-plate-gallery>
+  </zenobia-plate-sheet>
+</zenobia-plate-drawer>
+<script>
+(function (root) {
+  "use strict";
+
+  /* Zenobia (Thin Cities 2) — Multi-Altitude Bamboo & Oxidized-Zinc Stilted Trusswork */
+
+  const PALETTE = Object.freeze({
+    mesa_obsidian_umber: "#19110B",
+    dry_ochre_terracotta: "#C47A45",
+    baked_mesa_sienna: "#8F512B",
+    bamboo_culm_gold: "#D6B162",
+    bamboo_node_amber: "#9F7833",
+    oxidized_zinc_slate: "#6E858E",
+    weathered_zinc_mist: "#A9BEC5",
+    silk_ribbon_vermilion: "#D8524B",
+    silk_ribbon_saffron: "#E5A33B",
+    plateau_parchment: "#F3EAD6"
+  });
+
+  const CANONICAL_STONES = Object.freeze([
+    Object.freeze({
+      id: "dry_terrain_pilings",
+      label: "High Pilings Above Dry Terrain",
+      causal_role: "Zenobia stands on very high pilings of varying heights over cracked, dry ochre mesa ground with zero marsh, tide, or floodwater below."
+    }),
+    Object.freeze({
+      id: "bamboo_and_zinc_houses",
+      label: "Houses of Bamboo and Oxidized Zinc",
+      causal_role: "Light superstructures framed in golden split bamboo and corrugated oxidized-zinc sheets perched upon multi-tier stilts."
+    }),
+    Object.freeze({
+      id: "crossing_platforms_and_balconies",
+      label: "Platforms and Balconies Crossing on Stilts",
+      causal_role: "Cantilevered decks and balconies at staggered altitudes overstepping and crossing one another in open sky."
+    }),
+    Object.freeze({
+      id: "ladders_and_hanging_sidewalks",
+      label: "Ladders and Swaying Hanging Sidewalks",
+      causal_role: "Vertical bamboo rung-ladders and catenary rope-and-plank catwalks linking stilted platforms across airy chasms."
+    }),
+    Object.freeze({
+      id: "cone_roofed_belvederes",
+      label: "Cone-Roofed Belvederes",
+      causal_role: "Conical zinc-and-bamboo belvedere pavilions crowning the highest stilts as windward lookouts."
+    }),
+    Object.freeze({
+      id: "water_storage_barrels",
+      label: "Elevated Barrels of Water Storage",
+      causal_role: "Hooped timber-and-zinc cistern barrels hoisted onto upper platforms to hold precious water high above the arid plateau."
+    }),
+    Object.freeze({
+      id: "pulleys_fish_poles_and_cranes",
+      label: "Pulleys, Fish Poles, and Projecting Cranes",
+      causal_role: "Rigged sheave pulleys, jib cranes, and long cantilevered bamboo fishing poles casting lines and baskets into dry air."
+    }),
+    Object.freeze({
+      id: "weathervanes_and_ribbons",
+      label: "Spinning Weathervanes and Fluttering Ribbons",
+      causal_role: "Finial zinc weathervanes and silk ribbons streaming horizontally in the high plateau wind."
+    }),
+    Object.freeze({
+      id: "forgotten_founding_motive",
+      label: "Unremembered Motive of the Founders",
+      causal_role: "Probing the baked mesa post-sockets reveals dry dust and zero flood-history; nobody remembers why the founders raised Zenobia on stilts."
+    }),
+    Object.freeze({
+      id: "happy_life_desire_recombination",
+      label: "Happy-Life Recombination & Desire-Form Taxonomy",
+      causal_role: "Asked to imagine a happy life, any inhabitant or visitor inevitably recombines Zenobia's pilings, stairways, and hanging balconies—placing Zenobia among cities that give form to desires rather than cities erased by them."
+    })
+  ]);
+
+  const CLUSTER_BLUEPRINTS = [
+    { index: 0, name: "Westward Wind-Stilt", xNorm: 0.10, baseElev: 18, legs: 3, widthM: 6.4, belvedere: false, barrels: 1, crane: false, fishPole: 1, houseStyle: "split_bamboo", postDepth: 4.4 },
+    { index: 1, name: "Saffron Cistern Perch", xNorm: 0.21, baseElev: 31, legs: 4, widthM: 7.4, belvedere: true, barrels: 2, crane: true, fishPole: 0, houseStyle: "zinc_gable", postDepth: 5.6 },
+    { index: 2, name: "Cantilevered Reed Roost", xNorm: 0.33, baseElev: 22, legs: 3, widthM: 6.8, belvedere: false, barrels: 1, crane: false, fishPole: 1, houseStyle: "bamboo_veranda", postDepth: 4.8 },
+    { index: 3, name: "High Zenith Belvedere", xNorm: 0.44, baseElev: 41, legs: 4, widthM: 8.0, belvedere: true, barrels: 2, crane: true, fishPole: 1, houseStyle: "twin_pavilion", postDepth: 6.5 },
+    { index: 4, name: "Twin-Culm Joinery", xNorm: 0.56, baseElev: 26, legs: 3, widthM: 7.0, belvedere: false, barrels: 1, crane: true, fishPole: 1, houseStyle: "zinc_shed", postDepth: 5.1 },
+    { index: 5, name: "Grand Spire Truss", xNorm: 0.68, baseElev: 45, legs: 4, widthM: 8.2, belvedere: true, barrels: 2, crane: true, fishPole: 1, houseStyle: "tiered_zinc", postDepth: 6.9 },
+    { index: 6, name: "Lantern Balcony Deck", xNorm: 0.79, baseElev: 16, legs: 3, widthM: 6.2, belvedere: false, barrels: 1, crane: false, fishPole: 1, houseStyle: "split_bamboo", postDepth: 4.1 },
+    { index: 7, name: "East Scarp Lookout", xNorm: 0.90, baseElev: 34, legs: 4, widthM: 7.2, belvedere: true, barrels: 1, crane: true, fishPole: 0, houseStyle: "zinc_gable", postDepth: 5.9 }
+  ];
+
+  const INITIAL_CATWALKS = [
+    [0, 1, 0.84], [1, 2, 0.76], [1, 3, 0.92],
+    [2, 4, 0.74], [3, 4, 0.86], [3, 5, 0.93],
+    [4, 6, 0.78], [5, 6, 0.82], [5, 7, 0.90], [6, 7, 0.79]
+  ];
+
+  function clamp(v, lo, hi) {
+    return v < lo ? lo : v > hi ? hi : v;
+  }
+
+  function makeRng(seed) {
+    let s = (seed >>> 0) || 14021972;
+    return function next() {
+      s = (s * 1664525 + 1013904223) >>> 0;
+      return s / 4294967296;
+    };
+  }
+
+  function createAudioEngine(initialMuted) {
+    let muted = Boolean(initialMuted);
+    let ctx = null;
+    let noiseBuf = null;
+
+    function ensureCtx() {
+      if (muted) return null;
+      const AC = root.AudioContext || root.webkitAudioContext;
+      if (!AC) return null;
+      if (!ctx) {
+        try { ctx = new AC(); } catch (_e) { return null; }
+      }
+      if (ctx.state === "suspended") {
+        try { ctx.resume(); } catch (_e) { /* unlocked on gesture */ }
+      }
+      if (!noiseBuf && ctx) {
+        noiseBuf = ctx.createBuffer(1, Math.floor(ctx.sampleRate * 1.2), ctx.sampleRate);
+        const data = noiseBuf.getChannelData(0);
+        let r = makeRng(9014);
+        for (let i = 0; i < data.length; i++) data[i] = r() * 2 - 1;
+      }
+      return ctx;
+    }
+
+    function play(kind, strength) {
+      const ac = ensureCtx();
+      if (!ac) return false;
+      const now = ac.currentTime;
+      const amp = clamp(Number(strength) || 1, 0.25, 1.8);
+      try {
+        if (kind === "wind" || kind === "wind_gust") {
+          const src = ac.createBufferSource();
+          src.buffer = noiseBuf;
+          const bp = ac.createBiquadFilter();
+          bp.type = "bandpass";
+          bp.Q.value = 3.2;
+          bp.frequency.setValueAtTime(380, now);
+          bp.frequency.exponentialRampToValueAtTime(860 * Math.min(1.4, amp), now + 0.35);
+          bp.frequency.exponentialRampToValueAtTime(320, now + 0.95);
+          const g = ac.createGain();
+          g.gain.setValueAtTime(0.001, now);
+          g.gain.linearRampToValueAtTime(0.055 * amp, now + 0.18);
+          g.gain.exponentialRampToValueAtTime(0.0008, now + 0.98);
+          src.connect(bp); bp.connect(g); g.connect(ac.destination);
+          src.start(now); src.stop(now + 1.0);
+        } else if (kind === "bamboo_creak" || kind === "creak") {
+          for (let i = 0; i < 3; i++) {
+            const t0 = now + i * 0.055;
+            const osc = ac.createOscillator();
+            osc.type = "triangle";
+            osc.frequency.setValueAtTime(165 + i * 38, t0);
+            osc.frequency.exponentialRampToValueAtTime(118 + i * 22, t0 + 0.075);
+            const g = ac.createGain();
+            g.gain.setValueAtTime(0.045 * amp, t0);
+            g.gain.exponentialRampToValueAtTime(0.0008, t0 + 0.08);
+            osc.connect(g); g.connect(ac.destination);
+            osc.start(t0); osc.stop(t0 + 0.085);
+          }
+        } else if (kind === "vane_tick" || kind === "vane") {
+          const osc = ac.createOscillator();
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(2480, now);
+          osc.frequency.exponentialRampToValueAtTime(3620, now + 0.04);
+          const g = ac.createGain();
+          g.gain.setValueAtTime(0.032 * amp, now);
+          g.gain.exponentialRampToValueAtTime(0.0006, now + 0.055);
+          osc.connect(g); g.connect(ac.destination);
+          osc.start(now); osc.stop(now + 0.06);
+        } else if (kind === "pulley_ratchet" || kind === "pulley") {
+          for (let i = 0; i < 4; i++) {
+            const t0 = now + i * 0.048;
+            const osc = ac.createOscillator();
+            osc.type = "square";
+            osc.frequency.setValueAtTime(520 + i * 95, t0);
+            const g = ac.createGain();
+            g.gain.setValueAtTime(0.024 * amp, t0);
+            g.gain.exponentialRampToValueAtTime(0.0007, t0 + 0.035);
+            osc.connect(g); g.connect(ac.destination);
+            osc.start(t0); osc.stop(t0 + 0.04);
+          }
+        } else if (kind === "footing_knock" || kind === "footing") {
+          const osc = ac.createOscillator();
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(108, now);
+          osc.frequency.exponentialRampToValueAtTime(48, now + 0.11);
+          const g = ac.createGain();
+          g.gain.setValueAtTime(0.075 * amp, now);
+          g.gain.exponentialRampToValueAtTime(0.0008, now + 0.13);
+          osc.connect(g); g.connect(ac.destination);
+          osc.start(now); osc.stop(now + 0.14);
+        } else {
+          const notes = kind === "sublimate" ? [392, 493.88, 587.33, 783.99] : [440, 587.33, 659.25];
+          notes.forEach(function (freq, idx) {
+            const t0 = now + idx * 0.052;
+            const osc = ac.createOscillator();
+            osc.type = "sine";
+            osc.frequency.setValueAtTime(freq, t0);
+            const g = ac.createGain();
+            g.gain.setValueAtTime(0.038 * amp, t0);
+            g.gain.exponentialRampToValueAtTime(0.0007, t0 + 0.28);
+            osc.connect(g); g.connect(ac.destination);
+            osc.start(t0); osc.stop(t0 + 0.3);
+          });
+        }
+        return true;
+      } catch (_err) {
+        return false;
+      }
+    }
+
+    return {
+      play: play,
+      setMuted: function (m) { muted = Boolean(m); return muted; },
+      toggleMute: function () { muted = !muted; if (!muted) ensureCtx(); return muted; },
+      isMuted: function () { return muted; },
+      unlock: ensureCtx,
+      destroy: function () {
+        if (ctx && typeof ctx.close === "function") {
+          try { ctx.close(); } catch (_e) { /* ignore */ }
+        }
+        ctx = null;
+      }
+    };
+  }
+
+  function createTrusswork(opts) {
+    const cfg = opts || {};
+    let width = Math.max(240, Number(cfg.width) || 1280);
+    let height = Math.max(240, Number(cfg.height) || 800);
+    let dpr = Math.max(1, Number(cfg.dpr) || 1);
+    const boundCanvas = cfg.canvas || null;
+
+    let reducedMotion = Boolean(cfg.reducedMotion);
+    if (cfg.reducedMotion === undefined && root.matchMedia) {
+      try {
+        reducedMotion = Boolean(root.matchMedia("(prefers-reduced-motion: reduce)").matches);
+      } catch (_e) { /* ignore */ }
+    }
+
+    const audio = createAudioEngine(Boolean(cfg.muted));
+    const seedBase = Number(cfg.seed) || 14021972;
+
+    let timeSec = 0;
+    let windSpeed = 1.0;
+    let gustStrength = 0;
+    let hoistAnim = 0;
+    let vanePhase = 0;
+    let elevateCursor = 0;
+    let catwalkCursor = 0;
+    let probeCursor = 0;
+    let permutationGeneration = 0;
+    let flatAttemptSublimated = false;
+    let sublimatedFlatAttempts = 0;
+    let flatGhostTimer = 0;
+    let footingProbesCount = 0;
+    let lastInspected = null;
+    let lastFootingProbe = null;
+
+    let clusters = [];
+    let catwalks = [];
+    let mesaCracks = [];
+    let dustMotes = [];
+    let geom = { mesaY: Math.round(height * 0.84), hitNodes: [], clusters: [], catwalks: [] };
+
+    const unlockHandler = function () { audio.unlock(); };
+    if (root.document && root.document.addEventListener) {
+      root.document.addEventListener("pointerdown", unlockHandler, { passive: true });
+      root.document.addEventListener("keydown", unlockHandler, { passive: true });
+    }
+
+    function initWorld() {
+      const rng = makeRng(seedBase);
+      timeSec = 0;
+      windSpeed = 1.0;
+      gustStrength = 0;
+      hoistAnim = 0;
+      vanePhase = 0.6;
+      elevateCursor = 0;
+      catwalkCursor = 0;
+      probeCursor = 0;
+      permutationGeneration = 0;
+      flatAttemptSublimated = false;
+      sublimatedFlatAttempts = 0;
+      flatGhostTimer = 0;
+      footingProbesCount = 0;
+      lastInspected = null;
+      lastFootingProbe = null;
+
+      clusters = CLUSTER_BLUEPRINTS.map(function (bp, idx) {
+        const high = bp.baseElev >= 30;
+        return {
+          index: bp.index,
+          name: bp.name,
+          xNorm: bp.xNorm,
+          baselineMeters: bp.baseElev,
+          elevationMeters: bp.baseElev,
+          animOffsetMeters: 0,
+          legs: bp.legs,
+          widthMeters: bp.widthM,
+          tierFracs: high ? [0.46, 0.72] : [0.56],
+          cantileverLeftM: 3.4 + (idx % 3) * 1.4,
+          cantileverRightM: 3.8 + ((idx + 1) % 3) * 1.3,
+          hasBelvedere: bp.belvedere,
+          barrelCount: bp.barrels,
+          hasCrane: bp.crane,
+          pulleyDropFrac: 0.24 + (idx % 3) * 0.07,
+          fishPoleCount: bp.fishPole,
+          fishPoleDir: idx < 4 ? -1 : 1,
+          hasWeathervane: bp.belvedere || idx === 2 || idx === 4,
+          ribbonCount: bp.belvedere ? 3 : 2,
+          ladderCount: high ? 3 : 2,
+          houseStyle: bp.houseStyle,
+          postDepthMeters: bp.postDepth,
+          swaySeed: rng() * Math.PI * 2
+        };
+      });
+
+      catwalks = INITIAL_CATWALKS.map(function (pair, i) {
+        return {
+          id: "catwalk_" + i,
+          fromIdx: pair[0],
+          toIdx: pair[1],
+          tierFrac: pair[2],
+          sagMeters: 1.8 + Math.abs(pair[1] - pair[0]) * 0.85,
+          phase: i * 0.73
+        };
+      });
+
+      mesaCracks = [];
+      for (let i = 0; i < 26; i++) {
+        const x0 = 0.03 + (i / 25) * 0.94 + (rng() - 0.5) * 0.02;
+        mesaCracks.push({
+          xNorm: clamp(x0, 0.02, 0.98),
+          dx1: (rng() - 0.5) * 0.045,
+          dy1: 0.28 + rng() * 0.25,
+          dx2: (rng() - 0.5) * 0.06,
+          dy2: 0.58 + rng() * 0.36,
+          branchX: (rng() - 0.5) * 0.035
+        });
+      }
+
+      dustMotes = [];
+      for (let i = 0; i < 34; i++) {
+        dustMotes.push({
+          xNorm: rng(),
+          hFrac: rng() * 0.14,
+          size: 1.0 + rng() * 1.8,
+          speed: 0.012 + rng() * 0.024,
+          alpha: 0.16 + rng() * 0.26
+        });
+      }
+
+      rebuildGeometry();
+    }
+
+    function countCrossingCatwalks() {
+      let crossings = 0;
+      for (let i = 0; i < catwalks.length; i++) {
+        const a = catwalks[i];
+        const aLo = Math.min(a.fromIdx, a.toIdx);
+        const aHi = Math.max(a.fromIdx, a.toIdx);
+        for (let j = i + 1; j < catwalks.length; j++) {
+          const b = catwalks[j];
+          const bLo = Math.min(b.fromIdx, b.toIdx);
+          const bHi = Math.max(b.fromIdx, b.toIdx);
+          const overlap = Math.max(aLo, bLo) < Math.min(aHi, bHi);
+          if (overlap && Math.abs(a.tierFrac - b.tierFrac) > 0.03) crossings++;
+        }
+      }
+      return crossings;
+    }
+
+    function rebuildGeometry() {
+      const mesaY = Math.round(height * 0.84);
+      const topPad = Math.max(46, Math.round(height * 0.085));
+      let maxElev = 46;
+      for (let i = 0; i < clusters.length; i++) {
+        const eff = clusters[i].elevationMeters + clusters[i].animOffsetMeters;
+        if (eff > maxElev) maxElev = eff;
+      }
+      const scaleCeilingM = Math.max(62, maxElev + 14);
+      const pxPerM = (mesaY - topPad) / scaleCeilingM;
+      const horizScale = clamp(width / 1100, 0.42, 1.22);
+      const hitNodes = [];
+
+      const cGeoms = clusters.map(function (c) {
+        const effElevM = Math.max(12, c.elevationMeters + c.animOffsetMeters);
+        const swayAmp = reducedMotion ? 0 : (1.1 + windSpeed * 1.4 + gustStrength * 3.2) * (effElevM / 34);
+        const swayPx = reducedMotion ? 0 : Math.sin(timeSec * 1.35 + c.swaySeed) * swayAmp;
+        const baseX = c.xNorm * width;
+        const deckX = baseX + swayPx;
+        const deckY = mesaY - effElevM * pxPerM;
+        const halfW = Math.max(15, (c.widthMeters * pxPerM * 0.52) * horizScale);
+        const houseW = halfW * 1.62;
+        const houseH = Math.max(18, Math.min(38, 7.6 * pxPerM));
+        const roofPeakY = deckY - houseH - (c.hasBelvedere ? Math.max(24, 6.8 * pxPerM) : Math.max(9, 2.5 * pxPerM));
+
+        /* Register inspectable stones for this cluster */
+        hitNodes.push({
+          id: "piling_" + c.index, stoneId: "dry_terrain_pilings", kind: "piling_shaft",
+          label: c.name + " Seasoned Pilings", x: baseX, y: mesaY - 8, x2: deckX, y2: deckY,
+          radius: 38, priority: 2, altitudeMeters: Number((effElevM * 0.5).toFixed(1)),
+          material: "Seasoned ironwood-bamboo culms & rope cross-bracing",
+          note: "High pilings (" + effElevM.toFixed(1) + "m) braced over parched ochre clay with zero water below.",
+          clusterIdx: c.index
+        });
+        hitNodes.push({
+          id: "socket_" + c.index, stoneId: "forgotten_founding_motive", kind: "mesa_footing",
+          label: c.name + " Dry Post-Socket", x: baseX, y: mesaY + 8,
+          radius: 42, priority: 5, altitudeMeters: 0,
+          material: "Baked ochre-sienna clay & dry timber shoe",
+          note: "Dry clay dust (" + c.postDepthMeters.toFixed(1) + "m deep), zero flood-marks; nobody remembers why the founders built on stilts.",
+          clusterIdx: c.index
+        });
+        hitNodes.push({
+          id: "house_" + c.index, stoneId: "bamboo_and_zinc_houses", kind: "bamboo_zinc_house",
+          label: c.name + " Bamboo & Zinc House", x: deckX, y: deckY - houseH * 0.55,
+          radius: 40, priority: 6, altitudeMeters: Number(effElevM.toFixed(1)),
+          material: "Split golden bamboo lattice & corrugated oxidized zinc",
+          note: "Light pavilion framed in woven bamboo and patinated zinc sheets perched at " + effElevM.toFixed(1) + "m.",
+          clusterIdx: c.index
+        });
+
+        c.tierFracs.forEach(function (tf, ti) {
+          const ty = mesaY - effElevM * tf * pxPerM;
+          const balX = baseX + swayPx * tf + (ti % 2 === 0 ? -halfW * 1.45 : halfW * 1.45);
+          hitNodes.push({
+            id: "balcony_" + c.index + "_" + ti, stoneId: "crossing_platforms_and_balconies", kind: "crossing_balcony",
+            label: c.name + " Cantilevered Balcony", x: balX, y: ty,
+            radius: 38, priority: 7, altitudeMeters: Number((effElevM * tf).toFixed(1)),
+            material: "Cantilevered timber joists & split-bamboo balustrade",
+            note: "Staggered balcony jutting into thin air to overstep neighboring stilt decks.",
+            clusterIdx: c.index
+          });
+        });
+
+        hitNodes.push({
+          id: "ladder_" + c.index, stoneId: "ladders_and_hanging_sidewalks", kind: "bamboo_ladder",
+          label: c.name + " Rung Ladder", x: deckX - halfW * 0.75, y: deckY + Math.min(42, effElevM * 0.28 * pxPerM),
+          radius: 36, priority: 6, altitudeMeters: Number((effElevM * 0.78).toFixed(1)),
+          material: "Bound bamboo side-rails & lashed hardwood rungs",
+          note: "Steep bamboo rung-ladder linking lower cantilevered landings to the upper deck.",
+          clusterIdx: c.index
+        });
+
+        if (c.barrelCount > 0) {
+          hitNodes.push({
+            id: "barrel_" + c.index, stoneId: "water_storage_barrels", kind: "water_barrel",
+            label: c.name + " Hoisted Cistern Barrels (" + c.barrelCount + ")",
+            x: deckX + halfW * 0.92, y: deckY - 7,
+            radius: 38, priority: 8, altitudeMeters: Number(effElevM.toFixed(1)),
+            material: "Hooped cedar staves & oxidized-zinc bands",
+            note: "All water in Zenobia is hoisted aloft into strapped platform barrels above the dry plateau.",
+            clusterIdx: c.index
+          });
+        }
+
+        if (c.hasBelvedere) {
+          hitNodes.push({
+            id: "belvedere_" + c.index, stoneId: "cone_roofed_belvederes", kind: "cone_belvedere",
+            label: c.name + " Cone-Roofed Belvedere", x: deckX, y: deckY - houseH - 14,
+            radius: 40, priority: 9, altitudeMeters: Number((effElevM + 5.5).toFixed(1)),
+            material: "Conical oxidized-zinc roof over open bamboo colonnade",
+            note: "High conical belvedere lookout crowning the stilt cluster in the plateau wind.",
+            clusterIdx: c.index
+          });
+        }
+
+        if (c.hasCrane || c.fishPoleCount > 0) {
+          const jibDir = c.index % 2 === 0 ? -1 : 1;
+          const rigX = deckX + jibDir * (halfW + 18 * horizScale);
+          const rigY = deckY - houseH * 0.4 + 10;
+          hitNodes.push({
+            id: "rig_" + c.index, stoneId: "pulleys_fish_poles_and_cranes",
+            kind: c.hasCrane ? "pulley_crane" : "fish_pole",
+            label: c.name + (c.hasCrane ? " Jib Crane & Pulley" : " Air-Casting Fish Pole"),
+            x: rigX, y: rigY, radius: 40, priority: 8, altitudeMeters: Number((effElevM - 1.5).toFixed(1)),
+            material: "Whip-bamboo pole, iron sheave pulley & braided hemp line",
+            note: "Projecting crane sheave and bamboo fishing pole casting lines and baskets into empty dry air.",
+            clusterIdx: c.index
+          });
+        }
+
+        if (c.hasWeathervane || c.ribbonCount > 0) {
+          hitNodes.push({
+            id: "vane_" + c.index, stoneId: "weathervanes_and_ribbons", kind: "weathervane_ribbon",
+            label: c.name + " Zinc Weathervane & Silk Ribbons", x: deckX + 10, y: roofPeakY - 6,
+            radius: 40, priority: 9, altitudeMeters: Number((effElevM + 7.2).toFixed(1)),
+            material: "Finial oxidized zinc & vermilion-saffron silk streamers",
+            note: "Spinning finial weathervane and bright silk ribbons streaming in the dry plateau wind.",
+            clusterIdx: c.index
+          });
+        }
+
+        return {
+          cluster: c, effElevM: effElevM, baseX: baseX, deckX: deckX, deckY: deckY,
+          swayPx: swayPx, halfW: halfW, houseW: houseW, houseH: houseH, roofPeakY: roofPeakY
+        };
+      });
+
+      const cwGeoms = catwalks.map(function (cw) {
+        const a = cGeoms[cw.fromIdx];
+        const b = cGeoms[cw.toIdx];
+        if (!a || !b) return null;
+        const tf = clamp(cw.tierFrac, 0.45, 0.98);
+        const x1 = a.baseX + a.swayPx * tf;
+        const y1 = mesaY - a.effElevM * tf * pxPerM;
+        const x2 = b.baseX + b.swayPx * tf;
+        const y2 = mesaY - b.effElevM * tf * pxPerM;
+        const swayMid = reducedMotion ? 0 : Math.sin(timeSec * 1.9 + cw.phase) * (1.8 + windSpeed * 1.6 + gustStrength * 3.8);
+        const sagPx = cw.sagMeters * pxPerM + swayMid * 0.35;
+        const mx = (x1 + x2) * 0.5;
+        const my = (y1 + y2) * 0.5 + sagPx * 0.5;
+        const midAlt = ((a.effElevM + b.effElevM) * 0.5 * tf) - cw.sagMeters * 0.5;
+
+        hitNodes.push({
+          id: cw.id, stoneId: "ladders_and_hanging_sidewalks", kind: "hanging_catwalk",
+          label: "Hanging Sidewalk (" + a.cluster.name.split(" ")[0] + " – " + b.cluster.name.split(" ")[0] + ")",
+          x: mx, y: my, x1: x1, y1: y1, x2: x2, y2: y2, sagPx: sagPx,
+          radius: 38, priority: 7, altitudeMeters: Number(Math.max(8, midAlt).toFixed(1)),
+          material: "Catenary hemp cables & lashed bamboo-plank footway",
+          note: "Swaying hanging sidewalk spanning an airy chasm high above the cracked mesa.",
+          clusterIdx: cw.fromIdx
+        });
+
+        return { cw: cw, x1: x1, y1: y1, x2: x2, y2: y2, sagPx: sagPx, mx: mx, my: my, swayMid: swayMid };
+      }).filter(Boolean);
+
+      geom = {
+        mesaY: mesaY, topPad: topPad, pxPerM: pxPerM, horizScale: horizScale,
+        scaleCeilingM: scaleCeilingM, clusters: cGeoms, catwalks: cwGeoms, hitNodes: hitNodes
+      };
+    }
+
+    function pointToSegmentDist(px, py, x1, y1, x2, y2) {
+      const dx = x2 - x1;
+      const dy = y2 - y1;
+      const lenSq = dx * dx + dy * dy;
+      if (lenSq < 1e-4) return Math.hypot(px - x1, py - y1);
+      const t = clamp(((px - x1) * dx + (py - y1) * dy) / lenSq, 0, 1);
+      return Math.hypot(px - (x1 + t * dx), py - (y1 + t * dy));
+    }
+
+    function pointToCatenaryDist(px, py, x1, y1, x2, y2, sagPx) {
+      let best = Infinity;
+      for (let i = 0; i <= 10; i++) {
+        const t = i / 10;
+        const cx = x1 + (x2 - x1) * t;
+        const cy = y1 + (y2 - y1) * t + 4 * t * (1 - t) * sagPx * 0.55;
+        const d = Math.hypot(px - cx, py - cy);
+        if (d < best) best = d;
+      }
+      return best;
+    }
+
+    function getState() {
+      let baseSum = 0;
+      let elevSum = 0;
+      let minAlt = Infinity;
+      let maxAlt = -Infinity;
+      let ladders = 0;
+      let belvederes = 0;
+      let barrels = 0;
+      let cranes = 0;
+      let fishPoles = 0;
+      let weathervanes = 0;
+      let ribbons = 0;
+
+      for (let i = 0; i < clusters.length; i++) {
+        const c = clusters[i];
+        baseSum += c.baselineMeters;
+        elevSum += c.elevationMeters;
+        if (c.elevationMeters < minAlt) minAlt = c.elevationMeters;
+        if (c.elevationMeters > maxAlt) maxAlt = c.elevationMeters;
+        ladders += c.ladderCount;
+        if (c.hasBelvedere) belvederes++;
+        barrels += c.barrelCount;
+        if (c.hasCrane) cranes++;
+        fishPoles += c.fishPoleCount;
+        if (c.hasWeathervane) weathervanes++;
+        ribbons += c.ribbonCount;
+      }
+
+      const baseMean = baseSum / clusters.length;
+      const currMean = elevSum / clusters.length;
+      return {
+        width: width,
+        height: height,
+        dpr: dpr,
+        mesaY: geom.mesaY,
+        groundMoisture: 0,
+        waterAtGround: false,
+        floodMarksFound: 0,
+        clusterCount: clusters.length,
+        clusters: clusters.map(function (c) {
+          return {
+            index: c.index,
+            name: c.name,
+            xNorm: c.xNorm,
+            baselineMeters: c.baselineMeters,
+            elevationMeters: Number(c.elevationMeters.toFixed(2)),
+            hasBelvedere: c.hasBelvedere,
+            barrelCount: c.barrelCount,
+            hasCrane: c.hasCrane,
+            fishPoleCount: c.fishPoleCount,
+            ribbonCount: c.ribbonCount,
+            postDepthMeters: c.postDepthMeters
+          };
+        }),
+        baselineAltitudeMeters: Number(baseMean.toFixed(2)),
+        meanAltitudeMeters: Number(currMean.toFixed(2)),
+        minAltitudeMeters: Number(minAlt.toFixed(2)),
+        maxAltitudeMeters: Number(maxAlt.toFixed(2)),
+        altitudeGainMeters: Number((currMean - baseMean).toFixed(2)),
+        catwalkCount: catwalks.length,
+        crossingCatwalkCount: countCrossingCatwalks(),
+        ladderCount: ladders,
+        belvedereCount: belvederes,
+        barrelCount: barrels,
+        elevatedWaterLiters: barrels * 180,
+        pulleyCount: cranes + 2,
+        craneCount: cranes,
+        fishPoleCount: fishPoles,
+        weathervaneCount: weathervanes,
+        ribbonCount: ribbons,
+        windSpeed: Number(windSpeed.toFixed(2)),
+        gustStrength: Number(gustStrength.toFixed(2)),
+        reducedMotion: reducedMotion,
+        muted: audio.isMuted(),
+        permutationGeneration: permutationGeneration,
+        flatAttemptSublimated: flatAttemptSublimated,
+        sublimatedFlatAttempts: sublimatedFlatAttempts,
+        classification: "gives_form_to_desires",
+        footingProbesCount: footingProbesCount,
+        lastInspected: lastInspected,
+        lastFootingProbe: lastFootingProbe,
+        stonesPresent: CANONICAL_STONES.map(function (s) { return s.id; })
+      };
+    }
+
+    function setViewport(w, h, nextDpr) {
+      if (w && typeof w === "object") {
+        width = Math.max(240, Number(w.width) || width);
+        height = Math.max(240, Number(w.height) || height);
+        dpr = Math.max(1, Number(w.dpr) || dpr);
+      } else {
+        if (Number(w) > 0) width = Math.max(240, Number(w));
+        if (Number(h) > 0) height = Math.max(240, Number(h));
+        if (Number(nextDpr) > 0) dpr = Math.max(1, Number(nextDpr));
+      }
+      rebuildGeometry();
+      return getState();
+    }
+
+    function step(dt) {
+      const safeDt = clamp(Number(dt) || 0.016, 0, 0.25);
+      if (reducedMotion) {
+        gustStrength = 0;
+        hoistAnim = 0;
+        for (let i = 0; i < clusters.length; i++) clusters[i].animOffsetMeters = 0;
+        if (flatGhostTimer > 0) flatGhostTimer = Math.max(0, flatGhostTimer - safeDt);
+        rebuildGeometry();
+        return;
+      }
+      timeSec += safeDt;
+      vanePhase += safeDt * (1.8 + windSpeed * 2.1 + gustStrength * 6.5);
+      gustStrength = Math.max(0, gustStrength * Math.exp(-safeDt * 1.65) - safeDt * 0.02);
+      hoistAnim = Math.max(0, hoistAnim - safeDt * 0.9);
+      if (flatGhostTimer > 0) flatGhostTimer = Math.max(0, flatGhostTimer - safeDt);
+      const decay = Math.exp(-safeDt * 5.2);
+      for (let i = 0; i < clusters.length; i++) {
+        clusters[i].animOffsetMeters *= decay;
+        if (Math.abs(clusters[i].animOffsetMeters) < 0.02) clusters[i].animOffsetMeters = 0;
+      }
+      for (let i = 0; i < dustMotes.length; i++) {
+        const m = dustMotes[i];
+        m.xNorm += m.speed * (0.7 + windSpeed * 0.6 + gustStrength * 1.8) * safeDt;
+        if (m.xNorm > 1.03) m.xNorm -= 1.06;
+      }
+      rebuildGeometry();
+    }
+
+    function probeMesaFooting(rawXNorm) {
+      let xn;
+      if (rawXNorm === undefined || rawXNorm === null || Number.isNaN(Number(rawXNorm))) {
+        xn = clusters[probeCursor % clusters.length].xNorm;
+        probeCursor++;
+      } else {
+        const n = Number(rawXNorm);
+        xn = n > 1.05 ? clamp(n / width, 0.02, 0.98) : clamp(n, 0.02, 0.98);
+      }
+      let nearest = clusters[0];
+      let bestDist = Infinity;
+      for (let i = 0; i < clusters.length; i++) {
+        const d = Math.abs(clusters[i].xNorm - xn);
+        if (d < bestDist) { bestDist = d; nearest = clusters[i]; }
+      }
+      footingProbesCount++;
+      const notes = [
+        "Augur core from " + nearest.name + " socket (" + nearest.postDepthMeters.toFixed(1) + "m): bone-dry ochre clay, zero marsh silt, zero flood-marks. Nobody remembers why the founders raised Zenobia on high pilings.",
+        "Dry terracotta dust sifts from the seasoned post-shoe (" + nearest.postDepthMeters.toFixed(1) + "m deep). Neither river nor tide ever touched this plateau; the founders' motive has vanished.",
+        "Parched sienna hardpan (" + nearest.postDepthMeters.toFixed(1) + "m): 0% ground moisture, 0 flood strata. Why Zenobia climbed onto stilts over dry earth remains unremembered."
+      ];
+      const report = {
+        id: "footing_socket_" + nearest.index,
+        stoneId: "forgotten_founding_motive",
+        kind: "mesa_footing",
+        label: nearest.name + " Dry Post-Socket",
+        xNorm: Number(nearest.xNorm.toFixed(3)),
+        yNorm: Number((geom.mesaY / height).toFixed(3)),
+        altitudeMeters: 0,
+        groundMoisture: 0,
+        waterAtGround: false,
+        floodMarksFound: 0,
+        postDepthMeters: nearest.postDepthMeters,
+        material: "Baked ochre-sienna hardpan & seasoned ironwood post-shoe",
+        note: notes[(footingProbesCount - 1) % notes.length]
+      };
+      lastFootingProbe = report;
+      lastInspected = report;
+      audio.play("footing_knock", 1.0);
+      return report;
+    }
+
+    function inspectAt(px, py) {
+      rebuildGeometry();
+      const x = Number(px) || 0;
+      const y = Number(py) || 0;
+      if (y >= geom.mesaY - 12) {
+        return probeMesaFooting(x / width);
+      }
+      let chosen = null;
+      let bestScore = Infinity;
+      for (let i = 0; i < geom.hitNodes.length; i++) {
+        const node = geom.hitNodes[i];
+        let d;
+        if (node.kind === "piling_shaft") {
+          d = pointToSegmentDist(x, y, node.x, node.y, node.x2, node.y2);
+        } else if (node.kind === "hanging_catwalk") {
+          d = pointToCatenaryDist(x, y, node.x1, node.y1, node.x2, node.y2, node.sagPx);
+        } else {
+          d = Math.hypot(x - node.x, y - node.y);
+        }
+        const limit = Math.max(38, node.radius || 38);
+        if (d <= limit) {
+          const score = d - (node.priority || 1) * 2.8;
+          if (score < bestScore) { bestScore = score; chosen = node; }
+        }
+      }
+      if (!chosen) return null;
+      const soundMap = {
+        weathervane_ribbon: "vane_tick",
+        pulley_crane: "pulley_ratchet",
+        fish_pole: "bamboo_creak",
+        water_barrel: "pulley_ratchet",
+        piling_shaft: "bamboo_creak",
+        mesa_footing: "footing_knock"
+      };
+      audio.play(soundMap[chosen.kind] || "chime", 0.95);
+      const res = {
+        id: chosen.id,
+        stoneId: chosen.stoneId,
+        kind: chosen.kind,
+        label: chosen.label,
+        altitudeMeters: chosen.altitudeMeters,
+        material: chosen.material,
+        note: chosen.note,
+        xNorm: Number(clamp(x / width, 0, 1).toFixed(3)),
+        yNorm: Number(clamp(y / height, 0, 1).toFixed(3)),
+        groundMoisture: 0,
+        waterAtGround: false
+      };
+      lastInspected = res;
+      return res;
+    }
+
+    function elevateCluster(clusterIdx, deltaMeters) {
+      const delta = deltaMeters === undefined ? 4.5 : Number(deltaMeters) || 4.5;
+      if (clusterIdx === undefined || clusterIdx === null || clusterIdx < 0 || clusterIdx >= clusters.length) {
+        const i1 = elevateCursor % clusters.length;
+        const i2 = (elevateCursor + 3) % clusters.length;
+        elevateCursor++;
+        [i1, i2].forEach(function (idx) {
+          const prev = clusters[idx].elevationMeters;
+          clusters[idx].elevationMeters = clamp(prev + delta, 14, 78);
+          clusters[idx].animOffsetMeters = reducedMotion ? 0 : (prev - clusters[idx].elevationMeters);
+          if (clusters[idx].elevationMeters >= 36) clusters[idx].hasBelvedere = true;
+        });
+      } else {
+        const c = clusters[clusterIdx];
+        const prev = c.elevationMeters;
+        c.elevationMeters = clamp(prev + delta, 14, 78);
+        c.animOffsetMeters = reducedMotion ? 0 : (prev - c.elevationMeters);
+        if (c.elevationMeters >= 36) c.hasBelvedere = true;
+      }
+      rebuildGeometry();
+      audio.play("bamboo_creak", 1.1);
+      return getState();
+    }
+
+    function spanCatwalk(fromIdx, toIdx, tierFrac) {
+      const candidatePairs = [
+        [0, 2, 0.90], [2, 5, 0.88], [1, 4, 0.81], [4, 7, 0.89],
+        [0, 3, 0.79], [2, 6, 0.85], [3, 6, 0.91], [1, 5, 0.77]
+      ];
+      let a = Number(fromIdx);
+      let b = Number(toIdx);
+      let tf = Number(tierFrac);
+      if (Number.isNaN(a) || Number.isNaN(b) || a === b || a < 0 || b < 0 || a >= clusters.length || b >= clusters.length) {
+        const pick = candidatePairs[catwalkCursor % candidatePairs.length];
+        catwalkCursor++;
+        a = pick[0];
+        b = pick[1];
+        tf = clamp(pick[2] + ((catwalkCursor % 3) - 1) * 0.04, 0.56, 0.95);
+      } else {
+        tf = Number.isNaN(tf) ? 0.84 : clamp(tf, 0.50, 0.96);
+      }
+      const cw = {
+        id: "catwalk_" + catwalks.length + "_" + a + "_" + b,
+        fromIdx: a,
+        toIdx: b,
+        tierFrac: tf,
+        sagMeters: 1.7 + Math.abs(b - a) * 0.8,
+        phase: catwalks.length * 0.91
+      };
+      catwalks.push(cw);
+      if (catwalks.length > 22) catwalks.shift();
+      rebuildGeometry();
+      audio.play("bamboo_creak", 0.9);
+      audio.play("chime", 0.85);
+      return cw;
+    }
+
+    function hoistBarrels(count) {
+      const add = Math.max(1, Number(count) || 2);
+      for (let i = 0; i < add; i++) {
+        const c = clusters[(elevateCursor + i * 3) % clusters.length];
+        c.barrelCount = Math.min(6, c.barrelCount + 1);
+      }
+      elevateCursor++;
+      hoistAnim = reducedMotion ? 0 : 1.0;
+      rebuildGeometry();
+      audio.play("pulley_ratchet", 1.15);
+      return {
+        barrelCount: getState().barrelCount,
+        elevatedWaterLiters: getState().elevatedWaterLiters,
+        groundMoisture: 0,
+        waterAtGround: false
+      };
+    }
+
+    function triggerGust(strength) {
+      const s = clamp(Number(strength) || 1.15, 0.25, 2.4);
+      windSpeed = clamp(0.9 + s * 0.55, 0.8, 2.6);
+      gustStrength = reducedMotion ? 0 : s;
+      rebuildGeometry();
+      audio.play("wind_gust", s);
+      audio.play("chime", 0.75 * s);
+      return { windSpeed: windSpeed, gustStrength: gustStrength };
+    }
+
+    function applyDreamPermutation(permSpec) {
+      const spec = permSpec || {};
+      permutationGeneration = Number(spec.generation) || (permutationGeneration + 1);
+      const isSublimatedFlat = Boolean(spec.rejectedFlatAttempt || spec.flatAttemptSublimated || spec.isFlatAttempt);
+      if (isSublimatedFlat) {
+        flatAttemptSublimated = true;
+        sublimatedFlatAttempts++;
+        flatGhostTimer = reducedMotion ? 1.2 : 2.8;
+      }
+
+      const targets = Array.isArray(spec.targetElevations) ? spec.targetElevations
+        : (Array.isArray(spec.elevations) ? spec.elevations : null);
+      for (let i = 0; i < clusters.length; i++) {
+        const c = clusters[i];
+        const prev = c.elevationMeters;
+        let nextElev;
+        if (targets && Number(targets[i]) > 0) {
+          nextElev = Math.max(16, Number(targets[i]));
+        } else {
+          const boost = isSublimatedFlat ? (5.5 + (i % 3) * 2.2) : (3.5 + ((i + permutationGeneration) % 4) * 1.8);
+          nextElev = clamp(Math.max(c.baselineMeters + boost, prev + 2.4), 16, 76);
+        }
+        c.elevationMeters = clamp(nextElev, 16, 78);
+        c.animOffsetMeters = reducedMotion ? 0 : (prev - c.elevationMeters);
+      }
+
+      /* Guarantee meanAltitudeMeters strictly exceeds baselineAltitudeMeters */
+      let sumNow = 0;
+      let sumBase = 0;
+      for (let i = 0; i < clusters.length; i++) {
+        sumNow += clusters[i].elevationMeters;
+        sumBase += clusters[i].baselineMeters;
+      }
+      if (sumNow <= sumBase + 8) {
+        const lift = ((sumBase + 24) - sumNow) / clusters.length;
+        for (let i = 0; i < clusters.length; i++) {
+          clusters[i].elevationMeters = clamp(clusters[i].elevationMeters + lift, 16, 78);
+        }
+      }
+
+      const belvBoost = Math.max(0, Number(spec.belvedereBoost) || (isSublimatedFlat ? 2 : 1));
+      let addedBelv = 0;
+      for (let i = 0; i < clusters.length && addedBelv < belvBoost; i++) {
+        const idx = (i * 3 + permutationGeneration) % clusters.length;
+        if (!clusters[idx].hasBelvedere) {
+          clusters[idx].hasBelvedere = true;
+          clusters[idx].hasWeathervane = true;
+          addedBelv++;
+        }
+      }
+
+      const bBoost = Math.max(0, Number(spec.barrelBoost) || 1);
+      for (let i = 0; i < bBoost; i++) {
+        const c = clusters[(i * 2 + permutationGeneration) % clusters.length];
+        c.barrelCount = Math.min(6, c.barrelCount + 1);
+      }
+
+      if (Number(spec.ribbonDensity) > 0) {
+        const rCount = clamp(Math.round(Number(spec.ribbonDensity) * 2.5), 2, 5);
+        for (let i = 0; i < clusters.length; i++) {
+          clusters[i].ribbonCount = Math.max(clusters[i].ribbonCount, rCount);
+          if (i % 2 === 0) clusters[i].fishPoleCount = Math.max(1, clusters[i].fishPoleCount);
+        }
+      }
+
+      const extra = Array.isArray(spec.extraCatwalks) ? spec.extraCatwalks : [];
+      if (extra.length > 0) {
+        catwalks = INITIAL_CATWALKS.map(function (pair, i) {
+          return {
+            id: "catwalk_base_" + i,
+            fromIdx: pair[0], toIdx: pair[1], tierFrac: pair[2],
+            sagMeters: 1.8 + Math.abs(pair[1] - pair[0]) * 0.85, phase: i * 0.73
+          };
+        });
+        extra.forEach(function (entry, idx) {
+          const f = Array.isArray(entry) ? entry[0] : entry.fromIdx;
+          const t = Array.isArray(entry) ? entry[1] : entry.toIdx;
+          const tf = Array.isArray(entry) ? entry[2] : entry.tierFrac;
+          if (f >= 0 && t >= 0 && f < clusters.length && t < clusters.length && f !== t) {
+            catwalks.push({
+              id: "catwalk_perm_" + permutationGeneration + "_" + idx,
+              fromIdx: f, toIdx: t, tierFrac: clamp(Number(tf) || 0.86, 0.52, 0.96),
+              sagMeters: 1.7 + Math.abs(t - f) * 0.82, phase: (idx + 3) * 0.88
+            });
+          }
+        });
+      } else {
+        spanCatwalk();
+      }
+
+      if (Number(spec.windSpeed) > 0) {
+        windSpeed = clamp(Number(spec.windSpeed), 0.7, 2.6);
+      }
+      if (!reducedMotion) gustStrength = Math.max(gustStrength, 0.85);
+      rebuildGeometry();
+      audio.play(isSublimatedFlat ? "sublimate" : "chime", 1.15);
+      return getState();
+    }
+
+    function setReducedMotion(flag) {
+      reducedMotion = Boolean(flag);
+      if (reducedMotion) {
+        gustStrength = 0;
+        hoistAnim = 0;
+        for (let i = 0; i < clusters.length; i++) clusters[i].animOffsetMeters = 0;
+      }
+      rebuildGeometry();
+      return reducedMotion;
+    }
+
+    function reset() {
+      initWorld();
+      audio.play("chime", 0.7);
+      return getState();
+    }
+
+    function destroy() {
+      if (root.document && root.document.removeEventListener) {
+        root.document.removeEventListener("pointerdown", unlockHandler);
+        root.document.removeEventListener("keydown", unlockHandler);
+      }
+      audio.destroy();
+    }
+
+    function drawPilingsAndBracing(ctx, cg, mesaY) {
+      const c = cg.cluster;
+      const legs = c.legs;
+      const baseSpan = cg.halfW * 1.18;
+      const topSpan = cg.halfW * 0.92;
+      const legBottomX = [];
+      const legTopX = [];
+
+      for (let l = 0; l < legs; l++) {
+        const frac = legs === 1 ? 0 : (l / (legs - 1)) * 2 - 1;
+        legBottomX.push(cg.baseX + frac * baseSpan);
+        legTopX.push(cg.deckX + frac * topSpan);
+      }
+
+      /* Diagonal X-bracing bays between outer pilings */
+      const bays = Math.max(3, Math.round(cg.effElevM / 6.5));
+      ctx.strokeStyle = PALETTE.bamboo_node_amber;
+      ctx.lineWidth = Math.max(1.0, 1.35 * geom.horizScale);
+      for (let b = 0; b < bays; b++) {
+        const t0 = b / bays;
+        const t1 = (b + 1) / bays;
+        const y0 = mesaY - (mesaY - cg.deckY) * t0;
+        const y1 = mesaY - (mesaY - cg.deckY) * t1;
+        const lx0 = legBottomX[0] + (legTopX[0] - legBottomX[0]) * t0;
+        const rx0 = legBottomX[legs - 1] + (legTopX[legs - 1] - legBottomX[legs - 1]) * t0;
+        const lx1 = legBottomX[0] + (legTopX[0] - legBottomX[0]) * t1;
+        const rx1 = legBottomX[legs - 1] + (legTopX[legs - 1] - legBottomX[legs - 1]) * t1;
+
+        ctx.beginPath();
+        ctx.moveTo(lx0, y0); ctx.lineTo(rx1, y1);
+        ctx.moveTo(rx0, y0); ctx.lineTo(lx1, y1);
+        ctx.stroke();
+
+        if (b > 0) {
+          ctx.beginPath();
+          ctx.moveTo(lx0, y0); ctx.lineTo(rx0, y0);
+          ctx.stroke();
+        }
+      }
+
+      /* Main vertical/tapered bamboo-and-timber pilings with culm node rings */
+      for (let l = 0; l < legs; l++) {
+        const bx = legBottomX[l];
+        const tx = legTopX[l];
+        ctx.strokeStyle = l % 2 === 0 ? PALETTE.bamboo_culm_gold : PALETTE.bamboo_node_amber;
+        ctx.lineWidth = Math.max(2.1, (l === 0 || l === legs - 1 ? 3.1 : 2.3) * geom.horizScale);
+        ctx.beginPath();
+        ctx.moveTo(bx, mesaY + 3);
+        ctx.lineTo(tx, cg.deckY);
+        ctx.stroke();
+
+        /* Bamboo culm node lashings */
+        ctx.strokeStyle = PALETTE.mesa_obsidian_umber;
+        ctx.lineWidth = 1.1;
+        for (let n = 1; n < bays * 2; n++) {
+          const tn = n / (bays * 2);
+          const nx = bx + (tx - bx) * tn;
+          const ny = mesaY - (mesaY - cg.deckY) * tn;
+          ctx.beginPath();
+          ctx.moveTo(nx - 2.4, ny);
+          ctx.lineTo(nx + 2.4, ny);
+          ctx.stroke();
+        }
+      }
+    }
+
+    function drawBalconiesAndLadders(ctx, cg, mesaY) {
+      const c = cg.cluster;
+      const hs = geom.horizScale;
+
+      /* Staggered intermediate crossing balconies */
+      c.tierFracs.forEach(function (tf, ti) {
+        const ty = mesaY - cg.effElevM * tf * geom.pxPerM;
+        const cx = cg.baseX + cg.swayPx * tf;
+        const jutL = (ti % 2 === 0 ? c.cantileverLeftM * 4.8 : c.cantileverRightM * 2.2) * hs;
+        const jutR = (ti % 2 === 0 ? c.cantileverRightM * 2.4 : c.cantileverLeftM * 4.8) * hs;
+        const xL = cx - cg.halfW - jutL;
+        const xR = cx + cg.halfW + jutR;
+
+        /* Knee-brace struts */
+        ctx.strokeStyle = PALETTE.bamboo_node_amber;
+        ctx.lineWidth = 1.4;
+        ctx.beginPath();
+        ctx.moveTo(cx - cg.halfW * 0.7, ty + 14);
+        ctx.lineTo(xL + 4, ty);
+        ctx.moveTo(cx + cg.halfW * 0.7, ty + 14);
+        ctx.lineTo(xR - 4, ty);
+        ctx.stroke();
+
+        /* Deck plank beam */
+        ctx.fillStyle = PALETTE.bamboo_node_amber;
+        ctx.fillRect(xL, ty - 2, xR - xL, 4);
+        ctx.fillStyle = PALETTE.bamboo_culm_gold;
+        ctx.fillRect(xL, ty - 2.5, xR - xL, 1.6);
+
+        /* Open-air bamboo handrail & balusters */
+        const railH = 8.5;
+        ctx.strokeStyle = PALETTE.bamboo_culm_gold;
+        ctx.lineWidth = 1.1;
+        ctx.beginPath();
+        ctx.moveTo(xL, ty - railH);
+        ctx.lineTo(xR, ty - railH);
+        for (let bx = xL; bx <= xR; bx += Math.max(6, 8 * hs)) {
+          ctx.moveTo(bx, ty - 2);
+          ctx.lineTo(bx, ty - railH);
+        }
+        ctx.stroke();
+      });
+
+      /* Bamboo rung ladders linking staggered decks */
+      const ladX = cg.deckX - cg.halfW * 0.72;
+      const ladBottomY = Math.min(mesaY - 26, cg.deckY + cg.effElevM * 0.46 * geom.pxPerM);
+      ctx.strokeStyle = PALETTE.bamboo_culm_gold;
+      ctx.lineWidth = 1.3;
+      ctx.beginPath();
+      ctx.moveTo(ladX - 3.2, cg.deckY - 4);
+      ctx.lineTo(ladX - 5.0, ladBottomY);
+      ctx.moveTo(ladX + 3.2, cg.deckY - 4);
+      ctx.lineTo(ladX + 1.4, ladBottomY);
+      for (let ry = cg.deckY; ry < ladBottomY; ry += 6.5) {
+        const f = (ry - cg.deckY) / Math.max(1, ladBottomY - cg.deckY);
+        const shift = -1.8 * f;
+        ctx.moveTo(ladX - 3.2 + shift, ry);
+        ctx.lineTo(ladX + 3.2 + shift, ry);
+      }
+      ctx.stroke();
+    }
+
+    function drawCatwalkSpan(ctx, cwG) {
+      const steps = 18;
+      const railOffset = 7.5;
+      ctx.strokeStyle = PALETTE.bamboo_node_amber;
+      ctx.lineWidth = 1.25;
+
+      /* Upper handrail catenary */
+      ctx.beginPath();
+      for (let s = 0; s <= steps; s++) {
+        const t = s / steps;
+        const x = cwG.x1 + (cwG.x2 - cwG.x1) * t;
+        const y = cwG.y1 + (cwG.y2 - cwG.y1) * t + 4 * t * (1 - t) * cwG.sagPx * 0.55 - railOffset;
+        if (s === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+
+      /* Footway cable + vertical suspenders + bamboo planks */
+      ctx.strokeStyle = PALETTE.bamboo_culm_gold;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      for (let s = 0; s <= steps; s++) {
+        const t = s / steps;
+        const x = cwG.x1 + (cwG.x2 - cwG.x1) * t;
+        const y = cwG.y1 + (cwG.y2 - cwG.y1) * t + 4 * t * (1 - t) * cwG.sagPx * 0.55;
+        if (s === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+
+      ctx.strokeStyle = PALETTE.plateau_parchment;
+      ctx.globalAlpha = 0.55;
+      ctx.lineWidth = 1.0;
+      for (let s = 1; s < steps; s++) {
+        const t = s / steps;
+        const x = cwG.x1 + (cwG.x2 - cwG.x1) * t;
+        const y = cwG.y1 + (cwG.y2 - cwG.y1) * t + 4 * t * (1 - t) * cwG.sagPx * 0.55;
+        ctx.beginPath();
+        ctx.moveTo(x, y - railOffset);
+        ctx.lineTo(x, y + 1.5);
+        ctx.stroke();
+        ctx.fillStyle = PALETTE.bamboo_culm_gold;
+        ctx.fillRect(x - 2.2, y - 0.8, 4.4, 2.2);
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    function drawSuperstructure(ctx, cg) {
+      const c = cg.cluster;
+      const hs = geom.horizScale;
+      const dx = cg.deckX;
+      const dy = cg.deckY;
+      const deckSpan = cg.halfW * 1.45;
+
+      /* Primary upper platform beam & railing */
+      ctx.fillStyle = PALETTE.bamboo_node_amber;
+      ctx.fillRect(dx - deckSpan, dy - 2.5, deckSpan * 2, 5);
+      ctx.fillStyle = PALETTE.bamboo_culm_gold;
+      ctx.fillRect(dx - deckSpan, dy - 3, deckSpan * 2, 2);
+
+      /* Split-bamboo & oxidized-zinc house */
+      const hw = cg.houseW;
+      const hh = cg.houseH;
+      const hx = dx - hw * 0.5;
+      const hy = dy - hh - 2.5;
+      ctx.fillStyle = PALETTE.bamboo_node_amber;
+      ctx.fillRect(hx, hy, hw, hh);
+      ctx.fillStyle = PALETTE.bamboo_culm_gold;
+      for (let sx = hx + 2; sx < hx + hw - 2; sx += 4.2) {
+        ctx.fillRect(sx, hy + 2, 2.2, hh - 4);
+      }
+
+      /* Louvered shutters & warm lantern pinpoints */
+      const winW = Math.max(5, hw * 0.18);
+      const winH = Math.max(6, hh * 0.34);
+      ctx.fillStyle = PALETTE.oxidized_zinc_slate;
+      ctx.fillRect(dx - winW - 3, hy + hh * 0.28, winW + 2, winH);
+      ctx.fillStyle = PALETTE.silk_ribbon_saffron;
+      ctx.fillRect(dx + 2, hy + hh * 0.28, winW, winH);
+      ctx.fillStyle = PALETTE.plateau_parchment;
+      ctx.fillRect(dx + 3.5, hy + hh * 0.33, Math.max(2, winW - 3), Math.max(2.5, winH - 3));
+
+      /* Corrugated oxidized-zinc roof */
+      const roofOver = 6 * hs;
+      const peakH = Math.max(8, hh * 0.42);
+      ctx.fillStyle = PALETTE.oxidized_zinc_slate;
+      ctx.beginPath();
+      ctx.moveTo(hx - roofOver, hy + 1);
+      ctx.lineTo(dx, hy - peakH);
+      ctx.lineTo(hx + hw + roofOver, hy + 1);
+      ctx.closePath();
+      ctx.fill();
+      ctx.strokeStyle = PALETTE.weathered_zinc_mist;
+      ctx.lineWidth = 1.1;
+      for (let r = -3; r <= 3; r++) {
+        ctx.beginPath();
+        ctx.moveTo(dx + r * (hw * 0.16), hy + 1);
+        ctx.lineTo(dx + r * (hw * 0.05), hy - peakH + Math.abs(r) * 1.4);
+        ctx.stroke();
+      }
+
+      let finialBaseY = hy - peakH;
+
+      /* Cone-roofed belvedere crowning upper stilts */
+      if (c.hasBelvedere) {
+        const belvW = hw * 0.62;
+        const belvColH = Math.max(12, hh * 0.56);
+        const belvBaseY = hy - peakH + 3;
+        const belvTopY = belvBaseY - belvColH;
+        const coneH = Math.max(14, hh * 0.68);
+        ctx.strokeStyle = PALETTE.bamboo_culm_gold;
+        ctx.lineWidth = 1.5;
+        [-0.42, -0.14, 0.14, 0.42].forEach(function (f) {
+          ctx.beginPath();
+          ctx.moveTo(dx + belvW * f, belvBaseY);
+          ctx.lineTo(dx + belvW * f * 0.88, belvTopY);
+          ctx.stroke();
+        });
+        ctx.fillStyle = PALETTE.oxidized_zinc_slate;
+        ctx.beginPath();
+        ctx.moveTo(dx - belvW * 0.66, belvTopY + 1);
+        ctx.lineTo(dx, belvTopY - coneH);
+        ctx.lineTo(dx + belvW * 0.66, belvTopY + 1);
+        ctx.closePath();
+        ctx.fill();
+        ctx.strokeStyle = PALETTE.weathered_zinc_mist;
+        ctx.lineWidth = 1.15;
+        ctx.beginPath();
+        ctx.moveTo(dx - belvW * 0.66, belvTopY + 1);
+        ctx.lineTo(dx, belvTopY - coneH);
+        ctx.lineTo(dx + belvW * 0.66, belvTopY + 1);
+        ctx.stroke();
+        finialBaseY = belvTopY - coneH;
+      }
+
+      /* Hooped barrels of elevated water storage */
+      for (let b = 0; b < c.barrelCount; b++) {
+        const side = b % 2 === 0 ? 1 : -1;
+        const slot = Math.floor(b / 2);
+        const bx = dx + side * (hw * 0.56 + 5 + slot * 8.5 * hs);
+        const by = dy - 11.5;
+        ctx.fillStyle = PALETTE.baked_mesa_sienna;
+        ctx.fillRect(bx - 3.6, by, 7.2, 9.2);
+        ctx.fillStyle = PALETTE.weathered_zinc_mist;
+        ctx.fillRect(bx - 3.9, by + 1.8, 7.8, 1.3);
+        ctx.fillRect(bx - 3.9, by + 6.2, 7.8, 1.3);
+        /* Tiny elevated cistern meniscus glint */
+        ctx.fillStyle = PALETTE.plateau_parchment;
+        ctx.fillRect(bx - 1.2, by + 3.6, 2.4, 1.8);
+      }
+
+      /* Projecting jib crane, spoked pulley sheave & suspended basket */
+      if (c.hasCrane) {
+        const dir = c.index % 2 === 0 ? -1 : 1;
+        const tipX = dx + dir * (deckSpan + 16 * hs);
+        const tipY = hy + 3;
+        ctx.strokeStyle = PALETTE.bamboo_culm_gold;
+        ctx.lineWidth = 1.7;
+        ctx.beginPath();
+        ctx.moveTo(dx + dir * (hw * 0.4), dy - 4);
+        ctx.lineTo(tipX, tipY);
+        ctx.moveTo(dx + dir * (hw * 0.35), hy + 2);
+        ctx.lineTo(tipX, tipY);
+        ctx.stroke();
+
+        /* Pulley sheave wheel */
+        ctx.strokeStyle = PALETTE.weathered_zinc_mist;
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.arc(tipX, tipY + 2.5, 3.4, 0, Math.PI * 2);
+        ctx.stroke();
+
+        const dropPx = Math.max(22, (c.pulleyDropFrac - hoistAnim * 0.14) * cg.effElevM * geom.pxPerM);
+        const swing = reducedMotion ? 0 : Math.sin(timeSec * 2.1 + c.index) * (2.5 + gustStrength * 4);
+        const baskX = tipX + swing;
+        const baskY = Math.min(geom.mesaY - 22, tipY + 5 + dropPx);
+        ctx.strokeStyle = PALETTE.plateau_parchment;
+        ctx.lineWidth = 0.95;
+        ctx.beginPath();
+        ctx.moveTo(tipX, tipY + 5.5);
+        ctx.lineTo(baskX, baskY);
+        ctx.stroke();
+        ctx.fillStyle = PALETTE.bamboo_culm_gold;
+        ctx.fillRect(baskX - 4.2, baskY, 8.4, 5.5);
+      }
+
+      /* Cantilevered bamboo fish poles casting lines into dry air */
+      for (let fp = 0; fp < c.fishPoleCount; fp++) {
+        const pDir = c.fishPoleDir * (fp % 2 === 0 ? 1 : -1);
+        const px0 = dx + pDir * (deckSpan * 0.82);
+        const py0 = dy - 5;
+        const pxTip = px0 + pDir * (28 + fp * 10) * hs;
+        const pyTip = py0 - 14 + (reducedMotion ? 0 : Math.sin(timeSec * 2.4 + c.index) * 2.2);
+        ctx.strokeStyle = PALETTE.bamboo_culm_gold;
+        ctx.lineWidth = 1.15;
+        ctx.beginPath();
+        ctx.moveTo(px0, py0);
+        ctx.quadraticCurveTo((px0 + pxTip) * 0.5, pyTip - 6, pxTip, pyTip);
+        ctx.stroke();
+        ctx.strokeStyle = PALETTE.plateau_parchment;
+        ctx.globalAlpha = 0.55;
+        ctx.lineWidth = 0.75;
+        ctx.beginPath();
+        ctx.moveTo(pxTip, pyTip);
+        ctx.lineTo(pxTip + (reducedMotion ? 0 : windSpeed * 3.5), pyTip + 28);
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+      }
+
+      /* Spinning zinc weathervanes & streaming vermilion/saffron silk ribbons */
+      if (c.hasWeathervane) {
+        const spinW = Math.cos(vanePhase + c.index * 1.1) * 7.5;
+        ctx.strokeStyle = PALETTE.weathered_zinc_mist;
+        ctx.lineWidth = 1.25;
+        ctx.beginPath();
+        ctx.moveTo(dx, finialBaseY + 2);
+        ctx.lineTo(dx, finialBaseY - 11);
+        ctx.moveTo(dx - spinW, finialBaseY - 8.5);
+        ctx.lineTo(dx + spinW, finialBaseY - 8.5);
+        ctx.stroke();
+      }
+
+      for (let r = 0; r < c.ribbonCount; r++) {
+        const anchorX = dx + (r === 0 ? 0 : (r % 2 === 0 ? -hw * 0.45 : hw * 0.45));
+        const anchorY = r === 0 ? finialBaseY - 5 : hy + 1;
+        const len = (18 + r * 6 + windSpeed * 7 + gustStrength * 10) * hs;
+        ctx.strokeStyle = r % 2 === 0 ? PALETTE.silk_ribbon_vermilion : PALETTE.silk_ribbon_saffron;
+        ctx.lineWidth = 1.65;
+        ctx.beginPath();
+        ctx.moveTo(anchorX, anchorY);
+        for (let seg = 1; seg <= 5; seg++) {
+          const f = seg / 5;
+          const flutter = reducedMotion ? (seg % 2 === 0 ? -1.4 : 1.4)
+            : Math.sin(timeSec * 5.6 - seg * 1.1 + c.index + r) * (2.2 + gustStrength * 2.8) * f;
+          ctx.lineTo(anchorX + len * f, anchorY + flutter - f * 1.5);
+        }
+        ctx.stroke();
+      }
+    }
+
+    function render(ctxArg, wArg, hArg) {
+      const ctx = ctxArg || (boundCanvas && boundCanvas.getContext ? boundCanvas.getContext("2d") : null);
+      if (!ctx) return;
+      if (Number(wArg) > 0 && Number(hArg) > 0 && (Math.abs(wArg - width) > 1 || Math.abs(hArg - height) > 1)) {
+        width = Number(wArg);
+        height = Number(hArg);
+        rebuildGeometry();
+      }
+      const mesaY = geom.mesaY;
+
+      ctx.save();
+      /* 1. High arid plateau sky gradient */
+      const skyGrad = ctx.createLinearGradient(0, 0, 0, mesaY);
+      skyGrad.addColorStop(0, "#19110B");
+      skyGrad.addColorStop(0.38, "#2C221A");
+      skyGrad.addColorStop(0.76, "#5C3A23");
+      skyGrad.addColorStop(1, "#9B6034");
+      ctx.fillStyle = skyGrad;
+      ctx.fillRect(0, 0, width, mesaY + 2);
+
+      /* Thin plateau wind filaments */
+      ctx.strokeStyle = PALETTE.plateau_parchment;
+      ctx.globalAlpha = 0.055;
+      ctx.lineWidth = 1;
+      for (let i = 0; i < 6; i++) {
+        const wy = mesaY * (0.14 + i * 0.13);
+        const wx = ((reducedMotion ? 0 : timeSec * 22 * (i % 2 + 1)) + i * 190) % (width + 180) - 90;
+        ctx.beginPath();
+        ctx.moveTo(wx, wy);
+        ctx.lineTo(wx + 140, wy - 2);
+        ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+
+      /* 2. Sublimated Flat-Ground Chalk Ghost (when flat dream is rejected) */
+      if (flatGhostTimer > 0) {
+        const alpha = clamp(flatGhostTimer / 2.8, 0.12, 0.68);
+        ctx.save();
+        ctx.globalAlpha = alpha;
+        ctx.strokeStyle = PALETTE.plateau_parchment;
+        ctx.setLineDash([4, 4]);
+        ctx.lineWidth = 1.3;
+        for (let i = 0; i < geom.clusters.length; i++) {
+          const cg = geom.clusters[i];
+          const bw = cg.houseW * 0.95;
+          ctx.strokeRect(cg.baseX - bw * 0.5, mesaY - 18, bw, 18);
+          ctx.beginPath();
+          ctx.moveTo(cg.baseX, mesaY - 20);
+          ctx.lineTo(cg.deckX, cg.deckY + 12);
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+
+      /* 3. Pilings, cross-bracing, balconies, ladders & hanging catwalks */
+      for (let i = 0; i < geom.clusters.length; i++) {
+        drawPilingsAndBracing(ctx, geom.clusters[i], mesaY);
+      }
+      for (let i = 0; i < geom.clusters.length; i++) {
+        drawBalconiesAndLadders(ctx, geom.clusters[i], mesaY);
+      }
+      for (let i = 0; i < geom.catwalks.length; i++) {
+        drawCatwalkSpan(ctx, geom.catwalks[i]);
+      }
+      for (let i = 0; i < geom.clusters.length; i++) {
+        drawSuperstructure(ctx, geom.clusters[i]);
+      }
+
+      /* 4. Strictly Dry Cracked Ochre/Terracotta Mesa Horizon (groundMoisture: 0) */
+      const mesaGrad = ctx.createLinearGradient(0, mesaY, 0, height);
+      mesaGrad.addColorStop(0, PALETTE.dry_ochre_terracotta);
+      mesaGrad.addColorStop(0.26, PALETTE.baked_mesa_sienna);
+      mesaGrad.addColorStop(1, PALETTE.mesa_obsidian_umber);
+      ctx.fillStyle = mesaGrad;
+      ctx.fillRect(0, mesaY, width, height - mesaY);
+
+      ctx.strokeStyle = PALETTE.bamboo_culm_gold;
+      ctx.globalAlpha = 0.35;
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(0, mesaY);
+      ctx.lineTo(width, mesaY);
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+
+      /* Desiccation cracks across baked earth */
+      ctx.strokeStyle = PALETTE.mesa_obsidian_umber;
+      ctx.lineWidth = 1.15;
+      const mesaH = Math.max(24, height - mesaY);
+      for (let i = 0; i < mesaCracks.length; i++) {
+        const cr = mesaCracks[i];
+        const x0 = cr.xNorm * width;
+        const x1 = x0 + cr.dx1 * width;
+        const y1 = mesaY + cr.dy1 * mesaH;
+        const x2 = x1 + cr.dx2 * width;
+        const y2 = mesaY + cr.dy2 * mesaH;
+        ctx.beginPath();
+        ctx.moveTo(x0, mesaY + 1);
+        ctx.lineTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x1 + cr.branchX * width, y1 + mesaH * 0.18);
+        ctx.stroke();
+      }
+
+      /* Dry post-sockets around piling footings */
+      for (let i = 0; i < geom.clusters.length; i++) {
+        const cg = geom.clusters[i];
+        ctx.fillStyle = PALETTE.mesa_obsidian_umber;
+        ctx.fillRect(cg.baseX - cg.halfW * 1.28, mesaY - 1.5, cg.halfW * 2.56, 4.5);
+        ctx.strokeStyle = PALETTE.dry_ochre_terracotta;
+        ctx.lineWidth = 1;
+        ctx.strokeRect(cg.baseX - cg.halfW * 1.28, mesaY - 1.5, cg.halfW * 2.56, 4.5);
+      }
+
+      /* Drifting dry ochre dust motes above the mesa */
+      ctx.fillStyle = PALETTE.plateau_parchment;
+      for (let i = 0; i < dustMotes.length; i++) {
+        const m = dustMotes[i];
+        ctx.globalAlpha = m.alpha;
+        ctx.fillRect(m.xNorm * width, mesaY - 3 - m.hFrac * height, m.size, m.size);
+      }
+      ctx.globalAlpha = 1;
+
+      /* 5. Active inspection / footing augur reticle */
+      if (lastInspected) {
+        const rx = lastInspected.xNorm * width;
+        const ry = lastInspected.yNorm * height;
+        ctx.strokeStyle = PALETTE.silk_ribbon_saffron;
+        ctx.lineWidth = 1.4;
+        ctx.beginPath();
+        ctx.arc(rx, ry, 13, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    initWorld();
+
+    return {
+      getState: getState,
+      setViewport: setViewport,
+      step: step,
+      render: render,
+      inspectAt: inspectAt,
+      probeMesaFooting: probeMesaFooting,
+      elevateCluster: elevateCluster,
+      spanCatwalk: spanCatwalk,
+      hoistBarrels: hoistBarrels,
+      triggerGust: triggerGust,
+      applyDreamPermutation: applyDreamPermutation,
+      setReducedMotion: setReducedMotion,
+      setMuted: function (m) { return audio.setMuted(m); },
+      toggleMute: function () { return audio.toggleMute(); },
+      isMuted: function () { return audio.isMuted(); },
+      playSound: function (kind, strength) { return audio.play(kind, strength); },
+      reset: reset,
+      destroy: destroy
+    };
+  }
+
+  root.ZenobiaStiltedTrusswork = Object.freeze({
+    PALETTE: PALETTE,
+    CANONICAL_STONES: CANONICAL_STONES,
+    createTrusswork: createTrusswork
+  });
+})(typeof globalThis !== "undefined" ? globalThis : window);
+
+/*
+ * City 14: Zenobia (Thin Cities 2)
+ * Layer: Happy-Life Desire Recombinator & Taxonomy Engine
+ * Standalone IIFE exposing globalThis.ZenobiaHappyLifeDreamer
+ */
+(function (root) {
+  'use strict';
+
+  var PALETTE = Object.freeze({
+    mesa_obsidian_umber: '#19110B',
+    dry_ochre_terracotta: '#C47A45',
+    baked_mesa_sienna: '#8F512B',
+    bamboo_culm_gold: '#D6B162',
+    bamboo_node_amber: '#9F7833',
+    oxidized_zinc_slate: '#6E858E',
+    weathered_zinc_mist: '#A9BEC5',
+    silk_ribbon_vermilion: '#D8524B',
+    silk_ribbon_saffron: '#E5A33B',
+    plateau_parchment: '#F3EAD6'
+  });
+
+  var TAXONOMY = Object.freeze({
+    falseBinaryRejected: true,
+    rejectedBinary: Object.freeze(['happy', 'unhappy']),
+    rejectedBinaryLabel: 'Happy vs. Unhappy Cities (False Binary Rejected)',
+    rejectedBinaryReason:
+      'There is no sense in dividing cities into happy and unhappy, but rather into two other species: those that through the years and the changes continue to give form to desires, and those in which desires either erase the city or are erased by it.',
+    classification: 'gives_form_to_desires',
+    zenobiaClassification: 'gives_form_to_desires',
+    oppositeClassification: 'desires_erase_or_erased',
+    species: Object.freeze({
+      gives_form_to_desires: Object.freeze({
+        id: 'gives_form_to_desires',
+        label: 'Cities That Continue to Give Form to Desires',
+        description:
+          'Cities that through the years and the changes continue to give form to desires, recombining pilings, ladders, balconies, and weathervanes into every imagined happy life.',
+        includesZenobia: true
+      }),
+      desires_erase_or_erased: Object.freeze({
+        id: 'desires_erase_or_erased',
+        label: 'Cities Where Desires Erase or Are Erased',
+        description:
+          'Cities in which desires either obliterate the urban fabric or are flattened into mute submission by it.',
+        includesZenobia: false
+      })
+    })
+  });
+
+  var DESIRE_AXES = Object.freeze([
+    Object.freeze({
+      id: 'pilingHeight',
+      index: 0,
+      label: 'Piling Elevation Loft',
+      shortLabel: 'Pilings',
+      min: 0,
+      max: 1,
+      step: 0.01,
+      defaultValue: 0.56,
+      stoneIds: Object.freeze(['dry_terrain_pilings', 'bamboo_and_zinc_houses']),
+      description: 'Vertical reach of split-bamboo and timber pilings above the dry mesa.'
+    }),
+    Object.freeze({
+      id: 'catwalkWeave',
+      index: 1,
+      label: 'Crossed Balconies & Catwalks',
+      shortLabel: 'Catwalks',
+      min: 0,
+      max: 1,
+      step: 0.01,
+      defaultValue: 0.58,
+      stoneIds: Object.freeze(['crossing_platforms_and_balconies', 'ladders_and_hanging_sidewalks']),
+      description: 'Interlacing of cantilevered balconies, bamboo ladders, and swaying sidewalks.'
+    }),
+    Object.freeze({
+      id: 'cisternLookouts',
+      index: 2,
+      label: 'Cone Belvederes & Water Barrels',
+      shortLabel: 'Belvederes',
+      min: 0,
+      max: 1,
+      step: 0.01,
+      defaultValue: 0.54,
+      stoneIds: Object.freeze(['cone_roofed_belvederes', 'water_storage_barrels']),
+      description: 'Conical zinc pavilions and hooped water cisterns hoisted high aloft.'
+    }),
+    Object.freeze({
+      id: 'windVanes',
+      index: 3,
+      label: 'Poles, Pulleys & Silk Ribbons',
+      shortLabel: 'Vanes & Ribbons',
+      min: 0,
+      max: 1,
+      step: 0.01,
+      defaultValue: 0.60,
+      stoneIds: Object.freeze(['pulleys_fish_poles_and_cranes', 'weathervanes_and_ribbons']),
+      description: 'Rigged sheaves, bamboo fishing poles, spinning zinc vanes, and silk streamers.'
+    })
+  ]);
+
+  var DESIRE_PROMPTS = [
+    Object.freeze({
+      key: '1',
+      index: 0,
+      id: 'flat_courtyard',
+      label: 'Attempt Flat Stone Town',
+      shortLabel: 'Flat Stone Town',
+      isFlatAttempt: true,
+      persona: 'visitor_from_scratch',
+      intendedSketch: 'Low stone courtyards laid flush upon level ochre earth with zero stilts.',
+      sublimationReason:
+        'A courtyard pressed against dry clay feels airless to desire; before the chalk lines set, the porches jack themselves onto high pilings and sling rope stairways across open sky.',
+      axisTargets: Object.freeze({ pilingHeight: 0.72, catwalkWeave: 0.68, cisternLookouts: 0.60, windVanes: 0.64 }),
+      offsets: Object.freeze([4.5, 8.0, 5.5, 9.5, 6.0, 10.5, 5.0, 7.5]),
+      catwalks: Object.freeze([[0, 2, 0.58], [1, 3, 0.74], [2, 5, 0.66], [4, 6, 0.80], [5, 7, 0.62]])
+    }),
+    Object.freeze({
+      key: '2',
+      index: 1,
+      id: 'harbor_quay',
+      label: 'Attempt Earthbound Avenues',
+      shortLabel: 'Earthbound Avenues',
+      isFlatAttempt: true,
+      persona: 'visitor_from_scratch',
+      intendedSketch: 'Broad, solid stone avenues anchored directly to the dry plateau.',
+      sublimationReason:
+        'Even paved avenues refuse the dust: the street grid splits into suspended plank sidewalks, hoists its cistern barrels aloft, and crowns the crossings with oxidized-zinc cones.',
+      axisTargets: Object.freeze({ pilingHeight: 0.76, catwalkWeave: 0.74, cisternLookouts: 0.66, windVanes: 0.68 }),
+      offsets: Object.freeze([6.0, 7.0, 9.0, 8.5, 10.0, 9.0, 6.5, 8.0]),
+      catwalks: Object.freeze([[0, 1, 0.52], [1, 4, 0.71], [2, 3, 0.83], [3, 6, 0.64], [4, 7, 0.77], [5, 6, 0.56]])
+    }),
+    Object.freeze({
+      key: '3',
+      index: 2,
+      id: 'crossed_balconies',
+      label: 'Dream Crossing Balconies',
+      shortLabel: 'Crossing Balconies',
+      isFlatAttempt: false,
+      persona: 'dreamer_recombining',
+      intendedSketch: 'Cantilevered bamboo decks and swaying hanging sidewalks overstepping in midair.',
+      sublimationReason:
+        'Happiness arranges itself as staggered verandas crossing at oblique heights, linked by rung ladders where neighbors converse across sunlit chasms of dry wind.',
+      axisTargets: Object.freeze({ pilingHeight: 0.68, catwalkWeave: 0.94, cisternLookouts: 0.58, windVanes: 0.70 }),
+      offsets: Object.freeze([5.0, 9.5, 6.5, 11.0, 7.5, 12.0, 6.0, 9.0]),
+      catwalks: Object.freeze([
+        [0, 2, 0.48], [0, 3, 0.76], [1, 4, 0.63], [2, 5, 0.84],
+        [3, 6, 0.55], [4, 7, 0.72], [5, 7, 0.88], [1, 2, 0.42]
+      ])
+    }),
+    Object.freeze({
+      key: '4',
+      index: 3,
+      id: 'cone_belvederes',
+      label: 'Dream High Cone Belvederes',
+      shortLabel: 'Cone Belvederes',
+      isFlatAttempt: false,
+      persona: 'dreamer_recombining',
+      intendedSketch: 'Conical zinc belvederes, hoisted water-storage barrels, and jib cranes.',
+      sublimationReason:
+        'Desire climbs to cone-roofed pavilions at the pinnacle of the tallest pilings, strapping hooped water barrels beneath the eaves while every drop stays high above the parched mesa.',
+      axisTargets: Object.freeze({ pilingHeight: 0.88, catwalkWeave: 0.66, cisternLookouts: 0.96, windVanes: 0.72 }),
+      offsets: Object.freeze([7.5, 12.5, 8.0, 14.0, 9.5, 14.5, 8.5, 11.5]),
+      catwalks: Object.freeze([[0, 1, 0.66], [1, 3, 0.86], [2, 4, 0.60], [3, 5, 0.90], [5, 7, 0.78], [6, 7, 0.58]])
+    }),
+    Object.freeze({
+      key: '5',
+      index: 4,
+      id: 'ribbons_and_poles',
+      label: 'Dream Vanes, Poles & Ribbons',
+      shortLabel: 'Vanes & Ribbons',
+      isFlatAttempt: false,
+      persona: 'dreamer_recombining',
+      intendedSketch: 'Cantilevered bamboo fishing poles, sheave pulleys, weathervanes, and silk streamers.',
+      sublimationReason:
+        'A happy day bristles with long bamboo poles casting baskets into dry plateau gusts, spinning zinc weathervanes, and vermilion and saffron ribbons streaming horizontally.',
+      axisTargets: Object.freeze({ pilingHeight: 0.74, catwalkWeave: 0.72, cisternLookouts: 0.68, windVanes: 0.98 }),
+      offsets: Object.freeze([6.0, 10.0, 7.5, 11.5, 8.5, 12.5, 7.0, 10.5]),
+      catwalks: Object.freeze([[0, 2, 0.62], [1, 3, 0.75], [2, 5, 0.53], [3, 6, 0.81], [4, 7, 0.69], [6, 7, 0.85]])
+    }),
+    Object.freeze({
+      key: '6',
+      index: 5,
+      id: 'inhabitant_confession',
+      label: 'Ask a Zenobian About Happiness',
+      shortLabel: 'Zenobian Confession',
+      isFlatAttempt: false,
+      persona: 'zenobian_inhabitant',
+      intendedSketch: 'An inhabitant describes the happiest life imaginable by recombining all of Zenobia.',
+      sublimationReason:
+        'Asked to picture a happy life, the inhabitant can only imagine a city like Zenobia—higher pilings, other suspended stairways, other crossed balconies, and brisker weathervanes.',
+      axisTargets: Object.freeze({ pilingHeight: 0.94, catwalkWeave: 0.92, cisternLookouts: 0.90, windVanes: 0.94 }),
+      offsets: Object.freeze([9.0, 13.5, 10.5, 15.0, 11.5, 15.5, 9.5, 13.0]),
+      catwalks: Object.freeze([
+        [0, 1, 0.54], [0, 3, 0.80], [1, 4, 0.68], [2, 5, 0.88],
+        [2, 4, 0.46], [3, 6, 0.74], [4, 7, 0.84], [5, 7, 0.60], [3, 5, 0.91]
+      ])
+    })
+  ];
+
+  (function indexPrompts() {
+    var byKey = {};
+    var byId = {};
+    for (var i = 0; i < DESIRE_PROMPTS.length; i++) {
+      var p = DESIRE_PROMPTS[i];
+      byKey[p.key] = p;
+      byId[p.id] = p;
+      Object.defineProperty(DESIRE_PROMPTS, p.id, {
+        value: p,
+        enumerable: false,
+        writable: false,
+        configurable: false
+      });
+    }
+    Object.defineProperty(DESIRE_PROMPTS, 'byKey', {
+      value: Object.freeze(byKey),
+      enumerable: false,
+      writable: false,
+      configurable: false
+    });
+    Object.defineProperty(DESIRE_PROMPTS, 'byId', {
+      value: Object.freeze(byId),
+      enumerable: false,
+      writable: false,
+      configurable: false
+    });
+    Object.freeze(DESIRE_PROMPTS);
+  })();
+
+  var DEFAULT_BASELINE_ELEVATIONS = Object.freeze([16, 24, 18, 31, 21, 34, 17, 27]);
+  var CLUSTER_X_NORMS = Object.freeze([0.10, 0.21, 0.33, 0.44, 0.56, 0.67, 0.79, 0.90]);
+  var EXTRA_SPAN_POOL = Object.freeze([
+    [0, 1, 0.50], [1, 2, 0.64], [2, 3, 0.78], [3, 4, 0.56],
+    [4, 5, 0.82], [5, 6, 0.68], [6, 7, 0.54], [0, 3, 0.72],
+    [1, 4, 0.85], [2, 5, 0.61], [3, 6, 0.88], [4, 7, 0.75],
+    [0, 2, 0.44], [2, 4, 0.70], [3, 5, 0.90], [5, 7, 0.79]
+  ]);
+
+  function clamp(val, lo, hi) {
+    var n = Number(val);
+    if (!Number.isFinite(n)) return lo;
+    return n < lo ? lo : n > hi ? hi : n;
+  }
+
+  function round2(val) {
+    return Math.round(val * 100) / 100;
+  }
+
+  function meanOf(arr) {
+    if (!arr || !arr.length) return 0;
+    var sum = 0;
+    for (var i = 0; i < arr.length; i++) sum += arr[i];
+    return sum / arr.length;
+  }
+
+  function resolvePrompt(input) {
+    if (input && typeof input === 'object') {
+      if (input.id && DESIRE_PROMPTS.byId[input.id]) return DESIRE_PROMPTS.byId[input.id];
+      if (input.key && DESIRE_PROMPTS.byKey[String(input.key)]) return DESIRE_PROMPTS.byKey[String(input.key)];
+    }
+    if (typeof input === 'number' && Number.isFinite(input)) {
+      if (input >= 1 && input <= 6) return DESIRE_PROMPTS.byKey[String(Math.round(input))];
+      if (input === 0) return DESIRE_PROMPTS[0];
+    }
+    if (typeof input === 'string') {
+      var trimmed = input.trim();
+      if (DESIRE_PROMPTS.byId[trimmed]) return DESIRE_PROMPTS.byId[trimmed];
+      if (DESIRE_PROMPTS.byKey[trimmed]) return DESIRE_PROMPTS.byKey[trimmed];
+      var lower = trimmed.toLowerCase();
+      if (DESIRE_PROMPTS.byId[lower]) return DESIRE_PROMPTS.byId[lower];
+      if (lower.indexOf('flat') >= 0 || lower.indexOf('courtyard') >= 0 || lower.indexOf('ground') >= 0) {
+        return DESIRE_PROMPTS[0];
+      }
+      if (lower.indexOf('harbor') >= 0 || lower.indexOf('quay') >= 0 || lower.indexOf('earth') >= 0) {
+        return DESIRE_PROMPTS[1];
+      }
+    }
+    return DESIRE_PROMPTS[5];
+  }
+
+  function resolveAxisKey(axis) {
+    if (typeof axis === 'number' && axis >= 0 && axis < DESIRE_AXES.length) {
+      return DESIRE_AXES[Math.floor(axis)].id;
+    }
+    var s = String(axis || '').trim();
+    if (s === '0' || s === '1' || s === '2' || s === '3') return DESIRE_AXES[Number(s)].id;
+    var low = s.toLowerCase();
+    if (s === 'pilingHeight' || low.indexOf('piling') >= 0 || low.indexOf('altit') >= 0 || low.indexOf('elev') >= 0 || low.indexOf('stilt') >= 0 || low.indexOf('height') >= 0) {
+      return 'pilingHeight';
+    }
+    if (s === 'catwalkWeave' || low.indexOf('catwalk') >= 0 || low.indexOf('cross') >= 0 || low.indexOf('balcon') >= 0 || low.indexOf('ladder') >= 0 || low.indexOf('sidewalk') >= 0) {
+      return 'catwalkWeave';
+    }
+    if (s === 'cisternLookouts' || low.indexOf('cistern') >= 0 || low.indexOf('belvedere') >= 0 || low.indexOf('barrel') >= 0 || low.indexOf('cone') >= 0 || low.indexOf('water') >= 0) {
+      return 'cisternLookouts';
+    }
+    if (s === 'windVanes' || low.indexOf('vane') >= 0 || low.indexOf('ribbon') >= 0 || low.indexOf('pole') >= 0 || low.indexOf('pulley') >= 0 || low.indexOf('wind') >= 0) {
+      return 'windVanes';
+    }
+    return 'pilingHeight';
+  }
+
+  function normalizeAxisValue(val) {
+    var num = Number(val);
+    if (!Number.isFinite(num)) return 0.56;
+    if (num > 1.0001) return clamp(num / 100, 0, 1);
+    return clamp(num, 0, 1);
+  }
+
+  function buildCatwalkSet(seedSpans, catwalkAxis, generation) {
+    var targetCount = Math.max(4, Math.min(9, Math.round(4 + catwalkAxis * 5)));
+    var result = [];
+    var seen = {};
+    function pushSpan(a, b, tier) {
+      var f = clamp(Math.floor(a), 0, 7);
+      var t = clamp(Math.floor(b), 0, 7);
+      if (f === t) t = (f + 2) % 8;
+      var lo = Math.min(f, t);
+      var hi = Math.max(f, t);
+      var band = Math.round(tier * 10);
+      var sig = lo + ':' + hi + ':' + band;
+      if (seen[sig]) return;
+      seen[sig] = true;
+      var jitter = (((generation * 7 + lo * 3 + hi * 5) % 9) - 4) * 0.015;
+      result.push([f, t, round2(clamp(tier + jitter, 0.36, 0.91))]);
+    }
+    if (seedSpans && seedSpans.length) {
+      for (var i = 0; i < seedSpans.length && result.length < targetCount; i++) {
+        var sp = seedSpans[(i + generation) % seedSpans.length];
+        pushSpan(sp[0], sp[1], sp[2]);
+      }
+    }
+    var cursor = (generation * 3) % EXTRA_SPAN_POOL.length;
+    var guard = 0;
+    while (result.length < targetCount && guard < EXTRA_SPAN_POOL.length * 2) {
+      var cand = EXTRA_SPAN_POOL[(cursor + guard) % EXTRA_SPAN_POOL.length];
+      pushSpan(cand[0], cand[1], cand[2]);
+      guard++;
+    }
+    return result;
+  }
+
+  function synthesizePermutation(store, opts) {
+    var prompt = opts.prompt || DESIRE_PROMPTS[5];
+    var isFlatAttempt = Boolean(opts.forceFlatAttempt || prompt.isFlatAttempt || opts.zeroAltitudeRebound);
+    store.generation += 1;
+    store.recombinationCount += 1;
+    if (isFlatAttempt) {
+      store.flatAttemptsCount += 1;
+    }
+
+    var axes = store.axes;
+    var effectiveLoft = isFlatAttempt ? Math.max(0.68, axes.pilingHeight) : Math.max(0.38, axes.pilingHeight);
+    var flatReboundBonus = isFlatAttempt
+      ? Math.min(7.5, 2.0 + store.flatAttemptsCount * 1.1)
+      : Math.min(3.0, store.flatAttemptsCount * 0.35);
+
+    var targetElevations = [];
+    for (var i = 0; i < 8; i++) {
+      var baseH = store.baselineElevations[i];
+      var offsetH = prompt.offsets[i] * (0.48 + effectiveLoft * 0.62);
+      var phase = ((store.generation * 5 + i * 3) % 7) - 3;
+      var shimmer = phase * 0.65;
+      var rawH = baseH + offsetH * 0.62 + flatReboundBonus * (0.65 + ((i % 3) * 0.18)) + shimmer;
+      targetElevations.push(round2(clamp(rawH, 17.0, 46.5)));
+    }
+
+    var minFloor = 16.5;
+    for (var j = 0; j < 8; j++) {
+      if (targetElevations[j] < minFloor) targetElevations[j] = minFloor;
+    }
+    var meanAlt = meanOf(targetElevations);
+    var requiredMinMean = store.baselineAltitudeMeters + (isFlatAttempt ? Math.min(9.5, 3.8 + store.flatAttemptsCount * 0.75) : 3.2);
+    if (meanAlt < requiredMinMean) {
+      var lift = requiredMinMean - meanAlt;
+      for (var k = 0; k < 8; k++) {
+        targetElevations[k] = round2(clamp(targetElevations[k] + lift, 17.0, 48.0));
+      }
+      meanAlt = meanOf(targetElevations);
+    }
+    meanAlt = round2(meanAlt);
+
+    var extraCatwalks = buildCatwalkSet(prompt.catwalks, axes.catwalkWeave, store.generation);
+    var belvedereBoost = Math.max(1, Math.min(5, Math.round(1 + axes.cisternLookouts * 3 + (isFlatAttempt ? 1 : 0))));
+    var barrelBoost = Math.max(1, Math.min(6, Math.round(1 + axes.cisternLookouts * 3.4 + effectiveLoft * 0.8)));
+    var ribbonDensity = round2(clamp(0.64 + axes.windVanes * 0.86 + (store.generation % 3) * 0.04, 0.60, 1.65));
+    var windSpeed = round2(clamp(0.54 + axes.windVanes * 0.74 + (isFlatAttempt ? 0.12 : 0), 0.48, 1.45));
+
+    var narrative = opts.customNarrative || (
+      isFlatAttempt
+        ? 'Flat-ground draft #' + store.flatAttemptsCount + ' (' + prompt.intendedSketch + ') dissolves in dry mesa dust: ' +
+          prompt.sublimationReason + ' Mean stilt height climbs to ' + meanAlt.toFixed(1) + 'm (+' +
+          round2(meanAlt - store.baselineAltitudeMeters).toFixed(1) + 'm above baseline) across ' + extraCatwalks.length + ' crossed catwalks.'
+        : prompt.sublimationReason + ' Generation #' + store.generation + ' lifts the 8 bamboo-and-zinc clusters to ' +
+          meanAlt.toFixed(1) + 'm mean altitude with ' + extraCatwalks.length + ' suspended catwalks.'
+    );
+
+    var taxonomyNote =
+      'Happy/unhappy binary rejected: Zenobia belongs to cities that through the years and the changes continue to give form to desires (' +
+      TAXONOMY.classification + '), never erased by grounded symmetry.';
+
+    return {
+      generation: store.generation,
+      promptId: opts.promptIdOverride || prompt.id,
+      promptKey: prompt.key,
+      promptLabel: opts.promptLabelOverride || prompt.label,
+      rejectedFlatAttempt: isFlatAttempt,
+      flatAttemptSublimated: isFlatAttempt,
+      flatAttemptsCount: store.flatAttemptsCount,
+      baselineAltitudeMeters: store.baselineAltitudeMeters,
+      meanAltitudeMeters: meanAlt,
+      altitudeGainMeters: round2(meanAlt - store.baselineAltitudeMeters),
+      minPilingHeightMeters: round2(Math.min.apply(null, targetElevations)),
+      maxPilingHeightMeters: round2(Math.max.apply(null, targetElevations)),
+      targetElevations: targetElevations,
+      extraCatwalks: extraCatwalks,
+      belvedereBoost: belvedereBoost,
+      barrelBoost: barrelBoost,
+      ribbonDensity: ribbonDensity,
+      windSpeed: windSpeed,
+      classification: TAXONOMY.classification,
+      falseBinaryRejected: true,
+      narrative: narrative,
+      taxonomyNote: taxonomyNote
+    };
+  }
+
+  function clonePerm(p) {
+    return {
+      generation: p.generation,
+      promptId: p.promptId,
+      promptKey: p.promptKey,
+      promptLabel: p.promptLabel,
+      rejectedFlatAttempt: p.rejectedFlatAttempt,
+      flatAttemptSublimated: p.flatAttemptSublimated,
+      flatAttemptsCount: p.flatAttemptsCount,
+      baselineAltitudeMeters: p.baselineAltitudeMeters,
+      meanAltitudeMeters: p.meanAltitudeMeters,
+      altitudeGainMeters: p.altitudeGainMeters,
+      minPilingHeightMeters: p.minPilingHeightMeters,
+      maxPilingHeightMeters: p.maxPilingHeightMeters,
+      targetElevations: p.targetElevations.slice(),
+      extraCatwalks: p.extraCatwalks.map(function (c) { return [c[0], c[1], c[2]]; }),
+      belvedereBoost: p.belvedereBoost,
+      barrelBoost: p.barrelBoost,
+      ribbonDensity: p.ribbonDensity,
+      windSpeed: p.windSpeed,
+      classification: p.classification,
+      falseBinaryRejected: p.falseBinaryRejected,
+      narrative: p.narrative,
+      taxonomyNote: p.taxonomyNote
+    };
+  }
+
+  function makeBaselinePerm(baseElevs, baseMean) {
+    return {
+      generation: 0,
+      promptId: 'initial_zenobia',
+      promptKey: '0',
+      promptLabel: 'Ancestral Stilted Zenobia',
+      rejectedFlatAttempt: false,
+      flatAttemptSublimated: false,
+      flatAttemptsCount: 0,
+      baselineAltitudeMeters: baseMean,
+      meanAltitudeMeters: baseMean,
+      altitudeGainMeters: 0,
+      minPilingHeightMeters: round2(Math.min.apply(null, baseElevs)),
+      maxPilingHeightMeters: round2(Math.max.apply(null, baseElevs)),
+      targetElevations: baseElevs.slice(),
+      extraCatwalks: [[0, 1, 0.56], [1, 3, 0.72], [3, 5, 0.68], [5, 7, 0.62]],
+      belvedereBoost: 2,
+      barrelBoost: 2,
+      ribbonDensity: 0.90,
+      windSpeed: 0.72,
+      classification: TAXONOMY.classification,
+      falseBinaryRejected: true,
+      narrative:
+        'Zenobia stands on high pilings above dry cracked earth; nobody remembers why the founders raised it, yet every dream of a happy life recombines its stilts, ladders, balconies, and weathervanes.',
+      taxonomyNote: TAXONOMY.rejectedBinaryReason
+    };
+  }
+
+  function drawDreamSketchInternal(ctx, width, height, store) {
+    if (!ctx || !(width > 0) || !(height > 0)) return false;
+    var perm = store.currentPerm;
+    var compact = height < 88;
+    var houseH = compact ? 4 : 6;
+    var coneH = compact ? 9 : 13;
+    var vaneH = compact ? 11 : 15;
+    var houseHalfW = compact ? 5 : 7;
+    var mesaY = Math.round(height * 0.86);
+    var minTopY = Math.min(mesaY - 10, 17 + vaneH + 2);
+    var usableH = Math.max(10, mesaY - minTopY);
+    var scaleM = usableH / 50.0;
+
+    ctx.save();
+    ctx.fillStyle = PALETTE.mesa_obsidian_umber;
+    ctx.fillRect(0, 0, width, height);
+
+    ctx.fillStyle = PALETTE.baked_mesa_sienna;
+    ctx.fillRect(0, mesaY, width, height - mesaY);
+    ctx.strokeStyle = PALETTE.dry_ochre_terracotta;
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(0, mesaY);
+    ctx.lineTo(width, mesaY);
+    for (var c = 1; c <= 7; c++) {
+      var cx = Math.round((width * c) / 8);
+      ctx.moveTo(cx, mesaY);
+      ctx.lineTo(cx - 4, Math.min(height - 1, mesaY + 5));
+      ctx.lineTo(cx + 3, Math.min(height - 1, mesaY + 9));
+    }
+    ctx.stroke();
+
+    var baseLineY = Math.max(minTopY, mesaY - store.baselineAltitudeMeters * scaleM);
+    if (typeof ctx.setLineDash === 'function') ctx.setLineDash([4, 4]);
+    ctx.strokeStyle = 'rgba(169, 190, 197, 0.38)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(8, baseLineY);
+    ctx.lineTo(width - 8, baseLineY);
+    ctx.stroke();
+
+    if (perm.rejectedFlatAttempt || store.flatAttemptsCount > 0) {
+      var ghostH = Math.min(8, Math.max(4, Math.round(usableH * 0.22)));
+      var arrowTop = Math.max(minTopY, mesaY - Math.min(26, Math.max(12, Math.round(usableH * 0.58))));
+      ctx.strokeStyle = 'rgba(243, 234, 214, 0.34)';
+      for (var g = 0; g < 4; g++) {
+        var gx = Math.round(width * (0.14 + g * 0.20));
+        var gw = Math.max(14, Math.round(width * 0.12));
+        ctx.strokeRect(gx, mesaY - ghostH, gw, ghostH);
+      }
+      if (typeof ctx.setLineDash === 'function') ctx.setLineDash([]);
+      ctx.strokeStyle = PALETTE.silk_ribbon_vermilion;
+      ctx.lineWidth = 1.2;
+      for (var v = 0; v < 4; v++) {
+        var vx = Math.round(width * (0.20 + v * 0.20));
+        ctx.beginPath();
+        ctx.moveTo(vx, mesaY - ghostH - 1);
+        ctx.lineTo(vx, arrowTop);
+        ctx.moveTo(vx - 3, arrowTop + 4);
+        ctx.lineTo(vx, arrowTop);
+        ctx.lineTo(vx + 3, arrowTop + 4);
+        ctx.stroke();
+      }
+    }
+    if (typeof ctx.setLineDash === 'function') ctx.setLineDash([]);
+
+    var xs = [];
+    var topYs = [];
+    for (var i = 0; i < 8; i++) {
+      var x = Math.round(CLUSTER_X_NORMS[i] * width);
+      var yTop = Math.max(minTopY, mesaY - perm.targetElevations[i] * scaleM);
+      var hPx = mesaY - yTop;
+      xs.push(x);
+      topYs.push(yTop);
+
+      ctx.strokeStyle = PALETTE.bamboo_node_amber;
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(x - 4, mesaY);
+      ctx.lineTo(x - 3, yTop);
+      ctx.moveTo(x + 4, mesaY);
+      ctx.lineTo(x + 3, yTop);
+      ctx.moveTo(x - 4, mesaY - hPx * 0.45);
+      ctx.lineTo(x + 3, mesaY - hPx * 0.72);
+      ctx.moveTo(x + 4, mesaY - hPx * 0.45);
+      ctx.lineTo(x - 3, mesaY - hPx * 0.72);
+      ctx.stroke();
+
+      ctx.fillStyle = PALETTE.oxidized_zinc_slate;
+      ctx.fillRect(x - houseHalfW, yTop - houseH, houseHalfW * 2, houseH);
+      ctx.fillStyle = PALETTE.bamboo_culm_gold;
+      ctx.beginPath();
+      ctx.moveTo(x - houseHalfW - 1, yTop - houseH);
+      ctx.lineTo(x, yTop - coneH);
+      ctx.lineTo(x + houseHalfW + 1, yTop - houseH);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.strokeStyle = i % 2 === 0 ? PALETTE.silk_ribbon_vermilion : PALETTE.silk_ribbon_saffron;
+      ctx.lineWidth = 1.1;
+      ctx.beginPath();
+      ctx.moveTo(x, yTop - coneH);
+      ctx.lineTo(x + 8, yTop - vaneH);
+      ctx.stroke();
+    }
+
+    ctx.strokeStyle = PALETTE.silk_ribbon_saffron;
+    ctx.lineWidth = 1.15;
+    for (var s = 0; s < perm.extraCatwalks.length; s++) {
+      var cw = perm.extraCatwalks[s];
+      var x1 = xs[cw[0]];
+      var x2 = xs[cw[1]];
+      var y1 = mesaY - (mesaY - topYs[cw[0]]) * cw[2];
+      var y2 = mesaY - (mesaY - topYs[cw[1]]) * cw[2];
+      var sag = Math.min(10, Math.abs(x2 - x1) * 0.07);
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      if (typeof ctx.quadraticCurveTo === 'function') {
+        ctx.quadraticCurveTo((x1 + x2) * 0.5, Math.min(mesaY - 2, Math.max(y1, y2) + sag), x2, y2);
+      } else {
+        ctx.lineTo(x2, y2);
+      }
+      ctx.stroke();
+    }
+
+    if (typeof ctx.fillText === 'function') {
+      ctx.fillStyle = PALETTE.plateau_parchment;
+      ctx.font = '10px "SF Mono", Menlo, monospace';
+      var sign = perm.altitudeGainMeters >= 0 ? '+' : '';
+      ctx.fillText(
+        'GEN #' + perm.generation + ' · ' + perm.meanAltitudeMeters.toFixed(1) + 'm (' + sign + perm.altitudeGainMeters.toFixed(1) + 'm)',
+        6,
+        12
+      );
+    }
+    ctx.restore();
+    return true;
+  }
+
+  function createDreamer(options) {
+    var cfg = options && typeof options === 'object' ? options : {};
+    var baseElevs;
+    if (Array.isArray(cfg.baselineElevations) && cfg.baselineElevations.length === 8) {
+      baseElevs = cfg.baselineElevations.map(function (v) { return round2(clamp(v, 14, 42)); });
+    } else if (Number.isFinite(cfg.baselineAltitudeMeters) && cfg.baselineAltitudeMeters > 0) {
+      var delta = cfg.baselineAltitudeMeters - meanOf(DEFAULT_BASELINE_ELEVATIONS);
+      baseElevs = DEFAULT_BASELINE_ELEVATIONS.map(function (v) { return round2(clamp(v + delta, 14, 42)); });
+    } else {
+      baseElevs = DEFAULT_BASELINE_ELEVATIONS.slice();
+    }
+    var baseMean = round2(meanOf(baseElevs));
+
+    function defaultAxes() {
+      return {
+        pilingHeight: DESIRE_AXES[0].defaultValue,
+        catwalkWeave: DESIRE_AXES[1].defaultValue,
+        cisternLookouts: DESIRE_AXES[2].defaultValue,
+        windVanes: DESIRE_AXES[3].defaultValue
+      };
+    }
+
+    var store = {
+      generation: 0,
+      flatAttemptsCount: 0,
+      recombinationCount: 0,
+      recombineCursor: 0,
+      baselineElevations: baseElevs,
+      baselineAltitudeMeters: baseMean,
+      axes: defaultAxes(),
+      lastPrompt: DESIRE_PROMPTS[5],
+      currentPerm: makeBaselinePerm(baseElevs, baseMean),
+      history: []
+    };
+
+    function buildState() {
+      var p = store.currentPerm;
+      var axesCopy = {
+        pilingHeight: store.axes.pilingHeight,
+        catwalkWeave: store.axes.catwalkWeave,
+        cisternLookouts: store.axes.cisternLookouts,
+        windVanes: store.axes.windVanes
+      };
+      return {
+        generation: store.generation,
+        activePromptId: p.promptId,
+        activePromptKey: p.promptKey,
+        activePromptLabel: p.promptLabel,
+        promptId: p.promptId,
+        promptLabel: p.promptLabel,
+        rejectedFlatAttempt: p.rejectedFlatAttempt,
+        flatAttemptSublimated: Boolean(p.flatAttemptSublimated || store.flatAttemptsCount > 0),
+        flatAttemptsCount: store.flatAttemptsCount,
+        recombinationCount: store.recombinationCount,
+        baselineAltitudeMeters: store.baselineAltitudeMeters,
+        meanAltitudeMeters: p.meanAltitudeMeters,
+        altitudeGainMeters: p.altitudeGainMeters,
+        minPilingHeightMeters: p.minPilingHeightMeters,
+        maxPilingHeightMeters: p.maxPilingHeightMeters,
+        baselineElevations: store.baselineElevations.slice(),
+        targetElevations: p.targetElevations.slice(),
+        extraCatwalks: p.extraCatwalks.map(function (c) { return [c[0], c[1], c[2]]; }),
+        belvedereBoost: p.belvedereBoost,
+        barrelBoost: p.barrelBoost,
+        ribbonDensity: p.ribbonDensity,
+        windSpeed: p.windSpeed,
+        axes: axesCopy,
+        desireAxes: {
+          pilingHeight: axesCopy.pilingHeight,
+          catwalkWeave: axesCopy.catwalkWeave,
+          cisternLookouts: axesCopy.cisternLookouts,
+          windVanes: axesCopy.windVanes
+        },
+        classification: TAXONOMY.classification,
+        zenobiaClassification: TAXONOMY.zenobiaClassification,
+        oppositeClassification: TAXONOMY.oppositeClassification,
+        falseBinaryRejected: true,
+        rejectedBinary: ['happy', 'unhappy'],
+        groundMoisture: 0,
+        waterAtGround: false,
+        narrative: p.narrative,
+        taxonomyNote: p.taxonomyNote,
+        historyLength: store.history.length
+      };
+    }
+
+    function commitPerm(perm) {
+      store.currentPerm = perm;
+      store.history.push(clonePerm(perm));
+      if (store.history.length > 36) store.history.shift();
+      var stateSnap = buildState();
+      var permSnap = clonePerm(perm);
+      if (typeof cfg.onPermutation === 'function') {
+        cfg.onPermutation(permSnap, stateSnap);
+      }
+      return { state: stateSnap, permSpec: permSnap };
+    }
+
+    function dreamFromPrompt(promptIdOrKey) {
+      var prompt = resolvePrompt(promptIdOrKey);
+      store.lastPrompt = prompt;
+      store.axes.pilingHeight = prompt.axisTargets.pilingHeight;
+      store.axes.catwalkWeave = prompt.axisTargets.catwalkWeave;
+      store.axes.cisternLookouts = prompt.axisTargets.cisternLookouts;
+      store.axes.windVanes = prompt.axisTargets.windVanes;
+      var perm = synthesizePermutation(store, { prompt: prompt });
+      return commitPerm(perm);
+    }
+
+    function attemptGroundReset() {
+      var flatPrompt = store.flatAttemptsCount % 2 === 0 ? DESIRE_PROMPTS[0] : DESIRE_PROMPTS[1];
+      store.lastPrompt = flatPrompt;
+      store.axes.pilingHeight = round2(clamp(Math.max(0.76, store.axes.pilingHeight + 0.08), 0.72, 0.98));
+      store.axes.catwalkWeave = round2(clamp(Math.max(0.72, store.axes.catwalkWeave + 0.06), 0.68, 0.96));
+      var perm = synthesizePermutation(store, {
+        prompt: flatPrompt,
+        forceFlatAttempt: true,
+        promptIdOverride: 'ground_reset_sublimated',
+        promptLabelOverride: 'Ground-Level Reset Sublimated Aloft'
+      });
+      return commitPerm(perm);
+    }
+
+    function setDesireAxis(axisOrMap, rawValue) {
+      var zeroRebound = false;
+      if (axisOrMap && typeof axisOrMap === 'object') {
+        var keys = Object.keys(axisOrMap);
+        for (var i = 0; i < keys.length; i++) {
+          var ak = resolveAxisKey(keys[i]);
+          var nv = normalizeAxisValue(axisOrMap[keys[i]]);
+          if (ak === 'pilingHeight' && nv <= 0.08) {
+            zeroRebound = true;
+            nv = 0.72;
+          }
+          store.axes[ak] = round2(nv);
+        }
+      } else {
+        var key = resolveAxisKey(axisOrMap);
+        var val = normalizeAxisValue(rawValue);
+        if (key === 'pilingHeight' && val <= 0.08) {
+          zeroRebound = true;
+          val = 0.72;
+        }
+        store.axes[key] = round2(val);
+      }
+      var activePrompt = zeroRebound ? DESIRE_PROMPTS[0] : (store.lastPrompt && !store.lastPrompt.isFlatAttempt ? store.lastPrompt : DESIRE_PROMPTS[5]);
+      var perm = synthesizePermutation(store, {
+        prompt: activePrompt,
+        zeroAltitudeRebound: zeroRebound,
+        promptIdOverride: zeroRebound ? 'flat_axis_sublimated' : activePrompt.id,
+        promptLabelOverride: zeroRebound ? 'Zero-Stilt Slider Rebounded Aloft' : activePrompt.label
+      });
+      return commitPerm(perm);
+    }
+
+    function recombineNext() {
+      var cycle = [DESIRE_PROMPTS[2], DESIRE_PROMPTS[3], DESIRE_PROMPTS[4], DESIRE_PROMPTS[5]];
+      var nextPrompt = cycle[store.recombineCursor % cycle.length];
+      store.recombineCursor += 1;
+      store.lastPrompt = nextPrompt;
+      store.axes.pilingHeight = round2(clamp(0.64 + ((store.recombineCursor * 13) % 31) * 0.01, 0.62, 0.96));
+      store.axes.catwalkWeave = round2(clamp(0.66 + ((store.recombineCursor * 17) % 29) * 0.01, 0.64, 0.96));
+      store.axes.cisternLookouts = round2(clamp(0.60 + ((store.recombineCursor * 19) % 33) * 0.01, 0.58, 0.95));
+      store.axes.windVanes = round2(clamp(0.65 + ((store.recombineCursor * 23) % 29) * 0.01, 0.62, 0.96));
+      var perm = synthesizePermutation(store, { prompt: nextPrompt });
+      return commitPerm(perm);
+    }
+
+    function reset() {
+      store.generation = 0;
+      store.flatAttemptsCount = 0;
+      store.recombinationCount = 0;
+      store.recombineCursor = 0;
+      store.axes = defaultAxes();
+      store.lastPrompt = DESIRE_PROMPTS[5];
+      store.currentPerm = makeBaselinePerm(store.baselineElevations, store.baselineAltitudeMeters);
+      store.history = [];
+      return { state: buildState(), permSpec: clonePerm(store.currentPerm) };
+    }
+
+    return {
+      getState: buildState,
+      dreamFromPrompt: dreamFromPrompt,
+      attemptGroundReset: attemptGroundReset,
+      setDesireAxis: setDesireAxis,
+      recombineNext: recombineNext,
+      getCurrentPermutation: function () { return clonePerm(store.currentPerm); },
+      getHistory: function () { return store.history.map(clonePerm); },
+      renderDreamSketch: function (ctx, width, height) {
+        return drawDreamSketchInternal(ctx, width, height, store);
+      },
+      reset: reset
+    };
+  }
+
+  var api = Object.freeze({
+    PALETTE: PALETTE,
+    TAXONOMY: TAXONOMY,
+    DESIRE_AXES: DESIRE_AXES,
+    DESIRE_PROMPTS: DESIRE_PROMPTS,
+    createDreamer: createDreamer
+  });
+
+  root.ZenobiaHappyLifeDreamer = api;
+})(typeof globalThis !== 'undefined' ? globalThis : window);
+
+(function () {
+  "use strict";
+  var TrussMod = globalThis.ZenobiaStiltedTrusswork;
+  var DreamMod = globalThis.ZenobiaHappyLifeDreamer;
+  if (!TrussMod || !DreamMod) { return; }
+
+  var stageEl = document.getElementById("zenobia-canvas-well") || document.getElementById("zenobia-mesa-stage");
+  var trussCanvas = document.getElementById("zenobia-truss-canvas");
+  var trussCtx = trussCanvas.getContext("2d");
+  var sketchCanvas = document.getElementById("zenobia-sketch-canvas");
+  var sketchCtx = sketchCanvas.getContext("2d");
+
+  var statAlt = document.getElementById("zenobia-stat-alt");
+  var statMoisture = document.getElementById("zenobia-stat-moisture");
+  var statBarrels = document.getElementById("zenobia-stat-barrels");
+  var statCatwalks = document.getElementById("zenobia-stat-catwalks");
+  var altNeedle = document.getElementById("zenobia-alt-needle");
+
+  var augurKind = document.getElementById("zenobia-augur-kind");
+  var augurAlt = document.getElementById("zenobia-augur-alt");
+  var augurTitle = document.getElementById("zenobia-augur-title");
+  var augurNote = document.getElementById("zenobia-augur-note");
+  var augurProof = document.getElementById("zenobia-augur-proof");
+
+  var genLedger = document.getElementById("zenobia-gen-ledger");
+  var sublimCountEl = document.getElementById("zenobia-sublim-count");
+  var gainReadoutEl = document.getElementById("zenobia-gain-readout");
+  var dreamNoteEl = document.getElementById("zenobia-dream-note");
+  var muteLabel = document.getElementById("zenobia-mute-label");
+  var crownMute = document.getElementById("zenobia-crown-mute");
+
+  var plateDrawer = document.getElementById("zenobia-plate-drawer");
+  var plateGallery = document.getElementById("zenobia-plate-gallery");
+  var loupeBtn = document.getElementById("zenobia-loupe-btn");
+  var mapImg = document.getElementById("zenobia-map-img");
+  var cityImg = document.getElementById("zenobia-city-img");
+  var mapCaption = document.getElementById("zenobia-map-caption");
+  var cityCaption = document.getElementById("zenobia-city-caption");
+
+  function makeFallbackSvgUri(title, subtitle) {
+    var svg = "<svg viewBox='0 0 800 520' width='800' height='520'>" +
+      "<rect width='800' height='520' fill='#19110B'/>" +
+      "<rect x='18' y='18' width='764' height='484' fill='none' stroke='#D6B162' stroke-width='2'/>" +
+      "<line x1='30' y1='420' x2='770' y2='420' stroke='#C47A45' stroke-width='4'/>" +
+      "<line x1='130' y1='420' x2='130' y2='190' stroke='#D6B162' stroke-width='5'/>" +
+      "<line x1='290' y1='420' x2='290' y2='135' stroke='#D6B162' stroke-width='5'/>" +
+      "<line x1='470' y1='420' x2='470' y2='110' stroke='#D6B162' stroke-width='5'/>" +
+      "<line x1='640' y1='420' x2='640' y2='165' stroke='#D6B162' stroke-width='5'/>" +
+      "<path d='M130 210 Q210 245 290 165 Q380 205 470 140 Q555 190 640 180' fill='none' stroke='#E5A33B' stroke-width='2.5'/>" +
+      "<polygon points='260,135 290,95 320,135' fill='#6E858E' stroke='#D6B162' stroke-width='1.5'/>" +
+      "<polygon points='440,110 470,68 500,110' fill='#6E858E' stroke='#D6B162' stroke-width='1.5'/>" +
+      "<text x='400' y='458' fill='#F3EAD6' font-family='monospace' font-size='15' text-anchor='middle'>" + title + "</text>" +
+      "<text x='400' y='482' fill='#C47A45' font-family='monospace' font-size='12' text-anchor='middle'>" + subtitle + "</text>" +
+      "</svg>";
+    return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+  }
+
+  function wirePlateFallbacks() {
+    mapImg.addEventListener("error", function () {
+      if (!mapImg.dataset.triedSvg) {
+        mapImg.dataset.triedSvg = "1";
+        mapImg.src = "map.svg";
+        mapCaption.textContent = "Plate I · Vector Survey Fallback (map.svg) — Eight Piling Clusters Above Dry Mesa";
+        return;
+      }
+      if (!mapImg.dataset.usedSchematic) {
+        mapImg.dataset.usedSchematic = "1";
+        mapImg.src = makeFallbackSvgUri("ZENOBIA CARTOGRAPHIC SURVEY SCHEMATIC", "Dry Mesa Pilings · Ground Moisture 0% · Crossing Catwalks");
+        mapCaption.textContent = "Plate I · Procedural Schematic Diagram — High Pilings & Crossing Catwalks Over Dry Mesa";
+      }
+    });
+    cityImg.addEventListener("error", function () {
+      if (!cityImg.dataset.usedSchematic) {
+        cityImg.dataset.usedSchematic = "1";
+        cityImg.src = makeFallbackSvgUri("ZENOBIA ARCHITECTURAL ELEVATION SCHEMATIC", "Bamboo & Oxidized-Zinc Houses · Cone Belvederes · Hoisted Barrels");
+        cityCaption.textContent = "Plate II · Procedural Elevation Schematic — Bamboo & Zinc Houses, Cone Belvederes & Ribbons";
+      }
+    });
+  }
+  wirePlateFallbacks();
+
+  var mqReduced = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
+  var isReducedMotion = Boolean(mqReduced && mqReduced.matches);
+
+  var stageW = 880;
+  var stageH = 680;
+  var stageDpr = Math.min(2, Math.max(1, window.devicePixelRatio || 1));
+
+  var trusswork = TrussMod.createTrusswork({
+    canvas: trussCanvas,
+    width: stageW,
+    height: stageH,
+    dpr: stageDpr,
+    reducedMotion: isReducedMotion,
+    muted: false
+  });
+
+  var twInitial = trusswork.getState();
+  var dreamer = DreamMod.createDreamer({
+    baselineElevations: twInitial.clusters.map(function (c) { return c.baselineMeters; }),
+    baselineAltitudeMeters: twInitial.baselineAltitudeMeters,
+    onPermutation: function (permSpec, drState) {
+      trusswork.applyDreamPermutation(permSpec);
+      setAugurFromDream(permSpec, drState);
+      syncUI();
+      renderAll();
+    }
+  });
+
+  function resizeCanvases() {
+    var rect = stageEl.getBoundingClientRect();
+    stageDpr = Math.min(2, Math.max(1, window.devicePixelRatio || 1));
+    stageW = Math.max(240, Math.round(rect.width || 800));
+    stageH = Math.max(200, Math.round(rect.height || 520));
+    trussCanvas.width = Math.round(stageW * stageDpr);
+    trussCanvas.height = Math.round(stageH * stageDpr);
+    trussCtx.setTransform(stageDpr, 0, 0, stageDpr, 0, 0);
+    trusswork.setViewport(stageW, stageH, stageDpr);
+
+    var skRect = sketchCanvas.getBoundingClientRect();
+    var skW = Math.max(160, Math.round(skRect.width || 340));
+    var skH = Math.max(36, Math.round(skRect.height || 68));
+    sketchCanvas.width = Math.round(skW * stageDpr);
+    sketchCanvas.height = Math.round(skH * stageDpr);
+    sketchCtx.setTransform(stageDpr, 0, 0, stageDpr, 0, 0);
+    sketchCanvas.dataset.logicalW = String(skW);
+    sketchCanvas.dataset.logicalH = String(skH);
+  }
+  var promptChips = Array.prototype.slice.call(document.querySelectorAll("dream-prompt-chip[data-key]"));
+  var axisCards = Array.prototype.slice.call(document.querySelectorAll("desire-axis-vernier[data-axis-slot]"));
+  var axesMeta = DreamMod.DESIRE_AXES || [];
+
+  promptChips.forEach(function (chip) {
+    var key = chip.getAttribute("data-key");
+    var found = (DreamMod.DESIRE_PROMPTS || []).filter(function (p) { return String(p.key) === String(key); })[0];
+    if (found) {
+      chip.setAttribute("data-prompt", found.id);
+      var lbl = chip.querySelector(".zenobia-keylabel");
+      if (lbl) { lbl.textContent = found.label; }
+    }
+  });
+
+  axisCards.forEach(function (card, idx) {
+    var meta = axesMeta[idx];
+    if (!meta) { return; }
+    card.setAttribute("data-axis-id", meta.id);
+    var nm = card.querySelector(".zenobia-axis-name");
+    var rail = card.querySelector("desire-axis-rail");
+    if (nm) { nm.textContent = meta.shortLabel || meta.label; nm.title = meta.label; }
+    if (rail) { rail.setAttribute("aria-label", meta.label); }
+  });
+
+  function setAugurCard(item) {
+    if (!item) { return; }
+    var badge = (item.stoneId || item.kind || "zenobia_stone").replace(/_/g, " ").toUpperCase();
+    augurKind.textContent = badge;
+    var altVal = Number(item.altitudeMeters);
+    augurAlt.textContent = isFinite(altVal) ? (altVal > 0 ? "+" + altVal.toFixed(1) + "m" : "0.0m MESA") : "+0.0m";
+    augurTitle.textContent = item.label || "Zenobia Trusswork Element";
+    augurNote.textContent = item.note || "";
+    var depthPart = item.postDepthMeters ? " · Socket Depth: " + Number(item.postDepthMeters).toFixed(1) + "m" : "";
+    augurProof.textContent = "Ground Moisture: 0% · Dry Mesa · Flood Marks: 0" + depthPart;
+  }
+
+  function setAugurFromDream(permSpec, drState) {
+    if (!permSpec) { return; }
+    var wasFlat = Boolean(permSpec.rejectedFlatAttempt || permSpec.flatAttemptSublimated);
+    augurKind.textContent = wasFlat ? "FLAT DREAM SUBLIMATED ALOFT" : "HAPPY-LIFE RECOMBINATION";
+    augurAlt.textContent = "+" + Number(permSpec.meanAltitudeMeters || 30).toFixed(1) + "m MEAN";
+    augurTitle.textContent = permSpec.promptLabel || "Stilted Desire Permutation";
+    augurNote.textContent = permSpec.narrative || (drState && drState.narrative) || "";
+    augurProof.textContent = "Ground Moisture: 0% · Dry Mesa · Classification: gives_form_to_desires";
+  }
+
+  function syncUI() {
+    var tw = trusswork.getState();
+    var dr = dreamer.getState();
+    var meanAlt = Number(tw.meanAltitudeMeters || dr.meanAltitudeMeters || 29);
+    var gain = Number(tw.altitudeGainMeters || (meanAlt - tw.baselineAltitudeMeters) || 0);
+    statAlt.textContent = meanAlt.toFixed(1) + "m";
+    statMoisture.textContent = String(tw.groundMoisture) + "%";
+    statBarrels.textContent = String(tw.barrelCount);
+    statCatwalks.textContent = String(tw.catwalkCount);
+    altNeedle.textContent = meanAlt.toFixed(1) + "m";
+
+    var genNum = Math.max(Number(dr.generation || 0), Number(tw.permutationGeneration || 0));
+    var sign = gain >= 0 ? "+" : "";
+    genLedger.textContent = "Gen " + genNum + " · " + sign + gain.toFixed(1) + "m";
+    var subTotal = Math.max(Number(dr.flatAttemptsCount || 0), Number(tw.sublimatedFlatAttempts || 0));
+    sublimCountEl.textContent = "Flat Attempts Sublimated: " + subTotal;
+    gainReadoutEl.textContent = "Mean " + meanAlt.toFixed(1) + "m (" + sign + gain.toFixed(1) + "m)";
+    if (dr.narrative) { dreamNoteEl.textContent = dr.narrative; }
+
+    var muted = trusswork.isMuted();
+    muteLabel.textContent = muted ? "Muted" : "Chimes";
+    crownMute.textContent = muted ? "Muted" : "Audio";
+
+    promptChips.forEach(function (chip) {
+      var pid = chip.getAttribute("data-prompt");
+      chip.classList.toggle("zenobia-is-active", pid === dr.activePromptId);
+    });
+
+    axisCards.forEach(function (card, idx) {
+      var meta = axesMeta[idx];
+      if (!meta) { return; }
+      var raw = dr.axes && typeof dr.axes[meta.id] === "number" ? dr.axes[meta.id] : 0.56;
+      var pct = Math.round(Math.max(0, Math.min(1, raw)) * 100);
+      var rd = card.querySelector(".zenobia-axis-readout");
+      var bar = card.querySelector(".zenobia-axis-bar");
+      var rail = card.querySelector("desire-axis-rail");
+      if (rd) { rd.textContent = pct + "%"; }
+      if (bar) { bar.style.width = pct + "%"; }
+      if (rail) { rail.setAttribute("aria-valuenow", String(pct)); }
+    });
+  }
+
+  function renderAll() {
+    trusswork.render(trussCtx, stageW, stageH);
+    var skW = Number(sketchCanvas.dataset.logicalW) || 320;
+    var skH = Number(sketchCanvas.dataset.logicalH) || 64;
+    dreamer.renderDreamSketch(sketchCtx, skW, skH);
+  }
+
+  function bindRoleButton(el, handler) {
+    if (!el) { return; }
+    el.addEventListener("click", function (ev) {
+      ev.preventDefault();
+      handler(ev);
+    });
+    el.addEventListener("keydown", function (ev) {
+      if (ev.key === "Enter" || ev.key === " ") {
+        ev.preventDefault();
+        ev.stopPropagation();
+        handler(ev);
+      }
+    });
+  }
+
+  var probeCursor = 0;
+  var socketNorms = [0.11, 0.22, 0.33, 0.44, 0.56, 0.68, 0.79, 0.90];
+
+  function performAction(act) {
+    if (act === "elevate") {
+      trusswork.elevateCluster(undefined, 3.6);
+      var stE = trusswork.getState();
+      setAugurCard({ stoneId: "dry_terrain_pilings", altitudeMeters: stE.meanAltitudeMeters, label: "Seasoned Pilings Jacked Higher", note: "Staggered bamboo-and-timber stilts rise higher into dry plateau wind while the baked mesa below stays bone-dry." });
+    } else if (act === "catwalk") {
+      trusswork.spanCatwalk();
+      var stC = trusswork.getState();
+      setAugurCard({ stoneId: "ladders_and_hanging_sidewalks", altitudeMeters: stC.meanAltitudeMeters, label: "New Swaying Rope-and-Plank Sidewalk", note: "Another catenary catwalk crosses open sky between staggered balconies (" + stC.catwalkCount + " active spans)." });
+    } else if (act === "barrels") {
+      trusswork.hoistBarrels(2);
+      var stB = trusswork.getState();
+      setAugurCard({ stoneId: "water_storage_barrels", altitudeMeters: stB.maxAltitudeMeters * 0.82, label: "Hooped Water Cisterns Hoisted Aloft", note: "All water in Zenobia is stored in elevated barrels (" + stB.barrelCount + " barrels, " + stB.elevatedWaterLiters + " L); zero moisture touches the ground." });
+    } else if (act === "footing") {
+      var xN = socketNorms[probeCursor % socketNorms.length];
+      probeCursor += 1;
+      var rep = trusswork.probeMesaFooting(xN);
+      setAugurCard(rep);
+    } else if (act === "gust") {
+      trusswork.triggerGust(1.0);
+      var stW = trusswork.getState();
+      setAugurCard({ stoneId: "weathervanes_and_ribbons", altitudeMeters: stW.maxAltitudeMeters, label: "Plateau Gust Across Vanes & Silk Ribbons", note: "High arid wind spins the finial zinc weathervanes and streams vermilion and saffron ribbons horizontally." });
+    } else if (act === "ground") {
+      dreamer.attemptGroundReset();
+      trusswork.playSound("creak", 0.8);
+    } else if (act === "mute") {
+      trusswork.toggleMute();
+    } else if (act === "reset") {
+      trusswork.reset();
+      dreamer.reset();
+      var twR = trusswork.getState();
+      setAugurCard({ stoneId: "bamboo_and_zinc_houses", altitudeMeters: twR.meanAltitudeMeters, label: "Ancestral Stilted Zenobia Restored", note: "Eight stilt clusters stand over dry cracked ochre earth; nobody remembers why the founders raised Zenobia." });
+    } else if (act === "plates") {
+      togglePlates();
+    }
+    syncUI();
+    renderAll();
+  }
+  function openPlates() {
+    plateDrawer.hidden = false;
+  }
+  function closePlates() {
+    plateDrawer.hidden = true;
+  }
+  function togglePlates() {
+    plateDrawer.hidden = !plateDrawer.hidden;
+  }
+  function setPlateView(viewName) {
+    plateGallery.setAttribute("data-view", viewName);
+    var tabs = document.querySelectorAll("zenobia-folio-tab[data-plate-view]");
+    Array.prototype.forEach.call(tabs, function (tb) {
+      tb.classList.toggle("zenobia-is-active", tb.getAttribute("data-plate-view") === viewName);
+    });
+  }
+  function togglePlateZoom() {
+    var cur = plateGallery.getAttribute("data-zoom") === "1.8" ? "1" : "1.8";
+    plateGallery.setAttribute("data-zoom", cur);
+    loupeBtn.textContent = cur === "1.8" ? "[Z] Loupe 1.8×" : "[Z] Loupe 1.0×";
+    loupeBtn.classList.toggle("zenobia-is-active", cur === "1.8");
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll("catwalk-action-key[data-action]"), function (btn) {
+    bindRoleButton(btn, function () { performAction(btn.getAttribute("data-action")); });
+  });
+
+  promptChips.forEach(function (chip) {
+    bindRoleButton(chip, function () {
+      var key = chip.getAttribute("data-key");
+      dreamer.dreamFromPrompt(key);
+      trusswork.playSound("chime", 0.75);
+    });
+  });
+
+  Array.prototype.forEach.call(document.querySelectorAll("zenobia-folio-tab[data-plate-view]"), function (tab) {
+    bindRoleButton(tab, function () { setPlateView(tab.getAttribute("data-plate-view")); });
+  });
+  bindRoleButton(loupeBtn, togglePlateZoom);
+  bindRoleButton(document.getElementById("zenobia-plate-close"), closePlates);
+  plateDrawer.addEventListener("click", function (ev) {
+    if (ev.target === plateDrawer) { closePlates(); }
+  });
+
+  axisCards.forEach(function (card, idx) {
+    var rail = card.querySelector("desire-axis-rail");
+    var meta = axesMeta[idx];
+    if (!rail || !meta) { return; }
+    var dragging = false;
+    function applyFromClientX(clientX) {
+      var r = rail.getBoundingClientRect();
+      if (!r.width) { return; }
+      var ratio = Math.max(0, Math.min(1, (clientX - r.left) / r.width));
+      dreamer.setDesireAxis(meta.id, ratio);
+    }
+    rail.addEventListener("pointerdown", function (ev) {
+      dragging = true;
+      if (rail.setPointerCapture) { try { rail.setPointerCapture(ev.pointerId); } catch (_e) {} }
+      applyFromClientX(ev.clientX);
+    });
+    rail.addEventListener("pointermove", function (ev) {
+      if (dragging) { applyFromClientX(ev.clientX); }
+    });
+    rail.addEventListener("pointerup", function () { dragging = false; });
+    rail.addEventListener("pointercancel", function () { dragging = false; });
+    rail.addEventListener("keydown", function (ev) {
+      var st = dreamer.getState();
+      var cur = st.axes && typeof st.axes[meta.id] === "number" ? st.axes[meta.id] : 0.55;
+      if (ev.key === "ArrowRight" || ev.key === "ArrowUp") {
+        ev.preventDefault();
+        dreamer.setDesireAxis(meta.id, Math.min(1, cur + 0.08));
+      } else if (ev.key === "ArrowLeft" || ev.key === "ArrowDown") {
+        ev.preventDefault();
+        dreamer.setDesireAxis(meta.id, Math.max(0, cur - 0.08));
+      }
+    });
+  });
+
+  trussCanvas.addEventListener("click", function (ev) {
+    var r = trussCanvas.getBoundingClientRect();
+    var px = ev.clientX - r.left;
+    var py = ev.clientY - r.top;
+    var hit = trusswork.inspectAt(px, py);
+    if (hit) { setAugurCard(hit); }
+    syncUI();
+    renderAll();
+  });
+
+  window.addEventListener("keydown", function (ev) {
+    if (ev.metaKey || ev.ctrlKey || ev.altKey) { return; }
+    var k = ev.key;
+    if (k === "Escape") {
+      if (!plateDrawer.hidden) { ev.preventDefault(); closePlates(); }
+      return;
+    }
+    var low = k.toLowerCase();
+    if (low === "p") { ev.preventDefault(); togglePlates(); return; }
+    if (low === "z" && !plateDrawer.hidden) { ev.preventDefault(); togglePlateZoom(); return; }
+    if (!plateDrawer.hidden) { return; }
+
+    if (k >= "1" && k <= "6") {
+      ev.preventDefault();
+      dreamer.dreamFromPrompt(k);
+      trusswork.playSound("chime", 0.75);
+    } else if (low === "e") { ev.preventDefault(); performAction("elevate"); }
+    else if (low === "c") { ev.preventDefault(); performAction("catwalk"); }
+    else if (low === "b") { ev.preventDefault(); performAction("barrels"); }
+    else if (low === "f") { ev.preventDefault(); performAction("footing"); }
+    else if (low === "w") { ev.preventDefault(); performAction("gust"); }
+    else if (low === "g") { ev.preventDefault(); performAction("ground"); }
+    else if (low === "m") { ev.preventDefault(); performAction("mute"); }
+    else if (low === "r") { ev.preventDefault(); performAction("reset"); }
+  });
+
+  if (mqReduced && mqReduced.addEventListener) {
+    mqReduced.addEventListener("change", function (ev) {
+      isReducedMotion = Boolean(ev.matches);
+      trusswork.setReducedMotion(isReducedMotion);
+      renderAll();
+    });
+  }
+
+  window.addEventListener("resize", function () {
+    resizeCanvases();
+    renderAll();
+  });
+
+  var lastTs = performance.now();
+  function tick(now) {
+    var dt = Math.min(0.05, Math.max(0.001, (now - lastTs) / 1000));
+    lastTs = now;
+    if (!isReducedMotion && plateDrawer.hidden) {
+      trusswork.step(dt);
+      trusswork.render(trussCtx, stageW, stageH);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  resizeCanvases();
+  syncUI();
+  renderAll();
+  requestAnimationFrame(tick);
+
+  var api = {
+    trusswork: trusswork,
+    dreamer: dreamer,
+    getState: function () { return { trusswork: trusswork.getState(), dreamer: dreamer.getState(), platesOpen: !plateDrawer.hidden }; },
+    performAction: performAction,
+    dreamFromPrompt: function (idOrKey) { return dreamer.dreamFromPrompt(idOrKey); },
+    attemptGroundReset: function () { return dreamer.attemptGroundReset(); },
+    openPlates: openPlates,
+    closePlates: closePlates,
+    togglePlates: togglePlates,
+    togglePlateZoom: togglePlateZoom
+  };
+  globalThis.zenobiaTrusswork = trusswork;
+  globalThis.zenobiaDreamer = dreamer;
+  globalThis.__ZENOBIA_API__ = api;
+  globalThis.ZenobiaApp = api;
+})();
+
+</script>
+</body>
+</html>

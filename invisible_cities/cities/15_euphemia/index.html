@@ -1,0 +1,3292 @@
+<!DOCTYPE html>
+<html lang="en" class="eup-html">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Euphemia — Caravanserai of the Seven Nations</title>
+<style class="eup-styles">
+.eup-html, .eup-body, .eup-html *, .eup-html *::before, .eup-html *::after {
+  box-sizing: border-box;
+}
+.eup-html [hidden], .eup-hidden {
+  display: none !important;
+}
+.eup-html, .eup-body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  background: #131829;
+  color: #f5ede0;
+  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  -webkit-font-smoothing: antialiased;
+}
+.eup-caravanserai {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-areas:
+    "topbar topbar"
+    "stage ledger";
+  gap: 10px;
+  padding: 0 12px 10px;
+  width: 100%;
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+  background: radial-gradient(circle at 24% 18%, #1d354d 0%, #131829 68%);
+}
+.eup-caravanserai[data-phase="bazaar"] {
+  background: radial-gradient(circle at 25% 15%, #2b3f57 0%, #1b1f33 62%, #131829 100%);
+}
+.eup-caravanserai[data-phase="campfire"] {
+  background: radial-gradient(circle at 50% 45%, #2b1d28 0%, #131829 74%);
+}
+.eup-caravanserai[data-phase="voyage"] {
+  background: radial-gradient(circle at 20% 25%, #192b44 0%, #0e1322 78%);
+}
+.eup-turning-bar {
+  grid-area: topbar;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0 -12px;
+  padding: 7px 14px;
+  background: linear-gradient(90deg, #161b2e 0%, #261e2b 50%, #162438 100%);
+  border-bottom: 1px solid rgba(242, 204, 110, 0.28);
+}
+.eup-brand-cluster, .eup-phase-cluster, .eup-util-cluster {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.eup-title-mark {
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #f2cc6e;
+  text-transform: uppercase;
+}
+.eup-subtitle-mark {
+  display: inline-block;
+  font-size: 0.76rem;
+  color: rgba(245, 237, 224, 0.78);
+  padding-left: 6px;
+  border-left: 1px solid rgba(224, 159, 62, 0.38);
+}
+.eup-btn {
+  appearance: none;
+  border: 1px solid rgba(242, 204, 110, 0.36);
+  background: rgba(29, 53, 77, 0.58);
+  color: #f5ede0;
+  font-family: inherit;
+  font-size: 0.76rem;
+  font-weight: 600;
+  line-height: 1.15;
+  padding: 6px 9px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.16s ease, border-color 0.16s ease, color 0.16s ease;
+}
+.eup-btn:hover, .eup-btn:focus-visible {
+  border-color: #f2cc6e;
+  background: rgba(224, 159, 62, 0.24);
+  outline: none;
+}
+.eup-phase-btn[aria-pressed="true"] {
+  background: linear-gradient(180deg, #e09f3e 0%, #b86f24 100%);
+  color: #131829;
+  border-color: #f2cc6e;
+  font-weight: 700;
+}
+.eup-stage {
+  grid-area: stage;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  min-width: 0;
+  min-height: 0;
+  border: 1px solid rgba(242, 204, 110, 0.28);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #121728;
+}
+.eup-stage-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 220px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.eup-stage-caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 10px;
+  font-size: 0.75rem;
+  background: rgba(19, 24, 41, 0.94);
+  border-top: 1px solid rgba(242, 204, 110, 0.22);
+  color: rgba(245, 237, 224, 0.88);
+}
+.eup-bazaar-ledger, .eup-campfire-circle, .eup-recall-chest {
+  grid-area: ledger;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+  min-height: 0;
+  padding: 9px 10px;
+  border: 1px solid rgba(242, 204, 110, 0.28);
+  border-radius: 8px;
+  background: rgba(19, 24, 41, 0.86);
+  overflow-y: auto;
+}
+.eup-section-cue {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px;
+  font-size: 0.76rem;
+  color: #f2cc6e;
+  border-bottom: 1px solid rgba(242, 204, 110, 0.18);
+  padding-bottom: 4px;
+}
+.eup-cue-note {
+  display: inline-block;
+  font-size: 0.72rem;
+  color: rgba(245, 237, 224, 0.76);
+}
+.eup-turning-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 5px;
+}
+.eup-turn-pill {
+  padding: 5px 4px;
+  font-size: 0.7rem;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.eup-turn-pill[aria-pressed="true"] {
+  background: rgba(224, 159, 62, 0.34);
+  border-color: #f2cc6e;
+  color: #f2cc6e;
+}
+.eup-nation-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5px;
+}
+.eup-nation-token {
+  display: block;
+  min-width: 0;
+}
+.eup-nation-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  width: 100%;
+  padding: 5px 7px;
+  text-align: left;
+  background: rgba(24, 30, 48, 0.85);
+}
+.eup-nation-btn[aria-pressed="true"] {
+  background: rgba(224, 159, 62, 0.22);
+  border-color: #f2cc6e;
+}
+.eup-nation-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  width: 100%;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #f5ede0;
+}
+.eup-route-badge {
+  display: inline-block;
+  font-size: 0.64rem;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: rgba(242, 204, 110, 0.18);
+  color: #f2cc6e;
+  letter-spacing: 0.04em;
+}
+.eup-nation-meta {
+  display: block;
+  font-size: 0.66rem;
+  color: rgba(245, 237, 224, 0.74);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+.eup-commodity-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 5px;
+}
+.eup-commodity-chip {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 4px;
+  padding: 5px 6px;
+  border: 1px solid rgba(242, 204, 110, 0.24);
+  border-radius: 5px;
+  background: rgba(26, 28, 44, 0.88);
+  min-width: 0;
+}
+.eup-commodity-chip[data-role="offer"] {
+  border-color: #e09f3e;
+  background: rgba(224, 159, 62, 0.16);
+}
+.eup-commodity-chip[data-role="request"] {
+  border-color: #8ea861;
+  background: rgba(142, 168, 97, 0.16);
+}
+.eup-comm-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #f5ede0;
+}
+.eup-comm-stock {
+  display: inline-block;
+  font-size: 0.66rem;
+  color: #f2cc6e;
+}
+.eup-comm-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+.eup-mini-btn {
+  padding: 3px 4px;
+  font-size: 0.66rem;
+  text-align: center;
+}
+.eup-mini-btn[aria-pressed="true"] {
+  background: #e09f3e;
+  color: #131829;
+  border-color: #f2cc6e;
+  font-weight: 700;
+}
+.eup-scale-readout {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 7px 9px;
+  border: 1px solid rgba(224, 159, 62, 0.44);
+  border-radius: 6px;
+  background: linear-gradient(180deg, rgba(38, 30, 42, 0.92) 0%, rgba(21, 25, 41, 0.96) 100%);
+}
+.eup-quote-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  font-size: 0.76rem;
+  color: #f2cc6e;
+}
+.eup-scale-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.eup-barter-btn {
+  flex: 1 1 130px;
+  background: linear-gradient(180deg, #e09f3e 0%, #b86f24 100%);
+  color: #131829;
+  border-color: #f2cc6e;
+  font-weight: 700;
+}
+.eup-ledger-receipt {
+  display: block;
+  font-size: 0.7rem;
+  line-height: 1.32;
+  color: rgba(245, 237, 224, 0.84);
+}
+.eup-ember-grid, .eup-slot-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+.eup-word-ember, .eup-slot-tablet {
+  display: block;
+  min-width: 0;
+}
+.eup-ember-btn, .eup-slot-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  width: 100%;
+  padding: 7px 8px;
+  text-align: left;
+  background: rgba(34, 24, 34, 0.88);
+  border-color: rgba(235, 110, 45, 0.42);
+}
+.eup-ember-btn[data-swapped="true"], .eup-slot-btn[data-swapped="true"] {
+  background: linear-gradient(180deg, rgba(184, 58, 40, 0.34) 0%, rgba(44, 26, 36, 0.94) 100%);
+  border-color: #eb6e2d;
+}
+.eup-ember-btn[aria-pressed="true"], .eup-slot-btn[aria-pressed="true"] {
+  border-color: #f2cc6e;
+  box-shadow: inset 0 0 0 1px #f2cc6e;
+}
+.eup-word-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #f2cc6e;
+}
+.eup-word-state {
+  display: block;
+  font-size: 0.66rem;
+  color: rgba(245, 237, 224, 0.78);
+}
+.eup-echo-band {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 5px 8px;
+  border-radius: 5px;
+  background: rgba(235, 110, 45, 0.14);
+  border: 1px solid rgba(235, 110, 45, 0.34);
+  font-size: 0.72rem;
+  color: #f5ede0;
+}
+.eup-tale-scroll {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1 1 auto;
+  min-height: 150px;
+  overflow-y: auto;
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid rgba(242, 204, 110, 0.2);
+  background: rgba(14, 17, 29, 0.72);
+}
+.eup-tale-card {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 6px 8px;
+  border-radius: 5px;
+  border-left: 3px solid #e09f3e;
+  background: rgba(28, 25, 40, 0.85);
+  font-size: 0.74rem;
+  line-height: 1.35;
+}
+.eup-tale-card[data-installed="true"] {
+  border-left-color: #eb6e2d;
+  background: rgba(184, 58, 40, 0.22);
+}
+.eup-tale-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #f2cc6e;
+}
+.eup-recall-inspector {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1 1 auto;
+  padding: 10px 11px;
+  border-radius: 6px;
+  border: 1px solid rgba(242, 204, 110, 0.34);
+  background: linear-gradient(180deg, rgba(24, 30, 50, 0.92) 0%, rgba(16, 20, 34, 0.96) 100%);
+}
+.eup-provenance-seal {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 5px 8px;
+  border-radius: 4px;
+  font-size: 0.71rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  background: rgba(142, 168, 97, 0.2);
+  border: 1px solid rgba(142, 168, 97, 0.55);
+  color: #d9e8bd;
+}
+.eup-provenance-seal[data-provenance="swapped"] {
+  background: rgba(235, 110, 45, 0.22);
+  border-color: #eb6e2d;
+  color: #f2cc6e;
+}
+.eup-recalled-story {
+  display: block;
+  font-size: 0.88rem;
+  line-height: 1.48;
+  color: #f5ede0;
+}
+.eup-palimpsest-ghost {
+  display: block;
+  padding: 7px 9px;
+  border-radius: 4px;
+  border-left: 2px dashed rgba(245, 237, 224, 0.34);
+  background: rgba(19, 24, 41, 0.65);
+  font-size: 0.74rem;
+  line-height: 1.38;
+  color: rgba(245, 237, 224, 0.58);
+  font-style: italic;
+}
+.eup-plate-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 16px;
+  background: rgba(13, 17, 30, 0.96);
+  backdrop-filter: blur(6px);
+}
+.eup-tab-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(242, 204, 110, 0.28);
+}
+.eup-tab-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.eup-loupe-viewport {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  padding: 6px;
+  border: 1px solid rgba(242, 204, 110, 0.24);
+  border-radius: 8px;
+  background: #0d111e;
+}
+.eup-diptych-frame {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  width: 100%;
+  min-height: 0;
+  align-items: center;
+}
+.eup-diptych-frame[data-tab="map"], .eup-diptych-frame[data-tab="image"] {
+  grid-template-columns: minmax(0, 1fr);
+}
+.eup-plate-pane {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+  padding: 6px;
+  border: 1px solid rgba(224, 159, 62, 0.28);
+  border-radius: 6px;
+  background: #131829;
+}
+.eup-plate-img, .eup-plate-fallback {
+  display: block;
+  max-width: 100%;
+  max-height: calc(100vh - 150px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 4px;
+  transform-origin: center center;
+  transition: transform 0.2s ease;
+}
+.eup-loupe-viewport[data-loupe="on"] .eup-plate-img,
+.eup-loupe-viewport[data-loupe="on"] .eup-plate-fallback {
+  transform: scale(1.75);
+  cursor: grab;
+}
+.eup-plate-caption {
+  display: block;
+  font-size: 0.72rem;
+  color: #f2cc6e;
+  text-align: center;
+}
+@media (max-width: 919px) {
+  .eup-html, .eup-body {
+    overflow-x: hidden;
+  }
+  .eup-caravanserai {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      "topbar"
+      "stage"
+      "ledger";
+    height: auto;
+    max-height: none;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: visible;
+    padding: 0 8px 14px;
+    gap: 8px;
+  }
+  .eup-turning-bar {
+    margin: 0 -8px;
+    padding: 7px 8px;
+    gap: 6px;
+  }
+  .eup-subtitle-mark {
+    display: none;
+  }
+  .eup-stage-canvas {
+    height: 236px;
+    min-height: 236px;
+  }
+  .eup-turning-strip, .eup-commodity-grid, .eup-ember-grid, .eup-slot-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .eup-nation-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .eup-diptych-frame {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .eup-plate-drawer {
+    padding: 8px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .eup-btn, .eup-plate-img, .eup-plate-fallback {
+    transition: none !important;
+  }
+}
+</style>
+</head>
+
+<body class="eup-body">
+<euphemia-caravanserai class="eup-caravanserai" id="eup-root" data-phase="bazaar">
+  <celestial-turning-bar class="eup-turning-bar">
+    <ember-echo-band class="eup-brand-cluster">
+      <brass-scale-readout class="eup-title-mark">Euphemia</brass-scale-readout>
+      <brass-scale-readout class="eup-subtitle-mark" id="eup-turning-badge">Vernal Equinox · ENE Monsoon Trade</brass-scale-readout>
+    </ember-echo-band>
+    <ember-echo-band class="eup-phase-cluster" role="group" aria-label="Journey Phases">
+      <button type="button" class="eup-btn eup-phase-btn" id="eup-phase-bazaar" data-phase="bazaar" aria-pressed="true">[B] Daytime Bazaar</button>
+      <button type="button" class="eup-btn eup-phase-btn" id="eup-phase-campfire" data-phase="campfire" aria-pressed="false">[N] Night Fires</button>
+      <button type="button" class="eup-btn eup-phase-btn" id="eup-phase-voyage" data-phase="voyage" aria-pressed="false">[V] Return Voyage</button>
+    </ember-echo-band>
+    <ember-echo-band class="eup-util-cluster">
+      <button type="button" class="eup-btn eup-util-btn" id="eup-btn-turning" title="Cycle Solstice and Equinox [T]">[T] Turning</button>
+      <button type="button" class="eup-btn eup-util-btn" id="eup-btn-plates" aria-expanded="false" title="Archival Map and City Plate [P]">[P] Plates</button>
+      <button type="button" class="eup-btn eup-util-btn" id="eup-btn-mute" aria-pressed="false" title="Toggle WebAudio [M]">[M] Sound On</button>
+      <button type="button" class="eup-btn eup-util-btn" id="eup-btn-reset" title="Reset Cargo and Memory Pack [R]">[R] Reset</button>
+    </ember-echo-band>
+  </celestial-turning-bar>
+
+  <harbor-caravan-stage class="eup-stage">
+    <canvas class="eup-stage-canvas" id="eup-canvas" width="800" height="560" aria-label="Euphemia Lagoon Dhows, Camel Caravans, Brass Scale, and Seven Campfires"></canvas>
+    <ember-echo-band class="eup-stage-caption" id="eup-stage-caption">Seven nations gather at every solstice and equinox: yellow-striped sails on the lagoon, camel caravans at the eastern arches.</ember-echo-band>
+  </harbor-caravan-stage>
+
+  <equinox-bazaar-ledger class="eup-bazaar-ledger" id="eup-panel-bazaar">
+    <ember-echo-band class="eup-section-cue">
+      <brass-scale-readout class="eup-title-mark">Solstice &amp; Equinox Turning</brass-scale-readout>
+      <brass-scale-readout class="eup-cue-note" id="eup-solar-note">Declination 0° · Equal Day &amp; Night</brass-scale-readout>
+    </ember-echo-band>
+    <ember-echo-band class="eup-turning-strip" id="eup-turning-strip"></ember-echo-band>
+
+    <ember-echo-band class="eup-section-cue">
+      <brass-scale-readout class="eup-title-mark">Seven Merchant Nations</brass-scale-readout>
+      <brass-scale-readout class="eup-cue-note" id="eup-nation-summary">4 Striped Sail Berths · 3 Camel Arches</brass-scale-readout>
+    </ember-echo-band>
+    <ember-echo-band class="eup-nation-grid" id="eup-nation-grid"></ember-echo-band>
+
+    <ember-echo-band class="eup-section-cue">
+      <brass-scale-readout class="eup-title-mark">Six Cargo Bales &amp; Spices (Keys 1–6)</brass-scale-readout>
+      <brass-scale-readout class="eup-cue-note" id="eup-pack-summary">Choose Offer &amp; Ask</brass-scale-readout>
+    </ember-echo-band>
+    <ember-echo-band class="eup-commodity-grid" id="eup-commodity-grid"></ember-echo-band>
+
+    <brass-scale-readout class="eup-scale-readout" id="eup-scale-readout">
+      <ember-echo-band class="eup-quote-line" id="eup-quote-line">Weighing cargo on the brass balance...</ember-echo-band>
+      <ember-echo-band class="eup-scale-controls">
+        <button type="button" class="eup-btn eup-qty-btn" id="eup-qty-dec" aria-label="Decrease offer quantity">- Qty</button>
+        <button type="button" class="eup-btn eup-qty-btn" id="eup-qty-inc" aria-label="Increase offer quantity">+ Qty</button>
+        <button type="button" class="eup-btn eup-weigh-btn" id="eup-btn-weigh">Weigh Beam</button>
+        <button type="button" class="eup-btn eup-barter-btn" id="eup-btn-barter">Barter Cargo</button>
+        <button type="button" class="eup-btn eup-util-btn" id="eup-go-campfire">[N] Night Fires</button>
+      </ember-echo-band>
+      <brass-scale-readout class="eup-ledger-receipt" id="eup-ledger-receipt">No barters struck yet at this turning.</brass-scale-readout>
+    </brass-scale-readout>
+  </equinox-bazaar-ledger>
+
+  <campfire-memory-circle class="eup-campfire-circle" id="eup-panel-campfire" hidden>
+    <ember-echo-band class="eup-echo-band" id="eup-campfire-status">Stretched beside the seven fires around the shuttered market, merchants listen. Speak a word (1–6):</ember-echo-band>
+    <ember-echo-band class="eup-ember-grid" id="eup-ember-grid"></ember-echo-band>
+    <merchant-tale-scroll class="eup-tale-scroll" id="eup-tale-scroll"></merchant-tale-scroll>
+    <ember-echo-band class="eup-scale-controls">
+      <button type="button" class="eup-btn eup-util-btn" id="eup-back-bazaar">[B] Return to Stalls</button>
+      <button type="button" class="eup-btn eup-barter-btn" id="eup-go-voyage">[V] Embark on Return Voyage</button>
+    </ember-echo-band>
+  </campfire-memory-circle>
+
+  <voyage-recall-chest class="eup-recall-chest" id="eup-panel-voyage" hidden>
+    <ember-echo-band class="eup-echo-band" id="eup-voyage-status">On the long journey ahead, call up your memories one by one (1–6):</ember-echo-band>
+    <ember-echo-band class="eup-slot-grid" id="eup-slot-grid"></ember-echo-band>
+    <ember-echo-band class="eup-recall-inspector" id="eup-recall-inspector">
+      <swapped-provenance-seal class="eup-provenance-seal" id="eup-provenance-seal" data-provenance="native">Intact Native Memory</swapped-provenance-seal>
+      <brass-scale-readout class="eup-recalled-story" id="eup-recalled-story">Select any memory tablet above (1–6) to summon what rises on the homeward road.</brass-scale-readout>
+      <brass-scale-readout class="eup-palimpsest-ghost" id="eup-palimpsest-ghost" hidden></brass-scale-readout>
+    </ember-echo-band>
+    <ember-echo-band class="eup-scale-controls">
+      <button type="button" class="eup-btn eup-util-btn" id="eup-voyage-to-fires">[N] Back to Seven Fires</button>
+      <button type="button" class="eup-btn eup-util-btn" id="eup-voyage-to-bazaar">[B] Back to Bazaar</button>
+    </ember-echo-band>
+  </voyage-recall-chest>
+
+  <euphemia-plate-drawer class="eup-plate-drawer" id="eup-plate-drawer" hidden role="dialog" aria-modal="true" aria-label="Euphemia Archival Plates">
+    <plate-tab-strip class="eup-tab-strip">
+      <ember-echo-band class="eup-tab-group" role="tablist" aria-label="Plate Views">
+        <button type="button" class="eup-btn eup-phase-btn" id="eup-tab-diptych" data-plate-tab="diptych" aria-pressed="true">Diptych</button>
+        <button type="button" class="eup-btn eup-phase-btn" id="eup-tab-map" data-plate-tab="map" aria-pressed="false">Cartographic Map (map.png)</button>
+        <button type="button" class="eup-btn eup-phase-btn" id="eup-tab-image" data-plate-tab="image" aria-pressed="false">City Plate (image.png)</button>
+      </ember-echo-band>
+      <ember-echo-band class="eup-tab-group">
+        <button type="button" class="eup-btn eup-util-btn" id="eup-btn-loupe" aria-pressed="false">[Z] 1.75x Loupe Off</button>
+        <button type="button" class="eup-btn eup-util-btn" id="eup-btn-close-plates">[Esc] Close</button>
+      </ember-echo-band>
+    </plate-tab-strip>
+    <plate-loupe-viewport class="eup-loupe-viewport" id="eup-loupe-viewport" data-loupe="off">
+      <plate-diptych-frame class="eup-diptych-frame" id="eup-diptych-frame" data-tab="diptych">
+        <ember-echo-band class="eup-plate-pane" id="eup-pane-map">
+          <img class="eup-plate-img" id="eup-map-img" src="map.png" alt="Cartographic map of Euphemia with seven-nation lagoon berths, camel caravan arches, and nocturnal campfire ring" onerror="if(!this.dataset.triedSvg){this.dataset.triedSvg='1';this.src='map.svg';}else{this.hidden=true;this.nextElementSibling.hidden=false;}">
+          <svg class="eup-plate-fallback" id="eup-map-fallback" viewBox="0 0 800 600" hidden role="img" aria-label="Euphemia Saffron-Indigo Cartographic Proof Plate">
+            <rect class="eup-svg-bg" x="0" y="0" width="800" height="600" fill="#131829"/>
+            <rect class="eup-svg-border" x="18" y="18" width="764" height="564" fill="none" stroke="#f2cc6e" stroke-width="2"/>
+            <path class="eup-svg-sea" d="M 20 180 L 330 180 L 285 580 L 20 580 Z" fill="#1d354d"/>
+            <ellipse class="eup-svg-court" cx="430" cy="360" rx="185" ry="135" fill="#1f1b2e" stroke="#e09f3e" stroke-width="2"/>
+            <circle class="eup-svg-fire" cx="430" cy="225" r="9" fill="#eb6e2d"/><circle class="eup-svg-fire" cx="565" cy="272" r="9" fill="#eb6e2d"/>
+            <circle class="eup-svg-fire" cx="598" cy="392" r="9" fill="#eb6e2d"/><circle class="eup-svg-fire" cx="505" cy="485" r="9" fill="#eb6e2d"/>
+            <circle class="eup-svg-fire" cx="355" cy="485" r="9" fill="#eb6e2d"/><circle class="eup-svg-fire" cx="262" cy="392" r="9" fill="#eb6e2d"/>
+            <circle class="eup-svg-fire" cx="295" cy="272" r="9" fill="#eb6e2d"/>
+            <text class="eup-svg-txt" x="400" y="72" text-anchor="middle" fill="#f2cc6e" font-size="22" font-family="Georgia, serif">EUPHEMIA · SEVEN NATIONS CARTOGRAPHIC PROOF</text>
+          </svg>
+          <brass-scale-readout class="eup-plate-caption">Cartographic Survey · Harbor Berths, Caravan Arches &amp; Seven Fires</brass-scale-readout>
+        </ember-echo-band>
+        <ember-echo-band class="eup-plate-pane" id="eup-pane-image">
+          <img class="eup-plate-img" id="eup-city-img" src="image.png" alt="Twilight prospect of Euphemia showing yellow-striped dhow sails, camel trains, brass scales, and seven market fires" onerror="this.hidden=true;this.nextElementSibling.hidden=false;">
+          <svg class="eup-plate-fallback" id="eup-city-fallback" viewBox="0 0 800 500" hidden role="img" aria-label="Euphemia Saffron-Indigo Architectural Proof Plate">
+            <rect class="eup-svg-bg" x="0" y="0" width="800" height="500" fill="#131829"/>
+            <rect class="eup-svg-border" x="16" y="16" width="768" height="468" fill="none" stroke="#e09f3e" stroke-width="2"/>
+            <polygon class="eup-svg-sail" points="150,320 220,170 250,315" fill="#f2cc6e" stroke="#b83a28" stroke-width="2"/>
+            <line class="eup-svg-beam" x1="330" y1="220" x2="470" y2="205" stroke="#f2cc6e" stroke-width="4"/>
+            <circle class="eup-svg-hearth" cx="590" cy="340" r="26" fill="#eb6e2d" opacity="0.82"/>
+            <text class="eup-svg-txt" x="400" y="68" text-anchor="middle" fill="#f5ede0" font-size="20" font-family="Georgia, serif">EUPHEMIA · CARAVANSERAI TWILIGHT PROOF PLATE</text>
+          </svg>
+          <brass-scale-readout class="eup-plate-caption">City Plate · Yellow-Striped Sails, Brass Balance &amp; Nocturnal Hearth Chorus</brass-scale-readout>
+        </ember-echo-band>
+      </plate-diptych-frame>
+    </plate-loupe-viewport>
+  </euphemia-plate-drawer>
+</euphemia-caravanserai>
+<script class="eup-script">
+
+/* City 15: Euphemia — Daytime Seven-Nations Bazaar, Brass Scales, Yellow-Striped Sails & Caravans */
+(function (root) {
+  'use strict';
+
+  const PALETTE = {
+    saffronBazaar: '#e09f3e',
+    muslinGold: '#f2cc6e',
+    pistachioJade: '#8ea861',
+    nutmegRusset: '#8c4a2f',
+    poppySlate: '#4d4659',
+    indigoNight: '#131829',
+    harborUltramarine: '#1d354d',
+    campfireAmber: '#eb6e2d',
+    emberCrimson: '#b83a28',
+    cottonParchment: '#f5ede0'
+  };
+
+  const SOLAR_TURNINGS = [
+    {
+      id: 'vernal_equinox', index: 0, label: 'Vernal Equinox',
+      seasonTag: 'Equal Day & Night · Spring Crossing',
+      solarDeclinationDeg: 0, windBearing: 'ENE Monsoon Trade', skyTint: '#e6a64c',
+      rates: { ginger: 1.06, cotton_bales: 0.94, pistachios: 1.22, poppy_seeds: 1.00, nutmeg: 1.10, golden_muslin: 1.14 }
+    },
+    {
+      id: 'summer_solstice', index: 1, label: 'Summer Solstice',
+      seasonTag: 'High Tropic Zenith · Longest Sun',
+      solarDeclinationDeg: 23.4, windBearing: 'SSW Lagoon Breeze', skyTint: '#f2cc6e',
+      rates: { ginger: 0.90, cotton_bales: 1.20, pistachios: 0.98, poppy_seeds: 1.24, nutmeg: 0.95, golden_muslin: 1.32 }
+    },
+    {
+      id: 'autumnal_equinox', index: 2, label: 'Autumnal Equinox',
+      seasonTag: 'Equal Day & Night · Harvest Balance',
+      solarDeclinationDeg: 0, windBearing: 'WNW Steppe Drift', skyTint: '#d8843b',
+      rates: { ginger: 1.24, cotton_bales: 1.04, pistachios: 0.92, poppy_seeds: 1.14, nutmeg: 1.26, golden_muslin: 1.02 }
+    },
+    {
+      id: 'winter_solstice', index: 3, label: 'Winter Solstice',
+      seasonTag: 'Southern Tropic Arc · Long Ember Night',
+      solarDeclinationDeg: -23.4, windBearing: 'NNE Cold Sirocco', skyTint: '#b87a49',
+      rates: { ginger: 1.34, cotton_bales: 1.15, pistachios: 1.18, poppy_seeds: 0.88, nutmeg: 1.35, golden_muslin: 0.96 }
+    }
+  ];
+
+  const SIX_COMMODITIES = [
+    { id: 'ginger', label: 'ginger', display: 'Ginger', unit: 'crates', baseValue: 12, color: '#d89236' },
+    { id: 'cotton_bales', label: 'cotton bales', display: 'Cotton Bales', unit: 'bales', baseValue: 10, color: '#f5ede0' },
+    { id: 'pistachios', label: 'pistachios', display: 'Pistachios', unit: 'sacks', baseValue: 15, color: '#8ea861' },
+    { id: 'poppy_seeds', label: 'poppy seeds', display: 'Poppy Seeds', unit: 'amphorae', baseValue: 14, color: '#6b607a' },
+    { id: 'nutmeg', label: 'nutmeg', display: 'Nutmeg', unit: 'casks', baseValue: 18, color: '#8c4a2f' },
+    { id: 'golden_muslin', label: 'golden muslin', display: 'Golden Muslin', unit: 'bolts', baseValue: 22, color: '#f2cc6e' }
+  ];
+
+  const SEVEN_NATIONS = [
+    {
+      id: 'ormuz_shoals', index: 0, name: 'Salt-Reef Mariners of Ormuz',
+      merchantName: 'Rashid al-Bahr', routeType: 'sail',
+      specialtyId: 'ginger', cravesId: 'pistachios',
+      berthLabel: 'West Pier I · Yellow-Striped Dhow', bannerColor: '#e09f3e'
+    },
+    {
+      id: 'sogdian_pass', index: 1, name: 'High-Pass Drovers of Sogdiana',
+      merchantName: 'Tarkhan of Samarkand', routeType: 'caravan',
+      specialtyId: 'pistachios', cravesId: 'cotton_bales',
+      berthLabel: 'East Arch I · Bactrian Camel Yard', bannerColor: '#8ea861'
+    },
+    {
+      id: 'malabar_tide', index: 2, name: 'Monsoon Pilots of Malabar',
+      merchantName: 'Devaki Nair', routeType: 'sail',
+      specialtyId: 'cotton_bales', cravesId: 'poppy_seeds',
+      berthLabel: 'Tide Mole II · Striped Lateen', bannerColor: '#f2cc6e'
+    },
+    {
+      id: 'bactrian_steppe', index: 3, name: 'Red-Sand Caravaneers of Balkh',
+      merchantName: 'Mirza Qasim', routeType: 'caravan',
+      specialtyId: 'poppy_seeds', cravesId: 'nutmeg',
+      berthLabel: 'East Arch II · Cistern Caravan', bannerColor: '#6b607a'
+    },
+    {
+      id: 'banda_atolls', index: 4, name: 'Spice-Atoll Navigators of Banda',
+      merchantName: 'Sulaiman Laut', routeType: 'sail',
+      specialtyId: 'nutmeg', cravesId: 'golden_muslin',
+      berthLabel: 'Lantern Jetty III · Saffron Lugger', bannerColor: '#8c4a2f'
+    },
+    {
+      id: 'tigris_looms', index: 5, name: 'River-Loom Factors of Mosul',
+      merchantName: 'Zaynab al-Mawsili', routeType: 'caravan',
+      specialtyId: 'golden_muslin', cravesId: 'ginger',
+      berthLabel: 'East Arch III · Silk Camel Train', bannerColor: '#eb6e2d'
+    },
+    {
+      id: 'tyrian_sound', index: 6, name: 'Lighthouse Factors of Tyre',
+      merchantName: 'Niketas of Tyre', routeType: 'sail',
+      specialtyId: 'poppy_seeds', cravesId: 'cotton_bales',
+      berthLabel: 'Outer Slip IV · Striped Felucca', bannerColor: '#b83a28'
+    }
+  ];
+
+  function findCommodity(key) {
+    if (typeof key === 'number') return SIX_COMMODITIES[((key % 6) + 6) % 6];
+    const norm = String(key || '').trim().toLowerCase();
+    return SIX_COMMODITIES.find(c => c.id === norm || c.label === norm || c.display.toLowerCase() === norm) || null;
+  }
+
+  function findNation(key) {
+    if (typeof key === 'number') return SEVEN_NATIONS[((key % 7) + 7) % 7];
+    const norm = String(key || '').trim().toLowerCase();
+    return SEVEN_NATIONS.find(n => n.id === norm || n.name.toLowerCase() === norm) || null;
+  }
+
+  function findTurning(key) {
+    if (typeof key === 'number') return SOLAR_TURNINGS[((key % 4) + 4) % 4];
+    const norm = String(key || '').trim().toLowerCase();
+    return SOLAR_TURNINGS.find(t => t.id === norm || t.label.toLowerCase() === norm) || null;
+  }
+
+  function createBazaarSynth(initialMuted) {
+    let ctx = null;
+    let noiseBuf = null;
+    let muted = !!initialMuted;
+
+    function ensureCtx() {
+      if (muted) return null;
+      try {
+        if (!ctx) {
+          const AC = root.AudioContext || root.webkitAudioContext;
+          if (!AC) return null;
+          ctx = new AC();
+        }
+        if (ctx.state === 'suspended') ctx.resume().catch(function () {});
+        if (!noiseBuf && ctx) {
+          noiseBuf = ctx.createBuffer(1, Math.floor(ctx.sampleRate * 0.45), ctx.sampleRate);
+          const d = noiseBuf.getChannelData(0);
+          for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * Math.exp(-i / (d.length * 0.55));
+        }
+        return ctx;
+      } catch (_err) {
+        return null;
+      }
+    }
+
+    function playScaleClink(pitchShift) {
+      const ac = ensureCtx();
+      if (!ac) return;
+      try {
+        const now = ac.currentTime;
+        const mult = Math.max(0.75, Math.min(1.35, pitchShift || 1));
+        [1180, 1795, 2680].forEach(function (freq, idx) {
+          const osc = ac.createOscillator();
+          const gain = ac.createGain();
+          osc.type = idx === 1 ? 'triangle' : 'sine';
+          osc.frequency.setValueAtTime(freq * mult, now + idx * 0.018);
+          gain.gain.setValueAtTime(0.0001, now);
+          gain.gain.exponentialRampToValueAtTime(0.055 / (idx + 1), now + idx * 0.018 + 0.008);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.34 + idx * 0.06);
+          osc.connect(gain);
+          gain.connect(ac.destination);
+          osc.start(now + idx * 0.018);
+          osc.stop(now + 0.44 + idx * 0.06);
+        });
+      } catch (_e) {}
+    }
+    function playSailSnap() {
+      const ac = ensureCtx();
+      if (!ac || !noiseBuf) return;
+      try {
+        const now = ac.currentTime;
+        const src = ac.createBufferSource();
+        src.buffer = noiseBuf;
+        const bp = ac.createBiquadFilter();
+        bp.type = 'bandpass';
+        bp.frequency.setValueAtTime(520, now);
+        bp.frequency.exponentialRampToValueAtTime(1250, now + 0.14);
+        bp.Q.value = 1.8;
+        const g = ac.createGain();
+        g.gain.setValueAtTime(0.08, now);
+        g.gain.exponentialRampToValueAtTime(0.0001, now + 0.28);
+        src.connect(bp);
+        bp.connect(g);
+        g.connect(ac.destination);
+        src.start(now);
+
+        const creak = ac.createOscillator();
+        const cg = ac.createGain();
+        creak.type = 'sawtooth';
+        creak.frequency.setValueAtTime(155, now);
+        creak.frequency.linearRampToValueAtTime(210, now + 0.16);
+        cg.gain.setValueAtTime(0.018, now);
+        cg.gain.exponentialRampToValueAtTime(0.0001, now + 0.20);
+        creak.connect(cg);
+        cg.connect(ac.destination);
+        creak.start(now);
+        creak.stop(now + 0.22);
+      } catch (_e) {}
+    }
+
+    function playCaravanBells() {
+      const ac = ensureCtx();
+      if (!ac) return;
+      try {
+        const now = ac.currentTime;
+        [0, 0.11].forEach(function (offset, stepIdx) {
+          [615, 938, 1490].forEach(function (f, i) {
+            const osc = ac.createOscillator();
+            const g = ac.createGain();
+            osc.type = i === 0 ? 'triangle' : 'sine';
+            osc.frequency.setValueAtTime(f * (stepIdx ? 1.04 : 1), now + offset);
+            g.gain.setValueAtTime(0.0001, now + offset);
+            g.gain.exponentialRampToValueAtTime(0.045 / (i + 1), now + offset + 0.01);
+            g.gain.exponentialRampToValueAtTime(0.0001, now + offset + 0.36);
+            osc.connect(g);
+            g.connect(ac.destination);
+            osc.start(now + offset);
+            osc.stop(now + offset + 0.40);
+          });
+        });
+      } catch (_e) {}
+    }
+
+    function playLagoonLap() {
+      const ac = ensureCtx();
+      if (!ac || !noiseBuf) return;
+      try {
+        const now = ac.currentTime;
+        const src = ac.createBufferSource();
+        src.buffer = noiseBuf;
+        const lp = ac.createBiquadFilter();
+        lp.type = 'lowpass';
+        lp.frequency.setValueAtTime(360, now);
+        const g = ac.createGain();
+        g.gain.setValueAtTime(0.001, now);
+        g.gain.linearRampToValueAtTime(0.045, now + 0.12);
+        g.gain.exponentialRampToValueAtTime(0.0001, now + 0.42);
+        src.connect(lp);
+        lp.connect(g);
+        g.connect(ac.destination);
+        src.start(now);
+      } catch (_e) {}
+    }
+
+    return {
+      unlock: function () { return !!ensureCtx(); },
+      setMuted: function (m) { muted = !!m; return muted; },
+      isMuted: function () { return muted; },
+      isReady: function () { return !!(ctx && ctx.state === 'running'); },
+      playScaleClink: playScaleClink,
+      playSailSnap: playSailSnap,
+      playCaravanBells: playCaravanBells,
+      playLagoonLap: playLagoonLap
+    };
+  }
+
+  function defaultInventory() {
+    return {
+      ginger: 8,
+      cotton_bales: 8,
+      pistachios: 6,
+      poppy_seeds: 6,
+      nutmeg: 6,
+      golden_muslin: 5
+    };
+  }
+
+  function createBazaarEngine(opts) {
+    const cfg = opts || {};
+    const synth = createBazaarSynth(!!cfg.muted);
+
+    let turningIndex = 0;
+    let selectedNationIndex = 0;
+    let offerId = 'ginger';
+    let offerQty = 2;
+    let requestId = 'pistachios';
+    let inventory = defaultInventory();
+    let ledger = [];
+    let totalBarters = 0;
+    let tradedCommodities = new Set();
+    let tradedNations = new Set();
+    let nationPulse = [0, 0, 0, 0, 0, 0, 0];
+    let scaleTilt = 0;
+    let scaleEquilibrium = 0;
+    let scaleVelocity = 0;
+    let clock = 0;
+    let quote = null;
+
+    function computeQuote() {
+      const turning = SOLAR_TURNINGS[turningIndex];
+      const nation = SEVEN_NATIONS[selectedNationIndex];
+      const offerComm = findCommodity(offerId) || SIX_COMMODITIES[0];
+      const reqComm = findCommodity(requestId) || SIX_COMMODITIES[2];
+      const qty = Math.max(1, Math.min(12, Math.round(offerQty || 1)));
+
+      const offerBonus = offerComm.id === nation.cravesId ? 1.26 : (offerComm.id === nation.specialtyId ? 0.86 : 1.0);
+      const reqDiscount = reqComm.id === nation.specialtyId ? 0.82 : (reqComm.id === nation.cravesId ? 1.15 : 1.0);
+
+      const offerUnitWorth = +(offerComm.baseValue * (turning.rates[offerComm.id] || 1) * offerBonus).toFixed(2);
+      const requestUnitWorth = +(reqComm.baseValue * (turning.rates[reqComm.id] || 1) * reqDiscount).toFixed(2);
+      const exchangeRatio = +(offerUnitWorth / requestUnitWorth).toFixed(2);
+      const receivedQty = Math.max(1, Math.round(qty * exchangeRatio));
+
+      const leftLoad = offerUnitWorth * qty;
+      const rightLoad = requestUnitWorth * receivedQty;
+      const diffNorm = (rightLoad - leftLoad) / Math.max(10, leftLoad + rightLoad);
+      const unitAngle = Math.atan2(requestUnitWorth - offerUnitWorth, 32) * 0.55;
+      scaleEquilibrium = Math.max(-0.36, Math.min(0.36, +(diffNorm * 0.75 + unitAngle).toFixed(4)));
+
+      quote = {
+        turningId: turning.id,
+        turningLabel: turning.label,
+        nationId: nation.id,
+        nationName: nation.name,
+        offerId: offerComm.id,
+        offerLabel: offerComm.label,
+        offerDisplay: offerComm.display,
+        offerQty: qty,
+        requestId: reqComm.id,
+        requestLabel: reqComm.label,
+        requestDisplay: reqComm.display,
+        receivedQty: receivedQty,
+        exchangeRatio: exchangeRatio,
+        offerUnitWorth: offerUnitWorth,
+        requestUnitWorth: requestUnitWorth,
+        cravedMatch: offerComm.id === nation.cravesId,
+        specialtyMatch: reqComm.id === nation.specialtyId
+      };
+      return quote;
+    }
+    function nudgeScale(impulse, pitch) {
+      scaleVelocity += impulse;
+      synth.playScaleClink(pitch || 1);
+    }
+
+    function setTurning(val) {
+      const found = findTurning(val);
+      if (!found) return computeQuote();
+      turningIndex = found.index;
+      const q = computeQuote();
+      nudgeScale(found.solarDeclinationDeg >= 0 ? 0.85 : -0.85, 0.94 + turningIndex * 0.06);
+      synth.playLagoonLap();
+      return q;
+    }
+
+    function nextTurning() {
+      return setTurning((turningIndex + 1) % SOLAR_TURNINGS.length);
+    }
+
+    function selectNation(val) {
+      const found = findNation(val);
+      if (!found) return SEVEN_NATIONS[selectedNationIndex];
+      selectedNationIndex = found.index;
+      nationPulse[selectedNationIndex] = 1.0;
+      computeQuote();
+      if (found.routeType === 'sail') synth.playSailSnap();
+      else synth.playCaravanBells();
+      scaleVelocity += (found.routeType === 'sail' ? -0.55 : 0.55);
+      return found;
+    }
+
+    function setOffer(val, qtyOpt) {
+      const found = findCommodity(val);
+      if (found) {
+        if (found.id === requestId) requestId = offerId;
+        offerId = found.id;
+      }
+      if (typeof qtyOpt === 'number' && !Number.isNaN(qtyOpt)) {
+        offerQty = Math.max(1, Math.min(12, Math.round(qtyOpt)));
+      }
+      const q = computeQuote();
+      nudgeScale(-0.7, 0.96);
+      return q;
+    }
+
+    function setRequest(val) {
+      const found = findCommodity(val);
+      if (found) {
+        if (found.id === offerId) offerId = requestId;
+        requestId = found.id;
+      }
+      const q = computeQuote();
+      nudgeScale(0.7, 1.08);
+      return q;
+    }
+
+    function weighPair(offerArg, reqArg, qtyArg) {
+      if (offerArg && typeof offerArg === 'object') {
+        if (offerArg.offerId) {
+          const fo = findCommodity(offerArg.offerId);
+          if (fo) offerId = fo.id;
+        }
+        if (offerArg.requestId) {
+          const fr = findCommodity(offerArg.requestId);
+          if (fr) requestId = fr.id;
+        }
+        if (typeof offerArg.qty === 'number') offerQty = Math.max(1, Math.min(12, Math.round(offerArg.qty)));
+      } else {
+        if (offerArg !== undefined && offerArg !== null) {
+          const fo = findCommodity(offerArg);
+          if (fo) offerId = fo.id;
+        }
+        if (reqArg !== undefined && reqArg !== null) {
+          const fr = findCommodity(reqArg);
+          if (fr) requestId = fr.id;
+        }
+        if (typeof qtyArg === 'number' && !Number.isNaN(qtyArg)) {
+          offerQty = Math.max(1, Math.min(12, Math.round(qtyArg)));
+        }
+      }
+      if (offerId === requestId) {
+        const alt = SIX_COMMODITIES.find(function (c) { return c.id !== offerId; });
+        if (alt) requestId = alt.id;
+      }
+      const q = computeQuote();
+      nudgeScale(scaleEquilibrium >= 0 ? 1.15 : -1.15, 1.0 + q.exchangeRatio * 0.08);
+      return q;
+    }
+
+    function executeBarter() {
+      const q = computeQuote();
+      const nation = SEVEN_NATIONS[selectedNationIndex];
+      const turning = SOLAR_TURNINGS[turningIndex];
+      const have = inventory[q.offerId] || 0;
+      const spent = have > 0 ? Math.min(have, q.offerQty) : 0;
+      const scaleFactor = have > 0 ? (spent / q.offerQty) : 0.5;
+      const gained = Math.max(1, Math.round(q.receivedQty * scaleFactor));
+
+      inventory[q.offerId] = Math.max(0, have - spent);
+      inventory[q.requestId] = (inventory[q.requestId] || 0) + gained;
+
+      totalBarters += 1;
+      tradedCommodities.add(q.offerId);
+      tradedCommodities.add(q.requestId);
+      tradedNations.add(nation.id);
+      nationPulse[nation.index] = 1.35;
+
+      const receipt = {
+        id: 'barter_' + totalBarters,
+        stepNo: totalBarters,
+        turningId: turning.id,
+        turningLabel: turning.label,
+        nationId: nation.id,
+        nationName: nation.name,
+        merchantName: nation.merchantName,
+        routeType: nation.routeType,
+        offerId: q.offerId,
+        offerLabel: q.offerLabel,
+        offerQty: spent > 0 ? spent : 1,
+        requestId: q.requestId,
+        requestLabel: q.requestLabel,
+        receivedQty: gained,
+        exchangeRatio: q.exchangeRatio,
+        consignmentCredit: spent === 0
+      };
+      ledger.unshift(receipt);
+      if (ledger.length > 24) ledger.length = 24;
+
+      nudgeScale(q.exchangeRatio >= 1 ? 1.45 : -1.45, 1.14);
+      if (nation.routeType === 'sail') synth.playSailSnap();
+      else synth.playCaravanBells();
+
+      return {
+        ok: true,
+        receipt: receipt,
+        inventory: Object.assign({}, inventory),
+        quote: computeQuote(),
+        totalBarters: totalBarters
+      };
+    }
+
+    function step(dt, env) {
+      const clampedDt = Math.max(0.001, Math.min(0.1, Number(dt) || 0.016));
+      const reduced = !!(env && env.reducedMotion);
+      if (!reduced) clock += clampedDt;
+      for (let i = 0; i < nationPulse.length; i++) {
+        nationPulse[i] = reduced ? 0 : Math.max(0, nationPulse[i] - clampedDt * 0.85);
+      }
+      if (reduced) {
+        scaleTilt = scaleEquilibrium;
+        scaleVelocity = 0;
+      } else {
+        const accel = -26.0 * (scaleTilt - scaleEquilibrium) - 5.4 * scaleVelocity;
+        scaleVelocity += accel * clampedDt;
+        scaleTilt = Math.max(-0.48, Math.min(0.48, scaleTilt + scaleVelocity * clampedDt));
+      }
+    }
+
+    function reset() {
+      turningIndex = 0;
+      selectedNationIndex = 0;
+      offerId = 'ginger';
+      offerQty = 2;
+      requestId = 'pistachios';
+      inventory = defaultInventory();
+      ledger = [];
+      totalBarters = 0;
+      tradedCommodities = new Set();
+      tradedNations = new Set();
+      nationPulse = [0, 0, 0, 0, 0, 0, 0];
+      scaleVelocity = 0;
+      computeQuote();
+      scaleTilt = scaleEquilibrium;
+      return getState();
+    }
+
+    function getState() {
+      if (!quote) computeQuote();
+      return {
+        SOLAR_TURNINGS: SOLAR_TURNINGS,
+        SEVEN_NATIONS: SEVEN_NATIONS,
+        SIX_COMMODITIES: SIX_COMMODITIES,
+        turningIndex: turningIndex,
+        turning: SOLAR_TURNINGS[turningIndex],
+        selectedNationIndex: selectedNationIndex,
+        selectedNation: SEVEN_NATIONS[selectedNationIndex],
+        offerId: offerId,
+        offerQty: offerQty,
+        requestId: requestId,
+        quote: Object.assign({}, quote),
+        scaleTilt: scaleTilt,
+        scaleEquilibrium: scaleEquilibrium,
+        scaleVelocity: scaleVelocity,
+        inventory: Object.assign({}, inventory),
+        ledger: ledger.slice(),
+        totalBarters: totalBarters,
+        tradedCommodities: Array.from(tradedCommodities),
+        tradedNations: Array.from(tradedNations),
+        muted: synth.isMuted(),
+        audioReady: synth.isReady()
+      };
+    }
+
+    computeQuote();
+    scaleTilt = scaleEquilibrium;
+    function computeLayout(width, height, phase) {
+      const w = Math.max(240, Number(width) || 800);
+      const h = Math.max(200, Number(height) || 500);
+      const p = phase || 'bazaar';
+      const compact = w < 560;
+      const hitBase = Math.max(26, Math.min(46, Math.min(w, h) * 0.068));
+
+      const sailIndices = [0, 2, 4, 6];
+      const caravanIndices = [1, 3, 5];
+      const vessels = [];
+
+      sailIndices.forEach(function (nIdx, sPos) {
+        const nx = p === 'campfire'
+          ? w * (0.085 + (sPos % 2) * 0.065)
+          : w * (compact ? (0.12 + (sPos % 2) * 0.17) : (0.105 + (sPos % 2) * 0.145 + sPos * 0.018));
+        const ny = p === 'campfire'
+          ? h * (0.35 + sPos * 0.115)
+          : h * (0.37 + sPos * 0.095);
+        vessels.push({ nation: SEVEN_NATIONS[nIdx], x: nx, y: ny, hitR: hitBase, slot: sPos });
+      });
+
+      caravanIndices.forEach(function (nIdx, cPos) {
+        const nx = p === 'campfire'
+          ? w * (0.915 - (cPos % 2) * 0.065)
+          : w * (compact ? (0.88 - (cPos % 2) * 0.16) : (0.885 - (cPos % 2) * 0.135 - cPos * 0.015));
+        const ny = p === 'campfire'
+          ? h * (0.39 + cPos * 0.13)
+          : h * (0.40 + cPos * 0.118);
+        vessels.push({ nation: SEVEN_NATIONS[nIdx], x: nx, y: ny, hitR: hitBase, slot: cPos });
+      });
+
+      const stalls = SIX_COMMODITIES.map(function (comm, i) {
+        const sx = w * (0.115 + i * (0.77 / 5));
+        const sy = h * 0.865;
+        const sw = Math.max(36, Math.min(104, w * 0.118));
+        const sh = Math.max(32, Math.min(58, h * 0.10));
+        return { comm: comm, index: i, x: sx, y: sy, w: sw, h: sh };
+      });
+
+      const scaleX = w * 0.50;
+      const fulcrumY = h * (compact ? 0.41 : 0.42);
+      const baseY = h * 0.695;
+      const beamHalf = Math.max(38, Math.min(96, w * 0.105));
+      const chainLen = Math.max(32, Math.min(64, h * 0.115));
+      const cosT = Math.cos(scaleTilt);
+      const sinT = Math.sin(scaleTilt);
+
+      return {
+        w: w,
+        h: h,
+        compact: compact,
+        vessels: vessels,
+        stalls: stalls,
+        scale: {
+          x: scaleX,
+          fulcrumY: fulcrumY,
+          baseY: baseY,
+          beamHalf: beamHalf,
+          chainLen: chainLen,
+          leftPanX: scaleX - beamHalf * cosT,
+          leftPanY: fulcrumY - beamHalf * sinT + chainLen,
+          rightPanX: scaleX + beamHalf * cosT,
+          rightPanY: fulcrumY + beamHalf * sinT + chainLen
+        }
+      };
+    }
+
+    function hitTest(x, y, width, height, phase) {
+      const p = phase || 'bazaar';
+      const w = Math.max(240, Number(width) || 800);
+      const h = Math.max(200, Number(height) || 500);
+
+      if (p === 'voyage') {
+        if (Math.hypot(x - w * 0.28, y - h * 0.62) <= Math.max(42, w * 0.085)) {
+          return { type: 'sail', id: SEVEN_NATIONS[0].id, index: 0 };
+        }
+        if (Math.hypot(x - w * 0.74, y - h * 0.66) <= Math.max(42, w * 0.085)) {
+          return { type: 'caravan', id: SEVEN_NATIONS[1].id, index: 1 };
+        }
+        return { type: null, id: null, index: -1 };
+      }
+
+      const layout = computeLayout(w, h, p);
+
+      if (p === 'bazaar') {
+        for (let i = 0; i < layout.stalls.length; i++) {
+          const st = layout.stalls[i];
+          if (Math.abs(x - st.x) <= st.w * 0.56 && Math.abs(y - st.y) <= st.h * 0.65) {
+            return { type: 'commodity', id: st.comm.id, index: st.index };
+          }
+        }
+        const sc = layout.scale;
+        if (Math.hypot(x - sc.leftPanX, y - sc.leftPanY) <= 28) {
+          const oc = findCommodity(offerId) || SIX_COMMODITIES[0];
+          return { type: 'commodity', id: oc.id, index: SIX_COMMODITIES.indexOf(oc) };
+        }
+        if (Math.hypot(x - sc.rightPanX, y - sc.rightPanY) <= 28) {
+          const rc = findCommodity(requestId) || SIX_COMMODITIES[2];
+          return { type: 'commodity', id: rc.id, index: SIX_COMMODITIES.indexOf(rc) };
+        }
+      }
+
+      for (let i = 0; i < layout.vessels.length; i++) {
+        const v = layout.vessels[i];
+        if (p === 'bazaar' && Math.abs(x - v.x) <= v.hitR * 0.95 && y >= v.y + v.hitR * 0.24 && y <= v.y + v.hitR * 0.92) {
+          return { type: 'nation', id: v.nation.id, index: v.nation.index };
+        }
+        const dist = Math.hypot(x - v.x, y - (v.y - v.hitR * 0.14));
+        if (dist <= v.hitR * (p === 'campfire' ? 0.82 : 0.98)) {
+          return {
+            type: v.nation.routeType === 'sail' ? 'sail' : 'caravan',
+            id: v.nation.id,
+            index: v.nation.index
+          };
+        }
+      }
+
+      return { type: null, id: null, index: -1 };
+    }
+
+    function drawYellowStripedBoat(ctx, v, nightMode, isSelected, pulse) {
+      const sc = Math.max(0.68, Math.min(1.18, v.hitR / 36));
+      const bob = Math.sin(clock * 2.1 + v.nation.index * 1.3) * (nightMode ? 1.2 : 2.6) + pulse * 3.5;
+      ctx.save();
+      ctx.translate(v.x, v.y + bob);
+      ctx.scale(sc, sc);
+
+      if (isSelected && !nightMode) {
+        ctx.beginPath();
+        ctx.ellipse(0, 6, 44, 16, 0, 0, Math.PI * 2);
+        ctx.strokeStyle = PALETTE.muslinGold;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+
+      ctx.strokeStyle = nightMode ? 'rgba(242,204,110,0.22)' : 'rgba(245,237,224,0.45)';
+      ctx.lineWidth = 1.3;
+      ctx.beginPath();
+      ctx.moveTo(-34, 14);
+      ctx.quadraticCurveTo(0, 18, 34, 14);
+      ctx.stroke();
+
+      ctx.fillStyle = nightMode ? '#2b2024' : '#6e3924';
+      ctx.beginPath();
+      ctx.moveTo(-32, 2);
+      ctx.lineTo(30, 0);
+      ctx.lineTo(20, 13);
+      ctx.lineTo(-22, 13);
+      ctx.closePath();
+      ctx.fill();
+      ctx.strokeStyle = nightMode ? '#70583c' : PALETTE.saffronBazaar;
+      ctx.lineWidth = 1.4;
+      ctx.stroke();
+
+      ctx.strokeStyle = nightMode ? '#5c4b3b' : '#4a2618';
+      ctx.lineWidth = 2.2;
+      ctx.beginPath();
+      ctx.moveTo(-2, 2);
+      ctx.lineTo(-2, -46);
+      ctx.moveTo(-24, -14);
+      ctx.lineTo(22, -44);
+      ctx.stroke();
+
+      const billow = (nightMode ? 4 : 10) + pulse * 8;
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(-22, -13);
+      ctx.lineTo(20, -42);
+      ctx.quadraticCurveTo(18 + billow, -16, 12, -2);
+      ctx.closePath();
+      ctx.clip();
+
+      for (let st = -30; st < 36; st += 7) {
+        ctx.fillStyle = (Math.floor((st + 30) / 7) % 2 === 0)
+          ? (nightMode ? '#c8a24a' : '#ffd24c')
+          : (nightMode ? '#4b3b36' : '#f7eed7');
+        ctx.fillRect(st, -48, 7.4, 52);
+      }
+      ctx.restore();
+
+      ctx.strokeStyle = nightMode ? 'rgba(242,204,110,0.45)' : '#b86f24';
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(-22, -13);
+      ctx.lineTo(20, -42);
+      ctx.quadraticCurveTo(18 + billow, -16, 12, -2);
+      ctx.closePath();
+      ctx.stroke();
+
+      ctx.fillStyle = v.nation.bannerColor;
+      ctx.beginPath();
+      ctx.moveTo(-2, -46);
+      ctx.lineTo(11, -43);
+      ctx.lineTo(-2, -39);
+      ctx.closePath();
+      ctx.fill();
+
+      if (!nightMode) {
+        ctx.fillStyle = 'rgba(19,24,41,0.78)';
+        ctx.fillRect(-26, 16, 52, 13);
+        ctx.fillStyle = isSelected ? PALETTE.muslinGold : PALETTE.cottonParchment;
+        ctx.font = '600 9px Georgia, serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('N' + (v.nation.index + 1) + ' · SAIL', 0, 25);
+      }
+      ctx.restore();
+    }
+    function drawCamelCaravan(ctx, v, nightMode, isSelected, pulse) {
+      const sc = Math.max(0.68, Math.min(1.18, v.hitR / 36));
+      const stride = nightMode ? 0 : Math.sin(clock * 2.6 + v.nation.index) * 1.8 - pulse * 5;
+      ctx.save();
+      ctx.translate(v.x + stride, v.y);
+      ctx.scale(sc, sc);
+
+      if (isSelected && !nightMode) {
+        ctx.beginPath();
+        ctx.ellipse(0, 8, 42, 15, 0, 0, Math.PI * 2);
+        ctx.strokeStyle = PALETTE.muslinGold;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+
+      ctx.fillStyle = nightMode ? 'rgba(12,14,24,0.55)' : 'rgba(92,51,34,0.25)';
+      ctx.beginPath();
+      ctx.ellipse(0, 13, 30, 6, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      const bodyFill = nightMode ? '#292233' : '#a86a38';
+      ctx.fillStyle = bodyFill;
+      ctx.strokeStyle = nightMode ? 'rgba(235,110,45,0.45)' : '#5c3419';
+      ctx.lineWidth = 1.3;
+
+      ctx.beginPath();
+      ctx.moveTo(-22, 0);
+      ctx.quadraticCurveTo(-15, -20, -6, -6);
+      ctx.quadraticCurveTo(4, -22, 14, -4);
+      ctx.lineTo(18, 3);
+      ctx.lineTo(-18, 4);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(-19, -1);
+      ctx.quadraticCurveTo(-29, -8, -28, -22);
+      ctx.lineTo(-35, -24);
+      ctx.lineTo(-36, -19);
+      ctx.lineTo(-24, -15);
+      ctx.strokeStyle = bodyFill;
+      ctx.lineWidth = 5.2;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+
+      if (!nightMode) {
+        const legSwing = Math.sin(clock * 3.2 + v.nation.index) * 2.5;
+        ctx.strokeStyle = '#7c4b25';
+        ctx.lineWidth = 2.6;
+        [-14, -6, 7, 14].forEach(function (lx, li) {
+          ctx.beginPath();
+          ctx.moveTo(lx, 2);
+          ctx.lineTo(lx + (li % 2 ? legSwing : -legSwing), 13);
+          ctx.stroke();
+        });
+      }
+
+      const spec = findCommodity(v.nation.specialtyId) || SIX_COMMODITIES[4];
+      ctx.fillStyle = nightMode ? '#5e3d35' : spec.color;
+      ctx.fillRect(-13, -15, 22, 9);
+      ctx.strokeStyle = PALETTE.muslinGold;
+      ctx.lineWidth = 1.1;
+      ctx.strokeRect(-13, -15, 22, 9);
+
+      ctx.fillStyle = PALETTE.muslinGold;
+      ctx.beginPath();
+      ctx.arc(-26, -12, 2.5, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.strokeStyle = '#6b4728';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(16, 4);
+      ctx.lineTo(16, -34);
+      ctx.stroke();
+      ctx.fillStyle = v.nation.bannerColor;
+      ctx.beginPath();
+      ctx.moveTo(16, -34);
+      ctx.lineTo(28, -30);
+      ctx.lineTo(16, -25);
+      ctx.closePath();
+      ctx.fill();
+
+      if (!nightMode) {
+        ctx.fillStyle = 'rgba(19,24,41,0.78)';
+        ctx.fillRect(-28, 16, 56, 13);
+        ctx.fillStyle = isSelected ? PALETTE.muslinGold : PALETTE.cottonParchment;
+        ctx.font = '600 9px Georgia, serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('N' + (v.nation.index + 1) + ' · CAMEL', 0, 25);
+      }
+      ctx.restore();
+    }
+
+    function drawStallsAndBrassScale(ctx, layout) {
+      const sc = layout.scale;
+      const offerComm = findCommodity(offerId) || SIX_COMMODITIES[0];
+      const reqComm = findCommodity(requestId) || SIX_COMMODITIES[2];
+
+      ctx.save();
+      ctx.fillStyle = '#5c3b1e';
+      ctx.fillRect(sc.x - 28, sc.baseY - 6, 56, 10);
+      ctx.strokeStyle = PALETTE.muslinGold;
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(sc.x, sc.baseY - 6);
+      ctx.lineTo(sc.x, sc.fulcrumY - 16);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(sc.x, sc.fulcrumY - 18, 9, Math.PI, 0);
+      ctx.strokeStyle = PALETTE.saffronBazaar;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.save();
+      ctx.translate(sc.x, sc.fulcrumY);
+      ctx.rotate(scaleTilt);
+      ctx.strokeStyle = PALETTE.muslinGold;
+      ctx.lineWidth = 3.5;
+      ctx.beginPath();
+      ctx.moveTo(-sc.beamHalf, 0);
+      ctx.lineTo(sc.beamHalf, 0);
+      ctx.moveTo(0, 0);
+      ctx.lineTo(0, -18);
+      ctx.stroke();
+      ctx.restore();
+
+      [
+        { px: sc.leftPanX, py: sc.leftPanY, bx: sc.x - sc.beamHalf * Math.cos(scaleTilt), by: sc.fulcrumY - sc.beamHalf * Math.sin(scaleTilt), comm: offerComm, tag: 'OFFER' },
+        { px: sc.rightPanX, py: sc.rightPanY, bx: sc.x + sc.beamHalf * Math.cos(scaleTilt), by: sc.fulcrumY + sc.beamHalf * Math.sin(scaleTilt), comm: reqComm, tag: 'YIELD' }
+      ].forEach(function (pan) {
+        ctx.strokeStyle = 'rgba(242,204,110,0.82)';
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.moveTo(pan.bx, pan.by);
+        ctx.lineTo(pan.px - 16, pan.py);
+        ctx.moveTo(pan.bx, pan.by);
+        ctx.lineTo(pan.px + 16, pan.py);
+        ctx.stroke();
+
+        ctx.fillStyle = pan.comm.color;
+        ctx.beginPath();
+        ctx.arc(pan.px, pan.py - 3, 11, Math.PI, 0);
+        ctx.fill();
+
+        ctx.fillStyle = PALETTE.saffronBazaar;
+        ctx.beginPath();
+        ctx.ellipse(pan.px, pan.py, 20, 5.5, 0, 0, Math.PI);
+        ctx.fill();
+        ctx.fillStyle = PALETTE.cottonParchment;
+        ctx.font = '600 8.5px Georgia, serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(pan.tag, pan.px, pan.py + 15);
+      });
+      ctx.restore();
+
+      layout.stalls.forEach(function (st) {
+        const active = st.comm.id === offerId || st.comm.id === requestId;
+        ctx.save();
+        ctx.translate(st.x, st.y);
+        ctx.fillStyle = active ? 'rgba(35,28,38,0.92)' : 'rgba(24,22,34,0.82)';
+        ctx.fillRect(-st.w * 0.5, -st.h * 0.5, st.w, st.h);
+        ctx.strokeStyle = active ? PALETTE.muslinGold : 'rgba(224,159,62,0.48)';
+        ctx.lineWidth = active ? 2 : 1.1;
+        ctx.strokeRect(-st.w * 0.5, -st.h * 0.5, st.w, st.h);
+
+        ctx.fillStyle = st.comm.color;
+        ctx.fillRect(-st.w * 0.5, -st.h * 0.5, st.w, 6);
+        ctx.beginPath();
+        ctx.arc(0, -3, Math.min(9, st.h * 0.19), 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = PALETTE.cottonParchment;
+        ctx.font = (layout.compact ? '600 8px' : '600 9.5px') + ' Georgia, serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(st.comm.display, 0, st.h * 0.34);
+        ctx.restore();
+      });
+    }
+    function drawVoyageScene(ctx, w, h, env) {
+      const swapped = Math.max(0, Math.min(6, Number(env && env.swappedCount) || 0));
+      const sky = ctx.createLinearGradient(0, 0, 0, h * 0.62);
+      sky.addColorStop(0, '#0b1020');
+      sky.addColorStop(0.65, '#15233b');
+      sky.addColorStop(1, swapped > 0 ? '#2b243c' : '#1d354d');
+      ctx.fillStyle = sky;
+      ctx.fillRect(0, 0, w, h);
+
+      const poleX = w * 0.5;
+      const poleY = h * 0.24;
+      const rot = clock * 0.08 + turningIndex * (Math.PI * 0.5);
+      for (let s = 0; s < 34; s++) {
+        const r = 22 + (s * 17) % Math.max(90, w * 0.36);
+        const a = rot + s * 1.91;
+        const sx = poleX + Math.cos(a) * r;
+        const sy = poleY + Math.sin(a) * r * 0.48;
+        if (sy > 0 && sy < h * 0.56) {
+          ctx.fillStyle = s % 5 === 0 ? PALETTE.muslinGold : 'rgba(245,237,224,0.62)';
+          ctx.fillRect(sx, sy, s % 5 === 0 ? 2.2 : 1.5, s % 5 === 0 ? 2.2 : 1.5);
+        }
+      }
+
+      ctx.fillStyle = '#12263a';
+      ctx.fillRect(0, h * 0.56, w * 0.56, h * 0.44);
+      ctx.strokeStyle = swapped > 0 ? 'rgba(242,204,110,0.42)' : 'rgba(245,237,224,0.28)';
+      for (let r = 0; r < 6; r++) {
+        const wy = h * (0.62 + r * 0.055);
+        ctx.beginPath();
+        ctx.moveTo(w * 0.06, wy);
+        ctx.quadraticCurveTo(w * 0.28, wy + Math.sin(clock * 1.8 + r) * 4, w * 0.50, wy);
+        ctx.stroke();
+      }
+
+      ctx.fillStyle = '#1c1829';
+      ctx.beginPath();
+      ctx.moveTo(w * 0.44, h);
+      ctx.quadraticCurveTo(w * 0.62, h * 0.54, w, h * 0.60);
+      ctx.lineTo(w, h);
+      ctx.closePath();
+      ctx.fill();
+
+      drawYellowStripedBoat(ctx, { nation: SEVEN_NATIONS[0], x: w * 0.28, y: h * 0.63, hitR: 38 }, false, swapped > 0, 0.35);
+      drawCamelCaravan(ctx, { nation: SEVEN_NATIONS[1], x: w * 0.74, y: h * 0.66, hitR: 38 }, false, swapped > 0, 0.2);
+
+      const sway = Math.sin(clock * 1.5) * 5;
+      ctx.strokeStyle = PALETTE.saffronBazaar;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.arc(w * 0.5, h * 0.98 + sway * 0.4, 46, Math.PI * 1.15, Math.PI * 1.85);
+      ctx.stroke();
+    }
+
+    function renderScene(ctx, width, height, env) {
+      if (!ctx) return;
+      const w = Math.max(240, Number(width) || 800);
+      const h = Math.max(200, Number(height) || 500);
+      const phase = (env && env.phase) || 'bazaar';
+
+      ctx.save();
+      ctx.clearRect(0, 0, w, h);
+
+      if (phase === 'voyage') {
+        drawVoyageScene(ctx, w, h, env);
+        ctx.restore();
+        return;
+      }
+
+      const night = phase === 'campfire';
+      const turning = SOLAR_TURNINGS[turningIndex];
+      const layout = computeLayout(w, h, phase);
+
+      const skyGrad = ctx.createLinearGradient(0, 0, 0, h * 0.48);
+      if (night) {
+        skyGrad.addColorStop(0, '#0d1222');
+        skyGrad.addColorStop(1, '#1c243b');
+      } else {
+        skyGrad.addColorStop(0, turning.skyTint);
+        skyGrad.addColorStop(1, '#f4dfb8');
+      }
+      ctx.fillStyle = skyGrad;
+      ctx.fillRect(0, 0, w, h);
+
+      const sunY = h * (0.16 - (turning.solarDeclinationDeg / 23.4) * 0.065);
+      const sunX = w * (0.24 + turningIndex * 0.17);
+      if (night) {
+        for (let i = 0; i < 24; i++) {
+          ctx.fillStyle = i % 4 === 0 ? PALETTE.muslinGold : 'rgba(245,237,224,0.55)';
+          ctx.fillRect((i * 73) % w, (i * 29) % (h * 0.28), 1.8, 1.8);
+        }
+      } else {
+        ctx.fillStyle = 'rgba(255,246,214,0.88)';
+        ctx.beginPath();
+        ctx.arc(sunX, sunY, 18, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      ctx.fillStyle = night ? '#181d30' : '#c9883a';
+      ctx.fillRect(0, h * 0.25, w, h * 0.12);
+      const archCount = 7;
+      const archW = w / archCount;
+      for (let a = 0; a < archCount; a++) {
+        ctx.fillStyle = night ? '#101424' : 'rgba(92,48,26,0.52)';
+        ctx.beginPath();
+        ctx.arc((a + 0.5) * archW, h * 0.35, archW * 0.32, Math.PI, 0);
+        ctx.lineTo((a + 0.82) * archW, h * 0.37);
+        ctx.lineTo((a + 0.18) * archW, h * 0.37);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      ctx.fillStyle = night ? '#14192b' : '#dfbe88';
+      ctx.fillRect(0, h * 0.36, w, h * 0.64);
+
+      ctx.fillStyle = night ? '#112236' : PALETTE.harborUltramarine;
+      ctx.beginPath();
+      ctx.moveTo(0, h * 0.36);
+      ctx.lineTo(w * (night ? 0.24 : 0.41), h * 0.36);
+      ctx.lineTo(w * (night ? 0.19 : 0.35), h);
+      ctx.lineTo(0, h);
+      ctx.closePath();
+      ctx.fill();
+
+      if (night) {
+        const courtGrad = ctx.createRadialGradient(w * 0.5, h * 0.57, 18, w * 0.5, h * 0.57, Math.min(w, h) * 0.36);
+        courtGrad.addColorStop(0, 'rgba(38,28,36,0.92)');
+        courtGrad.addColorStop(1, 'rgba(19,24,41,0.96)');
+        ctx.fillStyle = courtGrad;
+        ctx.beginPath();
+        ctx.ellipse(w * 0.5, h * 0.57, w * 0.29, h * 0.24, 0, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      layout.vessels.forEach(function (v) {
+        const isSel = v.nation.index === selectedNationIndex;
+        const p = nationPulse[v.nation.index] || 0;
+        if (v.nation.routeType === 'sail') drawYellowStripedBoat(ctx, v, night, isSel, p);
+        else drawCamelCaravan(ctx, v, night, isSel, p);
+      });
+
+      if (!night) {
+        drawStallsAndBrassScale(ctx, layout);
+      }
+
+      ctx.restore();
+    }
+
+    return {
+      getState: getState,
+      setTurning: setTurning,
+      nextTurning: nextTurning,
+      selectNation: selectNation,
+      setOffer: setOffer,
+      setRequest: setRequest,
+      weighPair: weighPair,
+      executeBarter: executeBarter,
+      step: step,
+      renderScene: renderScene,
+      hitTest: hitTest,
+      setMuted: function (m) { return synth.setMuted(m); },
+      unlockAudio: function () { return synth.unlock(); },
+      reset: reset
+    };
+  }
+
+  const api = {
+    PALETTE: PALETTE,
+    SOLAR_TURNINGS: SOLAR_TURNINGS,
+    SEVEN_NATIONS: SEVEN_NATIONS,
+    SIX_COMMODITIES: SIX_COMMODITIES,
+    createBazaarEngine: createBazaarEngine
+  };
+
+  root.EuphemiaBazaarLayer = api;
+  if (typeof window !== 'undefined') window.EuphemiaBazaarLayer = api;
+})(typeof globalThis !== 'undefined' ? globalThis : (typeof window !== 'undefined' ? window : this));
+
+(function (root) {
+  'use strict';
+
+  const PALETTE = {
+    saffronBazaar: '#e09f3e', muslinGold: '#f2cc6e', pistachioJade: '#8ea861', nutmegRusset: '#8c4a2f',
+    poppySlate: '#4d4659', indigoNight: '#131829', harborUltramarine: '#1d354d',
+    campfireAmber: '#eb6e2d', emberCrimson: '#b83a28', cottonParchment: '#f5ede0'
+  };
+
+  const TRIGGER_WORDS = [
+    { id: 'wolf', word: 'wolf', key: '1', emberColor: '#eb6e2d' },
+    { id: 'sister', word: 'sister', key: '2', emberColor: '#f2cc6e' },
+    { id: 'hidden_treasure', word: 'hidden treasure', key: '3', emberColor: '#e09f3e' },
+    { id: 'battle', word: 'battle', key: '4', emberColor: '#c94732' },
+    { id: 'scabies', word: 'scabies', key: '5', emberColor: '#a88354' },
+    { id: 'lovers', word: 'lovers', key: '6', emberColor: '#d96b82' }
+  ];
+
+  const DEFAULT_TURNINGS = ['Vernal Equinox', 'Summer Solstice', 'Autumnal Equinox', 'Winter Solstice'];
+
+  const DEFAULT_NATIONS = [
+    { index: 0, id: 'hormuz', name: 'Hormuz Strait', merchantName: 'Rashid al-Sirafi', routeType: 'sail', bannerColor: '#e09f3e' },
+    { index: 1, id: 'samarkand', name: 'Samarkand Steppe', merchantName: 'Timur of Khiva', routeType: 'caravan', bannerColor: '#f2cc6e' },
+    { index: 2, id: 'malabar', name: 'Malabar Coast', merchantName: 'Kesavan of Calicut', routeType: 'sail', bannerColor: '#8ea861' },
+    { index: 3, id: 'bukhara', name: 'Sogdian Oasis', merchantName: 'Roxana of Bukhara', routeType: 'caravan', bannerColor: '#c94732' },
+    { index: 4, id: 'aden', name: 'Aden Roadstead', merchantName: 'Tariq ibn Zayd', routeType: 'sail', bannerColor: '#eb6e2d' },
+    { index: 5, id: 'khotan', name: 'Jade Gate of Khotan', merchantName: 'Shen of Khotan', routeType: 'caravan', bannerColor: '#a88354' },
+    { index: 6, id: 'kilwa', name: 'Zanj Coral Isles', merchantName: 'Musa of Kilwa', routeType: 'sail', bannerColor: '#d96b82' }
+  ];
+
+  const MEMORY_CORPUS = {
+    wolf: {
+      nativeOrigin: 'High stone sheepfold at home, first November frost',
+      nativeMemory: 'Gray frost on our cedar latch: a lean she-wolf paused below the dry vineyard wall, yellow eyes calm in lantern smoke before vanishing uphill.',
+      merchantTales: [
+        'Salt-marsh wolf of the reed delta, licking brine from stranded pearl skiffs while green phosphorescence clung to her wet ribs at moonset.',
+        'White-pelted steppe leader pacing beside our felt wagons for nine nights, catching frozen mutton tallow tossed across blue snowdrift tracks.',
+        'Red hill-wolf circling the cardamom drying mats at monsoon break, barking once like a bronze bell before leaping the swollen sluice.',
+        'One-eyed canyon wolf nursing three cubs inside a tumbled watchtower cistern, warm breath steaming through cracked turquoise glaze at dawn.',
+        'Basalt-black headland wolf trotting down to the frankincense jetty whenever yellow-striped dhows grounded, waiting patiently for dried shark offal.',
+        'High-pass timber wolf trapped behind an avalanche screen, howling a clear fifth that shook loose icicles along our yak-hair pack ropes.',
+        'Mangrove shadow-wolf with a notched ear, swimming silently between coral weirs while sleeping flamingos tucked their beaks beneath pink wings.'
+      ]
+    },
+    sister: {
+      nativeOrigin: 'Courtyard cistern at home, linen-washing noon',
+      nativeMemory: 'My younger sister braiding wet rosemary into her dark plait beside our stone well, counting swallows through one squinted eye while sheets dried.',
+      merchantTales: [
+        'My twin sister diving six fathoms without a nose-clip, surfacing with two blistered pearl oysters and laughing salt foam across the gunwale.',
+        'My eldest sister riding astride a two-humped lead camel, singing falconry verses while stitching silver coins along her felt bridal cuffs.',
+        'My half-sister on the pepper coast grinding turmeric over wet granite, both palms stained bright saffron seven days after the boat race.',
+        'My veiled sister tuning a mulberry-wood lute on our flat roof at dusk, dropping ripe mulberries into the baskets of passing water-carriers.',
+        'My barefoot sister reading star altitudes through a brass quadrant on the sea-wall, naming every hidden reef before our old pilot woke.',
+        'My quiet sister weaving raw gold thread into cloud-muslin by butter-lamp light, biting off knotted silk cleanly with her chipped front tooth.',
+        'My tallest sister weighing cloves on the coral quay, balancing scarlet crab-eye seeds across tiny ivory pans without ever blinking.'
+      ]
+    },
+    hidden_treasure: {
+      nativeOrigin: 'Orchard retaining wall behind our cellar stairs',
+      nativeMemory: 'Three tarnished silver groats and a carved almond-stone whistle sealed inside a clay oil cruet beneath the loose flagstone under our fig tree.',
+      merchantTales: [
+        'Forty green celadon bowls waxed inside bamboo pitch-casks, wedged beneath black brain-coral where only equinoctial neap tides bare the wreck ribs.',
+        'A nomad belt of hammered ibex gold buried under seven blackened hearth-stones beside a bitter salt pan that blooms every twelfth spring.',
+        'Uncut pigeon-blood spinels sewn inside hollow cinnamon quills, stacked openly in a customs shed where drowsy clerks smelled only bark dust.',
+        'Two brass astrolabes and an indigo-dyer manual bricked inside the thirteenth spiral step of the leaning minaret outside the pistachio gate.',
+        'Gray ambergris heavy as a sleeping calf wrapped in tarred yellow sailcloth, sunk beneath rusted chains in a cliff cove without wells.',
+        'Nineteen bars of pale river electrum wedged inside a blue glacier crevasse, creeping three handspans down-valley each thaw toward the moraine.',
+        'Tortoiseshell coffers packed with ancient aurei and whole nutmegs, resting dry inside a hollow baobab trunk sealed over by wild bees.'
+      ]
+    },
+    battle: {
+      nativeOrigin: 'Shallow gravel river-ford, late October rain',
+      nativeMemory: 'Two parish militias shoving ash-wood pikes across muddy river reeds until cold rain soaked the powder horns and everyone trudged home shivering.',
+      merchantTales: [
+        'Grappling irons clattering across yellow-striped yards in red dust haze while clay naphtha pots hissed harmlessly into the choppy strait.',
+        'Steppe horse-archers wheeling through bitter wormwood smoke at noon, bone-tipped whistling arrows splitting wicker shields without a single shouted word.',
+        'Armored elephants knee-deep along flooded paddy embankments, bronze tusk-caps catching sheet lightning while monsoon thunder drowned every kettle drum.',
+        'Night sappers counter-mining beneath mudbrick ramparts, ears pressed tight against brass basins until enemy pickaxes broke through into lamp smoke.',
+        'Rowed galleys locked oar-to-oar off the white salt cape, lead sling-shot drumming wet rawhide canopies until the land breeze tore them apart.',
+        'Mountain slingers holding a narrow shale ledge above the caravan gorge, levering round river boulders down through echoing mist until moonrise.',
+        'Lagoon dhows dueling with long bamboo boarding-spears over turquoise shoals while silver needlefish leaped across the tangled steering sweeps.'
+      ]
+    },
+    scabies: {
+      nativeOrigin: 'Damp shearing-shed loft in wet April',
+      nativeMemory: 'Red-speckled wrists caught from damp fleeces in spring, scrubbed raw by my grandmother with boiled walnut hulls, yellow sulfur tallow, and rainwater.',
+      merchantTales: [
+        'Fierce bunk-itch caught from damp coir rigging during forty windless days, cooled only when sailors plunged both arms into stinging brine barrels.',
+        'Winter saddle-mange spreading from traded steppe ponies in snow quarters, smeared at twilight with warm birch tar and crushed juniper ash.',
+        'Monsoon skin-fire stinging beneath wet cotton bales in the harbor godown, calmed with bitter neem-leaf paste beside smoky charcoal braziers.',
+        'Dusty caravan rash between cramped fingers after tallying tarnished copper dirhams, washed clean at the steaming sulfur spring outside the wall.',
+        'Red salt-blisters scratched sleeplessly beneath coarse wool cloaks on night watch, cured by rubbing halved limes and cedar soot before dawn.',
+        'Prickling wool-mite rash under heavy sheepskin coats on the frosty pass, steamed away inside a river-pebble sweat tent scented with mugwort.',
+        'Stubborn hold-itch carried in unwashed ginger sacks from outer atolls, scrubbed on white coral sand until trade winds dried every welt.'
+      ]
+    },
+    lovers: {
+      nativeOrigin: 'Stone hay-bridge behind the cooper lane',
+      nativeMemory: 'Warm plum skin and crushed wild mint beneath our stone bridge at midnight, two breaths misting together while the watchman passed overhead.',
+      merchantTales: [
+        'Two pearl-sorters meeting behind upturned skiffs at dead low water, pressing salt-crusted palms together while slack yellow sails murmured above.',
+        'A young caravan outrider and a felt-weaver whispering through a tent lattice in frost, trading hammered copper rings warm from their throats.',
+        'Spice-weighers lingering inside the nutmeg loft after shutter-bolt, dark hair dusted with brown mace and wrists scented with crushed cardamom.',
+        'Restless cousins sharing split pomegranates inside a dry qanat beneath the bazaar, counting donkey hooves rumbling across vaulted bricks overhead.',
+        'A harbor pilot daughter and a foreign supercargo signaling with shuttered brass lanterns across black water on the eve of solstice tide.',
+        'Two shivering muleteers wrapped inside one unbleached muslin bolt behind ginger packs, laughing into wool sleeves so sleeping camels stayed still.',
+        'Night swimmers meeting on the outer lagoon sandbar under southern stars, tracing bright plankton rings around each other in warm surf.'
+      ]
+    }
+  };
+
+  function resolveNations(customNations) {
+    const external = Array.isArray(customNations) && customNations.length === 7
+      ? customNations
+      : (root.EuphemiaBazaarLayer && Array.isArray(root.EuphemiaBazaarLayer.SEVEN_NATIONS) && root.EuphemiaBazaarLayer.SEVEN_NATIONS.length === 7
+        ? root.EuphemiaBazaarLayer.SEVEN_NATIONS
+        : null);
+    return DEFAULT_NATIONS.map(function (base, idx) {
+      const ext = external && external[idx] ? external[idx] : null;
+      return {
+        index: idx,
+        id: (ext && ext.id) || base.id,
+        name: (ext && ext.name) || base.name,
+        merchantName: (ext && ext.merchantName) || base.merchantName,
+        routeType: (ext && ext.routeType) || base.routeType,
+        bannerColor: (ext && ext.bannerColor) || base.bannerColor
+      };
+    });
+  }
+
+  function resolveWordIndex(wordOrId) {
+    if (wordOrId === null || wordOrId === undefined) return -1;
+    const norm = String(wordOrId).trim().toLowerCase();
+    const underscored = norm.replace(/\s+/g, '_');
+    for (let i = 0; i < TRIGGER_WORDS.length; i += 1) {
+      const spec = TRIGGER_WORDS[i];
+      if (spec.id === norm || spec.id === underscored || spec.word === norm || spec.key === norm) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  function createCampfireAudio(initialMuted) {
+    let ctx = null, master = null, muted = Boolean(initialMuted);
+    const MODAL_HZ = [146.83, 155.56, 185.0, 196.0, 220.0, 233.08, 261.63, 293.66];
+    const HOME_HZ = [261.63, 293.66, 329.63, 392.0, 440.0, 523.25];
+
+    function ensureCtx() {
+      if (ctx) return ctx;
+      const AC = root.AudioContext || root.webkitAudioContext;
+      if (!AC) return null;
+      try {
+        ctx = new AC();
+        master = ctx.createGain();
+        master.gain.value = muted ? 0 : 0.22;
+        master.connect(ctx.destination);
+      } catch (_err) { ctx = null; }
+      return ctx;
+    }
+
+    function unlock() {
+      const ac = ensureCtx();
+      if (!ac) return false;
+      if (ac.state === 'suspended' && typeof ac.resume === 'function') { try { ac.resume(); } catch (_err) {} }
+      return true;
+    }
+
+    function setMuted(flag) {
+      muted = Boolean(flag);
+      if (master && ctx) { try { master.gain.setTargetAtTime(muted ? 0 : 0.22, ctx.currentTime, 0.02); } catch (_err) {} }
+      return muted;
+    }
+
+    function playChorus(wordIdx, nationIdx) {
+      if (muted) return;
+      const ac = ensureCtx();
+      if (!ac || !master) return;
+      try {
+        if (ac.state === 'suspended' && ac.resume) ac.resume();
+        const now = ac.currentTime;
+        const crackleLen = Math.floor(ac.sampleRate * 0.28);
+        const buf = ac.createBuffer(1, crackleLen, ac.sampleRate);
+        const data = buf.getChannelData(0);
+        for (let i = 0; i < crackleLen; i += 1) {
+          data[i] = (Math.random() > 0.965 ? (Math.random() * 2 - 1) : (Math.random() * 2 - 1) * 0.05) * (1 - i / crackleLen);
+        }
+        const noise = ac.createBufferSource();
+        noise.buffer = buf;
+        const bp = ac.createBiquadFilter();
+        bp.type = 'bandpass'; bp.frequency.value = 1350 + wordIdx * 140; bp.Q.value = 2.4;
+        const ng = ac.createGain();
+        ng.gain.setValueAtTime(0.35, now); ng.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+        noise.connect(bp); bp.connect(ng); ng.connect(master); noise.start(now);
+
+        for (let n = 0; n < 7; n += 1) {
+          const t0 = now + n * 0.038;
+          const osc = ac.createOscillator(), og = ac.createGain(), flt = ac.createBiquadFilter();
+          osc.type = n === nationIdx ? 'sawtooth' : 'triangle';
+          osc.frequency.setValueAtTime(MODAL_HZ[(wordIdx + n) % MODAL_HZ.length] * (n === nationIdx ? 2 : 1), t0);
+          flt.type = 'lowpass'; flt.frequency.value = n === nationIdx ? 1480 : 920;
+          og.gain.setValueAtTime(0.0001, t0);
+          og.gain.linearRampToValueAtTime(n === nationIdx ? 0.14 : 0.055, t0 + 0.018);
+          og.gain.exponentialRampToValueAtTime(0.0008, t0 + (n === nationIdx ? 0.62 : 0.34));
+          osc.connect(flt); flt.connect(og); og.connect(master);
+          osc.start(t0); osc.stop(t0 + (n === nationIdx ? 0.65 : 0.36));
+        }
+      } catch (_err) {}
+    }
+
+    function playRecall(wordIdx, isSwapped, nationIdx) {
+      if (muted) return;
+      const ac = ensureCtx();
+      if (!ac || !master) return;
+      try {
+        if (ac.state === 'suspended' && ac.resume) ac.resume();
+        const now = ac.currentTime;
+        if (!isSwapped) {
+          const base = HOME_HZ[wordIdx % HOME_HZ.length];
+          [1, 1.5, 2].forEach(function (mult, idx) {
+            const osc = ac.createOscillator(), g = ac.createGain();
+            osc.type = idx === 0 ? 'sine' : 'triangle';
+            osc.frequency.setValueAtTime(base * mult, now + idx * 0.045);
+            g.gain.setValueAtTime(0.0001, now + idx * 0.045);
+            g.gain.linearRampToValueAtTime(0.11 / (idx + 1), now + idx * 0.045 + 0.02);
+            g.gain.exponentialRampToValueAtTime(0.0008, now + 0.55 + idx * 0.06);
+            osc.connect(g); g.connect(master);
+            osc.start(now + idx * 0.045); osc.stop(now + 0.65 + idx * 0.06);
+          });
+        } else {
+          const ghost = ac.createOscillator(), gg = ac.createGain();
+          ghost.type = 'sine'; ghost.frequency.setValueAtTime(HOME_HZ[wordIdx % HOME_HZ.length], now);
+          gg.gain.setValueAtTime(0.05, now); gg.gain.exponentialRampToValueAtTime(0.0008, now + 0.14);
+          ghost.connect(gg); gg.connect(master); ghost.start(now); ghost.stop(now + 0.16);
+
+          const rootHz = MODAL_HZ[(wordIdx + (nationIdx || 0)) % MODAL_HZ.length] * 1.5;
+          [1, 1.06, 1.26, 1.5].forEach(function (ratio, idx) {
+            const osc = ac.createOscillator(), flt = ac.createBiquadFilter(), g = ac.createGain();
+            osc.type = idx % 2 === 0 ? 'sawtooth' : 'triangle';
+            osc.frequency.setValueAtTime(rootHz * ratio, now + 0.08 + idx * 0.035);
+            flt.type = 'bandpass'; flt.frequency.value = 720 + idx * 340; flt.Q.value = 2.8;
+            g.gain.setValueAtTime(0.0001, now + 0.08 + idx * 0.035);
+            g.gain.linearRampToValueAtTime(0.12, now + 0.11 + idx * 0.035);
+            g.gain.exponentialRampToValueAtTime(0.0008, now + 0.68 + idx * 0.04);
+            osc.connect(flt); flt.connect(g); g.connect(master);
+            osc.start(now + 0.08 + idx * 0.035); osc.stop(now + 0.74 + idx * 0.04);
+          });
+        }
+      } catch (_err) {}
+    }
+
+    return { isMuted: function () { return muted; }, unlock: unlock, setMuted: setMuted, playChorus: playChorus, playRecall: playRecall };
+  }
+  function computeCampfireLayout(width, height) {
+    const w = Math.max(240, width || 800);
+    const h = Math.max(200, height || 500);
+    const cx = w * 0.5;
+    const cy = h * 0.53;
+    const rx = Math.min(w * 0.37, h * 0.48);
+    const ry = Math.min(h * 0.33, w * 0.28);
+    const fires = [];
+    for (let i = 0; i < 7; i += 1) {
+      const ang = -Math.PI * 0.5 + (i * Math.PI * 2) / 7;
+      const fx = cx + Math.cos(ang) * rx;
+      const fy = cy + Math.sin(ang) * ry;
+      const outX = Math.cos(ang);
+      const outY = Math.sin(ang);
+      const mx = fx + outX * Math.max(24, rx * 0.14);
+      const my = fy + outY * Math.max(16, ry * 0.14);
+      fires.push({ index: i, ang: ang, fx: fx, fy: fy, mx: mx, my: my });
+    }
+    const embers = [];
+    const irx = rx * 0.42;
+    const iry = ry * 0.42;
+    for (let j = 0; j < 6; j += 1) {
+      const eAng = -Math.PI * 0.5 + (j * Math.PI * 2) / 6;
+      embers.push({
+        index: j,
+        wordId: TRIGGER_WORDS[j].id,
+        ex: cx + Math.cos(eAng) * irx,
+        ey: cy + Math.sin(eAng) * iry
+      });
+    }
+    return { w: w, h: h, cx: cx, cy: cy, rx: rx, ry: ry, fires: fires, embers: embers };
+  }
+
+  function computeVoyageLayout(width, height) {
+    const w = Math.max(240, width || 800);
+    const h = Math.max(200, height || 500);
+    const glyphs = [];
+    for (let i = 0; i < 6; i += 1) {
+      const t = (i + 0.5) / 6;
+      const gx = w * (0.12 + t * 0.76);
+      const arch = Math.sin(t * Math.PI);
+      const gy = h * (0.44 - arch * 0.21) + (i % 2 === 0 ? -8 : 10);
+      glyphs.push({ index: i, wordId: TRIGGER_WORDS[i].id, gx: gx, gy: gy });
+    }
+    return { w: w, h: h, horizonY: h * 0.68, glyphs: glyphs };
+  }
+
+  function createCampfireEngine(opts) {
+    const options = opts || {};
+    const audio = createCampfireAudio(Boolean(options.muted));
+    let nations = resolveNations(options.nations);
+    let time = 0;
+    let totalTalesHeard = 0;
+    let activeWordId = null;
+    let activeChorus = [];
+    let inspectedWordId = null;
+    let inspectedEntry = null;
+    let voyagePulse = { wordIndex: -1, alpha: 0 };
+
+    const fireState = Array.from({ length: 7 }, function (_, idx) { return { phase: idx * 1.37, flare: 0 }; });
+    const sparks = Array.from({ length: 42 }, function (_, idx) {
+      return { fireIdx: idx % 7, u: (idx * 0.19) % 1, drift: ((idx % 5) - 2) * 0.35, speed: 0.38 + (idx % 7) * 0.07 };
+    });
+    let emberArcs = [];
+
+    function createInitialSlots() {
+      return TRIGGER_WORDS.map(function (spec) {
+        const entry = MEMORY_CORPUS[spec.id];
+        return {
+          id: spec.id, word: spec.word, key: spec.key, emberColor: spec.emberColor,
+          isSwapped: false, swapCount: 0, installedNationIndex: -1, bannerColor: PALETTE.cottonParchment,
+          nativeText: entry.nativeMemory, nativeOrigin: entry.nativeOrigin,
+          currentText: entry.nativeMemory, currentNarrator: 'Traveler (Own Memory)',
+          currentNation: 'Native Homeland', turningSwapped: null, chorusEchoes: []
+        };
+      });
+    }
+
+    let slots = createInitialSlots();
+    function countSwapped() {
+      return slots.reduce(function (acc, s) { return acc + (s.isSwapped ? 1 : 0); }, 0);
+    }
+
+    function snapshotSlot(s) {
+      return {
+        id: s.id, word: s.word, key: s.key, emberColor: s.emberColor,
+        isSwapped: s.isSwapped, swapCount: s.swapCount,
+        nativeText: s.nativeText, nativeOrigin: s.nativeOrigin,
+        nativeGhostText: s.isSwapped ? s.nativeText : null,
+        currentText: s.currentText, currentNarrator: s.currentNarrator,
+        currentNation: s.currentNation, turningSwapped: s.turningSwapped,
+        chorusEchoes: s.chorusEchoes.slice()
+      };
+    }
+
+    function getState() {
+      const swappedCount = countSwapped();
+      return {
+        TRIGGER_WORDS: TRIGGER_WORDS.map(function (w) { return Object.assign({}, w); }),
+        memorySlots: slots.map(snapshotSlot),
+        swappedCount: swappedCount, intactCount: slots.length - swappedCount,
+        totalTalesHeard: totalTalesHeard, activeWordId: activeWordId,
+        activeChorus: activeChorus.slice(), inspectedWordId: inspectedWordId,
+        inspectedEntry: inspectedEntry ? Object.assign({}, inspectedEntry) : null,
+        muted: audio.isMuted()
+      };
+    }
+
+    function speakWord(wordOrId, callOpts) {
+      nations = resolveNations(options.nations);
+      const wIdx = resolveWordIndex(wordOrId);
+      const curSwapped = countSwapped();
+      if (wIdx < 0) return { ok: false, id: null, word: null, swappedCount: curSwapped, intactCount: slots.length - curSwapped };
+      const cOpts = callOpts || {};
+      const tIdx = Number.isInteger(cOpts.turningIndex) ? ((cOpts.turningIndex % 4) + 4) % 4 : 0;
+      const tLabel = cOpts.turningLabel || DEFAULT_TURNINGS[tIdx];
+      const slot = slots[wIdx];
+      const corpus = MEMORY_CORPUS[slot.id];
+
+      let chosenIdx;
+      if (slot.swapCount === 0 && Number.isInteger(cOpts.nationHintIndex) && cOpts.nationHintIndex >= 0 && cOpts.nationHintIndex < 7) {
+        chosenIdx = cOpts.nationHintIndex;
+      } else if (slot.swapCount === 0) {
+        chosenIdx = (wIdx * 2 + tIdx) % 7;
+      } else {
+        chosenIdx = (slot.installedNationIndex + 1 + (tIdx % 2)) % 7;
+        if (chosenIdx === slot.installedNationIndex) chosenIdx = (chosenIdx + 1) % 7;
+      }
+
+      const chorus = nations.map(function (nat, nIdx) {
+        return {
+          nationIndex: nIdx, nation: nat.name, narrator: nat.merchantName,
+          routeType: nat.routeType, bannerColor: nat.bannerColor,
+          wordId: slot.id, word: slot.word, text: corpus.merchantTales[nIdx],
+          isInstalled: nIdx === chosenIdx
+        };
+      });
+
+      const displacedText = slot.currentText;
+      const installed = chorus[chosenIdx];
+      slot.isSwapped = true;
+      slot.swapCount += 1;
+      slot.installedNationIndex = chosenIdx;
+      slot.bannerColor = installed.bannerColor;
+      slot.currentText = installed.text;
+      slot.currentNarrator = installed.narrator;
+      slot.currentNation = installed.nation;
+      slot.turningSwapped = tLabel;
+      slot.chorusEchoes = chorus;
+      totalTalesHeard += 7;
+      activeWordId = slot.id;
+      activeChorus = chorus;
+
+      for (let f = 0; f < 7; f += 1) {
+        fireState[f].flare = f === chosenIdx ? 1.0 : 0.65;
+        emberArcs.push({
+          fromFire: f, toFire: (f + 1) % 7, wordIdx: wIdx, isPrimary: f === chosenIdx,
+          color: f === chosenIdx ? slot.emberColor : nations[f].bannerColor,
+          progress: 0, speed: f === chosenIdx ? 0.95 : 1.15 + (f % 3) * 0.14
+        });
+      }
+      if (emberArcs.length > 28) emberArcs = emberArcs.slice(emberArcs.length - 28);
+      audio.playChorus(wIdx, chosenIdx);
+      if (inspectedWordId === slot.id) inspectedEntry = buildRecallEntry(slot, wIdx, 'campfire');
+
+      const swappedCount = countSwapped();
+      return {
+        ok: true, id: slot.id, word: slot.word, chorus: chorus,
+        displacedText: displacedText, installedText: slot.currentText,
+        narrator: slot.currentNarrator, nation: slot.currentNation,
+        turningSwapped: slot.turningSwapped, swapCount: slot.swapCount,
+        swappedCount: swappedCount, intactCount: slots.length - swappedCount
+      };
+    }
+
+    function buildRecallEntry(slot, wIdx, phase) {
+      return {
+        ok: true, id: slot.id, word: slot.word, key: slot.key, emberColor: slot.emberColor,
+        phase: phase || 'voyage', isSwapped: slot.isSwapped, swapCount: slot.swapCount,
+        provenance: slot.isSwapped ? 'swapped' : 'native',
+        provenanceLabel: slot.isSwapped ? 'Foreign Merchant Memory' : 'Intact Native Memory',
+        currentText: slot.currentText, recalledText: slot.currentText,
+        nativeText: slot.nativeText, nativeOrigin: slot.nativeOrigin,
+        nativeGhostText: slot.isSwapped ? slot.nativeText : null,
+        currentNarrator: slot.currentNarrator, currentNation: slot.currentNation,
+        turningSwapped: slot.turningSwapped, bannerColor: slot.bannerColor, slotIndex: wIdx
+      };
+    }
+
+    function summonMemory(wordOrId, phase) {
+      const wIdx = resolveWordIndex(wordOrId);
+      if (wIdx < 0) return { ok: false, id: null, word: null };
+      const slot = slots[wIdx];
+      const entry = buildRecallEntry(slot, wIdx, phase);
+      inspectedWordId = slot.id;
+      inspectedEntry = entry;
+      voyagePulse = { wordIndex: wIdx, alpha: 1.0 };
+      audio.playRecall(wIdx, slot.isSwapped, slot.installedNationIndex);
+      return entry;
+    }
+
+    function step(dt, env) {
+      const reduced = Boolean(env && env.reducedMotion);
+      const raw = typeof dt === 'number' && dt > 0 ? dt : 0.016;
+      const dtSec = raw > 1.5 ? Math.min(raw / 1000, 0.1) : Math.min(raw, 0.1);
+      time += reduced ? dtSec * 0.2 : dtSec;
+
+      for (let i = 0; i < 7; i += 1) {
+        fireState[i].flare = Math.max(0, fireState[i].flare - dtSec * (reduced ? 1.8 : 0.85));
+      }
+      if (!reduced) {
+        for (let s = 0; s < sparks.length; s += 1) {
+          sparks[s].u = (sparks[s].u + dtSec * sparks[s].speed) % 1;
+        }
+      }
+      const nextArcs = [];
+      for (let a = 0; a < emberArcs.length; a += 1) {
+        const arc = emberArcs[a];
+        arc.progress += dtSec * (reduced ? 2.4 : arc.speed);
+        if (arc.progress < 1) nextArcs.push(arc);
+      }
+      emberArcs = nextArcs;
+      if (voyagePulse.alpha > 0) {
+        voyagePulse.alpha = Math.max(0, voyagePulse.alpha - dtSec * 0.75);
+      }
+    }
+
+    function setMuted(flag) {
+      return audio.setMuted(flag);
+    }
+
+    function unlockAudio() {
+      return audio.unlock();
+    }
+
+    function reset() {
+      slots = createInitialSlots();
+      totalTalesHeard = 0;
+      activeWordId = null;
+      activeChorus = [];
+      inspectedWordId = null;
+      inspectedEntry = null;
+      emberArcs = [];
+      voyagePulse = { wordIndex: -1, alpha: 0 };
+      for (let i = 0; i < 7; i += 1) fireState[i].flare = 0;
+      return getState();
+    }
+
+    function drawCampfireScene(ctx, width, height, reduced) {
+      nations = resolveNations(options.nations);
+      const lay = computeCampfireLayout(width, height);
+      ctx.save();
+      ctx.fillStyle = 'rgba(19, 24, 41, 0.82)';
+      ctx.fillRect(0, 0, width, height);
+
+      ctx.strokeStyle = 'rgba(242, 204, 110, 0.14)';
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.ellipse(lay.cx, lay.cy, lay.rx * 1.06, lay.ry * 1.08, 0, 0, Math.PI * 2);
+      ctx.stroke();
+
+      for (let i = 0; i < 7; i += 1) {
+        const f = lay.fires[i];
+        const nextF = lay.fires[(i + 1) % 7];
+        ctx.strokeStyle = activeWordId ? 'rgba(235, 110, 45, 0.24)' : 'rgba(245, 237, 224, 0.08)';
+        ctx.setLineDash([4, 5]);
+        ctx.beginPath();
+        ctx.moveTo(f.fx, f.fy);
+        ctx.quadraticCurveTo(lay.cx, lay.cy, nextF.fx, nextF.fy);
+        ctx.stroke();
+      }
+      ctx.setLineDash([]);
+
+      for (let i = 0; i < 7; i += 1) {
+        const f = lay.fires[i];
+        const nat = nations[i];
+        const flk = reduced ? 0.5 : 0.5 + 0.5 * Math.sin(time * 6.2 + fireState[i].phase);
+        const flare = fireState[i].flare;
+        const glowR = (26 + flk * 7 + flare * 18) * Math.min(1.15, width / 640);
+
+        ctx.save();
+        ctx.translate(f.mx, f.my);
+        ctx.rotate(f.ang + Math.PI * 0.5);
+        ctx.fillStyle = nat.bannerColor || PALETTE.nutmegRusset;
+        ctx.globalAlpha = 0.42;
+        ctx.fillRect(-18, -7, 36, 14);
+        ctx.globalAlpha = 0.92;
+        ctx.fillStyle = '#1b1d2e';
+        ctx.beginPath();
+        ctx.ellipse(-3, 0, 12, 4.5, -0.12, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(9, -3.5, 4.2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(242, 204, 110, 0.55)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.restore();
+
+        const grad = ctx.createRadialGradient(f.fx, f.fy, 2, f.fx, f.fy, glowR);
+        grad.addColorStop(0, 'rgba(242, 204, 110, 0.88)');
+        grad.addColorStop(0.45, 'rgba(235, 110, 45, 0.42)');
+        grad.addColorStop(1, 'rgba(184, 58, 40, 0)');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(f.fx, f.fy, glowR, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.strokeStyle = '#52291b';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(f.fx - 9, f.fy + 4);
+        ctx.lineTo(f.fx + 9, f.fy - 2);
+        ctx.moveTo(f.fx - 8, f.fy - 2);
+        ctx.lineTo(f.fx + 8, f.fy + 4);
+        ctx.stroke();
+
+        const hFlame = 13 + flk * 6 + flare * 10;
+        ctx.fillStyle = PALETTE.emberCrimson;
+        ctx.beginPath();
+        ctx.moveTo(f.fx - 7, f.fy + 2);
+        ctx.quadraticCurveTo(f.fx - 3, f.fy - hFlame, f.fx, f.fy - hFlame * 1.15);
+        ctx.quadraticCurveTo(f.fx + 4, f.fy - hFlame * 0.85, f.fx + 7, f.fy + 2);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = PALETTE.muslinGold;
+        ctx.beginPath();
+        ctx.moveTo(f.fx - 3.5, f.fy + 2);
+        ctx.quadraticCurveTo(f.fx, f.fy - hFlame * 0.85, f.fx + 3.5, f.fy + 2);
+        ctx.closePath();
+        ctx.fill();
+      }
+      if (!reduced) {
+        for (let s = 0; s < sparks.length; s += 1) {
+          const sp = sparks[s];
+          const f = lay.fires[sp.fireIdx];
+          const sx = f.fx + Math.sin(time * 3 + s) * 7 + sp.drift * sp.u * 16;
+          const sy = f.fy - 8 - sp.u * 34;
+          ctx.fillStyle = sp.u < 0.45 ? PALETTE.muslinGold : PALETTE.campfireAmber;
+          ctx.globalAlpha = Math.max(0, 1 - sp.u);
+          ctx.beginPath();
+          ctx.arc(sx, sy, 1.6, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+      }
+
+      for (let a = 0; a < emberArcs.length; a += 1) {
+        const arc = emberArcs[a];
+        const src = lay.fires[arc.fromFire];
+        const dst = arc.isPrimary ? lay.embers[arc.wordIdx] : lay.fires[arc.toFire];
+        const tx = arc.isPrimary ? dst.ex : dst.fx;
+        const ty = arc.isPrimary ? dst.ey : dst.fy;
+        const p = arc.progress;
+        const ctrlX = (src.fx + tx) * 0.5;
+        const ctrlY = Math.min(src.fy, ty) - (arc.isPrimary ? 48 : 28);
+        const px = (1 - p) * (1 - p) * src.fx + 2 * (1 - p) * p * ctrlX + p * p * tx;
+        const py = (1 - p) * (1 - p) * src.fy + 2 * (1 - p) * p * ctrlY + p * p * ty;
+
+        ctx.strokeStyle = arc.color;
+        ctx.globalAlpha = (1 - p * 0.65) * 0.85;
+        ctx.lineWidth = arc.isPrimary ? 2.4 : 1.3;
+        ctx.beginPath();
+        ctx.moveTo(src.fx, src.fy - 6);
+        ctx.quadraticCurveTo(ctrlX, ctrlY, px, py);
+        ctx.stroke();
+
+        ctx.fillStyle = PALETTE.muslinGold;
+        ctx.beginPath();
+        ctx.arc(px, py, arc.isPrimary ? 3.8 : 2.2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+
+      if (typeof ctx.fillText === 'function' && width >= 440) {
+        ctx.font = '10px Georgia, serif';
+        ctx.textAlign = 'center';
+        ctx.fillStyle = 'rgba(245, 237, 224, 0.62)';
+        for (let i = 0; i < 7; i += 1) {
+          ctx.fillText(nations[i].name, lay.fires[i].fx, lay.fires[i].fy + 20);
+        }
+      }
+      for (let j = 0; j < 6; j += 1) {
+        const em = lay.embers[j];
+        const sl = slots[j];
+        const r = activeWordId === sl.id ? 11 : 8.5;
+        ctx.fillStyle = sl.isSwapped ? sl.emberColor : 'rgba(245, 237, 224, 0.22)';
+        ctx.strokeStyle = sl.isSwapped ? PALETTE.muslinGold : 'rgba(245, 237, 224, 0.62)';
+        ctx.lineWidth = activeWordId === sl.id ? 2.2 : 1.3;
+        ctx.beginPath();
+        ctx.arc(em.ex, em.ey, r, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        if (sl.isSwapped) {
+          ctx.beginPath();
+          ctx.arc(em.ex, em.ey, r + 3.5, 0, Math.PI * 2);
+          ctx.strokeStyle = 'rgba(235, 110, 45, 0.55)';
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+        if (typeof ctx.fillText === 'function') {
+          ctx.font = '10px Georgia, serif';
+          ctx.textAlign = 'center';
+          ctx.fillStyle = sl.isSwapped ? PALETTE.muslinGold : PALETTE.cottonParchment;
+          ctx.fillText(sl.word, em.ex, em.ey + r + 12);
+        }
+      }
+      ctx.restore();
+    }
+
+    function drawVoyageScene(ctx, width, height, reduced) {
+      const lay = computeVoyageLayout(width, height);
+      ctx.save();
+      const sky = ctx.createLinearGradient(0, 0, 0, height);
+      sky.addColorStop(0, '#0d1120');
+      sky.addColorStop(0.66, PALETTE.indigoNight);
+      sky.addColorStop(1, PALETTE.harborUltramarine);
+      ctx.fillStyle = sky;
+      ctx.fillRect(0, 0, width, height);
+
+      const glow = ctx.createRadialGradient(width * 0.14, lay.horizonY, 2, width * 0.14, lay.horizonY, width * 0.26);
+      glow.addColorStop(0, 'rgba(235, 110, 45, 0.34)');
+      glow.addColorStop(1, 'rgba(235, 110, 45, 0)');
+      ctx.fillStyle = glow;
+      ctx.fillRect(0, 0, width, height);
+
+      ctx.strokeStyle = 'rgba(242, 204, 110, 0.22)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(0, lay.horizonY);
+      ctx.lineTo(width, lay.horizonY);
+      ctx.stroke();
+
+      for (let i = 0; i < 6; i += 1) {
+        const g = lay.glyphs[i];
+        const sl = slots[i];
+        const sel = inspectedWordId === sl.id;
+        const tw = reduced ? 0 : Math.sin(time * 2.4 + i) * 1.5;
+
+        if (sl.isSwapped) {
+          ctx.strokeStyle = 'rgba(245, 237, 224, 0.22)';
+          ctx.setLineDash([2, 3]);
+          ctx.beginPath();
+          ctx.arc(g.gx - 9, g.gy + 6, 10, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.setLineDash([]);
+          ctx.strokeStyle = 'rgba(235, 110, 45, 0.32)';
+          ctx.beginPath();
+          ctx.moveTo(width * 0.14, lay.horizonY);
+          ctx.quadraticCurveTo(g.gx * 0.6, g.gy + 36, g.gx, g.gy + tw);
+          ctx.stroke();
+
+          ctx.strokeStyle = sl.emberColor;
+          ctx.fillStyle = sl.emberColor;
+          ctx.lineWidth = sel ? 2.4 : 1.5;
+          ctx.beginPath();
+          for (let k = 0; k < 5; k += 1) {
+            const a = -Math.PI * 0.5 + (k * Math.PI * 4) / 5;
+            const px = g.gx + Math.cos(a) * (sel ? 14 : 11);
+            const py = g.gy + tw + Math.sin(a) * (sel ? 14 : 11);
+            if (k === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+          }
+          ctx.closePath();
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.arc(g.gx, g.gy + tw, 3.6, 0, Math.PI * 2);
+          ctx.fill();
+        } else {
+          ctx.strokeStyle = sel ? PALETTE.muslinGold : 'rgba(245, 237, 224, 0.72)';
+          ctx.fillStyle = PALETTE.cottonParchment;
+          ctx.lineWidth = sel ? 2.2 : 1.2;
+          ctx.beginPath();
+          ctx.arc(g.gx, g.gy + tw, sel ? 11 : 8, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.arc(g.gx, g.gy + tw, 2.8, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        if (typeof ctx.fillText === 'function') {
+          ctx.font = '10px Georgia, serif';
+          ctx.textAlign = 'center';
+          ctx.fillStyle = sl.isSwapped ? PALETTE.muslinGold : PALETTE.cottonParchment;
+          ctx.fillText(sl.word, g.gx, g.gy + tw + 22);
+        }
+      }
+      ctx.restore();
+    }
+
+    function renderOverlay(ctx, width, height, env) {
+      if (!ctx) return;
+      const phase = (env && env.phase) || 'campfire';
+      const reduced = Boolean(env && env.reducedMotion);
+      if (phase === 'campfire') drawCampfireScene(ctx, width, height, reduced);
+      else if (phase === 'voyage') drawVoyageScene(ctx, width, height, reduced);
+    }
+
+    function hitTest(x, y, width, height, phase) {
+      const mode = phase || 'campfire';
+      if (mode === 'campfire') {
+        const lay = computeCampfireLayout(width, height);
+        for (let j = 0; j < lay.embers.length; j += 1) {
+          if (Math.hypot(x - lay.embers[j].ex, y - lay.embers[j].ey) <= 16) {
+            return { type: 'ember', index: j, wordId: lay.embers[j].wordId };
+          }
+        }
+        for (let i = 0; i < lay.fires.length; i += 1) {
+          if (Math.hypot(x - lay.fires[i].fx, y - lay.fires[i].fy) <= 22) {
+            return { type: 'fire', index: i, wordId: activeWordId };
+          }
+          if (Math.hypot(x - lay.fires[i].mx, y - lay.fires[i].my) <= 20) {
+            return { type: 'merchant', index: i, wordId: activeWordId };
+          }
+        }
+      } else if (mode === 'voyage') {
+        const lay = computeVoyageLayout(width, height);
+        for (let i = 0; i < lay.glyphs.length; i += 1) {
+          if (Math.hypot(x - lay.glyphs[i].gx, y - lay.glyphs[i].gy) <= 20) {
+            return { type: 'ember', index: i, wordId: lay.glyphs[i].wordId };
+          }
+        }
+      }
+      return { type: null, index: -1, wordId: null };
+    }
+
+    return {
+      getState: getState, speakWord: speakWord, summonMemory: summonMemory,
+      step: step, renderOverlay: renderOverlay, hitTest: hitTest,
+      setMuted: setMuted, unlockAudio: unlockAudio, reset: reset
+    };
+  }
+
+  const API = {
+    TRIGGER_WORDS: TRIGGER_WORDS, MEMORY_CORPUS: MEMORY_CORPUS,
+    DEFAULT_NATIONS: DEFAULT_NATIONS, createCampfireEngine: createCampfireEngine
+  };
+  if (typeof window !== 'undefined') window.EuphemiaCampfireLayer = API;
+  root.EuphemiaCampfireLayer = API;
+})(typeof globalThis !== 'undefined' ? globalThis : (typeof window !== 'undefined' ? window : this));
+
+(function () {
+  'use strict';
+
+  const bazaarLayer = window.EuphemiaBazaarLayer;
+  const campfireLayer = window.EuphemiaCampfireLayer;
+  const bazaarEngine = bazaarLayer.createBazaarEngine({ muted: false });
+  const campfireEngine = campfireLayer.createCampfireEngine({
+    nations: bazaarLayer.SEVEN_NATIONS,
+    muted: false
+  });
+
+  const rootEl = document.getElementById('eup-root');
+  const canvas = document.getElementById('eup-canvas');
+  const ctx = canvas.getContext('2d');
+  const offVoyageCanvas = document.createElement('canvas');
+  offVoyageCanvas.className = 'eup-offscreen-canvas';
+  const offVoyageCtx = offVoyageCanvas.getContext('2d');
+
+  const motionQuery = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+  let reducedMotion = !!(motionQuery && motionQuery.matches);
+  if (motionQuery) {
+    const onMotion = function (ev) { reducedMotion = !!ev.matches; renderFrame(); };
+    if (motionQuery.addEventListener) motionQuery.addEventListener('change', onMotion);
+    else if (motionQuery.addListener) motionQuery.addListener(onMotion);
+  }
+
+  let phase = 'bazaar';
+  let muted = false;
+  let plateDrawerOpen = false;
+  let plateTab = 'diptych';
+  let loupeActive = false;
+  let campfireNationHint = null;
+  let cssW = 800;
+  let cssH = 560;
+  let lastTs = 0;
+
+  const elTurningBadge = document.getElementById('eup-turning-badge');
+  const elStageCaption = document.getElementById('eup-stage-caption');
+  const elPanelBazaar = document.getElementById('eup-panel-bazaar');
+  const elPanelCampfire = document.getElementById('eup-panel-campfire');
+  const elPanelVoyage = document.getElementById('eup-panel-voyage');
+  const elSolarNote = document.getElementById('eup-solar-note');
+  const elTurningStrip = document.getElementById('eup-turning-strip');
+  const elNationSummary = document.getElementById('eup-nation-summary');
+  const elNationGrid = document.getElementById('eup-nation-grid');
+  const elPackSummary = document.getElementById('eup-pack-summary');
+  const elCommodityGrid = document.getElementById('eup-commodity-grid');
+  const elQuoteLine = document.getElementById('eup-quote-line');
+  const elLedgerReceipt = document.getElementById('eup-ledger-receipt');
+  const elCampfireStatus = document.getElementById('eup-campfire-status');
+  const elEmberGrid = document.getElementById('eup-ember-grid');
+  const elTaleScroll = document.getElementById('eup-tale-scroll');
+  const elVoyageStatus = document.getElementById('eup-voyage-status');
+  const elSlotGrid = document.getElementById('eup-slot-grid');
+  const elProvenanceSeal = document.getElementById('eup-provenance-seal');
+  const elRecalledStory = document.getElementById('eup-recalled-story');
+  const elPalimpsestGhost = document.getElementById('eup-palimpsest-ghost');
+  const elPlateDrawer = document.getElementById('eup-plate-drawer');
+  const elLoupeViewport = document.getElementById('eup-loupe-viewport');
+  const elDiptychFrame = document.getElementById('eup-diptych-frame');
+  const elPaneMap = document.getElementById('eup-pane-map');
+  const elPaneImage = document.getElementById('eup-pane-image');
+  const elBtnPlates = document.getElementById('eup-btn-plates');
+  const elBtnMute = document.getElementById('eup-btn-mute');
+  const elBtnLoupe = document.getElementById('eup-btn-loupe');
+
+  function makeTag(tagName, cls, text) {
+    const node = document.createElement(tagName);
+    node.className = cls;
+    if (text !== undefined && text !== null) node.textContent = text;
+    return node;
+  }
+
+  function unlockAudio() {
+    bazaarEngine.unlockAudio();
+    campfireEngine.unlockAudio();
+  }
+
+  function syncCanvasSize() {
+    const rect = canvas.getBoundingClientRect();
+    const nextW = Math.max(260, Math.round(rect.width || 800));
+    const nextH = Math.max(200, Math.round(rect.height || 480));
+    const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+    cssW = nextW;
+    cssH = nextH;
+    const devW = Math.round(nextW * dpr);
+    const devH = Math.round(nextH * dpr);
+    if (canvas.width !== devW || canvas.height !== devH) {
+      canvas.width = devW;
+      canvas.height = devH;
+    }
+    if (offVoyageCanvas.width !== devW || offVoyageCanvas.height !== devH) {
+      offVoyageCanvas.width = devW;
+      offVoyageCanvas.height = devH;
+    }
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    offVoyageCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function commLabelById(id) {
+    const found = bazaarLayer.SIX_COMMODITIES.find(function (c) { return c.id === id; });
+    return found ? found.label : id;
+  }
+
+  function renderBazaarDOM(bState) {
+    elTurningStrip.textContent = '';
+    bState.SOLAR_TURNINGS.forEach(function (t) {
+      const btn = makeTag('button', 'eup-btn eup-turn-pill', t.label);
+      btn.type = 'button';
+      btn.setAttribute('aria-pressed', String(t.index === bState.turningIndex));
+      btn.addEventListener('click', function () {
+        unlockAudio();
+        bazaarEngine.setTurning(t.index);
+        syncUI();
+      });
+      elTurningStrip.appendChild(btn);
+    });
+
+    elSolarNote.textContent = 'Declination ' + bState.turning.solarDeclinationDeg + '° · ' + bState.turning.windBearing;
+    elNationSummary.textContent = 'Selected: ' + bState.selectedNation.name + ' (' + bState.tradedNations.length + '/7 traded)';
+
+    elNationGrid.textContent = '';
+    bState.SEVEN_NATIONS.forEach(function (nat) {
+      const token = makeTag('nation-berth-token', 'eup-nation-token');
+      const btn = makeTag('button', 'eup-btn eup-nation-btn');
+      btn.type = 'button';
+      btn.setAttribute('aria-pressed', String(nat.index === bState.selectedNationIndex));
+      const topLine = makeTag('ember-echo-band', 'eup-nation-line');
+      topLine.appendChild(makeTag('brass-scale-readout', 'eup-nation-title', (nat.index + 1) + '. ' + nat.name));
+      topLine.appendChild(makeTag('brass-scale-readout', 'eup-route-badge', nat.routeType === 'sail' ? 'YELLOW SAIL' : 'CAMEL ARCH'));
+      const meta = makeTag('brass-scale-readout', 'eup-nation-meta',
+        nat.merchantName + ' · brings ' + commLabelById(nat.specialtyId) + ' · seeks ' + commLabelById(nat.cravesId));
+      btn.appendChild(topLine);
+      btn.appendChild(meta);
+      btn.addEventListener('click', function () {
+        unlockAudio();
+        bazaarEngine.selectNation(nat.index);
+        syncUI();
+      });
+      token.appendChild(btn);
+      elNationGrid.appendChild(token);
+    });
+
+    elPackSummary.textContent = 'Weighed/traded goods: ' + bState.tradedCommodities.length + '/6';
+    elCommodityGrid.textContent = '';
+    bState.SIX_COMMODITIES.forEach(function (comm, idx) {
+      const chip = makeTag('commodity-bale-chip', 'eup-commodity-chip');
+      const isOffer = bState.offerId === comm.id;
+      const isReq = bState.requestId === comm.id;
+      chip.dataset.role = isOffer ? 'offer' : (isReq ? 'request' : 'idle');
+
+      const head = makeTag('ember-echo-band', 'eup-comm-head');
+      head.appendChild(makeTag('brass-scale-readout', 'eup-comm-name', '[' + (idx + 1) + '] ' + comm.label));
+      head.appendChild(makeTag('brass-scale-readout', 'eup-comm-stock', (bState.inventory[comm.id] || 0) + ' ' + comm.unit));
+
+      const actions = makeTag('ember-echo-band', 'eup-comm-actions');
+      const btnOffer = makeTag('button', 'eup-btn eup-mini-btn', 'Offer');
+      btnOffer.type = 'button';
+      btnOffer.setAttribute('aria-pressed', String(isOffer));
+      btnOffer.addEventListener('click', function () {
+        unlockAudio();
+        bazaarEngine.setOffer(comm.id);
+        syncUI();
+      });
+      const btnAsk = makeTag('button', 'eup-btn eup-mini-btn', 'Ask');
+      btnAsk.type = 'button';
+      btnAsk.setAttribute('aria-pressed', String(isReq));
+      btnAsk.addEventListener('click', function () {
+        unlockAudio();
+        bazaarEngine.setRequest(comm.id);
+        syncUI();
+      });
+      actions.appendChild(btnOffer);
+      actions.appendChild(btnAsk);
+      chip.appendChild(head);
+      chip.appendChild(actions);
+      elCommodityGrid.appendChild(chip);
+    });
+
+    const q = bState.quote;
+    const deg = (bState.scaleEquilibrium * 180 / Math.PI).toFixed(1);
+    elQuoteLine.textContent = 'Offer ' + q.offerQty + ' ' + q.offerLabel +
+      ' -> Yield ' + q.receivedQty + ' ' + q.requestLabel +
+      ' · Rate ' + q.exchangeRatio.toFixed(2) + 'x · Beam ' + (deg >= 0 ? '+' : '') + deg + '°';
+
+    if (bState.ledger.length > 0) {
+      const r = bState.ledger[0];
+      elLedgerReceipt.textContent = 'Barter #' + r.stepNo + ' (' + r.turningLabel + '): ' +
+        r.merchantName + ' (' + (r.routeType === 'sail' ? 'yellow-striped sail' : 'camel caravan') + ') exchanged ' +
+        r.offerQty + ' ' + r.offerLabel + ' for ' + r.receivedQty + ' ' + r.requestLabel + '.';
+    } else {
+      elLedgerReceipt.textContent = 'Weigh ginger, cotton bales, pistachios, poppy seeds, nutmeg, or golden muslin on the brass scale.';
+    }
+  }
+
+  function speakTriggerWord(wordOrId, extraOpts) {
+    unlockAudio();
+    const bState = bazaarEngine.getState();
+    const opts = Object.assign({
+      turningIndex: bState.turningIndex,
+      turningLabel: bState.turning.label
+    }, extraOpts || {});
+    if (campfireNationHint !== null && opts.nationHintIndex === undefined) {
+      opts.nationHintIndex = campfireNationHint;
+    }
+    const res = campfireEngine.speakWord(wordOrId, opts);
+    syncUI();
+    renderFrame();
+    return res;
+  }
+
+  function summonVoyageMemory(wordOrId) {
+    unlockAudio();
+    const res = campfireEngine.summonMemory(wordOrId, phase);
+    syncUI();
+    renderFrame();
+    return res;
+  }
+
+  function renderCampfireDOM(bState, cState) {
+    if (cState.activeWordId) {
+      const actSlot = cState.memorySlots.find(function (s) { return s.id === cState.activeWordId; });
+      elCampfireStatus.textContent = 'Word spoken beside the fires: "' + (actSlot ? actSlot.word : cState.activeWordId) +
+        '" · 7 merchants answered · ' + cState.swappedCount + '/6 memories traded (' + cState.intactCount + '/6 native).';
+    } else {
+      elCampfireStatus.textContent = 'Stretched on carpets beside the seven fires around the shuttered market, merchants listen. Speak a word (1–6):';
+    }
+
+    elEmberGrid.textContent = '';
+    cState.memorySlots.forEach(function (slot) {
+      const wrap = makeTag('trigger-word-ember', 'eup-word-ember');
+      const btn = makeTag('button', 'eup-btn eup-ember-btn');
+      btn.type = 'button';
+      btn.dataset.wordId = slot.id;
+      btn.dataset.swapped = String(slot.isSwapped);
+      btn.setAttribute('aria-pressed', String(cState.activeWordId === slot.id));
+      btn.appendChild(makeTag('brass-scale-readout', 'eup-word-label', '[' + slot.key + '] ' + slot.word));
+      btn.appendChild(makeTag('brass-scale-readout', 'eup-word-state',
+        slot.isSwapped ? ('Traded · ' + slot.currentNation) : 'Unspoken · Native'));
+      btn.addEventListener('click', function () {
+        speakTriggerWord(slot.id);
+      });
+      wrap.appendChild(btn);
+      elEmberGrid.appendChild(wrap);
+    });
+
+    elTaleScroll.textContent = '';
+    if (cState.activeChorus && cState.activeChorus.length > 0) {
+      cState.activeChorus.forEach(function (item) {
+        const card = makeTag('ember-echo-band', 'eup-tale-card');
+        card.dataset.installed = String(!!item.isInstalled);
+        const meta = makeTag('ember-echo-band', 'eup-tale-meta');
+        meta.appendChild(makeTag('brass-scale-readout', 'eup-tale-who',
+          'Fire ' + (item.nationIndex + 1) + ' · ' + item.narrator + ' (' + item.nation + ')'));
+        meta.appendChild(makeTag('swapped-provenance-seal', 'eup-route-badge',
+          item.isInstalled ? 'SETTLED IN PACK' : (item.routeType === 'sail' ? 'SAIL TALE' : 'CARAVAN TALE')));
+        card.appendChild(meta);
+        card.appendChild(makeTag('brass-scale-readout', 'eup-tale-body', item.text));
+        elTaleScroll.appendChild(card);
+      });
+    } else {
+      const idleCard = makeTag('ember-echo-band', 'eup-tale-card');
+      idleCard.appendChild(makeTag('brass-scale-readout', 'eup-tale-body',
+        'Seven fires ring the darkened flagstones (' + bState.turning.label + '). Whenever someone utters wolf, sister, hidden treasure, battle, scabies, or lovers, each of the seven nations answers with a tale.'));
+      elTaleScroll.appendChild(idleCard);
+    }
+  }
+
+  function renderVoyageDOM(cState) {
+    elVoyageStatus.textContent = 'Long journey home · Memory Pack: ' + cState.swappedCount +
+      '/6 replaced by merchant tales · ' + cState.intactCount + '/6 native homeland memories intact.';
+
+    elSlotGrid.textContent = '';
+    cState.memorySlots.forEach(function (slot) {
+      const tab = makeTag('memory-slot-tablet', 'eup-slot-tablet');
+      const btn = makeTag('button', 'eup-btn eup-slot-btn');
+      btn.type = 'button';
+      btn.dataset.wordId = slot.id;
+      btn.dataset.swapped = String(slot.isSwapped);
+      btn.setAttribute('aria-pressed', String(cState.inspectedWordId === slot.id));
+      btn.appendChild(makeTag('brass-scale-readout', 'eup-word-label', '[' + slot.key + '] ' + slot.word));
+      btn.appendChild(makeTag('brass-scale-readout', 'eup-word-state',
+        slot.isSwapped ? ('Foreign: ' + slot.currentNarrator) : 'Intact Homeland'));
+      btn.addEventListener('click', function () {
+        summonVoyageMemory(slot.id);
+      });
+      tab.appendChild(btn);
+      elSlotGrid.appendChild(tab);
+    });
+
+    const entry = cState.inspectedEntry;
+    if (entry && entry.ok) {
+      elProvenanceSeal.dataset.provenance = entry.isSwapped ? 'swapped' : 'native';
+      if (entry.isSwapped) {
+        elProvenanceSeal.textContent = 'Swapped beside the Fires · ' + entry.currentNarrator +
+          ' · ' + entry.currentNation + (entry.turningSwapped ? ' (' + entry.turningSwapped + ')' : '');
+        elRecalledStory.textContent = entry.currentText;
+        elPalimpsestGhost.hidden = false;
+        elPalimpsestGhost.textContent = 'Faded native memory (' + entry.nativeOrigin + '): "' + entry.nativeGhostText + '"';
+      } else {
+        elProvenanceSeal.textContent = 'Intact Native Memory · ' + entry.nativeOrigin;
+        elRecalledStory.textContent = entry.currentText;
+        elPalimpsestGhost.hidden = true;
+      }
+    }
+  }
+
+  function syncPlateUI() {
+    elPlateDrawer.hidden = !plateDrawerOpen;
+    elBtnPlates.setAttribute('aria-expanded', String(plateDrawerOpen));
+    elDiptychFrame.dataset.tab = plateTab;
+    elPaneMap.hidden = (plateTab === 'image');
+    elPaneImage.hidden = (plateTab === 'map');
+    ['diptych', 'map', 'image'].forEach(function (t) {
+      const b = document.getElementById('eup-tab-' + t);
+      if (b) b.setAttribute('aria-pressed', String(plateTab === t));
+    });
+    elLoupeViewport.dataset.loupe = loupeActive ? 'on' : 'off';
+    elBtnLoupe.setAttribute('aria-pressed', String(loupeActive));
+    elBtnLoupe.textContent = loupeActive ? '[Z] 1.75x Loupe On' : '[Z] 1.75x Loupe Off';
+  }
+
+  function syncUI() {
+    const bState = bazaarEngine.getState();
+    const cState = campfireEngine.getState();
+
+    rootEl.dataset.phase = phase;
+    elTurningBadge.textContent = bState.turning.label + ' · ' + bState.turning.windBearing;
+    elBtnMute.setAttribute('aria-pressed', String(muted));
+    elBtnMute.textContent = muted ? '[M] Muted' : '[M] Sound On';
+
+    ['bazaar', 'campfire', 'voyage'].forEach(function (p) {
+      const pb = document.getElementById('eup-phase-' + p);
+      if (pb) pb.setAttribute('aria-pressed', String(phase === p));
+    });
+
+    elPanelBazaar.hidden = (phase !== 'bazaar');
+    elPanelCampfire.hidden = (phase !== 'campfire');
+    elPanelVoyage.hidden = (phase !== 'voyage');
+
+    if (phase === 'bazaar') {
+      elStageCaption.textContent = bState.turning.label + ' · ' + bState.selectedNation.berthLabel +
+        ' · Barters struck: ' + bState.totalBarters;
+      renderBazaarDOM(bState);
+    } else if (phase === 'campfire') {
+      elStageCaption.textContent = 'Night beside the seven fires · Click any ember or merchant fire, or press 1–6 (' +
+        cState.swappedCount + '/6 words spoken).';
+      renderCampfireDOM(bState, cState);
+    } else {
+      elStageCaption.textContent = 'Return voyage by yellow-striped sail and camel train · ' +
+        cState.swappedCount + ' foreign merchant tales, ' + cState.intactCount + ' native memories.';
+      renderVoyageDOM(cState);
+    }
+    syncPlateUI();
+  }
+
+  function setPhase(nextPhase) {
+    if (nextPhase !== 'bazaar' && nextPhase !== 'campfire' && nextPhase !== 'voyage') return phase;
+    phase = nextPhase;
+    if (phase === 'voyage') {
+      const cState = campfireEngine.getState();
+      if (!cState.inspectedWordId) {
+        campfireEngine.summonMemory(cState.activeWordId || 'wolf', 'voyage');
+      } else {
+        campfireEngine.summonMemory(cState.inspectedWordId, 'voyage');
+      }
+    }
+    syncUI();
+    syncCanvasSize();
+    renderFrame();
+    return phase;
+  }
+
+  function renderFrame() {
+    const cState = campfireEngine.getState();
+    const env = { phase: phase, swappedCount: cState.swappedCount, reducedMotion: reducedMotion };
+    bazaarEngine.renderScene(ctx, cssW, cssH, env);
+    if (phase === 'campfire') {
+      campfireEngine.renderOverlay(ctx, cssW, cssH, env);
+    } else if (phase === 'voyage') {
+      offVoyageCtx.clearRect(0, 0, cssW, cssH);
+      campfireEngine.renderOverlay(offVoyageCtx, cssW, cssH, env);
+      ctx.save();
+      ctx.globalCompositeOperation = 'screen';
+      ctx.globalAlpha = 0.86;
+      ctx.drawImage(offVoyageCanvas, 0, 0, offVoyageCanvas.width, offVoyageCanvas.height, 0, 0, cssW, cssH);
+      ctx.restore();
+    }
+  }
+
+  function tick(ts) {
+    const dt = lastTs ? Math.min(0.05, Math.max(0.001, (ts - lastTs) / 1000)) : 0.016;
+    lastTs = ts;
+    const env = { phase: phase, reducedMotion: reducedMotion };
+    bazaarEngine.step(dt, env);
+    campfireEngine.step(dt, env);
+    renderFrame();
+    window.requestAnimationFrame(tick);
+  }
+
+  canvas.addEventListener('click', function (ev) {
+    unlockAudio();
+    const rect = canvas.getBoundingClientRect();
+    const x = ev.clientX - rect.left;
+    const y = ev.clientY - rect.top;
+    if (phase === 'bazaar') {
+      const hit = bazaarEngine.hitTest(x, y, rect.width, rect.height, 'bazaar');
+      if (hit.type === 'commodity') {
+        const bs = bazaarEngine.getState();
+        if (bs.offerId === hit.id) bazaarEngine.setRequest(hit.id);
+        else bazaarEngine.setOffer(hit.id);
+        syncUI();
+      } else if (hit.type === 'nation' || hit.type === 'sail' || hit.type === 'caravan') {
+        bazaarEngine.selectNation(hit.index);
+        syncUI();
+      }
+    } else if (phase === 'campfire') {
+      const chit = campfireEngine.hitTest(x, y, rect.width, rect.height, 'campfire');
+      if (chit.type === 'ember' && chit.wordId) {
+        speakTriggerWord(chit.wordId);
+      } else if (chit.type === 'fire' || chit.type === 'merchant') {
+        campfireNationHint = chit.index;
+        bazaarEngine.selectNation(chit.index);
+        syncUI();
+      } else {
+        const bhit = bazaarEngine.hitTest(x, y, rect.width, rect.height, 'campfire');
+        if (bhit.index >= 0) {
+          campfireNationHint = bhit.index;
+          bazaarEngine.selectNation(bhit.index);
+          syncUI();
+        }
+      }
+    } else if (phase === 'voyage') {
+      const vhit = campfireEngine.hitTest(x, y, rect.width, rect.height, 'voyage');
+      if (vhit.type === 'ember' && vhit.wordId) {
+        summonVoyageMemory(vhit.wordId);
+      } else {
+        const bvhit = bazaarEngine.hitTest(x, y, rect.width, rect.height, 'voyage');
+        if (bvhit.index >= 0) bazaarEngine.selectNation(bvhit.index);
+      }
+    }
+    renderFrame();
+  });
+
+  function setMutedAll(flag) {
+    muted = !!flag;
+    bazaarEngine.setMuted(muted);
+    campfireEngine.setMuted(muted);
+    syncUI();
+    return muted;
+  }
+
+  function resetAll() {
+    campfireNationHint = null;
+    plateDrawerOpen = false;
+    loupeActive = false;
+    bazaarEngine.reset();
+    campfireEngine.reset();
+    phase = 'bazaar';
+    syncUI();
+    syncCanvasSize();
+    renderFrame();
+    return getPublicState();
+  }
+
+  document.getElementById('eup-phase-bazaar').addEventListener('click', function () { unlockAudio(); setPhase('bazaar'); });
+  document.getElementById('eup-phase-campfire').addEventListener('click', function () { unlockAudio(); setPhase('campfire'); });
+  document.getElementById('eup-phase-voyage').addEventListener('click', function () { unlockAudio(); setPhase('voyage'); });
+  document.getElementById('eup-go-campfire').addEventListener('click', function () { unlockAudio(); setPhase('campfire'); });
+  document.getElementById('eup-back-bazaar').addEventListener('click', function () { unlockAudio(); setPhase('bazaar'); });
+  document.getElementById('eup-go-voyage').addEventListener('click', function () { unlockAudio(); setPhase('voyage'); });
+  document.getElementById('eup-voyage-to-fires').addEventListener('click', function () { unlockAudio(); setPhase('campfire'); });
+  document.getElementById('eup-voyage-to-bazaar').addEventListener('click', function () { unlockAudio(); setPhase('bazaar'); });
+
+  document.getElementById('eup-btn-turning').addEventListener('click', function () {
+    unlockAudio();
+    bazaarEngine.nextTurning();
+    syncUI();
+  });
+
+  document.getElementById('eup-qty-dec').addEventListener('click', function () {
+    unlockAudio();
+    const bs = bazaarEngine.getState();
+    bazaarEngine.setOffer(bs.offerId, Math.max(1, bs.offerQty - 1));
+    syncUI();
+  });
+
+  document.getElementById('eup-qty-inc').addEventListener('click', function () {
+    unlockAudio();
+    const bs = bazaarEngine.getState();
+    bazaarEngine.setOffer(bs.offerId, Math.min(12, bs.offerQty + 1));
+    syncUI();
+  });
+
+  document.getElementById('eup-btn-weigh').addEventListener('click', function () {
+    unlockAudio();
+    const bs = bazaarEngine.getState();
+    bazaarEngine.weighPair(bs.offerId, bs.requestId, bs.offerQty);
+    syncUI();
+  });
+
+  document.getElementById('eup-btn-barter').addEventListener('click', function () {
+    unlockAudio();
+    bazaarEngine.executeBarter();
+    syncUI();
+  });
+
+  elBtnPlates.addEventListener('click', function () {
+    plateDrawerOpen = !plateDrawerOpen;
+    if (!plateDrawerOpen) loupeActive = false;
+    syncPlateUI();
+  });
+
+  document.getElementById('eup-btn-close-plates').addEventListener('click', function () {
+    plateDrawerOpen = false;
+    loupeActive = false;
+    syncPlateUI();
+  });
+
+  ['diptych', 'map', 'image'].forEach(function (t) {
+    document.getElementById('eup-tab-' + t).addEventListener('click', function () {
+      plateTab = t;
+      syncPlateUI();
+    });
+  });
+
+  elBtnLoupe.addEventListener('click', function () {
+    loupeActive = !loupeActive;
+    syncPlateUI();
+  });
+
+  elBtnMute.addEventListener('click', function () {
+    setMutedAll(!muted);
+  });
+
+  document.getElementById('eup-btn-reset').addEventListener('click', function () {
+    resetAll();
+  });
+
+  window.addEventListener('keydown', function (ev) {
+    if (ev.metaKey || ev.ctrlKey || ev.altKey) return;
+    const tag = ev.target && ev.target.tagName ? ev.target.tagName.toLowerCase() : '';
+    if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
+    const k = ev.key;
+    const low = k.toLowerCase();
+
+    if (k === 'Escape') {
+      if (plateDrawerOpen || loupeActive) {
+        ev.preventDefault();
+        plateDrawerOpen = false;
+        loupeActive = false;
+        syncPlateUI();
+      }
+      return;
+    }
+    if (low === 'p') {
+      ev.preventDefault();
+      plateDrawerOpen = !plateDrawerOpen;
+      if (!plateDrawerOpen) loupeActive = false;
+      syncPlateUI();
+      return;
+    }
+    if (low === 'z') {
+      ev.preventDefault();
+      loupeActive = !loupeActive;
+      syncPlateUI();
+      return;
+    }
+    if (low === 'm') {
+      ev.preventDefault();
+      setMutedAll(!muted);
+      return;
+    }
+    if (low === 'r') {
+      ev.preventDefault();
+      resetAll();
+      return;
+    }
+    if (plateDrawerOpen) return;
+
+    if (low === 'b') { ev.preventDefault(); unlockAudio(); setPhase('bazaar'); return; }
+    if (low === 'n') { ev.preventDefault(); unlockAudio(); setPhase('campfire'); return; }
+    if (low === 'v') { ev.preventDefault(); unlockAudio(); setPhase('voyage'); return; }
+    if (low === 't') { ev.preventDefault(); unlockAudio(); bazaarEngine.nextTurning(); syncUI(); return; }
+
+    if (k >= '1' && k <= '6') {
+      ev.preventDefault();
+      const idx = Number(k) - 1;
+      if (phase === 'bazaar') {
+        unlockAudio();
+        const comm = bazaarLayer.SIX_COMMODITIES[idx];
+        if (comm) {
+          bazaarEngine.setOffer(comm.id);
+          syncUI();
+        }
+      } else if (phase === 'campfire') {
+        speakTriggerWord(k);
+      } else if (phase === 'voyage') {
+        summonVoyageMemory(k);
+      }
+    }
+  });
+
+  window.addEventListener('resize', function () {
+    syncCanvasSize();
+    renderFrame();
+  });
+
+  function getPublicState() {
+    const bState = bazaarEngine.getState();
+    const cState = campfireEngine.getState();
+    return {
+      cityId: '15_euphemia',
+      phase: phase,
+      plateDrawerOpen: plateDrawerOpen,
+      plateTab: plateTab,
+      loupeActive: loupeActive,
+      loupeScale: loupeActive ? 1.75 : 1,
+      muted: muted,
+      reducedMotion: reducedMotion,
+      turning: bState.turning,
+      turningIndex: bState.turningIndex,
+      nations: bState.SEVEN_NATIONS,
+      selectedNation: bState.selectedNation,
+      commodities: bState.SIX_COMMODITIES,
+      inventory: bState.inventory,
+      quote: bState.quote,
+      totalBarters: bState.totalBarters,
+      triggerWords: cState.TRIGGER_WORDS,
+      memorySlots: cState.memorySlots,
+      swappedCount: cState.swappedCount,
+      intactCount: cState.intactCount,
+      totalTalesHeard: cState.totalTalesHeard,
+      activeWordId: cState.activeWordId,
+      inspectedWordId: cState.inspectedWordId,
+      inspectedEntry: cState.inspectedEntry,
+      bazaar: bState,
+      campfire: cState
+    };
+  }
+
+  window.__euphemia = {
+    getState: getPublicState,
+    setPhase: setPhase,
+    setTurning: function (v) { const r = bazaarEngine.setTurning(v); syncUI(); renderFrame(); return r; },
+    nextTurning: function () { const r = bazaarEngine.nextTurning(); syncUI(); renderFrame(); return r; },
+    selectNation: function (v) { const r = bazaarEngine.selectNation(v); syncUI(); renderFrame(); return r; },
+    setOffer: function (v, q) { const r = bazaarEngine.setOffer(v, q); syncUI(); renderFrame(); return r; },
+    setRequest: function (v) { const r = bazaarEngine.setRequest(v); syncUI(); renderFrame(); return r; },
+    weighPair: function (o, rq, q) { const r = bazaarEngine.weighPair(o, rq, q); syncUI(); renderFrame(); return r; },
+    executeBarter: function () { const r = bazaarEngine.executeBarter(); syncUI(); renderFrame(); return r; },
+    barter: function () { const r = bazaarEngine.executeBarter(); syncUI(); renderFrame(); return r; },
+    speakWord: speakTriggerWord,
+    summonMemory: summonVoyageMemory,
+    recallMemory: summonVoyageMemory,
+    openPlates: function (t) { plateDrawerOpen = true; if (t) plateTab = t; syncPlateUI(); return getPublicState(); },
+    closePlates: function () { plateDrawerOpen = false; loupeActive = false; syncPlateUI(); return getPublicState(); },
+    togglePlates: function () { plateDrawerOpen = !plateDrawerOpen; if (!plateDrawerOpen) loupeActive = false; syncPlateUI(); return plateDrawerOpen; },
+    setPlateTab: function (t) { if (t === 'diptych' || t === 'map' || t === 'image') plateTab = t; syncPlateUI(); return plateTab; },
+    toggleLoupe: function (force) { loupeActive = typeof force === 'boolean' ? force : !loupeActive; syncPlateUI(); return loupeActive; },
+    setMuted: setMutedAll,
+    toggleMute: function () { return setMutedAll(!muted); },
+    reset: resetAll,
+    engines: { bazaar: bazaarEngine, campfire: campfireEngine }
+  };
+
+  const mapImg = document.getElementById('eup-map-img');
+  if (mapImg && mapImg.complete && mapImg.naturalWidth === 0 && mapImg.onerror) mapImg.onerror();
+  const cityImg = document.getElementById('eup-city-img');
+  if (cityImg && cityImg.complete && cityImg.naturalWidth === 0 && cityImg.onerror) cityImg.onerror();
+
+  syncUI();
+  syncCanvasSize();
+  renderFrame();
+  window.requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>

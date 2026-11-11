@@ -1,0 +1,1984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VI · TAMARA — Cities &amp; Signs I (Xylographic Emblem Folio)</title>
+  <style id="xylo-tamara-folio-css">
+    :root {
+      --tmr-vellum: #f3ead8;
+      --tmr-aged-rag: #e6d8be;
+      --tmr-chalk: #efe6d2;
+      --tmr-ink: #171310;
+      --tmr-vermilion: #a62c1e;
+      --tmr-ochre: #986d24;
+      --tmr-slate: #49525c;
+      --tmr-vellum-deep: #dccba9;
+      --tmr-serif: "Palatino Linotype", "Book Antiqua", Baskerville, Georgia, serif;
+      --tmr-mono: "Courier New", Courier, monospace;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: var(--tmr-ink);
+      color: var(--tmr-ink);
+      font-family: var(--tmr-serif);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    tamara-emblem-book {
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr) auto;
+      width: 100%;
+      height: 100vh;
+      height: 100dvh;
+      max-width: 100vw;
+      overflow: hidden;
+      background-color: var(--tmr-vellum);
+      background-image:
+        repeating-linear-gradient(
+          0deg,
+          rgba(23, 19, 16, 0.022) 0px,
+          rgba(23, 19, 16, 0.022) 1px,
+          transparent 1px,
+          transparent 5px
+        ),
+        radial-gradient(circle at 50% 45%, rgba(243, 234, 216, 0.4), rgba(220, 203, 169, 0.55));
+      border: 3px solid var(--tmr-ink);
+      box-shadow: inset 0 0 0 2px var(--tmr-vellum), inset 0 0 0 3.5px var(--tmr-ochre);
+      position: relative;
+    }
+
+    /* ---------------- TOP FOLIO RUBRIC SPINE ---------------- */
+    folio-rubric-spine {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 6px 12px;
+      background-color: var(--tmr-aged-rag);
+      background-image: repeating-linear-gradient(
+        -45deg,
+        rgba(23, 19, 16, 0.03) 0px,
+        rgba(23, 19, 16, 0.03) 1px,
+        transparent 1px,
+        transparent 7px
+      );
+      border-bottom: 2px solid var(--tmr-ink);
+      min-height: 44px;
+      z-index: 10;
+    }
+
+    xylo-rubric-brand {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      min-width: 0;
+    }
+
+    xylo-seal-crest {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      flex: 0 0 30px;
+      border: 1.5px solid var(--tmr-ink);
+      background: var(--tmr-vellum);
+      box-shadow: 2px 2px 0 var(--tmr-vermilion);
+    }
+
+    xylo-seal-crest svg {
+      width: 24px;
+      height: 24px;
+      display: block;
+    }
+
+    xylo-title-stack {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    xylo-series-kicker {
+      display: block;
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--tmr-vermilion);
+      line-height: 1.15;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    xylo-folio-heading {
+      display: flex;
+      align-items: baseline;
+      gap: 7px;
+      font-size: clamp(13px, 1.45vw, 17px);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      line-height: 1.15;
+      color: var(--tmr-ink);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    xylo-heading-sub {
+      font-size: 11.5px;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--tmr-slate);
+      letter-spacing: 0.02em;
+    }
+
+    xylo-utility-cluster {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 5px;
+      flex: 0 0 auto;
+    }
+
+    .tmr-press-key {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 4px 8px;
+      background: var(--tmr-vellum);
+      color: var(--tmr-ink);
+      border: 1.5px solid var(--tmr-ink);
+      font-family: var(--tmr-serif);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      line-height: 1.15;
+      cursor: pointer;
+      user-select: none;
+      box-shadow: 1.5px 1.5px 0 var(--tmr-ink);
+      transition: background-color 130ms ease, color 130ms ease, transform 130ms ease;
+    }
+
+    .tmr-press-key:hover {
+      background: var(--tmr-ink);
+      color: var(--tmr-vellum);
+    }
+
+    .tmr-press-key:focus-visible,
+    xylo-act-tab:focus-visible,
+    xylo-catalog-slip:focus-visible,
+    xylo-sign-check-row:focus-visible,
+    xylo-cloud-constellation-row:focus-visible {
+      outline: 2px solid var(--tmr-vermilion);
+      outline-offset: 2px;
+    }
+
+    .tmr-press-key[data-engaged="true"] {
+      background: var(--tmr-vermilion);
+      color: var(--tmr-vellum);
+      border-color: var(--tmr-ink);
+    }
+
+    .tmr-press-key.tmr-ochre-tone {
+      background: var(--tmr-ochre);
+      color: var(--tmr-vellum);
+    }
+
+    .tmr-press-key.tmr-ochre-tone:hover {
+      background: var(--tmr-ink);
+      color: var(--tmr-vellum);
+    }
+
+    .tmr-press-key.tmr-vermilion-tone {
+      background: var(--tmr-vermilion);
+      color: var(--tmr-vellum);
+    }
+
+    .tmr-press-key.tmr-vermilion-tone:hover {
+      background: var(--tmr-ink);
+      color: var(--tmr-vellum);
+    }
+
+    .tmr-keycap {
+      font-family: var(--tmr-mono);
+      font-size: 9.5px;
+      padding: 0 3px;
+      border: 1px solid currentColor;
+      opacity: 0.85;
+    }
+
+    /* ---------------- ACT RUBRIC TAB RAIL ---------------- */
+    act-tab-rail {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      background: var(--tmr-vellum-deep);
+      border-bottom: 2px solid var(--tmr-ink);
+      z-index: 9;
+    }
+
+    xylo-act-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      padding: 6px 10px;
+      border-right: 1.5px solid var(--tmr-ink);
+      background: var(--tmr-aged-rag);
+      color: var(--tmr-ink);
+      cursor: pointer;
+      user-select: none;
+      min-width: 0;
+      transition: background-color 130ms ease, color 130ms ease;
+    }
+
+    xylo-act-tab:last-child {
+      border-right: none;
+    }
+
+    xylo-act-tab:hover {
+      background: var(--tmr-chalk);
+    }
+
+    xylo-act-tab[data-selected="true"] {
+      background: var(--tmr-vermilion);
+      color: var(--tmr-vellum);
+      box-shadow: inset 0 -3px 0 var(--tmr-ink);
+    }
+
+    xylo-tab-label-wrap {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    xylo-tab-roman {
+      font-weight: 700;
+      font-size: 11.5px;
+      letter-spacing: 0.06em;
+      color: var(--tmr-vermilion);
+      flex: 0 0 auto;
+    }
+
+    xylo-act-tab[data-selected="true"] xylo-tab-roman {
+      color: var(--tmr-vellum);
+    }
+
+    xylo-tab-name {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    xylo-tab-tally {
+      font-family: var(--tmr-mono);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 1px 5px;
+      border: 1px solid currentColor;
+      white-space: nowrap;
+      flex: 0 0 auto;
+    }
+    /* ---------------- CENTRAL STAGE DECK ---------------- */
+    tamara-stage-deck {
+      position: relative;
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    wilderness-verge-stage,
+    heraldic-corridor-stage,
+    horizon-augury-stage,
+    archival-plates-folio {
+      display: none;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      padding: 8px 10px;
+      gap: 10px;
+      overflow: hidden;
+    }
+
+    wilderness-verge-stage[data-active-stage="true"],
+    horizon-augury-stage[data-active-stage="true"] {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 326px;
+    }
+
+    heraldic-corridor-stage[data-active-stage="true"] {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 364px;
+      grid-template-rows: minmax(0, 1fr);
+    }
+
+    archival-plates-folio[data-active-stage="true"] {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: 8px;
+    }
+
+    xylo-corridor-subswitch {
+      display: none;
+    }
+
+    xylo-verge-mount,
+    xylo-corridor-mount,
+    xylo-horizon-mount {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    /* ---------------- MARGINALIA & PEEL INSPECTION LECTERN ---------------- */
+    xylo-verge-marginalia,
+    peel-inspection-lectern,
+    xylo-horizon-marginalia {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      height: 100%;
+      min-height: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 9px 10px;
+      background: var(--tmr-aged-rag);
+      border: 2px solid var(--tmr-ink);
+      box-shadow: inset 0 0 0 1.5px var(--tmr-vellum);
+    }
+
+    xylo-rubric-block {
+      display: block;
+      padding: 7px 8px;
+      background: var(--tmr-vellum);
+      border: 1.5px solid var(--tmr-ink);
+    }
+
+    xylo-section-pilcrow {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--tmr-vermilion);
+      border-bottom: 1px solid var(--tmr-ochre);
+      padding-bottom: 4px;
+      margin-bottom: 5px;
+    }
+
+    xylo-epigraph-prose {
+      display: block;
+      font-size: 11.8px;
+      line-height: 1.38;
+      color: var(--tmr-ink);
+      font-style: italic;
+    }
+
+    xylo-checklist-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    xylo-sign-check-row,
+    xylo-cloud-constellation-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 6px 8px;
+      background: var(--tmr-vellum);
+      border: 1.5px solid var(--tmr-ink);
+      cursor: pointer;
+      transition: background-color 120ms ease, border-color 120ms ease;
+    }
+
+    xylo-sign-check-row:hover,
+    xylo-cloud-constellation-row:hover {
+      background: var(--tmr-chalk);
+      border-color: var(--tmr-vermilion);
+    }
+
+    xylo-sign-check-row[data-recognized="true"],
+    xylo-cloud-constellation-row[data-recognized="true"] {
+      border-color: var(--tmr-vermilion);
+      background: #f7efe0;
+      box-shadow: inset 3px 0 0 var(--tmr-vermilion);
+    }
+
+    xylo-row-copy {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .tmr-row-title {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--tmr-ink);
+    }
+
+    .tmr-row-gloss {
+      font-size: 10.5px;
+      color: var(--tmr-slate);
+    }
+
+    .tmr-seal-stamp {
+      font-family: var(--tmr-mono);
+      font-size: 9.5px;
+      font-weight: 700;
+      padding: 2px 5px;
+      border: 1px solid var(--tmr-ink);
+      background: var(--tmr-aged-rag);
+      color: var(--tmr-ink);
+      white-space: nowrap;
+      flex: 0 0 auto;
+    }
+
+    xylo-sign-check-row[data-recognized="true"] .tmr-seal-stamp,
+    xylo-cloud-constellation-row[data-recognized="true"] .tmr-seal-stamp {
+      background: var(--tmr-vermilion);
+      color: var(--tmr-vellum);
+    }
+
+    /* ---------------- ACT II LECTERN & 26-CATALOG INDEX ---------------- */
+    xylo-lectern-specimen {
+      display: grid;
+      grid-template-columns: 102px minmax(0, 1fr);
+      gap: 8px;
+      align-items: center;
+      padding: 7px;
+      background: var(--tmr-vellum);
+      border: 1.5px solid var(--tmr-ink);
+    }
+
+    xylo-specimen-woodcut {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 102px;
+      height: 102px;
+      background: var(--tmr-chalk);
+      border: 1.5px solid var(--tmr-ink);
+      padding: 3px;
+    }
+
+    xylo-specimen-woodcut svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    xylo-specimen-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      min-width: 0;
+    }
+
+    .tmr-specimen-kicker {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--tmr-ochre);
+    }
+
+    .tmr-specimen-title {
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--tmr-ink);
+    }
+
+    .tmr-specimen-signifies {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--tmr-vermilion);
+      line-height: 1.22;
+    }
+
+    .tmr-nonmaterial-law {
+      font-family: var(--tmr-mono);
+      font-size: 9.5px;
+      padding: 2px 5px;
+      background: var(--tmr-aged-rag);
+      border: 1px solid var(--tmr-ink);
+      color: var(--tmr-ink);
+      margin-top: 2px;
+    }
+
+    xylo-peel-discourse-box {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 7px 8px;
+      background: var(--tmr-vellum);
+      border: 1.5px solid var(--tmr-ink);
+    }
+
+    .tmr-stratum-heading {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--tmr-vermilion);
+    }
+
+    .tmr-stratum-prose {
+      font-size: 11.5px;
+      line-height: 1.34;
+      color: var(--tmr-ink);
+    }
+
+    xylo-lectern-actions {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 6px;
+    }
+
+    xylo-catalog-index-box {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      flex: 1 1 auto;
+      min-height: 135px;
+      padding: 7px;
+      background: var(--tmr-vellum);
+      border: 1.5px solid var(--tmr-ink);
+      overflow: hidden;
+    }
+
+    xylo-filter-pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+    }
+
+    .tmr-filter-chip {
+      padding: 2px 5px;
+      font-family: var(--tmr-serif);
+      font-size: 10px;
+      font-weight: 700;
+      border: 1px solid var(--tmr-ink);
+      background: var(--tmr-aged-rag);
+      color: var(--tmr-ink);
+      cursor: pointer;
+    }
+
+    .tmr-filter-chip[data-active-filter="true"] {
+      background: var(--tmr-ink);
+      color: var(--tmr-vellum);
+    }
+
+    xylo-catalog-scroll {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      flex: 1 1 auto;
+      min-height: 80px;
+      padding-right: 2px;
+    }
+
+    xylo-catalog-slip {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      padding: 4px 6px;
+      border: 1px solid rgba(23, 19, 16, 0.45);
+      background: var(--tmr-chalk);
+      cursor: pointer;
+      font-size: 10.8px;
+      line-height: 1.2;
+    }
+
+    xylo-catalog-slip:hover {
+      border-color: var(--tmr-vermilion);
+      background: var(--tmr-vellum);
+    }
+
+    xylo-catalog-slip[data-current-slip="true"] {
+      border: 1.5px solid var(--tmr-vermilion);
+      background: #f9f0de;
+      font-weight: 700;
+    }
+
+    .tmr-slip-depth {
+      font-family: var(--tmr-mono);
+      font-size: 9.5px;
+      padding: 1px 4px;
+      border: 1px solid var(--tmr-ink);
+      background: var(--tmr-aged-rag);
+      flex: 0 0 auto;
+    }
+
+    .tmr-slip-depth[data-peeled="true"] {
+      background: var(--tmr-vermilion);
+      color: var(--tmr-vellum);
+    }
+
+    /* ---------------- ACT IV ARCHIVAL PLATES FOLIO & LOUPE ---------------- */
+    plate-mode-rail {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 6px 10px;
+      padding: 6px 10px;
+      background: var(--tmr-aged-rag);
+      border: 1.5px solid var(--tmr-ink);
+    }
+
+    xylo-plate-btn-group {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    plate-loupe-viewport {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 10px;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      overflow: auto;
+      padding: 8px;
+      background: var(--tmr-vellum-deep);
+      border: 2px solid var(--tmr-ink);
+    }
+
+    plate-loupe-viewport[data-plate-view="map"],
+    plate-loupe-viewport[data-plate-view="image"] {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    xylo-plate-frame {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-height: 220px;
+      background: var(--tmr-vellum);
+      border: 2px solid var(--tmr-ink);
+      overflow: auto;
+    }
+
+    plate-loupe-viewport[data-plate-view="map"] xylo-plate-frame[data-frame-kind="image"],
+    plate-loupe-viewport[data-plate-view="image"] xylo-plate-frame[data-frame-kind="map"] {
+      display: none;
+    }
+
+    xylo-plate-canvas-well {
+      position: relative;
+      flex: 1 1 auto;
+      min-height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: auto;
+      padding: 8px;
+      background: #e9dec6;
+      cursor: grab;
+    }
+
+    .tmr-plate-img {
+      display: block;
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border: 1.5px solid var(--tmr-ink);
+      box-shadow: 3px 3px 0 rgba(23, 19, 16, 0.28);
+      transform-origin: top left;
+    }
+
+    plate-loupe-viewport[data-zoom-step="1.75"] xylo-plate-canvas-well,
+    plate-loupe-viewport[data-zoom-step="2.5"] xylo-plate-canvas-well {
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
+
+    plate-loupe-viewport[data-zoom-step="1.75"] .tmr-plate-img {
+      max-width: none;
+      max-height: none;
+      width: 175%;
+    }
+
+    plate-loupe-viewport[data-zoom-step="2.5"] .tmr-plate-img {
+      max-width: none;
+      max-height: none;
+      width: 250%;
+    }
+
+    xylo-plate-fallback-etching {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-align: center;
+      padding: 18px;
+      max-width: 460px;
+      border: 1.5px dashed var(--tmr-ochre);
+      background: var(--tmr-vellum);
+    }
+
+    xylo-plate-frame[data-img-missing="true"] .tmr-plate-img {
+      display: none;
+    }
+
+    xylo-plate-frame[data-img-missing="true"] xylo-plate-fallback-etching {
+      display: flex;
+    }
+
+    plate-caption-plaque {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 6px 12px;
+      padding: 5px 10px;
+      background: var(--tmr-aged-rag);
+      border: 1.5px solid var(--tmr-ink);
+      font-size: 11px;
+    }
+
+    /* ---------------- BOTTOM DISCOURSE LEDGER & COLOPHON ---------------- */
+    discourse-ledger-strip {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 5px 12px;
+      background: var(--tmr-aged-rag);
+      border-top: 2px solid var(--tmr-ink);
+      font-size: 11px;
+      min-height: 38px;
+      z-index: 10;
+    }
+
+    xylo-ledger-metrics {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px 10px;
+      min-width: 0;
+    }
+
+    xylo-coat-meter {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-weight: 700;
+    }
+
+    xylo-coat-track {
+      display: inline-block;
+      width: 68px;
+      height: 8px;
+      background: var(--tmr-vellum);
+      border: 1px solid var(--tmr-ink);
+      overflow: hidden;
+    }
+
+    xylo-coat-fill {
+      display: block;
+      height: 100%;
+      width: 4%;
+      background: linear-gradient(90deg, var(--tmr-ochre), var(--tmr-vermilion));
+      transition: width 180ms ease;
+    }
+
+    xylo-discourse-ticker {
+      flex: 1 1 auto;
+      min-width: 0;
+      font-style: italic;
+      color: var(--tmr-slate);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    colophon-rubric {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      flex: 0 0 auto;
+    }
+
+    colophon-seal {
+      display: inline-block;
+      padding: 2px 7px;
+      background: var(--tmr-ink);
+      color: var(--tmr-vellum);
+      border: 1px solid var(--tmr-ochre);
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    /* ---------------- REDUCED MOTION & MOBILE PORTRAIT (390x844) ---------------- */
+    tamara-emblem-book[data-reduced-motion="true"] *,
+    tamara-emblem-book[data-reduced-motion="true"] *::before,
+    tamara-emblem-book[data-reduced-motion="true"] *::after {
+      transition: none !important;
+      animation: none !important;
+    }
+
+    @media (max-width: 860px) {
+      folio-rubric-spine {
+        padding: 5px 8px;
+        gap: 6px;
+      }
+      xylo-heading-sub,
+      xylo-discourse-ticker,
+      .tmr-keycap {
+        display: none;
+      }
+      .tmr-press-key {
+        padding: 3px 6px;
+        font-size: 10px;
+      }
+      act-tab-rail {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+      xylo-act-tab {
+        padding: 5px 5px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+      }
+      xylo-tab-name {
+        font-size: 10px;
+      }
+      xylo-tab-tally {
+        font-size: 9px;
+        padding: 0 3px;
+      }
+      wilderness-verge-stage[data-active-stage="true"],
+      horizon-augury-stage[data-active-stage="true"] {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: minmax(260px, 1.35fr) minmax(0, 1fr);
+        padding: 6px;
+        gap: 6px;
+      }
+      heraldic-corridor-stage[data-active-stage="true"] {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: auto minmax(0, 1fr);
+        padding: 6px;
+        gap: 6px;
+      }
+      xylo-corridor-subswitch {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 5px;
+      }
+      heraldic-corridor-stage[data-mobile-pane="corridor"] peel-inspection-lectern {
+        display: none;
+      }
+      heraldic-corridor-stage[data-mobile-pane="lectern"] xylo-corridor-mount {
+        display: none;
+      }
+      corridor-perspective-well.xylo-corridor-well {
+        min-height: 300px !important;
+      }
+      plate-loupe-viewport {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      discourse-ledger-strip {
+        padding: 4px 8px;
+        font-size: 10px;
+        gap: 6px;
+      }
+      xylo-coat-track {
+        width: 44px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <tamara-emblem-book id="tmr-emblem-book" data-active-act="1" data-reduced-motion="false">
+    <!-- TOP XYLOGRAPHIC RUBRIC SPINE -->
+    <folio-rubric-spine>
+      <xylo-rubric-brand>
+        <xylo-seal-crest aria-hidden="true">
+          <svg viewBox="0 0 32 32">
+            <rect x="2" y="2" width="28" height="28" fill="#f3ead8" stroke="#171310" stroke-width="2"/>
+            <path d="M5,9 L27,9 M16,4 L16,28" stroke="#171310" stroke-width="1.6"/>
+            <path d="M8,13 L24,13 L24,21 C24,25 19,27 16,28 C13,27 8,25 8,21 Z" fill="#a62c1e" stroke="#171310" stroke-width="1.4"/>
+            <circle cx="16" cy="19" r="3.2" fill="#f3ead8"/>
+          </svg>
+        </xylo-seal-crest>
+        <xylo-title-stack>
+          <xylo-series-kicker>¶ Chapter I · Cities &amp; Signs I · Folio VI</xylo-series-kicker>
+          <xylo-folio-heading>
+            TAMARA
+            <xylo-heading-sub>— The Thick Coating of Signs &amp; the Empty Sky</xylo-heading-sub>
+          </xylo-folio-heading>
+        </xylo-title-stack>
+      </xylo-rubric-brand>
+
+      <xylo-utility-cluster>
+        <xylo-press-trigger role="button" tabindex="0" class="tmr-press-key tmr-ochre-tone" id="tmr-btn-plates" data-tmr-cmd="toggle-plates" aria-pressed="false" title="Inspect Archival Map &amp; Perspective Plates (Key P)">
+          Plates <xylo-keycap-glyph class="tmr-keycap">P</xylo-keycap-glyph>
+        </xylo-press-trigger>
+        <xylo-press-trigger role="button" tabindex="0" class="tmr-press-key" id="tmr-btn-sound" data-tmr-cmd="toggle-sound" data-engaged="true" aria-pressed="true" title="Toggle WebAudio Woodblock &amp; Parchment Foley (Key M)">
+          Foley: On <xylo-keycap-glyph class="tmr-keycap">M</xylo-keycap-glyph>
+        </xylo-press-trigger>
+        <xylo-press-trigger role="button" tabindex="0" class="tmr-press-key" id="tmr-btn-motion" data-tmr-cmd="toggle-motion" data-engaged="false" aria-pressed="false" title="Toggle Reduced Motion (Key V)">
+          Motion: Full <xylo-keycap-glyph class="tmr-keycap">V</xylo-keycap-glyph>
+        </xylo-press-trigger>
+        <xylo-press-trigger role="button" tabindex="0" class="tmr-press-key" id="tmr-btn-reset" data-tmr-cmd="reset-all" title="Reset Journey &amp; Discourse Ledger (Key R)">
+          Reset <xylo-keycap-glyph class="tmr-keycap">R</xylo-keycap-glyph>
+        </xylo-press-trigger>
+      </xylo-utility-cluster>
+    </folio-rubric-spine>
+
+    <!-- ACT SWITCHING RUBRIC RAIL (1 / 2 / 3 / P) -->
+    <act-tab-rail role="tablist" aria-label="Tamara Three-Act Spatial Folio">
+      <xylo-act-tab role="tab" tabindex="0" id="tmr-tab-1" data-tmr-act="1" data-selected="true" aria-selected="true">
+        <xylo-tab-label-wrap>
+          <xylo-tab-roman>ACT I</xylo-tab-roman>
+          <xylo-tab-name>Wilderness Verge</xylo-tab-name>
+        </xylo-tab-label-wrap>
+        <xylo-tab-tally id="tmr-tally-act1">0/3 Signs</xylo-tab-tally>
+      </xylo-act-tab>
+
+      <xylo-act-tab role="tab" tabindex="0" id="tmr-tab-2" data-tmr-act="2" data-selected="false" aria-selected="false">
+        <xylo-tab-label-wrap>
+          <xylo-tab-roman>ACT II</xylo-tab-roman>
+          <xylo-tab-name>Street of Jutting Signs</xylo-tab-name>
+        </xylo-tab-label-wrap>
+        <xylo-tab-tally id="tmr-tally-act2">1/26 · P0</xylo-tab-tally>
+      </xylo-act-tab>
+
+      <xylo-act-tab role="tab" tabindex="0" id="tmr-tab-3" data-tmr-act="3" data-selected="false" aria-selected="false">
+        <xylo-tab-label-wrap>
+          <xylo-tab-roman>ACT III</xylo-tab-roman>
+          <xylo-tab-name>Empty Horizon &amp; Clouds</xylo-tab-name>
+        </xylo-tab-label-wrap>
+        <xylo-tab-tally id="tmr-tally-act3">0/3 Clouds</xylo-tab-tally>
+      </xylo-act-tab>
+
+      <xylo-act-tab role="tab" tabindex="0" id="tmr-tab-4" data-tmr-act="4" data-selected="false" aria-selected="false">
+        <xylo-tab-label-wrap>
+          <xylo-tab-roman>FOLIO</xylo-tab-roman>
+          <xylo-tab-name>Map &amp; City Plate</xylo-tab-name>
+        </xylo-tab-label-wrap>
+        <xylo-tab-tally id="tmr-tally-act4">II Plates</xylo-tab-tally>
+      </xylo-act-tab>
+    </act-tab-rail>
+
+    <!-- CENTRAL THREE-ACT + ARCHIVAL PLATES STAGE DECK -->
+    <tamara-stage-deck>
+      <!-- ACT I: WILDERNESS APPROACH -->
+      <wilderness-verge-stage id="tmr-stage-1" data-active-stage="true" role="tabpanel" aria-labelledby="tmr-tab-1">
+        <xylo-verge-mount id="tmr-verge-mount"></xylo-verge-mount>
+        <xylo-verge-marginalia>
+          <xylo-rubric-block>
+            <xylo-section-pilcrow>
+              <tmr-glyph-label>¶ Approach Among Mute Things</tmr-glyph-label>
+              <tmr-glyph-label id="tmr-mute-counter">Mute: 0</tmr-glyph-label>
+            </xylo-section-pilcrow>
+            <xylo-epigraph-prose>
+              “You walk for days among trees and among stones. Rarely does the eye light on a thing, and then only when it has recognized that thing as the sign of another thing… All the rest is silent and interchangeable; trees and stones are only what they are.”
+            </xylo-epigraph-prose>
+          </xylo-rubric-block>
+
+          <xylo-rubric-block>
+            <xylo-section-pilcrow>
+              <tmr-glyph-label>¶ Three Natural Signs Before the Gate</tmr-glyph-label>
+              <tmr-glyph-label id="tmr-verge-progress">0 / 3</tmr-glyph-label>
+            </xylo-section-pilcrow>
+            <xylo-checklist-stack id="tmr-wilderness-checklist"></xylo-checklist-stack>
+          </xylo-rubric-block>
+
+          <xylo-rubric-block>
+            <xylo-section-pilcrow>
+              <tmr-glyph-label>¶ City Threshold</tmr-glyph-label>
+              <tmr-glyph-label>Key S / 2</tmr-glyph-label>
+            </xylo-section-pilcrow>
+            <xylo-checklist-stack>
+              <xylo-press-trigger role="button" tabindex="0" class="tmr-press-key" data-tmr-cmd="verge-scan">
+                Recognize Next Sign on Verge [S]
+              </xylo-press-trigger>
+              <xylo-press-trigger role="button" tabindex="0" class="tmr-press-key tmr-vermilion-tone" id="tmr-enter-gate-btn" data-tmr-cmd="enter-corridor">
+                Gate Sealed (Recognize 3 Signs or Press 2)
+              </xylo-press-trigger>
+            </xylo-checklist-stack>
+          </xylo-rubric-block>
+        </xylo-verge-marginalia>
+      </wilderness-verge-stage>
+
+      <!-- ACT II: STREET OF JUTTING SIGNS & PEEL LECTERN -->
+      <heraldic-corridor-stage id="tmr-stage-2" data-active-stage="false" data-mobile-pane="corridor" role="tabpanel" aria-labelledby="tmr-tab-2">
+        <xylo-corridor-subswitch>
+          <xylo-press-trigger role="button" tabindex="0" class="tmr-press-key" id="tmr-sub-corridor" data-tmr-cmd="mobile-pane-corridor" data-engaged="true">
+            Street Corridor
+          </xylo-press-trigger>
+          <xylo-press-trigger role="button" tabindex="0" class="tmr-press-key" id="tmr-sub-lectern" data-tmr-cmd="mobile-pane-lectern" data-engaged="false">
+            Peel Lectern &amp; 26-Index
+          </xylo-press-trigger>
+        </xylo-corridor-subswitch>
+
+        <xylo-corridor-mount id="tmr-corridor-mount"></xylo-corridor-mount>
+
+        <peel-inspection-lectern id="tmr-lectern" aria-label="Pry and Peel Beneath Sign Lectern">
+          <xylo-lectern-specimen>
+            <xylo-specimen-woodcut id="tmr-lectern-svg"></xylo-specimen-woodcut>
+            <xylo-specimen-meta>
+              <tmr-glyph-label class="tmr-specimen-kicker" id="tmr-lectern-station">STATION I · JUTTING SIGNBOARDS</tmr-glyph-label>
+              <tmr-glyph-label class="tmr-specimen-title" id="tmr-lectern-title">Iron Pincers</tmr-glyph-label>
+              <tmr-glyph-label class="tmr-specimen-signifies" id="tmr-lectern-sign">pincers -&gt; tooth-drawer's house</tmr-glyph-label>
+              <tmr-glyph-label class="tmr-nonmaterial-law" id="tmr-lectern-law">Depth 0 · Raw Matter: NONE</tmr-glyph-label>
+            </xylo-specimen-meta>
+          </xylo-lectern-specimen>
+
+          <xylo-peel-discourse-box>
+            <tmr-glyph-label class="tmr-stratum-heading" id="tmr-lectern-stratum">Stratum 0 — Outer Woodcut Facade</tmr-glyph-label>
+            <tmr-glyph-label class="tmr-stratum-prose" id="tmr-lectern-prose"></tmr-glyph-label>
+            <xylo-lectern-actions>
+              <xylo-press-trigger role="button" tabindex="0" class="tmr-press-key tmr-vermilion-tone" id="tmr-lectern-peel-btn" data-tmr-cmd="peel-once">
+                Pry / Peel Beneath [E]
+              </xylo-press-trigger>
+              <xylo-press-trigger role="button" tabindex="0" class="tmr-press-key tmr-ochre-tone" data-tmr-cmd="peel-deep">
+                Scrape +3 Strata [X]
+              </xylo-press-trigger>
+            </xylo-lectern-actions>
+          </xylo-peel-discourse-box>
+
+          <xylo-catalog-index-box>
+            <xylo-section-pilcrow>
+              <tmr-glyph-label>¶ Complete 26-Sign Index</tmr-glyph-label>
+              <tmr-glyph-label id="tmr-catalog-count">1 / 26 Scanned</tmr-glyph-label>
+            </xylo-section-pilcrow>
+            <xylo-filter-pill-row id="tmr-filter-row"></xylo-filter-pill-row>
+            <xylo-catalog-scroll id="tmr-catalog-list"></xylo-catalog-scroll>
+          </xylo-catalog-index-box>
+        </peel-inspection-lectern>
+      </heraldic-corridor-stage>
+
+      <!-- ACT III: POST-EXIT EMPTY HORIZON & SPEEDING CLOUDS -->
+      <horizon-augury-stage id="tmr-stage-3" data-active-stage="false" role="tabpanel" aria-labelledby="tmr-tab-3">
+        <xylo-horizon-mount id="tmr-horizon-mount"></xylo-horizon-mount>
+        <xylo-horizon-marginalia>
+          <xylo-rubric-block>
+            <xylo-section-pilcrow>
+              <tmr-glyph-label>¶ Outside the Undiscovered City</tmr-glyph-label>
+              <tmr-glyph-label id="tmr-dwell-speed">Dwell: 412ms</tmr-glyph-label>
+            </xylo-section-pilcrow>
+            <xylo-epigraph-prose>
+              “However the city may really be, beneath this thick coating of signs, whatever it may contain or conceal, you leave without having discovered it. Outside, the land stretches, empty, to the horizon; the sky opens, with speeding clouds. In the shape that chance and wind give the clouds, you are already intent on recognizing figures: a sailing ship, a hand, an elephant…”
+            </xylo-epigraph-prose>
+          </xylo-rubric-block>
+
+          <xylo-rubric-block>
+            <xylo-section-pilcrow>
+              <tmr-glyph-label>¶ Cloud-Augury Constellations</tmr-glyph-label>
+              <tmr-glyph-label id="tmr-cloud-progress">0 / 3</tmr-glyph-label>
+            </xylo-section-pilcrow>
+            <xylo-checklist-stack id="tmr-cloud-checklist"></xylo-checklist-stack>
+          </xylo-rubric-block>
+
+          <xylo-rubric-block>
+            <xylo-section-pilcrow>
+              <tmr-glyph-label>¶ Gaze Reticle &amp; Conditioning</tmr-glyph-label>
+              <tmr-glyph-label>Arrows / C</tmr-glyph-label>
+            </xylo-section-pilcrow>
+            <xylo-plate-btn-group>
+              <xylo-press-trigger role="button" tabindex="0" class="tmr-press-key" data-tmr-cmd="gaze-left" title="Nudge Gaze West">&larr;</xylo-press-trigger>
+              <xylo-press-trigger role="button" tabindex="0" class="tmr-press-key" data-tmr-cmd="gaze-up" title="Nudge Gaze Zenith">&uarr;</xylo-press-trigger>
+              <xylo-press-trigger role="button" tabindex="0" class="tmr-press-key" data-tmr-cmd="gaze-down" title="Nudge Gaze Horizon">&darr;</xylo-press-trigger>
+              <xylo-press-trigger role="button" tabindex="0" class="tmr-press-key" data-tmr-cmd="gaze-right" title="Nudge Gaze East">&rarr;</xylo-press-trigger>
+              <xylo-press-trigger role="button" tabindex="0" class="tmr-press-key tmr-vermilion-tone" data-tmr-cmd="crystallize-next">
+                Crystallize [C]
+              </xylo-press-trigger>
+            </xylo-plate-btn-group>
+          </xylo-rubric-block>
+        </xylo-horizon-marginalia>
+      </horizon-augury-stage>
+
+      <!-- FOLIO IV: ARCHIVAL CARTOGRAPHY & CITY PERSPECTIVE PLATES -->
+      <archival-plates-folio id="tmr-stage-4" data-active-stage="false" role="tabpanel" aria-labelledby="tmr-tab-4">
+        <plate-mode-rail>
+          <xylo-plate-btn-group>
+            <xylo-press-trigger role="button" tabindex="0" class="tmr-press-key" data-tmr-plate-mode="diptych" data-engaged="true">
+              Diptych View
+            </xylo-press-trigger>
+            <xylo-press-trigger role="button" tabindex="0" class="tmr-press-key" data-tmr-plate-mode="map" data-engaged="false">
+              Ichnographia Map (1600×1200)
+            </xylo-press-trigger>
+            <xylo-press-trigger role="button" tabindex="0" class="tmr-press-key" data-tmr-plate-mode="image" data-engaged="false">
+              Street Canyon Plate (1600×1000)
+            </xylo-press-trigger>
+            <xylo-press-trigger role="button" tabindex="0" class="tmr-press-key" id="tmr-map-fmt-btn" data-tmr-cmd="toggle-map-format" title="Switch Map Source Between Copperplate PNG and Vector SVG">
+              Map: PNG
+            </xylo-press-trigger>
+          </xylo-plate-btn-group>
+
+          <xylo-plate-btn-group>
+            <xylo-press-trigger role="button" tabindex="0" class="tmr-press-key tmr-ochre-tone" id="tmr-zoom-btn" data-tmr-cmd="cycle-zoom">
+              Loupe: 1.0× [Z]
+            </xylo-press-trigger>
+            <xylo-press-trigger role="button" tabindex="0" class="tmr-press-key tmr-vermilion-tone" data-tmr-cmd="close-plates">
+              Return [Esc]
+            </xylo-press-trigger>
+          </xylo-plate-btn-group>
+        </plate-mode-rail>
+
+        <plate-loupe-viewport id="tmr-loupe-viewport" data-plate-view="diptych" data-zoom-step="1">
+          <xylo-plate-frame id="tmr-map-frame" data-frame-kind="map" data-img-missing="false">
+            <xylo-plate-canvas-well data-pan-well="1">
+              <img class="tmr-plate-img" id="tmr-map-img" src="map.png" alt="Cartographic Plan of Tamara — Wilderness Verge, Via Signorum Corridor, and Pareidolia Plain" />
+              <xylo-plate-fallback-etching>
+                <tmr-glyph-label class="tmr-specimen-kicker">¶ TABULA ICHNOGRAPHICA · 1600×1200</tmr-glyph-label>
+                <tmr-glyph-label class="tmr-specimen-title">Copperplate Map Matrix Prepared</tmr-glyph-label>
+                <tmr-glyph-label class="tmr-row-gloss">Awaiting Royal Plate Guild impression (map.png / map.svg) charting the West Wilderness Verge, the 5 Precincts of Jutting Signs, and the East Pareidolia Plain.</tmr-glyph-label>
+              </xylo-plate-fallback-etching>
+            </xylo-plate-canvas-well>
+          </xylo-plate-frame>
+
+          <xylo-plate-frame id="tmr-image-frame" data-frame-kind="image" data-img-missing="false">
+            <xylo-plate-canvas-well data-pan-well="1">
+              <img class="tmr-plate-img" id="tmr-city-img" src="image.png" alt="Architectural Perspective Plate of Tamara — Narrow Street Thick with Jutting Signboards Opening to Cloud-Swept Horizon" />
+              <xylo-plate-fallback-etching>
+                <tmr-glyph-label class="tmr-specimen-kicker">¶ PROSPECTUS URBIS · 1600×1000</tmr-glyph-label>
+                <tmr-glyph-label class="tmr-specimen-title">Tempera &amp; Woodcut Perspective Matrix Prepared</tmr-glyph-label>
+                <tmr-glyph-label class="tmr-row-gloss">Awaiting Royal Plate Guild impression (image.png) depicting the street canyon of pincers, tankard, halberds, scales, shields, decrees, vendor stalls, and distant cloud figures.</tmr-glyph-label>
+              </xylo-plate-fallback-etching>
+            </xylo-plate-canvas-well>
+          </xylo-plate-frame>
+        </plate-loupe-viewport>
+
+        <plate-caption-plaque>
+          <tmr-glyph-label id="tmr-plate-telemetry">¶ FOLIO PLATES: I. Ichnographia Tamarae (map.png) · II. Prospectus Viae Signorum (image.png)</tmr-glyph-label>
+          <tmr-glyph-label class="tmr-row-gloss">Drag inside plate well when zoomed (1.75× / 2.5×) · Press Z to cycle engraver's loupe</tmr-glyph-label>
+        </plate-caption-plaque>
+      </archival-plates-folio>
+    </tamara-stage-deck>
+
+    <!-- PERSISTENT DISCOURSE LEDGER & COLOPHON SEAL -->
+    <discourse-ledger-strip aria-live="polite">
+      <xylo-ledger-metrics>
+        <xylo-coat-meter>
+          <tmr-glyph-label id="tmr-coat-label">Semiotic Coat: 4%</tmr-glyph-label>
+          <xylo-coat-track><xylo-coat-fill id="tmr-coat-fill"></xylo-coat-fill></xylo-coat-track>
+        </xylo-coat-meter>
+        <tmr-glyph-label id="tmr-ledger-summary">Ledger: 1 Name Recorded · 0 Peels · Raw Matter: 0</tmr-glyph-label>
+      </xylo-ledger-metrics>
+
+      <xylo-discourse-ticker id="tmr-discourse-ticker">
+        “Your gaze scans the streets as if they were written pages: the city says everything you must think, makes you repeat her discourse…”
+      </xylo-discourse-ticker>
+
+      <colophon-rubric>
+        <colophon-seal>TAMARA · SIGNUM VI</colophon-seal>
+      </colophon-rubric>
+    </discourse-ledger-strip>
+  </tamara-emblem-book>
+
+  <script src="layers/semiotic_coat.js"></script>
+  <script src="layers/pareidolia_horizon.js"></script>
+  <script>
+  (function () {
+    "use strict";
+
+    var CoatAPI = window.TamaraSemioticCoat;
+    var HorizonAPI = window.TamaraPareidoliaHorizon;
+    if (!CoatAPI || !HorizonAPI) {
+      throw new Error("Tamara layer globals failed to load.");
+    }
+
+    var ROMAN_DEPTH = ["0", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
+    function fmtRoman(n) {
+      var d = Math.max(0, Math.floor(Number(n) || 0));
+      return d < ROMAN_DEPTH.length ? ROMAN_DEPTH[d] : "S" + d;
+    }
+
+    function esc(s) {
+      return String(s)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    /* ---------------- WEBAUDIO XYLOGRAPHIC FOLEY SYNTHESIZER ---------------- */
+    var Foley = (function () {
+      var ctx = null;
+      var enabled = true;
+      var noiseBuf = null;
+
+      function ensureCtx() {
+        if (!enabled) return null;
+        if (!ctx) {
+          var Ctor = window.AudioContext || window.webkitAudioContext;
+          if (!Ctor) return null;
+          try {
+            ctx = new Ctor();
+          } catch (_e) {
+            return null;
+          }
+        }
+        if (ctx.state === "suspended") {
+          try { ctx.resume(); } catch (_r) {}
+        }
+        if (!noiseBuf && ctx) {
+          var len = Math.floor(ctx.sampleRate * 0.35);
+          noiseBuf = ctx.createBuffer(1, len, ctx.sampleRate);
+          var ch = noiseBuf.getChannelData(0);
+          for (var i = 0; i < len; i++) {
+            ch[i] = (Math.random() * 2 - 1) * (1 - i / len);
+          }
+        }
+        return ctx;
+      }
+
+      function woodblockClack(accent) {
+        var ac = ensureCtx();
+        if (!ac) return;
+        var now = ac.currentTime;
+        var osc = ac.createOscillator();
+        var gain = ac.createGain();
+        osc.type = "triangle";
+        var base = accent ? 390 : 310;
+        osc.frequency.setValueAtTime(base, now);
+        osc.frequency.exponentialRampToValueAtTime(145, now + 0.055);
+        gain.gain.setValueAtTime(0.09, now);
+        gain.gain.exponentialRampToValueAtTime(0.0008, now + 0.065);
+        osc.connect(gain);
+        gain.connect(ac.destination);
+        osc.start(now);
+        osc.stop(now + 0.07);
+      }
+
+      function parchmentPeel(depth) {
+        var ac = ensureCtx();
+        if (!ac || !noiseBuf) return;
+        var now = ac.currentTime;
+        var src = ac.createBufferSource();
+        src.buffer = noiseBuf;
+        var bp = ac.createBiquadFilter();
+        bp.type = "bandpass";
+        var center = Math.max(680, 1480 - Math.min(depth || 1, 8) * 75);
+        bp.frequency.setValueAtTime(center, now);
+        bp.frequency.linearRampToValueAtTime(center * 1.45, now + 0.14);
+        bp.Q.value = 1.9;
+        var gain = ac.createGain();
+        gain.gain.setValueAtTime(0.001, now);
+        gain.gain.linearRampToValueAtTime(0.12, now + 0.028);
+        gain.gain.exponentialRampToValueAtTime(0.0008, now + 0.16);
+        src.connect(bp);
+        bp.connect(gain);
+        gain.connect(ac.destination);
+        src.start(now);
+        src.stop(now + 0.17);
+        woodblockClack(false);
+      }
+
+      function rubricChime(stepIdx) {
+        var ac = ensureCtx();
+        if (!ac) return;
+        var now = ac.currentTime;
+        var notes = [293.66, 369.99, 440.0, 587.33];
+        var f1 = notes[(stepIdx || 0) % notes.length];
+        var freqs = [f1, f1 * 1.5];
+        for (var i = 0; i < freqs.length; i++) {
+          var osc = ac.createOscillator();
+          var g = ac.createGain();
+          osc.type = i === 0 ? "triangle" : "sine";
+          osc.frequency.setValueAtTime(freqs[i], now + i * 0.035);
+          g.gain.setValueAtTime(0.001, now + i * 0.035);
+          g.gain.linearRampToValueAtTime(0.065, now + i * 0.035 + 0.02);
+          g.gain.exponentialRampToValueAtTime(0.0007, now + 0.36 + i * 0.06);
+          osc.connect(g);
+          g.connect(ac.destination);
+          osc.start(now + i * 0.035);
+          osc.stop(now + 0.44);
+        }
+      }
+
+      function windAuguryWhisper() {
+        var ac = ensureCtx();
+        if (!ac || !noiseBuf) return;
+        var now = ac.currentTime;
+        var src = ac.createBufferSource();
+        src.buffer = noiseBuf;
+        var lp = ac.createBiquadFilter();
+        lp.type = "bandpass";
+        lp.frequency.setValueAtTime(520, now);
+        lp.frequency.exponentialRampToValueAtTime(980, now + 0.28);
+        lp.Q.value = 2.4;
+        var g = ac.createGain();
+        g.gain.setValueAtTime(0.001, now);
+        g.gain.linearRampToValueAtTime(0.085, now + 0.08);
+        g.gain.exponentialRampToValueAtTime(0.0008, now + 0.33);
+        src.connect(lp);
+        lp.connect(g);
+        g.connect(ac.destination);
+        src.start(now);
+        src.stop(now + 0.34);
+        rubricChime(2);
+      }
+
+      return {
+        isEnabled: function () { return enabled; },
+        setEnabled: function (flag) { enabled = Boolean(flag); return enabled; },
+        clack: woodblockClack,
+        peel: parchmentPeel,
+        chime: rubricChime,
+        wind: windAuguryWhisper
+      };
+    })();
+
+    /* ---------------- DOM REFERENCES & APP STATE ---------------- */
+    var bookEl = document.getElementById("tmr-emblem-book");
+    var stageEls = {
+      1: document.getElementById("tmr-stage-1"),
+      2: document.getElementById("tmr-stage-2"),
+      3: document.getElementById("tmr-stage-3"),
+      4: document.getElementById("tmr-stage-4")
+    };
+    var tabEls = {
+      1: document.getElementById("tmr-tab-1"),
+      2: document.getElementById("tmr-tab-2"),
+      3: document.getElementById("tmr-tab-3"),
+      4: document.getElementById("tmr-tab-4")
+    };
+
+    var initialReduced = false;
+    try {
+      if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        initialReduced = true;
+      }
+    } catch (_m) {}
+
+    var state = {
+      activeAct: 1,
+      lastJourneyAct: 1,
+      reducedMotion: initialReduced,
+      catalogFilter: "all",
+      mobileCorridorPane: "corridor",
+      plateMode: "diptych",
+      zoomIdx: 0,
+      zoomSteps: [1, 1.75, 2.5],
+      mapFormat: "png",
+      lastTickerText: "“Your gaze scans the streets as if they were written pages: the city says everything you must think, makes you repeat her discourse…”"
+    };
+
+    var catalogItems = CoatAPI.getCatalog();
+    var wildernessSigns = HorizonAPI.getWildernessSigns();
+    var cloudFigures = HorizonAPI.getCloudFigures();
+
+    var wildernessCtrl = null;
+    var corridorCtrl = null;
+    var horizonCtrl = null;
+
+    function getCombinedSaturation() {
+      var wCount = wildernessCtrl ? wildernessCtrl.getState().discoveredCount : 0;
+      var cSat = corridorCtrl ? corridorCtrl.getState().discourseSaturation : 0;
+      return Math.max(0, Math.min(1, Number((cSat * 0.88 + (wCount / 3) * 0.12).toFixed(4))));
+    }
+
+    function renderFilterPills() {
+      var row = document.getElementById("tmr-filter-row");
+      var filters = [
+        { key: "all", label: "All 26" },
+        { key: "0", label: "I·Signs(4)" },
+        { key: "1", label: "II·Shields(4)" },
+        { key: "2", label: "III·Decrees(6)" },
+        { key: "3", label: "IV·Order(8)" },
+        { key: "4", label: "V·Bazaar(4)" }
+      ];
+      row.innerHTML = filters.map(function (f) {
+        var active = state.catalogFilter === f.key;
+        return '<xylo-press-trigger role="button" tabindex="0" class="tmr-filter-chip" data-tmr-filter="' +
+          f.key + '" data-active-filter="' + (active ? "true" : "false") + '">' + esc(f.label) + "</xylo-press-trigger>";
+      }).join("");
+    }
+
+    function renderLecternAndCatalog() {
+      if (!corridorCtrl) return;
+      var cState = corridorCtrl.getState();
+      var item = CoatAPI.getItem(cState.selectedId) || catalogItems[0];
+      var depth = cState.selectedDepth || 0;
+      var peeled = CoatAPI.peel(item.id, depth);
+      var stObj = CoatAPI.STATIONS[item.stationIndex];
+
+      document.getElementById("tmr-lectern-svg").innerHTML = item.renderWoodcutSVG(depth);
+      document.getElementById("tmr-lectern-station").textContent =
+        "STATION " + stObj.roman + " · " + stObj.title.toUpperCase();
+      document.getElementById("tmr-lectern-title").textContent = item.title;
+      document.getElementById("tmr-lectern-sign").textContent = item.shortSign;
+      document.getElementById("tmr-lectern-law").textContent =
+        "Stratum " + fmtRoman(depth) + " · Raw Matter: NONE (isRawMatter=" + String(peeled.isRawMatter) + ")";
+      document.getElementById("tmr-lectern-stratum").textContent =
+        peeled.stratumTitle + " [" + peeled.sealCode + "]";
+      document.getElementById("tmr-lectern-prose").textContent = peeled.discourseText;
+      document.getElementById("tmr-lectern-peel-btn").textContent =
+        "Pry / Peel -> Stratum " + fmtRoman(depth + 1) + " [E]";
+      document.getElementById("tmr-catalog-count").textContent =
+        cState.inspectedItemsCount + " / 26 Scanned · " + cState.totalPeels + " Peels";
+
+      renderFilterPills();
+
+      var filtered = catalogItems.filter(function (entry) {
+        return state.catalogFilter === "all" || String(entry.stationIndex) === state.catalogFilter;
+      });
+      var listEl = document.getElementById("tmr-catalog-list");
+      listEl.innerHTML = filtered.map(function (entry) {
+        var d = cState.peelDepths[entry.id] || 0;
+        var isCur = entry.id === cState.selectedId;
+        return (
+          '<xylo-catalog-slip role="button" tabindex="0" data-tmr-select-item="' + esc(entry.id) +
+          '" data-current-slip="' + (isCur ? "true" : "false") + '">' +
+            '<tmr-glyph-label>' + esc(entry.catalogNumber + ". " + entry.title) + "</tmr-glyph-label>" +
+            '<tmr-glyph-label class="tmr-slip-depth" data-peeled="' + (d > 0 ? "true" : "false") + '">' +
+              (d === 0 ? "S0" : "S" + fmtRoman(d)) +
+            "</tmr-glyph-label>" +
+          "</xylo-catalog-slip>"
+        );
+      }).join("");
+    }
+    function renderWildernessMarginalia() {
+      if (!wildernessCtrl) return;
+      var wState = wildernessCtrl.getState();
+      var foundSet = new Set(wState.discoveredSigns || []);
+      document.getElementById("tmr-verge-progress").textContent = wState.discoveredCount + " / 3";
+      document.getElementById("tmr-mute-counter").textContent = "Mute: " + wState.muteProbesCount;
+
+      var checklistEl = document.getElementById("tmr-wilderness-checklist");
+      checklistEl.innerHTML = wildernessSigns.map(function (s) {
+        var found = foundSet.has(s.id);
+        return (
+          '<xylo-sign-check-row role="button" tabindex="0" data-tmr-wsign="' + esc(s.id) +
+          '" data-recognized="' + (found ? "true" : "false") + '">' +
+            "<xylo-row-copy>" +
+              '<tmr-glyph-label class="tmr-row-title">' + esc(s.roman + ". " + s.thing) + "</tmr-glyph-label>" +
+              '<tmr-glyph-label class="tmr-row-gloss">' + esc("-> " + s.signifies) + "</tmr-glyph-label>" +
+            "</xylo-row-copy>" +
+            '<tmr-glyph-label class="tmr-seal-stamp">' + (found ? "READ" : "SEEK") + "</tmr-glyph-label>" +
+          "</xylo-sign-check-row>"
+        );
+      }).join("");
+
+      var gateBtn = document.getElementById("tmr-enter-gate-btn");
+      if (wState.gateUnlocked) {
+        gateBtn.textContent = "Cross Open Gate -> Street of Signs [2]";
+        gateBtn.setAttribute("data-engaged", "true");
+      } else {
+        gateBtn.textContent = "Gate Sealed (" + wState.discoveredCount + "/3 Signs · or Key 2)";
+        gateBtn.setAttribute("data-engaged", "false");
+      }
+    }
+
+    function renderHorizonMarginalia() {
+      if (!horizonCtrl) return;
+      var hState = horizonCtrl.getState();
+      var recList = Array.isArray(hState.recognizedFigures)
+        ? hState.recognizedFigures
+        : (hState.recognized ? Array.from(hState.recognized) : []);
+      var recSet = new Set(recList);
+      var dwellMs = hState.dwellThresholdMs || Math.round(420 - 210 * getCombinedSaturation());
+
+      document.getElementById("tmr-dwell-speed").textContent = "Dwell: " + dwellMs + "ms";
+      document.getElementById("tmr-cloud-progress").textContent = recSet.size + " / 3";
+
+      var cListEl = document.getElementById("tmr-cloud-checklist");
+      cListEl.innerHTML = cloudFigures.map(function (fig) {
+        var isRec = recSet.has(fig.id);
+        return (
+          '<xylo-cloud-constellation-row role="button" tabindex="0" data-tmr-cfig="' + esc(fig.id) +
+          '" data-recognized="' + (isRec ? "true" : "false") + '">' +
+            "<xylo-row-copy>" +
+              '<tmr-glyph-label class="tmr-row-title">' + esc(fig.roman + ". " + fig.name) + "</tmr-glyph-label>" +
+              '<tmr-glyph-label class="tmr-row-gloss">' + esc(fig.taxonomyNote) + "</tmr-glyph-label>" +
+            "</xylo-row-copy>" +
+            '<tmr-glyph-label class="tmr-seal-stamp">' + (isRec ? "SEEN" : "GAZE") + "</tmr-glyph-label>" +
+          "</xylo-cloud-constellation-row>"
+        );
+      }).join("");
+    }
+
+    function syncGlobalTelemetry(tickerOverride) {
+      if (tickerOverride) {
+        state.lastTickerText = tickerOverride;
+      }
+      var wState = wildernessCtrl ? wildernessCtrl.getState() : { discoveredCount: 0 };
+      var cState = corridorCtrl
+        ? corridorCtrl.getState()
+        : { inspectedItemsCount: 1, totalPeels: 0, recordedNamesCount: 1 };
+      var hState = horizonCtrl ? horizonCtrl.getState() : { recognizedFigures: [] };
+      var recClouds = Array.isArray(hState.recognizedFigures)
+        ? hState.recognizedFigures.length
+        : (hState.recognizedCount || 0);
+
+      var sat = getCombinedSaturation();
+      if (horizonCtrl) {
+        horizonCtrl.setSaturation(sat);
+      }
+      var satPct = Math.max(4, Math.round(sat * 100));
+      var totalRecorded = wState.discoveredCount + cState.recordedNamesCount + recClouds;
+
+      document.getElementById("tmr-tally-act1").textContent = wState.discoveredCount + "/3 Signs";
+      document.getElementById("tmr-tally-act2").textContent =
+        cState.inspectedItemsCount + "/26 · P" + cState.totalPeels;
+      document.getElementById("tmr-tally-act3").textContent = recClouds + "/3 Clouds";
+
+      document.getElementById("tmr-coat-label").textContent = "Semiotic Coat: " + Math.round(sat * 100) + "%";
+      document.getElementById("tmr-coat-fill").style.width = satPct + "%";
+      document.getElementById("tmr-ledger-summary").textContent =
+        "Ledger: " + totalRecorded + " Discourse Tokens · " + cState.totalPeels + " Peels · Raw Matter: 0";
+      document.getElementById("tmr-discourse-ticker").textContent = state.lastTickerText;
+    }
+
+    function setAct(actNum, silentAudio) {
+      var n = Number(actNum);
+      if (!stageEls[n]) return;
+      state.activeAct = n;
+      if (n >= 1 && n <= 3) {
+        state.lastJourneyAct = n;
+      }
+      bookEl.setAttribute("data-active-act", String(n));
+      for (var k = 1; k <= 4; k++) {
+        var active = k === n;
+        stageEls[k].setAttribute("data-active-stage", active ? "true" : "false");
+        tabEls[k].setAttribute("data-selected", active ? "true" : "false");
+        tabEls[k].setAttribute("aria-selected", active ? "true" : "false");
+      }
+      var pBtn = document.getElementById("tmr-btn-plates");
+      pBtn.setAttribute("aria-pressed", n === 4 ? "true" : "false");
+      pBtn.setAttribute("data-engaged", n === 4 ? "true" : "false");
+
+      if (!silentAudio) Foley.clack(true);
+      if (n === 1 && wildernessCtrl) wildernessCtrl.resize();
+      if (n === 2) renderLecternAndCatalog();
+      if (n === 3 && horizonCtrl) {
+        horizonCtrl.setSaturation(getCombinedSaturation());
+        horizonCtrl.resize();
+        renderHorizonMarginalia();
+      }
+    }
+
+    function setMobileCorridorPane(pane) {
+      state.mobileCorridorPane = pane === "lectern" ? "lectern" : "corridor";
+      stageEls[2].setAttribute("data-mobile-pane", state.mobileCorridorPane);
+      document.getElementById("tmr-sub-corridor").setAttribute(
+        "data-engaged",
+        state.mobileCorridorPane === "corridor" ? "true" : "false"
+      );
+      document.getElementById("tmr-sub-lectern").setAttribute(
+        "data-engaged",
+        state.mobileCorridorPane === "lectern" ? "true" : "false"
+      );
+    }
+
+    function setPlateMode(mode) {
+      state.plateMode = mode;
+      document.getElementById("tmr-loupe-viewport").setAttribute("data-plate-view", mode);
+      var btns = document.querySelectorAll("[data-tmr-plate-mode]");
+      for (var i = 0; i < btns.length; i++) {
+        var m = btns[i].getAttribute("data-tmr-plate-mode");
+        btns[i].setAttribute("data-engaged", m === mode ? "true" : "false");
+      }
+      Foley.clack(false);
+    }
+
+    function cycleZoom(resetToOne) {
+      state.zoomIdx = resetToOne ? 0 : (state.zoomIdx + 1) % state.zoomSteps.length;
+      var z = state.zoomSteps[state.zoomIdx];
+      document.getElementById("tmr-loupe-viewport").setAttribute("data-zoom-step", String(z));
+      document.getElementById("tmr-zoom-btn").textContent = "Loupe: " + z.toFixed(z === 1.75 ? 2 : 1) + "× [Z]";
+      Foley.clack(false);
+    }
+
+    function toggleMapFormat() {
+      state.mapFormat = state.mapFormat === "png" ? "svg" : "png";
+      var mapImg = document.getElementById("tmr-map-img");
+      document.getElementById("tmr-map-frame").setAttribute("data-img-missing", "false");
+      mapImg.src = state.mapFormat === "png" ? "map.png" : "map.svg";
+      document.getElementById("tmr-map-fmt-btn").textContent = "Map: " + state.mapFormat.toUpperCase();
+      Foley.clack(false);
+    }
+
+    function wirePlateImagesAndPan() {
+      var pairs = [
+        { img: document.getElementById("tmr-map-img"), frame: document.getElementById("tmr-map-frame") },
+        { img: document.getElementById("tmr-city-img"), frame: document.getElementById("tmr-image-frame") }
+      ];
+      pairs.forEach(function (p) {
+        p.img.addEventListener("load", function () {
+          p.frame.setAttribute("data-img-missing", "false");
+        });
+        p.img.addEventListener("error", function () {
+          p.frame.setAttribute("data-img-missing", "true");
+        });
+        if (p.img.complete && p.img.naturalWidth === 0) {
+          p.frame.setAttribute("data-img-missing", "true");
+        }
+      });
+
+      var wells = document.querySelectorAll("xylo-plate-canvas-well[data-pan-well]");
+      var drag = null;
+      for (var i = 0; i < wells.length; i++) {
+        wells[i].addEventListener("pointerdown", function (ev) {
+          if (state.zoomIdx === 0) return;
+          drag = { el: ev.currentTarget, x: ev.clientX, y: ev.clientY, sl: ev.currentTarget.scrollLeft, st: ev.currentTarget.scrollTop };
+        });
+      }
+      window.addEventListener("pointermove", function (ev) {
+        if (!drag) return;
+        drag.el.scrollLeft = drag.sl - (ev.clientX - drag.x);
+        drag.el.scrollTop = drag.st - (ev.clientY - drag.y);
+      });
+      window.addEventListener("pointerup", function () { drag = null; });
+    }
+
+    function applyReducedMotion(flag) {
+      state.reducedMotion = Boolean(flag);
+      bookEl.setAttribute("data-reduced-motion", String(state.reducedMotion));
+      var mBtn = document.getElementById("tmr-btn-motion");
+      mBtn.setAttribute("data-engaged", String(state.reducedMotion));
+      mBtn.setAttribute("aria-pressed", String(state.reducedMotion));
+      mBtn.innerHTML = (state.reducedMotion ? "Motion: Calm " : "Motion: Full ") +
+        '<xylo-keycap-glyph class="tmr-keycap">V</xylo-keycap-glyph>';
+      if (wildernessCtrl) wildernessCtrl.setReducedMotion(state.reducedMotion);
+      if (corridorCtrl) corridorCtrl.setReducedMotion(state.reducedMotion);
+      if (horizonCtrl) horizonCtrl.setReducedMotion(state.reducedMotion);
+    }
+
+    function toggleSound() {
+      var on = Foley.setEnabled(!Foley.isEnabled());
+      var sBtn = document.getElementById("tmr-btn-sound");
+      sBtn.setAttribute("data-engaged", String(on));
+      sBtn.setAttribute("aria-pressed", String(on));
+      sBtn.innerHTML = (on ? "Foley: On " : "Foley: Mute ") +
+        '<xylo-keycap-glyph class="tmr-keycap">M</xylo-keycap-glyph>';
+      if (on) Foley.clack(true);
+    }
+
+    function resetAll() {
+      if (wildernessCtrl) wildernessCtrl.reset();
+      if (corridorCtrl) corridorCtrl.reset();
+      if (horizonCtrl) {
+        horizonCtrl.reset();
+        horizonCtrl.setSaturation(0.04);
+      }
+      state.catalogFilter = "all";
+      setMobileCorridorPane("corridor");
+      renderWildernessMarginalia();
+      renderLecternAndCatalog();
+      renderHorizonMarginalia();
+      syncGlobalTelemetry("“You walk for days among trees and among stones… trees and stones are only what they are.”");
+      setAct(1, true);
+      Foley.clack(true);
+    }
+
+    /* ---------------- MOUNT THREE XYLOGRAPHIC STAGES ---------------- */
+    wildernessCtrl = HorizonAPI.mountWilderness(document.getElementById("tmr-verge-mount"), {
+      reducedMotion: state.reducedMotion,
+      onSignFound: function (signObj, count) {
+        Foley.chime(count);
+        renderWildernessMarginalia();
+        syncGlobalTelemetry("WILDERNESS SIGN " + signObj.roman + ": " + signObj.discourseEntry);
+      },
+      onMuteInspect: function (muteObj) {
+        Foley.clack(false);
+        renderWildernessMarginalia();
+        syncGlobalTelemetry(muteObj.message);
+      },
+      onEnterCity: function () {
+        Foley.chime(3);
+        syncGlobalTelemetry("PORTA TAMARAE PENETRATED: Entering streets thick with jutting signboards.");
+        setAct(2, true);
+      }
+    });
+
+    corridorCtrl = CoatAPI.mountCorridor(document.getElementById("tmr-corridor-mount"), {
+      reducedMotion: state.reducedMotion,
+      onSelect: function (item, peeled) {
+        Foley.clack(false);
+        renderLecternAndCatalog();
+        syncGlobalTelemetry("SCANNED [" + peeled.sealCode + "]: " + item.title + " (" + item.shortSign + ")");
+      },
+      onPeel: function (item, peeled) {
+        Foley.peel(peeled.depth);
+        renderLecternAndCatalog();
+        syncGlobalTelemetry(
+          "PEELED [" + peeled.sealCode + " · Raw Matter: NONE]: " + peeled.stratumTitle + " — " + item.shortSign
+        );
+      },
+      onStationChange: function (_idx, stObj) {
+        Foley.clack(true);
+        renderLecternAndCatalog();
+        syncGlobalTelemetry("CORRIDOR STATION " + stObj.roman + ": " + stObj.title + " — " + stObj.subtitle);
+      },
+      onExitGate: function () {
+        Foley.wind();
+        syncGlobalTelemetry("EXITED UNDISCOVERED: Leaving the thick coat of signs beneath speeding clouds.");
+        setAct(3, true);
+      }
+    });
+
+    horizonCtrl = HorizonAPI.mountHorizon(document.getElementById("tmr-horizon-mount"), {
+      reducedMotion: state.reducedMotion,
+      initialSaturation: getCombinedSaturation(),
+      onFigureCrystallized: function (figObj) {
+        Foley.wind();
+        renderHorizonMarginalia();
+        syncGlobalTelemetry("CLOUD AUGURY [" + figObj.rubricTitle + "]: Vapor crystallized into " + figObj.name + ".");
+      },
+      onGazeMove: function () {
+        renderHorizonMarginalia();
+      }
+    });
+
+    /* ---------------- DELEGATED POINTER & KEYBOARD CONTROLLER ---------------- */
+    function handleActionTarget(target) {
+      if (!target || typeof target.closest !== "function") return false;
+
+      var actTab = target.closest("xylo-act-tab[data-tmr-act]");
+      if (actTab) {
+        setAct(Number(actTab.getAttribute("data-tmr-act")));
+        return true;
+      }
+
+      var wRow = target.closest("xylo-sign-check-row[data-tmr-wsign]");
+      if (wRow) {
+        var wid = wRow.getAttribute("data-tmr-wsign");
+        wildernessCtrl.focusSign(wid);
+        wildernessCtrl.discoverSign(wid);
+        renderWildernessMarginalia();
+        return true;
+      }
+
+      var cRow = target.closest("xylo-cloud-constellation-row[data-tmr-cfig]");
+      if (cRow) {
+        horizonCtrl.crystallizeFigure(cRow.getAttribute("data-tmr-cfig"));
+        renderHorizonMarginalia();
+        return true;
+      }
+
+      var fChip = target.closest("[data-tmr-filter]");
+      if (fChip) {
+        state.catalogFilter = fChip.getAttribute("data-tmr-filter");
+        Foley.clack(false);
+        renderLecternAndCatalog();
+        return true;
+      }
+
+      var slip = target.closest("xylo-catalog-slip[data-tmr-select-item]");
+      if (slip) {
+        corridorCtrl.selectItem(slip.getAttribute("data-tmr-select-item"), { focusPlate: false });
+        renderLecternAndCatalog();
+        return true;
+      }
+
+      var pMode = target.closest("[data-tmr-plate-mode]");
+      if (pMode) {
+        setPlateMode(pMode.getAttribute("data-tmr-plate-mode"));
+        return true;
+      }
+
+      var cmdEl = target.closest("[data-tmr-cmd]");
+      if (!cmdEl) return false;
+      var cmd = cmdEl.getAttribute("data-tmr-cmd");
+
+      if (cmd === "toggle-plates") {
+        setAct(state.activeAct === 4 ? state.lastJourneyAct : 4);
+      } else if (cmd === "close-plates") {
+        setAct(state.lastJourneyAct);
+      } else if (cmd === "toggle-sound") {
+        toggleSound();
+      } else if (cmd === "toggle-motion") {
+        applyReducedMotion(!state.reducedMotion);
+        Foley.clack(false);
+      } else if (cmd === "reset-all") {
+        resetAll();
+      } else if (cmd === "verge-scan") {
+        wildernessCtrl.discoverNext();
+        renderWildernessMarginalia();
+      } else if (cmd === "enter-corridor") {
+        setAct(2);
+      } else if (cmd === "mobile-pane-corridor") {
+        setMobileCorridorPane("corridor");
+        Foley.clack(false);
+      } else if (cmd === "mobile-pane-lectern") {
+        setMobileCorridorPane("lectern");
+        Foley.clack(false);
+      } else if (cmd === "peel-once") {
+        corridorCtrl.peelItem();
+      } else if (cmd === "peel-deep") {
+        corridorCtrl.peelItem();
+        corridorCtrl.peelItem();
+        corridorCtrl.peelItem();
+      } else if (cmd === "gaze-left") {
+        horizonCtrl.moveGaze(-0.07, 0);
+      } else if (cmd === "gaze-right") {
+        horizonCtrl.moveGaze(0.07, 0);
+      } else if (cmd === "gaze-up") {
+        horizonCtrl.moveGaze(0, -0.06);
+      } else if (cmd === "gaze-down") {
+        horizonCtrl.moveGaze(0, 0.06);
+      } else if (cmd === "crystallize-next") {
+        horizonCtrl.crystallizeFigure();
+      } else if (cmd === "cycle-zoom") {
+        cycleZoom(false);
+      } else if (cmd === "toggle-map-format") {
+        toggleMapFormat();
+      }
+      return true;
+    }
+
+    bookEl.addEventListener("click", function (ev) {
+      handleActionTarget(ev.target);
+    });
+
+    bookEl.addEventListener("keydown", function (ev) {
+      if ((ev.key === "Enter" || ev.key === " ") && ev.target && ev.target !== document.body) {
+        var customInteractive = ev.target.closest(
+          "xylo-press-trigger, xylo-act-tab, xylo-catalog-slip, xylo-sign-check-row, xylo-cloud-constellation-row"
+        );
+        if (customInteractive) {
+          ev.preventDefault();
+          handleActionTarget(customInteractive);
+        }
+      }
+    });
+
+    window.addEventListener("keydown", function (ev) {
+      if (ev.metaKey || ev.ctrlKey || ev.altKey) return;
+      var k = ev.key;
+      if (k === "1" || k === "2" || k === "3" || k === "4") {
+        ev.preventDefault();
+        setAct(Number(k));
+      } else if (k === "p" || k === "P") {
+        ev.preventDefault();
+        setAct(state.activeAct === 4 ? state.lastJourneyAct : 4);
+      } else if (k === "Escape" && state.activeAct === 4) {
+        ev.preventDefault();
+        if (state.zoomIdx > 0) cycleZoom(true);
+        else setAct(state.lastJourneyAct);
+      } else if (k === "m" || k === "M") {
+        ev.preventDefault();
+        toggleSound();
+      } else if (k === "v" || k === "V") {
+        ev.preventDefault();
+        applyReducedMotion(!state.reducedMotion);
+      } else if (k === "r" || k === "R") {
+        ev.preventDefault();
+        resetAll();
+      } else if (state.activeAct === 1 && (k === "s" || k === "S")) {
+        ev.preventDefault();
+        wildernessCtrl.discoverNext();
+        renderWildernessMarginalia();
+      } else if (state.activeAct === 2) {
+        if (k === "e" || k === "E") {
+          ev.preventDefault();
+          corridorCtrl.peelItem();
+        } else if (k === "x" || k === "X") {
+          ev.preventDefault();
+          corridorCtrl.peelItem();
+          corridorCtrl.peelItem();
+          corridorCtrl.peelItem();
+        } else if (k === "[") {
+          ev.preventDefault();
+          corridorCtrl.stepStation(-1);
+        } else if (k === "]") {
+          ev.preventDefault();
+          corridorCtrl.stepStation(1);
+        } else if (k === "j" || k === "J" || k === "k" || k === "K") {
+          ev.preventDefault();
+          var curId = corridorCtrl.getState().selectedId;
+          var idx = catalogItems.findIndex(function (it) { return it.id === curId; });
+          var delta = (k === "j" || k === "J") ? 1 : -1;
+          var nextIdx = (idx + delta + catalogItems.length) % catalogItems.length;
+          corridorCtrl.selectItem(catalogItems[nextIdx].id, { focusPlate: false });
+        }
+      } else if (state.activeAct === 3) {
+        var insidePlate = ev.target && ev.target.closest && ev.target.closest("xylo-horizon-plate");
+        if (!insidePlate) {
+          if (k === "ArrowLeft") { ev.preventDefault(); horizonCtrl.moveGaze(-0.065, 0); }
+          else if (k === "ArrowRight") { ev.preventDefault(); horizonCtrl.moveGaze(0.065, 0); }
+          else if (k === "ArrowUp") { ev.preventDefault(); horizonCtrl.moveGaze(0, -0.055); }
+          else if (k === "ArrowDown") { ev.preventDefault(); horizonCtrl.moveGaze(0, 0.055); }
+          else if (k === "c" || k === "C") { ev.preventDefault(); horizonCtrl.crystallizeFigure(); }
+        }
+      } else if (state.activeAct === 4 && (k === "z" || k === "Z")) {
+        ev.preventDefault();
+        cycleZoom(false);
+      }
+    });
+
+    try {
+      if (window.matchMedia) {
+        var mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+        if (mq && typeof mq.addEventListener === "function") {
+          mq.addEventListener("change", function (e) { applyReducedMotion(e.matches); });
+        }
+      }
+    } catch (_mqErr) {}
+
+    wirePlateImagesAndPan();
+    applyReducedMotion(state.reducedMotion);
+    renderWildernessMarginalia();
+    renderLecternAndCatalog();
+    renderHorizonMarginalia();
+    syncGlobalTelemetry();
+
+    window.TamaraFolioApp = {
+      setAct: setAct,
+      peelSelected: function (steps) {
+        var n = Math.max(1, Number(steps) || 1);
+        var res = null;
+        for (var i = 0; i < n; i++) res = corridorCtrl.peelItem();
+        return res;
+      },
+      crystallizeCloud: function (id) { return horizonCtrl.crystallizeFigure(id); },
+      discoverWildernessSign: function (id) { return id ? wildernessCtrl.discoverSign(id) : wildernessCtrl.discoverNext(); },
+      setReducedMotion: applyReducedMotion,
+      toggleSound: toggleSound,
+      resetAll: resetAll,
+      getState: function () {
+        return {
+          activeAct: state.activeAct,
+          reducedMotion: state.reducedMotion,
+          combinedSaturation: getCombinedSaturation(),
+          wilderness: wildernessCtrl.getState(),
+          corridor: corridorCtrl.getState(),
+          horizon: horizonCtrl.getState()
+        };
+      }
+    };
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,4031 @@
+<!DOCTYPE html>
+<html lang="en" class="zoe-html">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Zoe · XIII — Cities &amp; Signs 3</title>
+<style>
+.zoe-html,
+.zoe-body {
+  --zoe-soot: #141115;
+  --zoe-soot-elev: #1d1820;
+  --zoe-soot-panel: rgba(25, 21, 28, 0.92);
+  --zoe-pyramid: #9c5248;
+  --zoe-pagoda: #d98a3c;
+  --zoe-bazaar: #c9b79c;
+  --zoe-canal: #479399;
+  --zoe-midden: #9a8462;
+  --zoe-chalk: #f2efe4;
+  --zoe-chalk-dim: #b9b2a3;
+  --zoe-chalk-faint: rgba(242, 239, 228, 0.16);
+  --zoe-gilt: #e5b94c;
+  --zoe-serif: 'Iowan Old Style', 'Palatino', 'Book Antiqua', Georgia, serif;
+  --zoe-mono: 'SF Mono', 'Menlo', Consolas, monospace;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--zoe-soot);
+  color: var(--zoe-chalk);
+  font-family: var(--zoe-serif);
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+.zoe-body,
+.zoe-body * {
+  box-sizing: border-box;
+}
+zoe-plate-drawer[hidden],
+.zoe-is-hidden {
+  display: none !important;
+}
+.zoe-continuum {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  max-width: 100vw;
+  max-height: 100dvh;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  background: radial-gradient(circle at 50% 44%, #211b24 0%, #141115 78%);
+}
+.zoe-masthead-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 5px 12px;
+  background: rgba(20, 17, 21, 0.94);
+  border-bottom: 1px solid var(--zoe-chalk-faint);
+  min-width: 0;
+}
+.zoe-brand-cluster {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex-shrink: 0;
+}
+.zoe-city-numeral {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 6px;
+  border: 1px solid rgba(229, 185, 76, 0.55);
+  color: var(--zoe-gilt);
+  font-family: var(--zoe-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  border-radius: 3px;
+}
+.zoe-title-stack {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.zoe-city-title {
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--zoe-chalk);
+}
+.zoe-city-rubric {
+  display: inline-block;
+  font-size: 11px;
+  color: var(--zoe-chalk-dim);
+  letter-spacing: 0.04em;
+}
+.zoe-epigraph-whisper {
+  display: block;
+  flex: 1 1 auto;
+  min-width: 0;
+  text-align: center;
+  font-size: 12px;
+  font-style: italic;
+  color: #dfd8c8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.zoe-continuum-badges {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.zoe-live-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  border-radius: 3px;
+  background: rgba(229, 185, 76, 0.12);
+  border: 1px solid rgba(229, 185, 76, 0.38);
+  color: var(--zoe-gilt);
+  font-family: var(--zoe-mono);
+  font-size: 10.5px;
+  white-space: nowrap;
+}
+.zoe-form-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
+  padding: 5px 10px;
+  background: rgba(24, 20, 27, 0.9);
+  border-bottom: 1px solid var(--zoe-chalk-faint);
+  min-width: 0;
+}
+.zoe-shell-token {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 4px 7px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(242, 239, 228, 0.15);
+  cursor: pointer;
+  min-width: 0;
+  transition: border-color 140ms ease, background 140ms ease;
+}
+.zoe-shell-token:hover,
+.zoe-shell-token:focus-visible {
+  border-color: rgba(229, 185, 76, 0.72);
+  background: rgba(229, 185, 76, 0.08);
+  outline: none;
+}
+.zoe-shell-token.zoe-shell-selected {
+  border-color: var(--zoe-gilt);
+  background: rgba(229, 185, 76, 0.15);
+  box-shadow: inset 0 0 0 1px rgba(229, 185, 76, 0.45);
+}
+.zoe-shell-head {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+}
+.zoe-shell-swatch {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  background: var(--zoe-gilt);
+}
+.zoe-shell-outward {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--zoe-chalk);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.zoe-shell-expected {
+  display: block;
+  font-size: 10px;
+  color: var(--zoe-chalk-dim);
+  text-decoration: line-through;
+  text-decoration-color: rgba(229, 185, 76, 0.55);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.zoe-shell-inward {
+  display: block;
+  font-family: var(--zoe-mono);
+  font-size: 10px;
+  color: var(--zoe-gilt);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.zoe-stage-wrap {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  min-height: 0;
+  min-width: 0;
+  position: relative;
+}
+.zoe-canvas-vessel {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+.zoe-stage-canvas {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  touch-action: none;
+}
+.zoe-focus-toast {
+  display: block;
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: calc(100% - 20px);
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(20, 17, 21, 0.82);
+  border: 1px solid rgba(242, 239, 228, 0.22);
+  color: var(--zoe-chalk);
+  font-size: 11px;
+  pointer-events: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.zoe-act-matrix {
+  display: grid;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+  gap: 4px;
+  padding: 4px 10px;
+  background: rgba(22, 18, 25, 0.95);
+  border-top: 1px solid var(--zoe-chalk-faint);
+  min-width: 0;
+}
+.zoe-act-glyph {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 6px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(242, 239, 228, 0.16);
+  cursor: pointer;
+  min-width: 0;
+}
+.zoe-act-glyph:hover,
+.zoe-act-glyph:focus-visible {
+  border-color: var(--zoe-gilt);
+  background: rgba(229, 185, 76, 0.12);
+  outline: none;
+}
+.zoe-act-sigil {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.zoe-act-meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.zoe-act-name {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--zoe-chalk);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.zoe-act-host {
+  display: block;
+  font-family: var(--zoe-mono);
+  font-size: 9.5px;
+  color: var(--zoe-chalk-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.zoe-boundary-dissolver {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 5px 10px;
+  background: rgba(17, 14, 19, 0.97);
+  border-top: 1px solid rgba(229, 185, 76, 0.28);
+  min-width: 0;
+  flex-wrap: wrap;
+}
+.zoe-doubt-ledger {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  flex-wrap: wrap;
+}
+.zoe-chalk-gauge {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 148px;
+  max-width: 100%;
+}
+.zoe-gauge-caption {
+  display: block;
+  font-family: var(--zoe-mono);
+  font-size: 9.5px;
+  color: var(--zoe-chalk);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.zoe-chalk-track {
+  display: block;
+  width: 100%;
+  height: 5px;
+  border-radius: 3px;
+  background: rgba(242, 239, 228, 0.14);
+  overflow: hidden;
+}
+.zoe-chalk-fill {
+  display: block;
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #e5b94c 0%, #f2efe4 100%);
+  transition: width 90ms linear;
+}
+.zoe-metric-chip,
+.zoe-perimeter-fold {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 6px;
+  border-radius: 3px;
+  background: rgba(242, 239, 228, 0.06);
+  border: 1px solid rgba(242, 239, 228, 0.18);
+  font-family: var(--zoe-mono);
+  font-size: 10px;
+  color: var(--zoe-chalk);
+  white-space: nowrap;
+}
+.zoe-perimeter-fold {
+  cursor: pointer;
+  border-color: rgba(71, 147, 153, 0.55);
+  color: #8fd2d7;
+}
+.zoe-chalk-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+.zoe-chalk-pill,
+.zoe-action-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 7px;
+  border-radius: 3px;
+  background: rgba(242, 239, 228, 0.07);
+  border: 1px solid rgba(242, 239, 228, 0.25);
+  color: var(--zoe-chalk);
+  font-family: var(--zoe-mono);
+  font-size: 10px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.zoe-chalk-pill:hover,
+.zoe-chalk-pill:focus-visible,
+.zoe-action-pill:hover,
+.zoe-action-pill:focus-visible,
+.zoe-perimeter-fold:hover,
+.zoe-perimeter-fold:focus-visible {
+  border-color: var(--zoe-gilt);
+  background: rgba(229, 185, 76, 0.16);
+  outline: none;
+}
+.zoe-action-accent {
+  border-color: rgba(217, 138, 60, 0.65);
+  color: #f4ba78;
+}
+.zoe-action-gilt {
+  border-color: rgba(229, 185, 76, 0.7);
+  background: rgba(229, 185, 76, 0.14);
+  color: var(--zoe-gilt);
+}
+.zoe-plate-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  background: rgba(12, 10, 14, 0.9);
+}
+.zoe-plate-sheet {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  width: min(1220px, 100%);
+  height: min(740px, 100%);
+  background: #1a151d;
+  border: 1px solid rgba(229, 185, 76, 0.5);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.zoe-plate-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(20, 17, 21, 0.96);
+  border-bottom: 1px solid var(--zoe-chalk-faint);
+  flex-wrap: wrap;
+}
+.zoe-plate-heading {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--zoe-gilt);
+}
+.zoe-plate-tabs {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.zoe-plate-tab {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 3px;
+  border: 1px solid rgba(242, 239, 228, 0.24);
+  background: rgba(242, 239, 228, 0.06);
+  color: var(--zoe-chalk);
+  font-family: var(--zoe-mono);
+  font-size: 10.5px;
+  cursor: pointer;
+}
+.zoe-plate-tab.zoe-tab-active {
+  border-color: var(--zoe-gilt);
+  background: rgba(229, 185, 76, 0.18);
+  color: var(--zoe-gilt);
+}
+.zoe-plate-close {
+  border-color: rgba(156, 82, 72, 0.7);
+}
+.zoe-plate-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  padding: 10px;
+  min-height: 0;
+  min-width: 0;
+}
+.zoe-plate-gallery[data-mode="map"],
+.zoe-plate-gallery[data-mode="vista"] {
+  grid-template-columns: minmax(0, 1fr);
+}
+.zoe-plate-gallery[data-mode="map"] .zoe-card-vista,
+.zoe-plate-gallery[data-mode="vista"] .zoe-card-map {
+  display: none;
+}
+.zoe-plate-card {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  background: #120f14;
+  border: 1px solid var(--zoe-chalk-faint);
+  border-radius: 4px;
+  overflow: hidden;
+  min-height: 0;
+}
+.zoe-plate-viewport {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  min-height: 0;
+  background: #0f0c11;
+}
+.zoe-plate-img,
+.zoe-plate-fallback {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  transform-origin: var(--zoe-pan-x, 50%) var(--zoe-pan-y, 50%);
+  transition: transform 150ms ease;
+}
+.zoe-plate-gallery[data-zoom="true"] .zoe-plate-img,
+.zoe-plate-gallery[data-zoom="true"] .zoe-plate-fallback {
+  transform: scale(1.75);
+  cursor: zoom-out;
+}
+.zoe-plate-caption {
+  display: block;
+  padding: 6px 9px;
+  font-family: var(--zoe-mono);
+  font-size: 10px;
+  color: var(--zoe-chalk-dim);
+  border-top: 1px solid var(--zoe-chalk-faint);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (max-width: 860px) {
+  .zoe-masthead-strip { padding: 4px 8px; gap: 6px; }
+  .zoe-city-rubric, .zoe-epigraph-whisper { display: none; }
+  .zoe-city-title { font-size: 14px; }
+  .zoe-live-pill { font-size: 9.5px; padding: 2px 5px; }
+  .zoe-form-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3px; padding: 3px 6px; }
+  .zoe-shell-token { padding: 2px 4px; gap: 1px; }
+  .zoe-shell-outward { font-size: 9.5px; }
+  .zoe-shell-expected { display: none; }
+  .zoe-shell-inward { font-size: 8.8px; }
+  .zoe-focus-toast { font-size: 9.5px; padding: 2px 7px; top: 4px; }
+  .zoe-act-matrix { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3px; padding: 3px 6px; }
+  .zoe-act-glyph { padding: 2px 4px; gap: 3px; }
+  .zoe-act-sigil { font-size: 11px; }
+  .zoe-act-name { font-size: 9px; }
+  .zoe-act-host { font-size: 8px; }
+  .zoe-boundary-dissolver { padding: 4px 6px; gap: 4px; }
+  .zoe-doubt-ledger { width: 100%; justify-content: space-between; gap: 4px; }
+  .zoe-chalk-gauge { width: 108px; }
+  .zoe-metric-chip, .zoe-perimeter-fold { font-size: 8.8px; padding: 2px 4px; }
+  .zoe-chalk-controls { width: 100%; gap: 3px; }
+  .zoe-chalk-pill, .zoe-action-pill { padding: 3px 5px; font-size: 8.8px; }
+  .zoe-plate-gallery { grid-template-columns: minmax(0, 1fr); grid-template-rows: repeat(2, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .zoe-body, .zoe-body * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+</style>
+</head>
+<body class="zoe-body">
+<zoe-continuum class="zoe-continuum" id="zoe-continuum">
+  <zoe-masthead-strip class="zoe-masthead-strip">
+    <zoe-brand-cluster class="zoe-brand-cluster">
+      <zoe-city-numeral class="zoe-city-numeral">XIII</zoe-city-numeral>
+      <zoe-title-stack class="zoe-title-stack">
+        <zoe-city-title class="zoe-city-title">ZOE</zoe-city-title>
+        <zoe-city-rubric class="zoe-city-rubric">Cities &amp; Signs · 3 — Indivisible Existence</zoe-city-rubric>
+      </zoe-title-stack>
+    </zoe-brand-cluster>
+    <zoe-epigraph-whisper class="zoe-epigraph-whisper" id="zoe-status-whisper">Every point of Zoe hosts every act: outward form never fixes inward life.</zoe-epigraph-whisper>
+    <zoe-continuum-badges class="zoe-continuum-badges">
+      <zoe-live-pill class="zoe-live-pill" id="zoe-nine-badge">9/9 Acts Live</zoe-live-pill>
+      <zoe-live-pill class="zoe-live-pill" id="zoe-incongruity-badge">Incongruity 100%</zoe-live-pill>
+    </zoe-continuum-badges>
+  </zoe-masthead-strip>
+
+  <form-illusion-grid class="zoe-form-grid" id="zoe-form-grid">
+    <zoe-shell-token class="zoe-shell-token" tabindex="0" data-shell-id="pyramid_roof">
+      <zoe-shell-head class="zoe-shell-head"><zoe-shell-swatch class="zoe-shell-swatch" style="background:#9c5248"></zoe-shell-swatch><zoe-shell-outward class="zoe-shell-outward">Pyramid Roof</zoe-shell-outward></zoe-shell-head>
+      <zoe-shell-expected class="zoe-shell-expected">Expected: Royal Palace</zoe-shell-expected>
+      <zoe-shell-inward class="zoe-shell-inward">Now: ✚ Leprosarium · ≈ Baths</zoe-shell-inward>
+    </zoe-shell-token>
+    <zoe-shell-token class="zoe-shell-token" tabindex="0" data-shell-id="pagoda">
+      <zoe-shell-head class="zoe-shell-head"><zoe-shell-swatch class="zoe-shell-swatch" style="background:#d98a3c"></zoe-shell-swatch><zoe-shell-outward class="zoe-shell-outward">Pine-Cone Pagoda</zoe-shell-outward></zoe-shell-head>
+      <zoe-shell-expected class="zoe-shell-expected">Expected: High Priests Temple</zoe-shell-expected>
+      <zoe-shell-inward class="zoe-shell-inward">Now: ⚒ Forging · ♨ Cooking</zoe-shell-inward>
+    </zoe-shell-token>
+    <zoe-shell-token class="zoe-shell-token" tabindex="0" data-shell-id="covered_market">
+      <zoe-shell-head class="zoe-shell-head"><zoe-shell-swatch class="zoe-shell-swatch" style="background:#c9b79c"></zoe-shell-swatch><zoe-shell-outward class="zoe-shell-outward">Covered Market</zoe-shell-outward></zoe-shell-head>
+      <zoe-shell-expected class="zoe-shell-expected">Expected: Grand Bazaar</zoe-shell-expected>
+      <zoe-shell-inward class="zoe-shell-inward">Now: ◈ Oracles · ☽ Sleeping</zoe-shell-inward>
+    </zoe-shell-token>
+    <zoe-shell-token class="zoe-shell-token" tabindex="0" data-shell-id="canal">
+      <zoe-shell-head class="zoe-shell-head"><zoe-shell-swatch class="zoe-shell-swatch" style="background:#479399"></zoe-shell-swatch><zoe-shell-outward class="zoe-shell-outward">Scrawl of Canals</zoe-shell-outward></zoe-shell-head>
+      <zoe-shell-expected class="zoe-shell-expected">Expected: Embassy Quays</zoe-shell-expected>
+      <zoe-shell-inward class="zoe-shell-inward">Now: ⚖ Gold · ♛ Reigning</zoe-shell-inward>
+    </zoe-shell-token>
+    <zoe-shell-token class="zoe-shell-token" tabindex="0" data-shell-id="rubbish_heap">
+      <zoe-shell-head class="zoe-shell-head"><zoe-shell-swatch class="zoe-shell-swatch" style="background:#9a8462"></zoe-shell-swatch><zoe-shell-outward class="zoe-shell-outward">Rubbish Heap</zoe-shell-outward></zoe-shell-head>
+      <zoe-shell-expected class="zoe-shell-expected">Expected: Outcast Midden</zoe-shell-expected>
+      <zoe-shell-inward class="zoe-shell-inward">Now: ⇄ Trading</zoe-shell-inward>
+    </zoe-shell-token>
+  </form-illusion-grid>
+
+  <act-permutation-stage class="zoe-stage-wrap" id="zoe-stage-wrap">
+    <zoe-canvas-vessel class="zoe-canvas-vessel" id="zoe-canvas-vessel">
+      <canvas class="zoe-stage-canvas" id="zoe-stage-canvas"></canvas>
+      <zoe-focus-toast class="zoe-focus-toast" id="zoe-focus-toast">Drag across Zoe to chalk a boundary · Tap a shell to focus · Tap any act below to route inside</zoe-focus-toast>
+    </zoe-canvas-vessel>
+    <zoe-act-matrix class="zoe-act-matrix" id="zoe-act-matrix">
+      <zoe-act-glyph class="zoe-act-glyph" tabindex="0" data-act-id="sleeping"><zoe-act-sigil class="zoe-act-sigil">☽</zoe-act-sigil><zoe-act-meta class="zoe-act-meta"><zoe-act-name class="zoe-act-name">Sleeping</zoe-act-name><zoe-act-host class="zoe-act-host">→ Market</zoe-act-host></zoe-act-meta></zoe-act-glyph>
+      <zoe-act-glyph class="zoe-act-glyph" tabindex="0" data-act-id="tool_forging"><zoe-act-sigil class="zoe-act-sigil">⚒</zoe-act-sigil><zoe-act-meta class="zoe-act-meta"><zoe-act-name class="zoe-act-name">Forging</zoe-act-name><zoe-act-host class="zoe-act-host">→ Pagoda</zoe-act-host></zoe-act-meta></zoe-act-glyph>
+      <zoe-act-glyph class="zoe-act-glyph" tabindex="0" data-act-id="cooking"><zoe-act-sigil class="zoe-act-sigil">♨</zoe-act-sigil><zoe-act-meta class="zoe-act-meta"><zoe-act-name class="zoe-act-name">Cooking</zoe-act-name><zoe-act-host class="zoe-act-host">→ Pagoda</zoe-act-host></zoe-act-meta></zoe-act-glyph>
+      <zoe-act-glyph class="zoe-act-glyph" tabindex="0" data-act-id="gold_counting"><zoe-act-sigil class="zoe-act-sigil">⚖</zoe-act-sigil><zoe-act-meta class="zoe-act-meta"><zoe-act-name class="zoe-act-name">Gold-Count</zoe-act-name><zoe-act-host class="zoe-act-host">→ Canals</zoe-act-host></zoe-act-meta></zoe-act-glyph>
+      <zoe-act-glyph class="zoe-act-glyph" tabindex="0" data-act-id="reigning"><zoe-act-sigil class="zoe-act-sigil">♛</zoe-act-sigil><zoe-act-meta class="zoe-act-meta"><zoe-act-name class="zoe-act-name">Reigning</zoe-act-name><zoe-act-host class="zoe-act-host">→ Canals</zoe-act-host></zoe-act-meta></zoe-act-glyph>
+      <zoe-act-glyph class="zoe-act-glyph" tabindex="0" data-act-id="trading"><zoe-act-sigil class="zoe-act-sigil">⇄</zoe-act-sigil><zoe-act-meta class="zoe-act-meta"><zoe-act-name class="zoe-act-name">Trading</zoe-act-name><zoe-act-host class="zoe-act-host">→ Midden</zoe-act-host></zoe-act-meta></zoe-act-glyph>
+      <zoe-act-glyph class="zoe-act-glyph" tabindex="0" data-act-id="consulting_oracles"><zoe-act-sigil class="zoe-act-sigil">◈</zoe-act-sigil><zoe-act-meta class="zoe-act-meta"><zoe-act-name class="zoe-act-name">Oracles</zoe-act-name><zoe-act-host class="zoe-act-host">→ Market</zoe-act-host></zoe-act-meta></zoe-act-glyph>
+      <zoe-act-glyph class="zoe-act-glyph" tabindex="0" data-act-id="leprosarium_tending"><zoe-act-sigil class="zoe-act-sigil">✚</zoe-act-sigil><zoe-act-meta class="zoe-act-meta"><zoe-act-name class="zoe-act-name">Leprosarium</zoe-act-name><zoe-act-host class="zoe-act-host">→ Pyramid</zoe-act-host></zoe-act-meta></zoe-act-glyph>
+      <zoe-act-glyph class="zoe-act-glyph" tabindex="0" data-act-id="odalisque_bathing"><zoe-act-sigil class="zoe-act-sigil">≈</zoe-act-sigil><zoe-act-meta class="zoe-act-meta"><zoe-act-name class="zoe-act-name">Bathing</zoe-act-name><zoe-act-host class="zoe-act-host">→ Pyramid</zoe-act-host></zoe-act-meta></zoe-act-glyph>
+    </zoe-act-matrix>
+  </act-permutation-stage>
+
+  <boundary-dissolver class="zoe-boundary-dissolver" id="zoe-boundary-dissolver">
+    <zoe-doubt-ledger class="zoe-doubt-ledger" id="zoe-doubt-ledger">
+      <zoe-chalk-gauge class="zoe-chalk-gauge">
+        <zoe-gauge-caption class="zoe-gauge-caption" id="zoe-chalk-label">Chalk: Ready (Drag on city)</zoe-gauge-caption>
+        <zoe-chalk-track class="zoe-chalk-track"><zoe-chalk-fill class="zoe-chalk-fill" id="zoe-chalk-fill"></zoe-chalk-fill></zoe-chalk-track>
+      </zoe-chalk-gauge>
+      <zoe-metric-chip class="zoe-metric-chip" id="zoe-dissolved-chip">Dissolved: 0</zoe-metric-chip>
+      <zoe-metric-chip class="zoe-metric-chip" id="zoe-doubt-chip">Doubt: 18%</zoe-metric-chip>
+      <zoe-perimeter-fold class="zoe-perimeter-fold" id="zoe-fold-chip" tabindex="0">Folds: 0 · Wheels≡Wolves</zoe-perimeter-fold>
+    </zoe-doubt-ledger>
+    <zoe-chalk-controls class="zoe-chalk-controls">
+      <zoe-chalk-pill class="zoe-chalk-pill" tabindex="0" data-preset="sacred_profane">[1] Sacred/Profane</zoe-chalk-pill>
+      <zoe-chalk-pill class="zoe-chalk-pill" tabindex="0" data-preset="royal_artisan">[2] Royal/Artisan</zoe-chalk-pill>
+      <zoe-chalk-pill class="zoe-chalk-pill" tabindex="0" data-preset="pure_outcast">[3] Pure/Leprous</zoe-chalk-pill>
+      <zoe-chalk-pill class="zoe-chalk-pill" tabindex="0" data-preset="inside_outside">[4] Wheels/Wolves</zoe-chalk-pill>
+      <zoe-action-pill class="zoe-action-pill zoe-action-accent" id="zoe-btn-permute" tabindex="0">[X] Permute 9</zoe-action-pill>
+      <zoe-action-pill class="zoe-action-pill" id="zoe-btn-tumble" tabindex="0">[W] Tumble Edge</zoe-action-pill>
+      <zoe-action-pill class="zoe-action-pill" id="zoe-btn-sound" tabindex="0">[M] Sound: On</zoe-action-pill>
+      <zoe-action-pill class="zoe-action-pill" id="zoe-btn-reset" tabindex="0">[R] Reset</zoe-action-pill>
+      <zoe-action-pill class="zoe-action-pill zoe-action-gilt" id="zoe-btn-plates" tabindex="0">[P] Plates</zoe-action-pill>
+    </zoe-chalk-controls>
+  </boundary-dissolver>
+</zoe-continuum>
+
+<zoe-plate-drawer class="zoe-plate-drawer" id="zoe-plate-drawer" hidden>
+  <zoe-plate-sheet class="zoe-plate-sheet">
+    <zoe-plate-bar class="zoe-plate-bar">
+      <zoe-plate-heading class="zoe-plate-heading">ZOE · XIII — Royal Plate Guild Archival Folio</zoe-plate-heading>
+      <zoe-plate-tabs class="zoe-plate-tabs">
+        <zoe-plate-tab class="zoe-plate-tab zoe-tab-active" tabindex="0" data-plate-mode="diptych">Diptych</zoe-plate-tab>
+        <zoe-plate-tab class="zoe-plate-tab" tabindex="0" data-plate-mode="map">Cartographic Map</zoe-plate-tab>
+        <zoe-plate-tab class="zoe-plate-tab" tabindex="0" data-plate-mode="vista">City Vista</zoe-plate-tab>
+        <zoe-plate-tab class="zoe-plate-tab" id="zoe-btn-loupe" tabindex="0">[Z] Loupe 1.75x</zoe-plate-tab>
+        <zoe-plate-tab class="zoe-plate-tab zoe-plate-close" id="zoe-btn-close-plates" tabindex="0">[Esc] Close</zoe-plate-tab>
+      </zoe-plate-tabs>
+    </zoe-plate-bar>
+    <zoe-plate-gallery class="zoe-plate-gallery" id="zoe-plate-gallery" data-mode="diptych" data-zoom="false">
+      <zoe-plate-card class="zoe-plate-card zoe-card-map">
+        <zoe-plate-viewport class="zoe-plate-viewport" id="zoe-vp-map">
+          <img class="zoe-plate-img" id="zoe-map-img" src="map.png" loading="lazy" alt="Cartographic Map of Zoe">
+          <canvas class="zoe-plate-fallback zoe-is-hidden" id="zoe-map-fallback" width="800" height="600"></canvas>
+        </zoe-plate-viewport>
+        <zoe-plate-caption class="zoe-plate-caption" id="zoe-map-caption">Plate I · Cartographic Plan of Zoe (map.png · 1600×1200) — Indivisible continuum without boundary walls</zoe-plate-caption>
+      </zoe-plate-card>
+      <zoe-plate-card class="zoe-plate-card zoe-card-vista">
+        <zoe-plate-viewport class="zoe-plate-viewport" id="zoe-vp-vista">
+          <img class="zoe-plate-img" id="zoe-vista-img" src="image.png" loading="lazy" alt="City Vista of Zoe">
+          <canvas class="zoe-plate-fallback zoe-is-hidden" id="zoe-vista-fallback" width="800" height="500"></canvas>
+        </zoe-plate-viewport>
+        <zoe-plate-caption class="zoe-plate-caption" id="zoe-vista-caption">Plate II · Architectural Cutaway Vista of Zoe (image.png · 1600×1000) — Deceptive roofs, canals &amp; simultaneous acts</zoe-plate-caption>
+      </zoe-plate-card>
+    </zoe-plate-gallery>
+  </zoe-plate-sheet>
+</zoe-plate-drawer>
+
+<script>
+(function (root) {
+  "use strict";
+
+  var PALETTE = {
+    sootDeep: "#141115",
+    sootMid: "#1d1820",
+    sootWarm: "#272028",
+    stoneWarm: "#3b3235",
+    porphyry: "#9c5248",
+    porphyryDark: "#68322b",
+    porphyryLight: "#c57468",
+    pagodaAmber: "#d98a3c",
+    pagodaDark: "#8f511c",
+    pagodaLight: "#f0b265",
+    bazaarStone: "#c9b79c",
+    bazaarDark: "#857661",
+    bazaarLight: "#e4d8c3",
+    canalVerdigris: "#479399",
+    canalDeep: "#1d464b",
+    canalFoam: "#9ad4d8",
+    middenOchre: "#9a8462",
+    middenDark: "#5e4e37",
+    middenShard: "#b86b4b",
+    chalk: "#f2efe4",
+    chalkDim: "rgba(242, 239, 228, 0.42)",
+    bezantGilt: "#e5b94c",
+    wolfFrost: "#9cb0ba",
+    wheelIron: "#8f7a62",
+    steppeGrass: "#4b5d52"
+  };
+
+  var SHELL_FORMS = [
+    {
+      id: "pyramid_roof",
+      index: 0,
+      label: "Pyramid Roof",
+      expectedFunction: "Royal Palace & Throne Treasury",
+      calvinoStone: "pyramid_roofs",
+      roofHue: "#9c5248",
+      anchorNorm: { x: 0.19, y: 0.265 },
+      footprintNorm: { w: 0.27, h: 0.40 }
+    },
+    {
+      id: "pagoda",
+      index: 1,
+      label: "Pine-Cone Pagoda",
+      expectedFunction: "High Priests' Temple & Sanctuary",
+      calvinoStone: "pine_cone_pagodas",
+      roofHue: "#d98a3c",
+      anchorNorm: { x: 0.50, y: 0.25 },
+      footprintNorm: { w: 0.27, h: 0.41 }
+    },
+    {
+      id: "covered_market",
+      index: 2,
+      label: "Covered Market",
+      expectedFunction: "Grand Bazaar & Guild Arcade",
+      calvinoStone: "covered_markets",
+      roofHue: "#c9b79c",
+      anchorNorm: { x: 0.81, y: 0.265 },
+      footprintNorm: { w: 0.27, h: 0.40 }
+    },
+    {
+      id: "canal",
+      index: 3,
+      label: "Scrawl of Canals",
+      expectedFunction: "Embassy Quays & Irrigated Gardens",
+      calvinoStone: "scrawl_of_canals",
+      roofHue: "#479399",
+      anchorNorm: { x: 0.305, y: 0.73 },
+      footprintNorm: { w: 0.32, h: 0.395 }
+    },
+    {
+      id: "rubbish_heap",
+      index: 4,
+      label: "Rubbish Heap",
+      expectedFunction: "Outcast Midden & Slum Margin",
+      calvinoStone: "rubbish_heaps",
+      roofHue: "#9a8462",
+      anchorNorm: { x: 0.695, y: 0.73 },
+      footprintNorm: { w: 0.32, h: 0.395 }
+    }
+  ];
+
+  var PORTRAIT_SLOTS = [
+    { x: 0.045, y: 0.045, w: 0.435, h: 0.272 },
+    { x: 0.520, y: 0.055, w: 0.435, h: 0.272 },
+    { x: 0.045, y: 0.365, w: 0.435, h: 0.272 },
+    { x: 0.520, y: 0.375, w: 0.435, h: 0.272 },
+    { x: 0.155, y: 0.688, w: 0.690, h: 0.262 }
+  ];
+
+  var BOUNDARY_PRESETS = [
+    {
+      id: "sacred_profane",
+      label: "Sacred / Profane",
+      thesis: "Cordon Temple Pagoda & Pyramid sanctuary away from Bazaar & Midden",
+      pointsNorm: [
+        { x: 0.05, y: 0.49 },
+        { x: 0.24, y: 0.48 },
+        { x: 0.43, y: 0.50 },
+        { x: 0.63, y: 0.46 },
+        { x: 0.66, y: 0.24 },
+        { x: 0.69, y: 0.06 }
+      ]
+    },
+    {
+      id: "royal_artisan",
+      label: "Royal / Artisan",
+      thesis: "Divide sovereign Pyramid & Embassy Quays from anvils, hearths & stalls",
+      pointsNorm: [
+        { x: 0.345, y: 0.05 },
+        { x: 0.355, y: 0.28 },
+        { x: 0.465, y: 0.49 },
+        { x: 0.500, y: 0.72 },
+        { x: 0.495, y: 0.95 }
+      ]
+    },
+    {
+      id: "pure_outcast",
+      label: "Pure / Leprous",
+      thesis: "Quarantine the Rubbish Heap & cots behind a lime-chalk cordon",
+      pointsNorm: [
+        { x: 0.50, y: 0.95 },
+        { x: 0.50, y: 0.69 },
+        { x: 0.57, y: 0.50 },
+        { x: 0.77, y: 0.49 },
+        { x: 0.96, y: 0.52 }
+      ]
+    },
+    {
+      id: "inside_outside",
+      label: "Wheels / Wolves Perimeter",
+      thesis: "Draw an outer city wall between the rumble of wheels and howl of wolves",
+      pointsNorm: [
+        { x: 0.035, y: 0.12 },
+        { x: 0.500, y: 0.03 },
+        { x: 0.965, y: 0.12 },
+        { x: 0.965, y: 0.88 },
+        { x: 0.500, y: 0.965 },
+        { x: 0.035, y: 0.88 },
+        { x: 0.035, y: 0.12 }
+      ]
+    }
+  ];
+
+  function clamp(v, lo, hi) {
+    return v < lo ? lo : v > hi ? hi : v;
+  }
+
+  function makePoint(xn, yn) {
+    var cx = clamp(Number(xn) || 0, 0, 1);
+    var cy = clamp(Number(yn) || 0, 0, 1);
+    return { xNorm: cx, yNorm: cy, x: cx, y: cy };
+  }
+
+  function distToSegmentSq(px, py, ax, ay, bx, by) {
+    var dx = bx - ax;
+    var dy = by - ay;
+    var lenSq = dx * dx + dy * dy;
+    var t = lenSq > 1e-9 ? clamp(((px - ax) * dx + (py - ay) * dy) / lenSq, 0, 1) : 0;
+    var qx = ax + dx * t;
+    var qy = ay + dy * t;
+    var ex = px - qx;
+    var ey = py - qy;
+    return { d2: ex * ex + ey * ey, qx: qx, qy: qy };
+  }
+
+  function densifyPoints(rawPoints, targetSpacing) {
+    var spacing = targetSpacing || 0.045;
+    var out = [];
+    if (!rawPoints || !rawPoints.length) return out;
+    for (var i = 0; i < rawPoints.length; i++) {
+      var cur = rawPoints[i];
+      var cx = cur.xNorm !== undefined ? cur.xNorm : cur.x;
+      var cy = cur.yNorm !== undefined ? cur.yNorm : cur.y;
+      if (i === 0) {
+        out.push(makePoint(cx, cy));
+      } else {
+        var prev = out[out.length - 1];
+        var dist = Math.hypot(cx - prev.xNorm, cy - prev.yNorm);
+        var steps = Math.max(1, Math.ceil(dist / spacing));
+        for (var s = 1; s <= steps; s++) {
+          var u = s / steps;
+          out.push(makePoint(prev.xNorm + (cx - prev.xNorm) * u, prev.yNorm + (cy - prev.yNorm) * u));
+        }
+      }
+    }
+    return out;
+  }
+
+  function resolveAmbientHue(shellId, actAssignments) {
+    if (!actAssignments) return null;
+    if (Array.isArray(actAssignments)) {
+      for (var i = 0; i < actAssignments.length; i++) {
+        var a = actAssignments[i];
+        if (a && a.currentShellId === shellId && a.hue) return a.hue;
+      }
+      return null;
+    }
+    var entry = actAssignments[shellId];
+    if (!entry) return null;
+    if (typeof entry === "string") return null;
+    if (entry.primaryAct && entry.primaryAct.hue) return entry.primaryAct.hue;
+    if (Array.isArray(entry.acts) && entry.acts[0] && entry.acts[0].hue) return entry.acts[0].hue;
+    return null;
+  }
+
+  function createDeceptiveForms(config) {
+    var cfg = config || {};
+    var state = {
+      width: Math.max(240, Number(cfg.width) || 1280),
+      height: Math.max(240, Number(cfg.height) || 800),
+      dpr: Math.max(1, Number(cfg.dpr) || 1),
+      reducedMotion: Boolean(cfg.reducedMotion),
+      time: 0,
+      ripplePhase: 0,
+      smokePhase: 0,
+      selectedShellId: null,
+      shells: [],
+      doubtPulses: [0, 0, 0, 0, 0],
+      activeChalkStrokes: [],
+      currentStroke: null,
+      strokeSeq: 0,
+      recentDissolvedTraces: [],
+      dustMotes: [],
+      dissolvedBoundariesCount: 0,
+      totalChalkAttempts: 0,
+      travelerDoubt: 0.18,
+      perimeterTumbleCount: 0,
+      tumblePhase: 0,
+      tumbleDir: { x: 1, y: -0.32 },
+      toroidOffset: { x: 0, y: 0 },
+      wheelWolfBlend: 0.35
+    };
+
+    function recomputeLayout() {
+      var W = state.width;
+      var H = state.height;
+      var isPortrait = W < H * 0.94;
+      state.shells = SHELL_FORMS.map(function (meta, idx) {
+        var nx, ny, nw, nh;
+        if (isPortrait) {
+          var p = PORTRAIT_SLOTS[idx];
+          nx = p.x;
+          ny = p.y;
+          nw = p.w;
+          nh = p.h;
+        } else {
+          nw = meta.footprintNorm.w;
+          nh = meta.footprintNorm.h;
+          nx = meta.anchorNorm.x - nw * 0.5;
+          ny = meta.anchorNorm.y - nh * 0.5;
+        }
+        var rx = Math.round(nx * W);
+        var ry = Math.round(ny * H);
+        var rw = Math.round(nw * W);
+        var rh = Math.round(nh * H);
+        var ix = Math.round(rx + rw * 0.08);
+        var iy = Math.round(ry + rh * 0.36);
+        var iw = Math.round(rw * 0.84);
+        var ih = Math.round(rh * 0.56);
+        return {
+          id: meta.id,
+          index: meta.index,
+          label: meta.label,
+          expectedFunction: meta.expectedFunction,
+          calvinoStone: meta.calvinoStone,
+          roofHue: meta.roofHue,
+          anchorNorm: { x: meta.anchorNorm.x, y: meta.anchorNorm.y },
+          footprintNorm: { w: meta.footprintNorm.w, h: meta.footprintNorm.h },
+          xNorm: nx,
+          yNorm: ny,
+          wNorm: nw,
+          hNorm: nh,
+          x: rx,
+          y: ry,
+          w: rw,
+          h: rh,
+          cx: Math.round(rx + rw * 0.5),
+          cy: Math.round(ry + rh * 0.5),
+          interiorRect: { x: ix, y: iy, w: iw, h: ih },
+          selected: state.selectedShellId === meta.id,
+          doubtPulse: state.doubtPulses[idx] || 0
+        };
+      });
+    }
+
+    function spawnDust(xNorm, yNorm, count, hue, reduced) {
+      if (reduced || state.dustMotes.length > 220) return;
+      for (var i = 0; i < count; i++) {
+        var ang = ((state.strokeSeq * 17 + i * 2.39996) % 6.28318);
+        var spd = 0.014 + ((i * 7) % 11) * 0.003;
+        state.dustMotes.push({
+          xNorm: clamp(xNorm + Math.cos(ang) * 0.006, 0.01, 0.99),
+          yNorm: clamp(yNorm + Math.sin(ang) * 0.006, 0.01, 0.99),
+          vx: Math.cos(ang) * spd,
+          vy: Math.sin(ang) * spd - 0.012,
+          life: 1.0,
+          size: 1.4 + (i % 3) * 0.9,
+          hue: hue || PALETTE.chalk
+        });
+      }
+    }
+
+    function resize(width, height, dpr) {
+      if (Number(width) > 40) state.width = Number(width);
+      if (Number(height) > 40) state.height = Number(height);
+      if (Number(dpr) > 0) state.dpr = Number(dpr);
+      recomputeLayout();
+      return state.shells;
+    }
+
+    function getShells() {
+      return state.shells;
+    }
+
+    function hitTestShell(normX, normY) {
+      var px = clamp(Number(normX) || 0, 0, 1) * state.width;
+      var py = clamp(Number(normY) || 0, 0, 1) * state.height;
+      for (var i = state.shells.length - 1; i >= 0; i--) {
+        var s = state.shells[i];
+        if (px >= s.x && px <= s.x + s.w && py >= s.y && py <= s.y + s.h) {
+          return s;
+        }
+      }
+      return null;
+    }
+
+    function setSelectedShell(shellIdOrNull) {
+      state.selectedShellId = shellIdOrNull || null;
+      for (var i = 0; i < state.shells.length; i++) {
+        state.shells[i].selected = state.shells[i].id === state.selectedShellId;
+      }
+      return state.selectedShellId;
+    }
+
+    function beginChalkLine(normX, normY) {
+      if (state.currentStroke) {
+        state.currentStroke.drawing = false;
+        state.currentStroke.completed = true;
+      }
+      state.strokeSeq += 1;
+      state.totalChalkAttempts += 1;
+      var pt = makePoint(normX, normY);
+      var pts = [pt];
+      var stroke = {
+        id: "chalk_" + state.strokeSeq,
+        presetId: null,
+        label: "Custom Zoning Line",
+        thesis: "Traveler's hand-drawn line attempting to partition Zoe",
+        points: pts,
+        pointsNorm: pts,
+        integrity: 1.0,
+        age: 0,
+        idleDrawTime: 0,
+        drawing: true,
+        completed: false,
+        breaches: [],
+        seed: state.strokeSeq * 1.618
+      };
+      state.currentStroke = stroke;
+      state.activeChalkStrokes.push(stroke);
+      spawnDust(pt.xNorm, pt.yNorm, 3, PALETTE.chalk, state.reducedMotion);
+      return stroke;
+    }
+
+    function extendChalkLine(normX, normY) {
+      if (!state.currentStroke) {
+        return beginChalkLine(normX, normY);
+      }
+      var stroke = state.currentStroke;
+      stroke.idleDrawTime = 0;
+      var pt = makePoint(normX, normY);
+      var prev = stroke.points[stroke.points.length - 1];
+      var dist = Math.hypot(pt.xNorm - prev.xNorm, pt.yNorm - prev.yNorm);
+      if (dist >= 0.007) {
+        var steps = Math.min(8, Math.max(1, Math.ceil(dist / 0.04)));
+        for (var s = 1; s <= steps; s++) {
+          var u = s / steps;
+          stroke.points.push(makePoint(
+            prev.xNorm + (pt.xNorm - prev.xNorm) * u,
+            prev.yNorm + (pt.yNorm - prev.yNorm) * u
+          ));
+        }
+        spawnDust(pt.xNorm, pt.yNorm, 1, PALETTE.chalk, state.reducedMotion);
+      }
+      return stroke;
+    }
+
+    function endChalkLine() {
+      var stroke = state.currentStroke;
+      if (!stroke) return null;
+      if (stroke.points.length < 2) {
+        var p0 = stroke.points[0];
+        stroke.points.push(makePoint(p0.xNorm + 0.04, p0.yNorm + 0.015));
+      }
+      stroke.drawing = false;
+      stroke.completed = true;
+      state.currentStroke = null;
+      return stroke;
+    }
+
+    function applyPresetChalk(presetId) {
+      var chosen = BOUNDARY_PRESETS[0];
+      for (var i = 0; i < BOUNDARY_PRESETS.length; i++) {
+        if (BOUNDARY_PRESETS[i].id === presetId || i === presetId) {
+          chosen = BOUNDARY_PRESETS[i];
+          break;
+        }
+      }
+      state.strokeSeq += 1;
+      state.totalChalkAttempts += 1;
+      var pts = densifyPoints(chosen.pointsNorm, 0.042);
+      var stroke = {
+        id: "chalk_" + state.strokeSeq,
+        presetId: chosen.id,
+        label: chosen.label,
+        thesis: chosen.thesis,
+        points: pts,
+        pointsNorm: pts,
+        integrity: 1.0,
+        age: 0,
+        idleDrawTime: 0,
+        drawing: false,
+        completed: true,
+        breaches: [],
+        seed: state.strokeSeq * 1.618
+      };
+      state.activeChalkStrokes.push(stroke);
+      if (chosen.id === "inside_outside") {
+        state.wheelWolfBlend = Math.max(state.wheelWolfBlend, 0.82);
+      }
+      for (var k = 0; k < pts.length; k += 4) {
+        spawnDust(pts[k].xNorm, pts[k].yNorm, 2, PALETTE.chalk, state.reducedMotion);
+      }
+      return stroke;
+    }
+
+    function clearChalk() {
+      state.activeChalkStrokes = [];
+      state.currentStroke = null;
+      state.recentDissolvedTraces = [];
+      state.dustMotes = [];
+    }
+
+    function triggerPerimeterTumble(dirX, dirY) {
+      var dx = Number(dirX);
+      var dy = Number(dirY);
+      if (!dx && !dy) {
+        var cycle = state.perimeterTumbleCount % 4;
+        dx = cycle === 0 ? 1 : cycle === 1 ? -1 : cycle === 2 ? 0.45 : -0.45;
+        dy = cycle === 0 ? -0.32 : cycle === 1 ? 0.32 : cycle === 2 ? 1 : -1;
+      }
+      var mag = Math.hypot(dx, dy) || 1;
+      state.tumbleDir = { x: dx / mag, y: dy / mag };
+      state.perimeterTumbleCount += 1;
+      state.tumblePhase = 1.0;
+      state.wheelWolfBlend = 1.0;
+      state.toroidOffset.x = (state.toroidOffset.x + state.tumbleDir.x * 0.27 + 10) % 1;
+      state.toroidOffset.y = (state.toroidOffset.y + state.tumbleDir.y * 0.19 + 10) % 1;
+      state.travelerDoubt = clamp(state.travelerDoubt + 0.12, 0, 1);
+      for (var i = 0; i < state.shells.length; i++) {
+        state.doubtPulses[i] = Math.max(state.doubtPulses[i], 0.85);
+        state.shells[i].doubtPulse = state.doubtPulses[i];
+      }
+      if (typeof cfg.onPerimeterTumble === "function") {
+        cfg.onPerimeterTumble(state.perimeterTumbleCount);
+      }
+      return state.perimeterTumbleCount;
+    }
+
+    function step(dt, bleedField, reducedMotion) {
+      if (reducedMotion !== undefined) {
+        state.reducedMotion = Boolean(reducedMotion);
+      }
+      var totalDt = clamp(Number(dt) >= 0 ? Number(dt) : 0.016, 0, 5.0);
+      var steps = Math.max(1, Math.ceil(totalDt / 0.05));
+      var subDt = totalDt / steps;
+      var crossings = bleedField && Array.isArray(bleedField.activeCrossings) ? bleedField.activeCrossings : [];
+      var flux = bleedField && typeof bleedField.fluxIntensity === "number"
+        ? clamp(bleedField.fluxIntensity, 0, 1.8)
+        : 0.24;
+
+      for (var stepIdx = 0; stepIdx < steps; stepIdx++) {
+        state.time += subDt;
+        if (!state.reducedMotion) {
+          state.ripplePhase += subDt * 1.65;
+          state.smokePhase += subDt * 1.15;
+          state.toroidOffset.x = (state.toroidOffset.x + state.tumbleDir.x * state.tumblePhase * subDt * 0.42 + 10) % 1;
+          state.toroidOffset.y = (state.toroidOffset.y + state.tumbleDir.y * state.tumblePhase * subDt * 0.28 + 10) % 1;
+        }
+        state.tumblePhase = Math.max(0, state.tumblePhase - subDt * 0.62);
+        var targetBlend = 0.34 + state.travelerDoubt * 0.24 + state.tumblePhase * 0.42;
+        state.wheelWolfBlend += (clamp(targetBlend, 0.25, 1) - state.wheelWolfBlend) * Math.min(1, subDt * 3.2);
+
+        for (var si = 0; si < state.shells.length; si++) {
+          state.doubtPulses[si] = Math.max(0, state.doubtPulses[si] - subDt * 0.9);
+          state.shells[si].doubtPulse = state.doubtPulses[si];
+        }
+
+        for (var idx = state.activeChalkStrokes.length - 1; idx >= 0; idx--) {
+          var st = state.activeChalkStrokes[idx];
+          st.age += subDt;
+          if (st.drawing) {
+            st.idleDrawTime += subDt;
+            if (st.idleDrawTime > 0.55) {
+              if (st.points.length < 2) {
+                st.points.push(makePoint(st.points[0].xNorm + 0.04, st.points[0].yNorm + 0.015));
+              }
+              st.drawing = false;
+              st.completed = true;
+              if (state.currentStroke === st) state.currentStroke = null;
+            }
+          }
+
+          var hitPressure = 0;
+          for (var ci = 0; ci < crossings.length; ci++) {
+            var cr = crossings[ci];
+            if (!cr) continue;
+            var cx = cr.xNorm !== undefined ? cr.xNorm : cr.x;
+            var cy = cr.yNorm !== undefined ? cr.yNorm : cr.y;
+            var bestD2 = 999;
+            var bestQ = null;
+            for (var pi = 0; pi < st.points.length - 1; pi++) {
+              var a = st.points[pi];
+              var b = st.points[pi + 1];
+              var res = distToSegmentSq(cx, cy, a.xNorm, a.yNorm, b.xNorm, b.yNorm);
+              if (res.d2 < bestD2) {
+                bestD2 = res.d2;
+                bestQ = res;
+              }
+            }
+            if (bestD2 < 0.0169 && bestQ) {
+              var prox = 1 - Math.sqrt(bestD2) / 0.13;
+              hitPressure += prox * 0.65;
+              if (st.breaches.length < 14) {
+                st.breaches.push({
+                  xNorm: bestQ.qx,
+                  yNorm: bestQ.qy,
+                  hue: cr.hue || PALETTE.bezantGilt,
+                  actId: cr.actId || "",
+                  life: 0.75
+                });
+              }
+              if (!state.reducedMotion && ((ci + stepIdx) % 3 === 0)) {
+                spawnDust(bestQ.qx, bestQ.qy, 1, cr.hue || PALETTE.bezantGilt, false);
+              }
+            }
+          }
+
+          for (var bi = st.breaches.length - 1; bi >= 0; bi--) {
+            st.breaches[bi].life -= subDt * 1.4;
+            if (st.breaches[bi].life <= 0) st.breaches.splice(bi, 1);
+          }
+
+          if (!st.drawing) {
+            var baseRate = 1.0 / 2.75;
+            var accel = clamp(1.0 + flux * 0.52 + hitPressure, 1.0, 2.5);
+            st.integrity = Math.max(0, st.integrity - baseRate * accel * subDt);
+            state.travelerDoubt = clamp(state.travelerDoubt + 0.022 * subDt, 0, 1);
+            if (!state.reducedMotion && st.points.length > 1 && Math.sin(st.age * 23 + idx) > 0.65) {
+              var pick = st.points[Math.floor((st.age * 19 + idx * 3) % st.points.length)];
+              spawnDust(pick.xNorm, pick.yNorm, 1, PALETTE.chalk, false);
+            }
+            if (st.integrity <= 0.001) {
+              state.recentDissolvedTraces.push({
+                points: st.points.slice(0),
+                alpha: 0.45,
+                label: st.label
+              });
+              state.activeChalkStrokes.splice(idx, 1);
+              state.dissolvedBoundariesCount += 1;
+              state.travelerDoubt = clamp(state.travelerDoubt + 0.16, 0, 1.0);
+              for (var sp = 0; sp < state.shells.length; sp++) {
+                state.doubtPulses[sp] = Math.max(state.doubtPulses[sp], 0.65);
+                state.shells[sp].doubtPulse = state.doubtPulses[sp];
+              }
+              for (var dp = 0; dp < st.points.length; dp += 3) {
+                spawnDust(st.points[dp].xNorm, st.points[dp].yNorm, 2, PALETTE.bezantGilt, state.reducedMotion);
+              }
+              if (typeof cfg.onBoundaryDissolved === "function") {
+                cfg.onBoundaryDissolved(st, state.dissolvedBoundariesCount);
+              }
+            }
+          }
+        }
+
+        for (var ti = state.recentDissolvedTraces.length - 1; ti >= 0; ti--) {
+          state.recentDissolvedTraces[ti].alpha -= subDt * 0.48;
+          if (state.recentDissolvedTraces[ti].alpha <= 0.01) {
+            state.recentDissolvedTraces.splice(ti, 1);
+          }
+        }
+
+        for (var mi = state.dustMotes.length - 1; mi >= 0; mi--) {
+          var m = state.dustMotes[mi];
+          m.life -= subDt * 0.85;
+          if (!state.reducedMotion) {
+            m.xNorm += m.vx * subDt;
+            m.yNorm += m.vy * subDt;
+          }
+          if (m.life <= 0) state.dustMotes.splice(mi, 1);
+        }
+      }
+      return getState();
+    }
+
+    function getState() {
+      var maxInt = 0;
+      var minInt = 0;
+      if (state.activeChalkStrokes.length > 0) {
+        maxInt = 0;
+        minInt = 1;
+        for (var i = 0; i < state.activeChalkStrokes.length; i++) {
+          var v = state.activeChalkStrokes[i].integrity;
+          if (v > maxInt) maxInt = v;
+          if (v < minInt) minInt = v;
+        }
+      }
+      return {
+        shells: state.shells,
+        activeChalkStrokes: state.activeChalkStrokes,
+        maxChalkIntegrity: maxInt,
+        minChalkIntegrity: minInt,
+        dissolvedBoundariesCount: state.dissolvedBoundariesCount,
+        totalChalkAttempts: state.totalChalkAttempts,
+        travelerDoubt: state.travelerDoubt,
+        perimeterTumbleCount: state.perimeterTumbleCount,
+        tumblePhase: state.tumblePhase,
+        wheelWolfBlend: state.wheelWolfBlend,
+        selectedShellId: state.selectedShellId
+      };
+    }
+
+    function reset() {
+      state.selectedShellId = null;
+      state.activeChalkStrokes = [];
+      state.currentStroke = null;
+      state.recentDissolvedTraces = [];
+      state.dustMotes = [];
+      state.dissolvedBoundariesCount = 0;
+      state.totalChalkAttempts = 0;
+      state.travelerDoubt = 0.18;
+      state.perimeterTumbleCount = 0;
+      state.tumblePhase = 0;
+      state.wheelWolfBlend = 0.35;
+      state.toroidOffset = { x: 0, y: 0 };
+      state.doubtPulses = [0, 0, 0, 0, 0];
+      recomputeLayout();
+      return getState();
+    }
+
+    function syncViewport(ctx, viewport) {
+      var vw = viewport && (viewport.width || viewport.w);
+      var vh = viewport && (viewport.height || viewport.h);
+      if (!vw && ctx && ctx.canvas) vw = ctx.canvas.clientWidth || ctx.canvas.width;
+      if (!vh && ctx && ctx.canvas) vh = ctx.canvas.clientHeight || ctx.canvas.height;
+      if (vw && vh && (Math.abs(vw - state.width) > 1 || Math.abs(vh - state.height) > 1)) {
+        resize(vw, vh, (viewport && viewport.dpr) || state.dpr);
+      }
+    }
+
+    function drawPawprint(ctx, px, py, scale, angle, alpha) {
+      ctx.save();
+      ctx.translate(px, py);
+      ctx.rotate(angle);
+      ctx.fillStyle = "rgba(162, 182, 192, " + alpha.toFixed(3) + ")";
+      ctx.beginPath();
+      ctx.ellipse(0, 2 * scale, 3.2 * scale, 2.5 * scale, 0, 0, Math.PI * 2);
+      ctx.fill();
+      var toes = [[-3.3, -2.2], [-1.1, -3.6], [1.2, -3.6], [3.3, -2.2]];
+      for (var i = 0; i < toes.length; i++) {
+        ctx.beginPath();
+        ctx.ellipse(toes[i][0] * scale, toes[i][1] * scale, 1.25 * scale, 1.7 * scale, 0, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.restore();
+    }
+
+    function drawContinuumAndPerimeter(ctx, W, H) {
+      var bg = ctx.createRadialGradient(W * 0.5, H * 0.48, Math.min(W, H) * 0.08, W * 0.5, H * 0.5, Math.max(W, H) * 0.78);
+      bg.addColorStop(0, "#241d25");
+      bg.addColorStop(0.58, "#19151c");
+      bg.addColorStop(1, PALETTE.sootDeep);
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, W, H);
+
+      var tileX = Math.max(44, Math.round(W / 14));
+      var tileY = Math.max(36, Math.round(H / 11));
+      var ox = (state.toroidOffset.x * tileX) % tileX;
+      var oy = (state.toroidOffset.y * tileY) % tileY;
+      ctx.strokeStyle = "rgba(201, 183, 156, 0.055)";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      for (var gx = -tileX + ox; gx < W + tileX; gx += tileX) {
+        ctx.moveTo(gx, 0);
+        ctx.lineTo(gx + tileX * 0.18, H);
+      }
+      for (var gy = -tileY + oy; gy < H + tileY; gy += tileY) {
+        ctx.moveTo(0, gy);
+        ctx.lineTo(W, gy);
+      }
+      ctx.stroke();
+
+      var blend = state.wheelWolfBlend;
+      var seamPadX = Math.max(14, W * 0.026);
+      var seamPadY = Math.max(12, H * 0.028);
+      ctx.save();
+      ctx.strokeStyle = "rgba(143, 122, 98, " + (0.22 + blend * 0.24).toFixed(3) + ")";
+      ctx.lineWidth = 1.4;
+      for (var r = 0; r < 2; r++) {
+        var inset = r * 5.5;
+        ctx.setLineDash([14, 7, 5, 8]);
+        ctx.beginPath();
+        ctx.roundRect
+          ? ctx.roundRect(seamPadX + inset, seamPadY + inset, W - (seamPadX + inset) * 2, H - (seamPadY + inset) * 2, 18)
+          : ctx.rect(seamPadX + inset, seamPadY + inset, W - (seamPadX + inset) * 2, H - (seamPadY + inset) * 2);
+        ctx.stroke();
+      }
+      ctx.setLineDash([]);
+
+      var pawCount = 16;
+      for (var p = 0; p < pawCount; p++) {
+        var u = ((p / pawCount) + state.toroidOffset.x * 0.6) % 1;
+        var perim = u * 4;
+        var px, py, ang;
+        if (perim < 1) {
+          px = W * (0.06 + perim * 0.88);
+          py = seamPadY * 0.9 + Math.sin(p * 2.1) * 4;
+          ang = 1.57;
+        } else if (perim < 2) {
+          px = W - seamPadX * 0.9 + Math.cos(p * 1.7) * 4;
+          py = H * (0.08 + (perim - 1) * 0.84);
+          ang = 3.14;
+        } else if (perim < 3) {
+          px = W * (0.94 - (perim - 2) * 0.88);
+          py = H - seamPadY * 0.9 + Math.sin(p * 1.9) * 4;
+          ang = -1.57;
+        } else {
+          px = seamPadX * 0.9 + Math.cos(p * 2.3) * 4;
+          py = H * (0.92 - (perim - 3) * 0.84);
+          ang = 0;
+        }
+        drawPawprint(ctx, px, py, 0.85, ang + 0.35, 0.20 + blend * 0.28);
+        ctx.strokeStyle = "rgba(92, 118, 101, " + (0.24 + blend * 0.2).toFixed(3) + ")";
+        ctx.beginPath();
+        ctx.moveTo(px + 6, py + 4);
+        ctx.lineTo(px + 9, py - 3);
+        ctx.moveTo(px + 8, py + 4);
+        ctx.lineTo(px + 13, py - 2);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    function drawCanalScrawlAndGarrets(ctx, W, H) {
+      var isPortrait = W < H * 0.94;
+      var canalW = Math.max(12, Math.min(W, H) * 0.032);
+      ctx.save();
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+
+      function traceCanalMain() {
+        ctx.beginPath();
+        if (isPortrait) {
+          ctx.moveTo(0, H * 0.342);
+          ctx.bezierCurveTo(W * 0.34, H * 0.315, W * 0.65, H * 0.375, W, H * 0.345);
+          ctx.moveTo(W * 0.495, H * 0.03);
+          ctx.bezierCurveTo(W * 0.51, H * 0.35, W * 0.48, H * 0.52, W * 0.72, H * 0.665);
+          ctx.moveTo(0, H * 0.665);
+          ctx.bezierCurveTo(W * 0.36, H * 0.648, W * 0.66, H * 0.682, W, H * 0.66);
+        } else {
+          ctx.moveTo(0, H * 0.50);
+          ctx.bezierCurveTo(W * 0.26, H * 0.455, W * 0.44, H * 0.545, W * 0.66, H * 0.485);
+          ctx.bezierCurveTo(W * 0.80, H * 0.455, W * 0.90, H * 0.515, W, H * 0.49);
+          ctx.moveTo(W * 0.345, H * 0.03);
+          ctx.bezierCurveTo(W * 0.335, H * 0.28, W * 0.355, H * 0.48, W * 0.305, H * 0.62);
+          ctx.moveTo(W * 0.655, H * 0.04);
+          ctx.bezierCurveTo(W * 0.665, H * 0.27, W * 0.505, H * 0.52, W * 0.50, H * 0.96);
+        }
+      }
+
+      ctx.strokeStyle = "#5c5349";
+      ctx.lineWidth = canalW + 5;
+      traceCanalMain();
+      ctx.stroke();
+
+      ctx.strokeStyle = PALETTE.canalDeep;
+      ctx.lineWidth = canalW;
+      traceCanalMain();
+      ctx.stroke();
+
+      ctx.strokeStyle = "rgba(71, 147, 153, 0.58)";
+      ctx.lineWidth = canalW * 0.52;
+      ctx.setLineDash([16, 12]);
+      ctx.lineDashOffset = -state.ripplePhase * 18;
+      traceCanalMain();
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      var bridges = isPortrait
+        ? [[0.26, 0.34], [0.74, 0.355], [0.49, 0.665]]
+        : [[0.345, 0.34], [0.49, 0.502], [0.655, 0.31], [0.50, 0.73]];
+      for (var bi = 0; bi < bridges.length; bi++) {
+        var bx = bridges[bi][0] * W;
+        var by = bridges[bi][1] * H;
+        ctx.fillStyle = "#8d7e6a";
+        ctx.strokeStyle = "#2b2326";
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.rect(bx - 9, by - 5, 18, 10);
+        ctx.fill();
+        ctx.stroke();
+        ctx.strokeStyle = PALETTE.bazaarLight;
+        ctx.beginPath();
+        ctx.moveTo(bx - 9, by - 5);
+        ctx.lineTo(bx + 9, by - 5);
+        ctx.moveTo(bx - 9, by + 5);
+        ctx.lineTo(bx + 9, by + 5);
+        ctx.stroke();
+      }
+
+      var nodes = isPortrait
+        ? [[0.495, 0.345], [0.10, 0.79], [0.90, 0.79]]
+        : [[0.345, 0.485], [0.655, 0.485], [0.085, 0.69], [0.915, 0.69]];
+      for (var ni = 0; ni < nodes.length; ni++) {
+        var gx = nodes[ni][0] * W;
+        var gy = nodes[ni][1] * H;
+        /* Garret timber roof + skylight */
+        ctx.fillStyle = "#3a2e2b";
+        ctx.beginPath();
+        ctx.moveTo(gx - 15, gy + 6);
+        ctx.lineTo(gx - 5, gy - 9);
+        ctx.lineTo(gx + 5, gy + 6);
+        ctx.closePath();
+        ctx.fill();
+        ctx.fillStyle = "rgba(235, 185, 92, 0.78)";
+        ctx.fillRect(gx - 7, gy - 2, 4, 4);
+        /* Golden haymow dome beside garret */
+        ctx.fillStyle = "#b58e47";
+        ctx.beginPath();
+        ctx.arc(gx + 11, gy + 5, 7.5, Math.PI, 0);
+        ctx.closePath();
+        ctx.fill();
+        ctx.strokeStyle = "#dfc07c";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(gx + 11, gy - 6);
+        ctx.lineTo(gx + 11, gy + 5);
+        ctx.stroke();
+        /* Hearth smoke curl */
+        var sw = Math.sin(state.smokePhase + ni * 1.7) * 3;
+        ctx.strokeStyle = "rgba(226, 218, 206, 0.24)";
+        ctx.beginPath();
+        ctx.moveTo(gx - 5, gy - 9);
+        ctx.quadraticCurveTo(gx - 5 + sw, gy - 16, gx - 2 - sw * 0.6, gy - 22);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    function drawSingleShellBackdrop(ctx, s, ambientHue) {
+      var ir = s.interiorRect;
+      var roofTop = s.y;
+      var roofBot = ir.y;
+      var roofH = Math.max(18, roofBot - roofTop);
+
+      ctx.save();
+      /* Plinth shadow & outer masonry cheek walls */
+      ctx.fillStyle = "rgba(8, 6, 10, 0.52)";
+      ctx.fillRect(s.x + 4, ir.y + 4, s.w - 2, s.y + s.h - ir.y);
+
+      ctx.fillStyle = "#2b2329";
+      ctx.strokeStyle = "rgba(201, 183, 156, 0.24)";
+      ctx.lineWidth = 1.2;
+      ctx.fillRect(s.x + 2, ir.y - 3, s.w - 4, s.y + s.h - ir.y + 1);
+      ctx.strokeRect(s.x + 2, ir.y - 3, s.w - 4, s.y + s.h - ir.y + 1);
+
+      /* Warm recessed cutaway chamber (interiorRect) */
+      var chGrad = ctx.createLinearGradient(ir.x, ir.y, ir.x, ir.y + ir.h);
+      chGrad.addColorStop(0, "#171219");
+      chGrad.addColorStop(0.55, "#221b24");
+      chGrad.addColorStop(1, "#2c2329");
+      ctx.fillStyle = chGrad;
+      ctx.fillRect(ir.x, ir.y, ir.w, ir.h);
+
+      var glowColor = ambientHue || s.roofHue;
+      ctx.save();
+      ctx.globalAlpha = 0.14;
+      var glow = ctx.createRadialGradient(s.cx, ir.y + ir.h * 0.52, 4, s.cx, ir.y + ir.h * 0.52, ir.w * 0.56);
+      glow.addColorStop(0, glowColor);
+      glow.addColorStop(1, "rgba(20, 17, 21, 0)");
+      ctx.fillStyle = glow;
+      ctx.fillRect(ir.x, ir.y, ir.w, ir.h);
+      ctx.restore();
+
+      /* Subtle recessed masonry courses & center bay vault line */
+      ctx.strokeStyle = "rgba(242, 239, 228, 0.06)";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(ir.x, ir.y + ir.h * 0.5);
+      ctx.lineTo(ir.x + ir.w, ir.y + ir.h * 0.5);
+      ctx.moveTo(s.cx, ir.y + 4);
+      ctx.lineTo(s.cx, ir.y + ir.h - 4);
+      ctx.stroke();
+
+      /* Outward Deceptive Architectural Roof by Canonical Stone */
+      if (s.id === "pyramid_roof") {
+        var tiers = 5;
+        for (var t = 0; t < tiers; t++) {
+          var u0 = t / tiers;
+          var u1 = (t + 1) / tiers;
+          var tw = s.w * (0.96 - u0 * 0.72);
+          var ty = roofBot - u1 * roofH * 0.92;
+          var th = (roofH * 0.92) / tiers + 1;
+          var tx = s.cx - tw * 0.5;
+          ctx.fillStyle = t % 2 === 0 ? PALETTE.porphyry : "#864239";
+          ctx.fillRect(tx, ty, tw, th);
+          ctx.fillStyle = PALETTE.porphyryDark;
+          ctx.fillRect(tx + tw * 0.66, ty, tw * 0.34, th);
+          ctx.strokeStyle = PALETTE.porphyryLight;
+          ctx.beginPath();
+          ctx.moveTo(tx, ty);
+          ctx.lineTo(tx + tw, ty);
+          ctx.stroke();
+        }
+        ctx.fillStyle = PALETTE.bezantGilt;
+        ctx.beginPath();
+        ctx.moveTo(s.cx, roofTop + 1);
+        ctx.lineTo(s.cx - 5, roofTop + 9);
+        ctx.lineTo(s.cx + 5, roofTop + 9);
+        ctx.closePath();
+        ctx.fill();
+      } else if (s.id === "pagoda") {
+        var eaves = 4;
+        for (var e = 0; e < eaves; e++) {
+          var eu = e / eaves;
+          var ew = s.w * (0.94 - eu * 0.54);
+          var ey = roofBot - (e + 1) * (roofH * 0.84 / eaves);
+          var eh = (roofH * 0.84 / eaves) + 2;
+          ctx.fillStyle = e % 2 === 0 ? PALETTE.pagodaAmber : "#bf732c";
+          ctx.beginPath();
+          ctx.moveTo(s.cx - ew * 0.5 - 6, ey + eh - 3);
+          ctx.quadraticCurveTo(s.cx - ew * 0.36, ey + eh, s.cx - ew * 0.28, ey);
+          ctx.lineTo(s.cx + ew * 0.28, ey);
+          ctx.quadraticCurveTo(s.cx + ew * 0.36, ey + eh, s.cx + ew * 0.5 + 6, ey + eh - 3);
+          ctx.closePath();
+          ctx.fill();
+          ctx.strokeStyle = PALETTE.pagodaLight;
+          ctx.stroke();
+        }
+        ctx.strokeStyle = PALETTE.bezantGilt;
+        ctx.lineWidth = 1.8;
+        ctx.beginPath();
+        ctx.moveTo(s.cx, roofTop);
+        ctx.lineTo(s.cx, roofTop + roofH * 0.22);
+        ctx.stroke();
+      } else if (s.id === "covered_market") {
+        var bays = 3;
+        var bw = (s.w * 0.92) / bays;
+        var bx0 = s.cx - s.w * 0.46;
+        for (var b = 0; b < bays; b++) {
+          var bcx = bx0 + bw * (b + 0.5);
+          ctx.fillStyle = PALETTE.bazaarStone;
+          ctx.beginPath();
+          ctx.arc(bcx, roofBot - 4, bw * 0.48, Math.PI, 0);
+          ctx.lineTo(bcx + bw * 0.5, roofBot);
+          ctx.lineTo(bcx - bw * 0.5, roofBot);
+          ctx.closePath();
+          ctx.fill();
+          ctx.strokeStyle = PALETTE.bazaarDark;
+          ctx.stroke();
+          /* Striped bazaar awning */
+          var stripes = 4;
+          var sw = bw / stripes;
+          for (var st = 0; st < stripes; st++) {
+            ctx.fillStyle = st % 2 === 0 ? PALETTE.porphyry : PALETTE.bazaarLight;
+            ctx.fillRect(bx0 + b * bw + st * sw, roofBot - 6, sw - 0.5, 6);
+          }
+        }
+      } else if (s.id === "canal") {
+        ctx.fillStyle = "#3c585c";
+        ctx.fillRect(s.x + s.w * 0.06, roofTop + roofH * 0.25, s.w * 0.88, roofH * 0.75);
+        for (var ca = 0; ca < 2; ca++) {
+          var acx = s.cx + (ca === 0 ? -s.w * 0.21 : s.w * 0.21);
+          ctx.fillStyle = PALETTE.canalDeep;
+          ctx.beginPath();
+          ctx.arc(acx, roofBot, s.w * 0.16, Math.PI, 0);
+          ctx.fill();
+          ctx.strokeStyle = PALETTE.canalFoam;
+          ctx.stroke();
+        }
+        /* Sluice steps & shimmering basin sill */
+        ctx.fillStyle = PALETTE.canalVerdigris;
+        ctx.fillRect(ir.x, ir.y + ir.h - 6, ir.w, 6);
+        for (var sl = 0; sl < 4; sl++) {
+          ctx.fillStyle = "#8a8072";
+          ctx.fillRect(s.x + 4 + sl * 4, roofBot - 16 + sl * 4, 8, 4);
+        }
+      } else {
+        /* Rubbish Heap: stratified amphora shards, slag & salvaged timber arch */
+        ctx.fillStyle = PALETTE.middenDark;
+        ctx.beginPath();
+        ctx.moveTo(s.x + 4, roofBot);
+        ctx.quadraticCurveTo(s.x + s.w * 0.24, roofTop + 4, s.cx, roofTop + 6);
+        ctx.quadraticCurveTo(s.x + s.w * 0.78, roofTop + 2, s.x + s.w - 4, roofBot);
+        ctx.closePath();
+        ctx.fill();
+        ctx.fillStyle = PALETTE.middenOchre;
+        ctx.beginPath();
+        ctx.moveTo(s.x + 12, roofBot);
+        ctx.quadraticCurveTo(s.cx - s.w * 0.15, roofTop + roofH * 0.34, s.x + s.w - 14, roofBot);
+        ctx.closePath();
+        ctx.fill();
+        for (var sh = 0; sh < 7; sh++) {
+          var sx = s.x + s.w * (0.16 + sh * 0.11);
+          var sy = roofBot - 6 - ((sh * 13) % Math.max(8, Math.floor(roofH * 0.55)));
+          ctx.strokeStyle = sh % 2 === 0 ? PALETTE.middenShard : PALETTE.bazaarStone;
+          ctx.beginPath();
+          ctx.arc(sx, sy, 4.5, 0.3, 2.7);
+          ctx.stroke();
+        }
+      }
+      ctx.restore();
+    }
+
+    function renderBackdropAndShells(ctx, viewport, actAssignments) {
+      if (!ctx) return;
+      syncViewport(ctx, viewport);
+      var W = state.width;
+      var H = state.height;
+      drawContinuumAndPerimeter(ctx, W, H);
+      drawCanalScrawlAndGarrets(ctx, W, H);
+      for (var i = 0; i < state.shells.length; i++) {
+        var s = state.shells[i];
+        var hue = resolveAmbientHue(s.id, actAssignments);
+        drawSingleShellBackdrop(ctx, s, hue);
+      }
+    }
+
+    function renderChalkAndForeframes(ctx, viewport) {
+      if (!ctx) return;
+      syncViewport(ctx, viewport);
+      var W = state.width;
+      var H = state.height;
+      var ROMAN = ["I", "II", "III", "IV", "V"];
+
+      ctx.save();
+      /* 1. Cutaway architectural foreframes, sills & engraved shell cartouches */
+      for (var i = 0; i < state.shells.length; i++) {
+        var s = state.shells[i];
+        var ir = s.interiorRect;
+
+        /* Cutaway section columns & stone lintel/sill */
+        ctx.fillStyle = "rgba(59, 50, 53, 0.92)";
+        ctx.fillRect(ir.x - 4, ir.y - 2, 4, ir.h + 4);
+        ctx.fillRect(ir.x + ir.w, ir.y - 2, 4, ir.h + 4);
+        ctx.fillStyle = s.roofHue;
+        ctx.fillRect(ir.x - 5, ir.y - 4, ir.w + 10, 3);
+        ctx.fillStyle = "#5c5049";
+        ctx.fillRect(ir.x - 6, ir.y + ir.h, ir.w + 12, 4);
+
+        /* Compact architectural lintel nameplate above cutaway */
+        var fontPx = Math.max(9, Math.min(11, Math.round(s.w * 0.042)));
+        ctx.font = "600 " + fontPx + "px 'Iowan Old Style', 'Palatino', Georgia, serif";
+        var tagText = ROMAN[i] + " · " + s.label.toUpperCase();
+        var tw = Math.min(ir.w - 6, ctx.measureText ? ctx.measureText(tagText).width + 12 : 110);
+        var tx = s.cx - tw * 0.5;
+        var ty = ir.y - fontPx - 7;
+        ctx.fillStyle = "rgba(20, 17, 21, 0.84)";
+        ctx.fillRect(tx, ty, tw, fontPx + 4);
+        ctx.strokeStyle = "rgba(229, 185, 76, 0.36)";
+        ctx.lineWidth = 0.9;
+        ctx.strokeRect(tx, ty, tw, fontPx + 4);
+        ctx.fillStyle = PALETTE.chalk;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(tagText, s.cx, ty + (fontPx + 4) * 0.52);
+
+        /* Selection reticle & traveler doubt pulse halo */
+        if (s.selected || s.doubtPulse > 0.03) {
+          var haloAlpha = s.selected ? 0.88 : s.doubtPulse * 0.45;
+          ctx.strokeStyle = s.selected
+            ? "rgba(229, 185, 76, " + haloAlpha.toFixed(3) + ")"
+            : "rgba(242, 239, 228, " + haloAlpha.toFixed(3) + ")";
+          ctx.lineWidth = s.selected ? 1.8 : 1.1;
+          ctx.strokeRect(s.x - 2, s.y - 2, s.w + 4, s.h + 4);
+        }
+      }
+
+      /* 2. Toroidal inside/outside perimeter fold wave */
+      if (state.tumblePhase > 0.01) {
+        var tp = state.tumblePhase;
+        var pad = (1 - tp) * Math.min(W, H) * 0.18 + 8;
+        ctx.strokeStyle = "rgba(229, 185, 76, " + (tp * 0.58).toFixed(3) + ")";
+        ctx.lineWidth = 2;
+        ctx.setLineDash([10, 6]);
+        ctx.strokeRect(pad, pad, W - pad * 2, H - pad * 2);
+        ctx.setLineDash([]);
+        ctx.font = "italic 600 11px 'Iowan Old Style', Georgia, serif";
+        ctx.fillStyle = "rgba(242, 239, 228, " + (tp * 0.85).toFixed(3) + ")";
+        ctx.textAlign = "center";
+        ctx.fillText("NO LINE BETWEEN WHEELS & WOLVES — ZOE TUMBLES INTO ZOE", W * 0.5, Math.max(18, H * 0.035));
+      }
+
+      /* 3. Faint chalk ghost scars from recently dissolved boundaries */
+      for (var rt = 0; rt < state.recentDissolvedTraces.length; rt++) {
+        var tr = state.recentDissolvedTraces[rt];
+        if (!tr.points || tr.points.length < 2) continue;
+        ctx.strokeStyle = "rgba(242, 239, 228, " + (tr.alpha * 0.45).toFixed(3) + ")";
+        ctx.lineWidth = 1.2;
+        ctx.setLineDash([3, 7]);
+        ctx.beginPath();
+        for (var rpi = 0; rpi < tr.points.length; rpi++) {
+          var rpt = tr.points[rpi];
+          if (rpi === 0) ctx.moveTo(rpt.xNorm * W, rpt.yNorm * H);
+          else ctx.lineTo(rpt.xNorm * W, rpt.yNorm * H);
+        }
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      /* 4. Active traveler zoning-chalk lines & fracture fissures */
+      for (var si = 0; si < state.activeChalkStrokes.length; si++) {
+        var st = state.activeChalkStrokes[si];
+        var pts = st.points;
+        if (!pts || pts.length < 2) continue;
+        var integ = clamp(st.integrity, 0, 1);
+        var frac = 1 - integ;
+
+        for (var p = 0; p < pts.length - 1; p++) {
+          /* Dissolve gaps widen deterministically as integrity drops */
+          var segHash = Math.abs(Math.sin(st.seed * 7.1 + p * 1.93));
+          if (integ < 0.88 && segHash > integ * 1.12) continue;
+
+          var a = pts[p];
+          var b = pts[p + 1];
+          var jit = state.reducedMotion ? 0 : frac * 3.5 * Math.sin(p * 2.7 + st.age * 9);
+          var ax = a.xNorm * W + jit;
+          var ay = a.yNorm * H - jit * 0.7;
+          var bx = b.xNorm * W - jit * 0.6;
+          var by = b.yNorm * H + jit;
+
+          ctx.strokeStyle = "rgba(242, 239, 228, " + (0.25 + integ * 0.72).toFixed(3) + ")";
+          ctx.lineWidth = 1.4 + integ * 2.0;
+          ctx.beginPath();
+          ctx.moveTo(ax, ay);
+          ctx.lineTo(bx, by);
+          ctx.stroke();
+
+          /* Plumb surveyor ticks & transverse fracture cracks */
+          if (p % 2 === 0) {
+            var mx = (ax + bx) * 0.5;
+            var my = (ay + by) * 0.5;
+            var ndx = -(by - ay);
+            var ndy = bx - ax;
+            var nl = Math.hypot(ndx, ndy) || 1;
+            var tickLen = 4 + frac * 5;
+            ctx.strokeStyle = frac > 0.45
+              ? "rgba(229, 185, 76, " + (0.35 + integ * 0.5).toFixed(3) + ")"
+              : "rgba(242, 239, 228, " + (0.35 + integ * 0.45).toFixed(3) + ")";
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(mx - (ndx / nl) * tickLen, my - (ndy / nl) * tickLen);
+            ctx.lineTo(mx + (ndx / nl) * tickLen, my + (ndy / nl) * tickLen);
+            ctx.stroke();
+          }
+        }
+
+        /* Cross-bleed breach rings where acts pierce the chalk line */
+        for (var bi = 0; bi < st.breaches.length; bi++) {
+          var br = st.breaches[bi];
+          var brx = br.xNorm * W;
+          var bry = br.yNorm * H;
+          var rad = 6 + (1 - br.life) * 14;
+          ctx.strokeStyle = br.hue || PALETTE.bezantGilt;
+          ctx.globalAlpha = clamp(br.life, 0, 1) * 0.82;
+          ctx.lineWidth = 1.6;
+          ctx.beginPath();
+          ctx.arc(brx, bry, rad, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.globalAlpha = 1;
+        }
+
+        /* Midpoint chalk integrity badge */
+        var mid = pts[Math.floor(pts.length * 0.5)];
+        if (mid && integ > 0.04) {
+          var pct = Math.round(integ * 100);
+          var badge = (st.label || "ZONING CHALK").toUpperCase() + " · " + pct + "%";
+          ctx.font = "600 10px 'SF Mono', 'Menlo', monospace";
+          var bw = (ctx.measureText ? ctx.measureText(badge).width : 116) + 10;
+          var mxp = clamp(mid.xNorm * W, bw * 0.5 + 6, W - bw * 0.5 - 6);
+          var myp = clamp(mid.yNorm * H - 12, 16, H - 16);
+          ctx.fillStyle = "rgba(20, 17, 21, " + (0.72 * integ + 0.15).toFixed(3) + ")";
+          ctx.fillRect(mxp - bw * 0.5, myp - 8, bw, 16);
+          ctx.strokeStyle = "rgba(242, 239, 228, " + (0.55 * integ).toFixed(3) + ")";
+          ctx.lineWidth = 0.9;
+          ctx.strokeRect(mxp - bw * 0.5, myp - 8, bw, 16);
+          ctx.fillStyle = PALETTE.chalk;
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText(badge, mxp, myp);
+        }
+      }
+
+      /* 5. Drifting chalk-dust motes */
+      for (var dm = 0; dm < state.dustMotes.length; dm++) {
+        var mote = state.dustMotes[dm];
+        ctx.fillStyle = mote.hue || PALETTE.chalk;
+        ctx.globalAlpha = clamp(mote.life, 0, 1) * 0.68;
+        ctx.beginPath();
+        ctx.arc(mote.xNorm * W, mote.yNorm * H, mote.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      ctx.restore();
+    }
+
+    recomputeLayout();
+
+    return {
+      SHELL_FORMS: SHELL_FORMS,
+      BOUNDARY_PRESETS: BOUNDARY_PRESETS,
+      getShells: getShells,
+      resize: resize,
+      hitTestShell: hitTestShell,
+      setSelectedShell: setSelectedShell,
+      beginChalkLine: beginChalkLine,
+      extendChalkLine: extendChalkLine,
+      endChalkLine: endChalkLine,
+      applyPresetChalk: applyPresetChalk,
+      clearChalk: clearChalk,
+      triggerPerimeterTumble: triggerPerimeterTumble,
+      step: step,
+      getState: getState,
+      reset: reset,
+      renderBackdropAndShells: renderBackdropAndShells,
+      renderChalkAndForeframes: renderChalkAndForeframes
+    };
+  }
+
+  var api = {
+    SHELL_FORMS: SHELL_FORMS,
+    BOUNDARY_PRESETS: BOUNDARY_PRESETS,
+    createDeceptiveForms: createDeceptiveForms
+  };
+
+  if (typeof globalThis !== "undefined") {
+    globalThis.ZoeDeceptiveForms = api;
+  }
+  if (typeof window !== "undefined") {
+    window.ZoeDeceptiveForms = api;
+  }
+  if (root) {
+    root.ZoeDeceptiveForms = api;
+  }
+})(typeof globalThis !== "undefined" ? globalThis : this);
+
+/*
+ * City 13: ZOE (Chapter II - Cities & Signs 3)
+ * Layer: layers/permutation_acts.js
+ * Epistemic Partition: Nine simultaneous Calvino acts, dynamic cross-shell
+ * derangement & chalk-piercing filaments, bespoke interior vignettes, and
+ * polyphonic procedural WebAudio.
+ */
+(function (root) {
+  "use strict";
+
+  var SHELL_IDS = [
+    "pyramid_roof",
+    "pagoda",
+    "covered_market",
+    "canal",
+    "rubbish_heap"
+  ];
+
+  var SHELL_META = {
+    pyramid_roof: { label: "Pyramid Roof", expected: "Palace & Treasury", ax: 0.20, ay: 0.29 },
+    pagoda: { label: "Pine-Cone Pagoda", expected: "High Priests Sanctuary", ax: 0.50, ay: 0.26 },
+    covered_market: { label: "Covered Market", expected: "Grand Bazaar Arcade", ax: 0.80, ay: 0.29 },
+    canal: { label: "Scrawl of Canals", expected: "Embassy Quays & Gardens", ax: 0.33, ay: 0.73 },
+    rubbish_heap: { label: "Rubbish Heap", expected: "Outcast Midden", ax: 0.68, ay: 0.73 }
+  };
+
+  var ACTS = [
+    {
+      id: "sleeping",
+      index: 0,
+      label: "Sleeping",
+      shortLabel: "SLEEP",
+      symbol: "\u263D",
+      naiveShellId: "rubbish_heap",
+      hue: "#7d8cc4",
+      summary: "Bolster mats & rhythmic nocturnal breathing"
+    },
+    {
+      id: "tool_forging",
+      index: 1,
+      label: "Tool-Forging",
+      shortLabel: "FORGE",
+      symbol: "\u2692",
+      naiveShellId: "covered_market",
+      hue: "#e87a3d",
+      summary: "White-hot iron on anvil, bellows & flying sparks"
+    },
+    {
+      id: "cooking",
+      index: 2,
+      label: "Cooking",
+      shortLabel: "COOK",
+      symbol: "\u2668",
+      naiveShellId: "rubbish_heap",
+      hue: "#d99b38",
+      summary: "Copper cauldron steam, hearth embers & saffron broth"
+    },
+    {
+      id: "gold_counting",
+      index: 3,
+      label: "Gold-Counting",
+      shortLabel: "GOLD",
+      symbol: "\u2696",
+      naiveShellId: "pyramid_roof",
+      hue: "#ebd05b",
+      summary: "Stacked bezants, brass assay balance & tally weights"
+    },
+    {
+      id: "reigning",
+      index: 4,
+      label: "Reigning",
+      shortLabel: "REIGN",
+      symbol: "\u265B",
+      naiveShellId: "pyramid_roof",
+      hue: "#c95b78",
+      summary: "Purple dais, scepter edict & kneeling envoys"
+    },
+    {
+      id: "trading",
+      index: 5,
+      label: "Trading",
+      shortLabel: "TRADE",
+      symbol: "\u21C4",
+      naiveShellId: "covered_market",
+      hue: "#5ab899",
+      summary: "Unrolled silk bales, spice measures & abacus beads"
+    },
+    {
+      id: "consulting_oracles",
+      index: 6,
+      label: "Consulting Oracles",
+      shortLabel: "ORACLE",
+      symbol: "\u25C8",
+      naiveShellId: "pagoda",
+      hue: "#9e78d6",
+      summary: "Smoking tripod cleft, cast bone lots & laurel vapor"
+    },
+    {
+      id: "leprosarium_tending",
+      index: 7,
+      label: "Leprosarium Tending",
+      shortLabel: "LEPROSY",
+      symbol: "\u271A",
+      naiveShellId: "rubbish_heap",
+      hue: "#a3b899",
+      summary: "Quarantine cots, linen bandages, salve bowls & bell"
+    },
+    {
+      id: "odalisque_bathing",
+      index: 8,
+      label: "Odalisque Bathing",
+      shortLabel: "BATHS",
+      symbol: "\u2248",
+      naiveShellId: "canal",
+      hue: "#e38fb3",
+      summary: "Marble steam-basin, rosewater ewers & silk veils"
+    }
+  ];
+
+  var ACT_BY_ID = {};
+  for (var ai = 0; ai < ACTS.length; ai++) {
+    ACT_BY_ID[ACTS[ai].id] = ACTS[ai];
+  }
+
+  /* Canonical Calvino initial state: all 9 acts active, 0 in naive shell (1.0 incongruity) */
+  var INITIAL_ASSIGNMENTS = {
+    pyramid_roof: ["leprosarium_tending", "odalisque_bathing"],
+    pagoda: ["tool_forging", "cooking"],
+    covered_market: ["consulting_oracles", "sleeping"],
+    canal: ["gold_counting", "reigning"],
+    rubbish_heap: ["trading"]
+  };
+
+  /* Fallback guaranteed-valid full derangement bank (100% unexpected across all 5 solo rotations) */
+  var FALLBACK_DERANGEMENTS = [
+    {
+      pyramid_roof: ["consulting_oracles"],
+      pagoda: ["reigning", "odalisque_bathing"],
+      covered_market: ["gold_counting", "leprosarium_tending"],
+      canal: ["tool_forging", "sleeping"],
+      rubbish_heap: ["trading", "cooking"]
+    },
+    {
+      pyramid_roof: ["trading", "cooking"],
+      pagoda: ["leprosarium_tending"],
+      covered_market: ["reigning", "odalisque_bathing"],
+      canal: ["consulting_oracles", "sleeping"],
+      rubbish_heap: ["gold_counting", "tool_forging"]
+    },
+    {
+      pyramid_roof: ["sleeping", "tool_forging"],
+      pagoda: ["gold_counting", "trading"],
+      covered_market: ["leprosarium_tending"],
+      canal: ["cooking", "consulting_oracles"],
+      rubbish_heap: ["reigning", "odalisque_bathing"]
+    },
+    {
+      pyramid_roof: ["cooking", "trading"],
+      pagoda: ["sleeping", "leprosarium_tending"],
+      covered_market: ["odalisque_bathing", "gold_counting"],
+      canal: ["tool_forging"],
+      rubbish_heap: ["consulting_oracles", "reigning"]
+    }
+  ];
+  /* Fix fallback[0] rubbish_heap cooking naive -> swap cooking with canal sleeping? Wait: sleeping naive is rubbish_heap too! Swap cooking with covered_market gold_counting! */
+  FALLBACK_DERANGEMENTS[0].covered_market = ["cooking", "leprosarium_tending"];
+  FALLBACK_DERANGEMENTS[0].rubbish_heap = ["trading", "gold_counting"];
+
+  function clamp(v, lo, hi) {
+    return v < lo ? lo : (v > hi ? hi : v);
+  }
+
+  function lerp(a, b, t) {
+    return a + (b - a) * t;
+  }
+
+  function hexToRgba(hex, alpha) {
+    var h = String(hex || "#e5b94c").replace("#", "");
+    if (h.length === 3) {
+      h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+    }
+    var r = parseInt(h.slice(0, 2), 16) || 229;
+    var g = parseInt(h.slice(2, 4), 16) || 185;
+    var b = parseInt(h.slice(4, 6), 16) || 76;
+    return "rgba(" + r + "," + g + "," + b + "," + clamp(alpha, 0, 1).toFixed(3) + ")";
+  }
+
+  function quadBezier(p0x, p0y, cx, cy, p1x, p1y, t) {
+    var inv = 1 - t;
+    return {
+      x: inv * inv * p0x + 2 * inv * t * cx + t * t * p1x,
+      y: inv * inv * p0y + 2 * inv * t * cy + t * t * p1y
+    };
+  }
+
+  function segmentIntersection(ax, ay, bx, by, cx, cy, dx, dy) {
+    var rpx = bx - ax;
+    var rpy = by - ay;
+    var spx = dx - cx;
+    var spy = dy - cy;
+    var denom = rpx * spy - rpy * spx;
+    if (Math.abs(denom) < 1e-7) {
+      return null;
+    }
+    var qpx = cx - ax;
+    var qpy = cy - ay;
+    var t = (qpx * spy - qpy * spx) / denom;
+    var u = (qpx * rpy - qpy * rpx) / denom;
+    if (t >= 0 && t <= 1 && u >= 0 && u <= 1) {
+      return { x: ax + t * rpx, y: ay + t * rpy, t: t, u: u };
+    }
+    return null;
+  }
+
+  /* Polyphonic Procedural WebAudio Engine (zero external assets, headless-safe) */
+  function createAudioEngine(initialMuted) {
+    var muted = Boolean(initialMuted);
+    var actx = null;
+    var master = null;
+    var noiseBuf = null;
+
+    function ensureNoise(ctx) {
+      if (noiseBuf) { return noiseBuf; }
+      var len = Math.max(1, Math.floor(ctx.sampleRate * 0.6));
+      var buf = ctx.createBuffer(1, len, ctx.sampleRate);
+      var data = buf.getChannelData(0);
+      for (var i = 0; i < len; i++) {
+        data[i] = Math.random() * 2 - 1;
+      }
+      noiseBuf = buf;
+      return noiseBuf;
+    }
+
+    function unlockAudio() {
+      try {
+        if (!actx) {
+          var Ctor = root.AudioContext || root.webkitAudioContext;
+          if (!Ctor) { return false; }
+          actx = new Ctor();
+          master = actx.createGain();
+          master.gain.value = muted ? 0.0001 : 0.22;
+          master.connect(actx.destination);
+        }
+        if (actx && actx.state === "suspended" && typeof actx.resume === "function") {
+          actx.resume().catch(function () {});
+        }
+        return Boolean(actx);
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function setMuted(flag) {
+      muted = Boolean(flag);
+      try {
+        if (actx && master) {
+          var now = actx.currentTime;
+          master.gain.cancelScheduledValues(now);
+          master.gain.setTargetAtTime(muted ? 0.0001 : 0.22, now, 0.025);
+        }
+      } catch (e) {}
+      return muted;
+    }
+
+    function isMuted() {
+      return muted;
+    }
+
+    function playTone(freq, type, dur, peak, delaySec, slideTo) {
+      if (muted || !actx || !master) { return; }
+      try {
+        var t0 = actx.currentTime + (delaySec || 0);
+        var osc = actx.createOscillator();
+        var g = actx.createGain();
+        osc.type = type || "sine";
+        osc.frequency.setValueAtTime(Math.max(30, freq), t0);
+        if (slideTo) {
+          osc.frequency.exponentialRampToValueAtTime(Math.max(30, slideTo), t0 + dur * 0.88);
+        }
+        g.gain.setValueAtTime(0.0001, t0);
+        g.gain.linearRampToValueAtTime(peak || 0.14, t0 + Math.min(0.03, dur * 0.2));
+        g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+        osc.connect(g);
+        g.connect(master);
+        osc.start(t0);
+        osc.stop(t0 + dur + 0.02);
+      } catch (e) {}
+    }
+
+    function playFilteredNoise(filterType, freq, q, dur, peak, delaySec, slideTo) {
+      if (muted || !actx || !master) { return; }
+      try {
+        var t0 = actx.currentTime + (delaySec || 0);
+        var src = actx.createBufferSource();
+        src.buffer = ensureNoise(actx);
+        src.loop = true;
+        var flt = actx.createBiquadFilter();
+        flt.type = filterType || "bandpass";
+        flt.frequency.setValueAtTime(freq, t0);
+        if (slideTo) {
+          flt.frequency.exponentialRampToValueAtTime(Math.max(40, slideTo), t0 + dur);
+        }
+        flt.Q.value = q || 3.0;
+        var g = actx.createGain();
+        g.gain.setValueAtTime(0.0001, t0);
+        g.gain.linearRampToValueAtTime(peak || 0.12, t0 + Math.min(0.03, dur * 0.22));
+        g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+        src.connect(flt);
+        flt.connect(g);
+        g.connect(master);
+        src.start(t0);
+        src.stop(t0 + dur + 0.02);
+      } catch (e) {}
+    }
+
+    function triggerActVoice(actId, delayOffset) {
+      if (muted || !actx || !master) { return; }
+      var d = delayOffset || 0;
+      if (actId === "sleeping") {
+        playTone(174.6, "sine", 0.52, 0.11, d, 172.0);
+        playTone(261.6, "triangle", 0.55, 0.07, d + 0.03, 258.0);
+        playFilteredNoise("lowpass", 420, 1.4, 0.45, 0.05, d + 0.02, 260);
+      } else if (actId === "tool_forging") {
+        /* FM-style metallic anvil clang + high spark ping */
+        try {
+          var t0 = actx.currentTime + d;
+          var car = actx.createOscillator();
+          var mod = actx.createOscillator();
+          var mg = actx.createGain();
+          var cg = actx.createGain();
+          car.frequency.setValueAtTime(690, t0);
+          mod.frequency.setValueAtTime(690 * 2.76, t0);
+          mg.gain.setValueAtTime(520, t0);
+          mg.gain.exponentialRampToValueAtTime(8, t0 + 0.24);
+          cg.gain.setValueAtTime(0.0001, t0);
+          cg.gain.linearRampToValueAtTime(0.18, t0 + 0.006);
+          cg.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.30);
+          mod.connect(mg);
+          mg.connect(car.frequency);
+          car.connect(cg);
+          cg.connect(master);
+          mod.start(t0);
+          car.start(t0);
+          mod.stop(t0 + 0.32);
+          car.stop(t0 + 0.32);
+        } catch (e) {}
+        playTone(2480, "sine", 0.11, 0.06, d + 0.03, 3100);
+      } else if (actId === "cooking") {
+        playTone(293.7, "sine", 0.36, 0.11, d);
+        playTone(440.0, "sine", 0.34, 0.08, d + 0.02);
+        playTone(520, "sine", 0.09, 0.07, d + 0.05, 760);
+        playTone(610, "sine", 0.08, 0.06, d + 0.14, 890);
+      } else if (actId === "gold_counting") {
+        playTone(1760, "sine", 0.28, 0.11, d);
+        playTone(2637, "triangle", 0.24, 0.07, d + 0.045);
+        playTone(3520, "sine", 0.18, 0.05, d + 0.09);
+      } else if (actId === "reigning") {
+        playTone(130.8, "sawtooth", 0.44, 0.08, d);
+        playTone(196.0, "triangle", 0.44, 0.10, d + 0.02);
+        playTone(329.6, "triangle", 0.40, 0.08, d + 0.05);
+      } else if (actId === "trading") {
+        playFilteredNoise("bandpass", 960, 9.0, 0.055, 0.15, d);
+        playFilteredNoise("bandpass", 1220, 9.0, 0.055, 0.14, d + 0.055);
+        playFilteredNoise("bandpass", 1490, 9.0, 0.060, 0.13, d + 0.11);
+      } else if (actId === "consulting_oracles") {
+        playTone(164.8, "triangle", 0.56, 0.10, d);
+        playTone(174.6, "sine", 0.56, 0.09, d + 0.03);
+        playTone(246.9, "sine", 0.52, 0.08, d + 0.06);
+      } else if (actId === "leprosarium_tending") {
+        playTone(784.0, "sine", 0.38, 0.12, d);
+        playTone(1582.0, "sine", 0.26, 0.06, d + 0.01);
+        playFilteredNoise("bandpass", 720, 6.0, 0.04, 0.09, d);
+      } else {
+        /* odalisque_bathing: pentatonic water-harp */
+        playTone(370.0, "sine", 0.30, 0.09, d);
+        playTone(440.0, "sine", 0.30, 0.09, d + 0.055);
+        playTone(554.4, "triangle", 0.32, 0.08, d + 0.11);
+        playTone(659.3, "sine", 0.34, 0.07, d + 0.165);
+      }
+    }
+
+    function triggerChalkScratch() {
+      playFilteredNoise("bandpass", 2350, 4.2, 0.085, 0.11, 0, 1780);
+      playFilteredNoise("highpass", 3400, 1.8, 0.055, 0.06, 0.015);
+    }
+
+    function triggerDissolveChord() {
+      playTone(293.66, "sine", 0.58, 0.08, 0, 311.1);
+      playTone(440.00, "triangle", 0.62, 0.07, 0.04, 466.2);
+      playTone(659.25, "sine", 0.66, 0.06, 0.08, 698.5);
+      playTone(880.00, "sine", 0.70, 0.05, 0.12, 987.8);
+    }
+
+    function triggerPerimeterTumbleSound() {
+      /* Wooden cartwheel rumble morphing into haunting steppe wolf-howl glissando */
+      playFilteredNoise("lowpass", 135, 3.2, 0.52, 0.18, 0, 78);
+      playTone(72, "triangle", 0.14, 0.14, 0.02, 54);
+      playTone(78, "triangle", 0.14, 0.13, 0.16, 58);
+      playTone(84, "triangle", 0.14, 0.12, 0.30, 62);
+      if (!muted && actx && master) {
+        try {
+          var t0 = actx.currentTime + 0.28;
+          var howl = actx.createOscillator();
+          var lfo = actx.createOscillator();
+          var lfoGain = actx.createGain();
+          var flt = actx.createBiquadFilter();
+          var hg = actx.createGain();
+          howl.type = "triangle";
+          howl.frequency.setValueAtTime(285, t0);
+          howl.frequency.exponentialRampToValueAtTime(548, t0 + 0.34);
+          howl.frequency.exponentialRampToValueAtTime(372, t0 + 0.92);
+          lfo.frequency.setValueAtTime(5.6, t0);
+          lfoGain.gain.setValueAtTime(9.5, t0);
+          flt.type = "bandpass";
+          flt.frequency.setValueAtTime(620, t0);
+          flt.Q.value = 2.4;
+          hg.gain.setValueAtTime(0.0001, t0);
+          hg.gain.linearRampToValueAtTime(0.14, t0 + 0.22);
+          hg.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.96);
+          lfo.connect(lfoGain);
+          lfoGain.connect(howl.frequency);
+          howl.connect(flt);
+          flt.connect(hg);
+          hg.connect(master);
+          lfo.start(t0);
+          howl.start(t0);
+          lfo.stop(t0 + 0.98);
+          howl.stop(t0 + 0.98);
+        } catch (e) {}
+      }
+    }
+
+    function triggerPermutationFlourish(actIds) {
+      if (muted || !actx || !master) { return; }
+      var picks = actIds && actIds.length ? actIds.slice(0, 3) : ["gold_counting", "consulting_oracles", "odalisque_bathing"];
+      for (var i = 0; i < picks.length; i++) {
+        triggerActVoice(picks[i], i * 0.065);
+      }
+    }
+
+    return {
+      unlockAudio: unlockAudio,
+      setMuted: setMuted,
+      isMuted: isMuted,
+      triggerActVoice: triggerActVoice,
+      triggerChalkScratch: triggerChalkScratch,
+      triggerDissolveChord: triggerDissolveChord,
+      triggerPerimeterTumbleSound: triggerPerimeterTumbleSound,
+      triggerPermutationFlourish: triggerPermutationFlourish
+    };
+  }
+
+  function cloneAssignments(src) {
+    var out = {};
+    for (var i = 0; i < SHELL_IDS.length; i++) {
+      var sid = SHELL_IDS[i];
+      out[sid] = (src[sid] || []).slice();
+    }
+    return out;
+  }
+
+  function locateAct(assignments, actId) {
+    for (var i = 0; i < SHELL_IDS.length; i++) {
+      var sid = SHELL_IDS[i];
+      var arr = assignments[sid] || [];
+      for (var s = 0; s < arr.length; s++) {
+        if (arr[s] === actId) {
+          return { shellId: sid, slot: s };
+        }
+      }
+    }
+    return { shellId: "rubbish_heap", slot: 0 };
+  }
+
+  function statsForAssignments(assignments) {
+    var seen = {};
+    var uniqueCount = 0;
+    var unexpectedCount = 0;
+    for (var i = 0; i < SHELL_IDS.length; i++) {
+      var sid = SHELL_IDS[i];
+      var arr = assignments[sid] || [];
+      for (var s = 0; s < arr.length; s++) {
+        var aid = arr[s];
+        if (ACT_BY_ID[aid] && !seen[aid]) {
+          seen[aid] = true;
+          uniqueCount++;
+          if (ACT_BY_ID[aid].naiveShellId !== sid) {
+            unexpectedCount++;
+          }
+        }
+      }
+    }
+    return {
+      allNineActive: uniqueCount === 9,
+      incongruityIndex: uniqueCount > 0 ? Number((unexpectedCount / 9).toFixed(4)) : 0
+    };
+  }
+
+  function createPermutationActs(config) {
+    var cfg = config || {};
+    var audio = createAudioEngine(Boolean(cfg.muted));
+    var assignments = cloneAssignments(INITIAL_ASSIGNMENTS);
+    var permutationCount = 0;
+    var fallbackCursor = 0;
+    var timeSec = 0;
+    var autoCycleTimer = 0;
+    var chalkSpawnCooldown = 0;
+    var lastCanvasW = 1280;
+    var lastCanvasH = 800;
+    var shellAnchors = {};
+    var migrations = [];
+    var actPulseBoost = {};
+
+    for (var k = 0; k < SHELL_IDS.length; k++) {
+      var initSid = SHELL_IDS[k];
+      shellAnchors[initSid] = { x: SHELL_META[initSid].ax, y: SHELL_META[initSid].ay };
+    }
+    for (var m = 0; m < ACTS.length; m++) {
+      actPulseBoost[ACTS[m].id] = 0;
+    }
+
+    function syncShellAnchors(shells, vw, vh) {
+      if (!Array.isArray(shells) || shells.length === 0) { return; }
+      var w = vw || lastCanvasW || 1280;
+      var h = vh || lastCanvasH || 800;
+      for (var i = 0; i < shells.length; i++) {
+        var sh = shells[i];
+        if (!sh || !sh.id || !shellAnchors[sh.id]) { continue; }
+        var ir = sh.interiorRect;
+        var px = typeof sh.cx === "number" ? sh.cx : (ir ? ir.x + ir.w * 0.5 : (sh.x || 0) + (sh.w || 0) * 0.5);
+        var py = typeof sh.cy === "number" ? sh.cy : (ir ? ir.y + ir.h * 0.5 : (sh.y || 0) + (sh.h || 0) * 0.5);
+        if (w > 1 && h > 1 && (px > 1.5 || py > 1.5)) {
+          shellAnchors[sh.id] = { x: clamp(px / w, 0.04, 0.96), y: clamp(py / h, 0.05, 0.95) };
+        } else if (px >= 0 && py >= 0) {
+          shellAnchors[sh.id] = { x: clamp(px, 0.04, 0.96), y: clamp(py, 0.05, 0.95) };
+        }
+      }
+    }
+
+    function spawnMigrationArc(actId, fromShellId, toShellId, opts) {
+      var o = opts || {};
+      var act = ACT_BY_ID[actId] || ACTS[0];
+      var a = o.fromNorm || shellAnchors[fromShellId] || { x: 0.25, y: 0.3 };
+      var b = o.toNorm || shellAnchors[toShellId] || { x: 0.75, y: 0.7 };
+      var mx = o.viaNorm ? o.viaNorm.x : (a.x + b.x) * 0.5 + (a.y - b.y) * 0.22;
+      var my = o.viaNorm ? o.viaNorm.y : (a.y + b.y) * 0.5 - Math.abs(b.x - a.x) * 0.24 - 0.04;
+      migrations.push({
+        actId: act.id,
+        symbol: act.symbol,
+        hue: act.hue,
+        ax: clamp(a.x, 0.02, 0.98),
+        ay: clamp(a.y, 0.02, 0.98),
+        cx: clamp(mx, 0.02, 0.98),
+        cy: clamp(my, 0.02, 0.98),
+        bx: clamp(b.x, 0.02, 0.98),
+        by: clamp(b.y, 0.02, 0.98),
+        age: 0,
+        ttl: o.ttl || 1.65,
+        isChalkSurge: Boolean(o.isChalkSurge),
+        ambient: Boolean(o.ambient)
+      });
+      if (migrations.length > 42) {
+        migrations.splice(0, migrations.length - 42);
+      }
+    }
+
+    function seedAmbientFilaments() {
+      migrations.length = 0;
+      spawnMigrationArc("leprosarium_tending", "rubbish_heap", "pyramid_roof", { ttl: 2.8, ambient: true });
+      spawnMigrationArc("tool_forging", "covered_market", "pagoda", { ttl: 3.1, ambient: true });
+      spawnMigrationArc("gold_counting", "pyramid_roof", "canal", { ttl: 3.4, ambient: true });
+    }
+    seedAmbientFilaments();
+
+    function buildActRecord(act) {
+      var loc = locateAct(assignments, act.id);
+      var boost = actPulseBoost[act.id] || 0;
+      var wave = 0.62 + 0.24 * Math.sin(timeSec * 2.1 + act.index * 1.37);
+      var level = Number(clamp(wave + boost * 0.35, 0.35, 1.0).toFixed(3));
+      return {
+        id: act.id,
+        index: act.index,
+        label: act.label,
+        shortLabel: act.shortLabel,
+        symbol: act.symbol,
+        hue: act.hue,
+        summary: act.summary,
+        naiveShellId: act.naiveShellId,
+        currentShellId: loc.shellId,
+        slot: loc.slot,
+        isUnexpected: loc.shellId !== act.naiveShellId,
+        activityLevel: level
+      };
+    }
+
+    function getActs() {
+      var list = [];
+      for (var i = 0; i < ACTS.length; i++) {
+        list.push(buildActRecord(ACTS[i]));
+      }
+      return list;
+    }
+
+    function getShellOccupants(shellId) {
+      var sid = SHELL_META[shellId] ? shellId : SHELL_IDS[0];
+      var ids = assignments[sid] || [];
+      var actObjs = [];
+      for (var i = 0; i < ids.length; i++) {
+        if (ACT_BY_ID[ids[i]]) {
+          actObjs.push(buildActRecord(ACT_BY_ID[ids[i]]));
+        }
+      }
+      var p = actObjs[0] || null;
+      var s = actObjs[1] || null;
+      var meta = SHELL_META[sid];
+      var names = p ? (s ? p.label + " + " + s.label : p.label) : "Indivisible Flux";
+      var caption = meta.label + " (expected " + meta.expected + ") hosts " + names;
+      return {
+        shellId: sid,
+        primaryAct: p,
+        secondaryAct: s,
+        acts: actObjs,
+        incongruityCaption: caption
+      };
+    }
+
+    function findValidDerangement() {
+      var prevSolo = "rubbish_heap";
+      for (var i = 0; i < SHELL_IDS.length; i++) {
+        if ((assignments[SHELL_IDS[i]] || []).length === 1) {
+          prevSolo = SHELL_IDS[i];
+          break;
+        }
+      }
+      var candidateSolos = SHELL_IDS.filter(function (s) { return s !== prevSolo; });
+      for (var attempt = 0; attempt < 80; attempt++) {
+        var solo = candidateSolos[attempt % candidateSolos.length];
+        var slots = [];
+        for (var si = 0; si < SHELL_IDS.length; si++) {
+          var shId = SHELL_IDS[si];
+          slots.push(shId);
+          if (shId !== solo) { slots.push(shId); }
+        }
+        var pool = ACTS.map(function (a) { return a.id; });
+        for (var p = pool.length - 1; p > 0; p--) {
+          var r = Math.floor(Math.random() * (p + 1));
+          var tmp = pool[p];
+          pool[p] = pool[r];
+          pool[r] = tmp;
+        }
+        var ok = true;
+        var moved = 0;
+        var next = { pyramid_roof: [], pagoda: [], covered_market: [], canal: [], rubbish_heap: [] };
+        for (var idx = 0; idx < 9; idx++) {
+          var aid = pool[idx];
+          var targetShell = slots[idx];
+          if (ACT_BY_ID[aid].naiveShellId === targetShell) {
+            ok = false;
+            break;
+          }
+          if (locateAct(assignments, aid).shellId !== targetShell) {
+            moved++;
+          }
+          next[targetShell].push(aid);
+        }
+        if (ok && moved >= 7) {
+          return next;
+        }
+      }
+      var fb = cloneAssignments(FALLBACK_DERANGEMENTS[fallbackCursor % FALLBACK_DERANGEMENTS.length]);
+      fallbackCursor++;
+      return fb;
+    }
+
+    function applyNewAssignments(next, playFlourish, reason) {
+      var movedActs = [];
+      for (var i = 0; i < ACTS.length; i++) {
+        var aid = ACTS[i].id;
+        var before = locateAct(assignments, aid).shellId;
+        var after = locateAct(next, aid).shellId;
+        if (before !== after) {
+          movedActs.push(aid);
+          actPulseBoost[aid] = 1.0;
+          spawnMigrationArc(aid, before, after, { ttl: 1.75 });
+        }
+      }
+      assignments = next;
+      permutationCount++;
+      autoCycleTimer = 0;
+      if (playFlourish) {
+        audio.triggerPermutationFlourish(movedActs);
+      }
+      if (typeof cfg.onPermute === "function") {
+        try { cfg.onPermute(getState(), reason || "permute"); } catch (e) {}
+      }
+    }
+
+    function permuteNow(reason) {
+      var next = findValidDerangement();
+      applyNewAssignments(next, true, reason || "manual");
+      return getState();
+    }
+
+    function assignActToShell(actId, shellId) {
+      if (!ACT_BY_ID[actId] || !SHELL_META[shellId]) {
+        return getShellOccupants(shellId || SHELL_IDS[0]);
+      }
+      var cur = locateAct(assignments, actId);
+      actPulseBoost[actId] = 1.0;
+      if (cur.shellId === shellId) {
+        var sameArr = assignments[shellId];
+        if (sameArr.length === 2 && sameArr[1] === actId) {
+          assignments[shellId] = [sameArr[1], sameArr[0]];
+        }
+        audio.triggerActVoice(actId);
+        return getShellOccupants(shellId);
+      }
+      var next = cloneAssignments(assignments);
+      var srcArr = next[cur.shellId];
+      var dstArr = next[shellId];
+      srcArr.splice(cur.slot, 1);
+
+      if (dstArr.length === 1 && srcArr.length === 1) {
+        /* Target had 1 act, source had 2: target becomes 2, source stays 1 — zero displaced acts! */
+        dstArr.unshift(actId);
+      } else {
+        /* Swap one act out of target shell, avoiding naiveShellId when possible */
+        var pickIdx = dstArr.length - 1;
+        for (var di = dstArr.length - 1; di >= 0; di--) {
+          if (ACT_BY_ID[dstArr[di]].naiveShellId !== cur.shellId) {
+            pickIdx = di;
+            break;
+          }
+        }
+        var displaced = dstArr.splice(pickIdx, 1)[0];
+        dstArr.unshift(actId);
+        if (ACT_BY_ID[displaced].naiveShellId === cur.shellId) {
+          /* 3-way unexpected rotation through an eligible middle shell */
+          var routed = false;
+          for (var mi = 0; mi < SHELL_IDS.length && !routed; mi++) {
+            var mid = SHELL_IDS[mi];
+            if (mid === shellId || mid === cur.shellId) { continue; }
+            var mArr = next[mid];
+            for (var mj = 0; mj < mArr.length; mj++) {
+              var cand = mArr[mj];
+              if (ACT_BY_ID[displaced].naiveShellId !== mid && ACT_BY_ID[cand].naiveShellId !== cur.shellId) {
+                mArr[mj] = displaced;
+                srcArr.push(cand);
+                routed = true;
+                break;
+              }
+            }
+          }
+          if (!routed) { srcArr.push(displaced); }
+        } else {
+          srcArr.push(displaced);
+        }
+      }
+      /* Heal any previously pinned naive act elsewhere so Zoe never settles < 0.8889 incongruity */
+      for (var hs = 0; hs < SHELL_IDS.length; hs++) {
+        var hSid = SHELL_IDS[hs];
+        var hArr = next[hSid];
+        for (var hi = 0; hi < hArr.length; hi++) {
+          var hAct = hArr[hi];
+          if (hAct === actId || ACT_BY_ID[hAct].naiveShellId !== hSid) { continue; }
+          var healed = false;
+          for (var ts = 0; ts < SHELL_IDS.length && !healed; ts++) {
+            var tSid = SHELL_IDS[ts];
+            if (tSid === hSid) { continue; }
+            var tArr = next[tSid];
+            for (var ti = 0; ti < tArr.length; ti++) {
+              var tAct = tArr[ti];
+              if (tAct === actId) { continue; }
+              if (ACT_BY_ID[hAct].naiveShellId !== tSid && ACT_BY_ID[tAct].naiveShellId !== hSid) {
+                hArr[hi] = tAct;
+                tArr[ti] = hAct;
+                healed = true;
+                break;
+              }
+            }
+          }
+        }
+      }
+      applyNewAssignments(next, false, "assign");
+      audio.triggerActVoice(actId);
+      return getShellOccupants(shellId);
+    }
+
+    function normPt(pt) {
+      if (!pt) { return null; }
+      var rawX = typeof pt.xNorm === "number" ? pt.xNorm : (typeof pt.nx === "number" ? pt.nx : pt.x);
+      var rawY = typeof pt.yNorm === "number" ? pt.yNorm : (typeof pt.ny === "number" ? pt.ny : pt.y);
+      if (typeof rawX !== "number" || typeof rawY !== "number") { return null; }
+      if (rawX > 1.5 || rawY > 1.5) {
+        return { x: clamp(rawX / (lastCanvasW || 1280), 0, 1), y: clamp(rawY / (lastCanvasH || 800), 0, 1) };
+      }
+      return { x: clamp(rawX, 0, 1), y: clamp(rawY, 0, 1) };
+    }
+
+    function extractChalkSegments(chalkStrokes) {
+      var list = Array.isArray(chalkStrokes) ? chalkStrokes : (chalkStrokes ? [chalkStrokes] : []);
+      var segs = [];
+      for (var i = 0; i < list.length; i++) {
+        var st = list[i];
+        if (!st || (typeof st.integrity === "number" && st.integrity <= 0.001)) { continue; }
+        var pts = st.points || st.pointsNorm || (Array.isArray(st) ? st : []);
+        for (var j = 0; j < pts.length - 1; j++) {
+          var a = normPt(pts[j]);
+          var b = normPt(pts[j + 1]);
+          if (a && b && (Math.abs(b.x - a.x) + Math.abs(b.y - a.y) > 0.003)) {
+            segs.push({ ax: a.x, ay: a.y, bx: b.x, by: b.y });
+          }
+        }
+      }
+      return segs;
+    }
+
+    function surgeAcrossChalk(chalkStrokes, shells) {
+      syncShellAnchors(shells);
+      var segs = extractChalkSegments(chalkStrokes);
+      if (segs.length === 0) { return 0; }
+      var spawned = 0;
+      var stride = Math.max(1, Math.floor(segs.length / 4));
+      for (var i = 0; i < segs.length && spawned < 6; i += stride) {
+        var sg = segs[i];
+        var mx = (sg.ax + sg.bx) * 0.5;
+        var my = (sg.ay + sg.by) * 0.5;
+        var dx = sg.bx - sg.ax;
+        var dy = sg.by - sg.ay;
+        var len = Math.hypot(dx, dy) || 1;
+        var nx = -dy / len;
+        var ny = dx / len;
+        var sidePos = null;
+        var sideNeg = null;
+        for (var s = 0; s < SHELL_IDS.length; s++) {
+          var sid = SHELL_IDS[s];
+          var anc = shellAnchors[sid];
+          var side = (anc.x - mx) * nx + (anc.y - my) * ny;
+          if (side >= 0 && !sidePos) { sidePos = sid; }
+          if (side < 0 && !sideNeg) { sideNeg = sid; }
+        }
+        var fromSid = sidePos || SHELL_IDS[spawned % SHELL_IDS.length];
+        var toSid = sideNeg || SHELL_IDS[(spawned + 2) % SHELL_IDS.length];
+        var actPick = (assignments[fromSid] && assignments[fromSid][0]) || ACTS[(spawned * 2) % ACTS.length].id;
+        var span = 0.16;
+        spawnMigrationArc(actPick, fromSid, toSid, {
+          fromNorm: { x: clamp(mx + nx * span, 0.05, 0.95), y: clamp(my + ny * span, 0.06, 0.94) },
+          viaNorm: { x: mx, y: my },
+          toNorm: { x: clamp(mx - nx * span, 0.05, 0.95), y: clamp(my - ny * span, 0.06, 0.94) },
+          ttl: 1.35,
+          isChalkSurge: true
+        });
+        actPulseBoost[actPick] = 0.95;
+        spawned++;
+      }
+      return spawned;
+    }
+
+    function autoCrossBleed() {
+      /* Gentle autonomous unexpected swap between two shells */
+      for (var tries = 0; tries < 25; tries++) {
+        var sA = SHELL_IDS[Math.floor(Math.random() * SHELL_IDS.length)];
+        var sB = SHELL_IDS[Math.floor(Math.random() * SHELL_IDS.length)];
+        if (sA === sB) { continue; }
+        var aList = assignments[sA];
+        var bList = assignments[sB];
+        var ia = Math.floor(Math.random() * aList.length);
+        var ib = Math.floor(Math.random() * bList.length);
+        var actA = aList[ia];
+        var actB = bList[ib];
+        if (ACT_BY_ID[actA].naiveShellId !== sB && ACT_BY_ID[actB].naiveShellId !== sA) {
+          var next = cloneAssignments(assignments);
+          next[sA][ia] = actB;
+          next[sB][ib] = actA;
+          applyNewAssignments(next, false, "auto_bleed");
+          return;
+        }
+      }
+      applyNewAssignments(findValidDerangement(), false, "auto_derange");
+    }
+
+    function step(dt, shells, chalkStrokes, reducedMotion) {
+      var stepDt = clamp(typeof dt === "number" && isFinite(dt) ? dt : 0.016, 0, 0.2);
+      var rm = Boolean(reducedMotion);
+      timeSec += rm ? stepDt * 0.25 : stepDt;
+      syncShellAnchors(shells);
+
+      for (var pi = 0; pi < ACTS.length; pi++) {
+        var pid = ACTS[pi].id;
+        actPulseBoost[pid] = Math.max(0, (actPulseBoost[pid] || 0) - stepDt * 0.85);
+      }
+
+      for (var mi = migrations.length - 1; mi >= 0; mi--) {
+        migrations[mi].age += stepDt;
+        if (migrations[mi].age >= migrations[mi].ttl) {
+          migrations.splice(mi, 1);
+        }
+      }
+
+      if (!rm && migrations.length < 3) {
+        var aIdx = Math.floor((timeSec * 1.7) % SHELL_IDS.length);
+        var bIdx = (aIdx + 2) % SHELL_IDS.length;
+        var sFrom = SHELL_IDS[aIdx];
+        var sTo = SHELL_IDS[bIdx];
+        var ambAct = (assignments[sFrom] && assignments[sFrom][0]) || ACTS[0].id;
+        spawnMigrationArc(ambAct, sFrom, sTo, { ttl: 2.9, ambient: true });
+      }
+
+      if (!rm) {
+        autoCycleTimer += stepDt;
+        if (autoCycleTimer >= 7.0) {
+          autoCycleTimer = 0;
+          autoCrossBleed();
+        }
+      }
+
+      var segs = extractChalkSegments(chalkStrokes);
+      var activeCrossings = [];
+      if (segs.length > 0) {
+        chalkSpawnCooldown -= stepDt;
+        if (chalkSpawnCooldown <= 0) {
+          surgeAcrossChalk(chalkStrokes, shells);
+          chalkSpawnCooldown = rm ? 0.65 : 0.28;
+        }
+        /* Intersect migration filaments + sample cross-bleed pressure along chalk */
+        for (var m = 0; m < migrations.length && activeCrossings.length < 18; m++) {
+          var mg = migrations[m];
+          for (var g = 0; g < segs.length && activeCrossings.length < 18; g++) {
+            var sg = segs[g];
+            var hit = segmentIntersection(mg.ax, mg.ay, mg.bx, mg.by, sg.ax, sg.ay, sg.bx, sg.by) ||
+                      segmentIntersection(mg.ax, mg.ay, mg.cx, mg.cy, sg.ax, sg.ay, sg.bx, sg.by);
+            if (hit) {
+              activeCrossings.push({
+                xNorm: Number(clamp(hit.x, 0, 1).toFixed(4)),
+                yNorm: Number(clamp(hit.y, 0, 1).toFixed(4)),
+                actId: mg.actId,
+                hue: mg.hue
+              });
+            }
+          }
+        }
+        if (activeCrossings.length < 3) {
+          for (var c = 0; c < Math.min(4, segs.length); c++) {
+            var cs = segs[c];
+            var pickAct = ACTS[(c + permutationCount) % ACTS.length];
+            activeCrossings.push({
+              xNorm: Number(((cs.ax + cs.bx) * 0.5).toFixed(4)),
+              yNorm: Number(((cs.ay + cs.by) * 0.5).toFixed(4)),
+              actId: pickAct.id,
+              hue: pickAct.hue
+            });
+          }
+        }
+      } else {
+        chalkSpawnCooldown = 0;
+      }
+
+      var st = statsForAssignments(assignments);
+      var burstCount = 0;
+      for (var bi = 0; bi < migrations.length; bi++) {
+        if (!migrations[bi].ambient) { burstCount++; }
+      }
+      var flux = clamp(0.24 + burstCount * 0.085 + activeCrossings.length * 0.065, 0.20, 1.0);
+      return {
+        fluxIntensity: Number(flux.toFixed(3)),
+        activeCrossings: activeCrossings,
+        incongruityIndex: st.incongruityIndex,
+        allNineActive: st.allNineActive,
+        permutationCount: permutationCount
+      };
+    }
+
+    function drawActVignette(ctx, actId, bx, by, bw, bh, t) {
+      var badgeReserve = Math.min(18, Math.max(12, bh * 0.22));
+      var sx = bx + 2;
+      var sy = by + badgeReserve;
+      var sw = Math.max(12, bw - 4);
+      var sh = Math.max(12, bh - badgeReserve - 2);
+      var cx = sx + sw * 0.5;
+      var cy = sy + sh * 0.54;
+      var u = Math.min(sw, sh);
+      var lw = Math.max(1.0, u * 0.032);
+
+      if (actId === "sleeping") {
+        var breath = 0.5 + 0.5 * Math.sin(t * 1.7);
+        /* Breathing moon-lantern */
+        var lx = cx + sw * 0.24;
+        var ly = sy + sh * 0.24;
+        ctx.fillStyle = hexToRgba("#9aaef0", 0.16 + breath * 0.14);
+        ctx.beginPath();
+        ctx.arc(lx, ly, u * (0.20 + breath * 0.05), 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = "#dce4ff";
+        ctx.beginPath();
+        ctx.arc(lx, ly, u * 0.09, 0.35, Math.PI * 1.75);
+        ctx.arc(lx + u * 0.035, ly - u * 0.02, u * 0.075, Math.PI * 1.7, 0.4, true);
+        ctx.fill();
+        /* Woven bolster mat & sleeper */
+        var my = sy + sh * 0.80;
+        ctx.fillStyle = "#48527a";
+        ctx.fillRect(cx - sw * 0.38, my, sw * 0.76, Math.max(3, u * 0.08));
+        ctx.fillStyle = "#8a99cf";
+        ctx.beginPath();
+        ctx.ellipse(cx - sw * 0.25, my - u * 0.05, u * 0.10, u * 0.06, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = "#6776ad";
+        ctx.beginPath();
+        ctx.moveTo(cx - sw * 0.16, my);
+        ctx.quadraticCurveTo(cx + sw * 0.04, my - u * (0.20 + breath * 0.06), cx + sw * 0.30, my);
+        ctx.closePath();
+        ctx.fill();
+        ctx.strokeStyle = hexToRgba("#cad4ff", 0.45);
+        ctx.lineWidth = lw * 0.8;
+        ctx.beginPath();
+        ctx.arc(cx - sw * 0.14, my - u * (0.22 + breath * 0.08), u * (0.06 + breath * 0.05), 0, Math.PI * 2);
+        ctx.stroke();
+      } else if (actId === "tool_forging") {
+        var strike = Math.abs(Math.sin(t * 3.8));
+        var baseY = sy + sh * 0.82;
+        /* Bellows on left */
+        ctx.fillStyle = "#6e4730";
+        ctx.beginPath();
+        ctx.moveTo(cx - sw * 0.40, baseY - u * (0.24 - strike * 0.07));
+        ctx.lineTo(cx - sw * 0.16, baseY - u * 0.12);
+        ctx.lineTo(cx - sw * 0.40, baseY - u * 0.04);
+        ctx.closePath();
+        ctx.fill();
+        /* Oak block & horned iron anvil */
+        ctx.fillStyle = "#4d3527";
+        ctx.fillRect(cx - u * 0.13, baseY - u * 0.14, u * 0.28, u * 0.14);
+        ctx.fillStyle = "#3a3f4a";
+        ctx.beginPath();
+        ctx.moveTo(cx - u * 0.27, baseY - u * 0.26);
+        ctx.lineTo(cx + u * 0.24, baseY - u * 0.28);
+        ctx.lineTo(cx + u * 0.16, baseY - u * 0.14);
+        ctx.lineTo(cx - u * 0.13, baseY - u * 0.14);
+        ctx.closePath();
+        ctx.fill();
+        /* White-hot iron & swinging hammer */
+        ctx.strokeStyle = "#ffd685";
+        ctx.lineWidth = Math.max(2, u * 0.055);
+        ctx.beginPath();
+        ctx.moveTo(cx - u * 0.12, baseY - u * 0.29);
+        ctx.lineTo(cx + u * 0.11, baseY - u * 0.29);
+        ctx.stroke();
+        ctx.save();
+        ctx.translate(cx + u * 0.22, baseY - u * 0.44);
+        ctx.rotate(-0.65 + (1 - strike) * 0.72);
+        ctx.strokeStyle = "#b58b61";
+        ctx.lineWidth = lw * 1.2;
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(-u * 0.24, -u * 0.04);
+        ctx.stroke();
+        ctx.fillStyle = "#6b7280";
+        ctx.fillRect(-u * 0.29, -u * 0.11, u * 0.10, u * 0.15);
+        ctx.restore();
+        /* Flying forge sparks */
+        for (var sp = 0; sp < 5; sp++) {
+          var prog = ((t * 2.4 + sp * 0.21) % 1);
+          var sxp = cx + Math.cos(0.6 + sp * 0.52) * u * 0.34 * prog;
+          var syp = (baseY - u * 0.30) - Math.sin(0.7 + sp * 0.35) * u * 0.38 * prog;
+          ctx.fillStyle = sp % 2 === 0 ? "#ffe394" : "#ff7b38";
+          ctx.fillRect(sxp, syp, Math.max(1.5, u * 0.035), Math.max(1.5, u * 0.035));
+        }
+      } else if (actId === "cooking") {
+        var cyBase = sy + sh * 0.84;
+        /* Hearth embers */
+        ctx.fillStyle = hexToRgba("#ff6629", 0.78 + 0.2 * Math.sin(t * 5.2));
+        ctx.beginPath();
+        ctx.ellipse(cx, cyBase - u * 0.04, u * 0.24, u * 0.06, 0, 0, Math.PI * 2);
+        ctx.fill();
+        /* Copper cauldron & saffron broth */
+        ctx.fillStyle = "#a8582b";
+        ctx.beginPath();
+        ctx.arc(cx, cyBase - u * 0.25, u * 0.22, -0.15, Math.PI + 0.15, false);
+        ctx.closePath();
+        ctx.fill();
+        ctx.fillStyle = "#f2b844";
+        ctx.beginPath();
+        ctx.ellipse(cx, cyBase - u * 0.28, u * 0.20, u * 0.055, 0, 0, Math.PI * 2);
+        ctx.fill();
+        /* Rising steam curls */
+        ctx.strokeStyle = hexToRgba("#f7ead2", 0.62);
+        ctx.lineWidth = lw;
+        for (var st = -1; st <= 1; st++) {
+          var ox = cx + st * u * 0.11;
+          var drift = Math.sin(t * 2.6 + st * 1.4) * u * 0.045;
+          ctx.beginPath();
+          ctx.moveTo(ox, cyBase - u * 0.36);
+          ctx.quadraticCurveTo(ox + drift, cyBase - u * 0.50, ox - drift, cyBase - u * 0.64);
+          ctx.stroke();
+        }
+      } else if (actId === "gold_counting") {
+        var gBase = sy + sh * 0.84;
+        ctx.fillStyle = "#2d3b34";
+        ctx.fillRect(cx - sw * 0.40, gBase - u * 0.05, sw * 0.80, Math.max(3, u * 0.06));
+        /* Stacked gold bezants */
+        ctx.fillStyle = "#f0cf56";
+        for (var col = 0; col < 3; col++) {
+          var cnt = 3 + (col === 1 ? 2 : col);
+          for (var c = 0; c < cnt; c++) {
+            ctx.fillRect(cx - sw * 0.35 + col * u * 0.11, gBase - u * 0.09 - c * u * 0.048, u * 0.085, u * 0.034);
+          }
+        }
+        /* Tilting brass assay balance */
+        var bxMid = cx + sw * 0.10;
+        var tilt = Math.sin(t * 2.1) * 0.17;
+        ctx.strokeStyle = "#ebd05b";
+        ctx.lineWidth = lw * 1.15;
+        ctx.beginPath();
+        ctx.moveTo(bxMid, gBase - u * 0.05);
+        ctx.lineTo(bxMid, gBase - u * 0.54);
+        ctx.stroke();
+        var arm = u * 0.22;
+        var lx2 = bxMid - Math.cos(tilt) * arm;
+        var ly2 = (gBase - u * 0.50) - Math.sin(tilt) * arm;
+        var rx2 = bxMid + Math.cos(tilt) * arm;
+        var ry2 = (gBase - u * 0.50) + Math.sin(tilt) * arm;
+        ctx.beginPath();
+        ctx.moveTo(lx2, ly2);
+        ctx.lineTo(rx2, ry2);
+        ctx.stroke();
+        ctx.fillStyle = "#d9b441";
+        ctx.beginPath();
+        ctx.arc(lx2, ly2 + u * 0.16, u * 0.075, 0, Math.PI, false);
+        ctx.arc(rx2, ry2 + u * 0.16, u * 0.075, 0, Math.PI, false);
+        ctx.fill();
+      } else if (actId === "reigning") {
+        var rBase = sy + sh * 0.84;
+        /* Purple dais & canopy */
+        ctx.fillStyle = "#6e2948";
+        ctx.fillRect(cx - sw * 0.38, rBase - u * 0.12, sw * 0.44, u * 0.12);
+        ctx.fillStyle = hexToRgba("#9c3d63", 0.55);
+        ctx.beginPath();
+        ctx.moveTo(cx - sw * 0.38, sy + sh * 0.10);
+        ctx.lineTo(cx + sw * 0.04, sy + sh * 0.16);
+        ctx.lineTo(cx - sw * 0.02, rBase - u * 0.12);
+        ctx.lineTo(cx - sw * 0.38, rBase - u * 0.12);
+        ctx.closePath();
+        ctx.fill();
+        /* Monarch with crown & scepter + kneeling envoy */
+        var mx2 = cx - sw * 0.18;
+        ctx.fillStyle = "#d46a89";
+        ctx.fillRect(mx2 - u * 0.07, rBase - u * 0.42, u * 0.14, u * 0.30);
+        ctx.beginPath();
+        ctx.arc(mx2, rBase - u * 0.50, u * 0.065, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = "#f2cf5c";
+        ctx.beginPath();
+        ctx.moveTo(mx2 - u * 0.07, rBase - u * 0.55);
+        ctx.lineTo(mx2 - u * 0.04, rBase - u * 0.65);
+        ctx.lineTo(mx2, rBase - u * 0.58);
+        ctx.lineTo(mx2 + u * 0.04, rBase - u * 0.65);
+        ctx.lineTo(mx2 + u * 0.07, rBase - u * 0.55);
+        ctx.closePath();
+        ctx.fill();
+        ctx.strokeStyle = "#f2cf5c";
+        ctx.lineWidth = lw * 1.1;
+        ctx.beginPath();
+        ctx.moveTo(mx2 + u * 0.05, rBase - u * 0.32);
+        ctx.lineTo(cx + sw * 0.10, rBase - u * (0.50 + Math.sin(t * 2.0) * 0.04));
+        ctx.stroke();
+        ctx.fillStyle = "#a38d98";
+        ctx.beginPath();
+        ctx.ellipse(cx + sw * 0.22, rBase - u * 0.12, u * 0.10, u * 0.12, -0.35, 0, Math.PI * 2);
+        ctx.fill();
+      } else if (actId === "trading") {
+        var tBase = sy + sh * 0.84;
+        /* Unrolled silk bales */
+        var silks = ["#c94f6d", "#45b09c", "#e0a943"];
+        for (var sb = 0; sb < 3; sb++) {
+          ctx.fillStyle = silks[sb];
+          ctx.beginPath();
+          ctx.ellipse(cx - sw * 0.28 + sb * u * 0.09, tBase - u * (0.14 + sb * 0.09), u * 0.11, u * 0.055, -0.25, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        /* Conical spice bowls */
+        var spices = ["#d96538", "#e8bd43", "#9c3e54"];
+        for (var spb = 0; spb < 3; spb++) {
+          var bxp = cx - u * 0.05 + spb * u * 0.11;
+          ctx.fillStyle = spices[spb];
+          ctx.beginPath();
+          ctx.moveTo(bxp - u * 0.05, tBase - u * 0.04);
+          ctx.lineTo(bxp, tBase - u * 0.16);
+          ctx.lineTo(bxp + u * 0.05, tBase - u * 0.04);
+          ctx.closePath();
+          ctx.fill();
+        }
+        /* Wooden abacus frame & sliding beads */
+        var ax = cx + sw * 0.16;
+        var ay = tBase - u * 0.46;
+        var aw = u * 0.24;
+        var ah = u * 0.36;
+        ctx.strokeStyle = "#a67c52";
+        ctx.lineWidth = lw * 1.1;
+        ctx.strokeRect(ax, ay, aw, ah);
+        for (var r = 1; r <= 3; r++) {
+          var ry = ay + (ah * r) / 4;
+          ctx.beginPath();
+          ctx.moveTo(ax, ry);
+          ctx.lineTo(ax + aw, ry);
+          ctx.stroke();
+          var shift = (0.5 + 0.35 * Math.sin(t * 2.5 + r * 1.7)) * (aw - u * 0.08);
+          ctx.fillStyle = "#f0cf65";
+          ctx.beginPath();
+          ctx.arc(ax + u * 0.04 + shift, ry, u * 0.032, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      } else {
+        drawRemainingVignette(ctx, actId, cx, cy, sx, sy, sw, sh, u, lw, t);
+      }
+    }
+
+    function drawRemainingVignette(ctx, actId, cx, cy, sx, sy, sw, sh, u, lw, t) {
+      var base = sy + sh * 0.85;
+      if (actId === "consulting_oracles") {
+        /* Glowing volcanic cleft, bronze Delphic tripod, laurel vapor & cast bone lots */
+        ctx.fillStyle = hexToRgba("#b68cf2", 0.42 + 0.2 * Math.sin(t * 3.1));
+        ctx.beginPath();
+        ctx.moveTo(cx - u * 0.22, base);
+        ctx.lineTo(cx - u * 0.04, base - u * 0.11);
+        ctx.lineTo(cx + u * 0.18, base);
+        ctx.closePath();
+        ctx.fill();
+        ctx.strokeStyle = "#b89658";
+        ctx.lineWidth = lw * 1.15;
+        ctx.beginPath();
+        ctx.moveTo(cx - u * 0.20, base);
+        ctx.lineTo(cx - u * 0.08, base - u * 0.44);
+        ctx.moveTo(cx + u * 0.20, base);
+        ctx.lineTo(cx + u * 0.08, base - u * 0.44);
+        ctx.moveTo(cx, base);
+        ctx.lineTo(cx, base - u * 0.44);
+        ctx.stroke();
+        ctx.fillStyle = "#c9a461";
+        ctx.beginPath();
+        ctx.ellipse(cx, base - u * 0.46, u * 0.16, u * 0.055, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = hexToRgba("#dfd0ff", 0.65);
+        ctx.beginPath();
+        var vap = Math.sin(t * 2.2) * u * 0.07;
+        ctx.moveTo(cx, base - u * 0.12);
+        ctx.quadraticCurveTo(cx + vap, base - u * 0.38, cx - vap, base - u * 0.68);
+        ctx.stroke();
+        ctx.strokeStyle = "#ede6d5";
+        for (var bl = 0; bl < 3; bl++) {
+          var bx2 = cx + sw * 0.18 + bl * u * 0.05;
+          ctx.beginPath();
+          ctx.moveTo(bx2, base - u * 0.05);
+          ctx.lineTo(bx2 + u * 0.07, base - u * (0.10 - bl * 0.02));
+          ctx.stroke();
+        }
+      } else if (actId === "leprosarium_tending") {
+        /* Quarantine cot, linen-bandaged figure, salve bowl & swinging clapper bell */
+        ctx.strokeStyle = "#8c7558";
+        ctx.lineWidth = lw * 1.15;
+        ctx.beginPath();
+        ctx.moveTo(cx - sw * 0.38, base - u * 0.16);
+        ctx.lineTo(cx + sw * 0.16, base - u * 0.16);
+        ctx.moveTo(cx - sw * 0.34, base - u * 0.16);
+        ctx.lineTo(cx - sw * 0.34, base);
+        ctx.moveTo(cx + sw * 0.12, base - u * 0.16);
+        ctx.lineTo(cx + sw * 0.12, base);
+        ctx.stroke();
+        ctx.fillStyle = "#dce3d5";
+        ctx.beginPath();
+        ctx.arc(cx - sw * 0.25, base - u * 0.25, u * 0.065, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillRect(cx - sw * 0.18, base - u * 0.26, sw * 0.28, u * 0.09);
+        ctx.strokeStyle = "#8fa685";
+        ctx.lineWidth = Math.max(1, lw * 0.75);
+        ctx.beginPath();
+        ctx.moveTo(cx - sw * 0.14, base - u * 0.26);
+        ctx.lineTo(cx - sw * 0.10, base - u * 0.17);
+        ctx.moveTo(cx - sw * 0.05, base - u * 0.26);
+        ctx.lineTo(cx - sw * 0.01, base - u * 0.17);
+        ctx.stroke();
+        /* Salve bowl + bronze quarantine bell */
+        ctx.fillStyle = "#b8c9ad";
+        ctx.beginPath();
+        ctx.arc(cx + sw * 0.28, base - u * 0.10, u * 0.075, 0, Math.PI, false);
+        ctx.fill();
+        var swing = Math.sin(t * 2.8) * 0.22;
+        ctx.save();
+        ctx.translate(cx + sw * 0.26, sy + sh * 0.14);
+        ctx.rotate(swing);
+        ctx.fillStyle = "#d4b259";
+        ctx.beginPath();
+        ctx.moveTo(-u * 0.08, u * 0.18);
+        ctx.lineTo(0, 0);
+        ctx.lineTo(u * 0.08, u * 0.18);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+      } else {
+        /* odalisque_bathing: fluted marble steam-basin, rosewater ewer & silk veils */
+        ctx.fillStyle = hexToRgba("#e38fb3", 0.24);
+        ctx.beginPath();
+        ctx.moveTo(sx + sw * 0.06, sy + sh * 0.06);
+        ctx.quadraticCurveTo(sx + sw * 0.20, cy, sx + sw * 0.08, base);
+        ctx.lineTo(sx, base);
+        ctx.lineTo(sx, sy + sh * 0.06);
+        ctx.closePath();
+        ctx.fill();
+        /* Marble basin & rippling rose-turquoise water */
+        ctx.fillStyle = "#e8dde2";
+        ctx.fillRect(cx - sw * 0.30, base - u * 0.18, sw * 0.56, u * 0.14);
+        ctx.fillStyle = "#6ec4c9";
+        ctx.beginPath();
+        ctx.ellipse(cx - sw * 0.02, base - u * 0.18, sw * 0.25, u * 0.055, 0, 0, Math.PI * 2);
+        ctx.fill();
+        /* Long-necked gilt rosewater ewer */
+        var ex = cx + sw * 0.28;
+        ctx.fillStyle = "#e3b368";
+        ctx.beginPath();
+        ctx.ellipse(ex, base - u * 0.18, u * 0.075, u * 0.11, 0.2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = "#e3b368";
+        ctx.lineWidth = lw * 1.1;
+        ctx.beginPath();
+        ctx.moveTo(ex, base - u * 0.27);
+        ctx.lineTo(ex - u * 0.09, base - u * 0.40);
+        ctx.stroke();
+        /* Hammam steam wisps */
+        ctx.strokeStyle = hexToRgba("#ffe6f2", 0.58);
+        for (var w = -1; w <= 1; w += 2) {
+          var wx = cx - sw * 0.04 + w * u * 0.11;
+          var sway = Math.sin(t * 2.0 + w) * u * 0.05;
+          ctx.beginPath();
+          ctx.moveTo(wx, base - u * 0.24);
+          ctx.quadraticCurveTo(wx + sway, base - u * 0.44, wx - sway, base - u * 0.62);
+          ctx.stroke();
+        }
+      }
+    }
+
+    function renderActs(ctx, viewport, shells) {
+      if (!ctx) { return; }
+      var vp = viewport || {};
+      var vw = vp.width || vp.w || (ctx.canvas ? ctx.canvas.width : 1280);
+      var vh = vp.height || vp.h || (ctx.canvas ? ctx.canvas.height : 800);
+      lastCanvasW = vw;
+      lastCanvasH = vh;
+      syncShellAnchors(shells, vw, vh);
+
+      /* 1. Render bespoke vignettes inside each shell's cutaway interiorRect */
+      var shellList = Array.isArray(shells) && shells.length ? shells : [];
+      for (var i = 0; i < shellList.length; i++) {
+        var sh = shellList[i];
+        if (!sh || !sh.id) { continue; }
+        var ir = sh.interiorRect || { x: (sh.x || 0) + 8, y: (sh.y || 0) + 20, w: Math.max(40, (sh.w || 120) - 16), h: Math.max(32, (sh.h || 80) - 26) };
+        var occ = assignments[sh.id] || [];
+        if (occ.length === 0 || ir.w < 14 || ir.h < 14) { continue; }
+
+        for (var slot = 0; slot < occ.length; slot++) {
+          var act = ACT_BY_ID[occ[slot]];
+          if (!act) { continue; }
+          var bayW = occ.length === 2 ? (ir.w - 3) * 0.5 : ir.w;
+          var bayX = occ.length === 2 ? ir.x + slot * (bayW + 3) : ir.x;
+          var bayY = ir.y;
+          var bayH = ir.h;
+
+          ctx.save();
+          ctx.beginPath();
+          ctx.rect(bayX, bayY, bayW, bayH);
+          ctx.clip();
+
+          var grad = ctx.createRadialGradient(bayX + bayW * 0.5, bayY + bayH * 0.6, 2, bayX + bayW * 0.5, bayY + bayH * 0.55, Math.max(bayW, bayH) * 0.72);
+          grad.addColorStop(0, hexToRgba(act.hue, 0.24));
+          grad.addColorStop(1, "rgba(18,15,20,0.06)");
+          ctx.fillStyle = grad;
+          ctx.fillRect(bayX, bayY, bayW, bayH);
+
+          drawActVignette(ctx, act.id, bayX, bayY, bayW, bayH, timeSec + slot * 0.9);
+
+          /* Engraved glyph badge */
+          var badgeH = Math.min(16, Math.max(11, bayH * 0.21));
+          var showText = bayW >= 52;
+          var badgeW = showText ? Math.min(bayW - 4, 62) : Math.min(bayW - 4, 20);
+          ctx.fillStyle = "rgba(17,14,19,0.84)";
+          ctx.fillRect(bayX + 2, bayY + 2, badgeW, badgeH);
+          ctx.strokeStyle = hexToRgba(act.hue, 0.78);
+          ctx.lineWidth = 1;
+          ctx.strokeRect(bayX + 2, bayY + 2, badgeW, badgeH);
+          ctx.fillStyle = act.hue;
+          ctx.font = "600 " + Math.max(8, Math.round(badgeH * 0.68)) + "px 'SF Mono', Menlo, monospace";
+          ctx.textBaseline = "middle";
+          ctx.textAlign = showText ? "left" : "center";
+          var labelTxt = showText ? (act.symbol + " " + act.shortLabel) : act.symbol;
+          ctx.fillText(labelTxt, showText ? bayX + 5 : bayX + 2 + badgeW * 0.5, bayY + 2 + badgeH * 0.54);
+          ctx.restore();
+        }
+
+        if (occ.length === 2) {
+          ctx.save();
+          ctx.strokeStyle = "rgba(229,185,76,0.34)";
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(ir.x + ir.w * 0.5, ir.y + 3);
+          ctx.lineTo(ir.x + ir.w * 0.5, ir.y + ir.h - 3);
+          ctx.stroke();
+          ctx.restore();
+        }
+      }
+
+      /* 2. Render luminous indivisible life-filaments arcing between shells & piercing chalk */
+      ctx.save();
+      for (var m = 0; m < migrations.length; m++) {
+        var mg = migrations[m];
+        var p = clamp(mg.age / mg.ttl, 0, 1);
+        var env = Math.sin(p * Math.PI);
+        var alpha = mg.ambient ? env * 0.34 : env * (mg.isChalkSurge ? 0.92 : 0.78);
+        if (alpha <= 0.02) { continue; }
+        var x0 = mg.ax * vw, y0 = mg.ay * vh;
+        var xc = mg.cx * vw, yc = mg.cy * vh;
+        var x1 = mg.bx * vw, y1 = mg.by * vh;
+
+        ctx.strokeStyle = hexToRgba(mg.hue, alpha);
+        ctx.lineWidth = mg.isChalkSurge ? 2.4 : (mg.ambient ? 1.15 : 1.85);
+        ctx.beginPath();
+        ctx.moveTo(x0, y0);
+        ctx.quadraticCurveTo(xc, yc, x1, y1);
+        ctx.stroke();
+
+        var head = quadBezier(x0, y0, xc, yc, x1, y1, p);
+        ctx.fillStyle = hexToRgba(mg.hue, Math.min(1, alpha * 1.25));
+        ctx.beginPath();
+        ctx.arc(head.x, head.y, mg.isChalkSurge ? 4.2 : 3.0, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.restore();
+    }
+
+    function getState() {
+      var st = statsForAssignments(assignments);
+      return {
+        permutationCount: permutationCount,
+        incongruityIndex: st.incongruityIndex,
+        allNineActive: st.allNineActive,
+        shellAssignments: cloneAssignments(assignments),
+        activeMigrationsCount: migrations.length,
+        muted: audio.isMuted(),
+        acts: getActs()
+      };
+    }
+
+    function reset() {
+      assignments = cloneAssignments(INITIAL_ASSIGNMENTS);
+      permutationCount = 0;
+      autoCycleTimer = 0;
+      chalkSpawnCooldown = 0;
+      for (var i = 0; i < ACTS.length; i++) {
+        actPulseBoost[ACTS[i].id] = 0;
+      }
+      seedAmbientFilaments();
+      return getState();
+    }
+
+    return {
+      ACTS: ACTS,
+      getActs: getActs,
+      getShellOccupants: getShellOccupants,
+      permuteNow: permuteNow,
+      assignActToShell: assignActToShell,
+      surgeAcrossChalk: surgeAcrossChalk,
+      step: step,
+      renderActs: renderActs,
+      setMuted: audio.setMuted,
+      isMuted: audio.isMuted,
+      unlockAudio: audio.unlockAudio,
+      triggerActVoice: audio.triggerActVoice,
+      triggerChalkScratch: audio.triggerChalkScratch,
+      triggerDissolveChord: audio.triggerDissolveChord,
+      triggerPerimeterTumbleSound: audio.triggerPerimeterTumbleSound,
+      getState: getState,
+      reset: reset
+    };
+  }
+
+  var api = {
+    ACTS: ACTS,
+    SHELL_IDS: SHELL_IDS,
+    createPermutationActs: createPermutationActs
+  };
+
+  root.ZoePermutationActs = api;
+  if (typeof window !== "undefined") {
+    window.ZoePermutationActs = api;
+  }
+})(typeof globalThis !== "undefined" ? globalThis : this);
+
+(function () {
+  'use strict';
+
+  var FormsAPI = globalThis.ZoeDeceptiveForms;
+  var ActsAPI = globalThis.ZoePermutationActs;
+  if (!FormsAPI || !ActsAPI) {
+    return;
+  }
+
+  var SHELL_ORDER = ['pyramid_roof', 'pagoda', 'covered_market', 'canal', 'rubbish_heap'];
+  var SHELL_SHORT = {
+    pyramid_roof: 'Pyramid',
+    pagoda: 'Pagoda',
+    covered_market: 'Market',
+    canal: 'Canals',
+    rubbish_heap: 'Midden'
+  };
+  var ACT_SHORT = {
+    sleeping: 'Sleeping',
+    tool_forging: 'Forging',
+    cooking: 'Cooking',
+    gold_counting: 'Gold',
+    reigning: 'Reigning',
+    trading: 'Trading',
+    consulting_oracles: 'Oracles',
+    leprosarium_tending: 'Leprosarium',
+    odalisque_bathing: 'Baths'
+  };
+
+  var forms = FormsAPI.createDeceptiveForms({});
+  var acts = ActsAPI.createPermutationActs({});
+
+  var canvas = document.getElementById('zoe-stage-canvas');
+  var vessel = document.getElementById('zoe-canvas-vessel');
+  var ctx = canvas.getContext('2d');
+  var statusWhisper = document.getElementById('zoe-status-whisper');
+  var focusToast = document.getElementById('zoe-focus-toast');
+  var nineBadge = document.getElementById('zoe-nine-badge');
+  var incongruityBadge = document.getElementById('zoe-incongruity-badge');
+  var chalkLabel = document.getElementById('zoe-chalk-label');
+  var chalkFill = document.getElementById('zoe-chalk-fill');
+  var dissolvedChip = document.getElementById('zoe-dissolved-chip');
+  var doubtChip = document.getElementById('zoe-doubt-chip');
+  var foldChip = document.getElementById('zoe-fold-chip');
+  var btnPermute = document.getElementById('zoe-btn-permute');
+  var btnTumble = document.getElementById('zoe-btn-tumble');
+  var btnSound = document.getElementById('zoe-btn-sound');
+  var btnReset = document.getElementById('zoe-btn-reset');
+  var btnPlates = document.getElementById('zoe-btn-plates');
+  var plateDrawer = document.getElementById('zoe-plate-drawer');
+  var plateGallery = document.getElementById('zoe-plate-gallery');
+  var btnLoupe = document.getElementById('zoe-btn-loupe');
+  var btnClosePlates = document.getElementById('zoe-btn-close-plates');
+  var mapImg = document.getElementById('zoe-map-img');
+  var vistaImg = document.getElementById('zoe-vista-img');
+  var mapFallback = document.getElementById('zoe-map-fallback');
+  var vistaFallback = document.getElementById('zoe-vista-fallback');
+
+  var shellTokens = Array.prototype.slice.call(document.querySelectorAll('zoe-shell-token'));
+  var actGlyphs = Array.prototype.slice.call(document.querySelectorAll('zoe-act-glyph'));
+  var chalkPills = Array.prototype.slice.call(document.querySelectorAll('zoe-chalk-pill'));
+  var plateTabs = Array.prototype.slice.call(document.querySelectorAll('zoe-plate-tab[data-plate-mode]'));
+
+  var motionQuery = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
+  var reducedMotion = Boolean(motionQuery.matches);
+  if (motionQuery.addEventListener) {
+    motionQuery.addEventListener('change', function (ev) { reducedMotion = Boolean(ev.matches); });
+  }
+
+  var viewW = 960;
+  var viewH = 540;
+  var viewDpr = Math.min(window.devicePixelRatio || 1, 2);
+  var elapsedSec = 0;
+  var lastBleedField = { fluxIntensity: 0.25, activeCrossings: [], incongruityIndex: 1, allNineActive: true, permutationCount: 0 };
+  var prevDissolvedCount = 0;
+
+  function resizeStage() {
+    var rect = vessel.getBoundingClientRect();
+    viewW = Math.max(240, Math.floor(rect.width || window.innerWidth));
+    viewH = Math.max(180, Math.floor(rect.height || 400));
+    viewDpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(viewW * viewDpr);
+    canvas.height = Math.round(viewH * viewDpr);
+    forms.resize(viewW, viewH, viewDpr);
+  }
+
+  function unlockSoundIfAllowed() {
+    if (!acts.isMuted()) {
+      acts.unlockAudio();
+    }
+  }
+
+  function buildActAssignments() {
+    var map = {};
+    for (var i = 0; i < SHELL_ORDER.length; i++) {
+      var sid = SHELL_ORDER[i];
+      map[sid] = acts.getShellOccupants(sid);
+    }
+    return map;
+  }
+
+  function syncHud() {
+    var fState = forms.getState();
+    var aState = acts.getState();
+    var allActs = acts.getActs();
+    var selectedId = fState.selectedShellId || null;
+
+    for (var i = 0; i < shellTokens.length; i++) {
+      var tok = shellTokens[i];
+      var sid = tok.getAttribute('data-shell-id');
+      tok.classList.toggle('zoe-shell-selected', sid === selectedId);
+      var occ = acts.getShellOccupants(sid);
+      var list = (occ && occ.acts) ? occ.acts : [];
+      var parts = [];
+      for (var j = 0; j < list.length; j++) {
+        var item = list[j];
+        var shortLbl = ACT_SHORT[item.id] || item.label;
+        parts.push((item.symbol || '') + ' ' + shortLbl);
+      }
+      var inwardEl = tok.querySelector('.zoe-shell-inward');
+      if (inwardEl) {
+        inwardEl.textContent = 'Now: ' + (parts.join(' · ') || 'Indivisible');
+      }
+    }
+
+    var actById = {};
+    for (var k = 0; k < allActs.length; k++) {
+      actById[allActs[k].id] = allActs[k];
+    }
+    for (var m = 0; m < actGlyphs.length; m++) {
+      var glyph = actGlyphs[m];
+      var aid = glyph.getAttribute('data-act-id');
+      var info = actById[aid];
+      if (info) {
+        var hostEl = glyph.querySelector('.zoe-act-host');
+        if (hostEl) {
+          hostEl.textContent = '→ ' + (SHELL_SHORT[info.currentShellId] || info.currentShellId);
+        }
+        glyph.style.borderColor = (selectedId && info.currentShellId === selectedId) ? info.hue : '';
+      }
+    }
+
+    nineBadge.textContent = (aState.allNineActive ? '9/9' : allActs.length + '/9') + ' Acts Live';
+    incongruityBadge.textContent = 'Incongruity ' + Math.round((aState.incongruityIndex || 1) * 100) + '%';
+
+    var strokes = fState.activeChalkStrokes || [];
+    var dissolved = fState.dissolvedBoundariesCount || 0;
+    if (strokes.length > 0) {
+      var integ = typeof fState.maxChalkIntegrity === 'number' ? fState.maxChalkIntegrity : (strokes[0].integrity || 0);
+      var pct = Math.max(0, Math.min(100, Math.round(integ * 100)));
+      chalkFill.style.width = pct + '%';
+      chalkLabel.textContent = 'Chalk Integrity: ' + pct + '% → Dissolving';
+    } else if (dissolved > 0) {
+      chalkFill.style.width = '0%';
+      chalkLabel.textContent = 'Chalk: 0% Dissolved (' + dissolved + ')';
+    } else {
+      chalkFill.style.width = '100%';
+      chalkLabel.textContent = 'Chalk: 100% Ready (Drag)';
+    }
+
+    dissolvedChip.textContent = 'Dissolved: ' + dissolved;
+    doubtChip.textContent = 'Doubt: ' + Math.round((fState.travelerDoubt || 0.18) * 100) + '%';
+    foldChip.textContent = 'Folds: ' + (fState.perimeterTumbleCount || 0) + ' · Wheels≡Wolves';
+    btnSound.textContent = acts.isMuted() ? '[M] Muted' : '[M] Sound: On';
+  }
+  function drawPlateFallback(cvs, kind) {
+    if (!cvs) { return; }
+    var c = cvs.getContext('2d');
+    var w = cvs.width;
+    var h = cvs.height;
+    c.fillStyle = '#18131b';
+    c.fillRect(0, 0, w, h);
+    c.strokeStyle = '#e5b94c';
+    c.lineWidth = 2;
+    c.strokeRect(14, 14, w - 28, h - 28);
+    c.strokeStyle = 'rgba(242,239,228,0.28)';
+    c.lineWidth = 1;
+    c.strokeRect(22, 22, w - 44, h - 44);
+    var hues = ['#9c5248', '#d98a3c', '#c9b79c', '#479399', '#9a8462'];
+    for (var r = 0; r < 5; r++) {
+      c.strokeStyle = hues[r];
+      c.beginPath();
+      if (kind === 'map') {
+        c.arc(w * 0.5, h * 0.52, 65 + r * 38, 0, Math.PI * 2);
+      } else {
+        var bx = 70 + r * 136;
+        c.rect(bx, h * 0.34, 112, h * 0.42);
+      }
+      c.stroke();
+    }
+    c.fillStyle = '#f2efe4';
+    c.font = '600 18px Georgia, serif';
+    c.textAlign = 'center';
+    c.fillText(kind === 'map' ? 'ZOE · XIII — TOROIDAL CONTINUUM PLAN' : 'ZOE · XIII — FIVE DECEPTIVE SHELLS CUTAWAY', w * 0.5, 58);
+    c.fillStyle = '#b9b2a3';
+    c.font = '12px Menlo, monospace';
+    c.fillText('Indivisible existence: every shell shelters every human act', w * 0.5, h - 36);
+  }
+
+  var mapTriedSvg = false;
+  var mapFailed = false;
+  var vistaFailed = false;
+
+  mapImg.addEventListener('load', function () {
+    mapFailed = false;
+    mapImg.classList.remove('zoe-is-hidden');
+    mapFallback.classList.add('zoe-is-hidden');
+  });
+  mapImg.addEventListener('error', function () {
+    if (!mapTriedSvg) {
+      mapTriedSvg = true;
+      mapImg.src = 'map.svg';
+      return;
+    }
+    mapFailed = true;
+    mapImg.classList.add('zoe-is-hidden');
+    mapFallback.classList.remove('zoe-is-hidden');
+    drawPlateFallback(mapFallback, 'map');
+  });
+
+  vistaImg.addEventListener('load', function () {
+    vistaFailed = false;
+    vistaImg.classList.remove('zoe-is-hidden');
+    vistaFallback.classList.add('zoe-is-hidden');
+  });
+  vistaImg.addEventListener('error', function () {
+    vistaFailed = true;
+    vistaImg.classList.add('zoe-is-hidden');
+    vistaFallback.classList.remove('zoe-is-hidden');
+    drawPlateFallback(vistaFallback, 'vista');
+  });
+
+  function setPlateMode(mode) {
+    plateGallery.setAttribute('data-mode', mode);
+    for (var i = 0; i < plateTabs.length; i++) {
+      var t = plateTabs[i];
+      t.classList.toggle('zoe-tab-active', t.getAttribute('data-plate-mode') === mode);
+    }
+  }
+
+  function toggleLoupe(force) {
+    var cur = plateGallery.getAttribute('data-zoom') === 'true';
+    var next = typeof force === 'boolean' ? force : !cur;
+    plateGallery.setAttribute('data-zoom', next ? 'true' : 'false');
+    btnLoupe.classList.toggle('zoe-tab-active', next);
+    return next;
+  }
+
+  function togglePlates(force) {
+    var isHidden = plateDrawer.hasAttribute('hidden');
+    var shouldOpen = typeof force === 'boolean' ? force : isHidden;
+    if (shouldOpen) {
+      plateDrawer.removeAttribute('hidden');
+      if (mapFailed) {
+        mapTriedSvg = false;
+        mapImg.src = 'map.png';
+      }
+      if (vistaFailed) {
+        vistaImg.src = 'image.png';
+      }
+    } else {
+      plateDrawer.setAttribute('hidden', '');
+      toggleLoupe(false);
+    }
+    return shouldOpen;
+  }
+
+  plateGallery.addEventListener('pointermove', function (ev) {
+    if (plateGallery.getAttribute('data-zoom') !== 'true') { return; }
+    var vp = ev.target.closest ? ev.target.closest('zoe-plate-viewport') : null;
+    if (!vp) { return; }
+    var r = vp.getBoundingClientRect();
+    var px = Math.max(0, Math.min(100, ((ev.clientX - r.left) / Math.max(1, r.width)) * 100));
+    var py = Math.max(0, Math.min(100, ((ev.clientY - r.top) / Math.max(1, r.height)) * 100));
+    vp.style.setProperty('--zoe-pan-x', px.toFixed(1) + '%');
+    vp.style.setProperty('--zoe-pan-y', py.toFixed(1) + '%');
+  });
+
+  function bindPill(el, handler) {
+    if (!el) { return; }
+    el.addEventListener('click', function (ev) {
+      unlockSoundIfAllowed();
+      handler(ev);
+    });
+    el.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Enter' || ev.key === ' ') {
+        ev.preventDefault();
+        ev.stopPropagation();
+        unlockSoundIfAllowed();
+        handler(ev);
+      }
+    });
+  }
+  function doSelectShell(shellId) {
+    var cur = forms.getState().selectedShellId;
+    var next = (cur === shellId) ? null : shellId;
+    forms.setSelectedShell(next);
+    if (next) {
+      var occ = acts.getShellOccupants(next);
+      if (occ && occ.primaryAct) {
+        acts.triggerActVoice(occ.primaryAct.id || occ.primaryAct);
+      }
+      focusToast.textContent = 'Focused ' + (SHELL_SHORT[next] || next) + ' — click any act below to route inside this shell';
+    } else {
+      focusToast.textContent = 'Drag across Zoe to chalk a boundary · Tap a shell to focus · Tap any act below to route inside';
+    }
+    syncHud();
+    return next;
+  }
+
+  function doRouteAct(actId, explicitShellId) {
+    var targetShell = explicitShellId || forms.getState().selectedShellId;
+    if (!targetShell) {
+      var all = acts.getActs();
+      var currentShell = null;
+      var naiveShell = null;
+      for (var i = 0; i < all.length; i++) {
+        if (all[i].id === actId) {
+          currentShell = all[i].currentShellId;
+          naiveShell = all[i].naiveShellId;
+          break;
+        }
+      }
+      var curIdx = Math.max(0, SHELL_ORDER.indexOf(currentShell));
+      for (var step = 1; step <= SHELL_ORDER.length; step++) {
+        var cand = SHELL_ORDER[(curIdx + step) % SHELL_ORDER.length];
+        if (cand !== currentShell && cand !== naiveShell) {
+          targetShell = cand;
+          break;
+        }
+      }
+      if (!targetShell) { targetShell = SHELL_ORDER[(curIdx + 1) % SHELL_ORDER.length]; }
+    }
+    var res = acts.assignActToShell(actId, targetShell);
+    statusWhisper.textContent = (ACT_SHORT[actId] || actId) + ' now inhabits ' + (SHELL_SHORT[targetShell] || targetShell) + ': outward form declares nothing.';
+    syncHud();
+    return res;
+  }
+
+  function doPresetChalk(presetId) {
+    var stroke = forms.applyPresetChalk(presetId);
+    acts.triggerChalkScratch();
+    var st = forms.getState();
+    acts.surgeAcrossChalk(st.activeChalkStrokes || [], forms.getShells());
+    focusToast.textContent = 'Boundary chalked (' + presetId.replace('_', '/') + ') — watch cross-bleeding acts fracture & dissolve the line';
+    syncHud();
+    return stroke;
+  }
+
+  function doPermute(reason) {
+    var res = acts.permuteNow(reason || 'manual');
+    statusWhisper.textContent = 'All nine simultaneous acts permuted across Zoe — no act rests in its expected shell.';
+    syncHud();
+    return res;
+  }
+
+  function doTumble(dx, dy) {
+    var res = forms.triggerPerimeterTumble(typeof dx === 'number' ? dx : 1, typeof dy === 'number' ? dy : 0);
+    acts.triggerPerimeterTumbleSound();
+    acts.permuteNow('perimeter_fold');
+    focusToast.textContent = 'Rumble of wheels ≡ howl of wolves: crossing outside tumbles straight back into Zoe';
+    syncHud();
+    return res;
+  }
+
+  function doReset() {
+    forms.reset();
+    acts.reset();
+    prevDissolvedCount = 0;
+    focusToast.textContent = 'Drag across Zoe to chalk a boundary · Tap a shell to focus · Tap any act below to route inside';
+    statusWhisper.textContent = 'Every point of Zoe hosts every act: outward form never fixes inward life.';
+    syncHud();
+  }
+
+  shellTokens.forEach(function (tok) {
+    bindPill(tok, function () { doSelectShell(tok.getAttribute('data-shell-id')); });
+  });
+  actGlyphs.forEach(function (g) {
+    bindPill(g, function () { doRouteAct(g.getAttribute('data-act-id')); });
+  });
+  chalkPills.forEach(function (p) {
+    bindPill(p, function () { doPresetChalk(p.getAttribute('data-preset')); });
+  });
+  plateTabs.forEach(function (t) {
+    bindPill(t, function () { setPlateMode(t.getAttribute('data-plate-mode')); });
+  });
+  bindPill(btnPermute, function () { doPermute('ui'); });
+  bindPill(btnTumble, function () { doTumble(1, 0); });
+  bindPill(foldChip, function () { doTumble(-1, 0.35); });
+  bindPill(btnSound, function () {
+    var nextMuted = !acts.isMuted();
+    acts.setMuted(nextMuted);
+    if (!nextMuted) { acts.unlockAudio(); }
+    syncHud();
+  });
+  bindPill(btnReset, function () { doReset(); });
+  bindPill(btnPlates, function () { togglePlates(); });
+  bindPill(btnLoupe, function () { toggleLoupe(); });
+  bindPill(btnClosePlates, function () { togglePlates(false); });
+  plateDrawer.addEventListener('click', function (ev) {
+    if (ev.target === plateDrawer) { togglePlates(false); }
+  });
+
+  var ptrDown = false;
+  var ptrDragging = false;
+  var startX = 0;
+  var startY = 0;
+  var startNormX = 0;
+  var startNormY = 0;
+
+  function normFromEvent(ev) {
+    var r = canvas.getBoundingClientRect();
+    var nx = Math.max(0, Math.min(1, (ev.clientX - r.left) / Math.max(1, r.width)));
+    var ny = Math.max(0, Math.min(1, (ev.clientY - r.top) / Math.max(1, r.height)));
+    return { x: nx, y: ny };
+  }
+
+  canvas.addEventListener('pointerdown', function (ev) {
+    unlockSoundIfAllowed();
+    var n = normFromEvent(ev);
+    ptrDown = true;
+    ptrDragging = false;
+    startX = ev.clientX;
+    startY = ev.clientY;
+    startNormX = n.x;
+    startNormY = n.y;
+    if (canvas.setPointerCapture) {
+      try { canvas.setPointerCapture(ev.pointerId); } catch (_e) {}
+    }
+  });
+
+  canvas.addEventListener('pointermove', function (ev) {
+    if (!ptrDown) { return; }
+    var dist = Math.hypot(ev.clientX - startX, ev.clientY - startY);
+    var n = normFromEvent(ev);
+    if (!ptrDragging && dist >= 4) {
+      ptrDragging = true;
+      forms.beginChalkLine(startNormX, startNormY);
+      acts.triggerChalkScratch();
+    }
+    if (ptrDragging) {
+      forms.extendChalkLine(n.x, n.y);
+    }
+  });
+
+  function finishPointer(ev) {
+    if (!ptrDown) { return; }
+    ptrDown = false;
+    if (ptrDragging) {
+      ptrDragging = false;
+      forms.endChalkLine();
+      var st = forms.getState();
+      acts.surgeAcrossChalk(st.activeChalkStrokes || [], forms.getShells());
+      focusToast.textContent = 'Traveler chalk boundary drawn — acts immediately bleed across & dissolve the line';
+      syncHud();
+    } else if (ev) {
+      var n = normFromEvent(ev);
+      var hit = forms.hitTestShell(n.x, n.y);
+      var hitId = typeof hit === 'string' ? hit : (hit && hit.id ? hit.id : null);
+      if (hitId) {
+        doSelectShell(hitId);
+      } else if (n.x < 0.045 || n.x > 0.955 || n.y < 0.045 || n.y > 0.955) {
+        doTumble(n.x < 0.5 ? -1 : 1, n.y < 0.5 ? -0.4 : 0.4);
+      }
+    }
+  }
+  canvas.addEventListener('pointerup', finishPointer);
+  canvas.addEventListener('pointercancel', function () { finishPointer(null); });
+  window.addEventListener('keydown', function (ev) {
+    if (ev.metaKey || ev.ctrlKey || ev.altKey) { return; }
+    var k = ev.key;
+    var low = k ? k.toLowerCase() : '';
+    if (k === 'Escape') {
+      if (!plateDrawer.hasAttribute('hidden')) {
+        ev.preventDefault();
+        togglePlates(false);
+      } else if (forms.getState().selectedShellId) {
+        forms.setSelectedShell(null);
+        syncHud();
+      }
+      return;
+    }
+    unlockSoundIfAllowed();
+    if (low === 'p') { ev.preventDefault(); togglePlates(); return; }
+    if (low === 'z' && !plateDrawer.hasAttribute('hidden')) { ev.preventDefault(); toggleLoupe(); return; }
+    if (!plateDrawer.hasAttribute('hidden')) { return; }
+    if (k === '1') { ev.preventDefault(); doPresetChalk('sacred_profane'); }
+    else if (k === '2') { ev.preventDefault(); doPresetChalk('royal_artisan'); }
+    else if (k === '3') { ev.preventDefault(); doPresetChalk('pure_outcast'); }
+    else if (k === '4') { ev.preventDefault(); doPresetChalk('inside_outside'); }
+    else if (low === 'x' || k === ' ') { ev.preventDefault(); doPermute('key'); }
+    else if (low === 'w') { ev.preventDefault(); doTumble(1, 0); }
+    else if (low === 'm') {
+      ev.preventDefault();
+      var nextM = !acts.isMuted();
+      acts.setMuted(nextM);
+      if (!nextM) { acts.unlockAudio(); }
+      syncHud();
+    }
+    else if (low === 'r') { ev.preventDefault(); doReset(); }
+  });
+
+  function stepWorld(dt) {
+    elapsedSec += dt;
+    var shells = forms.getShells();
+    var fStateBefore = forms.getState();
+    var strokes = fStateBefore.activeChalkStrokes || [];
+    lastBleedField = acts.step(dt, shells, strokes, reducedMotion) || lastBleedField;
+    forms.step(dt, lastBleedField, reducedMotion);
+    var fStateAfter = forms.getState();
+    var nowDissolved = fStateAfter.dissolvedBoundariesCount || 0;
+    if (nowDissolved > prevDissolvedCount) {
+      prevDissolvedCount = nowDissolved;
+      acts.triggerDissolveChord();
+      focusToast.textContent = 'Boundary dissolved to 0% — indivisible existence erases every dividing line';
+    }
+  }
+
+  function renderFrame() {
+    ctx.save();
+    ctx.setTransform(viewDpr, 0, 0, viewDpr, 0, 0);
+    var viewport = { width: viewW, height: viewH, w: viewW, h: viewH, dpr: viewDpr, time: elapsedSec, reducedMotion: reducedMotion };
+    var assignments = buildActAssignments();
+    var shells = forms.getShells();
+    forms.renderBackdropAndShells(ctx, viewport, assignments);
+    acts.renderActs(ctx, viewport, shells);
+    forms.renderChalkAndForeframes(ctx, viewport);
+    ctx.restore();
+  }
+
+  var lastTs = performance.now();
+  var hudAccum = 0;
+  function frame(ts) {
+    var dt = Math.min(0.06, Math.max(0.001, (ts - lastTs) / 1000));
+    lastTs = ts;
+    stepWorld(dt);
+    renderFrame();
+    hudAccum += dt;
+    if (hudAccum >= 0.08) {
+      hudAccum = 0;
+      syncHud();
+    }
+    requestAnimationFrame(frame);
+  }
+
+  window.addEventListener('resize', function () {
+    resizeStage();
+    renderFrame();
+  });
+  if (typeof ResizeObserver === 'function') {
+    var ro = new ResizeObserver(function () {
+      resizeStage();
+      renderFrame();
+    });
+    ro.observe(vessel);
+  }
+
+  resizeStage();
+  stepWorld(0.016);
+  syncHud();
+  renderFrame();
+  requestAnimationFrame(frame);
+
+  window.__ZOE_DEBUG__ = {
+    getFormsState: function () { return forms.getState(); },
+    getActsState: function () { return acts.getState(); },
+    getShells: function () { return forms.getShells(); },
+    getActs: function () { return acts.getActs(); },
+    applyPresetChalk: function (presetId) { return doPresetChalk(presetId || 'sacred_profane'); },
+    permuteNow: function (reason) { return doPermute(reason || 'debug'); },
+    assignActToShell: function (actId, shellId) { return doRouteAct(actId, shellId); },
+    triggerPerimeterTumble: function (dx, dy) { return doTumble(dx, dy); },
+    selectShell: function (shellId) { return doSelectShell(shellId); },
+    reset: function () { doReset(); return { forms: forms.getState(), acts: acts.getState() }; },
+    togglePlates: function (force) { return togglePlates(force); },
+    stepSimulation: function (seconds) {
+      var total = Math.max(0, Number(seconds) || 0);
+      var step = 0.05;
+      var rem = total;
+      while (rem > 0.0001) {
+        var d = Math.min(step, rem);
+        stepWorld(d);
+        rem -= d;
+      }
+      syncHud();
+      renderFrame();
+      return { forms: forms.getState(), acts: acts.getState() };
+    }
+  };
+})();
+</script>
+</body>
+</html>

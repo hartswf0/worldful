@@ -1,0 +1,2689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Maurilia · Stereopticon of Obligatory Regret</title>
+<style>
+:root{--mrl-bristol:#efe4cd;--mrl-sepia:#6e5036;--mrl-umber:#3a2819;--mrl-ivory:#faf5e8;--mrl-gilt:#d8a24a;--mrl-mud:#7b7468;--mrl-glare:#b8b2a6;--mrl-asphalt:#14191f;--mrl-concrete:#8c969e;--mrl-cyan:#5ec2d6;--mrl-sodium:#f09b36;--mrl-crimson:#a93b2c;--mrl-chrome:#dce5ec;--mrl-mahogany:#2b160c;--mrl-panel:#1c120c;--mrl-ink:#efe4cd;--mrl-dim:#b39b78;--mrl-edge:rgba(216,162,74,.34)}
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none !important}
+html,body{width:100%;height:100%;overflow:hidden;background:#0d0a08;color:var(--mrl-ink);font-family:Georgia,"Times New Roman",serif;-webkit-text-size-adjust:100%}
+.mrl-root{position:fixed;inset:0;display:grid;grid-template-rows:auto minmax(0,1fr);width:100vw;height:100vh;height:100dvh;overflow:hidden}
+.mrl-root[data-vantage="1906"]{--mrl-panel:#2a2824;--mrl-ink:#d9d4c9;--mrl-dim:#9d9689;--mrl-edge:rgba(184,178,166,.32);--mrl-gilt:#a49e92}
+.mrl-crown{display:flex;align-items:center;gap:10px;padding:6px 14px;min-width:0;background:linear-gradient(180deg,#2b160c,#170d08);border-bottom:1px solid var(--mrl-edge)}
+.mrl-root[data-vantage="1906"] .mrl-crown{background:linear-gradient(180deg,#3a3732,#24221f)}
+.mrl-sigil{display:grid;place-items:center;flex:0 0 auto;width:28px;height:28px;border:1.5px solid var(--mrl-gilt);border-radius:50%;color:var(--mrl-gilt);font-style:italic;font-weight:700;font-size:15px}
+.mrl-crown-title{display:flex;align-items:baseline;gap:10px;min-width:0;flex:1 1 auto;font-size:19px;font-style:italic;letter-spacing:.06em;color:var(--mrl-ivory);white-space:nowrap;overflow:hidden}
+.mrl-crown-sub{font-size:11.5px;font-style:normal;letter-spacing:.16em;text-transform:uppercase;color:var(--mrl-dim);overflow:hidden;text-overflow:ellipsis}
+.mrl-vantage-badge{flex:0 0 auto;padding:3px 9px;border:1px solid var(--mrl-edge);border-radius:999px;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mrl-gilt);white-space:nowrap}
+.mrl-deck{display:grid;grid-template-columns:minmax(0,1fr) 372px;min-height:0;min-width:0}
+.mrl-horizon{position:relative;display:block;min-width:0;min-height:0;overflow:hidden;background:var(--mrl-asphalt)}
+.mrl-stage-canvas{position:absolute;inset:0;display:block;width:100%;height:100%;touch-action:none;cursor:crosshair}
+.mrl-loupe{position:absolute;left:0;top:0;display:block;border-radius:50%;transform:translate(-50%,-50%);cursor:grab;touch-action:none;outline:none;background:transparent}
+.mrl-loupe:active{cursor:grabbing}
+.mrl-loupe:focus-visible{box-shadow:0 0 0 3px rgba(216,162,74,.85),0 0 0 6px rgba(20,25,31,.6)}
+.mrl-root[data-vantage="1906"] .mrl-loupe{cursor:default}
+.mrl-root[data-vantage="1906"] .mrl-rupture{bottom:32px}
+.mrl-rupture{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);display:block;width:min(560px,92%);padding:8px 12px;border:1px solid var(--mrl-crimson);border-radius:6px;background:rgba(12,16,22,.86);color:var(--mrl-chrome);pointer-events:none;text-align:center}
+.mrl-rupture-eq{display:block;font-family:"Courier New",monospace;font-weight:700;font-size:14px;letter-spacing:.14em;color:#7ef4ff}
+.mrl-rupture-whisper{display:block;margin-top:3px;font-size:11px;font-style:italic;line-height:1.35;color:var(--mrl-chrome)}
+.mrl-root[data-clean="false"] .mrl-legend{display:none}
+.mrl-legend{position:absolute;left:10px;top:10px;display:block;max-width:calc(100% - 20px);padding:4px 8px;border-radius:4px;background:rgba(12,16,22,.62);font-family:"Courier New",monospace;font-size:10.5px;color:var(--mrl-chrome);pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mrl-column{display:flex;flex-direction:column;gap:9px;min-height:0;min-width:0;padding:10px 12px;overflow-x:hidden;overflow-y:auto;background:linear-gradient(180deg,var(--mrl-panel),#120b07);border-left:1px solid var(--mrl-edge)}
+.mrl-root[data-vantage="1906"] .mrl-column{background:linear-gradient(180deg,#2e2c28,#22201d)}
+.mrl-block{display:block;padding:8px 10px;border:1px solid var(--mrl-edge);border-radius:6px;background:rgba(0,0,0,.18)}
+.mrl-block-title{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mrl-dim)}
+.mrl-strong{color:var(--mrl-ivory);font-family:"Courier New",monospace;font-weight:700;font-size:13px;letter-spacing:.04em}
+.mrl-locus-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.mrl-tab,.mrl-key{display:flex;align-items:center;justify-content:center;gap:5px;min-width:0;min-height:32px;padding:5px 7px;border:1px solid var(--mrl-edge);border-radius:5px;background:rgba(43,22,12,.55);color:var(--mrl-ink);font-size:11.5px;line-height:1.2;text-align:center;cursor:pointer;user-select:none;-webkit-user-select:none;transition:background .18s,border-color .18s,color .18s}
+.mrl-tab:hover,.mrl-key:hover{border-color:var(--mrl-gilt)}
+.mrl-tab:focus-visible,.mrl-key:focus-visible{outline:2px solid var(--mrl-gilt);outline-offset:1px}
+.mrl-tab[aria-selected="true"],.mrl-key[aria-pressed="true"],.mrl-key[aria-checked="true"]{background:var(--mrl-gilt);border-color:var(--mrl-gilt);color:#1a0f09}
+.mrl-kbd{display:inline-block;flex:0 0 auto;padding:0 4px;border:1px solid currentColor;border-radius:3px;font-family:"Courier New",monospace;font-size:10px;line-height:14px;opacity:.85}
+.mrl-slot{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mrl-note{display:block;min-width:0;padding:6px 8px;border-radius:5px;font-size:11.5px;line-height:1.35}
+.mrl-note-prov{background:rgba(239,228,205,.1);border-left:3px solid var(--mrl-gilt)}
+.mrl-note-metro{background:rgba(94,194,214,.08);border-left:3px solid var(--mrl-cyan)}
+.mrl-note-label{display:block;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mrl-dim)}
+.mrl-note-title{display:block;margin-top:2px;color:var(--mrl-ivory);font-weight:700}
+.mrl-note-body{display:block;margin-top:3px;font-style:italic;color:var(--mrl-ink);opacity:.86}
+.mrl-calibrator{display:block}
+.mrl-vernier{position:relative;display:block;height:30px;margin-top:6px}
+.mrl-band{position:absolute;top:6px;height:18px;left:52%;width:26%;display:block;border:1px solid var(--mrl-gilt);border-radius:3px;background:repeating-linear-gradient(90deg,rgba(216,162,74,.28) 0 3px,rgba(216,162,74,.12) 3px 6px);pointer-events:none}
+.mrl-band-label{position:absolute;top:-13px;left:50%;transform:translateX(-50%);font-size:8.5px;letter-spacing:.12em;color:var(--mrl-gilt);white-space:nowrap}
+.mrl-range{position:relative;display:block;width:100%;height:30px;margin:0;background:transparent;accent-color:var(--mrl-gilt);cursor:pointer}
+.mrl-range:focus-visible{outline:2px solid var(--mrl-gilt);outline-offset:2px}
+.mrl-scale{position:relative;display:block;height:12px;margin-top:1px;background:repeating-linear-gradient(90deg,var(--mrl-dim) 0 1px,transparent 1px 10%) top/100% 4px no-repeat}
+.mrl-tick{position:absolute;top:3px;transform:translateX(-50%);font-family:"Courier New",monospace;font-size:8.5px;color:var(--mrl-dim)}
+.mrl-tick-edge-l{transform:none}
+.mrl-tick-edge-r{transform:translateX(-100%)}
+.mrl-meter{position:relative;display:block;height:9px;margin-top:6px;border-radius:5px;background:rgba(255,255,255,.08);overflow:hidden}
+.mrl-meter-fill{position:absolute;left:0;top:0;bottom:0;display:block;width:0;background:linear-gradient(90deg,#8a5a24,var(--mrl-gilt),#f4d48a);transition:width .2s ease}
+.mrl-meter-fill-cyan{background:linear-gradient(90deg,#1d5868,var(--mrl-cyan),var(--mrl-chrome))}
+.mrl-meter-fill-crimson{background:linear-gradient(90deg,#5a1f17,var(--mrl-crimson),#e2735e)}
+.mrl-ledger{display:block;margin-top:6px;padding:5px 8px;border-radius:4px;font-size:11.5px;line-height:1.35;border-left:3px solid var(--mrl-dim);background:rgba(0,0,0,.2)}
+.mrl-ledger[data-etiquette="pleased"]{border-left-color:#8fbf6a}
+.mrl-ledger[data-etiquette="disappointed"]{border-left-color:var(--mrl-sodium)}
+.mrl-ledger[data-etiquette="admonishing"]{border-left-color:var(--mrl-crimson)}
+.mrl-ledger[data-etiquette="silent"]{border-left-color:var(--mrl-mud)}
+.mrl-ledger-verdict{display:block;margin-top:3px;font-size:10.5px;font-style:italic;color:var(--mrl-dim)}
+.mrl-chrono{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:8px}
+.mrl-chrono-split{display:flex;align-items:center;gap:6px;min-width:0;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mrl-dim)}
+.mrl-chrono-split .mrl-range{height:24px;flex:1 1 auto;min-width:0}
+.mrl-gauge{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;column-gap:8px;row-gap:2px;margin-top:5px;font-size:11px}
+.mrl-gauge-label{display:block;color:var(--mrl-ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mrl-gauge .mrl-meter{grid-column:1 / -1;margin-top:0;height:6px}
+.mrl-fault-eq{display:block;margin-top:4px;font-family:"Courier New",monospace;font-size:11px;letter-spacing:.12em;text-align:center;color:#7ef4ff}
+.mrl-probe{display:flex;align-items:center;gap:6px;margin-top:4px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mrl-dim)}
+.mrl-probe .mrl-range{height:24px;flex:1 1 auto;min-width:0}
+.mrl-colophon-keys{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:5px}
+.mrl-key-forbidden[aria-pressed="true"]{background:var(--mrl-crimson);border-color:var(--mrl-crimson);color:var(--mrl-chrome)}
+.mrl-tutelary{display:block;margin-top:5px;font-size:10.5px;line-height:1.35;font-style:italic;color:var(--mrl-dim)}
+.mrl-keyrail{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.mrl-drawer{position:fixed;inset:0;z-index:40;display:block;background:rgba(8,6,4,.82);backdrop-filter:blur(3px);--mrl-gilt:#d8a24a;--mrl-ink:#efe4cd;--mrl-dim:#b39b78;--mrl-edge:rgba(216,162,74,.34)}
+.mrl-drawer-sheet{position:absolute;inset:3vh 3vw;display:grid;grid-template-rows:auto minmax(0,1fr);min-width:0;border:1px solid var(--mrl-gilt);border-radius:8px;background:linear-gradient(180deg,#2b160c,#140c07);overflow:hidden}
+.mrl-drawer-head{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid rgba(216,162,74,.34)}
+.mrl-drawer-title{flex:1 1 180px;min-width:0;font-size:15px;font-style:italic;letter-spacing:.06em;color:var(--mrl-ivory)}
+.mrl-tab-rail{display:flex;gap:6px;flex-wrap:wrap}
+.mrl-plate-stage{position:relative;display:block;min-height:0;min-width:0;padding:10px;overflow:hidden}
+.mrl-diptych{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;height:100%;min-height:0}
+.mrl-drawer[data-plate-tab="map"] .mrl-diptych,.mrl-drawer[data-plate-tab="city"] .mrl-diptych{grid-template-columns:1fr}
+.mrl-drawer[data-plate-tab="map"] .mrl-fig-city,.mrl-drawer[data-plate-tab="city"] .mrl-fig-map{display:none}
+.mrl-fig{display:grid;grid-template-rows:minmax(0,1fr) auto;gap:4px;min-height:0;min-width:0;overflow:hidden;border:1px solid rgba(216,162,74,.3);border-radius:5px;background:#0d0906}
+.mrl-plate-vp{display:block;width:100%;height:100%;min-height:0;min-width:0;overflow:hidden}
+.mrl-plate-img{display:block;width:100%;height:100%;min-height:0;object-fit:contain;transform-origin:var(--mrl-zx,50%) var(--mrl-zy,50%);transition:transform .3s ease}
+.mrl-drawer[data-zoom="on"] .mrl-plate-img{transform:scale(1.75);cursor:zoom-out}
+.mrl-caption{display:block;padding:3px 8px 5px;font-size:11px;font-style:italic;color:var(--mrl-dim);text-align:center}
+@media (max-width:760px){
+.mrl-crown{padding:5px 10px;gap:8px}
+.mrl-crown-title{font-size:16px}
+.mrl-crown-sub,.mrl-legend,.mrl-note-body,.mrl-ledger-verdict{display:none}
+.mrl-vantage-badge{font-size:9px;padding:2px 7px}
+.mrl-deck{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(170px,30vh) minmax(0,1fr)}
+.mrl-fault-eq{display:none}
+.mrl-tutelary{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-top:4px}
+.mrl-gauge{margin-top:3px}
+.mrl-vernier{margin-top:4px}
+.mrl-column{gap:5px;padding:6px 9px;border-left:0;border-top:1px solid var(--mrl-edge)}
+.mrl-block{padding:6px 8px}
+.mrl-tab,.mrl-key{min-height:30px;padding:4px 5px;font-size:10.5px}
+.mrl-note{padding:4px 6px;font-size:10.5px}
+.mrl-ledger{font-size:10.5px;padding:4px 7px}
+.mrl-rupture{bottom:6px;padding:5px 8px}
+.mrl-rupture-eq{font-size:11.5px}
+.mrl-rupture-whisper{font-size:9.5px}
+.mrl-diptych{grid-template-columns:1fr;grid-template-rows:1fr 1fr}
+.mrl-drawer[data-plate-tab="map"] .mrl-diptych,.mrl-drawer[data-plate-tab="city"] .mrl-diptych{grid-template-rows:1fr}
+.mrl-drawer-sheet{inset:2vh 2vw}
+}
+@media (prefers-reduced-motion: reduce){
+*,*::before,*::after{transition:none !important;animation:none !important;scroll-behavior:auto !important}
+}
+</style>
+<script>
+/* Plate fallback: map.png -> map.svg (once) -> locally engraved canvas plate (no network). */
+(function(){
+  function engrave(kind){
+    var c = document.createElement("canvas"); c.width = 960; c.height = kind === "map" ? 720 : 600;
+    var g = c.getContext("2d"); if (!g) return "";
+    var w = c.width, h = c.height, map = kind === "map";
+    g.fillStyle = map ? "#efe4cd" : "#e6d6b5"; g.fillRect(0, 0, w, h);
+    g.strokeStyle = "#6e5036"; g.lineWidth = 3; g.strokeRect(14, 14, w - 28, h - 28);
+    g.lineWidth = 1; g.strokeRect(24, 24, w - 48, h - 48);
+    g.globalAlpha = 0.18;
+    for (var y = 30; y < h - 30; y += 6) { g.beginPath(); g.moveTo(30, y); g.lineTo(w - 30, y + (map ? 0 : 2)); g.stroke(); }
+    g.globalAlpha = 1;
+    var loci = [[0.22, 0.64, "HEN \u21c4 GLASS BUS STATION"], [0.50, 0.44, "BANDSTAND \u21c4 VIADUCT"], [0.79, 0.56, "PARASOLS \u21c4 MUNITIONS"]];
+    g.font = "italic 30px Georgia, serif"; g.fillStyle = "#3a2819"; g.textAlign = "center";
+    g.fillText(map ? "Maurilia \u00b7 Survey of One Site, Two Cities" : "Maurilia \u00b7 Architectural Plate", w / 2, 70);
+    g.font = "13px Georgia, serif";
+    if (map) {
+      g.strokeStyle = "#8c969e"; g.lineWidth = 10; g.beginPath(); g.moveTo(40, h * 0.47); g.bezierCurveTo(w * 0.3, h * 0.36, w * 0.7, h * 0.52, w - 40, h * 0.42); g.stroke();
+      g.strokeStyle = "#6e5036"; g.lineWidth = 1.2;
+      for (var i = 0; i < 14; i++) { g.beginPath(); g.arc(w * 0.5, h * 0.52, 40 + i * 22, 0, Math.PI * 2); g.globalAlpha = 0.12; g.stroke(); }
+      g.globalAlpha = 1;
+    } else {
+      g.fillStyle = "#14191f"; g.fillRect(40, h * 0.55, w - 80, h * 0.32);
+      g.fillStyle = "#8c969e"; g.fillRect(60, h * 0.42, w - 120, 16);
+      for (var s = 0; s < 3; s++) { g.fillStyle = "#a93b2c"; g.fillRect(w * 0.74 + s * 34, h * 0.22, 16, h * 0.34); }
+      g.fillStyle = "#5ec2d6"; g.fillRect(w * 0.12, h * 0.5, w * 0.2, h * 0.12);
+    }
+    for (var k = 0; k < loci.length; k++) {
+      var x = loci[k][0] * w, yy = loci[k][1] * h;
+      g.strokeStyle = "#d8a24a"; g.lineWidth = 2; g.beginPath(); g.arc(x, yy, 30, 0, Math.PI * 2); g.stroke();
+      g.fillStyle = "#3a2819"; g.fillText(loci[k][2], x, yy + 50);
+    }
+    g.font = "12px Courier New, monospace"; g.fillStyle = "#6e5036";
+    g.fillText("NAME CONTINUITY 1.00 \u00b7 ONTOLOGICAL CONNECTION 0.00", w / 2, h - 40);
+    try { return c.toDataURL("image/png"); } catch (e) { return ""; }
+  }
+  window.mrlPlateFallback = function(img){
+    if (!img) return;
+    var step = img.getAttribute("data-fallback-step") || "0";
+    var svg = img.getAttribute("data-svg");
+    if (step === "0" && svg) { img.setAttribute("data-fallback-step", "1"); img.src = svg; return; }
+    if (step !== "2") {
+      img.setAttribute("data-fallback-step", "2");
+      var url = engrave(img.getAttribute("data-kind") || "city");
+      if (url) img.src = url;
+    }
+  };
+})();
+</script>
+</head>
+<body>
+<maurilia-stereopticon class="mrl-root" id="mrl-root" data-vantage="metropolis">
+  <stereopticon-crown class="mrl-crown">
+    <crown-sigil class="mrl-sigil" aria-hidden="true">M</crown-sigil>
+    <crown-title class="mrl-crown-title">Maurilia <crown-sub class="mrl-crown-sub">Stereopticon of the obligatory regret</crown-sub></crown-title>
+    <vantage-badge class="mrl-vantage-badge" id="mrl-vantage-badge" aria-live="polite">Postcard Viewed from Metropolis</vantage-badge>
+  </stereopticon-crown>
+  <stereopticon-deck class="mrl-deck">
+    <viaduct-horizon class="mrl-horizon" id="mrl-horizon">
+      <canvas class="mrl-stage-canvas" id="mrl-stage-canvas" role="img" aria-label="Present metropolis of Maurilia seen through a postcard loupe"></canvas>
+      <postcard-loupe class="mrl-loupe" id="mrl-loupe" tabindex="0" role="slider" aria-label="Postcard loupe: drag, or use arrow keys" aria-valuemin="0" aria-valuemax="100" aria-valuenow="22"></postcard-loupe>
+      <forbidden-truth-rupture class="mrl-rupture" id="mrl-rupture" hidden aria-live="assertive">
+        <rupture-equation class="mrl-rupture-eq">MAURILIA I &#8869; MAURILIA II &#183; 0.00</rupture-equation>
+        <rupture-whisper class="mrl-rupture-whisper" id="mrl-rupture-whisper"></rupture-whisper>
+      </forbidden-truth-rupture>
+      <horizon-legend class="mrl-legend" aria-hidden="true">1&#183;2&#183;3 loci &#8592;&#8594; cycle &#8593;&#8595; regret T 1906 L lens C curtain G probe F truth M sound P plates</horizon-legend>
+    </viaduct-horizon>
+    <carte-control-column class="mrl-column" id="mrl-column">
+      <carte-locus-strip class="mrl-locus-strip" role="tablist" aria-label="Three loci of the same site">
+        <carte-vignette-tab class="mrl-tab" role="tab" tabindex="0" data-act="locus" data-locus="0" aria-selected="true"><kbd-glyph class="mrl-kbd">1</kbd-glyph>Hen &#8644; Bus Station</carte-vignette-tab>
+        <carte-vignette-tab class="mrl-tab" role="tab" tabindex="0" data-act="locus" data-locus="1" aria-selected="false"><kbd-glyph class="mrl-kbd">2</kbd-glyph>Bandstand &#8644; Viaduct</carte-vignette-tab>
+        <carte-vignette-tab class="mrl-tab" role="tab" tabindex="0" data-act="locus" data-locus="2" aria-selected="false"><kbd-glyph class="mrl-kbd">3</kbd-glyph>Parasols &#8644; Munitions</carte-vignette-tab>
+      </carte-locus-strip>
+      <carte-postale-slot class="mrl-slot" aria-live="polite">
+        <provincial-stone-note class="mrl-note mrl-note-prov">
+          <stone-note-label class="mrl-note-label" id="mrl-prov-label">Postcard &#183; 1906</stone-note-label>
+          <stone-note-title class="mrl-note-title" id="mrl-prov-title"></stone-note-title>
+          <stone-note-body class="mrl-note-body" id="mrl-prov-body"></stone-note-body>
+        </provincial-stone-note>
+        <metropolis-stone-note class="mrl-note mrl-note-metro">
+          <stone-note-label class="mrl-note-label">Same spot &#183; today</stone-note-label>
+          <stone-note-title class="mrl-note-title" id="mrl-metro-title"></stone-note-title>
+          <stone-note-body class="mrl-note-body" id="mrl-metro-body"></stone-note-body>
+        </metropolis-stone-note>
+      </carte-postale-slot>
+      <nostalgia-calibrator class="mrl-block mrl-calibrator">
+        <calibrator-head class="mrl-block-title">Regret toward the postcards <regret-readout class="mrl-strong" id="mrl-regret-readout">0.65</regret-readout></calibrator-head>
+        <regret-vernier-track class="mrl-vernier">
+          <regret-rule-band class="mrl-band" aria-hidden="true"><band-caption class="mrl-band-label">RULE 0.52&#8211;0.78</band-caption></regret-rule-band>
+          <input class="mrl-range" id="mrl-regret" type="range" min="0" max="1" step="0.01" value="0.65" aria-label="Regret level">
+        </regret-vernier-track>
+        <regret-vernier-scale class="mrl-scale" aria-hidden="true"><vernier-tick-label class="mrl-tick mrl-tick-edge-l" style="left:0%">0.00</vernier-tick-label><vernier-tick-label class="mrl-tick" style="left:52%">.52</vernier-tick-label><vernier-tick-label class="mrl-tick" style="left:78%">.78</vernier-tick-label><vernier-tick-label class="mrl-tick mrl-tick-edge-r" style="left:100%">1.00</vernier-tick-label></regret-vernier-scale>
+        <grace-gauge class="mrl-gauge">
+          <gauge-label class="mrl-gauge-label">Retroactive grace</gauge-label><grace-readout class="mrl-strong" id="mrl-grace-readout">0.00</grace-readout>
+          <grace-meter class="mrl-meter"><grace-meter-fill class="mrl-meter-fill" id="mrl-grace-fill"></grace-meter-fill></grace-meter>
+        </grace-gauge>
+        <citizen-etiquette-ledger class="mrl-ledger" id="mrl-etiquette" data-etiquette="pleased"><etiquette-line id="mrl-etiquette-line"></etiquette-line><etiquette-verdict class="mrl-ledger-verdict" id="mrl-etiquette-verdict"></etiquette-verdict></citizen-etiquette-ledger>
+      </nostalgia-calibrator>
+      <vantage-chronoscope class="mrl-block mrl-chrono">
+        <chrono-key class="mrl-key" id="mrl-vantage-key" role="switch" tabindex="0" data-act="vantage" aria-checked="false"><kbd-glyph class="mrl-kbd">T</kbd-glyph><chrono-key-label id="mrl-vantage-label">Inhabit 1906</chrono-key-label></chrono-key>
+        <chrono-split class="mrl-chrono-split"><split-caption>Curtain</split-caption><input class="mrl-range" id="mrl-split" type="range" min="0" max="1" step="0.01" value="0" aria-label="Postcard split curtain"></chrono-split>
+      </vantage-chronoscope>
+      <departed-gods-colophon class="mrl-block mrl-colophon">
+        <colophon-head class="mrl-block-title">Beneath names &#183; above places <probe-readout class="mrl-strong" id="mrl-probe-readout">0.00</probe-readout></colophon-head>
+        <homonym-fault-gauge class="mrl-gauge">
+          <homonym-stratum-bar class="mrl-gauge-label">Name &amp; Accent Continuity</homonym-stratum-bar><gauge-value class="mrl-strong" id="mrl-continuity-readout">100%</gauge-value>
+          <gauge-track class="mrl-meter"><gauge-fill class="mrl-meter-fill mrl-meter-fill-cyan" id="mrl-continuity-fill" style="width:100%"></gauge-fill></gauge-track>
+          <tutelary-fault-readout class="mrl-gauge-label">Ontological Connection</tutelary-fault-readout><gauge-value class="mrl-strong" id="mrl-ontology-readout">0.00</gauge-value>
+          <gauge-track class="mrl-meter"><gauge-fill class="mrl-meter-fill mrl-meter-fill-crimson" id="mrl-ontology-fill"></gauge-fill></gauge-track>
+          <discontinuity-label class="mrl-gauge-label">Discontinuity index</discontinuity-label><gauge-value class="mrl-strong" id="mrl-disc-readout">0.35</gauge-value>
+          <gauge-track class="mrl-meter"><gauge-fill class="mrl-meter-fill mrl-meter-fill-crimson" id="mrl-disc-fill"></gauge-fill></gauge-track>
+        </homonym-fault-gauge>
+        <fault-equation class="mrl-fault-eq" id="mrl-fault-eq">MAURILIA I &#8869; MAURILIA II</fault-equation>
+        <gods-probe-track class="mrl-probe"><probe-caption>Probe</probe-caption><input class="mrl-range" id="mrl-probe" type="range" min="0" max="1" step="0.01" value="0" aria-label="Departed gods probe depth"></gods-probe-track>
+        <colophon-keys class="mrl-colophon-keys">
+          <gods-step-key class="mrl-key" role="button" tabindex="0" data-act="probe"><kbd-glyph class="mrl-kbd">G</kbd-glyph>Probe deeper</gods-step-key>
+          <forbidden-truth-trigger class="mrl-key mrl-key-forbidden" id="mrl-forbidden-key" role="button" tabindex="0" data-act="forbidden" aria-pressed="false"><kbd-glyph class="mrl-kbd">F</kbd-glyph>Speak forbidden truth</forbidden-truth-trigger>
+        </colophon-keys>
+        <tutelary-stratum-readout class="mrl-tutelary" id="mrl-tutelary" aria-live="polite"></tutelary-stratum-readout>
+      </departed-gods-colophon>
+      <stereopticon-keyrail class="mrl-keyrail">
+        <rail-key class="mrl-key" role="button" tabindex="0" data-act="lens" id="mrl-lens-key"><kbd-glyph class="mrl-kbd">L</kbd-glyph>Lens</rail-key>
+        <rail-key class="mrl-key" role="button" tabindex="0" data-act="curtain" id="mrl-curtain-key" aria-pressed="false"><kbd-glyph class="mrl-kbd">C</kbd-glyph>Curtain</rail-key>
+        <rail-key class="mrl-key" role="button" tabindex="0" data-act="mute" id="mrl-mute-key" aria-pressed="false"><kbd-glyph class="mrl-kbd">M</kbd-glyph><mute-label id="mrl-mute-label">Sound</mute-label></rail-key>
+        <rail-key class="mrl-key" role="button" tabindex="0" data-act="plates" id="mrl-plates-key" aria-pressed="false"><kbd-glyph class="mrl-kbd">P</kbd-glyph>Plates</rail-key>
+      </stereopticon-keyrail>
+    </carte-control-column>
+  </stereopticon-deck>
+  <maurilia-plate-drawer class="mrl-drawer" id="mrl-drawer" hidden role="dialog" aria-modal="true" aria-label="Royal plate drawer of Maurilia" data-plate-tab="diptych" data-zoom="off">
+    <plate-drawer-sheet class="mrl-drawer-sheet">
+      <plate-drawer-head class="mrl-drawer-head">
+        <plate-drawer-title class="mrl-drawer-title">Royal Plates &#183; Maurilia</plate-drawer-title>
+        <plate-tab-rail class="mrl-tab-rail" role="tablist" aria-label="Plate views">
+          <plate-tab-key class="mrl-tab" role="tab" tabindex="0" data-act="tab" data-tab="diptych" aria-selected="true">Diptych</plate-tab-key>
+          <plate-tab-key class="mrl-tab" role="tab" tabindex="0" data-act="tab" data-tab="map" aria-selected="false">Carto Map</plate-tab-key>
+          <plate-tab-key class="mrl-tab" role="tab" tabindex="0" data-act="tab" data-tab="city" aria-selected="false">City Plate</plate-tab-key>
+        </plate-tab-rail>
+        <plate-zoom-key class="mrl-key" id="mrl-zoom-key" role="button" tabindex="0" data-act="zoom" aria-pressed="false"><kbd-glyph class="mrl-kbd">Z</kbd-glyph>1.75&#215; loupe</plate-zoom-key>
+        <plate-close-key class="mrl-key" id="mrl-close-key" role="button" tabindex="0" data-act="plates-close" aria-label="Close plate drawer"><kbd-glyph class="mrl-kbd">Esc</kbd-glyph>Close</plate-close-key>
+      </plate-drawer-head>
+      <plate-loupe-stage class="mrl-plate-stage" id="mrl-plate-stage">
+        <plate-diptych-stage class="mrl-diptych">
+          <plate-diptych-frame class="mrl-fig mrl-fig-map">
+            <plate-img-viewport class="mrl-plate-vp"><img class="mrl-plate-img" id="mrl-map-img" src="map.png" alt="Cartographic survey of Maurilia" data-svg="map.svg" data-kind="map" onerror="mrlPlateFallback(this)"></plate-img-viewport>
+            <plate-caption class="mrl-caption">Carto Map &#183; one site, one name, two cities</plate-caption>
+          </plate-diptych-frame>
+          <plate-diptych-frame class="mrl-fig mrl-fig-city">
+            <plate-img-viewport class="mrl-plate-vp"><img class="mrl-plate-img" id="mrl-city-img" src="image.png" alt="Architectural plate of Maurilia" data-kind="city" onerror="mrlPlateFallback(this)"></plate-img-viewport>
+            <plate-caption class="mrl-caption">City Plate &#183; the metropolis beside its postcards</plate-caption>
+          </plate-diptych-frame>
+        </plate-diptych-stage>
+      </plate-loupe-stage>
+    </plate-drawer-sheet>
+  </maurilia-plate-drawer>
+</maurilia-stereopticon>
+<script>
+/* City 11: Maurilia — Provincial Postcards & Retroactive-Grace Optical Layer */
+if (typeof window === "undefined") {
+  globalThis.window = globalThis;
+}
+
+window.MauriliaPostcards = (function () {
+  "use strict";
+
+  var PALETTE = {
+    postcardBristol: "#efe4cd",
+    postcardAgedEdge: "#c9b089",
+    collodionSepia: "#6e5036",
+    umberInk: "#3a2819",
+    parasolLaceIvory: "#faf5e8",
+    retroactiveGraceGilt: "#d8a24a",
+    stampMagenta: "#944654",
+    dreary1906Mud: "#7b7468",
+    dreary1906DeepMud: "#59534a",
+    dreary1906Glare: "#b8b2a6",
+    dreary1906Haze: "#9d9689",
+    mahoganyDark: "#2b160c",
+    mahoganyWarm: "#59301c",
+    brassHighlight: "#e3bd6b",
+    brassMid: "#9c7638",
+    brassShadow: "#4d3716"
+  };
+
+  var OBLIGATORY_REGRET_BAND = {
+    min: 0.52,
+    max: 0.78
+  };
+
+  var LOCI = [
+    {
+      index: 0,
+      locus_index: 0,
+      id: "hen_vs_bus_station",
+      u: 0.22,
+      v: 0.64,
+      radiusNorm: 0.18,
+      stoneId: "hen_in_square",
+      title: "Speckled Hen in the Provincial Square",
+      shortLabel: "I · Square & Speckled Hen",
+      postmark: "MAURILIA · 14 IV 1906",
+      serieCode: "CARTE POSTALE · SÉRIE I · No. 14",
+      postcardNote: "Lime-washed shutters half-drawn over Piazza Vecchia; a barred Plymouth-rock hen pecks millet beside the limestone trough.",
+      dreary1906Note: "Chalk dust, rutted cart mud, horse-flies over stagnant trough water, and a scrawny mud-splashed fowl.",
+      metropolisCounterpart: "Gleaming cantilevered glass bus station"
+    },
+    {
+      index: 1,
+      locus_index: 1,
+      id: "bandstand_vs_viaduct",
+      u: 0.50,
+      v: 0.44,
+      radiusNorm: 0.19,
+      stoneId: "wrought_iron_bandstand",
+      title: "Filigree Wrought-Iron Bandstand",
+      shortLabel: "II · Wrought-Iron Bandstand",
+      postmark: "MAURILIA · 22 VI 1906",
+      serieCode: "CARTE POSTALE · SÉRIE I · No. 27",
+      postcardNote: "Octagonal zinc-domed municipal pavilion in filigree ironwork; empty brass music stands wait between potted oleanders.",
+      dreary1906Note: "Blistered lead paint, rust-streaked iron ribs, and crooked music stands rattling in empty Sunday boredom.",
+      metropolisCounterpart: "Sweeping prestressed concrete viaduct overpass"
+    },
+    {
+      index: 2,
+      locus_index: 2,
+      id: "parasols_vs_munitions",
+      u: 0.79,
+      v: 0.56,
+      radiusNorm: 0.18,
+      stoneId: "two_ladies_white_parasols",
+      title: "Two Young Ladies with White Lace Parasols",
+      shortLabel: "III · Two Ladies & White Parasols",
+      postmark: "MAURILIA · 09 VIII 1906",
+      serieCode: "CARTE POSTALE · SÉRIE I · No. 41",
+      postcardNote: "Beneath pollarded plane trees, two young ladies incline scalloped ivory eyelet-lace parasols along the dappled walk.",
+      dreary1906Note: "Harsh noon glare on sparse dusty saplings; two squinting townswomen in stiff starch and mud-hemmed skirts.",
+      metropolisCounterpart: "Munitions factory smokestacks & foundry gate"
+    }
+  ];
+
+  function clamp(val, min, max) {
+    return val < min ? min : val > max ? max : val;
+  }
+
+  function round4(val) {
+    return Math.round(val * 10000) / 10000;
+  }
+
+  function drawEllipse(ctx, cx, cy, rx, ry, rot) {
+    if (rx <= 0 || ry <= 0) return;
+    if (typeof ctx.ellipse === "function") {
+      ctx.ellipse(cx, cy, rx, ry, rot || 0, 0, Math.PI * 2);
+    } else {
+      ctx.save();
+      ctx.translate(cx, cy);
+      if (rot) ctx.rotate(rot);
+      ctx.scale(1, ry / rx);
+      ctx.arc(0, 0, rx, 0, Math.PI * 2);
+      ctx.restore();
+    }
+  }
+
+  function roundedRectPath(ctx, x, y, w, h, r) {
+    var rr = Math.min(r, w * 0.5, h * 0.5);
+    ctx.beginPath();
+    ctx.moveTo(x + rr, y);
+    ctx.arcTo(x + w, y, x + w, y + h, rr);
+    ctx.arcTo(x + w, y + h, x, y + h, rr);
+    ctx.arcTo(x, y + h, x, y, rr);
+    ctx.arcTo(x, y, x + w, y, rr);
+    ctx.closePath();
+  }
+
+  var cachedHalftone = null;
+  function getHalftonePattern(ctx) {
+    if (cachedHalftone !== null) return cachedHalftone;
+    if (typeof document === "undefined" || !document.createElement) {
+      cachedHalftone = false;
+      return false;
+    }
+    try {
+      var tile = document.createElement("canvas");
+      tile.width = 72;
+      tile.height = 72;
+      var tctx = tile.getContext("2d");
+      if (!tctx || typeof ctx.createPattern !== "function") {
+        cachedHalftone = false;
+        return false;
+      }
+      tctx.save();
+      tctx.translate(36, 36);
+      tctx.rotate(0.26);
+      for (var gy = -54; gy <= 54; gy += 6) {
+        for (var gx = -54; gx <= 54; gx += 6) {
+          var checker = ((gx + gy) % 12 === 0) ? 1.12 : 0.78;
+          tctx.fillStyle = "rgba(58, 40, 25, 0.085)";
+          tctx.beginPath();
+          tctx.arc(gx, gy, checker, 0, Math.PI * 2);
+          tctx.fill();
+        }
+      }
+      tctx.restore();
+      cachedHalftone = ctx.createPattern(tile, "repeat") || false;
+    } catch (_e) {
+      cachedHalftone = false;
+    }
+    return cachedHalftone;
+  }
+
+  function computeRetroactiveGrace(state) {
+    var s = state || {};
+    var realTime1906 = Boolean(s.realTime1906);
+    var regret = clamp(typeof s.regretLevel === "number" && !isNaN(s.regretLevel) ? s.regretLevel : 0.65, 0, 1);
+    var metroRaw = typeof s.metropolisContrast === "number" && !isNaN(s.metropolisContrast) ? s.metropolisContrast : 0.85;
+    var contrastScale = Math.max(0.3, clamp(metroRaw, 0, 1));
+
+    if (realTime1906) {
+      return {
+        retroactiveGrace: 0,
+        inObligatoryBand: false,
+        bandStatus: "UNMEDIATED_1906_NO_GRACE",
+        citizenSatisfaction: 0.12,
+        collodionWarmth: 0,
+        halftonePitch: 0,
+        drearyRealityFactor: 1.0,
+        citizenVerdict: "Face-to-face with 1906 provincial Maurilia—without the gleaming metropolis for contrast—one saw nothing graceful at all: only chalk glare, cart mud, and stifling provincial tedium."
+      };
+    }
+
+    if (regret >= OBLIGATORY_REGRET_BAND.min && regret <= OBLIGATORY_REGRET_BAND.max) {
+      var centerDist = Math.abs(regret - 0.65) / 0.13;
+      var arch = clamp(1 - centerDist * centerDist, 0, 1);
+      var scaledGrace = clamp((0.90 + 0.08 * arch) * contrastScale, 0.75 * Math.min(1, contrastScale / 0.85), 0.98);
+      if (metroRaw >= 0.80) scaledGrace = clamp(scaledGrace, 0.76, 0.98);
+      return {
+        retroactiveGrace: round4(scaledGrace),
+        inObligatoryBand: true,
+        bandStatus: "OBLIGATORY_CALIBRATED_REGRET",
+        citizenSatisfaction: round4(0.89 + 0.09 * arch),
+        collodionWarmth: round4(0.82 + 0.15 * arch * contrastScale),
+        halftonePitch: round4(6.4 - 1.1 * arch),
+        drearyRealityFactor: round4(0.12 - 0.08 * arch),
+        citizenVerdict: "Within the obligatory rule: acknowledging metropolitan magnificence and prosperity while mourning a lost provincial grace visible only now in old postcards."
+      };
+    }
+
+    if (regret < OBLIGATORY_REGRET_BAND.min) {
+      var tLow = regret / OBLIGATORY_REGRET_BAND.min;
+      var lowGrace = clamp(0.14 + 0.28 * tLow * contrastScale, 0.14, 0.42);
+      var vulgar = regret < 0.30;
+      return {
+        retroactiveGrace: round4(lowGrace),
+        inObligatoryBand: false,
+        bandStatus: vulgar ? "VULGAR_METROPOLIS_PRAISE" : "INSUFFICIENT_POSTCARD_REGRET",
+        citizenSatisfaction: round4(0.08 + 0.22 * tLow),
+        collodionWarmth: round4(0.24 + 0.34 * tLow),
+        halftonePitch: 8.2,
+        drearyRealityFactor: round4(0.56 - 0.24 * tLow),
+        citizenVerdict: vulgar
+          ? "Hosts frown at unseemly praise for buses and viaducts alone: custom obliges the traveler to prefer the postcard town to the present."
+          : "Your nod to the old cards falls short of Maurilian etiquette: warmer regret for the lost provincial square is required."
+      };
+    }
+
+    var tHigh = (regret - OBLIGATORY_REGRET_BAND.max) / (1 - OBLIGATORY_REGRET_BAND.max);
+    var highGrace = clamp((0.28 - 0.16 * tHigh) * Math.min(1, 0.65 + 0.35 * contrastScale), 0.10, 0.28);
+    return {
+      retroactiveGrace: round4(highGrace),
+      inObligatoryBand: false,
+      bandStatus: "NAIVE_UNCHANGED_FALLACY",
+      citizenSatisfaction: round4(0.26 - 0.18 * tHigh),
+      collodionWarmth: round4(0.34 - 0.20 * tHigh),
+      halftonePitch: 9.0,
+      drearyRealityFactor: round4(0.48 + 0.38 * tHigh),
+      citizenVerdict: "You have transgressed the boundary of regret: had Maurilia remained unchanged as a dusty province, even less grace would appear—for that grace was born only through metropolitan contrast."
+    };
+  }
+
+  function hitTestLocus(normX, normY) {
+    if (typeof normX !== "number" || typeof normY !== "number") return -1;
+    var bestIdx = -1;
+    var bestDist = Infinity;
+    for (var i = 0; i < LOCI.length; i++) {
+      var loc = LOCI[i];
+      var d = Math.hypot(normX - loc.u, normY - loc.v);
+      if (d <= loc.radiusNorm && d < bestDist) {
+        bestDist = d;
+        bestIdx = i;
+      }
+    }
+    return bestIdx;
+  }
+
+  function getLocus(indexOrId) {
+    if (typeof indexOrId === "number") {
+      return LOCI[clamp(Math.round(indexOrId), 0, LOCI.length - 1)];
+    }
+    for (var i = 0; i < LOCI.length; i++) {
+      if (LOCI[i].id === indexOrId || LOCI[i].stoneId === indexOrId) return LOCI[i];
+    }
+    return LOCI[0];
+  }
+
+  function renderBackdropAndTownscape(ctx, w, h, s, grace, animTime) {
+    var real1906 = Boolean(s.realTime1906);
+    var activeIdx = clamp(Math.round(s.activeLocus || 0), 0, 2);
+    var activeLoc = LOCI[activeIdx];
+    var horizonY = h * 0.43;
+
+    if (real1906) {
+      var glareSky = ctx.createLinearGradient(0, 0, 0, horizonY);
+      glareSky.addColorStop(0, PALETTE.dreary1906Glare);
+      glareSky.addColorStop(0.7, "#ada79a");
+      glareSky.addColorStop(1, PALETTE.dreary1906Haze);
+      ctx.fillStyle = glareSky;
+      ctx.fillRect(0, 0, w, horizonY + 4);
+
+      var mudGround = ctx.createLinearGradient(0, horizonY, 0, h);
+      mudGround.addColorStop(0, "#8c8578");
+      mudGround.addColorStop(0.45, PALETTE.dreary1906Mud);
+      mudGround.addColorStop(1, PALETTE.dreary1906DeepMud);
+      ctx.fillStyle = mudGround;
+      ctx.fillRect(0, horizonY, w, h - horizonY);
+    } else {
+      var bristolSky = ctx.createLinearGradient(0, 0, 0, h);
+      bristolSky.addColorStop(0, PALETTE.postcardBristol);
+      bristolSky.addColorStop(0.46, "#e5d4b3");
+      bristolSky.addColorStop(1, PALETTE.postcardAgedEdge);
+      ctx.fillStyle = bristolSky;
+      ctx.fillRect(0, 0, w, h);
+
+      if (grace.collodionWarmth < 0.65) {
+        ctx.fillStyle = "rgba(132, 126, 115, " + round4((0.65 - grace.collodionWarmth) * 0.42) + ")";
+        ctx.fillRect(0, 0, w, h);
+      }
+
+      if (grace.retroactiveGrace > 0.05) {
+        var sunBloom = ctx.createRadialGradient(
+          activeLoc.u * w, activeLoc.v * h * 0.85, w * 0.02,
+          activeLoc.u * w, activeLoc.v * h * 0.85, w * 0.52
+        );
+        sunBloom.addColorStop(0, "rgba(216, 162, 74, " + round4(grace.retroactiveGrace * 0.34) + ")");
+        sunBloom.addColorStop(0.55, "rgba(216, 162, 74, " + round4(grace.retroactiveGrace * 0.12) + ")");
+        sunBloom.addColorStop(1, "rgba(216, 162, 74, 0)");
+        ctx.fillStyle = sunBloom;
+        ctx.fillRect(0, 0, w, h);
+      }
+    }
+
+    ctx.beginPath();
+    ctx.moveTo(0, horizonY);
+    ctx.quadraticCurveTo(w * 0.18, h * 0.33, w * 0.38, h * 0.38);
+    ctx.quadraticCurveTo(w * 0.56, h * 0.31, w * 0.76, h * 0.37);
+    ctx.quadraticCurveTo(w * 0.90, h * 0.34, w, h * 0.39);
+    ctx.lineTo(w, horizonY + 8);
+    ctx.lineTo(0, horizonY + 8);
+    ctx.closePath();
+    ctx.fillStyle = real1906 ? "#8e887c" : "rgba(150, 118, 84, 0.32)";
+    ctx.fill();
+
+    var bellX = w * 0.355;
+    var bellBaseY = h * 0.42;
+    ctx.fillStyle = real1906 ? "#746e63" : "rgba(110, 80, 54, 0.52)";
+    ctx.fillRect(bellX - w * 0.011, bellBaseY - h * 0.11, w * 0.022, h * 0.11);
+    ctx.beginPath();
+    ctx.moveTo(bellX - w * 0.014, bellBaseY - h * 0.11);
+    ctx.lineTo(bellX, bellBaseY - h * 0.148);
+    ctx.lineTo(bellX + w * 0.014, bellBaseY - h * 0.11);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.strokeStyle = real1906 ? "#645e54" : "rgba(92, 66, 44, 0.45)";
+    ctx.lineWidth = Math.max(1, w * 0.0014);
+    var balY = h * 0.485;
+    ctx.beginPath();
+    ctx.moveTo(w * 0.33, balY);
+    ctx.lineTo(w * 0.67, balY);
+    ctx.stroke();
+    for (var bx = 0.34; bx <= 0.665; bx += 0.018) {
+      ctx.beginPath();
+      ctx.moveTo(w * bx, balY);
+      ctx.lineTo(w * bx, balY + h * 0.024);
+      ctx.stroke();
+    }
+
+    if (real1906) {
+      for (var r = 0; r < 4; r++) {
+        var ry = h * (0.67 + r * 0.055);
+        ctx.strokeStyle = r % 2 === 0 ? "#4e493f" : "#676055";
+        ctx.lineWidth = Math.max(2, h * 0.008);
+        ctx.beginPath();
+        ctx.moveTo(w * 0.02, ry + (r % 2) * 5);
+        ctx.bezierCurveTo(w * 0.32, ry - 9, w * 0.64, ry + 11, w * 0.98, ry - 4);
+        ctx.stroke();
+      }
+      ctx.fillStyle = "rgba(168, 162, 150, 0.38)";
+      ctx.beginPath();
+      drawEllipse(ctx, w * 0.25, h * 0.71, w * 0.065, h * 0.016, 0.08);
+      ctx.fill();
+    } else {
+      ctx.strokeStyle = "rgba(96, 68, 45, 0.18)";
+      ctx.lineWidth = 1;
+      for (var row = 0; row < 7; row++) {
+        var cy = h * (0.55 + row * 0.052);
+        ctx.beginPath();
+        ctx.arc(w * 0.22, cy + h * 0.22, h * (0.24 + row * 0.03), Math.PI * 1.18, Math.PI * 1.82);
+        ctx.stroke();
+      }
+      ctx.fillStyle = "rgba(216, 162, 74, " + round4(grace.retroactiveGrace * 0.09) + ")";
+      ctx.beginPath();
+      ctx.moveTo(w * 0.60, h * 0.50);
+      ctx.lineTo(w * 0.98, h * 0.56);
+      ctx.lineTo(w * 0.98, h * 0.84);
+      ctx.lineTo(w * 0.56, h * 0.72);
+      ctx.closePath();
+      ctx.fill();
+
+      if (grace.retroactiveGrace > 0.35) {
+        for (var m = 0; m < 10; m++) {
+          var mx = w * (0.14 + ((m * 0.083) % 0.74)) + Math.sin(animTime * 0.7 + m) * 4;
+          var my = h * (0.28 + ((m * 0.061) % 0.44)) + Math.cos(animTime * 0.5 + m * 1.7) * 3;
+          ctx.fillStyle = "rgba(250, 245, 232, " + round4(grace.retroactiveGrace * 0.28) + ")";
+          ctx.beginPath();
+          ctx.arc(mx, my, 1.5, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+    }
+  }
+
+  function renderLocusHenSquare(ctx, w, h, s, grace, animTime) {
+    var real1906 = Boolean(s.realTime1906);
+    var cx = LOCI[0].u * w;
+    var cy = LOCI[0].v * h;
+    var sc = Math.min(w, h);
+
+    var wallX = cx - sc * 0.21;
+    var wallY = cy - sc * 0.29;
+    var wallW = sc * 0.31;
+    var wallH = sc * 0.24;
+    ctx.fillStyle = real1906 ? "#8f897d" : "#e3d1b2";
+    ctx.strokeStyle = real1906 ? "#575249" : PALETTE.collodionSepia;
+    ctx.lineWidth = Math.max(1.2, sc * 0.0022);
+    ctx.fillRect(wallX, wallY, wallW, wallH);
+    ctx.strokeRect(wallX, wallY, wallW, wallH);
+
+    ctx.fillStyle = real1906 ? "#686258" : "#8b6343";
+    ctx.beginPath();
+    ctx.moveTo(wallX - sc * 0.012, wallY);
+    ctx.lineTo(wallX + wallW * 0.5, wallY - sc * 0.042);
+    ctx.lineTo(wallX + wallW + sc * 0.012, wallY);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    for (var a = 0; a < 3; a++) {
+      var ax = wallX + wallW * (0.18 + a * 0.32);
+      var archW = wallW * 0.21;
+      var archBottom = wallY + wallH;
+      ctx.fillStyle = real1906 ? "#4b463e" : "#4e3622";
+      ctx.beginPath();
+      ctx.moveTo(ax - archW * 0.5, archBottom);
+      ctx.lineTo(ax - archW * 0.5, archBottom - wallH * 0.42);
+      ctx.arc(ax, archBottom - wallH * 0.42, archW * 0.5, Math.PI, 0);
+      ctx.lineTo(ax + archW * 0.5, archBottom);
+      ctx.closePath();
+      ctx.fill();
+
+      var winY = wallY + wallH * 0.15;
+      var winW = archW * 0.62;
+      var winH = wallH * 0.24;
+      ctx.fillStyle = real1906 ? "#5d584f" : "#6e5036";
+      ctx.fillRect(ax - winW * 0.85, winY, winW * 1.7, winH);
+      ctx.fillStyle = real1906 ? "#423e37" : "#3a2819";
+      ctx.fillRect(ax - winW * 0.42, winY, winW * 0.84, winH);
+    }
+
+    var trX = cx - sc * 0.135;
+    var trY = cy - sc * 0.025;
+    ctx.fillStyle = real1906 ? "#6d675c" : "#cbb693";
+    ctx.fillRect(trX, trY, sc * 0.088, sc * 0.036);
+    ctx.strokeRect(trX, trY, sc * 0.088, sc * 0.036);
+    ctx.fillStyle = real1906 ? "#4f5246" : "rgba(110, 80, 54, 0.42)";
+    ctx.fillRect(trX + 3, trY + 3, sc * 0.088 - 6, sc * 0.012);
+
+    var peck = real1906 ? 0.05 : Math.sin(animTime * 2.8) * 0.09;
+    var hr = sc * 0.044;
+
+    if (!real1906 && grace.retroactiveGrace > 0.08) {
+      var henGlow = ctx.createRadialGradient(cx, cy, hr * 0.2, cx, cy, hr * 2.4);
+      henGlow.addColorStop(0, "rgba(216, 162, 74, " + round4(grace.retroactiveGrace * 0.48) + ")");
+      henGlow.addColorStop(1, "rgba(216, 162, 74, 0)");
+      ctx.fillStyle = henGlow;
+      ctx.beginPath();
+      ctx.arc(cx, cy, hr * 2.4, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = PALETTE.retroactiveGraceGilt;
+      for (var g = 0; g < 8; g++) {
+        ctx.beginPath();
+        ctx.arc(cx + hr * (0.75 + (g % 4) * 0.22), cy + hr * (0.68 + Math.floor(g / 4) * 0.14), 1.7, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    ctx.fillStyle = real1906 ? "rgba(48, 44, 38, 0.45)" : "rgba(58, 40, 25, 0.26)";
+    ctx.beginPath();
+    drawEllipse(ctx, cx, cy + hr * 0.78, hr * 0.92, hr * 0.24, 0);
+    ctx.fill();
+
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.strokeStyle = real1906 ? "#47423a" : "#7c5634";
+    ctx.lineWidth = Math.max(1.5, hr * 0.08);
+    ctx.beginPath();
+    ctx.moveTo(-hr * 0.12, hr * 0.35);
+    ctx.lineTo(-hr * 0.18, hr * 0.75);
+    ctx.moveTo(hr * 0.12, hr * 0.35);
+    ctx.lineTo(hr * 0.16, hr * 0.75);
+    ctx.stroke();
+
+    ctx.fillStyle = real1906 ? "#5b554c" : "#4b3421";
+    ctx.beginPath();
+    ctx.moveTo(-hr * 0.45, -hr * 0.05);
+    ctx.quadraticCurveTo(-hr * 1.15, -hr * 0.68, -hr * 0.88, hr * 0.18);
+    ctx.quadraticCurveTo(-hr * 0.70, hr * 0.36, -hr * 0.35, hr * 0.22);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.beginPath();
+    drawEllipse(ctx, 0, hr * 0.04, hr * (real1906 ? 0.62 : 0.74), hr * (real1906 ? 0.42 : 0.54), 0.12);
+    ctx.fillStyle = real1906 ? "#665f55" : "#5c4028";
+    ctx.fill();
+    ctx.strokeStyle = real1906 ? "#3f3b34" : PALETTE.umberInk;
+    ctx.lineWidth = Math.max(1.2, hr * 0.05);
+    ctx.stroke();
+
+    if (!real1906) {
+      for (var sp = 0; sp < 14; sp++) {
+        var sx = -hr * 0.46 + (sp % 5) * hr * 0.22;
+        var sy = -hr * 0.22 + Math.floor(sp / 5) * hr * 0.19;
+        ctx.fillStyle = sp % 2 === 0 ? PALETTE.parasolLaceIvory : PALETTE.retroactiveGraceGilt;
+        ctx.beginPath();
+        drawEllipse(ctx, sx, sy, hr * 0.085, hr * 0.045, 0.25);
+        ctx.fill();
+      }
+    } else {
+      ctx.fillStyle = "#48433b";
+      ctx.beginPath();
+      drawEllipse(ctx, -hr * 0.1, hr * 0.24, hr * 0.32, hr * 0.12, 0.1);
+      ctx.fill();
+    }
+
+    ctx.save();
+    ctx.translate(hr * 0.52, -hr * 0.18);
+    ctx.rotate(peck);
+    ctx.fillStyle = real1906 ? "#635c52" : "#543a24";
+    ctx.beginPath();
+    ctx.arc(hr * 0.14, -hr * 0.12, hr * 0.24, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = real1906 ? "#7d6862" : "#9c4347";
+    ctx.beginPath();
+    ctx.arc(hr * 0.10, -hr * 0.36, hr * 0.09, 0, Math.PI * 2);
+    ctx.arc(hr * 0.22, -hr * 0.33, hr * 0.08, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = real1906 ? "#857e70" : PALETTE.retroactiveGraceGilt;
+    ctx.beginPath();
+    ctx.moveTo(hr * 0.35, -hr * 0.14);
+    ctx.lineTo(hr * 0.56, -hr * 0.04);
+    ctx.lineTo(hr * 0.34, -hr * 0.02);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = PALETTE.parasolLaceIvory;
+    ctx.beginPath();
+    ctx.arc(hr * 0.20, -hr * 0.16, hr * 0.045, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+    ctx.restore();
+
+    if (real1906) {
+      ctx.fillStyle = "#23201c";
+      for (var f = 0; f < 6; f++) {
+        var fx = trX + sc * 0.05 + Math.cos(animTime * 4.2 + f * 1.3) * sc * 0.06 + f * sc * 0.018;
+        var fy = trY - sc * 0.01 + Math.sin(animTime * 5.1 + f * 2.1) * sc * 0.025;
+        ctx.beginPath();
+        ctx.arc(fx, fy, 1.6, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+  }
+
+  function renderLocusBandstand(ctx, w, h, s, grace, animTime) {
+    var real1906 = Boolean(s.realTime1906);
+    var cx = LOCI[1].u * w;
+    var cy = LOCI[1].v * h;
+    var sc = Math.min(w, h);
+    var pw = sc * 0.21;
+    var eavesY = cy - sc * 0.055;
+    var deckY = cy + sc * 0.068;
+    var baseY = cy + sc * 0.118;
+
+    if (!real1906 && grace.retroactiveGrace > 0.08) {
+      var bandGlow = ctx.createRadialGradient(cx, cy - sc * 0.02, sc * 0.02, cx, cy - sc * 0.02, sc * 0.22);
+      bandGlow.addColorStop(0, "rgba(216, 162, 74, " + round4(grace.retroactiveGrace * 0.44) + ")");
+      bandGlow.addColorStop(1, "rgba(216, 162, 74, 0)");
+      ctx.fillStyle = bandGlow;
+      ctx.beginPath();
+      ctx.arc(cx, cy - sc * 0.02, sc * 0.22, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    ctx.fillStyle = real1906 ? "#706a5f" : "#cfb995";
+    ctx.strokeStyle = real1906 ? "#4c473f" : PALETTE.umberInk;
+    ctx.lineWidth = Math.max(1.2, sc * 0.0022);
+    ctx.beginPath();
+    ctx.moveTo(cx - pw * 0.54, deckY);
+    ctx.lineTo(cx + pw * 0.54, deckY);
+    ctx.lineTo(cx + pw * 0.62, baseY);
+    ctx.lineTo(cx - pw * 0.62, baseY);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    for (var st = 1; st <= 3; st++) {
+      var sy = deckY + (baseY - deckY) * (st / 4);
+      ctx.beginPath();
+      ctx.moveTo(cx - pw * 0.18, sy);
+      ctx.lineTo(cx + pw * 0.18, sy);
+      ctx.stroke();
+    }
+
+    for (var side = -1; side <= 1; side += 2) {
+      var ox = cx + side * pw * 0.72;
+      var oy = baseY - sc * 0.012;
+      ctx.fillStyle = real1906 ? "#5d564c" : "#7d5335";
+      ctx.fillRect(ox - sc * 0.018, oy - sc * 0.026, sc * 0.036, sc * 0.028);
+      ctx.fillStyle = real1906 ? "#646358" : "#5b482e";
+      ctx.beginPath();
+      ctx.arc(ox, oy - sc * 0.048, sc * (real1906 ? 0.021 : 0.028), 0, Math.PI * 2);
+      ctx.fill();
+      if (!real1906) {
+        ctx.fillStyle = PALETTE.parasolLaceIvory;
+        for (var bl = -1; bl <= 1; bl++) {
+          ctx.beginPath();
+          ctx.arc(ox + bl * sc * 0.011, oy - sc * 0.052 + Math.abs(bl) * 3, 2.2, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+    }
+
+    var colOffsets = [-0.46, -0.24, 0, 0.24, 0.46];
+    ctx.strokeStyle = real1906 ? "#4c4841" : PALETTE.umberInk;
+    ctx.lineWidth = Math.max(1.5, sc * 0.0028);
+    for (var c = 0; c < colOffsets.length; c++) {
+      var colX = cx + pw * colOffsets[c];
+      ctx.beginPath();
+      ctx.moveTo(colX, eavesY);
+      ctx.lineTo(colX, deckY);
+      ctx.stroke();
+      if (c < colOffsets.length - 1) {
+        var nextX = cx + pw * colOffsets[c + 1];
+        var midX = (colX + nextX) * 0.5;
+        ctx.strokeStyle = real1906 ? "#58534b" : PALETTE.collodionSepia;
+        ctx.lineWidth = Math.max(1.1, sc * 0.0018);
+        ctx.beginPath();
+        ctx.arc(colX + (nextX - colX) * 0.24, eavesY + sc * 0.016, sc * 0.013, 0, Math.PI);
+        ctx.arc(nextX - (nextX - colX) * 0.24, eavesY + sc * 0.016, sc * 0.013, 0, Math.PI);
+        ctx.stroke();
+        if (!real1906 && grace.retroactiveGrace > 0.25) {
+          ctx.strokeStyle = "rgba(216, 162, 74, " + round4(grace.retroactiveGrace * 0.65) + ")";
+          ctx.beginPath();
+          ctx.arc(midX, eavesY + sc * 0.012, sc * 0.009, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+        ctx.strokeStyle = real1906 ? "#4c4841" : PALETTE.umberInk;
+        ctx.lineWidth = Math.max(1.5, sc * 0.0028);
+      }
+    }
+
+    var railY = deckY - sc * 0.032;
+    ctx.lineWidth = Math.max(1.1, sc * 0.002);
+    ctx.beginPath();
+    ctx.moveTo(cx - pw * 0.46, railY);
+    ctx.lineTo(cx + pw * 0.46, railY);
+    ctx.stroke();
+    for (var rx = -0.44; rx <= 0.44; rx += 0.055) {
+      if (Math.abs(rx) < 0.12) continue;
+      ctx.beginPath();
+      ctx.moveTo(cx + pw * rx, railY);
+      ctx.lineTo(cx + pw * rx, deckY);
+      ctx.stroke();
+    }
+
+    for (var ms = -1; ms <= 1; ms++) {
+      var mx = cx + ms * pw * 0.16;
+      var tilt = real1906 && ms === 1 ? 0.18 : 0;
+      ctx.save();
+      ctx.translate(mx, deckY);
+      ctx.rotate(tilt);
+      ctx.strokeStyle = real1906 ? "#5d574d" : PALETTE.retroactiveGraceGilt;
+      ctx.lineWidth = Math.max(1.2, sc * 0.002);
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.lineTo(0, -sc * 0.042);
+      ctx.moveTo(-sc * 0.012, -sc * 0.042);
+      ctx.lineTo(sc * 0.012, -sc * 0.046);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    var apexY = cy - sc * 0.145;
+    ctx.fillStyle = real1906 ? "#6c685f" : "#5b412b";
+    ctx.strokeStyle = real1906 ? "#45413b" : PALETTE.umberInk;
+    ctx.lineWidth = Math.max(1.4, sc * 0.0024);
+    ctx.beginPath();
+    ctx.moveTo(cx - pw * 0.55, eavesY);
+    ctx.quadraticCurveTo(cx - pw * 0.26, apexY + sc * 0.012, cx, apexY);
+    ctx.quadraticCurveTo(cx + pw * 0.26, apexY + sc * 0.012, cx + pw * 0.55, eavesY);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    if (real1906) {
+      ctx.strokeStyle = "#6e4936";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(cx - pw * 0.14, apexY + sc * 0.025);
+      ctx.lineTo(cx - pw * 0.22, eavesY - 2);
+      ctx.moveTo(cx + pw * 0.18, apexY + sc * 0.035);
+      ctx.lineTo(cx + pw * 0.26, eavesY - 2);
+      ctx.stroke();
+    } else {
+      ctx.strokeStyle = PALETTE.retroactiveGraceGilt;
+      ctx.lineWidth = 1.1;
+      for (var scx = -0.50; scx <= 0.46; scx += 0.095) {
+        ctx.beginPath();
+        ctx.arc(cx + pw * (scx + 0.045), eavesY, pw * 0.048, 0, Math.PI);
+        ctx.stroke();
+      }
+    }
+
+    ctx.strokeStyle = real1906 ? "#4c4841" : PALETTE.umberInk;
+    ctx.lineWidth = Math.max(1.4, sc * 0.0024);
+    ctx.beginPath();
+    ctx.moveTo(cx, apexY);
+    ctx.lineTo(cx, apexY - sc * 0.036);
+    ctx.stroke();
+
+    if (!real1906 && grace.retroactiveGrace > 0.35) {
+      var pulse = (animTime * 0.55) % 1;
+      for (var wv = 0; wv < 2; wv++) {
+        var frac = (pulse + wv * 0.5) % 1;
+        var rad = sc * (0.03 + frac * 0.09);
+        ctx.strokeStyle = "rgba(216, 162, 74, " + round4((1 - frac) * grace.retroactiveGrace * 0.42) + ")";
+        ctx.lineWidth = 1.1;
+        ctx.beginPath();
+        ctx.arc(cx, apexY - sc * 0.02, rad, Math.PI * 1.15, Math.PI * 1.85);
+        ctx.stroke();
+      }
+    }
+  }
+
+  function renderLocusParasols(ctx, w, h, s, grace, animTime) {
+    var real1906 = Boolean(s.realTime1906);
+    var cx = LOCI[2].u * w;
+    var cy = LOCI[2].v * h;
+    var sc = Math.min(w, h);
+
+    for (var t = 0; t < 3; t++) {
+      var tx = cx + sc * (-0.12 + t * 0.115);
+      var ty = cy + sc * (0.06 - t * 0.025);
+      var tScale = 1 - t * 0.14;
+      ctx.strokeStyle = real1906 ? "#544f46" : "#4d3521";
+      ctx.lineWidth = Math.max(2, sc * 0.008 * tScale);
+      ctx.beginPath();
+      ctx.moveTo(tx, ty);
+      ctx.lineTo(tx, ty - sc * 0.18 * tScale);
+      ctx.stroke();
+
+      ctx.fillStyle = real1906 ? "rgba(104, 100, 90, 0.55)" : "rgba(110, 80, 54, 0.36)";
+      ctx.beginPath();
+      drawEllipse(ctx, tx, ty - sc * 0.21 * tScale, sc * 0.068 * tScale, sc * 0.044 * tScale, 0);
+      ctx.fill();
+    }
+
+    if (!real1906 && grace.retroactiveGrace > 0.08) {
+      var parGlow = ctx.createRadialGradient(cx, cy - sc * 0.03, sc * 0.02, cx, cy - sc * 0.03, sc * 0.21);
+      parGlow.addColorStop(0, "rgba(216, 162, 74, " + round4(grace.retroactiveGrace * 0.46) + ")");
+      parGlow.addColorStop(1, "rgba(216, 162, 74, 0)");
+      ctx.fillStyle = parGlow;
+      ctx.beginPath();
+      ctx.arc(cx, cy - sc * 0.03, sc * 0.21, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    for (var i = 0; i < 2; i++) {
+      var lx = cx + (i === 0 ? -sc * 0.042 : sc * 0.044);
+      var ly = cy + (i === 0 ? sc * 0.078 : sc * 0.092);
+      var figH = sc * (i === 0 ? 0.155 : 0.148);
+      var tiltSign = i === 0 ? -1 : 1;
+      var sway = real1906 ? 0 : Math.sin(animTime * 1.6 + i * 1.4) * 0.035;
+
+      ctx.fillStyle = real1906 ? "rgba(44, 40, 35, 0.48)" : "rgba(58, 40, 25, 0.22)";
+      ctx.beginPath();
+      drawEllipse(ctx, lx, ly + sc * 0.006, figH * 0.28, figH * 0.07, 0);
+      ctx.fill();
+
+      ctx.fillStyle = real1906 ? (i === 0 ? "#918b7f" : "#837d72") : PALETTE.parasolLaceIvory;
+      ctx.strokeStyle = real1906 ? "#4c473f" : PALETTE.collodionSepia;
+      ctx.lineWidth = Math.max(1.2, sc * 0.002);
+      ctx.beginPath();
+      ctx.moveTo(lx - figH * 0.08, ly - figH * 0.52);
+      ctx.quadraticCurveTo(lx - figH * 0.22, ly - figH * 0.14, lx - figH * 0.28, ly);
+      ctx.lineTo(lx + figH * 0.26, ly);
+      ctx.quadraticCurveTo(lx + figH * 0.19, ly - figH * 0.16, lx + figH * 0.08, ly - figH * 0.52);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      if (real1906) {
+        ctx.fillStyle = "#544e44";
+        ctx.fillRect(lx - figH * 0.26, ly - figH * 0.07, figH * 0.50, figH * 0.07);
+      } else {
+        ctx.strokeStyle = PALETTE.retroactiveGraceGilt;
+        ctx.beginPath();
+        ctx.moveTo(lx - figH * 0.085, ly - figH * 0.51);
+        ctx.lineTo(lx + figH * 0.085, ly - figH * 0.51);
+        ctx.stroke();
+      }
+
+      ctx.fillStyle = real1906 ? "#888277" : "#f5ebd6";
+      ctx.strokeStyle = real1906 ? "#4c473f" : PALETTE.collodionSepia;
+      ctx.beginPath();
+      drawEllipse(ctx, lx, ly - figH * 0.65, figH * 0.095, figH * 0.14, 0);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = real1906 ? "#9e978b" : "#e7d4b5";
+      ctx.beginPath();
+      ctx.arc(lx, ly - figH * 0.85, figH * 0.072, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.save();
+      ctx.translate(lx + tiltSign * figH * 0.05, ly - figH * 0.62);
+      ctx.rotate(tiltSign * 0.18 + sway);
+
+      ctx.strokeStyle = real1906 ? "#454038" : PALETTE.umberInk;
+      ctx.lineWidth = Math.max(1.3, sc * 0.0022);
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.lineTo(0, -figH * 0.64);
+      ctx.stroke();
+
+      var pRad = figH * 0.44;
+      var pRimY = -figH * 0.34;
+      var pTopY = -figH * 0.58;
+      ctx.fillStyle = real1906 ? "#a49e92" : PALETTE.parasolLaceIvory;
+      ctx.strokeStyle = real1906 ? "#555047" : PALETTE.collodionSepia;
+      ctx.lineWidth = Math.max(1.2, sc * 0.002);
+      ctx.beginPath();
+      ctx.moveTo(-pRad, pRimY);
+      ctx.quadraticCurveTo(0, pTopY - figH * 0.08, pRad, pRimY);
+      if (real1906) {
+        ctx.lineTo(-pRad, pRimY);
+      } else {
+        var scallops = 8;
+        var stepW = (pRad * 2) / scallops;
+        for (var k = scallops; k >= 1; k--) {
+          var sx1 = -pRad + k * stepW;
+          var sx0 = sx1 - stepW;
+          ctx.quadraticCurveTo((sx0 + sx1) * 0.5, pRimY + figH * 0.065, sx0, pRimY);
+        }
+      }
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      if (!real1906) {
+        ctx.strokeStyle = "rgba(110, 80, 54, 0.36)";
+        ctx.lineWidth = 0.9;
+        for (var rb = -3; rb <= 3; rb++) {
+          ctx.beginPath();
+          ctx.moveTo(0, pTopY);
+          ctx.lineTo((rb / 3.5) * pRad, pRimY);
+          ctx.stroke();
+        }
+        ctx.fillStyle = PALETTE.collodionSepia;
+        for (var ey = -3; ey <= 3; ey++) {
+          ctx.beginPath();
+          ctx.arc((ey / 3.6) * pRad, pRimY + figH * 0.02, 1.05, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+      ctx.restore();
+    }
+  }
+
+  function renderPostcardFraming(ctx, w, h, s, grace) {
+    var activeIdx = clamp(Math.round(s.activeLocus || 0), 0, 2);
+    var activeLoc = LOCI[activeIdx];
+    var minDim = Math.min(w, h);
+    var pad = Math.max(10, minDim * 0.022);
+
+    var pat = getHalftonePattern(ctx);
+    if (pat) {
+      ctx.fillStyle = pat;
+      ctx.fillRect(0, 0, w, h);
+    } else {
+      ctx.fillStyle = "rgba(58, 40, 25, 0.07)";
+      var step = Math.max(14, Math.round(minDim * 0.03));
+      for (var gy = pad; gy < h - pad; gy += step) {
+        for (var gx = pad; gx < w - pad; gx += step) {
+          ctx.beginPath();
+          ctx.arc(gx + ((gy / step) % 2) * 4, gy, 1.0, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+    }
+
+    ctx.save();
+    ctx.strokeStyle = grace.inObligatoryBand ? "rgba(216, 162, 74, 0.68)" : "rgba(110, 80, 54, 0.42)";
+    ctx.lineWidth = 1.4;
+    if (ctx.setLineDash) ctx.setLineDash([5, 4]);
+    ctx.beginPath();
+    ctx.arc(activeLoc.u * w, activeLoc.v * h, activeLoc.radiusNorm * minDim * 0.78, 0, Math.PI * 2);
+    ctx.stroke();
+    if (ctx.setLineDash) ctx.setLineDash([]);
+    ctx.restore();
+
+    ctx.strokeStyle = PALETTE.postcardBristol;
+    ctx.lineWidth = pad * 1.35;
+    ctx.strokeRect(pad * 0.5, pad * 0.5, w - pad, h - pad);
+
+    ctx.strokeStyle = PALETTE.collodionSepia;
+    ctx.lineWidth = 1.2;
+    ctx.strokeRect(pad, pad, w - pad * 2, h - pad * 2);
+
+    ctx.fillStyle = PALETTE.postcardBristol;
+    var notchStep = Math.max(14, Math.round(minDim * 0.028));
+    for (var nx = pad + notchStep; nx < w - pad - 6; nx += notchStep) {
+      ctx.beginPath();
+      ctx.arc(nx, pad, 2.6, 0, Math.PI);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(nx, h - pad, 2.6, Math.PI, Math.PI * 2);
+      ctx.fill();
+    }
+
+    var cSize = Math.max(18, minDim * 0.042);
+    var corners = [
+      [pad - 2, pad - 2, 1, 1],
+      [w - pad + 2, pad - 2, -1, 1],
+      [pad - 2, h - pad + 2, 1, -1],
+      [w - pad + 2, h - pad + 2, -1, -1]
+    ];
+    for (var c = 0; c < corners.length; c++) {
+      var cx0 = corners[c][0], cy0 = corners[c][1], sx = corners[c][2], sy = corners[c][3];
+      ctx.fillStyle = PALETTE.umberInk;
+      ctx.beginPath();
+      ctx.moveTo(cx0, cy0);
+      ctx.lineTo(cx0 + sx * cSize, cy0);
+      ctx.lineTo(cx0, cy0 + sy * cSize);
+      ctx.closePath();
+      ctx.fill();
+      ctx.strokeStyle = PALETTE.retroactiveGraceGilt;
+      ctx.lineWidth = 0.9;
+      ctx.beginPath();
+      ctx.moveTo(cx0 + sx * cSize * 0.82, cy0 + sy * 2);
+      ctx.lineTo(cx0 + sx * 2, cy0 + sy * cSize * 0.82);
+      ctx.stroke();
+    }
+
+    var stW = Math.max(38, minDim * 0.068);
+    var stH = stW * 1.18;
+    var stX = w - pad - stW - minDim * 0.02;
+    var stY = pad + minDim * 0.018;
+    ctx.fillStyle = PALETTE.postcardBristol;
+    ctx.fillRect(stX - 3, stY - 3, stW + 6, stH + 6);
+    ctx.fillStyle = PALETTE.stampMagenta;
+    ctx.fillRect(stX, stY, stW, stH);
+    ctx.strokeStyle = PALETTE.postcardBristol;
+    ctx.lineWidth = 1;
+    ctx.strokeRect(stX + 3, stY + 3, stW - 6, stH - 6);
+    ctx.fillStyle = PALETTE.postcardBristol;
+    ctx.font = "bold " + Math.max(8, Math.round(stW * 0.22)) + "px Georgia, serif";
+    ctx.textAlign = "center";
+    ctx.fillText("5c", stX + stW * 0.5, stY + stH * 0.54);
+    ctx.font = Math.max(6, Math.round(stW * 0.14)) + "px Georgia, serif";
+    ctx.fillText("POSTES", stX + stW * 0.5, stY + stH * 0.82);
+
+    var pmX = stX - stW * 0.36;
+    var pmY = stY + stH * 0.56;
+    var pmR = stW * 0.52;
+    ctx.save();
+    ctx.translate(pmX, pmY);
+    ctx.rotate(-0.14);
+    ctx.strokeStyle = "rgba(58, 40, 25, 0.76)";
+    ctx.lineWidth = 1.3;
+    ctx.beginPath();
+    ctx.arc(0, 0, pmR, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(0, 0, pmR * 0.76, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.fillStyle = "rgba(58, 40, 25, 0.82)";
+    ctx.font = "bold " + Math.max(6, Math.round(pmR * 0.27)) + "px Georgia, serif";
+    ctx.fillText("1906", 0, 3);
+    for (var wv = -1; wv <= 2; wv++) {
+      var wy = wv * pmR * 0.26;
+      ctx.beginPath();
+      ctx.moveTo(pmR * 0.55, wy);
+      ctx.bezierCurveTo(pmR * 1.0, wy - 4, pmR * 1.35, wy + 4, pmR * 1.85, wy - 2);
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    ctx.textAlign = "left";
+    ctx.fillStyle = PALETTE.umberInk;
+    var titlePx = Math.max(15, Math.round(minDim * 0.036));
+    ctx.font = "italic 600 " + titlePx + "px Georgia, 'Times New Roman', serif";
+    ctx.fillText("Saluti da Maurilia", pad + minDim * 0.025, pad + titlePx + minDim * 0.014);
+    ctx.font = Math.max(9, Math.round(minDim * 0.015)) + "px Georgia, serif";
+    ctx.fillStyle = PALETTE.collodionSepia;
+    ctx.fillText(activeLoc.postmark + "  ·  " + activeLoc.serieCode, pad + minDim * 0.026, pad + titlePx + minDim * 0.036);
+    ctx.fillText(activeLoc.title, pad + minDim * 0.026, h - pad - minDim * 0.015);
+  }
+
+  function renderUnmediated1906Overlay(ctx, w, h, s) {
+    var activeIdx = clamp(Math.round(s.activeLocus || 0), 0, 2);
+    var activeLoc = LOCI[activeIdx];
+    var minDim = Math.min(w, h);
+    ctx.strokeStyle = "rgba(56, 52, 46, 0.65)";
+    ctx.lineWidth = 1.4;
+    ctx.strokeRect(activeLoc.u * w - minDim * 0.11, activeLoc.v * h - minDim * 0.11, minDim * 0.22, minDim * 0.22);
+    ctx.fillStyle = "rgba(44, 41, 36, 0.78)";
+    ctx.fillRect(0, h - 28, w, 28);
+    ctx.fillStyle = "#d4cfc4";
+    ctx.font = "600 11px monospace";
+    ctx.textAlign = "left";
+    ctx.fillText("1906 UNMEDIATED PROVINCIAL REALITY · GRACE 0.00 · " + activeLoc.title.toUpperCase(), 14, h - 10);
+  }
+
+  function renderPostcard(ctx, width, height, state) {
+    if (!ctx || width <= 0 || height <= 0) return computeRetroactiveGrace(state);
+    var s = state || {};
+    var animTime = s.reducedMotion ? 0 : (Number(s.time) || 0);
+    var grace = computeRetroactiveGrace(s);
+
+    ctx.save();
+    renderBackdropAndTownscape(ctx, width, height, s, grace, animTime);
+    renderLocusBandstand(ctx, width, height, s, grace, animTime);
+    renderLocusHenSquare(ctx, width, height, s, grace, animTime);
+    renderLocusParasols(ctx, width, height, s, grace, animTime);
+    if (s.realTime1906) {
+      renderUnmediated1906Overlay(ctx, width, height, s);
+    } else {
+      renderPostcardFraming(ctx, width, height, s, grace);
+    }
+    ctx.restore();
+    return grace;
+  }
+
+  function renderLoupeOverlay(ctx, width, height, state) {
+    if (!ctx || width <= 0 || height <= 0) return;
+    var s = state || {};
+    var grace = computeRetroactiveGrace(s);
+    var activeIdx = clamp(Math.round(s.activeLocus || 0), 0, 2);
+    var defaultLoc = LOCI[activeIdx];
+    var normX = typeof s.loupeX === "number" ? s.loupeX : defaultLoc.u;
+    var normY = typeof s.loupeY === "number" ? s.loupeY : defaultLoc.v;
+    var hitIdx = hitTestLocus(normX, normY);
+    var focusLoc = LOCI[hitIdx >= 0 ? hitIdx : activeIdx];
+
+    var minDim = Math.min(width, height);
+    var lx = normX * width;
+    var ly = normY * height;
+    var radius = clamp((typeof s.loupeRadius === "number" ? s.loupeRadius : 0.20) * minDim, 36, minDim * 0.45);
+    var split = clamp(Number(s.postcardSplit) || 0, 0, 1);
+
+    ctx.save();
+    if (split > 0.02) {
+      var splitX = split * width;
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(0, 0, splitX, height);
+      ctx.clip();
+      renderPostcard(ctx, width, height, s);
+      ctx.restore();
+
+      ctx.strokeStyle = PALETTE.brassHighlight;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(splitX, 0);
+      ctx.lineTo(splitX, height);
+      ctx.stroke();
+      ctx.fillStyle = PALETTE.mahoganyDark;
+      roundedRectPath(ctx, splitX - 11, height * 0.5 - 26, 22, 52, 5);
+      ctx.fill();
+      ctx.strokeRect(splitX - 9, height * 0.5 - 24, 18, 48);
+    }
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(lx, ly + 5, radius + 9, 0, Math.PI * 2);
+    ctx.fillStyle = "rgba(8, 10, 14, 0.52)";
+    ctx.fill();
+    ctx.restore();
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(lx, ly, radius, 0, Math.PI * 2);
+    ctx.clip();
+    renderPostcard(ctx, width, height, s);
+
+    if (!s.realTime1906) {
+      ctx.strokeStyle = PALETTE.postcardBristol;
+      ctx.lineWidth = 7;
+      ctx.beginPath();
+      ctx.arc(lx, ly, radius - 2, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.fillStyle = PALETTE.postcardBristol;
+      for (var sc = 0; sc < 28; sc++) {
+        var sa = (sc / 28) * Math.PI * 2;
+        ctx.beginPath();
+        ctx.arc(lx + Math.cos(sa) * (radius - 5), ly + Math.sin(sa) * (radius - 5), 2.3, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.fillStyle = "rgba(58, 40, 25, 0.62)";
+      ctx.font = "italic 600 " + Math.max(9, Math.round(radius * 0.11)) + "px Georgia, serif";
+      ctx.textAlign = "center";
+      ctx.fillText(focusLoc.postmark, lx, ly - radius * 0.72);
+    }
+
+    var lensSheen = ctx.createLinearGradient(lx - radius, ly - radius, lx + radius, ly + radius);
+    lensSheen.addColorStop(0, s.realTime1906 ? "rgba(255,255,255,0.06)" : "rgba(250, 245, 232, 0.22)");
+    lensSheen.addColorStop(0.45, "rgba(255,255,255,0)");
+    lensSheen.addColorStop(1, s.realTime1906 ? "rgba(30,28,24,0.22)" : "rgba(216, 162, 74, " + round4(grace.retroactiveGrace * 0.20) + ")");
+    ctx.fillStyle = lensSheen;
+    ctx.fillRect(lx - radius, ly - radius, radius * 2, radius * 2);
+    ctx.restore();
+
+    ctx.strokeStyle = PALETTE.mahoganyDark;
+    ctx.lineWidth = 9;
+    ctx.beginPath();
+    ctx.arc(lx, ly, radius + 4, 0, Math.PI * 2);
+    ctx.stroke();
+
+    var bezelGrad = ctx.createLinearGradient(lx - radius, ly - radius, lx + radius, ly + radius);
+    bezelGrad.addColorStop(0, PALETTE.brassHighlight);
+    bezelGrad.addColorStop(0.5, PALETTE.brassMid);
+    bezelGrad.addColorStop(1, PALETTE.brassShadow);
+    ctx.strokeStyle = bezelGrad;
+    ctx.lineWidth = 4.5;
+    ctx.beginPath();
+    ctx.arc(lx, ly, radius + 1.5, 0, Math.PI * 2);
+    ctx.stroke();
+
+    for (var tk = 0; tk < 36; tk++) {
+      var ang = (tk / 36) * Math.PI * 2;
+      var innerT = radius + (tk % 3 === 0 ? 0.5 : 2.5);
+      var outerT = radius + (tk % 3 === 0 ? 8.2 : 6.2);
+      ctx.strokeStyle = tk % 3 === 0 ? PALETTE.brassHighlight : PALETTE.brassMid;
+      ctx.lineWidth = tk % 3 === 0 ? 1.4 : 0.9;
+      ctx.beginPath();
+      ctx.moveTo(lx + Math.cos(ang) * innerT, ly + Math.sin(ang) * innerT);
+      ctx.lineTo(lx + Math.cos(ang) * outerT, ly + Math.sin(ang) * outerT);
+      ctx.stroke();
+    }
+
+    var tagW = Math.min(width - 20, Math.max(188, radius * 1.75));
+    var tagH = 26;
+    var tagX = clamp(lx - tagW * 0.5, 10, width - tagW - 10);
+    var tagY = (ly + radius + 38 < height) ? (ly + radius + 12) : Math.max(8, ly - radius - 38);
+    ctx.fillStyle = "rgba(32, 20, 13, 0.92)";
+    ctx.strokeStyle = grace.inObligatoryBand ? PALETTE.brassHighlight : PALETTE.brassMid;
+    ctx.lineWidth = 1.3;
+    roundedRectPath(ctx, tagX, tagY, tagW, tagH, 5);
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillStyle = PALETTE.parasolLaceIvory;
+    ctx.font = "600 10.5px Georgia, serif";
+    ctx.textAlign = "center";
+    var badge = s.realTime1906
+      ? (focusLoc.shortLabel + " · 1906 GRACE 0.00")
+      : (focusLoc.shortLabel + " · GRACE " + grace.retroactiveGrace.toFixed(2));
+    ctx.fillText(badge, tagX + tagW * 0.5, tagY + 16.5);
+    ctx.restore();
+  }
+
+  return {
+    LOCI: LOCI,
+    STONES: LOCI,
+    OBLIGATORY_REGRET_BAND: OBLIGATORY_REGRET_BAND,
+    PALETTE: PALETTE,
+    computeRetroactiveGrace: computeRetroactiveGrace,
+    renderPostcard: renderPostcard,
+    renderLoupeOverlay: renderLoupeOverlay,
+    hitTestLocus: hitTestLocus,
+    getLocus: getLocus
+  };
+})();
+</script>
+<script>
+/* City 11: Maurilia — Gleaming Present Metropolis & Departed-Gods Stratum */
+if (typeof window === "undefined") {
+  globalThis.window = globalThis;
+}
+
+window.MauriliaMetropolis = (function () {
+  "use strict";
+
+  var PALETTE = {
+    asphalt: "#14191f",
+    skyZenith: "#0c1219",
+    skyHorizon: "#1e2936",
+    concrete: "#8c969e",
+    concreteShadow: "#555f68",
+    concreteHighlight: "#b6c0c8",
+    glassCyan: "#5ec2d6",
+    glassDeep: "#1d5868",
+    sodiumAmber: "#f09b36",
+    foundryCrimson: "#a93b2c",
+    outsiderChrome: "#dce5ec",
+    outsiderVolt: "#7ef4ff",
+    retroGilt: "#d8a24a",
+    lariaOchre: "#8b6d4b",
+    vaultShadow: "#0b0e13"
+  };
+
+  var STONES = [
+    {
+      index: 0,
+      locusIndex: 0,
+      id: "hen_vs_bus_station",
+      u: 0.22,
+      v: 0.64,
+      radiusNorm: 0.18,
+      stoneId: "glass_bus_station",
+      title: "Gleaming Cantilevered Glass Bus Station",
+      shortLabel: "01 · GLASS BUS CONCOURSE",
+      subtitle: "Cyan curtain-wall transit concourse, amber route boards & articulated coaches",
+      metropolisNote: "Beneath a soaring cyan glass cantilever, amber departure matrices flicker above articulated coaches hissing onto rain-slick asphalt while commuters pass with old Maurilian profiles and lilting vowels.",
+      sharedCitizenSurname: "Vercelli-Mora",
+      sharedAccentCadence: "Rising penultimate vowel on wet platform ('Maurilia centrale, corsia quattro')",
+      departedOldGod: "Lar of Dust-Grain & Courtyard Threshold (receded wordlessly)",
+      settledOutsiderGod: "Kinetron of Scheduled Transit & Curtain-Glass (settled on plinth)"
+    },
+    {
+      index: 1,
+      locusIndex: 1,
+      id: "bandstand_vs_viaduct",
+      u: 0.50,
+      v: 0.44,
+      radiusNorm: 0.19,
+      stoneId: "concrete_viaduct_overpass",
+      title: "Sweeping Concrete Viaduct Overpass",
+      shortLabel: "02 · CONCRETE VIADUCT OVERPASS",
+      subtitle: "Prestressed box-girder flyover on fluted pylons, sodium masts & traffic streams",
+      metropolisNote: "A monumental prestressed concrete ribbon banks across fluted pylons above the central avenues, lit by tall sodium-vapor masts and twin rivers of headlamps and brake-light streaks.",
+      sharedCitizenSurname: "Bellini-Sarti",
+      sharedAccentCadence: "Clipped consonant cadence echoing under box-girder expansion joints",
+      departedOldGod: "Genii of Oleander Shade & Sunday Measure (vacated sky-seat)",
+      settledOutsiderGod: "Archon of Prestressed Span & Sodium Velocity (enthroned aloft)"
+    },
+    {
+      index: 2,
+      locusIndex: 2,
+      id: "parasols_vs_munitions",
+      u: 0.79,
+      v: 0.56,
+      radiusNorm: 0.18,
+      stoneId: "munitions_factory",
+      title: "Munitions Factory Smokestacks & Shift Gate",
+      shortLabel: "03 · MUNITIONS FACTORY & STACKS",
+      subtitle: "Sawtooth foundry clerestories, three brick-and-iron smokestacks & shift siren",
+      metropolisNote: "Sawtooth steel clerestories glow furnace-crimson behind the riveted shift gate while three iron-banded smokestacks vent dark plumes above the freight rail siding and siren tower.",
+      sharedCitizenSurname: "Cattaneo-Riva",
+      sharedAccentCadence: "Soft sibilant inflection along the evening foundry turnstile queue",
+      departedOldGod: "Nymphs of Eyelet-Lace Shade & Linden Dust (departed without a word)",
+      settledOutsiderGod: "Ferric Demiurge of Ordnance Stampings & Siren Voltage (occupying niche)"
+    }
+  ];
+
+  function clamp(val, min, max) {
+    return val < min ? min : val > max ? max : val;
+  }
+
+  function clamp01(val) {
+    var n = Number(val);
+    if (!Number.isFinite(n)) return 0;
+    return n < 0 ? 0 : n > 1 ? 1 : n;
+  }
+
+  function safeSetLineDash(ctx, segments) {
+    if (ctx && typeof ctx.setLineDash === "function") {
+      ctx.setLineDash(segments);
+    }
+  }
+
+  function drawEllipseSafe(ctx, cx, cy, rx, ry) {
+    if (rx <= 0 || ry <= 0) return;
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.scale(rx, ry);
+    ctx.beginPath();
+    ctx.arc(0, 0, 1, 0, Math.PI * 2);
+    ctx.restore();
+  }
+
+  function hitTestLocus(normX, normY) {
+    var nx = Number(normX);
+    var ny = Number(normY);
+    if (!Number.isFinite(nx) || !Number.isFinite(ny)) return -1;
+    var bestIdx = -1;
+    var bestDist = Infinity;
+    for (var i = 0; i < STONES.length; i++) {
+      var s = STONES[i];
+      var dx = nx - s.u;
+      var dy = ny - s.v;
+      var d = Math.sqrt(dx * dx + dy * dy);
+      if (d <= s.radiusNorm && d < bestDist) {
+        bestDist = d;
+        bestIdx = i;
+      }
+    }
+    return bestIdx;
+  }
+
+  function computeDiscontinuity(state) {
+    var st = state || {};
+    var probe = clamp01(st.godsProbeDepth);
+    var spoken = Boolean(st.forbiddenTruthSpoken);
+    var regret = Number.isFinite(Number(st.regretLevel)) ? clamp01(st.regretLevel) : 0.65;
+    var effectiveProbe = spoken ? 1.0 : probe;
+
+    var discontinuityIndex = spoken
+      ? 1.0
+      : Number((0.35 + 0.65 * effectiveProbe).toFixed(4));
+    var departedGodsVisibility = spoken
+      ? 1.0
+      : Number(clamp01(Math.pow(effectiveProbe, 0.85)).toFixed(4));
+    var outsiderSettlementRatio = spoken
+      ? 1.0
+      : Number(clamp01(effectiveProbe * (0.82 + 0.18 * effectiveProbe)).toFixed(4));
+
+    var inBand = regret >= 0.52 && regret <= 0.78;
+    var baseHosp = inBand ? 0.94 : 0.64;
+    var citizenHospitality = spoken
+      ? 0.08
+      : Number(clamp(baseHosp - 0.44 * effectiveProbe, 0.18, 0.98).toFixed(4));
+
+    var colophonWarning;
+    if (spoken) {
+      colophonWarning =
+        "Beware of saying to them that sometimes different cities follow one another on the same site and under the same name, born and dying without knowing one another, without communication among themselves.";
+    } else if (probe > 0.55) {
+      colophonWarning =
+        "Beneath identical surnames and vocal cadences, the old tutelary gods have gone without a word and angular outsiders have settled in their niches.";
+    } else if (probe > 0.02) {
+      colophonWarning =
+        "Sub-plaque stratum exposed: names, accents, and profiles hold at 1.00, yet ontological continuity between postcard town and metropolis registers 0.00.";
+    } else {
+      colophonWarning =
+        "Citizens proudly display the gleaming metropolis alongside faded postcards, assuming one continuous civic soul beneath the shared name.";
+    }
+
+    return {
+      cityName: "MAURILIA",
+      sameSiteCoordinates: true,
+      inhabitantNameAccentContinuity: 1.0,
+      facialFeatureContinuity: 1.0,
+      ontologicalConnection: 0.0,
+      discontinuityIndex: discontinuityIndex,
+      departedGodsVisibility: departedGodsVisibility,
+      outsiderSettlementRatio: outsiderSettlementRatio,
+      citizenHospitality: citizenHospitality,
+      colophonWarning: colophonWarning
+    };
+  }
+
+  function drawSkyAndSkyline(ctx, w, h, t, contrast) {
+    var skyGrad = ctx.createLinearGradient(0, 0, 0, h * 0.62);
+    skyGrad.addColorStop(0, PALETTE.skyZenith);
+    skyGrad.addColorStop(0.62, PALETTE.skyHorizon);
+    skyGrad.addColorStop(1, "#263240");
+    ctx.fillStyle = skyGrad;
+    ctx.fillRect(0, 0, w, h);
+
+    var cyanGlow = ctx.createRadialGradient(w * 0.22, h * 0.60, w * 0.02, w * 0.22, h * 0.60, w * 0.34);
+    cyanGlow.addColorStop(0, "rgba(94, 194, 214, " + (0.22 * contrast).toFixed(3) + ")");
+    cyanGlow.addColorStop(1, "rgba(94, 194, 214, 0)");
+    ctx.fillStyle = cyanGlow;
+    ctx.fillRect(0, 0, w, h);
+
+    var foundryGlow = ctx.createRadialGradient(w * 0.80, h * 0.54, w * 0.02, w * 0.80, h * 0.54, w * 0.32);
+    foundryGlow.addColorStop(0, "rgba(169, 59, 44, " + (0.26 * contrast).toFixed(3) + ")");
+    foundryGlow.addColorStop(1, "rgba(169, 59, 44, 0)");
+    ctx.fillStyle = foundryGlow;
+    ctx.fillRect(0, 0, w, h);
+
+    var towers = [
+      [0.03, 0.30, 0.055, 0.30], [0.09, 0.23, 0.065, 0.37], [0.17, 0.28, 0.052, 0.32],
+      [0.31, 0.21, 0.070, 0.39], [0.39, 0.26, 0.058, 0.34], [0.46, 0.19, 0.066, 0.41],
+      [0.55, 0.24, 0.062, 0.36], [0.63, 0.27, 0.054, 0.33], [0.90, 0.29, 0.065, 0.31]
+    ];
+    var horizonY = h * 0.59;
+    for (var i = 0; i < towers.length; i++) {
+      var tw = towers[i];
+      var tx = tw[0] * w;
+      var ty = tw[1] * h;
+      var bw = tw[2] * w;
+      var bh = horizonY - ty;
+      ctx.fillStyle = i % 2 === 0 ? "#18212b" : "#1d2834";
+      ctx.fillRect(tx, ty, bw, bh);
+      ctx.strokeStyle = "rgba(140, 150, 158, 0.22)";
+      ctx.lineWidth = 1;
+      ctx.strokeRect(tx, ty, bw, bh);
+
+      var cols = Math.max(2, Math.floor(bw / 11));
+      var rows = Math.max(4, Math.floor(bh / 13));
+      for (var r = 0; r < rows; r++) {
+        for (var c = 0; c < cols; c++) {
+          if (((i * 7 + r * 3 + c * 5) % 4) === 0) continue;
+          var litCyan = ((r + i + c) % 3) === 0;
+          ctx.fillStyle = litCyan ? "rgba(94, 194, 214, 0.36)" : "rgba(240, 155, 54, 0.32)";
+          ctx.fillRect(tx + 4 + c * ((bw - 6) / cols), ty + 5 + r * ((bh - 8) / rows), 3.5, 4.5);
+        }
+      }
+    }
+  }
+
+  function drawWetBoulevard(ctx, w, h, t) {
+    var roadTop = h * 0.585;
+    var roadGrad = ctx.createLinearGradient(0, roadTop, 0, h);
+    roadGrad.addColorStop(0, "#192028");
+    roadGrad.addColorStop(0.35, PALETTE.asphalt);
+    roadGrad.addColorStop(1, "#0d1116");
+    ctx.fillStyle = roadGrad;
+    ctx.fillRect(0, roadTop, w, h - roadTop);
+
+    var reflSpecs = [
+      { x: w * 0.22, color: "94, 194, 214", span: w * 0.13 },
+      { x: w * 0.50, color: "240, 155, 54", span: w * 0.14 },
+      { x: w * 0.79, color: "169, 59, 44", span: w * 0.12 }
+    ];
+    for (var s = 0; s < reflSpecs.length; s++) {
+      var rf = reflSpecs[s];
+      for (var k = 0; k < 9; k++) {
+        var ry = roadTop + 8 + k * ((h - roadTop - 16) / 9);
+        var shimmer = Math.sin(t * 2.1 + k * 0.9 + s) * (w * 0.008);
+        var rw = rf.span * (0.35 + 0.07 * k);
+        ctx.fillStyle = "rgba(" + rf.color + ", " + (0.20 - k * 0.016).toFixed(3) + ")";
+        ctx.fillRect(rf.x - rw * 0.5 + shimmer, ry, rw, 2.5);
+      }
+    }
+
+    ctx.strokeStyle = "rgba(220, 229, 236, 0.18)";
+    ctx.lineWidth = 1.5;
+    safeSetLineDash(ctx, [16, 14]);
+    ctx.beginPath();
+    ctx.moveTo(0, h * 0.73);
+    ctx.lineTo(w, h * 0.75);
+    ctx.stroke();
+    safeSetLineDash(ctx, []);
+  }
+
+  function drawViaductOverpass(ctx, w, h, t) {
+    var cx = STONES[1].u * w;
+    var cy = STONES[1].v * h;
+    var pylonXs = [w * 0.14, w * 0.34, cx, w * 0.66, w * 0.86];
+    var groundY = h * 0.60;
+
+    for (var p = 0; p < pylonXs.length; p++) {
+      var px = pylonXs[p];
+      var archOffset = Math.pow((px - cx) / (w * 0.5), 2) * (h * 0.055);
+      var deckY = cy + archOffset;
+      var pw = Math.max(12, w * 0.022);
+      ctx.fillStyle = PALETTE.concreteShadow;
+      ctx.beginPath();
+      ctx.moveTo(px - pw * 0.95, deckY + 10);
+      ctx.lineTo(px + pw * 0.95, deckY + 10);
+      ctx.lineTo(px + pw * 0.55, groundY);
+      ctx.lineTo(px - pw * 0.55, groundY);
+      ctx.closePath();
+      ctx.fill();
+      ctx.strokeStyle = PALETTE.concreteHighlight;
+      ctx.lineWidth = 1;
+      for (var fl = -2; fl <= 2; fl++) {
+        ctx.beginPath();
+        ctx.moveTo(px + fl * (pw * 0.25), deckY + 12);
+        ctx.lineTo(px + fl * (pw * 0.14), groundY);
+        ctx.stroke();
+      }
+    }
+
+    for (var m = 0; m < 6; m++) {
+      var mx = w * (0.10 + m * 0.16);
+      var mCurve = Math.pow((mx - cx) / (w * 0.5), 2) * (h * 0.055);
+      var mTop = cy + mCurve - h * 0.065;
+      ctx.strokeStyle = PALETTE.concrete;
+      ctx.lineWidth = 1.6;
+      ctx.beginPath();
+      ctx.moveTo(mx, cy + mCurve - 4);
+      ctx.lineTo(mx, mTop);
+      ctx.lineTo(mx + 10, mTop - 3);
+      ctx.stroke();
+
+      var lampGlow = ctx.createRadialGradient(mx + 10, mTop - 3, 1, mx + 10, mTop - 3, w * 0.045);
+      lampGlow.addColorStop(0, "rgba(240, 155, 54, 0.85)");
+      lampGlow.addColorStop(1, "rgba(240, 155, 54, 0)");
+      ctx.fillStyle = lampGlow;
+      ctx.beginPath();
+      ctx.arc(mx + 10, mTop - 3, w * 0.045, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    ctx.fillStyle = PALETTE.concreteShadow;
+    ctx.beginPath();
+    ctx.moveTo(0, cy + h * 0.055 + 16);
+    ctx.quadraticCurveTo(cx, cy - h * 0.052 + 16, w, cy + h * 0.060 + 16);
+    ctx.lineTo(w, cy + h * 0.060 + 28);
+    ctx.quadraticCurveTo(cx, cy - h * 0.052 + 28, 0, cy + h * 0.055 + 28);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.fillStyle = PALETTE.concrete;
+    ctx.beginPath();
+    ctx.moveTo(0, cy + h * 0.055);
+    ctx.quadraticCurveTo(cx, cy - h * 0.052, w, cy + h * 0.060);
+    ctx.lineTo(w, cy + h * 0.060 + 17);
+    ctx.quadraticCurveTo(cx, cy - h * 0.052 + 17, 0, cy + h * 0.055 + 17);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.strokeStyle = PALETTE.concreteHighlight;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(0, cy + h * 0.055);
+    ctx.quadraticCurveTo(cx, cy - h * 0.052, w, cy + h * 0.060);
+    ctx.stroke();
+
+    for (var tr = 0; tr < 8; tr++) {
+      var uHead = ((tr / 8) + t * 0.09) % 1;
+      var hx = uHead * w;
+      var hy = cy + Math.pow((hx - cx) / (w * 0.5), 2) * (h * 0.055) - 2;
+      ctx.strokeStyle = "rgba(220, 245, 255, 0.85)";
+      ctx.lineWidth = 2.4;
+      ctx.beginPath();
+      ctx.moveTo(hx - 18, hy + 1);
+      ctx.lineTo(hx + 8, hy);
+      ctx.stroke();
+
+      var uTail = (1 - (((tr + 0.4) / 8 + t * 0.075) % 1));
+      var rx = uTail * w;
+      var ry2 = cy + Math.pow((rx - cx) / (w * 0.5), 2) * (h * 0.055) + 3;
+      ctx.strokeStyle = "rgba(235, 68, 52, 0.82)";
+      ctx.beginPath();
+      ctx.moveTo(rx - 12, ry2);
+      ctx.lineTo(rx + 14, ry2 + 1);
+      ctx.stroke();
+    }
+  }
+
+  function drawGlassBusStation(ctx, w, h, t) {
+    var cx = STONES[0].u * w;
+    var cy = STONES[0].v * h;
+    var sw = w * 0.25;
+    var sh = h * 0.16;
+    var left = cx - sw * 0.52;
+    var base = cy + sh * 0.36;
+
+    var concGrad = ctx.createLinearGradient(left, base - sh, left + sw, base);
+    concGrad.addColorStop(0, "rgba(94, 194, 214, 0.42)");
+    concGrad.addColorStop(0.6, "rgba(29, 88, 104, 0.72)");
+    concGrad.addColorStop(1, "rgba(20, 25, 31, 0.88)");
+    ctx.fillStyle = concGrad;
+    ctx.fillRect(left + sw * 0.08, base - sh * 0.72, sw * 0.78, sh * 0.72);
+
+    ctx.strokeStyle = PALETTE.glassCyan;
+    ctx.lineWidth = 1.3;
+    for (var m = 0; m <= 7; m++) {
+      var mx = left + sw * 0.08 + m * (sw * 0.78 / 7);
+      ctx.beginPath();
+      ctx.moveTo(mx, base - sh * 0.72);
+      ctx.lineTo(mx, base);
+      ctx.stroke();
+    }
+
+    ctx.fillStyle = "#202a33";
+    ctx.beginPath();
+    ctx.moveTo(left - sw * 0.08, base - sh * 0.92);
+    ctx.lineTo(left + sw * 1.04, base - sh * 1.08);
+    ctx.lineTo(left + sw * 0.96, base - sh * 0.70);
+    ctx.lineTo(left + sw * 0.02, base - sh * 0.68);
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = PALETTE.glassCyan;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    for (var b = 0; b < 3; b++) {
+      var bx = left + sw * (0.16 + b * 0.24);
+      var by = base - sh * 0.62;
+      ctx.fillStyle = "#12161b";
+      ctx.fillRect(bx, by, sw * 0.19, sh * 0.17);
+      ctx.fillStyle = PALETTE.sodiumAmber;
+      ctx.fillRect(bx + 3, by + 3, sw * 0.14, 3);
+      ctx.fillRect(bx + 3, by + 8, sw * 0.10, 2.5);
+    }
+
+    for (var c = 0; c < 2; c++) {
+      var busX = left + sw * (0.10 + c * 0.46) + Math.sin(t * 0.8 + c) * 1.5;
+      var busY = base - sh * 0.25 + c * 6;
+      var busW = sw * 0.42;
+      var busH = sh * 0.28;
+      ctx.fillStyle = "#263845";
+      ctx.fillRect(busX, busY, busW, busH);
+      ctx.fillStyle = "#14191f";
+      ctx.fillRect(busX + busW * 0.48, busY + 1, busW * 0.07, busH - 2);
+      ctx.fillStyle = PALETTE.glassCyan;
+      ctx.fillRect(busX + 4, busY + 4, busW * 0.40, busH * 0.44);
+      ctx.fillRect(busX + busW * 0.58, busY + 4, busW * 0.36, busH * 0.44);
+      ctx.fillStyle = PALETTE.sodiumAmber;
+      ctx.fillRect(busX + busW - 9, busY + 2, 7, 4);
+    }
+
+    for (var p = 0; p < 6; p++) {
+      var stride = Math.sin(t * 2.2 + p * 1.3) * 2.5;
+      var px = left + sw * (0.15 + p * 0.13) + stride;
+      var py = base + 5 + (p % 2) * 4;
+      ctx.fillStyle = "#d5c6b3";
+      ctx.beginPath();
+      ctx.arc(px, py - 11, 2.6, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.moveTo(px + 2.2, py - 12);
+      ctx.lineTo(px + 4.6, py - 10.5);
+      ctx.lineTo(px + 2.2, py - 9.5);
+      ctx.fill();
+      ctx.fillStyle = p % 2 === 0 ? "#384958" : "#4b5a68";
+      ctx.fillRect(px - 2.5, py - 8, 5, 9);
+      ctx.strokeStyle = "rgba(240, 155, 54, 0.45)";
+      ctx.lineWidth = 0.9;
+      ctx.beginPath();
+      ctx.arc(px + 5, py - 12, 4.5, -0.6, 0.6);
+      ctx.stroke();
+    }
+  }
+
+  function drawMunitionsFactory(ctx, w, h, t) {
+    var cx = STONES[2].u * w;
+    var cy = STONES[2].v * h;
+    var fw = w * 0.23;
+    var fh = h * 0.17;
+    var left = cx - fw * 0.50;
+    var base = cy + fh * 0.45;
+
+    for (var s = 0; s < 3; s++) {
+      var sx = left + fw * (0.20 + s * 0.27);
+      var stackTop = base - fh * (1.38 - s * 0.08);
+      var swTop = Math.max(7, fw * 0.045);
+      var swBot = Math.max(11, fw * 0.072);
+
+      for (var pl = 0; pl < 5; pl++) {
+        var driftX = (pl + 1) * (w * 0.012) + Math.sin(t * 1.1 + pl + s) * (t === 0 ? 0 : 4);
+        var driftY = stackTop - 8 - pl * (h * 0.017);
+        var pr = swTop * (1.1 + pl * 0.55);
+        ctx.fillStyle = "rgba(58, 52, 56, " + (0.42 - pl * 0.065).toFixed(3) + ")";
+        drawEllipseSafe(ctx, sx + driftX, driftY, pr * 1.35, pr * 0.78);
+        ctx.fill();
+      }
+
+      ctx.fillStyle = "#472926";
+      ctx.beginPath();
+      ctx.moveTo(sx - swTop, stackTop);
+      ctx.lineTo(sx + swTop, stackTop);
+      ctx.lineTo(sx + swBot, base - fh * 0.46);
+      ctx.lineTo(sx - swBot, base - fh * 0.46);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.strokeStyle = "#1c1f24";
+      ctx.lineWidth = 2;
+      for (var ring = 0; ring < 4; ring++) {
+        var ry = stackTop + 8 + ring * ((base - fh * 0.48 - stackTop) / 4);
+        ctx.beginPath();
+        ctx.moveTo(sx - swBot * 0.85, ry);
+        ctx.lineTo(sx + swBot * 0.85, ry);
+        ctx.stroke();
+      }
+    }
+
+    ctx.fillStyle = "#241d20";
+    ctx.beginPath();
+    ctx.moveTo(left, base);
+    ctx.lineTo(left, base - fh * 0.52);
+    for (var tooth = 0; tooth < 4; tooth++) {
+      var tx0 = left + tooth * (fw * 0.22);
+      ctx.lineTo(tx0 + fw * 0.15, base - fh * 0.76);
+      ctx.lineTo(tx0 + fw * 0.22, base - fh * 0.52);
+    }
+    ctx.lineTo(left + fw * 0.92, base - fh * 0.52);
+    ctx.lineTo(left + fw * 0.92, base);
+    ctx.closePath();
+    ctx.fill();
+
+    for (var cl = 0; cl < 4; cl++) {
+      var gx = left + cl * (fw * 0.22) + fw * 0.145;
+      ctx.fillStyle = PALETTE.foundryCrimson;
+      ctx.fillRect(gx, base - fh * 0.70, fw * 0.06, fh * 0.19);
+      ctx.fillStyle = "rgba(240, 155, 54, 0.72)";
+      ctx.fillRect(gx + 2, base - fh * 0.65, fw * 0.03, fh * 0.11);
+    }
+
+    var gateX = left + fw * 0.06;
+    ctx.strokeStyle = PALETTE.concrete;
+    ctx.lineWidth = 1.6;
+    ctx.strokeRect(gateX, base - fh * 0.30, fw * 0.26, fh * 0.30);
+    ctx.fillStyle = "rgba(169, 59, 44, 0.45)";
+    ctx.fillRect(gateX + 3, base - fh * 0.27, fw * 0.26 - 6, fh * 0.27);
+
+    var sirenX = left + fw * 0.90;
+    var sirenY = base - fh * 0.88;
+    ctx.strokeStyle = "#7b858e";
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(sirenX - 6, base);
+    ctx.lineTo(sirenX, sirenY);
+    ctx.lineTo(sirenX + 6, base);
+    ctx.stroke();
+    var pulseR = 7 + ((t * 14) % 16);
+    ctx.strokeStyle = "rgba(240, 155, 54, 0.55)";
+    ctx.beginPath();
+    ctx.arc(sirenX, sirenY, pulseR, 0, Math.PI * 2);
+    ctx.stroke();
+
+    ctx.strokeStyle = "#6c7680";
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(left - fw * 0.08, base + 6);
+    ctx.lineTo(left + fw * 1.02, base + 6);
+    ctx.stroke();
+    ctx.fillStyle = "#353d45";
+    ctx.fillRect(left + fw * 0.46, base - 5, fw * 0.30, 9);
+  }
+
+  function drawActiveLocusFrame(ctx, w, h, activeIdx) {
+    var stone = STONES[activeIdx];
+    if (!stone) return;
+    var cx = stone.u * w;
+    var cy = stone.v * h;
+    var r = stone.radiusNorm * Math.min(w, h) * 0.72;
+    var arm = Math.max(10, r * 0.24);
+
+    ctx.strokeStyle = "rgba(94, 194, 214, 0.78)";
+    ctx.lineWidth = 1.6;
+    var corners = [[-1, -1], [1, -1], [1, 1], [-1, 1]];
+    for (var i = 0; i < corners.length; i++) {
+      var sx = corners[i][0];
+      var sy = corners[i][1];
+      ctx.beginPath();
+      ctx.moveTo(cx + sx * r, cy + sy * (r - arm));
+      ctx.lineTo(cx + sx * r, cy + sy * r);
+      ctx.lineTo(cx + sx * (r - arm), cy + sy * r);
+      ctx.stroke();
+    }
+    ctx.strokeStyle = "rgba(216, 162, 74, 0.62)";
+    safeSetLineDash(ctx, [4, 5]);
+    ctx.beginPath();
+    ctx.arc(cx, cy, r * 0.92, 0, Math.PI * 2);
+    ctx.stroke();
+    safeSetLineDash(ctx, []);
+  }
+
+  function drawDepartedGodsCutaway(ctx, w, h, t, disc, spoken) {
+    var vis = disc.departedGodsVisibility;
+    if (vis <= 0.02 && !spoken) return;
+    var alpha = spoken ? 0.96 : clamp(0.22 + vis * 0.74, 0, 0.96);
+
+    var skyCutH = h * 0.185;
+    ctx.fillStyle = "rgba(9, 14, 21, " + (alpha * 0.86).toFixed(3) + ")";
+    ctx.fillRect(0, 0, w, skyCutH);
+    ctx.strokeStyle = "rgba(220, 229, 236, " + (alpha * 0.65).toFixed(3) + ")";
+    ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    ctx.moveTo(0, skyCutH);
+    ctx.lineTo(w, skyCutH);
+    ctx.stroke();
+
+    ctx.font = "600 " + Math.max(9, Math.round(h * 0.015)) + "px monospace";
+    ctx.fillStyle = "rgba(220, 229, 236, " + alpha.toFixed(3) + ")";
+    ctx.fillText("ABOVE PLACES · VACATED CELESTIAL SEATS & OUTSIDER SPIRITS", 12, Math.max(13, skyCutH * 0.18));
+
+    var vaultTop = h * 0.805;
+    ctx.fillStyle = "rgba(11, 14, 19, " + (alpha * 0.92).toFixed(3) + ")";
+    ctx.fillRect(0, vaultTop, w, h - vaultTop);
+    ctx.strokeStyle = "rgba(216, 162, 74, " + (alpha * 0.72).toFixed(3) + ")";
+    ctx.beginPath();
+    ctx.moveTo(0, vaultTop);
+    ctx.lineTo(w, vaultTop);
+    ctx.stroke();
+    ctx.fillStyle = "rgba(216, 162, 74, " + alpha.toFixed(3) + ")";
+    ctx.fillText("BENEATH NAMES · VACATED LARIA VAULTS & OUTSIDER TOTEMS", 12, vaultTop + 14);
+
+    var plaques = ["PIAZZA MAURILIA", "VIADOTTO MAURILIA", "CORSO MAURILIA"];
+    for (var i = 0; i < STONES.length; i++) {
+      var lx = STONES[i].u * w;
+      var seatY = skyCutH * 0.62;
+      ctx.strokeStyle = "rgba(139, 109, 75, " + (alpha * 0.65).toFixed(3) + ")";
+      safeSetLineDash(ctx, [3, 3]);
+      ctx.strokeRect(lx - 28, seatY - 18, 56, 28);
+      safeSetLineDash(ctx, []);
+
+      var spin = t * 0.7 + i;
+      var ox = lx + Math.cos(spin) * 2;
+      ctx.strokeStyle = "rgba(126, 244, 255, " + alpha.toFixed(3) + ")";
+      ctx.fillStyle = "rgba(220, 229, 236, " + (alpha * 0.85).toFixed(3) + ")";
+      ctx.beginPath();
+      ctx.moveTo(ox, seatY - 16);
+      ctx.lineTo(ox + 15, seatY - 2);
+      ctx.lineTo(ox, seatY + 12);
+      ctx.lineTo(ox - 15, seatY - 2);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      var pw = Math.max(88, w * 0.11);
+      ctx.fillStyle = "#1c2430";
+      ctx.fillRect(lx - pw * 0.5, vaultTop - 9, pw, 15);
+      ctx.strokeStyle = PALETTE.outsiderChrome;
+      ctx.strokeRect(lx - pw * 0.5, vaultTop - 9, pw, 15);
+      ctx.fillStyle = PALETTE.outsiderChrome;
+      ctx.fillText(plaques[i], lx - pw * 0.44, vaultTop + 2);
+
+      var vy = vaultTop + (h - vaultTop) * 0.56;
+      ctx.strokeStyle = "rgba(139, 109, 75, " + (alpha * 0.78).toFixed(3) + ")";
+      ctx.beginPath();
+      ctx.arc(lx - 22, vy, 18, Math.PI, 0);
+      ctx.lineTo(lx - 4, vy + 18);
+      ctx.lineTo(lx - 40, vy + 18);
+      ctx.closePath();
+      ctx.stroke();
+
+      for (var fp = 0; fp < 4; fp++) {
+        ctx.fillStyle = "rgba(216, 162, 74, " + (alpha * (0.68 - fp * 0.15)).toFixed(3) + ")";
+        drawEllipseSafe(ctx, lx - 28 - fp * 11, vy + 14 + (fp % 2) * 3, 3.2, 1.6);
+        ctx.fill();
+      }
+
+      ctx.fillStyle = "rgba(220, 229, 236, " + (alpha * 0.92).toFixed(3) + ")";
+      ctx.strokeStyle = "rgba(126, 244, 255, " + alpha.toFixed(3) + ")";
+      ctx.beginPath();
+      ctx.moveTo(lx + 18, vy - 18);
+      ctx.lineTo(lx + 30, vy + 16);
+      ctx.lineTo(lx + 6, vy + 16);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+    }
+
+    if (spoken) {
+      var fy = h * 0.50;
+      ctx.strokeStyle = PALETTE.outsiderVolt;
+      ctx.lineWidth = 2.4;
+      ctx.beginPath();
+      ctx.moveTo(0, fy + 8);
+      ctx.lineTo(w * 0.28, fy - 6);
+      ctx.lineTo(w * 0.51, fy + 10);
+      ctx.lineTo(w * 0.74, fy - 8);
+      ctx.lineTo(w, fy + 4);
+      ctx.stroke();
+
+      var tagW = Math.min(w - 24, 368);
+      var tagX = (w - tagW) * 0.5;
+      ctx.fillStyle = "rgba(12, 16, 22, 0.94)";
+      ctx.fillRect(tagX, fy - 15, tagW, 26);
+      ctx.strokeStyle = PALETTE.foundryCrimson;
+      ctx.lineWidth = 1.6;
+      ctx.strokeRect(tagX, fy - 15, tagW, 26);
+      ctx.fillStyle = PALETTE.outsiderChrome;
+      ctx.fillText("MAURILIA [I] \u2260 MAURILIA [II] \u00b7 CONNECTION 0.00", tagX + 12, fy + 2);
+    }
+  }
+
+  function renderMetropolis(ctx, width, height, state) {
+    if (!ctx || width <= 0 || height <= 0) return;
+    var st = state || {};
+    var t = st.reducedMotion ? 0 : (Number(st.time) || 0);
+    var contrast = Number.isFinite(Number(st.metropolisContrast))
+      ? clamp(Number(st.metropolisContrast), 0.25, 1.25)
+      : 0.88;
+    var disc = computeDiscontinuity(st);
+
+    ctx.save();
+    drawSkyAndSkyline(ctx, width, height, t, contrast);
+    drawWetBoulevard(ctx, width, height, t);
+    drawViaductOverpass(ctx, width, height, t);
+    drawGlassBusStation(ctx, width, height, t);
+    drawMunitionsFactory(ctx, width, height, t);
+
+    if (Number.isInteger(st.activeLocus) && st.activeLocus >= 0 && st.activeLocus < STONES.length) {
+      drawActiveLocusFrame(ctx, width, height, st.activeLocus);
+    }
+    drawDepartedGodsCutaway(ctx, width, height, t, disc, Boolean(st.forbiddenTruthSpoken));
+    ctx.restore();
+  }
+
+  function createAudioEngine() {
+    var ac = null;
+    var unlocked = false;
+    var muted = false;
+    var disposed = false;
+    var nodes = null;
+    var lastWaltzStep = -1;
+
+    function buildGraph() {
+      if (nodes || !ac) return;
+      var master = ac.createGain();
+      master.gain.value = muted ? 0 : 0.24;
+      master.connect(ac.destination);
+
+      var bufLen = ac.sampleRate * 2;
+      var noiseBuf = ac.createBuffer(1, bufLen, ac.sampleRate);
+      var nd = noiseBuf.getChannelData(0);
+      var brown = 0;
+      for (var i = 0; i < bufLen; i++) {
+        var white = Math.random() * 2 - 1;
+        brown = (brown + 0.03 * white) / 1.03;
+        nd[i] = brown * 2.6 + (Math.random() > 0.996 ? white * 0.75 : 0);
+      }
+
+      function makeLoopNoise(type, freq, q) {
+        var src = ac.createBufferSource();
+        src.buffer = noiseBuf;
+        src.loop = true;
+        var flt = ac.createBiquadFilter();
+        flt.type = type;
+        flt.frequency.value = freq;
+        flt.Q.value = q;
+        var g = ac.createGain();
+        g.gain.value = 0.0001;
+        src.connect(flt);
+        flt.connect(g);
+        g.connect(master);
+        src.start();
+        return { src: src, flt: flt, gain: g };
+      }
+
+      function makeOsc(type, freq, filterFreq) {
+        var osc = ac.createOscillator();
+        osc.type = type;
+        osc.frequency.value = freq;
+        var flt = ac.createBiquadFilter();
+        flt.type = "lowpass";
+        flt.frequency.value = filterFreq;
+        var g = ac.createGain();
+        g.gain.value = 0.0001;
+        osc.connect(flt);
+        flt.connect(g);
+        g.connect(master);
+        osc.start();
+        return { osc: osc, flt: flt, gain: g };
+      }
+
+      nodes = {
+        master: master,
+        noiseBuf: noiseBuf,
+        rumble: makeLoopNoise("lowpass", 118, 0.8),
+        brakeHiss: makeLoopNoise("bandpass", 3100, 2.4),
+        crackle: makeLoopNoise("highpass", 2300, 0.9),
+        dryWind: makeLoopNoise("bandpass", 370, 1.5),
+        shiftHorn: makeOsc("sawtooth", 146.83, 410),
+        waltzBass: makeOsc("triangle", 146.83, 520),
+        waltzHornA: makeOsc("sawtooth", 293.66, 920),
+        waltzHornB: makeOsc("sawtooth", 369.99, 960),
+        flyStatic: makeOsc("sawtooth", 312, 1050),
+        outsiderHum: makeOsc("sine", 528, 1600)
+      };
+    }
+
+    function unlock() {
+      if (disposed || typeof window === "undefined") return false;
+      var Ctor = window.AudioContext || window.webkitAudioContext;
+      if (!Ctor) return false;
+      try {
+        if (!ac) ac = new Ctor();
+        if (ac.state === "suspended") ac.resume();
+        buildGraph();
+        unlocked = true;
+        return true;
+      } catch (_e) {
+        return false;
+      }
+    }
+
+    function setMuted(flag) {
+      muted = Boolean(flag);
+      if (ac && nodes && !disposed) {
+        nodes.master.gain.setTargetAtTime(muted ? 0 : 0.24, ac.currentTime, 0.05);
+      }
+      return muted;
+    }
+
+    function update(state, graceMetrics, discMetrics) {
+      if (!unlocked || !ac || !nodes || disposed || muted) return;
+      if (ac.state === "suspended") return;
+      var st = state || {};
+      var gm = graceMetrics || {};
+      var dm = discMetrics || {};
+      var now = ac.currentTime;
+      var is1906 = Boolean(st.realTime1906);
+      var grace = is1906 ? 0 : clamp01(gm.retroactiveGrace);
+      var contrast = clamp(Number(st.metropolisContrast) || 0.85, 0.2, 1.2);
+      var locus = Number(st.activeLocus) || 0;
+      var godsVis = clamp01(dm.departedGodsVisibility);
+      var motion = !st.reducedMotion;
+
+      var metroAmt = is1906 ? 0.0001 : (0.14 * contrast * (1 - grace * 0.38));
+      var hissPulse = (!is1906 && motion && Math.sin(now * 1.35) > 0.86) ? 0.045 : 0.004;
+      var hornAmt = is1906 ? 0.0001 : (locus === 2 ? 0.032 : 0.012) * contrast;
+
+      nodes.rumble.gain.gain.setTargetAtTime(metroAmt, now, 0.12);
+      nodes.brakeHiss.gain.gain.setTargetAtTime(is1906 ? 0.0001 : hissPulse * (locus === 0 ? 1.5 : 0.7), now, 0.08);
+      nodes.shiftHorn.gain.gain.setTargetAtTime(hornAmt, now, 0.18);
+
+      nodes.dryWind.gain.gain.setTargetAtTime(is1906 ? 0.12 : 0.0001, now, 0.12);
+      nodes.flyStatic.gain.gain.setTargetAtTime(is1906 ? 0.018 : 0.0001, now, 0.12);
+      if (is1906 && motion) {
+        nodes.flyStatic.osc.frequency.setTargetAtTime(304 + Math.sin(now * 13) * 18, now, 0.04);
+      }
+
+      nodes.crackle.gain.gain.setTargetAtTime(grace > 0.02 ? grace * 0.055 : 0.0001, now, 0.12);
+      nodes.outsiderHum.gain.gain.setTargetAtTime(godsVis > 0.03 ? godsVis * 0.028 : 0.0001, now, 0.15);
+
+      if (!is1906 && grace > 0.02) {
+        var step = Math.floor(now * 2.15) % 12;
+        var beat = step % 3;
+        var bar = Math.floor(step / 3);
+        var roots = [146.83, 110.0, 123.47, 98.0];
+        var thirds = [[293.66, 369.99], [220.0, 277.18], [246.94, 329.63], [196.0, 246.94]];
+        if (step !== lastWaltzStep) {
+          lastWaltzStep = step;
+          var det = motion ? Math.sin(now * 1.9) * 1.6 : 0;
+          nodes.waltzBass.osc.frequency.setTargetAtTime(roots[bar] + det * 0.4, now, 0.02);
+          nodes.waltzHornA.osc.frequency.setTargetAtTime(thirds[bar][0] + det, now, 0.02);
+          nodes.waltzHornB.osc.frequency.setTargetAtTime(thirds[bar][1] - det * 0.8, now, 0.02);
+        }
+        nodes.waltzBass.gain.gain.setTargetAtTime(beat === 0 ? grace * 0.065 : grace * 0.012, now, 0.04);
+        var chordGain = (beat === 1 || beat === 2) ? grace * 0.036 : grace * 0.006;
+        nodes.waltzHornA.gain.gain.setTargetAtTime(chordGain, now, 0.04);
+        nodes.waltzHornB.gain.gain.setTargetAtTime(chordGain * 0.85, now, 0.04);
+      } else {
+        nodes.waltzBass.gain.gain.setTargetAtTime(0.0001, now, 0.08);
+        nodes.waltzHornA.gain.gain.setTargetAtTime(0.0001, now, 0.08);
+        nodes.waltzHornB.gain.gain.setTargetAtTime(0.0001, now, 0.08);
+      }
+    }
+
+    function triggerTone(freq, endFreq, type, dur, peak) {
+      if (!unlocked || !ac || !nodes || disposed || muted) return;
+      var now = ac.currentTime;
+      var osc = ac.createOscillator();
+      var g = ac.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, now);
+      osc.frequency.exponentialRampToValueAtTime(Math.max(24, endFreq), now + dur);
+      g.gain.setValueAtTime(0.0001, now);
+      g.gain.linearRampToValueAtTime(peak, now + 0.018);
+      g.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+      osc.connect(g);
+      g.connect(nodes.master);
+      osc.start(now);
+      osc.stop(now + dur + 0.03);
+    }
+
+    function triggerLocusPulse(locusIndex, state) {
+      var is1906 = Boolean(state && state.realTime1906);
+      if (is1906) {
+        triggerTone(165, 92, "triangle", 0.16, 0.08);
+        return;
+      }
+      if (locusIndex === 0) {
+        triggerTone(659.25, 987.77, "sine", 0.24, 0.08);
+      } else if (locusIndex === 1) {
+        triggerTone(220.0, 146.83, "triangle", 0.30, 0.09);
+      } else {
+        triggerTone(146.83, 207.65, "sawtooth", 0.34, 0.07);
+      }
+    }
+
+    function triggerForbiddenChord() {
+      var freqs = [311.13, 440.0, 659.25, 932.33];
+      for (var i = 0; i < freqs.length; i++) {
+        triggerTone(freqs[i], freqs[i] * 0.985, "sawtooth", 0.85, 0.045);
+      }
+      triggerTone(110.0, 41.2, "sine", 0.95, 0.14);
+    }
+
+    function dispose() {
+      if (disposed) return;
+      disposed = true;
+      if (ac) {
+        try { ac.close(); } catch (_e) {}
+      }
+      ac = null;
+      nodes = null;
+      unlocked = false;
+    }
+
+    return {
+      unlock: unlock,
+      setMuted: setMuted,
+      isMuted: function () { return muted; },
+      update: update,
+      triggerLocusPulse: triggerLocusPulse,
+      triggerForbiddenChord: triggerForbiddenChord,
+      dispose: dispose
+    };
+  }
+
+  return {
+    STONES: STONES,
+    LOCI: STONES,
+    PALETTE: PALETTE,
+    hitTestLocus: hitTestLocus,
+    computeDiscontinuity: computeDiscontinuity,
+    renderMetropolis: renderMetropolis,
+    createAudioEngine: createAudioEngine
+  };
+})();
+</script>
+<script>
+(function () {
+  "use strict";
+  var P = window.MauriliaPostcards, MM = window.MauriliaMetropolis;
+  var $ = function (id) { return document.getElementById(id); };
+  var mq = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
+  var BAND = [0.52, 0.78];
+  var LENSES = [0.20, 0.27, 0.14];
+  var TABS = ["diptych", "map", "city"];
+  var ETIQUETTE = {
+    OBLIGATORY_CALIBRATED_REGRET: ["pleased", "Hosts beam: the metropolis praised, a lost grace mourned \u2014 within the rule."],
+    VULGAR_METROPOLIS_PRAISE: ["disappointed", "Hosts frown: praising only buses and viaducts is thought vulgar."],
+    INSUFFICIENT_POSTCARD_REGRET: ["disappointed", "Hosts wait politely: a little more regret for the old cards is customary."],
+    NAIVE_UNCHANGED_FALLACY: ["admonishing", "Hosts admonish: wishing Maurilia had never changed breaks the rule."],
+    UNMEDIATED_1906_NO_GRACE: ["silent", "Nobody sighs here: standing in 1906 itself, there is nothing to praise."]
+  };
+  var state = {
+    time: 0, activeLocus: 0, loupeX: P.LOCI[0].u, loupeY: P.LOCI[0].v, loupeRadius: LENSES[0],
+    postcardSplit: 0, metropolisContrast: 0.88, realTime1906: false, regretLevel: 0.65,
+    godsProbeDepth: 0, forbiddenTruthSpoken: false, reducedMotion: !!(mq && mq.matches),
+    muted: false, audioUnlocked: false, plateDrawerOpen: false, plateTab: "diptych", plateZoom: 1
+  };
+  var lensIdx = 0, tween = null, dragging = false, lastFocus = null, lastAudio = 0;
+  var grace = null, disc = null;
+  var canvas = $("mrl-stage-canvas"), ctx = canvas.getContext("2d");
+  var horizon = $("mrl-horizon"), loupeEl = $("mrl-loupe"), root = $("mrl-root"), drawer = $("mrl-drawer");
+  var cssW = 0, cssH = 0, dpr = 1, t0 = performance.now();
+  var audio = null;
+  try { audio = MM.createAudioEngine ? MM.createAudioEngine() : null; } catch (e) { audio = null; }
+
+  function clamp(v, a, b) { v = Number(v); if (!isFinite(v)) v = a; return v < a ? a : v > b ? b : v; }
+  function f2(v) { return (Math.round(Number(v) * 100) / 100).toFixed(2); }
+  function setText(id, txt) { var el = $(id); if (el && el.textContent !== txt) el.textContent = txt; }
+  function setWidth(id, frac) { var el = $(id); if (el) el.style.width = (clamp(frac, 0, 1) * 100).toFixed(1) + "%"; }
+
+  function loupePx() { var m = Math.min(cssW, cssH); return clamp(state.loupeRadius * m, 36, Math.max(36, m * 0.45)); }
+  function positionLoupe() {
+    var r = loupePx();
+    loupeEl.style.width = loupeEl.style.height = (2 * r).toFixed(1) + "px";
+    loupeEl.style.left = (state.loupeX * cssW).toFixed(1) + "px";
+    loupeEl.style.top = (state.loupeY * cssH).toFixed(1) + "px";
+    loupeEl.setAttribute("aria-valuenow", String(Math.round(state.loupeX * 100)));
+    loupeEl.setAttribute("aria-valuetext", "Loupe over " + P.LOCI[state.activeLocus].title);
+  }
+  function render() {
+    if (!ctx || !cssW || !cssH) return;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, cssW, cssH);
+    try {
+      if (state.realTime1906) P.renderPostcard(ctx, cssW, cssH, state);
+      else { MM.renderMetropolis(ctx, cssW, cssH, state); P.renderLoupeOverlay(ctx, cssW, cssH, state); }
+    } catch (e) { if (window.console) console.warn("render", e); }
+  }
+  function resize() {
+    var r = horizon.getBoundingClientRect();
+    dpr = Math.min(2.5, window.devicePixelRatio || 1);
+    cssW = Math.max(1, Math.round(r.width)); cssH = Math.max(1, Math.round(r.height));
+    canvas.width = Math.round(cssW * dpr); canvas.height = Math.round(cssH * dpr);
+    positionLoupe(); render();
+  }
+  function etiquetteFor(g) { return ETIQUETTE[g.bandStatus] || ["disappointed", g.citizenVerdict || ""]; }
+
+  function getMetrics() {
+    var g = grace, d = disc, L = P.LOCI[state.activeLocus], S = MM.STONES[state.activeLocus], et = etiquetteFor(g);
+    return {
+      city: "MAURILIA", activeLocus: state.activeLocus, activeLocusId: L.id,
+      provincialStoneId: L.stoneId, provincialStone: L.title, metropolisStoneId: S.stoneId, metropolisStone: S.title,
+      regretLevel: state.regretLevel, obligatoryBand: BAND.slice(), inObligatoryBand: g.inObligatoryBand, bandStatus: g.bandStatus,
+      retroactiveGrace: g.retroactiveGrace, citizenSatisfaction: g.citizenSatisfaction, collodionWarmth: g.collodionWarmth,
+      halftonePitch: g.halftonePitch, drearyRealityFactor: g.drearyRealityFactor, citizenVerdict: g.citizenVerdict,
+      citizenEtiquette: et[0], citizenEtiquetteLine: et[1],
+      realTime1906: state.realTime1906, vantage: state.realTime1906 ? "Inhabit 1906 Provincial Maurilia Directly" : "Postcard Viewed from Metropolis",
+      postcardSplit: state.postcardSplit, loupeX: state.loupeX, loupeY: state.loupeY, loupeRadius: state.loupeRadius,
+      godsProbeDepth: state.godsProbeDepth, forbiddenTruthSpoken: state.forbiddenTruthSpoken,
+      cityName: d.cityName, sameSiteCoordinates: d.sameSiteCoordinates,
+      inhabitantNameAccentContinuity: d.inhabitantNameAccentContinuity, facialFeatureContinuity: d.facialFeatureContinuity,
+      nameAccentContinuityPct: Math.round(d.inhabitantNameAccentContinuity * 100), ontologicalConnection: d.ontologicalConnection,
+      discontinuityIndex: d.discontinuityIndex, departedGodsVisibility: d.departedGodsVisibility,
+      outsiderSettlementRatio: d.outsiderSettlementRatio, citizenHospitality: d.citizenHospitality, colophonWarning: d.colophonWarning,
+      cutawayVisible: !state.realTime1906 && (state.godsProbeDepth > 0.02 || state.forbiddenTruthSpoken),
+      departedOldGod: S.departedOldGod, settledOutsiderGod: S.settledOutsiderGod, sharedCitizenSurname: S.sharedCitizenSurname,
+      plateDrawerOpen: state.plateDrawerOpen, plateTab: state.plateTab, plateZoom: state.plateZoom,
+      reducedMotion: state.reducedMotion, muted: state.muted, audioAvailable: !!audio, audioUnlocked: state.audioUnlocked
+    };
+  }
+  window.__MAURILIA_STATE__ = {};
+
+  function updateDOM() {
+    var g = grace, d = disc, i = state.activeLocus, L = P.LOCI[i], S = MM.STONES[i], et = etiquetteFor(g);
+    root.setAttribute("data-vantage", state.realTime1906 ? "1906" : "metropolis");
+    root.setAttribute("data-clean", String(!state.realTime1906 && state.postcardSplit <= 0.02 && state.godsProbeDepth <= 0.02 && !state.forbiddenTruthSpoken));
+    setText("mrl-vantage-badge", state.realTime1906 ? "Inhabit 1906 Provincial Maurilia Directly" : "Postcard Viewed from Metropolis");
+    setText("mrl-vantage-label", state.realTime1906 ? "Back to postcard" : "Inhabit 1906");
+    $("mrl-vantage-key").setAttribute("aria-checked", state.realTime1906 ? "true" : "false");
+    var tabs = document.querySelectorAll("carte-vignette-tab");
+    for (var k = 0; k < tabs.length; k++) tabs[k].setAttribute("aria-selected", String(+tabs[k].getAttribute("data-locus") === i));
+    setText("mrl-prov-label", state.realTime1906 ? "Before one's eyes \u00b7 1906" : "Postcard \u00b7 " + L.postmark.replace("MAURILIA \u00b7 ", ""));
+    setText("mrl-prov-title", L.title);
+    setText("mrl-prov-body", state.realTime1906 ? L.dreary1906Note : L.postcardNote);
+    setText("mrl-metro-title", S.title);
+    setText("mrl-metro-body", S.subtitle);
+    setText("mrl-regret-readout", f2(state.regretLevel));
+    if (document.activeElement !== $("mrl-regret")) $("mrl-regret").value = String(state.regretLevel);
+    setText("mrl-grace-readout", f2(g.retroactiveGrace));
+    setWidth("mrl-grace-fill", g.retroactiveGrace);
+    var led = $("mrl-etiquette"); led.setAttribute("data-etiquette", et[0]); led.setAttribute("data-band", g.bandStatus);
+    setText("mrl-etiquette-line", et[1]);
+    setText("mrl-etiquette-verdict", g.citizenVerdict || "");
+    if (document.activeElement !== $("mrl-split")) $("mrl-split").value = String(state.postcardSplit);
+    $("mrl-curtain-key").setAttribute("aria-pressed", String(state.postcardSplit > 0.02));
+    setText("mrl-probe-readout", f2(state.godsProbeDepth));
+    if (document.activeElement !== $("mrl-probe")) $("mrl-probe").value = String(state.godsProbeDepth);
+    setText("mrl-continuity-readout", Math.round(d.inhabitantNameAccentContinuity * 100) + "%");
+    setWidth("mrl-continuity-fill", d.inhabitantNameAccentContinuity);
+    setText("mrl-ontology-readout", f2(d.ontologicalConnection));
+    setWidth("mrl-ontology-fill", d.ontologicalConnection);
+    setText("mrl-disc-readout", f2(d.discontinuityIndex));
+    setWidth("mrl-disc-fill", d.discontinuityIndex);
+    setText("mrl-tutelary", (state.godsProbeDepth > 0.02 || state.forbiddenTruthSpoken)
+      ? "Departed: " + S.departedOldGod + " \u00b7 Settled: " + S.settledOutsiderGod + " \u00b7 Surname still " + S.sharedCitizenSurname + "."
+      : "Same surnames, same accents, same faces. Press G to look beneath the names.");
+    $("mrl-forbidden-key").setAttribute("aria-pressed", String(state.forbiddenTruthSpoken));
+    $("mrl-rupture").hidden = !state.forbiddenTruthSpoken;
+    setText("mrl-rupture-whisper", state.forbiddenTruthSpoken ? d.colophonWarning : "");
+    $("mrl-mute-key").setAttribute("aria-pressed", String(state.muted));
+    setText("mrl-mute-label", state.muted ? "Muted" : "Sound");
+    $("mrl-plates-key").setAttribute("aria-pressed", String(state.plateDrawerOpen));
+    drawer.setAttribute("data-plate-tab", state.plateTab);
+    drawer.setAttribute("data-zoom", state.plateZoom > 1 ? "on" : "off");
+    $("mrl-zoom-key").setAttribute("aria-pressed", String(state.plateZoom > 1));
+    var ptabs = drawer.querySelectorAll("plate-tab-key");
+    for (var q = 0; q < ptabs.length; q++) ptabs[q].setAttribute("aria-selected", String(ptabs[q].getAttribute("data-tab") === state.plateTab));
+  }
+  function sync() {
+    grace = P.computeRetroactiveGrace(state);
+    disc = MM.computeDiscontinuity(state);
+    updateDOM(); positionLoupe(); render();
+    var m = getMetrics(), s = window.__MAURILIA_STATE__;
+    for (var key in s) if (!(key in m)) delete s[key];
+    for (var k2 in m) s[k2] = m[k2];
+    s.time = state.time;
+    pushAudio(true);
+    return m;
+  }
+  function pushAudio(force) {
+    if (!audio || !state.audioUnlocked) return;
+    var now = performance.now();
+    if (!force && now - lastAudio < 120) return;
+    lastAudio = now;
+    try { audio.update(state, grace, disc); } catch (e) {}
+  }
+  function unlockAudio() {
+    if (!audio || state.audioUnlocked) return;
+    try { state.audioUnlocked = !!audio.unlock(); audio.setMuted(state.muted); } catch (e) { state.audioUnlocked = false; }
+  }
+
+  function setLocus(idx, opts) {
+    var i = Math.round(clamp(idx, 0, 2));
+    var instant = !opts || opts.instant !== false || state.reducedMotion;
+    var L = P.LOCI[i];
+    state.activeLocus = i;
+    if (instant) { tween = null; state.loupeX = L.u; state.loupeY = L.v; }
+    else tween = { start: performance.now(), dur: 560, fx: state.loupeX, fy: state.loupeY, tx: L.u, ty: L.v };
+    if (audio && state.audioUnlocked) { try { audio.triggerLocusPulse(i, state); } catch (e) {} }
+    return sync();
+  }
+  function setLoupe(x, y, radius) {
+    tween = null;
+    if (x != null) state.loupeX = clamp(x, 0, 1);
+    if (y != null) state.loupeY = clamp(y, 0, 1);
+    if (radius != null) state.loupeRadius = clamp(radius, 0.08, 0.45);
+    var hit = P.hitTestLocus(state.loupeX, state.loupeY);
+    if (hit >= 0) state.activeLocus = hit;
+    return sync();
+  }
+  function setRegret(v) { state.regretLevel = Math.round(clamp(v, 0, 1) * 100) / 100; return sync(); }
+  function setRealTime1906(on) {
+    state.realTime1906 = (on === undefined) ? !state.realTime1906 : !!on;
+    if (audio && state.audioUnlocked) { try { audio.triggerLocusPulse(state.activeLocus, state); } catch (e) {} }
+    return sync();
+  }
+  function setPostcardSplit(v) { state.postcardSplit = clamp(v, 0, 1); return sync(); }
+  function setGodsProbe(v) { state.godsProbeDepth = Math.round(clamp(v, 0, 1) * 100) / 100; return sync(); }
+  function setForbiddenTruth(on) {
+    state.forbiddenTruthSpoken = (on === undefined) ? !state.forbiddenTruthSpoken : !!on;
+    if (state.forbiddenTruthSpoken && audio && state.audioUnlocked) { try { audio.triggerForbiddenChord(); } catch (e) {} }
+    return sync();
+  }
+  function setPlateTab(tab) { if (TABS.indexOf(tab) >= 0) state.plateTab = tab; return sync(); }
+  function togglePlateDrawer(force) {
+    var open = (force === undefined) ? !state.plateDrawerOpen : !!force;
+    if (open === state.plateDrawerOpen) return sync();
+    state.plateDrawerOpen = open;
+    drawer.hidden = !open;
+    if (open) { lastFocus = document.activeElement; var c = $("mrl-close-key"); if (c) c.focus({ preventScroll: true }); }
+    else { state.plateZoom = 1; if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true }); }
+    return sync();
+  }
+  function togglePlateZoom(force) {
+    var on = (force === undefined) ? !(state.plateZoom > 1) : !!force;
+    state.plateZoom = on ? 1.75 : 1;
+    return sync();
+  }
+  function cycleLens() { lensIdx = (lensIdx + 1) % LENSES.length; return setLoupe(null, null, LENSES[lensIdx]); }
+  function stepProbe() { var p = state.godsProbeDepth; return setGodsProbe(p >= 0.995 ? 0 : Math.min(1, (Math.floor(p * 4 + 1e-6) + 1) / 4)); }
+  function toggleMute(force) {
+    unlockAudio();
+    state.muted = (force === undefined) ? !state.muted : !!force;
+    if (audio) { try { audio.setMuted(state.muted); } catch (e) {} }
+    return sync();
+  }
+
+  window.__MAURILIA_API__ = {
+    setLocus: function (i) { return setLocus(i, { instant: true }); },
+    setLoupe: setLoupe, setRegret: setRegret, setRealTime1906: setRealTime1906, setPostcardSplit: setPostcardSplit,
+    setGodsProbe: setGodsProbe, setForbiddenTruth: setForbiddenTruth, togglePlateDrawer: togglePlateDrawer,
+    togglePlateZoom: togglePlateZoom, setPlateTab: setPlateTab, toggleMute: toggleMute, getMetrics: getMetrics,
+    getState: function () { return JSON.parse(JSON.stringify(state)); }
+  };
+
+  function act(el) {
+    var a = el.getAttribute("data-act");
+    unlockAudio();
+    if (a === "locus") setLocus(+el.getAttribute("data-locus"), { instant: false });
+    else if (a === "vantage") setRealTime1906();
+    else if (a === "probe") stepProbe();
+    else if (a === "forbidden") setForbiddenTruth();
+    else if (a === "lens") cycleLens();
+    else if (a === "curtain") setPostcardSplit(state.postcardSplit > 0.02 ? 0 : 0.5);
+    else if (a === "mute") toggleMute();
+    else if (a === "plates") togglePlateDrawer();
+    else if (a === "plates-close") togglePlateDrawer(false);
+    else if (a === "zoom") togglePlateZoom();
+    else if (a === "tab") setPlateTab(el.getAttribute("data-tab"));
+  }
+  document.addEventListener("click", function (e) {
+    var el = e.target && e.target.closest ? e.target.closest("[data-act]") : null;
+    if (el) { act(el); return; }
+    if (e.target === drawer) togglePlateDrawer(false);
+  });
+  $("mrl-regret").addEventListener("input", function (e) { unlockAudio(); setRegret(e.target.value); });
+  $("mrl-split").addEventListener("input", function (e) { setPostcardSplit(e.target.value); });
+  $("mrl-probe").addEventListener("input", function (e) { setGodsProbe(e.target.value); });
+
+  canvas.addEventListener("pointerdown", function (e) {
+    unlockAudio();
+    var r = horizon.getBoundingClientRect(), nx = (e.clientX - r.left) / r.width, ny = (e.clientY - r.top) / r.height;
+    var hit = P.hitTestLocus(nx, ny);
+    if (hit >= 0) setLocus(hit, { instant: false });
+    else if (state.reducedMotion) setLoupe(nx, ny);
+    else { tween = { start: performance.now(), dur: 420, fx: state.loupeX, fy: state.loupeY, tx: clamp(nx, 0, 1), ty: clamp(ny, 0, 1), free: true }; }
+  });
+  loupeEl.addEventListener("pointerdown", function (e) {
+    unlockAudio(); dragging = true; tween = null;
+    try { loupeEl.setPointerCapture(e.pointerId); } catch (err) {}
+    loupeEl.focus({ preventScroll: true }); e.preventDefault();
+  });
+  loupeEl.addEventListener("pointermove", function (e) {
+    if (!dragging) return;
+    var r = horizon.getBoundingClientRect();
+    setLoupe((e.clientX - r.left) / r.width, (e.clientY - r.top) / r.height);
+  });
+  function endDrag() { dragging = false; }
+  loupeEl.addEventListener("pointerup", endDrag);
+  loupeEl.addEventListener("pointercancel", endDrag);
+  $("mrl-plate-stage").addEventListener("pointermove", function (e) {
+    var r = e.currentTarget.getBoundingClientRect();
+    drawer.style.setProperty("--mrl-zx", (clamp((e.clientX - r.left) / r.width, 0, 1) * 100).toFixed(1) + "%");
+    drawer.style.setProperty("--mrl-zy", (clamp((e.clientY - r.top) / r.height, 0, 1) * 100).toFixed(1) + "%");
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var t = e.target, k = e.key, isInput = t && t.tagName === "INPUT";
+    var actEl = t && t.getAttribute ? (t.getAttribute("data-act") ? t : null) : null;
+    unlockAudio();
+    if (actEl && (k === "Enter" || k === " " || k === "Spacebar")) { e.preventDefault(); act(actEl); return; }
+    if (k === "Escape") { if (state.plateDrawerOpen) { e.preventDefault(); togglePlateDrawer(false); } return; }
+    var lk = k.length === 1 ? k.toLowerCase() : k;
+    if (state.plateDrawerOpen) {
+      if (lk === "z") { e.preventDefault(); togglePlateZoom(); }
+      else if (lk === "p") { e.preventDefault(); togglePlateDrawer(false); }
+      else if (lk === "1" || lk === "2" || lk === "3") { e.preventDefault(); setPlateTab(TABS[+lk - 1]); }
+      else if (k === "Tab") {
+        var f = drawer.querySelectorAll("[tabindex='0']"), first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+      return;
+    }
+    if (k.indexOf("Arrow") === 0) {
+      if (isInput) return;
+      e.preventDefault();
+      if (t === loupeEl) {
+        var st = e.shiftKey ? 0.06 : 0.02;
+        setLoupe(state.loupeX + (k === "ArrowLeft" ? -st : k === "ArrowRight" ? st : 0), state.loupeY + (k === "ArrowUp" ? -st : k === "ArrowDown" ? st : 0));
+      } else if (k === "ArrowLeft" || k === "ArrowRight") setLocus((state.activeLocus + (k === "ArrowLeft" ? 2 : 1)) % 3, { instant: false });
+      else setRegret(state.regretLevel + (k === "ArrowUp" ? 0.01 : -0.01));
+      return;
+    }
+    var map = { "1": function () { setLocus(0, { instant: false }); }, "2": function () { setLocus(1, { instant: false }); },
+      "3": function () { setLocus(2, { instant: false }); }, t: function () { setRealTime1906(); }, l: cycleLens,
+      c: function () { setPostcardSplit(state.postcardSplit > 0.02 ? 0 : 0.5); }, g: stepProbe,
+      f: function () { setForbiddenTruth(); }, m: function () { toggleMute(); }, p: function () { togglePlateDrawer(); },
+      z: function () { togglePlateZoom(); } };
+    if (map[lk]) { e.preventDefault(); map[lk](); }
+  });
+
+  function onMotionPref() { state.reducedMotion = !!(mq && mq.matches); if (state.reducedMotion) { state.time = 0; tween = null; } sync(); }
+  if (mq) { if (mq.addEventListener) mq.addEventListener("change", onMotionPref); else if (mq.addListener) mq.addListener(onMotionPref); }
+  window.addEventListener("resize", resize);
+  if (window.ResizeObserver) new ResizeObserver(resize).observe(horizon);
+
+  function frame(now) {
+    var moved = false;
+    if (tween) {
+      var k = clamp((now - tween.start) / tween.dur, 0, 1), ez = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+      state.loupeX = tween.fx + (tween.tx - tween.fx) * ez; state.loupeY = tween.fy + (tween.ty - tween.fy) * ez;
+      if (k >= 1) { var fr = tween.free; tween = null; if (fr) { setLoupe(state.loupeX, state.loupeY); } else sync(); }
+      else positionLoupe();
+      moved = true;
+    }
+    if (!state.reducedMotion) { state.time = (now - t0) / 1000; render(); }
+    else if (moved) render();
+    pushAudio(false);
+    requestAnimationFrame(frame);
+  }
+  resize();
+  sync();
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

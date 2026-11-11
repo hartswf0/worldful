@@ -1,0 +1,2284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ZORA · Cities &amp; Memory 4 — Ars-Memoriae Honeycomb &amp; Nine-Locus Score</title>
+  <style>
+    :root {
+      --zora-weathering: 0;
+      --zora-vellum-hi: #f6ecda;
+      --zora-vellum-mid: #ecdcc0;
+      --zora-vellum-lo: #dec8a2;
+      --zora-chalk-hi: #e2ded6;
+      --zora-chalk-lo: #cbc5ba;
+      --zora-void-hi: #171821;
+      --zora-void-lo: #101118;
+
+      --zora-ink: #281d15;
+      --zora-ink-soft: #594433;
+      --zora-ink-faint: #7b634d;
+      --zora-verdigris: #23685a;
+      --zora-verdigris-soft: rgba(35, 104, 90, 0.14);
+      --zora-vermilion: #a53122;
+      --zora-vermilion-soft: rgba(165, 49, 34, 0.14);
+      --zora-lapis: #264b7c;
+      --zora-lapis-soft: rgba(38, 75, 124, 0.14);
+      --zora-gold: #9e7322;
+      --zora-gold-bright: #c5973c;
+      --zora-rule: rgba(82, 58, 38, 0.28);
+      --zora-rule-strong: rgba(74, 50, 31, 0.52);
+      --zora-surface: rgba(251, 244, 230, 0.78);
+      --zora-surface-elevated: rgba(246, 235, 214, 0.92);
+      --zora-shadow: 0 8px 26px rgba(42, 28, 16, 0.11);
+
+      --zora-serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+      --zora-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      min-height: 100%;
+      overflow-x: hidden;
+      font-family: var(--zora-serif);
+      background: var(--zora-vellum-mid);
+      color: var(--zora-ink);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Explicit block/flex/grid definitions for bespoke Ars-Memoriae custom elements */
+    zora-codex,
+    memoria-rubric,
+    topography-banner,
+    codex-incipit,
+    codex-titulus,
+    codex-subtitulus,
+    codex-colophon,
+    sigil-seal,
+    seal-rubric,
+    seal-metric,
+    organ-folio,
+    stave-folio-leaf,
+    stave-stage-frame,
+    stage-marginalia,
+    stave-canvas-well,
+    erasure-epitaph,
+    epitaph-verse,
+    epitaph-actions,
+    neume-ribbon,
+    chronicle-whisper,
+    whisper-prose,
+    cadence-clavichord,
+    memoria-armarium,
+    alveolus-plate,
+    reliquary-plate,
+    armarium-head,
+    alveolus-comb,
+    alveolus-cell,
+    cell-crown,
+    cell-locus-title,
+    cell-token-slot,
+    cell-actions,
+    alveolus-gloss,
+    scholar-reliquary,
+    memoria-token,
+    token-caption,
+    reliquary-gloss,
+    chorographia-plate-vault,
+    plate-vault-sheet,
+    plate-vault-masthead,
+    plate-vault-heading,
+    plate-tab-strip,
+    plate-diptych-gallery,
+    chorographia-plate-card,
+    plate-scroll-port,
+    plate-colophon-caption,
+    plate-pending-notice {
+      display: block;
+    }
+
+    marginalia-chip,
+    neume-punctum,
+    whisper-rubric,
+    token-sigil,
+    token-relation-tag {
+      display: inline-flex;
+    }
+
+    /* Dynamic Phase Palettes: living -> weathering -> forgotten */
+    zora-codex {
+      min-height: 100vh;
+      width: 100%;
+      max-width: 100vw;
+      overflow-x: hidden;
+      padding: 8px 16px 10px;
+      background:
+        radial-gradient(ellipse at 18% 10%, rgba(255, 250, 240, 0.65), transparent 60%),
+        radial-gradient(ellipse at 85% 88%, rgba(196, 168, 126, 0.25), transparent 58%),
+        linear-gradient(
+          180deg,
+          color-mix(in srgb, var(--zora-vellum-hi) calc((1 - var(--zora-weathering)) * 100%), var(--zora-chalk-hi)) 0%,
+          color-mix(in srgb, var(--zora-vellum-mid) calc((1 - var(--zora-weathering)) * 100%), var(--zora-chalk-lo)) 58%,
+          color-mix(in srgb, var(--zora-vellum-lo) calc((1 - var(--zora-weathering)) * 100%), #bdb7ac) 100%
+        );
+      color: var(--zora-ink);
+      transition: background 0.55s ease, color 0.45s ease;
+    }
+
+    zora-codex[data-zora-phase="weathering"] {
+      --zora-ink: #332922;
+      --zora-ink-soft: #5f5349;
+      --zora-ink-faint: #786d63;
+      --zora-verdigris: #35675d;
+      --zora-vermilion: #983b2e;
+      --zora-lapis: #355278;
+      --zora-rule: rgba(92, 80, 68, 0.32);
+      --zora-rule-strong: rgba(84, 72, 60, 0.54);
+      --zora-surface: rgba(238, 233, 223, 0.82);
+      --zora-surface-elevated: rgba(232, 226, 214, 0.94);
+    }
+
+    zora-codex[data-zora-phase="forgotten"] {
+      --zora-ink: #dfe8f6;
+      --zora-ink-soft: #a9bbd4;
+      --zora-ink-faint: #7f93b0;
+      --zora-verdigris: #7ec4b6;
+      --zora-verdigris-soft: rgba(126, 196, 182, 0.16);
+      --zora-vermilion: #e07a68;
+      --zora-vermilion-soft: rgba(224, 122, 104, 0.17);
+      --zora-lapis: #8fb8eb;
+      --zora-lapis-soft: rgba(143, 184, 235, 0.17);
+      --zora-gold: #d8c394;
+      --zora-gold-bright: #ecdba8;
+      --zora-rule: rgba(164, 186, 216, 0.24);
+      --zora-rule-strong: rgba(188, 208, 236, 0.48);
+      --zora-surface: rgba(26, 29, 40, 0.86);
+      --zora-surface-elevated: rgba(31, 35, 48, 0.94);
+      --zora-shadow: 0 10px 30px rgba(4, 6, 12, 0.5);
+      background:
+        radial-gradient(ellipse at 50% 18%, rgba(92, 118, 158, 0.15), transparent 62%),
+        linear-gradient(180deg, var(--zora-void-hi) 0%, #13151e 55%, var(--zora-void-lo) 100%);
+      color: var(--zora-ink);
+    }
+
+    .zora-codex-frame {
+      max-width: 1380px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* Masthead & Topography Banner */
+    memoria-rubric {
+      border: 1px solid var(--zora-rule-strong);
+      background: var(--zora-surface);
+      box-shadow: var(--zora-shadow);
+      padding: 6px 14px;
+      margin-bottom: 8px;
+      position: relative;
+    }
+
+    memoria-rubric::before {
+      content: "";
+      position: absolute;
+      inset: 2px;
+      border: 1px solid var(--zora-rule);
+      pointer-events: none;
+    }
+
+    topography-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    codex-incipit {
+      flex: 1 1 400px;
+      min-width: 0;
+    }
+
+    codex-titulus {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 1.24rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--zora-ink);
+      line-height: 1.15;
+    }
+
+    .zora-rubric-cap {
+      color: var(--zora-vermilion);
+      font-size: 1.38rem;
+      letter-spacing: 0.1em;
+    }
+
+    .zora-series-tag {
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--zora-verdigris);
+      padding: 1px 7px;
+      border: 1px solid var(--zora-rule-strong);
+      background: var(--zora-verdigris-soft);
+    }
+
+    codex-subtitulus {
+      margin-top: 3px;
+      font-size: 0.82rem;
+      font-style: italic;
+      color: var(--zora-ink-soft);
+      line-height: 1.3;
+    }
+
+    codex-colophon {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(112px, auto));
+      gap: 7px;
+      flex: 0 1 auto;
+    }
+
+    sigil-seal {
+      padding: 4px 9px;
+      border: 1px solid var(--zora-rule-strong);
+      background: var(--zora-surface-elevated);
+      min-width: 0;
+    }
+
+    sigil-seal[data-seal-alert="forgotten"] {
+      border-color: var(--zora-vermilion);
+      background: var(--zora-vermilion-soft);
+    }
+
+    seal-rubric {
+      font-size: 0.63rem;
+      text-transform: uppercase;
+      letter-spacing: 0.11em;
+      color: var(--zora-ink-faint);
+      line-height: 1.15;
+    }
+
+    seal-metric {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--zora-ink);
+      margin-top: 1px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Main Two-Leaf Codex Spread */
+    organ-folio {
+      display: grid;
+      grid-template-columns: minmax(0, 1.24fr) minmax(380px, 0.96fr);
+      gap: 12px;
+      align-items: start;
+    }
+
+    stave-folio-leaf,
+    memoria-armarium {
+      min-width: 0;
+    }
+
+    /* Left Leaf: Canvas Stage + Neume Ribbon + Chronicle Whisper + Clavichord */
+    stave-stage-frame {
+      border: 1px solid var(--zora-rule-strong);
+      background: var(--zora-surface-elevated);
+      box-shadow: var(--zora-shadow);
+      padding: 6px;
+      position: relative;
+    }
+
+    stage-marginalia {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 2px 6px 5px;
+      font-size: 0.72rem;
+      color: var(--zora-ink-soft);
+      border-bottom: 1px solid var(--zora-rule);
+      margin-bottom: 5px;
+      flex-wrap: wrap;
+    }
+
+    marginalia-chip {
+      align-items: center;
+      gap: 5px;
+      font-family: var(--zora-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.03em;
+    }
+
+    .zora-pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--zora-verdigris);
+      display: inline-block;
+    }
+
+    zora-codex[data-zora-phase="forgotten"] .zora-pulse-dot {
+      background: var(--zora-lapis);
+      box-shadow: 0 0 6px var(--zora-lapis);
+    }
+
+    stave-canvas-well {
+      position: relative;
+      width: 100%;
+      height: clamp(296px, 43vh, 368px);
+      overflow: hidden;
+      border: 1px solid var(--zora-rule);
+    }
+
+    #zora-stage-canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+
+    /* Erasure Epitaph rendered in static document flow above canvas so zero loci (I-IX) are occluded */
+    erasure-epitaph {
+      display: none;
+      margin-bottom: 6px;
+      padding: 8px 12px;
+      background: rgba(17, 20, 29, 0.94);
+      border: 1px solid rgba(186, 208, 238, 0.58);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+      color: #e6eef9;
+    }
+
+    erasure-epitaph[data-epitaph-open="true"] {
+      display: block;
+    }
+
+    .epitaph-kicker {
+      font-family: var(--zora-mono);
+      font-size: 0.64rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #9ec0ea;
+      margin-bottom: 3px;
+      display: block;
+    }
+
+    epitaph-verse {
+      font-size: 0.82rem;
+      font-style: italic;
+      line-height: 1.36;
+      color: #f0f5fc;
+    }
+
+    epitaph-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 6px;
+      flex-wrap: wrap;
+    }
+
+    .epitaph-ghost-hint {
+      font-size: 0.71rem;
+      color: #afc4df;
+    }
+
+    .epitaph-action-group {
+      display: inline-flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    /* 9-Note Square Neume Stave Ribbon */
+    neume-ribbon {
+      display: grid;
+      grid-template-columns: repeat(9, minmax(0, 1fr));
+      gap: 4px;
+      margin-top: 6px;
+    }
+
+    .neume-step-key {
+      appearance: none;
+      border: 1px solid var(--zora-rule-strong);
+      background: var(--zora-surface);
+      color: var(--zora-ink);
+      font-family: var(--zora-serif);
+      padding: 4px 2px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-width: 0;
+      line-height: 1.1;
+      transition: background 0.16s ease, border-color 0.16s ease, transform 0.12s ease;
+    }
+
+    .neume-step-key:hover {
+      border-color: var(--zora-verdigris);
+      background: var(--zora-verdigris-soft);
+    }
+
+    .neume-step-key[data-neume-state="next"] {
+      border-color: var(--zora-verdigris);
+      box-shadow: inset 0 0 0 1px var(--zora-verdigris);
+    }
+
+    .neume-step-key[data-neume-state="walked"] {
+      background: rgba(158, 115, 34, 0.15);
+      border-color: var(--zora-gold);
+    }
+
+    .neume-step-key[data-neume-state="locked"] {
+      background: var(--zora-lapis-soft);
+      border-color: var(--zora-lapis);
+    }
+
+    .neume-step-key[data-neume-active="true"] {
+      transform: translateY(-1px);
+      box-shadow: 0 0 0 1.5px var(--zora-vermilion);
+    }
+
+    .neume-roman {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .neume-pitch {
+      font-family: var(--zora-mono);
+      font-size: 0.62rem;
+      color: var(--zora-ink-soft);
+    }
+
+    /* Chronicle Whisper Bar */
+    chronicle-whisper {
+      margin-top: 8px;
+      padding: 8px 12px;
+      border: 1px solid var(--zora-rule-strong);
+      border-left: 4px solid var(--zora-verdigris);
+      background: var(--zora-surface);
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+
+    chronicle-whisper[data-whisper-tone="refusal"] {
+      border-left-color: var(--zora-vermilion);
+      background: var(--zora-vermilion-soft);
+    }
+
+    chronicle-whisper[data-whisper-tone="bound"] {
+      border-left-color: var(--zora-lapis);
+    }
+
+    chronicle-whisper[data-whisper-tone="forgotten"] {
+      border-left-color: var(--zora-gold-bright);
+    }
+
+    whisper-rubric {
+      font-family: var(--zora-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 2px 6px;
+      border: 1px solid var(--zora-rule-strong);
+      color: var(--zora-vermilion);
+      flex: 0 0 auto;
+    }
+
+    whisper-prose {
+      font-size: 0.81rem;
+      line-height: 1.35;
+      color: var(--zora-ink);
+      min-width: 0;
+    }
+
+    /* Cadence Clavichord Controls */
+    cadence-clavichord {
+      margin-top: 8px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 6px;
+    }
+
+    .clavichord-stop {
+      appearance: none;
+      border: 1px solid var(--zora-rule-strong);
+      background: var(--zora-surface-elevated);
+      color: var(--zora-ink);
+      font-family: var(--zora-serif);
+      font-size: 0.76rem;
+      font-weight: 600;
+      padding: 6px 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 5px;
+      min-height: 34px;
+      min-width: 0;
+      text-align: left;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+
+    .clavichord-stop:hover {
+      background: var(--zora-verdigris-soft);
+      border-color: var(--zora-verdigris);
+    }
+
+    .clavichord-stop[data-stop-variant="primary"] {
+      border-color: var(--zora-verdigris);
+      background: var(--zora-verdigris-soft);
+    }
+
+    .clavichord-stop[data-stop-variant="refusal-test"]:hover {
+      border-color: var(--zora-vermilion);
+      background: var(--zora-vermilion-soft);
+    }
+
+    .clavichord-stop[data-stop-variant="learned"] {
+      border-color: var(--zora-gold);
+      grid-column: span 2;
+    }
+
+    .clavichord-stop-label {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .zora-kbd {
+      font-family: var(--zora-mono);
+      font-size: 0.64rem;
+      font-weight: 600;
+      padding: 1px 4px;
+      border: 1px solid var(--zora-rule-strong);
+      background: var(--zora-surface);
+      color: var(--zora-ink-soft);
+      flex: 0 0 auto;
+    }
+
+    /* Right Leaf: 9-Cell Honeycomb Musical Staff & Scholar's Reliquary */
+    memoria-armarium {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .armarium-plate {
+      border: 1px solid var(--zora-rule-strong);
+      background: var(--zora-surface);
+      box-shadow: var(--zora-shadow);
+      padding: 7px 9px;
+    }
+
+    armarium-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
+      border-bottom: 1px solid var(--zora-rule);
+      padding-bottom: 3px;
+      margin-bottom: 5px;
+      flex-wrap: wrap;
+    }
+
+    .armarium-title {
+      font-size: 0.84rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--zora-ink);
+    }
+
+    .armarium-note {
+      font-size: 0.72rem;
+      font-style: italic;
+      color: var(--zora-ink-soft);
+    }
+
+    /* 9-Cell Honeycomb Musical Staff */
+    alveolus-comb {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 5px;
+    }
+
+    alveolus-cell {
+      position: relative;
+      border: 1px solid var(--zora-rule-strong);
+      background: var(--zora-surface-elevated);
+      padding: 5px 6px;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 3px;
+      clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px), 0 8px);
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    alveolus-cell[data-cell-state="next"] {
+      border-color: var(--zora-verdigris);
+      box-shadow: inset 0 0 0 1px var(--zora-verdigris);
+    }
+
+    alveolus-cell[data-cell-state="walked"] {
+      border-color: var(--zora-gold);
+    }
+
+    alveolus-cell[data-cell-state="locked"] {
+      background: color-mix(in srgb, var(--zora-surface-elevated) 72%, var(--zora-lapis-soft));
+      border-color: var(--zora-lapis);
+    }
+
+    alveolus-cell[data-cell-active="true"] {
+      box-shadow: inset 0 0 0 1.5px var(--zora-vermilion);
+    }
+
+    alveolus-cell[data-cell-refused="true"] {
+      border-color: var(--zora-vermilion);
+      background: var(--zora-vermilion-soft);
+    }
+
+    cell-crown {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+    }
+
+    .alveolus-pitch-tag {
+      font-family: var(--zora-mono);
+      font-size: 0.66rem;
+      font-weight: 700;
+      color: var(--zora-vermilion);
+    }
+
+    .alveolus-status-pill {
+      font-family: var(--zora-mono);
+      font-size: 0.59rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 1px 4px;
+      border: 1px solid var(--zora-rule);
+      color: var(--zora-ink-soft);
+    }
+
+    alveolus-cell[data-cell-state="locked"] .alveolus-status-pill {
+      border-color: var(--zora-lapis);
+      color: var(--zora-lapis);
+      font-weight: 700;
+    }
+
+    .alveolus-sound-trigger {
+      appearance: none;
+      border: none;
+      background: transparent;
+      padding: 0;
+      margin: 0;
+      text-align: left;
+      cursor: pointer;
+      color: inherit;
+      font-family: inherit;
+      width: 100%;
+      min-width: 0;
+    }
+
+    cell-locus-title {
+      font-size: 0.77rem;
+      font-weight: 700;
+      line-height: 1.18;
+      color: var(--zora-ink);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .alveolus-sound-trigger:hover cell-locus-title {
+      color: var(--zora-verdigris);
+      text-decoration: underline;
+    }
+
+    cell-token-slot {
+      font-size: 0.68rem;
+      line-height: 1.22;
+      color: var(--zora-ink-soft);
+      min-height: 27px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .alveolus-bound-line {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 700;
+      color: var(--zora-ink);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .alveolus-relation-badge {
+      font-family: var(--zora-mono);
+      font-size: 0.58rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0 4px;
+      border: 1px solid currentColor;
+      flex: 0 0 auto;
+    }
+
+    .alveolus-relation-badge[data-relation="affinity"] {
+      color: var(--zora-verdigris);
+      background: var(--zora-verdigris-soft);
+    }
+
+    .alveolus-relation-badge[data-relation="contrast"] {
+      color: var(--zora-vermilion);
+      background: var(--zora-vermilion-soft);
+    }
+
+    cell-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+      margin-top: 1px;
+    }
+
+    .alveolus-mini-key {
+      appearance: none;
+      border: 1px solid var(--zora-rule-strong);
+      background: var(--zora-surface);
+      color: var(--zora-ink);
+      font-family: var(--zora-serif);
+      font-size: 0.65rem;
+      font-weight: 600;
+      padding: 2px 5px;
+      cursor: pointer;
+      line-height: 1.2;
+      min-height: 22px;
+    }
+
+    .alveolus-mini-key:hover:not(:disabled) {
+      border-color: var(--zora-verdigris);
+      background: var(--zora-verdigris-soft);
+    }
+
+    .alveolus-mini-key:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .alveolus-displace-key:hover {
+      border-color: var(--zora-vermilion) !important;
+      background: var(--zora-vermilion-soft) !important;
+    }
+
+    alveolus-gloss {
+      margin-top: 7px;
+      padding: 6px 8px;
+      border: 1px solid var(--zora-rule);
+      background: var(--zora-surface-elevated);
+      font-size: 0.74rem;
+      line-height: 1.32;
+      color: var(--zora-ink-soft);
+    }
+
+    /* Scholar's Reliquary: 9 Ars-Memoriae Categories */
+    scholar-reliquary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 5px;
+    }
+
+    .memoria-token-key {
+      appearance: none;
+      border: 1px solid var(--zora-rule-strong);
+      background: var(--zora-surface-elevated);
+      color: var(--zora-ink);
+      font-family: var(--zora-serif);
+      padding: 5px 6px;
+      cursor: pointer;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+
+    .memoria-token-key:hover {
+      border-color: var(--zora-lapis);
+      background: var(--zora-lapis-soft);
+    }
+
+    .memoria-token-key[data-token-selected="true"] {
+      border-color: var(--zora-vermilion);
+      box-shadow: inset 0 0 0 1px var(--zora-vermilion);
+      background: var(--zora-vermilion-soft);
+    }
+
+    .memoria-token-key[data-token-bound="true"] {
+      opacity: 0.78;
+      border-style: dashed;
+    }
+
+    .token-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+      width: 100%;
+    }
+
+    token-sigil {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--zora-gold);
+    }
+
+    token-relation-tag {
+      font-family: var(--zora-mono);
+      font-size: 0.56rem;
+      text-transform: uppercase;
+      padding: 0 3px;
+      border: 1px solid var(--zora-rule);
+      color: var(--zora-ink-soft);
+    }
+
+    token-relation-tag[data-rel-preview="affinity"] {
+      color: var(--zora-verdigris);
+      border-color: var(--zora-verdigris);
+    }
+
+    token-relation-tag[data-rel-preview="contrast"] {
+      color: var(--zora-vermilion);
+      border-color: var(--zora-vermilion);
+    }
+
+    token-caption {
+      font-size: 0.71rem;
+      font-weight: 700;
+      line-height: 1.16;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+    }
+
+    reliquary-gloss {
+      margin-top: 6px;
+      font-size: 0.72rem;
+      line-height: 1.3;
+      color: var(--zora-ink-soft);
+      padding: 5px 8px;
+      border: 1px solid var(--zora-rule);
+      background: var(--zora-surface-elevated);
+    }
+
+    /* Chorographia & Architectural Plate Vault Drawer */
+    .zora-vault-trigger {
+      border-color: var(--zora-gold);
+      font-family: var(--zora-serif);
+      font-size: 0.68rem;
+      padding: 2px 8px;
+      min-height: 21px;
+    }
+
+    chorographia-plate-vault {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 40;
+      background: rgba(14, 15, 22, 0.82);
+      padding: 16px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    chorographia-plate-vault[data-vault-open="true"] {
+      display: flex;
+    }
+
+    plate-vault-sheet {
+      width: 100%;
+      max-width: 1240px;
+      margin: auto;
+      border: 1px solid var(--zora-rule-strong);
+      background: var(--zora-surface-elevated);
+      color: var(--zora-ink);
+      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.52);
+      padding: 12px 14px 14px;
+    }
+
+    plate-vault-masthead {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--zora-rule-strong);
+      margin-bottom: 10px;
+    }
+
+    plate-vault-heading {
+      font-size: 0.94rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--zora-ink);
+    }
+
+    plate-tab-strip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .zora-plate-tab[aria-selected="true"] {
+      border-color: var(--zora-vermilion);
+      background: var(--zora-vermilion-soft);
+    }
+
+    plate-diptych-gallery {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      align-items: start;
+    }
+
+    chorographia-plate-vault[data-plate-tab="map"] plate-diptych-gallery,
+    chorographia-plate-vault[data-plate-tab="image"] plate-diptych-gallery {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    chorographia-plate-vault[data-plate-tab="map"] chorographia-plate-card[data-plate-slot="image"],
+    chorographia-plate-vault[data-plate-tab="image"] chorographia-plate-card[data-plate-slot="map"] {
+      display: none;
+    }
+
+    chorographia-plate-card {
+      border: 1px solid var(--zora-rule-strong);
+      background: var(--zora-surface);
+      padding: 8px;
+      min-width: 0;
+    }
+
+    plate-scroll-port {
+      width: 100%;
+      max-height: 62vh;
+      overflow: auto;
+      border: 1px solid var(--zora-rule);
+      background: rgba(18, 19, 26, 0.08);
+    }
+
+    .zora-plate-img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-width: 100%;
+    }
+
+    chorographia-plate-vault[data-plate-loupe="zoom"] .zora-plate-img {
+      width: 175%;
+      max-width: none;
+    }
+
+    plate-pending-notice {
+      padding: 28px 14px;
+      text-align: center;
+      font-style: italic;
+      font-size: 0.8rem;
+      color: var(--zora-ink-soft);
+    }
+
+    plate-colophon-caption {
+      margin-top: 6px;
+      font-size: 0.74rem;
+      line-height: 1.34;
+      color: var(--zora-ink-soft);
+    }
+
+    /* Accessible Focus Rings */
+    button:focus-visible,
+    #zora-stage-canvas:focus-visible {
+      outline: 2px solid var(--zora-vermilion);
+      outline-offset: 2px;
+    }
+
+    /* Responsive Breakpoints: Tablet & 390x844 Mobile */
+    @media (max-width: 1060px) {
+      organ-folio {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      codex-colophon {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: 100%;
+      }
+
+      plate-diptych-gallery {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      zora-codex {
+        padding: 8px 10px 18px;
+      }
+
+      memoria-rubric {
+        padding: 8px 10px;
+      }
+
+      codex-titulus {
+        font-size: 1.06rem;
+      }
+
+      stave-canvas-well {
+        height: 264px;
+      }
+
+      erasure-epitaph {
+        padding: 7px 9px;
+      }
+
+      chorographia-plate-vault {
+        padding: 8px;
+      }
+
+      plate-vault-sheet {
+        padding: 9px 10px 12px;
+      }
+
+      epitaph-verse {
+        font-size: 0.74rem;
+      }
+
+      .neume-roman {
+        font-size: 0.61rem;
+      }
+
+      .neume-pitch {
+        font-size: 0.55rem;
+      }
+
+      cadence-clavichord {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .clavichord-stop {
+        min-height: 38px;
+        font-size: 0.74rem;
+      }
+
+      .clavichord-stop[data-stop-variant="learned"] {
+        grid-column: 1 / -1;
+      }
+
+      alveolus-comb {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      alveolus-cell:last-child {
+        grid-column: 1 / -1;
+      }
+
+      .alveolus-mini-key {
+        min-height: 28px;
+        padding: 3px 6px;
+      }
+
+      scholar-reliquary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .memoria-token-key:last-child {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <zora-codex id="zora-codex" data-zora-phase="living" data-reduced-motion="false">
+    <memoria-rubric class="zora-codex-frame" role="banner">
+      <topography-banner>
+        <codex-incipit>
+          <codex-titulus role="heading" aria-level="1">
+            <strong class="zora-rubric-cap">ZORA</strong>
+            <em class="zora-series-tag">Chapter I · Cities &amp; Memory 4</em>
+          </codex-titulus>
+          <codex-subtitulus id="zora-approach-subtitle">
+            Beyond six rivers and three mountain ranges rises Zora — an unalterable nine-locus musical score &amp; Ars-Memoriae honeycomb.
+          </codex-subtitulus>
+        </codex-incipit>
+
+        <codex-colophon aria-label="Zora Codex Telemetry">
+          <sigil-seal id="seal-topography">
+            <seal-rubric>Topography &amp; Mode</seal-rubric>
+            <seal-metric id="metric-topography">6 Rivers · 3 Ranges · D Dorian</seal-metric>
+          </sigil-seal>
+          <sigil-seal id="seal-score">
+            <seal-rubric>Street Score</seal-rubric>
+            <seal-metric id="metric-score">0 / 9 Notes · Next I</seal-metric>
+          </sigil-seal>
+          <sigil-seal id="seal-invariance">
+            <seal-rubric>Invariance</seal-rubric>
+            <seal-metric id="metric-invariance">0 / 9 Cells Locked</seal-metric>
+          </sigil-seal>
+          <sigil-seal id="seal-earth" data-seal-alert="none">
+            <seal-rubric>Earthly Stone</seal-rubric>
+            <seal-metric id="metric-earth">100% · Living Pulse</seal-metric>
+          </sigil-seal>
+        </codex-colophon>
+      </topography-banner>
+    </memoria-rubric>
+
+    <organ-folio class="zora-codex-frame" role="main">
+      <stave-folio-leaf>
+        <stave-stage-frame>
+          <stage-marginalia>
+            <marginalia-chip id="stage-folio-caption">
+              Fol. VIIr · Six Rivers Converging into the Nine-Locus Dorian Stave
+            </marginalia-chip>
+            <marginalia-chip id="stage-pulse-caption">
+              <i class="zora-pulse-dot" aria-hidden="true"></i>
+              <strong id="metric-pulse-label">Pulse 64 BPM · Living Stone</strong>
+              <button
+                type="button"
+                class="alveolus-mini-key zora-vault-trigger"
+                id="cmd-open-plates"
+                aria-expanded="false"
+                aria-controls="zora-plate-vault"
+              >
+                Chorographia &amp; Plate [V]
+              </button>
+            </marginalia-chip>
+          </stage-marginalia>
+
+          <erasure-epitaph id="zora-erasure-epitaph" data-epitaph-open="false" aria-hidden="true">
+            <strong class="epitaph-kicker">Cap. I · Zora Erased from Earth · Mental Ghost-Score Remaining</strong>
+            <epitaph-verse>
+              “Forced to remain motionless and always the same, in order to be more easily remembered, Zora has languished, disintegrated, disappeared. The earth has forgotten her.”
+            </epitaph-verse>
+            <epitaph-actions>
+              <em class="epitaph-ghost-hint">Click any silverpoint locus (I–IX) below to sound her disembodied crystal harmonics.</em>
+              <epitaph-action-bar class="epitaph-action-group">
+                <button type="button" class="alveolus-mini-key" id="epitaph-play-ghost">Play Ghost-Score [P]</button>
+                <button type="button" class="alveolus-mini-key" id="epitaph-restore-earth">Restore Earth [R]</button>
+              </epitaph-action-bar>
+            </epitaph-actions>
+          </erasure-epitaph>
+
+          <stave-canvas-well>
+            <canvas
+              id="zora-stage-canvas"
+              tabindex="0"
+              role="application"
+              aria-label="Interactive Ars-Memoriae elevation of Zora: three mountain ranges, six rivers, and nine architectural loci from Copper Clock to Harbor Alley. Press 1 through 9 to walk in strict order."
+            ></canvas>
+          </stave-canvas-well>
+
+          <neume-ribbon id="zora-neume-ribbon" role="group" aria-label="Nine-note Dorian musical street sequence"></neume-ribbon>
+        </stave-stage-frame>
+
+        <chronicle-whisper id="zora-chronicle-whisper" data-whisper-tone="calm" aria-live="polite" role="status">
+          <whisper-rubric id="zora-whisper-rubric">Incipit</whisper-rubric>
+          <whisper-prose id="zora-whisper-prose">
+            Beyond six rivers and three mountain ranges rises Zora. Walk Locus I (The Copper Clock, D4) to enter her unalterable street score.
+          </whisper-prose>
+        </chronicle-whisper>
+
+        <cadence-clavichord role="group" aria-label="Score and Memory Organ Manual">
+          <button type="button" class="clavichord-stop" data-stop-variant="primary" id="cmd-walk-next">
+            <strong class="clavichord-stop-label" id="label-walk-next">Walk Next Note</strong>
+            <kbd class="zora-kbd">N</kbd>
+          </button>
+          <button type="button" class="clavichord-stop" id="cmd-play-score">
+            <strong class="clavichord-stop-label" id="label-play-score">Perform 9-Note Score</strong>
+            <kbd class="zora-kbd">P</kbd>
+          </button>
+          <button type="button" class="clavichord-stop" id="cmd-pin-memory">
+            <strong class="clavichord-stop-label" id="label-pin-memory">Pin Selected Memory</strong>
+            <kbd class="zora-kbd">B</kbd>
+          </button>
+          <button type="button" class="clavichord-stop" data-stop-variant="refusal-test" id="cmd-test-displace">
+            <strong class="clavichord-stop-label">Test Note Displacement</strong>
+            <kbd class="zora-kbd">D</kbd>
+          </button>
+          <button type="button" class="clavichord-stop" data-stop-variant="learned" id="cmd-memorize-all">
+            <strong class="clavichord-stop-label">Memorize All 9 (Learned Men)</strong>
+            <kbd class="zora-kbd">L</kbd>
+          </button>
+          <button type="button" class="clavichord-stop" id="cmd-restore-earth">
+            <strong class="clavichord-stop-label">Release Memory / Restore</strong>
+            <kbd class="zora-kbd">R</kbd>
+          </button>
+          <button type="button" class="clavichord-stop" id="cmd-toggle-mute" aria-pressed="false">
+            <strong class="clavichord-stop-label" id="label-toggle-mute">Sound: On</strong>
+            <kbd class="zora-kbd">M</kbd>
+          </button>
+        </cadence-clavichord>
+      </stave-folio-leaf>
+
+      <memoria-armarium>
+        <alveolus-plate class="armarium-plate" role="region" aria-label="Nine-Cell Honeycomb Musical Staff">
+          <armarium-head>
+            <strong class="armarium-title">I–IX · Honeycomb Locus-Organ</strong>
+            <em class="armarium-note">Not a single note may be altered or displaced</em>
+          </armarium-head>
+          <alveolus-comb id="zora-alveolus-comb"></alveolus-comb>
+          <alveolus-gloss id="zora-alveolus-gloss">
+            Select or walk Locus I (The Copper Clock) in strict sequence; pin scholarly tokens by Affinity or Contrast to test how invariance weathers Zora’s stone.
+          </alveolus-gloss>
+        </alveolus-plate>
+
+        <reliquary-plate class="armarium-plate" role="region" aria-label="Scholar's Reliquary Memory Categories">
+          <armarium-head>
+            <strong class="armarium-title">Scholar’s Reliquary · Ars Memoriae</strong>
+            <em class="armarium-note" id="zora-armed-indicator">Active relic ready for [B] or walked-cell pin</em>
+          </armarium-head>
+          <scholar-reliquary id="zora-scholar-reliquary"></scholar-reliquary>
+          <reliquary-gloss id="zora-reliquary-gloss"></reliquary-gloss>
+        </reliquary-plate>
+      </memoria-armarium>
+    </organ-folio>
+
+    <chorographia-plate-vault
+      id="zora-plate-vault"
+      data-vault-open="false"
+      data-plate-tab="diptych"
+      data-plate-loupe="fit"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Chorographia Zorae Map and Architectural Plate"
+      aria-hidden="true"
+    >
+      <plate-vault-sheet>
+        <plate-vault-masthead>
+          <plate-vault-heading>
+            Tabula VII · Chorographia Zorae &amp; Effigies Urbis
+          </plate-vault-heading>
+          <plate-tab-strip role="tablist" aria-label="Archival Plate Views">
+            <button type="button" role="tab" class="alveolus-mini-key zora-plate-tab" data-tab-target="diptych" aria-selected="true">
+              Diptych (Map + Plate)
+            </button>
+            <button type="button" role="tab" class="alveolus-mini-key zora-plate-tab" data-tab-target="map" aria-selected="false">
+              Chorographia Map
+            </button>
+            <button type="button" role="tab" class="alveolus-mini-key zora-plate-tab" data-tab-target="image" aria-selected="false">
+              City Illumination
+            </button>
+            <button type="button" class="alveolus-mini-key" id="cmd-plate-loupe" aria-pressed="false">
+              Loupe 1.75×
+            </button>
+            <button type="button" class="alveolus-mini-key" id="cmd-close-plates">
+              Close [Esc]
+            </button>
+          </plate-tab-strip>
+        </plate-vault-masthead>
+
+        <plate-diptych-gallery>
+          <chorographia-plate-card data-plate-slot="map">
+            <plate-scroll-port>
+              <img
+                id="zora-map-img"
+                class="zora-plate-img"
+                src="map.png"
+                loading="lazy"
+                alt="Chorographia Zorae: 16th-century hand-colored copperplate map showing three mountain ranges, six winding rivers converging into Zora's musical stave roadway, nine hexagonal honeycomb loci from Copper Clock to Harbor Alley, and eastward wind erosion"
+              >
+              <plate-pending-notice id="zora-map-notice" hidden>
+                Chorographia plate (map.png · 1600×1200) — archival copperplate impression pending on disk.
+              </plate-pending-notice>
+            </plate-scroll-port>
+            <plate-colophon-caption>
+              <strong>Chorographia Zorae (map.png · 1600×1200)</strong> — Six rivers descending three mountain ranges into Zora’s interlocking honeycomb alveoli and unalterable nine-locus street score (I Horologium Cupreum → IX Angiportus ad Portum).
+            </plate-colophon-caption>
+          </chorographia-plate-card>
+
+          <chorographia-plate-card data-plate-slot="image">
+            <plate-scroll-port>
+              <img
+                id="zora-city-img"
+                class="zora-plate-img"
+                src="image.png"
+                loading="lazy"
+                alt="Effigies Zorae: panoramic Renaissance painting of Zora beyond six rivers and three mountain ranges, transitioning from living copper and limestone into invariant honeycomb cells and wind-drifted dust leaving only the silverpoint ghost-score"
+              >
+              <plate-pending-notice id="zora-image-notice" hidden>
+                City illumination (image.png · 1600×1000) — archival painting pending on disk.
+              </plate-pending-notice>
+            </plate-scroll-port>
+            <plate-colophon-caption>
+              <strong>Effigies Urbis Zorae (image.png · 1600×1000)</strong> — Held motionless and invariant so the world’s most learned men can remember every stone, earthly Zora languishes and dissolves into wind-scoured ash while her crystal ghost-score endures.
+            </plate-colophon-caption>
+          </chorographia-plate-card>
+        </plate-diptych-gallery>
+      </plate-vault-sheet>
+    </chorographia-plate-vault>
+  </zora-codex>
+
+  <script src="layers/nine_loci_score.js"></script>
+  <script src="layers/disintegration.js"></script>
+  <script>
+    (function () {
+      "use strict";
+
+      var ScoreAPI = window.ZoraNineLociScore;
+      var DisintegrationAPI = window.ZoraDisintegration;
+      if (!ScoreAPI || !DisintegrationAPI) {
+        return;
+      }
+
+      var codexEl = document.getElementById("zora-codex");
+      var canvasEl = document.getElementById("zora-stage-canvas");
+      var neumeRibbonEl = document.getElementById("zora-neume-ribbon");
+      var alveolusCombEl = document.getElementById("zora-alveolus-comb");
+      var alveolusGlossEl = document.getElementById("zora-alveolus-gloss");
+      var reliquaryEl = document.getElementById("zora-scholar-reliquary");
+      var reliquaryGlossEl = document.getElementById("zora-reliquary-gloss");
+      var armedIndicatorEl = document.getElementById("zora-armed-indicator");
+
+      var metricTopographyEl = document.getElementById("metric-topography");
+      var metricScoreEl = document.getElementById("metric-score");
+      var metricInvarianceEl = document.getElementById("metric-invariance");
+      var metricEarthEl = document.getElementById("metric-earth");
+      var sealEarthEl = document.getElementById("seal-earth");
+      var metricPulseLabelEl = document.getElementById("metric-pulse-label");
+
+      var whisperEl = document.getElementById("zora-chronicle-whisper");
+      var whisperRubricEl = document.getElementById("zora-whisper-rubric");
+      var whisperProseEl = document.getElementById("zora-whisper-prose");
+      var epitaphEl = document.getElementById("zora-erasure-epitaph");
+
+      var cmdWalkNext = document.getElementById("cmd-walk-next");
+      var labelWalkNext = document.getElementById("label-walk-next");
+      var cmdPlayScore = document.getElementById("cmd-play-score");
+      var labelPlayScore = document.getElementById("label-play-score");
+      var cmdPinMemory = document.getElementById("cmd-pin-memory");
+      var labelPinMemory = document.getElementById("label-pin-memory");
+      var cmdTestDisplace = document.getElementById("cmd-test-displace");
+      var cmdMemorizeAll = document.getElementById("cmd-memorize-all");
+      var cmdRestoreEarth = document.getElementById("cmd-restore-earth");
+      var cmdToggleMute = document.getElementById("cmd-toggle-mute");
+      var labelToggleMute = document.getElementById("label-toggle-mute");
+      var epitaphPlayGhost = document.getElementById("epitaph-play-ghost");
+      var epitaphRestoreEarth = document.getElementById("epitaph-restore-earth");
+
+      var plateVaultEl = document.getElementById("zora-plate-vault");
+      var cmdOpenPlates = document.getElementById("cmd-open-plates");
+      var cmdClosePlates = document.getElementById("cmd-close-plates");
+      var cmdPlateLoupe = document.getElementById("cmd-plate-loupe");
+      var mapImgEl = document.getElementById("zora-map-img");
+      var cityImgEl = document.getElementById("zora-city-img");
+      var mapNoticeEl = document.getElementById("zora-map-notice");
+      var imageNoticeEl = document.getElementById("zora-image-notice");
+      var plateTabBtns = plateVaultEl
+        ? Array.prototype.slice.call(plateVaultEl.querySelectorAll(".zora-plate-tab"))
+        : [];
+
+      var reducedMotionQuery =
+        typeof window.matchMedia === "function"
+          ? window.matchMedia("(prefers-reduced-motion: reduce)")
+          : null;
+      var isReducedMotion = Boolean(reducedMotionQuery && reducedMotionQuery.matches);
+
+      var selectedTokenId = ScoreAPI.TOKENS[0].id;
+      var tokenArmedByClick = false;
+      var lastWhisperTone = "calm";
+      var lastRefusedCellIndex = -1;
+      var refusalClearTimer = null;
+
+      var score = ScoreAPI.createEngine({ muted: false });
+
+      var renderer = DisintegrationAPI.createRenderer(canvasEl, {
+        reducedMotion: isReducedMotion,
+        onEarthForgotten: function (metrics) {
+          lastWhisperTone = "forgotten";
+          setWhisper(
+            "Forgotten",
+            "Forced to remain motionless and always the same so she may be remembered, earthly Zora has disintegrated into wind-borne dust. Only her nine-note crystal ghost-score endures.",
+            "forgotten"
+          );
+          syncTelemetryAndPhase(score.getState(), metrics);
+        },
+        onPhaseChange: function (_phase, metrics) {
+          syncTelemetryAndPhase(score.getState(), metrics);
+        }
+      });
+
+      // Keep DOM metrics strictly synchronized even when tests call renderer.step() with large dtSeconds or fastForwardDisintegration()
+      var rawStep = renderer.step;
+      renderer.step = function (dtSeconds) {
+        if (typeof dtSeconds === "number" && isFinite(dtSeconds) && dtSeconds > 0.2) {
+          var remaining = Math.min(dtSeconds, 60);
+          var lastRes;
+          while (remaining > 0.0001) {
+            var chunk = Math.min(remaining, 0.1);
+            lastRes = rawStep(chunk);
+            remaining -= chunk;
+          }
+          renderer.renderOnce();
+          syncTelemetryAndPhase(score.getState(), renderer.getMetrics());
+          return lastRes;
+        }
+        var res = rawStep(dtSeconds);
+        syncTelemetryAndPhase(score.getState(), renderer.getMetrics());
+        return res;
+      };
+
+      var rawFastForward = renderer.fastForwardDisintegration;
+      renderer.fastForwardDisintegration = function () {
+        var metrics = rawFastForward();
+        syncTelemetryAndPhase(score.getState(), metrics);
+        return metrics;
+      };
+
+      function applyReducedMotion(flag) {
+        isReducedMotion = Boolean(flag);
+        codexEl.setAttribute("data-reduced-motion", isReducedMotion ? "true" : "false");
+        renderer.setReducedMotion(isReducedMotion);
+        syncTelemetryAndPhase(score.getState(), renderer.getMetrics());
+      }
+
+      if (reducedMotionQuery) {
+        var onMotionPrefChange = function (ev) {
+          applyReducedMotion(Boolean(ev.matches));
+        };
+        if (typeof reducedMotionQuery.addEventListener === "function") {
+          reducedMotionQuery.addEventListener("change", onMotionPrefChange);
+        } else if (typeof reducedMotionQuery.addListener === "function") {
+          reducedMotionQuery.addListener(onMotionPrefChange);
+        }
+      }
+      applyReducedMotion(isReducedMotion);
+
+      function setWhisper(rubric, text, tone) {
+        whisperRubricEl.textContent = rubric;
+        whisperProseEl.textContent = text;
+        whisperEl.setAttribute("data-whisper-tone", tone || "calm");
+      }
+
+      function pickFirstUnboundTokenId(bindings) {
+        var used = {};
+        for (var i = 0; i < bindings.length; i++) {
+          if (bindings[i]) {
+            used[bindings[i].tokenId] = true;
+          }
+        }
+        if (!used[selectedTokenId]) {
+          return selectedTokenId;
+        }
+        for (var t = 0; t < ScoreAPI.TOKENS.length; t++) {
+          if (!used[ScoreAPI.TOKENS[t].id]) {
+            return ScoreAPI.TOKENS[t].id;
+          }
+        }
+        return selectedTokenId;
+      }
+
+      // Build static DOM structures once so focus and handles remain stable
+      var neumeRefs = [];
+      var cellRefs = [];
+      var tokenRefs = [];
+
+      function buildNeumeRibbon() {
+        for (var i = 0; i < ScoreAPI.LOCI.length; i++) {
+          (function (locus) {
+            var btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "neume-step-key";
+            btn.setAttribute("data-locus-index", String(locus.index));
+            btn.setAttribute(
+              "aria-label",
+              "Locus " + locus.roman + ": " + locus.name + " (" + locus.noteName + ")"
+            );
+
+            var romanEl = document.createElement("neume-punctum");
+            romanEl.className = "neume-roman";
+            romanEl.textContent = locus.roman;
+
+            var pitchEl = document.createElement("neume-punctum");
+            pitchEl.className = "neume-pitch";
+            pitchEl.textContent = locus.noteName;
+
+            btn.appendChild(romanEl);
+            btn.appendChild(pitchEl);
+            btn.addEventListener("click", function () {
+              score.walkLocus(locus.index);
+            });
+
+            neumeRibbonEl.appendChild(btn);
+            neumeRefs.push({ button: btn, romanEl: romanEl, pitchEl: pitchEl });
+          })(ScoreAPI.LOCI[i]);
+        }
+      }
+
+      function buildAlveolusComb() {
+        for (var i = 0; i < ScoreAPI.LOCI.length; i++) {
+          (function (locus) {
+            var cell = document.createElement("alveolus-cell");
+            cell.setAttribute("data-locus-index", String(locus.index));
+            cell.setAttribute("data-locus-id", locus.id);
+
+            var crown = document.createElement("cell-crown");
+            var pitchTag = document.createElement("marginalia-chip");
+            pitchTag.className = "alveolus-pitch-tag";
+            pitchTag.textContent = locus.roman + " · " + locus.noteName;
+
+            var statusPill = document.createElement("marginalia-chip");
+            statusPill.className = "alveolus-status-pill";
+            statusPill.textContent = "Unwalked";
+
+            crown.appendChild(pitchTag);
+            crown.appendChild(statusPill);
+
+            var soundBtn = document.createElement("button");
+            soundBtn.type = "button";
+            soundBtn.className = "alveolus-sound-trigger";
+            soundBtn.setAttribute(
+              "aria-label",
+              "Walk or sound Locus " + locus.roman + " " + locus.name + " (" + locus.noteName + ")"
+            );
+
+            var titleEl = document.createElement("cell-locus-title");
+            titleEl.textContent = locus.shortName;
+            soundBtn.appendChild(titleEl);
+
+            soundBtn.addEventListener("click", function () {
+              score.walkLocus(locus.index);
+            });
+            cell.addEventListener("mouseenter", function () {
+              renderer.setHoveredLocus(locus.index);
+            });
+            cell.addEventListener("mouseleave", function () {
+              renderer.setHoveredLocus(-1);
+            });
+
+            var slotEl = document.createElement("cell-token-slot");
+
+            var actionsEl = document.createElement("cell-actions");
+            var pinOrUnsealBtn = document.createElement("button");
+            pinOrUnsealBtn.type = "button";
+            pinOrUnsealBtn.className = "alveolus-mini-key alveolus-pin-key";
+            pinOrUnsealBtn.textContent = "Pin";
+
+            pinOrUnsealBtn.addEventListener("click", function () {
+              var st = score.getState();
+              if (st.bindings[locus.index]) {
+                score.unbindLocus(locus.index);
+              } else {
+                var tokId = selectedTokenId || pickFirstUnboundTokenId(st.bindings);
+                var res = score.bindToken(locus.index, tokId);
+                if (res && res.bound) {
+                  tokenArmedByClick = false;
+                  selectedTokenId = pickFirstUnboundTokenId(score.getState().bindings);
+                  renderAll(score.getState());
+                } else if (res && res.reason === "locus_unwalked") {
+                  score.walkLocus(locus.index);
+                }
+              }
+            });
+
+            var displaceBtn = document.createElement("button");
+            displaceBtn.type = "button";
+            displaceBtn.className = "alveolus-mini-key alveolus-displace-key";
+            displaceBtn.textContent = "⇄ Swap";
+            displaceBtn.title = "Attempt to alter or displace Locus " + locus.roman + " in Zora's score";
+            displaceBtn.setAttribute(
+              "aria-label",
+              "Attempt to displace Locus " + locus.roman + " note"
+            );
+            displaceBtn.addEventListener("click", function () {
+              score.attemptDisplace(locus.index, (locus.index + 1) % ScoreAPI.LOCI.length);
+            });
+
+            actionsEl.appendChild(pinOrUnsealBtn);
+            actionsEl.appendChild(displaceBtn);
+
+            cell.appendChild(crown);
+            cell.appendChild(soundBtn);
+            cell.appendChild(slotEl);
+            cell.appendChild(actionsEl);
+
+            alveolusCombEl.appendChild(cell);
+            cellRefs.push({
+              cell: cell,
+              statusPill: statusPill,
+              slotEl: slotEl,
+              pinOrUnsealBtn: pinOrUnsealBtn,
+              displaceBtn: displaceBtn
+            });
+          })(ScoreAPI.LOCI[i]);
+        }
+      }
+
+      function buildScholarReliquary() {
+        for (var t = 0; t < ScoreAPI.TOKENS.length; t++) {
+          (function (token) {
+            var btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "memoria-token-key";
+            btn.setAttribute("data-token-id", token.id);
+            btn.setAttribute("data-token-category", token.category);
+
+            var topRow = document.createElement("memoria-token");
+            topRow.className = "token-top-row";
+
+            var sigilEl = document.createElement("token-sigil");
+            sigilEl.textContent = token.glyph;
+
+            var relTag = document.createElement("token-relation-tag");
+            relTag.textContent = "Relic";
+
+            topRow.appendChild(sigilEl);
+            topRow.appendChild(relTag);
+
+            var captionEl = document.createElement("token-caption");
+            captionEl.textContent = token.shortLabel;
+
+            btn.appendChild(topRow);
+            btn.appendChild(captionEl);
+
+            btn.addEventListener("click", function () {
+              selectedTokenId = token.id;
+              tokenArmedByClick = true;
+              renderAll(score.getState());
+            });
+
+            reliquaryEl.appendChild(btn);
+            tokenRefs.push({
+              token: token,
+              button: btn,
+              relTag: relTag,
+              captionEl: captionEl
+            });
+          })(ScoreAPI.TOKENS[t]);
+        }
+      }
+
+      function syncTelemetryAndPhase(state, metrics) {
+        var m = metrics || renderer.getMetrics();
+        var topo = ScoreAPI.TOPOGRAPHY;
+
+        metricTopographyEl.textContent =
+          m.riversCount + " Rivers · " + m.mountainRangesCount + " Ranges · " + topo.mode;
+
+        if (state.walkedCount >= ScoreAPI.LOCI.length) {
+          metricScoreEl.textContent = "9 / 9 Notes · Complete";
+        } else {
+          var nextLoc = ScoreAPI.LOCI[Math.max(0, state.nextRequiredIndex)];
+          metricScoreEl.textContent =
+            state.walkedCount + " / 9 Notes · Next " + nextLoc.roman + " (" + nextLoc.noteName + ")";
+        }
+
+        metricInvarianceEl.textContent =
+          state.lockedCount + " / 9 Cells Locked (" + m.frozenLociCount + " Frozen)";
+
+        var earthPct = Math.round(m.earthlyIntegrity * 100);
+        var weatheringVal = Math.max(0, Math.min(1, 1 - m.earthlyIntegrity));
+        codexEl.style.setProperty("--zora-weathering", weatheringVal.toFixed(3));
+
+        var uiPhase = "living";
+        if (m.isForgottenByEarth) {
+          uiPhase = "forgotten";
+        } else if (state.lockedCount > 0 || m.phase === "WEATHERING" || m.phase === "DISINTEGRATING") {
+          uiPhase = "weathering";
+        }
+        codexEl.setAttribute("data-zora-phase", uiPhase);
+
+        if (m.isForgottenByEarth) {
+          metricEarthEl.textContent = "FORGOTTEN BY EARTH (0%)";
+          sealEarthEl.setAttribute("data-seal-alert", "forgotten");
+          metricPulseLabelEl.textContent = "0 BPM · Disembodied Ghost-Score";
+          epitaphEl.setAttribute("data-epitaph-open", "true");
+          epitaphEl.setAttribute("aria-hidden", "false");
+        } else if (state.lockedCount === 9) {
+          metricEarthEl.textContent = earthPct + "% · Disintegrating";
+          sealEarthEl.setAttribute("data-seal-alert", "forgotten");
+          metricPulseLabelEl.textContent = "0 BPM · Eroding into Wind";
+          epitaphEl.setAttribute("data-epitaph-open", "false");
+          epitaphEl.setAttribute("aria-hidden", "true");
+        } else if (state.lockedCount > 0) {
+          metricEarthEl.textContent = earthPct + "% · Calcining Stone";
+          sealEarthEl.setAttribute("data-seal-alert", "none");
+          metricPulseLabelEl.textContent =
+            "Pulse " + m.cityPulseBpm + " BPM · " + state.lockedCount + "/9 Motionless";
+          epitaphEl.setAttribute("data-epitaph-open", "false");
+          epitaphEl.setAttribute("aria-hidden", "true");
+        } else {
+          metricEarthEl.textContent = "100% · Living Stone";
+          sealEarthEl.setAttribute("data-seal-alert", "none");
+          metricPulseLabelEl.textContent = "Pulse " + m.cityPulseBpm + " BPM · Living Stone";
+          epitaphEl.setAttribute("data-epitaph-open", "false");
+          epitaphEl.setAttribute("aria-hidden", "true");
+        }
+      }
+
+      function renderAll(state) {
+        var focusLocusIdx =
+          state.activeLocus >= 0
+            ? state.activeLocus
+            : Math.min(ScoreAPI.LOCI.length - 1, Math.max(0, state.nextRequiredIndex));
+        var focusLocus = ScoreAPI.LOCI[focusLocusIdx];
+        var selToken = ScoreAPI.getToken(selectedTokenId) || ScoreAPI.TOKENS[0];
+
+        // 1. Update 9 Neume Ribbon keys
+        for (var n = 0; n < neumeRefs.length; n++) {
+          var nRef = neumeRefs[n];
+          var nState = "unwalked";
+          if (state.bindings[n]) {
+            nState = "locked";
+          } else if (n <= state.walkedUpTo) {
+            nState = "walked";
+          } else if (n === state.nextRequiredIndex) {
+            nState = "next";
+          }
+          nRef.button.setAttribute("data-neume-state", nState);
+          nRef.button.setAttribute("data-neume-active", n === state.activeLocus ? "true" : "false");
+        }
+
+        // 2. Update 9 Honeycomb Cells
+        for (var i = 0; i < cellRefs.length; i++) {
+          var ref = cellRefs[i];
+          var locus = ScoreAPI.LOCI[i];
+          var binding = state.bindings[i];
+          var isWalked = i <= state.walkedUpTo;
+          var isNext = i === state.nextRequiredIndex;
+
+          var cState = "unwalked";
+          if (binding) {
+            cState = "locked";
+            ref.statusPill.textContent = "Locked";
+          } else if (isWalked) {
+            cState = "walked";
+            ref.statusPill.textContent = "Living";
+          } else if (isNext) {
+            cState = "next";
+            ref.statusPill.textContent = "Next";
+          } else {
+            ref.statusPill.textContent = "Locked Order";
+          }
+
+          ref.cell.setAttribute("data-cell-state", cState);
+          ref.cell.setAttribute("data-cell-active", i === state.activeLocus ? "true" : "false");
+          ref.cell.setAttribute("data-cell-refused", i === lastRefusedCellIndex ? "true" : "false");
+
+          // Populate slot
+          while (ref.slotEl.firstChild) {
+            ref.slotEl.removeChild(ref.slotEl.firstChild);
+          }
+
+          if (binding) {
+            var bLine = document.createElement("alveolus-bound");
+            bLine.className = "alveolus-bound-line";
+
+            var badge = document.createElement("marginalia-chip");
+            badge.className = "alveolus-relation-badge";
+            badge.setAttribute("data-relation", binding.relation);
+            badge.textContent = binding.relation === "affinity" ? "Affinity" : "Contrast";
+
+            var tokText = document.createElement("marginalia-chip");
+            tokText.textContent = binding.glyph + " " + binding.shortLabel;
+
+            bLine.appendChild(badge);
+            bLine.appendChild(tokText);
+            ref.slotEl.appendChild(bLine);
+            ref.cell.title = binding.mnemonicRule;
+
+            ref.pinOrUnsealBtn.disabled = false;
+            ref.pinOrUnsealBtn.textContent = "Unseal";
+            ref.pinOrUnsealBtn.setAttribute(
+              "aria-label",
+              "Unseal " + binding.shortLabel + " from Locus " + locus.roman
+            );
+          } else if (isWalked) {
+            var evalPreview = ScoreAPI.evaluateRelation(i, selToken.id);
+            var relWord = evalPreview && evalPreview.relation === "affinity" ? "Affinity" : "Contrast";
+            ref.slotEl.textContent = "Open cell · " + relWord + " w/ " + selToken.shortLabel;
+            ref.cell.title = locus.livingMotionDesc;
+
+            ref.pinOrUnsealBtn.disabled = false;
+            ref.pinOrUnsealBtn.textContent = "Pin " + selToken.glyph;
+            ref.pinOrUnsealBtn.setAttribute(
+              "aria-label",
+              "Pin " + selToken.shortLabel + " into Locus " + locus.roman
+            );
+          } else {
+            ref.slotEl.textContent = isNext ? "Walk next (" + locus.noteName + ")" : "Walk " + ScoreAPI.LOCI[state.nextRequiredIndex].roman + " first";
+            ref.cell.title = locus.stoneDetail;
+
+            ref.pinOrUnsealBtn.disabled = true;
+            ref.pinOrUnsealBtn.textContent = "Unwalked";
+            ref.pinOrUnsealBtn.setAttribute("aria-label", "Walk street up to Locus " + locus.roman + " before pinning");
+          }
+        }
+
+        // 3. Active Honeycomb Gloss
+        var activeBinding = state.bindings[focusLocusIdx];
+        if (activeBinding) {
+          alveolusGlossEl.textContent =
+            focusLocus.latin +
+            " [" +
+            activeBinding.relation.toUpperCase() +
+            " · " +
+            activeBinding.title +
+            "]: " +
+            activeBinding.mnemonicRule;
+        } else if (focusLocusIdx <= state.walkedUpTo) {
+          alveolusGlossEl.textContent =
+            focusLocus.latin + " (" + focusLocus.noteName + ") — " + focusLocus.stoneDetail + " " + focusLocus.livingMotionDesc;
+        } else {
+          alveolusGlossEl.textContent =
+            "Next required step: " +
+            focusLocus.latin +
+            " (" +
+            focusLocus.noteName +
+            ") — " +
+            focusLocus.stoneDetail;
+        }
+
+        // 4. Update 9 Scholar's Reliquary Tokens
+        var boundMap = {};
+        for (var b = 0; b < state.bindings.length; b++) {
+          if (state.bindings[b]) {
+            boundMap[state.bindings[b].tokenId] = state.bindings[b];
+          }
+        }
+
+        for (var t = 0; t < tokenRefs.length; t++) {
+          var tRef = tokenRefs[t];
+          var tok = tRef.token;
+          var isSel = tok.id === selToken.id;
+          var boundRec = boundMap[tok.id] || null;
+
+          tRef.button.setAttribute("data-token-selected", isSel ? "true" : "false");
+          tRef.button.setAttribute("data-token-bound", boundRec ? "true" : "false");
+          tRef.button.setAttribute("aria-pressed", isSel ? "true" : "false");
+
+          if (boundRec) {
+            tRef.relTag.textContent = "In " + boundRec.roman;
+            tRef.relTag.setAttribute("data-rel-preview", boundRec.relation);
+          } else {
+            var relEval = ScoreAPI.evaluateRelation(focusLocusIdx, tok.id);
+            var rType = relEval ? relEval.relation : "contrast";
+            tRef.relTag.textContent = rType === "affinity" ? "Affinity" : "Contrast";
+            tRef.relTag.setAttribute("data-rel-preview", rType);
+          }
+        }
+
+        var focusEval = ScoreAPI.evaluateRelation(focusLocusIdx, selToken.id);
+        reliquaryGlossEl.textContent =
+          selToken.glyph +
+          " " +
+          selToken.title +
+          " — " +
+          selToken.scholarExcerpt +
+          (focusEval ? " [" + focusEval.mnemonicRule + "]" : "");
+
+        armedIndicatorEl.textContent = tokenArmedByClick
+          ? "Armed: click any walked locus or press [B] to pin " + selToken.shortLabel
+          : "Selected: " + selToken.shortLabel + " · press [B] to pin";
+
+        // 5. Clavichord Controls State
+        if (state.walkedCount < ScoreAPI.LOCI.length) {
+          var reqLocus = ScoreAPI.LOCI[state.nextRequiredIndex];
+          labelWalkNext.textContent = "Walk " + reqLocus.roman + " · " + reqLocus.noteName;
+        } else {
+          labelWalkNext.textContent = "Step Score Note";
+        }
+        labelPlayScore.textContent = state.isPlaying ? "Stop Score" : "Perform 9-Note Score";
+        labelPinMemory.textContent =
+          state.lockedCount >= 9 ? "All 9 Cells Sealed" : "Pin " + selToken.shortLabel;
+        cmdToggleMute.setAttribute("aria-pressed", state.muted ? "true" : "false");
+        labelToggleMute.textContent = state.muted ? "Sound: Muted" : "Sound: On";
+
+        syncTelemetryAndPhase(state, renderer.getMetrics());
+      }
+
+      // Wire Score Engine events to Disintegration Renderer & Codex UI
+      score.on("onNotePlayed", function (payload) {
+        lastRefusedCellIndex = -1;
+        lastWhisperTone = payload.ghostMode ? "forgotten" : "calm";
+        renderer.triggerNotePulse(payload.index);
+      });
+
+      score.on("onDisplacementRefused", function (info) {
+        lastWhisperTone = "refusal";
+        lastRefusedCellIndex =
+          typeof info.attemptedIndex === "number" ? info.attemptedIndex : -1;
+        renderer.triggerRefusalFlash(info.attemptedIndex, info.requiredIndex);
+        setWhisper("Refused", info.message, "refusal");
+        if (refusalClearTimer) {
+          clearTimeout(refusalClearTimer);
+        }
+        refusalClearTimer = setTimeout(function () {
+          lastRefusedCellIndex = -1;
+          renderAll(score.getState());
+        }, isReducedMotion ? 450 : 950);
+      });
+
+      score.on("onTokenBound", function (ev) {
+        lastRefusedCellIndex = -1;
+        lastWhisperTone = "bound";
+        setWhisper(
+          ev.relation === "affinity" ? "Affinity" : "Contrast",
+          ev.isFullyMemorized
+            ? "9/9 Cells Sealed Invariant — " + ev.mnemonicRule + " Earthly Zora begins to dissolve."
+            : ev.mnemonicRule + " (" + ev.lockedCount + "/9 cells frozen motionless.)",
+          "bound"
+        );
+      });
+
+      score.on("onStateChange", function (state) {
+        var metrics = renderer.syncFromScore(state);
+        if (lastWhisperTone !== "refusal" && lastWhisperTone !== "bound") {
+          var rubric = metrics.isForgottenByEarth
+            ? "Ghost-Score"
+            : state.activeLocus >= 0
+              ? ScoreAPI.LOCI[state.activeLocus].roman + " · " + ScoreAPI.LOCI[state.activeLocus].noteName
+              : "Codex";
+          setWhisper(rubric, state.lastAnnouncement, metrics.isForgottenByEarth ? "forgotten" : "calm");
+        }
+        lastWhisperTone = "calm";
+        renderAll(state);
+      });
+
+      // Continuous lightweight telemetry observer while 9/9 disintegration cascade is actively running
+      function monitorDisintegrationTick() {
+        var m = renderer.getMetrics();
+        if (m.phase === "DISINTEGRATING" || (m.lockedCount < 9 && m.earthlyIntegrity < 1 - 0.55 * m.fixationRatio - 0.01)) {
+          syncTelemetryAndPhase(score.getState(), m);
+        }
+        if (typeof window.requestAnimationFrame === "function") {
+          window.requestAnimationFrame(monitorDisintegrationTick);
+        }
+      }
+
+      // Pin selected or next available memory action
+      function triggerPinMemory() {
+        var st = score.getState();
+        var tokToUse = pickFirstUnboundTokenId(st.bindings);
+        var res = score.bindNextAvailable(st.activeLocus, tokToUse);
+        if (res && res.bound) {
+          tokenArmedByClick = false;
+          selectedTokenId = pickFirstUnboundTokenId(score.getState().bindings);
+          renderAll(score.getState());
+        } else if (res && res.message) {
+          setWhisper("Memoria", res.message, "calm");
+        }
+        return res;
+      }
+
+      // Canvas pointer interaction: walk in strict order, refuse skips, or bind armed/active token
+      canvasEl.addEventListener("mousemove", function (ev) {
+        var idx = renderer.hitTestLocus(ev.clientX, ev.clientY);
+        renderer.setHoveredLocus(idx);
+      });
+
+      canvasEl.addEventListener("mouseleave", function () {
+        renderer.setHoveredLocus(-1);
+      });
+
+      canvasEl.addEventListener("click", function (ev) {
+        var hitIdx = renderer.hitTestLocus(ev.clientX, ev.clientY);
+        if (hitIdx < 0) {
+          return;
+        }
+        var st = score.getState();
+        // If locus is already walked and unbound, and user either armed a token or clicked the active walked locus again -> bind!
+        if (
+          hitIdx <= st.walkedUpTo &&
+          !st.bindings[hitIdx] &&
+          (tokenArmedByClick || hitIdx === st.activeLocus)
+        ) {
+          var tokId = pickFirstUnboundTokenId(st.bindings);
+          var bindRes = score.bindToken(hitIdx, tokId);
+          if (bindRes && bindRes.bound) {
+            tokenArmedByClick = false;
+            selectedTokenId = pickFirstUnboundTokenId(score.getState().bindings);
+            renderAll(score.getState());
+          }
+          return;
+        }
+        score.walkLocus(hitIdx);
+      });
+
+      // Clavichord button handlers
+      cmdWalkNext.addEventListener("click", function () {
+        score.stepForward();
+      });
+
+      function handlePlayToggle() {
+        var st = score.getState();
+        if (st.isPlaying) {
+          score.stopPlayback();
+        } else {
+          score.playFullScore(isReducedMotion ? 160 : 280);
+        }
+      }
+
+      cmdPlayScore.addEventListener("click", handlePlayToggle);
+      epitaphPlayGhost.addEventListener("click", handlePlayToggle);
+
+      cmdPinMemory.addEventListener("click", function () {
+        triggerPinMemory();
+      });
+
+      cmdTestDisplace.addEventListener("click", function () {
+        score.attemptDisplace();
+      });
+
+      cmdMemorizeAll.addEventListener("click", function () {
+        tokenArmedByClick = false;
+        score.memorizeAll();
+      });
+
+      function handleRestoreEarth() {
+        tokenArmedByClick = false;
+        lastRefusedCellIndex = -1;
+        score.reset();
+        selectedTokenId = ScoreAPI.TOKENS[0].id;
+        renderAll(score.getState());
+      }
+
+      cmdRestoreEarth.addEventListener("click", handleRestoreEarth);
+      epitaphRestoreEarth.addEventListener("click", handleRestoreEarth);
+
+      cmdToggleMute.addEventListener("click", function () {
+        score.toggleMute();
+      });
+
+      // Chorographia Map & City Illumination Vault Controls
+      function setPlateVaultOpen(openFlag) {
+        if (!plateVaultEl) {
+          return false;
+        }
+        var isOpen = Boolean(openFlag);
+        plateVaultEl.setAttribute("data-vault-open", isOpen ? "true" : "false");
+        plateVaultEl.setAttribute("aria-hidden", isOpen ? "false" : "true");
+        if (cmdOpenPlates) {
+          cmdOpenPlates.setAttribute("aria-expanded", isOpen ? "true" : "false");
+        }
+        if (isOpen) {
+          if (mapImgEl) {
+            mapImgEl.loading = "eager";
+          }
+          if (cityImgEl) {
+            cityImgEl.loading = "eager";
+          }
+          if (cmdClosePlates) {
+            cmdClosePlates.focus();
+          }
+        } else if (cmdOpenPlates) {
+          cmdOpenPlates.focus();
+        }
+        return isOpen;
+      }
+
+      function setPlateTab(tabName) {
+        if (!plateVaultEl) {
+          return;
+        }
+        var target = tabName === "map" || tabName === "image" ? tabName : "diptych";
+        plateVaultEl.setAttribute("data-plate-tab", target);
+        for (var i = 0; i < plateTabBtns.length; i++) {
+          var b = plateTabBtns[i];
+          var match = b.getAttribute("data-tab-target") === target;
+          b.setAttribute("aria-selected", match ? "true" : "false");
+        }
+      }
+
+      if (cmdOpenPlates) {
+        cmdOpenPlates.addEventListener("click", function () {
+          var openNow = plateVaultEl.getAttribute("data-vault-open") === "true";
+          setPlateVaultOpen(!openNow);
+        });
+      }
+      if (cmdClosePlates) {
+        cmdClosePlates.addEventListener("click", function () {
+          setPlateVaultOpen(false);
+        });
+      }
+      if (plateVaultEl) {
+        plateVaultEl.addEventListener("click", function (ev) {
+          if (ev.target === plateVaultEl) {
+            setPlateVaultOpen(false);
+          }
+        });
+      }
+      for (var pt = 0; pt < plateTabBtns.length; pt++) {
+        (function (tabBtn) {
+          tabBtn.addEventListener("click", function () {
+            setPlateTab(tabBtn.getAttribute("data-tab-target"));
+          });
+        })(plateTabBtns[pt]);
+      }
+      if (cmdPlateLoupe && plateVaultEl) {
+        cmdPlateLoupe.addEventListener("click", function () {
+          var zoomed = plateVaultEl.getAttribute("data-plate-loupe") === "zoom";
+          plateVaultEl.setAttribute("data-plate-loupe", zoomed ? "fit" : "zoom");
+          cmdPlateLoupe.setAttribute("aria-pressed", zoomed ? "false" : "true");
+          cmdPlateLoupe.textContent = zoomed ? "Loupe 1.75×" : "Fit 1×";
+        });
+      }
+
+      if (mapImgEl) {
+        mapImgEl.addEventListener("load", function () {
+          mapImgEl.hidden = false;
+          if (mapNoticeEl) {
+            mapNoticeEl.hidden = true;
+          }
+        });
+        mapImgEl.addEventListener("error", function () {
+          if (!mapImgEl.getAttribute("data-tried-svg")) {
+            mapImgEl.setAttribute("data-tried-svg", "1");
+            mapImgEl.src = "map.svg";
+            return;
+          }
+          mapImgEl.hidden = true;
+          if (mapNoticeEl) {
+            mapNoticeEl.hidden = false;
+          }
+        });
+      }
+
+      if (cityImgEl) {
+        cityImgEl.addEventListener("load", function () {
+          cityImgEl.hidden = false;
+          if (imageNoticeEl) {
+            imageNoticeEl.hidden = true;
+          }
+        });
+        cityImgEl.addEventListener("error", function () {
+          cityImgEl.hidden = true;
+          if (imageNoticeEl) {
+            imageNoticeEl.hidden = false;
+          }
+        });
+      }
+
+      // Full Keyboard Navigation: 1-9, N, P, B, D, L, R, M, V, Escape
+      window.addEventListener("keydown", function (ev) {
+        if (ev.metaKey || ev.ctrlKey || ev.altKey) {
+          return;
+        }
+        var tgt = ev.target;
+        if (tgt && (tgt.tagName === "INPUT" || tgt.tagName === "TEXTAREA" || tgt.tagName === "SELECT" || tgt.isContentEditable)) {
+          return;
+        }
+        var key = String(ev.key || "");
+        if (key === "Escape" && plateVaultEl && plateVaultEl.getAttribute("data-vault-open") === "true") {
+          ev.preventDefault();
+          setPlateVaultOpen(false);
+          return;
+        }
+        if (key >= "1" && key <= "9") {
+          ev.preventDefault();
+          score.walkLocus(Number(key) - 1);
+          return;
+        }
+        var lower = key.toLowerCase();
+        if (lower === "n") {
+          ev.preventDefault();
+          score.stepForward();
+        } else if (lower === "p") {
+          ev.preventDefault();
+          handlePlayToggle();
+        } else if (lower === "b") {
+          ev.preventDefault();
+          triggerPinMemory();
+        } else if (lower === "d") {
+          ev.preventDefault();
+          score.attemptDisplace();
+        } else if (lower === "l") {
+          ev.preventDefault();
+          tokenArmedByClick = false;
+          score.memorizeAll();
+        } else if (lower === "r") {
+          ev.preventDefault();
+          handleRestoreEarth();
+        } else if (lower === "m") {
+          ev.preventDefault();
+          score.toggleMute();
+        } else if (lower === "v") {
+          ev.preventDefault();
+          var currentlyOpen = plateVaultEl && plateVaultEl.getAttribute("data-vault-open") === "true";
+          setPlateVaultOpen(!currentlyOpen);
+        }
+      });
+
+      // Responsive canvas sizing
+      window.addEventListener("resize", function () {
+        renderer.resize();
+      });
+      if (typeof window.ResizeObserver === "function") {
+        var ro = new window.ResizeObserver(function () {
+          renderer.resize();
+        });
+        ro.observe(canvasEl);
+      }
+
+      // Initialize Folio UI & start living animation loop
+      buildNeumeRibbon();
+      buildAlveolusComb();
+      buildScholarReliquary();
+      renderer.syncFromScore(score.getState());
+      renderAll(score.getState());
+      renderer.start();
+      if (typeof window.requestAnimationFrame === "function") {
+        window.requestAnimationFrame(monitorDisintegrationTick);
+      }
+
+      window.__zoraApp = {
+        score: score,
+        renderer: renderer,
+        setReducedMotion: applyReducedMotion,
+        openPlates: function () {
+          return setPlateVaultOpen(true);
+        },
+        closePlates: function () {
+          return setPlateVaultOpen(false);
+        }
+      };
+    })();
+  </script>
+</body>
+</html>

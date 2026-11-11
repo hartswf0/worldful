@@ -1,0 +1,5116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Isidora — Cities &amp; Memory 2</title>
+  <style id="isidora-chronicle-styles">
+    [hidden] {
+      display: none !important;
+    }
+
+    :root {
+      --isidora-obsidian: #0c101a;
+      --isidora-indigo-vault: #141c2e;
+      --isidora-limestone-dark: #1b1612;
+      --isidora-limestone-mid: #7d6b52;
+      --isidora-limestone-pale: #dfd2ba;
+      --isidora-nacre-ivory: #f6ecd7;
+      --isidora-brass-gold: #e2b563;
+      --isidora-brass-bright: #f4cf86;
+      --isidora-amber-loggia: #c8863c;
+      --isidora-crimson-plume: #b83a32;
+      --isidora-hairline: rgba(226, 194, 138, 0.26);
+      --isidora-panel-bg: rgba(18, 22, 33, 0.92);
+      --isidora-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+      --isidora-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--isidora-obsidian);
+      color: var(--isidora-nacre-ivory);
+      font-family: var(--isidora-serif);
+      -webkit-font-smoothing: antialiased;
+      overflow: hidden;
+    }
+
+    isidora-chronicle,
+    isidora-archival-masthead,
+    nautilus-crest-mark,
+    chronicle-epigraph-ribbon,
+    masthead-instrument-rack,
+    sundial-epoch-badge,
+    isidora-sanctum-grid,
+    isidora-piazza-viewport,
+    nautilus-stairwell,
+    piazza-distance-reticle,
+    reticle-telemetry-chip,
+    wild-region-approach,
+    wild-approach-placard,
+    wild-stride-track,
+    wild-stride-fill,
+    wild-saddle-controls,
+    isidora-atelier-column,
+    chronicle-sundial-strip,
+    sundial-header-row,
+    irreversible-age-gauge,
+    irreversible-age-bar,
+    sundial-metrics-row,
+    sundial-metric-cell,
+    chamber-lore-scroll,
+    isidora-station-bench,
+    elders-parapet-wall,
+    parapet-colophon-seal,
+    isidora-plate-vault,
+    nautilus-atlas-folio,
+    folio-rubric-header,
+    folio-plate-tabs,
+    folio-loupe-controls,
+    folio-diptych-stage,
+    copperplate-map-frame,
+    tempera-vista-frame,
+    plate-etching-fallback,
+    folio-plate-caption {
+      display: block;
+    }
+
+    .isidora-chronicle-root {
+      display: grid;
+      grid-template-rows: 50px minmax(0, 1fr);
+      width: 100vw;
+      height: 100vh;
+      max-width: 100%;
+      background: radial-gradient(circle at 34% 38%, #18233a 0%, #0d111b 70%);
+    }
+
+    .isidora-chronicle-root[data-phase="twilight_drift"] {
+      background: radial-gradient(circle at 34% 34%, #2a2420 0%, #120f0d 74%);
+    }
+
+    .isidora-chronicle-root[data-phase="seated_elder"] {
+      background: radial-gradient(circle at 34% 28%, #362d23 0%, #15110e 76%);
+    }
+
+    .isidora-masthead {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 0 14px;
+      border-bottom: 1px solid var(--isidora-hairline);
+      background: linear-gradient(90deg, rgba(16, 20, 31, 0.96), rgba(26, 21, 17, 0.96));
+      z-index: 12;
+    }
+
+    .isidora-crest {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .isidora-crest-numeral {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--isidora-brass-gold);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .isidora-crest-title {
+      font-size: 18px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--isidora-nacre-ivory);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .isidora-epigraph-ribbon {
+      font-size: 12px;
+      font-style: italic;
+      color: rgba(235, 220, 192, 0.78);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-width: 0;
+    }
+
+    .isidora-rack {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .isidora-epoch-badge {
+      padding: 3px 9px;
+      border: 1px solid rgba(226, 181, 99, 0.42);
+      background: rgba(38, 30, 22, 0.78);
+      color: var(--isidora-brass-bright);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border-radius: 3px;
+      white-space: nowrap;
+    }
+
+    .isidora-rack-btn {
+      appearance: none;
+      font-family: var(--isidora-serif);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      color: var(--isidora-nacre-ivory);
+      background: rgba(25, 31, 46, 0.88);
+      border: 1px solid rgba(226, 194, 138, 0.46);
+      border-radius: 4px;
+      padding: 5px 10px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 140ms ease, border-color 140ms ease;
+    }
+
+    .isidora-rack-btn:hover,
+    .isidora-rack-btn:focus-visible {
+      background: rgba(196, 148, 72, 0.28);
+      border-color: var(--isidora-brass-bright);
+      outline: none;
+    }
+
+    .isidora-rack-btn[aria-pressed="true"],
+    .isidora-rack-btn[aria-expanded="true"] {
+      background: rgba(196, 148, 72, 0.36);
+      border-color: var(--isidora-brass-bright);
+      color: #fff6e3;
+    }
+
+    .isidora-sanctum-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 432px;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .isidora-piazza-viewport {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 440px;
+      overflow: hidden;
+      background: #0a101d;
+    }
+
+    .isidora-stairwell-stage {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .isidora-spiral-canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      cursor: grab;
+      outline: none;
+    }
+
+    .isidora-spiral-canvas:active {
+      cursor: grabbing;
+    }
+
+    .isidora-spiral-canvas:focus-visible {
+      box-shadow: inset 0 0 0 2px var(--isidora-brass-bright);
+    }
+
+    .isidora-wall-canvas {
+      position: absolute;
+      inset: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .isidora-stage-reticle {
+      position: absolute;
+      top: 10px;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 6px;
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    .isidora-reticle-chip {
+      padding: 3px 9px;
+      border-radius: 3px;
+      border: 1px solid rgba(226, 194, 138, 0.30);
+      background: rgba(12, 16, 26, 0.72);
+      color: rgba(246, 236, 215, 0.90);
+      font-size: 11px;
+      letter-spacing: 0.04em;
+    }
+
+    .isidora-wild-stage {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 7;
+      background: #0b0e18;
+    }
+
+    .isidora-wild-canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+
+    .isidora-wild-placard {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
+      max-width: 560px;
+      padding: 12px 14px;
+      border: 1px solid rgba(235, 204, 148, 0.44);
+      background: rgba(16, 13, 11, 0.86);
+      border-radius: 5px;
+      box-shadow: 0 8px 26px rgba(0, 0, 0, 0.55);
+    }
+
+    .isidora-wild-verse {
+      margin: 0 0 8px 0;
+      font-size: 13.5px;
+      line-height: 1.38;
+      color: #f4e6ca;
+      font-style: italic;
+    }
+
+    .isidora-wild-track {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 240, 210, 0.14);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 9px;
+    }
+
+    .isidora-wild-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #b87c3e, #f4cf86);
+      transition: width 160ms ease;
+    }
+
+    .isidora-wild-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .isidora-stride-btn {
+      appearance: none;
+      font-family: var(--isidora-serif);
+      font-size: 12px;
+      padding: 6px 11px;
+      border-radius: 4px;
+      border: 1px solid rgba(232, 198, 136, 0.52);
+      background: rgba(44, 32, 21, 0.88);
+      color: #f7ead2;
+      cursor: pointer;
+    }
+
+    .isidora-stride-btn--enter {
+      background: rgba(176, 126, 56, 0.38);
+      border-color: var(--isidora-brass-bright);
+      font-weight: 600;
+    }
+
+    .isidora-stride-btn:hover,
+    .isidora-stride-btn:focus-visible {
+      background: rgba(206, 154, 78, 0.44);
+      border-color: #ffe2a6;
+      outline: none;
+    }
+
+    .isidora-wild-readout {
+      margin-left: auto;
+      font-family: var(--isidora-mono);
+      font-size: 11px;
+      color: var(--isidora-brass-bright);
+    }
+
+    .isidora-atelier-col {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      padding: 10px 12px;
+      height: 100%;
+      min-height: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      border-left: 1px solid var(--isidora-hairline);
+      background: linear-gradient(180deg, #131928 0%, #191511 100%);
+    }
+
+    .isidora-sundial-strip {
+      padding: 8px 10px;
+      border: 1px solid rgba(226, 194, 138, 0.30);
+      background: rgba(22, 20, 18, 0.80);
+      border-radius: 5px;
+    }
+
+    .isidora-sundial-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 5px;
+    }
+
+    .isidora-sundial-title {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--isidora-brass-gold);
+      font-weight: 600;
+    }
+
+    .isidora-sundial-pct {
+      font-family: var(--isidora-mono);
+      font-size: 11.5px;
+      color: var(--isidora-nacre-ivory);
+    }
+
+    .isidora-age-gauge {
+      width: 100%;
+      height: 7px;
+      border-radius: 4px;
+      background: rgba(244, 228, 196, 0.12);
+      overflow: hidden;
+      margin-bottom: 6px;
+    }
+
+    .isidora-age-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #f3d79d 0%, #c8944c 52%, #8e785a 100%);
+      transition: width 200ms ease;
+    }
+
+    .isidora-sundial-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px;
+      font-size: 10.5px;
+      color: rgba(232, 218, 192, 0.84);
+    }
+
+    .isidora-metric-cell {
+      padding: 3px 5px;
+      background: rgba(12, 14, 20, 0.55);
+      border: 1px solid rgba(226, 194, 138, 0.16);
+      border-radius: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .isidora-chamber-scroll {
+      padding: 7px 10px;
+      border-left: 2px solid var(--isidora-brass-gold);
+      background: rgba(20, 25, 38, 0.72);
+      border-radius: 0 4px 4px 0;
+      font-size: 12px;
+      line-height: 1.35;
+      color: #efe2c8;
+    }
+
+    .isidora-station-bench {
+      padding: 8px 9px;
+      border: 1px solid rgba(226, 194, 138, 0.28);
+      background: rgba(15, 20, 32, 0.78);
+      border-radius: 5px;
+    }
+
+    .isidora-station-bench .isidora-sd-rail {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 5px;
+    }
+
+    .isidora-station-bench .isidora-sd-tab {
+      width: 100%;
+      text-align: left;
+      padding: 5px 7px;
+      font-family: var(--isidora-serif);
+      font-size: 11.5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .isidora-station-bench .isidora-sd-deck {
+      margin-top: 4px;
+      padding: 7px 8px;
+      gap: 6px;
+    }
+
+    .isidora-station-bench .isidora-sd-trigger {
+      font-family: var(--isidora-serif);
+      font-size: 11.5px;
+      padding: 5px 8px;
+    }
+
+    .isidora-station-bench .isidora-sd-tab:focus-visible,
+    .isidora-station-bench .isidora-sd-trigger:focus-visible,
+    .isidora-station-bench .isidora-sd-range:focus-visible {
+      outline: 2px solid var(--isidora-brass-bright);
+      outline-offset: 1px;
+    }
+
+    .isidora-parapet-box {
+      padding: 8px 9px;
+      border: 1px solid rgba(198, 177, 140, 0.32);
+      background: rgba(28, 22, 17, 0.84);
+      border-radius: 5px;
+      flex: 1 1 auto;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .isidora-parapet-box elder-seat-bench.isidora-seat-frieze-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 4px;
+    }
+
+    .isidora-parapet-box elder-row-seat {
+      min-height: 24px;
+      padding: 3px 4px;
+      font-size: 10.5px;
+      border-radius: 2px;
+    }
+
+    .isidora-parapet-box passing-youth-frieze {
+      flex-wrap: wrap;
+      gap: 4px 8px;
+      padding: 5px 8px;
+      font-size: 11px;
+    }
+
+    .isidora-parapet-box .isidora-youth-frieze-tally {
+      font-family: var(--isidora-mono);
+      font-size: 10.5px;
+      color: var(--isidora-brass-bright);
+      white-space: nowrap;
+    }
+
+    .isidora-parapet-box memory-inscription-ledge {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      max-height: 150px;
+      padding: 3px 1px;
+    }
+
+    .isidora-parapet-box carved-memory-tablet.isidora-memory-chisel {
+      max-width: 100%;
+      width: 100%;
+      border-radius: 3px;
+    }
+
+    .isidora-parapet-box .isidora-memory-chisel-echo {
+      white-space: normal;
+      overflow: visible;
+      text-overflow: clip;
+    }
+
+    .isidora-colophon-strip {
+      padding: 6px 9px;
+      border-top: 1px solid rgba(226, 194, 138, 0.20);
+      font-size: 11px;
+      line-height: 1.32;
+      color: rgba(226, 212, 186, 0.80);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .isidora-colophon-epigraph {
+      font-style: italic;
+      color: var(--isidora-brass-bright);
+    }
+
+    .isidora-plate-vault {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      background: rgba(8, 10, 16, 0.86);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .isidora-atlas-folio {
+      width: min(1220px, 100%);
+      height: min(760px, 100%);
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      background: #171411;
+      border: 1px solid rgba(232, 198, 136, 0.52);
+      border-radius: 6px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.75);
+      overflow: hidden;
+    }
+
+    .isidora-folio-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 9px 14px;
+      border-bottom: 1px solid var(--isidora-hairline);
+      background: #1f1914;
+    }
+
+    .isidora-folio-tabs,
+    .isidora-folio-loupe-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .isidora-diptych-stage {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      padding: 12px;
+      min-height: 0;
+      overflow: auto;
+      background: #110e0b;
+    }
+
+    .isidora-diptych-stage[data-view="map"] {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .isidora-diptych-stage[data-view="map"] tempera-vista-frame {
+      display: none;
+    }
+
+    .isidora-diptych-stage[data-view="image"] {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .isidora-diptych-stage[data-view="image"] copperplate-map-frame {
+      display: none;
+    }
+
+    .isidora-plate-frame {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 240px;
+      border: 1px solid rgba(218, 190, 140, 0.30);
+      background: #1a1510;
+      border-radius: 4px;
+      overflow: auto;
+      padding: 8px;
+    }
+
+    .isidora-plate-img {
+      display: block;
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 2px;
+      transform-origin: center center;
+      transition: transform 180ms ease;
+    }
+
+    .isidora-diptych-stage[data-loupe="true"] .isidora-plate-frame {
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
+
+    .isidora-diptych-stage[data-loupe="true"] .isidora-plate-img {
+      max-width: none;
+      max-height: none;
+      width: 175%;
+    }
+
+    .isidora-plate-fallback {
+      padding: 18px;
+      text-align: center;
+      font-style: italic;
+      color: var(--isidora-limestone-pale);
+      font-size: 13px;
+    }
+
+    .isidora-folio-caption {
+      padding: 7px 14px;
+      border-top: 1px solid var(--isidora-hairline);
+      background: #1b1612;
+      font-size: 11.5px;
+      color: rgba(235, 220, 192, 0.85);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 900px) {
+      html, body {
+        height: auto;
+        min-height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+
+      .isidora-chronicle-root {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .isidora-masthead {
+        padding: 6px 10px;
+        min-height: 46px;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .isidora-epigraph-ribbon {
+        display: none;
+      }
+
+      .isidora-crest-title {
+        font-size: 15px;
+      }
+
+      .isidora-rack {
+        gap: 5px;
+      }
+
+      .isidora-rack-btn {
+        padding: 4px 7px;
+        font-size: 11px;
+      }
+
+      .isidora-sanctum-grid {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+        overflow: visible;
+      }
+
+      .isidora-piazza-viewport {
+        width: 100%;
+        height: 446px;
+        min-height: 446px;
+        flex: 0 0 446px;
+      }
+
+      .isidora-wild-placard {
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+        padding: 9px 11px;
+      }
+
+      .isidora-wild-verse {
+        font-size: 12px;
+      }
+
+      .isidora-atelier-col {
+        width: 100%;
+        height: auto;
+        border-left: 0;
+        border-top: 1px solid var(--isidora-hairline);
+        padding: 10px;
+        overflow: visible;
+      }
+
+      .isidora-station-bench .isidora-sd-rail {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .isidora-diptych-stage {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .isidora-plate-vault {
+        padding: 8px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <isidora-chronicle class="isidora-chronicle-root" id="isidora-chronicle" data-phase="wild_ride">
+    <isidora-archival-masthead class="isidora-masthead">
+      <nautilus-crest-mark class="isidora-crest">
+        <span class="isidora-crest-numeral">Cities &amp; Memory II</span>
+        <span class="isidora-crest-title">Isidora</span>
+      </nautilus-crest-mark>
+
+      <chronicle-epigraph-ribbon class="isidora-epigraph-ribbon" id="isidora-masthead-epigraph">
+        Civitas Desiderii et Memoriae — Spiral seashells, violins in fifths, brass refractors, and the limestone wall in the square
+      </chronicle-epigraph-ribbon>
+
+      <masthead-instrument-rack class="isidora-rack">
+        <sundial-epoch-badge class="isidora-epoch-badge" id="isidora-phase-badge">Wild Regions</sundial-epoch-badge>
+        <button type="button" class="isidora-rack-btn" id="isidora-mute-btn" aria-pressed="false" title="Toggle WebAudio acoustics (M)">Sound [M]</button>
+        <button type="button" class="isidora-rack-btn" id="isidora-plates-btn" aria-expanded="false" aria-controls="isidora-plate-vault" title="Inspect Archival Map and City Plate (P)">Plates [P]</button>
+      </masthead-instrument-rack>
+    </isidora-archival-masthead>
+
+    <isidora-sanctum-grid class="isidora-sanctum-grid">
+      <isidora-piazza-viewport class="isidora-piazza-viewport" id="isidora-piazza-viewport">
+        <nautilus-stairwell class="isidora-stairwell-stage" id="isidora-stairwell-stage">
+          <canvas id="isidora-spiral-canvas" class="isidora-spiral-canvas"></canvas>
+          <canvas id="isidora-wall-canvas" class="isidora-wall-canvas" aria-hidden="true"></canvas>
+
+          <piazza-distance-reticle class="isidora-stage-reticle" aria-hidden="true">
+            <reticle-telemetry-chip class="isidora-reticle-chip" id="isidora-reticle-chamber">I · Seashell Spiral Stairwell</reticle-telemetry-chip>
+            <reticle-telemetry-chip class="isidora-reticle-chip" id="isidora-reticle-optics">Span 1.00× · Piazza Cutoff 14000 Hz</reticle-telemetry-chip>
+          </piazza-distance-reticle>
+        </nautilus-stairwell>
+
+        <wild-region-approach class="isidora-wild-stage" id="isidora-wild-stage" role="region" aria-label="Approach ride through wild regions toward the dreamed city">
+          <canvas id="isidora-wild-canvas" class="isidora-wild-canvas"></canvas>
+          <wild-approach-placard class="isidora-wild-placard">
+            <p class="isidora-wild-verse">
+              &ldquo;When a man rides a long time through wild regions he feels the desire for a city.&rdquo;
+            </p>
+            <wild-stride-track class="isidora-wild-track" aria-hidden="true">
+              <wild-stride-fill class="isidora-wild-fill" id="isidora-wild-fill"></wild-stride-fill>
+            </wild-stride-track>
+            <wild-saddle-controls class="isidora-wild-controls">
+              <button type="button" class="isidora-stride-btn" id="isidora-stride-step">Ride Onward [Space / &uarr;]</button>
+              <button type="button" class="isidora-stride-btn isidora-stride-btn--enter" id="isidora-stride-enter">Cross into the Dreamed City [Enter]</button>
+              <span class="isidora-wild-readout" id="isidora-wild-readout">0% horizon</span>
+            </wild-saddle-controls>
+          </wild-approach-placard>
+        </wild-region-approach>
+      </isidora-piazza-viewport>
+
+      <isidora-atelier-column class="isidora-atelier-col" id="isidora-atelier-col">
+        <chronicle-sundial-strip class="isidora-sundial-strip">
+          <sundial-header-row class="isidora-sundial-head">
+            <span class="isidora-sundial-title">Irreversible Chronological Drift</span>
+            <span class="isidora-sundial-pct" id="isidora-age-pct">Youth · 0%</span>
+          </sundial-header-row>
+          <irreversible-age-gauge class="isidora-age-gauge" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Chronological progression from dreamed youth to seated elder" id="isidora-age-progressbar">
+            <irreversible-age-bar class="isidora-age-bar" id="isidora-age-bar"></irreversible-age-bar>
+          </irreversible-age-gauge>
+          <sundial-metrics-row class="isidora-sundial-metrics">
+            <sundial-metric-cell class="isidora-metric-cell" id="isidora-metric-scale">Spiral: 1.00×</sundial-metric-cell>
+            <sundial-metric-cell class="isidora-metric-cell" id="isidora-metric-filter">Echo: 14000 Hz</sundial-metric-cell>
+            <sundial-metric-cell class="isidora-metric-cell" id="isidora-metric-carved">Carved: 0</sundial-metric-cell>
+          </sundial-metrics-row>
+        </chronicle-sundial-strip>
+
+        <chamber-lore-scroll class="isidora-chamber-scroll" id="isidora-chamber-scroll">
+          Buildings with spiral staircases encrusted with calcified nautilus, turritella, and murex shells; each turn toward desire advances the years across the piazza.
+        </chamber-lore-scroll>
+
+        <isidora-station-bench class="isidora-station-bench" id="isidora-controls-root">
+          <seashell-whorl></seashell-whorl>
+          <luthier-pegbox></luthier-pegbox>
+          <brass-refractor></brass-refractor>
+          <hesitation-loggia></hesitation-loggia>
+          <cockfight-pit></cockfight-pit>
+        </isidora-station-bench>
+
+        <elders-parapet-wall class="isidora-parapet-box" id="isidora-parapet-root">
+          <elder-row-seat></elder-row-seat>
+          <passing-youth-frieze></passing-youth-frieze>
+          <memory-inscription-ledge></memory-inscription-ledge>
+        </elders-parapet-wall>
+
+        <parapet-colophon-seal class="isidora-colophon-strip">
+          <span>Keys: [1–5] Chambers &middot; [Space / Enter] Pursue &middot; [&larr; / &rarr;] Tune &middot; [M] Sound &middot; [P] Plates</span>
+          <span class="isidora-colophon-epigraph" id="isidora-colophon-epigraph">&ldquo;In the square there is the wall where the old men sit and watch the young go by; he is seated in a row with them. Desires are already memories.&rdquo;</span>
+        </parapet-colophon-seal>
+      </isidora-atelier-column>
+    </isidora-sanctum-grid>
+
+    <isidora-plate-vault class="isidora-plate-vault" id="isidora-plate-vault" role="dialog" aria-modal="true" aria-label="Archival Copperplate Map and City Painting" hidden>
+      <nautilus-atlas-folio class="isidora-atlas-folio">
+        <folio-rubric-header class="isidora-folio-header">
+          <folio-plate-tabs class="isidora-folio-tabs" role="tablist" aria-label="Plate view">
+            <button type="button" class="isidora-rack-btn" role="tab" data-plate-view="diptych" aria-selected="true" aria-pressed="true">Diptych</button>
+            <button type="button" class="isidora-rack-btn" role="tab" data-plate-view="map" aria-selected="false" aria-pressed="false">Copperplate Map</button>
+            <button type="button" class="isidora-rack-btn" role="tab" data-plate-view="image" aria-selected="false" aria-pressed="false">City Painting</button>
+          </folio-plate-tabs>
+          <folio-loupe-controls class="isidora-folio-loupe-bar">
+            <button type="button" class="isidora-rack-btn" id="isidora-loupe-btn" aria-pressed="false">Loupe 1.75&times; [Z]</button>
+            <button type="button" class="isidora-rack-btn" id="isidora-close-plates-btn">Close [Esc]</button>
+          </folio-loupe-controls>
+        </folio-rubric-header>
+
+        <folio-diptych-stage class="isidora-diptych-stage" id="isidora-diptych-stage" data-view="diptych" data-loupe="false">
+          <copperplate-map-frame class="isidora-plate-frame">
+            <img src="map.png" data-svg-fallback="map.svg" alt="Hand-colored copperplate cartographic plan of the seashell-spiral quarters and southern square wall" class="isidora-plate-img" id="isidora-map-img">
+            <plate-etching-fallback class="isidora-plate-fallback" id="isidora-map-fallback" hidden>
+              Copperplate survey impression awaiting archival press pull (map.png).
+            </plate-etching-fallback>
+          </copperplate-map-frame>
+
+          <tempera-vista-frame class="isidora-plate-frame">
+            <img src="image.png" alt="Twilight architectural painting showing the foreground limestone wall of seated elders watching youth pass toward the seashell-encrusted spiral staircases" class="isidora-plate-img" id="isidora-vista-img">
+            <plate-etching-fallback class="isidora-plate-fallback" id="isidora-vista-fallback" hidden>
+              Tempera architectural plate awaiting archival illumination (image.png).
+            </plate-etching-fallback>
+          </tempera-vista-frame>
+        </folio-diptych-stage>
+
+        <folio-plate-caption class="isidora-folio-caption">
+          <span>Plate I: Chorographia Spiralis &amp; Southern Square Parapet (map.png, 1600&times;1200)</span>
+          <span>Plate II: Twilight Piazza of Seated Elders &amp; Chambers of Desire (image.png, 1600&times;1000)</span>
+        </folio-plate-caption>
+      </nautilus-atlas-folio>
+    </isidora-plate-vault>
+  </isidora-chronicle>
+
+  <script id="isidora-layer-spiral-desires">
+(function (global) {
+  'use strict';
+
+  var STATION_LIST = ['spiral', 'violin', 'telescope', 'hesitation', 'cockfight'];
+
+  var STATION_META = {
+    spiral: {
+      title: 'Seashell Spiral Stairwell',
+      tag: 'seashell-whorl',
+      deltaAge: 0.095,
+      label: 'Ascended the Seashell-Encrusted Golden Spiral',
+      memoryEcho: 'Spiral staircases encrusted with calcified spiral shells recede into piazza dusk.'
+    },
+    violin: {
+      title: 'Luthier Bench of Fifths',
+      tag: 'luthier-pegbox',
+      deltaAge: 0.10,
+      label: 'Sounded Just-Intonation Violin Fifths',
+      memoryEcho: 'Four spruce-resonated strings tuned in 3:2 fifths linger across the square like memory.'
+    },
+    telescope: {
+      title: 'Vernier Brass Refractor',
+      tag: 'brass-refractor',
+      deltaAge: 0.10,
+      label: 'Collapsed Chromatic Halos in the Brass Telescope',
+      memoryEcho: 'Through polished brass drawtubes, distant nacreous domes sharpen into youth gone by.'
+    },
+    hesitation: {
+      title: 'Loggia of the Third Woman',
+      tag: 'hesitation-loggia',
+      deltaAge: 0.11,
+      label: 'Hesitated Between Two Women — Encountered a Third',
+      memoryEcho: 'Leaning toward either poised silhouette parted the amber arch where a third stepped forth.'
+    },
+    cockfight: {
+      title: 'Chalked Pit & Bettors Brawl',
+      tag: 'cockfight-pit',
+      deltaAge: 0.115,
+      label: 'Incited the Cockfight into a Bloody Bettors Brawl',
+      memoryEcho: 'Crimson feathers scattered outward as the ring of bettors collided in the dust.'
+    }
+  };
+
+  var VIOLIN_COURSES = [
+    { id: 'G3', name: 'G3', targetHz: 196.00, initialCents: -18, color: [216, 174, 108] },
+    { id: 'D4', name: 'D4', targetHz: 293.66, initialCents: 14, color: [230, 196, 132] },
+    { id: 'A4', name: 'A4', targetHz: 440.00, initialCents: -11, color: [242, 218, 164] },
+    { id: 'E5', name: 'E5', targetHz: 659.25, initialCents: 16, color: [252, 238, 202] }
+  ];
+
+  var GOLDEN_PHI = 1.618033988749895;
+  var GOLDEN_B = (2 * Math.log(GOLDEN_PHI)) / Math.PI;
+  var SEASHELL_TOTAL = 72;
+
+  function clamp(v, lo, hi) {
+    return v < lo ? lo : v > hi ? hi : v;
+  }
+
+  function lerp(a, b, t) {
+    return a + (b - a) * t;
+  }
+
+  function mixRgb(rgbYouth, rgbAged, ageT) {
+    var t = clamp(ageT, 0, 1);
+    return [
+      Math.round(lerp(rgbYouth[0], rgbAged[0], t)),
+      Math.round(lerp(rgbYouth[1], rgbAged[1], t)),
+      Math.round(lerp(rgbYouth[2], rgbAged[2], t))
+    ];
+  }
+
+  function rgba(rgb, alpha) {
+    return 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + clamp(alpha, 0, 1).toFixed(3) + ')';
+  }
+
+  function mulberry32(seed) {
+    var a = seed >>> 0;
+    return function () {
+      a = (a + 0x6D2B79F5) >>> 0;
+      var t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function buildSeashells(count) {
+    var rng = mulberry32(20202);
+    var kinds = ['nautilus', 'turritella', 'murex'];
+    var list = [];
+    for (var i = 0; i < count; i++) {
+      var frac = i / count;
+      var theta = 1.15 + frac * (Math.PI * 6.8) + (rng() - 0.5) * 0.14;
+      list.push({
+        index: i,
+        kind: kinds[i % 3],
+        theta: theta,
+        railSide: i % 2 === 0 ? 1 : -1,
+        radialJitter: (rng() - 0.5) * 0.12,
+        sizeFactor: 0.72 + rng() * 0.62,
+        spin: rng() * Math.PI * 2,
+        shimmerPhase: rng() * Math.PI * 2
+      });
+    }
+    return list;
+  }
+
+  function buildConstellationField() {
+    var rng = mulberry32(90421);
+    var stars = [];
+    var anchors = [
+      { x: -0.48, y: -0.36, mag: 1.0 },
+      { x: -0.24, y: -0.44, mag: 0.85 },
+      { x: -0.05, y: -0.22, mag: 0.95 },
+      { x: 0.18, y: -0.40, mag: 1.0 },
+      { x: 0.42, y: -0.28, mag: 0.9 },
+      { x: 0.31, y: -0.08, mag: 0.82 },
+      { x: -0.34, y: -0.10, mag: 0.78 }
+    ];
+    for (var i = 0; i < anchors.length; i++) {
+      stars.push({ x: anchors[i].x, y: anchors[i].y, mag: anchors[i].mag, primary: true });
+    }
+    for (var j = 0; j < 34; j++) {
+      var ang = rng() * Math.PI * 2;
+      var rad = 0.12 + Math.sqrt(rng()) * 0.72;
+      var sy = Math.sin(ang) * rad;
+      if (sy > 0.24) sy = -Math.abs(sy) * 0.65;
+      stars.push({ x: Math.cos(ang) * rad * 0.86, y: sy, mag: 0.32 + rng() * 0.48, primary: false });
+    }
+    var links = [[0, 1], [1, 2], [2, 6], [2, 3], [3, 4], [4, 5], [2, 5]];
+    return { stars: stars, links: links };
+  }
+
+  function buildBettors(count) {
+    var rng = mulberry32(7719);
+    var bettors = [];
+    for (var i = 0; i < count; i++) {
+      var baseAngle = (i / count) * Math.PI * 2 + (rng() - 0.5) * 0.12;
+      bettors.push({
+        baseAngle: baseAngle,
+        orbitSpeed: (i % 2 === 0 ? 1 : -1) * (0.65 + rng() * 0.75),
+        lungePhase: rng() * Math.PI * 2,
+        shoulderScale: 0.88 + rng() * 0.28,
+        hatBrim: rng() > 0.42,
+        cloakTone: rng()
+      });
+    }
+    return bettors;
+  }
+
+  function buildFeathers(count) {
+    var rng = mulberry32(5513);
+    var feathers = [];
+    for (var i = 0; i < count; i++) {
+      feathers.push({
+        angle: (i / count) * Math.PI * 2 + (rng() - 0.5) * 0.25,
+        speed: 0.35 + rng() * 0.85,
+        spin: (rng() - 0.5) * 7.5,
+        length: 8 + rng() * 11,
+        crimson: rng() > 0.28,
+        progress: rng()
+      });
+    }
+    return feathers;
+  }
+
+  function createAudioEngine() {
+    var ctx = null;
+    var masterGain = null;
+    var memoryFilter = null;
+    var directGain = null;
+    var echoDelay = null;
+    var echoFeedback = null;
+    var echoDamp = null;
+    var echoWet = null;
+    var muted = false;
+    var unlocked = false;
+    var currentFilterHz = 13500;
+    var currentAge = 0;
+
+    function syncGraphParams() {
+      if (!ctx || !memoryFilter) return;
+      var now = ctx.currentTime || 0;
+      try {
+        memoryFilter.frequency.setTargetAtTime(clamp(currentFilterHz, 280, 18000), now, 0.04);
+        directGain.gain.setTargetAtTime(lerp(0.92, 0.48, currentAge), now, 0.05);
+        echoFeedback.gain.setTargetAtTime(lerp(0.10, 0.44, currentAge), now, 0.05);
+        echoWet.gain.setTargetAtTime(lerp(0.07, 0.40, currentAge), now, 0.05);
+        masterGain.gain.setTargetAtTime(muted ? 0.0001 : 0.72, now, 0.02);
+      } catch (_) {
+        memoryFilter.frequency.value = clamp(currentFilterHz, 280, 18000);
+        masterGain.gain.value = muted ? 0 : 0.72;
+      }
+    }
+
+    function ensureContext(fromGesture) {
+      var userActive = Boolean(fromGesture) ||
+        Boolean(typeof navigator !== 'undefined' && navigator.userActivation && navigator.userActivation.isActive);
+      if (muted) return null;
+      if (!ctx) {
+        if (!userActive) return null;
+        var Ctor = global.AudioContext || global.webkitAudioContext;
+        if (!Ctor) return null;
+        try {
+          ctx = new Ctor();
+          memoryFilter = ctx.createBiquadFilter();
+          memoryFilter.type = 'lowpass';
+          memoryFilter.Q.value = 0.82;
+          directGain = ctx.createGain();
+          echoDelay = ctx.createDelay(1.0);
+          echoDelay.delayTime.value = 0.235;
+          echoFeedback = ctx.createGain();
+          echoDamp = ctx.createBiquadFilter();
+          echoDamp.type = 'lowpass';
+          echoDamp.frequency.value = 1550;
+          echoWet = ctx.createGain();
+          masterGain = ctx.createGain();
+
+          memoryFilter.connect(directGain);
+          directGain.connect(masterGain);
+          memoryFilter.connect(echoDelay);
+          echoDelay.connect(echoDamp);
+          echoDamp.connect(echoWet);
+          echoWet.connect(masterGain);
+          echoDamp.connect(echoFeedback);
+          echoFeedback.connect(echoDelay);
+          masterGain.connect(ctx.destination);
+          unlocked = true;
+          syncGraphParams();
+        } catch (_) {
+          ctx = null;
+          return null;
+        }
+      }
+      if (ctx && ctx.state === 'suspended' && userActive && typeof ctx.resume === 'function') {
+        try { ctx.resume(); } catch (_) {}
+      }
+      return unlocked ? ctx : null;
+    }
+
+    return {
+      setMuted: function (nextMuted) {
+        muted = Boolean(nextMuted);
+        syncGraphParams();
+      },
+      isMuted: function () { return muted; },
+      setAgeFilter: function (hz, ageProgress) {
+        if (typeof hz === 'number' && isFinite(hz)) currentFilterHz = hz;
+        if (typeof ageProgress === 'number' && isFinite(ageProgress)) currentAge = clamp(ageProgress, 0, 1);
+        syncGraphParams();
+      },
+      unlock: function () { ensureContext(true); },
+      getInputNode: function (fromGesture) {
+        var c = ensureContext(fromGesture);
+        return c && memoryFilter ? { ctx: c, dest: memoryFilter } : null;
+      },
+      destroy: function () {
+        if (ctx && typeof ctx.close === 'function') {
+          try { ctx.close(); } catch (_) {}
+        }
+        ctx = null;
+        unlocked = false;
+      }
+    };
+  }
+
+  function synthViolinString(audio, freqHz, companionHz, bowed, fromGesture) {
+    var io = audio.getInputNode(fromGesture);
+    if (!io) return;
+    var ctx = io.ctx;
+    var now = ctx.currentTime;
+    try {
+      var bodyA = ctx.createBiquadFilter();
+      bodyA.type = 'peaking';
+      bodyA.frequency.value = 288;
+      bodyA.Q.value = 2.4;
+      bodyA.gain.value = 5.5;
+
+      var bodyB = ctx.createBiquadFilter();
+      bodyB.type = 'peaking';
+      bodyB.frequency.value = 538;
+      bodyB.Q.value = 2.8;
+      bodyB.gain.value = 4.2;
+
+      var env = ctx.createGain();
+      var dur = bowed ? 1.55 : 1.18;
+      env.gain.setValueAtTime(0.0001, now);
+      env.gain.linearRampToValueAtTime(bowed ? 0.20 : 0.24, now + (bowed ? 0.14 : 0.009));
+      env.gain.exponentialRampToValueAtTime(0.0008, now + dur);
+
+      bodyA.connect(bodyB);
+      bodyB.connect(env);
+      env.connect(io.dest);
+
+      var vibOsc = null;
+      var vibGain = null;
+      if (bowed) {
+        vibOsc = ctx.createOscillator();
+        vibGain = ctx.createGain();
+        vibOsc.frequency.value = 5.3;
+        vibGain.gain.value = freqHz * 0.006;
+        vibOsc.connect(vibGain);
+        vibOsc.start(now);
+        vibOsc.stop(now + dur + 0.04);
+      }
+
+      var partials = [1, 2, 3, 4, 5];
+      var weights = bowed ? [1.0, 0.56, 0.34, 0.20, 0.12] : [1.0, 0.48, 0.24, 0.11, 0.05];
+      for (var i = 0; i < partials.length; i++) {
+        var osc = ctx.createOscillator();
+        var pGain = ctx.createGain();
+        osc.type = i % 2 === 0 ? 'triangle' : 'sine';
+        osc.frequency.setValueAtTime(freqHz * partials[i], now);
+        if (vibGain && i < 2) vibGain.connect(osc.frequency);
+        pGain.gain.value = weights[i] * 0.38;
+        osc.connect(pGain);
+        pGain.connect(bodyA);
+        osc.start(now);
+        osc.stop(now + dur + 0.03);
+      }
+
+      if (companionHz && companionHz > 40) {
+        var fifthOsc = ctx.createOscillator();
+        var fifthGain = ctx.createGain();
+        fifthOsc.type = 'triangle';
+        fifthOsc.frequency.setValueAtTime(companionHz, now + 0.04);
+        fifthGain.gain.setValueAtTime(0.0001, now + 0.04);
+        fifthGain.gain.linearRampToValueAtTime(0.085, now + 0.16);
+        fifthGain.gain.exponentialRampToValueAtTime(0.0006, now + dur);
+        fifthOsc.connect(fifthGain);
+        fifthGain.connect(bodyA);
+        fifthOsc.start(now + 0.04);
+        fifthOsc.stop(now + dur + 0.03);
+      }
+    } catch (_) {}
+  }
+
+  function synthStationSound(audio, station, params, fromGesture) {
+    var io = audio.getInputNode(fromGesture);
+    if (!io) return;
+    var ctx = io.ctx;
+    var now = ctx.currentTime;
+    try {
+      if (station === 'spiral') {
+        var base = 310 + ((params.turns || 0) % 4) * 28;
+        var ratios = [1, 1.272, GOLDEN_PHI];
+        for (var i = 0; i < ratios.length; i++) {
+          var o = ctx.createOscillator();
+          var g = ctx.createGain();
+          o.type = i === 2 ? 'sine' : 'triangle';
+          o.frequency.setValueAtTime(base * ratios[i], now + i * 0.045);
+          g.gain.setValueAtTime(0.0001, now + i * 0.045);
+          g.gain.linearRampToValueAtTime(0.09, now + i * 0.045 + 0.02);
+          g.gain.exponentialRampToValueAtTime(0.0008, now + 0.55 + i * 0.08);
+          o.connect(g);
+          g.connect(io.dest);
+          o.start(now + i * 0.045);
+          o.stop(now + 0.68 + i * 0.08);
+        }
+      } else if (station === 'telescope') {
+        var click = ctx.createOscillator();
+        var cg = ctx.createGain();
+        click.type = 'triangle';
+        click.frequency.setValueAtTime(1950, now);
+        click.frequency.exponentialRampToValueAtTime(680, now + 0.035);
+        cg.gain.setValueAtTime(0.12, now);
+        cg.gain.exponentialRampToValueAtTime(0.001, now + 0.042);
+        click.connect(cg);
+        cg.connect(io.dest);
+        click.start(now);
+        click.stop(now + 0.05);
+
+        var bell = ctx.createOscillator();
+        var bg = ctx.createGain();
+        bell.type = 'sine';
+        bell.frequency.setValueAtTime(528 + (params.sharpness || 0.5) * 352, now + 0.02);
+        bg.gain.setValueAtTime(0.0001, now + 0.02);
+        bg.gain.linearRampToValueAtTime(0.04 + (params.sharpness || 0) * 0.07, now + 0.06);
+        bg.gain.exponentialRampToValueAtTime(0.0007, now + 0.62);
+        bell.connect(bg);
+        bg.connect(io.dest);
+        bell.start(now + 0.02);
+        bell.stop(now + 0.65);
+      } else if (station === 'hesitation') {
+        var pairHz = params.choice === 1 ? [369.99, 554.37] : [329.63, 493.88];
+        var thirdHz = params.choice === 1 ? 466.16 : 415.30;
+        for (var p = 0; p < 2; p++) {
+          var po = ctx.createOscillator();
+          var pg = ctx.createGain();
+          po.type = 'sine';
+          po.frequency.setValueAtTime(pairHz[p], now);
+          pg.gain.setValueAtTime(0.0001, now);
+          pg.gain.linearRampToValueAtTime(0.075, now + 0.04);
+          pg.gain.exponentialRampToValueAtTime(0.0008, now + 0.72);
+          po.connect(pg);
+          pg.connect(io.dest);
+          po.start(now);
+          po.stop(now + 0.76);
+        }
+        var tOsc = ctx.createOscillator();
+        var tGain = ctx.createGain();
+        tOsc.type = 'triangle';
+        tOsc.frequency.setValueAtTime(thirdHz, now + 0.11);
+        tGain.gain.setValueAtTime(0.0001, now + 0.11);
+        tGain.gain.linearRampToValueAtTime(0.13, now + 0.22);
+        tGain.gain.exponentialRampToValueAtTime(0.0008, now + 1.08);
+        tOsc.connect(tGain);
+        tGain.connect(io.dest);
+        tOsc.start(now + 0.11);
+        tOsc.stop(now + 1.12);
+      } else if (station === 'cockfight') {
+        var hits = 2 + Math.floor((params.intensity || 0.5) * 2.5);
+        for (var h = 0; h < hits; h++) {
+          var t0 = now + h * 0.085;
+          var thud = ctx.createOscillator();
+          var tg = ctx.createGain();
+          thud.type = 'sine';
+          thud.frequency.setValueAtTime(108 - h * 11, t0);
+          thud.frequency.exponentialRampToValueAtTime(34, t0 + 0.16);
+          tg.gain.setValueAtTime(0.22, t0);
+          tg.gain.exponentialRampToValueAtTime(0.001, t0 + 0.19);
+          thud.connect(tg);
+          tg.connect(io.dest);
+          thud.start(t0);
+          thud.stop(t0 + 0.21);
+        }
+      }
+    } catch (_) {}
+  }
+
+  function safeEllipse(ctx, x, y, rx, ry, rot, a0, a1) {
+    if (typeof ctx.ellipse === 'function') {
+      ctx.ellipse(x, y, Math.max(0.5, rx), Math.max(0.5, ry), rot || 0, a0 || 0, a1 === undefined ? Math.PI * 2 : a1);
+    } else {
+      ctx.save();
+      ctx.translate(x, y);
+      if (rot) ctx.rotate(rot);
+      ctx.scale(1, Math.max(0.1, ry / Math.max(0.5, rx)));
+      ctx.arc(0, 0, Math.max(0.5, rx), a0 || 0, a1 === undefined ? Math.PI * 2 : a1);
+      ctx.restore();
+    }
+  }
+
+  function drawCalcifiedShell(ctx, shell, x, y, baseSize, ageT, clock) {
+    var sz = Math.max(2.2, baseSize * shell.sizeFactor);
+    var shimmer = 0.5 + 0.5 * Math.sin(clock * 1.9 + shell.shimmerPhase);
+    var nacreRgb = mixRgb([238, 229, 214], [198, 174, 138], ageT);
+    var coralRgb = mixRgb([214, 168, 146], [164, 134, 102], ageT);
+    var rimRgb = mixRgb([126, 158, 176], [118, 98, 74], ageT);
+
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(shell.spin + shell.theta * 0.35);
+
+    if (shell.kind === 'nautilus') {
+      ctx.beginPath();
+      for (var s = 0; s <= 18; s++) {
+        var st = (s / 18) * Math.PI * 3.1;
+        var sr = sz * 0.14 * Math.exp(0.20 * st);
+        var sx = Math.cos(st) * sr;
+        var sy = Math.sin(st) * sr;
+        if (s === 0) ctx.moveTo(sx, sy);
+        else ctx.lineTo(sx, sy);
+      }
+      ctx.closePath();
+      ctx.fillStyle = rgba(nacreRgb, 0.76 + shimmer * 0.20);
+      ctx.fill();
+      ctx.lineWidth = 0.9;
+      ctx.strokeStyle = rgba(rimRgb, 0.82);
+      ctx.stroke();
+      for (var c = 4; c <= 16; c += 4) {
+        var ct = (c / 18) * Math.PI * 3.1;
+        var cr = sz * 0.14 * Math.exp(0.20 * ct);
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.quadraticCurveTo(Math.cos(ct - 0.3) * cr * 0.55, Math.sin(ct - 0.3) * cr * 0.55, Math.cos(ct) * cr, Math.sin(ct) * cr);
+        ctx.strokeStyle = rgba(coralRgb, 0.65);
+        ctx.stroke();
+      }
+    } else if (shell.kind === 'turritella') {
+      var len = sz * 1.65;
+      for (var w = 0; w < 5; w++) {
+        var wf = w / 5;
+        var wy = -len * 0.45 + wf * len;
+        var wr = sz * (0.14 + wf * 0.34);
+        ctx.beginPath();
+        safeEllipse(ctx, 0, wy, wr, wr * 0.56, 0, 0, Math.PI * 2);
+        ctx.fillStyle = rgba(w % 2 === 0 ? nacreRgb : coralRgb, 0.78);
+        ctx.fill();
+        ctx.lineWidth = 0.75;
+        ctx.strokeStyle = rgba(rimRgb, 0.72);
+        ctx.stroke();
+      }
+    } else {
+      ctx.beginPath();
+      safeEllipse(ctx, 0, 0, sz * 0.58, sz * 0.44, 0, 0, Math.PI * 2);
+      ctx.fillStyle = rgba(coralRgb, 0.80);
+      ctx.fill();
+      ctx.lineWidth = 0.9;
+      ctx.strokeStyle = rgba(nacreRgb, 0.88);
+      for (var sp = 0; sp < 6; sp++) {
+        var sa = (sp / 6) * Math.PI * 2;
+        ctx.moveTo(Math.cos(sa) * sz * 0.42, Math.sin(sa) * sz * 0.32);
+        ctx.lineTo(Math.cos(sa) * sz * 0.88, Math.sin(sa) * sz * 0.74);
+      }
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function renderSpiralVault(ctx, cx, cy, radius, state, alphaMul) {
+    var ageT = state.ageState.ageProgress;
+    var goldRgb = mixRgb([236, 198, 122], [176, 146, 104], ageT);
+    var pearlRgb = mixRgb([224, 236, 245], [192, 176, 148], ageT);
+    var vaultRgb = mixRgb([44, 68, 98], [86, 72, 56], ageT);
+    var stepStroke = mixRgb([248, 228, 186], [184, 158, 124], ageT);
+
+    ctx.save();
+    ctx.globalAlpha = clamp(alphaMul, 0.05, 1);
+    ctx.translate(cx, cy);
+    var zoom = state.activeStation === 'spiral' ? state.spiralZoom : 0.94;
+    ctx.scale(zoom, zoom);
+
+    var maxTheta = Math.PI * 7.8;
+    var aCoeff = (radius * 0.96) / Math.exp(GOLDEN_B * maxTheta);
+    var rot = state.spiralAngle;
+
+    var eyeGrad = ctx.createRadialGradient(0, 0, 2, 0, 0, radius * 0.98);
+    eyeGrad.addColorStop(0, rgba(pearlRgb, 0.34));
+    eyeGrad.addColorStop(0.38, rgba(goldRgb, 0.14));
+    eyeGrad.addColorStop(1, rgba(vaultRgb, 0.02));
+    ctx.fillStyle = eyeGrad;
+    ctx.beginPath();
+    ctx.arc(0, 0, radius * 0.98, 0, Math.PI * 2);
+    ctx.fill();
+
+    var stepCount = 86;
+    for (var i = 6; i < stepCount; i++) {
+      var th0 = (i / stepCount) * maxTheta;
+      var th1 = ((i + 0.88) / stepCount) * maxTheta;
+      var r0 = aCoeff * Math.exp(GOLDEN_B * th0);
+      var r1 = aCoeff * Math.exp(GOLDEN_B * th1);
+      var a0 = th0 + rot;
+      var a1 = th1 + rot;
+      var pulse = 0.5 + 0.5 * Math.sin(state.clock * 2.2 - th0 * 1.4 + state.shimmerBoost);
+
+      ctx.beginPath();
+      ctx.moveTo(Math.cos(a0) * r0 * 0.74, Math.sin(a0) * r0 * 0.74);
+      ctx.lineTo(Math.cos(a0) * r0 * 1.12, Math.sin(a0) * r0 * 1.12);
+      ctx.lineTo(Math.cos(a1) * r1 * 1.12, Math.sin(a1) * r1 * 1.12);
+      ctx.lineTo(Math.cos(a1) * r1 * 0.74, Math.sin(a1) * r1 * 0.74);
+      ctx.closePath();
+      ctx.fillStyle = rgba(i % 2 === 0 ? pearlRgb : goldRgb, 0.11 + pulse * 0.12);
+      ctx.fill();
+      ctx.lineWidth = 0.85;
+      ctx.strokeStyle = rgba(stepStroke, 0.34 + pulse * 0.22);
+      ctx.stroke();
+    }
+
+    for (var rail = 0; rail < 2; rail++) {
+      var factor = rail === 0 ? 0.74 : 1.12;
+      ctx.beginPath();
+      for (var k = 0; k <= 140; k++) {
+        var kt = (k / 140) * maxTheta;
+        var kr = aCoeff * Math.exp(GOLDEN_B * kt) * factor;
+        var ka = kt + rot;
+        var kx = Math.cos(ka) * kr;
+        var ky = Math.sin(ka) * kr;
+        if (k === 0) ctx.moveTo(kx, ky);
+        else ctx.lineTo(kx, ky);
+      }
+      ctx.lineWidth = rail === 1 ? 2.1 : 1.3;
+      ctx.strokeStyle = rgba(rail === 1 ? goldRgb : pearlRgb, 0.78);
+      ctx.stroke();
+    }
+
+    var chambers = ['violin', 'telescope', 'hesitation', 'cockfight'];
+    for (var c = 0; c < chambers.length; c++) {
+      var cTheta = Math.PI * (3.2 + c * 1.05);
+      var cRad = aCoeff * Math.exp(GOLDEN_B * cTheta) * 0.93;
+      var cAng = cTheta + rot;
+      var px = Math.cos(cAng) * cRad;
+      var py = Math.sin(cAng) * cRad;
+      var isSel = state.activeStation === chambers[c];
+      ctx.beginPath();
+      ctx.arc(px, py, Math.max(7, radius * 0.048), 0, Math.PI * 2);
+      ctx.fillStyle = rgba(isSel ? [255, 224, 150] : goldRgb, isSel ? 0.55 : 0.25);
+      ctx.fill();
+      ctx.lineWidth = isSel ? 2.0 : 1.1;
+      ctx.strokeStyle = rgba(pearlRgb, 0.85);
+      ctx.stroke();
+    }
+
+    var shells = state.seashells;
+    for (var s = 0; s < shells.length; s++) {
+      var sh = shells[s];
+      var sRad = aCoeff * Math.exp(GOLDEN_B * sh.theta) * (sh.railSide > 0 ? 1.13 : 0.73) * (1 + sh.radialJitter);
+      var sAng = sh.theta + rot;
+      var sx = Math.cos(sAng) * sRad;
+      var sy = Math.sin(sAng) * sRad;
+      var shellBase = clamp(sRad * 0.085, 2.6, radius * 0.052);
+      drawCalcifiedShell(ctx, sh, sx, sy, shellBase, ageT, state.clock);
+    }
+
+    ctx.restore();
+  }
+
+  function renderViolinStation(ctx, cx, cy, radius, state) {
+    var ageT = state.ageState.ageProgress;
+    var spruceTop = mixRgb([214, 142, 62], [158, 122, 82], ageT);
+    var spruceGlow = mixRgb([244, 192, 108], [186, 154, 114], ageT);
+    var ebonyRgb = mixRgb([28, 22, 20], [58, 48, 38], ageT);
+    var purflingRgb = mixRgb([252, 232, 184], [196, 174, 140], ageT);
+    var fifthGlow = mixRgb([255, 226, 148], [198, 172, 132], ageT);
+
+    ctx.save();
+    ctx.translate(cx, cy);
+    var s = radius * 0.88;
+
+    var harmony = state.violinFifthsHarmony;
+    for (var h = 1; h <= 3; h++) {
+      ctx.beginPath();
+      safeEllipse(ctx, 0, s * 0.12, s * (0.38 + h * 0.15 * harmony), s * (0.50 + h * 0.14 * harmony), 0, 0, Math.PI * 2);
+      ctx.lineWidth = 1.1;
+      ctx.strokeStyle = rgba(fifthGlow, (0.08 + harmony * 0.24) / h);
+      ctx.stroke();
+    }
+
+    var bodyGrad = ctx.createRadialGradient(0, s * 0.14, s * 0.05, 0, s * 0.14, s * 0.72);
+    bodyGrad.addColorStop(0, rgba(spruceGlow, 0.95));
+    bodyGrad.addColorStop(0.65, rgba(spruceTop, 0.94));
+    bodyGrad.addColorStop(1, rgba(mixRgb([124, 64, 24], [104, 80, 56], ageT), 0.96));
+
+    ctx.beginPath();
+    ctx.moveTo(0, -s * 0.34);
+    ctx.bezierCurveTo(s * 0.38, -s * 0.34, s * 0.42, -s * 0.04, s * 0.22, s * 0.08);
+    ctx.bezierCurveTo(s * 0.14, s * 0.14, s * 0.16, s * 0.24, s * 0.27, s * 0.30);
+    ctx.bezierCurveTo(s * 0.50, s * 0.42, s * 0.46, s * 0.82, 0, s * 0.84);
+    ctx.bezierCurveTo(-s * 0.46, s * 0.82, -s * 0.50, s * 0.42, -s * 0.27, s * 0.30);
+    ctx.bezierCurveTo(-s * 0.16, s * 0.24, -s * 0.14, s * 0.14, -s * 0.22, s * 0.08);
+    ctx.bezierCurveTo(-s * 0.42, -s * 0.04, -s * 0.38, -s * 0.34, 0, -s * 0.34);
+    ctx.closePath();
+    ctx.fillStyle = bodyGrad;
+    ctx.fill();
+    ctx.lineWidth = 2.2;
+    ctx.strokeStyle = rgba(purflingRgb, 0.82);
+    ctx.stroke();
+
+    for (var side = -1; side <= 1; side += 2) {
+      ctx.beginPath();
+      ctx.moveTo(side * s * 0.14, s * 0.05);
+      ctx.bezierCurveTo(side * s * 0.21, s * 0.14, side * s * 0.12, s * 0.34, side * s * 0.19, s * 0.44);
+      ctx.lineWidth = Math.max(2.2, s * 0.018);
+      ctx.strokeStyle = rgba(ebonyRgb, 0.92);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(side * s * 0.14, s * 0.05, s * 0.022, 0, Math.PI * 2);
+      ctx.arc(side * s * 0.19, s * 0.44, s * 0.025, 0, Math.PI * 2);
+      ctx.fillStyle = rgba(ebonyRgb, 0.92);
+      ctx.fill();
+    }
+
+    ctx.fillStyle = rgba(ebonyRgb, 0.95);
+    ctx.fillRect(-s * 0.065, -s * 0.76, s * 0.13, s * 0.86);
+    ctx.beginPath();
+    ctx.arc(0, -s * 0.84, s * 0.075, 0, Math.PI * 2);
+    ctx.fillStyle = rgba(spruceTop, 0.96);
+    ctx.fill();
+    ctx.strokeStyle = rgba(purflingRgb, 0.78);
+    ctx.lineWidth = 1.4;
+    ctx.stroke();
+
+    for (var p = 0; p < 4; p++) {
+      var pSide = p % 2 === 0 ? -1 : 1;
+      var py = -s * (0.74 - p * 0.055);
+      var pegAngle = (state.violinCents[p] / 35) * 0.65;
+      ctx.save();
+      ctx.translate(pSide * s * 0.08, py);
+      ctx.rotate(pegAngle);
+      ctx.fillStyle = rgba(purflingRgb, 0.9);
+      ctx.fillRect(pSide > 0 ? 0 : -s * 0.13, -s * 0.016, s * 0.13, s * 0.032);
+      ctx.beginPath();
+      safeEllipse(ctx, pSide * s * 0.14, 0, s * 0.038, s * 0.026, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    ctx.fillStyle = rgba(purflingRgb, 0.88);
+    ctx.fillRect(-s * 0.14, s * 0.25, s * 0.28, s * 0.028);
+    ctx.beginPath();
+    ctx.moveTo(-s * 0.07, s * 0.48);
+    ctx.lineTo(s * 0.07, s * 0.48);
+    ctx.lineTo(s * 0.035, s * 0.76);
+    ctx.lineTo(-s * 0.035, s * 0.76);
+    ctx.closePath();
+    ctx.fillStyle = rgba(ebonyRgb, 0.96);
+    ctx.fill();
+
+    for (var st = 0; st < 4; st++) {
+      var sxTop = (-1.5 + st) * s * 0.028;
+      var sxBot = (-1.5 + st) * s * 0.052;
+      var amp = state.stringEnergy[st] * s * 0.036;
+      var sCol = mixRgb(VIOLIN_COURSES[st].color, [196, 174, 140], ageT);
+      ctx.beginPath();
+      for (var seg = 0; seg <= 24; seg++) {
+        var u = seg / 24;
+        var sy = lerp(-s * 0.74, s * 0.50, u);
+        var vib = Math.sin(u * Math.PI) * Math.sin(state.clock * (22 + st * 7)) * amp;
+        var sx = lerp(sxTop, sxBot, u) + vib;
+        if (seg === 0) ctx.moveTo(sx, sy);
+        else ctx.lineTo(sx, sy);
+      }
+      ctx.lineWidth = 2.2 - st * 0.32;
+      ctx.strokeStyle = rgba(sCol, 0.95);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function renderTelescopeStation(ctx, cx, cy, radius, state) {
+    var ageT = state.ageState.ageProgress;
+    var brassHi = mixRgb([244, 206, 120], [186, 158, 114], ageT);
+    var brassLo = mixRgb([146, 102, 38], [112, 88, 62], ageT);
+    var skyRgb = mixRgb([12, 22, 42], [48, 40, 32], ageT);
+    var domeRgb = mixRgb([226, 236, 246], [190, 174, 148], ageT);
+    var sharp = state.telescopeSharpness;
+    var aber = (1 - sharp) * radius * 0.072;
+
+    ctx.save();
+    ctx.translate(cx, cy);
+    var lensR = radius * 0.64;
+
+    ctx.save();
+    ctx.translate(-radius * 0.46, radius * 0.42);
+    ctx.rotate(-0.56);
+    ctx.fillStyle = rgba(brassLo, 0.94);
+    ctx.fillRect(-radius * 0.34, -radius * 0.08, radius * 0.68, radius * 0.16);
+    ctx.fillStyle = rgba(brassHi, 0.92);
+    ctx.fillRect(-radius * 0.34, -radius * 0.05, radius * 0.68, radius * 0.05);
+    var wheelX = -radius * 0.12 + state.telescopeFocus * radius * 0.18;
+    ctx.beginPath();
+    ctx.arc(wheelX, radius * 0.10, radius * 0.075, 0, Math.PI * 2);
+    ctx.fillStyle = rgba(brassHi, 0.96);
+    ctx.fill();
+    ctx.strokeStyle = rgba(brassLo, 0.95);
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(radius * 0.06, -radius * 0.04, lensR, 0, Math.PI * 2);
+    ctx.fillStyle = rgba(skyRgb, 0.96);
+    ctx.fill();
+    ctx.clip();
+    ctx.translate(radius * 0.06, -radius * 0.04);
+
+    var channels = aber > 0.35
+      ? [
+          { dx: -aber, dy: -aber * 0.45, col: mixRgb([255, 88, 84], [198, 128, 98], ageT), a: 0.48 },
+          { dx: 0, dy: 0, col: domeRgb, a: 0.66 },
+          { dx: aber, dy: aber * 0.45, col: mixRgb([96, 164, 255], [148, 152, 168], ageT), a: 0.48 }
+        ]
+      : [{ dx: 0, dy: 0, col: domeRgb, a: 0.96 }];
+
+    var stars = state.starfield.stars;
+    var links = state.starfield.links;
+    if (sharp > 0.58) {
+      ctx.beginPath();
+      for (var l = 0; l < links.length; l++) {
+        var sA = stars[links[l][0]];
+        var sB = stars[links[l][1]];
+        ctx.moveTo(sA.x * lensR, sA.y * lensR);
+        ctx.lineTo(sB.x * lensR, sB.y * lensR);
+      }
+      ctx.lineWidth = 0.9;
+      ctx.strokeStyle = rgba(brassHi, (sharp - 0.55) * 0.85);
+      ctx.stroke();
+    }
+
+    for (var ch = 0; ch < channels.length; ch++) {
+      var cInfo = channels[ch];
+      for (var i = 0; i < stars.length; i++) {
+        var st = stars[i];
+        var sx = st.x * lensR + cInfo.dx * (0.6 + st.mag * 0.5);
+        var sy = st.y * lensR + cInfo.dy * (0.6 + st.mag * 0.5);
+        var sr = (st.primary ? 2.4 : 1.3) + (1 - sharp) * 3.4;
+        ctx.beginPath();
+        ctx.arc(sx, sy, sr, 0, Math.PI * 2);
+        ctx.fillStyle = rgba(cInfo.col, cInfo.a * st.mag);
+        ctx.fill();
+        if (sharp > 0.82 && st.primary && ch === 0) {
+          var spk = lensR * 0.055 * sharp;
+          ctx.beginPath();
+          ctx.moveTo(sx - spk, sy);
+          ctx.lineTo(sx + spk, sy);
+          ctx.moveTo(sx, sy - spk);
+          ctx.lineTo(sx, sy + spk);
+          ctx.lineWidth = 0.9;
+          ctx.strokeStyle = rgba(brassHi, 0.85);
+          ctx.stroke();
+        }
+      }
+
+      for (var d = -2; d <= 2; d++) {
+        var dx = d * lensR * 0.30 + cInfo.dx * 0.85;
+        var dw = lensR * (0.20 - Math.abs(d) * 0.022);
+        var dh = lensR * (0.28 - Math.abs(d) * 0.032);
+        var baseY = lensR * 0.66 + cInfo.dy * 0.5;
+        ctx.beginPath();
+        ctx.arc(dx, baseY, dw, Math.PI, 0);
+        ctx.closePath();
+        ctx.fillStyle = rgba(cInfo.col, cInfo.a * 0.55);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(dx, baseY - dw);
+        ctx.lineTo(dx, baseY - dw - dh * 0.45);
+        ctx.lineWidth = 1.4;
+        ctx.strokeStyle = rgba(brassHi, cInfo.a * 0.85);
+        ctx.stroke();
+      }
+    }
+
+    ctx.beginPath();
+    ctx.moveTo(-lensR, 0);
+    ctx.lineTo(lensR, 0);
+    ctx.moveTo(0, -lensR);
+    ctx.lineTo(0, lensR);
+    ctx.lineWidth = 0.7;
+    ctx.strokeStyle = rgba(brassHi, 0.28);
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.beginPath();
+    ctx.arc(radius * 0.06, -radius * 0.04, lensR, 0, Math.PI * 2);
+    ctx.lineWidth = Math.max(4, radius * 0.042);
+    ctx.strokeStyle = rgba(brassHi, 0.92);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawWomanSilhouette(ctx, x, y, h, rgb, alpha, sway) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.fillStyle = rgba(rgb, alpha);
+    ctx.beginPath();
+    ctx.arc(sway * h * 0.03, -h * 0.78, h * 0.095, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(-h * 0.11 + sway * h * 0.02, -h * 0.66);
+    ctx.quadraticCurveTo(h * 0.13, -h * 0.66, h * 0.10, -h * 0.38);
+    ctx.quadraticCurveTo(h * 0.24, -h * 0.02, h * 0.28, h * 0.22);
+    ctx.lineTo(-h * 0.26, h * 0.22);
+    ctx.quadraticCurveTo(-h * 0.20, -h * 0.06, -h * 0.09, -h * 0.38);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function renderHesitationStation(ctx, cx, cy, radius, state) {
+    var ageT = state.ageState.ageProgress;
+    var archStone = mixRgb([198, 186, 166], [156, 136, 108], ageT);
+    var womanOneRgb = mixRgb([246, 214, 158], [198, 172, 134], ageT);
+    var womanTwoRgb = mixRgb([196, 224, 248], [178, 168, 150], ageT);
+    var thirdRgb = mixRgb([255, 182, 118], [210, 162, 116], ageT);
+
+    ctx.save();
+    ctx.translate(cx, cy);
+    var r = radius * 0.88;
+
+    var archPositions = [-r * 0.52, r * 0.52];
+    for (var a = 0; a < 2; a++) {
+      var ax = archPositions[a];
+      var chosen = state.lastWomanChoice === a;
+      var wCol = a === 0 ? womanOneRgb : womanTwoRgb;
+      ctx.beginPath();
+      ctx.moveTo(ax - r * 0.24, r * 0.52);
+      ctx.lineTo(ax - r * 0.24, -r * 0.16);
+      ctx.arc(ax, -r * 0.16, r * 0.24, Math.PI, 0);
+      ctx.lineTo(ax + r * 0.24, r * 0.52);
+      ctx.closePath();
+      ctx.fillStyle = rgba(wCol, chosen ? 0.24 : 0.13);
+      ctx.fill();
+      ctx.lineWidth = chosen ? 2.4 : 1.5;
+      ctx.strokeStyle = rgba(archStone, 0.82);
+      ctx.stroke();
+
+      var sway = Math.sin(state.clock * 1.6 + a * 2.1);
+      drawWomanSilhouette(ctx, ax, r * 0.32, r * 0.58, wCol, chosen ? 0.92 : 0.72, sway);
+    }
+
+    var reveal = clamp(state.thirdWomanGlow + (state.thirdWomanReveals > 0 ? 0.72 : 0.08), 0, 1);
+    ctx.beginPath();
+    ctx.moveTo(-r * 0.23, r * 0.44);
+    ctx.lineTo(-r * 0.23, -r * 0.32);
+    ctx.arc(0, -r * 0.32, r * 0.23, Math.PI, 0);
+    ctx.lineTo(r * 0.23, r * 0.44);
+    ctx.closePath();
+    ctx.fillStyle = rgba(thirdRgb, 0.06 + reveal * 0.36);
+    ctx.fill();
+    ctx.lineWidth = 1.4 + reveal * 1.8;
+    ctx.strokeStyle = rgba(thirdRgb, 0.28 + reveal * 0.68);
+    ctx.stroke();
+
+    if (reveal > 0.12) {
+      ctx.beginPath();
+      ctx.moveTo(0, -r * 0.52);
+      ctx.lineTo(-r * 0.34, r * 0.62);
+      ctx.lineTo(r * 0.34, r * 0.62);
+      ctx.closePath();
+      ctx.fillStyle = rgba(thirdRgb, reveal * 0.20);
+      ctx.fill();
+      drawWomanSilhouette(ctx, 0, r * (0.30 - reveal * 0.06), r * (0.52 + reveal * 0.12), thirdRgb, reveal * 0.98, Math.cos(state.clock * 2.0));
+      for (var rp = 1; rp <= 2; rp++) {
+        ctx.beginPath();
+        safeEllipse(ctx, 0, r * 0.46, r * 0.14 * rp * reveal, r * 0.045 * rp * reveal, 0, 0, Math.PI * 2);
+        ctx.strokeStyle = rgba(thirdRgb, reveal * 0.55 / rp);
+        ctx.lineWidth = 1.2;
+        ctx.stroke();
+      }
+    }
+    ctx.restore();
+  }
+
+  function renderCockfightStation(ctx, cx, cy, radius, state) {
+    var ageT = state.ageState.ageProgress;
+    var chalkRgb = mixRgb([242, 236, 224], [188, 172, 148], ageT);
+    var crimsonRgb = mixRgb([212, 38, 46], [156, 74, 62], ageT);
+    var copperRgb = mixRgb([224, 148, 66], [174, 134, 92], ageT);
+    var plumageRgb = mixRgb([44, 152, 128], [94, 114, 98], ageT);
+    var cloakDark = mixRgb([26, 30, 42], [66, 56, 46], ageT);
+    var brawl = state.cockfightBrawlIntensity;
+
+    ctx.save();
+    ctx.translate(cx, cy);
+    var pitR = radius * 0.56;
+
+    ctx.beginPath();
+    ctx.arc(0, 0, pitR, 0, Math.PI * 2);
+    ctx.fillStyle = rgba(mixRgb([62, 48, 38], [84, 70, 54], ageT), 0.58);
+    ctx.fill();
+    if (typeof ctx.setLineDash === 'function') ctx.setLineDash(brawl > 0.45 ? [8, 5, 3, 6] : []);
+    ctx.lineWidth = 2.4;
+    ctx.strokeStyle = rgba(chalkRgb, 0.85 - brawl * 0.25);
+    ctx.stroke();
+    if (typeof ctx.setLineDash === 'function') ctx.setLineDash([]);
+
+    if (brawl > 0.30) {
+      for (var sw = 1; sw <= 3; sw++) {
+        var sr = pitR * (0.32 + sw * 0.24 * brawl);
+        ctx.beginPath();
+        ctx.arc(0, 0, sr, 0, Math.PI * 2);
+        ctx.lineWidth = 1.4;
+        ctx.strokeStyle = rgba(crimsonRgb, (brawl - 0.25) * 0.45 / sw);
+        ctx.stroke();
+      }
+    }
+
+    for (var c = 0; c < 2; c++) {
+      var dir = c === 0 ? 1 : -1;
+      var cAng = state.clock * (2.6 + brawl * 4.2) + c * Math.PI;
+      var cDist = pitR * lerp(0.32, 0.14, brawl);
+      var gx = Math.cos(cAng) * cDist;
+      var gy = Math.sin(cAng) * cDist;
+      ctx.save();
+      ctx.translate(gx, gy);
+      ctx.rotate(cAng + Math.PI * 0.5 * dir);
+      ctx.beginPath();
+      safeEllipse(ctx, 0, 0, pitR * 0.13, pitR * 0.085, 0, 0, Math.PI * 2);
+      ctx.fillStyle = rgba(c === 0 ? copperRgb : plumageRgb, 0.94);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.moveTo(-pitR * 0.10, 0);
+      ctx.quadraticCurveTo(-pitR * 0.28, -pitR * 0.22, -pitR * 0.34, pitR * 0.06);
+      ctx.lineWidth = 2.6;
+      ctx.strokeStyle = rgba(crimsonRgb, 0.92);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(pitR * 0.13, -pitR * 0.04, pitR * 0.042, 0, Math.PI * 2);
+      ctx.fillStyle = rgba(crimsonRgb, 0.96);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    var bettors = state.bettors;
+    for (var b = 0; b < bettors.length; b++) {
+      var bt = bettors[b];
+      var bAng = bt.baseAngle + state.clock * bt.orbitSpeed * brawl * 1.35;
+      var surge = brawl * (0.48 + 0.18 * Math.sin(state.clock * 5.8 + bt.lungePhase));
+      var bRad = pitR * (1.18 - surge * 0.78);
+      var bx = Math.cos(bAng) * bRad;
+      var by = Math.sin(bAng) * bRad;
+      var bSize = radius * 0.082 * bt.shoulderScale;
+
+      ctx.save();
+      ctx.translate(bx, by);
+      ctx.rotate(bAng + Math.PI * 0.5 + (brawl > 0.35 ? Math.sin(state.clock * 7 + b) * 0.45 : 0));
+      ctx.beginPath();
+      safeEllipse(ctx, 0, 0, bSize * 1.15, bSize * 0.68, 0, 0, Math.PI * 2);
+      ctx.fillStyle = rgba(cloakDark, 0.92);
+      ctx.fill();
+      ctx.lineWidth = 1.2;
+      ctx.strokeStyle = rgba(brawl > 0.45 && b % 2 === 0 ? crimsonRgb : chalkRgb, 0.68);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(0, 0, bSize * (bt.hatBrim ? 0.54 : 0.38), 0, Math.PI * 2);
+      ctx.fillStyle = rgba(mixRgb([88, 72, 58], [108, 92, 74], ageT), 0.95);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    if (brawl > 0.18) {
+      var feathers = state.feathers;
+      var activeCount = Math.min(feathers.length, Math.floor(8 + brawl * 34));
+      for (var f = 0; f < activeCount; f++) {
+        var ft = feathers[f];
+        var travel = ((ft.progress + state.clock * ft.speed * (0.35 + brawl)) % 1);
+        var fRad = pitR * (0.08 + travel * (0.55 + brawl * 0.65));
+        var fx = Math.cos(ft.angle) * fRad;
+        var fy = Math.sin(ft.angle) * fRad;
+        ctx.save();
+        ctx.translate(fx, fy);
+        ctx.rotate(ft.angle + state.clock * ft.spin);
+        ctx.beginPath();
+        safeEllipse(ctx, 0, 0, ft.length * 0.55, ft.length * 0.18, 0, 0, Math.PI * 2);
+        ctx.fillStyle = rgba(ft.crimson ? crimsonRgb : copperRgb, (1 - travel * 0.72) * clamp(brawl * 1.25, 0.25, 0.96));
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+    ctx.restore();
+  }
+
+  function renderMasterFrame(ctx, w, h, state) {
+    if (!ctx || w <= 0 || h <= 0) return;
+    var ageT = state.ageState.ageProgress;
+    var scale = clamp(state.ageState.distanceScale, 0.38, 1.08);
+    var bgTop = mixRgb([11, 20, 38], [58, 49, 39], ageT);
+    var bgBot = mixRgb([24, 38, 62], [116, 98, 76], ageT);
+
+    ctx.save();
+    ctx.clearRect(0, 0, w, h);
+    var bgGrad = ctx.createLinearGradient(0, 0, 0, h);
+    bgGrad.addColorStop(0, rgba(bgTop, 1));
+    bgGrad.addColorStop(1, rgba(bgBot, 1));
+    ctx.fillStyle = bgGrad;
+    ctx.fillRect(0, 0, w, h);
+
+    var recedeY = -h * 0.11 * ageT;
+    var cx = w * 0.5;
+    var cy = h * 0.48 + recedeY;
+    var baseRadius = Math.min(w, h) * 0.41;
+
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.scale(scale, scale);
+
+    var isSpiral = state.activeStation === 'spiral';
+    renderSpiralVault(ctx, 0, 0, baseRadius, state, isSpiral ? 1.0 : 0.24);
+
+    if (state.activeStation === 'violin') {
+      renderViolinStation(ctx, 0, 0, baseRadius, state);
+    } else if (state.activeStation === 'telescope') {
+      renderTelescopeStation(ctx, 0, 0, baseRadius, state);
+    } else if (state.activeStation === 'hesitation') {
+      renderHesitationStation(ctx, 0, 0, baseRadius, state);
+    } else if (state.activeStation === 'cockfight') {
+      renderCockfightStation(ctx, 0, 0, baseRadius, state);
+    }
+    ctx.restore();
+
+    if (ageT > 0.04) {
+      var hazeRgb = mixRgb([188, 162, 124], [154, 134, 106], ageT);
+      ctx.fillStyle = rgba(hazeRgb, ageT * 0.22);
+      ctx.fillRect(0, 0, w, h);
+    }
+    ctx.restore();
+  }
+
+  function injectScopedStyles(doc) {
+    if (!doc || !doc.head || typeof doc.getElementById !== 'function') return;
+    if (doc.getElementById('isidora-spiral-desires-styles')) return;
+    var st = doc.createElement('style');
+    st.id = 'isidora-spiral-desires-styles';
+    st.textContent = [
+      '.isidora-sd-console{display:flex;flex-direction:column;gap:6px;width:100%;box-sizing:border-box;font-family:Georgia,serif;color:#f3e7cf;}',
+      '.isidora-sd-rail{display:flex;flex-wrap:wrap;gap:4px;align-items:center;}',
+      '.isidora-sd-tab,.isidora-sd-trigger{appearance:none;border:1px solid rgba(232,198,136,0.45);background:rgba(20,28,44,0.82);color:#f5ead4;padding:4px 8px;border-radius:4px;font-size:12px;line-height:1.25;cursor:pointer;}',
+      '.isidora-sd-tab[aria-selected="true"]{background:rgba(196,148,72,0.34);border-color:#f2cb82;font-weight:600;}',
+      '.isidora-sd-deck{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:5px 8px;border:1px solid rgba(226,194,138,0.32);background:rgba(16,22,36,0.76);border-radius:5px;box-sizing:border-box;}',
+      '.isidora-sd-deck[hidden]{display:none !important;}',
+      '.isidora-sd-readout{font-size:11px;opacity:0.9;margin-left:auto;white-space:nowrap;}',
+      '.isidora-sd-range{accent-color:#e4b660;max-width:130px;cursor:pointer;}'
+    ].join('\n');
+    doc.head.appendChild(st);
+  }
+
+  function computeViolinHarmony(cents) {
+    var errSum = 0;
+    for (var i = 0; i < 4; i++) {
+      errSum += Math.abs(cents[i]) / 32;
+    }
+    for (var j = 0; j < 3; j++) {
+      errSum += Math.abs(cents[j + 1] - cents[j]) / 40;
+    }
+    var score = 1 - clamp(errSum / 5.2, 0, 0.92);
+    return Math.round(score * 1000) / 1000;
+  }
+
+  function computeTelescopeSharpness(focusVal) {
+    var dist = Math.abs(clamp(focusVal, 0, 1) - 0.74);
+    var raw = 1 - clamp(dist / 0.74, 0, 1);
+    var curved = Math.pow(raw, 1.25);
+    return Math.round(clamp(curved, 0.05, 1) * 1000) / 1000;
+  }
+
+  function detectInitialReducedMotion(explicitFlag) {
+    if (typeof explicitFlag === 'boolean') return explicitFlag;
+    if (typeof global.matchMedia === 'function') {
+      try {
+        return Boolean(global.matchMedia('(prefers-reduced-motion: reduce)').matches);
+      } catch (_) {}
+    }
+    return false;
+  }
+
+  function createIsidoraSpiralDesires(options) {
+    var opts = options || {};
+    var onDesirePursued = typeof opts.onDesirePursued === 'function' ? opts.onDesirePursued : null;
+    var audio = createAudioEngine();
+
+    var state = {
+      activeStation: 'spiral',
+      reducedMotion: detectInitialReducedMotion(opts.reducedMotion),
+      clock: 0.35,
+      shimmerBoost: 0,
+      spiralTurns: 0,
+      spiralAngle: 0,
+      spiralZoom: 1.0,
+      seashells: buildSeashells(SEASHELL_TOTAL),
+      violinCents: [
+        VIOLIN_COURSES[0].initialCents,
+        VIOLIN_COURSES[1].initialCents,
+        VIOLIN_COURSES[2].initialCents,
+        VIOLIN_COURSES[3].initialCents
+      ],
+      violinCursor: 0,
+      stringEnergy: [0, 0, 0, 0],
+      violinFifthsHarmony: 0,
+      telescopeFocus: 0.16,
+      telescopeSharpness: 0,
+      starfield: buildConstellationField(),
+      hesitationAttempts: 0,
+      thirdWomanReveals: 0,
+      lastWomanChoice: -1,
+      thirdWomanGlow: 0,
+      cockfightBrawlIntensity: 0.12,
+      bettors: buildBettors(10),
+      feathers: buildFeathers(42),
+      stationCounts: {
+        spiral: 0,
+        violin: 0,
+        telescope: 0,
+        hesitation: 0,
+        cockfight: 0
+      },
+      totalDesiresPursued: 0,
+      ageState: {
+        ageProgress: 0,
+        phase: 'youth_dream',
+        isSeatedOnWall: false,
+        memoryFilterHz: 13500,
+        distanceScale: 1.0
+      }
+    };
+
+    state.violinFifthsHarmony = computeViolinHarmony(state.violinCents);
+    state.telescopeSharpness = computeTelescopeSharpness(state.telescopeFocus);
+
+    var canvasEl = null;
+    var ctx2d = null;
+    var controlsRootEl = null;
+    var domRefs = null;
+    var widthPx = 800;
+    var heightPx = 600;
+    var rafId = null;
+    var lastFrameMs = 0;
+    var resizeObs = null;
+    var cleanups = [];
+    var destroyed = false;
+
+    function syncDomReadouts() {
+      if (!domRefs) return;
+      for (var i = 0; i < STATION_LIST.length; i++) {
+        var st = STATION_LIST[i];
+        var isAct = state.activeStation === st;
+        if (domRefs.tabs[st]) {
+          domRefs.tabs[st].setAttribute('aria-selected', isAct ? 'true' : 'false');
+        }
+        if (domRefs.decks[st]) {
+          if (isAct) domRefs.decks[st].removeAttribute('hidden');
+          else domRefs.decks[st].setAttribute('hidden', '');
+          domRefs.decks[st].setAttribute('data-active', isAct ? 'true' : 'false');
+        }
+      }
+      if (domRefs.spiralReadout) {
+        domRefs.spiralReadout.textContent = 'Turns ' + state.spiralTurns.toFixed(2) + ' · ' + state.seashells.length + ' shells';
+      }
+      if (domRefs.violinReadout) {
+        domRefs.violinReadout.textContent = '3:2 Fifths ' + Math.round(state.violinFifthsHarmony * 100) + '%';
+      }
+      if (domRefs.telescopeRange) {
+        domRefs.telescopeRange.value = String(Math.round(state.telescopeFocus * 100));
+      }
+      if (domRefs.telescopeReadout) {
+        domRefs.telescopeReadout.textContent = 'Sharpness ' + Math.round(state.telescopeSharpness * 100) + '%';
+      }
+      if (domRefs.hesitationReadout) {
+        domRefs.hesitationReadout.textContent = '3rd Woman reveals: ' + state.thirdWomanReveals;
+      }
+      if (domRefs.cockfightReadout) {
+        domRefs.cockfightReadout.textContent = 'Brawl ' + Math.round(state.cockfightBrawlIntensity * 100) + '%';
+      }
+      if (domRefs.consoleEl) {
+        domRefs.consoleEl.setAttribute('data-age-phase', state.ageState.phase || 'youth_dream');
+        domRefs.consoleEl.setAttribute('data-seated-wall', state.ageState.isSeatedOnWall ? 'true' : 'false');
+      }
+    }
+
+    function drawNow() {
+      if (!ctx2d || destroyed) return;
+      renderMasterFrame(ctx2d, widthPx, heightPx, state);
+    }
+
+    function stepPhysics(dt) {
+      state.clock += dt;
+      state.shimmerBoost *= Math.pow(0.28, dt);
+      state.thirdWomanGlow = Math.max(state.thirdWomanReveals > 0 ? 0.45 : 0, state.thirdWomanGlow - dt * 0.28);
+      for (var i = 0; i < 4; i++) {
+        state.stringEnergy[i] *= Math.pow(0.16, dt);
+        if (state.stringEnergy[i] < 0.004) state.stringEnergy[i] = 0;
+      }
+    }
+
+    function onAnimFrame(nowMs) {
+      rafId = null;
+      if (destroyed || state.reducedMotion) return;
+      var dt = lastFrameMs ? clamp((nowMs - lastFrameMs) / 1000, 0.004, 0.06) : 0.016;
+      lastFrameMs = nowMs;
+      stepPhysics(dt);
+      drawNow();
+      if (typeof global.requestAnimationFrame === 'function') {
+        rafId = global.requestAnimationFrame(onAnimFrame);
+      }
+    }
+
+    function syncLoop() {
+      if (rafId !== null && typeof global.cancelAnimationFrame === 'function') {
+        global.cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+      lastFrameMs = 0;
+      if (!destroyed && !state.reducedMotion && ctx2d && typeof global.requestAnimationFrame === 'function') {
+        rafId = global.requestAnimationFrame(onAnimFrame);
+      }
+    }
+
+    function getTelemetry() {
+      return {
+        activeStation: state.activeStation,
+        spiralTurns: state.spiralTurns,
+        seashellCount: state.seashells.length,
+        violinFifthsHarmony: state.violinFifthsHarmony,
+        telescopeSharpness: state.telescopeSharpness,
+        hesitationAttempts: state.hesitationAttempts,
+        thirdWomanReveals: state.thirdWomanReveals,
+        cockfightBrawlIntensity: state.cockfightBrawlIntensity,
+        stationCounts: {
+          spiral: state.stationCounts.spiral,
+          violin: state.stationCounts.violin,
+          telescope: state.stationCounts.telescope,
+          hesitation: state.stationCounts.hesitation,
+          cockfight: state.stationCounts.cockfight
+        },
+        totalDesiresPursued: state.totalDesiresPursued
+      };
+    }
+
+    function selectStation(stationId) {
+      var next = STATION_META[stationId] ? stationId : 'spiral';
+      state.activeStation = next;
+      syncDomReadouts();
+      drawNow();
+    }
+
+    function actOnStation(stationId, actionPayload) {
+      var target = STATION_META[stationId] ? stationId : state.activeStation;
+      var payload = actionPayload || {};
+      var fromGesture = Boolean(payload.fromUserGesture);
+      if (!payload.keepActiveStation) {
+        state.activeStation = target;
+      }
+
+      var meta = STATION_META[target];
+      var intensity = 0.72;
+      var customLabel = meta.label;
+
+      if (target === 'spiral') {
+        var turnStep = typeof payload.turns === 'number' && isFinite(payload.turns) ? payload.turns : 0.35;
+        state.spiralTurns = Math.round((state.spiralTurns + Math.abs(turnStep || 0.25)) * 1000) / 1000;
+        state.spiralAngle += turnStep * Math.PI * 2;
+        if (typeof payload.zoom === 'number' && isFinite(payload.zoom)) {
+          state.spiralZoom = clamp(payload.zoom, 0.76, 1.48);
+        } else {
+          state.spiralZoom = 0.94 + 0.16 * Math.sin(state.spiralTurns * 1.4);
+        }
+        state.shimmerBoost = 1.0;
+        intensity = clamp(0.58 + (state.spiralTurns % 1) * 0.4, 0.45, 1.0);
+        synthStationSound(audio, 'spiral', { turns: state.spiralTurns }, fromGesture);
+      } else if (target === 'violin') {
+        var idx = state.violinCursor;
+        if (typeof payload.stringIndex === 'number') {
+          idx = clamp(Math.floor(payload.stringIndex), 0, 3);
+        } else if (typeof payload.course === 'string') {
+          for (var c = 0; c < 4; c++) {
+            if (VIOLIN_COURSES[c].id === payload.course) idx = c;
+          }
+        }
+        state.violinCursor = (idx + 1) % 4;
+
+        if (typeof payload.cents === 'number' && isFinite(payload.cents)) {
+          state.violinCents[idx] = clamp(payload.cents, -45, 45);
+        } else if (typeof payload.centsDelta === 'number' && isFinite(payload.centsDelta)) {
+          state.violinCents[idx] = clamp(state.violinCents[idx] + payload.centsDelta, -45, 45);
+        } else {
+          state.violinCents[idx] = Math.abs(state.violinCents[idx]) < 2.5 ? 0 : state.violinCents[idx] * 0.18;
+          for (var k = 0; k < 4; k++) {
+            if (k !== idx) {
+              state.violinCents[k] = Math.abs(state.violinCents[k]) < 2.5 ? 0 : state.violinCents[k] * 0.55;
+            }
+          }
+        }
+        state.violinFifthsHarmony = computeViolinHarmony(state.violinCents);
+        var pairIdx = idx < 3 ? idx + 1 : idx - 1;
+        state.stringEnergy[idx] = 1.0;
+        state.stringEnergy[pairIdx] = Math.max(state.stringEnergy[pairIdx], 0.58);
+        var freqMain = VIOLIN_COURSES[idx].targetHz * Math.pow(2, state.violinCents[idx] / 1200);
+        var freqPair = VIOLIN_COURSES[pairIdx].targetHz * Math.pow(2, state.violinCents[pairIdx] / 1200);
+        var bowed = Boolean(payload.bow || payload.mode === 'bow');
+        customLabel = (bowed ? 'Bowed ' : 'Plucked ') + VIOLIN_COURSES[idx].id + '–' + VIOLIN_COURSES[pairIdx].id + ' Violin Fifth';
+        intensity = clamp(0.5 + state.violinFifthsHarmony * 0.5, 0.45, 1.0);
+        synthViolinString(audio, freqMain, freqPair, bowed, fromGesture);
+      } else if (target === 'telescope') {
+        if (typeof payload.sharpness === 'number' && isFinite(payload.sharpness)) {
+          state.telescopeSharpness = clamp(Math.round(payload.sharpness * 1000) / 1000, 0, 1);
+          state.telescopeFocus = clamp(0.74 - (1 - state.telescopeSharpness) * 0.58, 0, 1);
+        } else if (typeof payload.focus === 'number' && isFinite(payload.focus)) {
+          state.telescopeFocus = clamp(payload.focus, 0, 1);
+          state.telescopeSharpness = computeTelescopeSharpness(state.telescopeFocus);
+        } else if (typeof payload.delta === 'number' && isFinite(payload.delta)) {
+          state.telescopeFocus = clamp(state.telescopeFocus + payload.delta, 0, 1);
+          state.telescopeSharpness = computeTelescopeSharpness(state.telescopeFocus);
+        } else {
+          var gap = 0.74 - state.telescopeFocus;
+          state.telescopeFocus = Math.abs(gap) < 0.035 ? 0.74 : state.telescopeFocus + gap * 0.65;
+          state.telescopeSharpness = computeTelescopeSharpness(state.telescopeFocus);
+        }
+        intensity = clamp(0.45 + state.telescopeSharpness * 0.55, 0.45, 1.0);
+        synthStationSound(audio, 'telescope', { sharpness: state.telescopeSharpness }, fromGesture);
+      } else if (target === 'hesitation') {
+        var chosen = state.lastWomanChoice === 0 ? 1 : 0;
+        if (payload.choice === 0 || payload.choice === 1) chosen = payload.choice;
+        else if (payload.woman === 1 || payload.woman === 2) chosen = payload.woman - 1;
+        state.lastWomanChoice = chosen;
+        state.hesitationAttempts += 1;
+        state.thirdWomanReveals += 1;
+        state.thirdWomanGlow = 1.0;
+        customLabel = 'Leaned toward Woman ' + (chosen === 0 ? 'I' : 'II') + ' — Encountered a Third Woman';
+        intensity = 0.88;
+        synthStationSound(audio, 'hesitation', { choice: chosen }, fromGesture);
+      } else if (target === 'cockfight') {
+        if (typeof payload.intensity === 'number' && isFinite(payload.intensity)) {
+          state.cockfightBrawlIntensity = clamp(Math.max(state.cockfightBrawlIntensity, payload.intensity), 0, 1);
+        } else {
+          var stepBrawl = typeof payload.delta === 'number' && isFinite(payload.delta) ? payload.delta : 0.36;
+          state.cockfightBrawlIntensity = clamp(Math.round((state.cockfightBrawlIntensity + stepBrawl) * 1000) / 1000, 0, 1);
+        }
+        intensity = clamp(0.55 + state.cockfightBrawlIntensity * 0.45, 0.5, 1.0);
+        synthStationSound(audio, 'cockfight', { intensity: state.cockfightBrawlIntensity }, fromGesture);
+      }
+
+      state.stationCounts[target] += 1;
+      state.totalDesiresPursued += 1;
+      if (state.reducedMotion) state.clock += 0.35;
+
+      var desireEvent = {
+        station: target,
+        deltaAge: typeof payload.deltaAge === 'number' && payload.deltaAge > 0 ? payload.deltaAge : meta.deltaAge,
+        label: customLabel,
+        memoryEcho: meta.memoryEcho,
+        intensity: Math.round(intensity * 1000) / 1000
+      };
+
+      syncDomReadouts();
+      drawNow();
+      if (onDesirePursued) {
+        onDesirePursued(desireEvent);
+      }
+
+      return {
+        station: desireEvent.station,
+        deltaAge: desireEvent.deltaAge,
+        label: desireEvent.label,
+        memoryEcho: desireEvent.memoryEcho,
+        intensity: desireEvent.intensity,
+        telemetry: getTelemetry()
+      };
+    }
+
+    function setAgeState(nextState) {
+      var incoming = nextState || {};
+      var nextAge = typeof incoming.ageProgress === 'number' && isFinite(incoming.ageProgress)
+        ? clamp(incoming.ageProgress, 0, 1)
+        : state.ageState.ageProgress;
+      var nextScale = typeof incoming.distanceScale === 'number' && isFinite(incoming.distanceScale)
+        ? clamp(incoming.distanceScale, 0.36, 1.08)
+        : clamp(1 - nextAge * 0.42, 0.42, 1.0);
+      var nextHz = typeof incoming.memoryFilterHz === 'number' && isFinite(incoming.memoryFilterHz)
+        ? clamp(incoming.memoryFilterHz, 280, 18000)
+        : Math.round(13500 * Math.pow(660 / 13500, nextAge));
+
+      state.ageState = {
+        ageProgress: nextAge,
+        phase: incoming.phase || (nextAge >= 0.9 ? 'seated_elder' : nextAge >= 0.4 ? 'twilight_drift' : 'youth_dream'),
+        isSeatedOnWall: Boolean(incoming.isSeatedOnWall || nextAge >= 0.9),
+        memoryFilterHz: nextHz,
+        distanceScale: nextScale
+      };
+      audio.setAgeFilter(nextHz, nextAge);
+      syncDomReadouts();
+      drawNow();
+    }
+
+    function setAudioMuted(muted) {
+      audio.setMuted(Boolean(muted));
+    }
+
+    function setReducedMotion(reduced) {
+      state.reducedMotion = Boolean(reduced);
+      syncLoop();
+      drawNow();
+    }
+
+    function resize(width, height) {
+      var w = typeof width === 'number' && width > 0 ? width : widthPx;
+      var h = typeof height === 'number' && height > 0 ? height : heightPx;
+      widthPx = Math.max(120, Math.round(w));
+      heightPx = Math.max(120, Math.round(h));
+      if (canvasEl) {
+        var dpr = typeof global.devicePixelRatio === 'number' ? clamp(global.devicePixelRatio, 1, 2) : 1;
+        canvasEl.width = Math.round(widthPx * dpr);
+        canvasEl.height = Math.round(heightPx * dpr);
+        if (ctx2d && typeof ctx2d.setTransform === 'function') {
+          ctx2d.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+      }
+      drawNow();
+    }
+
+    function addListener(target, type, fn, optsArg) {
+      if (!target || typeof target.addEventListener !== 'function') return;
+      target.addEventListener(type, fn, optsArg || false);
+      cleanups.push(function () {
+        if (typeof target.removeEventListener === 'function') {
+          target.removeEventListener(type, fn, optsArg || false);
+        }
+      });
+    }
+
+    function buildControlsDom(rootEl) {
+      var doc = rootEl.ownerDocument || global.document;
+      if (!doc || typeof doc.createElement !== 'function') return;
+      injectScopedStyles(doc);
+      rootEl.innerHTML = '';
+
+      var consoleEl = doc.createElement('isidora-desire-console');
+      consoleEl.className = 'isidora-sd-console';
+      var railEl = doc.createElement('isidora-station-rail');
+      railEl.className = 'isidora-sd-rail';
+      railEl.setAttribute('role', 'tablist');
+      railEl.setAttribute('aria-label', 'Chambers of Desire');
+
+      var tabs = {};
+      var decks = {};
+      var tabLabels = {
+        spiral: '1 · Spiral Shells',
+        violin: '2 · Violin Fifths',
+        telescope: '3 · Brass Telescope',
+        hesitation: '4 · Three Women',
+        cockfight: '5 · Cockfight Pit'
+      };
+
+      for (var i = 0; i < STATION_LIST.length; i++) {
+        (function (stId) {
+          var b = doc.createElement('button');
+          b.type = 'button';
+          b.className = 'isidora-sd-tab';
+          b.setAttribute('role', 'tab');
+          b.setAttribute('data-station', stId);
+          b.textContent = tabLabels[stId];
+          addListener(b, 'click', function () {
+            audio.unlock();
+            selectStation(stId);
+          });
+          tabs[stId] = b;
+          railEl.appendChild(b);
+        })(STATION_LIST[i]);
+      }
+      consoleEl.appendChild(railEl);
+
+      function makeBtn(label, onClick) {
+        var btn = doc.createElement('button');
+        btn.type = 'button';
+        btn.className = 'isidora-sd-trigger';
+        btn.textContent = label;
+        addListener(btn, 'click', function () {
+          audio.unlock();
+          onClick();
+        });
+        return btn;
+      }
+
+      var spiralDeck = doc.createElement('seashell-whorl');
+      spiralDeck.className = 'isidora-sd-deck';
+      spiralDeck.appendChild(makeBtn('Turn Golden Spiral', function () {
+        actOnStation('spiral', { turns: 0.35, fromUserGesture: true });
+      }));
+      spiralDeck.appendChild(makeBtn('Deepen Shell Vault', function () {
+        actOnStation('spiral', { turns: 0.55, zoom: 1.18, fromUserGesture: true });
+      }));
+      var spiralReadout = doc.createElement('span');
+      spiralReadout.className = 'isidora-sd-readout';
+      spiralDeck.appendChild(spiralReadout);
+      decks.spiral = spiralDeck;
+      consoleEl.appendChild(spiralDeck);
+
+      var violinDeck = doc.createElement('luthier-pegbox');
+      violinDeck.className = 'isidora-sd-deck';
+      for (var v = 0; v < VIOLIN_COURSES.length; v++) {
+        (function (vIdx) {
+          var vc = VIOLIN_COURSES[vIdx];
+          violinDeck.appendChild(makeBtn(vc.id + ' ' + vc.targetHz.toFixed(0) + 'Hz', function () {
+            actOnStation('violin', { stringIndex: vIdx, fromUserGesture: true });
+          }));
+        })(v);
+      }
+      violinDeck.appendChild(makeBtn('Bow 3:2 Fifths', function () {
+        actOnStation('violin', { bow: true, fromUserGesture: true });
+      }));
+      var violinReadout = doc.createElement('span');
+      violinReadout.className = 'isidora-sd-readout';
+      violinDeck.appendChild(violinReadout);
+      decks.violin = violinDeck;
+      consoleEl.appendChild(violinDeck);
+
+      var teleDeck = doc.createElement('brass-refractor');
+      teleDeck.className = 'isidora-sd-deck';
+      var teleRange = doc.createElement('input');
+      teleRange.type = 'range';
+      teleRange.min = '0';
+      teleRange.max = '100';
+      teleRange.value = String(Math.round(state.telescopeFocus * 100));
+      teleRange.className = 'isidora-sd-range';
+      teleRange.setAttribute('aria-label', 'Vernier Drawtube Focus');
+      addListener(teleRange, 'input', function () {
+        state.telescopeFocus = clamp(Number(teleRange.value) / 100, 0, 1);
+        state.telescopeSharpness = computeTelescopeSharpness(state.telescopeFocus);
+        syncDomReadouts();
+        drawNow();
+      });
+      addListener(teleRange, 'change', function () {
+        audio.unlock();
+        actOnStation('telescope', { focus: clamp(Number(teleRange.value) / 100, 0, 1), fromUserGesture: true });
+      });
+      teleDeck.appendChild(teleRange);
+      teleDeck.appendChild(makeBtn('Lock Constellation Focus', function () {
+        actOnStation('telescope', { focus: 0.74, fromUserGesture: true });
+      }));
+      var teleReadout = doc.createElement('span');
+      teleReadout.className = 'isidora-sd-readout';
+      teleDeck.appendChild(teleReadout);
+      decks.telescope = teleDeck;
+      consoleEl.appendChild(teleDeck);
+
+      var hesDeck = doc.createElement('hesitation-loggia');
+      hesDeck.className = 'isidora-sd-deck';
+      hesDeck.appendChild(makeBtn('Approach Woman I', function () {
+        actOnStation('hesitation', { choice: 0, fromUserGesture: true });
+      }));
+      hesDeck.appendChild(makeBtn('Approach Woman II', function () {
+        actOnStation('hesitation', { choice: 1, fromUserGesture: true });
+      }));
+      var hesReadout = doc.createElement('span');
+      hesReadout.className = 'isidora-sd-readout';
+      hesDeck.appendChild(hesReadout);
+      decks.hesitation = hesDeck;
+      consoleEl.appendChild(hesDeck);
+
+      var pitDeck = doc.createElement('cockfight-pit');
+      pitDeck.className = 'isidora-sd-deck';
+      pitDeck.appendChild(makeBtn('Press Pit Wager', function () {
+        actOnStation('cockfight', { delta: 0.36, fromUserGesture: true });
+      }));
+      pitDeck.appendChild(makeBtn('Incite Bettors Brawl', function () {
+        actOnStation('cockfight', { intensity: 1.0, fromUserGesture: true });
+      }));
+      var pitReadout = doc.createElement('span');
+      pitReadout.className = 'isidora-sd-readout';
+      pitDeck.appendChild(pitReadout);
+      decks.cockfight = pitDeck;
+      consoleEl.appendChild(pitDeck);
+
+      rootEl.appendChild(consoleEl);
+      domRefs = {
+        consoleEl: consoleEl,
+        tabs: tabs,
+        decks: decks,
+        spiralReadout: spiralReadout,
+        violinReadout: violinReadout,
+        telescopeRange: teleRange,
+        telescopeReadout: teleReadout,
+        hesitationReadout: hesReadout,
+        cockfightReadout: pitReadout
+      };
+      syncDomReadouts();
+    }
+
+    function mount(nextCanvasEl, nextControlsRootEl) {
+      canvasEl = nextCanvasEl || null;
+      controlsRootEl = nextControlsRootEl || null;
+
+      if (canvasEl && typeof canvasEl.getContext === 'function') {
+        ctx2d = canvasEl.getContext('2d');
+        if (typeof canvasEl.setAttribute === 'function') {
+          if (!canvasEl.getAttribute('tabindex')) canvasEl.setAttribute('tabindex', '0');
+          canvasEl.setAttribute('role', 'region');
+          canvasEl.setAttribute('aria-label', 'Isidora Spiral Stairwell and Chambers of Desire');
+        }
+        var rect = typeof canvasEl.getBoundingClientRect === 'function'
+          ? canvasEl.getBoundingClientRect()
+          : { width: canvasEl.width || 800, height: canvasEl.height || 600 };
+        resize(rect.width || canvasEl.clientWidth || 800, rect.height || canvasEl.clientHeight || 600);
+
+        var dragActive = false;
+        var dragStartX = 0;
+        var dragMoved = 0;
+
+        addListener(canvasEl, 'pointerdown', function (ev) {
+          audio.unlock();
+          dragActive = true;
+          dragStartX = ev.clientX || 0;
+          dragMoved = 0;
+        });
+
+        addListener(canvasEl, 'pointermove', function (ev) {
+          if (!dragActive) return;
+          var dx = (ev.clientX || 0) - dragStartX;
+          dragStartX = ev.clientX || 0;
+          dragMoved += Math.abs(dx);
+          if (state.activeStation === 'spiral') {
+            state.spiralAngle += dx * 0.012;
+          } else if (state.activeStation === 'telescope') {
+            state.telescopeFocus = clamp(state.telescopeFocus + dx * 0.0025, 0, 1);
+            state.telescopeSharpness = computeTelescopeSharpness(state.telescopeFocus);
+            syncDomReadouts();
+          }
+          drawNow();
+        });
+
+        addListener(canvasEl, 'pointerup', function (ev) {
+          if (!dragActive) return;
+          dragActive = false;
+          var r = typeof canvasEl.getBoundingClientRect === 'function'
+            ? canvasEl.getBoundingClientRect()
+            : { left: 0, width: widthPx };
+          var relX = ((ev.clientX || 0) - (r.left || 0)) / Math.max(1, r.width || widthPx);
+          if (state.activeStation === 'hesitation') {
+            actOnStation('hesitation', { choice: relX < 0.5 ? 0 : 1, fromUserGesture: true });
+          } else if (state.activeStation === 'violin') {
+            var sIdx = clamp(Math.floor(relX * 4), 0, 3);
+            actOnStation('violin', { stringIndex: sIdx, bow: dragMoved > 24, fromUserGesture: true });
+          } else if (state.activeStation === 'telescope' && dragMoved > 8) {
+            actOnStation('telescope', { focus: state.telescopeFocus, fromUserGesture: true });
+          } else {
+            actOnStation(state.activeStation, { fromUserGesture: true });
+          }
+        });
+
+        addListener(canvasEl, 'wheel', function (ev) {
+          if (ev && typeof ev.preventDefault === 'function') ev.preventDefault();
+          audio.unlock();
+          var dir = (ev && ev.deltaY > 0) ? 1 : -1;
+          if (state.activeStation === 'telescope') {
+            actOnStation('telescope', { delta: dir * 0.12, fromUserGesture: true });
+          } else {
+            actOnStation('spiral', { turns: dir * 0.22, fromUserGesture: true });
+          }
+        }, { passive: false });
+
+        addListener(canvasEl, 'keydown', function (ev) {
+          if (!ev) return;
+          var k = ev.key;
+          if (k >= '1' && k <= '5') {
+            ev.preventDefault();
+            audio.unlock();
+            selectStation(STATION_LIST[Number(k) - 1]);
+          } else if (k === 'Enter' || k === ' ') {
+            ev.preventDefault();
+            audio.unlock();
+            actOnStation(state.activeStation, { fromUserGesture: true });
+          } else if (k === 'ArrowLeft' || k === 'ArrowRight') {
+            ev.preventDefault();
+            audio.unlock();
+            var sgn = k === 'ArrowRight' ? 1 : -1;
+            if (state.activeStation === 'hesitation') {
+              actOnStation('hesitation', { choice: sgn < 0 ? 0 : 1, fromUserGesture: true });
+            } else if (state.activeStation === 'telescope') {
+              actOnStation('telescope', { delta: sgn * 0.12, fromUserGesture: true });
+            } else if (state.activeStation === 'spiral') {
+              actOnStation('spiral', { turns: sgn * 0.25, fromUserGesture: true });
+            } else {
+              actOnStation(state.activeStation, { fromUserGesture: true });
+            }
+          }
+        });
+
+        if (typeof global.ResizeObserver === 'function') {
+          try {
+            resizeObs = new global.ResizeObserver(function (entries) {
+              if (!entries || !entries[0] || !entries[0].contentRect) return;
+              var cr = entries[0].contentRect;
+              if (cr.width > 10 && cr.height > 10) {
+                resize(cr.width, cr.height);
+              }
+            });
+            resizeObs.observe(canvasEl);
+          } catch (_) {}
+        }
+      }
+
+      if (controlsRootEl) {
+        buildControlsDom(controlsRootEl);
+      }
+
+      syncLoop();
+      drawNow();
+    }
+
+    function destroy() {
+      destroyed = true;
+      if (rafId !== null && typeof global.cancelAnimationFrame === 'function') {
+        global.cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+      if (resizeObs && typeof resizeObs.disconnect === 'function') {
+        try { resizeObs.disconnect(); } catch (_) {}
+        resizeObs = null;
+      }
+      for (var i = 0; i < cleanups.length; i++) {
+        try { cleanups[i](); } catch (_) {}
+      }
+      cleanups.length = 0;
+      if (controlsRootEl) {
+        controlsRootEl.innerHTML = '';
+      }
+      audio.destroy();
+      canvasEl = null;
+      ctx2d = null;
+      controlsRootEl = null;
+      domRefs = null;
+    }
+
+    return {
+      mount: mount,
+      setAgeState: setAgeState,
+      selectStation: selectStation,
+      actOnStation: actOnStation,
+      setAudioMuted: setAudioMuted,
+      setReducedMotion: setReducedMotion,
+      resize: resize,
+      getTelemetry: getTelemetry,
+      destroy: destroy
+    };
+  }
+
+  global.IsidoraSpiralDesires = {
+    create: createIsidoraSpiralDesires,
+    STATIONS: STATION_LIST.slice(),
+    VIOLIN_COURSES: VIOLIN_COURSES
+  };
+})(typeof window !== 'undefined' ? window : globalThis);
+
+  </script>
+  <script id="isidora-layer-old-mens-wall">
+/**
+ * City 02: ISIDORA (Cities & Memory 2) — Foreground Chronological Ratchet & Old Men's Wall
+ * File: layers/old_mens_wall.js
+ *
+ * Self-contained browser JS IIFE attaching `window.IsidoraOldMensWall`.
+ * Zero external dependencies and plain classic-script syntax so it can be
+ * inlined directly into standalone index.html.
+ *
+ * Interface Contract:
+ *   window.IsidoraOldMensWall.create({ onStateChange, reducedMotion }) => {
+ *     mount({ wildCanvasEl, wallCanvasEl, parapetRootEl }),
+ *     advanceWildRide(step = 0.25),
+ *     completeWildRide(),
+ *     recordDesire({ station, deltaAge, label, memoryEcho, intensity }),
+ *     getState(),
+ *     setReducedMotion(reduced),
+ *     resize(width, height),
+ *     destroy()
+ *   }
+ *
+ * Viewport Transform Ranges (ageProgress 0.00 -> 1.00):
+ *   distanceScale:      1.00 -> 0.62   (receding spiral scale across the square)
+ *   recessionY:          0.0 -> -44.0  (upward px shift behind rising parapet)
+ *   sepia:              0.00 -> 0.86   (warm limestone memory patina)
+ *   parapetHeightRatio: 0.14 -> 0.42   (foreground wall height ratio)
+ *   memoryFilterHz:    14000 -> 950    (piazza low-pass acoustic filter cutoff Hz)
+ */
+(function (global) {
+  'use strict';
+
+  var TAU = Math.PI * 2;
+
+  var ROMAN_NUMERALS = [
+    'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X',
+    'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII', 'XIX', 'XX'
+  ];
+
+  var STATION_META = {
+    spiral: {
+      sigil: 'I · Whorl',
+      defaultLabel: 'Calcified Nautilus Stairwell',
+      defaultEcho: 'Each seashell step climbed in desire settles behind him in pale limestone.',
+      emblem: 'shell'
+    },
+    violin: {
+      sigil: 'II · Fifths',
+      defaultLabel: 'Resonant Fifths on Spruce',
+      defaultEcho: 'Perfect fifths plucked for youth drift across the dusk square as remembered resonance.',
+      emblem: 'violin'
+    },
+    telescope: {
+      sigil: 'III · Vernier',
+      defaultLabel: 'Vernier Brass Refractor',
+      defaultEcho: 'Distant constellations brought to razor focus recede beyond the piazza parapet.',
+      emblem: 'telescope'
+    },
+    hesitation: {
+      sigil: 'IV · Loggia',
+      defaultLabel: 'Loggia of the Third Woman',
+      defaultEcho: 'Hesitating between two silhouettes, he recalls the third parting the amber shadow.',
+      emblem: 'loggia'
+    },
+    cockfight: {
+      sigil: 'V · Chalk Pit',
+      defaultLabel: 'Chalked Pit & Crimson Plume',
+      defaultEcho: 'Bloody tumult among the bettors subsides into a quiet scar on weathered stone.',
+      emblem: 'plume'
+    }
+  };
+
+  // Seven permanent cloaked old men + one open stone seat (slot 4) awaiting the traveler = 8 stone niches.
+  var SEAT_SLOTS = [
+    {
+      slotIndex: 0,
+      role: 'elder',
+      elderId: 1,
+      epithet: 'Elder of the Olivewood Cane',
+      cloakTone: '#2c2520',
+      shawlTone: '#473c31',
+      shoulderWidth: 1.02,
+      stature: 0.94,
+      headTilt: 0.14,
+      prop: 'cane-left',
+      beardLen: 0.85
+    },
+    {
+      slotIndex: 1,
+      role: 'elder',
+      elderId: 2,
+      epithet: 'Elder of the Slack Lute',
+      cloakTone: '#25211f',
+      shawlTone: '#3f362d',
+      shoulderWidth: 0.96,
+      stature: 1.03,
+      headTilt: 0.10,
+      prop: 'lute-knee',
+      beardLen: 0.60
+    },
+    {
+      slotIndex: 2,
+      role: 'elder',
+      elderId: 3,
+      epithet: 'Elder of the Folded Mantle',
+      cloakTone: '#312922',
+      shawlTone: '#514437',
+      shoulderWidth: 1.08,
+      stature: 0.98,
+      headTilt: 0.06,
+      prop: 'folded-arms',
+      beardLen: 0.95
+    },
+    {
+      slotIndex: 3,
+      role: 'elder',
+      elderId: 4,
+      epithet: 'Elder Leaning Toward the Square',
+      cloakTone: '#28221d',
+      shawlTone: '#483d32',
+      shoulderWidth: 1.00,
+      stature: 0.92,
+      headTilt: 0.18,
+      prop: 'ledge-hand',
+      beardLen: 0.72
+    },
+    {
+      slotIndex: 4,
+      role: 'traveler-seat',
+      elderId: null,
+      epithet: 'Open Limestone Seat in the Row',
+      cloakTone: '#2f261e',
+      shawlTone: '#5a4836',
+      shoulderWidth: 1.02,
+      stature: 0.99,
+      headTilt: 0.04,
+      prop: 'traveler-cloak',
+      beardLen: 0.68
+    },
+    {
+      slotIndex: 5,
+      role: 'elder',
+      elderId: 5,
+      epithet: 'Elder with Collapsed Spyglass',
+      cloakTone: '#24201d',
+      shawlTone: '#42382e',
+      shoulderWidth: 0.98,
+      stature: 1.01,
+      headTilt: -0.12,
+      prop: 'spyglass-lap',
+      beardLen: 0.78
+    },
+    {
+      slotIndex: 6,
+      role: 'elder',
+      elderId: 6,
+      epithet: 'Elder of the Silver Hood',
+      cloakTone: '#2e2721',
+      shawlTone: '#4d4033',
+      shoulderWidth: 1.04,
+      stature: 0.90,
+      headTilt: -0.09,
+      prop: 'clasped-hands',
+      beardLen: 1.00
+    },
+    {
+      slotIndex: 7,
+      role: 'elder',
+      elderId: 7,
+      epithet: 'Elder at the Eastern Pier',
+      cloakTone: '#221d1a',
+      shawlTone: '#3c332b',
+      shoulderWidth: 0.97,
+      stature: 1.04,
+      headTilt: -0.16,
+      prop: 'cane-right',
+      beardLen: 0.66
+    }
+  ];
+
+  var PERMANENT_ELDER_COUNT = 7;
+
+  function clamp(val, min, max) {
+    return Math.min(max, Math.max(min, val));
+  }
+
+  function clamp01(val) {
+    return clamp(val, 0, 1);
+  }
+
+  function round4(val) {
+    return Math.round(val * 10000) / 10000;
+  }
+
+  function smoothstep(edge0, edge1, x) {
+    var t = clamp01((x - edge0) / (edge1 - edge0 || 1));
+    return t * t * (3 - 2 * t);
+  }
+
+  function toRoman(num) {
+    if (num >= 1 && num <= ROMAN_NUMERALS.length) {
+      return ROMAN_NUMERALS[num - 1];
+    }
+    return String(num);
+  }
+
+  function registerCustomTag(tagName) {
+    if (
+      typeof customElements !== 'undefined' &&
+      typeof HTMLElement !== 'undefined' &&
+      !customElements.get(tagName)
+    ) {
+      try {
+        customElements.define(tagName, class extends HTMLElement {});
+      } catch (_) {
+        // Safe fallback in restricted or non-browser environments.
+      }
+    }
+  }
+
+  function drawEllipsePath(ctx, cx, cy, rx, ry, rot, a0, a1) {
+    if (typeof ctx.ellipse === 'function') {
+      ctx.ellipse(cx, cy, rx, ry, rot, a0, a1);
+      return;
+    }
+    ctx.save();
+    ctx.translate(cx, cy);
+    if (rot) ctx.rotate(rot);
+    ctx.scale(rx, ry);
+    ctx.arc(0, 0, 1, a0, a1);
+    ctx.restore();
+  }
+
+  function makeLinearGradient(ctx, x0, y0, x1, y1, stops, fallbackColor) {
+    if (typeof ctx.createLinearGradient === 'function') {
+      var grad = ctx.createLinearGradient(x0, y0, x1, y1);
+      if (grad && typeof grad.addColorStop === 'function') {
+        for (var i = 0; i < stops.length; i++) {
+          grad.addColorStop(stops[i][0], stops[i][1]);
+        }
+        return grad;
+      }
+    }
+    return fallbackColor;
+  }
+
+  function makeRadialGradient(ctx, x0, y0, r0, x1, y1, r1, stops, fallbackColor) {
+    if (typeof ctx.createRadialGradient === 'function') {
+      var grad = ctx.createRadialGradient(x0, y0, r0, x1, y1, r1);
+      if (grad && typeof grad.addColorStop === 'function') {
+        for (var i = 0; i < stops.length; i++) {
+          grad.addColorStop(stops[i][0], stops[i][1]);
+        }
+        return grad;
+      }
+    }
+    return fallbackColor;
+  }
+
+  function ensureBaseParapetStyles() {
+    if (typeof document === 'undefined' || !document.head || typeof document.createElement !== 'function') {
+      return;
+    }
+    if (document.querySelector && document.querySelector('style[data-isidora-wall-ledger]')) {
+      return;
+    }
+    var styleEl = document.createElement('style');
+    if (styleEl.setAttribute) {
+      styleEl.setAttribute('data-isidora-wall-ledger', '1');
+    }
+    // Zero-specificity :where() defaults so weaver CSS overrides effortlessly while standalone stays crisp.
+    styleEl.textContent = [
+      ':where(parapet-frieze-band.isidora-parapet-ledger){display:flex;flex-direction:column;gap:6px;width:100%;box-sizing:border-box;font-family:Georgia,"Palatino Linotype",serif;color:#dfd2ba;pointer-events:auto;}',
+      ':where(elder-seat-bench.isidora-seat-frieze-row){display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:4px;align-items:end;width:100%;box-sizing:border-box;}',
+      ':where(elder-row-seat){display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:22px;padding:2px 4px;border:1px solid rgba(207,188,152,0.22);background:rgba(24,19,15,0.68);color:rgba(223,210,186,0.82);font-size:10px;line-height:1.15;letter-spacing:0.04em;text-align:center;box-sizing:border-box;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}',
+      ':where(elder-row-seat[data-role="traveler-seat"][data-occupied="false"]){border-style:dashed;border-color:rgba(235,208,154,0.55);color:#f0d7a4;background:rgba(58,43,26,0.45);}',
+      ':where(elder-row-seat[data-role="traveler-seat"][data-occupied="true"]){border-style:solid;border-color:rgba(232,198,136,0.82);color:#f7e5be;background:rgba(76,56,34,0.74);}',
+      ':where(passing-youth-frieze){display:flex;align-items:center;justify-content:space-between;gap:8px;padding:3px 8px;border-left:2px solid rgba(226,194,136,0.55);background:rgba(20,16,13,0.66);font-size:11px;line-height:1.25;color:#d9cab0;box-sizing:border-box;}',
+      ':where(memory-inscription-ledge){display:flex;flex-wrap:nowrap;gap:6px;overflow-x:auto;overflow-y:hidden;padding:4px 2px;min-height:28px;scrollbar-width:thin;box-sizing:border-box;}',
+      ':where(carved-memory-tablet.isidora-memory-chisel){display:block;flex:0 0 auto;max-width:250px;padding:4px 8px;border:1px solid rgba(198,177,140,0.34);background:rgba(30,24,19,0.82);color:#e4d6bc;font-size:11px;line-height:1.25;box-sizing:border-box;}',
+      ':where(.isidora-memory-chisel-head){display:block;font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:#cbb082;margin-bottom:1px;}',
+      ':where(.isidora-memory-chisel-echo){display:block;font-style:italic;color:#dfd3bd;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}',
+      ':where(.isidora-memory-awaiting){font-size:11px;font-style:italic;color:rgba(217,202,176,0.68);padding:2px 6px;}'
+    ].join('\n');
+    document.head.appendChild(styleEl);
+  }
+
+  function createSeededStars(count) {
+    var stars = [];
+    var seed = 20202;
+    for (var i = 0; i < count; i++) {
+      seed = (seed * 16807) % 2147483647;
+      var sx = (seed % 10000) / 10000;
+      seed = (seed * 16807) % 2147483647;
+      var sy = ((seed % 10000) / 10000) * 0.48;
+      seed = (seed * 16807) % 2147483647;
+      var radius = 0.55 + ((seed % 1000) / 1000) * 1.35;
+      seed = (seed * 16807) % 2147483647;
+      var phase = ((seed % 1000) / 1000) * TAU;
+      stars.push({ x: sx, y: sy, r: radius, phase: phase });
+    }
+    return stars;
+  }
+
+  function createWildDust(count) {
+    var motes = [];
+    var seed = 9187;
+    for (var i = 0; i < count; i++) {
+      seed = (seed * 48271) % 2147483647;
+      var u = (seed % 10000) / 10000;
+      seed = (seed * 48271) % 2147483647;
+      var v = 0.36 + ((seed % 10000) / 10000) * 0.58;
+      seed = (seed * 48271) % 2147483647;
+      var speed = 0.04 + ((seed % 1000) / 1000) * 0.12;
+      seed = (seed * 48271) % 2147483647;
+      var len = 8 + ((seed % 1000) / 1000) * 26;
+      motes.push({ u: u, v: v, speed: speed, len: len });
+    }
+    return motes;
+  }
+
+  function createAmbientYouths() {
+    return [
+      { id: 0, u: 0.14, depth: 0.22, dir: 1, speed: 0.052, prop: 'violin', strideOffset: 0.2, heightScale: 0.98 },
+      { id: 1, u: 0.37, depth: 0.48, dir: -1, speed: 0.044, prop: 'pair', strideOffset: 1.7, heightScale: 0.92 },
+      { id: 2, u: 0.61, depth: 0.30, dir: 1, speed: 0.058, prop: 'scroll', strideOffset: 3.1, heightScale: 1.02 },
+      { id: 3, u: 0.81, depth: 0.62, dir: -1, speed: 0.049, prop: 'shawl', strideOffset: 4.4, heightScale: 0.88 },
+      { id: 4, u: 0.49, depth: 0.16, dir: 1, speed: 0.063, prop: 'lantern', strideOffset: 5.3, heightScale: 1.04 }
+    ];
+  }
+
+  function detectInitialReducedMotion(explicitFlag) {
+    if (typeof explicitFlag === 'boolean') {
+      return explicitFlag;
+    }
+    if (typeof window !== 'undefined' && typeof window.matchMedia === 'function') {
+      try {
+        var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+        return Boolean(mq && mq.matches);
+      } catch (_) {
+        return false;
+      }
+    }
+    return false;
+  }
+
+  function computePhase(wildProgress, age) {
+    if (wildProgress < 1 && age <= 0) {
+      return 'wild_ride';
+    }
+    if (age >= 0.90 - 1e-9) {
+      return 'seated_elder';
+    }
+    if (age >= 0.40 - 1e-9) {
+      return 'twilight_drift';
+    }
+    return 'youth_dream';
+  }
+
+  function computeViewportTransform(age) {
+    var t = clamp01(age);
+    var eased = smoothstep(0, 1, t);
+    var distanceScale = round4(1.0 - 0.38 * eased); // 1.00 -> 0.62
+    var recessionY = Math.round((-44 * eased) * 100) / 100; // 0 -> -44
+    var sepia = round4(0.86 * eased); // 0.00 -> 0.86
+    var parapetHeightRatio = round4(0.14 + 0.28 * eased); // 0.14 -> 0.42
+    var rawHz = 14000 * Math.pow(950 / 14000, t); // 14000 -> 950 exponential octave glide
+    var memoryFilterHz = t <= 0 ? 14000 : (t >= 1 ? 950 : Math.round(rawHz * 10) / 10);
+    return {
+      distanceScale: distanceScale,
+      recessionY: recessionY,
+      sepia: sepia,
+      parapetHeightRatio: parapetHeightRatio,
+      memoryFilterHz: memoryFilterHz
+    };
+  }
+
+  function create(options) {
+    var opts = options || {};
+    var onStateChange = typeof opts.onStateChange === 'function' ? opts.onStateChange : null;
+    var reducedMotion = detectInitialReducedMotion(opts.reducedMotion);
+
+    // Core strictly monotonic state
+    var wildRideProgress = 0;
+    var ageProgress = 0;
+    var phase = 'wild_ride';
+    var isSeatedOnWall = false;
+    var travelerSeated = false;
+    var viewportTransform = computeViewportTransform(0);
+
+    var carvedMemories = [];
+    var dispatchedYouthCount = 0;
+    var activeEnvoys = [];
+    var ambientYouths = createAmbientYouths();
+    var stars = createSeededStars(54);
+    var dustMotes = createWildDust(34);
+
+    // Mounted references
+    var wildCanvasEl = null;
+    var wallCanvasEl = null;
+    var parapetRootEl = null;
+    var wildBox = { w: 1280, h: 800, dpr: 1 };
+    var wallBox = { w: 1280, h: 320, dpr: 1 };
+
+    // Parapet custom DOM references
+    var ledgerWrapEl = null;
+    var seatRowWrapEl = null;
+    var seatEls = [];
+    var youthFriezeEl = null;
+    var youthStatusSpan = null;
+    var youthCountSpan = null;
+    var memoryLedgeEl = null;
+    var awaitingHintEl = null;
+
+    // Animation & interaction bookkeeping
+    var destroyed = false;
+    var mounted = false;
+    var rafId = null;
+    var lastFrameMs = 0;
+    var elapsedSec = 0;
+    var wildScroll = 0;
+    var strideImpulse = 0;
+    var resizeObserver = null;
+    var pointerDragState = null;
+
+    function getState() {
+      var seatedEldersCount = PERMANENT_ELDER_COUNT + (travelerSeated ? 1 : 0);
+      var youthsCount = phase === 'wild_ride' ? 0 : ambientYouths.length + activeEnvoys.length;
+      return {
+        phase: phase,
+        wildRideProgress: wildRideProgress,
+        ageProgress: ageProgress,
+        isSeatedOnWall: isSeatedOnWall,
+        eldersInRow: seatedEldersCount,
+        travelerSeated: travelerSeated,
+        passingYouthsActive: youthsCount,
+        dispatchedYouths: dispatchedYouthCount,
+        memoriesCarved: carvedMemories.length,
+        memoryInscriptions: carvedMemories.map(function (entry) {
+          return {
+            index: entry.index,
+            roman: entry.roman,
+            station: entry.station,
+            label: entry.label,
+            memoryEcho: entry.memoryEcho,
+            ageAtCarving: entry.ageAtCarving,
+            dispatchedYouth: entry.dispatchedYouth
+          };
+        }),
+        viewportTransform: {
+          distanceScale: viewportTransform.distanceScale,
+          recessionY: viewportTransform.recessionY,
+          sepia: viewportTransform.sepia,
+          parapetHeightRatio: viewportTransform.parapetHeightRatio,
+          memoryFilterHz: viewportTransform.memoryFilterHz
+        }
+      };
+    }
+
+    function notifyStateChange() {
+      if (onStateChange && !destroyed) {
+        onStateChange(getState());
+      }
+    }
+
+    function recalculateDerivedState() {
+      phase = computePhase(wildRideProgress, ageProgress);
+      if (ageProgress >= 0.90 - 1e-9) {
+        isSeatedOnWall = true;
+      }
+      if (ageProgress >= 0.75 - 1e-9) {
+        travelerSeated = true;
+      }
+      viewportTransform = computeViewportTransform(ageProgress);
+    }
+
+    function measureAndSyncCanvases(explicitWidth, explicitHeight) {
+      var dpr = 1;
+      if (typeof window !== 'undefined' && Number.isFinite(window.devicePixelRatio)) {
+        dpr = clamp(window.devicePixelRatio, 1, 2);
+      }
+
+      if (wildCanvasEl) {
+        var wRect = typeof wildCanvasEl.getBoundingClientRect === 'function'
+          ? wildCanvasEl.getBoundingClientRect()
+          : { width: 0, height: 0 };
+        var ww = Math.round(
+          (wRect && wRect.width > 0 ? wRect.width : 0) ||
+          explicitWidth ||
+          wildCanvasEl.clientWidth ||
+          wildCanvasEl.width ||
+          1280
+        );
+        var wh = Math.round(
+          (wRect && wRect.height > 0 ? wRect.height : 0) ||
+          explicitHeight ||
+          wildCanvasEl.clientHeight ||
+          wildCanvasEl.height ||
+          800
+        );
+        ww = Math.max(200, ww);
+        wh = Math.max(140, wh);
+        wildBox = { w: ww, h: wh, dpr: dpr };
+        var targetWildW = Math.round(ww * dpr);
+        var targetWildH = Math.round(wh * dpr);
+        if (wildCanvasEl.width !== targetWildW) wildCanvasEl.width = targetWildW;
+        if (wildCanvasEl.height !== targetWildH) wildCanvasEl.height = targetWildH;
+      }
+
+      if (wallCanvasEl) {
+        var pRect = typeof wallCanvasEl.getBoundingClientRect === 'function'
+          ? wallCanvasEl.getBoundingClientRect()
+          : { width: 0, height: 0 };
+        var pw = Math.round(
+          (pRect && pRect.width > 0 ? pRect.width : 0) ||
+          explicitWidth ||
+          wallCanvasEl.clientWidth ||
+          wallCanvasEl.width ||
+          1280
+        );
+        var ph = Math.round(
+          (pRect && pRect.height > 0 ? pRect.height : 0) ||
+          wallCanvasEl.clientHeight ||
+          (explicitHeight ? Math.round(explicitHeight * 0.42) : 0) ||
+          wallCanvasEl.height ||
+          320
+        );
+        pw = Math.max(200, pw);
+        ph = Math.max(96, ph);
+        wallBox = { w: pw, h: ph, dpr: dpr };
+        var targetWallW = Math.round(pw * dpr);
+        var targetWallH = Math.round(ph * dpr);
+        if (wallCanvasEl.width !== targetWallW) wallCanvasEl.width = targetWallW;
+        if (wallCanvasEl.height !== targetWallH) wallCanvasEl.height = targetWallH;
+      }
+    }
+
+    function clearElementChildren(el) {
+      if (!el) return;
+      if (typeof el.removeChild === 'function') {
+        while (el.firstChild) {
+          el.removeChild(el.firstChild);
+        }
+      } else if ('innerHTML' in el) {
+        el.innerHTML = '';
+      }
+    }
+
+    function buildParapetDom() {
+      seatEls = [];
+      ledgerWrapEl = null;
+      seatRowWrapEl = null;
+      youthFriezeEl = null;
+      youthStatusSpan = null;
+      youthCountSpan = null;
+      memoryLedgeEl = null;
+      awaitingHintEl = null;
+
+      if (!parapetRootEl || typeof document === 'undefined' || typeof document.createElement !== 'function') {
+        return;
+      }
+
+      registerCustomTag('parapet-frieze-band');
+      registerCustomTag('elder-seat-bench');
+      registerCustomTag('elder-row-seat');
+      registerCustomTag('passing-youth-frieze');
+      registerCustomTag('memory-inscription-ledge');
+      registerCustomTag('carved-memory-tablet');
+      ensureBaseParapetStyles();
+
+      clearElementChildren(parapetRootEl);
+      if (parapetRootEl.setAttribute) {
+        parapetRootEl.setAttribute('data-phase', phase);
+        parapetRootEl.setAttribute('data-reduced-motion', reducedMotion ? 'true' : 'false');
+      }
+
+      ledgerWrapEl = document.createElement('parapet-frieze-band');
+      ledgerWrapEl.className = 'isidora-parapet-ledger';
+      if (ledgerWrapEl.setAttribute) {
+        ledgerWrapEl.setAttribute('aria-label', 'Parapet wall of the seated elders and chiseled memories');
+      }
+
+      // 1. Row of 8 <elder-row-seat> custom elements (7 seated old men + 1 traveler seat)
+      seatRowWrapEl = document.createElement('elder-seat-bench');
+      seatRowWrapEl.className = 'isidora-seat-frieze-row';
+      if (seatRowWrapEl.setAttribute) {
+        seatRowWrapEl.setAttribute('role', 'list');
+        seatRowWrapEl.setAttribute('aria-label', 'Row of cloaked old men along the square wall');
+      }
+
+      for (var i = 0; i < SEAT_SLOTS.length; i++) {
+        var slot = SEAT_SLOTS[i];
+        var seatEl = document.createElement('elder-row-seat');
+        seatEl.className = slot.role === 'traveler-seat'
+          ? 'isidora-elder-seat isidora-elder-seat--traveler'
+          : 'isidora-elder-seat isidora-elder-seat--resident';
+        if (seatEl.setAttribute) {
+          seatEl.setAttribute('role', 'listitem');
+          seatEl.setAttribute('data-seat-index', String(slot.slotIndex));
+          seatEl.setAttribute('data-role', slot.role);
+        }
+        seatRowWrapEl.appendChild(seatEl);
+        seatEls.push(seatEl);
+      }
+      ledgerWrapEl.appendChild(seatRowWrapEl);
+
+      // 2. <passing-youth-frieze> custom element
+      youthFriezeEl = document.createElement('passing-youth-frieze');
+      youthFriezeEl.className = 'isidora-youth-frieze';
+      if (youthFriezeEl.setAttribute) {
+        youthFriezeEl.setAttribute('aria-live', 'polite');
+      }
+      youthStatusSpan = document.createElement('span');
+      youthStatusSpan.className = 'isidora-youth-frieze-narration';
+      youthCountSpan = document.createElement('span');
+      youthCountSpan.className = 'isidora-youth-frieze-tally';
+      youthFriezeEl.appendChild(youthStatusSpan);
+      youthFriezeEl.appendChild(youthCountSpan);
+      ledgerWrapEl.appendChild(youthFriezeEl);
+
+      // 3. <memory-inscription-ledge> custom element
+      memoryLedgeEl = document.createElement('memory-inscription-ledge');
+      memoryLedgeEl.className = 'isidora-inscription-ledge';
+      if (memoryLedgeEl.setAttribute) {
+        memoryLedgeEl.setAttribute('role', 'log');
+        memoryLedgeEl.setAttribute('aria-live', 'polite');
+        memoryLedgeEl.setAttribute('aria-label', 'Carved limestone memory inscriptions');
+      }
+
+      awaitingHintEl = document.createElement('span');
+      awaitingHintEl.className = 'isidora-memory-awaiting';
+      awaitingHintEl.textContent = 'Unchiselled limestone coping — pursued desires will carve themselves here as memories.';
+      memoryLedgeEl.appendChild(awaitingHintEl);
+
+      // Re-populate any memories recorded prior to mount
+      if (carvedMemories.length > 0) {
+        if (awaitingHintEl.parentNode === memoryLedgeEl) {
+          memoryLedgeEl.removeChild(awaitingHintEl);
+        }
+        for (var m = 0; m < carvedMemories.length; m++) {
+          appendInscriptionNode(carvedMemories[m]);
+        }
+      }
+
+      ledgerWrapEl.appendChild(memoryLedgeEl);
+      parapetRootEl.appendChild(ledgerWrapEl);
+
+      syncParapetDom();
+    }
+
+    function appendInscriptionNode(record) {
+      if (!memoryLedgeEl || typeof document === 'undefined' || typeof document.createElement !== 'function') {
+        return;
+      }
+      if (awaitingHintEl && awaitingHintEl.parentNode === memoryLedgeEl) {
+        memoryLedgeEl.removeChild(awaitingHintEl);
+      }
+
+      var tabletEl = document.createElement('carved-memory-tablet');
+      tabletEl.className = 'isidora-memory-chisel';
+      if (tabletEl.setAttribute) {
+        tabletEl.setAttribute('data-memory-index', String(record.index));
+        tabletEl.setAttribute('data-station', record.station);
+        tabletEl.setAttribute('data-youth-dispatched', record.dispatchedYouth ? 'true' : 'false');
+      }
+
+      var headEl = document.createElement('cite');
+      headEl.className = 'isidora-memory-chisel-head';
+      headEl.textContent = record.roman + ' · ' + record.label + (record.dispatchedYouth ? ' · Youth Enacted' : '');
+
+      var echoEl = document.createElement('q');
+      echoEl.className = 'isidora-memory-chisel-echo';
+      echoEl.textContent = record.memoryEcho;
+
+      tabletEl.appendChild(headEl);
+      tabletEl.appendChild(echoEl);
+      memoryLedgeEl.appendChild(tabletEl);
+
+      if ('scrollLeft' in memoryLedgeEl && 'scrollWidth' in memoryLedgeEl) {
+        memoryLedgeEl.scrollLeft = memoryLedgeEl.scrollWidth;
+      }
+    }
+
+    function syncParapetDom() {
+      if (!parapetRootEl) return;
+
+      if (parapetRootEl.setAttribute) {
+        parapetRootEl.setAttribute('data-phase', phase);
+        parapetRootEl.setAttribute('data-seated-elder', isSeatedOnWall ? 'true' : 'false');
+        parapetRootEl.setAttribute('data-traveler-seated', travelerSeated ? 'true' : 'false');
+        parapetRootEl.setAttribute('data-reduced-motion', reducedMotion ? 'true' : 'false');
+      }
+
+      for (var i = 0; i < seatEls.length; i++) {
+        var slot = SEAT_SLOTS[i];
+        var seatEl = seatEls[i];
+        if (!seatEl) continue;
+
+        if (slot.role === 'traveler-seat') {
+          var occupied = travelerSeated;
+          if (seatEl.setAttribute) {
+            seatEl.setAttribute('data-occupied', occupied ? 'true' : 'false');
+            seatEl.setAttribute(
+              'aria-label',
+              occupied
+                ? 'Seat V: Traveler seated in the row of elders watching youth go by'
+                : 'Seat V: Open stone seat awaiting the traveler among the elders'
+            );
+          }
+          seatEl.textContent = occupied
+            ? (isSeatedOnWall ? 'V · Seated in Row' : 'V · Taking Seat')
+            : 'V · Open Seat';
+        } else {
+          if (seatEl.setAttribute) {
+            seatEl.setAttribute('data-occupied', 'true');
+            seatEl.setAttribute('aria-label', slot.epithet + ' watching the square');
+          }
+          seatEl.textContent = toRoman(slot.slotIndex + 1) + ' · Elder ' + slot.elderId;
+        }
+      }
+
+      if (youthStatusSpan && youthCountSpan) {
+        if (phase === 'wild_ride') {
+          youthStatusSpan.textContent = 'Riding through wind-scoured wild regions toward the glimmer of a dreamed city.';
+          youthCountSpan.textContent = Math.round(wildRideProgress * 100) + '% approach';
+        } else if (isSeatedOnWall) {
+          var latestSeated = carvedMemories.length > 0 ? carvedMemories[carvedMemories.length - 1] : null;
+          youthStatusSpan.textContent = latestSeated
+            ? 'Seated in the row of old men; a passing youth crosses toward the spiral (' + latestSeated.label + '). Desires are already memories.'
+            : 'Seated in the row of old men along the square wall; the young go by across the flagstones.';
+          youthCountSpan.textContent = dispatchedYouthCount + ' enacted · ' + carvedMemories.length + ' carved';
+        } else if (ageProgress >= 0.50) {
+          youthStatusSpan.textContent = 'From the rising limestone parapet, passing youths carry each new desire toward the receding spiral.';
+          youthCountSpan.textContent = dispatchedYouthCount + ' youth dispatched';
+        } else {
+          youthStatusSpan.textContent = 'Brisk silhouettes of the young cross the square before the row of seven elders and one empty seat.';
+          youthCountSpan.textContent = PERMANENT_ELDER_COUNT + ' elders · 1 open seat';
+        }
+      }
+    }
+
+    // =========================================================================
+    // Canvas 1: Wild-Region Arrival Ride (wildCanvasEl)
+    // =========================================================================
+
+    function renderWildRide() {
+      if (!wildCanvasEl || typeof wildCanvasEl.getContext !== 'function') return;
+      var ctx = wildCanvasEl.getContext('2d');
+      if (!ctx) return;
+
+      var w = wildBox.w;
+      var h = wildBox.h;
+      var dpr = wildBox.dpr;
+
+      ctx.save();
+      if (ctx.setTransform) {
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      } else {
+        ctx.scale(dpr, dpr);
+      }
+      ctx.clearRect(0, 0, w, h);
+
+      var p = clamp01(wildRideProgress);
+      var horizonY = h * (0.54 - 0.04 * p);
+      var cityX = w * 0.62;
+      var strideBob = reducedMotion
+        ? 0
+        : Math.sin(wildScroll * 9.5) * (1.4 + 2.8 * strideImpulse) * (1 - 0.35 * p);
+
+      // 1. Nocturnal-to-ochre desert twilight sky
+      var skyGrad = makeLinearGradient(ctx, 0, 0, 0, h, [
+        [0, '#070b15'],
+        [0.34, '#15192b'],
+        [0.54, p > 0.5 ? '#593c26' : '#3d281b'],
+        [0.68, p > 0.5 ? '#a57543' : '#734d2c'],
+        [1, '#120d09']
+      ], '#1b1622');
+      ctx.fillStyle = skyGrad;
+      ctx.fillRect(0, 0, w, h);
+
+      // 2. Stars & faint astronomical constellation arcs
+      var starAlphaBase = 0.85 - 0.28 * p;
+      for (var s = 0; s < stars.length; s++) {
+        var st = stars[s];
+        var twinkle = reducedMotion ? 0.82 : (0.58 + 0.42 * Math.sin(elapsedSec * 1.7 + st.phase));
+        var sx = ((st.x * w - wildScroll * 12) % w + w) % w;
+        var sy = st.y * h + strideBob * 0.12;
+        if (sy < horizonY - 8) {
+          ctx.fillStyle = 'rgba(242, 232, 208, ' + (starAlphaBase * twinkle).toFixed(3) + ')';
+          ctx.beginPath();
+          ctx.arc(sx, sy, st.r, 0, TAU);
+          ctx.fill();
+        }
+      }
+
+      // Subtle Lyra/Sextans constellation threads high in the sky
+      ctx.strokeStyle = 'rgba(218, 204, 174, ' + (0.14 * starAlphaBase).toFixed(3) + ')';
+      ctx.lineWidth = 0.8;
+      ctx.beginPath();
+      ctx.moveTo(w * 0.56, h * 0.16);
+      ctx.lineTo(w * 0.61, h * 0.12);
+      ctx.lineTo(w * 0.66, h * 0.15);
+      ctx.lineTo(w * 0.63, h * 0.21);
+      ctx.closePath();
+      ctx.stroke();
+
+      // 3. Distant Nacreous Spiral City Glimmering on the Horizon
+      var glowRadius = Math.max(w, h) * (0.11 + 0.34 * p);
+      var cityGlow = makeRadialGradient(ctx, cityX, horizonY, 2, cityX, horizonY, glowRadius, [
+        [0, 'rgba(255, 244, 214, ' + (0.34 + 0.58 * p).toFixed(3) + ')'],
+        [0.28, 'rgba(236, 198, 138, ' + (0.18 + 0.36 * p).toFixed(3) + ')'],
+        [0.65, 'rgba(158, 106, 58, ' + (0.08 + 0.16 * p).toFixed(3) + ')'],
+        [1, 'rgba(18, 13, 10, 0)']
+      ], 'rgba(236, 198, 138, 0.16)');
+      ctx.fillStyle = cityGlow;
+      ctx.fillRect(0, 0, w, h);
+
+      drawDistantSpiralMirage(ctx, cityX, horizonY + strideBob * 0.25, w, h, p);
+
+      // 4. Layered Wind-Scoured Wild Ridges (4 parallax strata)
+      drawWildRidgeLayer(ctx, w, h, horizonY + strideBob * 0.30, 0.03, wildScroll * 24, 18, '#38261c', false);
+      drawWildRidgeLayer(ctx, w, h, horizonY + h * 0.07 + strideBob * 0.50, 0.05, wildScroll * 52, 26, '#2b1c14', true);
+      drawWildRidgeLayer(ctx, w, h, horizonY + h * 0.16 + strideBob * 0.75, 0.07, wildScroll * 96, 34, '#1d130e', true);
+      drawWildRidgeLayer(ctx, w, h, horizonY + h * 0.27 + strideBob * 1.00, 0.09, wildScroll * 155, 28, '#110b08', true);
+
+      // 5. Wind-scoured ochre dust streaks
+      ctx.lineWidth = 1.1;
+      for (var d = 0; d < dustMotes.length; d++) {
+        var dm = dustMotes[d];
+        var travel = reducedMotion ? wildScroll * 0.45 : (elapsedSec * dm.speed + wildScroll * 0.55);
+        var dx = (((dm.u - travel) % 1) + 1) * w;
+        var dy = dm.v * h + strideBob * 0.6;
+        var alpha = 0.08 + 0.14 * (1 - Math.abs(dm.v - 0.62) * 2);
+        ctx.strokeStyle = 'rgba(218, 178, 122, ' + clamp(alpha, 0.03, 0.24).toFixed(3) + ')';
+        ctx.beginPath();
+        ctx.moveTo(dx, dy);
+        ctx.lineTo(dx + dm.len * (0.7 + 0.6 * p), dy - 1.5);
+        ctx.stroke();
+      }
+
+      // 6. Cloaked Traveler on Horseback Cresting Foreground Wild Ridge
+      var riderX = w * (0.23 + 0.13 * p);
+      var riderY = horizonY + h * 0.25 + strideBob;
+      var riderScale = clamp(Math.min(w, h) / 760, 0.56, 1.18);
+      drawWildRiderSilhouette(ctx, riderX, riderY, riderScale, wildScroll, p, reducedMotion);
+
+      // 7. Arrival threshold nacre veil as wildRideProgress -> 1.0
+      if (p > 0.82) {
+        var veilT = smoothstep(0.82, 1.0, p);
+        ctx.fillStyle = 'rgba(244, 228, 195, ' + (0.28 * veilT).toFixed(3) + ')';
+        ctx.fillRect(0, 0, w, h);
+      }
+
+      ctx.restore();
+    }
+
+    function drawDistantSpiralMirage(ctx, cx, baseY, w, h, p) {
+      var unit = Math.min(w, h) * (0.045 + 0.075 * p);
+      var tiers = 6;
+
+      ctx.save();
+      // Rising spiral ziggurat & shell-domes of dreamed Isidora
+      for (var t = 0; t < tiers; t++) {
+        var frac = t / tiers;
+        var tierW = unit * (2.1 - frac * 1.48);
+        var tierH = unit * (0.28 + frac * 0.11);
+        var tierY = baseY - t * unit * 0.27;
+        var spiralShift = Math.sin(t * 1.15 + p * 1.8) * unit * 0.16 * (1 - frac * 0.5);
+
+        ctx.fillStyle = 'rgba(246, 231, 198, ' + (0.26 + 0.54 * p * (1 - frac * 0.25)).toFixed(3) + ')';
+        ctx.beginPath();
+        ctx.moveTo(cx - tierW * 0.5 + spiralShift, tierY);
+        ctx.lineTo(cx - tierW * 0.42 + spiralShift, tierY - tierH);
+        ctx.lineTo(cx + tierW * 0.42 + spiralShift, tierY - tierH);
+        ctx.lineTo(cx + tierW * 0.5 + spiralShift, tierY);
+        ctx.closePath();
+        ctx.fill();
+
+        // Nacreous shell-arch ribbing
+        ctx.strokeStyle = 'rgba(255, 248, 228, ' + (0.22 + 0.55 * p).toFixed(3) + ')';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.arc(cx + spiralShift, tierY - tierH, tierW * 0.22, Math.PI, 0);
+        ctx.stroke();
+      }
+
+      // Crown astronomical cupola & spire
+      var apexY = baseY - tiers * unit * 0.27;
+      ctx.fillStyle = 'rgba(255, 247, 224, ' + (0.42 + 0.55 * p).toFixed(3) + ')';
+      ctx.beginPath();
+      ctx.arc(cx, apexY - unit * 0.08, unit * 0.18, Math.PI, 0);
+      ctx.fill();
+
+      ctx.strokeStyle = 'rgba(255, 247, 224, ' + (0.50 + 0.48 * p).toFixed(3) + ')';
+      ctx.lineWidth = 1.3;
+      ctx.beginPath();
+      ctx.moveTo(cx, apexY - unit * 0.26);
+      ctx.lineTo(cx, apexY - unit * 0.62);
+      ctx.stroke();
+
+      // Golden logarithmic aura ribbon coiling around the dreamed city
+      ctx.strokeStyle = 'rgba(248, 224, 174, ' + (0.18 + 0.44 * p).toFixed(3) + ')';
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      for (var a = 0; a <= 42; a++) {
+        var theta = (a / 42) * Math.PI * 3.4;
+        var rad = unit * 0.09 * Math.exp(0.19 * theta);
+        var gx = cx + Math.cos(theta - p * 1.4) * rad;
+        var gy = baseY - unit * 0.72 + Math.sin(theta - p * 1.4) * rad * 0.36;
+        if (a === 0) ctx.moveTo(gx, gy);
+        else ctx.lineTo(gx, gy);
+      }
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function drawWildRidgeLayer(ctx, w, h, baseLineY, freq, phaseShift, amp, fillHex, withScrub) {
+      ctx.save();
+      ctx.fillStyle = fillHex;
+      ctx.beginPath();
+      ctx.moveTo(0, h);
+      var steps = Math.max(40, Math.round(w / 18));
+      for (var i = 0; i <= steps; i++) {
+        var x = (i / steps) * w;
+        var wx = x + phaseShift;
+        var mesa = Math.sin(wx * 0.0042 * (1 + freq * 6)) * amp
+          + Math.sin(wx * 0.011 + 1.7) * (amp * 0.42)
+          + Math.cos(wx * 0.023 + 0.6) * (amp * 0.16);
+        var y = baseLineY + mesa;
+        ctx.lineTo(x, y);
+      }
+      ctx.lineTo(w, h);
+      ctx.closePath();
+      ctx.fill();
+
+      if (withScrub) {
+        ctx.strokeStyle = fillHex;
+        ctx.lineWidth = 1.2;
+        for (var k = 0; k < 14; k++) {
+          var sx = (((k * 137 - phaseShift * 0.9) % w) + w) % w;
+          var swx = sx + phaseShift;
+          var sy = baseLineY
+            + Math.sin(swx * 0.0042 * (1 + freq * 6)) * amp
+            + Math.sin(swx * 0.011 + 1.7) * (amp * 0.42);
+          ctx.beginPath();
+          ctx.moveTo(sx, sy + 2);
+          ctx.lineTo(sx - 4, sy - 6);
+          ctx.moveTo(sx, sy + 2);
+          ctx.lineTo(sx + 1, sy - 8);
+          ctx.moveTo(sx, sy + 2);
+          ctx.lineTo(sx + 5, sy - 5);
+          ctx.stroke();
+        }
+      }
+      ctx.restore();
+    }
+
+    function drawWildRiderSilhouette(ctx, x, y, scale, scrollVal, p, isStatic) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.scale(scale, scale);
+
+      var gait = isStatic ? 0.35 : (scrollVal * 8.5 + elapsedSec * 2.4);
+      var cloakFlutter = isStatic ? 0 : Math.sin(gait * 1.3) * 4;
+
+      // Subtle rim glow facing the distant city
+      ctx.strokeStyle = 'rgba(235, 196, 134, ' + (0.28 + 0.38 * p).toFixed(3) + ')';
+      ctx.lineWidth = 1.6;
+
+      // Horse body & neck oriented right toward Isidora
+      ctx.fillStyle = '#0d0907';
+      ctx.beginPath();
+      drawEllipsePath(ctx, 0, 0, 32, 13, -0.06, 0, TAU);
+      ctx.fill();
+
+      // Horse neck & head lifted toward horizon
+      ctx.beginPath();
+      ctx.moveTo(18, -6);
+      ctx.quadraticCurveTo(33, -24, 38, -32);
+      ctx.lineTo(48, -26);
+      ctx.lineTo(44, -19);
+      ctx.quadraticCurveTo(34, -14, 26, 4);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // Four striding legs
+      var legAngles = [
+        Math.sin(gait) * 0.34,
+        Math.sin(gait + Math.PI) * 0.32,
+        Math.sin(gait + Math.PI * 0.5) * 0.34,
+        Math.sin(gait + Math.PI * 1.5) * 0.30
+      ];
+      var hipX = [-20, -13, 15, 22];
+      ctx.strokeStyle = '#0d0907';
+      ctx.lineWidth = 4.2;
+      ctx.lineCap = 'round';
+      for (var l = 0; l < 4; l++) {
+        var hx = hipX[l];
+        var ang = legAngles[l];
+        var kx = hx + Math.sin(ang) * 15;
+        var ky = 9 + Math.cos(ang) * 14;
+        var fx = kx + Math.sin(ang * 0.7 - 0.18) * 13;
+        var fy = ky + 14;
+        ctx.beginPath();
+        ctx.moveTo(hx, 8);
+        ctx.lineTo(kx, ky);
+        ctx.lineTo(fx, fy);
+        ctx.stroke();
+      }
+
+      // Flowing tail
+      ctx.lineWidth = 3.2;
+      ctx.beginPath();
+      ctx.moveTo(-30, -3);
+      ctx.quadraticCurveTo(-46, 2 + cloakFlutter * 0.5, -52, 16);
+      ctx.stroke();
+
+      // Young traveler silhouette in wind-swept cloak gazing toward the spiral city
+      ctx.fillStyle = '#140e0b';
+      ctx.beginPath();
+      ctx.moveTo(-6, -10);
+      ctx.quadraticCurveTo(-28, -14 + cloakFlutter, -38, 2 + cloakFlutter);
+      ctx.quadraticCurveTo(-18, -2, -2, -6);
+      ctx.closePath();
+      ctx.fill();
+
+      // Torso & hooded head
+      ctx.beginPath();
+      ctx.moveTo(-5, -9);
+      ctx.lineTo(-1, -34);
+      ctx.lineTo(9, -32);
+      ctx.lineTo(8, -9);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(5, -40, 6.2, 0, TAU);
+      ctx.fill();
+
+      // Nacre highlight along traveler's brow and shoulder facing the city
+      ctx.strokeStyle = 'rgba(246, 218, 168, ' + (0.35 + 0.45 * p).toFixed(3) + ')';
+      ctx.lineWidth = 1.3;
+      ctx.beginPath();
+      ctx.moveTo(9, -44);
+      ctx.quadraticCurveTo(13, -36, 9, -20);
+      ctx.stroke();
+
+      ctx.restore();
+    }
+
+    // =========================================================================
+    // Canvas 2: The Square, Passing Youths & Old Men's Limestone Wall (wallCanvasEl)
+    // =========================================================================
+
+    function renderSquareAndWall() {
+      if (!wallCanvasEl || typeof wallCanvasEl.getContext !== 'function') return;
+      var ctx = wallCanvasEl.getContext('2d');
+      if (!ctx) return;
+
+      var w = wallBox.w;
+      var h = wallBox.h;
+      var dpr = wallBox.dpr;
+
+      ctx.save();
+      if (ctx.setTransform) {
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      } else {
+        ctx.scale(dpr, dpr);
+      }
+      ctx.clearRect(0, 0, w, h);
+
+      if (phase === 'wild_ride') {
+        ctx.restore();
+        return;
+      }
+
+      var age = clamp01(ageProgress);
+      var isFullStageOverlay = h > 430 && h > w * 0.46;
+
+      // Adaptive vertical geometry: transparent upper stage when full-screen overlay,
+      // full frieze proportions when mounted inside a bottom parapet strip.
+      var activeBandRatio = isFullStageOverlay
+        ? viewportTransform.parapetHeightRatio
+        : (0.64 + 0.30 * smoothstep(0, 1, age));
+
+      var bandH = h * activeBandRatio;
+      var piazzaTopY = h - bandH;
+      var copingY = h - bandH * 0.52;
+      var wallBottomY = h;
+
+      // 1. Foreshortened Piazza Flagstones in front of the wall
+      drawPiazzaPromenade(ctx, w, h, piazzaTopY, copingY, age);
+
+      // 2. Dispatched Youth Envoys moving across the square toward the distant spiral (age >= 0.50)
+      drawDispatchedYouthEnvoys(ctx, w, h, piazzaTopY, copingY, age);
+
+      // 3. Brisk Silhouettes of the Young Walking Past Across the Square
+      drawPassingYouthSilhouettes(ctx, w, piazzaTopY, copingY, age);
+
+      // 4. Weathered Limestone Parapet Wall rising across the foreground square
+      drawLimestoneParapetWall(ctx, w, copingY, wallBottomY, age);
+
+      // 5. Row of >=7 Distinct Cloaked Old Men + Open Seat / Seated Traveler
+      drawSeatedEldersRow(ctx, w, copingY, wallBottomY, age);
+
+      ctx.restore();
+    }
+
+    function drawPiazzaPromenade(ctx, w, h, piazzaTopY, copingY, age) {
+      var depthH = Math.max(18, copingY - piazzaTopY);
+      var grad = makeLinearGradient(ctx, 0, piazzaTopY - depthH * 0.35, 0, copingY + 8, [
+        [0, 'rgba(32, 25, 19, 0)'],
+        [0.26, 'rgba(46, 36, 27, ' + (0.28 + 0.34 * age).toFixed(3) + ')'],
+        [0.75, 'rgba(66, 52, 38, ' + (0.58 + 0.28 * age).toFixed(3) + ')'],
+        [1, 'rgba(38, 29, 21, ' + (0.78 + 0.18 * age).toFixed(3) + ')']
+      ], 'rgba(54, 42, 31, 0.65)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, Math.max(0, piazzaTopY - depthH * 0.35), w, copingY - Math.max(0, piazzaTopY - depthH * 0.35) + 6);
+
+      // Perspective flagstone courses converging toward the distant spiral center
+      var vanishX = w * 0.5;
+      var vanishY = piazzaTopY - depthH * 1.35;
+      ctx.strokeStyle = 'rgba(216, 194, 156, ' + (0.11 + 0.12 * age).toFixed(3) + ')';
+      ctx.lineWidth = 1;
+
+      var radialCount = w < 520 ? 9 : 15;
+      for (var r = 0; r <= radialCount; r++) {
+        var bx = (r / radialCount) * w;
+        var tx = vanishX + (bx - vanishX) * 0.42;
+        ctx.beginPath();
+        ctx.moveTo(tx, piazzaTopY);
+        ctx.lineTo(bx, copingY);
+        ctx.stroke();
+      }
+
+      for (var row = 1; row <= 3; row++) {
+        var ry = piazzaTopY + Math.pow(row / 4, 1.35) * depthH;
+        ctx.beginPath();
+        ctx.moveTo(0, ry);
+        ctx.lineTo(w, ry);
+        ctx.stroke();
+      }
+    }
+
+    function drawPassingYouthSilhouettes(ctx, w, piazzaTopY, copingY, age) {
+      var promenadeSpan = Math.max(16, copingY - piazzaTopY);
+      var compactScale = w < 520 ? 0.72 : 1.0;
+      var baseFigureH = clamp(promenadeSpan * 0.62 * compactScale, 20, 56);
+
+      for (var i = 0; i < ambientYouths.length; i++) {
+        var youth = ambientYouths[i];
+        var travelU = reducedMotion
+          ? youth.u
+          : (((youth.u + youth.dir * elapsedSec * youth.speed) % 1.16) + 1.16) % 1.16 - 0.08;
+        var x = travelU * w;
+        var y = piazzaTopY + promenadeSpan * (0.30 + 0.54 * youth.depth);
+        var figH = baseFigureH * (0.78 + 0.28 * youth.depth) * youth.heightScale;
+        var stride = reducedMotion ? (0.45 + i * 0.3) : (elapsedSec * 7.4 + youth.strideOffset);
+
+        drawSingleYouthSilhouette(ctx, x, y, figH, youth.dir, stride, youth.prop, false, age);
+      }
+    }
+
+    function drawDispatchedYouthEnvoys(ctx, w, h, piazzaTopY, copingY, age) {
+      if (activeEnvoys.length === 0) return;
+
+      var vanishX = w * 0.5;
+      var farY = Math.max(8, piazzaTopY - Math.max(14, (copingY - piazzaTopY) * 0.22));
+      var seatFiveX = getSeatCenterX(4, w);
+
+      for (var i = 0; i < activeEnvoys.length; i++) {
+        var env = activeEnvoys[i];
+        var t = reducedMotion ? 0.52 : clamp01(env.progress);
+        var ex = seatFiveX + (vanishX - seatFiveX) * smoothstep(0, 1, t) + Math.sin(t * Math.PI) * env.arcOffset;
+        var ey = (copingY - 6) + (farY - (copingY - 6)) * smoothstep(0, 1, t);
+        var scalePerspective = 1.0 - 0.52 * t;
+        var figH = clamp((copingY - piazzaTopY) * 0.72, 24, 62) * scalePerspective;
+        var fadeAlpha = t > 0.85 ? (1 - (t - 0.85) / 0.15) : 1;
+
+        ctx.save();
+        ctx.globalAlpha = clamp01(fadeAlpha);
+
+        // Sightline arc from Traveler's stone seat across the flagstones to the receding youth
+        ctx.strokeStyle = 'rgba(246, 218, 160, 0.38)';
+        ctx.lineWidth = 1.15;
+        if (ctx.setLineDash) ctx.setLineDash([4, 4]);
+        ctx.beginPath();
+        ctx.moveTo(seatFiveX, copingY - 4);
+        ctx.quadraticCurveTo((seatFiveX + ex) * 0.5, (copingY + ey) * 0.5 - 10, ex, ey - figH * 0.45);
+        ctx.stroke();
+        if (ctx.setLineDash) ctx.setLineDash([]);
+
+        // Nacreous halo around dispatched youth enacting the remembered desire
+        var aura = makeRadialGradient(ctx, ex, ey - figH * 0.5, 1, ex, ey - figH * 0.5, figH * 0.95, [
+          [0, 'rgba(255, 238, 194, 0.52)'],
+          [1, 'rgba(255, 238, 194, 0)']
+        ], 'rgba(255, 238, 194, 0.28)');
+        ctx.fillStyle = aura;
+        ctx.beginPath();
+        ctx.arc(ex, ey - figH * 0.5, figH * 0.95, 0, TAU);
+        ctx.fill();
+
+        var stride = reducedMotion ? 0.6 : (elapsedSec * 9.0 + env.seed);
+        drawSingleYouthSilhouette(ctx, ex, ey, figH, ex < vanishX ? 1 : -1, stride, env.emblem, true, age);
+        ctx.restore();
+      }
+    }
+
+    function drawSingleYouthSilhouette(ctx, x, footY, figH, dir, stride, prop, highlighted, age) {
+      ctx.save();
+      ctx.translate(x, footY);
+      ctx.scale(dir >= 0 ? 1 : -1, 1);
+
+      var u = figH / 40;
+      var legSwing = Math.sin(stride) * 5.2 * u;
+
+      // Slanting evening shadow on flagstones
+      ctx.fillStyle = 'rgba(12, 9, 7, ' + (0.24 + 0.22 * age).toFixed(3) + ')';
+      ctx.beginPath();
+      drawEllipsePath(ctx, 3 * u, 1.5 * u, 8.5 * u, 2.4 * u, 0, 0, TAU);
+      ctx.fill();
+
+      var bodyFill = highlighted ? '#2d2116' : '#1b1511';
+      var rimStroke = highlighted
+        ? 'rgba(255, 236, 188, 0.92)'
+        : 'rgba(235, 206, 156, ' + (0.42 + 0.24 * (1 - age * 0.4)).toFixed(3) + ')';
+
+      ctx.strokeStyle = bodyFill;
+      ctx.lineWidth = Math.max(1.5, 2.6 * u);
+      ctx.lineCap = 'round';
+
+      // Brisk striding legs
+      ctx.beginPath();
+      ctx.moveTo(0, -16 * u);
+      ctx.lineTo(legSwing, 0);
+      ctx.moveTo(0, -16 * u);
+      ctx.lineTo(-legSwing, 0);
+      ctx.stroke();
+
+      // Lithe coat / tunic silhouette
+      ctx.fillStyle = bodyFill;
+      ctx.beginPath();
+      ctx.moveTo(-4.2 * u, -15 * u);
+      ctx.lineTo(-2.8 * u, -31 * u);
+      ctx.lineTo(3.4 * u, -31 * u);
+      ctx.lineTo(5.2 * u, -14 * u);
+      ctx.closePath();
+      ctx.fill();
+
+      // Head
+      ctx.beginPath();
+      ctx.arc(0.8 * u, -35.2 * u, 3.4 * u, 0, TAU);
+      ctx.fill();
+
+      // Flowing scarf / rim light
+      ctx.strokeStyle = rimStroke;
+      ctx.lineWidth = Math.max(1.0, 1.3 * u);
+      ctx.beginPath();
+      ctx.moveTo(3.2 * u, -37 * u);
+      ctx.lineTo(4.8 * u, -15 * u);
+      ctx.moveTo(-2.4 * u, -30 * u);
+      ctx.quadraticCurveTo(-9.5 * u, -27 * u + Math.cos(stride) * 2 * u, -13 * u, -23 * u);
+      ctx.stroke();
+
+      // Companion silhouette if prop === 'pair' or 'loggia'
+      if (prop === 'pair' || prop === 'loggia') {
+        ctx.fillStyle = bodyFill;
+        ctx.beginPath();
+        ctx.arc(-6.5 * u, -33.5 * u, 3.0 * u, 0, TAU);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(-9.5 * u, -14 * u);
+        ctx.lineTo(-8.2 * u, -29.5 * u);
+        ctx.lineTo(-4.2 * u, -29.5 * u);
+        ctx.lineTo(-3.2 * u, -14 * u);
+        ctx.closePath();
+        ctx.fill();
+      } else if (prop === 'violin') {
+        ctx.strokeStyle = 'rgba(232, 182, 112, 0.85)';
+        ctx.lineWidth = Math.max(1, 1.4 * u);
+        ctx.beginPath();
+        ctx.moveTo(2 * u, -26 * u);
+        ctx.lineTo(9.5 * u, -22 * u);
+        ctx.stroke();
+      } else if (prop === 'telescope' || prop === 'scroll') {
+        ctx.strokeStyle = 'rgba(236, 206, 138, 0.88)';
+        ctx.lineWidth = Math.max(1.1, 1.6 * u);
+        ctx.beginPath();
+        ctx.moveTo(2 * u, -28 * u);
+        ctx.lineTo(10 * u, -32 * u);
+        ctx.stroke();
+      } else if (prop === 'shell' || prop === 'lantern') {
+        ctx.fillStyle = 'rgba(252, 234, 190, 0.85)';
+        ctx.beginPath();
+        ctx.arc(6.8 * u, -24 * u, 2.2 * u, 0, TAU);
+        ctx.fill();
+      } else if (prop === 'plume') {
+        ctx.strokeStyle = 'rgba(222, 92, 76, 0.88)';
+        ctx.beginPath();
+        ctx.moveTo(3 * u, -36 * u);
+        ctx.quadraticCurveTo(8 * u, -42 * u, 10 * u, -38 * u);
+        ctx.stroke();
+      }
+
+      ctx.restore();
+    }
+
+    function drawLimestoneParapetWall(ctx, w, copingY, bottomY, age) {
+      var wallH = Math.max(24, bottomY - copingY);
+      var copingH = clamp(wallH * 0.16, 7, 16);
+
+      // Aged Istrian limestone body gradient
+      var stoneGrad = makeLinearGradient(ctx, 0, copingY, 0, bottomY, [
+        [0, '#c8b698'],
+        [0.14, '#ab9778'],
+        [0.22, '#695943'],
+        [0.58, '#7e6c53'],
+        [1, '#4c3f30']
+      ], '#7e6c53');
+      ctx.fillStyle = stoneGrad;
+      ctx.fillRect(0, copingY, w, wallH);
+
+      // Top beveled limestone seating ledge highlight + overhang shadow
+      ctx.fillStyle = 'rgba(244, 231, 204, ' + (0.42 + 0.18 * (1 - age)).toFixed(3) + ')';
+      ctx.fillRect(0, copingY, w, 2.2);
+
+      ctx.fillStyle = 'rgba(24, 18, 13, 0.46)';
+      ctx.fillRect(0, copingY + copingH, w, 3.5);
+
+      // Ashlar limestone block courses & mortar joints
+      var courses = 3;
+      var bodyStart = copingY + copingH;
+      var bodyH = Math.max(12, bottomY - bodyStart);
+      ctx.strokeStyle = 'rgba(42, 33, 24, 0.42)';
+      ctx.lineWidth = 1;
+
+      for (var c = 1; c <= courses; c++) {
+        var cy = bodyStart + (c / (courses + 1)) * bodyH;
+        ctx.beginPath();
+        ctx.moveTo(0, cy);
+        ctx.lineTo(w, cy);
+        ctx.stroke();
+      }
+
+      var blockCols = w < 520 ? 8 : 14;
+      var blockW = w / blockCols;
+      for (var row = 0; row <= courses; row++) {
+        var y0 = row === 0 ? bodyStart : bodyStart + (row / (courses + 1)) * bodyH;
+        var y1 = row === courses ? bottomY : bodyStart + ((row + 1) / (courses + 1)) * bodyH;
+        var stagger = (row % 2) * (blockW * 0.5);
+        for (var col = 0; col <= blockCols; col++) {
+          var jx = col * blockW + stagger;
+          if (jx > 0 && jx < w) {
+            ctx.beginPath();
+            ctx.moveTo(jx, y0);
+            ctx.lineTo(jx, y1);
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Subtle fossilized spiral seashell reliefs embedded in limestone blocks
+      var fossilCount = w < 520 ? 3 : 5;
+      ctx.strokeStyle = 'rgba(226, 208, 174, 0.24)';
+      ctx.lineWidth = 0.95;
+      for (var f = 0; f < fossilCount; f++) {
+        var fx = w * (0.12 + (f / (fossilCount - 1)) * 0.76);
+        var fy = bodyStart + bodyH * 0.66;
+        ctx.beginPath();
+        for (var s = 0; s <= 18; s++) {
+          var th = (s / 18) * Math.PI * 2.8;
+          var rr = 1.1 * Math.exp(0.22 * th);
+          var px = fx + Math.cos(th) * rr;
+          var py = fy + Math.sin(th) * rr;
+          if (s === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        }
+        ctx.stroke();
+      }
+
+      // Chiseled Roman numeral memory marks along the stone course
+      if (carvedMemories.length > 0 && bodyH > 26) {
+        var shownMarks = Math.min(carvedMemories.length, 12);
+        ctx.fillStyle = 'rgba(238, 220, 184, 0.62)';
+        ctx.font = Math.max(9, Math.min(12, Math.round(w / 95))) + 'px Georgia, serif';
+        ctx.textAlign = 'center';
+        var markSpan = Math.min(w * 0.84, shownMarks * 52);
+        var startX = (w - markSpan) * 0.5;
+        for (var m = 0; m < shownMarks; m++) {
+          var mx = shownMarks === 1
+            ? w * 0.5
+            : startX + (m / (shownMarks - 1)) * markSpan;
+          ctx.fillText(carvedMemories[m].roman, mx, bodyStart + bodyH * 0.30);
+        }
+      }
+    }
+
+    function getSeatCenterX(slotIndex, w) {
+      var margin = Math.max(16, w * 0.055);
+      var usableW = Math.max(120, w - margin * 2);
+      var slotW = usableW / SEAT_SLOTS.length;
+      return margin + slotW * (slotIndex + 0.5);
+    }
+
+    function drawSeatedEldersRow(ctx, w, copingY, bottomY, age) {
+      var margin = Math.max(16, w * 0.055);
+      var usableW = Math.max(120, w - margin * 2);
+      var slotW = usableW / SEAT_SLOTS.length;
+      var wallH = Math.max(24, bottomY - copingY);
+      var baseElderH = clamp(Math.min(wallH * 0.78, slotW * 1.12), 28, 86);
+
+      // Nearest passing youth horizontal focus for subtle elder gaze tracking
+      var gazeTargetX = w * 0.5;
+      if (!reducedMotion && ambientYouths.length > 0) {
+        var leadYouth = ambientYouths[0];
+        var leadU = (((leadYouth.u + leadYouth.dir * elapsedSec * leadYouth.speed) % 1.16) + 1.16) % 1.16 - 0.08;
+        gazeTargetX = leadU * w;
+      }
+
+      for (var i = 0; i < SEAT_SLOTS.length; i++) {
+        var slot = SEAT_SLOTS[i];
+        var cx = margin + slotW * (i + 0.5);
+
+        if (slot.role === 'traveler-seat') {
+          drawTravelerSeatAndFigure(ctx, cx, copingY, slotW, baseElderH, age, gazeTargetX, slot);
+        } else {
+          drawCloakedElderFigure(ctx, cx, copingY, slotW, baseElderH, age, gazeTargetX, slot, 1.0, 0);
+        }
+      }
+    }
+
+    function drawTravelerSeatAndFigure(ctx, cx, copingY, slotW, baseElderH, age, gazeTargetX, slot) {
+      var seatW = Math.min(slotW * 0.84, baseElderH * 0.82);
+
+      // Always render the carved concave open stone seat niche on the coping
+      ctx.save();
+      ctx.fillStyle = 'rgba(244, 224, 182, ' + (0.34 * (1 - smoothstep(0.75, 0.92, age)) + 0.10).toFixed(3) + ')';
+      ctx.fillRect(cx - seatW * 0.46, copingY - 2.5, seatW * 0.92, 5);
+
+      if (age < 0.75) {
+        // Subtle warm invitation arch above the empty stone seat awaiting the traveler
+        var pulse = reducedMotion ? 0.65 : (0.52 + 0.26 * Math.sin(elapsedSec * 1.8));
+        ctx.strokeStyle = 'rgba(242, 214, 160, ' + (pulse * (0.35 + 0.45 * age)).toFixed(3) + ')';
+        ctx.lineWidth = 1.1;
+        if (ctx.setLineDash) ctx.setLineDash([3, 3]);
+        ctx.beginPath();
+        ctx.arc(cx, copingY - baseElderH * 0.36, seatW * 0.34, Math.PI * 1.08, Math.PI * 1.92);
+        ctx.stroke();
+        if (ctx.setLineDash) ctx.setLineDash([]);
+        ctx.restore();
+        return;
+      }
+      ctx.restore();
+
+      // As ageProgress crosses 0.75 -> 1.0, ease the traveler's cloaked figure irreversibly into the open seat
+      var seatEase = smoothstep(0.75, 0.94, age);
+      var standOffset = (1 - seatEase) * (baseElderH * 0.24);
+      drawCloakedElderFigure(
+        ctx,
+        cx,
+        copingY - standOffset,
+        slotW,
+        baseElderH,
+        age,
+        gazeTargetX,
+        slot,
+        0.42 + 0.58 * seatEase,
+        1 - seatEase
+      );
+    }
+
+    function drawCloakedElderFigure(ctx, cx, seatY, slotW, baseH, age, gazeTargetX, slot, opacity, risingBlend) {
+      var figH = baseH * slot.stature;
+      var halfW = Math.min(slotW * 0.49, figH * 0.44) * slot.shoulderWidth;
+      var breath = reducedMotion ? 0 : Math.sin(elapsedSec * 1.3 + slot.slotIndex * 0.9) * 0.8;
+      var gazeShift = clamp((gazeTargetX - cx) / 380, -1, 1) * 2.2;
+
+      ctx.save();
+      ctx.globalAlpha = clamp01(opacity);
+      ctx.translate(cx, seatY + breath);
+
+      // Seated shadow cast downward onto the limestone parapet face
+      ctx.fillStyle = 'rgba(16, 12, 9, 0.44)';
+      ctx.beginPath();
+      drawEllipsePath(ctx, 0, figH * 0.14, halfW * 0.92, figH * 0.20, 0, 0, Math.PI);
+      ctx.fill();
+
+      // Heavy draped wool cloak resting shoulder-to-shoulder on the stone ledge
+      ctx.fillStyle = slot.cloakTone;
+      ctx.beginPath();
+      ctx.moveTo(-halfW, 4);
+      ctx.quadraticCurveTo(-halfW * 1.04, -figH * 0.56, -halfW * 0.52, -figH * 0.76);
+      ctx.quadraticCurveTo(0, -figH * 0.84, halfW * 0.52, -figH * 0.76);
+      ctx.quadraticCurveTo(halfW * 1.04, -figH * 0.56, halfW, 4);
+      ctx.closePath();
+      ctx.fill();
+
+      // Layered shawl / mantle fold across shoulders
+      ctx.fillStyle = slot.shawlTone;
+      ctx.beginPath();
+      ctx.moveTo(-halfW * 0.86, -figH * 0.28);
+      ctx.quadraticCurveTo(-halfW * 0.55, -figH * 0.74, 0, -figH * 0.77);
+      ctx.quadraticCurveTo(halfW * 0.55, -figH * 0.74, halfW * 0.86, -figH * 0.24);
+      ctx.quadraticCurveTo(0, -figH * 0.42, -halfW * 0.86, -figH * 0.28);
+      ctx.closePath();
+      ctx.fill();
+
+      // Hooded/crowned elder head turned slightly toward the passing youths in the square
+      var headX = slot.headTilt * halfW * 0.55 + gazeShift * (reducedMotion ? 0 : 0.65);
+      var headY = -figH * 0.86;
+      var headR = clamp(figH * 0.145, 4.5, 12.5);
+
+      ctx.fillStyle = slot.cloakTone;
+      ctx.beginPath();
+      ctx.arc(headX, headY, headR * 1.12, 0, TAU);
+      ctx.fill();
+
+      // Subtle silver hair / profile beard rim-light catching piazza glow
+      ctx.strokeStyle = slot.role === 'traveler-seat'
+        ? 'rgba(248, 222, 168, ' + (0.68 + 0.25 * (1 - risingBlend)).toFixed(3) + ')'
+        : 'rgba(226, 212, 186, 0.52)';
+      ctx.lineWidth = 1.25;
+      ctx.beginPath();
+      ctx.arc(headX, headY, headR * 1.08, Math.PI * 1.08, Math.PI * 1.92);
+      ctx.stroke();
+
+      // Shoulder rim-light from the square ahead
+      ctx.beginPath();
+      ctx.moveTo(-halfW * 0.82, -figH * 0.52);
+      ctx.quadraticCurveTo(-halfW * 0.48, -figH * 0.76, headX - headR * 0.9, headY + headR * 0.5);
+      ctx.moveTo(headX + headR * 0.9, headY + headR * 0.5);
+      ctx.quadraticCurveTo(halfW * 0.48, -figH * 0.76, halfW * 0.82, -figH * 0.52);
+      ctx.stroke();
+
+      // Distinct elder props (cane, slack lute, collapsed spyglass, ledge hand)
+      ctx.strokeStyle = 'rgba(196, 170, 128, 0.58)';
+      ctx.lineWidth = 1.3;
+      if (slot.prop === 'cane-left') {
+        ctx.beginPath();
+        ctx.moveTo(-halfW * 0.52, -figH * 0.36);
+        ctx.lineTo(-halfW * 0.64, figH * 0.24);
+        ctx.stroke();
+      } else if (slot.prop === 'cane-right') {
+        ctx.beginPath();
+        ctx.moveTo(halfW * 0.52, -figH * 0.36);
+        ctx.lineTo(halfW * 0.66, figH * 0.24);
+        ctx.stroke();
+      } else if (slot.prop === 'lute-knee') {
+        ctx.beginPath();
+        drawEllipsePath(ctx, halfW * 0.18, -figH * 0.22, headR * 0.85, headR * 0.55, -0.35, 0, TAU);
+        ctx.moveTo(halfW * 0.35, -figH * 0.28);
+        ctx.lineTo(halfW * 0.76, -figH * 0.48);
+        ctx.stroke();
+      } else if (slot.prop === 'spyglass-lap') {
+        ctx.strokeStyle = 'rgba(222, 188, 118, 0.72)';
+        ctx.lineWidth = 1.8;
+        ctx.beginPath();
+        ctx.moveTo(-halfW * 0.16, -figH * 0.16);
+        ctx.lineTo(halfW * 0.38, -figH * 0.24);
+        ctx.stroke();
+      } else if (slot.prop === 'ledge-hand' || slot.prop === 'traveler-cloak') {
+        ctx.fillStyle = 'rgba(198, 172, 136, 0.55)';
+        ctx.beginPath();
+        ctx.arc(halfW * 0.36, 1, Math.max(2, headR * 0.28), 0, TAU);
+        ctx.fill();
+      }
+
+      ctx.restore();
+    }
+
+    // =========================================================================
+    // Animation Loop & Pointer Stride Support
+    // =========================================================================
+
+    function renderAll() {
+      if (destroyed) return;
+      renderWildRide();
+      renderSquareAndWall();
+    }
+
+    function stepSimulation(dtSec) {
+      strideImpulse = Math.max(0, strideImpulse - dtSec * 1.8);
+      if (phase === 'wild_ride' && !reducedMotion) {
+        wildScroll += dtSec * (0.14 + 0.45 * strideImpulse);
+      }
+
+      if (activeEnvoys.length > 0 && !reducedMotion) {
+        var writeIdx = 0;
+        for (var i = 0; i < activeEnvoys.length; i++) {
+          var env = activeEnvoys[i];
+          env.progress += dtSec * 0.24;
+          if (env.progress < 1.0) {
+            activeEnvoys[writeIdx++] = env;
+          }
+        }
+        activeEnvoys.length = writeIdx;
+      }
+    }
+
+    function tick(nowMs) {
+      if (destroyed || !mounted || reducedMotion) {
+        rafId = null;
+        return;
+      }
+      if (!lastFrameMs) {
+        lastFrameMs = nowMs;
+      }
+      var dt = clamp((nowMs - lastFrameMs) / 1000, 0, 0.08);
+      lastFrameMs = nowMs;
+      elapsedSec += dt;
+
+      stepSimulation(dt);
+      renderAll();
+
+      if (typeof requestAnimationFrame === 'function') {
+        rafId = requestAnimationFrame(tick);
+      }
+    }
+
+    function startLoopIfNeeded() {
+      if (destroyed || !mounted || reducedMotion) {
+        stopLoop();
+        return;
+      }
+      if (rafId === null && typeof requestAnimationFrame === 'function') {
+        lastFrameMs = 0;
+        rafId = requestAnimationFrame(tick);
+      }
+    }
+
+    function stopLoop() {
+      if (rafId !== null && typeof cancelAnimationFrame === 'function') {
+        cancelAnimationFrame(rafId);
+      }
+      rafId = null;
+      lastFrameMs = 0;
+    }
+
+    function onWindowResize() {
+      if (destroyed || !mounted) return;
+      measureAndSyncCanvases();
+      renderAll();
+    }
+
+    function onWildPointerDown(ev) {
+      if (destroyed || phase !== 'wild_ride') return;
+      pointerDragState = {
+        startX: typeof ev.clientX === 'number' ? ev.clientX : 0,
+        startY: typeof ev.clientY === 'number' ? ev.clientY : 0,
+        accumPx: 0
+      };
+    }
+
+    function onWildPointerMove(ev) {
+      if (!pointerDragState || destroyed || phase !== 'wild_ride') return;
+      var cx = typeof ev.clientX === 'number' ? ev.clientX : pointerDragState.startX;
+      var cy = typeof ev.clientY === 'number' ? ev.clientY : pointerDragState.startY;
+      var dist = Math.hypot(cx - pointerDragState.startX, cy - pointerDragState.startY);
+      if (dist - pointerDragState.accumPx >= 36) {
+        pointerDragState.accumPx = dist;
+        advanceWildRide(0.08);
+      }
+    }
+
+    function onWildPointerUp() {
+      pointerDragState = null;
+    }
+
+    function attachListeners() {
+      if (typeof window !== 'undefined' && typeof window.addEventListener === 'function') {
+        window.addEventListener('resize', onWindowResize);
+      }
+      if (wildCanvasEl && typeof wildCanvasEl.addEventListener === 'function') {
+        wildCanvasEl.addEventListener('pointerdown', onWildPointerDown);
+        wildCanvasEl.addEventListener('pointermove', onWildPointerMove);
+        wildCanvasEl.addEventListener('pointerup', onWildPointerUp);
+        wildCanvasEl.addEventListener('pointercancel', onWildPointerUp);
+      }
+      if (typeof ResizeObserver === 'function') {
+        try {
+          resizeObserver = new ResizeObserver(function () {
+            onWindowResize();
+          });
+          if (wildCanvasEl) resizeObserver.observe(wildCanvasEl);
+          if (wallCanvasEl) resizeObserver.observe(wallCanvasEl);
+        } catch (_) {
+          resizeObserver = null;
+        }
+      }
+    }
+
+    function detachListeners() {
+      if (typeof window !== 'undefined' && typeof window.removeEventListener === 'function') {
+        window.removeEventListener('resize', onWindowResize);
+      }
+      if (wildCanvasEl && typeof wildCanvasEl.removeEventListener === 'function') {
+        wildCanvasEl.removeEventListener('pointerdown', onWildPointerDown);
+        wildCanvasEl.removeEventListener('pointermove', onWildPointerMove);
+        wildCanvasEl.removeEventListener('pointerup', onWildPointerUp);
+        wildCanvasEl.removeEventListener('pointercancel', onWildPointerUp);
+      }
+      if (resizeObserver) {
+        try {
+          resizeObserver.disconnect();
+        } catch (_) {}
+        resizeObserver = null;
+      }
+      pointerDragState = null;
+    }
+
+    // =========================================================================
+    // Public Contract Methods
+    // =========================================================================
+
+    function mount(elements) {
+      if (destroyed) return;
+      var els = elements || {};
+
+      stopLoop();
+      detachListeners();
+
+      wildCanvasEl = els.wildCanvasEl || null;
+      wallCanvasEl = els.wallCanvasEl || null;
+      parapetRootEl = els.parapetRootEl || null;
+      mounted = true;
+
+      recalculateDerivedState();
+      buildParapetDom();
+      measureAndSyncCanvases();
+      attachListeners();
+      renderAll();
+      startLoopIfNeeded();
+    }
+
+    function advanceWildRide(step) {
+      if (destroyed) return getState();
+
+      var rawStep = step === undefined ? 0.25 : (Number.isFinite(step) ? step : 0.25);
+      var positiveStep = clamp(rawStep, 0, 1);
+      var nextWild = round4(clamp01(Math.max(wildRideProgress, wildRideProgress + positiveStep)));
+
+      wildRideProgress = nextWild;
+      wildScroll += positiveStep * 1.35;
+      strideImpulse = Math.min(1.4, strideImpulse + (positiveStep > 0 ? 0.85 : 0));
+
+      recalculateDerivedState();
+      syncParapetDom();
+      renderAll();
+      notifyStateChange();
+      return getState();
+    }
+
+    function completeWildRide() {
+      if (destroyed) return getState();
+
+      wildRideProgress = 1;
+      wildScroll += 0.9;
+      strideImpulse = 0.6;
+
+      recalculateDerivedState();
+      syncParapetDom();
+      renderAll();
+      notifyStateChange();
+      return getState();
+    }
+
+    function recordDesire(payload) {
+      if (destroyed) return getState();
+      var item = payload || {};
+
+      // Entering any Isidora desire station confirms arrival past the wild regions
+      if (wildRideProgress < 1) {
+        wildRideProgress = 1;
+      }
+
+      // Strictly monotonic ageProgress ratchet: calibrated ~0.09..0.12 per desire (~9-11 pursuits -> 1.00)
+      var intensity = clamp01(Number.isFinite(item.intensity) ? item.intensity : 0.65);
+      var defaultStep = 0.095 + 0.02 * intensity;
+      var requestedStep = (Number.isFinite(item.deltaAge) && item.deltaAge > 0)
+        ? item.deltaAge
+        : defaultStep;
+      var calibratedStep = clamp(requestedStep, 0.09, 0.12);
+      var nextAge = round4(clamp01(Math.max(ageProgress, ageProgress + calibratedStep)));
+      ageProgress = nextAge;
+
+      recalculateDerivedState();
+
+      var stationKey = typeof item.station === 'string' && STATION_META[item.station]
+        ? item.station
+        : 'spiral';
+      var meta = STATION_META[stationKey];
+      var cleanLabel = typeof item.label === 'string' && item.label.trim()
+        ? item.label.trim()
+        : meta.defaultLabel;
+      var cleanEcho = typeof item.memoryEcho === 'string' && item.memoryEcho.trim()
+        ? item.memoryEcho.trim()
+        : meta.defaultEcho;
+
+      var shouldDispatchYouth = ageProgress >= 0.50 - 1e-9;
+      if (shouldDispatchYouth) {
+        dispatchedYouthCount += 1;
+        activeEnvoys.push({
+          id: dispatchedYouthCount,
+          station: stationKey,
+          emblem: meta.emblem,
+          progress: 0.04,
+          arcOffset: ((dispatchedYouthCount % 2 === 0 ? 1 : -1) * (10 + (dispatchedYouthCount % 3) * 6)),
+          seed: dispatchedYouthCount * 1.37
+        });
+        if (activeEnvoys.length > 5) {
+          activeEnvoys.shift();
+        }
+      }
+
+      var memoryRecord = {
+        index: carvedMemories.length + 1,
+        roman: toRoman(carvedMemories.length + 1),
+        station: stationKey,
+        label: cleanLabel,
+        memoryEcho: cleanEcho,
+        ageAtCarving: ageProgress,
+        dispatchedYouth: shouldDispatchYouth
+      };
+      carvedMemories.push(memoryRecord);
+
+      appendInscriptionNode(memoryRecord);
+      syncParapetDom();
+      renderAll();
+      notifyStateChange();
+      return getState();
+    }
+
+    function setReducedMotion(reduced) {
+      if (destroyed) return;
+      reducedMotion = Boolean(reduced);
+      if (reducedMotion) {
+        stopLoop();
+      } else {
+        startLoopIfNeeded();
+      }
+      syncParapetDom();
+      renderAll();
+    }
+
+    function resize(width, height) {
+      if (destroyed) return;
+      var w = Number.isFinite(width) && width > 0 ? width : undefined;
+      var h = Number.isFinite(height) && height > 0 ? height : undefined;
+      measureAndSyncCanvases(w, h);
+      renderAll();
+    }
+
+    function destroy() {
+      if (destroyed) return;
+      destroyed = true;
+      mounted = false;
+      stopLoop();
+      detachListeners();
+      if (parapetRootEl) {
+        clearElementChildren(parapetRootEl);
+      }
+      wildCanvasEl = null;
+      wallCanvasEl = null;
+      parapetRootEl = null;
+      seatEls = [];
+      activeEnvoys = [];
+    }
+
+    return {
+      mount: mount,
+      advanceWildRide: advanceWildRide,
+      completeWildRide: completeWildRide,
+      recordDesire: recordDesire,
+      getState: getState,
+      setReducedMotion: setReducedMotion,
+      resize: resize,
+      destroy: destroy
+    };
+  }
+
+  var api = {
+    create: create
+  };
+
+  global.IsidoraOldMensWall = api;
+  if (typeof window !== 'undefined') {
+    window.IsidoraOldMensWall = api;
+  }
+})(typeof window !== 'undefined' ? window : globalThis);
+
+  </script>
+  <script id="isidora-chronicle-orchestrator">
+    (function () {
+      'use strict';
+
+      var CUSTOM_TAGS = [
+        'isidora-chronicle', 'isidora-archival-masthead', 'nautilus-crest-mark',
+        'chronicle-epigraph-ribbon', 'masthead-instrument-rack', 'sundial-epoch-badge',
+        'isidora-sanctum-grid', 'isidora-piazza-viewport', 'nautilus-stairwell',
+        'piazza-distance-reticle', 'reticle-telemetry-chip', 'wild-region-approach',
+        'wild-approach-placard', 'wild-stride-track', 'wild-stride-fill', 'wild-saddle-controls',
+        'isidora-atelier-column', 'chronicle-sundial-strip', 'sundial-header-row',
+        'irreversible-age-gauge', 'irreversible-age-bar', 'sundial-metrics-row',
+        'sundial-metric-cell', 'chamber-lore-scroll', 'isidora-station-bench',
+        'seashell-whorl', 'luthier-pegbox', 'brass-refractor', 'hesitation-loggia',
+        'cockfight-pit', 'elders-parapet-wall', 'elder-row-seat', 'passing-youth-frieze',
+        'memory-inscription-ledge', 'parapet-colophon-seal', 'isidora-plate-vault',
+        'nautilus-atlas-folio', 'folio-rubric-header', 'folio-plate-tabs',
+        'folio-loupe-controls', 'folio-diptych-stage', 'copperplate-map-frame',
+        'tempera-vista-frame', 'plate-etching-fallback', 'folio-plate-caption',
+        'isidora-desire-console', 'isidora-station-rail'
+      ];
+
+      if (typeof customElements !== 'undefined' && typeof HTMLElement !== 'undefined') {
+        for (var t = 0; t < CUSTOM_TAGS.length; t++) {
+          if (!customElements.get(CUSTOM_TAGS[t])) {
+            try {
+              customElements.define(CUSTOM_TAGS[t], class extends HTMLElement {});
+            } catch (_) {}
+          }
+        }
+      }
+
+      var CHAMBER_COPY = {
+        spiral: {
+          chip: 'I · Seashell Spiral Stairwell',
+          prose: 'Buildings with spiral staircases encrusted with calcified nautilus, turritella, and murex shells; each turn along the golden whorl advances the years.'
+        },
+        violin: {
+          chip: 'II · Luthier Bench of 3:2 Fifths',
+          prose: 'Where perfect violins are made: four spruce-resonated strings tuned in pure 3:2 fifths (G3 196 Hz, D4 293.66 Hz, A4 440 Hz, E5 659.25 Hz).'
+        },
+        telescope: {
+          chip: 'III · Vernier Brass Refractor',
+          prose: 'Where perfect telescopes are made: draw the brass vernier tube to collapse chromatic aberration rings into razor-sharp constellations and shell-domes.'
+        },
+        hesitation: {
+          chip: 'IV · Loggia of the Third Woman',
+          prose: 'Where the foreigner hesitating between two women always encounters a third stepping into the parted amber archway shadow.'
+        },
+        cockfight: {
+          chip: 'V · Chalked Pit & Bettors Brawl',
+          prose: 'Where cockfights degenerate into bloody brawls among the bettors, erupting in crimson feathers and percussive tumult across the chalked ring.'
+        }
+      };
+
+      var PHASE_LABELS = {
+        wild_ride: 'Wild Regions',
+        youth_dream: 'Dreamed Youth',
+        twilight_drift: 'Twilight Drift',
+        seated_elder: 'Seated in the Row'
+      };
+
+      var chronicleEl = document.getElementById('isidora-chronicle');
+      var viewportEl = document.getElementById('isidora-piazza-viewport');
+      var spiralCanvasEl = document.getElementById('isidora-spiral-canvas');
+      var wallCanvasEl = document.getElementById('isidora-wall-canvas');
+      var wildStageEl = document.getElementById('isidora-wild-stage');
+      var wildCanvasEl = document.getElementById('isidora-wild-canvas');
+      var wildFillEl = document.getElementById('isidora-wild-fill');
+      var wildReadoutEl = document.getElementById('isidora-wild-readout');
+      var strideStepBtn = document.getElementById('isidora-stride-step');
+      var strideEnterBtn = document.getElementById('isidora-stride-enter');
+      var controlsRootEl = document.getElementById('isidora-controls-root');
+      var parapetRootEl = document.getElementById('isidora-parapet-root');
+      var phaseBadgeEl = document.getElementById('isidora-phase-badge');
+      var agePctEl = document.getElementById('isidora-age-pct');
+      var ageBarEl = document.getElementById('isidora-age-bar');
+      var ageProgressbarEl = document.getElementById('isidora-age-progressbar');
+      var metricScaleEl = document.getElementById('isidora-metric-scale');
+      var metricFilterEl = document.getElementById('isidora-metric-filter');
+      var metricCarvedEl = document.getElementById('isidora-metric-carved');
+      var reticleChamberEl = document.getElementById('isidora-reticle-chamber');
+      var reticleOpticsEl = document.getElementById('isidora-reticle-optics');
+      var chamberScrollEl = document.getElementById('isidora-chamber-scroll');
+      var muteBtn = document.getElementById('isidora-mute-btn');
+      var platesBtn = document.getElementById('isidora-plates-btn');
+      var plateVaultEl = document.getElementById('isidora-plate-vault');
+      var closePlatesBtn = document.getElementById('isidora-close-plates-btn');
+      var loupeBtn = document.getElementById('isidora-loupe-btn');
+      var diptychStageEl = document.getElementById('isidora-diptych-stage');
+      var mapImgEl = document.getElementById('isidora-map-img');
+      var mapFallbackEl = document.getElementById('isidora-map-fallback');
+      var vistaImgEl = document.getElementById('isidora-vista-img');
+      var vistaFallbackEl = document.getElementById('isidora-vista-fallback');
+
+      var mqlReduced = typeof window.matchMedia === 'function'
+        ? window.matchMedia('(prefers-reduced-motion: reduce)')
+        : null;
+      var reducedMotion = Boolean(mqlReduced && mqlReduced.matches);
+      var isMuted = false;
+      var loupeActive = false;
+      var spiral = null;
+      var wall = null;
+
+      function syncChamberCopy(stationId) {
+        var info = CHAMBER_COPY[stationId] || CHAMBER_COPY.spiral;
+        if (reticleChamberEl) reticleChamberEl.textContent = info.chip;
+        if (chamberScrollEl) chamberScrollEl.textContent = info.prose;
+      }
+
+      function syncFromWallState(st) {
+        if (!st) return;
+        var vt = st.viewportTransform || {};
+        var pct = Math.round((st.ageProgress || 0) * 100);
+        var wPct = Math.round((st.wildRideProgress || 0) * 100);
+
+        if (chronicleEl) {
+          chronicleEl.setAttribute('data-phase', st.phase);
+          chronicleEl.setAttribute('data-seated', st.isSeatedOnWall ? 'true' : 'false');
+        }
+        if (phaseBadgeEl) {
+          phaseBadgeEl.textContent = PHASE_LABELS[st.phase] || st.phase;
+        }
+        if (wildStageEl) {
+          if (st.phase === 'wild_ride') {
+            wildStageEl.removeAttribute('hidden');
+          } else {
+            wildStageEl.setAttribute('hidden', '');
+          }
+        }
+        if (wildFillEl) wildFillEl.style.width = wPct + '%';
+        if (wildReadoutEl) wildReadoutEl.textContent = wPct + '% horizon';
+
+        var epochWord = st.isSeatedOnWall ? 'Elder in Row' : (st.ageProgress >= 0.4 ? 'Twilight' : 'Youth');
+        if (agePctEl) agePctEl.textContent = epochWord + ' · ' + pct + '%';
+        if (ageBarEl) ageBarEl.style.width = pct + '%';
+        if (ageProgressbarEl) ageProgressbarEl.setAttribute('aria-valuenow', String(pct));
+
+        var dScale = typeof vt.distanceScale === 'number' ? vt.distanceScale : 1;
+        var fHz = typeof vt.memoryFilterHz === 'number' ? Math.round(vt.memoryFilterHz) : 14000;
+        var carvedCount = typeof st.memoriesCarved === 'number'
+          ? st.memoriesCarved
+          : (Array.isArray(st.memoriesCarved) ? st.memoriesCarved.length : 0);
+
+        if (metricScaleEl) metricScaleEl.textContent = 'Spiral: ' + dScale.toFixed(2) + '×';
+        if (metricFilterEl) metricFilterEl.textContent = 'Echo: ' + fHz + ' Hz';
+        if (metricCarvedEl) metricCarvedEl.textContent = 'Carved: ' + carvedCount;
+        if (reticleOpticsEl) {
+          reticleOpticsEl.textContent = 'Span ' + dScale.toFixed(2) + '× · Piazza Cutoff ' + fHz + ' Hz';
+        }
+
+        if (spiral) {
+          spiral.setAgeState({
+            ageProgress: st.ageProgress,
+            phase: st.phase,
+            isSeatedOnWall: st.isSeatedOnWall,
+            memoryFilterHz: fHz,
+            distanceScale: dScale
+          });
+        }
+      }
+
+      wall = window.IsidoraOldMensWall.create({
+        reducedMotion: reducedMotion,
+        onStateChange: function (nextState) {
+          syncFromWallState(nextState);
+        }
+      });
+
+      spiral = window.IsidoraSpiralDesires.create({
+        reducedMotion: reducedMotion,
+        onDesirePursued: function (desirePayload) {
+          if (desirePayload && desirePayload.station) {
+            syncChamberCopy(desirePayload.station);
+          }
+          wall.recordDesire(desirePayload);
+        }
+      });
+
+      spiral.mount(spiralCanvasEl, controlsRootEl);
+      wall.mount({
+        wildCanvasEl: wildCanvasEl,
+        wallCanvasEl: wallCanvasEl,
+        parapetRootEl: parapetRootEl
+      });
+
+      syncChamberCopy('spiral');
+      syncFromWallState(wall.getState());
+
+      if (controlsRootEl) {
+        controlsRootEl.addEventListener('click', function (ev) {
+          var t = ev && ev.target;
+          if (t && t.getAttribute && t.getAttribute('data-station')) {
+            var stName = t.getAttribute('data-station');
+            syncChamberCopy(stName);
+            if (wall.getState().phase === 'wild_ride') {
+              wall.completeWildRide();
+            }
+          }
+        });
+      }
+
+      if (strideStepBtn) {
+        strideStepBtn.addEventListener('click', function () {
+          wall.advanceWildRide(0.28);
+        });
+      }
+      if (strideEnterBtn) {
+        strideEnterBtn.addEventListener('click', function () {
+          wall.completeWildRide();
+        });
+      }
+
+      if (wildCanvasEl) {
+        var wildDownX = 0;
+        var wildDownY = 0;
+        wildCanvasEl.addEventListener('pointerdown', function (ev) {
+          wildDownX = ev.clientX || 0;
+          wildDownY = ev.clientY || 0;
+        });
+        wildCanvasEl.addEventListener('click', function (ev) {
+          var moved = Math.hypot((ev.clientX || 0) - wildDownX, (ev.clientY || 0) - wildDownY);
+          if (moved < 12 && wall.getState().phase === 'wild_ride') {
+            wall.advanceWildRide(0.25);
+          }
+        });
+        wildCanvasEl.addEventListener('wheel', function (ev) {
+          if (wall.getState().phase === 'wild_ride') {
+            ev.preventDefault();
+            wall.advanceWildRide(0.20);
+          }
+        }, { passive: false });
+      }
+
+      function setMutedState(nextMuted) {
+        isMuted = Boolean(nextMuted);
+        spiral.setAudioMuted(isMuted);
+        if (muteBtn) {
+          muteBtn.setAttribute('aria-pressed', isMuted ? 'true' : 'false');
+          muteBtn.textContent = isMuted ? 'Muted [M]' : 'Sound [M]';
+        }
+      }
+
+      if (muteBtn) {
+        muteBtn.addEventListener('click', function () {
+          setMutedState(!isMuted);
+        });
+      }
+
+      function setPlateVaultOpen(open) {
+        if (!plateVaultEl) return;
+        var shouldOpen = Boolean(open);
+        if (shouldOpen) {
+          plateVaultEl.removeAttribute('hidden');
+        } else {
+          plateVaultEl.setAttribute('hidden', '');
+          setLoupe(false);
+        }
+        if (platesBtn) {
+          platesBtn.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
+        }
+      }
+
+      function setLoupe(active) {
+        loupeActive = Boolean(active);
+        if (diptychStageEl) {
+          diptychStageEl.setAttribute('data-loupe', loupeActive ? 'true' : 'false');
+        }
+        if (loupeBtn) {
+          loupeBtn.setAttribute('aria-pressed', loupeActive ? 'true' : 'false');
+        }
+      }
+
+      function setPlateView(viewMode) {
+        var mode = (viewMode === 'map' || viewMode === 'image') ? viewMode : 'diptych';
+        if (diptychStageEl) {
+          diptychStageEl.setAttribute('data-view', mode);
+        }
+        if (plateVaultEl) {
+          var tabBtns = plateVaultEl.querySelectorAll('[data-plate-view]');
+          for (var i = 0; i < tabBtns.length; i++) {
+            var match = tabBtns[i].getAttribute('data-plate-view') === mode;
+            tabBtns[i].setAttribute('aria-selected', match ? 'true' : 'false');
+            tabBtns[i].setAttribute('aria-pressed', match ? 'true' : 'false');
+          }
+        }
+      }
+
+      if (platesBtn) {
+        platesBtn.addEventListener('click', function () {
+          setPlateVaultOpen(plateVaultEl.hasAttribute('hidden'));
+        });
+      }
+      if (closePlatesBtn) {
+        closePlatesBtn.addEventListener('click', function () {
+          setPlateVaultOpen(false);
+        });
+      }
+      if (loupeBtn) {
+        loupeBtn.addEventListener('click', function () {
+          setLoupe(!loupeActive);
+        });
+      }
+      if (plateVaultEl) {
+        plateVaultEl.addEventListener('click', function (ev) {
+          if (ev.target === plateVaultEl) {
+            setPlateVaultOpen(false);
+            return;
+          }
+          var t = ev.target;
+          if (t && t.getAttribute && t.getAttribute('data-plate-view')) {
+            setPlateView(t.getAttribute('data-plate-view'));
+          }
+        });
+      }
+
+      if (mapImgEl) {
+        var triedSvgFallback = false;
+        mapImgEl.addEventListener('load', function () {
+          mapImgEl.removeAttribute('hidden');
+          if (mapFallbackEl) mapFallbackEl.setAttribute('hidden', '');
+        });
+        mapImgEl.addEventListener('error', function () {
+          var svgAlt = mapImgEl.getAttribute('data-svg-fallback');
+          if (!triedSvgFallback && svgAlt) {
+            triedSvgFallback = true;
+            mapImgEl.src = svgAlt;
+            return;
+          }
+          mapImgEl.setAttribute('hidden', '');
+          if (mapFallbackEl) mapFallbackEl.removeAttribute('hidden');
+        });
+      }
+
+      if (vistaImgEl) {
+        vistaImgEl.addEventListener('load', function () {
+          vistaImgEl.removeAttribute('hidden');
+          if (vistaFallbackEl) vistaFallbackEl.setAttribute('hidden', '');
+        });
+        vistaImgEl.addEventListener('error', function () {
+          vistaImgEl.setAttribute('hidden', '');
+          if (vistaFallbackEl) vistaFallbackEl.removeAttribute('hidden');
+        });
+      }
+
+      var STATIONS = window.IsidoraSpiralDesires.STATIONS || ['spiral', 'violin', 'telescope', 'hesitation', 'cockfight'];
+
+      window.addEventListener('keydown', function (ev) {
+        if (!ev || ev.ctrlKey || ev.metaKey || ev.altKey) return;
+        var key = ev.key;
+        var vaultOpen = plateVaultEl && !plateVaultEl.hasAttribute('hidden');
+
+        if (key === 'Escape' && vaultOpen) {
+          ev.preventDefault();
+          setPlateVaultOpen(false);
+          return;
+        }
+        if (key === 'p' || key === 'P') {
+          ev.preventDefault();
+          setPlateVaultOpen(!vaultOpen);
+          return;
+        }
+        if ((key === 'z' || key === 'Z') && vaultOpen) {
+          ev.preventDefault();
+          setLoupe(!loupeActive);
+          return;
+        }
+        if (key === 'm' || key === 'M') {
+          ev.preventDefault();
+          setMutedState(!isMuted);
+          return;
+        }
+        if (vaultOpen || ev.defaultPrevented) return;
+
+        var tag = ev.target && ev.target.tagName ? ev.target.tagName.toLowerCase() : '';
+        if ((tag === 'button' || tag === 'input') && (key === 'Enter' || key === ' ' || key === 'ArrowLeft' || key === 'ArrowRight' || key === 'ArrowUp' || key === 'ArrowDown')) {
+          return;
+        }
+
+        var inWild = wall.getState().phase === 'wild_ride';
+        if (key >= '1' && key <= '5') {
+          ev.preventDefault();
+          var chosenSt = STATIONS[Number(key) - 1] || 'spiral';
+          if (inWild) wall.completeWildRide();
+          spiral.selectStation(chosenSt);
+          syncChamberCopy(chosenSt);
+          return;
+        }
+
+        if (inWild) {
+          if (key === ' ' || key === 'ArrowUp' || key === 'ArrowRight') {
+            ev.preventDefault();
+            wall.advanceWildRide(0.28);
+          } else if (key === 'Enter') {
+            ev.preventDefault();
+            wall.completeWildRide();
+          }
+          return;
+        }
+
+        var activeSt = spiral.getTelemetry().activeStation;
+        if (key === ' ' || key === 'Enter') {
+          ev.preventDefault();
+          spiral.actOnStation(activeSt, { fromUserGesture: true });
+        } else if (key === 'ArrowLeft' || key === 'ArrowRight' || key === 'ArrowUp' || key === 'ArrowDown') {
+          ev.preventDefault();
+          var dir = (key === 'ArrowRight' || key === 'ArrowUp') ? 1 : -1;
+          if (activeSt === 'hesitation') {
+            spiral.actOnStation('hesitation', { choice: dir < 0 ? 0 : 1, fromUserGesture: true });
+          } else if (activeSt === 'telescope') {
+            spiral.actOnStation('telescope', { delta: dir * 0.12, fromUserGesture: true });
+          } else if (activeSt === 'spiral') {
+            spiral.actOnStation('spiral', { turns: dir * 0.25, fromUserGesture: true });
+          } else {
+            spiral.actOnStation(activeSt, { fromUserGesture: true });
+          }
+        }
+      });
+
+      function setReducedMotionFlag(flag) {
+        reducedMotion = Boolean(flag);
+        spiral.setReducedMotion(reducedMotion);
+        wall.setReducedMotion(reducedMotion);
+      }
+
+      if (mqlReduced) {
+        var onMqlChange = function (e) { setReducedMotionFlag(Boolean(e && e.matches)); };
+        if (typeof mqlReduced.addEventListener === 'function') {
+          mqlReduced.addEventListener('change', onMqlChange);
+        } else if (typeof mqlReduced.addListener === 'function') {
+          mqlReduced.addListener(onMqlChange);
+        }
+      }
+
+      function syncViewportResize() {
+        if (!viewportEl) return;
+        var rect = viewportEl.getBoundingClientRect();
+        if (rect.width > 20 && rect.height > 20) {
+          spiral.resize(rect.width, rect.height);
+          wall.resize(rect.width, rect.height);
+        }
+      }
+
+      window.addEventListener('resize', syncViewportResize);
+      syncViewportResize();
+
+      function stepWildRideFn(step) {
+        return wall.advanceWildRide(typeof step === 'number' ? step : 0.25);
+      }
+      function completeWildRideFn() {
+        return wall.completeWildRide();
+      }
+      function triggerDesireFn(station, payload) {
+        var target = station || spiral.getTelemetry().activeStation;
+        syncChamberCopy(target);
+        return spiral.actOnStation(target, payload || {});
+      }
+      function selectStationFn(station) {
+        spiral.selectStation(station);
+        syncChamberCopy(spiral.getTelemetry().activeStation);
+        return spiral.getTelemetry();
+      }
+
+      function diagnosticsSnapshot() {
+        return {
+          charterId: '02_isidora',
+          spiralTelemetry: spiral.getTelemetry(),
+          wallState: wall.getState(),
+          platesIntegrated: true,
+          audioMuted: isMuted,
+          reducedMotion: reducedMotion,
+          plateVaultOpen: Boolean(plateVaultEl && !plateVaultEl.hasAttribute('hidden')),
+          stepWildRide: stepWildRideFn,
+          completeWildRide: completeWildRideFn,
+          triggerDesire: triggerDesireFn,
+          selectStation: selectStationFn,
+          openPlates: function () { setPlateVaultOpen(true); },
+          closePlates: function () { setPlateVaultOpen(false); },
+          setMuted: setMutedState,
+          setReducedMotion: setReducedMotionFlag
+        };
+      }
+
+      var diagHook = function () { return diagnosticsSnapshot(); };
+      Object.defineProperties(diagHook, {
+        charterId: { value: '02_isidora', enumerable: true },
+        spiralTelemetry: { get: function () { return spiral.getTelemetry(); }, enumerable: true },
+        wallState: { get: function () { return wall.getState(); }, enumerable: true },
+        platesIntegrated: { value: true, enumerable: true },
+        audioMuted: { get: function () { return isMuted; }, enumerable: true },
+        reducedMotion: { get: function () { return reducedMotion; }, enumerable: true },
+        plateVaultOpen: { get: function () { return Boolean(plateVaultEl && !plateVaultEl.hasAttribute('hidden')); }, enumerable: true },
+        stepWildRide: { value: stepWildRideFn, enumerable: true },
+        completeWildRide: { value: completeWildRideFn, enumerable: true },
+        triggerDesire: { value: triggerDesireFn, enumerable: true },
+        selectStation: { value: selectStationFn, enumerable: true },
+        openPlates: { value: function () { setPlateVaultOpen(true); }, enumerable: true },
+        closePlates: { value: function () { setPlateVaultOpen(false); }, enumerable: true },
+        setMuted: { value: setMutedState, enumerable: true },
+        setReducedMotion: { value: setReducedMotionFlag, enumerable: true }
+      });
+
+      window.__ISIDORA_DIAGNOSTICS__ = diagHook;
+    })();
+  </script>
+</body>
+</html>
