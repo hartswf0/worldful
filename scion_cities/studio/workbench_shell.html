@@ -662,6 +662,14 @@
     background: var(--chalk-blue);
     color: var(--paper);
   }
+  .atlas-link-btn.unified-map-link {
+    border-color: var(--red-bird);
+    color: var(--red-bird);
+  }
+  .atlas-link-btn.unified-map-link:hover {
+    background: var(--red-bird);
+    color: var(--paper);
+  }
 
   .atlas-plate-deck {
     display: none;
@@ -1061,6 +1069,8 @@
         <span class="pill ok" id="pill-sync" title="Audiovisual Frame-Lock Delta (<= 16.7ms)"><strong>AV LOCK:</strong> 1.2ms</span>
       </div>
 
+      <a id="link-header-unified-map" class="atlas-link-btn unified-map-link mute-hide" href="scion_unified_map.html">UNIFIED WORLD MAP &nearr;</a>
+      <a id="link-header-khan-atlas" class="atlas-link-btn mute-hide" href="scion_atlas.html">KHAN&#8217;S ATLAS &nearr;</a>
       <button type="button" id="btn-audio-arm" class="accent-blue" title="Unlock Parameter-Coupled WebAudio Synthesis">[AUDIO: STANDBY — CLICK TO ARM]</button>
       <button type="button" id="btn-mute-silhouette" class="accent-red" aria-pressed="false">[MUTE SILHOUETTE TEST (Hide All Labels &amp; Mute Audio)]</button>
     </div>
@@ -1139,6 +1149,7 @@
             <button type="button" class="plate-zoom-btn" data-pzoom="2.5">2.5x</button>
             <button type="button" id="btn-plate-loupe" class="active" aria-pressed="true">[LOUPE: ON]</button>
           </span>
+          <a id="link-open-unified-map" class="atlas-link-btn unified-map-link mute-hide" href="scion_unified_map.html">[UNIFIED WORLD MAP &nearr;]</a>
           <a id="link-open-khan-atlas" class="atlas-link-btn mute-hide" href="scion_atlas.html">[GREAT KHAN&#8217;S ATLAS &nearr;]</a>
         </div>
       </div>
@@ -3339,10 +3350,15 @@
     const metaStrip = document.getElementById("atlas-plate-meta-strip");
     const inlineTools = document.getElementById("atlas-inline-controls");
     const khanLink = document.getElementById("link-open-khan-atlas");
+    const khanHeaderLink = document.getElementById("link-header-khan-atlas");
+    const unifiedHeaderLink = document.getElementById("link-header-unified-map");
+    const unifiedStageLink = document.getElementById("link-open-unified-map");
+    const caseHash = encodeURIComponent(c.case_id);
 
-    if (khanLink) {
-      khanLink.href = `scion_atlas.html#${encodeURIComponent(c.case_id)}`;
-    }
+    if (khanLink) khanLink.href = `scion_atlas.html#${caseHash}`;
+    if (khanHeaderLink) khanHeaderLink.href = `scion_atlas.html#${caseHash}`;
+    if (unifiedHeaderLink) unifiedHeaderLink.href = `scion_unified_map.html#${caseHash}`;
+    if (unifiedStageLink) unifiedStageLink.href = `scion_unified_map.html#${caseHash}`;
 
     const isStage = state.stageViewMode === "stage";
     vpGrid.style.display = isStage ? "" : "none";

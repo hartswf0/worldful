@@ -191,6 +191,252 @@
     max-width: 380px;
   }
 
+  /* --- Unified 56-Panel Gretzinger-Khan Floor Map Hero Section --- */
+  .floor-map-section {
+    background: var(--bone);
+    border: 2px solid var(--soot);
+    box-shadow: 4px 4px 0 var(--soot);
+    padding: 12px 14px;
+    margin-bottom: 16px;
+  }
+  .floor-map-section.hidden {
+    display: none;
+  }
+
+  .floor-cta-primary {
+    background: var(--red-bird) !important;
+    color: var(--paper) !important;
+    border: 2px solid var(--soot) !important;
+    box-shadow: 3px 3px 0 var(--soot);
+    font-weight: 700 !important;
+    font-size: 11.5px !important;
+    padding: 7px 12px !important;
+    letter-spacing: 0.03em;
+  }
+  .floor-cta-primary:hover {
+    background: var(--soot) !important;
+    color: var(--paper) !important;
+  }
+
+  .floor-map-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding-bottom: 10px;
+    margin-bottom: 12px;
+    border-bottom: 1.5px solid var(--soot);
+  }
+
+  .floor-map-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(330px, 0.95fr);
+    gap: 14px;
+    align-items: start;
+  }
+
+  .floor-sheet-column {
+    background: #DDD5C6;
+    border: 1.5px solid var(--soot);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .floor-sheet-canvas-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 780px;
+    aspect-ratio: 3200 / 3500;
+    margin: 0 auto;
+    background: var(--paper);
+    border: 2px solid var(--soot);
+    box-shadow: 3px 3px 0 rgba(30, 30, 30, 0.25);
+    overflow: hidden;
+    user-select: none;
+  }
+
+  .floor-sheet-canvas-wrap > img.wall-sheet-img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: fill;
+  }
+
+  .gretzinger-grid-overlay {
+    position: absolute;
+    left: var(--grid-left, 0%);
+    top: var(--grid-top, 0%);
+    width: var(--grid-w, 100%);
+    height: var(--grid-h, 100%);
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    grid-template-rows: repeat(7, minmax(0, 1fr));
+    z-index: 12;
+  }
+
+  .gretz-cell {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 0 !important;
+    padding: 2px 3px !important;
+    margin: 0;
+    background: transparent !important;
+    border: 1px dashed rgba(30, 30, 30, 0.26) !important;
+    color: var(--soot);
+    display: flex !important;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start !important;
+    text-align: left;
+    cursor: pointer;
+    overflow: hidden;
+  }
+
+  .gretzinger-grid-overlay.labels-hidden .gretz-badge,
+  .gretzinger-grid-overlay.labels-hidden .gretz-city {
+    display: none;
+  }
+  .gretzinger-grid-overlay.labels-hidden .gretz-cell {
+    border-color: rgba(30, 30, 30, 0.08) !important;
+  }
+
+  .gretz-cell.origin-cell {
+    border: 2px solid var(--red-bird) !important;
+    box-shadow: inset 0 0 0 1.5px var(--ochre-oil);
+  }
+
+  .gretz-cell:hover,
+  .gretz-cell:focus-visible,
+  .gretz-cell.selected-cell {
+    border: 2.5px solid var(--red-bird) !important;
+    background: rgba(242, 239, 233, 0.24) !important;
+    z-index: 20;
+    outline: none;
+  }
+
+  .gretz-cell.filter-dimmed {
+    background: rgba(30, 30, 30, 0.52) !important;
+  }
+  .gretz-cell.filter-dimmed .gretz-badge,
+  .gretz-cell.filter-dimmed .gretz-city {
+    opacity: 0.35;
+  }
+
+  .gretz-badge {
+    font-size: 8.5px;
+    line-height: 1.1;
+    font-weight: 700;
+    padding: 1px 3px;
+    background: rgba(242, 239, 233, 0.88);
+    border: 1px solid rgba(30, 30, 30, 0.55);
+    color: var(--soot);
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .gretz-cell.origin-cell .gretz-badge {
+    background: var(--red-bird);
+    color: var(--paper);
+    border-color: var(--soot);
+  }
+
+  .gretz-city {
+    font-size: 8.5px;
+    line-height: 1.1;
+    font-weight: 700;
+    padding: 1px 3px;
+    background: rgba(30, 30, 30, 0.82);
+    color: var(--paper);
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .floor-hover-pill {
+    display: none;
+    position: absolute;
+    z-index: 30;
+    pointer-events: none;
+    background: var(--soot);
+    color: var(--paper);
+    border: 1.5px solid var(--red-bird);
+    box-shadow: 3px 3px 0 rgba(30, 30, 30, 0.45);
+    padding: 5px 8px;
+    font-size: 10px;
+    max-width: 260px;
+    line-height: 1.35;
+  }
+
+  .floor-legend-strip {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 6px;
+    font-size: 10.5px;
+    color: var(--graphite);
+  }
+
+  .floor-inspector-dock {
+    background: var(--paper);
+    border: 2px solid var(--soot);
+    box-shadow: 3px 3px 0 var(--soot);
+    padding: 11px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .fid-kicker {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--red-bird);
+    border-bottom: 1px solid var(--soot);
+    padding-bottom: 5px;
+  }
+
+  .fid-title {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    line-height: 1.12;
+    color: var(--soot);
+  }
+
+  .fid-thumbs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    cursor: pointer;
+  }
+  .fid-thumbs img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border: 1px solid var(--soot);
+    background: var(--bone);
+    display: block;
+  }
+
+  .fid-deck-card {
+    background: var(--bone);
+    border: 1px solid var(--soot);
+    border-left: 4px solid var(--ochre-oil);
+    padding: 6px 8px;
+    font-size: 10.5px;
+  }
+
   /* --- [5,4,3,2,1] 9-Chapter x 11-Series Diagonal Matrix --- */
   .matrix-section {
     background: var(--bone);
@@ -533,7 +779,7 @@
   }
 
   @media (max-width: 1100px) {
-    .dm-plates-row, .dm-ledger-grid {
+    .dm-plates-row, .dm-ledger-grid, .floor-map-layout {
       grid-template-columns: 1fr;
     }
   }
@@ -568,14 +814,16 @@
     <div class="masthead-stats">
       <span class="stat-stamp" id="atlas-stat-total"><strong>56</strong> FOLIO ENTRIES</span>
       <span class="stat-stamp" id="atlas-stat-plates"><strong>0</strong> PLATES INDEXED</span>
-      <a class="btn-link accent-red" href="scion_swarm_builder.html">[OPEN OPERATIVE SWARM WORKBENCH &nearr;]</a>
+      <a class="btn-link floor-cta-primary" href="scion_unified_map.html">OPEN INTERACTIVE FLOOR MAP &amp; 56-CARD RULE DECK (scion_unified_map.html) &nearr;</a>
+      <a class="btn-link accent-blue" href="scion_swarm_builder.html">[OPEN OPERATIVE SWARM WORKBENCH &nearr;]</a>
+      <a class="btn-link" href="index.html">[INDEX]</a>
     </div>
   </header>
 
   <!-- FILTER, SEARCH & VIEW BAR -->
   <section class="filter-bar" aria-label="Atlas Filters and Search">
     <div class="filter-controls">
-      <input type="search" id="atlas-search" placeholder="Search city, emblem, desert opposition, agent, locus, better question…" aria-label="Search Atlas">
+      <input type="search" id="atlas-search" placeholder="Search city, coordinate, biome, emblem, agent, locus, better question…" aria-label="Search Atlas">
       <select id="filter-series" aria-label="Filter by Thematic Series">
         <option value="ALL">All Thematic Series (11 + Scene 0)</option>
         <option value="Scene 0: Risk Proof">Scene 0: Risk Proof</option>
@@ -613,9 +861,75 @@
     </div>
 
     <div style="display:flex;gap:4px;flex-wrap:wrap;">
-      <button type="button" class="view-toggle-btn active" data-vmode="both">[MATRIX + GALLERY]</button>
+      <button type="button" class="view-toggle-btn active" data-vmode="all">[ALL: FLOOR MAP + MATRIX + GALLERY]</button>
+      <button type="button" class="view-toggle-btn accent-red" data-vmode="floormap">[UNIFIED 56-PANEL FLOOR MAP]</button>
       <button type="button" class="view-toggle-btn" data-vmode="matrix">[[5,4,3,2,1] MATRIX ONLY]</button>
       <button type="button" class="view-toggle-btn" data-vmode="gallery">[FOLIO CARDS ONLY]</button>
+    </div>
+  </section>
+
+  <!-- PRIMARY HERO PANEL: UNIFIED 56-PANEL GRETZINGER-KHAN FLOOR MAP -->
+  <section class="floor-map-section" id="atlas-unified-floor-section" aria-label="Unified 56-Panel Floor Map">
+    <div class="floor-map-toolbar">
+      <div>
+        <div class="khan-kicker" style="color:var(--red-bird);">OLOG_REV_003 · GRETZINGER &times; KUBLAI KHAN PALIMPSEST · 8&times;7 EDGE-MATCHED GRID (97/97 SEAMS · 6400&times;7000 WORLD)</div>
+        <h2 style="font-family:var(--font-serif);font-size:22px;font-weight:400;">Unified 56-Panel Floor Map — Scene 0 (`ORIGIN 0&middot;0`) + 55 Invisible Cities</h2>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;">
+        <select id="floor-epoch-filter" aria-label="Highlight Expansion Ring Epoch">
+          <option value="ALL">All Expansion Rings (1963–2026)</option>
+          <option value="0">Ring 0 · 1963 Origin (3,3)</option>
+          <option value="1-3">Rings 1–3 · Inner Chapters I–III</option>
+          <option value="4-6">Rings 4–6 · Mid Chapters IV–VI</option>
+          <option value="7-9">Rings 7–9 · Outer Chapters VII–IX</option>
+        </select>
+        <button type="button" class="floor-fmt-btn active" data-wfmt="png">SHEET .PNG</button>
+        <button type="button" class="floor-fmt-btn" data-wfmt="svg">SHEET .SVG</button>
+        <button type="button" id="btn-floor-labels">[8&times;7 STAMPS: OFF]</button>
+        <a class="btn-link floor-cta-primary" href="scion_unified_map.html">OPEN INTERACTIVE FLOOR MAP &amp; 56-CARD RULE DECK (scion_unified_map.html) &nearr;</a>
+      </div>
+    </div>
+
+    <div class="floor-map-layout">
+      <div class="floor-sheet-column">
+        <div class="floor-sheet-canvas-wrap" id="floor-sheet-canvas-wrap">
+          <img
+            id="unified-wall-sheet-img"
+            class="wall-sheet-img"
+            src="scion_cities/atlas/unified_khan_gretzinger_map.png"
+            alt="Unified 56-Panel Gretzinger-Khan Stitched Continent Map (8x7 panels, 3200x3500)"
+          >
+          <div class="gretzinger-grid-overlay" id="gretzinger-grid-overlay" role="grid" aria-label="Interactive 8 by 7 Coordinate Panel Grid"></div>
+          <div class="floor-hover-pill" id="floor-hover-pill"></div>
+        </div>
+        <div class="floor-legend-strip">
+          <span><strong>ORIGIN (col=3, row=3):</strong> `ORIGIN 0&middot;0` &middot; 1963 Abominable Cellar</span>
+          <span><strong>INTERACTION:</strong> Hover any panel to preview coordinate, biome &amp; swarm; click to open 1200px plate/swarm inspector</span>
+        </div>
+      </div>
+
+      <aside class="floor-inspector-dock" id="floor-inspector-dock" aria-live="polite">
+        <div class="fid-kicker">
+          <span id="fid-coord-stamp">ORIGIN 0&middot;0 &middot; (COL 3, ROW 3)</span>
+          <span id="fid-epoch-stamp">RING 0 &middot; 1963</span>
+        </div>
+        <div>
+          <h3 class="fid-title" id="fid-city-title">Abominable Cellar</h3>
+          <div style="font-size:11px;color:var(--chalk-blue);font-weight:700;" id="fid-biome-line">Biome: Origin Cellar Vault</div>
+          <div style="font-size:10.5px;color:var(--graphite);margin-top:2px;" id="fid-meta-line"></div>
+        </div>
+        <div class="fid-thumbs" id="fid-thumbs" title="Click to open 1200px Diptych Plate & Swarm Modal"></div>
+        <div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--dirt);margin-bottom:4px;">Bespoke Nonhuman Swarm Operators</div>
+          <div class="fc-agents" id="fid-swarm-chips"></div>
+        </div>
+        <div class="fid-deck-card" id="fid-deck-card"></div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;padding-top:4px;border-top:1px solid var(--rule-mid);">
+          <button type="button" class="accent-blue" id="fid-btn-inspect">[INSPECT DIPTYCH PLATES]</button>
+          <a class="btn-link accent-red" id="fid-link-unified" href="scion_unified_map.html">[FLY TO PANEL &amp; RULE DECK &nearr;]</a>
+          <a class="btn-link" id="fid-link-workbench" href="scion_swarm_builder.html">[WORKBENCH &nearr;]</a>
+        </div>
+      </aside>
     </div>
   </section>
 
@@ -659,6 +973,7 @@
         <button type="button" class="dm-zoom-btn" data-zm="1.75">1.75x</button>
         <button type="button" class="dm-zoom-btn" data-zm="2.5">2.5x</button>
         <button type="button" id="dm-loupe-btn" class="active">[LOUPE: ON]</button>
+        <a id="dm-unified-map-link" class="btn-link accent-blue" href="scion_unified_map.html">[8&times;7 FLOOR MAP &nearr;]</a>
         <a id="dm-workbench-link" class="btn-link accent-red" href="scion_swarm_builder.html">[OPEN IN WORKBENCH &nearr;]</a>
         <button type="button" id="dm-close-btn">[CLOSE &times;]</button>
       </div>
@@ -706,12 +1021,929 @@
     seriesFilter: "ALL",
     chapterFilter: "ALL",
     statusFilter: "ALL",
-    viewMode: "both",
+    epochFilter: "ALL",
+    viewMode: "all",
+    wallSheetFormat: "png",
+    wallSheetLabels: false,
+    hoveredCaseId: "flour_test_abominable_cellar",
+    panelByCaseId: new Map(),
+    gridPanels: [],
+    gridInsetPct: { left: 0, top: 0, width: 100, height: 100 },
     modalCaseId: null,
     modalFormat: "png",
     modalZoom: 1,
     modalLoupe: true
   };
+
+  /*__BEGIN_UNIFIED_8X7_MAP_BINDING__*/
+  const EMBEDDED_UNIFIED_GRID = {
+  "insetPct": {
+    "left": 0,
+    "top": 0,
+    "width": 100,
+    "height": 100
+  },
+  "seamAudit": {
+    "vertical_seams": 49,
+    "horizontal_seams": 48,
+    "total_seams": 97,
+    "total_shared_ports": 201,
+    "min_ports_per_seam": 2,
+    "max_port_mismatch_px": 0.0,
+    "ct4_seam_zero_discontinuity": true,
+    "ct5_deck_palimpsest_replay": true,
+    "verified": true
+  },
+  "panels": [
+    {
+      "col": 0,
+      "row": 0,
+      "case_id": "city_33_pyrrha",
+      "coord_label": "W3·N3",
+      "biome": "Mirror Sea & Canal Basin",
+      "ring_epoch": 6,
+      "year_stamp": "2001",
+      "card_number": 36,
+      "card_suit": "COLLAGE_PALIMPSEST",
+      "card_title": "Pyrrha: Kraft Palimpsest over Imagined Goblet Well Square",
+      "card_op": "paste_collage",
+      "card_instruction": "At W3·N3 (Pyrrha), hinge a torn kraft-vellum collage sheet with three masking-tape tabs over imagined goblet well square; ink rerouted alleys linking amber castellum towers and goblet square well curb while keeping pre-paste ghost streets and World low windblown sand dunes shards legible underneath."
+    },
+    {
+      "col": 1,
+      "row": 0,
+      "case_id": "city_41_irene",
+      "coord_label": "W2·N3",
+      "biome": "Escarpment, Chasm & Stilt Spine",
+      "ring_epoch": 8,
+      "year_stamp": "2010",
+      "card_number": 43,
+      "card_suit": "ARTERIAL_TRUNK",
+      "card_title": "Irene: Cross-Seam Windy Basalt Plateau Rim Trunk",
+      "card_op": "extend_trunk",
+      "card_instruction": "Rule a continuous double-cased trunk from windy plateau overlook in Irene (W2·N3) across matched seam ports into adjacent panels (city_43_thekla, city_33_pyrrha), coupling windy basalt plateau rim and birdcatcher lime net stakes exchange lanes."
+    },
+    {
+      "col": 2,
+      "row": 0,
+      "case_id": "city_43_thekla",
+      "coord_label": "W1·N3",
+      "biome": "Escarpment, Chasm & Stilt Spine",
+      "ring_epoch": 8,
+      "year_stamp": "2012",
+      "card_number": 42,
+      "card_suit": "CLINAMEN_SWERVE",
+      "card_title": "Thekla: Tick-12 Filter Swerve",
+      "card_op": "flip_clinamen",
+      "card_instruction": "Trigger ⊣ FILTER at tick 12 in thekla_sunset_constellation_drafter on panel W1·N3 (Thekla): invert P1–P4 municipal parcel tints between Lawful A and Clinamen A-Prime while preserving physical pine plank fences and flapping sackcloth screens floor residues at plank fence knothole crack."
+    },
+    {
+      "col": 3,
+      "row": 0,
+      "case_id": "city_28_baucis",
+      "coord_label": "0·N3",
+      "biome": "Escarpment, Chasm & Stilt Spine",
+      "ring_epoch": 5,
+      "year_stamp": "1995",
+      "card_number": 28,
+      "card_suit": "ARTERIAL_TRUNK",
+      "card_title": "Baucis: Cross-Seam Slender Flamingo Stilts Trunk",
+      "card_op": "extend_trunk",
+      "card_instruction": "Rule a continuous double-cased trunk from woodland flamingo legs in Baucis (0·N3) across matched seam ports into adjacent panels (city_47_perinthia, city_43_thekla), coupling slender flamingo stilts and cloud piercing ladders exchange lanes."
+    },
+    {
+      "col": 4,
+      "row": 0,
+      "case_id": "city_47_perinthia",
+      "coord_label": "E1·N3",
+      "biome": "Escarpment, Chasm & Stilt Spine",
+      "ring_epoch": 9,
+      "year_stamp": "2017",
+      "card_number": 47,
+      "card_suit": "CLINAMEN_SWERVE",
+      "card_title": "Perinthia: Tick-11 Filter Swerve",
+      "card_op": "flip_clinamen",
+      "card_instruction": "Trigger ⊣ FILTER at tick 11 in perinthia_monstrous_god_dilemma_judge on panel E1·N3 (Perinthia): invert P1–P4 municipal parcel tints between Lawful A and Clinamen A-Prime while preserving physical solstice cardo decumanus and twelve eclipse gates floor residues at solar cardo decumanus cross."
+    },
+    {
+      "col": 5,
+      "row": 0,
+      "case_id": "city_50_andria",
+      "coord_label": "E2·N3",
+      "biome": "Escarpment, Chasm & Stilt Spine",
+      "ring_epoch": 9,
+      "year_stamp": "2020",
+      "card_number": 50,
+      "card_suit": "SUBURBAN_BLOOM",
+      "card_title": "Andria: Gouache Block Accretion of Planetary Orbit Streets",
+      "card_op": "bloom_blocks",
+      "card_instruction": "Subdivide peripheral lots of Andria (E2·N3) into dense terracotta, mustard-ochre, and sage satellite blocks around cepheid orbital street ring, extending planetary orbit streets and lazaretto shadow theater cul-de-sacs up to the matched seam."
+    },
+    {
+      "col": 6,
+      "row": 0,
+      "case_id": "city_54_theodora",
+      "coord_label": "E3·N3",
+      "biome": "Subterranean & Nested Germ Fault Arc",
+      "ring_epoch": 9,
+      "year_stamp": "2025",
+      "card_number": 52,
+      "card_suit": "CLINAMEN_SWERVE",
+      "card_title": "Theodora: Tick-11 Filter Swerve",
+      "card_op": "flip_clinamen",
+      "card_instruction": "Trigger ⊣ FILTER at tick 11 in theodora_buffon_shelf_archivist on panel E3·N3 (Theodora): invert P1–P4 municipal parcel tints between Lawful A and Clinamen A-Prime while preserving physical exterminated condor feathers and aseptic sewer rat traps floor residues at aseptic rat massacre sewers."
+    },
+    {
+      "col": 7,
+      "row": 0,
+      "case_id": "city_46_laudomia",
+      "coord_label": "E4·N3",
+      "biome": "Subterranean & Nested Germ Fault Arc",
+      "ring_epoch": 9,
+      "year_stamp": "2016",
+      "card_number": 55,
+      "card_suit": "SUBURBAN_BLOOM",
+      "card_title": "Laudomia: Gouache Block Accretion of Windowless Necropolis Slabs",
+      "card_op": "bloom_blocks",
+      "card_instruction": "Subdivide peripheral lots of Laudomia (E4·N3) into dense terracotta, mustard-ochre, and sage satellite blocks around crowded living compartments, extending windowless necropolis slabs and veined marble vestibule domes cul-de-sacs up to the matched seam."
+    },
+    {
+      "col": 0,
+      "row": 1,
+      "case_id": "city_32_phyllis",
+      "coord_label": "W3·N2",
+      "biome": "Mirror Sea & Canal Basin",
+      "ring_epoch": 6,
+      "year_stamp": "2000",
+      "card_number": 34,
+      "card_suit": "VOID_EXCISE",
+      "card_title": "Phyllis: Whiteout Subtraction against Fortress Cranny Capers",
+      "card_op": "carve_void",
+      "card_instruction": "Excise an uninked vellum clearing inside Phyllis (W3·N2) pushing back blank-page habitual blindness; ring the cut perimeter with Red-Bird ConflictGrain keystones anchored on tracery canal bridges and nine carved canal bridges abutments."
+    },
+    {
+      "col": 1,
+      "row": 1,
+      "case_id": "city_24_zemrude",
+      "coord_label": "W2·N2",
+      "biome": "Mirror Sea & Canal Basin",
+      "ring_epoch": 4,
+      "year_stamp": "1990",
+      "card_number": 24,
+      "card_suit": "VOID_EXCISE",
+      "card_title": "Zemrude: Whiteout Subtraction against Flapping Linen Curtains",
+      "card_op": "carve_void",
+      "card_instruction": "Excise an uninked vellum clearing inside Zemrude (W2·N2) pushing back objective angle-independent facade; ring the cut perimeter with Red-Bird ConflictGrain keystones anchored on flapping curtain sills and sunlit window sills abutments."
+    },
+    {
+      "col": 2,
+      "row": 1,
+      "case_id": "city_16_zobeide",
+      "coord_label": "W1·N2",
+      "biome": "Caravan & Rail Trade Belt",
+      "ring_epoch": 3,
+      "year_stamp": "1981",
+      "card_number": 17,
+      "card_suit": "CLINAMEN_SWERVE",
+      "card_title": "Zobeide: Tick-11 Filter Swerve",
+      "card_op": "flip_clinamen",
+      "card_instruction": "Trigger ⊣ FILTER at tick 11 in zobeide_amnesiac_work_warden on panel W1·N2 (Zobeide): invert P1–P4 municipal parcel tints between Lawful A and Clinamen A-Prime while preserving physical moonlit whitewashed walls and tightly wound street skein floor residues at moon exposed skein."
+    },
+    {
+      "col": 3,
+      "row": 1,
+      "case_id": "city_14_zenobia",
+      "coord_label": "0·N2",
+      "biome": "Escarpment, Chasm & Stilt Spine",
+      "ring_epoch": 2,
+      "year_stamp": "1979",
+      "card_number": 14,
+      "card_suit": "VOID_EXCISE",
+      "card_title": "Zenobia: Whiteout Subtraction against Bamboo And Zinc Houses",
+      "card_op": "carve_void",
+      "card_instruction": "Excise an uninked vellum clearing inside Zenobia (0·N2) pushing back ground-bound desire-erasing cities; ring the cut perimeter with Red-Bird ConflictGrain keystones anchored on dry piling forest and dry terrain high pilings abutments."
+    },
+    {
+      "col": 4,
+      "row": 1,
+      "case_id": "city_18_armilla",
+      "coord_label": "E1·N2",
+      "biome": "Escarpment, Chasm & Stilt Spine",
+      "ring_epoch": 3,
+      "year_stamp": "1984",
+      "card_number": 19,
+      "card_suit": "VOID_EXCISE",
+      "card_title": "Armilla: Whiteout Subtraction against Horizontal Spur Conduits",
+      "card_op": "carve_void",
+      "card_instruction": "Excise an uninked vellum clearing inside Armilla (E1·N2) pushing back load-bearing brick-and-mortar enclosure; ring the cut perimeter with Red-Bird ConflictGrain keystones anchored on vertical riser forest and vertical riser pipe forest abutments."
+    },
+    {
+      "col": 5,
+      "row": 1,
+      "case_id": "city_26_octavia",
+      "coord_label": "E2·N2",
+      "biome": "Escarpment, Chasm & Stilt Spine",
+      "ring_epoch": 5,
+      "year_stamp": "1993",
+      "card_number": 27,
+      "card_suit": "CLINAMEN_SWERVE",
+      "card_title": "Octavia: Tick-11 Filter Swerve",
+      "card_op": "flip_clinamen",
+      "card_instruction": "Trigger ⊣ FILTER at tick 11 in octavia_net_rupture_reckoner on panel E2·N2 (Octavia): invert P1–P4 municipal parcel tints between Lawful A and Clinamen A-Prime while preserving physical twin mountain crests and spider web catenary net floor residues at twin mountain crest anchors."
+    },
+    {
+      "col": 6,
+      "row": 1,
+      "case_id": "city_35_eudoxia",
+      "coord_label": "E3·N2",
+      "biome": "Escarpment, Chasm & Stilt Spine",
+      "ring_epoch": 6,
+      "year_stamp": "2003",
+      "card_number": 35,
+      "card_suit": "SUBURBAN_BLOOM",
+      "card_title": "Eudoxia: Gouache Block Accretion of Crimson Indigo Carpet",
+      "card_op": "bloom_blocks",
+      "card_instruction": "Subdivide peripheral lots of Eudoxia (E3·N2) into dense terracotta, mustard-ochre, and sage satellite blocks around crimson indigo carpet shrine, extending crimson indigo carpet and braying pack mules cul-de-sacs up to the matched seam."
+    },
+    {
+      "col": 7,
+      "row": 1,
+      "case_id": "city_52_marozia",
+      "coord_label": "E4·N2",
+      "biome": "Subterranean & Nested Germ Fault Arc",
+      "ring_epoch": 9,
+      "year_stamp": "2023",
+      "card_number": 54,
+      "card_suit": "VOID_EXCISE",
+      "card_title": "Marozia: Whiteout Subtraction against Leaden Rat Burrows",
+      "card_op": "carve_void",
+      "card_instruction": "Excise an uninked vellum clearing inside Marozia (E4·N2) pushing back programmed ideological utopia decree; ring the cut perimeter with Red-Bird ConflictGrain keystones anchored on leaden rat pack passages and sibyl two city oracle abutments."
+    },
+    {
+      "col": 0,
+      "row": 2,
+      "case_id": "city_20_valdrada",
+      "coord_label": "W3·N1",
+      "biome": "Mirror Sea & Canal Basin",
+      "ring_epoch": 3,
+      "year_stamp": "1986",
+      "card_number": 21,
+      "card_suit": "COLLAGE_PALIMPSEST",
+      "card_title": "Valdrada: Kraft Palimpsest over Tiered Lake Verandas",
+      "card_op": "paste_collage",
+      "card_instruction": "At W3·N1 (Valdrada), hinge a torn kraft-vellum collage sheet with three masking-tape tabs over tiered lake verandas; ink rerouted alleys linking stacked cliffside verandas and railed iron parapets while keeping pre-paste ghost streets and World fluted travertine facades shards legible underneath."
+    },
+    {
+      "col": 1,
+      "row": 2,
+      "case_id": "city_17_hypatia",
+      "coord_label": "W2·N1",
+      "biome": "Mirror Sea & Canal Basin",
+      "ring_epoch": 3,
+      "year_stamp": "1982",
+      "card_number": 18,
+      "card_suit": "ARTERIAL_TRUNK",
+      "card_title": "Hypatia: Cross-Seam Cerulean Magnolia Lagoon Trunk",
+      "card_op": "extend_trunk",
+      "card_instruction": "Rule a continuous double-cased trunk from magnolia suicide lagoon in Hypatia (W2·N1) across matched seam ports into adjacent panels (city_09_zirma, city_20_valdrada), coupling cerulean magnolia lagoon and lagoon bottom crabs exchange lanes."
+    },
+    {
+      "col": 2,
+      "row": 2,
+      "case_id": "city_09_zirma",
+      "coord_label": "W1·N1",
+      "biome": "Caravan & Rail Trade Belt",
+      "ring_epoch": 1,
+      "year_stamp": "1973",
+      "card_number": 7,
+      "card_suit": "CLINAMEN_SWERVE",
+      "card_title": "Zirma: Tick-10 Filter Swerve",
+      "card_op": "flip_clinamen",
+      "card_instruction": "Trigger ⊣ FILTER at tick 10 in zirma_single_witness_pruner on panel W1·N1 (Zirma): invert P1–P4 municipal parcel tints between Lawful A and Clinamen A-Prime while preserving physical window level dirigibles and skyscraper cornice lunatics floor residues at cornice dirigible airway."
+    },
+    {
+      "col": 3,
+      "row": 2,
+      "case_id": "city_03_dorothea",
+      "coord_label": "0·N1",
+      "biome": "Caravan & Rail Trade Belt",
+      "ring_epoch": 1,
+      "year_stamp": "1966",
+      "card_number": 3,
+      "card_suit": "ARTERIAL_TRUNK",
+      "card_title": "Dorothea: Cross-Seam Four Aluminum Towers Trunk",
+      "card_op": "extend_trunk",
+      "card_instruction": "Rule a continuous double-cased trunk from seven spring gates in Dorothea (0·N1) across matched seam ports into adjacent panels (city_12_fedora, city_09_zirma), coupling four aluminum towers and seven spring drawbridges exchange lanes."
+    },
+    {
+      "col": 4,
+      "row": 2,
+      "case_id": "city_12_fedora",
+      "coord_label": "E1·N1",
+      "biome": "Caravan & Rail Trade Belt",
+      "ring_epoch": 2,
+      "year_stamp": "1977",
+      "card_number": 12,
+      "card_suit": "CLINAMEN_SWERVE",
+      "card_title": "Fedora: Tick-11 Filter Swerve",
+      "card_op": "flip_clinamen",
+      "card_instruction": "Trigger ⊣ FILTER at tick 11 in fedora_assumption_equalizer on panel E1·N1 (Fedora): invert P1–P4 municipal parcel tints between Lawful A and Clinamen A-Prime while preserving physical gray ashlar metropolis and central metal museum floor residues at gray stone arterials."
+    },
+    {
+      "col": 5,
+      "row": 2,
+      "case_id": "city_19_chloe",
+      "coord_label": "E2·N1",
+      "biome": "Caravan & Rail Trade Belt",
+      "ring_epoch": 3,
+      "year_stamp": "1985",
+      "card_number": 20,
+      "card_suit": "SUBURBAN_BLOOM",
+      "card_title": "Chloe: Gouache Block Accretion of Twirling Shoulder Parasol",
+      "card_op": "bloom_blocks",
+      "card_instruction": "Subdivide peripheral lots of Chloe (E2·N1) into dense terracotta, mustard-ochre, and sage satellite blocks around parasol coral promenade, extending twirling shoulder parasol and tattooed bazaar giant cul-de-sacs up to the matched seam."
+    },
+    {
+      "col": 6,
+      "row": 2,
+      "case_id": "city_39_beersheba",
+      "coord_label": "E3·N1",
+      "biome": "Escarpment, Chasm & Stilt Spine",
+      "ring_epoch": 7,
+      "year_stamp": "2008",
+      "card_number": 39,
+      "card_suit": "VOID_EXCISE",
+      "card_title": "Beersheba: Whiteout Subtraction against Tasseled Subsoil Pipes",
+      "card_op": "carve_void",
+      "card_instruction": "Excise an uninked vellum clearing inside Beersheba (E3·N1) pushing back self-possessed calculating hoarding; ring the cut perimeter with Red-Bird ConflictGrain keystones anchored on diamond hoard terrestrial vault and diamond gate silver locks abutments."
+    },
+    {
+      "col": 7,
+      "row": 2,
+      "case_id": "city_42_argia",
+      "coord_label": "E4·N1",
+      "biome": "Subterranean & Nested Germ Fault Arc",
+      "ring_epoch": 8,
+      "year_stamp": "2011",
+      "card_number": 45,
+      "card_suit": "SUBURBAN_BLOOM",
+      "card_title": "Argia: Gouache Block Accretion of Ceiling Packed Damp Clay",
+      "card_op": "bloom_blocks",
+      "card_instruction": "Subdivide peripheral lots of Argia (E4·N1) into dense terracotta, mustard-ochre, and sage satellite blocks around dirt packed negative stairs, extending ceiling packed damp clay and shale cloud roof strata cul-de-sacs up to the matched seam."
+    },
+    {
+      "col": 0,
+      "row": 3,
+      "case_id": "city_31_esmeralda",
+      "coord_label": "W3·0",
+      "biome": "Mirror Sea & Canal Basin",
+      "ring_epoch": 6,
+      "year_stamp": "1998",
+      "card_number": 32,
+      "card_suit": "CLINAMEN_SWERVE",
+      "card_title": "Esmeralda: Tick-11 Filter Swerve",
+      "card_op": "flip_clinamen",
+      "card_instruction": "Trigger ⊣ FILTER at tick 11 in esmeralda_gunpowder_sewer_smuggler on panel W3·0 (Esmeralda): invert P1–P4 municipal parcel tints between Lawful A and Clinamen A-Prime while preserving physical intersecting water canals and cambered stone bridges floor residues at intersecting canal landings."
+    },
+    {
+      "col": 1,
+      "row": 3,
+      "case_id": "city_08_despina",
+      "coord_label": "W2·0",
+      "biome": "Mirror Sea & Canal Basin",
+      "ring_epoch": 1,
+      "year_stamp": "1972",
+      "card_number": 8,
+      "card_suit": "ARTERIAL_TRUNK",
+      "card_title": "Despina: Cross-Seam Skyscraper Radar Pinnacles Trunk",
+      "card_op": "extend_trunk",
+      "card_instruction": "Rule a continuous double-cased trunk from tableland horizon ridge in Despina (W2·0) across matched seam ports into adjacent panels (city_01_diomira, city_31_esmeralda), coupling skyscraper radar pinnacles and white and red windsocks exchange lanes."
+    },
+    {
+      "col": 2,
+      "row": 3,
+      "case_id": "city_01_diomira",
+      "coord_label": "W1·0",
+      "biome": "Mirror Sea & Canal Basin",
+      "ring_epoch": 1,
+      "year_stamp": "1964",
+      "card_number": 2,
+      "card_suit": "CLINAMEN_SWERVE",
+      "card_title": "Diomira: Tick-11 Filter Swerve",
+      "card_op": "flip_clinamen",
+      "card_instruction": "Trigger ⊣ FILTER at tick 11 in diomira_terrace_cry_envier on panel W1·0 (Diomira): invert P1–P4 municipal parcel tints between Lawful A and Clinamen A-Prime while preserving physical sixty silver domes and bronze pantheon statues floor residues at silver dome ring."
+    },
+    {
+      "col": 3,
+      "row": 3,
+      "case_id": "flour_test_abominable_cellar",
+      "coord_label": "ORIGIN 0·0",
+      "biome": "Origin Cellar Nucleus (1963)",
+      "ring_epoch": 0,
+      "year_stamp": "1963",
+      "card_number": 1,
+      "card_suit": "COLLAGE_PALIMPSEST",
+      "card_title": "Abominable Cellar: Kraft Palimpsest over Cellar Scuff Threshold",
+      "card_op": "paste_collage",
+      "card_instruction": "At ORIGIN 0·0 (Abominable Cellar), hinge a torn kraft-vellum collage sheet with three masking-tape tabs over cellar scuff threshold; ink rerouted alleys linking burlap flour sacks and chalk boot scuff while keeping pre-paste ghost streets and World terracotta oil lamp shards legible underneath."
+    },
+    {
+      "col": 4,
+      "row": 3,
+      "case_id": "city_06_tamara",
+      "coord_label": "E1·0",
+      "biome": "Caravan & Rail Trade Belt",
+      "ring_epoch": 1,
+      "year_stamp": "1970",
+      "card_number": 5,
+      "card_suit": "SUBURBAN_BLOOM",
+      "card_title": "Tamara: Gouache Block Accretion of Tooth Drawer Pincers",
+      "card_op": "bloom_blocks",
+      "card_instruction": "Subdivide peripheral lots of Tamara (E1·0) into dense terracotta, mustard-ochre, and sage satellite blocks around jutting guild street, extending tooth drawer pincers and grocer scales cul-de-sacs up to the matched seam."
+    },
+    {
+      "col": 5,
+      "row": 3,
+      "case_id": "city_15_euphemia",
+      "coord_label": "E2·0",
+      "biome": "Caravan & Rail Trade Belt",
+      "ring_epoch": 2,
+      "year_stamp": "1980",
+      "card_number": 15,
+      "card_suit": "SUBURBAN_BLOOM",
+      "card_title": "Euphemia: Gouache Block Accretion of Yellow Striped Boat Awnings",
+      "card_op": "bloom_blocks",
+      "card_instruction": "Subdivide peripheral lots of Euphemia (E2·0) into dense terracotta, mustard-ochre, and sage satellite blocks around yellow mat quay, extending yellow striped boat awnings and pistachio and poppy sacks cul-de-sacs up to the matched seam."
+    },
+    {
+      "col": 6,
+      "row": 3,
+      "case_id": "city_36_moriana",
+      "coord_label": "E3·0",
+      "biome": "Escarpment, Chasm & Stilt Spine",
+      "ring_epoch": 7,
+      "year_stamp": "2004",
+      "card_number": 37,
+      "card_suit": "CLINAMEN_SWERVE",
+      "card_title": "Moriana: Tick-12 Filter Swerve",
+      "card_op": "flip_clinamen",
+      "card_instruction": "Trigger ⊣ FILTER at tick 12 in moriana_semicircle_detour_walker on panel E3·0 (Moriana): invert P1–P4 municipal parcel tints between Lawful A and Clinamen A-Prime while preserving physical sunlit alabaster gates and serpentine coral columns floor residues at alabaster coral villas."
+    },
+    {
+      "col": 7,
+      "row": 3,
+      "case_id": "city_38_eusapia",
+      "coord_label": "E4·0",
+      "biome": "Subterranean & Nested Germ Fault Arc",
+      "ring_epoch": 7,
+      "year_stamp": "2006",
+      "card_number": 40,
+      "card_suit": "SUBURBAN_BLOOM",
+      "card_title": "Eusapia: Gouache Block Accretion of Yellow Parchment Skeletons",
+      "card_op": "bloom_blocks",
+      "card_instruction": "Subdivide peripheral lots of Eusapia (E4·0) into dense terracotta, mustard-ochre, and sage satellite blocks around upper carefree banquet, extending yellow parchment skeletons and stopped grandfather clocks cul-de-sacs up to the matched seam."
+    },
+    {
+      "col": 0,
+      "row": 4,
+      "case_id": "city_34_adelma",
+      "coord_label": "W3·S1",
+      "biome": "Mirror Sea & Canal Basin",
+      "ring_epoch": 6,
+      "year_stamp": "2002",
+      "card_number": 33,
+      "card_suit": "ARTERIAL_TRUNK",
+      "card_title": "Adelma: Cross-Seam Iron Wharf Bollard Trunk",
+      "card_op": "extend_trunk",
+      "card_instruction": "Rule a continuous double-cased trunk from urchin bollard dock in Adelma (W3·S1) across matched seam ports into adjacent panels (city_07_zora, city_29_leandra), coupling iron wharf bollard and wet hemp hawser exchange lanes."
+    },
+    {
+      "col": 1,
+      "row": 4,
+      "case_id": "city_07_zora",
+      "coord_label": "W2·S1",
+      "biome": "Mirror Sea & Canal Basin",
+      "ring_epoch": 1,
+      "year_stamp": "1971",
+      "card_number": 11,
+      "card_suit": "COLLAGE_PALIMPSEST",
+      "card_title": "Zora: Kraft Palimpsest over Clock Awning Fountain",
+      "card_op": "paste_collage",
+      "card_instruction": "At W2·S1 (Zora), hinge a torn kraft-vellum collage sheet with three masking-tape tabs over clock awning fountain; ink rerouted alleys linking copper street clock and striped barber awning while keeping pre-paste ghost streets and World nine jet fountain shards legible underneath."
+    },
+    {
+      "col": 2,
+      "row": 4,
+      "case_id": "city_02_isidora",
+      "coord_label": "W1·S1",
+      "biome": "Mirror Sea & Canal Basin",
+      "ring_epoch": 1,
+      "year_stamp": "1965",
+      "card_number": 6,
+      "card_suit": "COLLAGE_PALIMPSEST",
+      "card_title": "Isidora: Kraft Palimpsest over Seashell Stairwell",
+      "card_op": "paste_collage",
+      "card_instruction": "At W1·S1 (Isidora), hinge a torn kraft-vellum collage sheet with three masking-tape tabs over seashell stairwell; ink rerouted alleys linking seashell spiral staircases and ground telescope lenses while keeping pre-paste ghost streets and World resonant spruce violins shards legible underneath."
+    },
+    {
+      "col": 3,
+      "row": 4,
+      "case_id": "city_04_zaira",
+      "coord_label": "0·S1",
+      "biome": "Mirror Sea & Canal Basin",
+      "ring_epoch": 1,
+      "year_stamp": "1967",
+      "card_number": 4,
+      "card_suit": "VOID_EXCISE",
+      "card_title": "Zaira: Whiteout Subtraction against Zinc Scaled Roofs",
+      "card_op": "carve_void",
+      "card_instruction": "Excise an uninked vellum clearing inside Zaira (0·S1) pushing back amnesiac geometric mensuration stripped of event scars; ring the cut perimeter with Red-Bird ConflictGrain keystones anchored on bastion lamppost stair and stairway streets abutments."
+    },
+    {
+      "col": 4,
+      "row": 4,
+      "case_id": "city_13_zoe",
+      "coord_label": "E1·S1",
+      "biome": "Caravan & Rail Trade Belt",
+      "ring_epoch": 2,
+      "year_stamp": "1978",
+      "card_number": 13,
+      "card_suit": "ARTERIAL_TRUNK",
+      "card_title": "Zoe: Cross-Seam Uniform Pyramidal Roofs Trunk",
+      "card_op": "extend_trunk",
+      "card_instruction": "Rule a continuous double-cased trunk from pyramid roof cluster in Zoe (E1·S1) across matched seam ports into adjacent panels (city_23_eutropia, city_04_zaira), coupling uniform pyramidal roofs and pine cone pagodas exchange lanes."
+    },
+    {
+      "col": 5,
+      "row": 4,
+      "case_id": "city_23_eutropia",
+      "coord_label": "E2·S1",
+      "biome": "Caravan & Rail Trade Belt",
+      "ring_epoch": 4,
+      "year_stamp": "1989",
+      "card_number": 23,
+      "card_suit": "ARTERIAL_TRUNK",
+      "card_title": "Eutropia: Cross-Seam Rolling Limestone Plateau Trunk",
+      "card_op": "extend_trunk",
+      "card_instruction": "Rule a continuous double-cased trunk from inhabited plateau town in Eutropia (E2·S1) across matched seam ports into adjacent panels (city_27_ersilia, city_13_zoe), coupling rolling limestone plateau and empty stone sister towns exchange lanes."
+    },
+    {
+      "col": 6,
+      "row": 4,
+      "case_id": "city_27_ersilia",
+      "coord_label": "E3·S1",
+      "biome": "Caravan & Rail Trade Belt",
+      "ring_epoch": 5,
+      "year_stamp": "1994",
+      "card_number": 29,
+      "card_suit": "VOID_EXCISE",
+      "card_title": "Ersilia: Whiteout Subtraction against Black Barter Cords",
+      "card_op": "carve_void",
+      "card_instruction": "Excise an uninked vellum clearing inside Ersilia (E3·S1) pushing back crumbling unrelational stone walls; ring the cut perimeter with Red-Bird ConflictGrain keystones anchored on corner post string loom and white kinship strings abutments."
+    },
+    {
+      "col": 7,
+      "row": 4,
+      "case_id": "city_45_olinda",
+      "coord_label": "E4·S1",
+      "biome": "Subterranean & Nested Germ Fault Arc",
+      "ring_epoch": 8,
+      "year_stamp": "2015",
+      "card_number": 46,
+      "card_suit": "COLLAGE_PALIMPSEST",
+      "card_title": "Olinda: Kraft Palimpsest over Pinhead Magnifying Nucleus",
+      "card_op": "paste_collage",
+      "card_instruction": "At E4·S1 (Olinda), hinge a torn kraft-vellum collage sheet with three masking-tape tabs over pinhead magnifying nucleus; ink rerouted alleys linking magnifying glass lens and pinhead skylight nucleus while keeping pre-paste ghost streets and World miniature streamer racetrack shards legible underneath."
+    },
+    {
+      "col": 0,
+      "row": 5,
+      "case_id": "city_29_leandra",
+      "coord_label": "W3·S2",
+      "biome": "Mirror Sea & Canal Basin",
+      "ring_epoch": 5,
+      "year_stamp": "1996",
+      "card_number": 30,
+      "card_suit": "SUBURBAN_BLOOM",
+      "card_title": "Leandra: Gouache Block Accretion of Hallway Coatrack Hooks",
+      "card_op": "bloom_blocks",
+      "card_instruction": "Subdivide peripheral lots of Leandra (W3·S2) into dense terracotta, mustard-ochre, and sage satellite blocks around coatrack umbrella threshold, extending hallway coatrack hooks and emigrant steamer trunks cul-de-sacs up to the matched seam."
+    },
+    {
+      "col": 1,
+      "row": 5,
+      "case_id": "city_11_maurilia",
+      "coord_label": "W2·S2",
+      "biome": "Mirror Sea & Canal Basin",
+      "ring_epoch": 2,
+      "year_stamp": "1975",
+      "card_number": 16,
+      "card_suit": "COLLAGE_PALIMPSEST",
+      "card_title": "Maurilia: Kraft Palimpsest over Overpass Bandstand Square",
+      "card_op": "paste_collage",
+      "card_instruction": "At W2·S2 (Maurilia), hinge a torn kraft-vellum collage sheet with three masking-tape tabs over overpass bandstand square; ink rerouted alleys linking sepia square postcards and provincial hen and bandstand while keeping pre-paste ghost streets and World two white parasols shards legible underneath."
+    },
+    {
+      "col": 2,
+      "row": 5,
+      "case_id": "city_05_anastasia",
+      "coord_label": "W1·S2",
+      "biome": "Mirror Sea & Canal Basin",
+      "ring_epoch": 1,
+      "year_stamp": "1969",
+      "card_number": 10,
+      "card_suit": "SUBURBAN_BLOOM",
+      "card_title": "Anastasia: Gouache Block Accretion of Concentric Water Canals",
+      "card_op": "bloom_blocks",
+      "card_instruction": "Subdivide peripheral lots of Anastasia (W1·S2) into dense terracotta, mustard-ochre, and sage satellite blocks around concentric kite canals, extending concentric water canals and cherry wood pheasant roast cul-de-sacs up to the matched seam."
+    },
+    {
+      "col": 3,
+      "row": 5,
+      "case_id": "city_10_isaura",
+      "coord_label": "0·S2",
+      "biome": "Mirror Sea & Canal Basin",
+      "ring_epoch": 1,
+      "year_stamp": "1974",
+      "card_number": 9,
+      "card_suit": "VOID_EXCISE",
+      "card_title": "Isaura: Whiteout Subtraction against Calcareous Rock Crust",
+      "card_op": "carve_void",
+      "card_instruction": "Excise an uninked vellum clearing inside Isaura (0·S2) pushing back parched calcareous crust beyond lake rim; ring the cut perimeter with Red-Bird ConflictGrain keystones anchored on calcareous buried lake and buried black lake abutments."
+    },
+    {
+      "col": 4,
+      "row": 5,
+      "case_id": "city_22_sophronia",
+      "coord_label": "E1·S2",
+      "biome": "Caravan & Rail Trade Belt",
+      "ring_epoch": 4,
+      "year_stamp": "1988",
+      "card_number": 22,
+      "card_suit": "CLINAMEN_SWERVE",
+      "card_title": "Sophronia: Tick-11 Filter Swerve",
+      "card_op": "flip_clinamen",
+      "card_instruction": "Trigger ⊣ FILTER at tick 11 in sophronia_marble_ministry_rigger on panel E1·S2 (Sophronia): invert P1–P4 municipal parcel tints between Lawful A and Clinamen A-Prime while preserving physical steep roller coaster humps and spinning ferris wheel cages floor residues at roller coaster big top."
+    },
+    {
+      "col": 5,
+      "row": 5,
+      "case_id": "city_25_aglaura",
+      "coord_label": "E2·S2",
+      "biome": "Caravan & Rail Trade Belt",
+      "ring_epoch": 4,
+      "year_stamp": "1992",
+      "card_number": 25,
+      "card_suit": "SUBURBAN_BLOOM",
+      "card_title": "Aglaura: Gouache Block Accretion of Colorless Iron Plumbing",
+      "card_op": "bloom_blocks",
+      "card_instruction": "Subdivide peripheral lots of Aglaura (E2·S2) into dense terracotta, mustard-ochre, and sage satellite blocks around proverbial canon forum, extending colorless iron plumbing and travertine gutter curbs cul-de-sacs up to the matched seam."
+    },
+    {
+      "col": 6,
+      "row": 5,
+      "case_id": "city_21_olivia",
+      "coord_label": "E3·S2",
+      "biome": "Continuous Sprawl & Refuse Range",
+      "ring_epoch": 4,
+      "year_stamp": "1987",
+      "card_number": 26,
+      "card_suit": "COLLAGE_PALIMPSEST",
+      "card_title": "Olivia: Kraft Palimpsest over Filigree Peacock Patio",
+      "card_op": "paste_collage",
+      "card_instruction": "At E3·S2 (Olivia), hinge a torn kraft-vellum collage sheet with three masking-tape tabs over filigree peacock patio; ink rerouted alleys linking mullioned filigree windows and fringed patio cushions while keeping pre-paste ghost streets and World spinning white peacock shards legible underneath."
+    },
+    {
+      "col": 7,
+      "row": 5,
+      "case_id": "city_49_raissa",
+      "coord_label": "E4·S2",
+      "biome": "Subterranean & Nested Germ Fault Arc",
+      "ring_epoch": 9,
+      "year_stamp": "2019",
+      "card_number": 53,
+      "card_suit": "ARTERIAL_TRUNK",
+      "card_title": "Raissa: Cross-Seam Spilled Iron Nails Trunk",
+      "card_op": "extend_trunk",
+      "card_instruction": "Rule a continuous double-cased trunk from awry ledger zinc wineshop in Raissa (E4·S2) across matched seam ports into adjacent panels (city_21_olivia, city_55_berenice), coupling spilled iron nails and awry merchant ledgers exchange lanes."
+    },
+    {
+      "col": 0,
+      "row": 6,
+      "case_id": "city_30_melania",
+      "coord_label": "W3·S3",
+      "biome": "Mirror Sea & Canal Basin",
+      "ring_epoch": 5,
+      "year_stamp": "1997",
+      "card_number": 31,
+      "card_suit": "COLLAGE_PALIMPSEST",
+      "card_title": "Melania: Kraft Palimpsest over Threshold Square Proscenium",
+      "card_op": "paste_collage",
+      "card_instruction": "At W3·S3 (Melania), hinge a torn kraft-vellum collage sheet with three masking-tape tabs over threshold square proscenium; ink rerouted alleys linking braggart soldier baldric and usurer promissory ledger while keeping pre-paste ghost streets and World procuress threshold curtain shards legible underneath."
+    },
+    {
+      "col": 1,
+      "row": 6,
+      "case_id": "city_44_trude",
+      "coord_label": "W2·S3",
+      "biome": "Continuous Sprawl & Refuse Range",
+      "ring_epoch": 8,
+      "year_stamp": "2013",
+      "card_number": 44,
+      "card_suit": "VOID_EXCISE",
+      "card_title": "Trude: Whiteout Subtraction against Greenish Yellowish Houses",
+      "card_op": "carve_void",
+      "card_instruction": "Excise an uninked vellum clearing inside Trude (W2·S3) pushing back place-specific irreducible difference; ring the cut perimeter with Red-Bird ConflictGrain keystones anchored on homonymous airport tarmac and airport name placards abutments."
+    },
+    {
+      "col": 2,
+      "row": 6,
+      "case_id": "city_48_procopia",
+      "coord_label": "W1·S3",
+      "biome": "Continuous Sprawl & Refuse Range",
+      "ring_epoch": 9,
+      "year_stamp": "2018",
+      "card_number": 48,
+      "card_suit": "ARTERIAL_TRUNK",
+      "card_title": "Procopia: Cross-Seam Inn Window Curtain Trunk",
+      "card_op": "extend_trunk",
+      "card_instruction": "Rule a continuous double-cased trunk from inn curtain window frame in Procopia (W1·S3) across matched seam ports into adjacent panels (city_37_clarice, city_44_trude), coupling inn window curtain and stone ditch bridge exchange lanes."
+    },
+    {
+      "col": 3,
+      "row": 6,
+      "case_id": "city_37_clarice",
+      "coord_label": "0·S3",
+      "biome": "Continuous Sprawl & Refuse Range",
+      "ring_epoch": 7,
+      "year_stamp": "2005",
+      "card_number": 38,
+      "card_suit": "ARTERIAL_TRUNK",
+      "card_title": "Clarice: Cross-Seam Corinthian Acanthus Capitals Trunk",
+      "card_op": "extend_trunk",
+      "card_instruction": "Rule a continuous double-cased trunk from plague rummage basements in Clarice (0·S3) across matched seam ports into adjacent panels (city_51_cecilia, city_48_procopia), coupling corinthian acanthus capitals and wrought iron harem gratings exchange lanes."
+    },
+    {
+      "col": 4,
+      "row": 6,
+      "case_id": "city_51_cecilia",
+      "coord_label": "E1·S3",
+      "biome": "Continuous Sprawl & Refuse Range",
+      "ring_epoch": 9,
+      "year_stamp": "2021",
+      "card_number": 49,
+      "card_suit": "VOID_EXCISE",
+      "card_title": "Cecilia: Whiteout Subtraction against Rusted Petrol Pumps",
+      "card_op": "carve_void",
+      "card_instruction": "Excise an uninked vellum clearing inside Cecilia (E1·S3) pushing back sharp rural-urban ecological boundary; ring the cut perimeter with Red-Bird ConflictGrain keystones anchored on tinkling wall gate pasture and tarnished pasture bells abutments."
+    },
+    {
+      "col": 5,
+      "row": 6,
+      "case_id": "city_53_penthesilea",
+      "coord_label": "E2·S3",
+      "biome": "Continuous Sprawl & Refuse Range",
+      "ring_epoch": 9,
+      "year_stamp": "2024",
+      "card_number": 51,
+      "card_suit": "COLLAGE_PALIMPSEST",
+      "card_title": "Penthesilea: Kraft Palimpsest over Corrugated Tollbooth Soup Approach",
+      "card_op": "paste_collage",
+      "card_instruction": "At E2·S3 (Penthesilea), hinge a torn kraft-vellum collage sheet with three masking-tape tabs over corrugated tollbooth soup approach; ink rerouted alleys linking pale concentric soup and unstaffed highway tollbooths while keeping pre-paste ghost streets and World cement walled carnivals shards legible underneath."
+    },
+    {
+      "col": 6,
+      "row": 6,
+      "case_id": "city_40_leonia",
+      "coord_label": "E3·S3",
+      "biome": "Continuous Sprawl & Refuse Range",
+      "ring_epoch": 7,
+      "year_stamp": "2009",
+      "card_number": 41,
+      "card_suit": "COLLAGE_PALIMPSEST",
+      "card_title": "Leonia: Kraft Palimpsest over Fresh Soap Morning Core",
+      "card_op": "paste_collage",
+      "card_instruction": "At E3·S3 (Leonia), hinge a torn kraft-vellum collage sheet with three masking-tape tabs over fresh soap morning core; ink rerouted alleys linking brand new soap cakes and virgin toothpaste tubes while keeping pre-paste ghost streets and World unopened morning tin cans shards legible underneath."
+    },
+    {
+      "col": 7,
+      "row": 6,
+      "case_id": "city_55_berenice",
+      "coord_label": "E4·S3",
+      "biome": "Subterranean & Nested Germ Fault Arc",
+      "ring_epoch": 9,
+      "year_stamp": "2026",
+      "card_number": 56,
+      "card_suit": "COLLAGE_PALIMPSEST",
+      "card_title": "Berenice: Kraft Palimpsest over Triglyph Cog Perfumed Baths",
+      "card_op": "paste_collage",
+      "card_instruction": "At E4·S3 (Berenice), hinge a torn kraft-vellum collage sheet with three masking-tape tabs over triglyph cog perfumed baths; ink rerouted alleys linking triglyph abacus metopes and meat grinder cogwheels while keeping pre-paste ghost streets and World glass piping vats shards legible underneath."
+    }
+  ]
+};
+  /*__END_UNIFIED_8X7_MAP_BINDING__*/
+
+  function formatGretzCoord(col, row) {
+    if (col === 3 && row === 3) return "ORIGIN 0·0";
+    const dx = col - 3;
+    const dy = row - 3;
+    const ew = dx === 0 ? "0" : (dx < 0 ? `W${Math.abs(dx)}` : `E${dx}`);
+    const ns = dy === 0 ? "0" : (dy < 0 ? `N${Math.abs(dy)}` : `S${dy}`);
+    return `${ew}·${ns}`;
+  }
+
+  function inferBiomeFromSeries(series, isOrigin) {
+    if (isOrigin) return "Origin Cellar Vault (1963)";
+    const s = String(series || "").toLowerCase();
+    if (s.includes("memory") || s.includes("desire") || s.includes("eyes")) return "Mirror Sea & Canal Basin";
+    if (s.includes("thin") || s.includes("sky")) return "Escarpment, Chasm & Stilt Spine";
+    if (s.includes("signs") || s.includes("trading") || s.includes("names")) return "Caravan & Rail Trade Belt";
+    if (s.includes("continuous")) return "Continuous Sprawl & Refuse Range";
+    if (s.includes("dead") || s.includes("hidden")) return "Subterranean & Nested Germ Fault";
+    return "Archival Survey Province";
+  }
+
+  function buildFallbackSpiralGrid() {
+    const cells = [];
+    for (let r = 0; r < 7; r++) {
+      for (let c = 0; c < 8; c++) {
+        if (c === 3 && r === 3) continue;
+        const ring = Math.max(Math.abs(c - 3), Math.abs(r - 3));
+        const ang = Math.atan2(r - 3, c - 3);
+        cells.push({ col: c, row: r, ring, ang });
+      }
+    }
+    cells.sort((a, b) => (a.ring - b.ring) || (a.ang - b.ang));
+    const out = [];
+    if (atlasState.folios[0]) {
+      out.push({
+        col: 3,
+        row: 3,
+        case_id: atlasState.folios[0].case_id,
+        coord_label: "ORIGIN 0·0",
+        biome: "Origin Cellar Vault (1963)",
+        ring_epoch: 0,
+        year_stamp: "1963",
+        card_number: 1,
+        card_suit: "CLINAMEN_SWERVE",
+        card_title: "Origin Flour-Sack Swerve",
+        card_op: "flip_clinamen",
+        card_instruction: "Hold at cellar post, filter witness memory at swerve tick, preserve floor flour & oil residues."
+      });
+    }
+    const cities = atlasState.folios.slice(1);
+    for (let i = 0; i < Math.min(cities.length, cells.length); i++) {
+      const f = cities[i];
+      const cell = cells[i];
+      const yr = String(1963 + Math.round(((i + 1) / 55) * 63));
+      out.push({
+        col: cell.col,
+        row: cell.row,
+        case_id: f.case_id,
+        coord_label: formatGretzCoord(cell.col, cell.row),
+        biome: inferBiomeFromSeries(f.series, false),
+        ring_epoch: f.chapter || cell.ring,
+        year_stamp: yr,
+        card_number: i + 2,
+        card_suit: "COLLAGE_PALIMPSEST",
+        card_title: `${f.city_name} Palimpsest Rule`,
+        card_op: "paste_collage",
+        card_instruction: f.mutatedPremise || `Match ${f.city_name} edge ports across adjacent 8x10 panels.`
+      });
+    }
+    return out;
+  }
+
+  function ingestUnifiedGridPanels(panels, insetPct) {
+    if (insetPct && typeof insetPct.left === "number") {
+      atlasState.gridInsetPct = insetPct;
+    }
+    const normalized = (panels || []).map((p) => {
+      const cidRaw = p.case_id || p.target_case_id || "";
+      const cid = cidRaw === "case_00_abominable_cellar" ? "flour_test_abominable_cellar" : cidRaw;
+      const f = atlasState.byCaseId.get(cid);
+      const col = Number(p.col);
+      const row = Number(p.row);
+      return {
+        col,
+        row,
+        case_id: cid,
+        coord_label: p.coord_label || formatGretzCoord(col, row),
+        biome: p.biome || p.region || p.biome_region || inferBiomeFromSeries(f ? f.series : "", col === 3 && row === 3),
+        ring_epoch: typeof p.ring_epoch === "number" ? p.ring_epoch : (f ? f.chapter : 0),
+        year_stamp: String(p.year_stamp || (col === 3 && row === 3 ? "1963" : "1985")),
+        card_number: p.card_number || 0,
+        card_suit: p.card_suit || "",
+        card_title: p.card_title || "",
+        card_op: p.card_op || "",
+        card_instruction: p.card_instruction || ""
+      };
+    });
+    normalized.sort((a, b) => (a.row - b.row) || (a.col - b.col));
+    atlasState.gridPanels = normalized;
+    atlasState.panelByCaseId.clear();
+    normalized.forEach((p) => atlasState.panelByCaseId.set(p.case_id, p));
+  }
 
   function resolveManifestForCase(caseId, cityIndex) {
     const m = window.SCION_ATLAS_MANIFEST || {};
@@ -965,6 +2197,8 @@
       if (!q) return true;
       const hay = [
         f.city_name, f.title, f.series, f.desert_opposed,
+        (atlasState.panelByCaseId.get(f.case_id) && atlasState.panelByCaseId.get(f.case_id).coord_label) || "",
+        (atlasState.panelByCaseId.get(f.case_id) && atlasState.panelByCaseId.get(f.case_id).biome) || "",
         (f.material_nouns || []).join(" "),
         (f.loci || []).join(" "),
         (f.agents || []).map((a) => `${a.agent_id} ${a.display_moniker} ${a.polarity}`).join(" "),
@@ -974,6 +2208,7 @@
     });
 
     atlasState.filteredIds = filtered.map((f) => f.case_id);
+    syncFloorGridFilterHighlights();
     document.getElementById("gallery-count-heading").textContent = `Folio Plates (${filtered.length} / ${atlasState.folios.length})`;
 
     const grid = document.getElementById("atlas-folio-grid");
@@ -984,9 +2219,11 @@
       card.className = "folio-card" + (f.manifestEntry ? " has-plates" : "");
       const mapSrc = plateUrl(f.manifestEntry, "map_png") || makeSchematicDataUri(f, true);
       const imgSrc = plateUrl(f.manifestEntry, "image_png") || makeSchematicDataUri(f, false);
+      const panelMeta = atlasState.panelByCaseId.get(f.case_id);
+      const coordTag = panelMeta ? ` · ${panelMeta.coord_label}` : "";
       const rubric = f.city_index === 0
-        ? "SCENE 00 · RISK PROOF"
-        : `#${String(f.city_index).padStart(2, "0")} · CH.${f.chapter} · p.${f.weaver_page}`;
+        ? `SCENE 00 · ORIGIN 0·0`
+        : `#${String(f.city_index).padStart(2, "0")} · CH.${f.chapter}${coordTag}`;
 
       const chips = (f.agents || []).slice(0, 5).map((a) =>
         `<span class="ag-chip" title="${a.agent_id} (${a.rig_archetype})">${a.role_symbol} ${a.agent_id.split("_").slice(0, 2).join("_")}</span>`
@@ -1086,9 +2323,13 @@
     }
 
     document.getElementById("dm-title").textContent = f.title;
+    const pMeta = atlasState.panelByCaseId.get(f.case_id);
+    const coordInfo = pMeta ? `8×7 Panel: ${pMeta.coord_label} (col=${pMeta.col}, row=${pMeta.row} · ${pMeta.biome}) · ` : "";
     document.getElementById("dm-subtitle").textContent =
-      `Case ID: ${f.case_id} · Opposes: ${f.desert_opposed} · Roubaud Baseline Checkpoint: ${String(f.parentCheckpointId).slice(0, 24)}`;
+      `${coordInfo}Case ID: ${f.case_id} · Opposes: ${f.desert_opposed} · Roubaud Baseline: ${String(f.parentCheckpointId).slice(0, 20)}`;
     document.getElementById("dm-workbench-link").href = `scion_swarm_builder.html#${encodeURIComponent(f.case_id)}`;
+    const dmUni = document.getElementById("dm-unified-map-link");
+    if (dmUni) dmUni.href = `scion_unified_map.html#${encodeURIComponent(f.case_id)}`;
 
     renderModalPlates(f);
     renderModalLedgers(f);
@@ -1199,38 +2440,258 @@
     openDiptychModal(list[nextIdx]);
   }
 
+  function panelMatchesEpochFilter(panel) {
+    const ef = atlasState.epochFilter;
+    if (!ef || ef === "ALL") return true;
+    const ep = Number(panel.ring_epoch || 0);
+    if (ef === "0") return ep === 0;
+    if (ef === "1-3") return ep >= 1 && ep <= 3;
+    if (ef === "4-6") return ep >= 4 && ep <= 6;
+    if (ef === "7-9") return ep >= 7 && ep <= 9;
+    return true;
+  }
+
+  function syncFloorGridFilterHighlights() {
+    const overlay = document.getElementById("gretzinger-grid-overlay");
+    if (!overlay) return;
+    const activeSet = new Set(atlasState.filteredIds);
+    const hasFilter = (
+      atlasState.searchQuery.trim() !== "" ||
+      atlasState.seriesFilter !== "ALL" ||
+      atlasState.chapterFilter !== "ALL" ||
+      atlasState.statusFilter !== "ALL" ||
+      atlasState.epochFilter !== "ALL"
+    );
+    overlay.querySelectorAll(".gretz-cell").forEach((cell) => {
+      const cid = cell.getAttribute("data-cid");
+      const p = atlasState.panelByCaseId.get(cid);
+      const okSearch = !hasFilter || (activeSet.has(cid) && (!p || panelMatchesEpochFilter(p)));
+      cell.classList.toggle("filter-dimmed", !okSearch);
+      cell.classList.toggle("selected-cell", cid === atlasState.hoveredCaseId);
+    });
+  }
+
+  function updateFloorInspector(caseId) {
+    const resolvedId = caseId === "case_00_abominable_cellar" ? "flour_test_abominable_cellar" : caseId;
+    const f = atlasState.byCaseId.get(resolvedId);
+    if (!f) return;
+    atlasState.hoveredCaseId = resolvedId;
+    const p = atlasState.panelByCaseId.get(resolvedId) || {
+      col: 3, row: 3, coord_label: "ORIGIN 0·0", biome: "Origin Cellar Vault", ring_epoch: 0, year_stamp: "1963"
+    };
+
+    const coordEl = document.getElementById("fid-coord-stamp");
+    const epochEl = document.getElementById("fid-epoch-stamp");
+    const titleEl = document.getElementById("fid-city-title");
+    const biomeEl = document.getElementById("fid-biome-line");
+    const metaEl = document.getElementById("fid-meta-line");
+    const thumbsEl = document.getElementById("fid-thumbs");
+    const swarmEl = document.getElementById("fid-swarm-chips");
+    const deckEl = document.getElementById("fid-deck-card");
+    const btnInsp = document.getElementById("fid-btn-inspect");
+    const lnkUni = document.getElementById("fid-link-unified");
+    const lnkWb = document.getElementById("fid-link-workbench");
+
+    if (coordEl) coordEl.textContent = `${p.coord_label} · (COL ${p.col}, ROW ${p.row})`;
+    if (epochEl) epochEl.textContent = `RING ${p.ring_epoch} · ${p.year_stamp}`;
+    if (titleEl) {
+      const prefix = f.city_index === 0 ? "Scene 00 · " : `#${String(f.city_index).padStart(2, "0")} · `;
+      titleEl.textContent = `${prefix}${f.city_name}`;
+    }
+    if (biomeEl) biomeEl.textContent = `Biome: ${p.biome}`;
+    if (metaEl) {
+      metaEl.textContent = `${f.series}${f.series_rank ? ` #${f.series_rank}` : ""} · Ch.${f.chapter} · Opposes: ${f.desert_opposed}`;
+    }
+
+    const mapSrc = plateUrl(f.manifestEntry, "map_png") || makeSchematicDataUri(f, true);
+    const imgSrc = plateUrl(f.manifestEntry, "image_png") || makeSchematicDataUri(f, false);
+    if (thumbsEl) {
+      thumbsEl.innerHTML =
+        `<img src="${mapSrc}" alt="${f.city_name} Survey Map">` +
+        `<img src="${imgSrc}" alt="${f.city_name} Architectural Engraving">`;
+      thumbsEl.onclick = () => openDiptychModal(f.case_id);
+    }
+
+    if (swarmEl) {
+      swarmEl.innerHTML = (f.agents || []).map((ag) =>
+        `<span class="ag-chip" title="${ag.agent_id} (${ag.rig_archetype})">${ag.role_symbol}${ag.op_symbol} ${ag.agent_id}</span>`
+      ).join("");
+    }
+
+    if (deckEl) {
+      const cNum = p.card_number ? `CARD #${String(p.card_number).padStart(2, "0")}` : "RULE DECK";
+      const cSuit = p.card_suit ? ` · ${p.card_suit}` : "";
+      const cOp = p.card_op ? ` [${p.card_op}]` : "";
+      const cTitle = p.card_title ? `<strong>${p.card_title}:</strong> ` : "";
+      const cInst = p.card_instruction || f.mutatedPremise || "";
+      deckEl.innerHTML =
+        `<div style="font-weight:700;color:var(--soot);margin-bottom:2px;">${cNum}${cSuit}${cOp}</div>` +
+        `<div>${cTitle}${cInst}</div>`;
+    }
+
+    if (btnInsp) btnInsp.onclick = () => openDiptychModal(f.case_id);
+    const enc = encodeURIComponent(f.case_id);
+    if (lnkUni) lnkUni.href = `scion_unified_map.html#${enc}`;
+    if (lnkWb) lnkWb.href = `scion_swarm_builder.html#${enc}`;
+
+    const overlay = document.getElementById("gretzinger-grid-overlay");
+    if (overlay) {
+      overlay.querySelectorAll(".gretz-cell").forEach((cEl) => {
+        cEl.classList.toggle("selected-cell", cEl.getAttribute("data-cid") === resolvedId);
+      });
+    }
+  }
+
+  function renderUnifiedFloorGrid() {
+    const overlay = document.getElementById("gretzinger-grid-overlay");
+    const wrap = document.getElementById("floor-sheet-canvas-wrap");
+    const pill = document.getElementById("floor-hover-pill");
+    if (!overlay || !wrap) return;
+
+    const ins = atlasState.gridInsetPct || { left: 0, top: 0, width: 100, height: 100 };
+    overlay.style.setProperty("--grid-left", `${ins.left}%`);
+    overlay.style.setProperty("--grid-top", `${ins.top}%`);
+    overlay.style.setProperty("--grid-w", `${ins.width}%`);
+    overlay.style.setProperty("--grid-h", `${ins.height}%`);
+    overlay.classList.toggle("labels-hidden", !atlasState.wallSheetLabels);
+
+    const cellLookup = new Map();
+    atlasState.gridPanels.forEach((p) => cellLookup.set(`${p.col},${p.row}`, p));
+
+    overlay.innerHTML = "";
+    for (let r = 0; r < 7; r++) {
+      for (let c = 0; c < 8; c++) {
+        const p = cellLookup.get(`${c},${r}`);
+        if (!p) continue;
+        const f = atlasState.byCaseId.get(p.case_id);
+        const btn = document.createElement("button");
+        const isOrigin = (c === 3 && r === 3);
+        btn.type = "button";
+        btn.className = "gretz-cell" + (isOrigin ? " origin-cell" : "");
+        btn.setAttribute("role", "gridcell");
+        btn.setAttribute("data-col", String(c));
+        btn.setAttribute("data-row", String(r));
+        btn.setAttribute("data-cid", p.case_id);
+        const shortName = f
+          ? (f.city_index === 0 ? "00 CELLAR" : `${String(f.city_index).padStart(2, "0")} ${f.city_name.toUpperCase()}`)
+          : p.case_id;
+        btn.setAttribute("aria-label", `${p.coord_label} (${c},${r}): ${f ? f.city_name : p.case_id} — ${p.biome}`);
+        btn.innerHTML =
+          `<span class="gretz-badge">${p.coord_label}</span>` +
+          `<span class="gretz-city">${shortName}</span>`;
+
+        btn.addEventListener("pointerenter", () => {
+          updateFloorInspector(p.case_id);
+        });
+        btn.addEventListener("pointermove", (ev) => {
+          if (!pill) return;
+          const rect = wrap.getBoundingClientRect();
+          const rx = ev.clientX - rect.left;
+          const ry = ev.clientY - rect.top;
+          const agCount = f && f.agents ? f.agents.length : 4;
+          pill.style.display = "block";
+          pill.style.left = `${Math.min(Math.max(6, rx + 12), Math.max(6, rect.width - 252))}px`;
+          pill.style.top = `${Math.min(Math.max(6, ry + 12), Math.max(6, rect.height - 76))}px`;
+          pill.innerHTML =
+            `<strong>${p.coord_label}</strong> (col ${c}, row ${r}) · Ring ${p.ring_epoch} (${p.year_stamp})<br>` +
+            `<strong>${f ? f.city_name : p.case_id}</strong> · ${p.biome}<br>` +
+            `<span style="color:#E8E0D6;">Swarm: ${agCount} faceless rigs · Click to inspect plates</span>`;
+        });
+        btn.addEventListener("pointerleave", () => {
+          if (pill) pill.style.display = "none";
+        });
+        btn.addEventListener("focus", () => {
+          updateFloorInspector(p.case_id);
+        });
+        btn.addEventListener("click", () => {
+          updateFloorInspector(p.case_id);
+          openDiptychModal(p.case_id);
+        });
+        overlay.appendChild(btn);
+      }
+    }
+
+    syncFloorGridFilterHighlights();
+    updateFloorInspector(atlasState.hoveredCaseId || "flour_test_abominable_cellar");
+  }
+
+  function tryHydrateUnifiedMapWorldJson() {
+    if (typeof fetch !== "function") return;
+    try {
+      fetch("scion_cities/build/unified_map_world.json")
+        .then((res) => (res && res.ok ? res.json() : null))
+        .then((world) => {
+          if (!world || !Array.isArray(world.panels) || !world.panels.length) return;
+          const deckByCase = new Map();
+          (world.deck || []).forEach((d) => {
+            if (d && d.target_case_id) deckByCase.set(d.target_case_id, d);
+          });
+          const mapped = world.panels.map((p) => {
+            const rawCid = p.case_id || p.panel_id || "";
+            const d = deckByCase.get(rawCid) || deckByCase.get(p.panel_id) || {};
+            return {
+              col: p.col,
+              row: p.row,
+              case_id: rawCid,
+              coord_label: p.coord_label,
+              biome: p.biome || p.region || p.biome_region || "",
+              ring_epoch: p.ring_epoch,
+              year_stamp: p.year_stamp,
+              card_number: d.card_number || p.card_number || 0,
+              card_suit: d.suit || p.card_suit || "",
+              card_title: d.title || p.card_title || "",
+              card_op: d.effect_op || p.card_op || "",
+              card_instruction: d.instruction || p.card_instruction || ""
+            };
+          });
+          ingestUnifiedGridPanels(mapped, atlasState.gridInsetPct);
+          renderUnifiedFloorGrid();
+          applyFiltersAndRenderGallery();
+        })
+        .catch(() => {});
+    } catch (_err) {}
+  }
+
   function initAtlasControls() {
     const searchEl = document.getElementById("atlas-search");
     const serEl = document.getElementById("filter-series");
     const chEl = document.getElementById("filter-chapter");
     const stEl = document.getElementById("filter-status");
+    const epEl = document.getElementById("floor-epoch-filter");
 
-    searchEl.addEventListener("input", () => {
+    if (searchEl) searchEl.addEventListener("input", () => {
       atlasState.searchQuery = searchEl.value;
       applyFiltersAndRenderGallery();
     });
-    serEl.addEventListener("change", () => {
+    if (serEl) serEl.addEventListener("change", () => {
       atlasState.seriesFilter = serEl.value;
       applyFiltersAndRenderGallery();
     });
-    chEl.addEventListener("change", () => {
+    if (chEl) chEl.addEventListener("change", () => {
       atlasState.chapterFilter = chEl.value;
       applyFiltersAndRenderGallery();
     });
-    stEl.addEventListener("change", () => {
+    if (stEl) stEl.addEventListener("change", () => {
       atlasState.statusFilter = stEl.value;
       applyFiltersAndRenderGallery();
     });
+    if (epEl) epEl.addEventListener("change", () => {
+      atlasState.epochFilter = epEl.value;
+      syncFloorGridFilterHighlights();
+    });
 
-    document.getElementById("btn-reset-filters").addEventListener("click", () => {
+    const resetBtn = document.getElementById("btn-reset-filters");
+    if (resetBtn) resetBtn.addEventListener("click", () => {
       atlasState.searchQuery = "";
       atlasState.seriesFilter = "ALL";
       atlasState.chapterFilter = "ALL";
       atlasState.statusFilter = "ALL";
-      searchEl.value = "";
-      serEl.value = "ALL";
-      chEl.value = "ALL";
-      stEl.value = "ALL";
+      atlasState.epochFilter = "ALL";
+      if (searchEl) searchEl.value = "";
+      if (serEl) serEl.value = "ALL";
+      if (chEl) chEl.value = "ALL";
+      if (stEl) stEl.value = "ALL";
+      if (epEl) epEl.value = "ALL";
       applyFiltersAndRenderGallery();
     });
 
@@ -1239,9 +2700,32 @@
         const mode = btn.getAttribute("data-vmode");
         atlasState.viewMode = mode;
         document.querySelectorAll(".view-toggle-btn").forEach((b) => b.classList.toggle("active", b === btn));
-        document.getElementById("atlas-matrix-section").classList.toggle("hidden", mode === "gallery");
-        document.getElementById("atlas-gallery-section").style.display = mode === "matrix" ? "none" : "block";
+        const floorSec = document.getElementById("atlas-unified-floor-section");
+        const matSec = document.getElementById("atlas-matrix-section");
+        const galSec = document.getElementById("atlas-gallery-section");
+        if (floorSec) floorSec.classList.toggle("hidden", mode === "matrix" || mode === "gallery");
+        if (matSec) matSec.classList.toggle("hidden", mode === "gallery" || mode === "floormap");
+        if (galSec) galSec.style.display = (mode === "matrix" || mode === "floormap") ? "none" : "block";
       });
+    });
+
+    document.querySelectorAll(".floor-fmt-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const fmt = btn.getAttribute("data-wfmt") === "svg" ? "svg" : "png";
+        atlasState.wallSheetFormat = fmt;
+        document.querySelectorAll(".floor-fmt-btn").forEach((b) => b.classList.toggle("active", b === btn));
+        const img = document.getElementById("unified-wall-sheet-img");
+        if (img) img.src = `scion_cities/atlas/unified_khan_gretzinger_map.${fmt}`;
+      });
+    });
+
+    const lblBtn = document.getElementById("btn-floor-labels");
+    if (lblBtn) lblBtn.addEventListener("click", () => {
+      atlasState.wallSheetLabels = !atlasState.wallSheetLabels;
+      lblBtn.classList.toggle("active", atlasState.wallSheetLabels);
+      lblBtn.textContent = atlasState.wallSheetLabels ? "[8×7 STAMPS: ON]" : "[8×7 STAMPS: OFF]";
+      const overlay = document.getElementById("gretzinger-grid-overlay");
+      if (overlay) overlay.classList.toggle("labels-hidden", !atlasState.wallSheetLabels);
     });
 
     document.getElementById("dm-close-btn").addEventListener("click", closeModal);
@@ -1289,9 +2773,17 @@
   }
 
   buildUnifiedFolios();
+  ingestUnifiedGridPanels(
+    EMBEDDED_UNIFIED_GRID.panels && EMBEDDED_UNIFIED_GRID.panels.length
+      ? EMBEDDED_UNIFIED_GRID.panels
+      : buildFallbackSpiralGrid(),
+    EMBEDDED_UNIFIED_GRID.insetPct
+  );
+  renderUnifiedFloorGrid();
   renderDiagonalMatrix();
   applyFiltersAndRenderGallery();
   initAtlasControls();
+  tryHydrateUnifiedMapWorldJson();
 
   const initHash = decodeURIComponent((window.location.hash || "").replace(/^#/, "").trim());
   if (initHash) {
