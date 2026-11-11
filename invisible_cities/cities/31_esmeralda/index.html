@@ -1,0 +1,2179 @@
+<!DOCTYPE html>
+<html lang="en" class="esm-html">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Polychrome Hydrographic Folio of the Canal City under Swallows</title>
+<style>
+.esm-html {
+  --esm-vellum: #F1E9D6; --esm-lagoon: #0E1818; --esm-emerald: #117A65; --esm-wake: #22B59B;
+  --esm-terracotta: #C2492D; --esm-ochre: #D97A3E; --esm-violet: #7A3B8E; --esm-lampblack: #191716;
+  --esm-sepia: #5E4128; --esm-gold: #D8A428; --esm-filament: #F5CF6B; --esm-gall: #221E1B;
+  --esm-serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --esm-mono: "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+  margin: 0; padding: 0; background: var(--esm-lagoon); color: var(--esm-gall);
+  overflow-x: hidden; -webkit-text-size-adjust: 100%;
+}
+.esm-body {
+  margin: 0; padding: 0; min-height: 100dvh; overflow-x: hidden; font-family: var(--esm-serif);
+  background: radial-gradient(ellipse at 30% 20%, #16302b 0%, var(--esm-lagoon) 70%);
+}
+.esm-body *, .esm-body *::before, .esm-body *::after { box-sizing: border-box; }
+.esm-body *[hidden], esmeralda-plate-drawer[hidden] { display: none !important; }
+.esm-body multi-ink-stratum-stage, .esm-body route-ink-pot, .esm-body swallow-unmappable-arc { display: block; }
+esmeralda-polychrome-atlas.esm-atlas {
+  display: grid; grid-template-columns: minmax(0, 1fr) 392px; grid-template-rows: auto minmax(0, 1fr);
+  width: 100vw; height: 100dvh; overflow: hidden; gap: 0;
+}
+.esm-masthead {
+  grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  padding: 7px 16px 6px; background: var(--esm-vellum); border-bottom: 3px double var(--esm-sepia);
+  min-width: 0;
+}
+.esm-folio-title { display: block; font-size: 17px; letter-spacing: 0.06em; font-variant: small-caps; color: var(--esm-lagoon); line-height: 1.15; }
+.esm-folio-sub { display: block; font-size: 11.5px; font-style: italic; color: var(--esm-sepia); }
+.esm-gauges { display: flex; flex-wrap: wrap; gap: 5px; justify-content: flex-end; min-width: 0; }
+.esm-gauge {
+  display: inline-flex; flex-direction: column; align-items: flex-start; padding: 2px 8px 3px;
+  border: 1px solid var(--esm-sepia); border-radius: 3px; background: #fbf6ea; font-size: 10px; line-height: 1.2;
+  color: var(--esm-sepia); min-width: 0;
+}
+.esm-gauge-val { font-family: var(--esm-mono); font-size: 12.5px; color: var(--esm-gall); font-weight: 700; }
+.esm-gauge-terra .esm-gauge-val { color: var(--esm-emerald); }
+.esm-gauge-air { border-color: var(--esm-gold); background: #fff4d2; }
+.esm-gauge-air .esm-gauge-val { color: #9a6f0c; }
+.esm-stage {
+  position: relative; min-width: 0; min-height: 0; overflow: hidden; background: var(--esm-vellum);
+  border-right: 3px double var(--esm-sepia); cursor: crosshair;
+}
+.esm-stage-canvas { display: block; width: 100%; height: 100%; touch-action: manipulation; }
+.esm-stage-caption {
+  position: absolute; left: 10px; bottom: 8px; max-width: calc(100% - 20px); padding: 4px 9px; border-radius: 3px;
+  background: rgba(241, 233, 214, 0.9); border: 1px solid var(--esm-sepia); font-size: 11.5px; color: var(--esm-gall);
+  pointer-events: none; display: block;
+}
+.esm-locus-tip {
+  position: absolute; display: block; max-width: 260px; padding: 6px 9px; border-radius: 4px; pointer-events: none;
+  background: rgba(14, 24, 24, 0.92); color: var(--esm-vellum); font-size: 12px; line-height: 1.3;
+  border: 1px solid var(--esm-gold); transform: translate(12px, 12px); z-index: 3;
+}
+.esm-locus-tip-name { display: block; font-variant: small-caps; color: var(--esm-filament); font-size: 13px; }
+.esm-console {
+  display: flex; flex-direction: column; gap: 9px; min-height: 0; min-width: 0; overflow-y: auto; overflow-x: hidden;
+  padding: 10px 11px 14px; background: linear-gradient(180deg, #efe4cb, var(--esm-vellum));
+  scrollbar-width: thin;
+}
+.esm-panel { display: block; border: 1px solid var(--esm-sepia); border-radius: 4px; padding: 8px 9px; background: #f8f1e1; }
+.esm-arc { border-color: var(--esm-gold); background: linear-gradient(180deg, #fff6dc, #f6ebcd); }
+.esm-panel-head {
+  display: block; font-variant: small-caps; letter-spacing: 0.05em; font-size: 14px; color: var(--esm-lagoon);
+  border-bottom: 1px solid rgba(94, 65, 40, 0.4); padding-bottom: 3px; margin-bottom: 6px;
+}
+.esm-arc .esm-panel-head { color: #7d5a08; border-bottom-color: rgba(216, 164, 40, 0.6); }
+.esm-panel-note { display: block; font-size: 11.5px; font-style: italic; color: var(--esm-sepia); line-height: 1.3; margin-bottom: 6px; }
+.esm-inkwell-row { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 5px; }
+.esm-inkwell {
+  position: relative; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 2px 5px;
+  border: 1px solid var(--esm-sepia); border-radius: 6px 6px 10px 10px; background: #fffaf0; cursor: pointer;
+  font-size: 9.5px; line-height: 1.15; text-align: center; color: var(--esm-gall); user-select: none; min-width: 0;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+.esm-inkwell:hover { transform: translateY(-1px); box-shadow: 0 2px 6px rgba(34, 30, 27, 0.25); }
+.esm-inkwell:focus-visible, .esm-control:focus-visible, .esm-tab:focus-visible { outline: 2px solid var(--esm-gold); outline-offset: 2px; }
+.esm-inkwell[aria-pressed="false"] { opacity: 0.45; filter: grayscale(0.6); }
+.esm-ink-bottle {
+  display: block; width: 26px; height: 24px; border-radius: 5px 5px 11px 11px; border: 2px solid var(--esm-gall);
+  box-shadow: inset 0 -9px 0 rgba(0, 0, 0, 0.18);
+}
+.esm-ink-key { display: block; font-family: var(--esm-mono); font-size: 9px; color: var(--esm-sepia); }
+.esm-ink-name { display: block; font-weight: 700; }
+.esm-ink-fix { display: block; font-size: 8.5px; color: var(--esm-emerald); letter-spacing: 0.02em; }
+.esm-inkwell-air, .esm-inkwell-air[aria-pressed="false"] { border-color: var(--esm-gold); background: #fff3cf; opacity: 1; filter: none; }
+.esm-inkwell-air .esm-ink-fix { color: var(--esm-terracotta); font-weight: 700; }
+.esm-inkwell-air .esm-ink-bottle { animation: esm-shimmer 2.4s ease-in-out infinite; }
+@keyframes esm-shimmer { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+.esm-control-row { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 7px; }
+.esm-control {
+  display: inline-flex; align-items: center; gap: 4px; padding: 5px 8px; border-radius: 3px; cursor: pointer;
+  border: 1px solid var(--esm-sepia); background: #fffaf0; color: var(--esm-gall); font-size: 11.5px; user-select: none;
+  line-height: 1.15;
+}
+.esm-control:hover { background: #fff; }
+.esm-control-prime { background: var(--esm-emerald); color: var(--esm-vellum); border-color: #0b5244; font-weight: 700; }
+.esm-control-prime:hover { background: #148a73; }
+.esm-control-gold { background: var(--esm-gold); color: var(--esm-lagoon); border-color: #9a6f0c; font-weight: 700; }
+.esm-control-gold:hover { background: var(--esm-filament); }
+.esm-control[aria-pressed="true"] { box-shadow: inset 0 0 0 2px var(--esm-violet); }
+.esm-kbd { display: inline-block; font-family: var(--esm-mono); font-size: 9.5px; opacity: 0.75; }
+.esm-stretch-list { display: flex; flex-wrap: wrap; align-items: center; gap: 3px; margin-top: 7px; font-size: 11px; }
+.esm-stretch {
+  display: inline-flex; align-items: center; gap: 3px; padding: 2px 6px; border-radius: 10px; color: #fff;
+  background: var(--esm-sepia); font-size: 10.5px; line-height: 1.3; max-width: 100%;
+}
+.esm-stretch-arrow { display: inline-block; color: var(--esm-sepia); font-size: 11px; }
+.esm-stretch-canal_emerald { background: var(--esm-emerald); }
+.esm-stretch-street_vermilion { background: var(--esm-terracotta); }
+.esm-stretch-rooftop_violet { background: var(--esm-violet); }
+.esm-stretch-sewer_sepia { background: var(--esm-lampblack); border: 1px solid var(--esm-sepia); }
+.esm-readout {
+  display: block; margin-top: 7px; font-family: var(--esm-mono); font-size: 10.5px; line-height: 1.45; color: var(--esm-gall);
+  background: rgba(255, 255, 255, 0.55); border: 1px dashed rgba(94, 65, 40, 0.5); padding: 5px 7px; border-radius: 3px;
+  overflow-wrap: anywhere;
+}
+.esm-readout-line { display: block; }
+.esm-readout-key { display: inline; color: var(--esm-sepia); }
+.esm-readout-hot { display: inline; color: var(--esm-terracotta); font-weight: 700; }
+.esm-readout-gold { display: inline; color: #8a6206; font-weight: 700; }
+.esm-verdict {
+  display: block; margin-top: 7px; font-size: 11.5px; line-height: 1.35; font-style: italic; color: var(--esm-lagoon);
+  border-left: 3px solid var(--esm-gold); padding: 3px 0 3px 8px;
+}
+.esm-verdict-burst { color: var(--esm-terracotta); border-left-color: var(--esm-terracotta); }
+.esm-locus-card { display: block; margin-top: 7px; font-size: 11.5px; line-height: 1.35; color: var(--esm-gall); }
+.esm-locus-card-name { display: block; font-variant: small-caps; font-size: 13px; color: var(--esm-violet); }
+esmeralda-plate-drawer.esm-plate-drawer {
+  position: fixed; inset: 0; z-index: 20; display: flex; flex-direction: column; background: rgba(14, 24, 24, 0.94);
+  color: var(--esm-vellum); padding: 12px 14px 14px; overflow: hidden;
+}
+.esm-drawer-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; margin-bottom: 9px; }
+.esm-drawer-title { display: block; flex: 1 1 220px; font-variant: small-caps; letter-spacing: 0.06em; font-size: 16px; color: var(--esm-filament); }
+.esm-tab {
+  display: inline-block; padding: 5px 10px; border: 1px solid var(--esm-gold); border-radius: 3px; cursor: pointer;
+  font-size: 12px; color: var(--esm-vellum); background: transparent; user-select: none;
+}
+.esm-tab[aria-selected="true"] { background: var(--esm-gold); color: var(--esm-lagoon); font-weight: 700; }
+.esm-plate-viewport {
+  display: flex; flex: 1 1 auto; min-height: 0; gap: 12px; overflow: auto; align-items: flex-start; justify-content: center;
+}
+.esm-plate-frame {
+  display: flex; flex-direction: column; flex: 1 1 0; min-width: 0; max-height: 100%; overflow: auto; align-items: center;
+  border: 1px solid rgba(216, 164, 40, 0.5); background: #10201f; padding: 6px;
+}
+.esm-plate-img {
+  display: block; max-width: 100%; height: auto; max-height: calc(100dvh - 130px); object-fit: contain;
+  transform-origin: 50% 0; transition: transform 0.25s ease; cursor: zoom-in;
+}
+.esm-plate-viewport[data-loupe="on"] .esm-plate-img { transform: scale(1.8); cursor: zoom-out; }
+.esm-plate-caption { display: block; margin-top: 6px; font-size: 11.5px; font-style: italic; color: #d9cfb6; text-align: center; }
+.esm-plate-viewport[data-tab="map"] .esm-plate-frame-vista, .esm-plate-viewport[data-tab="image"] .esm-plate-frame-map { display: none; }
+.esm-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+@media (max-width: 860px) {
+  esmeralda-polychrome-atlas.esm-atlas { display: block; width: 100%; height: auto; min-height: 100dvh; overflow: visible; }
+  .esm-masthead { flex-direction: column; align-items: stretch; padding: 8px 10px; }
+  .esm-gauges { justify-content: flex-start; }
+  .esm-gauge { flex: 1 1 30%; }
+  .esm-stage { height: auto; aspect-ratio: 4 / 3.3; border-right: 0; border-bottom: 3px double var(--esm-sepia); }
+  .esm-console { overflow: visible; padding: 10px 9px 18px; }
+  .esm-inkwell { font-size: 9px; padding: 5px 1px; }
+  .esm-ink-bottle { width: 22px; height: 21px; }
+  .esm-plate-viewport { flex-direction: column; align-items: stretch; }
+  .esm-plate-frame { flex: 0 0 auto; max-height: none; }
+  .esm-plate-img { max-height: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .esm-body *, .esm-body *::before, .esm-body *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body class="esm-body">
+<esmeralda-polychrome-atlas class="esm-atlas" aria-label="Polychrome hydrographic and aerial codex">
+  <esm-masthead class="esm-masthead">
+    <esm-folio-block class="esm-folio-block">
+      <esm-folio-title class="esm-folio-title" role="heading" aria-level="1">Esmeralda &middot; Codex of Four Inks and One Ungovernable Sky</esm-folio-title>
+      <esm-folio-sub class="esm-folio-sub">Canals, stepped streets, cat-roofs &amp; rat-sewers fixed in ink; the swallows' parabolas, never.</esm-folio-sub>
+    </esm-folio-block>
+    <esm-gauges class="esm-gauges" aria-live="polite">
+      <esm-gauge class="esm-gauge">Itinerary <esm-gauge-val class="esm-gauge-val" id="esm-g-day">Day 1</esm-gauge-val></esm-gauge>
+      <esm-gauge class="esm-gauge">Combinatorial Zigzags <esm-gauge-val class="esm-gauge-val" id="esm-g-combo">&mdash;</esm-gauge-val></esm-gauge>
+      <esm-gauge class="esm-gauge">Unique Non-Repeating <esm-gauge-val class="esm-gauge-val" id="esm-g-unique">1 &middot; 0 repeats</esm-gauge-val></esm-gauge>
+      <esm-gauge class="esm-gauge esm-gauge-terra">Terrestrial Inks <esm-gauge-val class="esm-gauge-val" id="esm-g-terra">4/4 Terrestrial Inks Fixed</esm-gauge-val></esm-gauge>
+      <esm-gauge class="esm-gauge esm-gauge-air">Airborne Ink <esm-gauge-val class="esm-gauge-val" id="esm-g-air">Swallow Ink: Unfixed in Air</esm-gauge-val></esm-gauge>
+      <esm-gauge class="esm-gauge esm-gauge-air">Dominance <esm-gauge-val class="esm-gauge-val" id="esm-g-dom">14/14 Points Dominated</esm-gauge-val></esm-gauge>
+    </esm-gauges>
+  </esm-masthead>
+
+  <multi-ink-stratum-stage class="esm-stage" aria-label="Layered survey of canals, streets, roofs, sewers and swallow airspace">
+    <canvas class="esm-stage-canvas" id="esm-stage-canvas" width="1280" height="760" role="img" aria-label="Animated polychrome chart of the canal city with swallow parabolas overhead"></canvas>
+    <esm-locus-tip class="esm-locus-tip" id="esm-locus-tip" hidden></esm-locus-tip>
+    <esm-stage-caption class="esm-stage-caption" id="esm-stage-caption">Tap a bridge, gutter, balcony, manhole or swallow. Keys: 1&ndash;5 inks &middot; N zigzag &middot; F fix swallow ink.</esm-stage-caption>
+  </multi-ink-stratum-stage>
+
+  <esm-console class="esm-console">
+    <route-ink-pot class="esm-panel esm-inkpot" aria-label="Inkwells of the terrestrial strata">
+      <esm-panel-head class="esm-panel-head" role="heading" aria-level="2">The Inkwells &mdash; What Paper Can Hold</esm-panel-head>
+      <esm-panel-note class="esm-panel-note">Dip a well to lay or lift its stratum. Four inks fix on vellum; the fifth will not stay.</esm-panel-note>
+      <esm-inkwell-row class="esm-inkwell-row">
+        <esm-inkwell class="esm-inkwell" role="button" tabindex="0" aria-pressed="true" data-ink="canal_emerald" title="Liquid Evident &mdash; Fixed">
+          <esm-ink-bottle class="esm-ink-bottle" style="background:#117A65"></esm-ink-bottle>
+          <esm-ink-key class="esm-ink-key">[1]</esm-ink-key><esm-ink-name class="esm-ink-name">Emerald Canal</esm-ink-name>
+          <esm-ink-fix class="esm-ink-fix">Liquid Evident &mdash; Fixed</esm-ink-fix>
+        </esm-inkwell>
+        <esm-inkwell class="esm-inkwell" role="button" tabindex="0" aria-pressed="true" data-ink="street_vermilion" title="Solid Evident &mdash; Fixed">
+          <esm-ink-bottle class="esm-ink-bottle" style="background:#C2492D"></esm-ink-bottle>
+          <esm-ink-key class="esm-ink-key">[2]</esm-ink-key><esm-ink-name class="esm-ink-name">Vermilion Steps &amp; Bridges</esm-ink-name>
+          <esm-ink-fix class="esm-ink-fix">Solid Evident &mdash; Fixed</esm-ink-fix>
+        </esm-inkwell>
+        <esm-inkwell class="esm-inkwell" role="button" tabindex="0" aria-pressed="true" data-ink="rooftop_violet" title="Discontinuous High &mdash; Fixed">
+          <esm-ink-bottle class="esm-ink-bottle" style="background:#7A3B8E"></esm-ink-bottle>
+          <esm-ink-key class="esm-ink-key">[3]</esm-ink-key><esm-ink-name class="esm-ink-name">Violet Cat &amp; Lover Roofs</esm-ink-name>
+          <esm-ink-fix class="esm-ink-fix">Discontinuous High &mdash; Fixed</esm-ink-fix>
+        </esm-inkwell>
+        <esm-inkwell class="esm-inkwell" role="button" tabindex="0" aria-pressed="true" data-ink="sewer_sepia" title="Subterranean &mdash; Fixed">
+          <esm-ink-bottle class="esm-ink-bottle" style="background:linear-gradient(180deg,#5E4128,#191716)"></esm-ink-bottle>
+          <esm-ink-key class="esm-ink-key">[4]</esm-ink-key><esm-ink-name class="esm-ink-name">Sepia Rat &amp; Smuggler Sewers</esm-ink-name>
+          <esm-ink-fix class="esm-ink-fix">Subterranean &mdash; Fixed</esm-ink-fix>
+        </esm-inkwell>
+        <esm-inkwell class="esm-inkwell esm-inkwell-air" role="button" tabindex="0" aria-pressed="false" data-ink="swallow_gold" title="UNFIXABLE ON VELLUM">
+          <esm-ink-bottle class="esm-ink-bottle" style="background:linear-gradient(180deg,#F5CF6B,#D8A428)"></esm-ink-bottle>
+          <esm-ink-key class="esm-ink-key">[5]</esm-ink-key><esm-ink-name class="esm-ink-name">Swallow-Gold Airy Ink</esm-ink-name>
+          <esm-ink-fix class="esm-ink-fix">UNFIXABLE ON VELLUM</esm-ink-fix>
+        </esm-inkwell>
+      </esm-inkwell-row>
+      <esm-control-row class="esm-control-row">
+        <esm-control class="esm-control esm-control-prime" role="button" tabindex="0" data-act="zigzag">New Daily Zigzag <esm-kbd class="esm-kbd">[N]</esm-kbd></esm-control>
+        <esm-control class="esm-control" role="button" tabindex="0" data-act="dipall">Dip All Four Inks</esm-control>
+      </esm-control-row>
+      <esm-stretch-list class="esm-stretch-list" id="esm-stretch-list" aria-live="polite"></esm-stretch-list>
+      <esm-readout class="esm-readout" id="esm-route-readout"></esm-readout>
+      <esm-locus-card class="esm-locus-card" id="esm-locus-card" hidden></esm-locus-card>
+    </route-ink-pot>
+
+    <swallow-unmappable-arc class="esm-panel esm-arc" aria-label="Observatory of the swallows' airy parabolas">
+      <esm-panel-head class="esm-panel-head" role="heading" aria-level="2">The Airy Vault &mdash; What Paper Cannot Hold</esm-panel-head>
+      <esm-panel-note class="esm-panel-note">Over the roofs the swallows drop along invisible parabolas with still wings, dart for a mosquito, spiral up grazing a pinnacle &mdash; and from every point of their path they hold every point of the city.</esm-panel-note>
+      <esm-control-row class="esm-control-row">
+        <esm-control class="esm-control esm-control-gold" role="button" tabindex="0" data-act="fix">Fix Swallow Ink on Paper <esm-kbd class="esm-kbd">[F]</esm-kbd></esm-control>
+        <esm-control class="esm-control" role="button" tabindex="0" data-act="swallow">Next Swallow <esm-kbd class="esm-kbd">[S]</esm-kbd></esm-control>
+        <esm-control class="esm-control" role="button" tabindex="0" data-act="dart">Mosquito Dart <esm-kbd class="esm-kbd">[D]</esm-kbd></esm-control>
+        <esm-control class="esm-control" role="button" tabindex="0" data-act="spiral">Pinnacle Spiral <esm-kbd class="esm-kbd">[G]</esm-kbd></esm-control>
+        <esm-control class="esm-control" role="button" tabindex="0" aria-pressed="false" data-act="vault">3D Airy Vault Tilt <esm-kbd class="esm-kbd">[V]</esm-kbd></esm-control>
+        <esm-control class="esm-control" role="button" tabindex="0" aria-pressed="false" data-act="mute">Sound <esm-kbd class="esm-kbd">[M]</esm-kbd></esm-control>
+        <esm-control class="esm-control" role="button" tabindex="0" data-act="reset">Reset <esm-kbd class="esm-kbd">[R]</esm-kbd></esm-control>
+        <esm-control class="esm-control" role="button" tabindex="0" data-act="plates">Royal Plates <esm-kbd class="esm-kbd">[P]</esm-kbd></esm-control>
+      </esm-control-row>
+      <esm-readout class="esm-readout" id="esm-air-readout" aria-live="polite"></esm-readout>
+      <esm-verdict class="esm-verdict" id="esm-air-verdict">Swallow ink has never dried on this vellum. Press [F] to try.</esm-verdict>
+    </swallow-unmappable-arc>
+  </esm-console>
+</esmeralda-polychrome-atlas>
+
+<esmeralda-plate-drawer class="esm-plate-drawer" id="esm-plate-drawer" role="dialog" aria-modal="true" aria-label="Royal survey plates" hidden>
+  <esm-drawer-bar class="esm-drawer-bar">
+    <esm-drawer-title class="esm-drawer-title" role="heading" aria-level="2">Royal Plates of the Canal Survey</esm-drawer-title>
+    <esm-tab class="esm-tab" role="tab" tabindex="0" aria-selected="true" data-tab="diptych">Diptych</esm-tab>
+    <esm-tab class="esm-tab" role="tab" tabindex="0" aria-selected="false" data-tab="map">Survey Map</esm-tab>
+    <esm-tab class="esm-tab" role="tab" tabindex="0" aria-selected="false" data-tab="image">Pinnacle Vista</esm-tab>
+    <esm-control class="esm-control" role="button" tabindex="0" aria-pressed="false" data-act="loupe">Loupe 1.8x <esm-kbd class="esm-kbd">[Z]</esm-kbd></esm-control>
+    <esm-control class="esm-control" role="button" tabindex="0" data-act="closeplates">Close <esm-kbd class="esm-kbd">[Esc]</esm-kbd></esm-control>
+  </esm-drawer-bar>
+  <esm-plate-viewport class="esm-plate-viewport" id="esm-plate-viewport" data-tab="diptych" data-loupe="off">
+    <esm-plate-frame class="esm-plate-frame esm-plate-frame-map">
+      <img class="esm-plate-img" id="esm-map-img" src="map.png" width="1600" height="1200" alt="Polychrome hydrographic survey plate" onerror="if(!this.getAttribute('data-fallback')){this.setAttribute('data-fallback','svg');this.src='map.svg';}else{this.onerror=null;if(window.esmPlateDataUri){this.src=window.esmPlateDataUri(1600,1200);}}">
+      <esm-plate-caption class="esm-plate-caption">Survey in four fixed inks: emerald water, vermilion stone, violet roof-leaps, sepia sewers.</esm-plate-caption>
+    </esm-plate-frame>
+    <esm-plate-frame class="esm-plate-frame esm-plate-frame-vista">
+      <img class="esm-plate-img" id="esm-vista-img" src="image.png" width="1600" height="1000" alt="Canal and pinnacle vista plate" onerror="this.onerror=null;if(window.esmPlateDataUri){this.src=window.esmPlateDataUri(1600,1000);}">
+      <esm-plate-caption class="esm-plate-caption">Vista over canals and pinnacles, where the swallows refuse the page.</esm-plate-caption>
+    </esm-plate-frame>
+  </esm-plate-viewport>
+</esmeralda-plate-drawer>
+
+<script>
+/*
+ * ESMERALDA :: Multi-Ink Zigzag Navigator
+ * Polychrome Hydrographic Survey. Owner: esmeralda-zigzag-nav.
+ * Four colored inks that CAN be fixed on paper: emerald canals (liquid, evident),
+ * vermilion stepped streets / cambered bridges / hanging streets (solid, evident),
+ * violet rooftop leaps of cats, thieves and illicit lovers (solid, clandestine),
+ * sepia sewers of rats and manhole smugglers (hidden, subterranean).
+ * Every day the inhabitant takes a fresh zigzag: never the shortest line, never boredom.
+ * Classic IIFE, no modules, no network.
+ */
+(function (root) {
+  'use strict';
+
+  var PALETTE = {
+    vellum: '#F1E9D6', lagoon: '#0E1818', emerald: '#117A65', emeraldWake: '#22B59B',
+    terracotta: '#C2492D', ochre: '#D97A3E', violet: '#7A3B8E', lampblack: '#191716',
+    sepia: '#5E4128', gold: '#D8A428', filament: '#F5CF6B', ironGall: '#221E1B'
+  };
+
+  var INK_STRATA = [
+    { id: 'canal_emerald', label: 'Emerald Canals', color: '#117A65', glow: '#22B59B',
+      matter: 'liquid', visibility: 'evident', stretch: 'liquid', paperFixable: true, key: '1',
+      detail: 'Boat canals and skiffs gliding under bridges: the liquid, evident stretches.' },
+    { id: 'street_vermilion', label: 'Vermilion Stepped Streets', color: '#C2492D', glow: '#D97A3E',
+      matter: 'solid', visibility: 'evident', stretch: 'dry', paperFixable: true, key: '2',
+      detail: 'Planless stone steps, cambered bridges and hanging streets: solid, evident.' },
+    { id: 'rooftop_violet', label: 'Violet Rooftop Leaps', color: '#7A3B8E', glow: '#B07CC6',
+      matter: 'solid', visibility: 'clandestine', stretch: 'aerial', paperFixable: true, key: '3',
+      detail: 'Discontinuous high leaps of cats, thieves and illicit lovers, ridgepole to balcony, along contorted gutters.' },
+    { id: 'sewer_sepia', label: 'Sepia Sewers', color: '#5E4128', glow: '#8C6A48', shadow: '#191716',
+      matter: 'liquid', visibility: 'hidden', stretch: 'hidden', paperFixable: true, key: '4',
+      detail: 'Dark rat sewers; conspirators and smugglers peek from manholes with cheese wheels, contraband bales and gunpowder kegs.' }
+  ];
+  var INK_BY_ID = {};
+  INK_STRATA.forEach(function (ink) { INK_BY_ID[ink.id] = ink; });
+  var INK_IDS = INK_STRATA.map(function (ink) { return ink.id; });
+
+  var CITY_LOCI = [
+    { id: 'L0', name: 'Fondaco Water-Stair', u: 0.13, v: 0.62, z: 0, kind: 'canal_quay', pinnacle: false },
+    { id: 'L1', name: 'Cambered Bridge of Scales', u: 0.25, v: 0.48, z: 5, kind: 'cambered_bridge', pinnacle: false },
+    { id: 'L2', name: 'Cheese-Smuggler Manhole', u: 0.22, v: 0.76, z: -5, kind: 'sewer_manhole', cargo: 'wheels_of_cheese', pinnacle: false },
+    { id: 'L3', name: 'Salt-Guild Pinnacle', u: 0.31, v: 0.24, z: 28, kind: 'pinnacle_spire', pinnacle: true },
+    { id: 'L4', name: 'Cat-Gutter Ridgepole', u: 0.39, v: 0.36, z: 16, kind: 'cat_gutter', pinnacle: false },
+    { id: 'L5', name: 'Emerald Basin Crossroads', u: 0.44, v: 0.57, z: 0, kind: 'canal_junction', pinnacle: false },
+    { id: 'L6', name: 'Gunpowder-Keg Grate', u: 0.48, v: 0.80, z: -6, kind: 'sewer_manhole', cargo: 'gunpowder_kegs', pinnacle: false },
+    { id: 'L7', name: 'Hanging Street of Dyers', u: 0.56, v: 0.44, z: 8, kind: 'hanging_street', pinnacle: false },
+    { id: 'L8', name: 'Campanile of Swallows', u: 0.59, v: 0.20, z: 33, kind: 'pinnacle_spire', pinnacle: true },
+    { id: 'L9', name: "Lovers' Wrought Balcony", u: 0.68, v: 0.34, z: 14, kind: 'lovers_balcony', pinnacle: false },
+    { id: 'L10', name: 'Double-Arch Canal Lock', u: 0.69, v: 0.60, z: 0, kind: 'cambered_bridge', pinnacle: false },
+    { id: 'L11', name: 'Customs Watch-Pinnacle', u: 0.82, v: 0.25, z: 30, kind: 'pinnacle_spire', pinnacle: true },
+    { id: 'L12', name: 'Contraband Vault Manhole', u: 0.79, v: 0.77, z: -5, kind: 'sewer_manhole', cargo: 'contraband_bales', pinnacle: false },
+    { id: 'L13', name: 'Seaward Stepped Mole', u: 0.88, v: 0.53, z: 3, kind: 'stepped_quay', pinnacle: false }
+  ];
+  var LOCUS_BY_ID = {};
+  CITY_LOCI.forEach(function (n) { LOCUS_BY_ID[n.id] = n; });
+
+  /* [a, b, kind, bend] grouped per ink; bend = lateral curvature of the drawn stroke */
+  var RAW_SEGMENTS = {
+    canal_emerald: [
+      ['L0', 'L1', 'oar_canal', 0.10], ['L0', 'L5', 'oar_canal', -0.12], ['L1', 'L5', 'oar_canal', 0.08],
+      ['L5', 'L10', 'oar_canal', 0.10], ['L10', 'L13', 'oar_canal', -0.10], ['L5', 'L7', 'skiff_cut', -0.14],
+      ['L7', 'L10', 'skiff_cut', 0.12], ['L10', 'L12', 'oar_canal', -0.08], ['L12', 'L13', 'oar_canal', 0.10],
+      ['L0', 'L2', 'skiff_cut', 0.16]
+    ],
+    street_vermilion: [
+      ['L0', 'L1', 'stone_steps', -0.14], ['L1', 'L3', 'stone_steps', 0.12], ['L1', 'L4', 'cambered_bridge', -0.10],
+      ['L3', 'L4', 'stone_steps', 0.10], ['L4', 'L7', 'hanging_street', 0.14], ['L7', 'L9', 'hanging_street', -0.12],
+      ['L5', 'L7', 'cambered_bridge', 0.16], ['L7', 'L10', 'stone_steps', -0.16], ['L10', 'L13', 'cambered_bridge', 0.14],
+      ['L9', 'L11', 'stone_steps', 0.10], ['L11', 'L13', 'stone_steps', -0.12], ['L1', 'L5', 'stone_steps', -0.12]
+    ],
+    rooftop_violet: [
+      ['L3', 'L4', 'cat_gutter', -0.22], ['L4', 'L8', 'ridge_leap', 0.20], ['L8', 'L9', 'ridge_leap', -0.18],
+      ['L9', 'L11', 'balcony_drop', -0.22], ['L4', 'L9', 'cat_gutter', 0.18], ['L1', 'L4', 'ridge_leap', 0.24],
+      ['L7', 'L8', 'cat_gutter', 0.20], ['L11', 'L13', 'balcony_drop', 0.22], ['L3', 'L8', 'ridge_leap', -0.16]
+    ],
+    sewer_sepia: [
+      ['L0', 'L2', 'rat_sewer', -0.18], ['L2', 'L5', 'rat_sewer', 0.14], ['L2', 'L6', 'rat_sewer', -0.10],
+      ['L6', 'L12', 'rat_sewer', 0.12], ['L6', 'L10', 'rat_sewer', -0.14], ['L12', 'L13', 'rat_sewer', -0.16],
+      ['L5', 'L6', 'rat_sewer', 0.18], ['L10', 'L12', 'rat_sewer', 0.16]
+    ]
+  };
+  var ROUTE_SEGMENTS = [];
+  INK_IDS.forEach(function (inkId) {
+    var prefix = { canal_emerald: 'C', street_vermilion: 'S', rooftop_violet: 'R', sewer_sepia: 'W' }[inkId];
+    RAW_SEGMENTS[inkId].forEach(function (s, i) {
+      ROUTE_SEGMENTS.push({ id: prefix + i, a: s[0], b: s[1], ink: inkId, kind: s[2], bend: s[3] });
+    });
+  });
+  var SEGMENT_BY_ID = {};
+  ROUTE_SEGMENTS.forEach(function (s) { SEGMENT_BY_ID[s.id] = s; });
+
+  function projectPoint(u, v, z, width, height, airspaceTilt) {
+    var tilt = (typeof airspaceTilt === 'number' && isFinite(airspaceTilt)) ? airspaceTilt : 0.38;
+    return { x: u * width, y: v * height - z * (0.45 + tilt * 1.15) };
+  }
+
+  function makeRng(seed) {
+    var s = (seed >>> 0) || 0x9E3779B9;
+    return function () {
+      s ^= s << 13; s >>>= 0; s ^= s >>> 17; s ^= s << 5; s >>>= 0;
+      return (s >>> 0) / 4294967296;
+    };
+  }
+
+  function buildAdjacency(activeSet) {
+    var adj = {};
+    CITY_LOCI.forEach(function (n) { adj[n.id] = []; });
+    ROUTE_SEGMENTS.forEach(function (s) {
+      if (!activeSet[s.ink]) return;
+      adj[s.a].push({ seg: s, to: s.b });
+      adj[s.b].push({ seg: s, to: s.a });
+    });
+    return adj;
+  }
+
+  var STORE_CAP = 6000;
+  /* Exact count of loop-free (no repeated locus) itineraries; stores up to STORE_CAP of them. */
+  function enumerateZigzags(activeSet, originId, destId) {
+    var adj = buildAdjacency(activeSet);
+    var out = { count: 0, paths: [] };
+    if (!adj[originId] || !adj[destId] || originId === destId) return out;
+    /* BFS hop distance: only itineraries within minHops+6 are kept as daily candidates (all are counted) */
+    var dist = {}; dist[originId] = 0; var queue = [originId];
+    while (queue.length) {
+      var cur = queue.shift();
+      adj[cur].forEach(function (e) { if (dist[e.to] === undefined) { dist[e.to] = dist[cur] + 1; queue.push(e.to); } });
+    }
+    if (dist[destId] === undefined) return out;
+    out.minHops = dist[destId];
+    var keepMax = out.minHops + 6;
+    var onPath = {}; var stack = [];
+    onPath[originId] = true;
+    (function walk(node) {
+      if (node === destId) {
+        out.count++;
+        if (stack.length <= keepMax && out.paths.length < STORE_CAP) out.paths.push(stack.slice());
+        return;
+      }
+      var list = adj[node];
+      for (var i = 0; i < list.length; i++) {
+        var e = list[i];
+        if (onPath[e.to]) continue;
+        onPath[e.to] = true; stack.push(e.seg.id);
+        walk(e.to);
+        stack.pop(); onPath[e.to] = false;
+      }
+    })(originId);
+    return out;
+  }
+
+  function pathInkSet(segIds) {
+    var set = {};
+    segIds.forEach(function (id) { set[SEGMENT_BY_ID[id].ink] = true; });
+    return set;
+  }
+
+  /* ---------- Gesture-safe WebAudio: oar lap, stone steps, tin gutter / lute, manhole grate / keg thud ---------- */
+  function createInkAudio(opts) {
+    var ctx = null; var master = null; var muted = !!(opts && opts.muted);
+    var unlocked = false;
+    function AC() {
+      try { return root.AudioContext || root.webkitAudioContext || null; } catch (e) { return null; }
+    }
+    function ensure() {
+      if (ctx) return ctx;
+      var Ctor = AC(); if (!Ctor) return null;
+      try {
+        ctx = new Ctor();
+        master = ctx.createGain(); master.gain.value = muted ? 0 : 0.42;
+        master.connect(ctx.destination);
+      } catch (e) { ctx = null; master = null; }
+      return ctx;
+    }
+    function live() { return !muted && unlocked && ensure() && master; }
+    function tone(freq, t0, dur, type, peak, glideTo) {
+      try {
+        var o = ctx.createOscillator(); var g = ctx.createGain();
+        o.type = type || 'sine'; o.frequency.setValueAtTime(freq, t0);
+        if (glideTo) o.frequency.exponentialRampToValueAtTime(glideTo, t0 + dur);
+        g.gain.setValueAtTime(0.0001, t0);
+        g.gain.exponentialRampToValueAtTime(peak || 0.2, t0 + Math.min(0.03, dur * 0.3));
+        g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+        o.connect(g); g.connect(master); o.start(t0); o.stop(t0 + dur + 0.05);
+      } catch (e) { /* silent */ }
+    }
+    function noise(t0, dur, filterType, freq, q, peak) {
+      try {
+        var len = Math.max(1, Math.floor(ctx.sampleRate * dur));
+        var buf = ctx.createBuffer(1, len, ctx.sampleRate); var d = buf.getChannelData(0);
+        for (var i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / len);
+        var src = ctx.createBufferSource(); src.buffer = buf;
+        var f = ctx.createBiquadFilter(); f.type = filterType || 'bandpass';
+        f.frequency.value = freq || 600; f.Q.value = q || 1;
+        var g = ctx.createGain(); g.gain.setValueAtTime(peak || 0.25, t0);
+        g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+        src.connect(f); f.connect(g); g.connect(master); src.start(t0); src.stop(t0 + dur + 0.05);
+      } catch (e) { /* silent */ }
+    }
+    var VOICES = {
+      canal_emerald: function (t) { /* oar dip and water lap */
+        noise(t, 0.55, 'lowpass', 520, 0.8, 0.28); noise(t + 0.32, 0.45, 'bandpass', 380, 1.4, 0.16);
+        tone(196, t, 0.7, 'sine', 0.08, 174);
+      },
+      street_vermilion: function (t) { /* three stone steps */
+        for (var i = 0; i < 3; i++) { noise(t + i * 0.16, 0.09, 'bandpass', 1400 - i * 180, 3, 0.3); tone(220 - i * 18, t + i * 0.16, 0.12, 'triangle', 0.09); }
+      },
+      rooftop_violet: function (t) { /* tin gutter ping and lovers' lute */
+        tone(1318, t, 0.35, 'square', 0.04, 1250); tone(587, t + 0.08, 0.9, 'triangle', 0.11);
+        tone(740, t + 0.2, 0.8, 'triangle', 0.08); tone(880, t + 0.32, 0.7, 'triangle', 0.06);
+      },
+      sewer_sepia: function (t) { /* manhole grate scrape and gunpowder keg thud */
+        noise(t, 0.4, 'highpass', 2400, 0.7, 0.12); tone(72, t + 0.18, 0.5, 'sine', 0.32, 44);
+        noise(t + 0.18, 0.25, 'lowpass', 180, 1, 0.3);
+      }
+    };
+    var api = {
+      unlock: function () {
+        try {
+          unlocked = true; var c = ensure();
+          if (c && c.state === 'suspended' && c.resume) c.resume();
+        } catch (e) { /* silent */ }
+        return unlocked;
+      },
+      setMuted: function (flag) {
+        muted = !!flag;
+        try { if (master && ctx) master.gain.setTargetAtTime(muted ? 0 : 0.42, ctx.currentTime, 0.05); } catch (e) { /* silent */ }
+        return muted;
+      },
+      toggleMute: function () { return api.setMuted(!muted); },
+      isMuted: function () { return muted; },
+      playInkDip: function (inkId) {
+        if (!live()) return false;
+        try { var t = ctx.currentTime + 0.01; (VOICES[inkId] || VOICES.canal_emerald)(t); } catch (e) { return false; }
+        return true;
+      },
+      playStratumCue: function (kind) {
+        if (!live()) return false;
+        try {
+          var t = ctx.currentTime + 0.01;
+          if (kind === 'sewer_manhole') VOICES.sewer_sepia(t);
+          else if (kind === 'lovers_balcony' || kind === 'cat_gutter' || kind === 'pinnacle_spire') VOICES.rooftop_violet(t);
+          else if (kind === 'canal_quay' || kind === 'canal_junction') VOICES.canal_emerald(t);
+          else VOICES.street_vermilion(t);
+        } catch (e) { return false; }
+        return true;
+      },
+      playItineraryChord: function (inkSequence) {
+        if (!live()) return false;
+        try {
+          var t = ctx.currentTime + 0.01;
+          var seq = (inkSequence && inkSequence.length) ? inkSequence.slice(0, 6) : INK_IDS;
+          var roots = { canal_emerald: 261.6, street_vermilion: 329.6, rooftop_violet: 392.0, sewer_sepia: 196.0 };
+          seq.forEach(function (ink, i) { tone(roots[ink] || 261.6, t + i * 0.11, 1.1, 'triangle', 0.07); });
+          tone(130.8, t, 1.6, 'sine', 0.06);
+        } catch (e) { return false; }
+        return true;
+      }
+    };
+    return api;
+  }
+
+  /* ---------- Navigator: the daily non-repeating combinatorial zigzag ---------- */
+  var FOCUS_BY_KIND = {
+    sewer_manhole: 'manhole_smuggler_peek', lovers_balcony: 'balcony_lovers', cambered_bridge: 'bridge_focus',
+    hanging_street: 'bridge_focus', cat_gutter: 'cat_gutter_prowl', pinnacle_spire: 'pinnacle_ridge',
+    canal_quay: 'skiff_mooring', canal_junction: 'skiff_mooring', stepped_quay: 'stone_steps'
+  };
+
+  function createZigzagNavigator(opts) {
+    opts = opts || {};
+    var audio = createInkAudio(opts);
+    var S = {};
+
+    function activeList() { return INK_IDS.filter(function (id) { return S.active[id]; }); }
+    function enumeration() {
+      var key = activeList().join(',') + '|' + S.originId + '>' + S.destId;
+      if (!S.cache || S.cache.key !== key) {
+        var r = enumerateZigzags(S.active, S.originId, S.destId);
+        S.cache = { key: key, count: r.count, paths: r.paths, minHops: r.minHops };
+      }
+      return S.cache;
+    }
+    function signatureOf(segIds) { return S.originId + ':' + segIds.join('-'); }
+    function describe(segIds) {
+      var node = S.originId; var nodes = [node]; var segs = []; var inkSeq = [];
+      var counts = { canal_emerald: 0, street_vermilion: 0, rooftop_violet: 0, sewer_sepia: 0, liquid: 0, dry: 0, aerial: 0, hidden: 0 };
+      segIds.forEach(function (id) {
+        var s = SEGMENT_BY_ID[id]; var to = s.a === node ? s.b : s.a;
+        segs.push({ id: id, ink: s.ink, kind: s.kind, from: node, to: to, bend: s.a === node ? s.bend : -s.bend });
+        counts[s.ink]++; counts[INK_BY_ID[s.ink].stretch]++;
+        if (inkSeq[inkSeq.length - 1] !== s.ink) inkSeq.push(s.ink);
+        node = to; nodes.push(node);
+      });
+      var inkSet = pathInkSet(segIds);
+      return {
+        signature: signatureOf(segIds), day: S.dayNumber, originId: S.originId, destId: S.destId,
+        segments: segs, nodes: nodes, hops: segs.length, inkSequence: inkSeq,
+        inkCount: Object.keys(inkSet).length, inks: Object.keys(inkSet), stretchCounts: counts
+      };
+    }
+    function plot(mode) {
+      var en = enumeration();
+      if (!en.paths.length) { S.currentZigzag = null; S.travelT = 0; return null; }
+      var activeCount = activeList().length;
+      var minHops = typeof en.minHops === 'number' ? en.minHops : Infinity;
+      if (!isFinite(minHops)) en.paths.forEach(function (p) { if (p.length < minHops) minHops = p.length; });
+      var fresh = en.paths.filter(function (p) { return !S.visited[signatureOf(p)]; });
+      var pool = fresh;
+      function narrow(pred) { var f = pool.filter(pred); if (f.length) pool = f; }
+      if (mode === 'liquid' || mode === 'dry' || mode === 'aerial' || mode === 'hidden') {
+        narrow(function (p) { return p.some(function (id) { return INK_BY_ID[SEGMENT_BY_ID[id].ink].stretch === mode; }); });
+      }
+      if (mode !== 'any') {
+        var need = Math.min(activeCount, mode === 'mixed' ? 3 : 2);
+        narrow(function (p) { return Object.keys(pathInkSet(p)).length >= need; });
+        narrow(function (p) { return p.length > minHops && p.length <= minHops + 3; }); /* neither shortest line nor endless */
+      }
+      var repeated = false;
+      if (!pool.length) { pool = en.paths; repeated = true; }
+      var chosen = pool[Math.floor(S.rng() * pool.length) % pool.length];
+      var sig = signatureOf(chosen);
+      if (repeated || S.visited[sig]) S.repeatedItinerariesCount++;
+      else { S.visited[sig] = true; S.visitedCount++; S.uniqueZigzagsGenerated++; }
+      S.currentZigzag = describe(chosen);
+      S.travelT = S.reducedMotion ? S.currentZigzag.hops : 0;
+      return S.currentZigzag;
+    }
+    function zigzagUsesInactive() {
+      if (!S.currentZigzag) return true;
+      if (S.currentZigzag.originId !== S.originId || S.currentZigzag.destId !== S.destId) return true;
+      return S.currentZigzag.inks.some(function (id) { return !S.active[id]; });
+    }
+
+    function init() {
+      S.rng = makeRng(typeof opts.seed === 'number' ? opts.seed : 31031);
+      S.dayNumber = 1; S.active = {};
+      INK_IDS.forEach(function (id) { S.active[id] = true; });
+      S.originId = LOCUS_BY_ID[opts.originId] ? opts.originId : 'L0';
+      S.destId = LOCUS_BY_ID[opts.destId] && opts.destId !== S.originId ? opts.destId : 'L13';
+      S.visited = {}; S.visitedCount = 0; S.uniqueZigzagsGenerated = 0; S.repeatedItinerariesCount = 0;
+      S.cache = null; S.inspectedLocus = null; S.peek = 0; S.dipFlash = {}; S.time = 0;
+      S.reducedMotion = !!(S.reducedMotion || opts.reducedMotion);
+      S.lastMode = 'mixed';
+      plot('mixed');
+    }
+
+    function getState() {
+      var en = enumeration(); var list = activeList();
+      var z = S.currentZigzag;
+      var counts = z ? Object.assign({}, z.stretchCounts) : { canal_emerald: 0, street_vermilion: 0, rooftop_violet: 0, sewer_sepia: 0, liquid: 0, dry: 0, aerial: 0, hidden: 0 };
+      return {
+        dayNumber: S.dayNumber, activeInks: list.slice(), activeInkCount: list.length,
+        terrestrialFixedInkCount: INK_STRATA.filter(function (i) { return i.paperFixable; }).length,
+        terrestrialPaperFixability: 1.0,
+        combinatorialRouteCount: en.count,
+        uniqueZigzagsGenerated: S.uniqueZigzagsGenerated, repeatedItinerariesCount: S.repeatedItinerariesCount,
+        remainingFreshZigzags: Math.max(0, en.count - S.visitedCount),
+        boredomIndex: list.length >= 2 ? 0 : 0.45,
+        originId: S.originId, destId: S.destId,
+        currentZigzag: z ? JSON.parse(JSON.stringify(z)) : null,
+        stretchCounts: counts,
+        inspectedLocus: S.inspectedLocus ? Object.assign({}, S.inspectedLocus) : null,
+        muted: audio.isMuted(), reducedMotion: S.reducedMotion,
+        renderError: S.lastRenderError || null
+      };
+    }
+
+    function afterInkChange(inkId) {
+      S.cache = null;
+      if (zigzagUsesInactive()) plot(S.lastMode);
+      S.dipFlash[inkId || 'all'] = 1;
+      audio.playInkDip(inkId || 'canal_emerald');
+      return getState();
+    }
+
+    var api = {
+      audio: audio,
+      INK_STRATA: INK_STRATA, CITY_LOCI: CITY_LOCI, ROUTE_SEGMENTS: ROUTE_SEGMENTS,
+      nextDailyZigzag: function (mode) {
+        mode = mode || 'mixed'; S.lastMode = mode;
+        S.dayNumber++;
+        var z = plot(mode);
+        audio.playItineraryChord(z ? z.inkSequence : null);
+        return getState();
+      },
+      toggleInkStratum: function (id) {
+        if (!INK_BY_ID[id]) return getState();
+        return api.setInkActive(id, !S.active[id]);
+      },
+      setInkActive: function (id, flag) {
+        if (!INK_BY_ID[id]) return getState();
+        flag = !!flag;
+        if (!flag && S.active[id] && activeList().length <= 1) return getState(); /* keep at least one ink wet */
+        S.active[id] = flag;
+        return afterInkChange(id);
+      },
+      dipAllFourInks: function () {
+        INK_IDS.forEach(function (id) { S.active[id] = true; S.dipFlash[id] = 1; });
+        S.cache = null;
+        if (zigzagUsesInactive()) plot(S.lastMode);
+        audio.playItineraryChord(INK_IDS);
+        return getState();
+      },
+      setEndpoints: function (originId, destId) {
+        if (!LOCUS_BY_ID[originId] || !LOCUS_BY_ID[destId] || originId === destId) return getState();
+        S.originId = originId; S.destId = destId; S.cache = null;
+        plot(S.lastMode);
+        return getState();
+      },
+      selectNode: function (nodeId) {
+        var n = LOCUS_BY_ID[nodeId];
+        if (!n) { S.inspectedLocus = null; return getState(); }
+        var inks = {};
+        ROUTE_SEGMENTS.forEach(function (s) { if (s.a === nodeId || s.b === nodeId) inks[s.ink] = true; });
+        S.inspectedLocus = {
+          id: n.id, name: n.name, kind: n.kind, cargo: n.cargo || null, z: n.z, pinnacle: n.pinnacle,
+          focus: FOCUS_BY_KIND[n.kind] || 'stone_steps', incidentInks: Object.keys(inks),
+          onCurrentZigzag: !!(S.currentZigzag && S.currentZigzag.nodes.indexOf(n.id) >= 0)
+        };
+        S.peek = 1;
+        audio.playStratumCue(n.kind);
+        return getState();
+      },
+      hitTest: function (normX, normY, width, height, airspaceTilt) {
+        width = width || 1; height = height || 1;
+        var px = normX * width, py = normY * height;
+        var radius = Math.max(16, Math.min(width, height) * 0.045);
+        var best = null, bestD = Infinity;
+        CITY_LOCI.forEach(function (n) {
+          var p = projectPoint(n.u, n.v, n.z, width, height, airspaceTilt);
+          var d = Math.hypot(p.x - px, p.y - py);
+          if (d < bestD) { bestD = d; best = n.id; }
+        });
+        return bestD <= radius ? best : null;
+      },
+      step: function (dtSec) {
+        var dt = Math.max(0, Math.min(0.25, +dtSec || 0));
+        var z = S.currentZigzag;
+        if (S.reducedMotion) {
+          if (z) S.travelT = z.hops;
+          S.peek = S.peek > 0 ? 0.6 : 0; S.dipFlash = {};
+          return;
+        }
+        S.time += dt;
+        if (z) { S.travelT += dt * 0.55; if (S.travelT > z.hops + 1.2) S.travelT = 0; }
+        S.peek = Math.max(0, S.peek - dt * 0.12);
+        Object.keys(S.dipFlash).forEach(function (k) { S.dipFlash[k] = Math.max(0, S.dipFlash[k] - dt * 1.4); });
+      },
+      reset: function () { init(); return getState(); },
+      setReducedMotion: function (flag) { S.reducedMotion = !!flag; if (S.reducedMotion && S.currentZigzag) S.travelT = S.currentZigzag.hops; return getState(); },
+      getState: getState,
+      renderMultiInkStrata: function (ctx, width, height, viewOpts) { renderStrata(ctx, width, height, viewOpts || {}, S); }
+    };
+    init();
+    return api;
+  }
+
+  /* ---------- Canvas renderer: four inks on vellum over the lagoon ---------- */
+  function segGeom(seg, from, to, w, h, tilt) {
+    var a = LOCUS_BY_ID[from], b = LOCUS_BY_ID[to];
+    var p0 = projectPoint(a.u, a.v, a.z, w, h, tilt), p2 = projectPoint(b.u, b.v, b.z, w, h, tilt);
+    var dx = p2.x - p0.x, dy = p2.y - p0.y, len = Math.hypot(dx, dy) || 1;
+    var bend = (seg.a === from ? seg.bend : -seg.bend);
+    var c = { x: (p0.x + p2.x) / 2 - dy / len * bend * len, y: (p0.y + p2.y) / 2 + dx / len * bend * len };
+    return { p0: p0, c: c, p2: p2 };
+  }
+  function qpt(g, t) {
+    var m = 1 - t;
+    return { x: m * m * g.p0.x + 2 * m * t * g.c.x + t * t * g.p2.x, y: m * m * g.p0.y + 2 * m * t * g.c.y + t * t * g.p2.y };
+  }
+  function strokeQ(ctx, g) { ctx.beginPath(); ctx.moveTo(g.p0.x, g.p0.y); ctx.quadraticCurveTo(g.c.x, g.c.y, g.p2.x, g.p2.y); ctx.stroke(); }
+
+  function renderStrata(ctx, w, h, view, S) {
+    if (!ctx || !w || !h) return;
+    var tilt = typeof view.airspaceTilt === 'number' ? view.airspaceTilt : 0.38;
+    var t = S.time, k = Math.max(0.6, Math.min(w, h) / 700);
+    ctx.save();
+    try {
+      /* ground: vellum folio with abyssal lagoon along the seaward edge */
+      ctx.fillStyle = PALETTE.vellum; ctx.fillRect(0, 0, w, h);
+      var lg = ctx.createLinearGradient(w * 0.86, 0, w, 0);
+      lg.addColorStop(0, 'rgba(14,24,24,0)'); lg.addColorStop(1, 'rgba(14,24,24,0.85)');
+      ctx.fillStyle = lg; ctx.fillRect(w * 0.86, 0, w * 0.14, h);
+      ctx.fillStyle = 'rgba(14,24,24,0.55)'; ctx.fillRect(0, h * 0.93, w, h * 0.07);
+      /* terracotta blocks, deterministic */
+      var br = makeRng(3131);
+      for (var i = 0; i < 70; i++) {
+        var bu = 0.06 + br() * 0.86, bv = 0.12 + br() * 0.76, bz = 2 + br() * 10;
+        var near = CITY_LOCI.some(function (n) { return Math.abs(n.u - bu) < 0.035 && Math.abs(n.v - bv) < 0.05; });
+        if (near) continue;
+        var bp = projectPoint(bu, bv, bz, w, h, tilt), bw = (10 + br() * 18) * k, bh = (8 + br() * 12) * k;
+        ctx.fillStyle = 'rgba(194,73,45,0.18)'; ctx.fillRect(bp.x - bw / 2, bp.y - bh / 2, bw, bh);
+        ctx.fillStyle = 'rgba(217,122,62,0.28)';
+        ctx.beginPath(); ctx.moveTo(bp.x - bw / 2, bp.y - bh / 2); ctx.lineTo(bp.x, bp.y - bh / 2 - 5 * k); ctx.lineTo(bp.x + bw / 2, bp.y - bh / 2); ctx.fill();
+      }
+      /* four ink networks */
+      var order = ['sewer_sepia', 'canal_emerald', 'street_vermilion', 'rooftop_violet'];
+      order.forEach(function (inkId) {
+        var on = !!S.active[inkId], flash = S.dipFlash[inkId] || 0, ink = INK_BY_ID[inkId];
+        ctx.globalAlpha = on ? (view.highlightInk && view.highlightInk !== inkId ? 0.35 : 0.9) : 0.07;
+        ROUTE_SEGMENTS.forEach(function (s) {
+          if (s.ink !== inkId) return;
+          var g = segGeom(s, s.a, s.b, w, h, tilt);
+          ctx.setLineDash([]); ctx.lineCap = 'round';
+          if (inkId === 'canal_emerald') {
+            ctx.strokeStyle = ink.color; ctx.lineWidth = (7 + flash * 4) * k; strokeQ(ctx, g);
+            ctx.strokeStyle = PALETTE.emeraldWake; ctx.lineWidth = 1.2 * k; ctx.setLineDash([6 * k, 9 * k]);
+            ctx.lineDashOffset = -t * 18; strokeQ(ctx, g);
+          } else if (inkId === 'street_vermilion') {
+            ctx.strokeStyle = ink.color; ctx.lineWidth = (3.2 + flash * 3) * k; strokeQ(ctx, g);
+            ctx.strokeStyle = PALETTE.ochre; ctx.lineWidth = 1 * k;
+            for (var q = 0.1; q < 0.95; q += 0.12) { var sp = qpt(g, q); ctx.beginPath(); ctx.moveTo(sp.x - 3 * k, sp.y - 3 * k); ctx.lineTo(sp.x + 3 * k, sp.y + 3 * k); ctx.stroke(); }
+            if (s.kind === 'cambered_bridge' || s.kind === 'hanging_street') {
+              var m = qpt(g, 0.5); ctx.strokeStyle = PALETTE.ironGall; ctx.lineWidth = 1.4 * k;
+              ctx.beginPath(); ctx.arc(m.x, m.y + 4 * k, 7 * k, Math.PI * 1.1, Math.PI * 1.9); ctx.stroke();
+            }
+          } else if (inkId === 'rooftop_violet') {
+            ctx.strokeStyle = ink.color; ctx.lineWidth = (2.6 + flash * 3) * k; ctx.setLineDash([10 * k, 7 * k]); strokeQ(ctx, g);
+          } else {
+            ctx.strokeStyle = PALETTE.lampblack; ctx.lineWidth = (6 + flash * 3) * k; ctx.globalAlpha *= 0.5; strokeQ(ctx, g);
+            ctx.globalAlpha = on ? 0.9 : 0.07; ctx.strokeStyle = ink.color; ctx.lineWidth = 2.4 * k; ctx.setLineDash([2 * k, 5 * k]); strokeQ(ctx, g);
+            if (on) { var rp = qpt(g, (t * 0.25 + s.bend * 3 + 1) % 1); ctx.fillStyle = PALETTE.lampblack; ctx.beginPath(); ctx.ellipse(rp.x, rp.y, 3 * k, 1.8 * k, 0, 0, Math.PI * 2); ctx.fill(); }
+          }
+        });
+      });
+      ctx.globalAlpha = 1; ctx.setLineDash([]);
+      /* skiffs on canals, cats on gutters */
+      ROUTE_SEGMENTS.forEach(function (s, idx) {
+        if (!S.active[s.ink]) return;
+        var g = segGeom(s, s.a, s.b, w, h, tilt), ph = (t * 0.08 + idx * 0.37) % 1;
+        if (s.ink === 'canal_emerald' && idx % 2 === 0) {
+          var sk = qpt(g, ph), sk2 = qpt(g, Math.min(1, ph + 0.02)), ang = Math.atan2(sk2.y - sk.y, sk2.x - sk.x);
+          ctx.save(); ctx.translate(sk.x, sk.y); ctx.rotate(ang); ctx.fillStyle = PALETTE.ironGall;
+          ctx.beginPath(); ctx.moveTo(-8 * k, 0); ctx.quadraticCurveTo(0, 5 * k, 8 * k, 0); ctx.lineTo(-8 * k, 0); ctx.fill();
+          ctx.strokeStyle = PALETTE.ochre; ctx.lineWidth = k; ctx.beginPath(); ctx.moveTo(2 * k, 0); ctx.lineTo(-4 * k, -7 * k); ctx.stroke(); ctx.restore();
+        } else if (s.kind === 'cat_gutter') {
+          var cp = qpt(g, 0.5 + 0.35 * Math.sin(t * 0.5 + idx)); ctx.fillStyle = PALETTE.lampblack;
+          ctx.beginPath(); ctx.ellipse(cp.x, cp.y - 3 * k, 5 * k, 2.6 * k, 0, 0, Math.PI * 2); ctx.fill();
+          ctx.beginPath(); ctx.arc(cp.x + 5 * k, cp.y - 5 * k, 2.2 * k, 0, Math.PI * 2); ctx.fill();
+          ctx.beginPath(); ctx.moveTo(cp.x + 4 * k, cp.y - 7 * k); ctx.lineTo(cp.x + 4.6 * k, cp.y - 9 * k); ctx.lineTo(cp.x + 5.6 * k, cp.y - 7 * k); ctx.fill();
+          ctx.strokeStyle = PALETTE.lampblack; ctx.lineWidth = k; ctx.beginPath(); ctx.moveTo(cp.x - 5 * k, cp.y - 3 * k); ctx.quadraticCurveTo(cp.x - 9 * k, cp.y - 9 * k, cp.x - 7 * k, cp.y - 11 * k); ctx.stroke();
+        }
+      });
+      drawLoci(ctx, w, h, tilt, k, S, view);
+      drawZigzag(ctx, w, h, tilt, k, S);
+    } catch (e) { S.lastRenderError = String(e && e.message || e); /* never let a frame throw */ }
+    ctx.restore();
+  }
+
+  function drawCargo(ctx, cargo, x, y, k) {
+    if (cargo === 'wheels_of_cheese') {
+      ctx.fillStyle = PALETTE.gold; ctx.beginPath(); ctx.arc(x, y, 5 * k, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = PALETTE.filament; ctx.beginPath(); ctx.moveTo(x, y); ctx.arc(x, y, 5 * k, -0.4, 0.4); ctx.fill();
+      ctx.strokeStyle = PALETTE.sepia; ctx.lineWidth = 0.8 * k; ctx.beginPath(); ctx.arc(x, y, 5 * k, 0, Math.PI * 2); ctx.stroke();
+    } else if (cargo === 'gunpowder_kegs') {
+      ctx.fillStyle = PALETTE.sepia; ctx.beginPath(); ctx.ellipse(x, y, 4.4 * k, 6 * k, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = PALETTE.lampblack; ctx.lineWidth = 1.1 * k;
+      ctx.beginPath(); ctx.moveTo(x - 4.2 * k, y - 2.5 * k); ctx.lineTo(x + 4.2 * k, y - 2.5 * k); ctx.moveTo(x - 4.2 * k, y + 2.5 * k); ctx.lineTo(x + 4.2 * k, y + 2.5 * k); ctx.stroke();
+      ctx.fillStyle = PALETTE.terracotta; ctx.fillRect(x - 0.8 * k, y - 8.5 * k, 1.6 * k, 2.6 * k);
+    } else {
+      ctx.fillStyle = '#8C6A48'; ctx.fillRect(x - 5 * k, y - 4 * k, 10 * k, 8 * k);
+      ctx.strokeStyle = PALETTE.lampblack; ctx.lineWidth = 0.9 * k;
+      ctx.beginPath(); ctx.moveTo(x - 5 * k, y - 4 * k); ctx.lineTo(x + 5 * k, y + 4 * k); ctx.moveTo(x + 5 * k, y - 4 * k); ctx.lineTo(x - 5 * k, y + 4 * k); ctx.stroke();
+    }
+  }
+
+  function drawLoci(ctx, w, h, tilt, k, S, view) {
+    var insp = S.inspectedLocus ? S.inspectedLocus.id : null, t = S.time;
+    CITY_LOCI.forEach(function (n, idx) {
+      var p = projectPoint(n.u, n.v, n.z, w, h, tilt), base = projectPoint(n.u, n.v, 0, w, h, tilt);
+      var focused = insp === n.id, lift = focused ? S.peek : 0;
+      if (n.z > 0) { ctx.strokeStyle = 'rgba(34,30,27,0.25)'; ctx.lineWidth = k; ctx.setLineDash([2 * k, 3 * k]); ctx.beginPath(); ctx.moveTo(base.x, base.y); ctx.lineTo(p.x, p.y); ctx.stroke(); ctx.setLineDash([]); }
+      ctx.fillStyle = PALETTE.ironGall; ctx.strokeStyle = PALETTE.ironGall; ctx.lineWidth = 1.4 * k;
+      if (n.kind === 'pinnacle_spire') {
+        ctx.fillStyle = PALETTE.terracotta; ctx.beginPath(); ctx.moveTo(p.x, p.y - 18 * k); ctx.lineTo(p.x - 5 * k, p.y + 4 * k); ctx.lineTo(p.x + 5 * k, p.y + 4 * k); ctx.fill(); ctx.stroke();
+      } else if (n.kind === 'sewer_manhole') {
+        ctx.fillStyle = PALETTE.lampblack; ctx.beginPath(); ctx.ellipse(p.x, p.y, 9 * k, 4.5 * k, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = PALETTE.sepia; ctx.beginPath(); ctx.moveTo(p.x - 7 * k, p.y); ctx.lineTo(p.x + 7 * k, p.y); ctx.moveTo(p.x, p.y - 4 * k); ctx.lineTo(p.x, p.y + 4 * k); ctx.stroke();
+        /* conspirator / smuggler peeking from the manhole with cargo */
+        var rise = (S.active.sewer_sepia ? 3 : 0) + lift * 10 + Math.max(0, Math.sin(t * 0.9 + idx)) * 2;
+        if (rise > 0.5) {
+          ctx.fillStyle = PALETTE.sepia; ctx.beginPath(); ctx.arc(p.x - 2 * k, p.y - rise * k, 4 * k, Math.PI, 0); ctx.fill();
+          ctx.fillStyle = PALETTE.lampblack; ctx.fillRect(p.x - 7 * k, p.y - (rise + 3) * k, 10 * k, 1.6 * k);
+          ctx.fillStyle = PALETTE.filament; ctx.fillRect(p.x - 3.5 * k, p.y - (rise - 1) * k, 1.2 * k, 1.2 * k); ctx.fillRect(p.x - 0.5 * k, p.y - (rise - 1) * k, 1.2 * k, 1.2 * k);
+          drawCargo(ctx, n.cargo, p.x + 10 * k, p.y - (rise * 0.6 + 3) * k, k);
+        }
+      } else if (n.kind === 'lovers_balcony') {
+        ctx.strokeStyle = PALETTE.ironGall; ctx.beginPath(); ctx.moveTo(p.x - 10 * k, p.y + 3 * k); ctx.lineTo(p.x + 10 * k, p.y + 3 * k); ctx.stroke();
+        for (var b = -9; b <= 9; b += 3) { ctx.beginPath(); ctx.moveTo(p.x + b * k, p.y + 3 * k); ctx.lineTo(p.x + b * k, p.y - 2 * k); ctx.stroke(); }
+        var lean = Math.sin(t * 0.7) * 1.2 + lift * 2;
+        ctx.fillStyle = PALETTE.violet; ctx.beginPath(); ctx.arc(p.x - 3.5 * k + lean * k * 0.5, p.y - 9 * k, 2.5 * k, 0, Math.PI * 2); ctx.arc(p.x + 3.5 * k - lean * k * 0.5, p.y - 9 * k, 2.5 * k, 0, Math.PI * 2); ctx.fill();
+        ctx.fillRect(p.x - 5.5 * k, p.y - 7 * k, 3.6 * k, 7 * k); ctx.fillRect(p.x + 1.9 * k, p.y - 7 * k, 3.6 * k, 7 * k);
+        ctx.fillStyle = PALETTE.terracotta; ctx.beginPath(); ctx.arc(p.x - 1 * k, p.y - 15 * k, 1.5 * k, 0, Math.PI * 2); ctx.arc(p.x + 1 * k, p.y - 15 * k, 1.5 * k, 0, Math.PI * 2); ctx.fill();
+      } else if (n.kind === 'cambered_bridge') {
+        ctx.strokeStyle = PALETTE.terracotta; ctx.lineWidth = 3 * k; ctx.beginPath(); ctx.arc(p.x, p.y + 8 * k, 11 * k, Math.PI * 1.15, Math.PI * 1.85); ctx.stroke();
+      } else if (n.kind === 'hanging_street') {
+        ctx.strokeStyle = PALETTE.ironGall; ctx.beginPath(); ctx.moveTo(p.x - 11 * k, p.y - 9 * k); ctx.lineTo(p.x - 9 * k, p.y); ctx.moveTo(p.x + 11 * k, p.y - 9 * k); ctx.lineTo(p.x + 9 * k, p.y); ctx.stroke();
+        ctx.fillStyle = PALETTE.ochre; ctx.fillRect(p.x - 11 * k, p.y - 1.5 * k, 22 * k, 3 * k);
+      } else if (n.kind === 'cat_gutter') {
+        ctx.strokeStyle = PALETTE.ironGall; ctx.beginPath(); ctx.moveTo(p.x - 11 * k, p.y + 4 * k); ctx.lineTo(p.x, p.y - 6 * k); ctx.lineTo(p.x + 11 * k, p.y + 4 * k); ctx.stroke();
+        ctx.strokeStyle = '#9A9A92'; ctx.beginPath(); ctx.moveTo(p.x - 11 * k, p.y + 6 * k); ctx.bezierCurveTo(p.x - 4 * k, p.y + 10 * k, p.x + 4 * k, p.y + 2 * k, p.x + 11 * k, p.y + 6 * k); ctx.stroke();
+      } else {
+        ctx.fillStyle = PALETTE.terracotta;
+        for (var st = 0; st < 3; st++) ctx.fillRect(p.x - (8 - st * 2) * k, p.y + (2 - st * 3) * k, (16 - st * 4) * k, 2.6 * k);
+      }
+      if (focused) {
+        ctx.strokeStyle = PALETTE.gold; ctx.lineWidth = 2 * k; ctx.beginPath(); ctx.arc(p.x, p.y - 2 * k, 16 * k + Math.sin(t * 3) * 2 * k, 0, Math.PI * 2); ctx.stroke();
+      }
+      if (view.showLabels !== false) {
+        ctx.font = (focused ? 'bold ' : '') + Math.round(10 * k) + 'px Georgia, serif'; ctx.textAlign = 'center';
+        ctx.fillStyle = PALETTE.ironGall; ctx.fillText(focused ? n.id + ' ' + n.name : n.id, p.x, p.y + 17 * k);
+      }
+    });
+  }
+
+  function drawZigzag(ctx, w, h, tilt, k, S) {
+    var z = S.currentZigzag; if (!z) return;
+    var pulse = 0.6 + 0.4 * Math.sin(S.time * 2.4);
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    z.segments.forEach(function (sg) {
+      var g = segGeom(SEGMENT_BY_ID[sg.id], sg.from, sg.to, w, h, tilt);
+      ctx.globalAlpha = 0.35 * pulse; ctx.strokeStyle = PALETTE.filament; ctx.lineWidth = 12 * k; strokeQ(ctx, g);
+      ctx.globalAlpha = 1; ctx.strokeStyle = INK_BY_ID[sg.ink].glow; ctx.lineWidth = 4 * k; strokeQ(ctx, g);
+    });
+    z.nodes.forEach(function (id, i) {
+      var n = LOCUS_BY_ID[id], p = projectPoint(n.u, n.v, n.z, w, h, tilt);
+      ctx.fillStyle = PALETTE.gold; ctx.strokeStyle = PALETTE.ironGall; ctx.lineWidth = 1.2 * k;
+      ctx.beginPath(); ctx.arc(p.x + 11 * k, p.y - 11 * k, 7 * k, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = PALETTE.ironGall; ctx.font = 'bold ' + Math.round(9 * k) + 'px Georgia, serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(String(i), p.x + 11 * k, p.y - 11 * k); ctx.textBaseline = 'alphabetic';
+    });
+    var tt = Math.min(z.hops - 1e-6, Math.max(0, S.travelT)), si = Math.floor(tt), sg = z.segments[si];
+    if (!sg) return;
+    var tp = qpt(segGeom(SEGMENT_BY_ID[sg.id], sg.from, sg.to, w, h, tilt), tt - si);
+    ctx.globalAlpha = 0.5; ctx.fillStyle = PALETTE.filament; ctx.beginPath(); ctx.arc(tp.x, tp.y, 11 * k, 0, Math.PI * 2); ctx.fill();
+    ctx.globalAlpha = 1; ctx.fillStyle = INK_BY_ID[sg.ink].color; ctx.strokeStyle = PALETTE.vellum; ctx.lineWidth = 2 * k;
+    ctx.beginPath(); ctx.arc(tp.x, tp.y, 5.5 * k, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+  }
+
+  var EsmeraldaMultiInkZigzags = {
+    PALETTE: PALETTE, INK_STRATA: INK_STRATA, CITY_LOCI: CITY_LOCI, ROUTE_SEGMENTS: ROUTE_SEGMENTS,
+    projectPoint: projectPoint, enumerateZigzags: enumerateZigzags, createInkAudio: createInkAudio,
+    createZigzagNavigator: createZigzagNavigator
+  };
+  root.EsmeraldaMultiInkZigzags = EsmeraldaMultiInkZigzags;
+  if (typeof module !== 'undefined' && module.exports) module.exports = EsmeraldaMultiInkZigzags;
+})(typeof globalThis !== 'undefined' ? globalThis : this);
+
+</script>
+<script>
+/*
+ * ESMERALDA — Airy Swallow Parabolas (Aerial Survey Layer)
+ * Layer owner: esmeralda-swallow-arc (canonical role: esmeralda-swallow-parabola)
+ *
+ * "Harder to fix on paper are the routes of the swallows, which cut the air
+ *  over the roofs, dropping along invisible parabolas with still wings,
+ *  darting to gulp a mosquito, spiraling upward, grazing a pinnacle,
+ *  dominating from every point of their airy paths all the points of the city."
+ *
+ * Classic browser IIFE. Sets globalThis.EsmeraldaSwallowParabolas.
+ * No module syntax, no network access, no relative parent paths.
+ */
+(function (root) {
+  'use strict';
+
+  var TAU = Math.PI * 2;
+  var Z_MIN = 18;
+  var Z_MAX = 58;
+  var ROOF_CEILING = 16;
+  var CURVE_SAMPLES = 16;
+  var MOSQUITO_COUNT = 12;
+
+  var PALETTE = {
+    vellum_folio: '#F1E9D6',
+    abyssal_lagoon: '#0E1818',
+    swallow_gold: '#D8A428',
+    airy_filament: '#F5CF6B',
+    iron_gall: '#221E1B',
+    ridgepole_terracotta: '#C2492D',
+    clandestine_violet: '#7A3B8E',
+    emerald_wake: '#22B59B'
+  };
+
+  var FLIGHT_REGIMES = ['still_wing_parabola', 'mosquito_dart', 'pinnacle_spiral'];
+
+  var REGIME_INFO = {
+    still_wing_parabola: { label: 'Still-wing parabolic drop', wingBeatHz: 0 },
+    mosquito_dart: { label: 'Darting to swallow a mosquito', wingBeatHz: 14 },
+    pinnacle_spiral: { label: 'Spiraling up, grazing a pinnacle', wingBeatHz: 7 }
+  };
+
+  /* Survey city_loci (L0..L13); pinnacles L3, L8, L11. */
+  var CITY_LOCI = [
+    { id: 'L0', name: 'Fondaco Water-Stair', u: 0.13, v: 0.62, z: 0, kind: 'canal_quay', pinnacle: false },
+    { id: 'L1', name: 'Cambered Bridge of Scales', u: 0.25, v: 0.48, z: 5, kind: 'cambered_bridge', pinnacle: false },
+    { id: 'L2', name: 'Cheese-Smuggler Manhole', u: 0.22, v: 0.76, z: -5, kind: 'sewer_manhole', pinnacle: false },
+    { id: 'L3', name: 'Salt-Guild Pinnacle', u: 0.31, v: 0.24, z: 28, kind: 'pinnacle_spire', pinnacle: true },
+    { id: 'L4', name: 'Cat-Gutter Ridgepole', u: 0.39, v: 0.36, z: 16, kind: 'cat_gutter', pinnacle: false },
+    { id: 'L5', name: 'Emerald Basin Crossroads', u: 0.44, v: 0.57, z: 0, kind: 'canal_junction', pinnacle: false },
+    { id: 'L6', name: 'Gunpowder-Keg Grate', u: 0.48, v: 0.80, z: -6, kind: 'sewer_manhole', pinnacle: false },
+    { id: 'L7', name: 'Hanging Street of Dyers', u: 0.56, v: 0.44, z: 8, kind: 'hanging_street', pinnacle: false },
+    { id: 'L8', name: 'Campanile of Swallows', u: 0.59, v: 0.20, z: 33, kind: 'pinnacle_spire', pinnacle: true },
+    { id: 'L9', name: "Lovers' Wrought Balcony", u: 0.68, v: 0.34, z: 14, kind: 'lovers_balcony', pinnacle: false },
+    { id: 'L10', name: 'Double-Arch Canal Lock', u: 0.69, v: 0.60, z: 0, kind: 'cambered_bridge', pinnacle: false },
+    { id: 'L11', name: 'Customs Watch-Pinnacle', u: 0.82, v: 0.25, z: 30, kind: 'pinnacle_spire', pinnacle: true },
+    { id: 'L12', name: 'Contraband Vault Manhole', u: 0.79, v: 0.77, z: -5, kind: 'sewer_manhole', pinnacle: false },
+    { id: 'L13', name: 'Seaward Stepped Mole', u: 0.88, v: 0.53, z: 3, kind: 'stepped_quay', pinnacle: false }
+  ];
+
+  var PINNACLE_IDS = ['L3', 'L8', 'L11'];
+
+  var SWALLOW_ROSTER = [
+    { id: 'S0', name: 'Rondine of the Salt Quay', u: 0.16, v: 0.40, z: 54, homePinnacle: 'L3', regime: 'still_wing_parabola' },
+    { id: 'S1', name: 'Dyers\' Fork-Tail', u: 0.30, v: 0.55, z: 47, homePinnacle: 'L3', regime: 'still_wing_parabola' },
+    { id: 'S2', name: 'Campanile Sickle', u: 0.52, v: 0.30, z: 57, homePinnacle: 'L8', regime: 'pinnacle_spiral' },
+    { id: 'S3', name: 'Basin Skimmer', u: 0.45, v: 0.62, z: 40, homePinnacle: 'L8', regime: 'still_wing_parabola' },
+    { id: 'S4', name: 'Mosquito Gulper of the Lock', u: 0.66, v: 0.52, z: 36, homePinnacle: 'L8', regime: 'mosquito_dart' },
+    { id: 'S5', name: 'Customs Crescent', u: 0.78, v: 0.38, z: 52, homePinnacle: 'L11', regime: 'still_wing_parabola' },
+    { id: 'S6', name: 'Seaward Scythe', u: 0.86, v: 0.60, z: 44, homePinnacle: 'L11', regime: 'still_wing_parabola' }
+  ];
+
+  function projectAirPoint(u, v, z, width, height, airspaceTilt) {
+    var tilt = (typeof airspaceTilt === 'number' && isFinite(airspaceTilt)) ? airspaceTilt : 0.38;
+    return { sx: u * width, sy: v * height - z * (0.45 + tilt * 1.15) };
+  }
+
+  function clamp(x, a, b) { return x < a ? a : (x > b ? b : x); }
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function easeInOut(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
+
+  function makeRng(seed) {
+    var s = (seed >>> 0) || 0x5EA11A;
+    return function () {
+      s = (s + 0x6D2B79F5) >>> 0;
+      var t = s;
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function findLocus(loci, id) {
+    for (var i = 0; i < loci.length; i++) { if (loci[i].id === id) { return loci[i]; } }
+    return null;
+  }
+
+  /* ---------- Gesture-safe WebAudio voice of the airspace ---------- */
+  function createAirAudio() {
+    var ctx = null;
+    var master = null;
+    var muted = false;
+
+    function ready() { return !!(ctx && master && !muted); }
+
+    function tone(type, freq, t0, dur, peak, freqEnd) {
+      var osc = ctx.createOscillator();
+      var g = ctx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, t0);
+      if (freqEnd) { osc.frequency.exponentialRampToValueAtTime(freqEnd, t0 + dur); }
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(peak, t0 + Math.min(0.04, dur * 0.3));
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+      osc.connect(g); g.connect(master);
+      osc.start(t0); osc.stop(t0 + dur + 0.05);
+    }
+
+    function noise(t0, dur, peak, filterFreq, q, filterEnd) {
+      var len = Math.max(1, Math.floor(ctx.sampleRate * dur));
+      var buf = ctx.createBuffer(1, len, ctx.sampleRate);
+      var data = buf.getChannelData(0);
+      for (var i = 0; i < len; i++) { data[i] = Math.random() * 2 - 1; }
+      var src = ctx.createBufferSource();
+      src.buffer = buf;
+      var bp = ctx.createBiquadFilter();
+      bp.type = 'bandpass';
+      bp.frequency.setValueAtTime(filterFreq, t0);
+      if (filterEnd) { bp.frequency.exponentialRampToValueAtTime(filterEnd, t0 + dur); }
+      bp.Q.value = q;
+      var g = ctx.createGain();
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(peak, t0 + dur * 0.35);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+      src.connect(bp); bp.connect(g); g.connect(master);
+      src.start(t0); src.stop(t0 + dur + 0.05);
+    }
+
+    var api = {
+      unlock: function () {
+        try {
+          if (!ctx) {
+            var AC = root.AudioContext || root.webkitAudioContext;
+            if (!AC) { return false; }
+            ctx = new AC();
+            master = ctx.createGain();
+            master.gain.value = muted ? 0 : 0.5;
+            master.connect(ctx.destination);
+          }
+          if (ctx.state === 'suspended' && ctx.resume) { ctx.resume(); }
+          return true;
+        } catch (e) { return false; }
+      },
+      setMuted: function (m) {
+        muted = !!m;
+        try { if (master) { master.gain.value = muted ? 0 : 0.5; } } catch (e) { }
+        return muted;
+      },
+      toggleMute: function () { return api.setMuted(!muted); },
+      isMuted: function () { return muted; },
+      isUnlocked: function () { return !!ctx; },
+      playStillWing: function () {
+        if (!ready()) { return; }
+        try {
+          var t = ctx.currentTime;
+          noise(t, 1.8, 0.10, 900, 0.7, 380);
+          tone('sine', 523.25, t, 1.6, 0.05, 392);
+          tone('sine', 784.0, t + 0.1, 1.4, 0.025, 587.3);
+        } catch (e) { }
+      },
+      playMosquitoSnap: function () {
+        if (!ready()) { return; }
+        try {
+          var t = ctx.currentTime;
+          tone('triangle', 1318.5, t, 0.09, 0.14, 660);
+          tone('square', 2637, t + 0.005, 0.03, 0.03);
+          noise(t, 0.05, 0.05, 4200, 3);
+        } catch (e) { }
+      },
+      playPinnacleChime: function () {
+        if (!ready()) { return; }
+        try {
+          var t = ctx.currentTime;
+          var notes = [587.33, 739.99, 880.0, 1174.66];
+          for (var i = 0; i < notes.length; i++) { tone('sine', notes[i], t + i * 0.11, 1.2, 0.07); }
+          tone('triangle', 2349.3, t + 0.44, 1.5, 0.02);
+        } catch (e) { }
+      },
+      playParchmentDissolve: function () {
+        if (!ready()) { return; }
+        try {
+          var t = ctx.currentTime;
+          noise(t, 0.35, 0.12, 2400, 1.2, 600);
+          noise(t + 0.3, 1.9, 0.07, 1800, 4, 7200);
+          for (var i = 0; i < 6; i++) { tone('sine', 1046.5 * Math.pow(1.122, i), t + 0.35 + i * 0.13, 0.9, 0.025); }
+        } catch (e) { }
+      }
+    };
+    return api;
+  }
+
+  /* ---------- The airspace engine ---------- */
+  function createSwallowAirspace(opts) {
+    opts = opts || {};
+    var loci = (Array.isArray(opts.cityLoci) && opts.cityLoci.length === 14) ? opts.cityLoci.map(function (l) {
+      return { id: l.id, name: l.name, u: +l.u, v: +l.v, z: +l.z || 0, kind: l.kind, pinnacle: !!l.pinnacle };
+    }) : CITY_LOCI.map(function (l) { return Object.assign({}, l); });
+    var pinnacles = PINNACLE_IDS.map(function (id) { return findLocus(loci, id); }).filter(Boolean);
+    var seed = typeof opts.seed === 'number' ? opts.seed : 31031;
+    var rng = makeRng(seed);
+    var audio = opts.audio || createAirAudio();
+
+    var S = {};
+
+    function rand(a, b) { return a + (b - a) * rng(); }
+
+    function makeMosquito() {
+      return {
+        baseU: rand(0.14, 0.86), baseV: rand(0.22, 0.72), baseZ: rand(22, 46),
+        ampU: rand(0.01, 0.035), ampV: rand(0.008, 0.025), ampZ: rand(1.5, 5),
+        freq: rand(0.6, 1.7), phase: rand(0, TAU), u: 0, v: 0, z: 0, gulpFlash: 0
+      };
+    }
+
+    function updateMosquito(m, T) {
+      m.u = clamp(m.baseU + m.ampU * Math.sin(m.freq * T + m.phase), 0.05, 0.95);
+      m.v = clamp(m.baseV + m.ampV * Math.sin(m.freq * 1.37 * T + m.phase * 0.7), 0.12, 0.85);
+      m.z = clamp(m.baseZ + m.ampZ * Math.sin(m.freq * 2.1 * T + m.phase * 1.3), Z_MIN, Z_MAX - 6);
+    }
+
+    function nearestPinnacle(u, v) {
+      var best = pinnacles[0], bd = Infinity;
+      for (var i = 0; i < pinnacles.length; i++) {
+        var d = Math.hypot(pinnacles[i].u - u, pinnacles[i].v - v);
+        if (d < bd) { bd = d; best = pinnacles[i]; }
+      }
+      return best;
+    }
+
+    function curvePoint(sw, t) {
+      var p, e;
+      t = clamp(t, 0, 1);
+      if (sw.regime === 'mosquito_dart') {
+        var m = S.mosquitoes[sw.dart.target];
+        e = easeInOut(t);
+        p = { u: lerp(sw.dart.u0, m.u, e), v: lerp(sw.dart.v0, m.v, e), z: lerp(sw.dart.z0, m.z, e) - 3 * Math.sin(Math.PI * t) };
+      } else if (sw.regime === 'pinnacle_spiral') {
+        var sp = sw.spiral;
+        var ang = sp.theta0 + t * sp.turns * TAU;
+        var r = lerp(sp.r0, 0.016, Math.sqrt(t));
+        p = { u: sp.pu + r * Math.cos(ang), v: sp.pv + r * Math.sin(ang) * 0.62, z: lerp(sp.z0, sp.z1, t) };
+      } else {
+        var pa = sw.para;
+        /* Ballistic still-wing drop: uniform horizontal glide, quadratic fall. */
+        p = { u: lerp(pa.u0, pa.u1, t), v: lerp(pa.v0, pa.v1, t), z: pa.z0 - (pa.z0 - pa.z1) * t * t };
+      }
+      p.z = clamp(p.z, Z_MIN, Z_MAX);
+      return p;
+    }
+
+    function planParabola(sw) {
+      if (sw.z < 24) { planSpiral(sw); return; }
+      var P = pinnacles[Math.floor(rng() * pinnacles.length)];
+      var ang = rand(0, TAU), rad = rand(0.07, 0.15);
+      sw.regime = 'still_wing_parabola';
+      sw.para = {
+        u0: sw.u, v0: sw.v, z0: sw.z,
+        u1: clamp(P.u + Math.cos(ang) * rad, 0.06, 0.94),
+        v1: clamp(P.v + Math.sin(ang) * rad * 0.62 + 0.04, 0.12, 0.82),
+        z1: clamp(rand(19, 23), Z_MIN, sw.z - 3)
+      };
+      sw.t = 0; sw.dur = rand(3.6, 5.6);
+      sw.wingBeatHz = 0;
+    }
+
+    function planSpiral(sw, forcedPinnacle) {
+      var P = forcedPinnacle || nearestPinnacle(sw.u, sw.v);
+      var dx = sw.u - P.u, dy = (sw.v - P.v) / 0.62;
+      sw.regime = 'pinnacle_spiral';
+      sw.spiral = {
+        pinnacleId: P.id, pu: P.u, pv: P.v, pz: P.z,
+        theta0: Math.atan2(dy, dx), r0: clamp(Math.hypot(dx, dy), 0.03, 0.2),
+        turns: rand(2.2, 3.1), z0: sw.z, z1: clamp(rand(53, 58), Math.max(sw.z + 6, P.z + 12), Z_MAX),
+        grazed: false
+      };
+      sw.t = 0; sw.dur = rand(4.4, 6.0);
+      sw.wingBeatHz = REGIME_INFO.pinnacle_spiral.wingBeatHz;
+    }
+
+    function planDart(sw, mIdx) {
+      if (typeof mIdx !== 'number' || mIdx < 0 || mIdx >= S.mosquitoes.length) {
+        var bd = Infinity;
+        for (var i = 0; i < S.mosquitoes.length; i++) {
+          var m = S.mosquitoes[i];
+          var d = Math.hypot(m.u - sw.u, m.v - sw.v, (m.z - sw.z) / 140);
+          if (d < bd) { bd = d; mIdx = i; }
+        }
+      }
+      sw.regime = 'mosquito_dart';
+      sw.dart = { u0: sw.u, v0: sw.v, z0: sw.z, target: mIdx };
+      sw.t = 0; sw.dur = 0.75;
+      sw.wingBeatHz = REGIME_INFO.mosquito_dart.wingBeatHz;
+    }
+
+    /* All-Point Dominance: from every airy curve sample above the roofs, sightlines reach all 14 loci. */
+    function sightlinesFrom(sample) {
+      var reached = 0;
+      if (sample.z < ROOF_CEILING) { return 0; }
+      for (var j = 0; j < loci.length; j++) {
+        var L = loci[j];
+        var len = Math.hypot(L.u - sample.u, L.v - sample.v, (L.z - sample.z) / 200);
+        if (isFinite(len)) { reached++; }
+      }
+      return reached;
+    }
+
+    function curveSamples(sw) {
+      var out = [];
+      for (var i = 0; i < CURVE_SAMPLES; i++) { out.push(curvePoint(sw, i / (CURVE_SAMPLES - 1))); }
+      return out;
+    }
+
+    function computeDominance() {
+      var minCount = loci.length, samples = 0, allOk = true;
+      for (var s = 0; s < S.swallows.length; s++) {
+        var pts = curveSamples(S.swallows[s]);
+        pts.push({ u: S.swallows[s].u, v: S.swallows[s].v, z: S.swallows[s].z });
+        for (var k = 0; k < pts.length; k++) {
+          var c = sightlinesFrom(pts[k]);
+          samples++;
+          if (c < minCount) { minCount = c; }
+          if (c !== loci.length) { allOk = false; }
+        }
+      }
+      S.dominatedPointsCount = minCount;
+      S.curveSamplesChecked = samples;
+      S.everyCurvePointDominatesAll = allOk;
+    }
+
+    var PIN_PRESS_DUR = 0.9;
+    var PIN_DISSOLVE_DUR = 1.7;
+
+    function emit(type, detail) {
+      if (typeof opts.onEvent === 'function') {
+        try { opts.onEvent(type, detail); } catch (e) { }
+      }
+    }
+
+    function init() {
+      rng = makeRng(seed);
+      S.time = 0;
+      S.mosquitoes = [];
+      for (var m = 0; m < MOSQUITO_COUNT; m++) { S.mosquitoes.push(makeMosquito()); updateMosquito(S.mosquitoes[m], 0); }
+      S.swallows = SWALLOW_ROSTER.map(function (r, i) {
+        var sw = {
+          id: r.id, name: r.name, index: i, homePinnacle: r.homePinnacle,
+          u: r.u, v: r.v, z: clamp(r.z, Z_MIN, Z_MAX), heading: 0, wingPhase: rand(0, TAU),
+          wingBeatHz: 0, t: 0, dur: 4, regime: r.regime, trail: [], cooldown: rand(1.5, 3.5),
+          darts: 0, spirals: 0, glides: 0
+        };
+        if (r.regime === 'pinnacle_spiral') { planSpiral(sw, findLocus(loci, r.homePinnacle)); }
+        else if (r.regime === 'mosquito_dart') { planDart(sw, i % MOSQUITO_COUNT); }
+        else { planParabola(sw); }
+        return sw;
+      });
+      S.mosquitoesSwallowed = 0;
+      S.pinnacleGrazes = 0;
+      S.inspectedSwallowIndex = 0;
+      S.airspaceTilt = typeof opts.airspaceTilt === 'number' ? clamp(opts.airspaceTilt, 0, 1) : 0.38;
+      S.airyVaultView = false;
+      S.showAllPointDominance = true;
+      S.failedPaperPinAttempts = 0;
+      S.pinAttemptPhase = 'airborne_unfixed';
+      S.pinTimer = 0;
+      S.pinSwallowIndex = -1;
+      S.flatten = 0;
+      S.pressedSamples = [];
+      S.burstSightlines = [];
+      S.reducedMotion = !!opts.reducedMotion;
+      computeDominance();
+    }
+
+    function validIndex(idx) {
+      if (typeof idx !== 'number' || !isFinite(idx)) { return S.inspectedSwallowIndex; }
+      var n = S.swallows.length;
+      return ((Math.floor(idx) % n) + n) % n;
+    }
+
+    function effectiveTilt() { return S.airyVaultView ? Math.max(S.airspaceTilt, 0.86) : S.airspaceTilt; }
+
+    function advanceSwallow(sw, fdt, rdt) {
+      var prevU = sw.u, prevV = sw.v;
+      sw.t += fdt / sw.dur;
+      var p = curvePoint(sw, Math.min(sw.t, 1));
+      sw.u = p.u; sw.v = p.v; sw.z = p.z;
+      if (Math.abs(sw.u - prevU) + Math.abs(sw.v - prevV) > 1e-6) { sw.heading = Math.atan2(sw.v - prevV, sw.u - prevU); }
+      sw.wingPhase += (S.reducedMotion ? 0 : sw.wingBeatHz) * rdt * TAU;
+      sw.trail.push({ u: sw.u, v: sw.v, z: sw.z });
+      if (sw.trail.length > 56) { sw.trail.shift(); }
+      sw.cooldown = Math.max(0, sw.cooldown - fdt);
+
+      if (sw.regime === 'pinnacle_spiral' && !sw.spiral.grazed && sw.z >= sw.spiral.pz + 1) {
+        sw.spiral.grazed = true;
+        S.pinnacleGrazes++;
+        audio.playPinnacleChime();
+        emit('pinnacle_graze', { swallow: sw.id, pinnacle: sw.spiral.pinnacleId });
+      }
+      if (sw.regime === 'still_wing_parabola' && sw.cooldown <= 0) {
+        for (var i = 0; i < S.mosquitoes.length; i++) {
+          var m = S.mosquitoes[i];
+          if (Math.hypot(m.u - sw.u, m.v - sw.v, (m.z - sw.z) / 160) < 0.1 && rng() < 0.6) {
+            planDart(sw, i);
+            sw.cooldown = 3;
+            emit('mosquito_intercept', { swallow: sw.id, mosquito: i });
+            break;
+          }
+        }
+        if (sw.regime !== 'still_wing_parabola') { return; }
+      }
+      if (sw.t >= 1) { finishRegime(sw); }
+    }
+
+    function finishRegime(sw) {
+      if (sw.regime === 'mosquito_dart') {
+        var mi = sw.dart.target;
+        S.mosquitoesSwallowed++;
+        sw.darts++;
+        audio.playMosquitoSnap();
+        emit('mosquito_swallowed', { swallow: sw.id, mosquito: mi, total: S.mosquitoesSwallowed });
+        var fresh = makeMosquito();
+        fresh.gulpFlash = 1;
+        S.mosquitoes[mi] = fresh;
+        updateMosquito(fresh, S.time);
+        planParabola(sw);
+      } else if (sw.regime === 'pinnacle_spiral') {
+        sw.spirals++;
+        planParabola(sw);
+        if (sw.index === S.inspectedSwallowIndex) { audio.playStillWing(); }
+      } else {
+        sw.glides++;
+        planParabola(sw);
+      }
+    }
+
+    function stepPaperPin(dt) {
+      if (S.pinAttemptPhase === 'pressing') {
+        S.pinTimer += dt;
+        S.flatten = clamp(S.pinTimer / PIN_PRESS_DUR, 0, 1);
+        if (S.pinTimer >= PIN_PRESS_DUR) {
+          S.pinAttemptPhase = 'dissolving';
+          S.pinTimer = 0;
+          buildBurst();
+          audio.playParchmentDissolve();
+          emit('paper_dissolving', { swallow: S.swallows[S.pinSwallowIndex].id, sightlines: S.burstSightlines.length });
+        }
+      } else if (S.pinAttemptPhase === 'dissolving') {
+        S.pinTimer += dt;
+        S.flatten = 1 - easeInOut(clamp(S.pinTimer / PIN_DISSOLVE_DUR, 0, 1));
+        if (S.pinTimer >= PIN_DISSOLVE_DUR) {
+          S.pinAttemptPhase = 'airborne_unfixed';
+          S.pinTimer = 0;
+          S.flatten = 0;
+          emit('paper_unfixed', { swallow: S.swallows[S.pinSwallowIndex].id, failedPaperPinAttempts: S.failedPaperPinAttempts });
+        }
+      }
+    }
+
+    function buildBurst() {
+      S.burstSightlines = [];
+      for (var i = 0; i < S.pressedSamples.length; i++) {
+        var a = S.pressedSamples[i];
+        for (var j = 0; j < loci.length; j++) {
+          S.burstSightlines.push({ sampleIndex: i, locusId: loci[j].id, from: { u: a.u, v: a.v, z: a.z }, to: { u: loci[j].u, v: loci[j].v, z: loci[j].z } });
+        }
+      }
+    }
+
+    function step(dtSec) {
+      var dt = clamp(typeof dtSec === 'number' && isFinite(dtSec) ? dtSec : 0.016, 0, 0.1);
+      var fdt = S.reducedMotion ? dt * 0.3 : dt;
+      S.time += fdt;
+      for (var m = 0; m < S.mosquitoes.length; m++) {
+        updateMosquito(S.mosquitoes[m], S.time);
+        S.mosquitoes[m].gulpFlash = Math.max(0, S.mosquitoes[m].gulpFlash - dt * 1.5);
+      }
+      for (var s = 0; s < S.swallows.length; s++) { advanceSwallow(S.swallows[s], fdt, dt); }
+      stepPaperPin(dt);
+      computeDominance();
+      return api;
+    }
+
+    function inspectSwallow(idx) {
+      S.inspectedSwallowIndex = validIndex(idx);
+      emit('inspect', { swallow: S.swallows[S.inspectedSwallowIndex].id });
+      return getState();
+    }
+
+    function triggerMosquitoDart(idx) {
+      var sw = S.swallows[validIndex(idx)];
+      planDart(sw);
+      sw.cooldown = 3;
+      emit('mosquito_dart', { swallow: sw.id, mosquito: sw.dart.target });
+      return getState();
+    }
+
+    function triggerPinnacleSpiral(idx) {
+      var sw = S.swallows[validIndex(idx)];
+      if (sw.z > Z_MAX - 8) { sw.z = Z_MAX - 8; }
+      planSpiral(sw);
+      emit('pinnacle_spiral', { swallow: sw.id, pinnacle: sw.spiral.pinnacleId });
+      return getState();
+    }
+
+    /* The Unmappable Paper-Fixation Paradox: pressing a 3D parabola onto z=0 vellum always fails. */
+    function attemptFixSwallowsOnPaper(idx) {
+      var i = validIndex(idx);
+      var sw = S.swallows[i];
+      S.failedPaperPinAttempts++;
+      S.pinSwallowIndex = i;
+      S.inspectedSwallowIndex = i;
+      S.pinAttemptPhase = 'pressing';
+      S.pinTimer = 0;
+      S.flatten = 0;
+      S.pressedSamples = curveSamples(sw).map(function (p) { return { u: p.u, v: p.v, z: p.z }; });
+      buildBurst();
+      emit('paper_pressing', { swallow: sw.id, attempt: S.failedPaperPinAttempts });
+      return getState();
+    }
+
+    function setAirspaceTilt(val) {
+      var n = Number(val);
+      if (isFinite(n)) { S.airspaceTilt = clamp(n, 0, 1); }
+      return getState();
+    }
+
+    function toggleAiryVaultView(force) {
+      S.airyVaultView = typeof force === 'boolean' ? force : !S.airyVaultView;
+      return getState();
+    }
+
+    function toggleDominanceCone(on) {
+      S.showAllPointDominance = typeof on === 'boolean' ? on : !S.showAllPointDominance;
+      return getState();
+    }
+
+    function hitTestSwallow(normX, normY, width, height) {
+      var w = width || 1, h = height || 1;
+      var px = normX * w, py = normY * h;
+      var tilt = effectiveTilt();
+      var best = -1, bd = Math.max(18, Math.min(w, h) * 0.035);
+      for (var i = 0; i < S.swallows.length; i++) {
+        var sw = S.swallows[i];
+        var p = projectAirPoint(sw.u, sw.v, sw.z * (1 - S.flatten * (i === S.pinSwallowIndex ? 1 : 0)), w, h, tilt);
+        var d = Math.hypot(p.sx - px, p.sy - py);
+        if (d < bd) { bd = d; best = i; }
+      }
+      return best;
+    }
+
+    function setReducedMotion(on) {
+      S.reducedMotion = !!on;
+      return getState();
+    }
+
+    function reset() {
+      init();
+      emit('reset', {});
+      return getState();
+    }
+
+    function getState() {
+      var regimeCounts = { still_wing_parabola: 0, mosquito_dart: 0, pinnacle_spiral: 0 };
+      var swallows = S.swallows.map(function (sw) {
+        regimeCounts[sw.regime]++;
+        return {
+          id: sw.id, name: sw.name, index: sw.index, regime: sw.regime,
+          regimeLabel: REGIME_INFO[sw.regime].label,
+          u: sw.u, v: sw.v, z: sw.z, heading: sw.heading,
+          wingBeatHz: sw.wingBeatHz, stillWings: sw.wingBeatHz === 0,
+          progress: clamp(sw.t, 0, 1),
+          pinnacleId: sw.regime === 'pinnacle_spiral' ? sw.spiral.pinnacleId : null,
+          darts: sw.darts, spirals: sw.spirals, glides: sw.glides
+        };
+      });
+      var insp = swallows[S.inspectedSwallowIndex];
+      return {
+        swallowCount: swallows.length,
+        swallows: swallows,
+        inspectedSwallowIndex: S.inspectedSwallowIndex,
+        inspectedSwallow: insp,
+        regimeCounts: regimeCounts,
+        mosquitoCount: S.mosquitoes.length,
+        mosquitoes: S.mosquitoes.map(function (m) { return { u: m.u, v: m.v, z: m.z }; }),
+        mosquitoesSwallowed: S.mosquitoesSwallowed,
+        pinnacleGrazes: S.pinnacleGrazes,
+        pinnacles: PINNACLE_IDS.slice(),
+        airspaceTilt: S.airspaceTilt,
+        effectiveTilt: effectiveTilt(),
+        airyVaultView: S.airyVaultView,
+        showAllPointDominance: S.showAllPointDominance,
+        dominatedPointsCount: S.dominatedPointsCount,
+        totalCityPoints: loci.length,
+        dominanceRatio: S.dominatedPointsCount / loci.length,
+        everyCurvePointDominatesAll: S.everyCurvePointDominatesAll,
+        curveSamplesChecked: S.curveSamplesChecked,
+        curveSamplesPerSwallow: CURVE_SAMPLES,
+        burstSightlineCount: CURVE_SAMPLES * loci.length,
+        activeBurstSightlines: S.pinAttemptPhase === 'airborne_unfixed' ? 0 : S.burstSightlines.length,
+        failedPaperPinAttempts: S.failedPaperPinAttempts,
+        pinAttemptPhase: S.pinAttemptPhase,
+        pinSwallowIndex: S.pinSwallowIndex,
+        paperFlattening: S.flatten,
+        swallowPaperFixed: false,
+        swallowPaperFixability: 0.0,
+        altitudeRange: [Z_MIN, Z_MAX],
+        reducedMotion: S.reducedMotion,
+        muted: audio.isMuted(),
+        time: S.time
+      };
+    }
+
+    /* ---------- Canvas2D renderer ---------- */
+    function drawSwallow(ctx, x, y, heading, spread, size, color, glow) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(heading);
+      if (glow) { ctx.shadowColor = PALETTE.airy_filament; ctx.shadowBlur = 14; }
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.moveTo(size * 0.95, 0);
+      ctx.quadraticCurveTo(size * 0.1, -size * 0.55 * spread, -size * 0.55, -size * 1.65 * spread);
+      ctx.quadraticCurveTo(-size * 0.05, -size * 0.5 * spread, -size * 0.45, 0);
+      ctx.quadraticCurveTo(-size * 0.05, size * 0.5 * spread, -size * 0.55, size * 1.65 * spread);
+      ctx.quadraticCurveTo(size * 0.1, size * 0.55 * spread, size * 0.95, 0);
+      ctx.closePath();
+      ctx.fill();
+      ctx.shadowBlur = 0;
+      ctx.strokeStyle = color;
+      ctx.lineWidth = Math.max(1, size * 0.14);
+      ctx.beginPath();
+      ctx.moveTo(-size * 0.4, 0); ctx.lineTo(-size * 1.35, -size * 0.38);
+      ctx.moveTo(-size * 0.4, 0); ctx.lineTo(-size * 1.35, size * 0.38);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function renderSwallowAirspace(ctx, width, height, viewOpts) {
+      if (!ctx) { return; }
+      var vo = viewOpts || {};
+      var w = width || (ctx.canvas && ctx.canvas.width) || 800;
+      var h = height || (ctx.canvas && ctx.canvas.height) || 600;
+      var tilt = typeof vo.airspaceTilt === 'number' ? vo.airspaceTilt : effectiveTilt();
+      var T = S.time;
+      var pinIdx = S.pinAttemptPhase === 'airborne_unfixed' ? -1 : S.pinSwallowIndex;
+      function P(u, v, z) { return projectAirPoint(u, v, z, w, h, tilt); }
+      function PS(i, p) { return P(p.u, p.v, i === pinIdx ? p.z * (1 - S.flatten) : p.z); }
+
+      ctx.save();
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      if (vo.background) {
+        var g = ctx.createLinearGradient(0, 0, 0, h);
+        g.addColorStop(0, '#1C2A2A'); g.addColorStop(1, PALETTE.abyssal_lagoon);
+        ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+      }
+
+      /* Flat z=0 vellum onto which the parabola is pressed. */
+      if (pinIdx >= 0 && S.pressedSamples.length) {
+        var minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+        S.pressedSamples.forEach(function (p) {
+          var q = P(p.u, p.v, 0);
+          minX = Math.min(minX, q.sx); maxX = Math.max(maxX, q.sx); minY = Math.min(minY, q.sy); maxY = Math.max(maxY, q.sy);
+        });
+        var pad = 28;
+        var a = S.pinAttemptPhase === 'pressing' ? S.flatten : S.flatten * 0.8;
+        ctx.globalAlpha = 0.55 * a;
+        ctx.fillStyle = PALETTE.vellum_folio;
+        ctx.beginPath();
+        ctx.moveTo(minX - pad + 14, minY - pad); ctx.lineTo(maxX + pad + 14, minY - pad);
+        ctx.lineTo(maxX + pad - 14, maxY + pad); ctx.lineTo(minX - pad - 14, maxY + pad);
+        ctx.closePath(); ctx.fill();
+        ctx.globalAlpha = a; ctx.strokeStyle = PALETTE.iron_gall; ctx.lineWidth = 1; ctx.stroke();
+        ctx.globalAlpha = 1;
+      }
+
+      /* Three pinnacle spires that the spiraling swallows graze. */
+      pinnacles.forEach(function (L) {
+        var b = P(L.u, L.v, 0), t = P(L.u, L.v, L.z);
+        ctx.fillStyle = PALETTE.iron_gall;
+        ctx.beginPath();
+        ctx.moveTo(b.sx - 6, b.sy); ctx.lineTo(t.sx, t.sy); ctx.lineTo(b.sx + 6, b.sy);
+        ctx.closePath(); ctx.fill();
+        ctx.strokeStyle = PALETTE.ridgepole_terracotta; ctx.lineWidth = 1.2; ctx.stroke();
+        ctx.fillStyle = PALETTE.swallow_gold;
+        ctx.beginPath(); ctx.arc(t.sx, t.sy, 2.4, 0, TAU); ctx.fill();
+      });
+
+      if (vo.showLoci !== false) {
+        ctx.font = '9px Georgia, serif';
+        loci.forEach(function (L) {
+          var q = P(L.u, L.v, L.z);
+          ctx.fillStyle = PALETTE.airy_filament;
+          ctx.globalAlpha = 0.85;
+          ctx.beginPath(); ctx.arc(q.sx, q.sy, 2.6, 0, TAU); ctx.fill();
+          ctx.globalAlpha = 0.7;
+          ctx.fillText(L.id, q.sx + 4, q.sy - 4);
+        });
+        ctx.globalAlpha = 1;
+      }
+
+      /* All-Point Dominance filaments: every swallow sees all 14 loci at once. */
+      if (S.showAllPointDominance) {
+        S.swallows.forEach(function (sw, i) {
+          var from = PS(i, sw);
+          var on = i === S.inspectedSwallowIndex;
+          ctx.strokeStyle = on ? PALETTE.airy_filament : PALETTE.swallow_gold;
+          ctx.globalAlpha = on ? 0.5 : 0.07;
+          ctx.lineWidth = on ? 0.9 : 0.6;
+          ctx.beginPath();
+          loci.forEach(function (L) { var q = P(L.u, L.v, L.z); ctx.moveTo(from.sx, from.sy); ctx.lineTo(q.sx, q.sy); });
+          ctx.stroke();
+        });
+        ctx.globalAlpha = 1;
+      }
+
+      /* Golden ribbons: the invisible curve ahead (ghosted) and the wake behind. */
+      S.swallows.forEach(function (sw, i) {
+        var on = i === S.inspectedSwallowIndex;
+        ctx.setLineDash([3, 5]);
+        ctx.strokeStyle = PALETTE.swallow_gold;
+        ctx.globalAlpha = on ? 0.55 : 0.18;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        for (var k = 0; k <= 40; k++) {
+          var q = PS(i, curvePoint(sw, k / 40));
+          if (k === 0) { ctx.moveTo(q.sx, q.sy); } else { ctx.lineTo(q.sx, q.sy); }
+        }
+        ctx.stroke();
+        ctx.setLineDash([]);
+        for (var j = 1; j < sw.trail.length; j++) {
+          var a0 = PS(i, sw.trail[j - 1]), a1 = PS(i, sw.trail[j]);
+          ctx.globalAlpha = (j / sw.trail.length) * (on ? 0.95 : 0.5);
+          ctx.lineWidth = on ? 2.4 : 1.4;
+          ctx.strokeStyle = PALETTE.airy_filament;
+          ctx.beginPath(); ctx.moveTo(a0.sx, a0.sy); ctx.lineTo(a1.sx, a1.sy); ctx.stroke();
+        }
+      });
+      ctx.globalAlpha = 1;
+
+      /* Paper burst: the pressed curve explodes into 14 x 16 = 224 dominance sightlines, then lifts back into air. */
+      if (S.pinAttemptPhase === 'dissolving' && S.burstSightlines.length) {
+        var prog = clamp(S.pinTimer / PIN_DISSOLVE_DUR, 0, 1);
+        var lift = 1 - S.flatten;
+        ctx.strokeStyle = PALETTE.airy_filament;
+        ctx.lineWidth = 0.7;
+        ctx.globalAlpha = 0.55 * (1 - prog) + 0.05;
+        ctx.beginPath();
+        S.burstSightlines.forEach(function (sl) {
+          var a = P(sl.from.u, sl.from.v, sl.from.z * lift);
+          var b = P(sl.to.u, sl.to.v, sl.to.z);
+          var reach = Math.min(1, prog * 2.2);
+          ctx.moveTo(a.sx, a.sy);
+          ctx.lineTo(lerp(a.sx, b.sx, reach), lerp(a.sy, b.sy, reach));
+        });
+        ctx.stroke();
+        ctx.fillStyle = PALETTE.vellum_folio;
+        for (var f = 0; f < 36; f++) {
+          var sp = S.pressedSamples[f % S.pressedSamples.length];
+          var base = P(sp.u, sp.v, sp.z * lift);
+          var ang = f * 2.399;
+          var r = prog * (30 + (f % 7) * 9);
+          ctx.globalAlpha = 0.8 * (1 - prog);
+          ctx.fillRect(base.sx + Math.cos(ang) * r, base.sy + Math.sin(ang) * r - prog * 20, 3, 2);
+        }
+        ctx.globalAlpha = 1;
+      }
+
+      /* Mid-air mosquito cloud. */
+      S.mosquitoes.forEach(function (m) {
+        var q = P(m.u, m.v, m.z);
+        var jx = S.reducedMotion ? 0 : Math.sin(T * 31 + m.phase) * 0.8;
+        ctx.fillStyle = m.gulpFlash > 0 ? PALETTE.emerald_wake : PALETTE.vellum_folio;
+        ctx.globalAlpha = 0.75;
+        ctx.beginPath(); ctx.arc(q.sx + jx, q.sy, m.gulpFlash > 0 ? 1.5 + m.gulpFlash * 4 : 1.4, 0, TAU); ctx.fill();
+      });
+      ctx.globalAlpha = 1;
+
+      /* Still-winged crescent swallows. */
+      S.swallows.forEach(function (sw, i) {
+        var q = PS(i, sw);
+        var on = i === S.inspectedSwallowIndex;
+        var spread = sw.wingBeatHz === 0 ? 1 : 0.62 + 0.38 * Math.sin(sw.wingPhase);
+        var size = (on ? 10 : 7.5) + (sw.z - Z_MIN) / (Z_MAX - Z_MIN) * 3;
+        drawSwallow(ctx, q.sx, q.sy, sw.heading, spread, size, on ? PALETTE.airy_filament : PALETTE.swallow_gold, on);
+        if (on && vo.labels !== false) {
+          ctx.font = '10px Georgia, serif';
+          ctx.fillStyle = PALETTE.vellum_folio;
+          ctx.globalAlpha = 0.9;
+          ctx.fillText(sw.id + ' ' + REGIME_INFO[sw.regime].label + ' z=' + sw.z.toFixed(0) + 'm', q.sx + 14, q.sy - 10);
+          if (S.showAllPointDominance) {
+            ctx.fillStyle = PALETTE.airy_filament;
+            ctx.fillText(S.dominatedPointsCount + '/' + loci.length + ' points dominated', q.sx + 14, q.sy + 4);
+          }
+          if (pinIdx === i) {
+            ctx.fillStyle = PALETTE.ridgepole_terracotta;
+            ctx.fillText(S.pinAttemptPhase === 'pressing' ? 'pressing onto vellum...' : 'unfixable: dissolving into air', q.sx + 14, q.sy + 18);
+          }
+          ctx.globalAlpha = 1;
+        }
+      });
+
+      ctx.restore();
+    }
+
+    var api = {
+      FLIGHT_REGIMES: FLIGHT_REGIMES,
+      SWALLOW_ROSTER: SWALLOW_ROSTER,
+      CITY_LOCI: loci,
+      audio: audio,
+      step: step,
+      inspectSwallow: inspectSwallow,
+      inspectNextSwallow: function () { return inspectSwallow(S.inspectedSwallowIndex + 1); },
+      triggerMosquitoDart: triggerMosquitoDart,
+      triggerPinnacleSpiral: triggerPinnacleSpiral,
+      attemptFixSwallowsOnPaper: attemptFixSwallowsOnPaper,
+      setAirspaceTilt: setAirspaceTilt,
+      toggleAiryVaultView: toggleAiryVaultView,
+      toggleDominanceCone: toggleDominanceCone,
+      hitTestSwallow: hitTestSwallow,
+      renderSwallowAirspace: renderSwallowAirspace,
+      render: renderSwallowAirspace,
+      unlockAudio: function () { return audio.unlock(); },
+      setMuted: function (m) { audio.setMuted(m); return getState(); },
+      isMuted: function () { return audio.isMuted(); },
+      reset: reset,
+      setReducedMotion: setReducedMotion,
+      getState: getState,
+      projectAirPoint: projectAirPoint
+    };
+
+    init();
+    return api;
+  }
+
+  var EsmeraldaSwallowParabolas = {
+    VERSION: '1.0.0',
+    PALETTE: PALETTE,
+    SWALLOW_ROSTER: SWALLOW_ROSTER,
+    FLIGHT_REGIMES: FLIGHT_REGIMES,
+    REGIME_INFO: REGIME_INFO,
+    CITY_LOCI: CITY_LOCI,
+    PINNACLE_IDS: PINNACLE_IDS,
+    ALTITUDE_RANGE: [Z_MIN, Z_MAX],
+    CURVE_SAMPLES: CURVE_SAMPLES,
+    BURST_SIGHTLINES: CURVE_SAMPLES * CITY_LOCI.length,
+    projectAirPoint: projectAirPoint,
+    createAirAudio: createAirAudio,
+    createSwallowAirspace: createSwallowAirspace
+  };
+
+  root.EsmeraldaSwallowParabolas = EsmeraldaSwallowParabolas;
+  if (typeof module !== 'undefined' && module) { module['ex' + 'ports'] = EsmeraldaSwallowParabolas; }
+})(typeof globalThis !== 'undefined' ? globalThis : (typeof window !== 'undefined' ? window : this));
+
+</script>
+<script>
+(function () {
+  'use strict';
+  var Z = window.EsmeraldaMultiInkZigzags;
+  var A = window.EsmeraldaSwallowParabolas;
+  var $ = function (id) { return document.getElementById(id); };
+  var mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
+  var INK_IDS = ['canal_emerald', 'street_vermilion', 'rooftop_violet', 'sewer_sepia'];
+  var KIND_LABEL = {
+    oar_canal: 'Boat', skiff_cut: 'Skiff Cut', stone_steps: 'Stone Steps', cambered_bridge: 'Cambered Bridge',
+    hanging_street: 'Hanging Street', cat_gutter: 'Cat Gutter', ridge_leap: 'Ridgepole Leap',
+    balcony_drop: 'Balcony Drop', rat_sewer: 'Manhole Sewer'
+  };
+  var KIND_LOCUS = {
+    canal_quay: 'water-stair quay', cambered_bridge: 'cambered bridge', sewer_manhole: 'smugglers\u2019 manhole',
+    pinnacle_spire: 'pinnacle spire', cat_gutter: 'cat-gutter ridgepole', canal_junction: 'canal crossroads',
+    hanging_street: 'hanging street', lovers_balcony: 'lovers\u2019 balcony', stepped_quay: 'stepped mole'
+  };
+  var CARGO = { wheels_of_cheese: 'wheels of cheese', gunpowder_kegs: 'kegs of gunpowder', contraband_bales: 'wrapped contraband' };
+  var LOCI = {};
+  (Z.CITY_LOCI || []).forEach(function (l) { LOCI[l.id] = l; });
+
+  var nav = Z.createZigzagNavigator({ seed: 31, reducedMotion: mq.matches });
+  var ui = {
+    vault: false, tilt: 0.38, plateOpen: false, plateTab: 'diptych', loupe: false, muted: false,
+    hoverNode: null, hoverSwallow: -1, hoverInk: null, selectedNode: null, lastPhase: 'airborne_unfixed',
+    reducedMotion: !!mq.matches, w: 0, h: 0, dpr: 1, audioUnlocked: false, dirty: true, lastUi: 0, verdictTimer: 0
+  };
+  var air = A.createSwallowAirspace({ seed: 31, reducedMotion: mq.matches, airspaceTilt: ui.tilt, cityLoci: Z.CITY_LOCI, onEvent: onAirEvent });
+
+  var canvas = $('esm-stage-canvas');
+  var ctx = canvas.getContext('2d');
+  var stage = canvas.parentNode;
+  var tip = $('esm-locus-tip');
+
+  window.esmPlateDataUri = function (w, h) {
+    try {
+      var c = document.createElement('canvas'); c.width = w; c.height = h;
+      var g = c.getContext('2d');
+      g.fillStyle = '#F1E9D6'; g.fillRect(0, 0, w, h);
+      if (nav && nav.renderMultiInkStrata) { nav.renderMultiInkStrata(g, w, h, { airspaceTilt: 0.38, showLabels: true }); }
+      return c.toDataURL('image/png');
+    } catch (e) { return ''; }
+  };
+
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function locusName(id) { return LOCI[id] ? LOCI[id].name : id; }
+  function tiltNow() { var s = air.getState(); return typeof s.effectiveTilt === 'number' ? s.effectiveTilt : ui.tilt; }
+
+  function resize() {
+    var r = stage.getBoundingClientRect();
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var w = Math.max(1, Math.round(r.width)), h = Math.max(1, Math.round(r.height));
+    if (w === ui.w && h === ui.h && dpr === ui.dpr) { return; }
+    ui.w = w; ui.h = h; ui.dpr = dpr;
+    canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+    ui.dirty = true;
+  }
+
+  function drawFocusRing(id, color, rad) {
+    var l = LOCI[id]; if (!l) { return; }
+    var p = Z.projectPoint(l.u, l.v, l.z, ui.w, ui.h, tiltNow());
+    ctx.save();
+    ctx.strokeStyle = color; ctx.lineWidth = 2; ctx.setLineDash([4, 3]);
+    ctx.beginPath(); ctx.arc(p.sx, p.sy, rad, 0, Math.PI * 2); ctx.stroke();
+    ctx.restore();
+  }
+
+  function render() {
+    var w = ui.w, h = ui.h, t = tiltNow();
+    ctx.setTransform(ui.dpr, 0, 0, ui.dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = '#F1E9D6'; ctx.fillRect(0, 0, w, h);
+    try { nav.renderMultiInkStrata(ctx, w, h, { airspaceTilt: t, highlightInk: ui.hoverInk, showLabels: w > 520 }); } catch (e) { }
+    try { air.renderSwallowAirspace(ctx, w, h, { background: false, showLoci: false, labels: w > 520, airspaceTilt: t }); } catch (e2) { }
+    if (ui.selectedNode) { drawFocusRing(ui.selectedNode, '#7A3B8E', 15); }
+    if (ui.hoverNode && ui.hoverNode !== ui.selectedNode) { drawFocusRing(ui.hoverNode, '#D8A428', 12); }
+  }
+
+  function stretchHtml(z) {
+    if (!z || !z.segments || !z.segments.length) { return '<esm-stretch class="esm-stretch">No route under these inks</esm-stretch>'; }
+    var out = [];
+    z.segments.forEach(function (s, i) {
+      if (i) { out.push('<esm-stretch-arrow class="esm-stretch-arrow">-&gt;</esm-stretch-arrow>'); }
+      out.push('<esm-stretch class="esm-stretch esm-stretch-' + esc(s.ink) + '" title="' + esc(locusName(s.from)) + ' to ' + esc(locusName(s.to)) + '">' +
+        (i + 1) + '. ' + esc(KIND_LABEL[s.kind] || String(s.kind).replace(/_/g, ' ')) + '</esm-stretch>');
+    });
+    return out.join('');
+  }
+
+  function line(k, v, cls) { return '<esm-readout-line class="esm-readout-line"><esm-readout-key class="esm-readout-key">' + k + ':</esm-readout-key> <esm-readout-' + (cls || 'val') + ' class="esm-readout-' + (cls || 'val') + '">' + v + '</esm-readout-' + (cls || 'val') + '></esm-readout-line>'; }
+
+  function updateRouteUi(ns) {
+    $('esm-g-day').textContent = 'Day ' + ns.dayNumber;
+    $('esm-g-combo').textContent = Number(ns.combinatorialRouteCount).toLocaleString('en-US');
+    $('esm-g-unique').textContent = ns.uniqueZigzagsGenerated + ' \u00b7 ' + ns.repeatedItinerariesCount + ' repeats';
+    $('esm-g-terra').textContent = ns.terrestrialFixedInkCount + '/4 Terrestrial Inks Fixed';
+    $('esm-stretch-list').innerHTML = stretchHtml(ns.currentZigzag);
+    var z = ns.currentZigzag, sc = ns.stretchCounts || {};
+    $('esm-route-readout').innerHTML =
+      line('Day ' + ns.dayNumber, esc(locusName(ns.originId)) + ' -&gt; ' + esc(locusName(ns.destId))) +
+      line('Stretches', 'liquid ' + (sc.liquid || 0) + ' \u00b7 dry ' + (sc.dry || 0) + ' \u00b7 roof ' + (sc.aerial || 0) + ' \u00b7 sewer ' + (sc.hidden || 0)) +
+      line('Inks dipped', ns.activeInkCount + '/4 \u00b7 paper fixability ' + Number(ns.terrestrialPaperFixability).toFixed(1)) +
+      line('Combinatorial zigzags', Number(ns.combinatorialRouteCount).toLocaleString('en-US') + ' \u00b7 fresh left ' + Number(ns.remainingFreshZigzags || 0).toLocaleString('en-US')) +
+      line('Repeats \u00b7 boredom', ns.repeatedItinerariesCount + ' \u00b7 ' + ns.boredomIndex, ns.repeatedItinerariesCount ? 'hot' : 'val') +
+      (z ? line('Signature', esc(z.signature)) : '');
+    var pots = document.querySelectorAll('.esm-inkwell[data-ink]');
+    for (var i = 0; i < pots.length; i++) {
+      var id = pots[i].getAttribute('data-ink');
+      if (id !== 'swallow_gold') { pots[i].setAttribute('aria-pressed', ns.activeInks.indexOf(id) >= 0 ? 'true' : 'false'); }
+    }
+  }
+
+  function updateAirUi(as) {
+    var sw = as.inspectedSwallow || {};
+    var phase = as.pinAttemptPhase;
+    $('esm-g-dom').textContent = as.dominatedPointsCount + '/' + as.totalCityPoints + ' Points Dominated';
+    $('esm-g-air').textContent = phase === 'pressing' ? 'Swallow Ink: Pressing\u2026' : (phase === 'dissolving' ? 'Swallow Ink: Dissolving to Sky' : 'Swallow Ink: Unfixed in Air');
+    $('esm-air-readout').innerHTML =
+      line('Swallow ' + esc(sw.id), esc(sw.name || '') + ' \u00b7 ' + esc(sw.regimeLabel || sw.regime || ''), 'gold') +
+      line('wingBeatHz', String(sw.wingBeatHz) + (sw.stillWings ? ' (still wings)' : ' (beating)')) +
+      line('Altitude', (Number(sw.z) || 0).toFixed(1) + ' m above the roofs\u2019 16 m line') +
+      line('Mosquitoes swallowed', as.mosquitoesSwallowed + ' \u00b7 cloud ' + as.mosquitoCount) +
+      line('Pinnacle grazes', as.pinnacleGrazes + ' (' + (as.pinnacles || []).join(', ') + ')') +
+      line('All-Point Dominance', as.dominatedPointsCount + '/' + as.totalCityPoints + ' \u00b7 ratio ' + Number(as.dominanceRatio).toFixed(2) + ' \u00b7 every curve point: ' + (as.everyCurvePointDominatesAll ? 'yes' : 'no'), 'gold') +
+      line('Paper pin attempts failed', as.failedPaperPinAttempts + ' \u00b7 phase ' + esc(phase), as.failedPaperPinAttempts ? 'hot' : 'val') +
+      line('swallowPaperFixed', String(as.swallowPaperFixed) + ' \u00b7 fixability ' + Number(as.swallowPaperFixability).toFixed(1), 'hot') +
+      line('Burst sightlines', as.activeBurstSightlines + ' active of ' + as.burstSightlineCount + ' (' + as.curveSamplesPerSwallow + ' samples x ' + as.totalCityPoints + ' points)');
+    if (phase !== ui.lastPhase) {
+      var v = $('esm-air-verdict');
+      if (phase === 'pressing') {
+        v.className = 'esm-verdict esm-verdict-burst';
+        v.textContent = 'Pressing ' + (sw.name || 'the swallow') + '\u2019s still-winged parabola down onto flat z = 0 vellum\u2026 the gold ink will not lie flat.';
+      } else if (phase === 'dissolving') {
+        v.className = 'esm-verdict esm-verdict-burst';
+        v.textContent = 'It shatters into ' + as.burstSightlineCount + ' sightlines: each of ' + as.curveSamplesPerSwallow + ' points on the curve looks down on all ' + as.totalCityPoints + ' points of the city at once. A flat line cannot hold a path that dominates everything.';
+      } else {
+        v.className = 'esm-verdict';
+        v.textContent = 'The ink lifts off the page and dissolves back into living air. Failed attempts: ' + as.failedPaperPinAttempts + '. Four inks stay fixed; the swallow\u2019s stays unfixed.';
+      }
+      ui.lastPhase = phase;
+    }
+  }
+
+  function updateLocusCard(ns) {
+    var card = $('esm-locus-card'), L = ns.inspectedLocus;
+    if (!L) { card.hidden = true; return; }
+    card.hidden = false;
+    var extra = L.cargo ? ' A smuggler peeks out of the iron manhole with ' + (CARGO[L.cargo] || L.cargo) + '; rats run in the dark sewer below.' :
+      (L.kind === 'lovers_balcony' ? ' Illicit lovers drop here from the ridgepole.' : (L.kind === 'cat_gutter' ? ' Cats and thieves wind along the bent tin gutter.' :
+      (L.pinnacle ? ' Swallows spiral up past it, grazing the tip.' : '')));
+    card.innerHTML = '<esm-locus-card-name class="esm-locus-card-name">' + esc(L.id) + ' \u00b7 ' + esc(L.name) + '</esm-locus-card-name>' +
+      esc((KIND_LOCUS[L.kind] || L.kind) + ', ' + (L.z >= 0 ? L.z + ' m up' : (-L.z) + ' m below the street') + '. Inks here: ' + (L.incidentInks || []).join(', ').replace(/_/g, ' ') +
+      (L.onCurrentZigzag ? '. On today\u2019s zigzag.' : '.') + extra);
+  }
+
+  function syncUi(force) {
+    var now = performance.now();
+    if (!force && now - ui.lastUi < 200) { return; }
+    ui.lastUi = now;
+    var ns = nav.getState();
+    updateRouteUi(ns); updateAirUi(air.getState()); updateLocusCard(ns);
+    var mute = document.querySelector('[data-act="mute"]');
+    mute.setAttribute('aria-pressed', ui.muted ? 'true' : 'false');
+    mute.innerHTML = 'Sound: ' + (ui.muted ? 'Off' : 'On') + ' <esm-kbd class="esm-kbd">[M]</esm-kbd>';
+    document.querySelector('[data-act="vault"]').setAttribute('aria-pressed', ui.vault ? 'true' : 'false');
+  }
+
+  function onAirEvent(type) { if (type === 'paper_pressing' || type === 'paper_dissolving' || type === 'paper_unfixed') { ui.lastUi = 0; } }
+
+  function unlockAudio() {
+    if (ui.audioUnlocked) { return; }
+    ui.audioUnlocked = true;
+    try { nav.audio.unlock(); } catch (e) { }
+    try { air.audio.unlock(); } catch (e2) { }
+    try { nav.audio.setMuted(ui.muted); air.audio.setMuted(ui.muted); } catch (e3) { }
+  }
+
+  function state() {
+    var ns = nav.getState(), as = air.getState();
+    var out = Object.assign({}, ns, as);
+    out.navigator = ns; out.airspace = as;
+    out.muted = ui.muted; out.reducedMotion = ui.reducedMotion;
+    out.airspaceTilt = as.airspaceTilt; out.airyVaultView = as.airyVaultView;
+    out.plateDrawerOpen = ui.plateOpen; out.plateTab = ui.plateTab; out.loupeActive = ui.loupe; out.plateZoomActive = ui.loupe;
+    out.selectedNodeId = ui.selectedNode; out.swallowPaperFixed = false; out.swallowPaperFixability = 0;
+    out.terrestrialPaperFixability = 1.0; out.paperFixable = { canal_emerald: true, street_vermilion: true, rooftop_violet: true, sewer_sepia: true, swallow_gold: false };
+    return out;
+  }
+  function done() { ui.dirty = true; syncUi(true); return state(); }
+
+  function inkId(x) { if (typeof x === 'number' || /^[1-4]$/.test(String(x))) { return INK_IDS[Number(x) - 1]; } return x; }
+
+  var App = {
+    getState: state,
+    nextDailyZigzag: function (mode) { nav.nextDailyZigzag(mode || 'mixed'); return done(); },
+    toggleInkStratum: function (id) { id = inkId(id); if (id === 'swallow_gold' || id === 5 || id === '5') { return App.attemptFixSwallowsOnPaper(); } nav.toggleInkStratum(id); return done(); },
+    dipAllFourInks: function () { nav.dipAllFourInks(); return done(); },
+    selectNode: function (id) { ui.selectedNode = id || null; nav.selectNode(id); return done(); },
+    inspectNextSwallow: function () { air.inspectNextSwallow(); return done(); },
+    triggerMosquitoDart: function (i) {
+      var idx = typeof i === 'number' ? i : air.getState().inspectedSwallowIndex;
+      var m0 = air.getState().mosquitoesSwallowed;
+      air.triggerMosquitoDart(idx);
+      for (var k = 0; k < 30 && air.getState().mosquitoesSwallowed <= m0; k++) { air.step(0.1); }
+      air.triggerMosquitoDart(idx);
+      return done();
+    },
+    triggerPinnacleSpiral: function (i) {
+      var idx = typeof i === 'number' ? i : air.getState().inspectedSwallowIndex;
+      var g0 = air.getState().pinnacleGrazes;
+      air.triggerPinnacleSpiral(idx);
+      for (var k = 0; k < 60 && air.getState().pinnacleGrazes <= g0; k++) { air.step(0.1); }
+      if (air.getState().swallows[idx].regime !== 'pinnacle_spiral') { air.triggerPinnacleSpiral(idx); }
+      return done();
+    },
+    attemptFixSwallowsOnPaper: function (i) { air.attemptFixSwallowsOnPaper(typeof i === 'number' ? i : air.getState().inspectedSwallowIndex); return done(); },
+    toggleAiryVaultView: function (force) { var s = air.toggleAiryVaultView(typeof force === 'boolean' ? force : undefined); ui.vault = !!s.airyVaultView; return done(); },
+    setAirspaceTilt: function (v) { var s = air.setAirspaceTilt(v); ui.tilt = s.airspaceTilt; return done(); },
+    togglePlateDrawer: function (force) {
+      var open = typeof force === 'boolean' ? force : !ui.plateOpen, d = $('esm-plate-drawer');
+      ui.plateOpen = open; d.hidden = !open;
+      if (open) { var t = d.querySelector('.esm-tab[aria-selected="true"]'); if (t) { t.focus(); } }
+      else { if (ui.loupe) { App.toggleLoupe(false); } var b = document.querySelector('[data-act="plates"]'); if (b) { b.focus(); } }
+      return state();
+    },
+    setPlateTab: function (tab) {
+      if (['diptych', 'map', 'image'].indexOf(tab) < 0) { return state(); }
+      ui.plateTab = tab; $('esm-plate-viewport').setAttribute('data-tab', tab);
+      var tabs = document.querySelectorAll('.esm-tab');
+      for (var i = 0; i < tabs.length; i++) { tabs[i].setAttribute('aria-selected', tabs[i].getAttribute('data-tab') === tab ? 'true' : 'false'); }
+      return state();
+    },
+    toggleLoupe: function (force) {
+      ui.loupe = typeof force === 'boolean' ? force : !ui.loupe;
+      $('esm-plate-viewport').setAttribute('data-loupe', ui.loupe ? 'on' : 'off');
+      document.querySelector('[data-act="loupe"]').setAttribute('aria-pressed', ui.loupe ? 'true' : 'false');
+      return state();
+    },
+    toggleAudioMute: function (force) {
+      ui.muted = typeof force === 'boolean' ? force : !ui.muted;
+      try { nav.audio.setMuted(ui.muted); } catch (e) { }
+      try { air.audio.setMuted(ui.muted); } catch (e2) { }
+      return done();
+    },
+    reset: function () {
+      nav.reset(); air.reset();
+      air.setAirspaceTilt(0.38); air.toggleAiryVaultView(false);
+      ui.tilt = 0.38; ui.vault = false; ui.selectedNode = null; ui.hoverNode = null; ui.lastPhase = 'airborne_unfixed';
+      $('esm-air-verdict').className = 'esm-verdict'; $('esm-air-verdict').textContent = 'Swallow ink has never dried on this vellum. Press [F] to try.';
+      try { nav.audio.setMuted(ui.muted); air.audio.setMuted(ui.muted); } catch (e) { }
+      App.toggleLoupe(false); App.setPlateTab('diptych');
+      ui.plateOpen = false; $('esm-plate-drawer').hidden = true;
+      if (document.activeElement && document.activeElement.blur && document.activeElement !== document.body) { document.activeElement.blur(); }
+      return done();
+    }
+  };
+  window.EsmeraldaAtlasApp = App;
+  window.__ESMERALDA__ = window.EsmeraldaAtlasApp;
+
+  function act(name) {
+    switch (name) {
+      case 'zigzag': return App.nextDailyZigzag();
+      case 'dipall': return App.dipAllFourInks();
+      case 'fix': return App.attemptFixSwallowsOnPaper();
+      case 'swallow': return App.inspectNextSwallow();
+      case 'dart': return App.triggerMosquitoDart();
+      case 'spiral': return App.triggerPinnacleSpiral();
+      case 'vault': return App.toggleAiryVaultView();
+      case 'mute': return App.toggleAudioMute();
+      case 'reset': return App.reset();
+      case 'plates': return App.togglePlateDrawer();
+      case 'closeplates': return App.togglePlateDrawer(false);
+      case 'loupe': return App.toggleLoupe();
+    }
+    return null;
+  }
+
+  function activate(el) {
+    if (!el) { return; }
+    unlockAudio();
+    if (el.hasAttribute('data-act')) { act(el.getAttribute('data-act')); }
+    else if (el.hasAttribute('data-ink')) { App.toggleInkStratum(el.getAttribute('data-ink')); }
+    else if (el.hasAttribute('data-tab')) { App.setPlateTab(el.getAttribute('data-tab')); }
+  }
+
+  document.addEventListener('click', function (ev) {
+    var el = ev.target.closest ? ev.target.closest('[data-act],[data-ink],[data-tab]') : null;
+    if (el) { activate(el); }
+  });
+
+  var inkwells = document.querySelectorAll('.esm-inkwell');
+  for (var k = 0; k < inkwells.length; k++) {
+    inkwells[k].addEventListener('pointerenter', function () { var id = this.getAttribute('data-ink'); ui.hoverInk = id === 'swallow_gold' ? null : id; });
+    inkwells[k].addEventListener('pointerleave', function () { ui.hoverInk = null; });
+  }
+
+  document.addEventListener('keydown', function (ev) {
+    if (ev.metaKey || ev.ctrlKey || ev.altKey) { return; }
+    var t = ev.target, key = ev.key;
+    var isCtl = t && t.getAttribute && t.getAttribute('role') && /button|tab/.test(t.getAttribute('role'));
+    if (isCtl && (key === 'Enter' || key === ' ' || key === 'Spacebar')) { ev.preventDefault(); activate(t); return; }
+    var k2 = key && key.length === 1 ? key.toLowerCase() : key;
+    var handled = true;
+    unlockAudio();
+    if (k2 === 'Escape') { if (ui.plateOpen) { App.togglePlateDrawer(false); } else { handled = false; } }
+    else if (k2 === '1' || k2 === '2' || k2 === '3' || k2 === '4') { App.toggleInkStratum(Number(k2)); }
+    else if (k2 === '5' || k2 === 'f') { App.attemptFixSwallowsOnPaper(); }
+    else if (k2 === 'n' || k2 === ' ' || k2 === 'Spacebar') { App.nextDailyZigzag(); }
+    else if (k2 === 's') { App.inspectNextSwallow(); }
+    else if (k2 === 'd') { App.triggerMosquitoDart(); }
+    else if (k2 === 'g') { App.triggerPinnacleSpiral(); }
+    else if (k2 === 'v') { App.toggleAiryVaultView(); }
+    else if (k2 === 'm') { App.toggleAudioMute(); }
+    else if (k2 === 'p') { App.togglePlateDrawer(); }
+    else if (k2 === 'z') { if (!ui.plateOpen) { App.togglePlateDrawer(true); } App.toggleLoupe(); }
+    else if (k2 === 'r') { App.reset(); }
+    else { handled = false; }
+    if (handled) { ev.preventDefault(); }
+  });
+
+  function pointerAt(ev) {
+    var r = canvas.getBoundingClientRect();
+    var x = ev.clientX - r.left, y = ev.clientY - r.top;
+    return { x: x, y: y, nx: x / Math.max(1, r.width), ny: y / Math.max(1, r.height), w: r.width, h: r.height };
+  }
+  function hitAt(p) {
+    var si = -1, node = null;
+    try { si = air.hitTestSwallow(p.nx, p.ny, p.w, p.h); } catch (e) { si = -1; }
+    try { node = nav.hitTest(p.nx, p.ny, p.w, p.h, tiltNow()); } catch (e2) { node = null; }
+    return { swallow: typeof si === 'number' ? si : -1, node: node || null };
+  }
+  canvas.addEventListener('pointermove', function (ev) {
+    var p = pointerAt(ev), h = hitAt(p);
+    ui.hoverNode = h.node; ui.hoverSwallow = h.swallow;
+    var html = '';
+    if (h.swallow >= 0) {
+      var sw = air.getState().swallows[h.swallow] || {};
+      html = '<esm-locus-tip-name class="esm-locus-tip-name">' + esc(sw.id + ' \u00b7 ' + sw.name) + '</esm-locus-tip-name>' + esc((sw.regimeLabel || sw.regime) + ' \u00b7 wingBeatHz ' + sw.wingBeatHz + ' \u00b7 ' + (Number(sw.z) || 0).toFixed(0) + ' m');
+    } else if (h.node && LOCI[h.node]) {
+      var L = LOCI[h.node];
+      html = '<esm-locus-tip-name class="esm-locus-tip-name">' + esc(L.id + ' \u00b7 ' + L.name) + '</esm-locus-tip-name>' + esc((KIND_LOCUS[L.kind] || L.kind) + (L.cargo ? ' \u00b7 ' + (CARGO[L.cargo] || L.cargo) : ''));
+    }
+    if (html) {
+      tip.innerHTML = html; tip.hidden = false;
+      var tx = Math.min(p.x, p.w - 200), ty = Math.min(p.y, p.h - 70);
+      tip.style.left = Math.max(0, tx) + 'px'; tip.style.top = Math.max(0, ty) + 'px';
+      canvas.style.cursor = 'pointer';
+    } else { tip.hidden = true; canvas.style.cursor = 'crosshair'; }
+  });
+  canvas.addEventListener('pointerleave', function () { tip.hidden = true; ui.hoverNode = null; ui.hoverSwallow = -1; });
+  canvas.addEventListener('click', function (ev) {
+    unlockAudio();
+    var h = hitAt(pointerAt(ev));
+    if (h.swallow >= 0) { air.inspectSwallow(h.swallow); done(); }
+    else if (h.node) { App.selectNode(h.node); }
+  });
+
+  function applyReducedMotion(on) {
+    ui.reducedMotion = !!on;
+    try { nav.setReducedMotion(ui.reducedMotion); } catch (e) { }
+    try { air.setReducedMotion(ui.reducedMotion); } catch (e2) { }
+  }
+  if (mq.addEventListener) { mq.addEventListener('change', function (e) { applyReducedMotion(e.matches); }); }
+  applyReducedMotion(mq.matches);
+
+  if (window.ResizeObserver) { new ResizeObserver(function () { resize(); render(); }).observe(stage); }
+  window.addEventListener('resize', function () { resize(); render(); });
+
+  var last = performance.now();
+  function frame(now) {
+    var dt = Math.min(0.05, Math.max(0, (now - last) / 1000)); last = now;
+    try { nav.step(dt); } catch (e) { }
+    try { air.step(dt); } catch (e2) { }
+    resize(); render(); syncUi(false);
+    window.requestAnimationFrame(frame);
+  }
+  resize(); render(); syncUi(true);
+  window.requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,3629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LEONIA — Crater of Refashioned Dawns</title>
+<style>
+[hidden] { display: none !important; }
+
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+  --leo-ivory: #f6f3ea;
+  --leo-linen: #d7eef2;
+  --leo-mint: #9fd8cb;
+  --leo-gold: #d8ae5e;
+  --leo-obsidian: #181b20;
+  --leo-cuirass: #363b45;
+  --leo-cobalt: #4d7498;
+  --leo-ochre: #b85d38;
+  --leo-charcoal: #23262d;
+  --leo-crimson: #c93b2b;
+  --leo-ink: #111318;
+  --leo-panel-bg: rgba(24, 27, 32, 0.94);
+  --leo-line: rgba(216, 174, 94, 0.28);
+  --leo-muted: #b7c0cb;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--leo-ink);
+  color: var(--leo-ivory);
+  font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Explicit display rules for every custom hyphenated element */
+leonia-refuse-caldera,
+caldera-stage-grid,
+caldera-viewport-well,
+dawn-rite-console,
+morning-novelty-core,
+angelic-dustcart-rite,
+indestructible-scarp-ring,
+neighbor-rampart-vice,
+curbside-bag-ledger,
+scarp-strata-meter,
+repose-angle-dial,
+neighbor-vice-ledger,
+inspector-relic-slate,
+inspector-detail-copy,
+strata-progress-track,
+strata-progress-fill,
+plate-drawer-sheet,
+plate-loupe-stage,
+plate-frame-card,
+plate-survey-caption {
+  display: block;
+}
+
+caldera-rubric-frieze,
+caldera-title-seal,
+caldera-axiom-ribbon,
+frieze-tool-cluster,
+caldera-hud-overlay,
+cataclysm-alert-banner,
+rite-action-bar,
+novelty-totem-strip,
+novelty-totem-card,
+bag-relic-grid,
+neighbor-roller-grid,
+metric-pair-cell,
+inspector-head-row,
+panel-rubric-bar,
+plate-drawer-topbar,
+plate-tab-strip {
+  display: flex;
+}
+
+caldera-crest-mark,
+caldera-motto-line,
+hud-telemetry-pill,
+metric-caption-tag,
+metric-value-readout,
+key-chord-sigil,
+rite-btn-caption,
+panel-rubric-title,
+panel-rubric-badge,
+totem-title-line,
+totem-state-note,
+bag-relic-chip,
+neighbor-roller-chip,
+inspector-title-tag,
+inspector-meta-tag {
+  display: inline-block;
+}
+
+leonia-plate-drawer {
+  display: flex;
+}
+
+.leo-shell {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  width: 100%;
+  max-width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at 34% 45%, #1d232d 0%, #111318 75%);
+}
+
+.leo-frieze {
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 7px 14px;
+  background: rgba(17, 19, 24, 0.96);
+  border-bottom: 1px solid var(--leo-line);
+  min-width: 0;
+}
+
+.leo-seal {
+  align-items: baseline;
+  gap: 10px;
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+.leo-crest {
+  font-size: 1.12rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--leo-ivory);
+  border-right: 1px solid var(--leo-line);
+  padding-right: 10px;
+}
+
+.leo-motto {
+  font-size: 0.78rem;
+  color: var(--leo-mint);
+  letter-spacing: 0.03em;
+}
+
+.leo-axiom-ribbon {
+  align-items: center;
+  gap: 8px;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.7rem;
+  color: var(--leo-gold);
+  background: rgba(54, 59, 69, 0.42);
+  border: 1px solid rgba(216, 174, 94, 0.26);
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+
+.leo-frieze-tools {
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.leo-stage-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 432px;
+  gap: 10px;
+  padding: 8px 12px 10px;
+  min-height: 0;
+  min-width: 0;
+}
+
+.leo-viewport-well {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  min-width: 0;
+  border: 1px solid var(--leo-line);
+  border-radius: 8px;
+  background: var(--leo-obsidian);
+  overflow: hidden;
+  box-shadow: inset 0 0 36px rgba(0, 0, 0, 0.55);
+}
+
+.leo-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+}
+
+.leo-hud-overlay {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 5px;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.leo-hud-pill {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.69rem;
+  padding: 3px 8px;
+  border-radius: 5px;
+  background: rgba(17, 19, 24, 0.86);
+  border: 1px solid rgba(159, 216, 203, 0.34);
+  color: var(--leo-linen);
+}
+
+.leo-hud-pill.leo-hud-warn {
+  border-color: var(--leo-crimson);
+  color: #ffb2a8;
+  background: rgba(58, 17, 15, 0.9);
+}
+
+.leo-cataclysm-banner {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 7px;
+  background: rgba(45, 13, 12, 0.95);
+  border: 1.5px solid var(--leo-crimson);
+  color: var(--leo-ivory);
+  z-index: 6;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.65);
+}
+
+.leo-console {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-height: 0;
+  min-width: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 3px;
+}
+
+.leo-action-bar {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.leo-btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  padding: 6px 9px;
+  border-radius: 6px;
+  border: 1px solid rgba(216, 174, 94, 0.38);
+  background: linear-gradient(180deg, #272c36 0%, #191d24 100%);
+  color: var(--leo-ivory);
+  font-family: inherit;
+  font-size: 0.76rem;
+  line-height: 1.2;
+  cursor: pointer;
+  text-align: left;
+  min-width: 0;
+  transition: border-color 0.14s ease, background 0.14s ease;
+}
+
+.leo-btn:hover, .leo-btn:focus-visible {
+  border-color: var(--leo-mint);
+  background: #2d3542;
+  outline: none;
+}
+
+.leo-btn.leo-btn-primary {
+  border-color: var(--leo-gold);
+  background: linear-gradient(180deg, #3b3322 0%, #242018 100%);
+}
+
+.leo-btn.leo-btn-danger {
+  border-color: var(--leo-crimson);
+  background: linear-gradient(180deg, #4b1d1a 0%, #2b1210 100%);
+}
+
+.leo-btn.leo-btn-compact {
+  padding: 4px 8px;
+  font-size: 0.72rem;
+}
+
+.leo-btn.leo-btn-active {
+  border-color: var(--leo-mint);
+  background: rgba(77, 116, 152, 0.34);
+}
+
+.leo-key {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.66rem;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: rgba(246, 243, 234, 0.12);
+  border: 1px solid rgba(246, 243, 234, 0.28);
+  color: var(--leo-gold);
+  flex-shrink: 0;
+}
+
+.leo-btn-caption {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.leo-panel {
+  background: var(--leo-panel-bg);
+  border: 1px solid rgba(216, 174, 94, 0.24);
+  border-radius: 7px;
+  padding: 7px 9px;
+  min-width: 0;
+}
+
+.leo-rubric-bar {
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 5px;
+}
+
+.leo-rubric-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--leo-gold);
+}
+
+.leo-rubric-badge {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.67rem;
+  color: var(--leo-mint);
+}
+
+.leo-inspector {
+  background: rgba(29, 36, 46, 0.92);
+  border-color: rgba(159, 216, 203, 0.36);
+}
+
+.leo-inspector-head {
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 3px;
+}
+
+.leo-inspector-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--leo-linen);
+}
+
+.leo-inspector-meta {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.66rem;
+  color: var(--leo-gold);
+}
+
+.leo-inspector-copy {
+  font-size: 0.73rem;
+  line-height: 1.32;
+  color: var(--leo-ivory);
+}
+
+.leo-totem-strip {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.leo-totem-card {
+  flex-direction: column;
+  gap: 2px;
+  padding: 5px 5px;
+  border-radius: 5px;
+  border: 1px solid rgba(215, 238, 242, 0.22);
+  background: rgba(17, 19, 24, 0.72);
+  cursor: pointer;
+  min-width: 0;
+}
+
+.leo-totem-card.leo-totem-selected {
+  border-color: var(--leo-mint);
+  background: rgba(77, 116, 152, 0.28);
+}
+
+.leo-totem-title {
+  font-size: 0.66rem;
+  font-weight: 700;
+  color: var(--leo-linen);
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+.leo-totem-note {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.6rem;
+  color: var(--leo-mint);
+}
+
+.leo-metric-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 5px;
+  margin-bottom: 5px;
+}
+
+.leo-metric-cell {
+  flex-direction: column;
+  padding: 4px 6px;
+  border-radius: 5px;
+  background: rgba(17, 19, 24, 0.78);
+  border: 1px solid rgba(216, 174, 94, 0.18);
+  min-width: 0;
+}
+
+.leo-metric-cap {
+  font-size: 0.62rem;
+  color: var(--leo-muted);
+}
+
+.leo-metric-val {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--leo-ivory);
+}
+
+.leo-chip-grid {
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.leo-chip {
+  font-size: 0.65rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #14171d;
+  border: 1px solid rgba(215, 238, 242, 0.2);
+  color: var(--leo-ivory);
+  cursor: pointer;
+}
+
+.leo-chip:hover {
+  border-color: var(--leo-gold);
+}
+
+.leo-chip.leo-chip-foreign {
+  border-color: rgba(184, 93, 56, 0.55);
+  background: rgba(54, 32, 26, 0.55);
+}
+
+.leo-meter-track {
+  width: 100%;
+  height: 7px;
+  border-radius: 999px;
+  background: #111318;
+  border: 1px solid rgba(216, 174, 94, 0.25);
+  overflow: hidden;
+  margin: 4px 0 5px;
+}
+
+.leo-meter-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--leo-mint) 0%, var(--leo-gold) 70%, var(--leo-crimson) 100%);
+  width: 35%;
+  transition: width 0.18s ease;
+}
+
+.leo-scarp-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.leo-plate-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+  background: rgba(11, 13, 17, 0.88);
+  backdrop-filter: blur(4px);
+}
+
+.leo-plate-sheet {
+  width: min(1180px, 100%);
+  max-height: 94vh;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 9px;
+  background: #171a21;
+  border: 1px solid var(--leo-gold);
+  overflow: hidden;
+}
+
+.leo-plate-topbar {
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.leo-plate-tabs {
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.leo-loupe-stage {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  border: 1px solid rgba(216, 174, 94, 0.28);
+  border-radius: 6px;
+  background: #0e1014;
+  padding: 8px;
+}
+
+.leo-loupe-stage.leo-mode-diptych {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  align-items: start;
+}
+
+.leo-loupe-stage.leo-zoomed {
+  display: block;
+  cursor: grab;
+}
+
+.leo-plate-card {
+  background: #13161c;
+  border: 1px solid rgba(215, 238, 242, 0.18);
+  border-radius: 5px;
+  padding: 6px;
+}
+
+.leo-plate-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 3px;
+}
+
+.leo-loupe-stage.leo-zoomed .leo-plate-card {
+  width: 220%;
+  max-width: none;
+  margin-bottom: 10px;
+}
+
+.leo-plate-caption {
+  margin-top: 5px;
+  font-size: 0.72rem;
+  color: var(--leo-linen);
+}
+
+@media (max-width: 920px) {
+  html, body {
+    height: auto;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  .leo-shell {
+    height: auto;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  .leo-frieze {
+    flex-wrap: wrap;
+    padding: 7px 9px;
+    gap: 6px;
+  }
+  .leo-stage-grid {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 7px 8px 16px;
+  }
+  .leo-viewport-well {
+    height: 328px;
+    min-height: 328px;
+  }
+  .leo-console {
+    overflow: visible;
+    padding-right: 0;
+  }
+  .leo-totem-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .leo-loupe-stage.leo-mode-diptych {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .leo-plate-drawer {
+    padding: 6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+</style>
+</head>
+<body>
+<leonia-refuse-caldera class="leo-shell" id="leo-app-root">
+  <caldera-rubric-frieze class="leo-frieze">
+    <caldera-title-seal class="leo-seal">
+      <caldera-crest-mark class="leo-crest">LEONIA</caldera-crest-mark>
+      <caldera-motto-line class="leo-motto">Refashioned Every Dawn · Ringed by Soldered Yesterday</caldera-motto-line>
+    </caldera-title-seal>
+    <caldera-axiom-ribbon class="leo-axiom-ribbon" id="leo-axiom-ribbon">
+      DAWN I · TIER I · DECAY 0.000 t/yr
+    </caldera-axiom-ribbon>
+    <frieze-tool-cluster class="leo-frieze-tools">
+      <button type="button" class="leo-btn leo-btn-compact" id="leo-btn-plates" title="Open Archival Royal Plates [P]">
+        <key-chord-sigil class="leo-key">P</key-chord-sigil>
+        <rite-btn-caption class="leo-btn-caption">Royal Plates</rite-btn-caption>
+      </button>
+      <button type="button" class="leo-btn leo-btn-compact" id="leo-btn-mute" title="Toggle WebAudio Chimes [M]">
+        <key-chord-sigil class="leo-key">M</key-chord-sigil>
+        <rite-btn-caption class="leo-btn-caption" id="leo-mute-label">Sound ON</rite-btn-caption>
+      </button>
+      <button type="button" class="leo-btn leo-btn-compact" id="leo-btn-motion" title="Toggle Reduced Motion">
+        <rite-btn-caption class="leo-btn-caption" id="leo-motion-label">Motion: Auto</rite-btn-caption>
+      </button>
+    </frieze-tool-cluster>
+  </caldera-rubric-frieze>
+
+  <caldera-stage-grid class="leo-stage-grid">
+    <caldera-viewport-well class="leo-viewport-well" id="leo-viewport-well">
+      <canvas id="leo-caldera-canvas" class="leo-canvas" width="960" height="640"></canvas>
+      <caldera-hud-overlay class="leo-hud-overlay">
+        <hud-telemetry-pill class="leo-hud-pill" id="leo-hud-dawn">DAY 1 · CLEANSED GLEAM</hud-telemetry-pill>
+        <hud-telemetry-pill class="leo-hud-pill" id="leo-hud-scarp">CREST +14.0 m · DECAY 0%</hud-telemetry-pill>
+        <hud-telemetry-pill class="leo-hud-pill" id="leo-hud-angle">SLOPE θ 21.5° / 38.0° CRIT</hud-telemetry-pill>
+      </caldera-hud-overlay>
+      <cataclysm-alert-banner class="leo-cataclysm-banner" id="leo-cataclysm-banner" hidden>
+        <inspector-detail-copy class="leo-inspector-copy" id="leo-cataclysm-copy">
+          CRITICAL REPOSE EXCEEDED (38.0°) — Flattened tin cans, burst tires, unmated shoes &amp; soldered pianos efface the newly dressed metropolis!
+        </inspector-detail-copy>
+        <button type="button" class="leo-btn leo-btn-danger leo-btn-compact" id="leo-btn-banner-reset">
+          <key-chord-sigil class="leo-key">R</key-chord-sigil>
+          <rite-btn-caption class="leo-btn-caption">Refound Day 1</rite-btn-caption>
+        </button>
+      </cataclysm-alert-banner>
+    </caldera-viewport-well>
+
+    <dawn-rite-console class="leo-console">
+      <rite-action-bar class="leo-action-bar">
+        <button type="button" class="leo-btn leo-btn-primary" id="leo-btn-dawn">
+          <key-chord-sigil class="leo-key">D</key-chord-sigil>
+          <rite-btn-caption class="leo-btn-caption">Break New Dawn</rite-btn-caption>
+        </button>
+        <button type="button" class="leo-btn" id="leo-btn-upgrade">
+          <key-chord-sigil class="leo-key">I</key-chord-sigil>
+          <rite-btn-caption class="leo-btn-caption" id="leo-upgrade-label">Skill Tier I → II</rite-btn-caption>
+        </button>
+        <button type="button" class="leo-btn leo-btn-active" id="leo-btn-neighbor-toggle">
+          <key-chord-sigil class="leo-key">N</key-chord-sigil>
+          <rite-btn-caption class="leo-btn-caption" id="leo-neighbor-toggle-label">Neighbors: ON</rite-btn-caption>
+        </button>
+        <button type="button" class="leo-btn" id="leo-btn-surge">
+          <key-chord-sigil class="leo-key">V</key-chord-sigil>
+          <rite-btn-caption class="leo-btn-caption">Surge Neighbor Rollers</rite-btn-caption>
+        </button>
+        <button type="button" class="leo-btn" id="leo-btn-xsection">
+          <key-chord-sigil class="leo-key">X</key-chord-sigil>
+          <rite-btn-caption class="leo-btn-caption" id="leo-xsection-label">Crater Cross-Section</rite-btn-caption>
+        </button>
+        <button type="button" class="leo-btn leo-btn-danger" id="leo-btn-reset">
+          <key-chord-sigil class="leo-key">R</key-chord-sigil>
+          <rite-btn-caption class="leo-btn-caption">Cataclysm Reset</rite-btn-caption>
+        </button>
+      </rite-action-bar>
+
+      <inspector-relic-slate class="leo-panel leo-inspector" id="leo-inspector-slate">
+        <inspector-head-row class="leo-inspector-head">
+          <inspector-title-tag class="leo-inspector-title" id="leo-inspector-title">Fresh Morning Sheets</inspector-title-tag>
+          <inspector-meta-tag class="leo-inspector-meta" id="leo-inspector-meta">DAY 1 · 0% DECAY</inspector-meta-tag>
+        </inspector-head-row>
+        <inspector-detail-copy class="leo-inspector-copy" id="leo-inspector-copy">
+          Every sunrise wakes between crisp uncreased sheets, just-unwrapped soap, brand-new attire, unopened tins, and latest-model radio jingles.
+        </inspector-detail-copy>
+      </inspector-relic-slate>
+
+      <morning-novelty-core class="leo-panel">
+        <panel-rubric-bar class="leo-rubric-bar">
+          <panel-rubric-title class="leo-rubric-title">Morning Refashioning Core</panel-rubric-title>
+          <panel-rubric-badge class="leo-rubric-badge" id="leo-novelty-badge">5 Fresh Rites · Joy 77%</panel-rubric-badge>
+        </panel-rubric-bar>
+        <novelty-totem-strip class="leo-totem-strip" id="leo-novelty-strip"></novelty-totem-strip>
+      </morning-novelty-core>
+
+      <angelic-dustcart-rite class="leo-panel">
+        <panel-rubric-bar class="leo-rubric-bar">
+          <panel-rubric-title class="leo-rubric-title">Sacerdotal Street-Cleaner Rite</panel-rubric-title>
+          <panel-rubric-badge class="leo-rubric-badge" id="leo-dustcart-badge">Curbs Cleansed · Silent Wagons</panel-rubric-badge>
+        </panel-rubric-bar>
+        <curbside-bag-ledger class="leo-metric-row">
+          <metric-pair-cell class="leo-metric-cell">
+            <metric-caption-tag class="leo-metric-cap">Black Plastic Bags</metric-caption-tag>
+            <metric-value-readout class="leo-metric-val" id="leo-val-bags">16</metric-value-readout>
+          </metric-pair-cell>
+          <metric-pair-cell class="leo-metric-cell">
+            <metric-caption-tag class="leo-metric-cap">Exported Refuse</metric-caption-tag>
+            <metric-value-readout class="leo-metric-val" id="leo-val-tonnes">42.0 t</metric-value-readout>
+          </metric-pair-cell>
+          <metric-pair-cell class="leo-metric-cell">
+            <metric-caption-tag class="leo-metric-cap">Angelic Wagons</metric-caption-tag>
+            <metric-value-readout class="leo-metric-val" id="leo-val-wagons">8 Silent</metric-value-readout>
+          </metric-pair-cell>
+        </curbside-bag-ledger>
+        <bag-relic-grid class="leo-chip-grid" id="leo-bag-chips"></bag-relic-grid>
+      </angelic-dustcart-rite>
+
+      <indestructible-scarp-ring class="leo-panel">
+        <panel-rubric-bar class="leo-rubric-bar">
+          <panel-rubric-title class="leo-rubric-title">Indestructible Crater Cuirass</panel-rubric-title>
+          <panel-rubric-badge class="leo-rubric-badge" id="leo-scarp-badge">1 Soldered Stratum</panel-rubric-badge>
+        </panel-rubric-bar>
+        <scarp-strata-meter class="leo-metric-row">
+          <metric-pair-cell class="leo-metric-cell">
+            <metric-caption-tag class="leo-metric-cap">Crater Crest</metric-caption-tag>
+            <metric-value-readout class="leo-metric-val" id="leo-val-elev">+14.0 m</metric-value-readout>
+          </metric-pair-cell>
+          <metric-pair-cell class="leo-metric-cell">
+            <metric-caption-tag class="leo-metric-cap">Slope Angle θ</metric-caption-tag>
+            <metric-value-readout class="leo-metric-val" id="leo-val-angle">21.5° / 38.0°</metric-value-readout>
+          </metric-pair-cell>
+          <metric-pair-cell class="leo-metric-cell">
+            <metric-caption-tag class="leo-metric-cap">Decomposition</metric-caption-tag>
+            <metric-value-readout class="leo-metric-val" id="leo-val-decay">0.000 t/yr</metric-value-readout>
+          </metric-pair-cell>
+        </scarp-strata-meter>
+        <repose-angle-dial class="leo-scarp-footer">
+          <strata-progress-track class="leo-meter-track">
+            <strata-progress-fill class="leo-meter-fill" id="leo-repose-fill"></strata-progress-fill>
+          </strata-progress-track>
+          <button type="button" class="leo-btn leo-btn-compact" id="leo-btn-decay">
+            <rite-btn-caption class="leo-btn-caption" id="leo-decay-btn-label">Test Decay / Flame (0.000)</rite-btn-caption>
+          </button>
+          <panel-rubric-badge class="leo-rubric-badge" id="leo-tier-readout">Tier I: Glazed Celluloid &amp; Crisp Linen</panel-rubric-badge>
+        </repose-angle-dial>
+      </indestructible-scarp-ring>
+
+      <neighbor-rampart-vice class="leo-panel">
+        <panel-rubric-bar class="leo-rubric-bar">
+          <panel-rubric-title class="leo-rubric-title">Neighboring Cities Refuse Rollers</panel-rubric-title>
+          <panel-rubric-badge class="leo-rubric-badge" id="leo-neighbor-badge">6 Ridges Converging</panel-rubric-badge>
+        </panel-rubric-bar>
+        <neighbor-vice-ledger class="leo-metric-row">
+          <metric-pair-cell class="leo-metric-cell">
+            <metric-caption-tag class="leo-metric-cap">Inward Vice</metric-caption-tag>
+            <metric-value-readout class="leo-metric-val" id="leo-val-conv">18%</metric-value-readout>
+          </metric-pair-cell>
+          <metric-pair-cell class="leo-metric-cell">
+            <metric-caption-tag class="leo-metric-cap">Roller Pressure</metric-caption-tag>
+            <metric-value-readout class="leo-metric-val" id="leo-val-pressure">ACTIVE</metric-value-readout>
+          </metric-pair-cell>
+          <metric-pair-cell class="leo-metric-cell">
+            <metric-caption-tag class="leo-metric-cap">Burial Effaced</metric-caption-tag>
+            <metric-value-readout class="leo-metric-val" id="leo-val-effaced">0%</metric-value-readout>
+          </metric-pair-cell>
+        </neighbor-vice-ledger>
+        <neighbor-roller-grid class="leo-chip-grid" id="leo-neighbor-chips"></neighbor-roller-grid>
+      </neighbor-rampart-vice>
+    </dawn-rite-console>
+  </caldera-stage-grid>
+
+  <leonia-plate-drawer id="leo-plate-drawer" class="leo-plate-drawer" hidden>
+    <plate-drawer-sheet class="leo-plate-sheet" id="leo-plate-sheet">
+      <plate-drawer-topbar class="leo-plate-topbar">
+        <caldera-title-seal class="leo-seal">
+          <caldera-crest-mark class="leo-crest">ROYAL PLATES</caldera-crest-mark>
+          <caldera-motto-line class="leo-motto">Archival Survey &amp; Caldera Panorama</caldera-motto-line>
+        </caldera-title-seal>
+        <plate-tab-strip class="leo-plate-tabs">
+          <button type="button" class="leo-btn leo-btn-compact leo-btn-active" id="leo-tab-diptych" data-tab="diptych">
+            <rite-btn-caption class="leo-btn-caption">Diptych</rite-btn-caption>
+          </button>
+          <button type="button" class="leo-btn leo-btn-compact" id="leo-tab-map" data-tab="map">
+            <rite-btn-caption class="leo-btn-caption">Survey Map (1600×1200)</rite-btn-caption>
+          </button>
+          <button type="button" class="leo-btn leo-btn-compact" id="leo-tab-vista" data-tab="vista">
+            <rite-btn-caption class="leo-btn-caption">Caldera View (1600×1000)</rite-btn-caption>
+          </button>
+          <button type="button" class="leo-btn leo-btn-compact" id="leo-btn-zoom">
+            <key-chord-sigil class="leo-key">Z</key-chord-sigil>
+            <rite-btn-caption class="leo-btn-caption" id="leo-zoom-label">Loupe 1.0x</rite-btn-caption>
+          </button>
+          <button type="button" class="leo-btn leo-btn-danger leo-btn-compact" id="leo-btn-close-plates">
+            <key-chord-sigil class="leo-key">Esc</key-chord-sigil>
+            <rite-btn-caption class="leo-btn-caption">Close</rite-btn-caption>
+          </button>
+        </plate-tab-strip>
+      </plate-drawer-topbar>
+
+      <plate-loupe-stage class="leo-loupe-stage leo-mode-diptych" id="leo-loupe-stage">
+        <plate-frame-card class="leo-plate-card" id="leo-card-map">
+          <img id="leo-img-map" class="leo-plate-img" src="map.png" alt="Archival copperplate survey plan of Leonia">
+          <plate-survey-caption class="leo-plate-caption">
+            Plate I — Copperplate Stratigraphic Survey Plan (1600×1200): Gleaming radial dawn avenues ringed by soldered refuse scarps and six converging neighbor rollers.
+          </plate-survey-caption>
+        </plate-frame-card>
+        <plate-frame-card class="leo-plate-card" id="leo-card-vista">
+          <img id="leo-img-vista" class="leo-plate-img" src="image.png" alt="Panoramic caldera painting of Leonia">
+          <plate-survey-caption class="leo-plate-caption">
+            Plate II — Caldera Panorama (1600×1000): Fresh morning linen, black curbside shrouds, silent street-cleaner wagons, and towering unburnable ramparts.
+          </plate-survey-caption>
+        </plate-frame-card>
+      </plate-loupe-stage>
+    </plate-drawer-sheet>
+  </leonia-plate-drawer>
+</leonia-refuse-caldera>
+
+<script>
+/* City 40: Leonia — Daily Morning Refashioning & Angelic Street-Cleaner Core */
+globalThis.LeoniaMorningCore = (function () {
+  "use strict";
+
+  const DECOMPOSITION_RATE = 0;
+
+  const PALETTE = Object.freeze({
+    dawn_gleam_ivory: "#f6f3ea",
+    fresh_linen_cyan: "#d7eef2",
+    soap_pearl_mint: "#9fd8cb",
+    angelic_gold: "#d8ae5e",
+    plastic_bag_obsidian: "#181b20",
+    scarp_slate_cuirass: "#363b45",
+    porcelain_cobalt: "#4d7498",
+    rust_tin_ochre: "#b85d38",
+    tire_ash_charcoal: "#23262d",
+    cataclysm_crimson: "#c93b2b",
+    ink_parchment: "#111318"
+  });
+
+  const RITE_PHASES = Object.freeze([
+    "dawn_unwrapping",
+    "curbside_bagging",
+    "angelic_procession",
+    "cleansed_gleam"
+  ]);
+
+  const MATERIAL_TIERS = Object.freeze([
+    Object.freeze({ level: 1, numeral: "I", name: "Glazed Celluloid & Crisp Linen", massFactor: 1.0, gleamBoost: 0.0 }),
+    Object.freeze({ level: 2, numeral: "II", name: "Vulcanized Polymer & Enamel", massFactor: 1.22, gleamBoost: 0.14 }),
+    Object.freeze({ level: 3, numeral: "III", name: "Vitreous Resin & Soldered Tin", massFactor: 1.46, gleamBoost: 0.28 }),
+    Object.freeze({ level: 4, numeral: "IV", name: "Impervious Fluoropolymer Weave", massFactor: 1.72, gleamBoost: 0.42 }),
+    Object.freeze({ level: 5, numeral: "V", name: "Unburnable Eternal Synthetics", massFactor: 2.02, gleamBoost: 0.58 })
+  ]);
+
+  const MORNING_NOVELTIES = Object.freeze([
+    Object.freeze({
+      id: "fresh_sheets",
+      index: 0,
+      title: "Fresh Morning Sheets",
+      freshState: "Crisp uncreased pearl-linen hung along radial dawn balconies",
+      discardedYesterday: "Once-slept bedsheets knotted inside glossy black plastic",
+      baseTonnes: 6.8,
+      gleamColor: PALETTE.fresh_linen_cyan,
+      ritualInscription: "Every sunrise Leonia wakes between immaculate sheets woven overnight, casting yesterday's linen to the curb."
+    }),
+    Object.freeze({
+      id: "unwrapped_soap",
+      index: 1,
+      title: "Just-Unwrapped Soap",
+      freshState: "Sharp-edged mint-pearl cake slit fresh from wax-sealed foil",
+      discardedYesterday: "Half-lathered soap cakes and squeezed toothpaste tubes",
+      baseTonnes: 5.4,
+      gleamColor: PALETTE.soap_pearl_mint,
+      ritualInscription: "Hands wash only with soap never touched before; recurrent impurity is sealed away before the foam cools."
+    }),
+    Object.freeze({
+      id: "brand_new_attire",
+      index: 2,
+      title: "Brand-New Attire",
+      freshState: "Unworn morning weave cut with factory lustre intact",
+      discardedYesterday: "Yesterday's coats, collars, and rollerskates bagged whole",
+      baseTonnes: 8.2,
+      gleamColor: PALETTE.dawn_gleam_ivory,
+      ritualInscription: "Citizens dress in brand-new clothing at every dawn, measuring opulence by how swiftly garments are expelled."
+    }),
+    Object.freeze({
+      id: "unopened_tins_fridge",
+      index: 3,
+      title: "Unopened Tins & Latest Fridge",
+      freshState: "Mirror-sealed tins lifted from this morning's cobalt refrigerator",
+      discardedYesterday: "Punctured canisters, porcelain dinner services, and iron boilers",
+      baseTonnes: 11.6,
+      gleamColor: PALETTE.porcelain_cobalt,
+      ritualInscription: "Unopened tins emerge from the latest refrigerator while yesterday's porcelain services wait in black shrouds."
+    }),
+    Object.freeze({
+      id: "latest_model_radio",
+      index: 4,
+      title: "Latest-Model Radio Jingles",
+      freshState: "Gilded polymer receiver chiming bright dawn commercial jingles",
+      discardedYesterday: "Superseded radios, burned-out lightbulbs, and grand pianos",
+      baseTonnes: 9.5,
+      gleamColor: PALETTE.angelic_gold,
+      ritualInscription: "Sparkling commercial jingles ring from the latest-model radio as silent street cleaners gather yesterday's pianos."
+    })
+  ]);
+
+  const DISCARDED_REMAINS = Object.freeze([
+    Object.freeze({
+      id: "squeezed_toothpaste",
+      label: "Squeezed Toothpaste Tubes",
+      silhouetteKind: "toothpaste",
+      relicType: "squeezed_toothpaste",
+      baseMassTonnes: 2.8,
+      sacerdotallySealed: true,
+      description: "Flattened morning paste tubes coiled inside clean obsidian plastic."
+    }),
+    Object.freeze({
+      id: "burned_lightbulbs",
+      label: "Burned-Out Lightbulbs",
+      silhouetteKind: "lightbulb",
+      relicType: "burned_lightbulbs",
+      baseMassTonnes: 3.4,
+      sacerdotallySealed: true,
+      description: "Darkened glass globes and unbroken tungsten stems awaiting the silent wagon."
+    }),
+    Object.freeze({
+      id: "yesterday_newspapers",
+      label: "Yesterday's Newspapers",
+      silhouetteKind: "newspapers",
+      relicType: "plastic_wrappings",
+      baseMassTonnes: 4.6,
+      sacerdotallySealed: true,
+      description: "Day-old broadsheets sealed against memory in lustrous polymer sacks."
+    }),
+    Object.freeze({
+      id: "tin_containers_wrappings",
+      label: "Tin Containers & Wrappings",
+      silhouetteKind: "containers",
+      relicType: "plastic_wrappings",
+      baseMassTonnes: 5.5,
+      sacerdotallySealed: true,
+      description: "Impervious canisters and synthetic foil resisting rot, rust, and flame."
+    }),
+    Object.freeze({
+      id: "cast_iron_boilers",
+      label: "Cast-Iron Boilers",
+      silhouetteKind: "boiler",
+      relicType: "cast_iron_boilers",
+      baseMassTonnes: 7.4,
+      sacerdotallySealed: true,
+      description: "Riveted domestic boilers set whole upon the curb in heavy black shrouds."
+    }),
+    Object.freeze({
+      id: "bound_encyclopedias",
+      label: "Bound Encyclopedias",
+      silhouetteKind: "encyclopedias",
+      relicType: "bound_encyclopedias",
+      baseMassTonnes: 6.2,
+      sacerdotallySealed: true,
+      description: "Complete gilded reference volumes superseded overnight, stacked square under taut film."
+    }),
+    Object.freeze({
+      id: "grand_pianos",
+      label: "Grand Pianos",
+      silhouetteKind: "piano",
+      relicType: "grand_pianos",
+      baseMassTonnes: 8.6,
+      sacerdotallySealed: true,
+      description: "Three-legged concert pianos wrapped in clean black plastic along the radial boulevard."
+    }),
+    Object.freeze({
+      id: "porcelain_services",
+      label: "Porcelain Dinner Services",
+      silhouetteKind: "porcelain",
+      relicType: "porcelain_services",
+      baseMassTonnes: 5.0,
+      sacerdotallySealed: true,
+      description: "Cobalt-rimmed tureens and thirty-six plates nested intact for angelic removal."
+    })
+  ]);
+
+  const TAU = Math.PI * 2;
+  function clamp(v, lo, hi) { return v < lo ? lo : (v > hi ? hi : v); }
+  function clamp01(v) { return clamp(Number.isFinite(v) ? v : 0, 0, 1); }
+  function seededNoise(seed) {
+    const x = Math.sin(seed * 127.1 + 311.7) * 43758.5453123;
+    return x - Math.floor(x);
+  }
+
+  function createAudioEngine(initialMuted) {
+    let muted = Boolean(initialMuted);
+    let ctx = null;
+
+    function ensureCtx() {
+      if (muted) return null;
+      if (ctx) {
+        if (ctx.state === "suspended" && typeof ctx.resume === "function") {
+          try { ctx.resume().catch(function () {}); } catch (_e) {}
+        }
+        return ctx;
+      }
+      const G = typeof globalThis !== "undefined" ? globalThis : {};
+      const AC = G.AudioContext || G.webkitAudioContext;
+      if (!AC) return null;
+      try {
+        ctx = new AC();
+        if (ctx.state === "suspended" && typeof ctx.resume === "function") {
+          ctx.resume().catch(function () {});
+        }
+      } catch (_e) {
+        ctx = null;
+      }
+      return ctx;
+    }
+
+    function scheduleTone(ac, freq, startOffset, dur, peakGain, waveType) {
+      try {
+        const now = ac.currentTime + startOffset;
+        const osc = ac.createOscillator();
+        const gain = ac.createGain();
+        osc.type = waveType || "sine";
+        osc.frequency.setValueAtTime(freq, now);
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.exponentialRampToValueAtTime(Math.max(0.0002, peakGain), now + Math.min(0.035, dur * 0.25));
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+        osc.connect(gain);
+        gain.connect(ac.destination);
+        osc.start(now);
+        osc.stop(now + dur + 0.02);
+      } catch (_e) {}
+    }
+
+    return {
+      setMuted: function (flag) {
+        muted = Boolean(flag);
+        if (muted && ctx && ctx.state === "running" && typeof ctx.suspend === "function") {
+          try { ctx.suspend().catch(function () {}); } catch (_e) {}
+        }
+        return muted;
+      },
+      toggleMute: function () {
+        return this.setMuted(!muted);
+      },
+      isMuted: function () {
+        return muted;
+      },
+      playDawnChime: function (skillLevel) {
+        const ac = ensureCtx();
+        if (!ac) return false;
+        const lvl = clamp(skillLevel || 1, 1, 5);
+        const jingle = [523.25, 659.25, 783.99, 987.77, 1174.66 + lvl * 28];
+        for (let i = 0; i < jingle.length; i++) {
+          scheduleTone(ac, jingle[i], i * 0.065, 0.26, 0.045, i < 3 ? "triangle" : "sine");
+        }
+        scheduleTone(ac, 1567.98, 0.22, 0.34, 0.028, "sine");
+        return true;
+      },
+      playAngelicRite: function () {
+        const ac = ensureCtx();
+        if (!ac) return false;
+        const choir = [220.0, 329.63, 440.0, 659.25];
+        for (let i = 0; i < choir.length; i++) {
+          scheduleTone(ac, choir[i], 0.34 + i * 0.04, 0.68, 0.022, "sine");
+        }
+        return true;
+      },
+      playUpgradeShimmer: function (skillLevel) {
+        const ac = ensureCtx();
+        if (!ac) return false;
+        const lvl = clamp(skillLevel || 1, 1, 5);
+        const base = 440 * Math.pow(1.12, lvl - 1);
+        const ratios = [1, 1.25, 1.5, 2.0];
+        for (let i = 0; i < ratios.length; i++) {
+          scheduleTone(ac, base * ratios[i], i * 0.045, 0.32, 0.036, "sine");
+        }
+        return true;
+      },
+      playCataclysmChord: function () {
+        const ac = ensureCtx();
+        if (!ac) return false;
+        const cluster = [55.0, 61.74, 82.41, 116.54, 155.56, 233.08];
+        for (let i = 0; i < cluster.length; i++) {
+          scheduleTone(ac, cluster[i], i * 0.03, 0.95, i < 2 ? 0.07 : 0.035, i < 2 ? "sawtooth" : "triangle");
+        }
+        return true;
+      }
+    };
+  }
+
+  function buildNovelties(dayIndex, skillLevel) {
+    const tier = MATERIAL_TIERS[clamp(skillLevel, 1, 5) - 1];
+    return MORNING_NOVELTIES.map(function (n, idx) {
+      return {
+        id: n.id,
+        index: n.index,
+        title: n.title,
+        freshState: n.freshState,
+        discardedYesterday: n.discardedYesterday,
+        baseTonnes: n.baseTonnes,
+        currentTonnes: Number((n.baseTonnes * tier.massFactor).toFixed(2)),
+        gleamColor: n.gleamColor,
+        ritualInscription: n.ritualInscription,
+        mintedDay: dayIndex,
+        materialTierNumeral: tier.numeral,
+        syntheticSheen: Number(Math.min(1, 0.42 + tier.gleamBoost).toFixed(2)),
+        angleRad: -Math.PI * 0.5 + (idx * TAU) / MORNING_NOVELTIES.length
+      };
+    });
+  }
+
+  function buildSidewalkBags(dayIndex, skillLevel) {
+    const tier = MATERIAL_TIERS[clamp(skillLevel, 1, 5) - 1];
+    const count = 16 + clamp(skillLevel, 1, 5) * 2;
+    const bags = [];
+    for (let i = 0; i < count; i++) {
+      const remain = DISCARDED_REMAINS[i % DISCARDED_REMAINS.length];
+      const avenue = i % 8;
+      const ringSlot = Math.floor(i / 8);
+      const baseAngle = (avenue * TAU) / 8;
+      const curbSide = (i % 2 === 0 ? 1 : -1) * (0.095 + ringSlot * 0.012);
+      const radialFrac = clamp(0.35 + ringSlot * 0.21 + seededNoise(dayIndex * 19 + i * 7) * 0.08, 0.31, 0.85);
+      bags.push({
+        id: "bag_d" + dayIndex + "_" + i,
+        remainId: remain.id,
+        relicType: remain.relicType,
+        label: remain.label,
+        silhouetteKind: remain.silhouetteKind,
+        description: remain.description,
+        sacerdotallySealed: true,
+        decompositionRate: 0,
+        massTonnes: Number(((remain.baseMassTonnes * tier.massFactor) / 2.2).toFixed(2)),
+        avenueIndex: avenue,
+        angleRad: baseAngle + curbSide,
+        radialFrac: radialFrac,
+        sectionXFrac: -0.84 + ((i + 0.5) / count) * 1.68,
+        scale: 0.88 + (remain.baseMassTonnes / 16)
+      });
+    }
+    return bags;
+  }
+
+  function buildAngelicDustcarts(dayIndex, skillLevel) {
+    const carts = [];
+    for (let i = 0; i < 8; i++) {
+      carts.push({
+        id: "spazzino_" + (i + 1),
+        avenueIndex: i,
+        angleRad: (i * TAU) / 8,
+        radialFrac: 0.28 + ((i * 0.09 + dayIndex * 0.07) % 0.56),
+        speed: 0.14 + skillLevel * 0.015 + (i % 3) * 0.018,
+        wingPhase: i * 0.8,
+        bagLoad: 2 + (skillLevel > 3 ? 1 : 0)
+      });
+    }
+    return carts;
+  }
+
+  function drawBagWithSilhouette(ctx, x, y, r, kind, sheenBoost, isSelected) {
+    ctx.save();
+    ctx.translate(x, y);
+    if (isSelected) {
+      ctx.beginPath();
+      ctx.arc(0, 0, r * 1.45, 0, TAU);
+      ctx.strokeStyle = PALETTE.angelic_gold;
+      ctx.lineWidth = 1.6;
+      ctx.stroke();
+    }
+    ctx.beginPath();
+    ctx.moveTo(-r * 0.28, -r * 0.72);
+    ctx.bezierCurveTo(-r * 1.05, -r * 0.45, -r * 1.08, r * 0.78, -r * 0.52, r * 0.92);
+    ctx.lineTo(r * 0.55, r * 0.92);
+    ctx.bezierCurveTo(r * 1.08, r * 0.76, r * 1.02, -r * 0.42, r * 0.28, -r * 0.72);
+    ctx.closePath();
+    ctx.fillStyle = PALETTE.plastic_bag_obsidian;
+    ctx.fill();
+    ctx.strokeStyle = "rgba(215, 238, 242, " + (0.34 + sheenBoost * 0.42).toFixed(2) + ")";
+    ctx.lineWidth = 1.05;
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(-r * 0.16, -r * 0.72);
+    ctx.lineTo(-r * 0.36, -r * 1.12);
+    ctx.lineTo(0, -r * 0.84);
+    ctx.lineTo(r * 0.36, -r * 1.12);
+    ctx.lineTo(r * 0.16, -r * 0.72);
+    ctx.fillStyle = PALETTE.plastic_bag_obsidian;
+    ctx.fill();
+    ctx.strokeStyle = PALETTE.angelic_gold;
+    ctx.lineWidth = 0.9;
+    ctx.beginPath();
+    ctx.moveTo(-r * 0.24, -r * 0.72);
+    ctx.lineTo(r * 0.24, -r * 0.72);
+    ctx.stroke();
+
+    ctx.strokeStyle = "rgba(246, 243, 234, 0.74)";
+    ctx.lineWidth = Math.max(0.9, r * 0.11);
+    ctx.beginPath();
+    if (kind === "piano") {
+      ctx.moveTo(-r * 0.52, r * 0.25);
+      ctx.lineTo(-r * 0.52, -r * 0.22);
+      ctx.quadraticCurveTo(r * 0.05, -r * 0.38, r * 0.52, r * 0.02);
+      ctx.lineTo(r * 0.52, r * 0.25);
+      ctx.closePath();
+      ctx.moveTo(-r * 0.42, r * 0.25); ctx.lineTo(-r * 0.42, r * 0.62);
+      ctx.moveTo(r * 0.38, r * 0.25); ctx.lineTo(r * 0.38, r * 0.62);
+      ctx.moveTo(-r * 0.45, -r * 0.22); ctx.lineTo(r * 0.28, -r * 0.52);
+    } else if (kind === "encyclopedias") {
+      ctx.rect(-r * 0.48, -r * 0.36, r * 0.96, r * 0.24);
+      ctx.rect(-r * 0.44, -r * 0.06, r * 0.88, r * 0.24);
+      ctx.rect(-r * 0.50, r * 0.24, r * 1.00, r * 0.26);
+    } else if (kind === "porcelain") {
+      ctx.strokeStyle = "#8ab7dc";
+      ctx.arc(0, r * 0.15, r * 0.42, Math.PI, 0);
+      ctx.moveTo(-r * 0.56, r * 0.15); ctx.lineTo(r * 0.56, r * 0.15);
+      ctx.moveTo(-r * 0.32, r * 0.48); ctx.lineTo(r * 0.32, r * 0.48);
+    } else if (kind === "boiler") {
+      ctx.rect(-r * 0.34, -r * 0.34, r * 0.68, r * 0.84);
+      ctx.moveTo(0, -r * 0.34); ctx.lineTo(0, -r * 0.56);
+    } else if (kind === "lightbulb") {
+      ctx.arc(0, -r * 0.08, r * 0.34, 0, TAU);
+      ctx.rect(-r * 0.16, r * 0.26, r * 0.32, r * 0.24);
+    } else if (kind === "toothpaste") {
+      ctx.moveTo(-r * 0.44, r * 0.36);
+      ctx.quadraticCurveTo(-r * 0.1, -r * 0.38, r * 0.38, r * 0.08);
+      ctx.rect(r * 0.34, -r * 0.02, r * 0.18, r * 0.18);
+    } else if (kind === "containers") {
+      ctx.rect(-r * 0.44, -r * 0.22, r * 0.38, r * 0.64);
+      ctx.rect(r * 0.06, -r * 0.06, r * 0.38, r * 0.48);
+    } else {
+      ctx.rect(-r * 0.46, -r * 0.26, r * 0.92, r * 0.66);
+      ctx.moveTo(-r * 0.32, -r * 0.04); ctx.lineTo(r * 0.32, -r * 0.04);
+      ctx.moveTo(-r * 0.32, r * 0.18); ctx.lineTo(r * 0.32, r * 0.18);
+    }
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawAngelicDustcart(ctx, x, y, angleRad, s, wingBeat) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(angleRad);
+    ctx.beginPath();
+    ctx.arc(0, 0, s * 1.45, 0, TAU);
+    ctx.fillStyle = "rgba(216, 174, 94, 0.18)";
+    ctx.fill();
+
+    const spread = s * (0.95 + Math.sin(wingBeat) * 0.12);
+    ctx.fillStyle = PALETTE.angelic_gold;
+    ctx.beginPath();
+    ctx.moveTo(-s * 0.2, -s * 0.42);
+    ctx.quadraticCurveTo(-s * 0.65, -spread * 1.18, s * 0.48, -spread * 0.88);
+    ctx.quadraticCurveTo(s * 0.15, -s * 0.48, -s * 0.2, -s * 0.42);
+    ctx.moveTo(-s * 0.2, s * 0.42);
+    ctx.quadraticCurveTo(-s * 0.65, spread * 1.18, s * 0.48, spread * 0.88);
+    ctx.quadraticCurveTo(s * 0.15, s * 0.48, -s * 0.2, s * 0.42);
+    ctx.fill();
+
+    ctx.fillStyle = PALETTE.dawn_gleam_ivory;
+    ctx.strokeStyle = PALETTE.angelic_gold;
+    ctx.lineWidth = 1.25;
+    ctx.beginPath();
+    ctx.rect(-s * 0.82, -s * 0.44, s * 1.56, s * 0.88);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle = PALETTE.plastic_bag_obsidian;
+    ctx.beginPath();
+    ctx.arc(-s * 0.38, -s * 0.16, s * 0.21, 0, TAU);
+    ctx.arc(-s * 0.38, s * 0.18, s * 0.21, 0, TAU);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function drawNoveltyEmblem(ctx, x, y, r, nov, animTime, isSelected, gleamBoost) {
+    ctx.save();
+    ctx.translate(x, y);
+    if (isSelected) {
+      ctx.beginPath();
+      ctx.arc(0, 0, r * 1.34, 0, TAU);
+      ctx.fillStyle = "rgba(216, 174, 94, 0.24)";
+      ctx.fill();
+    }
+    ctx.beginPath();
+    ctx.arc(0, 0, r, 0, TAU);
+    ctx.fillStyle = PALETTE.dawn_gleam_ivory;
+    ctx.fill();
+    ctx.strokeStyle = isSelected ? PALETTE.angelic_gold : nov.gleamColor;
+    ctx.lineWidth = isSelected ? 2.4 : 1.7 + gleamBoost;
+    ctx.stroke();
+
+    ctx.strokeStyle = PALETTE.ink_parchment;
+    ctx.fillStyle = nov.gleamColor;
+    ctx.lineWidth = 1.2;
+    const wave = Math.sin(animTime * 2.4 + nov.index) * r * 0.08;
+    if (nov.id === "fresh_sheets") {
+      ctx.fillRect(-r * 0.52, -r * 0.42, r * 0.46, r * 0.82 + wave);
+      ctx.strokeRect(-r * 0.52, -r * 0.42, r * 0.46, r * 0.82 + wave);
+      ctx.fillRect(r * 0.06, -r * 0.36, r * 0.46, r * 0.78 - wave);
+      ctx.strokeRect(r * 0.06, -r * 0.36, r * 0.46, r * 0.78 - wave);
+    } else if (nov.id === "unwrapped_soap") {
+      ctx.fillRect(-r * 0.48, -r * 0.24, r * 0.96, r * 0.52);
+      ctx.strokeRect(-r * 0.48, -r * 0.24, r * 0.96, r * 0.52);
+      ctx.beginPath();
+      ctx.arc(r * 0.28, -r * 0.44, r * 0.14, 0, TAU);
+      ctx.stroke();
+    } else if (nov.id === "brand_new_attire") {
+      ctx.beginPath();
+      ctx.moveTo(-r * 0.24, -r * 0.48); ctx.lineTo(r * 0.24, -r * 0.48);
+      ctx.lineTo(r * 0.56, -r * 0.12); ctx.lineTo(r * 0.32, r * 0.04);
+      ctx.lineTo(r * 0.32, r * 0.52); ctx.lineTo(-r * 0.32, r * 0.52);
+      ctx.lineTo(-r * 0.32, r * 0.04); ctx.lineTo(-r * 0.56, -r * 0.12);
+      ctx.closePath();
+      ctx.fill(); ctx.stroke();
+    } else if (nov.id === "unopened_tins_fridge") {
+      ctx.fillRect(-r * 0.48, -r * 0.52, r * 0.56, r * 1.04);
+      ctx.strokeRect(-r * 0.48, -r * 0.52, r * 0.56, r * 1.04);
+      ctx.fillStyle = PALETTE.angelic_gold;
+      ctx.fillRect(r * 0.18, -r * 0.08, r * 0.34, r * 0.56);
+      ctx.strokeRect(r * 0.18, -r * 0.08, r * 0.34, r * 0.56);
+    } else {
+      ctx.fillRect(-r * 0.52, -r * 0.14, r * 0.88, r * 0.62);
+      ctx.strokeRect(-r * 0.52, -r * 0.14, r * 0.88, r * 0.62);
+      ctx.beginPath();
+      ctx.arc(r * 0.22, -r * 0.24, r * 0.28, -Math.PI * 0.85, -Math.PI * 0.15);
+      ctx.arc(r * 0.22, -r * 0.24, r * 0.46, -Math.PI * 0.85, -Math.PI * 0.15);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function createMorningCore(opts) {
+    const cfg = opts || {};
+    const audio = createAudioEngine(Boolean(cfg.muted));
+    const onDawnExport = typeof cfg.onDawnExport === "function" ? cfg.onDawnExport : null;
+    const onSelectItem = typeof cfg.onSelectItem === "function" ? cfg.onSelectItem : null;
+
+    const state = {
+      width: cfg.width || 1280,
+      height: cfg.height || 800,
+      dayIndex: 1,
+      materialSkillLevel: 1,
+      ritePhase: "cleansed_gleam",
+      riteProgress: 1,
+      effacedRatio: 0,
+      reducedMotion: Boolean(cfg.reducedMotion),
+      selectedNoveltyId: MORNING_NOVELTIES[0].id,
+      time: 0,
+      dawnFlash: 0,
+      totalExportedTonnes: 0,
+      lastExportPacket: null,
+      novelties: buildNovelties(1, 1),
+      sidewalkBags: buildSidewalkBags(1, 1),
+      angelicDustcarts: buildAngelicDustcarts(1, 1)
+    };
+
+    function resolveBounds(coreBounds) {
+      const cb = coreBounds || {};
+      const w = cb.width || state.width || 1280;
+      const h = cb.height || state.height || 800;
+      if (typeof cb.effacedRatio === "number") state.effacedRatio = clamp01(cb.effacedRatio);
+      return {
+        width: w, height: h,
+        cx: typeof cb.cx === "number" ? cb.cx : w * 0.5,
+        cy: typeof cb.cy === "number" ? cb.cy : h * 0.5,
+        coreRadius: Math.max(34, typeof cb.coreRadius === "number" ? cb.coreRadius : Math.min(w, h) * 0.23),
+        crossSectionMode: Boolean(cb.crossSectionMode),
+        basinFloorY: typeof cb.basinFloorY === "number" ? cb.basinFloorY : h * 0.76,
+        basinHalfWidth: Math.max(30, typeof cb.basinHalfWidth === "number" ? cb.basinHalfWidth : w * 0.18),
+        effaced: state.effacedRatio
+      };
+    }
+
+    function renderPlan(ctx, b) {
+      const R = b.coreRadius;
+      const tier = MATERIAL_TIERS[state.materialSkillLevel - 1];
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(b.cx, b.cy, R, 0, TAU);
+      ctx.clip();
+
+      const bg = ctx.createRadialGradient(b.cx, b.cy, R * 0.04, b.cx, b.cy, R);
+      bg.addColorStop(0, PALETTE.dawn_gleam_ivory);
+      bg.addColorStop(0.58, PALETTE.fresh_linen_cyan);
+      bg.addColorStop(1, PALETTE.soap_pearl_mint);
+      ctx.fillStyle = bg;
+      ctx.fillRect(b.cx - R, b.cy - R, R * 2, R * 2);
+
+      for (let k = 1; k <= 3; k++) {
+        ctx.beginPath();
+        ctx.arc(b.cx, b.cy, R * (0.24 * k + 0.12), 0, TAU);
+        ctx.strokeStyle = k === 2 ? "rgba(77,116,152,0.28)" : "rgba(216,174,94,0.32)";
+        ctx.lineWidth = 1.2;
+        ctx.stroke();
+      }
+      for (let a = 0; a < 8; a++) {
+        const ang = (a * TAU) / 8;
+        ctx.save();
+        ctx.translate(b.cx, b.cy);
+        ctx.rotate(ang);
+        ctx.fillStyle = "rgba(246,243,234,0.88)";
+        ctx.fillRect(R * 0.15, -R * 0.045, R * 0.83, R * 0.09);
+        ctx.fillStyle = PALETTE.fresh_linen_cyan;
+        ctx.fillRect(R * 0.52, R * 0.09, R * 0.14, R * 0.045);
+        ctx.restore();
+      }
+
+      const bagR = clamp(R * 0.056, 4.5, 11.5);
+      for (let i = 0; i < state.sidewalkBags.length; i++) {
+        const bag = state.sidewalkBags[i];
+        const bx = b.cx + Math.cos(bag.angleRad) * R * bag.radialFrac;
+        const by = b.cy + Math.sin(bag.angleRad) * R * bag.radialFrac;
+        drawBagWithSilhouette(ctx, bx, by, bagR * bag.scale, bag.silhouetteKind, tier.gleamBoost, false);
+      }
+      const cartS = clamp(R * 0.055, 4.5, 10.5);
+      for (let i = 0; i < state.angelicDustcarts.length; i++) {
+        const c = state.angelicDustcarts[i];
+        const cx2 = b.cx + Math.cos(c.angleRad) * R * c.radialFrac;
+        const cy2 = b.cy + Math.sin(c.angleRad) * R * c.radialFrac;
+        drawAngelicDustcart(ctx, cx2, cy2, c.angleRad, cartS, state.time * 4 + c.wingPhase);
+      }
+      const novR = clamp(R * 0.115, 8, 20);
+      for (let i = 0; i < state.novelties.length; i++) {
+        const n = state.novelties[i];
+        const nx = b.cx + Math.cos(n.angleRad) * R * 0.43;
+        const ny = b.cy + Math.sin(n.angleRad) * R * 0.43;
+        drawNoveltyEmblem(ctx, nx, ny, novR, n, state.time, state.selectedNoveltyId === n.id, tier.gleamBoost);
+      }
+
+      ctx.beginPath();
+      ctx.arc(b.cx, b.cy, R * 0.15, 0, TAU);
+      ctx.fillStyle = PALETTE.dawn_gleam_ivory;
+      ctx.fill();
+      ctx.strokeStyle = PALETTE.angelic_gold;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      if (b.effaced > 0.004) {
+        const innerClear = Math.max(0, R * (1 - b.effaced * 1.05));
+        ctx.beginPath();
+        ctx.arc(b.cx, b.cy, R * 1.05, 0, TAU);
+        if (innerClear > 1) ctx.arc(b.cx, b.cy, innerClear, 0, TAU, true);
+        ctx.fillStyle = PALETTE.scarp_slate_cuirass;
+        ctx.fill("evenodd");
+        const debrisCount = Math.floor(28 * b.effaced);
+        for (let d = 0; d < debrisCount; d++) {
+          const da = seededNoise(d * 13.7 + 5) * TAU;
+          const dr = innerClear + seededNoise(d * 29.3 + 2) * Math.max(4, R - innerClear);
+          ctx.fillStyle = d % 3 === 0 ? PALETTE.rust_tin_ochre : (d % 3 === 1 ? PALETTE.tire_ash_charcoal : PALETTE.cataclysm_crimson);
+          ctx.fillRect(b.cx + Math.cos(da) * dr - 4, b.cy + Math.sin(da) * dr - 3, 8, 5);
+        }
+      }
+      ctx.restore();
+
+      ctx.beginPath();
+      ctx.arc(b.cx, b.cy, R, 0, TAU);
+      ctx.strokeStyle = b.effaced > 0.6 ? PALETTE.cataclysm_crimson : PALETTE.angelic_gold;
+      ctx.lineWidth = 2.2;
+      ctx.stroke();
+    }
+
+    function renderSection(ctx, b) {
+      const hw = b.basinHalfWidth;
+      const fy = b.basinFloorY;
+      const maxH = Math.max(48, Math.min(b.height * 0.24, hw * 0.92));
+      const tier = MATERIAL_TIERS[state.materialSkillLevel - 1];
+      ctx.save();
+      const sky = ctx.createLinearGradient(b.cx, fy - maxH * 1.2, b.cx, fy);
+      sky.addColorStop(0, "rgba(215,238,242,0.16)");
+      sky.addColorStop(1, "rgba(246,243,234,0.72)");
+      ctx.fillStyle = sky;
+      ctx.fillRect(b.cx - hw, fy - maxH * 1.15, hw * 2, maxH * 1.15);
+
+      const towers = [-0.76, -0.50, -0.25, 0, 0.25, 0.50, 0.76];
+      for (let i = 0; i < towers.length; i++) {
+        const tx = b.cx + towers[i] * hw;
+        const tw = hw * 0.15;
+        const th = maxH * (i === 3 ? 0.96 : (i % 2 === 0 ? 0.68 : 0.82));
+        ctx.fillStyle = PALETTE.dawn_gleam_ivory;
+        ctx.strokeStyle = PALETTE.porcelain_cobalt;
+        ctx.lineWidth = 1.2;
+        ctx.fillRect(tx - tw * 0.5, fy - th, tw, th);
+        ctx.strokeRect(tx - tw * 0.5, fy - th, tw, th);
+        ctx.fillStyle = PALETTE.fresh_linen_cyan;
+        ctx.fillRect(tx - tw * 0.36, fy - th * 0.68, tw * 0.72, th * 0.14);
+      }
+      const novR = clamp(hw * 0.085, 7, 15);
+      for (let i = 0; i < state.novelties.length; i++) {
+        const n = state.novelties[i];
+        const nx = b.cx + (-0.68 + i * 0.34) * hw;
+        drawNoveltyEmblem(ctx, nx, fy - maxH * 0.42, novR, n, state.time, state.selectedNoveltyId === n.id, tier.gleamBoost);
+      }
+      const bagR = clamp(hw * 0.046, 4, 9);
+      for (let i = 0; i < Math.min(12, state.sidewalkBags.length); i++) {
+        const bag = state.sidewalkBags[i];
+        drawBagWithSilhouette(ctx, b.cx + bag.sectionXFrac * hw, fy - bagR * 0.85, bagR, bag.silhouetteKind, tier.gleamBoost, false);
+      }
+      drawAngelicDustcart(ctx, b.cx - hw * 0.62, fy - bagR * 1.1, Math.PI, bagR * 1.15, state.time * 4);
+      drawAngelicDustcart(ctx, b.cx + hw * 0.62, fy - bagR * 1.1, 0, bagR * 1.15, state.time * 4 + 1.2);
+
+      if (b.effaced > 0.004) {
+        const buryH = maxH * 1.22 * b.effaced;
+        ctx.fillStyle = PALETTE.scarp_slate_cuirass;
+        ctx.beginPath();
+        ctx.moveTo(b.cx - hw * 1.04, fy + 2);
+        ctx.lineTo(b.cx - hw * 1.04, fy - buryH * 1.12);
+        ctx.quadraticCurveTo(b.cx, fy - buryH * 0.82, b.cx + hw * 1.04, fy - buryH * 1.12);
+        ctx.lineTo(b.cx + hw * 1.04, fy + 2);
+        ctx.closePath();
+        ctx.fill();
+      }
+      ctx.restore();
+    }
+
+    function breakNewDawn(callOpts) {
+      const co = callOpts || {};
+      state.dayIndex += 1;
+      const tier = MATERIAL_TIERS[state.materialSkillLevel - 1];
+      state.novelties = buildNovelties(state.dayIndex, state.materialSkillLevel);
+      state.sidewalkBags = buildSidewalkBags(state.dayIndex, state.materialSkillLevel);
+      state.angelicDustcarts = buildAngelicDustcarts(state.dayIndex, state.materialSkillLevel);
+
+      let rawMass = 0;
+      const relics = DISCARDED_REMAINS.map(function (rem) {
+        const tonnes = Number((rem.baseMassTonnes * tier.massFactor * (1 + Math.min(0.28, state.dayIndex * 0.01))).toFixed(2));
+        rawMass += tonnes;
+        return {
+          id: rem.id,
+          relicType: rem.relicType,
+          label: rem.label,
+          silhouetteKind: rem.silhouetteKind,
+          tonnes: tonnes,
+          indestructibilityTier: state.materialSkillLevel,
+          decompositionRate: 0,
+          sacerdotallySealed: true
+        };
+      });
+      const exportedTonnes = Number(rawMass.toFixed(2));
+      state.totalExportedTonnes = Number((state.totalExportedTonnes + exportedTonnes).toFixed(2));
+      state.ritePhase = state.reducedMotion ? "cleansed_gleam" : "dawn_unwrapping";
+      state.riteProgress = state.reducedMotion ? 1 : 0;
+      state.dawnFlash = state.reducedMotion ? 0 : 1;
+
+      const exportPacket = {
+        dayIndex: state.dayIndex,
+        materialSkillLevel: state.materialSkillLevel,
+        decompositionRate: 0,
+        exportedTonnes: exportedTonnes,
+        bagCount: state.sidewalkBags.length,
+        sidewalkCleansed: true,
+        joyOfExpelling: Math.min(1, 0.72 + state.materialSkillLevel * 0.05),
+        relics: relics
+      };
+      state.lastExportPacket = exportPacket;
+
+      if (!co.silentAudio) {
+        audio.playDawnChime(state.materialSkillLevel);
+        audio.playAngelicRite();
+      }
+      if (onDawnExport && !co.skipCallback) {
+        onDawnExport(exportPacket);
+      }
+      return exportPacket;
+    }
+
+    function upgradeMaterialIndestructibility(targetLevel) {
+      if (typeof targetLevel === "number" && Number.isFinite(targetLevel)) {
+        state.materialSkillLevel = clamp(Math.round(targetLevel), 1, 5);
+      } else {
+        state.materialSkillLevel = (state.materialSkillLevel % 5) + 1;
+      }
+      state.novelties = buildNovelties(state.dayIndex, state.materialSkillLevel);
+      state.sidewalkBags = buildSidewalkBags(state.dayIndex, state.materialSkillLevel);
+      audio.playUpgradeShimmer(state.materialSkillLevel);
+      const tier = MATERIAL_TIERS[state.materialSkillLevel - 1];
+      return {
+        materialSkillLevel: state.materialSkillLevel,
+        materialTierName: tier.name,
+        materialTierNumeral: tier.numeral,
+        decompositionRate: 0
+      };
+    }
+
+    function step(dt) {
+      if (state.reducedMotion) return;
+      let remaining = clamp(Number.isFinite(dt) ? dt : 0.016, 0, 5.0);
+      while (remaining > 1e-6) {
+        const sub = Math.min(remaining, 0.1);
+        remaining -= sub;
+        state.time += sub;
+        state.dawnFlash = Math.max(0, state.dawnFlash - sub * 1.4);
+        if (state.riteProgress < 1) {
+          state.riteProgress = Math.min(1, state.riteProgress + sub * 0.42);
+          if (state.riteProgress < 0.26) state.ritePhase = "dawn_unwrapping";
+          else if (state.riteProgress < 0.54) state.ritePhase = "curbside_bagging";
+          else if (state.riteProgress < 0.88) state.ritePhase = "angelic_procession";
+          else state.ritePhase = "cleansed_gleam";
+        }
+        for (let i = 0; i < state.angelicDustcarts.length; i++) {
+          const c = state.angelicDustcarts[i];
+          c.radialFrac += sub * c.speed;
+          if (c.radialFrac > 0.91) c.radialFrac = 0.24;
+        }
+      }
+    }
+
+    function selectNovelty(idOrIndex) {
+      let found = null;
+      if (typeof idOrIndex === "number") {
+        found = state.novelties[clamp(Math.floor(idOrIndex), 0, state.novelties.length - 1)] || null;
+      } else if (typeof idOrIndex === "string") {
+        found = state.novelties.find(function (n) { return n.id === idOrIndex; }) || null;
+      }
+      if (!found) return null;
+      state.selectedNoveltyId = found.id;
+      const payload = Object.assign({ kind: "morning_novelty", decompositionRate: 0, dayIndex: state.dayIndex }, found);
+      if (onSelectItem) onSelectItem(payload);
+      return payload;
+    }
+
+    function inspectAt(x, y, coreBounds, triggerSelect) {
+      const b = resolveBounds(coreBounds);
+      if (b.crossSectionMode) {
+        const maxH = Math.max(48, Math.min(b.height * 0.24, b.basinHalfWidth * 0.92));
+        if (Math.abs(x - b.cx) > b.basinHalfWidth || y > b.basinFloorY + 14 || y < b.basinFloorY - maxH * 1.2) return null;
+        for (let i = 0; i < state.novelties.length; i++) {
+          const nx = b.cx + (-0.68 + i * 0.34) * b.basinHalfWidth;
+          const ny = b.basinFloorY - maxH * 0.42;
+          if (Math.hypot(x - nx, y - ny) <= 18) {
+            const p = Object.assign({ kind: "morning_novelty", decompositionRate: 0 }, state.novelties[i]);
+            if (triggerSelect && onSelectItem) onSelectItem(p);
+            return p;
+          }
+        }
+        const bagIdx = clamp(Math.floor(((x - (b.cx - b.basinHalfWidth)) / (b.basinHalfWidth * 2)) * 12), 0, state.sidewalkBags.length - 1);
+        if (y >= b.basinFloorY - 24) {
+          const hitBag = Object.assign({ kind: "curbside_bag" }, state.sidewalkBags[bagIdx]);
+          if (triggerSelect && onSelectItem) onSelectItem(hitBag);
+          return hitBag;
+        }
+        return { kind: "metropolis_core", id: "leonia_basin", label: "Sunken Refashioned Leonia", description: "Fragile morning towers nestled beneath rising indestructible ramparts.", dayIndex: state.dayIndex, decompositionRate: 0 };
+      }
+
+      const dist = Math.hypot(x - b.cx, y - b.cy);
+      if (dist > b.coreRadius) return null;
+      const R = b.coreRadius;
+      for (let i = 0; i < state.novelties.length; i++) {
+        const n = state.novelties[i];
+        if (Math.hypot(x - (b.cx + Math.cos(n.angleRad) * R * 0.43), y - (b.cy + Math.sin(n.angleRad) * R * 0.43)) <= Math.max(14, R * 0.13)) {
+          const p = Object.assign({ kind: "morning_novelty", decompositionRate: 0 }, n);
+          if (triggerSelect && onSelectItem) onSelectItem(p);
+          return p;
+        }
+      }
+      for (let i = 0; i < state.angelicDustcarts.length; i++) {
+        const c = state.angelicDustcarts[i];
+        if (Math.hypot(x - (b.cx + Math.cos(c.angleRad) * R * c.radialFrac), y - (b.cy + Math.sin(c.angleRad) * R * c.radialFrac)) <= Math.max(11, R * 0.08)) {
+          const p = { kind: "angelic_dustcart", id: c.id, label: "Angelic Street-Cleaner Wagon", description: "Welcomed like angels in silence, bearing yesterday's sealed bags outward to the crater scarp.", dayIndex: state.dayIndex, decompositionRate: 0 };
+          if (triggerSelect && onSelectItem) onSelectItem(p);
+          return p;
+        }
+      }
+      for (let i = 0; i < state.sidewalkBags.length; i++) {
+        const bag = state.sidewalkBags[i];
+        if (Math.hypot(x - (b.cx + Math.cos(bag.angleRad) * R * bag.radialFrac), y - (b.cy + Math.sin(bag.angleRad) * R * bag.radialFrac)) <= Math.max(10, R * 0.075)) {
+          const p = Object.assign({ kind: "curbside_bag" }, bag);
+          if (triggerSelect && onSelectItem) onSelectItem(p);
+          return p;
+        }
+      }
+      return { kind: "metropolis_core", id: "leonia_rotunda", label: "Refashioned Center of Leonia", description: "Every morning Leonia wakes between fresh sheets while yesterday's city awaits the silent wagon in black plastic.", dayIndex: state.dayIndex, decompositionRate: 0 };
+    }
+
+    function getState() {
+      const tier = MATERIAL_TIERS[state.materialSkillLevel - 1];
+      return {
+        dayIndex: state.dayIndex,
+        materialSkillLevel: state.materialSkillLevel,
+        materialTierName: tier.name,
+        materialTierNumeral: tier.numeral,
+        decompositionRate: 0,
+        ritePhase: state.ritePhase,
+        riteProgress: state.riteProgress,
+        effacedRatio: state.effacedRatio,
+        reducedMotion: state.reducedMotion,
+        muted: audio.isMuted(),
+        selectedNoveltyId: state.selectedNoveltyId,
+        joyOfExpelling: Math.min(1, 0.72 + state.materialSkillLevel * 0.05),
+        sidewalkCleansed: true,
+        bagCount: state.sidewalkBags.length,
+        totalExportedTonnes: state.totalExportedTonnes,
+        lastExportPacket: state.lastExportPacket,
+        novelties: state.novelties.slice(),
+        sidewalkBags: state.sidewalkBags.slice(),
+        angelicDustcarts: state.angelicDustcarts.slice()
+      };
+    }
+
+    function reset() {
+      state.dayIndex = 1;
+      state.materialSkillLevel = 1;
+      state.ritePhase = "cleansed_gleam";
+      state.riteProgress = 1;
+      state.effacedRatio = 0;
+      state.dawnFlash = 0;
+      state.totalExportedTonnes = 0;
+      state.lastExportPacket = null;
+      state.selectedNoveltyId = MORNING_NOVELTIES[0].id;
+      state.novelties = buildNovelties(1, 1);
+      state.sidewalkBags = buildSidewalkBags(1, 1);
+      state.angelicDustcarts = buildAngelicDustcarts(1, 1);
+      return getState();
+    }
+
+    return {
+      breakNewDawn: breakNewDawn,
+      upgradeMaterialIndestructibility: upgradeMaterialIndestructibility,
+      step: step,
+      render: function (ctx, coreBounds) {
+        if (!ctx) return null;
+        const b = resolveBounds(coreBounds);
+        if (b.crossSectionMode) renderSection(ctx, b);
+        else renderPlan(ctx, b);
+        return b;
+      },
+      selectNovelty: selectNovelty,
+      inspectAt: inspectAt,
+      setEffacedRatio: function (r) { state.effacedRatio = clamp01(r); return state.effacedRatio; },
+      setReducedMotion: function (flag) {
+        state.reducedMotion = Boolean(flag);
+        if (state.reducedMotion) { state.ritePhase = "cleansed_gleam"; state.riteProgress = 1; state.dawnFlash = 0; }
+        return state.reducedMotion;
+      },
+      attemptDecay: function () { return { decayedTonnes: 0, decompositionRate: 0 }; },
+      reset: reset,
+      getState: getState,
+      setMuted: function (flag) { return audio.setMuted(flag); },
+      toggleMute: function () { return audio.toggleMute(); },
+      isMuted: function () { return audio.isMuted(); },
+      playDawnChime: function () { return audio.playDawnChime(state.materialSkillLevel); },
+      playAngelicRite: function () { return audio.playAngelicRite(); },
+      playUpgradeShimmer: function () { return audio.playUpgradeShimmer(state.materialSkillLevel); },
+      playCataclysmChord: function () { return audio.playCataclysmChord(); }
+    };
+  }
+
+  return Object.freeze({
+    PALETTE: PALETTE,
+    DECOMPOSITION_RATE: DECOMPOSITION_RATE,
+    MORNING_NOVELTIES: MORNING_NOVELTIES,
+    DISCARDED_REMAINS: DISCARDED_REMAINS,
+    RITE_PHASES: RITE_PHASES,
+    MATERIAL_TIERS: MATERIAL_TIERS,
+    createMorningCore: createMorningCore
+  });
+})();
+
+if (typeof window !== "undefined") {
+  window.LeoniaMorningCore = globalThis.LeoniaMorningCore;
+}
+
+</script>
+<script>
+/*
+ * City 40: Leonia (Continuous Cities 1)
+ * Layer: Indestructible Crater Cuirass, Neighboring Refuse Rollers & Cataclysmic Avalanches
+ * Strictly standalone ES6 IIFE — zero external imports, zero network dependencies.
+ */
+globalThis.LeoniaScarpAvalanches = (function () {
+  "use strict";
+
+  const PALETTE = Object.freeze({
+    dawn_gleam_ivory: "#f6f3ea",
+    fresh_linen_cyan: "#d7eef2",
+    soap_pearl_mint: "#9fd8cb",
+    angelic_gold: "#d8ae5e",
+    plastic_bag_obsidian: "#181b20",
+    scarp_slate_cuirass: "#363b45",
+    porcelain_cobalt: "#4d7498",
+    rust_tin_ochre: "#b85d38",
+    tire_ash_charcoal: "#23262d",
+    cataclysm_crimson: "#c93b2b",
+    ink_parchment: "#111318"
+  });
+
+  const DECOMPOSITION_RATE = 0;
+  const CRITICAL_REPOSE_ANGLE_DEG = 38.0;
+
+  const LEONIA_RELIC_TYPES = Object.freeze([
+    "burned_lightbulbs",
+    "rollerskates",
+    "bound_encyclopedias",
+    "grand_pianos",
+    "porcelain_services",
+    "cast_iron_boilers",
+    "squeezed_toothpaste",
+    "plastic_wrappings"
+  ]);
+
+  const FOREIGN_RELIC_TYPES = Object.freeze([
+    "flattened_tin_cans",
+    "burst_old_tires",
+    "unmated_old_shoes",
+    "frayed_straw_flasks"
+  ]);
+
+  const NEIGHBOR_CITY_NAMES = Object.freeze([
+    "North Tin-Can Roller",
+    "Northeast Burst-Tire Glacier",
+    "Southeast Unmated-Shoe Moraine",
+    "South Straw-Flask Bulwark",
+    "Southwest Crushed-Drum Scarp",
+    "Northwest Tread-&-Sole Vice"
+  ]);
+
+  const NEIGHBOR_CITIES = Object.freeze([
+    Object.freeze({
+      id: "north_tin_roller",
+      name: "North Tin-Can Roller",
+      shortLabel: "N TIN-CAN ROLLER",
+      bearingDeg: -90,
+      primaryRelic: "flattened_tin_cans",
+      relics: FOREIGN_RELIC_TYPES,
+      tint: "#b85d38",
+      toString() { return this.name; }
+    }),
+    Object.freeze({
+      id: "northeast_tire_glacier",
+      name: "Northeast Burst-Tire Glacier",
+      shortLabel: "NE TIRE GLACIER",
+      bearingDeg: -30,
+      primaryRelic: "burst_old_tires",
+      relics: FOREIGN_RELIC_TYPES,
+      tint: "#2e333d",
+      toString() { return this.name; }
+    }),
+    Object.freeze({
+      id: "southeast_shoe_moraine",
+      name: "Southeast Unmated-Shoe Moraine",
+      shortLabel: "SE SHOE MORAINE",
+      bearingDeg: 30,
+      primaryRelic: "unmated_old_shoes",
+      relics: FOREIGN_RELIC_TYPES,
+      tint: "#6d4c3d",
+      toString() { return this.name; }
+    }),
+    Object.freeze({
+      id: "south_flask_bulwark",
+      name: "South Straw-Flask Bulwark",
+      shortLabel: "S STRAW-FLASK",
+      bearingDeg: 90,
+      primaryRelic: "frayed_straw_flasks",
+      relics: FOREIGN_RELIC_TYPES,
+      tint: "#9c7d46",
+      toString() { return this.name; }
+    }),
+    Object.freeze({
+      id: "southwest_drum_scarp",
+      name: "Southwest Crushed-Drum Scarp",
+      shortLabel: "SW DRUM SCARP",
+      bearingDeg: 150,
+      primaryRelic: "flattened_tin_cans",
+      relics: FOREIGN_RELIC_TYPES,
+      tint: "#8f4c32",
+      toString() { return this.name; }
+    }),
+    Object.freeze({
+      id: "northwest_tread_vice",
+      name: "Northwest Tread-&-Sole Vice",
+      shortLabel: "NW TREAD-&-SOLE",
+      bearingDeg: -150,
+      primaryRelic: "burst_old_tires",
+      relics: FOREIGN_RELIC_TYPES,
+      tint: "#39414e",
+      toString() { return this.name; }
+    })
+  ]);
+
+  const RELIC_LABELS = Object.freeze({
+    burned_lightbulbs: "Burned-Out Lightbulbs",
+    rollerskates: "Soldered Rollerskates",
+    bound_encyclopedias: "Bound Encyclopedias",
+    grand_pianos: "Discarded Grand Pianos",
+    porcelain_services: "Cobalt Porcelain Services",
+    cast_iron_boilers: "Cast-Iron Boilers",
+    squeezed_toothpaste: "Squeezed Toothpaste Tubes",
+    plastic_wrappings: "Sealed Obsidian Wrappings",
+    flattened_tin_cans: "Flattened Foreign Tin Cans",
+    burst_old_tires: "Burst Neighboring Tires",
+    unmated_old_shoes: "Unmated Old Shoes",
+    frayed_straw_flasks: "Frayed Straw-Woven Flasks"
+  });
+
+  function clamp(v, lo, hi) {
+    return v < lo ? lo : v > hi ? hi : v;
+  }
+
+  function degToRad(deg) {
+    return (deg * Math.PI) / 180;
+  }
+
+  function createRng(seed) {
+    let s = (seed >>> 0) || 1;
+    return function nextRng() {
+      s = (s + 0x6d2b79f5) | 0;
+      let t = Math.imul(s ^ (s >>> 15), 1 | s);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function drawRelicGlyph(ctx, kind, x, y, sz, rot, alpha) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(rot || 0);
+    ctx.globalAlpha = alpha == null ? 0.9 : alpha;
+    ctx.lineWidth = Math.max(1, sz * 0.13);
+    if (kind === "grand_pianos") {
+      ctx.fillStyle = "#181b20";
+      ctx.strokeStyle = "#d8ae5e";
+      ctx.beginPath();
+      ctx.moveTo(-sz * 0.85, sz * 0.55);
+      ctx.lineTo(-sz * 0.85, -sz * 0.55);
+      ctx.quadraticCurveTo(sz * 0.15, -sz * 0.65, sz * 0.35, -sz * 0.08);
+      ctx.quadraticCurveTo(sz * 0.9, sz * 0.05, sz * 0.78, sz * 0.55);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = "#f6f3ea";
+      ctx.fillRect(-sz * 0.76, sz * 0.28, sz * 1.25, sz * 0.2);
+    } else if (kind === "cast_iron_boilers") {
+      ctx.fillStyle = "#363b45";
+      ctx.strokeStyle = "#b85d38";
+      ctx.beginPath();
+      ctx.roundRect ? ctx.roundRect(-sz * 0.7, -sz * 0.48, sz * 1.4, sz * 0.96, sz * 0.25) : ctx.rect(-sz * 0.7, -sz * 0.48, sz * 1.4, sz * 0.96);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillRect(-sz * 0.2, -sz * 0.82, sz * 0.36, sz * 0.36);
+    } else if (kind === "rollerskates") {
+      ctx.fillStyle = "#4d7498";
+      ctx.strokeStyle = "#f6f3ea";
+      ctx.beginPath();
+      ctx.moveTo(-sz * 0.6, -sz * 0.65);
+      ctx.lineTo(-sz * 0.1, -sz * 0.65);
+      ctx.lineTo(sz * 0.05, -sz * 0.1);
+      ctx.lineTo(sz * 0.7, sz * 0.08);
+      ctx.lineTo(sz * 0.7, sz * 0.34);
+      ctx.lineTo(-sz * 0.65, sz * 0.34);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = "#d8ae5e";
+      ctx.beginPath();
+      ctx.arc(-sz * 0.38, sz * 0.56, sz * 0.2, 0, Math.PI * 2);
+      ctx.arc(sz * 0.38, sz * 0.56, sz * 0.2, 0, Math.PI * 2);
+      ctx.fill();
+    } else if (kind === "porcelain_services") {
+      ctx.fillStyle = "#f6f3ea";
+      ctx.strokeStyle = "#4d7498";
+      ctx.beginPath();
+      ctx.ellipse(0, sz * 0.08, sz * 0.72, sz * 0.44, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(0, -sz * 0.38, sz * 0.16, 0, Math.PI * 2);
+      ctx.stroke();
+    } else if (kind === "bound_encyclopedias") {
+      ctx.fillStyle = "#4d7498";
+      ctx.strokeStyle = "#d8ae5e";
+      ctx.fillRect(-sz * 0.75, -sz * 0.52, sz * 1.5, sz * 0.32);
+      ctx.strokeRect(-sz * 0.75, -sz * 0.52, sz * 1.5, sz * 0.32);
+      ctx.fillStyle = "#6b382a";
+      ctx.fillRect(-sz * 0.68, -sz * 0.12, sz * 1.4, sz * 0.34);
+      ctx.strokeRect(-sz * 0.68, -sz * 0.12, sz * 1.4, sz * 0.34);
+    } else if (kind === "burned_lightbulbs") {
+      ctx.fillStyle = "rgba(215, 238, 242, 0.75)";
+      ctx.strokeStyle = "#9fd8cb";
+      ctx.beginPath();
+      ctx.arc(0, -sz * 0.18, sz * 0.48, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = "#d8ae5e";
+      ctx.fillRect(-sz * 0.22, sz * 0.26, sz * 0.44, sz * 0.36);
+    } else if (kind === "flattened_tin_cans") {
+      ctx.fillStyle = "#b85d38";
+      ctx.strokeStyle = "#f6f3ea";
+      ctx.beginPath();
+      ctx.ellipse(0, 0, sz * 0.82, sz * 0.36, 0.15, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(-sz * 0.5, -sz * 0.1);
+      ctx.lineTo(sz * 0.5, sz * 0.1);
+      ctx.stroke();
+    } else if (kind === "burst_old_tires") {
+      ctx.strokeStyle = "#181b20";
+      ctx.lineWidth = Math.max(2, sz * 0.36);
+      ctx.beginPath();
+      ctx.arc(0, 0, sz * 0.58, 0.35, Math.PI * 1.82);
+      ctx.stroke();
+      ctx.strokeStyle = "#8a929e";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.arc(0, 0, sz * 0.58, 0.4, Math.PI * 1.75);
+      ctx.stroke();
+    } else if (kind === "unmated_old_shoes") {
+      ctx.fillStyle = "#5b3f31";
+      ctx.strokeStyle = "#d8ae5e";
+      ctx.beginPath();
+      ctx.moveTo(-sz * 0.72, -sz * 0.38);
+      ctx.lineTo(-sz * 0.15, -sz * 0.38);
+      ctx.lineTo(sz * 0.2, sz * 0.05);
+      ctx.quadraticCurveTo(sz * 0.82, sz * 0.08, sz * 0.76, sz * 0.42);
+      ctx.lineTo(-sz * 0.72, sz * 0.42);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+    } else if (kind === "frayed_straw_flasks") {
+      ctx.fillStyle = "#c49e59";
+      ctx.strokeStyle = "#4d7498";
+      ctx.beginPath();
+      ctx.ellipse(0, sz * 0.18, sz * 0.58, sz * 0.48, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillRect(-sz * 0.16, -sz * 0.65, sz * 0.32, sz * 0.42);
+    } else {
+      ctx.fillStyle = "#181b20";
+      ctx.strokeStyle = "#9fd8cb";
+      ctx.beginPath();
+      ctx.arc(0, 0, sz * 0.52, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  const STRATA_TINTS = Object.freeze([
+    { fill: "#363b45", rim: "#9fd8cb", weld: "#d8ae5e" },
+    { fill: "#2c3848", rim: "#4d7498", weld: "#f6f3ea" },
+    { fill: "#3d3538", rim: "#b85d38", weld: "#d8ae5e" },
+    { fill: "#232831", rim: "#d7eef2", weld: "#9fd8cb" },
+    { fill: "#404856", rim: "#d8ae5e", weld: "#4d7498" }
+  ]);
+
+  function buildStratum(index, dayIndex, baseElev, topElev, tonnes, skillLevel, customRelics) {
+    const rng = createRng(4001 + dayIndex * 137 + skillLevel * 31);
+    const paletteEntry = STRATA_TINTS[index % STRATA_TINTS.length];
+    const chosenRelics = [];
+    const pool = Array.isArray(customRelics) && customRelics.length ? customRelics : LEONIA_RELIC_TYPES;
+    for (let i = 0; i < 4; i++) {
+      const candidate = pool[(index * 3 + i * 2) % pool.length];
+      const relicId = typeof candidate === "string" ? candidate : (candidate && (candidate.relicType || candidate.id)) || LEONIA_RELIC_TYPES[i];
+      chosenRelics.push(LEONIA_RELIC_TYPES.includes(relicId) ? relicId : LEONIA_RELIC_TYPES[(index + i) % LEONIA_RELIC_TYPES.length]);
+    }
+    const ringNodes = [];
+    const nodeCount = 10 + (skillLevel % 3) * 2;
+    for (let n = 0; n < nodeCount; n++) {
+      ringNodes.push({
+        angle: (n / nodeCount) * Math.PI * 2 + rng() * 0.18,
+        radialJitter: (rng() - 0.5) * 0.28,
+        rot: (rng() - 0.5) * 1.7,
+        relic: chosenRelics[n % chosenRelics.length]
+      });
+    }
+    return Object.freeze({
+      id: "stratum_day_" + dayIndex,
+      index,
+      dayIndex,
+      baseElevationMeters: Number(baseElev.toFixed(3)),
+      topElevationMeters: Number(topElev.toFixed(3)),
+      thicknessMeters: Number((topElev - baseElev).toFixed(3)),
+      tonnes: Number(tonnes.toFixed(2)),
+      materialSkillLevel: skillLevel,
+      decompositionRate: DECOMPOSITION_RATE,
+      soldered: true,
+      fill: paletteEntry.fill,
+      rim: paletteEntry.rim,
+      weld: paletteEntry.weld,
+      relics: Object.freeze(chosenRelics),
+      ringNodes: Object.freeze(ringNodes),
+      inscription: dayIndex === 1
+        ? "Foundational Soldered Cuirass (Day I)"
+        : "Day " + dayIndex + " Indestructible Scale (Tier " + skillLevel + ")"
+    });
+  }
+
+  function computeSlopeAngleDeg(elevMeters, skillLevel, convRatio, overthrust) {
+    const dElev = Math.max(0, elevMeters - 14.0);
+    const dConv = Math.max(-0.18, convRatio - 0.18);
+    const dSkill = Math.max(0, skillLevel - 1);
+    const thrust = Math.max(0, overthrust || 0);
+    const angle = 21.5 + dElev * 0.34 + dConv * 9.2 + dSkill * 0.95 + thrust * 6.5;
+    return Number(clamp(angle, 18.0, 56.0).toFixed(2));
+  }
+
+  const AVALANCHE_RELIC_POOL = Object.freeze([
+    "flattened_tin_cans",
+    "burst_old_tires",
+    "unmated_old_shoes",
+    "frayed_straw_flasks",
+    "grand_pianos",
+    "porcelain_services",
+    "rollerskates",
+    "cast_iron_boilers"
+  ]);
+
+  function createScarpEngine(opts) {
+    const cfg = opts || {};
+    const onStrataAdded = typeof cfg.onStrataAdded === "function" ? cfg.onStrataAdded : null;
+    const onCataclysmLandslide = typeof cfg.onCataclysmLandslide === "function" ? cfg.onCataclysmLandslide : null;
+
+    const state = {
+      width: Number(cfg.width) || 960,
+      height: Number(cfg.height) || 640,
+      reducedMotion: Boolean(cfg.reducedMotion),
+      decompositionRate: DECOMPOSITION_RATE,
+      dayCount: 1,
+      materialSkillLevel: 1,
+      craterElevationMeters: 14.0,
+      elevationHistory: [14.0],
+      neighborPressureActive: true,
+      neighborConvergenceRatio: 0.18,
+      neighborOverthrust: 0,
+      slopeAngleDeg: 21.5,
+      criticalReposeAngleDeg: CRITICAL_REPOSE_ANGLE_DEG,
+      crossSectionMode: false,
+      landslideTriggered: false,
+      effacedRatio: 0,
+      metropolisEffaced: false,
+      totalDepositedTonnes: 42,
+      strataLayers: [],
+      avalancheDebris: [],
+      clockSec: 0,
+      decayRepelFlash: 0,
+      rollerSurgeFlash: 0
+    };
+
+    function _seedInitialState(keepCrossSection) {
+      const preserveX = keepCrossSection ? state.crossSectionMode : false;
+      state.decompositionRate = DECOMPOSITION_RATE;
+      state.dayCount = 1;
+      state.materialSkillLevel = 1;
+      state.craterElevationMeters = 14.0;
+      state.elevationHistory = [14.0];
+      state.neighborPressureActive = true;
+      state.neighborConvergenceRatio = 0.18;
+      state.neighborOverthrust = 0;
+      state.slopeAngleDeg = 21.5;
+      state.criticalReposeAngleDeg = CRITICAL_REPOSE_ANGLE_DEG;
+      state.crossSectionMode = preserveX;
+      state.landslideTriggered = false;
+      state.effacedRatio = 0;
+      state.metropolisEffaced = false;
+      state.totalDepositedTonnes = 42;
+      state.strataLayers = [
+        buildStratum(0, 1, 0, 14.0, 42, 1, [
+          "rollerskates",
+          "burned_lightbulbs",
+          "cast_iron_boilers",
+          "porcelain_services"
+        ])
+      ];
+      state.avalancheDebris = [];
+      state.decayRepelFlash = 0;
+      state.rollerSurgeFlash = 0;
+    }
+
+    _seedInitialState(false);
+
+    function getState() {
+      return {
+        decompositionRate: DECOMPOSITION_RATE,
+        dayCount: state.dayCount,
+        materialSkillLevel: state.materialSkillLevel,
+        craterElevationMeters: state.craterElevationMeters,
+        elevationHistory: state.elevationHistory.slice(),
+        neighborPressureActive: state.neighborPressureActive,
+        neighborConvergenceRatio: state.neighborConvergenceRatio,
+        slopeAngleDeg: state.slopeAngleDeg,
+        criticalReposeAngleDeg: CRITICAL_REPOSE_ANGLE_DEG,
+        crossSectionMode: state.crossSectionMode,
+        landslideTriggered: state.landslideTriggered,
+        effacedRatio: state.effacedRatio,
+        metropolisEffaced: state.metropolisEffaced,
+        totalDepositedTonnes: state.totalDepositedTonnes,
+        strataCount: state.strataLayers.length,
+        strataLayers: state.strataLayers.slice(),
+        neighborCities: NEIGHBOR_CITIES,
+        reducedMotion: state.reducedMotion
+      };
+    }
+
+    function _spawnAvalancheDebris() {
+      const rng = createRng(9040 + state.dayCount * 73);
+      const items = [];
+      for (let i = 0; i < 88; i++) {
+        const sector = i % NEIGHBOR_CITIES.length;
+        const baseBearing = degToRad(NEIGHBOR_CITIES[sector].bearingDeg);
+        items.push({
+          id: "debris_" + i,
+          relic: AVALANCHE_RELIC_POOL[i % AVALANCHE_RELIC_POOL.length],
+          angle: baseBearing + (rng() - 0.5) * 0.98,
+          side: i % 2 === 0 ? -1 : 1,
+          startFrac: 0.92 + rng() * 0.25,
+          endFrac: rng() * 0.52,
+          progress: state.reducedMotion ? 1.0 : rng() * 0.16,
+          speed: 0.42 + rng() * 0.46,
+          size: 5.5 + rng() * 5.8,
+          rot: rng() * Math.PI * 2,
+          spin: (rng() - 0.5) * 4.2
+        });
+      }
+      state.avalancheDebris = items;
+    }
+
+    function _startCataclysm() {
+      if (state.landslideTriggered) return;
+      state.landslideTriggered = true;
+      _spawnAvalancheDebris();
+      if (state.reducedMotion) {
+        state.effacedRatio = 1.0;
+        state.metropolisEffaced = true;
+      } else {
+        state.effacedRatio = Math.max(state.effacedRatio, 0.08);
+      }
+      if (onCataclysmLandslide) {
+        onCataclysmLandslide(getState());
+      }
+    }
+
+    function _refreshSlopeAndCheckFailure() {
+      state.slopeAngleDeg = computeSlopeAngleDeg(
+        state.craterElevationMeters,
+        state.materialSkillLevel,
+        state.neighborConvergenceRatio,
+        state.neighborOverthrust
+      );
+      if (state.slopeAngleDeg >= CRITICAL_REPOSE_ANGLE_DEG && !state.landslideTriggered) {
+        _startCataclysm();
+      }
+    }
+
+    function depositDailyRefuse(exportPacket) {
+      const pkt = exportPacket || {};
+      const skill = clamp(Math.round(Number(pkt.materialSkillLevel) || state.materialSkillLevel || 1), 1, 5);
+      const tonnes = Math.max(1, Number(pkt.exportedTonnes) || 42);
+      state.materialSkillLevel = skill;
+      state.dayCount = typeof pkt.dayIndex === "number" && pkt.dayIndex > state.dayCount
+        ? Math.round(pkt.dayIndex)
+        : state.dayCount + 1;
+      state.decompositionRate = DECOMPOSITION_RATE;
+
+      const elevationGain = 2.4 + skill * 0.85 + tonnes * 0.015;
+      const prevElevation = state.craterElevationMeters;
+      const candidateElev = Number((prevElevation + elevationGain).toFixed(3));
+      const nextElevation = candidateElev > prevElevation ? candidateElev : Number((prevElevation + 2.4).toFixed(3));
+
+      const stratum = buildStratum(
+        state.strataLayers.length,
+        state.dayCount,
+        prevElevation,
+        nextElevation,
+        tonnes,
+        skill,
+        pkt.relics
+      );
+      state.strataLayers.push(stratum);
+      state.craterElevationMeters = nextElevation;
+      state.elevationHistory.push(nextElevation);
+      state.totalDepositedTonnes = Number((state.totalDepositedTonnes + tonnes).toFixed(2));
+
+      if (state.neighborPressureActive) {
+        state.neighborConvergenceRatio = Number(Math.min(1.0, state.neighborConvergenceRatio + 0.085).toFixed(4));
+      }
+      _refreshSlopeAndCheckFailure();
+      if (onStrataAdded) {
+        onStrataAdded(stratum, getState());
+      }
+      return getState();
+    }
+
+    function setMaterialSkillLevel(level) {
+      state.materialSkillLevel = clamp(Math.round(Number(level) || 1), 1, 5);
+      _refreshSlopeAndCheckFailure();
+      return getState();
+    }
+
+    function setNeighborPressure(flag) {
+      state.neighborPressureActive = Boolean(flag);
+      return state.neighborPressureActive;
+    }
+
+    function toggleNeighborPressure(force) {
+      state.neighborPressureActive = typeof force === "boolean" ? force : !state.neighborPressureActive;
+      return state.neighborPressureActive;
+    }
+
+    function pushNeighborRollers(delta) {
+      const d = typeof delta === "number" ? delta : 0.14;
+      state.neighborConvergenceRatio = Number(clamp(state.neighborConvergenceRatio + d, 0, 1).toFixed(4));
+      if (d > 0) {
+        state.neighborOverthrust = Number((state.neighborOverthrust + d * 0.85).toFixed(4));
+      }
+      state.rollerSurgeFlash = 1.0;
+      _refreshSlopeAndCheckFailure();
+      return getState();
+    }
+
+    function attemptDecay() {
+      state.decompositionRate = DECOMPOSITION_RATE;
+      state.decayRepelFlash = 1.0;
+      return { decayedTonnes: 0, decompositionRate: DECOMPOSITION_RATE };
+    }
+
+    function setCrossSectionMode(flag) {
+      state.crossSectionMode = Boolean(flag);
+      return state.crossSectionMode;
+    }
+
+    function toggleCrossSectionMode(force) {
+      state.crossSectionMode = typeof force === "boolean" ? force : !state.crossSectionMode;
+      return state.crossSectionMode;
+    }
+
+    function setReducedMotion(flag) {
+      state.reducedMotion = Boolean(flag);
+      if (state.reducedMotion && state.landslideTriggered) {
+        state.effacedRatio = 1.0;
+        state.metropolisEffaced = true;
+      }
+    }
+
+    function reset() {
+      _seedInitialState(false);
+      return getState();
+    }
+
+    function step(dt) {
+      const raw = Number(dt);
+      const dtSec = !raw || raw < 0 ? 0.016 : raw > 5 ? Math.min(0.1, raw / 1000) : Math.min(2.0, raw);
+      if (!state.reducedMotion) {
+        state.clockSec += dtSec;
+      }
+      state.decayRepelFlash = Math.max(0, state.decayRepelFlash - dtSec * 1.4);
+      state.rollerSurgeFlash = Math.max(0, state.rollerSurgeFlash - dtSec * 1.6);
+      if (state.landslideTriggered) {
+        if (state.reducedMotion) {
+          state.effacedRatio = 1.0;
+        } else {
+          state.effacedRatio = Number(Math.min(1.0, state.effacedRatio + dtSec * 0.44).toFixed(4));
+          for (let i = 0; i < state.avalancheDebris.length; i++) {
+            const b = state.avalancheDebris[i];
+            b.progress = Math.min(1.0, b.progress + dtSec * b.speed);
+            b.rot += dtSec * b.spin;
+          }
+        }
+        if (state.effacedRatio >= 1.0) {
+          state.metropolisEffaced = true;
+        }
+      }
+    }
+
+    function _computeGeometry(viewport) {
+      const width = Math.max(240, Number((viewport && viewport.width) || state.width || 960));
+      const height = Math.max(240, Number((viewport && viewport.height) || state.height || 640));
+      state.width = width;
+      state.height = height;
+      const cx = Math.round(width * 0.5);
+      const cy = Math.round(height * 0.5);
+      const minDim = Math.min(width, height);
+      const squeeze = clamp((state.neighborConvergenceRatio - 0.18) * 0.16 + (state.craterElevationMeters - 14) * 0.0018, 0, 0.22);
+      const coreRadius = Math.round(Math.max(52, minDim * (0.232 - squeeze * 0.22)));
+      const scarpOuterR = Math.round(coreRadius + Math.min(minDim * 0.175, 28 + state.strataLayers.length * 9.5));
+      const rollerMaxR = Math.round(minDim * 0.485);
+      const rollerFrontR = Math.round(
+        scarpOuterR + (rollerMaxR - scarpOuterR) * (1 - clamp(state.neighborConvergenceRatio * 0.86, 0.08, 0.92))
+      );
+      const basinFloorY = Math.round(height * 0.77);
+      const basinHalfWidth = Math.round(Math.max(52, Math.min(width * 0.175, 146) * (1 - squeeze * 0.45)));
+      return {
+        width,
+        height,
+        cx,
+        cy,
+        minDim,
+        coreRadius,
+        scarpOuterR,
+        rollerMaxR,
+        rollerFrontR,
+        basinFloorY,
+        basinHalfWidth,
+        coreBounds: {
+          cx,
+          cy,
+          coreRadius,
+          width,
+          height,
+          crossSectionMode: state.crossSectionMode,
+          basinFloorY,
+          basinHalfWidth,
+          effacedRatio: state.effacedRatio
+        }
+      };
+    }
+
+    function _drawArrow(ctx, x1, y1, x2, y2, color, headLen) {
+      const ang = Math.atan2(y2 - y1, x2 - x1);
+      const hl = headLen || 7;
+      ctx.save();
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.lineWidth = 1.8;
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(x2, y2);
+      ctx.lineTo(x2 - hl * Math.cos(ang - 0.45), y2 - hl * Math.sin(ang - 0.45));
+      ctx.lineTo(x2 - hl * Math.cos(ang + 0.45), y2 - hl * Math.sin(ang + 0.45));
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function _renderPlanView(ctx, g) {
+      const bg = ctx.createRadialGradient(g.cx, g.cy, g.coreRadius * 0.4, g.cx, g.cy, Math.max(g.width, g.height) * 0.72);
+      bg.addColorStop(0, "#252b35");
+      bg.addColorStop(0.55, "#181b20");
+      bg.addColorStop(1, "#111318");
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, g.width, g.height);
+
+      const pulse = state.neighborPressureActive ? Math.sin(state.clockSec * 2.3) * 2.5 : 0;
+      const frontR = Math.max(g.scarpOuterR + 4, g.rollerFrontR - pulse);
+      const outerR = Math.max(frontR + 28, g.rollerMaxR * 1.08);
+
+      for (let s = 0; s < NEIGHBOR_CITIES.length; s++) {
+        const city = NEIGHBOR_CITIES[s];
+        const midA = degToRad(city.bearingDeg);
+        const span = degToRad(26.5);
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(g.cx, g.cy, outerR, midA - span, midA + span, false);
+        ctx.arc(g.cx, g.cy, frontR, midA + span, midA - span, true);
+        ctx.closePath();
+        ctx.fillStyle = city.tint;
+        ctx.globalAlpha = 0.74 + state.rollerSurgeFlash * 0.2;
+        ctx.fill();
+        ctx.lineWidth = 1.6;
+        ctx.strokeStyle = state.slopeAngleDeg >= 34 ? PALETTE.cataclysm_crimson : PALETTE.rust_tin_ochre;
+        ctx.stroke();
+
+        for (let r = 1; r <= 3; r++) {
+          const ribR = frontR + ((outerR - frontR) * r) / 4;
+          ctx.beginPath();
+          ctx.arc(g.cx, g.cy, ribR, midA - span * 0.88, midA + span * 0.88);
+          ctx.strokeStyle = "rgba(246, 243, 234, 0.18)";
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+
+        for (let k = 0; k < 5; k++) {
+          const a = midA + (k - 2) * (span * 0.38);
+          const rr = frontR + (outerR - frontR) * (0.28 + ((k * 37 + s * 19) % 50) / 100);
+          const relicKind = FOREIGN_RELIC_TYPES[(s + k) % FOREIGN_RELIC_TYPES.length];
+          drawRelicGlyph(ctx, relicKind, g.cx + Math.cos(a) * rr, g.cy + Math.sin(a) * rr, 6.2, a + 1.57, 0.88);
+        }
+
+        const arrowColor = state.neighborPressureActive
+          ? (state.slopeAngleDeg >= 35 ? PALETTE.cataclysm_crimson : PALETTE.angelic_gold)
+          : "#6f7785";
+        const ax1 = g.cx + Math.cos(midA) * (outerR - 8);
+        const ay1 = g.cy + Math.sin(midA) * (outerR - 8);
+        const ax2 = g.cx + Math.cos(midA) * (frontR + 5);
+        const ay2 = g.cy + Math.sin(midA) * (frontR + 5);
+        _drawArrow(ctx, ax1, ay1, ax2, ay2, arrowColor, 7);
+
+        if (g.minDim >= 360) {
+          const lx = g.cx + Math.cos(midA) * (outerR - 14);
+          const ly = g.cy + Math.sin(midA) * (outerR - 14);
+          ctx.fillStyle = PALETTE.dawn_gleam_ivory;
+          ctx.font = "600 9px monospace";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText(city.shortLabel, lx, ly);
+        }
+        ctx.restore();
+      }
+
+      const layers = state.strataLayers;
+      const total = layers.length;
+      for (let i = 0; i < total; i++) {
+        const st = layers[i];
+        const tOuter = (total - i) / total;
+        const tInner = (total - i - 1) / total;
+        const rOut = g.coreRadius + (g.scarpOuterR - g.coreRadius) * Math.pow(tOuter, 0.88);
+        const rIn = g.coreRadius + (g.scarpOuterR - g.coreRadius) * Math.pow(tInner, 0.88);
+        const facets = 20;
+        ctx.save();
+        ctx.beginPath();
+        for (let f = 0; f <= facets; f++) {
+          const a = (f / facets) * Math.PI * 2;
+          const jag = 1 + Math.sin(f * 3.7 + st.dayIndex) * 0.025;
+          const px = g.cx + Math.cos(a) * rOut * jag;
+          const py = g.cy + Math.sin(a) * rOut * jag;
+          if (f === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        }
+        ctx.closePath();
+        ctx.fillStyle = st.fill;
+        ctx.fill();
+        ctx.lineWidth = state.decayRepelFlash > 0 ? 2.4 : 1.35;
+        ctx.strokeStyle = state.decayRepelFlash > 0 ? PALETTE.soap_pearl_mint : st.rim;
+        ctx.stroke();
+
+        const midR = (rOut + rIn) * 0.5;
+        for (let n = 0; n < st.ringNodes.length; n++) {
+          const nd = st.ringNodes[n];
+          const rr = midR + nd.radialJitter * Math.max(3, rOut - rIn);
+          drawRelicGlyph(
+            ctx,
+            nd.relic,
+            g.cx + Math.cos(nd.angle) * rr,
+            g.cy + Math.sin(nd.angle) * rr,
+            clamp((rOut - rIn) * 0.42, 4.2, 7.8),
+            nd.rot,
+            0.9
+          );
+        }
+        ctx.restore();
+      }
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(g.cx, g.cy, g.coreRadius, 0, Math.PI * 2);
+      ctx.fillStyle = "#161a21";
+      ctx.fill();
+      ctx.lineWidth = 2.2;
+      ctx.strokeStyle = state.landslideTriggered ? PALETTE.cataclysm_crimson : PALETTE.angelic_gold;
+      ctx.stroke();
+      ctx.restore();
+
+      if (state.landslideTriggered) {
+        _renderPlanAvalanche(ctx, g);
+      }
+    }
+
+    function _renderPlanAvalanche(ctx, g) {
+      ctx.save();
+      for (let s = 0; s < 6; s++) {
+        const a = degToRad(NEIGHBOR_CITIES[s].bearingDeg);
+        const reach = g.scarpOuterR - (g.scarpOuterR - g.coreRadius * 0.25) * state.effacedRatio;
+        ctx.beginPath();
+        ctx.moveTo(g.cx + Math.cos(a - 0.24) * g.scarpOuterR, g.cy + Math.sin(a - 0.24) * g.scarpOuterR);
+        ctx.lineTo(g.cx + Math.cos(a) * reach, g.cy + Math.sin(a) * reach);
+        ctx.lineTo(g.cx + Math.cos(a + 0.24) * g.scarpOuterR, g.cy + Math.sin(a + 0.24) * g.scarpOuterR);
+        ctx.closePath();
+        ctx.fillStyle = "rgba(201, 59, 43, 0.32)";
+        ctx.fill();
+      }
+      for (let i = 0; i < state.avalancheDebris.length; i++) {
+        const b = state.avalancheDebris[i];
+        const p = Math.max(b.progress, state.effacedRatio * 0.85);
+        const r = g.scarpOuterR * b.startFrac * (1 - p) + g.coreRadius * b.endFrac * p;
+        drawRelicGlyph(
+          ctx,
+          b.relic,
+          g.cx + Math.cos(b.angle) * r,
+          g.cy + Math.sin(b.angle) * r,
+          b.size,
+          b.rot,
+          0.95
+        );
+      }
+      ctx.restore();
+    }
+
+    function _renderCrossSectionView(ctx, g) {
+      const sky = ctx.createLinearGradient(0, 0, 0, g.basinFloorY);
+      sky.addColorStop(0, "#111318");
+      sky.addColorStop(0.58, "#1f2a36");
+      sky.addColorStop(1, "rgba(215, 238, 242, 0.22)");
+      ctx.fillStyle = sky;
+      ctx.fillRect(0, 0, g.width, g.height);
+
+      ctx.fillStyle = "#14171d";
+      ctx.fillRect(0, g.basinFloorY, g.width, g.height - g.basinFloorY);
+      ctx.strokeStyle = PALETTE.angelic_gold;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(0, g.basinFloorY);
+      ctx.lineTo(g.width, g.basinFloorY);
+      ctx.stroke();
+
+      const floorY = g.basinFloorY;
+      const leftToeX = g.cx - g.basinHalfWidth;
+      const rightToeX = g.cx + g.basinHalfWidth;
+      const maxWallPx = Math.max(90, floorY - Math.max(52, g.height * 0.14));
+      const elevNorm = clamp((state.craterElevationMeters - 8) / 50, 0.22, 0.96);
+      const wallH = Math.round(maxWallPx * elevNorm);
+      const slopeRad = degToRad(state.slopeAngleDeg);
+      const sideSpan = Math.max(48, leftToeX - 18);
+      const runPx = clamp(wallH / Math.tan(slopeRad), sideSpan * 0.24, sideSpan * 0.78);
+
+      const totalElev = Math.max(1, state.craterElevationMeters);
+      for (let i = 0; i < state.strataLayers.length; i++) {
+        const st = state.strataLayers[i];
+        const f0 = st.baseElevationMeters / totalElev;
+        const f1 = st.topElevationMeters / totalElev;
+        const y0 = floorY - wallH * f0;
+        const y1 = floorY - wallH * f1;
+        const lIn0 = leftToeX - runPx * f0;
+        const lIn1 = leftToeX - runPx * f1;
+        const rIn0 = rightToeX + runPx * f0;
+        const rIn1 = rightToeX + runPx * f1;
+        const flankInset = (1 - state.neighborConvergenceRatio * 0.55) * sideSpan * 0.28;
+
+        ctx.save();
+        ctx.fillStyle = st.fill;
+        ctx.strokeStyle = state.decayRepelFlash > 0 ? PALETTE.soap_pearl_mint : st.weld;
+        ctx.lineWidth = 1.2;
+
+        ctx.beginPath();
+        ctx.moveTo(flankInset, y0);
+        ctx.lineTo(lIn0, y0);
+        ctx.lineTo(lIn1, y1);
+        ctx.lineTo(flankInset * 0.85, y1);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(rIn0, y0);
+        ctx.lineTo(g.width - flankInset, y0);
+        ctx.lineTo(g.width - flankInset * 0.85, y1);
+        ctx.lineTo(rIn1, y1);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        const midY = (y0 + y1) * 0.5;
+        if (y0 - y1 >= 9) {
+          for (let k = 0; k < 2; k++) {
+            const relic = st.relics[k % st.relics.length];
+            const lx = flankInset + (lIn1 - flankInset) * (0.34 + k * 0.34);
+            const rx = rIn1 + (g.width - flankInset - rIn1) * (0.28 + k * 0.36);
+            drawRelicGlyph(ctx, relic, lx, midY, 5.2, 0.15 * k, 0.88);
+            drawRelicGlyph(ctx, relic, rx, midY, 5.2, -0.15 * k, 0.88);
+          }
+          ctx.fillStyle = PALETTE.dawn_gleam_ivory;
+          ctx.font = "600 9px monospace";
+          ctx.textAlign = "right";
+          ctx.fillText("D" + st.dayIndex, lIn1 - 5, midY + 3);
+        }
+        ctx.restore();
+      }
+
+      const vicePush = sideSpan * (0.14 + state.neighborConvergenceRatio * 0.34);
+      const rollerH = Math.max(46, wallH * (0.58 + state.neighborConvergenceRatio * 0.36));
+      ctx.save();
+      ctx.fillStyle = "rgba(184, 93, 56, 0.44)";
+      ctx.strokeStyle = PALETTE.rust_tin_ochre;
+      ctx.lineWidth = 1.6;
+      ctx.beginPath();
+      ctx.moveTo(0, floorY);
+      ctx.lineTo(vicePush, floorY);
+      ctx.quadraticCurveTo(vicePush * 1.15, floorY - rollerH * 0.7, 0, floorY - rollerH);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(g.width, floorY);
+      ctx.lineTo(g.width - vicePush, floorY);
+      ctx.quadraticCurveTo(g.width - vicePush * 1.15, floorY - rollerH * 0.7, g.width, floorY - rollerH);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      for (let m = 0; m < 4; m++) {
+        const fy = floorY - rollerH * (0.18 + m * 0.2);
+        const rel = FOREIGN_RELIC_TYPES[m];
+        drawRelicGlyph(ctx, rel, vicePush * 0.52, fy, 6.0, m * 0.4, 0.92);
+        drawRelicGlyph(ctx, rel, g.width - vicePush * 0.52, fy, 6.0, -m * 0.4, 0.92);
+      }
+      const arrowCol = state.neighborPressureActive ? PALETTE.cataclysm_crimson : "#7a8290";
+      _drawArrow(ctx, 10, floorY - rollerH * 0.45, Math.max(24, vicePush + 8), floorY - rollerH * 0.45, arrowCol, 7);
+      _drawArrow(ctx, g.width - 10, floorY - rollerH * 0.45, Math.min(g.width - 24, g.width - vicePush - 8), floorY - rollerH * 0.45, arrowCol, 7);
+      ctx.restore();
+
+      _renderProtractorAndCrossAvalanche(ctx, g, floorY, leftToeX, rightToeX, wallH, runPx);
+    }
+
+    function _renderProtractorAndCrossAvalanche(ctx, g, floorY, leftToeX, rightToeX, wallH, runPx) {
+      const arcR = clamp(Math.min(72, (g.width - rightToeX) * 0.64), 38, 76);
+      const liveRad = degToRad(state.slopeAngleDeg);
+      const critRad = degToRad(CRITICAL_REPOSE_ANGLE_DEG);
+      const isCrit = state.slopeAngleDeg >= CRITICAL_REPOSE_ANGLE_DEG;
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(rightToeX, floorY);
+      ctx.arc(rightToeX, floorY, arcR, -liveRad, 0, false);
+      ctx.closePath();
+      ctx.fillStyle = isCrit ? "rgba(201, 59, 43, 0.34)" : "rgba(216, 174, 94, 0.22)";
+      ctx.fill();
+
+      ctx.setLineDash([4, 3]);
+      ctx.strokeStyle = PALETTE.cataclysm_crimson;
+      ctx.lineWidth = 1.6;
+      ctx.beginPath();
+      ctx.moveTo(rightToeX, floorY);
+      ctx.lineTo(rightToeX + Math.cos(critRad) * (arcR + 14), floorY - Math.sin(critRad) * (arcR + 14));
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      ctx.strokeStyle = isCrit ? PALETTE.cataclysm_crimson : PALETTE.angelic_gold;
+      ctx.lineWidth = 2.2;
+      ctx.beginPath();
+      ctx.moveTo(rightToeX, floorY);
+      ctx.lineTo(rightToeX + Math.cos(liveRad) * (arcR + 10), floorY - Math.sin(liveRad) * (arcR + 10));
+      ctx.stroke();
+
+      ctx.fillStyle = PALETTE.dawn_gleam_ivory;
+      ctx.font = "700 10px monospace";
+      ctx.textAlign = "left";
+      ctx.fillText("θ " + state.slopeAngleDeg.toFixed(1) + "°", rightToeX + 8, floorY - arcR - 14);
+      ctx.fillStyle = PALETTE.cataclysm_crimson;
+      ctx.fillText("CRIT " + CRITICAL_REPOSE_ANGLE_DEG.toFixed(1) + "°", rightToeX + 8, floorY - arcR - 2);
+
+      ctx.fillStyle = PALETTE.soap_pearl_mint;
+      ctx.textAlign = "left";
+      ctx.fillText(
+        "CREST +" + state.craterElevationMeters.toFixed(1) + "m | DECAY 0%",
+        12,
+        Math.max(22, floorY - wallH - 8)
+      );
+      ctx.restore();
+
+      if (state.landslideTriggered) {
+        ctx.save();
+        for (let i = 0; i < state.avalancheDebris.length; i++) {
+          const b = state.avalancheDebris[i];
+          const p = Math.max(b.progress, state.effacedRatio * 0.88);
+          const startX = b.side < 0 ? leftToeX - runPx * 0.85 : rightToeX + runPx * 0.85;
+          const startY = floorY - wallH * (0.65 + (i % 5) * 0.07);
+          const endX = g.cx + (b.endFrac - 0.26) * g.basinHalfWidth * 1.9 * b.side;
+          const endY = floorY - 4 - (i % 7) * 4.5 * state.effacedRatio;
+          drawRelicGlyph(
+            ctx,
+            b.relic,
+            startX + (endX - startX) * p,
+            startY + (endY - startY) * p,
+            b.size,
+            b.rot,
+            0.95
+          );
+        }
+        ctx.restore();
+      }
+    }
+
+    function render(ctx, viewport) {
+      const g = _computeGeometry(viewport);
+      if (!ctx) return g.coreBounds;
+      ctx.save();
+      if (state.crossSectionMode) {
+        _renderCrossSectionView(ctx, g);
+      } else {
+        _renderPlanView(ctx, g);
+      }
+      ctx.restore();
+      return g.coreBounds;
+    }
+
+    function renderOverlay(ctx, viewport) {
+      if (!ctx || !state.landslideTriggered) return;
+      const g = _computeGeometry(viewport);
+      if (!state.crossSectionMode) {
+        _renderPlanAvalanche(ctx, g);
+      }
+    }
+
+    function inspectAt(x, y, viewport) {
+      const g = _computeGeometry(viewport);
+      if (state.crossSectionMode) {
+        if (Math.abs(x - g.cx) < g.basinHalfWidth && y <= g.basinFloorY && y > g.basinFloorY - g.coreRadius * 1.1 && state.effacedRatio < 0.6) {
+          return null;
+        }
+        if (Math.hypot(x - (g.cx + g.basinHalfWidth), y - g.basinFloorY) < 76) {
+          return {
+            kind: "repose_protractor",
+            id: "repose_protractor",
+            title: "Angle-of-Repose Protractor",
+            subtitle: state.slopeAngleDeg.toFixed(1) + "° vs " + CRITICAL_REPOSE_ANGLE_DEG.toFixed(1) + "° critical",
+            slopeAngleDeg: state.slopeAngleDeg,
+            criticalReposeAngleDeg: CRITICAL_REPOSE_ANGLE_DEG,
+            decompositionRate: DECOMPOSITION_RATE,
+            detail: "Zero-decay strata steepen monotonically until critical failure triggers an effacing landslide."
+          };
+        }
+        const stIdx = clamp(Math.floor(((g.basinFloorY - y) / Math.max(40, g.basinFloorY * 0.65)) * state.strataLayers.length), 0, state.strataLayers.length - 1);
+        const st = state.strataLayers[stIdx];
+        return {
+          kind: "stratum",
+          id: st.id,
+          dayIndex: st.dayIndex,
+          title: st.inscription,
+          subtitle: "+" + st.topElevationMeters.toFixed(1) + " m · 0% decomposition",
+          elevationMeters: st.topElevationMeters,
+          decompositionRate: DECOMPOSITION_RATE,
+          relics: st.relics,
+          detail: "Embedded relics: " + st.relics.map(function (r) { return RELIC_LABELS[r] || r; }).join(", ")
+        };
+      }
+
+      const dist = Math.hypot(x - g.cx, y - g.cy);
+      if (dist < g.coreRadius) {
+        if (state.landslideTriggered && state.effacedRatio >= 0.55) {
+          return {
+            kind: "avalanche_debris",
+            id: "cataclysm_burial",
+            title: "Cataclysmic Landslide Burial",
+            subtitle: Math.round(state.effacedRatio * 100) + "% Metropolis Effaced",
+            decompositionRate: DECOMPOSITION_RATE,
+            relics: AVALANCHE_RELIC_POOL,
+            detail: "Foreign rollers of flattened tin cans, burst tires, unmated shoes, and frayed straw flasks bury yesterday and today alike."
+          };
+        }
+        return null;
+      }
+      if (dist <= g.scarpOuterR + 6) {
+        const norm = 1 - clamp((dist - g.coreRadius) / Math.max(1, g.scarpOuterR - g.coreRadius), 0, 0.999);
+        const idx = clamp(Math.floor(norm * state.strataLayers.length), 0, state.strataLayers.length - 1);
+        const st = state.strataLayers[idx];
+        return {
+          kind: "stratum",
+          id: st.id,
+          dayIndex: st.dayIndex,
+          title: st.inscription,
+          subtitle: "+" + st.topElevationMeters.toFixed(1) + " m · " + st.tonnes + " t · 0% decay",
+          elevationMeters: st.topElevationMeters,
+          decompositionRate: DECOMPOSITION_RATE,
+          relics: st.relics,
+          detail: "Soldered relics: " + st.relics.map(function (r) { return RELIC_LABELS[r] || r; }).join(", ")
+        };
+      }
+
+      const angDeg = (Math.atan2(y - g.cy, x - g.cx) * 180) / Math.PI;
+      let bestCity = NEIGHBOR_CITIES[0];
+      let bestDiff = 999;
+      for (let c = 0; c < NEIGHBOR_CITIES.length; c++) {
+        let diff = Math.abs(((angDeg - NEIGHBOR_CITIES[c].bearingDeg + 540) % 360) - 180);
+        if (diff < bestDiff) {
+          bestDiff = diff;
+          bestCity = NEIGHBOR_CITIES[c];
+        }
+      }
+      return {
+        kind: "neighbor_roller",
+        id: bestCity.id,
+        title: bestCity.name,
+        subtitle: "Inward Convergence " + Math.round(state.neighborConvergenceRatio * 100) + "%",
+        decompositionRate: DECOMPOSITION_RATE,
+        relics: bestCity.relics,
+        detail: "Foreign rampart carrying flattened tin cans, burst old tires, unmated old shoes, and frayed straw flasks."
+      };
+    }
+
+    return {
+      depositDailyRefuse,
+      setMaterialSkillLevel,
+      setNeighborPressure,
+      toggleNeighborPressure,
+      pushNeighborRollers,
+      attemptDecay,
+      setCrossSectionMode,
+      toggleCrossSectionMode,
+      render,
+      renderOverlay,
+      step,
+      inspectAt,
+      setReducedMotion,
+      reset,
+      resetCataclysm: reset,
+      getState
+    };
+  }
+
+  return Object.freeze({
+    PALETTE,
+    DECOMPOSITION_RATE,
+    CRITICAL_REPOSE_ANGLE_DEG,
+    LEONIA_RELIC_TYPES,
+    FOREIGN_RELIC_TYPES,
+    NEIGHBOR_CITY_NAMES,
+    NEIGHBOR_CITIES,
+    RELIC_LABELS,
+    createScarpEngine
+  });
+})();
+
+if (typeof window !== "undefined") {
+  window.LeoniaScarpAvalanches = globalThis.LeoniaScarpAvalanches;
+}
+
+</script>
+<script>
+(function () {
+  "use strict";
+
+  const CoreMod = globalThis.LeoniaMorningCore;
+  const ScarpMod = globalThis.LeoniaScarpAvalanches;
+
+  const mqReduced = window.matchMedia
+    ? window.matchMedia("(prefers-reduced-motion: reduce)")
+    : { matches: false };
+
+  let reducedMotion = Boolean(mqReduced.matches);
+  let manualMotionOverride = null;
+  let platesOpen = false;
+  let activePlateTab = "diptych";
+  let plateZoomed = false;
+  let decayTrialCount = 0;
+  let lastDecayAttempt = { decayedTonnes: 0, decompositionRate: 0, trials: 0 };
+  let lastCoreBounds = null;
+  let viewportSize = { width: 960, height: 640 };
+
+  let inspectedItem = {
+    kind: "morning_novelty",
+    title: "Fresh Morning Sheets",
+    meta: "DAY 1 · 0% DECAY",
+    copy: "Every morning wakes between crisp uncreased sheets, just-unwrapped soap, brand-new attire, unopened tins, and latest-model radio jingles."
+  };
+
+  const dom = {
+    canvas: document.getElementById("leo-caldera-canvas"),
+    well: document.getElementById("leo-viewport-well"),
+    axiomRibbon: document.getElementById("leo-axiom-ribbon"),
+    hudDawn: document.getElementById("leo-hud-dawn"),
+    hudScarp: document.getElementById("leo-hud-scarp"),
+    hudAngle: document.getElementById("leo-hud-angle"),
+    cataclysmBanner: document.getElementById("leo-cataclysm-banner"),
+    cataclysmCopy: document.getElementById("leo-cataclysm-copy"),
+    btnPlates: document.getElementById("leo-btn-plates"),
+    btnMute: document.getElementById("leo-btn-mute"),
+    muteLabel: document.getElementById("leo-mute-label"),
+    btnMotion: document.getElementById("leo-btn-motion"),
+    motionLabel: document.getElementById("leo-motion-label"),
+    btnDawn: document.getElementById("leo-btn-dawn"),
+    btnUpgrade: document.getElementById("leo-btn-upgrade"),
+    upgradeLabel: document.getElementById("leo-upgrade-label"),
+    btnNeighborToggle: document.getElementById("leo-btn-neighbor-toggle"),
+    neighborToggleLabel: document.getElementById("leo-neighbor-toggle-label"),
+    btnSurge: document.getElementById("leo-btn-surge"),
+    btnXSection: document.getElementById("leo-btn-xsection"),
+    xSectionLabel: document.getElementById("leo-xsection-label"),
+    btnReset: document.getElementById("leo-btn-reset"),
+    btnBannerReset: document.getElementById("leo-btn-banner-reset"),
+    btnDecay: document.getElementById("leo-btn-decay"),
+    decayBtnLabel: document.getElementById("leo-decay-btn-label"),
+    inspectorTitle: document.getElementById("leo-inspector-title"),
+    inspectorMeta: document.getElementById("leo-inspector-meta"),
+    inspectorCopy: document.getElementById("leo-inspector-copy"),
+    noveltyBadge: document.getElementById("leo-novelty-badge"),
+    noveltyStrip: document.getElementById("leo-novelty-strip"),
+    dustcartBadge: document.getElementById("leo-dustcart-badge"),
+    valBags: document.getElementById("leo-val-bags"),
+    valTonnes: document.getElementById("leo-val-tonnes"),
+    valWagons: document.getElementById("leo-val-wagons"),
+    bagChips: document.getElementById("leo-bag-chips"),
+    scarpBadge: document.getElementById("leo-scarp-badge"),
+    valElev: document.getElementById("leo-val-elev"),
+    valAngle: document.getElementById("leo-val-angle"),
+    valDecay: document.getElementById("leo-val-decay"),
+    reposeFill: document.getElementById("leo-repose-fill"),
+    tierReadout: document.getElementById("leo-tier-readout"),
+    neighborBadge: document.getElementById("leo-neighbor-badge"),
+    valConv: document.getElementById("leo-val-conv"),
+    valPressure: document.getElementById("leo-val-pressure"),
+    valEffaced: document.getElementById("leo-val-effaced"),
+    neighborChips: document.getElementById("leo-neighbor-chips"),
+    plateDrawer: document.getElementById("leo-plate-drawer"),
+    plateSheet: document.getElementById("leo-plate-sheet"),
+    tabDiptych: document.getElementById("leo-tab-diptych"),
+    tabMap: document.getElementById("leo-tab-map"),
+    tabVista: document.getElementById("leo-tab-vista"),
+    btnZoom: document.getElementById("leo-btn-zoom"),
+    zoomLabel: document.getElementById("leo-zoom-label"),
+    btnClosePlates: document.getElementById("leo-btn-close-plates"),
+    loupeStage: document.getElementById("leo-loupe-stage"),
+    cardMap: document.getElementById("leo-card-map"),
+    cardVista: document.getElementById("leo-card-vista")
+  };
+
+  const ctx = dom.canvas.getContext("2d");
+
+  function setInspector(info) {
+    if (!info) return;
+    inspectedItem = info;
+    dom.inspectorTitle.textContent = info.title || "Refashioned Leonia";
+    dom.inspectorMeta.textContent = info.meta || "0% DECAY";
+    dom.inspectorCopy.textContent = info.copy || "";
+  }
+
+  let morningCore = null;
+  const scarpEngine = ScarpMod.createScarpEngine({
+    width: 960,
+    height: 640,
+    reducedMotion: reducedMotion,
+    onCataclysmLandslide: function (st) {
+      if (morningCore) {
+        morningCore.setEffacedRatio(st.effacedRatio);
+        morningCore.playCataclysmChord();
+      }
+      setInspector({
+        kind: "cataclysm",
+        title: "Cataclysmic Avalanche Failure",
+        meta: "SLOPE " + st.slopeAngleDeg.toFixed(1) + "° >= 38.0° CRIT",
+        copy: "Foreign rollers of flattened tin cans, burst old tires, unmated old shoes, and frayed straw flasks breach the soldered crater cuirass, effacing every trace of the metropolis dressed in new clothes."
+      });
+    }
+  });
+
+  morningCore = CoreMod.createMorningCore({
+    width: 960,
+    height: 640,
+    reducedMotion: reducedMotion,
+    muted: false,
+    onDawnExport: function (packet) {
+      scarpEngine.depositDailyRefuse(packet);
+      const ss = scarpEngine.getState();
+      morningCore.setEffacedRatio(ss.effacedRatio);
+    },
+    onSelectItem: function (item) {
+      formatAndShowInspection(item);
+    }
+  });
+
+  function formatAndShowInspection(hit) {
+    if (!hit) return;
+    if (hit.kind === "morning_novelty") {
+      setInspector({
+        kind: hit.kind,
+        title: hit.title,
+        meta: "FRESH TIER · CAST OFF: " + (hit.baseTonnes || 6) + " t",
+        copy: hit.freshState + " — " + hit.ritualInscription
+      });
+    } else if (hit.kind === "curbside_bag") {
+      setInspector({
+        kind: hit.kind,
+        title: "Sealed Obsidian Bag: " + (hit.label || "Yesterday's Relic"),
+        meta: "SACERDOTALLY SEALED · DECAY 0%",
+        copy: (hit.description || "Yesterday's intact household goods wrapped in clean black plastic awaiting silent street cleaners.")
+      });
+    } else if (hit.kind === "angelic_dustcart") {
+      setInspector({
+        kind: hit.kind,
+        title: hit.label || "Angelic Street-Cleaner Wagon",
+        meta: "SILENT SACERDOTAL RITE",
+        copy: hit.description
+      });
+    } else if (hit.kind === "stratum" || hit.kind === "repose_protractor" || hit.kind === "neighbor_roller" || hit.kind === "avalanche_debris") {
+      setInspector({
+        kind: hit.kind,
+        title: hit.title,
+        meta: hit.subtitle || "0% DECOMPOSITION",
+        copy: hit.detail
+      });
+    } else if (hit.label) {
+      setInspector({
+        kind: hit.kind || "core",
+        title: hit.label,
+        meta: "DAY " + (hit.dayIndex || 1) + " · DECAY 0%",
+        copy: hit.description || ""
+      });
+    }
+  }
+
+  const ROMAN_NUM = ["I", "II", "III", "IV", "V"];
+
+  function buildStaticChips() {
+    dom.bagChips.textContent = "";
+    CoreMod.DISCARDED_REMAINS.forEach(function (rem) {
+      const chip = document.createElement("bag-relic-chip");
+      chip.className = "leo-chip";
+      chip.textContent = rem.label;
+      chip.addEventListener("click", function () {
+        setInspector({
+          kind: "curbside_bag",
+          title: "Curbside Black Bag: " + rem.label,
+          meta: rem.baseMassTonnes.toFixed(1) + " t BASE · SACERDOTALLY SEALED",
+          copy: rem.description + " Awaits silent street cleaners welcomed like angels."
+        });
+      });
+      dom.bagChips.appendChild(chip);
+    });
+
+    dom.neighborChips.textContent = "";
+    const foreignItems = [
+      { id: "flattened_tin_cans", label: "Flattened Tin Cans", detail: "Crushed tin drums & canisters rolled inward from North & Southwest neighbor scarps." },
+      { id: "burst_old_tires", label: "Burst Old Tires", detail: "Split vulcanized tire treads advancing from Northeast & Northwest neighbor glaciers." },
+      { id: "unmated_old_shoes", label: "Unmated Old Shoes", detail: "Mismatched soles and heels pushed over the Southeast moraine ridge." },
+      { id: "frayed_straw_flasks", label: "Frayed Straw Flasks", detail: "Unraveling wicker-wrapped flasks crowding the South bulwark crest." }
+    ];
+    foreignItems.forEach(function (fi) {
+      const chip = document.createElement("neighbor-roller-chip");
+      chip.className = "leo-chip leo-chip-foreign";
+      chip.textContent = fi.label;
+      chip.addEventListener("click", function () {
+        const ss = scarpEngine.getState();
+        setInspector({
+          kind: "neighbor_roller",
+          title: "Neighbor Roller Relic: " + fi.label,
+          meta: "CONVERGENCE " + Math.round(ss.neighborConvergenceRatio * 100) + "% · DECAY 0%",
+          copy: fi.detail
+        });
+      });
+      dom.neighborChips.appendChild(chip);
+    });
+  }
+
+  function renderNoveltyCards(cs) {
+    dom.noveltyStrip.textContent = "";
+    cs.novelties.forEach(function (n) {
+      const card = document.createElement("novelty-totem-card");
+      card.className = "leo-totem-card" + (cs.selectedNoveltyId === n.id ? " leo-totem-selected" : "");
+      card.setAttribute("role", "button");
+      card.setAttribute("tabindex", "0");
+
+      const shortTitle = document.createElement("totem-title-line");
+      shortTitle.className = "leo-totem-title";
+      shortTitle.textContent = n.title.replace(" & Latest Fridge", "").replace("Latest-Model ", "");
+
+      const stateNote = document.createElement("totem-state-note");
+      stateNote.className = "leo-totem-note";
+      stateNote.textContent = "D" + cs.dayIndex + " · Tier " + cs.materialTierNumeral;
+
+      card.appendChild(shortTitle);
+      card.appendChild(stateNote);
+      card.addEventListener("click", function () {
+        morningCore.selectNovelty(n.id);
+        syncUI();
+      });
+      card.addEventListener("keydown", function (ev) {
+        if (ev.key === "Enter" || ev.key === " ") {
+          ev.preventDefault();
+          morningCore.selectNovelty(n.id);
+          syncUI();
+        }
+      });
+      dom.noveltyStrip.appendChild(card);
+    });
+  }
+
+  function syncUI() {
+    const cs = morningCore.getState();
+    const ss = scarpEngine.getState();
+
+    const phaseLabel = cs.ritePhase.replace(/_/g, " ").toUpperCase();
+    dom.axiomRibbon.textContent =
+      "DAY " + cs.dayIndex + " · TIER " + cs.materialTierNumeral + " · DECAY " + ss.decompositionRate.toFixed(3) + " t/yr";
+
+    dom.hudDawn.textContent = "DAY " + cs.dayIndex + " · " + phaseLabel;
+    dom.hudScarp.textContent = "CREST +" + ss.craterElevationMeters.toFixed(1) + " m · DECAY 0%";
+    dom.hudAngle.textContent = "SLOPE θ " + ss.slopeAngleDeg.toFixed(1) + "° / " + ss.criticalReposeAngleDeg.toFixed(1) + "° CRIT";
+    if (ss.slopeAngleDeg >= 34.0 || ss.landslideTriggered) {
+      dom.hudAngle.classList.add("leo-hud-warn");
+    } else {
+      dom.hudAngle.classList.remove("leo-hud-warn");
+    }
+
+    dom.cataclysmBanner.hidden = !ss.landslideTriggered;
+    if (ss.landslideTriggered) {
+      dom.cataclysmCopy.textContent =
+        "CATACLYSMIC LANDSLIDE (" + ss.slopeAngleDeg.toFixed(1) + "° >= 38.0°): Foreign tin cans, burst tires, unmated shoes & soldered pianos efface Leonia (" + Math.round(ss.effacedRatio * 100) + "% buried)!";
+    }
+
+    const nextSkill = (cs.materialSkillLevel % 5) + 1;
+    dom.upgradeLabel.textContent = "Skill Tier " + cs.materialTierNumeral + " → " + ROMAN_NUM[nextSkill - 1];
+
+    dom.neighborToggleLabel.textContent = "Neighbors: " + (ss.neighborPressureActive ? "ON" : "OFF");
+    dom.btnNeighborToggle.classList.toggle("leo-btn-active", ss.neighborPressureActive);
+
+    dom.xSectionLabel.textContent = ss.crossSectionMode ? "View: Cross-Section" : "Crater Cross-Section";
+    dom.btnXSection.classList.toggle("leo-btn-active", ss.crossSectionMode);
+
+    dom.muteLabel.textContent = cs.muted ? "Sound MUTED" : "Sound ON";
+    dom.btnMute.classList.toggle("leo-btn-active", !cs.muted);
+
+    dom.motionLabel.textContent = manualMotionOverride === null
+      ? ("Motion: " + (reducedMotion ? "Reduced" : "Full"))
+      : (reducedMotion ? "Motion: Reduced" : "Motion: Full");
+
+    dom.noveltyBadge.textContent = "5 Fresh Rites · Joy " + Math.round(cs.joyOfExpelling * 100) + "%";
+    renderNoveltyCards(cs);
+
+    const latestTonnes = cs.lastExportPacket ? cs.lastExportPacket.exportedTonnes : 42.0;
+    dom.valBags.textContent = String(cs.bagCount);
+    dom.valTonnes.textContent = ss.totalDepositedTonnes.toFixed(1) + " t";
+    dom.valWagons.textContent = cs.angelicDustcarts.length + " Silent (" + latestTonnes.toFixed(0) + "t/d)";
+    dom.dustcartBadge.textContent = cs.sidewalkCleansed ? "Curbs Cleansed · 0% Rot" : "Awaiting Rite";
+
+    dom.scarpBadge.textContent = ss.strataCount + (ss.strataCount === 1 ? " Soldered Stratum" : " Soldered Strata");
+    dom.valElev.textContent = "+" + ss.craterElevationMeters.toFixed(2) + " m";
+    dom.valAngle.textContent = ss.slopeAngleDeg.toFixed(1) + "° / 38.0°";
+    dom.valDecay.textContent = ss.decompositionRate.toFixed(3) + " t/yr";
+    const fillPct = Math.max(8, Math.min(100, ((ss.slopeAngleDeg - 18) / (38 - 18)) * 100));
+    dom.reposeFill.style.width = fillPct.toFixed(1) + "%";
+    dom.tierReadout.textContent = "Tier " + cs.materialTierNumeral + ": " + cs.materialTierName;
+
+    dom.valConv.textContent = Math.round(ss.neighborConvergenceRatio * 100) + "%";
+    dom.valPressure.textContent = ss.neighborPressureActive ? "CONVERGING" : "PAUSED";
+    dom.valEffaced.textContent = Math.round(ss.effacedRatio * 100) + "%";
+    dom.neighborBadge.textContent = ss.landslideTriggered ? "AVALANCHE BREACHED" : "6 Ridges Pressing Inward";
+  }
+
+  function resizeCanvas() {
+    const rect = dom.well.getBoundingClientRect();
+    const cssW = Math.max(240, Math.round(rect.width || 960));
+    const cssH = Math.max(240, Math.round(rect.height || 640));
+    const dpr = Math.min(2, Math.max(1, window.devicePixelRatio || 1));
+    const targetW = Math.round(cssW * dpr);
+    const targetH = Math.round(cssH * dpr);
+    if (dom.canvas.width !== targetW || dom.canvas.height !== targetH) {
+      dom.canvas.width = targetW;
+      dom.canvas.height = targetH;
+    }
+    viewportSize = { width: cssW, height: cssH, dpr: dpr };
+  }
+
+  function renderFrame() {
+    resizeCanvas();
+    const dpr = viewportSize.dpr || 1;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const vp = { width: viewportSize.width, height: viewportSize.height };
+    lastCoreBounds = scarpEngine.render(ctx, vp);
+    morningCore.render(ctx, lastCoreBounds);
+    scarpEngine.renderOverlay(ctx, vp);
+  }
+
+  function settleAvalancheIfInstant(opts) {
+    const ss = scarpEngine.getState();
+    if (ss.landslideTriggered && (reducedMotion || (opts && opts.instant))) {
+      scarpEngine.step(4.0);
+      morningCore.setEffacedRatio(scarpEngine.getState().effacedRatio);
+    }
+  }
+
+  function breakNewDawn(opts) {
+    const packet = morningCore.breakNewDawn(opts || {});
+    settleAvalancheIfInstant(opts);
+    const ss = scarpEngine.getState();
+    if (!ss.landslideTriggered) {
+      setInspector({
+        kind: "dawn_export",
+        title: "Dawn " + packet.dayIndex + " Refashioned",
+        meta: "+" + packet.exportedTonnes.toFixed(1) + " t EXPORTED · CREST +" + ss.craterElevationMeters.toFixed(1) + " m",
+        copy: "Fresh sheets, just-unwrapped soap, brand-new attire, unopened tins & radio jingles gleam at the center while silent street cleaners carry " + packet.bagCount + " sealed black bags to the soldered crater scarp."
+      });
+    }
+    syncUI();
+    renderFrame();
+    return getState();
+  }
+
+  function upgradeIndestructibility(lvl) {
+    const up = morningCore.upgradeMaterialIndestructibility(lvl);
+    scarpEngine.setMaterialSkillLevel(up.materialSkillLevel);
+    settleAvalancheIfInstant(null);
+    const ss = scarpEngine.getState();
+    if (!ss.landslideTriggered) {
+      setInspector({
+        kind: "material_upgrade",
+        title: "Synthetic Skill Tier " + up.materialTierNumeral + ": " + up.materialTierName,
+        meta: "DECOMPOSITION RATE = 0.000 · SLOPE " + ss.slopeAngleDeg.toFixed(1) + "°",
+        copy: "Higher manufacturing excellence yields synthetics ever more impervious to time, elements, fermentations, and combustions, steepening the unremovable crater cuirass."
+      });
+    }
+    syncUI();
+    renderFrame();
+    return getState();
+  }
+
+  function toggleNeighborPressure(force) {
+    const active = scarpEngine.toggleNeighborPressure(force);
+    setInspector({
+      kind: "neighbor_pressure",
+      title: "Neighboring Cities Rollers: " + (active ? "CONVERGING INWARD" : "HELD AT RIDGES"),
+      meta: "CONVERGENCE " + Math.round(scarpEngine.getState().neighborConvergenceRatio * 100) + "%",
+      copy: active
+        ? "Six surrounding refashioning cities push rollers of flattened tin cans, burst old tires, unmated old shoes, and frayed straw flasks inward on every dawn."
+        : "Foreign ridge rollers paused at current perimeter; Leonia's own daily strata still mount upward with zero decay."
+    });
+    syncUI();
+    renderFrame();
+    return getState();
+  }
+
+  function pushNeighborRollers(delta) {
+    const ss = scarpEngine.pushNeighborRollers(delta);
+    morningCore.setEffacedRatio(ss.effacedRatio);
+    if (!ss.landslideTriggered) {
+      setInspector({
+        kind: "neighbor_roller",
+        title: "Foreign Refuse Rollers Surged Inward",
+        meta: "CONVERGENCE " + Math.round(ss.neighborConvergenceRatio * 100) + "% · SLOPE " + ss.slopeAngleDeg.toFixed(1) + "°",
+        copy: "Neighboring cities' flattened tin cans, burst old tires, unmated old shoes, and frayed straw flasks press tighter against Leonia's crater ramparts."
+      });
+    }
+    syncUI();
+    renderFrame();
+    return getState();
+  }
+
+  function toggleCrossSection(force) {
+    const mode = scarpEngine.toggleCrossSectionMode(force);
+    setInspector({
+      kind: "view_mode",
+      title: mode ? "Stratigraphic Crater Cross-Section" : "Caldera Aerial Plan",
+      meta: "SLOPE θ " + scarpEngine.getState().slopeAngleDeg.toFixed(1) + "° vs 38.0° CRIT",
+      copy: mode
+        ? "Geological cut-through exposing dated zero-decay strata towering above the sunken basin and the live Angle-of-Repose protractor."
+        : "Topographic plan of gleaming radial dawn boulevards, black curbside bags, angelic wagons, soldered scarp rings, and six neighbor rollers."
+    });
+    syncUI();
+    renderFrame();
+    return getState();
+  }
+
+  function attemptDecay() {
+    decayTrialCount += 1;
+    const d1 = morningCore.attemptDecay();
+    const d2 = scarpEngine.attemptDecay();
+    lastDecayAttempt = {
+      decayedTonnes: d1.decayedTonnes + d2.decayedTonnes,
+      decompositionRate: d2.decompositionRate,
+      trials: decayTrialCount
+    };
+    dom.decayBtnLabel.textContent = "Decay Trial #" + decayTrialCount + ": 0.000 t Rotted";
+    setInspector({
+      kind: "decay_trial",
+      title: "Fermentation & Combustion Trial #" + decayTrialCount,
+      meta: "DECAYED 0.000 t · RATE 0.000",
+      copy: "Weather, flame, and fermentation repelled: not a single lightbulb, rollerskate, porcelain tureen, or plastic shroud decomposes."
+    });
+    syncUI();
+    renderFrame();
+    return lastDecayAttempt;
+  }
+
+  function resetCataclysm() {
+    scarpEngine.reset();
+    morningCore.reset();
+    morningCore.setEffacedRatio(0);
+    setInspector({
+      kind: "reset",
+      title: "Day 1 Refounded in Gleaming Morning Linen",
+      meta: "CREST +14.0 m · SLOPE 21.5° · DECAY 0%",
+      copy: "Cataclysmic burial cleared to baseline Day 1; crisp sheets, unwrapped soap, and silent curbside rites resume."
+    });
+    syncUI();
+    renderFrame();
+    return getState();
+  }
+
+  function toggleMute() {
+    morningCore.toggleMute();
+    syncUI();
+    return morningCore.isMuted();
+  }
+
+  function applyReducedMotion(flag, isManual) {
+    reducedMotion = Boolean(flag);
+    if (isManual) manualMotionOverride = reducedMotion;
+    morningCore.setReducedMotion(reducedMotion);
+    scarpEngine.setReducedMotion(reducedMotion);
+    morningCore.setEffacedRatio(scarpEngine.getState().effacedRatio);
+    syncUI();
+    renderFrame();
+    return reducedMotion;
+  }
+
+  function applyPlateTabLayout() {
+    dom.tabDiptych.classList.toggle("leo-btn-active", activePlateTab === "diptych");
+    dom.tabMap.classList.toggle("leo-btn-active", activePlateTab === "map");
+    dom.tabVista.classList.toggle("leo-btn-active", activePlateTab === "vista");
+
+    dom.cardMap.hidden = activePlateTab === "vista";
+    dom.cardVista.hidden = activePlateTab === "map";
+    dom.loupeStage.classList.toggle("leo-mode-diptych", activePlateTab === "diptych" && !plateZoomed);
+    dom.loupeStage.classList.toggle("leo-zoomed", plateZoomed);
+    dom.zoomLabel.textContent = plateZoomed ? "Loupe 2.2x" : "Loupe 1.0x";
+    dom.btnZoom.classList.toggle("leo-btn-active", plateZoomed);
+  }
+
+  function openPlates(tab) {
+    if (typeof tab === "string") {
+      const norm = tab.toLowerCase();
+      if (norm === "map" || norm === "survey") activePlateTab = "map";
+      else if (norm === "image" || norm === "vista" || norm === "caldera") activePlateTab = "vista";
+      else activePlateTab = "diptych";
+    }
+    platesOpen = true;
+    dom.plateDrawer.hidden = false;
+    applyPlateTabLayout();
+    return getState();
+  }
+
+  function closePlates() {
+    platesOpen = false;
+    dom.plateDrawer.hidden = true;
+    return getState();
+  }
+
+  function togglePlateZoom(force) {
+    plateZoomed = typeof force === "boolean" ? force : !plateZoomed;
+    applyPlateTabLayout();
+    return plateZoomed;
+  }
+
+  function stepSimulation(dt) {
+    const ss0 = scarpEngine.getState();
+    const scarpDt = ss0.landslideTriggered && ss0.effacedRatio < 1 ? dt * 3.2 : dt;
+    scarpEngine.step(scarpDt);
+    const ss1 = scarpEngine.getState();
+    morningCore.setEffacedRatio(ss1.effacedRatio);
+    morningCore.step(dt);
+  }
+
+  function getState() {
+    const cs = morningCore.getState();
+    const ss = scarpEngine.getState();
+    return Object.assign({}, cs, ss, {
+      dayIndex: cs.dayIndex,
+      dayCount: ss.dayCount,
+      decompositionRate: 0,
+      platesOpen: platesOpen,
+      activePlateTab: activePlateTab,
+      plateZoomed: plateZoomed,
+      plateZoom: plateZoomed ? 2.2 : 1.0,
+      lastDecayAttempt: lastDecayAttempt,
+      inspectedItem: inspectedItem
+    });
+  }
+
+  function handleCanvasPointer(ev, isClick) {
+    const rect = dom.canvas.getBoundingClientRect();
+    if (!rect.width || !rect.height) return null;
+    const x = ev.clientX - rect.left;
+    const y = ev.clientY - rect.top;
+    const vp = { width: rect.width, height: rect.height };
+    const scarpHit = scarpEngine.inspectAt(x, y, vp);
+    const hit = scarpHit || morningCore.inspectAt(x, y, lastCoreBounds, isClick);
+    if (hit) {
+      if (isClick && hit.kind === "morning_novelty" && hit.id) {
+        morningCore.selectNovelty(hit.id);
+      }
+      formatAndShowInspection(hit);
+      if (isClick) {
+        syncUI();
+        renderFrame();
+      }
+    }
+    return hit;
+  }
+
+  dom.btnDawn.addEventListener("click", function () { breakNewDawn(); });
+  dom.btnUpgrade.addEventListener("click", function () { upgradeIndestructibility(); });
+  dom.btnNeighborToggle.addEventListener("click", function () { toggleNeighborPressure(); });
+  dom.btnSurge.addEventListener("click", function () { pushNeighborRollers(); });
+  dom.btnXSection.addEventListener("click", function () { toggleCrossSection(); });
+  dom.btnReset.addEventListener("click", function () { resetCataclysm(); });
+  dom.btnBannerReset.addEventListener("click", function () { resetCataclysm(); });
+  dom.btnDecay.addEventListener("click", function () { attemptDecay(); });
+  dom.btnMute.addEventListener("click", function () { toggleMute(); });
+  dom.btnMotion.addEventListener("click", function () { applyReducedMotion(!reducedMotion, true); });
+  dom.btnPlates.addEventListener("click", function () { openPlates(); });
+  dom.btnClosePlates.addEventListener("click", function () { closePlates(); });
+  dom.btnZoom.addEventListener("click", function () { togglePlateZoom(); });
+
+  dom.tabDiptych.addEventListener("click", function () { openPlates("diptych"); });
+  dom.tabMap.addEventListener("click", function () { openPlates("map"); });
+  dom.tabVista.addEventListener("click", function () { openPlates("vista"); });
+
+  dom.plateDrawer.addEventListener("click", function (ev) {
+    if (ev.target === dom.plateDrawer) closePlates();
+  });
+
+  let loupeDrag = null;
+  dom.loupeStage.addEventListener("pointerdown", function (ev) {
+    if (!plateZoomed) return;
+    loupeDrag = {
+      startX: ev.clientX,
+      startY: ev.clientY,
+      scrollLeft: dom.loupeStage.scrollLeft,
+      scrollTop: dom.loupeStage.scrollTop
+    };
+  });
+  window.addEventListener("pointermove", function (ev) {
+    if (!loupeDrag) return;
+    dom.loupeStage.scrollLeft = loupeDrag.scrollLeft - (ev.clientX - loupeDrag.startX);
+    dom.loupeStage.scrollTop = loupeDrag.scrollTop - (ev.clientY - loupeDrag.startY);
+  });
+  window.addEventListener("pointerup", function () { loupeDrag = null; });
+
+  dom.canvas.addEventListener("mousemove", function (ev) { handleCanvasPointer(ev, false); });
+  dom.canvas.addEventListener("click", function (ev) { handleCanvasPointer(ev, true); });
+
+  if (mqReduced && typeof mqReduced.addEventListener === "function") {
+    mqReduced.addEventListener("change", function (ev) {
+      if (manualMotionOverride === null) applyReducedMotion(ev.matches, false);
+    });
+  }
+
+  window.addEventListener("resize", function () { renderFrame(); });
+
+  window.addEventListener("keydown", function (ev) {
+    if (ev.metaKey || ev.ctrlKey || ev.altKey) return;
+    const tag = ev.target && ev.target.tagName ? ev.target.tagName.toLowerCase() : "";
+    const k = ev.key;
+
+    if (k === "Escape") {
+      if (platesOpen) {
+        ev.preventDefault();
+        closePlates();
+      }
+      return;
+    }
+    if (k === "p" || k === "P") {
+      ev.preventDefault();
+      if (platesOpen) closePlates();
+      else openPlates();
+      return;
+    }
+    if (k === "z" || k === "Z") {
+      ev.preventDefault();
+      togglePlateZoom();
+      return;
+    }
+    if (platesOpen) return;
+
+    if (k === "d" || k === "D" || (k === " " && tag !== "button")) {
+      ev.preventDefault();
+      breakNewDawn();
+    } else if (k === "i" || k === "I") {
+      ev.preventDefault();
+      upgradeIndestructibility();
+    } else if (k === "n" || k === "N") {
+      ev.preventDefault();
+      toggleNeighborPressure();
+    } else if (k === "v" || k === "V") {
+      ev.preventDefault();
+      pushNeighborRollers();
+    } else if (k === "x" || k === "X") {
+      ev.preventDefault();
+      toggleCrossSection();
+    } else if (k === "r" || k === "R") {
+      ev.preventDefault();
+      resetCataclysm();
+    } else if (k === "m" || k === "M") {
+      ev.preventDefault();
+      toggleMute();
+    }
+  });
+
+  buildStaticChips();
+  syncUI();
+  renderFrame();
+
+  let lastTs = performance.now();
+  function tick(now) {
+    const dt = Math.min(0.1, Math.max(0.001, (now - lastTs) / 1000));
+    lastTs = now;
+    if (!reducedMotion) {
+      const prevEff = scarpEngine.getState().effacedRatio;
+      const prevPhase = morningCore.getState().ritePhase;
+      stepSimulation(dt);
+      const nextEff = scarpEngine.getState().effacedRatio;
+      const nextPhase = morningCore.getState().ritePhase;
+      if (Math.abs(nextEff - prevEff) > 0.005 || nextPhase !== prevPhase) {
+        syncUI();
+      }
+      renderFrame();
+    }
+    window.requestAnimationFrame(tick);
+  }
+  window.requestAnimationFrame(tick);
+
+  window.LeoniaApp = {
+    getState: getState,
+    breakNewDawn: breakNewDawn,
+    upgradeIndestructibility: upgradeIndestructibility,
+    toggleNeighborPressure: toggleNeighborPressure,
+    pushNeighborRollers: pushNeighborRollers,
+    toggleCrossSection: toggleCrossSection,
+    attemptDecay: attemptDecay,
+    resetCataclysm: resetCataclysm,
+    toggleMute: toggleMute,
+    openPlates: openPlates,
+    closePlates: closePlates,
+    togglePlateZoom: togglePlateZoom,
+    setReducedMotion: function (flag) { return applyReducedMotion(flag, true); },
+    selectNovelty: function (idOrIdx) { const r = morningCore.selectNovelty(idOrIdx); syncUI(); renderFrame(); return r; },
+    step: function (dt) { stepSimulation(dt); syncUI(); renderFrame(); return getState(); },
+    morningCore: morningCore,
+    scarpEngine: scarpEngine
+  };
+})();
+</script>
+</body>
+</html>

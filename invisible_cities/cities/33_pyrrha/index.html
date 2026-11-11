@@ -1,0 +1,3591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PYRRHA — VI · III</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  pyrrha-nominal-rupture [hidden],
+  pyrrha-plate-drawer[hidden],
+  [hidden] { display: none !important; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: #0d1d35;
+    color: #f4f1ea;
+    font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  pyrrha-nominal-rupture, rupture-crown-bar, crown-title-seal, crown-key-strip,
+  goblet-bay-mirage, mirage-canvas-well, mirage-stone-banner, stone-facet-strip,
+  dune-sawmill-grid, deck-rubric-line, threshold-step-row, threshold-step-track,
+  threshold-step-fill, threshold-step-thumb, deck-action-strip, arrival-datum-grid,
+  arrival-datum-cell, nameless-exile-ledger, nominal-binding-grid, nominal-binding-row,
+  ledger-control-pair, traveler-rupture-note, pyrrha-plate-drawer, plate-drawer-sheet,
+  plate-drawer-bar, plate-tab-cluster, plate-tool-cluster, plate-frame-grid,
+  plate-figure-card, plate-image-stage, plate-caption-line {
+    display: block;
+  }
+
+  crown-city-mark, crown-coord-mark, crown-phase-pill, crown-quick-key,
+  stone-banner-index, stone-banner-title, stone-banner-gloss, stone-facet-chip,
+  chip-index-badge, chip-stone-name, deck-rubric-title, deck-rubric-state,
+  threshold-step-caption, rupture-action-key, coastal-gust-key, sawmill-log-key,
+  datum-axis-name, datum-axis-value, binding-token-label, binding-referent-value,
+  phonetic-utterance-key, quarantine-seal-toggle, plate-drawer-heading,
+  plate-tab-key, plate-loupe-key, plate-close-key {
+    display: inline-block;
+  }
+
+  .pyr-root {
+    --pyr-bg-top: #102440;
+    --pyr-bg-bot: #16375f;
+    --pyr-panel: rgba(16, 36, 64, 0.86);
+    --pyr-panel-alt: rgba(21, 47, 82, 0.78);
+    --pyr-border: rgba(222, 216, 204, 0.28);
+    --pyr-border-strong: rgba(244, 241, 234, 0.62);
+    --pyr-ink: #f4f1ea;
+    --pyr-muted: #cbd6e4;
+    --pyr-accent: #7cc6f2;
+    --pyr-accent-warm: #e6be74;
+    --pyr-chip-bg: rgba(13, 31, 56, 0.78);
+    --pyr-key-bg: rgba(29, 78, 137, 0.42);
+    width: 100%;
+    height: 100vh;
+    max-width: 100vw;
+    overflow: hidden;
+    padding: 8px 12px 10px;
+    background: linear-gradient(165deg, var(--pyr-bg-top) 0%, var(--pyr-bg-bot) 100%);
+    color: var(--pyr-ink);
+    display: grid;
+    grid-template-columns: minmax(0, 1.48fr) minmax(356px, 0.96fr);
+    grid-template-rows: 44px auto minmax(0, 1fr);
+    grid-template-areas:
+      "crown crown"
+      "stage deck"
+      "stage ledger";
+    gap: 8px 10px;
+    transition: background 360ms ease, color 260ms ease;
+  }
+
+  .pyr-root[data-phase="arrived"] {
+    --pyr-bg-top: #2b2623;
+    --pyr-bg-bot: #171412;
+    --pyr-panel: rgba(38, 32, 28, 0.92);
+    --pyr-panel-alt: rgba(52, 43, 36, 0.86);
+    --pyr-border: rgba(216, 162, 74, 0.34);
+    --pyr-border-strong: rgba(230, 190, 116, 0.78);
+    --pyr-ink: #f4ece0;
+    --pyr-muted: #d7c3a3;
+    --pyr-accent: #e6be74;
+    --pyr-accent-warm: #d8a24a;
+    --pyr-chip-bg: rgba(27, 23, 20, 0.88);
+    --pyr-key-bg: rgba(168, 92, 50, 0.34);
+  }
+
+  .pyr-root[data-phase="quarantine"] {
+    --pyr-bg-top: #091525;
+    --pyr-bg-bot: #112641;
+    --pyr-panel: rgba(10, 24, 43, 0.92);
+    --pyr-panel-alt: rgba(16, 36, 62, 0.86);
+    --pyr-border: rgba(126, 192, 238, 0.36);
+    --pyr-border-strong: rgba(220, 235, 250, 0.78);
+    --pyr-ink: #dcebfa;
+    --pyr-muted: #9ec0df;
+    --pyr-accent: #7ec0ee;
+    --pyr-accent-warm: #e6be74;
+    --pyr-chip-bg: rgba(8, 20, 36, 0.88);
+    --pyr-key-bg: rgba(26, 66, 108, 0.45);
+  }
+
+  .pyr-crown {
+    grid-area: crown;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 5px 12px;
+    background: var(--pyr-panel);
+    border: 1px solid var(--pyr-border);
+    border-radius: 6px;
+  }
+
+  .pyr-crown-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .pyr-city-mark {
+    font-size: 1.16rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--pyr-ink);
+  }
+
+  .pyr-coord-mark {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    color: var(--pyr-muted);
+    padding: 2px 6px;
+    border: 1px solid var(--pyr-border);
+    border-radius: 3px;
+  }
+
+  .pyr-phase-pill {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.71rem;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: var(--pyr-key-bg);
+    border: 1px solid var(--pyr-border-strong);
+    color: var(--pyr-accent);
+    white-space: nowrap;
+  }
+  .pyr-crown-keys {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
+  }
+
+  .pyr-quick-key, .pyr-action-key, .pyr-stone-chip, .pyr-plate-btn, .pyr-plate-tab {
+    cursor: pointer;
+    user-select: none;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    transition: border-color 140ms ease, background 140ms ease, transform 100ms ease;
+  }
+
+  .pyr-quick-key:focus-visible, .pyr-action-key:focus-visible, .pyr-stone-chip:focus-visible,
+  .pyr-step-track:focus-visible, .pyr-plate-btn:focus-visible, .pyr-plate-tab:focus-visible {
+    outline: 2px solid var(--pyr-accent);
+    outline-offset: 1px;
+  }
+
+  .pyr-quick-key {
+    font-size: 0.68rem;
+    padding: 4px 7px;
+    border-radius: 4px;
+    background: var(--pyr-chip-bg);
+    border: 1px solid var(--pyr-border);
+    color: var(--pyr-ink);
+    white-space: nowrap;
+  }
+
+  .pyr-quick-key:hover, .pyr-action-key:hover, .pyr-stone-chip:hover,
+  .pyr-plate-btn:hover, .pyr-plate-tab:hover {
+    border-color: var(--pyr-border-strong);
+    background: var(--pyr-key-bg);
+  }
+
+  .pyr-stage {
+    grid-area: stage;
+    min-height: 0;
+    min-width: 0;
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto auto;
+    gap: 6px;
+    padding: 8px;
+    background: var(--pyr-panel);
+    border: 1px solid var(--pyr-border);
+    border-radius: 6px;
+  }
+
+  .pyr-canvas-well {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 190px;
+    border-radius: 5px;
+    overflow: hidden;
+    border: 1px solid var(--pyr-border);
+    background: #0d1d35;
+  }
+
+  .pyr-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: crosshair;
+  }
+
+  .pyr-stone-banner {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 5px 9px;
+    background: var(--pyr-panel-alt);
+    border: 1px solid var(--pyr-border);
+    border-radius: 4px;
+    min-width: 0;
+  }
+
+  .pyr-banner-idx {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--pyr-accent);
+    flex-shrink: 0;
+  }
+
+  .pyr-banner-title {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--pyr-ink);
+    flex-shrink: 0;
+  }
+
+  .pyr-banner-gloss {
+    font-size: 0.78rem;
+    color: var(--pyr-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .pyr-stone-strip {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 5px;
+  }
+
+  .pyr-stone-chip {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 6px;
+    border-radius: 4px;
+    background: var(--pyr-chip-bg);
+    border: 1px solid var(--pyr-border);
+    color: var(--pyr-muted);
+    font-size: 0.67rem;
+    min-width: 0;
+  }
+
+  .pyr-stone-chip[data-active="true"] {
+    border-color: var(--pyr-border-strong);
+    background: var(--pyr-key-bg);
+    color: var(--pyr-ink);
+  }
+
+  .pyr-chip-badge {
+    font-weight: 700;
+    color: var(--pyr-accent);
+    flex-shrink: 0;
+  }
+
+  .pyr-chip-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: inherit;
+  }
+
+  .pyr-arrival-deck, .pyr-ledger {
+    min-width: 0;
+    padding: 9px 11px;
+    background: var(--pyr-panel);
+    border: 1px solid var(--pyr-border);
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .pyr-arrival-deck { grid-area: deck; }
+  .pyr-ledger { grid-area: ledger; min-height: 0; justify-content: space-between; }
+
+  .pyr-rubric-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .pyr-rubric-title {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--pyr-accent);
+  }
+
+  .pyr-rubric-state {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.68rem;
+    color: var(--pyr-muted);
+  }
+  .pyr-step-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .pyr-step-track {
+    position: relative;
+    height: 22px;
+    border-radius: 11px;
+    background: var(--pyr-chip-bg);
+    border: 1px solid var(--pyr-border-strong);
+    cursor: ew-resize;
+    overflow: hidden;
+    touch-action: none;
+  }
+
+  .pyr-step-track[data-locked="true"] {
+    cursor: not-allowed;
+    border-color: #d8a24a;
+  }
+
+  .pyr-step-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #2d6da8 0%, #d8a24a 75%, #a85c32 100%);
+    transition: width 90ms linear;
+  }
+
+  .pyr-step-caption {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.67rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: #f4f1ea;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.85);
+    pointer-events: none;
+  }
+
+  .pyr-deck-actions {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr 1fr;
+    gap: 6px;
+  }
+
+  .pyr-action-key {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 6px 7px;
+    border-radius: 4px;
+    background: var(--pyr-chip-bg);
+    border: 1px solid var(--pyr-border);
+    color: var(--pyr-ink);
+    font-size: 0.69rem;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .pyr-key-primary {
+    background: var(--pyr-key-bg);
+    border-color: var(--pyr-border-strong);
+  }
+
+  .pyr-action-key[data-locked="true"] {
+    background: rgba(168, 92, 50, 0.44);
+    border-color: #e6be74;
+    color: #f4ece0;
+  }
+
+  .pyr-action-key[data-active="true"] {
+    background: rgba(126, 192, 238, 0.28);
+    border-color: #dcebfa;
+    color: #ffffff;
+  }
+
+  .pyr-datum-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 5px;
+  }
+
+  .pyr-datum-cell {
+    padding: 5px 7px;
+    border-radius: 4px;
+    background: var(--pyr-panel-alt);
+    border: 1px solid var(--pyr-border);
+    min-width: 0;
+  }
+
+  .pyr-datum-name {
+    display: block;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--pyr-muted);
+    margin-bottom: 2px;
+  }
+
+  .pyr-datum-val {
+    display: block;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.66rem;
+    font-weight: 700;
+    color: var(--pyr-ink);
+    line-height: 1.22;
+  }
+
+  .pyr-binding-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .pyr-ledger-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 5px 8px;
+    border-radius: 4px;
+    background: var(--pyr-panel-alt);
+    border: 1px solid var(--pyr-border);
+  }
+
+  .pyr-token-label {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.66rem;
+    color: var(--pyr-muted);
+  }
+
+  .pyr-referent-val {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.69rem;
+    font-weight: 700;
+    color: var(--pyr-accent);
+    text-align: right;
+  }
+
+  .pyr-ledger-controls {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 6px;
+  }
+
+  .pyr-note {
+    padding: 7px 9px;
+    border-radius: 4px;
+    background: var(--pyr-chip-bg);
+    border-left: 3px solid var(--pyr-accent);
+    font-size: 0.78rem;
+    line-height: 1.34;
+    color: var(--pyr-ink);
+  }
+  .pyr-plate-drawer {
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    background: rgba(9, 16, 28, 0.88);
+    backdrop-filter: blur(5px);
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pyr-plate-sheet {
+    width: min(1220px, 100%);
+    height: min(750px, 100%);
+    background: var(--pyr-panel);
+    border: 1px solid var(--pyr-border-strong);
+    border-radius: 8px;
+    padding: 10px 14px;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 10px;
+    overflow: hidden;
+  }
+
+  .pyr-plate-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--pyr-border);
+    padding-bottom: 8px;
+  }
+
+  .pyr-plate-heading {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--pyr-accent);
+  }
+
+  .pyr-plate-tabs, .pyr-plate-tools {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .pyr-plate-tab, .pyr-plate-btn {
+    font-size: 0.7rem;
+    padding: 4px 9px;
+    border-radius: 4px;
+    background: var(--pyr-chip-bg);
+    border: 1px solid var(--pyr-border);
+    color: var(--pyr-ink);
+  }
+
+  .pyr-plate-tab[data-active="true"], .pyr-plate-btn[data-active="true"] {
+    background: var(--pyr-key-bg);
+    border-color: var(--pyr-border-strong);
+    color: var(--pyr-accent);
+  }
+
+  .pyr-plate-grid {
+    min-height: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .pyr-plate-grid[data-tab="map"], .pyr-plate-grid[data-tab="vista"] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pyr-plate-card {
+    min-height: 0;
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    gap: 6px;
+    background: rgba(8, 13, 22, 0.76);
+    border: 1px solid var(--pyr-border);
+    border-radius: 6px;
+    padding: 8px;
+    overflow: hidden;
+  }
+
+  .pyr-plate-stage {
+    min-height: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pyr-plate-img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 3px;
+    transform-origin: center center;
+    transition: transform 180ms ease;
+  }
+
+  .pyr-plate-grid[data-loupe="true"] .pyr-plate-img {
+    transform: scale(1.75);
+  }
+
+  .pyr-plate-caption {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.68rem;
+    color: var(--pyr-muted);
+    text-align: center;
+  }
+
+  @media (max-width: 960px) {
+    .pyr-root {
+      height: auto;
+      min-height: 100vh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      padding: 6px 8px 10px;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto auto auto auto;
+      grid-template-areas:
+        "crown"
+        "stage"
+        "deck"
+        "ledger";
+      gap: 7px;
+    }
+    .pyr-crown { flex-direction: column; align-items: stretch; padding: 6px 8px; gap: 5px; }
+    .pyr-crown-left { justify-content: space-between; flex-wrap: wrap; gap: 5px; }
+    .pyr-crown-keys { justify-content: space-between; gap: 4px; }
+    .pyr-quick-key { font-size: 0.62rem; padding: 3px 5px; }
+    .pyr-canvas-well { height: 205px; min-height: 205px; }
+    .pyr-stone-banner { flex-wrap: wrap; gap: 4px 6px; padding: 4px 7px; }
+    .pyr-banner-gloss { white-space: normal; font-size: 0.72rem; }
+    .pyr-stone-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; }
+    .pyr-stone-chip { padding: 4px 5px; font-size: 0.62rem; }
+    .pyr-deck-actions { grid-template-columns: 1fr 1fr; }
+    .pyr-key-primary { grid-column: 1 / -1; }
+    .pyr-datum-val { font-size: 0.6rem; }
+    .pyr-ledger-controls { grid-template-columns: 1fr; gap: 5px; }
+    .pyr-note { font-size: 0.73rem; padding: 6px 8px; }
+    .pyr-plate-drawer { padding: 8px; }
+    .pyr-plate-grid { grid-template-columns: minmax(0, 1fr); overflow-y: auto; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pyr-root, .pyr-quick-key, .pyr-action-key, .pyr-stone-chip,
+    .pyr-step-fill, .pyr-plate-img {
+      transition: none !important;
+    }
+  }
+</style>
+</head>
+<body>
+<pyrrha-nominal-rupture class="pyr-root" id="pyr-root" data-phase="pre_arrival">
+  <rupture-crown-bar class="pyr-crown">
+    <crown-title-seal class="pyr-crown-left">
+      <crown-city-mark class="pyr-city-mark">PYRRHA</crown-city-mark>
+      <crown-coord-mark class="pyr-coord-mark">VI · III</crown-coord-mark>
+      <crown-phase-pill class="pyr-phase-pill" id="pyr-phase-seal">PRE-ARRIVAL IMAGINATION</crown-phase-pill>
+    </crown-title-seal>
+    <crown-key-strip class="pyr-crown-keys">
+      <crown-quick-key class="pyr-quick-key" id="pyr-qk-utter" tabindex="0" role="button">[N] Utter "PYRRHA"</crown-quick-key>
+      <crown-quick-key class="pyr-quick-key" id="pyr-qk-cross" tabindex="0" role="button">[A] Cross Threshold</crown-quick-key>
+      <crown-quick-key class="pyr-quick-key" id="pyr-qk-quarantine" tabindex="0" role="button">[Q] Quarantine</crown-quick-key>
+      <crown-quick-key class="pyr-quick-key" id="pyr-qk-plates" tabindex="0" role="button">[P] Royal Plates</crown-quick-key>
+      <crown-quick-key class="pyr-quick-key" id="pyr-qk-mute" tabindex="0" role="button">[M] Sound: On</crown-quick-key>
+      <crown-quick-key class="pyr-quick-key" id="pyr-qk-reset" tabindex="0" role="button">[R] Reset</crown-quick-key>
+    </crown-key-strip>
+  </rupture-crown-bar>
+
+  <goblet-bay-mirage class="pyr-stage">
+    <mirage-canvas-well class="pyr-canvas-well" id="pyr-canvas-well">
+      <canvas id="pyr-canvas" class="pyr-canvas"></canvas>
+    </mirage-canvas-well>
+    <mirage-stone-banner class="pyr-stone-banner">
+      <stone-banner-index class="pyr-banner-idx" id="pyr-stone-idx">[6]</stone-banner-index>
+      <stone-banner-title class="pyr-banner-title" id="pyr-stone-title">Central Carved Marble Well</stone-banner-title>
+      <stone-banner-gloss class="pyr-banner-gloss" id="pyr-stone-gloss">In the middle of the deep square, subterranean water rings beneath carved white marble.</stone-banner-gloss>
+    </mirage-stone-banner>
+    <stone-facet-strip class="pyr-stone-strip" id="pyr-stone-strip">
+      <stone-facet-chip class="pyr-stone-chip" data-stone-index="0" tabindex="0" role="button"><chip-index-badge class="pyr-chip-badge">[1]</chip-index-badge><chip-stone-name class="pyr-chip-name">Enclosed Rampart</chip-stone-name></stone-facet-chip>
+      <stone-facet-chip class="pyr-stone-chip" data-stone-index="1" tabindex="0" role="button"><chip-index-badge class="pyr-chip-badge">[2]</chip-index-badge><chip-stone-name class="pyr-chip-name">Goblet Towers</chip-stone-name></stone-facet-chip>
+      <stone-facet-chip class="pyr-stone-chip" data-stone-index="2" tabindex="0" role="button"><chip-index-badge class="pyr-chip-badge">[3]</chip-index-badge><chip-stone-name class="pyr-chip-name">High Windows</chip-stone-name></stone-facet-chip>
+      <stone-facet-chip class="pyr-stone-chip" data-stone-index="3" tabindex="0" role="button"><chip-index-badge class="pyr-chip-badge">[4]</chip-index-badge><chip-stone-name class="pyr-chip-name">Sloped Bay</chip-stone-name></stone-facet-chip>
+      <stone-facet-chip class="pyr-stone-chip" data-stone-index="4" tabindex="0" role="button"><chip-index-badge class="pyr-chip-badge">[5]</chip-index-badge><chip-stone-name class="pyr-chip-name">Deep Square</chip-stone-name></stone-facet-chip>
+      <stone-facet-chip class="pyr-stone-chip" data-stone-index="5" data-active="true" tabindex="0" role="button"><chip-index-badge class="pyr-chip-badge">[6]</chip-index-badge><chip-stone-name class="pyr-chip-name">Marble Well</chip-stone-name></stone-facet-chip>
+    </stone-facet-strip>
+  </goblet-bay-mirage>
+
+  <dune-sawmill-grid class="pyr-arrival-deck">
+    <deck-rubric-line class="pyr-rubric-line">
+      <deck-rubric-title class="pyr-rubric-title">Arrival Threshold &amp; Coastal Grid</deck-rubric-title>
+      <deck-rubric-state class="pyr-rubric-state" id="pyr-deck-state">UNSEEN · REVERSIBLE APPROACH</deck-rubric-state>
+    </deck-rubric-line>
+    <threshold-step-row class="pyr-step-row">
+      <threshold-step-track class="pyr-step-track" id="pyr-step-track" tabindex="0" role="slider" aria-label="Arrival threshold progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <threshold-step-fill class="pyr-step-fill" id="pyr-step-fill"></threshold-step-fill>
+        <threshold-step-caption class="pyr-step-caption" id="pyr-step-caption">FOOTSTEP APPROACH: 0% · BEFORE SEEING PYRRHA</threshold-step-caption>
+      </threshold-step-track>
+    </threshold-step-row>
+    <deck-action-strip class="pyr-deck-actions">
+      <rupture-action-key class="pyr-action-key pyr-key-primary" id="pyr-btn-cross" tabindex="0" role="button">[A] Set Foot in Pyrrha</rupture-action-key>
+      <coastal-gust-key class="pyr-action-key" id="pyr-btn-gust" tabindex="0" role="button">[W] Coastal Wind Gust</coastal-gust-key>
+      <sawmill-log-key class="pyr-action-key" id="pyr-btn-saw" tabindex="0" role="button">[S] Feed Sawmill Log</sawmill-log-key>
+    </deck-action-strip>
+    <arrival-datum-grid class="pyr-datum-grid">
+      <arrival-datum-cell class="pyr-datum-cell">
+        <datum-axis-name class="pyr-datum-name">Sea Horizon</datum-axis-name>
+        <datum-axis-value class="pyr-datum-val" id="pyr-val-sea">OPEN ULTRAMARINE BAY</datum-axis-value>
+      </arrival-datum-cell>
+      <arrival-datum-cell class="pyr-datum-cell">
+        <datum-axis-name class="pyr-datum-name">Street Plan</datum-axis-name>
+        <datum-axis-value class="pyr-datum-val" id="pyr-val-plan">ENCLOSED AMPHITHEATER</datum-axis-value>
+      </arrival-datum-cell>
+      <arrival-datum-cell class="pyr-datum-cell">
+        <datum-axis-name class="pyr-datum-name">Acoustic Field</datum-axis-name>
+        <datum-axis-value class="pyr-datum-val" id="pyr-val-sound">MARBLE WELL CHIME</datum-axis-value>
+      </arrival-datum-cell>
+    </arrival-datum-grid>
+  </dune-sawmill-grid>
+
+  <nameless-exile-ledger class="pyr-ledger">
+    <deck-rubric-line class="pyr-rubric-line">
+      <deck-rubric-title class="pyr-rubric-title">Nominal Referent Ledger</deck-rubric-title>
+      <deck-rubric-state class="pyr-rubric-state" id="pyr-ledger-tally">Utterances: 0</deck-rubric-state>
+    </deck-rubric-line>
+    <nominal-binding-grid class="pyr-binding-grid">
+      <nominal-binding-row class="pyr-ledger-row">
+        <binding-token-label class="pyr-token-label">Linguistic Sign "PYRRHA"</binding-token-label>
+        <binding-referent-value class="pyr-referent-val" id="pyr-ref-sign">FORTIFIED GOBLET BAY CITY</binding-referent-value>
+      </nominal-binding-row>
+      <nominal-binding-row class="pyr-ledger-row">
+        <binding-token-label class="pyr-token-label">Fortified Gulf City Name</binding-token-label>
+        <binding-referent-value class="pyr-referent-val" id="pyr-ref-gulf">"PYRRHA"</binding-referent-value>
+      </nominal-binding-row>
+    </nominal-binding-grid>
+    <ledger-control-pair class="pyr-ledger-controls">
+      <phonetic-utterance-key class="pyr-action-key pyr-key-utter" id="pyr-btn-utter" tabindex="0" role="button">[N] Pronounce "PYRRHA"</phonetic-utterance-key>
+      <quarantine-seal-toggle class="pyr-action-key pyr-key-quarantine" id="pyr-btn-quarantine" tabindex="0" role="button">[Q] Pre-Arrival Quarantine (Wordless Ocular)</quarantine-seal-toggle>
+    </ledger-control-pair>
+    <traveler-rupture-note class="pyr-note" id="pyr-traveler-note">Before ever seeing it, from the syllables of its name alone I know an enclosed city on the slopes of a bay, with high windows and towers flaring like a goblet, a deep square in the center, and a well in the middle.</traveler-rupture-note>
+  </nameless-exile-ledger>
+
+  <pyrrha-plate-drawer class="pyr-plate-drawer" id="pyr-plate-drawer" hidden>
+    <plate-drawer-sheet class="pyr-plate-sheet">
+      <plate-drawer-bar class="pyr-plate-bar">
+        <plate-drawer-heading class="pyr-plate-heading">ROYAL ARCHIVAL PLATES · PYRRHA (VI · III)</plate-drawer-heading>
+        <plate-tab-cluster class="pyr-plate-tabs">
+          <plate-tab-key class="pyr-plate-tab" id="pyr-tab-diptych" data-tab="diptych" data-active="true" tabindex="0" role="tab">Diptych</plate-tab-key>
+          <plate-tab-key class="pyr-plate-tab" id="pyr-tab-map" data-tab="map" tabindex="0" role="tab">Cartographic Survey</plate-tab-key>
+          <plate-tab-key class="pyr-plate-tab" id="pyr-tab-vista" data-tab="vista" tabindex="0" role="tab">Illuminated Vista</plate-tab-key>
+        </plate-tab-cluster>
+        <plate-tool-cluster class="pyr-plate-tools">
+          <plate-loupe-key class="pyr-plate-btn" id="pyr-plate-loupe" tabindex="0" role="button">[Z] 1.75x Loupe: Off</plate-loupe-key>
+          <plate-close-key class="pyr-plate-btn" id="pyr-plate-close" tabindex="0" role="button">[Esc] Close</plate-close-key>
+        </plate-tool-cluster>
+      </plate-drawer-bar>
+      <plate-frame-grid class="pyr-plate-grid" id="pyr-plate-grid" data-tab="diptych" data-loupe="false">
+        <plate-figure-card class="pyr-plate-card" id="pyr-card-map">
+          <plate-image-stage class="pyr-plate-stage">
+            <img id="pyr-map-img" class="pyr-plate-img" src="map.png" alt="Cartographic survey of Pyrrha">
+          </plate-image-stage>
+          <plate-caption-line class="pyr-plate-caption">Plate I · Cartographic Survey — Sea-Blocking Dune, Lumber Grid &amp; Spectral Gulf</plate-caption-line>
+        </plate-figure-card>
+        <plate-figure-card class="pyr-plate-card" id="pyr-card-vista">
+          <plate-image-stage class="pyr-plate-stage">
+            <img id="pyr-city-img" class="pyr-plate-img" src="image.png" alt="Illuminated vista of Pyrrha">
+          </plate-image-stage>
+          <plate-caption-line class="pyr-plate-caption">Plate II · Illuminated Vista — Dusty Sawmill Town &amp; Nameless Goblet Bay</plate-caption-line>
+        </plate-figure-card>
+      </plate-frame-grid>
+    </plate-drawer-sheet>
+  </pyrrha-plate-drawer>
+</pyrrha-nominal-rupture>
+
+<script>
+(function () {
+  'use strict';
+
+  const PALETTE = {
+    deepGulf: '#13345c',
+    gobletUltramarine: '#1d4e89',
+    aegeanBayLight: '#2d6da8',
+    harborCaustic: '#7cc6f2',
+    marbleWell: '#f4f1ea',
+    marbleShadow: '#cfc8ba',
+    limestoneParapet: '#ded8cc',
+    limestoneSlope: '#c5bdb0',
+    arcadeShadow: '#16253b',
+    duneOchre: '#d8a24a',
+    dustGlare: '#e6be74',
+    blueprintDeep: '#0a182b',
+    blueprintSlate: '#122947',
+    chalkLine: '#dcebfa',
+    chalkCyan: '#7ec0ee'
+  };
+
+  const GOBLET_STONES = [
+    {
+      id: 'enclosed_curtain_wall',
+      index: 0,
+      label: 'Enclosed Rampart Ring',
+      gobletRole: 'fortified_enclosure',
+      normX: 0.23,
+      normY: 0.55,
+      noteHz: 293.66,
+      inscription: 'Dressed limestone curtain walls clasping the steep slopes of the gulf.'
+    },
+    {
+      id: 'goblet_west_towers',
+      index: 1,
+      label: 'Goblet-Rim Castellated Towers',
+      gobletRole: 'goblet_towers',
+      normX: 0.34,
+      normY: 0.30,
+      noteHz: 329.63,
+      inscription: 'Crenellated cylindrical towers flaring upward like the rim of a stone goblet.'
+    },
+    {
+      id: 'high_lancet_windows',
+      index: 2,
+      label: 'High Seaward Lancet Windows',
+      gobletRole: 'high_windows',
+      normX: 0.66,
+      normY: 0.30,
+      noteHz: 369.99,
+      inscription: 'Tall narrow casements drinking ultramarine sea-light high above the tide.'
+    },
+    {
+      id: 'ultramarine_gulf_slopes',
+      index: 3,
+      label: 'Sloped Amphitheater Bay',
+      gobletRole: 'bay_slopes',
+      normX: 0.50,
+      normY: 0.43,
+      noteHz: 440.00,
+      inscription: 'Terraced slopes curving around a sheltered, wind-bright harbor.'
+    },
+    {
+      id: 'deep_central_square',
+      index: 4,
+      label: 'Deep Enclosed Central Square',
+      gobletRole: 'deep_square',
+      normX: 0.50,
+      normY: 0.61,
+      noteHz: 493.88,
+      inscription: 'A sunken flagstone piazza shadowed by radial arcades at the heart of the city.'
+    },
+    {
+      id: 'echoing_marble_well',
+      index: 5,
+      label: 'Central Carved Marble Well',
+      gobletRole: 'marble_well',
+      normX: 0.50,
+      normY: 0.70,
+      noteHz: 587.33,
+      inscription: 'In the middle of the deep square, subterranean water rings beneath carved white marble.'
+    }
+  ];
+
+  function clamp(v, lo, hi) {
+    return Math.max(lo, Math.min(hi, v));
+  }
+
+  function createGobletCity(opts) {
+    const options = opts || {};
+    const state = {
+      cityName: 'PYRRHA',
+      gobletClarity: 1.0,
+      seaVisibleInMind: true,
+      selectedStoneIndex: typeof options.selectedStoneIndex === 'number'
+        ? clamp(Math.floor(options.selectedStoneIndex), 0, 5)
+        : 5,
+      preArrivalUtteranceCount: 0,
+      muted: Boolean(options.muted),
+      hasCrossedThreshold: false,
+      quarantineActive: false,
+      thresholdPosition: 0,
+      phoneticGlow: 0.32,
+      shatterPulse: 0,
+      time: 0,
+      wellEchoTimer: 0,
+      stoneResonance: [0, 0, 0, 0, 0, 0.45],
+      ripples: []
+    };
+
+    const geom = {
+      width: 960,
+      height: 600,
+      dpr: 1,
+      towers: [],
+      terraces: [],
+      streets: [],
+      merlons: [],
+      square: { cx: 480, cy: 396, rx: 148, ry: 58 },
+      well: { cx: 480, cy: 420, r: 28 }
+    };
+
+    let audioCtx = null;
+
+    function ensureAudioContext() {
+      try {
+        if (!audioCtx) {
+          const Ctor = (typeof window !== 'undefined' && (window.AudioContext || window.webkitAudioContext))
+            || globalThis.AudioContext
+            || globalThis.webkitAudioContext;
+          if (Ctor) audioCtx = new Ctor();
+        }
+        if (audioCtx && audioCtx.state === 'suspended') {
+          const p = audioCtx.resume();
+          if (p && typeof p.catch === 'function') p.catch(function () {});
+        }
+      } catch (_) {
+        audioCtx = null;
+      }
+      return audioCtx;
+    }
+
+    function unlockAudio() {
+      const ctx = ensureAudioContext();
+      return Boolean(ctx);
+    }
+
+    function setMuted(flag) {
+      state.muted = Boolean(flag);
+      return state.muted;
+    }
+
+    function isMuted() {
+      return state.muted;
+    }
+
+    function playWellDrop(hz) {
+      if (state.muted) return;
+      try {
+        const ctx = ensureAudioContext();
+        if (!ctx) return;
+        const now = ctx.currentTime;
+        const baseHz = Number(hz) || 587.33;
+
+        const chimeOsc = ctx.createOscillator();
+        const chimeHarm = ctx.createOscillator();
+        const chimeGain = ctx.createGain();
+        chimeOsc.type = 'sine';
+        chimeHarm.type = 'triangle';
+        chimeOsc.frequency.setValueAtTime(baseHz, now);
+        chimeHarm.frequency.setValueAtTime(baseHz * 1.498, now);
+        chimeGain.gain.setValueAtTime(0.0001, now);
+        chimeGain.gain.exponentialRampToValueAtTime(0.065, now + 0.018);
+        chimeGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.15);
+        chimeOsc.connect(chimeGain);
+        chimeHarm.connect(chimeGain);
+        chimeGain.connect(ctx.destination);
+        chimeOsc.start(now);
+        chimeHarm.start(now);
+        chimeOsc.stop(now + 1.18);
+        chimeHarm.stop(now + 0.85);
+
+        const dropOsc = ctx.createOscillator();
+        const dropGain = ctx.createGain();
+        dropOsc.type = 'sine';
+        dropOsc.frequency.setValueAtTime(baseHz * 1.25, now + 0.07);
+        dropOsc.frequency.exponentialRampToValueAtTime(baseHz * 2.12, now + 0.19);
+        dropGain.gain.setValueAtTime(0.0001, now + 0.07);
+        dropGain.gain.exponentialRampToValueAtTime(0.048, now + 0.085);
+        dropGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.42);
+        dropOsc.connect(dropGain);
+        dropGain.connect(ctx.destination);
+        dropOsc.start(now + 0.07);
+        dropOsc.stop(now + 0.45);
+      } catch (_) {}
+    }
+
+    function playGobletChord() {
+      if (state.muted) return;
+      try {
+        const ctx = ensureAudioContext();
+        if (!ctx) return;
+        const now = ctx.currentTime;
+        for (let i = 0; i < GOBLET_STONES.length; i++) {
+          const t0 = now + i * 0.048;
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = i % 2 === 0 ? 'sine' : 'triangle';
+          osc.frequency.setValueAtTime(GOBLET_STONES[i].noteHz, t0);
+          gain.gain.setValueAtTime(0.0001, t0);
+          gain.gain.exponentialRampToValueAtTime(0.042, t0 + 0.025);
+          gain.gain.exponentialRampToValueAtTime(0.0001, t0 + 1.65);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(t0);
+          osc.stop(t0 + 1.7);
+        }
+      } catch (_) {}
+    }
+
+    function playQuarantineShatter() {
+      if (state.muted) return;
+      try {
+        const ctx = ensureAudioContext();
+        if (!ctx) return;
+        const now = ctx.currentTime;
+        const ratios = [932.33, 1108.73, 1318.51, 1661.22, 1975.53];
+        for (let i = 0; i < ratios.length; i++) {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(ratios[i], now);
+          osc.frequency.exponentialRampToValueAtTime(ratios[i] * 0.54, now + 0.34);
+          gain.gain.setValueAtTime(0.028, now);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.35);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.36);
+        }
+      } catch (_) {}
+    }
+
+    function spawnRipple(normX, normY, kind, maxR) {
+      if (state.ripples.length > 28) state.ripples.shift();
+      state.ripples.push({
+        normX: normX,
+        normY: normY,
+        kind: kind || 'well',
+        progress: 0,
+        maxR: maxR || (kind === 'well' ? 0.095 : 0.075)
+      });
+    }
+
+    function seedInitialRipples() {
+      state.ripples = [
+        { normX: 0.50, normY: 0.70, kind: 'well', progress: 0.28, maxR: 0.085 },
+        { normX: 0.50, normY: 0.70, kind: 'well', progress: 0.68, maxR: 0.085 }
+      ];
+    }
+
+    function resize(width, height, dpr) {
+      const w = Math.max(240, Number(width) || 960);
+      const h = Math.max(180, Number(height) || 600);
+      geom.width = w;
+      geom.height = h;
+      geom.dpr = Math.max(1, Number(dpr) || 1);
+
+      const towerSpecs = [
+        { nx: 0.20, topY: 0.34, botY: 0.53, scale: 0.88 },
+        { nx: 0.34, topY: 0.23, botY: 0.43, scale: 1.04 },
+        { nx: 0.43, topY: 0.20, botY: 0.39, scale: 0.96 },
+        { nx: 0.57, topY: 0.20, botY: 0.39, scale: 0.96 },
+        { nx: 0.66, topY: 0.23, botY: 0.43, scale: 1.04 },
+        { nx: 0.80, topY: 0.34, botY: 0.53, scale: 0.88 }
+      ];
+      const unit = Math.min(w, h);
+      geom.towers = towerSpecs.map(function (sp, idx) {
+        return {
+          index: idx,
+          cx: sp.nx * w,
+          topY: sp.topY * h,
+          botY: sp.botY * h,
+          shaftW: Math.max(14, unit * 0.036 * sp.scale),
+          rimW: Math.max(22, unit * 0.058 * sp.scale),
+          windowH: Math.max(14, (sp.botY - sp.topY) * h * 0.34)
+        };
+      });
+
+      geom.terraces = [0, 1, 2, 3].map(function (idx) {
+        return {
+          index: idx,
+          cx: w * 0.5,
+          cy: h * (0.37 + idx * 0.048),
+          rx: w * (0.24 + idx * 0.048),
+          ry: h * (0.075 + idx * 0.034)
+        };
+      });
+
+      geom.square = {
+        cx: w * 0.50,
+        cy: h * 0.685,
+        rx: w * 0.195,
+        ry: h * 0.105
+      };
+      geom.well = {
+        cx: w * 0.50,
+        cy: h * 0.70,
+        r: Math.max(15, unit * 0.048)
+      };
+
+      geom.streets = [-0.78, -0.52, -0.26, 0, 0.26, 0.52, 0.78].map(function (ang) {
+        return {
+          x1: w * 0.5 + Math.sin(ang) * w * 0.33,
+          y1: h * 0.44 + Math.cos(ang) * h * 0.03 - Math.abs(ang) * h * 0.04,
+          x2: geom.square.cx + Math.sin(ang) * geom.square.rx * 0.82,
+          y2: geom.square.cy - geom.square.ry * 0.68 + Math.abs(ang) * h * 0.045
+        };
+      });
+
+      geom.merlons = [];
+      for (let i = 0; i <= 26; i++) {
+        const u = i / 26;
+        const a = Math.PI * (0.06 + u * 0.88);
+        geom.merlons.push({
+          x: w * 0.5 - Math.cos(a) * w * 0.355,
+          y: h * 0.45 + Math.sin(a) * h * 0.365
+        });
+      }
+      return geom;
+    }
+
+    function getStones(width, height) {
+      const w = Number(width) || geom.width || 960;
+      const h = Number(height) || geom.height || 600;
+      return GOBLET_STONES.map(function (s, idx) {
+        return {
+          id: s.id,
+          index: s.index,
+          label: s.label,
+          gobletRole: s.gobletRole,
+          normX: s.normX,
+          normY: s.normY,
+          noteHz: s.noteHz,
+          inscription: s.inscription,
+          x: +(s.normX * w).toFixed(2),
+          y: +(s.normY * h).toFixed(2),
+          active: idx === state.selectedStoneIndex,
+          resonance: +(state.stoneResonance[idx] || 0).toFixed(4)
+        };
+      });
+    }
+
+    function resolveStoneIndex(stoneIdOrIndex) {
+      if (typeof stoneIdOrIndex === 'number' && Number.isFinite(stoneIdOrIndex)) {
+        return clamp(Math.floor(stoneIdOrIndex), 0, GOBLET_STONES.length - 1);
+      }
+      if (typeof stoneIdOrIndex === 'string') {
+        const asNum = Number(stoneIdOrIndex);
+        if (stoneIdOrIndex.trim() !== '' && Number.isFinite(asNum)) {
+          return clamp(Math.floor(asNum), 0, GOBLET_STONES.length - 1);
+        }
+        for (let i = 0; i < GOBLET_STONES.length; i++) {
+          if (GOBLET_STONES[i].id === stoneIdOrIndex || GOBLET_STONES[i].gobletRole === stoneIdOrIndex) {
+            return i;
+          }
+        }
+      }
+      return state.selectedStoneIndex;
+    }
+
+    function hitTestStone(px, py, width, height) {
+      const stones = getStones(width, height);
+      const radius = Math.max(22, Math.min(Number(width) || geom.width, Number(height) || geom.height) * 0.048);
+      let best = -1;
+      let bestDist = radius * radius;
+      for (let i = 0; i < stones.length; i++) {
+        const dx = px - stones[i].x;
+        const dy = py - stones[i].y;
+        const d2 = dx * dx + dy * dy;
+        if (d2 <= bestDist) {
+          bestDist = d2;
+          best = i;
+        }
+      }
+      return best;
+    }
+
+    function syncArrivalState(arrival) {
+      const a = arrival || {};
+      const thresholdPosition = clamp(Number(a.thresholdPosition) || 0, 0, 1);
+      const hasCrossed = Boolean(a.hasCrossedThreshold);
+      const quarantineActive = Boolean(a.quarantineActive);
+      state.thresholdPosition = thresholdPosition;
+      state.hasCrossedThreshold = hasCrossed;
+      state.quarantineActive = quarantineActive;
+
+      if (!hasCrossed) {
+        state.cityName = 'PYRRHA';
+        state.gobletClarity = +(Math.max(0.15, 1.0 - thresholdPosition * 0.85)).toFixed(4);
+        state.seaVisibleInMind = true;
+      } else if (!quarantineActive) {
+        state.cityName = null;
+        state.gobletClarity = 0.0;
+        state.seaVisibleInMind = false;
+      } else {
+        state.cityName = null;
+        state.gobletClarity = 0.68;
+        state.seaVisibleInMind = true;
+      }
+      return getState();
+    }
+
+    function inspectStone(stoneIdOrIndex, playSound) {
+      const idx = resolveStoneIndex(stoneIdOrIndex);
+      state.selectedStoneIndex = idx;
+      state.stoneResonance[idx] = 1.0;
+      const target = GOBLET_STONES[idx];
+      spawnRipple(target.normX, target.normY, 'stone', 0.075);
+      spawnRipple(0.50, 0.70, 'well', 0.09);
+      spawnRipple(0.50, 0.34, 'gulf', 0.11);
+      if (playSound !== false && !state.muted) {
+        playWellDrop(target.noteHz);
+      }
+      return {
+        stone: getStones()[idx],
+        cityName: state.cityName,
+        gobletClarity: state.gobletClarity
+      };
+    }
+
+    function utterPhoneticName(arrivalState) {
+      const crossed = Boolean(arrivalState && arrivalState.hasCrossedThreshold);
+      if (!crossed) {
+        state.hasCrossedThreshold = false;
+        state.quarantineActive = false;
+        state.cityName = 'PYRRHA';
+        state.gobletClarity = 1.0;
+        state.seaVisibleInMind = true;
+        state.phoneticGlow = 1.0;
+        state.preArrivalUtteranceCount += 1;
+        for (let i = 0; i < GOBLET_STONES.length; i++) {
+          state.stoneResonance[i] = 1.0;
+          spawnRipple(GOBLET_STONES[i].normX, GOBLET_STONES[i].normY, 'tower', 0.08);
+        }
+        spawnRipple(0.50, 0.70, 'well', 0.11);
+        if (!state.muted) playGobletChord();
+        return { summonedGoblet: true, cityName: 'PYRRHA', gobletClarity: 1.0 };
+      }
+
+      const wasQuarantined = Boolean(
+        state.quarantineActive ||
+        (arrivalState && (arrivalState.quarantineActive || arrivalState.quarantineShattered))
+      );
+      state.hasCrossedThreshold = true;
+      state.quarantineActive = false;
+      state.cityName = null;
+      state.gobletClarity = 0.0;
+      state.seaVisibleInMind = false;
+      state.phoneticGlow = 0.0;
+      if (wasQuarantined) {
+        state.shatterPulse = 1.0;
+        if (!state.muted) playQuarantineShatter();
+      }
+      return { summonedGoblet: false, cityName: null, gobletClarity: 0.0 };
+    }
+
+    function step(dt, reducedMotion) {
+      const safeDt = clamp(Number(dt) || 0.016, 0, 0.1);
+      const baseGlow = state.hasCrossedThreshold ? 0.0 : 0.28;
+      state.phoneticGlow += (baseGlow - state.phoneticGlow) * Math.min(1, safeDt * 1.8);
+      state.shatterPulse = Math.max(0, state.shatterPulse - safeDt * 2.4);
+      for (let i = 0; i < state.stoneResonance.length; i++) {
+        const rest = i === state.selectedStoneIndex ? 0.35 : 0;
+        state.stoneResonance[i] += (rest - state.stoneResonance[i]) * Math.min(1, safeDt * 2.5);
+      }
+      if (reducedMotion) return;
+      state.time += safeDt;
+      state.wellEchoTimer += safeDt;
+      if (state.wellEchoTimer >= 2.2) {
+        state.wellEchoTimer = 0;
+        spawnRipple(0.50, 0.70, 'well', 0.085);
+      }
+      for (let i = state.ripples.length - 1; i >= 0; i--) {
+        state.ripples[i].progress += safeDt * 0.48;
+        if (state.ripples[i].progress >= 1) state.ripples.splice(i, 1);
+      }
+    }
+
+    function drawGobletTower(ctx, t, isBlueprint) {
+      const cx = t.cx;
+      const topY = t.topY;
+      const botY = t.botY;
+      const halfShaft = t.shaftW * 0.5;
+      const halfRim = t.rimW * 0.5;
+      const flareY = topY + (botY - topY) * 0.34;
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(cx - halfShaft, botY);
+      ctx.lineTo(cx - halfShaft, flareY);
+      ctx.quadraticCurveTo(cx - halfShaft * 1.05, topY + 6, cx - halfRim, topY + 5);
+      ctx.lineTo(cx - halfRim, topY);
+      const merlonCount = 4;
+      const stepW = (halfRim * 2) / (merlonCount * 2 - 1);
+      for (let m = 0; m < merlonCount * 2 - 1; m++) {
+        const x0 = cx - halfRim + m * stepW;
+        const yDepth = m % 2 === 0 ? topY : topY + 5;
+        ctx.lineTo(x0, yDepth);
+        ctx.lineTo(x0 + stepW, yDepth);
+      }
+      ctx.lineTo(cx + halfRim, topY + 5);
+      ctx.quadraticCurveTo(cx + halfShaft * 1.05, topY + 6, cx + halfShaft, flareY);
+      ctx.lineTo(cx + halfShaft, botY);
+      ctx.closePath();
+
+      if (isBlueprint) {
+        ctx.fillStyle = 'rgba(18, 44, 76, 0.72)';
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(220, 235, 250, 0.82)';
+        ctx.lineWidth = 1.25;
+        ctx.stroke();
+      } else {
+        const grad = ctx.createLinearGradient(cx - halfRim, topY, cx + halfRim, topY);
+        grad.addColorStop(0, '#efeae0');
+        grad.addColorStop(0.55, PALETTE.limestoneParapet);
+        grad.addColorStop(1, '#9d9589');
+        ctx.fillStyle = grad;
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(29, 48, 76, 0.42)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+
+      const winW = Math.max(3.5, t.shaftW * 0.22);
+      const winH = t.windowH;
+      const winTop = flareY + 2;
+      ctx.beginPath();
+      ctx.moveTo(cx - winW, winTop + winH);
+      ctx.lineTo(cx - winW, winTop + winW * 1.4);
+      ctx.quadraticCurveTo(cx, winTop - 2, cx + winW, winTop + winW * 1.4);
+      ctx.lineTo(cx + winW, winTop + winH);
+      ctx.closePath();
+      if (isBlueprint) {
+        ctx.strokeStyle = PALETTE.chalkCyan;
+        ctx.fillStyle = 'rgba(126, 192, 238, 0.28)';
+        ctx.fill();
+        ctx.stroke();
+      } else {
+        const shimmer = 0.65 + 0.35 * Math.sin(state.time * 2.1 + t.index * 0.9);
+        ctx.fillStyle = PALETTE.gobletUltramarine;
+        ctx.fill();
+        ctx.fillStyle = 'rgba(142, 218, 255, ' + (0.45 + shimmer * 0.4 + state.phoneticGlow * 0.15).toFixed(3) + ')';
+        ctx.fill();
+      }
+      ctx.restore();
+    }
+
+    function drawArchitecturalBay(ctx, w, h, isBlueprint) {
+      if (!isBlueprint) {
+        const sky = ctx.createLinearGradient(0, 0, 0, h * 0.48);
+        sky.addColorStop(0, '#0d223f');
+        sky.addColorStop(0.52, '#225996');
+        sky.addColorStop(1, '#9ec9e6');
+        ctx.fillStyle = sky;
+        ctx.fillRect(0, 0, w, h);
+
+        if (state.phoneticGlow > 0.02) {
+          const halo = ctx.createRadialGradient(w * 0.5, h * 0.26, 8, w * 0.5, h * 0.26, w * 0.42);
+          halo.addColorStop(0, 'rgba(244, 241, 234, ' + (0.28 * state.phoneticGlow).toFixed(3) + ')');
+          halo.addColorStop(1, 'rgba(45, 109, 168, 0)');
+          ctx.fillStyle = halo;
+          ctx.fillRect(0, 0, w, h * 0.62);
+        }
+
+        const sea = ctx.createLinearGradient(0, h * 0.19, 0, h * 0.52);
+        sea.addColorStop(0, PALETTE.deepGulf);
+        sea.addColorStop(0.55, PALETTE.gobletUltramarine);
+        sea.addColorStop(1, PALETTE.aegeanBayLight);
+        ctx.fillStyle = sea;
+        ctx.fillRect(0, h * 0.19, w, h * 0.35);
+      }
+
+      for (let k = 0; k < 14; k++) {
+        const wy = h * (0.215 + k * 0.017);
+        const span = w * (0.34 - k * 0.008);
+        const drift = Math.sin(state.time * 1.4 + k * 0.8) * 9;
+        ctx.beginPath();
+        ctx.moveTo(w * 0.5 - span + drift, wy);
+        ctx.quadraticCurveTo(w * 0.5 + drift * 0.5, wy + 3, w * 0.5 + span + drift, wy);
+        ctx.strokeStyle = isBlueprint ? 'rgba(126, 192, 238, 0.32)' : 'rgba(190, 235, 255, 0.34)';
+        ctx.lineWidth = isBlueprint ? 1 : 1.3;
+        ctx.stroke();
+      }
+
+      ctx.beginPath();
+      ctx.moveTo(0, h);
+      ctx.lineTo(0, h * 0.29);
+      ctx.quadraticCurveTo(w * 0.21, h * 0.28, w * 0.28, h * 0.39);
+      ctx.quadraticCurveTo(w * 0.50, h * 0.48, w * 0.72, h * 0.39);
+      ctx.quadraticCurveTo(w * 0.79, h * 0.28, w, h * 0.29);
+      ctx.lineTo(w, h);
+      ctx.closePath();
+      if (isBlueprint) {
+        ctx.fillStyle = 'rgba(12, 28, 50, 0.85)';
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(220, 235, 250, 0.55)';
+        ctx.lineWidth = 1.3;
+        ctx.stroke();
+      } else {
+        const slopeGrad = ctx.createLinearGradient(0, h * 0.30, 0, h);
+        slopeGrad.addColorStop(0, '#d8d1c4');
+        slopeGrad.addColorStop(0.48, PALETTE.limestoneSlope);
+        slopeGrad.addColorStop(1, '#7f7a74');
+        ctx.fillStyle = slopeGrad;
+        ctx.fill();
+      }
+
+      for (let i = 0; i < geom.terraces.length; i++) {
+        const tr = geom.terraces[i];
+        ctx.beginPath();
+        ctx.ellipse(tr.cx, tr.cy + tr.ry * 0.55, tr.rx, tr.ry, 0, 0.08 * Math.PI, 0.92 * Math.PI);
+        ctx.strokeStyle = isBlueprint ? 'rgba(220, 235, 250, 0.46)' : 'rgba(54, 68, 89, 0.45)';
+        ctx.lineWidth = isBlueprint ? 1.1 : 2.2;
+        ctx.stroke();
+      }
+
+      for (let i = 0; i < geom.streets.length; i++) {
+        const st = geom.streets[i];
+        ctx.beginPath();
+        ctx.moveTo(st.x1, st.y1);
+        ctx.lineTo(st.x2, st.y2);
+        ctx.strokeStyle = isBlueprint ? 'rgba(126, 192, 238, 0.38)' : 'rgba(244, 241, 234, 0.52)';
+        ctx.lineWidth = isBlueprint ? 1 : 2.4;
+        ctx.stroke();
+      }
+    }
+
+    function drawSquareWellAndWalls(ctx, w, h, isBlueprint) {
+      if (geom.merlons.length > 1) {
+        ctx.beginPath();
+        ctx.moveTo(geom.merlons[0].x, geom.merlons[0].y);
+        for (let i = 1; i < geom.merlons.length; i++) {
+          ctx.lineTo(geom.merlons[i].x, geom.merlons[i].y);
+        }
+        ctx.strokeStyle = isBlueprint ? 'rgba(220, 235, 250, 0.88)' : PALETTE.limestoneParapet;
+        ctx.lineWidth = isBlueprint ? 2.2 : 9;
+        ctx.stroke();
+
+        for (let i = 0; i < geom.merlons.length; i++) {
+          const m = geom.merlons[i];
+          ctx.fillStyle = isBlueprint ? PALETTE.chalkCyan : '#ece7dc';
+          ctx.fillRect(m.x - 3.5, m.y - 7, 7, 6);
+        }
+      }
+
+      for (let i = 0; i < geom.towers.length; i++) {
+        drawGobletTower(ctx, geom.towers[i], isBlueprint);
+      }
+
+      const sq = geom.square;
+      ctx.save();
+      ctx.beginPath();
+      ctx.ellipse(sq.cx, sq.cy, sq.rx, sq.ry, 0, 0, Math.PI * 2);
+      ctx.fillStyle = isBlueprint ? 'rgba(8, 20, 38, 0.92)' : PALETTE.arcadeShadow;
+      ctx.fill();
+      ctx.strokeStyle = isBlueprint ? PALETTE.chalkLine : PALETTE.limestoneParapet;
+      ctx.lineWidth = isBlueprint ? 1.5 : 3;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.ellipse(sq.cx, sq.cy + 5, sq.rx * 0.82, sq.ry * 0.78, 0, 0, Math.PI * 2);
+      ctx.fillStyle = isBlueprint ? 'rgba(16, 38, 68, 0.86)' : '#445268';
+      ctx.fill();
+      ctx.strokeStyle = isBlueprint ? 'rgba(126, 192, 238, 0.55)' : 'rgba(222, 216, 204, 0.5)';
+      ctx.lineWidth = 1.2;
+      ctx.stroke();
+
+      for (let a = 0; a < 12; a++) {
+        const th = (a / 12) * Math.PI * 2;
+        const ax = sq.cx + Math.cos(th) * sq.rx * 0.91;
+        const ay = sq.cy + Math.sin(th) * sq.ry * 0.89;
+        ctx.beginPath();
+        ctx.arc(ax, ay, isBlueprint ? 3 : 4.5, 0, Math.PI * 2);
+        ctx.fillStyle = isBlueprint ? 'rgba(126, 192, 238, 0.45)' : '#0d1829';
+        ctx.fill();
+      }
+
+      const wl = geom.well;
+      ctx.beginPath();
+      ctx.ellipse(wl.cx, wl.cy + 2, wl.r * 1.38, wl.r * 0.88, 0, 0, Math.PI * 2);
+      ctx.fillStyle = isBlueprint ? 'rgba(220, 235, 250, 0.16)' : PALETTE.marbleShadow;
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.ellipse(wl.cx, wl.cy, wl.r * 1.12, wl.r * 0.72, 0, 0, Math.PI * 2);
+      ctx.fillStyle = isBlueprint ? 'rgba(18, 42, 74, 0.95)' : PALETTE.marbleWell;
+      ctx.fill();
+      ctx.strokeStyle = isBlueprint ? PALETTE.marbleWell : '#8a8275';
+      ctx.lineWidth = isBlueprint ? 1.8 : 1.5;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.ellipse(wl.cx, wl.cy, wl.r * 0.76, wl.r * 0.48, 0, 0, Math.PI * 2);
+      ctx.fillStyle = isBlueprint ? '#091b34' : PALETTE.deepGulf;
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.moveTo(wl.cx - wl.r * 0.85, wl.cy);
+      ctx.lineTo(wl.cx - wl.r * 0.85, wl.cy - wl.r * 1.05);
+      ctx.quadraticCurveTo(wl.cx, wl.cy - wl.r * 1.55, wl.cx + wl.r * 0.85, wl.cy - wl.r * 1.05);
+      ctx.lineTo(wl.cx + wl.r * 0.85, wl.cy);
+      ctx.strokeStyle = isBlueprint ? PALETTE.chalkCyan : PALETTE.marbleWell;
+      ctx.lineWidth = 1.6;
+      ctx.stroke();
+
+      for (let i = 0; i < state.ripples.length; i++) {
+        const rp = state.ripples[i];
+        const rx = rp.normX * w;
+        const ry = rp.normY * h;
+        const rad = Math.max(4, rp.progress * rp.maxR * Math.min(w, h));
+        const op = (1 - rp.progress) * (isBlueprint ? 0.65 : 0.75);
+        ctx.beginPath();
+        ctx.ellipse(rx, ry, rad, rad * 0.62, 0, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(142, 218, 255, ' + op.toFixed(3) + ')';
+        ctx.lineWidth = 1.3;
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    function drawStoneBeacons(ctx, w, h, selectedIndex, isBlueprint) {
+      const stones = getStones(w, h);
+      ctx.save();
+      ctx.font = '600 11px ui-monospace, SFMono-Regular, Menlo, monospace';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      for (let i = 0; i < stones.length; i++) {
+        const s = stones[i];
+        const isSel = i === selectedIndex;
+        const r = isSel ? 12.5 : 9.5;
+        if (isSel || s.resonance > 0.08) {
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, r + 5 + s.resonance * 6, 0, Math.PI * 2);
+          ctx.strokeStyle = isBlueprint ? 'rgba(126, 192, 238, 0.7)' : 'rgba(244, 241, 234, 0.82)';
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+        }
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, r, 0, Math.PI * 2);
+        ctx.fillStyle = isSel
+          ? (isBlueprint ? PALETTE.chalkCyan : PALETTE.marbleWell)
+          : (isBlueprint ? 'rgba(10, 24, 43, 0.88)' : 'rgba(19, 52, 92, 0.86)');
+        ctx.fill();
+        ctx.strokeStyle = isBlueprint ? PALETTE.chalkLine : PALETTE.marbleWell;
+        ctx.lineWidth = 1.4;
+        ctx.stroke();
+        ctx.fillStyle = isSel ? '#0d223f' : PALETTE.marbleWell;
+        ctx.fillText(String(i + 1), s.x, s.y + 0.5);
+      }
+      ctx.restore();
+    }
+
+    function renderGobletCity(ctx, viewport, renderOpts) {
+      if (!ctx) return;
+      const vp = viewport || {};
+      const opts = renderOpts || {};
+      const w = Number(vp.width) || geom.width || 960;
+      const h = Number(vp.height) || geom.height || 600;
+      const dpr = Number(vp.dpr) || geom.dpr || 1;
+      if (w !== geom.width || h !== geom.height) resize(w, h, dpr);
+
+      const alpha = typeof opts.alpha === 'number' ? clamp(opts.alpha, 0, 1) : 1;
+      if (alpha <= 0.001) return;
+      const quarantineMode = opts.quarantineMode !== undefined ? Boolean(opts.quarantineMode) : state.quarantineActive;
+      const approach = clamp(
+        Number(opts.thresholdApproach !== undefined ? opts.thresholdApproach : state.thresholdPosition) || 0,
+        0,
+        1
+      );
+      const selectedIndex = typeof opts.selectedStoneIndex === 'number'
+        ? clamp(Math.floor(opts.selectedStoneIndex), 0, 5)
+        : state.selectedStoneIndex;
+
+      ctx.save();
+      ctx.globalAlpha = alpha;
+
+      if (quarantineMode) {
+        ctx.fillStyle = '#060f1c';
+        ctx.fillRect(0, 0, w, h);
+        const ocR = Math.min(w, h) * 0.44;
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(w * 0.5, h * 0.5, ocR, 0, Math.PI * 2);
+        ctx.clip();
+        ctx.fillStyle = PALETTE.blueprintDeep;
+        ctx.fillRect(0, 0, w, h);
+        ctx.strokeStyle = 'rgba(126, 192, 238, 0.09)';
+        ctx.lineWidth = 1;
+        for (let gx = 0; gx < w; gx += 32) {
+          ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, h); ctx.stroke();
+        }
+        for (let gy = 0; gy < h; gy += 32) {
+          ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(w, gy); ctx.stroke();
+        }
+        drawArchitecturalBay(ctx, w, h, true);
+        drawSquareWellAndWalls(ctx, w, h, true);
+        drawStoneBeacons(ctx, w, h, selectedIndex, true);
+        ctx.restore();
+
+        ctx.beginPath();
+        ctx.arc(w * 0.5, h * 0.5, ocR, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(220, 235, 250, 0.72)';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(w * 0.5, h * 0.5, ocR + 7, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(126, 192, 238, 0.35)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      } else {
+        drawArchitecturalBay(ctx, w, h, false);
+        drawSquareWellAndWalls(ctx, w, h, false);
+        if (approach > 0.01) {
+          const hazeTop = h * (1 - approach * 0.82);
+          const haze = ctx.createLinearGradient(0, hazeTop, 0, h);
+          haze.addColorStop(0, 'rgba(230, 190, 116, 0)');
+          haze.addColorStop(0.55, 'rgba(216, 162, 74, ' + (approach * 0.48).toFixed(3) + ')');
+          haze.addColorStop(1, 'rgba(216, 162, 74, ' + (approach * 0.82).toFixed(3) + ')');
+          ctx.fillStyle = haze;
+          ctx.fillRect(0, hazeTop, w, h - hazeTop);
+        }
+        drawStoneBeacons(ctx, w, h, selectedIndex, false);
+      }
+
+      if (state.shatterPulse > 0.01) {
+        ctx.fillStyle = 'rgba(230, 190, 116, ' + (state.shatterPulse * 0.45).toFixed(3) + ')';
+        ctx.fillRect(0, 0, w, h);
+      }
+      ctx.restore();
+    }
+
+    function getState() {
+      const selStone = GOBLET_STONES[state.selectedStoneIndex] || GOBLET_STONES[5];
+      return {
+        cityName: state.cityName,
+        isNameless: state.cityName === null,
+        gobletClarity: state.gobletClarity,
+        seaVisibleInMind: state.seaVisibleInMind,
+        selectedStoneIndex: state.selectedStoneIndex,
+        selectedStoneId: selStone.id,
+        preArrivalUtteranceCount: state.preArrivalUtteranceCount,
+        muted: state.muted,
+        stones: getStones()
+      };
+    }
+
+    function reset() {
+      state.cityName = 'PYRRHA';
+      state.gobletClarity = 1.0;
+      state.seaVisibleInMind = true;
+      state.selectedStoneIndex = 5;
+      state.preArrivalUtteranceCount = 0;
+      state.hasCrossedThreshold = false;
+      state.quarantineActive = false;
+      state.thresholdPosition = 0;
+      state.phoneticGlow = 0.32;
+      state.shatterPulse = 0;
+      state.stoneResonance = [0, 0, 0, 0, 0, 0.45];
+      seedInitialRipples();
+      return getState();
+    }
+
+    seedInitialRipples();
+    resize(options.width || 960, options.height || 600, options.dpr || 1);
+
+    return {
+      GOBLET_STONES: GOBLET_STONES,
+      PALETTE: PALETTE,
+      resize: resize,
+      getStones: getStones,
+      hitTestStone: hitTestStone,
+      syncArrivalState: syncArrivalState,
+      inspectStone: inspectStone,
+      utterPhoneticName: utterPhoneticName,
+      step: step,
+      renderGobletCity: renderGobletCity,
+      unlockAudio: unlockAudio,
+      setMuted: setMuted,
+      isMuted: isMuted,
+      playGobletChord: playGobletChord,
+      playWellDrop: playWellDrop,
+      playQuarantineShatter: playQuarantineShatter,
+      getState: getState,
+      reset: reset
+    };
+  }
+
+  const api = {
+    PALETTE: PALETTE,
+    GOBLET_STONES: GOBLET_STONES,
+    createGobletCity: createGobletCity
+  };
+
+  globalThis.PyrrhaGobletCity = api;
+  if (typeof window !== 'undefined') {
+    window.PyrrhaGobletCity = api;
+  }
+})();
+
+</script>
+<script>
+(function (root) {
+  'use strict';
+
+  const PALETTE = Object.freeze({
+    skyZenith: '#e6be74',
+    skyMid: '#dbb062',
+    skyHorizon: '#cfa054',
+    duneSun: '#e0ae56',
+    duneOchre: '#d8a24a',
+    duneSlip: '#b98030',
+    duneShadow: '#a97228',
+    duneCrest: '#f1ce82',
+    groundPlain: '#caa05c',
+    streetDust: '#d8b26e',
+    streetRut: '#9c7134',
+    plasterLight: '#dfc18b',
+    plasterMid: '#c69d61',
+    plasterShade: '#9a7441',
+    tinRoof: '#6c5f55',
+    tinRust: '#8d5b37',
+    lumberPine: '#b87b34',
+    lumberCut: '#daa65c',
+    lumberEnd: '#8b5720',
+    sawdustGold: '#ecd089',
+    millShed: '#5c534c',
+    sawdustIron: '#2b2623',
+    sawRust: '#a85c32',
+    steelBlade: '#dad6ce',
+    timberShadow: '#171412',
+    markerCream: '#f4f1ea'
+  });
+
+  const ARRIVAL_STONES = Object.freeze([
+    Object.freeze({
+      id: 'sea_blocking_coastal_dune',
+      index: 0,
+      label: 'Sea-Blocking Coastal Dune',
+      stoneKind: 'dune',
+      normX: 0.50,
+      normY: 0.31,
+      inscription: 'A long ridge of low-coast sand seals the horizon; the sea is completely out of sight.'
+    }),
+    Object.freeze({
+      id: 'straight_dusty_streets',
+      index: 1,
+      label: 'Straight Dusty Streets',
+      stoneKind: 'streets',
+      normX: 0.50,
+      normY: 0.80,
+      inscription: 'Rectilinear ochre thoroughfares stretch flat between timber yards in harsh glare.'
+    }),
+    Object.freeze({
+      id: 'low_house_clusters',
+      index: 2,
+      label: 'Low House Groups',
+      stoneKind: 'houses',
+      normX: 0.18,
+      normY: 0.57,
+      inscription: 'Houses stand in squat plaster-and-tin clusters, not high, without a single tower.'
+    }),
+    Object.freeze({
+      id: 'stacked_lumber_yards',
+      index: 3,
+      label: 'Stacks of Cut Lumber',
+      stoneKind: 'lumber',
+      normX: 0.27,
+      normY: 0.72,
+      inscription: 'Tiered piles of sawn pine and cedar planks separate every group of dwellings.'
+    }),
+    Object.freeze({
+      id: 'buzzing_sawmills',
+      index: 4,
+      label: 'Noisy Sawmills',
+      stoneKind: 'sawmills',
+      normX: 0.76,
+      normY: 0.60,
+      inscription: 'Toothed steel circular blades buzz incessantly, scattering pale sawdust across the yards.'
+    }),
+    Object.freeze({
+      id: 'metal_vane_water_pumps',
+      index: 5,
+      label: 'Metal-Vane Water Pumps',
+      stoneKind: 'pumps',
+      normX: 0.83,
+      normY: 0.27,
+      inscription: 'Coastal wind turns the rattling sheet-metal rotors atop tall lattice-iron water pumps.'
+    })
+  ]);
+
+  function clamp(v, lo, hi) {
+    return v < lo ? lo : (v > hi ? hi : v);
+  }
+
+  function createDuneArrival(opts) {
+    const options = opts || {};
+    let thresholdPosition = 0;
+    let hasCrossedThreshold = false;
+    let isNameIrrevocablyRebound = false;
+    let nominalReferent = 'goblet_bay_city';
+    let gobletCityName = 'PYRRHA';
+    let namelessExile = false;
+    let seaVisible = true;
+    let quarantineActive = false;
+
+    let quarantineEntriesCount = 0;
+    let quarantineShatteredByNameCount = 0;
+    let postArrivalNameUtterances = 0;
+    let failedBayRecallCount = 0;
+    let retreatBlockedCount = 0;
+
+    let sawmillBuzzLevel = 0;
+    let windPumpRattleLevel = 0;
+    let windSpeed = 0.35;
+    let lumberStacksCut = 0;
+    let selectedStoneIndex = -1;
+    let muted = Boolean(options.muted);
+
+    let simTime = 0;
+    let bladeAngle = 0;
+    let ochreGlare = 0;
+    let ruptureFlash = 0;
+    let dunePlume = 0;
+    let streetDustPulse = 0;
+    let houseGlarePulse = 0;
+    let lumberPulse = 0;
+    let sawCutFlash = 0;
+    let stonePulse = 0;
+
+    let audioCtx = null;
+    let noiseBuffer = null;
+
+    const geom = {
+      w: Number(options.width) || 1280,
+      h: Number(options.height) || 800,
+      dpr: Number(options.dpr) || 1,
+      horizonY: 352,
+      duneCrest: [],
+      street: null,
+      crossLanes: [],
+      houses: [],
+      lumberYards: [],
+      sawmills: [],
+      pumps: []
+    };
+
+    const pumpAngles = [0.2, 1.35, 2.5, 0.85];
+    const pumpRates = [1.85, 2.15, 1.72, 2.32];
+    const dustMotes = [];
+    const sawdustParticles = [];
+
+    function seedParticles() {
+      dustMotes.length = 0;
+      sawdustParticles.length = 0;
+      for (let i = 0; i < 42; i++) {
+        dustMotes.push({
+          nx: ((i * 37) % 100) / 100,
+          ny: 0.25 + (((i * 53) % 72) / 100),
+          vx: 0.045 + (i % 7) * 0.012,
+          vy: -0.006 + (i % 5) * 0.003,
+          r: 1.1 + (i % 4) * 0.65,
+          alpha: 0.22 + (i % 5) * 0.08
+        });
+      }
+      for (let j = 0; j < 34; j++) {
+        sawdustParticles.push({
+          ox: ((j * 29) % 100) / 100 - 0.5,
+          oy: ((j * 41) % 100) / 100,
+          vx: -0.05 - (j % 6) * 0.015,
+          vy: -0.03 + (j % 7) * 0.014,
+          life: (j % 10) / 10,
+          size: 1.3 + (j % 3) * 0.7
+        });
+      }
+    }
+
+    function resize(width, height, dpr) {
+      const w = Math.max(240, Number(width) || geom.w || 1280);
+      const h = Math.max(200, Number(height) || geom.h || 800);
+      geom.w = w;
+      geom.h = h;
+      geom.dpr = Math.max(1, Number(dpr) || geom.dpr || 1);
+      geom.horizonY = h * 0.44;
+
+      geom.duneCrest = [
+        { x: 0, y: h * 0.30 },
+        { x: w * 0.16, y: h * 0.265 },
+        { x: w * 0.35, y: h * 0.295 },
+        { x: w * 0.52, y: h * 0.248 },
+        { x: w * 0.71, y: h * 0.285 },
+        { x: w * 0.88, y: h * 0.258 },
+        { x: w, y: h * 0.292 }
+      ];
+
+      geom.street = {
+        topY: geom.horizonY,
+        botY: h,
+        topLeftX: w * 0.464,
+        topRightX: w * 0.536,
+        botLeftX: w * 0.285,
+        botRightX: w * 0.715
+      };
+
+      geom.crossLanes = [
+        { y: h * 0.53, thickness: Math.max(8, h * 0.022) },
+        { y: h * 0.675, thickness: Math.max(12, h * 0.032) },
+        { y: h * 0.835, thickness: Math.max(16, h * 0.042) }
+      ];
+
+      geom.houses = [
+        { x: w * 0.05, y: h * 0.47, bw: w * 0.11, bh: h * 0.062, roof: 'tin', tint: 0 },
+        { x: w * 0.175, y: h * 0.48, bw: w * 0.095, bh: h * 0.058, roof: 'rust', tint: 1 },
+        { x: w * 0.30, y: h * 0.468, bw: w * 0.088, bh: h * 0.054, roof: 'tin', tint: 0 },
+        { x: w * 0.06, y: h * 0.555, bw: w * 0.135, bh: h * 0.082, roof: 'rust', tint: 1 },
+        { x: w * 0.21, y: h * 0.568, bw: w * 0.115, bh: h * 0.074, roof: 'tin', tint: 0 },
+        { x: w * 0.575, y: h * 0.472, bw: w * 0.095, bh: h * 0.056, roof: 'tin', tint: 1 },
+        { x: w * 0.855, y: h * 0.495, bw: w * 0.105, bh: h * 0.068, roof: 'rust', tint: 0 },
+        { x: w * 0.04, y: h * 0.735, bw: w * 0.135, bh: h * 0.092, roof: 'tin', tint: 1 }
+      ];
+
+      geom.lumberYards = [
+        { x: w * 0.345, y: h * 0.585, sw: w * 0.075, sh: h * 0.052, tiers: 4 },
+        { x: w * 0.195, y: h * 0.695, sw: w * 0.135, sh: h * 0.078, tiers: 5 },
+        { x: w * 0.345, y: h * 0.725, sw: w * 0.072, sh: h * 0.062, tiers: 4 },
+        { x: w * 0.615, y: h * 0.715, sw: w * 0.115, sh: h * 0.072, tiers: 5 },
+        { x: w * 0.76, y: h * 0.745, sw: w * 0.13, sh: h * 0.076, tiers: 4 }
+      ];
+
+      geom.sawmills = [
+        { x: w * 0.61, y: h * 0.505, mw: w * 0.13, mh: h * 0.076, bladeR: h * 0.022, primary: false },
+        { x: w * 0.675, y: h * 0.555, mw: w * 0.205, mh: h * 0.112, bladeR: h * 0.034, primary: true }
+      ];
+
+      geom.pumps = [
+        { x: w * 0.135, baseY: h * 0.468, topY: h * 0.255, rotorR: h * 0.036, idx: 0 },
+        { x: w * 0.382, baseY: h * 0.462, topY: h * 0.272, rotorR: h * 0.031, idx: 1 },
+        { x: w * 0.695, baseY: h * 0.466, topY: h * 0.258, rotorR: h * 0.035, idx: 2 },
+        { x: w * 0.830, baseY: h * 0.515, topY: h * 0.235, rotorR: h * 0.048, idx: 3 }
+      ];
+      return geom;
+    }
+
+    function getStones(width, height) {
+      const w = Number(width) || geom.w || 1280;
+      const h = Number(height) || geom.h || 800;
+      const hitR = Math.max(18, Math.round(Math.min(w, h) * 0.032));
+      return ARRIVAL_STONES.map(function (s) {
+        return {
+          id: s.id,
+          index: s.index,
+          label: s.label,
+          stoneKind: s.stoneKind,
+          normX: s.normX,
+          normY: s.normY,
+          inscription: s.inscription,
+          x: Math.round(s.normX * w),
+          y: Math.round(s.normY * h),
+          radius: hitR,
+          selected: selectedStoneIndex === s.index
+        };
+      });
+    }
+
+    function hitTestStone(px, py, width, height) {
+      const stones = getStones(width, height);
+      let best = null;
+      let bestDist = Infinity;
+      for (let i = 0; i < stones.length; i++) {
+        const st = stones[i];
+        const dx = px - st.x;
+        const dy = py - st.y;
+        const d = Math.sqrt(dx * dx + dy * dy);
+        if (d <= st.radius * 1.45 && d < bestDist) {
+          best = st;
+          bestDist = d;
+        }
+      }
+      return best;
+    }
+
+    function ensureAudio() {
+      try {
+        if (!audioCtx) {
+          const Ctor = root.AudioContext || root.webkitAudioContext;
+          if (!Ctor) return null;
+          audioCtx = new Ctor();
+        }
+        if (audioCtx && !noiseBuffer) {
+          const len = Math.floor(audioCtx.sampleRate * 0.5);
+          noiseBuffer = audioCtx.createBuffer(1, len, audioCtx.sampleRate);
+          const ch = noiseBuffer.getChannelData(0);
+          for (let i = 0; i < len; i++) {
+            ch[i] = ((i * 16807) % 2147483647) / 1073741823.5 - 1;
+          }
+        }
+        return audioCtx;
+      } catch (_err) {
+        return null;
+      }
+    }
+
+    function unlockAudio() {
+      try {
+        const ctx = ensureAudio();
+        if (!ctx) return false;
+        if (ctx.state === 'suspended' && typeof ctx.resume === 'function') {
+          ctx.resume().catch(function () {});
+        }
+        return true;
+      } catch (_err) {
+        return false;
+      }
+    }
+
+    function setMuted(flag) {
+      muted = Boolean(flag);
+      return muted;
+    }
+
+    function isMuted() {
+      return muted;
+    }
+
+    function playSawmillBuzz(intensity) {
+      if (muted) return false;
+      try {
+        const ctx = ensureAudio();
+        if (!ctx) return false;
+        if (ctx.state === 'suspended' && typeof ctx.resume === 'function') {
+          ctx.resume().catch(function () {});
+        }
+        const now = ctx.currentTime;
+        const level = clamp(Number(intensity) || 0.8, 0.1, 1.0);
+        const dur = 0.42;
+
+        const osc1 = ctx.createOscillator();
+        const osc2 = ctx.createOscillator();
+        const filter = ctx.createBiquadFilter();
+        const gain = ctx.createGain();
+
+        osc1.type = 'sawtooth';
+        osc2.type = 'square';
+        osc1.frequency.setValueAtTime(114 + level * 22, now);
+        osc1.frequency.linearRampToValueAtTime(148 + level * 30, now + 0.09);
+        osc1.frequency.exponentialRampToValueAtTime(106 + level * 14, now + dur);
+
+        osc2.frequency.setValueAtTime(229 + level * 42, now);
+        osc2.frequency.exponentialRampToValueAtTime(212 + level * 28, now + dur);
+
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(680 + level * 260, now);
+        filter.Q.setValueAtTime(3.1, now);
+
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.exponentialRampToValueAtTime(0.055 * level, now + 0.03);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+
+        osc1.connect(filter);
+        osc2.connect(filter);
+        filter.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc1.start(now);
+        osc2.start(now);
+        osc1.stop(now + dur + 0.02);
+        osc2.stop(now + dur + 0.02);
+
+        if (noiseBuffer) {
+          const nSrc = ctx.createBufferSource();
+          const nHp = ctx.createBiquadFilter();
+          const nGain = ctx.createGain();
+          nSrc.buffer = noiseBuffer;
+          nHp.type = 'highpass';
+          nHp.frequency.setValueAtTime(1450, now);
+          nGain.gain.setValueAtTime(0.0001, now);
+          nGain.gain.exponentialRampToValueAtTime(0.025 * level, now + 0.04);
+          nGain.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+          nSrc.connect(nHp);
+          nHp.connect(nGain);
+          nGain.connect(ctx.destination);
+          nSrc.start(now);
+          nSrc.stop(now + dur + 0.02);
+        }
+        return true;
+      } catch (_err) {
+        return false;
+      }
+    }
+
+    function playWindPumpClank(intensity) {
+      if (muted) return false;
+      try {
+        const ctx = ensureAudio();
+        if (!ctx) return false;
+        if (ctx.state === 'suspended' && typeof ctx.resume === 'function') {
+          ctx.resume().catch(function () {});
+        }
+        const now = ctx.currentTime;
+        const level = clamp(Number(intensity) || 0.75, 0.1, 1.0);
+
+        for (let k = 0; k < 3; k++) {
+          const t0 = now + k * 0.085;
+          const osc = ctx.createOscillator();
+          const bp = ctx.createBiquadFilter();
+          const g = ctx.createGain();
+          osc.type = k % 2 === 0 ? 'triangle' : 'square';
+          osc.frequency.setValueAtTime(430 + k * 210, t0);
+          osc.frequency.exponentialRampToValueAtTime(240 + k * 90, t0 + 0.09);
+          bp.type = 'bandpass';
+          bp.frequency.setValueAtTime(980 + k * 190, t0);
+          bp.Q.setValueAtTime(4.5, t0);
+          g.gain.setValueAtTime(0.0001, t0);
+          g.gain.exponentialRampToValueAtTime(0.042 * level, t0 + 0.008);
+          g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.11);
+          osc.connect(bp);
+          bp.connect(g);
+          g.connect(ctx.destination);
+          osc.start(t0);
+          osc.stop(t0 + 0.12);
+        }
+        return true;
+      } catch (_err) {
+        return false;
+      }
+    }
+
+    function getState() {
+      const selectedStone = selectedStoneIndex >= 0 && selectedStoneIndex < ARRIVAL_STONES.length
+        ? ARRIVAL_STONES[selectedStoneIndex]
+        : null;
+      return {
+        thresholdPosition: thresholdPosition,
+        hasCrossedThreshold: hasCrossedThreshold,
+        isNameIrrevocablyRebound: isNameIrrevocablyRebound,
+        nominalReferent: nominalReferent,
+        gobletCityName: gobletCityName,
+        namelessExile: namelessExile,
+        seaVisible: seaVisible,
+        quarantineActive: quarantineActive,
+        quarantineEntriesCount: quarantineEntriesCount,
+        quarantineShatteredByNameCount: quarantineShatteredByNameCount,
+        postArrivalNameUtterances: postArrivalNameUtterances,
+        failedBayRecallCount: failedBayRecallCount,
+        retreatBlockedCount: retreatBlockedCount,
+        sawmillBuzzLevel: Number(sawmillBuzzLevel.toFixed(3)),
+        windPumpRattleLevel: Number(windPumpRattleLevel.toFixed(3)),
+        windSpeed: Number(windSpeed.toFixed(3)),
+        lumberStacksCut: lumberStacksCut,
+        selectedStoneIndex: selectedStoneIndex,
+        selectedStoneId: selectedStone ? selectedStone.id : null,
+        muted: muted,
+        stones: getStones(geom.w, geom.h)
+      };
+    }
+
+    function emitChange() {
+      if (typeof options.onStateChange === 'function') {
+        try {
+          options.onStateChange(getState());
+        } catch (_err) {}
+      }
+    }
+
+    function crossThreshold() {
+      thresholdPosition = 1.0;
+      hasCrossedThreshold = true;
+      isNameIrrevocablyRebound = true;
+      nominalReferent = 'dune_sawmill_grid';
+      gobletCityName = null;
+      namelessExile = true;
+      seaVisible = false;
+      quarantineActive = false;
+      sawmillBuzzLevel = 0.78;
+      windPumpRattleLevel = 0.74;
+      windSpeed = Math.max(windSpeed, 0.62);
+      ochreGlare = 0.90;
+      ruptureFlash = 1.0;
+      playSawmillBuzz(0.82);
+      playWindPumpClank(0.76);
+      emitChange();
+      return getState();
+    }
+
+    function setThresholdProgress(val) {
+      if (hasCrossedThreshold) {
+        thresholdPosition = 1.0;
+        if (Number(val) < 1.0) {
+          retreatBlockedCount += 1;
+        }
+        emitChange();
+        return getState();
+      }
+      thresholdPosition = clamp(Number(val) || 0, 0, 1);
+      if (thresholdPosition >= 1.0) {
+        return crossThreshold();
+      }
+      sawmillBuzzLevel = thresholdPosition * 0.34;
+      windPumpRattleLevel = thresholdPosition * 0.30;
+      emitChange();
+      return getState();
+    }
+
+    function summonByName(_token) {
+      if (!hasCrossedThreshold) {
+        return {
+          phase: 'PRE_ARRIVAL',
+          nominalReferent: 'goblet_bay_city',
+          gobletCityName: 'PYRRHA',
+          seaVisible: true,
+          quarantineShattered: false
+        };
+      }
+      postArrivalNameUtterances += 1;
+      failedBayRecallCount += 1;
+      let quarantineShattered = false;
+      if (quarantineActive) {
+        quarantineActive = false;
+        quarantineShattered = true;
+        quarantineShatteredByNameCount += 1;
+      }
+      sawmillBuzzLevel = 1.0;
+      windPumpRattleLevel = 1.0;
+      ochreGlare = 1.0;
+      windSpeed = Math.max(windSpeed, 0.88);
+      ruptureFlash = quarantineShattered ? 1.0 : 0.72;
+      playSawmillBuzz(1.0);
+      playWindPumpClank(1.0);
+      emitChange();
+      return {
+        phase: 'ARRIVED_REBOUND',
+        nominalReferent: 'dune_sawmill_grid',
+        gobletCityName: null,
+        seaVisible: false,
+        quarantineShattered: quarantineShattered,
+        sawmillBuzzLevel: 1.0,
+        windPumpRattleLevel: 1.0
+      };
+    }
+
+    function attemptRecallGobletByName() {
+      if (!hasCrossedThreshold) {
+        return {
+          recalled: true,
+          gobletCityName: 'PYRRHA',
+          evokedInstead: 'goblet_bay_city'
+        };
+      }
+      failedBayRecallCount += 1;
+      let quarantineShattered = false;
+      if (quarantineActive) {
+        quarantineActive = false;
+        quarantineShattered = true;
+        quarantineShatteredByNameCount += 1;
+      }
+      sawmillBuzzLevel = 1.0;
+      windPumpRattleLevel = 1.0;
+      ochreGlare = 1.0;
+      windSpeed = Math.max(windSpeed, 0.88);
+      ruptureFlash = quarantineShattered ? 1.0 : 0.72;
+      playSawmillBuzz(1.0);
+      playWindPumpClank(1.0);
+      emitChange();
+      return {
+        recalled: false,
+        gobletCityName: null,
+        evokedInstead: 'dune_sawmill_grid',
+        quarantineShattered: quarantineShattered
+      };
+    }
+
+    function setQuarantine(flag) {
+      if (!hasCrossedThreshold) {
+        quarantineActive = false;
+        emitChange();
+        return getState();
+      }
+      const next = Boolean(flag);
+      if (next && !quarantineActive) {
+        quarantineEntriesCount += 1;
+      }
+      quarantineActive = next;
+      if (!quarantineActive) {
+        sawmillBuzzLevel = Math.max(sawmillBuzzLevel, 0.72);
+        windPumpRattleLevel = Math.max(windPumpRattleLevel, 0.68);
+      }
+      emitChange();
+      return getState();
+    }
+
+    function toggleQuarantine() {
+      return setQuarantine(!quarantineActive);
+    }
+
+    function triggerWindGust(strength, internalOpts) {
+      const s = clamp(strength === undefined ? 1.0 : Number(strength) || 1.0, 0.1, 1.5);
+      windSpeed = Math.min(1.0, 0.55 + 0.45 * s);
+      windPumpRattleLevel = 1.0;
+      dunePlume = Math.max(dunePlume, 0.85 * Math.min(1, s));
+      streetDustPulse = Math.max(streetDustPulse, 0.80 * Math.min(1, s));
+      if (!internalOpts || !internalOpts.silent) {
+        playWindPumpClank(Math.min(1.0, 0.65 + 0.35 * s));
+      }
+      emitChange();
+      return getState();
+    }
+
+    function triggerSawmillCut(internalOpts) {
+      sawmillBuzzLevel = 1.0;
+      lumberStacksCut += 1;
+      sawCutFlash = 1.0;
+      lumberPulse = 1.0;
+      for (let i = 0; i < sawdustParticles.length; i++) {
+        sawdustParticles[i].life = (i % 7) * 0.08;
+      }
+      if (!internalOpts || !internalOpts.silent) {
+        playSawmillBuzz(1.0);
+      }
+      emitChange();
+      return getState();
+    }
+
+    function inspectStone(stoneIdOrIndex, playSound) {
+      const soundOn = playSound !== false;
+      let idx = -1;
+      if (typeof stoneIdOrIndex === 'number' && Number.isFinite(stoneIdOrIndex)) {
+        idx = Math.floor(stoneIdOrIndex);
+      } else if (typeof stoneIdOrIndex === 'string') {
+        const trimmed = stoneIdOrIndex.trim();
+        if (/^[0-5]$/.test(trimmed)) {
+          idx = Number(trimmed);
+        } else {
+          for (let i = 0; i < ARRIVAL_STONES.length; i++) {
+            if (ARRIVAL_STONES[i].id === trimmed || ARRIVAL_STONES[i].stoneKind === trimmed) {
+              idx = i;
+              break;
+            }
+          }
+        }
+      }
+      if (idx < 0 || idx >= ARRIVAL_STONES.length) {
+        selectedStoneIndex = -1;
+        emitChange();
+        return { stone: null, state: getState() };
+      }
+
+      selectedStoneIndex = idx;
+      stonePulse = 1.0;
+      if (idx === 0) {
+        dunePlume = 1.0;
+        windSpeed = Math.max(windSpeed, 0.74);
+        if (soundOn) playWindPumpClank(0.48);
+      } else if (idx === 1) {
+        streetDustPulse = 1.0;
+        ochreGlare = Math.max(ochreGlare, 0.72);
+        if (soundOn) playWindPumpClank(0.52);
+      } else if (idx === 2) {
+        houseGlarePulse = 1.0;
+        if (soundOn) playWindPumpClank(0.42);
+      } else if (idx === 3) {
+        lumberPulse = 1.0;
+        lumberStacksCut += 1;
+        if (soundOn) playSawmillBuzz(0.60);
+      } else if (idx === 4) {
+        triggerSawmillCut({ silent: !soundOn });
+      } else if (idx === 5) {
+        triggerWindGust(0.95, { silent: !soundOn });
+      }
+      const stones = getStones(geom.w, geom.h);
+      emitChange();
+      return { stone: stones[idx], state: getState() };
+    }
+
+    function reset() {
+      thresholdPosition = 0;
+      hasCrossedThreshold = false;
+      isNameIrrevocablyRebound = false;
+      nominalReferent = 'goblet_bay_city';
+      gobletCityName = 'PYRRHA';
+      namelessExile = false;
+      seaVisible = true;
+      quarantineActive = false;
+
+      quarantineEntriesCount = 0;
+      quarantineShatteredByNameCount = 0;
+      postArrivalNameUtterances = 0;
+      failedBayRecallCount = 0;
+      retreatBlockedCount = 0;
+
+      sawmillBuzzLevel = 0;
+      windPumpRattleLevel = 0;
+      windSpeed = 0.35;
+      lumberStacksCut = 0;
+      selectedStoneIndex = -1;
+
+      ochreGlare = 0;
+      ruptureFlash = 0;
+      dunePlume = 0;
+      streetDustPulse = 0;
+      houseGlarePulse = 0;
+      lumberPulse = 0;
+      sawCutFlash = 0;
+      stonePulse = 0;
+      seedParticles();
+      emitChange();
+      return getState();
+    }
+
+    function step(dt, reducedMotion) {
+      const d = clamp(Number(dt) || 0.016, 0, 0.1);
+      const rm = Boolean(
+        reducedMotion && (typeof reducedMotion === 'object' ? reducedMotion.reducedMotion : reducedMotion)
+      );
+      const motionScale = rm ? 0.12 : 1.0;
+      simTime += d * motionScale;
+
+      if (hasCrossedThreshold && !quarantineActive) {
+        sawmillBuzzLevel = Math.max(0.68, sawmillBuzzLevel + (0.72 - sawmillBuzzLevel) * Math.min(1, d * 1.9));
+        windPumpRattleLevel = Math.max(0.62, windPumpRattleLevel + (0.66 - windPumpRattleLevel) * Math.min(1, d * 1.9));
+        windSpeed = Math.max(0.54, windSpeed + (0.58 - windSpeed) * Math.min(1, d * 1.2));
+      } else if (hasCrossedThreshold && quarantineActive) {
+        sawmillBuzzLevel = sawmillBuzzLevel + (0.18 - sawmillBuzzLevel) * Math.min(1, d * 2.4);
+        windPumpRattleLevel = windPumpRattleLevel + (0.16 - windPumpRattleLevel) * Math.min(1, d * 2.4);
+        windSpeed = windSpeed + (0.36 - windSpeed) * Math.min(1, d * 1.6);
+      }
+
+      for (let i = 0; i < pumpAngles.length; i++) {
+        pumpAngles[i] = (pumpAngles[i] + d * motionScale * pumpRates[i] * (0.65 + windSpeed * 2.55)) % (Math.PI * 2);
+      }
+      bladeAngle = (bladeAngle + d * motionScale * (9.5 + sawmillBuzzLevel * 24.0)) % (Math.PI * 2);
+
+      ochreGlare = Math.max(0, ochreGlare - d * 0.65);
+      ruptureFlash = rm ? 0 : Math.max(0, ruptureFlash - d * 2.1);
+      dunePlume = Math.max(0, dunePlume - d * 0.75);
+      streetDustPulse = Math.max(0, streetDustPulse - d * 0.85);
+      houseGlarePulse = Math.max(0, houseGlarePulse - d * 1.1);
+      lumberPulse = Math.max(0, lumberPulse - d * 1.0);
+      sawCutFlash = Math.max(0, sawCutFlash - d * 1.8);
+      stonePulse = Math.max(0, stonePulse - d * 0.9);
+
+      for (let m = 0; m < dustMotes.length; m++) {
+        const pt = dustMotes[m];
+        pt.nx += pt.vx * d * motionScale * (0.6 + windSpeed * 1.4);
+        pt.ny += pt.vy * d * motionScale;
+        if (pt.nx > 1.04) pt.nx = -0.04;
+        if (pt.ny < 0.22) pt.ny = 0.96;
+        if (pt.ny > 0.98) pt.ny = 0.26;
+      }
+      for (let s = 0; s < sawdustParticles.length; s++) {
+        const sp = sawdustParticles[s];
+        sp.life += d * motionScale * (0.65 + sawmillBuzzLevel * 0.95);
+        if (sp.life >= 1) sp.life -= 1;
+      }
+      return getState();
+    }
+
+    function drawSkyAndDune(ctx, w, h) {
+      const skyGrad = ctx.createLinearGradient(0, 0, 0, geom.horizonY);
+      skyGrad.addColorStop(0, PALETTE.skyZenith);
+      skyGrad.addColorStop(0.58, PALETTE.skyMid);
+      skyGrad.addColorStop(1, PALETTE.skyHorizon);
+      ctx.fillStyle = skyGrad;
+      ctx.fillRect(0, 0, w, geom.horizonY + 6);
+
+      if (ochreGlare > 0.01) {
+        ctx.fillStyle = 'rgba(255, 236, 179, ' + (0.24 * ochreGlare).toFixed(3) + ')';
+        ctx.fillRect(0, 0, w, geom.horizonY);
+      }
+
+      const crest = geom.duneCrest;
+      const duneGrad = ctx.createLinearGradient(0, h * 0.24, 0, geom.horizonY + 8);
+      duneGrad.addColorStop(0, PALETTE.duneSun);
+      duneGrad.addColorStop(0.45, PALETTE.duneOchre);
+      duneGrad.addColorStop(1, PALETTE.duneShadow);
+
+      ctx.beginPath();
+      ctx.moveTo(0, geom.horizonY + 6);
+      ctx.lineTo(crest[0].x, crest[0].y);
+      for (let i = 0; i < crest.length - 1; i++) {
+        const mx = (crest[i].x + crest[i + 1].x) * 0.5;
+        const my = (crest[i].y + crest[i + 1].y) * 0.5;
+        ctx.quadraticCurveTo(crest[i].x, crest[i].y, mx, my);
+      }
+      const last = crest[crest.length - 1];
+      ctx.lineTo(last.x, last.y);
+      ctx.lineTo(w, geom.horizonY + 6);
+      ctx.closePath();
+      ctx.fillStyle = duneGrad;
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.moveTo(crest[1].x, crest[1].y);
+      ctx.quadraticCurveTo(w * 0.28, h * 0.34, w * 0.44, geom.horizonY + 2);
+      ctx.lineTo(w * 0.66, geom.horizonY + 2);
+      ctx.quadraticCurveTo(w * 0.58, h * 0.31, crest[3].x, crest[3].y);
+      ctx.closePath();
+      ctx.fillStyle = PALETTE.duneSlip;
+      ctx.fill();
+
+      ctx.strokeStyle = PALETTE.duneCrest;
+      ctx.lineWidth = Math.max(1.5, h * 0.0025);
+      ctx.beginPath();
+      ctx.moveTo(crest[0].x, crest[0].y);
+      for (let j = 0; j < crest.length - 1; j++) {
+        const mx2 = (crest[j].x + crest[j + 1].x) * 0.5;
+        const my2 = (crest[j].y + crest[j + 1].y) * 0.5;
+        ctx.quadraticCurveTo(crest[j].x, crest[j].y, mx2, my2);
+      }
+      ctx.lineTo(last.x, last.y);
+      ctx.stroke();
+
+      ctx.strokeStyle = 'rgba(139, 87, 32, 0.26)';
+      ctx.lineWidth = 1;
+      for (let r = 0; r < 5; r++) {
+        const ry = h * (0.325 + r * 0.022);
+        ctx.beginPath();
+        ctx.moveTo(0, ry);
+        ctx.bezierCurveTo(w * 0.32, ry - 6, w * 0.68, ry + 7, w, ry - 3);
+        ctx.stroke();
+      }
+
+      if (dunePlume > 0.02 || windSpeed > 0.62) {
+        const pAlpha = clamp(0.14 + dunePlume * 0.28 + (windSpeed - 0.5) * 0.2, 0, 0.48);
+        ctx.fillStyle = 'rgba(241, 206, 130, ' + pAlpha.toFixed(3) + ')';
+        for (let k = 0; k < crest.length; k++) {
+          ctx.beginPath();
+          ctx.ellipse(crest[k].x + 18, crest[k].y - 4, w * 0.055, h * 0.012, -0.08, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+    }
+
+    function drawGridAndShadows(ctx, w, h) {
+      const plainGrad = ctx.createLinearGradient(0, geom.horizonY, 0, h);
+      plainGrad.addColorStop(0, '#c89b54');
+      plainGrad.addColorStop(1, '#ab7c39');
+      ctx.fillStyle = plainGrad;
+      ctx.fillRect(0, geom.horizonY, w, h - geom.horizonY);
+
+      ctx.fillStyle = '#d3ab66';
+      for (let i = 0; i < geom.crossLanes.length; i++) {
+        const lane = geom.crossLanes[i];
+        ctx.fillRect(0, lane.y - lane.thickness * 0.5, w, lane.thickness);
+      }
+
+      const st = geom.street;
+      ctx.beginPath();
+      ctx.moveTo(st.topLeftX, st.topY);
+      ctx.lineTo(st.topRightX, st.topY);
+      ctx.lineTo(st.botRightX, st.botY);
+      ctx.lineTo(st.botLeftX, st.botY);
+      ctx.closePath();
+      ctx.fillStyle = PALETTE.streetDust;
+      ctx.fill();
+
+      ctx.strokeStyle = PALETTE.streetRut;
+      ctx.lineWidth = 1.4;
+      const rutOffsets = [-0.24, -0.16, 0.16, 0.24];
+      for (let r = 0; r < rutOffsets.length; r++) {
+        const u = 0.5 + rutOffsets[r];
+        const tx = st.topLeftX + (st.topRightX - st.topLeftX) * u;
+        const bx = st.botLeftX + (st.botRightX - st.botLeftX) * u;
+        ctx.beginPath();
+        ctx.moveTo(tx, st.topY + 2);
+        ctx.lineTo(bx, st.botY);
+        ctx.stroke();
+      }
+
+      ctx.save();
+      ctx.fillStyle = 'rgba(23, 20, 18, 0.19)';
+      ctx.strokeStyle = 'rgba(23, 20, 18, 0.21)';
+      for (let p = 0; p < geom.pumps.length; p++) {
+        const pm = geom.pumps[p];
+        const sx = pm.x - w * 0.16;
+        const sy = pm.baseY + h * 0.14;
+        ctx.lineWidth = 2.2;
+        ctx.beginPath();
+        ctx.moveTo(pm.x, pm.baseY);
+        ctx.lineTo(sx, sy);
+        ctx.stroke();
+        const rx = pm.rotorR * 1.15;
+        const ry = pm.rotorR * 0.42;
+        for (let b = 0; b < 7; b++) {
+          const ang = pumpAngles[p] + (b * Math.PI) / 7;
+          ctx.beginPath();
+          ctx.moveTo(sx - Math.cos(ang) * rx, sy - Math.sin(ang) * ry);
+          ctx.lineTo(sx + Math.cos(ang) * rx, sy + Math.sin(ang) * ry);
+          ctx.stroke();
+        }
+      }
+      ctx.restore();
+    }
+
+    function drawSquatHouses(ctx) {
+      for (let i = 0; i < geom.houses.length; i++) {
+        const hs = geom.houses[i];
+        const sideW = hs.bw * 0.22;
+        ctx.fillStyle = hs.tint === 0 ? PALETTE.plasterLight : PALETTE.plasterMid;
+        if (houseGlarePulse > 0.05) {
+          ctx.fillStyle = '#ecd09b';
+        }
+        ctx.fillRect(hs.x, hs.y, hs.bw, hs.bh);
+        ctx.fillStyle = PALETTE.plasterShade;
+        ctx.fillRect(hs.x + hs.bw, hs.y + hs.bh * 0.06, sideW, hs.bh * 0.94);
+
+        const roofH = hs.bh * 0.30;
+        ctx.beginPath();
+        ctx.moveTo(hs.x - 4, hs.y + 2);
+        ctx.lineTo(hs.x + hs.bw * 0.5, hs.y - roofH);
+        ctx.lineTo(hs.x + hs.bw + sideW + 3, hs.y + 3);
+        ctx.closePath();
+        ctx.fillStyle = hs.roof === 'tin' ? PALETTE.tinRoof : PALETTE.tinRust;
+        ctx.fill();
+
+        ctx.fillStyle = PALETTE.timberShadow;
+        const winW = Math.max(5, hs.bw * 0.13);
+        const winH = Math.max(6, hs.bh * 0.28);
+        ctx.fillRect(hs.x + hs.bw * 0.18, hs.y + hs.bh * 0.34, winW, winH);
+        ctx.fillRect(hs.x + hs.bw * 0.62, hs.y + hs.bh * 0.34, winW, winH);
+        ctx.fillRect(hs.x + hs.bw * 0.41, hs.y + hs.bh * 0.46, winW * 0.95, hs.bh * 0.54);
+      }
+    }
+
+    function drawLumberYards(ctx) {
+      const bonusTiers = Math.min(3, Math.floor(lumberStacksCut * 0.6));
+      for (let i = 0; i < geom.lumberYards.length; i++) {
+        const ly = geom.lumberYards[i];
+        const totalTiers = ly.tiers + (i % 2 === 0 ? bonusTiers : Math.min(2, lumberStacksCut));
+        const tierH = ly.sh / Math.max(4, ly.tiers);
+        const endW = ly.sw * 0.18;
+        ctx.fillStyle = 'rgba(23, 20, 18, 0.24)';
+        ctx.fillRect(ly.x - 4, ly.y + ly.sh - 2, ly.sw + endW + 8, 6);
+
+        for (let t = 0; t < totalTiers; t++) {
+          const ty = ly.y + ly.sh - (t + 1) * tierH;
+          const inset = t * 1.2;
+          const pw = ly.sw - inset * 2;
+          ctx.fillStyle = PALETTE.timberShadow;
+          ctx.fillRect(ly.x + inset + pw * 0.16, ty + tierH - 2, 3, 2);
+          ctx.fillRect(ly.x + inset + pw * 0.76, ty + tierH - 2, 3, 2);
+
+          ctx.fillStyle = (lumberPulse > 0.1 && t === totalTiers - 1) ? '#efc379' : (t % 2 === 0 ? PALETTE.lumberCut : PALETTE.lumberPine);
+          ctx.fillRect(ly.x + inset, ty, pw, tierH - 2);
+          ctx.fillStyle = PALETTE.lumberEnd;
+          ctx.fillRect(ly.x + inset + pw, ty + 1, endW, tierH - 2);
+        }
+      }
+    }
+
+    function drawSawmills(ctx) {
+      for (let i = 0; i < geom.sawmills.length; i++) {
+        const ml = geom.sawmills[i];
+        ctx.fillStyle = PALETTE.timberShadow;
+        ctx.fillRect(ml.x, ml.y, ml.mw, ml.mh);
+
+        ctx.fillStyle = PALETTE.sawdustGold;
+        ctx.beginPath();
+        ctx.moveTo(ml.x + ml.mw * 0.26, ml.y + ml.mh);
+        ctx.lineTo(ml.x + ml.mw * 0.52, ml.y + ml.mh * 0.72);
+        ctx.lineTo(ml.x + ml.mw * 0.78, ml.y + ml.mh);
+        ctx.closePath();
+        ctx.fill();
+
+        const cx = ml.x + ml.mw * 0.52;
+        const cy = ml.y + ml.mh * 0.62;
+        ctx.fillStyle = '#6f4720';
+        ctx.fillRect(ml.x + ml.mw * 0.08, cy + ml.bladeR * 0.15, ml.mw * 0.44, ml.bladeR * 0.55);
+
+        ctx.save();
+        ctx.translate(cx, cy);
+        if (sawmillBuzzLevel > 0.25) {
+          ctx.strokeStyle = 'rgba(236, 208, 137, ' + (0.28 * sawmillBuzzLevel).toFixed(3) + ')';
+          ctx.lineWidth = 3;
+          ctx.beginPath();
+          ctx.arc(0, 0, ml.bladeR * 1.18, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+        ctx.rotate(bladeAngle * (ml.primary ? 1 : -1.15));
+        ctx.fillStyle = PALETTE.steelBlade;
+        ctx.beginPath();
+        const teeth = 16;
+        for (let k = 0; k < teeth * 2; k++) {
+          const r = k % 2 === 0 ? ml.bladeR : ml.bladeR * 0.82;
+          const a = (k * Math.PI) / teeth;
+          const px = Math.cos(a) * r;
+          const py = Math.sin(a) * r;
+          if (k === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        }
+        ctx.closePath();
+        ctx.fill();
+        ctx.fillStyle = PALETTE.sawRust;
+        ctx.beginPath();
+        ctx.arc(0, 0, ml.bladeR * 0.24, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        ctx.fillStyle = PALETTE.sawdustIron;
+        const postW = Math.max(4, ml.mw * 0.04);
+        ctx.fillRect(ml.x, ml.y, postW, ml.mh);
+        ctx.fillRect(ml.x + ml.mw * 0.48, ml.y, postW, ml.mh);
+        ctx.fillRect(ml.x + ml.mw - postW, ml.y, postW, ml.mh);
+
+        ctx.beginPath();
+        ctx.moveTo(ml.x - 8, ml.y + 4);
+        ctx.lineTo(ml.x + ml.mw * 0.46, ml.y - ml.mh * 0.34);
+        ctx.lineTo(ml.x + ml.mw + 10, ml.y + 4);
+        ctx.closePath();
+        ctx.fillStyle = PALETTE.millShed;
+        ctx.fill();
+
+        if (ml.primary) {
+          ctx.fillStyle = 'rgba(236, 208, 137, 0.78)';
+          for (let s = 0; s < sawdustParticles.length; s++) {
+            const sp = sawdustParticles[s];
+            const sx = cx + (sp.vx * sp.life * ml.mw * 1.8) + sp.ox * 16;
+            const sy = cy + (sp.vy * sp.life * ml.mh * 1.9) + (sp.life * sp.life * ml.mh * 0.65);
+            ctx.fillRect(sx, sy, sp.size, sp.size);
+          }
+        }
+      }
+    }
+
+    function drawWindPumps(ctx) {
+      for (let i = 0; i < geom.pumps.length; i++) {
+        const pm = geom.pumps[i];
+        const halfBase = pm.rotorR * 0.56;
+        const halfTop = pm.rotorR * 0.14;
+        ctx.strokeStyle = PALETTE.sawdustIron;
+        ctx.lineWidth = Math.max(1.5, pm.rotorR * 0.055);
+        ctx.beginPath();
+        ctx.moveTo(pm.x - halfBase, pm.baseY);
+        ctx.lineTo(pm.x - halfTop, pm.topY);
+        ctx.moveTo(pm.x + halfBase, pm.baseY);
+        ctx.lineTo(pm.x + halfTop, pm.topY);
+        ctx.stroke();
+
+        ctx.lineWidth = 1.1;
+        const bays = 5;
+        for (let b = 0; b < bays; b++) {
+          const t0 = b / bays;
+          const t1 = (b + 1) / bays;
+          const y0 = pm.baseY + (pm.topY - pm.baseY) * t0;
+          const y1 = pm.baseY + (pm.topY - pm.baseY) * t1;
+          const w0 = halfBase + (halfTop - halfBase) * t0;
+          const w1 = halfBase + (halfTop - halfBase) * t1;
+          ctx.beginPath();
+          ctx.moveTo(pm.x - w0, y0);
+          ctx.lineTo(pm.x + w1, y1);
+          ctx.moveTo(pm.x + w0, y0);
+          ctx.lineTo(pm.x - w1, y1);
+          ctx.stroke();
+        }
+
+        const strokeOffset = Math.sin(pumpAngles[i] * 2) * (pm.rotorR * 0.16);
+        ctx.strokeStyle = PALETTE.millShed;
+        ctx.beginPath();
+        ctx.moveTo(pm.x, pm.topY);
+        ctx.lineTo(pm.x, pm.baseY + 4 + strokeOffset);
+        ctx.stroke();
+
+        ctx.fillStyle = PALETTE.sawRust;
+        ctx.beginPath();
+        ctx.moveTo(pm.x, pm.topY);
+        ctx.lineTo(pm.x + pm.rotorR * 1.18, pm.topY - pm.rotorR * 0.24);
+        ctx.lineTo(pm.x + pm.rotorR * 1.12, pm.topY + pm.rotorR * 0.18);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.save();
+        ctx.translate(pm.x, pm.topY);
+        ctx.rotate(pumpAngles[i]);
+        ctx.strokeStyle = PALETTE.millShed;
+        ctx.lineWidth = 1.3;
+        ctx.beginPath();
+        ctx.arc(0, 0, pm.rotorR, 0, Math.PI * 2);
+        ctx.arc(0, 0, pm.rotorR * 0.42, 0, Math.PI * 2);
+        ctx.stroke();
+
+        const vanes = 14;
+        for (let v = 0; v < vanes; v++) {
+          const a0 = (v * Math.PI * 2) / vanes;
+          ctx.fillStyle = v % 2 === 0 ? '#9c9288' : '#6c6259';
+          ctx.beginPath();
+          ctx.moveTo(Math.cos(a0) * pm.rotorR * 0.24, Math.sin(a0) * pm.rotorR * 0.24);
+          ctx.lineTo(Math.cos(a0 + 0.12) * pm.rotorR, Math.sin(a0 + 0.12) * pm.rotorR);
+          ctx.lineTo(Math.cos(a0 + 0.30) * pm.rotorR * 0.96, Math.sin(a0 + 0.30) * pm.rotorR * 0.96);
+          ctx.closePath();
+          ctx.fill();
+        }
+        ctx.restore();
+      }
+    }
+
+    function drawDustAndMarkers(ctx, w, h, renderOpts) {
+      const optsObj = renderOpts || {};
+      for (let i = 0; i < dustMotes.length; i++) {
+        const dm = dustMotes[i];
+        ctx.fillStyle = 'rgba(244, 221, 168, ' + (dm.alpha + streetDustPulse * 0.16).toFixed(3) + ')';
+        ctx.beginPath();
+        ctx.arc(dm.nx * w, dm.ny * h, dm.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      if (optsObj.showMarkers !== false) {
+        const stones = getStones(w, h);
+        const hovIdx = typeof optsObj.hoveredStoneIndex === 'number' ? optsObj.hoveredStoneIndex : -1;
+        const activeIdx = typeof optsObj.selectedStoneIndex === 'number' ? optsObj.selectedStoneIndex : selectedStoneIndex;
+        ctx.font = '600 11px ui-monospace, SFMono-Regular, Menlo, monospace';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+
+        for (let s = 0; s < stones.length; s++) {
+          const st = stones[s];
+          const isHot = st.index === activeIdx || st.index === hovIdx;
+          const pinR = isHot ? 12.5 : 10;
+          if (isHot) {
+            ctx.strokeStyle = 'rgba(244, 241, 234, 0.85)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(st.x, st.y, pinR + 4 + stonePulse * 3, 0, Math.PI * 2);
+            ctx.stroke();
+          }
+          ctx.fillStyle = isHot ? PALETTE.sawRust : 'rgba(23, 20, 18, 0.84)';
+          ctx.beginPath();
+          ctx.arc(st.x, st.y, pinR, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.strokeStyle = PALETTE.skyZenith;
+          ctx.lineWidth = 1.4;
+          ctx.stroke();
+          ctx.fillStyle = PALETTE.markerCream;
+          ctx.fillText(String(st.index + 1), st.x, st.y + 0.5);
+        }
+      }
+
+      if (ruptureFlash > 0.01) {
+        ctx.fillStyle = 'rgba(230, 190, 116, ' + (ruptureFlash * 0.38).toFixed(3) + ')';
+        ctx.fillRect(0, 0, w, h);
+      }
+    }
+
+    function renderDuneArrival(ctx, viewport, renderOpts) {
+      if (!ctx) return;
+      const vp = viewport || {};
+      const optsObj = renderOpts || {};
+      const w = Number(vp.width || vp.w) || geom.w || (ctx.canvas ? ctx.canvas.width : 1280);
+      const h = Number(vp.height || vp.h) || geom.h || (ctx.canvas ? ctx.canvas.height : 800);
+      const dpr = Number(vp.dpr) || geom.dpr || 1;
+
+      if (Math.abs(w - geom.w) > 1 || Math.abs(h - geom.h) > 1 || !geom.street) {
+        resize(w, h, dpr);
+      }
+
+      ctx.save();
+      if (optsObj.alpha !== undefined) {
+        ctx.globalAlpha = clamp(Number(optsObj.alpha), 0, 1);
+      }
+      drawSkyAndDune(ctx, w, h);
+      drawGridAndShadows(ctx, w, h);
+      drawWindPumps(ctx);
+      drawSquatHouses(ctx);
+      drawLumberYards(ctx);
+      drawSawmills(ctx);
+      drawDustAndMarkers(ctx, w, h, optsObj);
+      ctx.restore();
+    }
+
+    seedParticles();
+    resize(geom.w, geom.h, geom.dpr);
+
+    return {
+      ARRIVAL_STONES: ARRIVAL_STONES,
+      PALETTE: PALETTE,
+      resize: resize,
+      getStones: getStones,
+      hitTestStone: hitTestStone,
+      setThresholdProgress: setThresholdProgress,
+      crossThreshold: crossThreshold,
+      summonByName: summonByName,
+      attemptRecallGobletByName: attemptRecallGobletByName,
+      setQuarantine: setQuarantine,
+      toggleQuarantine: toggleQuarantine,
+      inspectStone: inspectStone,
+      triggerWindGust: triggerWindGust,
+      triggerSawmillCut: triggerSawmillCut,
+      step: step,
+      renderDuneArrival: renderDuneArrival,
+      unlockAudio: unlockAudio,
+      setMuted: setMuted,
+      isMuted: isMuted,
+      playSawmillBuzz: playSawmillBuzz,
+      playWindPumpClank: playWindPumpClank,
+      getState: getState,
+      reset: reset
+    };
+  }
+
+  const api = Object.freeze({
+    ARRIVAL_STONES: ARRIVAL_STONES,
+    PALETTE: PALETTE,
+    createDuneArrival: createDuneArrival
+  });
+
+  root.PyrrhaDuneArrival = api;
+  if (typeof window !== 'undefined') {
+    window.PyrrhaDuneArrival = api;
+  }
+})(typeof globalThis !== 'undefined' ? globalThis : (typeof window !== 'undefined' ? window : this));
+
+</script>
+<script>
+(function () {
+  'use strict';
+
+  const rootEl = document.getElementById('pyr-root');
+  const canvas = document.getElementById('pyr-canvas');
+  const canvasWell = document.getElementById('pyr-canvas-well');
+  const ctx = canvas.getContext('2d');
+
+  const phaseSealEl = document.getElementById('pyr-phase-seal');
+  const qkUtter = document.getElementById('pyr-qk-utter');
+  const qkCross = document.getElementById('pyr-qk-cross');
+  const qkQuarantine = document.getElementById('pyr-qk-quarantine');
+  const qkPlates = document.getElementById('pyr-qk-plates');
+  const qkMute = document.getElementById('pyr-qk-mute');
+  const qkReset = document.getElementById('pyr-qk-reset');
+
+  const stoneIdxEl = document.getElementById('pyr-stone-idx');
+  const stoneTitleEl = document.getElementById('pyr-stone-title');
+  const stoneGlossEl = document.getElementById('pyr-stone-gloss');
+  const stoneChips = Array.prototype.slice.call(document.querySelectorAll('.pyr-stone-chip'));
+
+  const deckStateEl = document.getElementById('pyr-deck-state');
+  const stepTrackEl = document.getElementById('pyr-step-track');
+  const stepFillEl = document.getElementById('pyr-step-fill');
+  const stepCaptionEl = document.getElementById('pyr-step-caption');
+  const btnCross = document.getElementById('pyr-btn-cross');
+  const btnGust = document.getElementById('pyr-btn-gust');
+  const btnSaw = document.getElementById('pyr-btn-saw');
+
+  const valSeaEl = document.getElementById('pyr-val-sea');
+  const valPlanEl = document.getElementById('pyr-val-plan');
+  const valSoundEl = document.getElementById('pyr-val-sound');
+
+  const ledgerTallyEl = document.getElementById('pyr-ledger-tally');
+  const refSignEl = document.getElementById('pyr-ref-sign');
+  const refGulfEl = document.getElementById('pyr-ref-gulf');
+  const btnUtter = document.getElementById('pyr-btn-utter');
+  const btnQuarantine = document.getElementById('pyr-btn-quarantine');
+  const noteEl = document.getElementById('pyr-traveler-note');
+
+  const plateDrawerEl = document.getElementById('pyr-plate-drawer');
+  const plateGridEl = document.getElementById('pyr-plate-grid');
+  const plateLoupeBtn = document.getElementById('pyr-plate-loupe');
+  const plateCloseBtn = document.getElementById('pyr-plate-close');
+  const cardMapEl = document.getElementById('pyr-card-map');
+  const cardVistaEl = document.getElementById('pyr-card-vista');
+  const mapImgEl = document.getElementById('pyr-map-img');
+  const plateTabs = Array.prototype.slice.call(document.querySelectorAll('.pyr-plate-tab'));
+
+  const GOBLET_SHORT = ['Rampart Ring', 'Goblet Towers', 'Lancet Windows', 'Amphitheater Bay', 'Deep Square', 'Marble Well'];
+  const ARRIVAL_SHORT = ['Coastal Dune', 'Dusty Streets', 'Low Houses', 'Lumber Stacks', 'Noisy Sawmills', 'Iron Pumps'];
+
+  const motionQuery = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+  let reducedMotion = Boolean(motionQuery && motionQuery.matches);
+  if (motionQuery && typeof motionQuery.addEventListener === 'function') {
+    motionQuery.addEventListener('change', function (ev) {
+      reducedMotion = Boolean(ev.matches);
+      renderFrame();
+    });
+  }
+
+  let vpWidth = 960;
+  let vpHeight = 540;
+  let vpDpr = Math.min(window.devicePixelRatio || 1, 2);
+  let hoveredStoneIndex = -1;
+  let plateDrawerOpen = false;
+  let plateTab = 'diptych';
+  let loupeZoom = false;
+  let draggingTrack = false;
+  let mapFallbackUsed = false;
+
+  mapImgEl.addEventListener('error', function () {
+    if (!mapFallbackUsed) {
+      mapFallbackUsed = true;
+      mapImgEl.src = 'map.svg';
+    }
+  });
+
+  const goblet = window.PyrrhaGobletCity.createGobletCity({ selectedStoneIndex: 5, muted: false });
+  const arrival = window.PyrrhaDuneArrival.createDuneArrival({ muted: false });
+
+  function unlockAllAudio() {
+    goblet.unlockAudio();
+    arrival.unlockAudio();
+  }
+
+  function resizeCanvas() {
+    const rect = canvasWell.getBoundingClientRect();
+    const w = Math.max(220, Math.round(rect.width || 640));
+    const h = Math.max(160, Math.round(rect.height || 360));
+    vpDpr = Math.min(window.devicePixelRatio || 1, 2);
+    vpWidth = w;
+    vpHeight = h;
+    const pxW = Math.round(w * vpDpr);
+    const pxH = Math.round(h * vpDpr);
+    if (canvas.width !== pxW || canvas.height !== pxH) {
+      canvas.width = pxW;
+      canvas.height = pxH;
+    }
+    goblet.resize(w, h, vpDpr);
+    arrival.resize(w, h, vpDpr);
+    renderFrame();
+  }
+
+  function setNote(text) {
+    noteEl.textContent = text;
+  }
+
+  function syncUI() {
+    const arr = arrival.getState();
+    const gob = goblet.syncArrivalState(arr);
+    const inGobletView = !arr.hasCrossedThreshold || arr.quarantineActive;
+
+    if (!arr.hasCrossedThreshold) {
+      rootEl.setAttribute('data-phase', 'pre_arrival');
+      phaseSealEl.textContent = 'PRE-ARRIVAL IMAGINATION';
+      deckStateEl.textContent = 'UNSEEN · REVERSIBLE APPROACH';
+    } else if (arr.quarantineActive) {
+      rootEl.setAttribute('data-phase', 'quarantine');
+      phaseSealEl.textContent = 'QUARANTINE · NAMELESS EXILE';
+      deckStateEl.textContent = '100% IRREVERSIBLE · OCULAR QUARANTINE';
+    } else {
+      rootEl.setAttribute('data-phase', 'arrived');
+      phaseSealEl.textContent = 'ARRIVED · NAME REBOUND';
+      deckStateEl.textContent = '100% IRREVERSIBLE · THRESHOLD CROSSED';
+    }
+
+    const pct = Math.round(arr.thresholdPosition * 100);
+    stepFillEl.style.width = pct + '%';
+    stepTrackEl.setAttribute('aria-valuenow', String(pct));
+    stepTrackEl.setAttribute('data-locked', arr.hasCrossedThreshold ? 'true' : 'false');
+    stepCaptionEl.textContent = arr.hasCrossedThreshold
+      ? '100% IRREVERSIBLE · FOOT SET IN ACTUAL PYRRHA'
+      : ('FOOTSTEP APPROACH: ' + pct + '% · BEFORE SEEING PYRRHA');
+
+    btnCross.setAttribute('data-locked', arr.hasCrossedThreshold ? 'true' : 'false');
+    btnCross.textContent = arr.hasCrossedThreshold ? '[A] 100% Irreversible · Arrived' : '[A] Set Foot in Pyrrha';
+    qkCross.textContent = arr.hasCrossedThreshold ? '[A] Arrived (Locked)' : '[A] Cross Threshold';
+
+    valSeaEl.textContent = !arr.hasCrossedThreshold
+      ? 'OPEN ULTRAMARINE BAY'
+      : 'BLOCKED BY SAND DUNE (0%)';
+    valPlanEl.textContent = !arr.hasCrossedThreshold
+      ? 'ENCLOSED AMPHITHEATER'
+      : 'STRAIGHT DUSTY GRID';
+    valSoundEl.textContent = !arr.hasCrossedThreshold
+      ? 'MARBLE WELL CHIME'
+      : (arr.quarantineActive ? 'HUSHED OCULAR SEAL' : 'SAWMILL BUZZ & IRON VANES');
+
+    refSignEl.textContent = !arr.hasCrossedThreshold
+      ? 'FORTIFIED GOBLET BAY CITY'
+      : 'DUNE · LUMBER · SAWMILLS · PUMPS';
+    refGulfEl.textContent = !arr.hasCrossedThreshold
+      ? '"PYRRHA"'
+      : '— FOREVER WITHOUT A NAME —';
+
+    const totalUtter = gob.preArrivalUtteranceCount + arr.postArrivalNameUtterances;
+    ledgerTallyEl.textContent = 'Utterances: ' + totalUtter + (arr.quarantineShatteredByNameCount > 0 ? ' · Shattered: ' + arr.quarantineShatteredByNameCount : '');
+    btnQuarantine.setAttribute('data-active', arr.quarantineActive ? 'true' : 'false');
+    btnQuarantine.textContent = arr.quarantineActive
+      ? '[Q] Exit Quarantine (Wordless Ocular Active)'
+      : '[Q] Pre-Arrival Quarantine (Wordless Ocular)';
+    qkMute.textContent = arr.muted ? '[M] Sound: Muted' : '[M] Sound: On';
+    const stonesList = inGobletView ? goblet.getStones(vpWidth, vpHeight) : arrival.getStones(vpWidth, vpHeight);
+    const shortLabels = inGobletView ? GOBLET_SHORT : ARRIVAL_SHORT;
+    const activeIdx = inGobletView
+      ? gob.selectedStoneIndex
+      : (arr.selectedStoneIndex >= 0 ? arr.selectedStoneIndex : 0);
+    const activeStone = stonesList[activeIdx] || stonesList[0];
+
+    stoneIdxEl.textContent = '[' + (activeIdx + 1) + ']';
+    stoneTitleEl.textContent = activeStone.label;
+    stoneGlossEl.textContent = activeStone.inscription;
+
+    for (let i = 0; i < stoneChips.length; i++) {
+      const chip = stoneChips[i];
+      const nameNode = chip.querySelector('.pyr-chip-name');
+      if (nameNode) nameNode.textContent = shortLabels[i];
+      chip.setAttribute('data-active', i === activeIdx ? 'true' : 'false');
+    }
+  }
+
+  function renderFrame() {
+    if (!ctx) return;
+    const arr = arrival.getState();
+    const gob = goblet.getState();
+    ctx.save();
+    ctx.setTransform(vpDpr, 0, 0, vpDpr, 0, 0);
+    ctx.clearRect(0, 0, vpWidth, vpHeight);
+    const vp = { width: vpWidth, height: vpHeight, dpr: vpDpr };
+
+    if (!arr.hasCrossedThreshold) {
+      goblet.renderGobletCity(ctx, vp, {
+        alpha: 1,
+        quarantineMode: false,
+        thresholdApproach: arr.thresholdPosition,
+        selectedStoneIndex: gob.selectedStoneIndex
+      });
+      if (arr.thresholdPosition > 0.08) {
+        arrival.renderDuneArrival(ctx, vp, {
+          alpha: Math.min(0.36, arr.thresholdPosition * 0.36),
+          showMarkers: false
+        });
+      }
+    } else if (arr.quarantineActive) {
+      goblet.renderGobletCity(ctx, vp, {
+        alpha: 1,
+        quarantineMode: true,
+        selectedStoneIndex: gob.selectedStoneIndex
+      });
+    } else {
+      const selIdx = arr.selectedStoneIndex >= 0 ? arr.selectedStoneIndex : 0;
+      arrival.renderDuneArrival(ctx, vp, {
+        alpha: 1,
+        showMarkers: true,
+        selectedStoneIndex: selIdx,
+        hoveredStoneIndex: hoveredStoneIndex
+      });
+    }
+    ctx.restore();
+  }
+
+  function getState() {
+    const arr = arrival.getState();
+    const gob = goblet.syncArrivalState(arr);
+    const inGobletView = !arr.hasCrossedThreshold || arr.quarantineActive;
+    const activeIdx = inGobletView
+      ? gob.selectedStoneIndex
+      : (arr.selectedStoneIndex >= 0 ? arr.selectedStoneIndex : 0);
+    const activeStones = inGobletView ? gob.stones : arr.stones;
+    return {
+      phase: !arr.hasCrossedThreshold ? 'PRE_ARRIVAL' : (arr.quarantineActive ? 'QUARANTINE_EXILE' : 'ARRIVED_REBOUND'),
+      thresholdPosition: arr.thresholdPosition,
+      hasCrossedThreshold: arr.hasCrossedThreshold,
+      isNameIrrevocablyRebound: arr.isNameIrrevocablyRebound,
+      nominalReferent: arr.nominalReferent,
+      gobletCityName: arr.gobletCityName,
+      namelessExile: arr.namelessExile,
+      seaVisible: arr.seaVisible,
+      seaVisibleInMind: gob.seaVisibleInMind,
+      gobletClarity: gob.gobletClarity,
+      quarantineActive: arr.quarantineActive,
+      quarantineEntriesCount: arr.quarantineEntriesCount,
+      quarantineShatteredByNameCount: arr.quarantineShatteredByNameCount,
+      preArrivalUtteranceCount: gob.preArrivalUtteranceCount,
+      postArrivalNameUtterances: arr.postArrivalNameUtterances,
+      failedBayRecallCount: arr.failedBayRecallCount,
+      retreatBlockedCount: arr.retreatBlockedCount,
+      sawmillBuzzLevel: arr.sawmillBuzzLevel,
+      windPumpRattleLevel: arr.windPumpRattleLevel,
+      windSpeed: arr.windSpeed,
+      lumberStacksCut: arr.lumberStacksCut,
+      selectedStoneIndex: activeIdx,
+      selectedStoneId: activeStones[activeIdx] ? activeStones[activeIdx].id : null,
+      activeLayer: !arr.hasCrossedThreshold ? 'goblet' : (arr.quarantineActive ? 'quarantine' : 'dune'),
+      stones: activeStones,
+      gobletStones: gob.stones,
+      arrivalStones: arr.stones,
+      plateDrawerOpen: plateDrawerOpen,
+      plateTab: plateTab,
+      loupeZoom: loupeZoom,
+      muted: arr.muted,
+      reducedMotion: reducedMotion
+    };
+  }
+
+  function crossThreshold() {
+    unlockAllAudio();
+    const wasCrossed = arrival.getState().hasCrossedThreshold;
+    arrival.crossThreshold();
+    if (!wasCrossed && arrival.getState().selectedStoneIndex < 0) {
+      arrival.inspectStone(0, false);
+    }
+    syncUI();
+    setNote('The instant I set foot here, everything imagined is forgotten: the sea is out of sight behind a coastal dune, straight dusty streets run between low house groups, stacks of lumber, and buzzing sawmills, while wind turns the metal vanes of water pumps.');
+    renderFrame();
+    return getState();
+  }
+
+  function setThresholdProgress(val) {
+    unlockAllAudio();
+    const prevCrossed = arrival.getState().hasCrossedThreshold;
+    const next = arrival.setThresholdProgress(val);
+    if (prevCrossed && Number(val) < 1.0) {
+      setNote('Retreat is impossible: having once set foot in actual Pyrrha, the name cannot be un-stepped or returned to the bay.');
+    } else if (!prevCrossed && next.hasCrossedThreshold) {
+      if (next.selectedStoneIndex < 0) arrival.inspectStone(0, false);
+      setNote('Crossing the threshold seals the sea behind the coastal sand dune; "PYRRHA" now means only these straight streets, lumber stacks, sawmills, and rattling pumps.');
+    } else if (!next.hasCrossedThreshold) {
+      setNote('Approaching the coast (' + Math.round(next.thresholdPosition * 100) + '%): ochre glare rises at the edge of mind, though the enclosed goblet city on the gulf still holds its name.');
+    }
+    syncUI();
+    renderFrame();
+    return getState();
+  }
+  function summonByName(token) {
+    unlockAllAudio();
+    const cleanToken = String(token || 'PYRRHA').toUpperCase();
+    const before = arrival.getState();
+    const res = arrival.summonByName(cleanToken);
+    goblet.utterPhoneticName({
+      hasCrossedThreshold: before.hasCrossedThreshold,
+      quarantineActive: before.quarantineActive,
+      quarantineShattered: Boolean(res.quarantineShattered)
+    });
+    syncUI();
+    if (!before.hasCrossedThreshold) {
+      setNote('Speaking "' + cleanToken + '" before arrival rings across six goblet-flared towers, high seaward lancet windows, and the echoing marble well in the deep central square.');
+    } else if (res.quarantineShattered) {
+      setNote('Speaking "' + cleanToken + '" shatters the silent ocular quarantine at once! The syllable drags my mind straight back to the coastal sand dune, buzzing sawmills, and rattling metal pump vanes.');
+    } else {
+      setNote('I pronounce "' + cleanToken + '", trying to summon the gulf city—yet my mind sees only this ochre glare, lumber stacks, noisy sawmills, and wind-pumps; the enclosed bay city remains forever without a name.');
+    }
+    renderFrame();
+    return Object.assign({}, getState(), res);
+  }
+
+  function attemptRecallGobletByName() {
+    unlockAllAudio();
+    const before = arrival.getState();
+    const res = arrival.attemptRecallGobletByName();
+    goblet.utterPhoneticName({
+      hasCrossedThreshold: before.hasCrossedThreshold,
+      quarantineActive: before.quarantineActive,
+      quarantineShattered: Boolean(res.quarantineShattered)
+    });
+    syncUI();
+    if (res.recalled) {
+      setNote('Before setting foot there, the name "PYRRHA" effortlessly summons the fortified amphitheater bay and its central marble well.');
+    } else if (res.quarantineShattered) {
+      setNote('Attempting to call the bay phantom "PYRRHA" shatters wordless quarantine and snaps vision back to the dusty street and sawmills.');
+    } else {
+      setNote('Calling "PYRRHA" cannot reach the gulf anymore: the name belongs irrevocably to the dune, lumber yards, sawmills, and iron water-pumps.');
+    }
+    renderFrame();
+    return Object.assign({}, getState(), res);
+  }
+
+  function setQuarantine(flag) {
+    unlockAllAudio();
+    const prev = arrival.getState();
+    if (!prev.hasCrossedThreshold) {
+      arrival.setQuarantine(false);
+      syncUI();
+      setNote('Before arrival, no quarantine is needed: the enclosed city on the bay slopes still answers openly to "PYRRHA".');
+      renderFrame();
+      return getState();
+    }
+    const next = arrival.setQuarantine(Boolean(flag));
+    syncUI();
+    if (next.quarantineActive) {
+      setNote('Wordless Ocular Quarantine engaged: holding my tongue, I trace the spectral blueprint of the fortified gulf city—still forever without a name. Speak "PYRRHA" and this phantom shatters.');
+    } else {
+      setNote('Leaving ocular quarantine: harsh ochre glare, straight dusty streets, buzzing circular saws, and rattling pump vanes fill the horizon.');
+    }
+    renderFrame();
+    return getState();
+  }
+
+  function toggleQuarantine() {
+    const arr = arrival.getState();
+    return setQuarantine(!arr.quarantineActive);
+  }
+
+  function inspectStone(stoneIdOrIndex) {
+    unlockAllAudio();
+    const arr = arrival.getState();
+    const inGobletView = !arr.hasCrossedThreshold || arr.quarantineActive;
+    if (inGobletView) {
+      const gRes = goblet.inspectStone(stoneIdOrIndex, true);
+      syncUI();
+      if (gRes && gRes.stone) {
+        const suffix = arr.quarantineActive ? ' (beheld in wordless nameless exile).' : '.';
+        setNote(gRes.stone.label + ' — ' + gRes.stone.inscription.replace(/\.$/, '') + suffix);
+      }
+    } else {
+      const aRes = arrival.inspectStone(stoneIdOrIndex, true);
+      syncUI();
+      if (aRes && aRes.stone) {
+        setNote(aRes.stone.label + ' — ' + aRes.stone.inscription);
+      }
+    }
+    renderFrame();
+    return getState();
+  }
+
+  function triggerWindGust(strength) {
+    unlockAllAudio();
+    const st = arrival.triggerWindGust(strength === undefined ? 1.0 : strength);
+    syncUI();
+    if (st.hasCrossedThreshold && !st.quarantineActive) {
+      setNote('A coastal wind gust sweeps over the sea-hiding sand dune, spinning the sheet-metal vanes of the tall lattice water pumps.');
+    }
+    renderFrame();
+    return getState();
+  }
+
+  function triggerSawmillCut() {
+    unlockAllAudio();
+    const st = arrival.triggerSawmillCut();
+    syncUI();
+    if (st.hasCrossedThreshold && !st.quarantineActive) {
+      setNote('Toothed steel blades buzz louder through fresh pine timber, stacking another tier of cut planks between the squat house groups.');
+    }
+    renderFrame();
+    return getState();
+  }
+
+  function syncPlateDrawerUI() {
+    if (plateDrawerOpen) {
+      plateDrawerEl.removeAttribute('hidden');
+    } else {
+      plateDrawerEl.setAttribute('hidden', '');
+    }
+    plateGridEl.setAttribute('data-tab', plateTab);
+    plateGridEl.setAttribute('data-loupe', loupeZoom ? 'true' : 'false');
+    plateLoupeBtn.setAttribute('data-active', loupeZoom ? 'true' : 'false');
+    plateLoupeBtn.textContent = loupeZoom ? '[Z] 1.75x Loupe: On' : '[Z] 1.75x Loupe: Off';
+    for (let i = 0; i < plateTabs.length; i++) {
+      const t = plateTabs[i].getAttribute('data-tab');
+      plateTabs[i].setAttribute('data-active', t === plateTab ? 'true' : 'false');
+    }
+    if (plateTab === 'map') {
+      cardMapEl.removeAttribute('hidden');
+      cardVistaEl.setAttribute('hidden', '');
+    } else if (plateTab === 'vista') {
+      cardMapEl.setAttribute('hidden', '');
+      cardVistaEl.removeAttribute('hidden');
+    } else {
+      cardMapEl.removeAttribute('hidden');
+      cardVistaEl.removeAttribute('hidden');
+    }
+  }
+  function openPlateDrawer() {
+    plateDrawerOpen = true;
+    syncPlateDrawerUI();
+    return getState();
+  }
+
+  function closePlateDrawer() {
+    plateDrawerOpen = false;
+    loupeZoom = false;
+    syncPlateDrawerUI();
+    return getState();
+  }
+
+  function togglePlateDrawer() {
+    plateDrawerOpen = !plateDrawerOpen;
+    if (!plateDrawerOpen) loupeZoom = false;
+    syncPlateDrawerUI();
+    return getState();
+  }
+
+  function setPlateTab(tabName) {
+    const clean = String(tabName || 'diptych').toLowerCase();
+    if (clean === 'map' || clean === 'cartographic' || clean === 'survey') plateTab = 'map';
+    else if (clean === 'vista' || clean === 'image' || clean === 'city') plateTab = 'vista';
+    else plateTab = 'diptych';
+    syncPlateDrawerUI();
+    return getState();
+  }
+
+  function toggleLoupe() {
+    loupeZoom = !loupeZoom;
+    syncPlateDrawerUI();
+    return getState();
+  }
+
+  function toggleMute() {
+    const nextMuted = !arrival.isMuted();
+    arrival.setMuted(nextMuted);
+    goblet.setMuted(nextMuted);
+    if (!nextMuted) unlockAllAudio();
+    syncUI();
+    return getState();
+  }
+
+  function reset() {
+    arrival.reset();
+    goblet.reset();
+    hoveredStoneIndex = -1;
+    plateDrawerOpen = false;
+    loupeZoom = false;
+    plateTab = 'diptych';
+    syncPlateDrawerUI();
+    syncUI();
+    setNote('Before ever seeing it, from the syllables of its name alone I know an enclosed city on the slopes of a bay, with high windows and towers flaring like a goblet, a deep square in the center, and a well in the middle.');
+    renderFrame();
+    return getState();
+  }
+
+  function bindKeyButton(el, fn) {
+    if (!el) return;
+    el.addEventListener('click', function (ev) {
+      ev.preventDefault();
+      fn();
+    });
+    el.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Enter' || ev.key === ' ') {
+        ev.preventDefault();
+        ev.stopPropagation();
+        fn();
+      }
+    });
+  }
+
+  bindKeyButton(qkUtter, function () { summonByName('PYRRHA'); });
+  bindKeyButton(btnUtter, function () { summonByName('PYRRHA'); });
+  bindKeyButton(qkCross, crossThreshold);
+  bindKeyButton(btnCross, crossThreshold);
+  bindKeyButton(qkQuarantine, toggleQuarantine);
+  bindKeyButton(btnQuarantine, toggleQuarantine);
+  bindKeyButton(btnGust, function () { triggerWindGust(1.0); });
+  bindKeyButton(btnSaw, triggerSawmillCut);
+  bindKeyButton(qkPlates, togglePlateDrawer);
+  bindKeyButton(qkMute, toggleMute);
+  bindKeyButton(qkReset, reset);
+  bindKeyButton(plateLoupeBtn, toggleLoupe);
+  bindKeyButton(plateCloseBtn, closePlateDrawer);
+
+  for (let i = 0; i < stoneChips.length; i++) {
+    (function (idx) {
+      bindKeyButton(stoneChips[idx], function () { inspectStone(idx); });
+    })(i);
+  }
+
+  for (let i = 0; i < plateTabs.length; i++) {
+    (function (tabEl) {
+      bindKeyButton(tabEl, function () { setPlateTab(tabEl.getAttribute('data-tab')); });
+    })(plateTabs[i]);
+  }
+
+  plateDrawerEl.addEventListener('click', function (ev) {
+    if (ev.target === plateDrawerEl) closePlateDrawer();
+  });
+
+  function updateTrackFromPointer(clientX) {
+    const rect = stepTrackEl.getBoundingClientRect();
+    if (!rect.width) return;
+    const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+    setThresholdProgress(ratio >= 0.96 ? 1.0 : ratio);
+  }
+
+  stepTrackEl.addEventListener('pointerdown', function (ev) {
+    draggingTrack = true;
+    if (stepTrackEl.setPointerCapture) {
+      try { stepTrackEl.setPointerCapture(ev.pointerId); } catch (_e) {}
+    }
+    updateTrackFromPointer(ev.clientX);
+  });
+  stepTrackEl.addEventListener('pointermove', function (ev) {
+    if (!draggingTrack) return;
+    updateTrackFromPointer(ev.clientX);
+  });
+  stepTrackEl.addEventListener('pointerup', function () { draggingTrack = false; });
+  stepTrackEl.addEventListener('pointercancel', function () { draggingTrack = false; });
+  stepTrackEl.addEventListener('keydown', function (ev) {
+    if (ev.key === 'ArrowRight' || ev.key === 'ArrowUp') {
+      ev.preventDefault();
+      ev.stopPropagation();
+      setThresholdProgress(Math.min(1, arrival.getState().thresholdPosition + 0.12));
+    } else if (ev.key === 'ArrowLeft' || ev.key === 'ArrowDown') {
+      ev.preventDefault();
+      ev.stopPropagation();
+      setThresholdProgress(Math.max(0, arrival.getState().thresholdPosition - 0.12));
+    } else if (ev.key === 'Enter' || ev.key === ' ') {
+      ev.preventDefault();
+      ev.stopPropagation();
+      crossThreshold();
+    }
+  });
+  function getCanvasLocalCoords(ev) {
+    const rect = canvas.getBoundingClientRect();
+    return {
+      x: ev.clientX - rect.left,
+      y: ev.clientY - rect.top
+    };
+  }
+
+  canvas.addEventListener('pointermove', function (ev) {
+    const pt = getCanvasLocalCoords(ev);
+    const arr = arrival.getState();
+    const inGobletView = !arr.hasCrossedThreshold || arr.quarantineActive;
+    let nextHover = -1;
+    if (inGobletView) {
+      nextHover = goblet.hitTestStone(pt.x, pt.y, vpWidth, vpHeight);
+    } else {
+      const hitObj = arrival.hitTestStone(pt.x, pt.y, vpWidth, vpHeight);
+      nextHover = hitObj && typeof hitObj.index === 'number' ? hitObj.index : -1;
+    }
+    if (nextHover !== hoveredStoneIndex) {
+      hoveredStoneIndex = nextHover;
+      canvas.style.cursor = hoveredStoneIndex >= 0 ? 'pointer' : 'crosshair';
+      if (reducedMotion) renderFrame();
+    }
+  });
+
+  canvas.addEventListener('pointerleave', function () {
+    hoveredStoneIndex = -1;
+    canvas.style.cursor = 'crosshair';
+  });
+
+  canvas.addEventListener('click', function (ev) {
+    const pt = getCanvasLocalCoords(ev);
+    const arr = arrival.getState();
+    const inGobletView = !arr.hasCrossedThreshold || arr.quarantineActive;
+    if (inGobletView) {
+      const idx = goblet.hitTestStone(pt.x, pt.y, vpWidth, vpHeight);
+      if (idx >= 0) inspectStone(idx);
+    } else {
+      const hitObj = arrival.hitTestStone(pt.x, pt.y, vpWidth, vpHeight);
+      if (hitObj && typeof hitObj.index === 'number') inspectStone(hitObj.index);
+    }
+  });
+
+  window.addEventListener('keydown', function (ev) {
+    if (ev.ctrlKey || ev.metaKey || ev.altKey) return;
+    const key = ev.key;
+    const lower = key.toLowerCase();
+
+    if (key === 'Escape') {
+      if (plateDrawerOpen) {
+        ev.preventDefault();
+        closePlateDrawer();
+      } else if (arrival.getState().quarantineActive) {
+        ev.preventDefault();
+        setQuarantine(false);
+      }
+      return;
+    }
+    if (lower === 'p') { ev.preventDefault(); togglePlateDrawer(); return; }
+    if (lower === 'z') { ev.preventDefault(); toggleLoupe(); return; }
+    if (lower === 'm') { ev.preventDefault(); toggleMute(); return; }
+    if (lower === 'r') { ev.preventDefault(); reset(); return; }
+    if (plateDrawerOpen) return;
+
+    if (lower === 'a') { ev.preventDefault(); crossThreshold(); }
+    else if (lower === 'n') { ev.preventDefault(); summonByName('PYRRHA'); }
+    else if (lower === 'q') { ev.preventDefault(); toggleQuarantine(); }
+    else if (lower === 'w') { ev.preventDefault(); triggerWindGust(1.0); }
+    else if (lower === 's') { ev.preventDefault(); triggerSawmillCut(); }
+    else if (/^[1-6]$/.test(key)) { ev.preventDefault(); inspectStone(Number(key) - 1); }
+  });
+
+  let lastTs = 0;
+  function tick(ts) {
+    if (!lastTs) lastTs = ts;
+    const dt = Math.min(0.05, Math.max(0.001, (ts - lastTs) / 1000));
+    lastTs = ts;
+    if (!reducedMotion && !plateDrawerOpen) {
+      goblet.step(dt, false);
+      arrival.step(dt, false);
+      renderFrame();
+    }
+    window.requestAnimationFrame(tick);
+  }
+
+  window.addEventListener('resize', resizeCanvas);
+  if (typeof ResizeObserver === 'function') {
+    const ro = new ResizeObserver(function () { resizeCanvas(); });
+    ro.observe(canvasWell);
+  }
+
+  const app = {
+    getState: getState,
+    setThresholdProgress: setThresholdProgress,
+    crossThreshold: crossThreshold,
+    summonByName: summonByName,
+    attemptRecallGobletByName: attemptRecallGobletByName,
+    setQuarantine: setQuarantine,
+    toggleQuarantine: toggleQuarantine,
+    inspectStone: inspectStone,
+    triggerWindGust: triggerWindGust,
+    triggerSawmillCut: triggerSawmillCut,
+    openPlateDrawer: openPlateDrawer,
+    closePlateDrawer: closePlateDrawer,
+    togglePlateDrawer: togglePlateDrawer,
+    setPlateTab: setPlateTab,
+    toggleLoupe: toggleLoupe,
+    toggleMute: toggleMute,
+    reset: reset
+  };
+
+  window.PyrrhaCityApp = app;
+  window.__PYRRHA_STATE__ = function () { return app.getState(); };
+
+  syncPlateDrawerUI();
+  syncUI();
+  resizeCanvas();
+  window.requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>

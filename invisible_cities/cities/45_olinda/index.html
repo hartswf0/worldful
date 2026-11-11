@@ -1,0 +1,2546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>45 · OLINDA — Hidden Cities 1</title>
+<style>
+[hidden]{display:none!important}
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --oli-loam:#14110c;
+  --oli-loam-elev:#1d1811;
+  --oli-loam-card:#251e15;
+  --oli-bark:#3b2a1a;
+  --oli-amber:#d9a441;
+  --oli-sapwood:#efe1bf;
+  --oli-sapwood-dim:#bfaee0;
+  --oli-muted:#b9aa8b;
+  --oli-brass:#c8a24a;
+  --oli-cyan:#9fd3d6;
+  --oli-roof:#c0583a;
+  --oli-moss:#6f8f4a;
+  --oli-pool:#3f8f9a;
+  --oli-carmine:#d23c4f;
+  --oli-turf:#5f9a3c;
+  --oli-slate:#8a8578;
+  --oli-line:rgba(200,162,74,0.26);
+  --oli-line-strong:rgba(217,164,65,0.58);
+}
+html,body{
+  margin:0;
+  padding:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:var(--oli-loam);
+  color:var(--oli-sapwood);
+  font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  -webkit-font-smoothing:antialiased;
+}
+olinda-loupe-meristem{
+  display:grid;
+  grid-template-rows:auto minmax(0,1fr);
+  width:100%;
+  height:100dvh;
+  max-width:100vw;
+  overflow:hidden;
+  background:radial-gradient(circle at 50% 45%,#221b12 0%,#14110c 78%);
+}
+olinda-masthead-band{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:7px 12px;
+  background:linear-gradient(180deg,#211a12 0%,#18130d 100%);
+  border-bottom:1px solid var(--oli-line);
+  min-width:0;
+}
+olinda-city-crest{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  min-width:0;
+}
+olinda-crest-glyph{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:30px;
+  height:30px;
+  flex-shrink:0;
+}
+svg.oli-crest-svg{
+  width:30px;
+  height:30px;
+  display:block;
+}
+olinda-crest-stack{
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+}
+olinda-crest-title{
+  display:block;
+  font-size:0.95rem;
+  font-weight:700;
+  letter-spacing:0.12em;
+  color:var(--oli-sapwood);
+  white-space:nowrap;
+}
+olinda-crest-epigraph{
+  display:block;
+  font-size:0.74rem;
+  color:var(--oli-muted);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  max-width:410px;
+}
+cambium-invariant-strip{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:6px;
+}
+cambium-metric-pill{
+  display:inline-flex;
+  align-items:baseline;
+  gap:5px;
+  padding:3px 8px;
+  border-radius:999px;
+  background:rgba(59,42,26,0.52);
+  border:1px solid var(--oli-line);
+  font-size:0.73rem;
+  white-space:nowrap;
+}
+cambium-metric-key{
+  display:inline;
+  color:var(--oli-muted);
+  font-family:ui-monospace,"SF Mono",Menlo,monospace;
+  font-size:0.68rem;
+}
+cambium-metric-val{
+  display:inline;
+  color:var(--oli-amber);
+  font-weight:700;
+  font-family:ui-monospace,"SF Mono",Menlo,monospace;
+  font-size:0.74rem;
+}
+olinda-utility-cluster{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  flex-shrink:0;
+}
+button.oli-btn{
+  appearance:none;
+  background:linear-gradient(180deg,#332619 0%,#241b12 100%);
+  color:var(--oli-sapwood);
+  border:1px solid var(--oli-line);
+  border-radius:5px;
+  padding:5px 9px;
+  font-family:inherit;
+  font-size:0.75rem;
+  line-height:1.15;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:border-color 0.14s ease,background 0.14s ease,color 0.14s ease;
+}
+button.oli-btn:hover{
+  border-color:var(--oli-amber);
+  color:#fff6df;
+}
+button.oli-btn:focus-visible{
+  outline:2px solid var(--oli-cyan);
+  outline-offset:1px;
+}
+button.oli-btn.oli-active,button.oli-btn[aria-pressed="true"]{
+  background:linear-gradient(180deg,#59401d 0%,#3d2b14 100%);
+  border-color:var(--oli-amber);
+  color:#fff5d8;
+}
+button.oli-btn-primary{
+  background:linear-gradient(180deg,#7a5520 0%,#4e3514 100%);
+  border-color:var(--oli-brass);
+  color:#fff7e2;
+  font-weight:700;
+}
+olinda-work-bench{
+  display:grid;
+  grid-template-columns:306px minmax(0,1fr) 294px;
+  gap:10px;
+  padding:10px;
+  min-height:0;
+  min-width:0;
+  overflow:hidden;
+}
+olinda-left-column{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  min-height:0;
+  min-width:0;
+}
+pinhead-nucleus-lens,scale-epoch-vernier,stretched-outer-girdle{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  padding:10px;
+  background:rgba(29,24,17,0.92);
+  border:1px solid var(--oli-line);
+  border-radius:8px;
+  min-width:0;
+}
+pinhead-nucleus-lens{
+  flex:1 1 auto;
+  min-height:0;
+  overflow-y:auto;
+}
+scale-epoch-vernier{
+  flex:0 0 auto;
+}
+stretched-outer-girdle{
+  min-height:0;
+  overflow:hidden;
+}
+olinda-panel-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:6px;
+}
+olinda-panel-title{
+  display:block;
+  font-size:0.77rem;
+  font-weight:700;
+  letter-spacing:0.09em;
+  text-transform:uppercase;
+  color:var(--oli-amber);
+}
+olinda-panel-badge{
+  display:inline-flex;
+  align-items:center;
+  padding:2px 7px;
+  border-radius:999px;
+  background:rgba(59,42,26,0.7);
+  border:1px solid var(--oli-line);
+  font-family:ui-monospace,"SF Mono",Menlo,monospace;
+  font-size:0.69rem;
+  color:var(--oli-sapwood);
+}
+olinda-loupe-controls{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+olinda-zoom-bar{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+input.oli-zoom-range{
+  flex:1 1 auto;
+  min-width:0;
+  accent-color:var(--oli-amber);
+  cursor:pointer;
+}
+olinda-zoom-actions{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  flex-wrap:wrap;
+}
+olinda-discovery-ledger{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:5px;
+}
+olinda-feature-token{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:5px 6px;
+  border-radius:5px;
+  background:rgba(20,17,12,0.62);
+  border:1px solid rgba(138,133,120,0.28);
+  color:var(--oli-slate);
+  font-size:0.71rem;
+  cursor:pointer;
+  user-select:none;
+  min-width:0;
+}
+olinda-feature-token.oli-discovered{
+  background:rgba(59,42,26,0.68);
+  border-color:var(--oli-line-strong);
+  color:var(--oli-sapwood);
+}
+olinda-feature-dot{
+  display:inline-block;
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  flex-shrink:0;
+  opacity:0.42;
+}
+olinda-feature-token.oli-discovered olinda-feature-dot{
+  opacity:1;
+  box-shadow:0 0 6px currentColor;
+}
+olinda-feature-name{
+  display:block;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+cambium-year-row{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+cambium-year-row button.oli-btn{
+  flex:1 1 auto;
+}
+cambium-vernier-track{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:4px;
+}
+button.oli-stage-btn{
+  padding:5px 3px;
+  font-size:0.68rem;
+  text-align:center;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+annual-cambium-rings{
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+  min-height:0;
+  background:#120f0b;
+  border:1px solid var(--oli-line);
+  border-radius:10px;
+  overflow:hidden;
+  position:relative;
+}
+cambium-stage-frame{
+  display:block;
+  position:relative;
+  flex:1 1 auto;
+  width:100%;
+  height:100%;
+  min-height:180px;
+}
+canvas.oli-stage-canvas{
+  display:block;
+  width:100%;
+  height:100%;
+  touch-action:none;
+  cursor:grab;
+}
+canvas.oli-stage-canvas.oli-dragging{
+  cursor:grabbing;
+}
+olinda-stage-whisper{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  padding:5px 10px;
+  background:rgba(20,17,12,0.88);
+  border-top:1px solid var(--oli-line);
+  font-size:0.72rem;
+  color:var(--oli-muted);
+  pointer-events:none;
+}
+olinda-whisper-line{
+  display:inline;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+cambium-girdle-note{
+  display:block;
+  font-size:0.71rem;
+  color:var(--oli-muted);
+  line-height:1.3;
+}
+cambium-lineage-scroll{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  flex:1 1 auto;
+  min-height:0;
+  overflow-y:auto;
+  padding-right:2px;
+}
+cambium-ring-entry{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  padding:7px 8px;
+  border-radius:6px;
+  background:rgba(20,17,12,0.72);
+  border:1px solid rgba(200,162,74,0.2);
+  cursor:pointer;
+  transition:border-color 0.14s ease,background 0.14s ease;
+}
+cambium-ring-entry:hover{
+  border-color:var(--oli-brass);
+}
+cambium-ring-entry.oli-selected{
+  background:rgba(72,51,23,0.72);
+  border-color:var(--oli-amber);
+  box-shadow:inset 0 0 0 1px rgba(217,164,65,0.35);
+}
+cambium-ring-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:6px;
+}
+cambium-ring-badge{
+  display:inline-block;
+  padding:1px 6px;
+  border-radius:4px;
+  font-size:0.66rem;
+  font-family:ui-monospace,"SF Mono",Menlo,monospace;
+  background:rgba(59,42,26,0.85);
+  color:var(--oli-amber);
+}
+cambium-ring-meta{
+  display:block;
+  font-size:0.69rem;
+  color:var(--oli-muted);
+  font-family:ui-monospace,"SF Mono",Menlo,monospace;
+}
+cambium-ring-buildings{
+  display:flex;
+  flex-wrap:wrap;
+  gap:4px;
+}
+cambium-bldg-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:3px;
+  padding:1px 5px;
+  border-radius:3px;
+  background:rgba(59,42,26,0.45);
+  font-size:0.66rem;
+  color:var(--oli-sapwood);
+}
+olinda-plate-drawer{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:fixed;
+  inset:0;
+  z-index:80;
+  background:rgba(12,10,7,0.86);
+  padding:14px;
+}
+olinda-plate-sheet{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  width:min(1120px,100%);
+  max-height:100%;
+  background:#1b150e;
+  border:1px solid var(--oli-brass);
+  border-radius:10px;
+  padding:10px;
+  box-shadow:0 22px 60px rgba(0,0,0,0.72);
+  overflow:hidden;
+}
+olinda-plate-bar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:8px;
+}
+olinda-plate-tabs,olinda-plate-actions{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  flex-wrap:wrap;
+}
+olinda-plate-viewport{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex:1 1 auto;
+  min-height:0;
+  background:#0f0c08;
+  border:1px solid var(--oli-line);
+  border-radius:6px;
+  overflow:hidden;
+  padding:6px;
+}
+olinda-plate-frame{
+  display:block;
+  position:relative;
+  max-width:100%;
+  max-height:72dvh;
+  line-height:0;
+}
+img.oli-plate-img{
+  display:block;
+  max-width:100%;
+  max-height:72dvh;
+  width:auto;
+  height:auto;
+  object-fit:contain;
+  border-radius:4px;
+}
+olinda-plate-loupe{
+  display:block;
+  position:absolute;
+  width:168px;
+  height:168px;
+  border-radius:50%;
+  border:3px solid var(--oli-brass);
+  box-shadow:0 8px 28px rgba(0,0,0,0.75),inset 0 0 14px rgba(159,211,214,0.32);
+  background-repeat:no-repeat;
+  pointer-events:none;
+  transform:translate(-50%,-50%);
+}
+olinda-plate-caption{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  font-size:0.73rem;
+  color:var(--oli-muted);
+}
+@media (max-width:960px){
+  olinda-masthead-band{
+    flex-wrap:wrap;
+    gap:5px;
+    padding:6px 8px;
+  }
+  olinda-crest-epigraph{
+    display:none;
+  }
+  olinda-utility-cluster{
+    gap:4px;
+    flex-wrap:wrap;
+  }
+  button.oli-btn{
+    padding:4px 6px;
+    font-size:0.69rem;
+  }
+  cambium-invariant-strip{
+    width:100%;
+    gap:4px;
+    order:3;
+  }
+  cambium-metric-pill{
+    padding:2px 6px;
+    font-size:0.66rem;
+  }
+  olinda-work-bench{
+    grid-template-columns:minmax(0,1fr);
+    grid-template-rows:238px auto 176px minmax(110px,1fr);
+    gap:6px;
+    padding:6px;
+  }
+  olinda-left-column{
+    display:contents;
+  }
+  annual-cambium-rings{
+    order:1;
+  }
+  cambium-stage-frame{
+    min-height:190px;
+  }
+  scale-epoch-vernier{
+    order:2;
+    padding:6px 8px;
+    gap:5px;
+  }
+  pinhead-nucleus-lens{
+    order:3;
+    padding:6px 8px;
+    gap:5px;
+  }
+  olinda-discovery-ledger{
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:4px;
+  }
+  olinda-feature-token{
+    padding:3px 4px;
+    font-size:0.62rem;
+    gap:4px;
+  }
+  stretched-outer-girdle{
+    order:4;
+    padding:6px 8px;
+    gap:5px;
+  }
+  cambium-girdle-note{
+    display:none;
+  }
+}
+</style>
+</head>
+<body>
+<olinda-loupe-meristem class="oli-meristem-root" id="oli-root">
+  <olinda-masthead-band class="oli-masthead">
+    <olinda-city-crest class="oli-crest">
+      <olinda-crest-glyph class="oli-crest-glyph">
+        <svg class="oli-crest-svg" viewBox="0 0 32 32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="#3b2a1a" stroke="#c8a24a" stroke-width="1.4"></circle>
+          <circle cx="16" cy="16" r="10.2" fill="none" stroke="#d9a441" stroke-width="1"></circle>
+          <circle cx="16" cy="16" r="6.4" fill="#efe1bf" fill-opacity="0.18" stroke="#efe1bf" stroke-width="0.9"></circle>
+          <circle cx="16" cy="16" r="2.1" fill="#9fd3d6"></circle>
+        </svg>
+      </olinda-crest-glyph>
+      <olinda-crest-stack class="oli-crest-stack">
+        <olinda-crest-title class="oli-crest-title">45 · OLINDA · HIDDEN CITIES 1</olinda-crest-title>
+        <olinda-crest-epigraph class="oli-crest-epigraph">Seek with a magnifying glass: a pinhead swells year by year inside the old walls, pressing earlier quarters outward.</olinda-crest-epigraph>
+      </olinda-crest-stack>
+    </olinda-city-crest>
+
+    <cambium-invariant-strip class="oli-invariants" aria-live="polite">
+      <cambium-metric-pill class="oli-metric-pill">
+        <cambium-metric-key class="oli-metric-key">year</cambium-metric-key>
+        <cambium-metric-val class="oli-metric-val" id="oli-val-year">0</cambium-metric-val>
+      </cambium-metric-pill>
+      <cambium-metric-pill class="oli-metric-pill">
+        <cambium-metric-key class="oli-metric-key">concentricRingsCount</cambium-metric-key>
+        <cambium-metric-val class="oli-metric-val" id="oli-val-rings">1</cambium-metric-val>
+      </cambium-metric-pill>
+      <cambium-metric-pill class="oli-metric-pill">
+        <cambium-metric-key class="oli-metric-key">generations</cambium-metric-key>
+        <cambium-metric-val class="oli-metric-val" id="oli-val-gens">2</cambium-metric-val>
+      </cambium-metric-pill>
+      <cambium-metric-pill class="oli-metric-pill">
+        <cambium-metric-key class="oli-metric-key">oldWallsDestroyed</cambium-metric-key>
+        <cambium-metric-val class="oli-metric-val" id="oli-val-destroyed">false</cambium-metric-val>
+      </cambium-metric-pill>
+    </cambium-invariant-strip>
+
+    <olinda-utility-cluster class="oli-utility-bar">
+      <button type="button" class="oli-btn oli-active" id="oli-btn-loupe" aria-pressed="true" title="Toggle brass loupe (L)">Loupe [L]</button>
+      <button type="button" class="oli-btn" id="oli-btn-plates" aria-pressed="false" title="Open Royal Plates (P)">Plates [P]</button>
+      <button type="button" class="oli-btn" id="oli-btn-mute" aria-pressed="false" title="Mute / unmute audio (M)">Sound [M]</button>
+      <button type="button" class="oli-btn" id="oli-btn-motion" aria-pressed="false" title="Toggle reduced motion">Motion</button>
+      <button type="button" class="oli-btn" id="oli-btn-reset" title="Reset meristem &amp; loupe (R)">Reset [R]</button>
+    </olinda-utility-cluster>
+  </olinda-masthead-band>
+  <olinda-work-bench class="oli-workbench">
+    <olinda-left-column class="oli-left-col">
+      <pinhead-nucleus-lens class="oli-lens-panel" id="oli-lens-panel">
+        <olinda-panel-head class="oli-panel-head">
+          <olinda-panel-title class="oli-panel-title">Pinhead Nucleus Loupe</olinda-panel-title>
+          <olinda-panel-badge class="oli-panel-badge" id="oli-zoom-badge">×1.0 · searching</olinda-panel-badge>
+        </olinda-panel-head>
+
+        <olinda-loupe-controls class="oli-loupe-controls">
+          <olinda-zoom-bar class="oli-zoom-bar">
+            <button type="button" class="oli-btn" id="oli-zoom-out" title="Zoom out (-)">−</button>
+            <input type="range" class="oli-zoom-range" id="oli-zoom-range" min="1" max="64" step="0.5" value="1" aria-label="Loupe magnification 1x to 64x">
+            <button type="button" class="oli-btn" id="oli-zoom-in" title="Zoom in (+)">+</button>
+          </olinda-zoom-bar>
+          <olinda-zoom-actions class="oli-zoom-actions">
+            <button type="button" class="oli-btn" id="oli-seek-nucleus" title="Center brass loupe over pinhead nucleus">Center on Pinhead</button>
+            <button type="button" class="oli-btn" id="oli-zoom-16" title="Focus to 16x over pinhead">Resolve ×16</button>
+            <olinda-panel-badge class="oli-panel-badge" id="oli-disc-count">0 / 8 resolved</olinda-panel-badge>
+          </olinda-zoom-actions>
+        </olinda-loupe-controls>
+
+        <olinda-discovery-ledger class="oli-discovery-ledger" id="oli-discovery-ledger">
+          <olinda-feature-token class="oli-feature-token" data-feature="roofs" role="button" tabindex="0">
+            <olinda-feature-dot class="oli-feature-dot" style="background:#c0583a;color:#c0583a"></olinda-feature-dot>
+            <olinda-feature-name class="oli-feature-name">Roofs</olinda-feature-name>
+          </olinda-feature-token>
+          <olinda-feature-token class="oli-feature-token" data-feature="gardens" role="button" tabindex="0">
+            <olinda-feature-dot class="oli-feature-dot" style="background:#6f8f4a;color:#6f8f4a"></olinda-feature-dot>
+            <olinda-feature-name class="oli-feature-name">Gardens</olinda-feature-name>
+          </olinda-feature-token>
+          <olinda-feature-token class="oli-feature-token" data-feature="pools" role="button" tabindex="0">
+            <olinda-feature-dot class="oli-feature-dot" style="background:#3f8f9a;color:#3f8f9a"></olinda-feature-dot>
+            <olinda-feature-name class="oli-feature-name">Pools</olinda-feature-name>
+          </olinda-feature-token>
+          <olinda-feature-token class="oli-feature-token" data-feature="antennas" role="button" tabindex="0">
+            <olinda-feature-dot class="oli-feature-dot" style="background:#efe1bf;color:#efe1bf"></olinda-feature-dot>
+            <olinda-feature-name class="oli-feature-name">Antennas</olinda-feature-name>
+          </olinda-feature-token>
+          <olinda-feature-token class="oli-feature-token" data-feature="skylights" role="button" tabindex="0">
+            <olinda-feature-dot class="oli-feature-dot" style="background:#9fd3d6;color:#9fd3d6"></olinda-feature-dot>
+            <olinda-feature-name class="oli-feature-name">Skylights</olinda-feature-name>
+          </olinda-feature-token>
+          <olinda-feature-token class="oli-feature-token" data-feature="square_kiosks" role="button" tabindex="0">
+            <olinda-feature-dot class="oli-feature-dot" style="background:#c8a24a;color:#c8a24a"></olinda-feature-dot>
+            <olinda-feature-name class="oli-feature-name">Kiosks</olinda-feature-name>
+          </olinda-feature-token>
+          <olinda-feature-token class="oli-feature-token" data-feature="street_streamers" role="button" tabindex="0">
+            <olinda-feature-dot class="oli-feature-dot" style="background:#d23c4f;color:#d23c4f"></olinda-feature-dot>
+            <olinda-feature-name class="oli-feature-name">Streamers</olinda-feature-name>
+          </olinda-feature-token>
+          <olinda-feature-token class="oli-feature-token" data-feature="horse_racing_track" role="button" tabindex="0">
+            <olinda-feature-dot class="oli-feature-dot" style="background:#5f9a3c;color:#5f9a3c"></olinda-feature-dot>
+            <olinda-feature-name class="oli-feature-name">Race Track</olinda-feature-name>
+          </olinda-feature-token>
+        </olinda-discovery-ledger>
+      </pinhead-nucleus-lens>
+
+      <scale-epoch-vernier class="oli-vernier-panel" id="oli-vernier-panel">
+        <olinda-panel-head class="oli-panel-head">
+          <olinda-panel-title class="oli-panel-title">Annual Meristem Vernier</olinda-panel-title>
+          <olinda-panel-badge class="oli-panel-badge" id="oli-stage-badge">pinhead</olinda-panel-badge>
+        </olinda-panel-head>
+        <cambium-year-row class="oli-year-row">
+          <button type="button" class="oli-btn oli-btn-primary" id="oli-advance-year">Advance Year (+1 yr) [Y]</button>
+        </cambium-year-row>
+        <cambium-vernier-track class="oli-vernier-track" id="oli-vernier-track">
+          <button type="button" class="oli-btn oli-stage-btn oli-active" data-stage="pinhead" aria-pressed="true" title="Stage 1: Pinhead">1·Pin</button>
+          <button type="button" class="oli-btn oli-stage-btn" data-stage="half_lemon" aria-pressed="false" title="Stage 2: Half a Lemon">2·Lemon</button>
+          <button type="button" class="oli-btn oli-stage-btn" data-stage="mushroom" aria-pressed="false" title="Stage 3: Large Mushroom">3·Mushrm</button>
+          <button type="button" class="oli-btn oli-stage-btn" data-stage="soup_plate" aria-pressed="false" title="Stage 4: Soup Plate">4·Plate</button>
+          <button type="button" class="oli-btn oli-stage-btn" data-stage="full_city" aria-pressed="false" title="Stage 5: Full-Size City">5·City</button>
+        </cambium-vernier-track>
+      </scale-epoch-vernier>
+    </olinda-left-column>
+
+    <annual-cambium-rings class="oli-stage-panel" id="oli-stage-panel">
+      <cambium-stage-frame class="oli-stage-frame" id="oli-stage-frame">
+        <canvas class="oli-stage-canvas" id="oli-stage-canvas" aria-label="Concentric cambium rings of Olinda with draggable brass magnifying glass"></canvas>
+      </cambium-stage-frame>
+      <olinda-stage-whisper class="oli-stage-whisper">
+        <olinda-whisper-line class="oli-whisper-line" id="oli-whisper-text">Drag the brass magnifying glass over the central glint; zoom past ×8 to inspect the nascent city.</olinda-whisper-line>
+        <olinda-panel-badge class="oli-panel-badge" id="oli-coord-badge">lens 0.62, 0.58</olinda-panel-badge>
+      </olinda-stage-whisper>
+    </annual-cambium-rings>
+
+    <stretched-outer-girdle class="oli-lineage-panel" id="oli-lineage-panel">
+      <olinda-panel-head class="oli-panel-head">
+        <olinda-panel-title class="oli-panel-title">Ring Lineage &amp; Girdles</olinda-panel-title>
+        <olinda-panel-badge class="oli-panel-badge" id="oli-lineage-badge">2 rings</olinda-panel-badge>
+      </olinda-panel-head>
+      <cambium-girdle-note class="oli-girdle-note">Old walls never fall: towers, churches, palaces, and theaters stretch into narrow outer girdles as new rings press from within.</cambium-girdle-note>
+      <cambium-lineage-scroll class="oli-lineage-scroll" id="oli-lineage-scroll"></cambium-lineage-scroll>
+    </stretched-outer-girdle>
+  </olinda-work-bench>
+
+  <olinda-plate-drawer class="oli-plate-drawer" id="oli-plate-drawer" role="dialog" aria-modal="true" aria-label="Olinda Royal Plates" hidden>
+    <olinda-plate-sheet class="oli-plate-sheet">
+      <olinda-plate-bar class="oli-plate-bar">
+        <olinda-plate-tabs class="oli-plate-tabs">
+          <button type="button" class="oli-btn oli-tab-btn oli-active" id="oli-tab-map" data-tab="map" aria-pressed="true">Survey Map</button>
+          <button type="button" class="oli-btn oli-tab-btn" id="oli-tab-painting" data-tab="painting" aria-pressed="false">Painting</button>
+        </olinda-plate-tabs>
+        <olinda-plate-actions class="oli-plate-actions">
+          <button type="button" class="oli-btn" id="oli-plate-zoom-btn" aria-pressed="false" title="Toggle optical plate loupe (Z)">Plate Loupe [Z]</button>
+          <button type="button" class="oli-btn" id="oli-plate-close-btn" title="Close drawer (Escape)">Close [Esc]</button>
+        </olinda-plate-actions>
+      </olinda-plate-bar>
+      <olinda-plate-viewport class="oli-plate-viewport">
+        <olinda-plate-frame class="oli-plate-frame" id="oli-plate-frame">
+          <img class="oli-plate-img" id="oli-img-map" src="map.png" width="1600" height="1200" alt="Cartographic survey plate of concentric Olinda">
+          <img class="oli-plate-img" id="oli-img-painting" src="image.png" width="1600" height="1000" alt="Painted view of Olinda nested within concentric walls" hidden>
+          <olinda-plate-loupe class="oli-plate-loupe" id="oli-plate-loupe" hidden></olinda-plate-loupe>
+        </olinda-plate-frame>
+      </olinda-plate-viewport>
+      <olinda-plate-caption class="oli-plate-caption">
+        <olinda-whisper-line class="oli-whisper-line" id="oli-plate-caption-text">Survey Map · Concentric cambium girdles and innermost meristem of Olinda (1600×1200)</olinda-whisper-line>
+        <olinda-panel-badge class="oli-panel-badge" id="oli-plate-dim-badge">1600×1200</olinda-panel-badge>
+      </olinda-plate-caption>
+    </olinda-plate-sheet>
+  </olinda-plate-drawer>
+</olinda-loupe-meristem>
+<script>
+/* OLINDA (City 45) - layers/pinhead_loupe_nucleus.js
+ * Stone 1: "Go out into Olinda with a magnifying glass and seek carefully:
+ * somewhere a point no bigger than the head of a pin, slightly enlarged,
+ * reveals roofs, antennas, skylights, gardens, pools, streamers across
+ * streets, kiosks in squares, and a horse-racing track."
+ * Owner: olinda-lens-botanist. Classic browser IIFE on globalThis.
+ */
+globalThis.OlindaPinheadLoupe = (function () {
+  'use strict';
+
+  var PALETTE = {
+    loamNight: '#14110c', barkUmber: '#3b2a1a', cambiumAmber: '#d9a441',
+    sapwoodCream: '#efe1bf', brassLoupe: '#c8a24a', lensGlassCyan: '#9fd3d6',
+    terracottaRoof: '#c0583a', gardenMoss: '#6f8f4a', poolTeal: '#3f8f9a',
+    streamerCarmine: '#d23c4f', turfTrackGreen: '#5f9a3c', girdleSlate: '#8a8578'
+  };
+  var PINHEAD_FEATURES = ['roofs', 'antennas', 'skylights', 'gardens', 'pools',
+    'street_streamers', 'square_kiosks', 'horse_racing_track'];
+  /* Discovery thresholds (lens over nucleus + zoom >= threshold). All eight
+   * are discovered by REVEAL_ZOOM; visual fade-in runs th*0.5 .. th*1.6. */
+  var FEATURE_THRESHOLDS = {
+    roofs: 4, gardens: 4.5, pools: 5, antennas: 5.5, skylights: 6,
+    square_kiosks: 6.5, street_streamers: 7, horse_racing_track: 8
+  };
+  var ZOOM_MIN = 1, ZOOM_MAX = 64, REVEAL_ZOOM = 8;
+  var OFFSET_GAIN = 1.5, COVER_FRACTION = 0.6, TAU = Math.PI * 2;
+
+  function clamp(v, a, b) { return v < a ? a : (v > b ? b : v); }
+  function clamp01(v) { return clamp(v, 0, 1); }
+  function smooth(a, b, x) { var t = clamp01((x - a) / (b - a)); return t * t * (3 - 2 * t); }
+  function num(v, d) { return (typeof v === 'number' && isFinite(v)) ? v : d; }
+  function rgba(hex, a) {
+    var n = parseInt(String(hex).replace('#', ''), 16);
+    return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + clamp01(a).toFixed(3) + ')';
+  }
+  function hash2(i, j) { var s = Math.sin(i * 127.1 + j * 311.7) * 43758.5453; return s - Math.floor(s); }
+  function mulberry32(seed) {
+    return function () {
+      seed = (seed + 0x6D2B79F5) | 0;
+      var t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  /* ---------- miniature city layout (unit disk, radius 1) ---------- */
+  var TRACK = { x: 0.30, y: 0.30, rx: 0.40, ry: 0.22 };
+  var SQUARES = [{ x: -0.40, y: -0.30, s: 0.15 }, { x: 0.32, y: -0.44, s: 0.12 }, { x: -0.46, y: 0.40, s: 0.11 }];
+  var CELL = 0.22, STREET = 0.06;
+  var COATS = ['#5a3a22', '#2a1d14', '#8b5a2b', '#d8c9a8', '#6b4a30', '#3a2a20', '#a0703f'];
+  var SILKS = [PALETTE.streamerCarmine, PALETTE.lensGlassCyan, PALETTE.cambiumAmber, PALETTE.sapwoodCream,
+    PALETTE.poolTeal, PALETTE.terracottaRoof, PALETTE.gardenMoss];
+
+  function inTrack(x, y, m) {
+    var dx = (x - TRACK.x) / (TRACK.rx + m), dy = (y - TRACK.y) / (TRACK.ry + m);
+    return dx * dx + dy * dy < 1;
+  }
+  function inSquare(x, y, m) {
+    for (var i = 0; i < SQUARES.length; i++) {
+      var q = SQUARES[i];
+      if (Math.abs(x - q.x) < q.s + m && Math.abs(y - q.y) < q.s + m) return true;
+    }
+    return false;
+  }
+
+  function buildCity() {
+    var rnd = mulberry32(45045);
+    var c = { buildings: [], gardens: [], pools: [], streamers: [], kiosks: [], horses: [] };
+    var b = (CELL - STREET) / 2, gx, gy, i;
+    for (gx = -5; gx <= 4; gx++) {
+      for (gy = -5; gy <= 4; gy++) {
+        var cx = (gx + 0.5) * CELL, cy = (gy + 0.5) * CELL;
+        if (Math.sqrt(cx * cx + cy * cy) > 0.84) continue;
+        if (inTrack(cx, cy, 0.07) || inSquare(cx, cy, 0.07)) continue;
+        var r = rnd();
+        if (r < 0.13) {
+          var trees = [];
+          for (i = 0; i < 5; i++) trees.push({ x: (rnd() - 0.5) * b * 1.5, y: (rnd() - 0.5) * b * 1.5, r: b * (0.16 + rnd() * 0.14) });
+          c.gardens.push({ x: cx, y: cy, s: b, trees: trees });
+        } else if (r < 0.22) {
+          c.pools.push({ x: cx, y: cy, s: b, w: 0.55 + rnd() * 0.25, h: 0.35 + rnd() * 0.25 });
+        } else {
+          var nx = r < 0.6 ? 2 : 1, ny = (r < 0.45 || r > 0.85) ? 2 : 1;
+          var bw = (2 * b) / nx, bh = (2 * b) / ny;
+          for (var ix = 0; ix < nx; ix++) {
+            for (var iy = 0; iy < ny; iy++) {
+              c.buildings.push({
+                x: cx - b + ix * bw + 0.006, y: cy - b + iy * bh + 0.006, w: bw - 0.012, h: bh - 0.012,
+                shade: rnd(), sky: rnd() < 0.45, ant: rnd() < 0.35, antA: rnd() * TAU
+              });
+            }
+          }
+        }
+      }
+    }
+    for (var k = -4; k <= 4; k++) {
+      for (var j = -5; j <= 4; j++) {
+        var along = (j + 0.5) * CELL, across = k * CELL;
+        for (var o = 0; o < 2; o++) {
+          var sx = o ? across : along, sy = o ? along : across;
+          if (Math.sqrt(sx * sx + sy * sy) > 0.8 || inTrack(sx, sy, 0.05) || inSquare(sx, sy, 0.03)) continue;
+          if (rnd() < 0.32) c.streamers.push({ x: sx, y: sy, horiz: !o, phase: rnd() * TAU });
+        }
+      }
+    }
+    SQUARES.forEach(function (q, qi) {
+      var n = 2 + (qi === 0 ? 1 : 0);
+      for (var m = 0; m < n; m++) {
+        var a = (m / n) * TAU + qi;
+        c.kiosks.push({ x: q.x + Math.cos(a) * q.s * 0.5, y: q.y + Math.sin(a) * q.s * 0.5,
+          r: 0.028, rot: rnd() * TAU, silk: SILKS[(qi + m) % SILKS.length] });
+      }
+    });
+    for (i = 0; i < 7; i++) {
+      c.horses.push({ a0: (i / 7) * TAU * 0.35 + rnd() * 0.2, lane: 0.2 + (i % 4) * 0.2,
+        speed: 0.5 + rnd() * 0.22, coat: COATS[i], silk: SILKS[i] });
+    }
+    return c;
+  }
+  var CITY = buildCity();
+
+  /* ---------- miniature city drawing (unit space; u = one screen px) ---------- */
+  function drawCity(ctx, S, alphaOf, motionT, glint) {
+    var u = 1 / S, cityA = smooth(1.6, 5, alphaOf.zoom), i;
+    ctx.save();
+    ctx.beginPath(); ctx.arc(0, 0, 1, 0, TAU); ctx.clip();
+    if (cityA > 0.01) {
+      ctx.globalAlpha = cityA;
+      var g = ctx.createRadialGradient(0, 0, 0.1, 0, 0, 1);
+      g.addColorStop(0, '#8a7350'); g.addColorStop(1, '#5e4a30');
+      ctx.fillStyle = g; ctx.fillRect(-1, -1, 2, 2);
+      ctx.fillStyle = rgba(PALETTE.sapwoodCream, 0.85);
+      SQUARES.forEach(function (q) { ctx.fillRect(q.x - q.s, q.y - q.s, q.s * 2, q.s * 2); });
+      ctx.strokeStyle = rgba(PALETTE.girdleSlate, 0.6); ctx.lineWidth = Math.max(u * 0.6, 0.004);
+      SQUARES.forEach(function (q) { ctx.strokeRect(q.x - q.s * 0.92, q.y - q.s * 0.92, q.s * 1.84, q.s * 1.84); });
+    }
+    drawTrack(ctx, u, alphaOf.horse_racing_track * cityA, motionT);
+    drawGreens(ctx, u, alphaOf.gardens * cityA, alphaOf.pools * cityA, glint);
+    drawRoofs(ctx, u, alphaOf, cityA, motionT);
+    drawKiosks(ctx, u, alphaOf.square_kiosks * cityA);
+    drawStreamers(ctx, u, alphaOf.street_streamers * cityA, motionT);
+    if (cityA > 0.01) {
+      ctx.globalAlpha = cityA;
+      ctx.strokeStyle = rgba(PALETTE.sapwoodCream, 0.8); ctx.lineWidth = Math.max(u * 1.2, 0.035);
+      ctx.beginPath(); ctx.arc(0, 0, 0.975, 0, TAU); ctx.stroke();
+      ctx.strokeStyle = rgba(PALETTE.barkUmber, 0.9); ctx.lineWidth = Math.max(u * 0.6, 0.01);
+      ctx.beginPath(); ctx.arc(0, 0, 0.95, 0, TAU); ctx.stroke();
+    }
+    ctx.restore();
+    /* unresolved bead: the pinhead before it blossoms into a city */
+    var beadA = 1 - cityA * 0.92;
+    if (beadA > 0.01) {
+      ctx.save(); ctx.globalAlpha = beadA;
+      var bg = ctx.createRadialGradient(-0.3, -0.3, 0.05, 0, 0, 1);
+      bg.addColorStop(0, PALETTE.sapwoodCream); bg.addColorStop(0.45, PALETTE.cambiumAmber); bg.addColorStop(1, PALETTE.barkUmber);
+      ctx.fillStyle = bg; ctx.beginPath(); ctx.arc(0, 0, 1, 0, TAU); ctx.fill();
+      ctx.strokeStyle = rgba(PALETTE.barkUmber, 0.6); ctx.lineWidth = Math.max(u, 0.02);
+      for (i = 1; i <= 3; i++) { ctx.beginPath(); ctx.arc(0, 0, i * 0.24, 0, TAU); ctx.stroke(); }
+      ctx.restore();
+    }
+  }
+
+  function drawTrack(ctx, u, a, t) {
+    if (a <= 0.01) return;
+    var T = TRACK, i;
+    ctx.save(); ctx.globalAlpha = a; ctx.translate(T.x, T.y);
+    ctx.fillStyle = PALETTE.turfTrackGreen;
+    ctx.beginPath(); ctx.ellipse(0, 0, T.rx, T.ry, 0, 0, TAU); ctx.fill();
+    ctx.fillStyle = '#c9a877';
+    ctx.beginPath(); ctx.ellipse(0, 0, T.rx * 0.93, T.ry * 0.88, 0, 0, TAU); ctx.fill();
+    ctx.fillStyle = PALETTE.turfTrackGreen;
+    ctx.beginPath(); ctx.ellipse(0, 0, T.rx * 0.7, T.ry * 0.52, 0, 0, TAU); ctx.fill();
+    ctx.strokeStyle = rgba(PALETTE.sapwoodCream, 0.95); ctx.lineWidth = Math.max(u * 0.5, 0.004);
+    ctx.beginPath(); ctx.ellipse(0, 0, T.rx * 0.93, T.ry * 0.88, 0, 0, TAU); ctx.stroke();
+    ctx.beginPath(); ctx.ellipse(0, 0, T.rx * 0.7, T.ry * 0.52, 0, 0, TAU); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(T.rx * 0.7, 0); ctx.lineTo(T.rx * 0.93, 0); ctx.stroke();
+    ctx.fillStyle = rgba(PALETTE.terracottaRoof, 0.9);
+    ctx.fillRect(-T.rx * 0.25, -T.ry * 1.12, T.rx * 0.5, T.ry * 0.16);
+    for (i = 0; i < CITY.horses.length; i++) {
+      var h = CITY.horses[i], ang = h.a0 - t * h.speed;
+      var k = 0.71 + h.lane * 0.2, rx = T.rx * k, ry = T.ry * (0.53 + h.lane * 0.33);
+      var x = Math.cos(ang) * rx, y = Math.sin(ang) * ry;
+      var dir = Math.atan2(-Math.cos(ang) * ry, Math.sin(ang) * rx);
+      var L = 0.024;
+      ctx.save(); ctx.translate(x, y); ctx.rotate(dir);
+      if (L / u < 1.2) {
+        ctx.fillStyle = h.coat; ctx.beginPath(); ctx.arc(0, 0, Math.max(L * 0.5, u * 0.6), 0, TAU); ctx.fill();
+      } else {
+        var gait = Math.sin(t * 14 + i * 1.7) * L * 0.25;
+        ctx.strokeStyle = h.coat; ctx.lineWidth = L * 0.12;
+        ctx.beginPath();
+        ctx.moveTo(L * 0.3, 0); ctx.lineTo(L * 0.3 + gait, L * 0.42);
+        ctx.moveTo(L * 0.3, 0); ctx.lineTo(L * 0.3 - gait, -L * 0.42);
+        ctx.moveTo(-L * 0.3, 0); ctx.lineTo(-L * 0.3 - gait, L * 0.42);
+        ctx.moveTo(-L * 0.3, 0); ctx.lineTo(-L * 0.3 + gait, -L * 0.42);
+        ctx.stroke();
+        ctx.fillStyle = h.coat;
+        ctx.beginPath(); ctx.ellipse(0, 0, L * 0.5, L * 0.2, 0, 0, TAU); ctx.fill();
+        ctx.beginPath(); ctx.ellipse(L * 0.62, 0, L * 0.18, L * 0.1, 0, 0, TAU); ctx.fill();
+        ctx.fillStyle = h.silk; ctx.beginPath(); ctx.arc(L * 0.05, 0, L * 0.16, 0, TAU); ctx.fill();
+      }
+      ctx.restore();
+    }
+    ctx.restore();
+  }
+
+  function drawGreens(ctx, u, ga, pa, glint) {
+    var i, j;
+    if (ga > 0.01) {
+      ctx.save(); ctx.globalAlpha = ga;
+      for (i = 0; i < CITY.gardens.length; i++) {
+        var gd = CITY.gardens[i];
+        ctx.fillStyle = PALETTE.gardenMoss; ctx.fillRect(gd.x - gd.s, gd.y - gd.s, gd.s * 2, gd.s * 2);
+        for (j = 0; j < gd.trees.length; j++) {
+          var tr = gd.trees[j];
+          ctx.fillStyle = 'rgba(30,40,18,0.45)';
+          ctx.beginPath(); ctx.arc(gd.x + tr.x + tr.r * 0.25, gd.y + tr.y + tr.r * 0.25, tr.r, 0, TAU); ctx.fill();
+          ctx.fillStyle = j % 2 ? '#4f6e33' : '#86a85a';
+          ctx.beginPath(); ctx.arc(gd.x + tr.x, gd.y + tr.y, tr.r, 0, TAU); ctx.fill();
+        }
+      }
+      ctx.restore();
+    }
+    if (pa > 0.01) {
+      ctx.save(); ctx.globalAlpha = pa;
+      for (i = 0; i < CITY.pools.length; i++) {
+        var p = CITY.pools[i], pw = p.s * 2 * p.w, ph = p.s * 2 * p.h;
+        ctx.fillStyle = '#9aa77a'; ctx.fillRect(p.x - p.s, p.y - p.s, p.s * 2, p.s * 2);
+        ctx.fillStyle = PALETTE.sapwoodCream; ctx.fillRect(p.x - pw / 2 - 0.008, p.y - ph / 2 - 0.008, pw + 0.016, ph + 0.016);
+        ctx.fillStyle = PALETTE.poolTeal; ctx.fillRect(p.x - pw / 2, p.y - ph / 2, pw, ph);
+        ctx.strokeStyle = rgba(PALETTE.lensGlassCyan, 0.5 + 0.4 * glint); ctx.lineWidth = Math.max(u * 0.5, 0.004);
+        ctx.beginPath(); ctx.moveTo(p.x - pw * 0.35, p.y - ph * 0.15); ctx.lineTo(p.x + pw * 0.1, p.y - ph * 0.15);
+        ctx.moveTo(p.x - pw * 0.1, p.y + ph * 0.15); ctx.lineTo(p.x + pw * 0.3, p.y + ph * 0.15); ctx.stroke();
+      }
+      ctx.restore();
+    }
+  }
+
+  function drawRoofs(ctx, u, A, cityA, t) {
+    var ra = A.roofs * cityA, sa = A.skylights * cityA, aa = A.antennas * cityA, i, b;
+    var lw = Math.max(u * 0.5, 0.003);
+    if (ra > 0.01) {
+      ctx.save(); ctx.globalAlpha = ra;
+      for (i = 0; i < CITY.buildings.length; i++) {
+        b = CITY.buildings[i];
+        ctx.fillStyle = 'rgba(20,17,12,0.35)'; ctx.fillRect(b.x + 0.008, b.y + 0.008, b.w, b.h);
+        ctx.fillStyle = b.shade < 0.33 ? '#a94a30' : (b.shade < 0.66 ? PALETTE.terracottaRoof : '#d0704e');
+        ctx.fillRect(b.x, b.y, b.w, b.h);
+        ctx.strokeStyle = 'rgba(70,28,18,0.7)'; ctx.lineWidth = lw;
+        ctx.beginPath();
+        if (b.w >= b.h) { ctx.moveTo(b.x + b.h * 0.3, b.y + b.h / 2); ctx.lineTo(b.x + b.w - b.h * 0.3, b.y + b.h / 2); }
+        else { ctx.moveTo(b.x + b.w / 2, b.y + b.w * 0.3); ctx.lineTo(b.x + b.w / 2, b.y + b.h - b.w * 0.3); }
+        ctx.stroke();
+        if (u < 0.006) {
+          ctx.strokeStyle = 'rgba(70,28,18,0.25)';
+          ctx.beginPath();
+          for (var s = 1; s < 5; s++) {
+            if (b.w >= b.h) { ctx.moveTo(b.x + b.w * s / 5, b.y); ctx.lineTo(b.x + b.w * s / 5, b.y + b.h); }
+            else { ctx.moveTo(b.x, b.y + b.h * s / 5); ctx.lineTo(b.x + b.w, b.y + b.h * s / 5); }
+          }
+          ctx.stroke();
+        }
+      }
+      ctx.restore();
+    }
+    if (sa > 0.01) {
+      ctx.save(); ctx.globalAlpha = sa;
+      for (i = 0; i < CITY.buildings.length; i++) {
+        b = CITY.buildings[i]; if (!b.sky) continue;
+        var sw = Math.min(b.w, b.h) * 0.28, sx = b.x + b.w * 0.22, sy = b.y + b.h * 0.22;
+        ctx.fillStyle = PALETTE.lensGlassCyan; ctx.fillRect(sx, sy, sw, sw);
+        ctx.strokeStyle = rgba(PALETTE.sapwoodCream, 0.9); ctx.lineWidth = lw; ctx.strokeRect(sx, sy, sw, sw);
+        ctx.fillStyle = 'rgba(255,255,255,0.55)'; ctx.fillRect(sx, sy, sw * 0.4, sw * 0.4);
+      }
+      ctx.restore();
+    }
+    if (aa > 0.01) {
+      ctx.save(); ctx.globalAlpha = aa;
+      ctx.strokeStyle = '#2a2018'; ctx.lineWidth = Math.max(u * 0.7, 0.003); ctx.lineCap = 'round';
+      for (i = 0; i < CITY.buildings.length; i++) {
+        b = CITY.buildings[i]; if (!b.ant) continue;
+        var ax = b.x + b.w * 0.72, ay = b.y + b.h * 0.7, al = 0.05, ca = Math.cos(b.antA), sn = Math.sin(b.antA);
+        ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(ax + 0.03, ay - al);
+        for (var c = 1; c <= 3; c++) {
+          var px = ax + 0.03 * c / 3.5, py = ay - al * c / 3.5, cl = 0.022 * (1.2 - c * 0.25);
+          ctx.moveTo(px - ca * cl, py - sn * cl); ctx.lineTo(px + ca * cl, py + sn * cl);
+        }
+        ctx.stroke();
+        ctx.fillStyle = rgba(PALETTE.streamerCarmine, 0.5 + 0.5 * Math.sin(t * 3 + i));
+        ctx.beginPath(); ctx.arc(ax + 0.03, ay - al, Math.max(u * 0.8, 0.005), 0, TAU); ctx.fill();
+      }
+      ctx.restore();
+    }
+  }
+
+  function drawKiosks(ctx, u, a) {
+    if (a <= 0.01) return;
+    ctx.save(); ctx.globalAlpha = a;
+    for (var i = 0; i < CITY.kiosks.length; i++) {
+      var k = CITY.kiosks[i];
+      ctx.save(); ctx.translate(k.x, k.y); ctx.rotate(k.rot);
+      ctx.fillStyle = 'rgba(20,17,12,0.3)'; ctx.beginPath(); ctx.arc(0.006, 0.006, k.r, 0, TAU); ctx.fill();
+      for (var s = 0; s < 8; s++) {
+        ctx.fillStyle = s % 2 ? PALETTE.sapwoodCream : k.silk;
+        ctx.beginPath(); ctx.moveTo(0, 0);
+        ctx.lineTo(Math.cos(s / 8 * TAU) * k.r, Math.sin(s / 8 * TAU) * k.r);
+        ctx.lineTo(Math.cos((s + 1) / 8 * TAU) * k.r, Math.sin((s + 1) / 8 * TAU) * k.r);
+        ctx.closePath(); ctx.fill();
+      }
+      ctx.fillStyle = PALETTE.brassLoupe; ctx.beginPath(); ctx.arc(0, 0, k.r * 0.18, 0, TAU); ctx.fill();
+      ctx.restore();
+    }
+    ctx.restore();
+  }
+
+  function drawStreamers(ctx, u, a, t) {
+    if (a <= 0.01) return;
+    var span = STREET * 0.75, lw = Math.max(u * 0.5, 0.0025);
+    ctx.save(); ctx.globalAlpha = a;
+    for (var i = 0; i < CITY.streamers.length; i++) {
+      var s = CITY.streamers[i];
+      ctx.save(); ctx.translate(s.x, s.y); if (s.horiz) ctx.rotate(Math.PI / 2);
+      var sag = 0.006 + 0.003 * Math.sin(t * 2.4 + s.phase);
+      ctx.strokeStyle = rgba(PALETTE.sapwoodCream, 0.9); ctx.lineWidth = lw;
+      ctx.beginPath(); ctx.moveTo(-span, 0); ctx.quadraticCurveTo(0, sag * 2, span, 0); ctx.stroke();
+      for (var f = 0; f < 5; f++) {
+        var fx = -span + (f + 0.5) * (2 * span / 5), fy = sag * (1 - Math.pow(fx / span, 2));
+        var fl = 0.012 * (1 + 0.25 * Math.sin(t * 6 + s.phase + f));
+        ctx.fillStyle = f % 2 ? PALETTE.cambiumAmber : PALETTE.streamerCarmine;
+        ctx.beginPath(); ctx.moveTo(fx - 0.006, fy); ctx.lineTo(fx + 0.006, fy); ctx.lineTo(fx, fy + fl); ctx.closePath(); ctx.fill();
+      }
+      ctx.restore();
+    }
+    ctx.restore();
+  }
+
+  /* ---------- lens drawing (screen space) ---------- */
+  function magnification(z) { return Math.pow(z, 1.4); }
+
+  function drawPinhead(ctx, x, y, glint) {
+    ctx.save();
+    var g = ctx.createRadialGradient(x, y, 0, x, y, 7);
+    g.addColorStop(0, rgba(PALETTE.cambiumAmber, 0.45)); g.addColorStop(1, rgba(PALETTE.cambiumAmber, 0));
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, 7, 0, TAU); ctx.fill();
+    ctx.fillStyle = PALETTE.sapwoodCream; ctx.beginPath(); ctx.arc(x, y, 1.6, 0, TAU); ctx.fill();
+    var L = 2.5 + 4 * glint;
+    ctx.strokeStyle = 'rgba(255,248,225,' + (0.25 + 0.65 * glint).toFixed(3) + ')';
+    ctx.lineWidth = 0.8; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(x - L, y); ctx.lineTo(x + L, y); ctx.moveTo(x, y - L); ctx.lineTo(x, y + L); ctx.stroke();
+    ctx.restore();
+  }
+
+  function roundedPath(ctx, x, y, w, h, r) {
+    ctx.beginPath(); ctx.moveTo(x + r, y); ctx.lineTo(x + w - r, y); ctx.arcTo(x + w, y, x + w, y + r, r);
+    ctx.lineTo(x + w, y + h - r); ctx.arcTo(x + w, y + h, x + w - r, y + h, r);
+    ctx.lineTo(x + r, y + h); ctx.arcTo(x, y + h, x, y + h - r, r);
+    ctx.lineTo(x, y + r); ctx.arcTo(x, y, x + r, y, r); ctx.closePath();
+  }
+
+  function drawHandle(ctx, lx, ly, r) {
+    ctx.save(); ctx.translate(lx, ly); ctx.rotate(Math.PI / 4);
+    var x0 = r * 1.02, cw = r * 0.18, hw = r * 0.82, th = r * 0.2;
+    ctx.fillStyle = 'rgba(0,0,0,0.3)'; roundedPath(ctx, x0 + 6, -th / 2 + 6, cw + hw, th, th / 2); ctx.fill();
+    var bg = ctx.createLinearGradient(0, -th / 2, 0, th / 2);
+    bg.addColorStop(0, '#f0d58a'); bg.addColorStop(0.5, PALETTE.brassLoupe); bg.addColorStop(1, '#6e5320');
+    ctx.fillStyle = bg; roundedPath(ctx, x0, -th * 0.38, cw, th * 0.76, th * 0.15); ctx.fill();
+    var wg = ctx.createLinearGradient(0, -th / 2, 0, th / 2);
+    wg.addColorStop(0, '#6b4a2c'); wg.addColorStop(0.45, PALETTE.barkUmber); wg.addColorStop(1, '#1d140c');
+    ctx.fillStyle = wg; roundedPath(ctx, x0 + cw, -th / 2, hw, th, th / 2); ctx.fill();
+    ctx.strokeStyle = 'rgba(239,225,191,0.18)'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(x0 + cw + th * 0.4, -th * 0.28); ctx.lineTo(x0 + cw + hw - th * 0.5, -th * 0.28); ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawMagnified(ctx, st, lx, ly, nx, ny, r, alphaOf, glint) {
+    var m = magnification(st.zoom), ndx = lx + (nx - lx) * OFFSET_GAIN, ndy = ly + (ny - ly) * OFFSET_GAIN;
+    var bg = ctx.createRadialGradient(lx, ly, r * 0.1, lx, ly, r);
+    bg.addColorStop(0, '#2a2117'); bg.addColorStop(1, PALETTE.loamNight);
+    ctx.fillStyle = bg; ctx.fillRect(lx - r, ly - r, r * 2, r * 2);
+    /* magnified loam grain, anchored to the nucleus */
+    var gs = 12 * m, i0 = Math.floor((lx - r - ndx) / gs), i1 = Math.ceil((lx + r - ndx) / gs);
+    var j0 = Math.floor((ly - r - ndy) / gs), j1 = Math.ceil((ly + r - ndy) / gs);
+    if ((i1 - i0) * (j1 - j0) < 1600) {
+      var sz = Math.max(0.6, 0.7 * Math.sqrt(m));
+      for (var i = i0; i <= i1; i++) {
+        for (var j = j0; j <= j1; j++) {
+          var h = hash2(i, j);
+          ctx.fillStyle = h < 0.5 ? 'rgba(239,225,191,0.10)' : 'rgba(217,164,65,0.12)';
+          ctx.fillRect(ndx + (i + hash2(j, i)) * gs, ndy + (j + h) * gs, sz * (0.6 + h), sz * (0.6 + h));
+        }
+      }
+    }
+    var S = Math.max(1.4, r * 0.014) * m;
+    if (S < 0.8) return;
+    ctx.save(); ctx.translate(ndx, ndy);
+    var halo = ctx.createRadialGradient(0, 0, S * 0.9, 0, 0, S * 1.35);
+    halo.addColorStop(0, rgba(PALETTE.cambiumAmber, 0.35 * glint + 0.1)); halo.addColorStop(1, rgba(PALETTE.cambiumAmber, 0));
+    ctx.fillStyle = halo; ctx.beginPath(); ctx.arc(0, 0, S * 1.35, 0, TAU); ctx.fill();
+    ctx.scale(S, S);
+    drawCity(ctx, S, alphaOf, st.motionT, glint);
+    ctx.restore();
+  }
+
+  function drawOptics(ctx, lx, ly, r) {
+    ctx.fillStyle = rgba(PALETTE.lensGlassCyan, 0.06); ctx.fillRect(lx - r, ly - r, r * 2, r * 2);
+    var v = ctx.createRadialGradient(lx, ly, r * 0.68, lx, ly, r);
+    v.addColorStop(0, 'rgba(20,17,12,0)'); v.addColorStop(1, 'rgba(20,17,12,0.5)');
+    ctx.fillStyle = v; ctx.fillRect(lx - r, ly - r, r * 2, r * 2);
+    ctx.lineWidth = 2.2;
+    ctx.strokeStyle = 'rgba(210,60,79,0.28)'; ctx.beginPath(); ctx.arc(lx + 1.2, ly + 0.6, r - 2.5, 0, TAU); ctx.stroke();
+    ctx.strokeStyle = rgba(PALETTE.lensGlassCyan, 0.35); ctx.beginPath(); ctx.arc(lx - 1.2, ly - 0.6, r - 2.5, 0, TAU); ctx.stroke();
+    ctx.lineWidth = 1; ctx.strokeStyle = rgba(PALETTE.lensGlassCyan, 0.12);
+    ctx.beginPath(); ctx.arc(lx, ly, r * 0.9, 0, TAU); ctx.stroke();
+    ctx.lineCap = 'round'; ctx.lineWidth = Math.max(2, r * 0.06); ctx.strokeStyle = 'rgba(255,255,255,0.28)';
+    ctx.beginPath(); ctx.arc(lx, ly, r * 0.78, Math.PI * 1.08, Math.PI * 1.55); ctx.stroke();
+    ctx.lineWidth = Math.max(1, r * 0.025); ctx.strokeStyle = 'rgba(255,255,255,0.16)';
+    ctx.beginPath(); ctx.arc(lx, ly, r * 0.66, Math.PI * 1.15, Math.PI * 1.35); ctx.stroke();
+    ctx.fillStyle = 'rgba(255,255,255,0.45)';
+    ctx.beginPath(); ctx.arc(lx - r * 0.42, ly - r * 0.5, Math.max(1.5, r * 0.035), 0, TAU); ctx.fill();
+  }
+
+  function drawRim(ctx, lx, ly, r, revealed) {
+    var w = Math.max(4, r * 0.11);
+    var g = ctx.createLinearGradient(lx - r, ly - r, lx + r, ly + r);
+    g.addColorStop(0, '#f3dc96'); g.addColorStop(0.45, PALETTE.brassLoupe); g.addColorStop(1, '#5e4519');
+    ctx.strokeStyle = g; ctx.lineWidth = w;
+    ctx.beginPath(); ctx.arc(lx, ly, r + w / 2, 0, TAU); ctx.stroke();
+    ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(20,17,12,0.8)';
+    ctx.beginPath(); ctx.arc(lx, ly, r, 0, TAU); ctx.stroke();
+    ctx.strokeStyle = 'rgba(255,240,200,0.55)';
+    ctx.beginPath(); ctx.arc(lx, ly, r + w, Math.PI * 0.95, Math.PI * 1.7); ctx.stroke();
+    ctx.strokeStyle = 'rgba(59,42,26,0.55)';
+    ctx.beginPath();
+    for (var i = 0; i < 64; i++) {
+      var a = i / 64 * TAU, c = Math.cos(a), s = Math.sin(a), k = i % 8 === 0 ? 0.75 : 0.4;
+      ctx.moveTo(lx + c * (r + w * (1 - k)), ly + s * (r + w * (1 - k))); ctx.lineTo(lx + c * (r + w), ly + s * (r + w));
+    }
+    ctx.stroke();
+    if (revealed) {
+      ctx.strokeStyle = rgba(PALETTE.cambiumAmber, 0.7); ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.arc(lx, ly, r + w + 3, 0, TAU); ctx.stroke();
+    }
+  }
+
+  /* ---------- the loupe instance ---------- */
+  var CHIME_BASE = [1046.5, 1174.66, 1318.51, 1567.98, 1760, 2093, 2349.32, 2637.02];
+
+  function createLoupe(opts) {
+    opts = opts || {};
+    var st = { lensX: 0.62, lensY: 0.58, zoom: 1, nucleusX: 0.5, nucleusY: 0.5, revealed: false,
+      muted: false, motionT: 0, glintT: 0 };
+    var disc = {}, order = [], lastW = 1000, lastH = 1000, lastR = 150, lastChime = {};
+    var audio = { ctx: null, master: null };
+    var autoChime = opts.autoChime !== false;
+
+    function call(fn, v) { if (typeof fn === 'function') { try { fn(v); } catch (e) { /* host error ignored */ } } }
+    function lensRadiusPx(w, h, ro) {
+      if (ro && typeof ro.lensRadius === 'number' && ro.lensRadius > 0) return ro.lensRadius;
+      return clamp(Math.min(w, h) * 0.15, 40, 220);
+    }
+    function lensDistPx(nx, ny) {
+      var dx = (nx - st.lensX) * lastW, dy = (ny - st.lensY) * lastH;
+      return Math.sqrt(dx * dx + dy * dy);
+    }
+    function covered() { return lensDistPx(st.nucleusX, st.nucleusY) < lastR * COVER_FRACTION; }
+    function alphaOf() {
+      var A = { zoom: st.zoom };
+      PINHEAD_FEATURES.forEach(function (f) { var th = FEATURE_THRESHOLDS[f]; A[f] = smooth(th * 0.5, th * 1.6, st.zoom); });
+      return A;
+    }
+    function evaluate() {
+      var cov = covered();
+      st.revealed = cov && st.zoom >= REVEAL_ZOOM;
+      if (!cov) return;
+      var fresh = [];
+      PINHEAD_FEATURES.forEach(function (f) {
+        if (!disc[f] && st.zoom >= FEATURE_THRESHOLDS[f]) { disc[f] = true; order.push(f); fresh.push(f); }
+      });
+      fresh.forEach(function (f, i) {
+        if (autoChime) chime(f, i * 0.11);
+        call(opts.onDiscover, f);
+      });
+    }
+
+    /* ---- WebAudio: crystalline optical / clockwork ---- */
+    function unlockAudio() {
+      try {
+        if (!audio.ctx) {
+          var AC = globalThis.AudioContext || globalThis.webkitAudioContext;
+          if (!AC) return false;
+          audio.ctx = new AC();
+          audio.master = audio.ctx.createGain();
+          audio.master.gain.value = st.muted ? 0 : 0.5;
+          audio.master.connect(audio.ctx.destination);
+        }
+        if (audio.ctx.state === 'suspended' && audio.ctx.resume) audio.ctx.resume();
+        return true;
+      } catch (e) { return false; }
+    }
+    function ready() { return !!(audio.ctx && audio.master && !st.muted); }
+    function setMuted(b) {
+      st.muted = !!b;
+      try { if (audio.master) audio.master.gain.setTargetAtTime(st.muted ? 0 : 0.5, audio.ctx.currentTime, 0.02); } catch (e) { /* noop */ }
+    }
+    function playFocusClick(z) {
+      if (!ready()) return false;
+      try {
+        var ac = audio.ctx, t = ac.currentTime, zz = clamp(num(z, st.zoom), ZOOM_MIN, ZOOM_MAX);
+        var f = 1400 * Math.pow(2, (Math.log(zz) / Math.LN2) / 3);
+        var o = ac.createOscillator(), g = ac.createGain();
+        o.type = 'triangle'; o.frequency.setValueAtTime(f, t); o.frequency.exponentialRampToValueAtTime(f * 0.6, t + 0.04);
+        g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.22, t + 0.002);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + 0.06);
+        o.connect(g); g.connect(audio.master); o.start(t); o.stop(t + 0.08);
+        var len = Math.max(1, Math.floor(ac.sampleRate * 0.02)), buf = ac.createBuffer(1, len, ac.sampleRate);
+        var d = buf.getChannelData(0);
+        for (var i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 4);
+        var src = ac.createBufferSource(), bp = ac.createBiquadFilter(), ng = ac.createGain();
+        src.buffer = buf; bp.type = 'bandpass'; bp.frequency.value = Math.min(f * 1.5, 12000); bp.Q.value = 6; ng.gain.value = 0.35;
+        src.connect(bp); bp.connect(ng); ng.connect(audio.master); src.start(t);
+        return true;
+      } catch (e) { return false; }
+    }
+    function chime(featureId, delay) {
+      if (!ready()) return false;
+      var now = Date.now();
+      if (lastChime[featureId] && now - lastChime[featureId] < 250) return false;
+      lastChime[featureId] = now;
+      try {
+        var ac = audio.ctx, t = ac.currentTime + (delay || 0), idx = PINHEAD_FEATURES.indexOf(featureId);
+        var base = CHIME_BASE[idx < 0 ? 0 : idx], ratios = [1, 2.76, 5.4, 8.93], gains = [0.2, 0.09, 0.045, 0.022];
+        for (var k = 0; k < ratios.length; k++) {
+          for (var dt = 0; dt < 2; dt++) {
+            var o = ac.createOscillator(), g = ac.createGain(), dec = 1.6 / (k + 1) + 0.3;
+            o.type = 'sine'; o.frequency.value = base * ratios[k] * (dt ? 1.003 : 1);
+            g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(gains[k] * (dt ? 0.5 : 1), t + 0.004);
+            g.gain.exponentialRampToValueAtTime(0.0001, t + dec);
+            o.connect(g); g.connect(audio.master); o.start(t); o.stop(t + dec + 0.05);
+          }
+        }
+        return true;
+      } catch (e) { return false; }
+    }
+
+    /* ---- public API ---- */
+    function setLensPosition(nx, ny) {
+      st.lensX = clamp01(num(nx, st.lensX)); st.lensY = clamp01(num(ny, st.lensY)); evaluate();
+    }
+    function setZoom(z) {
+      var nz = clamp(num(z, st.zoom), ZOOM_MIN, ZOOM_MAX), changed = nz !== st.zoom;
+      st.zoom = nz; evaluate();
+      if (changed) call(opts.onZoom, nz);
+      return st.zoom;
+    }
+    function zoomBy(factor) { return setZoom(st.zoom * num(factor, 1)); }
+    function setNucleus(nx, ny) {
+      st.nucleusX = clamp01(num(nx, st.nucleusX)); st.nucleusY = clamp01(num(ny, st.nucleusY)); evaluate();
+    }
+    function hitLens(nx, ny) { return lensDistPx(num(nx, -9), num(ny, -9)) <= lastR * 1.05; }
+    function step(dt, so) {
+      dt = clamp(num(dt, 0), 0, 0.1);
+      var reduced = !!(so && so.reducedMotion);
+      st.glintT += reduced ? dt * 0.25 : dt;
+      if (!reduced) st.motionT += dt;
+      evaluate();
+    }
+    function glintValue() { return Math.pow(0.5 + 0.5 * Math.sin(st.glintT * 2.2), 3); }
+    function render(ctx, w, h, ro) {
+      if (!ctx || !(w > 0) || !(h > 0)) return;
+      ro = ro || {};
+      lastW = w; lastH = h; lastR = lensRadiusPx(w, h, ro);
+      var r = lastR, lx = st.lensX * w, ly = st.lensY * h, nx = st.nucleusX * w, ny = st.nucleusY * h, gl = glintValue();
+      ctx.save();
+      drawPinhead(ctx, nx, ny, gl);
+      if (ro.hidden !== true && ro.visible !== false) {
+        drawHandle(ctx, lx, ly, r);
+        ctx.save();
+        ctx.beginPath(); ctx.arc(lx, ly, r, 0, TAU); ctx.clip();
+        drawMagnified(ctx, st, lx, ly, nx, ny, r, alphaOf(), gl);
+        drawOptics(ctx, lx, ly, r);
+        ctx.restore();
+        drawRim(ctx, lx, ly, r, st.revealed);
+        if (ro.showLabel !== false) {
+          ctx.font = '600 ' + Math.round(Math.max(10, r * 0.12)) + 'px Georgia, serif';
+          ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+          ctx.fillStyle = 'rgba(20,17,12,0.7)';
+          var label = '\u00d7' + (st.zoom < 10 ? st.zoom.toFixed(1) : Math.round(st.zoom)) + (st.revealed ? '  \u00b7  pinhead Olinda' : '');
+          ctx.fillText(label, lx + 1, ly - r * 1.16 + 1);
+          ctx.fillStyle = st.revealed ? PALETTE.cambiumAmber : PALETTE.sapwoodCream;
+          ctx.fillText(label, lx, ly - r * 1.16);
+        }
+      }
+      ctx.restore();
+    }
+    function getState() {
+      return { lensX: st.lensX, lensY: st.lensY, zoom: st.zoom, nucleusX: st.nucleusX, nucleusY: st.nucleusY,
+        isNucleusRevealed: st.revealed, discovered: order.slice(), muted: st.muted };
+    }
+    function reset() {
+      st.lensX = 0.62; st.lensY = 0.58; st.nucleusX = 0.5; st.nucleusY = 0.5;
+      st.motionT = 0; st.glintT = 0; st.revealed = false; disc = {}; order = [];
+      var was = st.zoom; st.zoom = 1;
+      if (was !== 1) call(opts.onZoom, 1);
+    }
+
+    return {
+      setLensPosition: setLensPosition, setZoom: setZoom, zoomBy: zoomBy, setNucleus: setNucleus,
+      getDiscovered: function () { return order.slice(); },
+      isNucleusRevealed: function () { return st.revealed; },
+      getFeatureAlpha: function (id) { var A = alphaOf(); return typeof A[id] === 'number' ? A[id] : 0; },
+      getLensRadius: function () { return lastR; },
+      render: render, hitLens: hitLens, step: step,
+      unlockAudio: unlockAudio, setMuted: setMuted, isMuted: function () { return st.muted; },
+      playFocusClick: playFocusClick, playDiscoveryChime: function (id) { return chime(id, 0); },
+      getState: getState, reset: reset
+    };
+  }
+
+  return {
+    PALETTE: PALETTE, PINHEAD_FEATURES: PINHEAD_FEATURES.slice(), FEATURE_THRESHOLDS: FEATURE_THRESHOLDS,
+    ZOOM_RANGE: [ZOOM_MIN, ZOOM_MAX], REVEAL_ZOOM: REVEAL_ZOOM, createLoupe: createLoupe
+  };
+})();
+
+/* OLINDA (City 45, VIII - Hidden Cities 1) - concentric cambium growth layer.
+   Olinda grows like a tree trunk, one ring a year. The innermost city walks
+   pinhead -> half_lemon -> mushroom -> soup_plate -> full_city; on reaching
+   full size it presses every older city outward. Old walls are NEVER
+   destroyed: they widen in radius and thin into stretched outer girdles,
+   carrying their towers, churches, palaces and theaters along the arc,
+   while a new pinhead Olinda nucleates at the center.
+   Owner: olinda-ring-cambium. Classic browser IIFE on globalThis, no modules. */
+globalThis.OlindaCambiumGrowth = (function () {
+  "use strict";
+
+  var PALETTE = {
+    loamNight: "#14110c", barkUmber: "#3b2a1a", cambiumAmber: "#d9a441",
+    sapwoodCream: "#efe1bf", brassLoupe: "#c8a24a", lensGlassCyan: "#9fd3d6",
+    terracottaRoof: "#c0583a", gardenMoss: "#6f8f4a", poolTeal: "#3f8f9a",
+    streamerCarmine: "#d23c4f", turfTrackGreen: "#5f9a3c", girdleSlate: "#8a8578"
+  };
+  var STAGES = ["pinhead", "half_lemon", "mushroom", "soup_plate", "full_city"];
+  /* relative radii, as a fraction of min(w, h) */
+  var STAGE_RADII = { pinhead: 0.004, half_lemon: 0.03, mushroom: 0.07, soup_plate: 0.14, full_city: 0.30 };
+  var KINDS = ["tower", "church", "palace", "theater"];
+  var FULL = STAGES.length - 1;   // growth clock value of a full-size city
+  var KNEE = 0.45;                // radius where the logarithmic fold starts
+  var LIMIT = 0.485;              // asymptote: every girdle stays on the canvas
+  var CORE_GAP = 0.92;            // innermost may fill at most this share of its wall
+  var TAU = Math.PI * 2;
+
+  function clamp(v, a, b) { return v < a ? a : (v > b ? b : v); }
+  function stageIndex(s) {
+    if (typeof s === "number" && isFinite(s)) return clamp(Math.round(s), 0, FULL);
+    return STAGES.indexOf(String(s));
+  }
+  function rng(seed) {
+    var a = seed >>> 0;
+    return function () {
+      a = (a + 0x6D2B79F5) >>> 0;
+      var t = a;
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  function hexToRgb(h) {
+    var n = parseInt(h.slice(1), 16);
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  }
+  function mix(a, b, t, alpha) {
+    var A = hexToRgb(a), B = hexToRgb(b);
+    t = clamp(t, 0, 1);
+    return "rgba(" + Math.round(A[0] + (B[0] - A[0]) * t) + "," +
+      Math.round(A[1] + (B[1] - A[1]) * t) + "," +
+      Math.round(A[2] + (B[2] - A[2]) * t) + "," + (alpha == null ? 1 : alpha) + ")";
+  }
+
+  /* Radius of a city whose growth clock is c. 0..4 walks the scale stages
+     (geometric easing between them); past 4 the city is pressed outward on a
+     logarithmic curve, so each older girdle is wider in radius but thinner. */
+  function clockRadius(c) {
+    if (!(c > 0)) return STAGE_RADII.pinhead;
+    if (c < FULL) {
+      var i = Math.floor(c), f = c - i;
+      var r0 = STAGE_RADII[STAGES[i]], r1 = STAGE_RADII[STAGES[i + 1]];
+      return r0 * Math.pow(r1 / r0, f);
+    }
+    return STAGE_RADII.full_city + pressed(c - FULL);
+  }
+  /* Outward pressure on walls older than full size: every year a wall widens,
+     but by less and less (slow power falloff, gentler than a log squeeze in
+     the outer band), bounded by LIMIT - full_city so all girdles stay on the
+     canvas and a girdle's thickness keeps shrinking as its radius grows. */
+  function pressed(x) {
+    return (LIMIT - STAGE_RADII.full_city) * (1 - Math.pow(1 + x / 6, -0.5));
+  }
+  /* Final safety squeeze: anything past KNEE is folded logarithmically toward
+     LIMIT (slope 1 at the knee, monotone), so no wall ever leaves the canvas. */
+  function compress(r) {
+    if (r <= KNEE) return r;
+    var span = LIMIT - KNEE, x = (r - KNEE) / span, k = 0.6;
+    return Math.min(LIMIT, KNEE + span * Math.log(1 + k * x) / k);
+  }
+
+  function makeBuildings(id) {
+    var r = rng(4517 + id * 7919), n = 14 + Math.floor(r() * 9), out = [];
+    var off = r() * TAU;
+    for (var i = 0; i < n; i++) {
+      out.push({
+        kind: i < KINDS.length ? KINDS[(i + id) % KINDS.length] : KINDS[Math.floor(r() * KINDS.length)],
+        angle: (off + (i + 0.15 + r() * 0.7) * (TAU / n)) % TAU,
+        scale: 0.6 + r() * 0.4
+      });
+    }
+    return out;
+  }
+  function countBuildings(list) {
+    var c = { tower: 0, church: 0, palace: 0, theater: 0 };
+    for (var i = 0; i < list.length; i++) c[list[i].kind] += 1;
+    return c;
+  }
+
+  /* Draw one building in a polar frame: +x points radially outward, y runs
+     along the arc. Tangential width scales with radius, radial height with
+     the ring's thickness - so outer girdles show them stretched thin. */
+  function drawBuilding(ctx, cx, cy, b, ra, rb, count, ink, accent) {
+    var hgt = Math.max(0.6, (rb - ra) * b.scale);
+    var share = b.kind === "tower" ? 0.3 : (b.kind === "church" ? 0.55 : (b.kind === "palace" ? 0.95 : 0.8));
+    var hw = Math.max(0.6, (TAU / count) * 0.5 * share * ((ra + rb) / 2)) / 2;
+    var x0 = ra;
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(b.angle);
+    ctx.fillStyle = ink;
+    if (b.kind === "tower") {
+      ctx.fillRect(x0, -hw, hgt * 0.72, hw * 2);
+      ctx.fillStyle = accent;
+      ctx.beginPath();
+      ctx.moveTo(x0 + hgt * 0.72, -hw);
+      ctx.lineTo(x0 + hgt, 0);
+      ctx.lineTo(x0 + hgt * 0.72, hw);
+      ctx.closePath();
+      ctx.fill();
+    } else if (b.kind === "church") {
+      ctx.fillRect(x0, -hw, hgt * 0.58, hw * 2);
+      ctx.fillStyle = accent;
+      ctx.beginPath();
+      ctx.moveTo(x0 + hgt * 0.58, -hw);
+      ctx.lineTo(x0 + hgt * 0.86, 0);
+      ctx.lineTo(x0 + hgt * 0.58, hw);
+      ctx.closePath();
+      ctx.fill();
+      ctx.fillRect(x0 + hgt * 0.86, -Math.max(0.3, hw * 0.06), hgt * 0.14, Math.max(0.6, hw * 0.12));
+    } else if (b.kind === "palace") {
+      ctx.fillRect(x0, -hw, hgt * 0.7, hw * 2);
+      ctx.fillStyle = accent;
+      for (var k = 0; k < 5; k++) {
+        var y = -hw + (k + 0.25) * (hw * 2 / 5);
+        ctx.fillRect(x0 + hgt * 0.7, y, hgt * 0.18, hw * 2 / 5 * 0.5);
+      }
+    } else {
+      ctx.fillRect(x0, -hw, hgt * 0.55, hw * 2);
+      ctx.fillStyle = accent;
+      ctx.beginPath();
+      ctx.save();
+      ctx.translate(x0 + hgt * 0.55, 0);
+      ctx.scale((hgt * 0.42) / hw, 1);
+      ctx.arc(0, 0, hw, -Math.PI / 2, Math.PI / 2, false);
+      ctx.restore();
+      ctx.closePath();
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+  function annulus(ctx, cx, cy, r0, r1) {
+    ctx.beginPath();
+    ctx.arc(cx, cy, r1, 0, TAU, false);
+    if (r0 > 0.25) {
+      ctx.moveTo(cx + r0, cy);
+      ctx.arc(cx, cy, r0, TAU, 0, true);
+    }
+  }
+
+  function createCambium(opts) {
+    opts = opts || {};
+    var onYear = typeof opts.onYear === "function" ? opts.onYear : null;
+    var onStage = typeof opts.onStage === "function" ? opts.onStage : null;
+    var center = { nx: 0.5, ny: 0.5 };
+    var gens, year, rings, nextId, time;
+    var audio = { ctx: null, muted: !!opts.muted };
+
+    function setCenter(nx, ny) {
+      if (isFinite(nx)) center.nx = clamp(+nx, 0, 1);
+      if (isFinite(ny)) center.ny = clamp(+ny, 0, 1);
+      return { nx: center.nx, ny: center.ny };
+    }
+    if (opts.center) setCenter(opts.center.nx, opts.center.ny);
+
+    /* clock: target growth clock; disp: eased clock used for drawing */
+    function newGen(bornYear, clock) {
+      var id = nextId++;
+      return {
+        id: id, bornYear: bornYear, stage: STAGES[Math.min(FULL, Math.floor(clock))],
+        clock: clock, disp: clock, innerR: 0, outerR: 0, buildings: makeBuildings(id)
+      };
+    }
+    /* gens[0] is the oldest (outermost) girdle; gens[n-1] the innermost city */
+    function radiiFor(key) {
+      var n = gens.length, res = new Array(n), prev = 0;
+      var wall = n > 1 ? clockRadius(gens[n - 2][key]) : Infinity;
+      for (var i = n - 1; i >= 0; i--) {
+        var lin = clockRadius(gens[i][key]);
+        if (i === n - 1) lin = Math.min(lin, wall * CORE_GAP);
+        var o = compress(lin);
+        if (o < prev + 1e-5) o = prev + 1e-5;
+        res[i] = { inner: prev, outer: o };
+        prev = o;
+      }
+      return res;
+    }
+    function layout() {
+      var r = radiiFor("clock");
+      for (var i = 0; i < gens.length; i++) {
+        gens[i].innerR = r[i].inner;
+        gens[i].outerR = r[i].outer;
+      }
+    }
+    function innermost() { return gens[gens.length - 1]; }
+    function roleOf(i) {
+      var n = gens.length;
+      return i === n - 1 ? "nucleus" : (i === n - 2 ? "core" : "girdle");
+    }
+
+    function reset() {
+      gens = []; year = 0; rings = 1; nextId = 0; time = 0;
+      gens.push(newGen(-FULL, FULL));   // the existing full-size Olinda
+      gens.push(newGen(0, 0));          // pinhead nucleus at its center
+      layout();
+      return getState();
+    }
+
+    function advanceYear() {
+      year += 1;
+      rings += 1;
+      var inner = innermost();
+      for (var i = 0; i < gens.length - 1; i++) gens[i].clock += 1;  // pressed outward
+      var si = Math.min(FULL, Math.max(0, stageIndex(inner.stage)) + 1);
+      inner.stage = STAGES[si];
+      inner.clock = si;
+      if (si === FULL) gens.push(newGen(year, 0));   // a new pinhead blossoms
+      layout();
+      var st = getState();
+      if (onStage) { try { onStage(st.innermostStage); } catch (e) { /* ignore */ } }
+      if (onYear) { try { onYear(st); } catch (e2) { /* ignore */ } }
+      return st;
+    }
+
+    /* Jump the innermost city to a stage (the weaver's 1-5 selector). Older
+       girdles keep their clocks, so no wall ever moves inward or vanishes. */
+    function setStage(stage) {
+      var si = stageIndex(stage);
+      if (si < 0) return getState();
+      var inner = innermost();
+      inner.stage = STAGES[si];
+      inner.clock = si;
+      layout();
+      if (onStage) { try { onStage(inner.stage); } catch (e) { /* ignore */ } }
+      return getState();
+    }
+
+    function getLineage() {
+      var n = gens.length, out = [];
+      for (var i = 0; i < n; i++) {
+        var g = gens[i];
+        out.push({
+          id: g.id, bornYear: g.bornYear, stage: g.stage,
+          ringIndex: n - 1 - i,           // 0 = innermost nucleus
+          role: roleOf(i),
+          innerR: g.innerR, outerR: g.outerR, thickness: g.outerR - g.innerR,
+          buildingCounts: countBuildings(g.buildings)
+        });
+      }
+      return out;
+    }
+    function getGenerations() {
+      return gens.map(function (g) {
+        return {
+          id: g.id, bornYear: g.bornYear, stage: g.stage, innerR: g.innerR, outerR: g.outerR,
+          buildings: g.buildings.map(function (b) { return { kind: b.kind, angle: b.angle }; })
+        };
+      });
+    }
+    function getState() {
+      return {
+        year: year,
+        concentricRingsCount: rings,
+        oldWallsDestroyed: false,
+        innermostStage: innermost().stage,
+        generationCount: gens.length,
+        lineage: getLineage()
+      };
+    }
+    function getCenter(w, h) {
+      return { cx: center.nx * (w || 0), cy: center.ny * (h || 0), nx: center.nx, ny: center.ny };
+    }
+    function hitTest(nx, ny, w, h) {
+      if (!w || !h) return null;
+      var c = getCenter(w, h), m = Math.min(w, h);
+      var d = Math.sqrt(Math.pow(nx * w - c.cx, 2) + Math.pow(ny * h - c.cy, 2)) / m;
+      var R = radiiFor("disp"), lin = getLineage();
+      for (var i = gens.length - 1; i >= 0; i--) {
+        var r0 = i === gens.length - 1 ? 0 : R[i].inner;
+        var r1 = Math.max(R[i].outer, i === gens.length - 1 ? 6 / m : 0);
+        if (d >= r0 && d <= r1) return lin[i];
+      }
+      return null;
+    }
+    function step(dt, so) {
+      dt = +dt || 0;
+      if (dt > 5) dt = dt / 1000;        // tolerate milliseconds
+      dt = clamp(dt, 0, 0.25);
+      var reduced = !!(so && so.reducedMotion);
+      if (!reduced) time += dt;
+      var k = reduced ? 1 : 1 - Math.exp(-dt * 3.2);
+      var moving = false;
+      for (var i = 0; i < gens.length; i++) {
+        var g = gens[i], diff = g.clock - g.disp;
+        if (Math.abs(diff) < 1e-3) g.disp = g.clock;
+        else { g.disp += diff * k; moving = true; }
+      }
+      return moving;
+    }
+
+    /* ---------- rendering: a tree-ring cross-section of Olinda ---------- */
+    function drawBark(ctx, cx, cy, r, m) {
+      var thick = Math.max(6, 0.02 * m), N = 144, seed = rng(97);
+      ctx.beginPath();
+      for (var i = 0; i <= N; i++) {
+        var a = (i % N) / N * TAU;
+        var rr = r + thick * (0.72 + 0.18 * Math.sin(a * 23) + 0.1 * Math.sin(a * 61 + 1.3) + 0.06 * seed());
+        if (i === 0) ctx.moveTo(cx + Math.cos(a) * rr, cy + Math.sin(a) * rr);
+        else ctx.lineTo(cx + Math.cos(a) * rr, cy + Math.sin(a) * rr);
+      }
+      ctx.closePath();
+      ctx.moveTo(cx + r, cy);
+      ctx.arc(cx, cy, r, TAU, 0, true);
+      ctx.fillStyle = PALETTE.barkUmber;
+      ctx.fill();
+      ctx.strokeStyle = mix(PALETTE.barkUmber, PALETTE.loamNight, 0.5, 0.9);
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+    function strokeCircle(ctx, cx, cy, r, style, lw) {
+      if (r <= 0.3) return;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, TAU, false);
+      ctx.strokeStyle = style;
+      ctx.lineWidth = lw;
+      ctx.stroke();
+    }
+    function drawGirdle(ctx, cx, cy, r0, r1, g, age) {
+      var t = clamp(age / 12, 0, 1);
+      var tone = 0.22 + 0.45 * t + (age % 2 ? 0.1 : 0);    // earlywood / latewood
+      annulus(ctx, cx, cy, r0, r1);
+      ctx.fillStyle = mix(PALETTE.sapwoodCream, PALETTE.barkUmber, tone);
+      ctx.fill();
+      var th = r1 - r0;
+      if (th > 3) {                      // annual hairlines: four years per girdle
+        for (var q = 1; q < 4; q++) strokeCircle(ctx, cx, cy, r0 + th * q / 4, mix(PALETTE.cambiumAmber, PALETTE.barkUmber, 0.3, 0.28), 0.6);
+      }
+      if (th >= 1.6) {
+        var ink = mix(PALETTE.girdleSlate, PALETTE.barkUmber, 0.15 + 0.5 * t);
+        var accent = mix(PALETTE.terracottaRoof, PALETTE.girdleSlate, 0.25 + 0.5 * t);
+        var pad = Math.min(1.2, th * 0.12);
+        for (var i = 0; i < g.buildings.length; i++) {
+          drawBuilding(ctx, cx, cy, g.buildings[i], r0 + pad, r1 - pad, g.buildings.length, ink, accent);
+        }
+      }
+      strokeCircle(ctx, cx, cy, r1, PALETTE.cambiumAmber, th > 4 ? 1.4 : 0.9);
+    }
+    function drawCore(ctx, cx, cy, r0, r1, g) {
+      var r = rng(31 + g.id * 131);
+      ctx.save();
+      annulus(ctx, cx, cy, r0, r1);
+      ctx.fillStyle = PALETTE.sapwoodCream;
+      ctx.fill();
+      ctx.clip();
+      var sp = Math.max(6, r1 / 9), x, y;
+      ctx.strokeStyle = mix(PALETTE.barkUmber, PALETTE.sapwoodCream, 0.55, 0.55);
+      ctx.lineWidth = 0.8;
+      ctx.beginPath();
+      for (x = cx - r1; x <= cx + r1; x += sp) { ctx.moveTo(x, cy - r1); ctx.lineTo(x, cy + r1); }
+      for (y = cy - r1; y <= cy + r1; y += sp) { ctx.moveTo(cx - r1, y); ctx.lineTo(cx + r1, y); }
+      for (var a = 0; a < 8; a++) {      // radial avenues toward the old gates
+        var an = a * TAU / 8 + 0.2;
+        ctx.moveTo(cx + Math.cos(an) * r0, cy + Math.sin(an) * r0);
+        ctx.lineTo(cx + Math.cos(an) * r1, cy + Math.sin(an) * r1);
+      }
+      ctx.stroke();
+      var blocks = 70;
+      for (var b = 0; b < blocks; b++) { // roofs, gardens, pools in the blocks
+        var rr = r0 + (r1 - r0) * (0.08 + 0.84 * r()), aa = r() * TAU, kind = r();
+        ctx.fillStyle = kind < 0.62 ? mix(PALETTE.terracottaRoof, PALETTE.sapwoodCream, 0.15, 0.8)
+          : (kind < 0.88 ? mix(PALETTE.gardenMoss, PALETTE.sapwoodCream, 0.1, 0.75) : PALETTE.poolTeal);
+        var s = sp * (0.25 + 0.3 * r());
+        ctx.fillRect(cx + Math.cos(aa) * rr - s / 2, cy + Math.sin(aa) * rr - s / 2, s, s);
+      }
+      strokeCircle(ctx, cx, cy, (r0 + r1) / 2, mix(PALETTE.cambiumAmber, PALETTE.sapwoodCream, 0.4, 0.5), 1);
+      var ra = r0 + (r1 - r0) * 0.62, rb = r1 - Math.max(1.5, (r1 - r0) * 0.06);
+      for (var i = 0; i < g.buildings.length; i++) {
+        drawBuilding(ctx, cx, cy, g.buildings[i], ra, rb, g.buildings.length,
+          mix(PALETTE.girdleSlate, PALETTE.barkUmber, 0.1), PALETTE.terracottaRoof);
+      }
+      ctx.restore();
+      strokeCircle(ctx, cx, cy, r1, PALETTE.cambiumAmber, 2.2);   // the living wall
+    }
+    function drawNucleus(ctx, cx, cy, r1, g) {
+      var si = Math.max(0, stageIndex(g.stage));
+      if (r1 > 2.5) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(cx, cy, r1, 0, TAU, false);
+        ctx.fillStyle = mix(PALETTE.sapwoodCream, PALETTE.cambiumAmber, 0.12);
+        ctx.fill();
+        if (r1 > 9) {
+          ctx.clip();
+          var sp = Math.max(3, r1 / (3 + si * 2)), r = rng(53 + g.id * 17);
+          ctx.strokeStyle = mix(PALETTE.barkUmber, PALETTE.sapwoodCream, 0.5, 0.5);
+          ctx.lineWidth = 0.6;
+          ctx.beginPath();
+          for (var x = cx - r1; x <= cx + r1; x += sp) { ctx.moveTo(x, cy - r1); ctx.lineTo(x, cy + r1); }
+          for (var y = cy - r1; y <= cy + r1; y += sp) { ctx.moveTo(cx - r1, y); ctx.lineTo(cx + r1, y); }
+          ctx.stroke();
+          for (var k = 0; k < 10 + si * 8; k++) {
+            var rr = r1 * Math.sqrt(r()), aa = r() * TAU, s = sp * 0.4;
+            ctx.fillStyle = k % 5 === 0 ? PALETTE.gardenMoss : PALETTE.terracottaRoof;
+            ctx.fillRect(cx + Math.cos(aa) * rr - s / 2, cy + Math.sin(aa) * rr - s / 2, s, s);
+          }
+        }
+        ctx.restore();
+        strokeCircle(ctx, cx, cy, r1, PALETTE.cambiumAmber, 1.2);
+      }
+      var tw = 0.75 + 0.25 * Math.sin(time * 3.1);     // the pinhead glint
+      var gr = Math.max(4, Math.min(14, r1 * 0.5 + 4));
+      var grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, gr);
+      grad.addColorStop(0, "rgba(255,250,232," + (0.95 * tw).toFixed(3) + ")");
+      grad.addColorStop(0.35, mix(PALETTE.lensGlassCyan, PALETTE.sapwoodCream, 0.3, 0.6 * tw));
+      grad.addColorStop(1, mix(PALETTE.lensGlassCyan, PALETTE.sapwoodCream, 0, 0));
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(cx, cy, gr, 0, TAU, false);
+      ctx.fill();
+      var L = gr * (1.2 + 0.3 * tw);
+      ctx.strokeStyle = "rgba(255,250,232," + (0.7 * tw).toFixed(3) + ")";
+      ctx.lineWidth = 0.8;
+      ctx.beginPath();
+      ctx.moveTo(cx - L, cy); ctx.lineTo(cx + L, cy);
+      ctx.moveTo(cx, cy - L); ctx.lineTo(cx, cy + L);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(cx, cy, 1.4, 0, TAU, false);
+      ctx.fillStyle = PALETTE.terracottaRoof;
+      ctx.fill();
+    }
+
+    function render(ctx, w, h, ro) {
+      if (!ctx || !(w > 0) || !(h > 0)) return;
+      ro = ro || {};
+      var c = getCenter(w, h);
+      var cx = isFinite(ro.cx) ? +ro.cx : c.cx, cy = isFinite(ro.cy) ? +ro.cy : c.cy;
+      var m = Math.min(w, h), R = radiiFor("disp"), n = gens.length, i;
+      ctx.save();
+      if (ro.background) { ctx.fillStyle = PALETTE.loamNight; ctx.fillRect(0, 0, w, h); }
+      drawBark(ctx, cx, cy, R[0].outer * m, m);
+      for (i = 0; i < n - 2; i++) drawGirdle(ctx, cx, cy, R[i].inner * m, R[i].outer * m, gens[i], n - 2 - i);
+      if (n > 2) {                       // medullary rays across the pressed girdles
+        var rIn = R[n - 2].outer * m, rOut = R[0].outer * m;
+        ctx.strokeStyle = mix(PALETTE.cambiumAmber, PALETTE.sapwoodCream, 0.3, 0.14);
+        ctx.lineWidth = 0.6;
+        ctx.beginPath();
+        for (var k = 0; k < 28; k++) {
+          var a = k * TAU / 28 + 0.05;
+          ctx.moveTo(cx + Math.cos(a) * rIn, cy + Math.sin(a) * rIn);
+          ctx.lineTo(cx + Math.cos(a) * rOut, cy + Math.sin(a) * rOut);
+        }
+        ctx.stroke();
+      }
+      if (n > 1) drawCore(ctx, cx, cy, R[n - 2].inner * m, R[n - 2].outer * m, gens[n - 2]);
+      drawNucleus(ctx, cx, cy, R[n - 1].outer * m, gens[n - 1]);
+      if (ro.highlightId != null) {
+        for (i = 0; i < n; i++) {
+          if (gens[i].id !== ro.highlightId) continue;
+          var h0 = i === n - 1 ? 0 : R[i].inner * m, h1 = Math.max(R[i].outer * m, i === n - 1 ? 6 : 0);
+          ctx.save();
+          annulus(ctx, cx, cy, h0, h1);
+          ctx.fillStyle = mix(PALETTE.brassLoupe, PALETTE.sapwoodCream, 0.2, 0.18);
+          ctx.fill();
+          ctx.shadowColor = PALETTE.brassLoupe;
+          ctx.shadowBlur = 8;
+          strokeCircle(ctx, cx, cy, h1, PALETTE.brassLoupe, 2.6);
+          strokeCircle(ctx, cx, cy, h0, PALETTE.brassLoupe, 2.6);
+          ctx.restore();
+        }
+      }
+      ctx.restore();
+    }
+
+    /* ---------- optional WebAudio: a low woody resonance per ring ---------- */
+    function unlockAudio() {
+      try {
+        if (!audio.ctx) {
+          var AC = globalThis.AudioContext || globalThis.webkitAudioContext;
+          if (!AC) return false;
+          audio.ctx = new AC();
+        }
+        if (audio.ctx.state === "suspended" && audio.ctx.resume) audio.ctx.resume();
+        return true;
+      } catch (e) { return false; }
+    }
+    function setMuted(b) { audio.muted = !!b; return audio.muted; }
+    function playRingGrowth(ringCount) {
+      if (audio.muted || !audio.ctx) return false;
+      try {
+        var ac = audio.ctx, t = ac.currentTime;
+        var rc = isFinite(ringCount) ? +ringCount : rings;
+        var f = 58 + (rc % 9) * 3.5;
+        var out = ac.createGain();
+        out.gain.setValueAtTime(0.0001, t);
+        out.gain.exponentialRampToValueAtTime(0.22, t + 0.03);
+        out.gain.exponentialRampToValueAtTime(0.0001, t + 1.6);
+        var lp = ac.createBiquadFilter();
+        lp.type = "lowpass"; lp.frequency.value = 420; lp.Q.value = 4;
+        lp.connect(out); out.connect(ac.destination);
+        var mults = [1, 2.01, 2.76], levels = [0.8, 0.3, 0.15];
+        for (var k = 0; k < 3; k++) {
+          var o = ac.createOscillator(), g = ac.createGain();
+          o.type = k ? "sine" : "triangle";
+          o.frequency.setValueAtTime(f * mults[k], t);
+          o.frequency.exponentialRampToValueAtTime(f * mults[k] * 0.97, t + 1.4);
+          g.gain.value = levels[k];
+          o.connect(g); g.connect(lp);
+          o.start(t); o.stop(t + 1.7);
+        }
+        var len = Math.max(1, Math.floor(ac.sampleRate * 0.06));
+        var buf = ac.createBuffer(1, len, ac.sampleRate), d = buf.getChannelData(0);
+        for (var j = 0; j < len; j++) d[j] = (Math.random() * 2 - 1) * Math.pow(1 - j / len, 3);
+        var src = ac.createBufferSource(), bp = ac.createBiquadFilter(), ng = ac.createGain();
+        src.buffer = buf;
+        bp.type = "bandpass"; bp.frequency.value = 190; bp.Q.value = 2.5;
+        ng.gain.value = 0.5;
+        src.connect(bp); bp.connect(ng); ng.connect(out);
+        src.start(t);
+        return true;
+      } catch (e) { return false; }
+    }
+
+    reset();
+    return {
+      advanceYear: advanceYear,
+      setStage: setStage,
+      getLineage: getLineage,
+      getGenerations: getGenerations,
+      render: render,
+      getCenter: getCenter,
+      setCenter: setCenter,
+      hitTest: hitTest,
+      step: step,
+      unlockAudio: unlockAudio,
+      setMuted: setMuted,
+      isMuted: function () { return audio.muted; },
+      playRingGrowth: playRingGrowth,
+      getState: getState,
+      reset: reset
+    };
+  }
+
+  return {
+    PALETTE: PALETTE,
+    STAGES: STAGES.slice(),
+    STAGE_RADII: STAGE_RADII,
+    BUILDING_KINDS: KINDS.slice(),
+    createCambium: createCambium
+  };
+})();
+
+(function () {
+  'use strict';
+
+  var STAGES = globalThis.OlindaCambiumGrowth.STAGES;
+  var THRESHOLDS = globalThis.OlindaPinheadLoupe.FEATURE_THRESHOLDS;
+
+  var canvas = document.getElementById('oli-stage-canvas');
+  var frameEl = document.getElementById('oli-stage-frame');
+  var ctx = canvas.getContext('2d');
+
+  var valYear = document.getElementById('oli-val-year');
+  var valRings = document.getElementById('oli-val-rings');
+  var valGens = document.getElementById('oli-val-gens');
+  var valDestroyed = document.getElementById('oli-val-destroyed');
+
+  var btnLoupe = document.getElementById('oli-btn-loupe');
+  var btnPlates = document.getElementById('oli-btn-plates');
+  var btnMute = document.getElementById('oli-btn-mute');
+  var btnMotion = document.getElementById('oli-btn-motion');
+  var btnReset = document.getElementById('oli-btn-reset');
+
+  var zoomBadge = document.getElementById('oli-zoom-badge');
+  var zoomRange = document.getElementById('oli-zoom-range');
+  var btnZoomOut = document.getElementById('oli-zoom-out');
+  var btnZoomIn = document.getElementById('oli-zoom-in');
+  var btnSeek = document.getElementById('oli-seek-nucleus');
+  var btnZoom16 = document.getElementById('oli-zoom-16');
+  var discCountBadge = document.getElementById('oli-disc-count');
+  var ledgerEl = document.getElementById('oli-discovery-ledger');
+
+  var stageBadge = document.getElementById('oli-stage-badge');
+  var btnAdvanceYear = document.getElementById('oli-advance-year');
+  var vernierTrack = document.getElementById('oli-vernier-track');
+
+  var whisperText = document.getElementById('oli-whisper-text');
+  var coordBadge = document.getElementById('oli-coord-badge');
+  var lineageBadge = document.getElementById('oli-lineage-badge');
+  var lineageScroll = document.getElementById('oli-lineage-scroll');
+
+  var drawerEl = document.getElementById('oli-plate-drawer');
+  var tabMapBtn = document.getElementById('oli-tab-map');
+  var tabPaintBtn = document.getElementById('oli-tab-painting');
+  var btnPlateZoom = document.getElementById('oli-plate-zoom-btn');
+  var btnPlateClose = document.getElementById('oli-plate-close-btn');
+  var plateFrameEl = document.getElementById('oli-plate-frame');
+  var imgMap = document.getElementById('oli-img-map');
+  var imgPaint = document.getElementById('oli-img-painting');
+  var plateLoupeEl = document.getElementById('oli-plate-loupe');
+  var plateCaptionEl = document.getElementById('oli-plate-caption-text');
+  var plateDimBadge = document.getElementById('oli-plate-dim-badge');
+
+  var mqReduced = globalThis.matchMedia ? globalThis.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
+  var manualReduced = null;
+  var loupeVisible = true;
+  var muted = false;
+  var selectedGenId = null;
+  var activePlateTab = 'map';
+  var plateZoomActive = false;
+  var plateLoupeNX = 0.5;
+  var plateLoupeNY = 0.5;
+  var cssW = 640;
+  var cssH = 480;
+  var lastLineageKey = '';
+
+  function isReducedMotion() {
+    return manualReduced !== null ? manualReduced : !!mqReduced.matches;
+  }
+
+  var cambium = globalThis.OlindaCambiumGrowth.createCambium({});
+  var loupe = globalThis.OlindaPinheadLoupe.createLoupe({
+    onDiscover: function () { syncDOM(); },
+    onZoom: function () { syncDOM(); }
+  });
+
+  function unlockAudioAll() {
+    loupe.unlockAudio();
+    cambium.unlockAudio();
+  }
+
+  function measureCanvas() {
+    var r = frameEl.getBoundingClientRect();
+    var w = Math.max(1, Math.round(r.width || 640));
+    var h = Math.max(1, Math.round(r.height || 480));
+    var dpr = Math.min(globalThis.devicePixelRatio || 1, 2);
+    var pw = Math.max(1, Math.round(w * dpr));
+    var ph = Math.max(1, Math.round(h * dpr));
+    cssW = w;
+    cssH = h;
+    if (canvas.width !== pw || canvas.height !== ph) {
+      canvas.width = pw;
+      canvas.height = ph;
+    }
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function syncNucleus() {
+    var c = cambium.getCenter(cssW, cssH);
+    loupe.setNucleus(c.nx, c.ny);
+  }
+
+  function renderScene() {
+    measureCanvas();
+    syncNucleus();
+    cambium.render(ctx, cssW, cssH, {
+      background: true,
+      highlightId: selectedGenId
+    });
+    loupe.render(ctx, cssW, cssH, {
+      hidden: !loupeVisible,
+      showLabel: true
+    });
+  }
+
+  function roleLabel(role) {
+    if (role === 'nucleus') return 'Innermost Meristem';
+    if (role === 'core') return 'Enclosing City';
+    return 'Stretched Girdle';
+  }
+
+  function renderLineageList(lineage) {
+    var key = lineage.map(function (g) {
+      return [g.id, g.stage, g.role, g.innerR.toFixed(4), g.outerR.toFixed(4)].join(':');
+    }).join('|') + '#' + String(selectedGenId);
+    if (key === lastLineageKey) return;
+    lastLineageKey = key;
+    lineageScroll.textContent = '';
+    for (var i = 0; i < lineage.length; i++) {
+      (function (g) {
+        var row = document.createElement('cambium-ring-entry');
+        row.className = 'oli-ring-entry' + (g.id === selectedGenId ? ' oli-selected' : '');
+        row.setAttribute('data-gen-id', String(g.id));
+        row.setAttribute('role', 'button');
+        row.setAttribute('tabindex', '0');
+
+        var top = document.createElement('cambium-ring-top');
+        top.className = 'oli-ring-top';
+        var title = document.createElement('olinda-panel-title');
+        title.className = 'oli-panel-title';
+        title.textContent = 'Gen #' + g.id + ' · ' + roleLabel(g.role);
+        var badge = document.createElement('cambium-ring-badge');
+        badge.className = 'oli-ring-badge';
+        badge.textContent = g.stage.replace('_', ' ');
+        top.appendChild(title);
+        top.appendChild(badge);
+
+        var meta = document.createElement('cambium-ring-meta');
+        meta.className = 'oli-ring-meta';
+        var pct = (g.thickness * 100).toFixed(1);
+        meta.textContent = 'born yr ' + g.bornYear + ' · band ' + (g.innerR * 100).toFixed(1) + '%–' + (g.outerR * 100).toFixed(1) + '% (Δ' + pct + '%)';
+
+        var bldgs = document.createElement('cambium-ring-buildings');
+        bldgs.className = 'oli-ring-buildings';
+        var bc = g.buildingCounts;
+        var items = [['twr', bc.tower], ['chr', bc.church], ['pal', bc.palace], ['tht', bc.theater]];
+        for (var k = 0; k < items.length; k++) {
+          var chip = document.createElement('cambium-bldg-chip');
+          chip.className = 'oli-bldg-chip';
+          chip.textContent = items[k][0] + ' ' + items[k][1];
+          bldgs.appendChild(chip);
+        }
+
+        row.appendChild(top);
+        row.appendChild(meta);
+        row.appendChild(bldgs);
+        row.addEventListener('click', function () {
+          unlockAudioAll();
+          selectedGenId = selectedGenId === g.id ? null : g.id;
+          syncAll();
+        });
+        row.addEventListener('keydown', function (ev) {
+          if (ev.key === 'Enter' || ev.key === ' ') {
+            ev.preventDefault();
+            selectedGenId = selectedGenId === g.id ? null : g.id;
+            syncAll();
+          }
+        });
+        lineageScroll.appendChild(row);
+      })(lineage[i]);
+    }
+  }
+  function updatePlateLoupe() {
+    if (drawerEl.hidden || !plateZoomActive) {
+      plateLoupeEl.hidden = true;
+      return;
+    }
+    var activeImg = activePlateTab === 'map' ? imgMap : imgPaint;
+    var rect = activeImg.getBoundingClientRect();
+    var w = Math.max(1, rect.width);
+    var h = Math.max(1, rect.height);
+    var mag = 2.4;
+    var srcFile = activePlateTab === 'map' ? 'map.png' : 'image.png';
+    plateLoupeEl.hidden = false;
+    plateLoupeEl.style.left = (plateLoupeNX * w) + 'px';
+    plateLoupeEl.style.top = (plateLoupeNY * h) + 'px';
+    plateLoupeEl.style.backgroundImage = 'url("' + srcFile + '")';
+    plateLoupeEl.style.backgroundSize = (w * mag) + 'px ' + (h * mag) + 'px';
+    plateLoupeEl.style.backgroundPosition = (84 - plateLoupeNX * w * mag) + 'px ' + (84 - plateLoupeNY * h * mag) + 'px';
+  }
+
+  function syncDOM() {
+    var cs = cambium.getState();
+    var ls = loupe.getState();
+    var reduced = isReducedMotion();
+
+    valYear.textContent = String(cs.year);
+    valRings.textContent = String(cs.concentricRingsCount);
+    valGens.textContent = String(cs.generationCount);
+    valDestroyed.textContent = String(cs.oldWallsDestroyed);
+
+    var zLabel = '×' + (ls.zoom < 10 ? ls.zoom.toFixed(1) : String(Math.round(ls.zoom)));
+    zoomBadge.textContent = zLabel + (ls.isNucleusRevealed ? ' · pinhead resolved' : ' · searching');
+    zoomRange.value = String(ls.zoom);
+    discCountBadge.textContent = ls.discovered.length + ' / 8 resolved';
+
+    var tokens = ledgerEl.querySelectorAll('olinda-feature-token');
+    for (var i = 0; i < tokens.length; i++) {
+      var fid = tokens[i].getAttribute('data-feature');
+      var has = ls.discovered.indexOf(fid) !== -1;
+      tokens[i].classList.toggle('oli-discovered', has);
+    }
+
+    stageBadge.textContent = cs.innermostStage.replace('_', ' ');
+    var sBtns = vernierTrack.querySelectorAll('button.oli-stage-btn');
+    for (var j = 0; j < sBtns.length; j++) {
+      var match = sBtns[j].getAttribute('data-stage') === cs.innermostStage;
+      sBtns[j].classList.toggle('oli-active', match);
+      sBtns[j].setAttribute('aria-pressed', match ? 'true' : 'false');
+    }
+
+    btnLoupe.classList.toggle('oli-active', loupeVisible);
+    btnLoupe.setAttribute('aria-pressed', loupeVisible ? 'true' : 'false');
+
+    btnMute.classList.toggle('oli-active', muted);
+    btnMute.setAttribute('aria-pressed', muted ? 'true' : 'false');
+    btnMute.textContent = muted ? 'Muted [M]' : 'Sound [M]';
+
+    btnMotion.classList.toggle('oli-active', reduced);
+    btnMotion.setAttribute('aria-pressed', reduced ? 'true' : 'false');
+    btnMotion.textContent = reduced ? 'Calm' : 'Motion';
+
+    var open = !drawerEl.hidden;
+    btnPlates.classList.toggle('oli-active', open);
+    btnPlates.setAttribute('aria-pressed', open ? 'true' : 'false');
+
+    var isMap = activePlateTab === 'map';
+    imgMap.hidden = !isMap;
+    imgPaint.hidden = isMap;
+    tabMapBtn.classList.toggle('oli-active', isMap);
+    tabMapBtn.setAttribute('aria-pressed', isMap ? 'true' : 'false');
+    tabPaintBtn.classList.toggle('oli-active', !isMap);
+    tabPaintBtn.setAttribute('aria-pressed', !isMap ? 'true' : 'false');
+    plateCaptionEl.textContent = isMap
+      ? 'Survey Map · Concentric cambium girdles and innermost meristem of Olinda (1600×1200)'
+      : 'Painting · Nested quarters of Olinda pressing outward within earlier walls (1600×1000)';
+    plateDimBadge.textContent = isMap ? '1600×1200' : '1600×1000';
+
+    btnPlateZoom.classList.toggle('oli-active', plateZoomActive);
+    btnPlateZoom.setAttribute('aria-pressed', plateZoomActive ? 'true' : 'false');
+    updatePlateLoupe();
+
+    coordBadge.textContent = 'lens ' + ls.lensX.toFixed(2) + ', ' + ls.lensY.toFixed(2);
+    if (ls.isNucleusRevealed) {
+      whisperText.textContent = 'Pinhead Olinda resolved: roofs, skylights, streamers across streets, kiosks, and galloping horses.';
+    } else if (cs.generationCount > 2) {
+      whisperText.textContent = 'Ring ' + cs.concentricRingsCount + ' · Earlier walls stretch into narrow outer girdles while a fresh pinhead stirs at center.';
+    } else {
+      whisperText.textContent = 'Drag the brass magnifying glass over the central glint; zoom past ×8 to inspect the nascent city.';
+    }
+
+    lineageBadge.textContent = cs.generationCount + ' gens · ' + cs.concentricRingsCount + (cs.concentricRingsCount === 1 ? ' ring' : ' rings');
+    renderLineageList(cs.lineage);
+  }
+
+  function syncAll() {
+    renderScene();
+    syncDOM();
+  }
+
+  function getAppState() {
+    var cs = cambium.getState();
+    var ls = loupe.getState();
+    return {
+      city: 'Olinda',
+      year: cs.year,
+      concentricRingsCount: cs.concentricRingsCount,
+      oldWallsDestroyed: cs.oldWallsDestroyed,
+      ringsOnlyGrowOutward: true,
+      innermostNucleusAlwaysPresent: true,
+      innermostStage: cs.innermostStage,
+      generationCount: cs.generationCount,
+      lineage: cs.lineage,
+      selectedGenerationId: selectedGenId,
+      lensX: ls.lensX,
+      lensY: ls.lensY,
+      zoom: ls.zoom,
+      nucleusX: ls.nucleusX,
+      nucleusY: ls.nucleusY,
+      loupeVisible: loupeVisible,
+      isNucleusRevealed: ls.isNucleusRevealed,
+      discovered: ls.discovered,
+      discoveredCount: ls.discovered.length,
+      muted: muted,
+      reducedMotion: isReducedMotion(),
+      platesOpen: !drawerEl.hidden,
+      activePlateTab: activePlateTab,
+      plateZoomActive: plateZoomActive
+    };
+  }
+  function doAdvanceYear() {
+    var st = cambium.advanceYear();
+    cambium.playRingGrowth(st.concentricRingsCount);
+    syncAll();
+    return getAppState();
+  }
+
+  function doSetStage(stage) {
+    cambium.setStage(stage);
+    syncAll();
+    return getAppState();
+  }
+
+  function doSetZoom(z, withClick) {
+    var nz = loupe.setZoom(z);
+    if (withClick) loupe.playFocusClick(nz);
+    syncAll();
+    return getAppState();
+  }
+
+  function doSetLens(nx, ny) {
+    loupeVisible = true;
+    loupe.setLensPosition(nx, ny);
+    syncAll();
+    return getAppState();
+  }
+
+  function doToggleLoupe(force) {
+    loupeVisible = typeof force === 'boolean' ? force : !loupeVisible;
+    syncAll();
+    return getAppState();
+  }
+
+  function doSetMuted(b) {
+    muted = typeof b === 'boolean' ? b : !muted;
+    loupe.setMuted(muted);
+    cambium.setMuted(muted);
+    syncDOM();
+    return getAppState();
+  }
+
+  function doOpenPlates(tab) {
+    if (tab === 'painting' || tab === 'image') activePlateTab = 'painting';
+    else if (tab === 'map') activePlateTab = 'map';
+    drawerEl.hidden = false;
+    syncDOM();
+    return getAppState();
+  }
+
+  function doClosePlates() {
+    drawerEl.hidden = true;
+    plateZoomActive = false;
+    syncDOM();
+    return getAppState();
+  }
+
+  function doTogglePlateZoom(force) {
+    plateZoomActive = typeof force === 'boolean' ? force : !plateZoomActive;
+    syncDOM();
+    return getAppState();
+  }
+
+  function doReset() {
+    cambium.reset();
+    loupe.reset();
+    loupeVisible = true;
+    selectedGenId = null;
+    drawerEl.hidden = true;
+    plateZoomActive = false;
+    lastLineageKey = '';
+    syncAll();
+    return getAppState();
+  }
+
+  /* ---- Stage pointer + touch drag & ring click ---- */
+  var drag = { active: false, pointerId: null, startX: 0, startY: 0, moved: false, grabDX: 0, grabDY: 0, onLens: false };
+
+  function canvasNormCoords(ev) {
+    var rect = canvas.getBoundingClientRect();
+    var w = Math.max(1, rect.width);
+    var h = Math.max(1, rect.height);
+    return {
+      nx: Math.max(0, Math.min(1, (ev.clientX - rect.left) / w)),
+      ny: Math.max(0, Math.min(1, (ev.clientY - rect.top) / h)),
+      w: w,
+      h: h
+    };
+  }
+
+  canvas.addEventListener('pointerdown', function (ev) {
+    unlockAudioAll();
+    var p = canvasNormCoords(ev);
+    var ls = loupe.getState();
+    var hit = loupeVisible && loupe.hitLens(p.nx, p.ny);
+    drag.active = true;
+    drag.pointerId = ev.pointerId;
+    drag.startX = ev.clientX;
+    drag.startY = ev.clientY;
+    drag.moved = false;
+    drag.onLens = hit;
+    drag.grabDX = hit ? (ls.lensX - p.nx) : 0;
+    drag.grabDY = hit ? (ls.lensY - p.ny) : 0;
+    canvas.classList.add('oli-dragging');
+    if (canvas.setPointerCapture) {
+      try { canvas.setPointerCapture(ev.pointerId); } catch (e) { /* ignore */ }
+    }
+  });
+
+  canvas.addEventListener('pointermove', function (ev) {
+    if (!drag.active || ev.pointerId !== drag.pointerId) return;
+    var dx = ev.clientX - drag.startX;
+    var dy = ev.clientY - drag.startY;
+    if (Math.sqrt(dx * dx + dy * dy) > 5) drag.moved = true;
+    if ((drag.onLens || drag.moved) && loupeVisible) {
+      var p = canvasNormCoords(ev);
+      loupe.setLensPosition(p.nx + drag.grabDX, p.ny + drag.grabDY);
+      syncAll();
+    }
+  });
+
+  function endPointer(ev) {
+    if (!drag.active || ev.pointerId !== drag.pointerId) return;
+    var p = canvasNormCoords(ev);
+    if (!drag.moved) {
+      var hitGen = cambium.hitTest(p.nx, p.ny, p.w, p.h);
+      if (hitGen) {
+        selectedGenId = selectedGenId === hitGen.id ? null : hitGen.id;
+        syncAll();
+      }
+    }
+    drag.active = false;
+    drag.pointerId = null;
+    canvas.classList.remove('oli-dragging');
+  }
+  canvas.addEventListener('pointerup', endPointer);
+  canvas.addEventListener('pointercancel', endPointer);
+  var lastWheelClick = 0;
+  canvas.addEventListener('wheel', function (ev) {
+    ev.preventDefault();
+    unlockAudioAll();
+    var factor = ev.deltaY < 0 ? 1.18 : (1 / 1.18);
+    var nz = loupe.zoomBy(factor);
+    var now = Date.now();
+    if (now - lastWheelClick > 70) {
+      lastWheelClick = now;
+      loupe.playFocusClick(nz);
+    }
+    syncAll();
+  }, { passive: false });
+
+  /* ---- UI Control Listeners ---- */
+  btnLoupe.addEventListener('click', function () { unlockAudioAll(); doToggleLoupe(); });
+  btnPlates.addEventListener('click', function () {
+    unlockAudioAll();
+    if (drawerEl.hidden) doOpenPlates(activePlateTab);
+    else doClosePlates();
+  });
+  btnMute.addEventListener('click', function () { unlockAudioAll(); doSetMuted(); });
+  btnMotion.addEventListener('click', function () {
+    manualReduced = !isReducedMotion();
+    syncAll();
+  });
+  btnReset.addEventListener('click', function () { unlockAudioAll(); doReset(); });
+
+  btnZoomOut.addEventListener('click', function () { unlockAudioAll(); doSetZoom(loupe.getState().zoom / 1.4, true); });
+  btnZoomIn.addEventListener('click', function () { unlockAudioAll(); doSetZoom(loupe.getState().zoom * 1.4, true); });
+  zoomRange.addEventListener('input', function () {
+    unlockAudioAll();
+    doSetZoom(parseFloat(zoomRange.value) || 1, false);
+  });
+  btnSeek.addEventListener('click', function () {
+    unlockAudioAll();
+    var c = cambium.getCenter(cssW, cssH);
+    doSetLens(c.nx, c.ny);
+  });
+  btnZoom16.addEventListener('click', function () {
+    unlockAudioAll();
+    var c = cambium.getCenter(cssW, cssH);
+    loupeVisible = true;
+    loupe.setLensPosition(c.nx, c.ny);
+    doSetZoom(Math.max(16, loupe.getState().zoom), true);
+  });
+
+  var fTokens = ledgerEl.querySelectorAll('olinda-feature-token');
+  for (var fi = 0; fi < fTokens.length; fi++) {
+    (function (tok) {
+      function focusFeature() {
+        unlockAudioAll();
+        var fid = tok.getAttribute('data-feature');
+        var th = THRESHOLDS[fid] || 8;
+        var c = cambium.getCenter(cssW, cssH);
+        loupeVisible = true;
+        loupe.setLensPosition(c.nx, c.ny);
+        doSetZoom(Math.max(loupe.getState().zoom, Math.ceil(th * 1.25)), true);
+      }
+      tok.addEventListener('click', focusFeature);
+      tok.addEventListener('keydown', function (ev) {
+        if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); focusFeature(); }
+      });
+    })(fTokens[fi]);
+  }
+
+  btnAdvanceYear.addEventListener('click', function () { unlockAudioAll(); doAdvanceYear(); });
+  var stageBtns = vernierTrack.querySelectorAll('button.oli-stage-btn');
+  for (var si = 0; si < stageBtns.length; si++) {
+    (function (btn) {
+      btn.addEventListener('click', function () {
+        unlockAudioAll();
+        doSetStage(btn.getAttribute('data-stage'));
+      });
+    })(stageBtns[si]);
+  }
+
+  tabMapBtn.addEventListener('click', function () { doOpenPlates('map'); });
+  tabPaintBtn.addEventListener('click', function () { doOpenPlates('painting'); });
+  btnPlateZoom.addEventListener('click', function () { doTogglePlateZoom(); });
+  btnPlateClose.addEventListener('click', function () { doClosePlates(); });
+  drawerEl.addEventListener('click', function (ev) {
+    if (ev.target === drawerEl) doClosePlates();
+  });
+  plateFrameEl.addEventListener('pointermove', function (ev) {
+    if (!plateZoomActive) return;
+    var activeImg = activePlateTab === 'map' ? imgMap : imgPaint;
+    var r = activeImg.getBoundingClientRect();
+    if (r.width > 0 && r.height > 0) {
+      plateLoupeNX = Math.max(0, Math.min(1, (ev.clientX - r.left) / r.width));
+      plateLoupeNY = Math.max(0, Math.min(1, (ev.clientY - r.top) / r.height));
+      updatePlateLoupe();
+    }
+  });
+
+  /* ---- Keyboard Shortcuts ---- */
+  globalThis.addEventListener('keydown', function (ev) {
+    if (ev.ctrlKey || ev.metaKey || ev.altKey) return;
+    var k = ev.key;
+    if (k === 'Escape') {
+      if (!drawerEl.hidden) { ev.preventDefault(); doClosePlates(); }
+      return;
+    }
+    if (k === 'y' || k === 'Y') { ev.preventDefault(); unlockAudioAll(); doAdvanceYear(); }
+    else if (k >= '1' && k <= '5') { ev.preventDefault(); unlockAudioAll(); doSetStage(STAGES[parseInt(k, 10) - 1]); }
+    else if (k === '+' || k === '=') { ev.preventDefault(); unlockAudioAll(); doSetZoom(loupe.getState().zoom * 1.4, true); }
+    else if (k === '-' || k === '_') { ev.preventDefault(); unlockAudioAll(); doSetZoom(loupe.getState().zoom / 1.4, true); }
+    else if (k === 'l' || k === 'L') { ev.preventDefault(); unlockAudioAll(); doToggleLoupe(); }
+    else if (k === 'm' || k === 'M') { ev.preventDefault(); unlockAudioAll(); doSetMuted(); }
+    else if (k === 'p' || k === 'P') {
+      ev.preventDefault();
+      if (drawerEl.hidden) doOpenPlates(activePlateTab);
+      else doClosePlates();
+    } else if (k === 'z' || k === 'Z') { ev.preventDefault(); doTogglePlateZoom(); }
+    else if (k === 'r' || k === 'R') { ev.preventDefault(); unlockAudioAll(); doReset(); }
+  });
+
+  if (mqReduced && mqReduced.addEventListener) {
+    mqReduced.addEventListener('change', function () { syncAll(); });
+  }
+  if (globalThis.ResizeObserver) {
+    new globalThis.ResizeObserver(function () { syncAll(); }).observe(frameEl);
+  }
+  globalThis.addEventListener('resize', function () { syncAll(); });
+
+  var prevTs = 0;
+  function tick(ts) {
+    var dt = prevTs ? Math.min(0.1, (ts - prevTs) / 1000) : 0.016;
+    prevTs = ts;
+    var reduced = isReducedMotion();
+    var moving = cambium.step(dt, { reducedMotion: reduced });
+    loupe.step(dt, { reducedMotion: reduced });
+    if (!reduced || moving) {
+      renderScene();
+    }
+    globalThis.requestAnimationFrame(tick);
+  }
+
+  globalThis.OlindaApp = {
+    getState: getAppState,
+    advanceYear: doAdvanceYear,
+    setStage: doSetStage,
+    setZoom: function (z) { return doSetZoom(z, false); },
+    setLens: doSetLens,
+    toggleLoupe: doToggleLoupe,
+    selectGeneration: function (id) { selectedGenId = id; syncAll(); return getAppState(); },
+    setMuted: doSetMuted,
+    toggleMute: function () { return doSetMuted(); },
+    setReducedMotion: function (b) { manualReduced = (b === null ? null : !!b); syncAll(); return getAppState(); },
+    openPlates: doOpenPlates,
+    closePlates: doClosePlates,
+    togglePlateZoom: doTogglePlateZoom,
+    reset: doReset
+  };
+
+  syncAll();
+  globalThis.requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,4235 @@
+<!DOCTYPE html>
+<html lang="en" class="eud-root-doc">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EUDOXIA — VI · Cities &amp; the Sky 1</title>
+  <style>
+    [hidden] { display: none !important; }
+
+    :root {
+      --eud-lampblack: #0d0b10;
+      --eud-soot: #19151e;
+      --eud-panel: #15111b;
+      --eud-panel-raised: #201a28;
+      --eud-ocher: #8c6d4e;
+      --eud-crimson: #b92938;
+      --eud-indigo: #1b3474;
+      --eud-indigo-bright: #4d75d8;
+      --eud-magenta: #b9338a;
+      --eud-gold: #d8a84c;
+      --eud-parchment: #eadcc3;
+      --eud-parchment-dim: #bfb097;
+      --eud-ember: #e85d35;
+      --eud-line: rgba(216, 168, 76, 0.28);
+      --eud-line-strong: rgba(216, 168, 76, 0.62);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html.eud-root-doc,
+    body.eud-sanctuary-body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      max-width: 100%;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background: radial-gradient(circle at 50% 18%, #1d1625 0%, #0d0b10 72%);
+      color: var(--eud-parchment);
+      font-family: "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+      font-size: 13px;
+      line-height: 1.28;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Explicit display rules for all bespoke Eudoxia custom elements */
+    eudoxia-sanctuary {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      width: 100%;
+      max-width: 1440px;
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 7px 10px 8px;
+    }
+
+    augury-rubric-frieze,
+    rubric-title-seal,
+    sanctuary-action-bar,
+    cosmos-pole-chip,
+    cosmos-dial-track,
+    knotted-carpet-loom,
+    loom-header-strip,
+    spool-swatch-row,
+    warp-weft-loupe,
+    loupe-preset-group,
+    homeomorphic-bridge-spine,
+    double-bond-readout,
+    constellation-sigil-plaque,
+    cosmology-verdict-scroll,
+    shapeless-alley-stain,
+    stain-header-strip,
+    alley-hazard-controls,
+    hazard-button-cluster,
+    thread-route-ledger,
+    route-endpoint-slot,
+    route-tortuosity-meter,
+    locus-pair-knot,
+    eudoxia-plate-drawer,
+    plate-folio-sheet,
+    plate-tab-strip,
+    plate-loupe-stage,
+    plate-figure-card,
+    plate-figure-rubric,
+    plate-caption-colophon {
+      display: flex;
+    }
+
+    oracle-cosmos-pivot,
+    eudoxia-stage-diptych,
+    locus-bijection-rail,
+    plate-diptych-grid {
+      display: grid;
+    }
+
+    rubric-augury-motto,
+    loom-canvas-frame,
+    spine-tether-canvas-wrap,
+    bond-carpet-facet,
+    bond-street-facet,
+    verdict-headline-seal,
+    verdict-body-inscription,
+    stain-canvas-frame,
+    knot-carpet-label,
+    knot-street-label {
+      display: block;
+    }
+
+    rubric-chapter-badge,
+    cosmos-angle-badge,
+    spool-thread-tag,
+    loupe-readout-tag,
+    verdict-parity-stamp,
+    stain-cosmos-tag,
+    hazard-tally-badge,
+    knot-index-medallion {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    rubric-city-glyph,
+    route-slot-caption {
+      display: inline-block;
+    }
+
+    /* Top Sanctuary Rubric Frieze */
+    .eud-rubric-frieze {
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 5px 10px;
+      background: linear-gradient(90deg, rgba(27, 52, 116, 0.32), rgba(25, 21, 30, 0.94) 45%, rgba(185, 41, 56, 0.26));
+      border: 1px solid var(--eud-line);
+      border-radius: 6px;
+    }
+
+    .eud-title-seal {
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .eud-chapter-badge {
+      padding: 2px 7px;
+      font-size: 10px;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      color: var(--eud-gold);
+      background: rgba(13, 11, 16, 0.72);
+      border: 1px solid var(--eud-line);
+      border-radius: 3px;
+    }
+
+    .eud-city-glyph {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      color: var(--eud-parchment);
+    }
+
+    .eud-augury-motto {
+      font-size: 11.5px;
+      font-style: italic;
+      color: var(--eud-parchment-dim);
+    }
+    .eud-action-bar {
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    .eud-btn {
+      appearance: none;
+      margin: 0;
+      padding: 4px 8px;
+      font-family: inherit;
+      font-size: 10.5px;
+      line-height: 1.15;
+      color: var(--eud-parchment);
+      background: linear-gradient(180deg, #272033 0%, #171320 100%);
+      border: 1px solid rgba(216, 168, 76, 0.36);
+      border-radius: 4px;
+      cursor: pointer;
+      white-space: normal;
+      text-align: center;
+      transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+    }
+
+    .eud-btn:hover,
+    .eud-btn:focus-visible {
+      border-color: var(--eud-gold);
+      background: linear-gradient(180deg, #352a45 0%, #20192d 100%);
+      outline: none;
+    }
+
+    .eud-btn.eud-is-active {
+      color: #fff6e3;
+      background: linear-gradient(180deg, rgba(185, 41, 56, 0.72), rgba(27, 52, 116, 0.72));
+      border-color: var(--eud-gold);
+      box-shadow: 0 0 8px rgba(216, 168, 76, 0.26);
+    }
+
+    .eud-btn-plates {
+      border-color: rgba(216, 168, 76, 0.65);
+      color: var(--eud-gold);
+    }
+
+    /* Oracle Reversible Cosmology Switch */
+    .eud-cosmos-pivot {
+      grid-template-columns: minmax(0, 1fr) minmax(240px, 1.1fr) minmax(0, 1fr);
+      align-items: center;
+      gap: 8px;
+      padding: 5px 10px;
+      background: rgba(21, 17, 27, 0.94);
+      border: 1px solid var(--eud-line);
+      border-radius: 6px;
+    }
+
+    .eud-pole-chip {
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 5px 8px;
+      min-width: 0;
+      font-size: 11px;
+      line-height: 1.18;
+      color: var(--eud-parchment-dim);
+      background: rgba(13, 11, 16, 0.74);
+      border: 1px solid rgba(216, 168, 76, 0.24);
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+      user-select: none;
+    }
+
+    .eud-pole-chip:hover,
+    .eud-pole-chip:focus-visible {
+      border-color: var(--eud-gold);
+      color: var(--eud-parchment);
+      outline: none;
+    }
+
+    .eud-pole-chip.eud-is-active {
+      color: #fff7e6;
+      border-color: var(--eud-gold);
+      background: linear-gradient(90deg, rgba(27, 52, 116, 0.52), rgba(185, 51, 138, 0.44));
+      box-shadow: inset 0 0 10px rgba(216, 168, 76, 0.2);
+    }
+
+    .eud-dial-track {
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .eud-oracle-slider,
+    .eud-zoom-slider {
+      flex: 1 1 auto;
+      min-width: 72px;
+      accent-color: var(--eud-gold);
+      cursor: pointer;
+    }
+
+    .eud-angle-badge {
+      flex: 0 0 auto;
+      padding: 2px 7px;
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      color: var(--eud-gold);
+      background: rgba(13, 11, 16, 0.85);
+      border: 1px solid var(--eud-line);
+      border-radius: 4px;
+    }
+
+    /* Main Synchronized Stage Diptych */
+    .eud-stage-diptych {
+      flex: 1 1 auto;
+      grid-template-columns: minmax(0, 1fr) 244px minmax(0, 1fr);
+      gap: 8px;
+      min-height: 0;
+    }
+
+    .eud-carpet-loom,
+    .eud-alley-stain {
+      flex-direction: column;
+      gap: 5px;
+      min-width: 0;
+      min-height: 0;
+      padding: 6px 8px;
+      background: rgba(21, 17, 27, 0.92);
+      border: 1px solid var(--eud-line);
+      border-radius: 6px;
+    }
+
+    .eud-loom-header,
+    .eud-stain-header {
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 5px;
+      min-width: 0;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--eud-gold);
+    }
+
+    .eud-swatch-row {
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .eud-thread-tag,
+    .eud-stain-tag,
+    .eud-loupe-tag,
+    .eud-hazard-tally {
+      padding: 1px 6px;
+      font-size: 9.5px;
+      letter-spacing: 0.04em;
+      color: var(--eud-parchment);
+      background: rgba(13, 11, 16, 0.8);
+      border: 1px solid rgba(216, 168, 76, 0.28);
+      border-radius: 3px;
+    }
+
+    .eud-thread-crimson { border-left: 3px solid var(--eud-crimson); }
+    .eud-thread-indigo { border-left: 3px solid var(--eud-indigo-bright); }
+    .eud-thread-magenta { border-left: 3px solid var(--eud-magenta); }
+
+    .eud-canvas-frame {
+      position: relative;
+      flex: 1 1 auto;
+      width: 100%;
+      min-height: 318px;
+      background: var(--eud-lampblack);
+      border: 1px solid rgba(216, 168, 76, 0.34);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .eud-stage-canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 318px;
+      cursor: crosshair;
+      touch-action: manipulation;
+    }
+    .eud-loupe-bar,
+    .eud-hazard-bar {
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 5px;
+      min-width: 0;
+    }
+
+    .eud-loupe-presets,
+    .eud-hazard-buttons {
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    /* Homeomorphic Bridge Spine */
+    .eud-bridge-spine {
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 6px;
+      min-width: 0;
+      padding: 6px 8px;
+      background: linear-gradient(180deg, rgba(25, 21, 30, 0.96), rgba(16, 13, 22, 0.98));
+      border: 1px solid var(--eud-line-strong);
+      border-radius: 6px;
+    }
+
+    .eud-spine-canvas-wrap {
+      width: 100%;
+      height: 86px;
+      background: var(--eud-lampblack);
+      border: 1px solid rgba(216, 168, 76, 0.3);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .eud-spine-canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .eud-bond-readout {
+      flex-direction: column;
+      gap: 5px;
+      min-width: 0;
+      padding: 5px 6px;
+      background: rgba(13, 11, 16, 0.72);
+      border: 1px solid rgba(216, 168, 76, 0.24);
+      border-radius: 4px;
+    }
+
+    .eud-constellation-plaque {
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 4px;
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--eud-gold);
+      border-bottom: 1px solid rgba(216, 168, 76, 0.2);
+      padding-bottom: 3px;
+    }
+
+    .eud-carpet-facet,
+    .eud-street-facet {
+      font-size: 10.5px;
+      line-height: 1.2;
+      color: var(--eud-parchment);
+      overflow-wrap: break-word;
+    }
+
+    .eud-carpet-facet {
+      border-left: 2px solid var(--eud-crimson);
+      padding-left: 5px;
+    }
+
+    .eud-street-facet {
+      border-left: 2px solid var(--eud-ocher);
+      padding-left: 5px;
+    }
+
+    .eud-verdict-scroll {
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+      padding: 6px;
+      background: linear-gradient(180deg, rgba(27, 52, 116, 0.22), rgba(140, 109, 78, 0.16));
+      border: 1px solid rgba(216, 168, 76, 0.35);
+      border-radius: 4px;
+    }
+
+    .eud-verdict-headline {
+      font-size: 10.5px;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--eud-gold);
+    }
+
+    .eud-verdict-body {
+      font-size: 10px;
+      line-height: 1.22;
+      color: var(--eud-parchment-dim);
+    }
+
+    .eud-verdict-stamp {
+      padding: 2px 6px;
+      font-size: 9px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #fff6e0;
+      background: rgba(185, 41, 56, 0.42);
+      border: 1px solid rgba(216, 168, 76, 0.45);
+      border-radius: 3px;
+      align-self: flex-start;
+    }
+
+    /* Quarter-to-Quarter Thread Pathfinding Ledger */
+    .eud-route-ledger {
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 5px 10px;
+      background: rgba(21, 17, 27, 0.94);
+      border: 1px solid var(--eud-line);
+      border-radius: 6px;
+    }
+
+    .eud-endpoint-slot {
+      align-items: center;
+      gap: 5px;
+      min-width: 0;
+      flex: 1 1 210px;
+    }
+
+    .eud-slot-caption {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--eud-gold);
+    }
+
+    .eud-route-select {
+      flex: 1 1 auto;
+      min-width: 0;
+      max-width: 100%;
+      padding: 3px 6px;
+      font-family: inherit;
+      font-size: 10.5px;
+      color: var(--eud-parchment);
+      background: #120f18;
+      border: 1px solid rgba(216, 168, 76, 0.4);
+      border-radius: 4px;
+    }
+
+    .eud-tortuosity-meter {
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      flex: 2 1 320px;
+      min-width: 0;
+      font-size: 10.5px;
+      line-height: 1.2;
+      color: var(--eud-parchment);
+    }
+    /* 9-Locus 1-to-1 Bijection Rail */
+    .eud-bijection-rail {
+      grid-template-columns: repeat(9, minmax(0, 1fr));
+      gap: 5px;
+    }
+
+    .eud-locus-knot {
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 2px;
+      min-width: 0;
+      padding: 4px 5px;
+      background: rgba(21, 17, 27, 0.92);
+      border: 1px solid rgba(216, 168, 76, 0.25);
+      border-radius: 5px;
+      cursor: pointer;
+      user-select: none;
+      transition: border-color 0.14s ease, background 0.14s ease;
+    }
+
+    .eud-locus-knot:hover,
+    .eud-locus-knot:focus-visible {
+      border-color: var(--eud-gold);
+      background: rgba(38, 29, 49, 0.96);
+      outline: none;
+    }
+
+    .eud-locus-knot.eud-is-active {
+      border-color: var(--eud-gold);
+      background: linear-gradient(180deg, rgba(185, 41, 56, 0.34), rgba(27, 52, 116, 0.38));
+      box-shadow: 0 0 8px rgba(216, 168, 76, 0.24);
+    }
+
+    .eud-knot-medallion {
+      justify-content: space-between;
+      width: 100%;
+      font-size: 9.5px;
+      font-weight: 700;
+      color: var(--eud-gold);
+    }
+
+    .eud-knot-carpet {
+      font-size: 9.5px;
+      font-weight: 600;
+      line-height: 1.14;
+      color: var(--eud-parchment);
+      overflow-wrap: break-word;
+    }
+
+    .eud-knot-street {
+      font-size: 9px;
+      line-height: 1.14;
+      color: var(--eud-parchment-dim);
+      overflow-wrap: break-word;
+    }
+
+    /* Royal Archival Plate Drawer [P] */
+    .eud-plate-drawer {
+      position: fixed;
+      inset: 0;
+      z-index: 900;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+      background: rgba(9, 7, 13, 0.91);
+      backdrop-filter: blur(4px);
+    }
+
+    .eud-plate-sheet {
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+      max-width: 1200px;
+      max-height: calc(100vh - 28px);
+      padding: 10px 12px;
+      background: #17121f;
+      border: 1px solid var(--eud-gold);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .eud-plate-tabs {
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .eud-loupe-stage {
+      flex: 1 1 auto;
+      flex-direction: column;
+      min-height: 0;
+      overflow: auto;
+      padding: 6px;
+      background: #0c0a10;
+      border: 1px solid rgba(216, 168, 76, 0.3);
+      border-radius: 5px;
+    }
+
+    .eud-plate-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      width: 100%;
+      align-items: start;
+    }
+
+    .eud-plate-grid.eud-single-plate {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .eud-plate-card {
+      flex-direction: column;
+      gap: 5px;
+      min-width: 0;
+      overflow: auto;
+    }
+
+    .eud-plate-rubric {
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--eud-gold);
+    }
+
+    .eud-plate-img {
+      display: block;
+      width: 100%;
+      max-height: 66vh;
+      height: auto;
+      object-fit: contain;
+      border: 1px solid rgba(216, 168, 76, 0.34);
+      border-radius: 4px;
+      transform-origin: var(--eud-loupe-ox, 50%) var(--eud-loupe-oy, 50%);
+      transition: transform 0.18s ease;
+    }
+
+    .eud-loupe-stage.eud-is-zoomed .eud-plate-img {
+      transform: scale(1.85);
+      cursor: zoom-out;
+    }
+
+    .eud-plate-colophon {
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 10.5px;
+      color: var(--eud-parchment-dim);
+    }
+
+    @media (max-width: 960px) {
+      eudoxia-sanctuary {
+        padding: 6px 8px 14px;
+      }
+      .eud-rubric-frieze {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .eud-action-bar {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        width: 100%;
+      }
+      .eud-cosmos-pivot {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .eud-dial-track {
+        grid-column: 1 / -1;
+      }
+      .eud-stage-diptych {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .eud-canvas-frame,
+      .eud-stage-canvas {
+        min-height: 256px;
+        height: 256px;
+      }
+      .eud-bijection-rail {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .eud-plate-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .eud-btn,
+      .eud-locus-knot,
+      .eud-plate-img {
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="eud-sanctuary-body">
+  <eudoxia-sanctuary class="eud-sanctuary" id="eud-sanctuary">
+    <augury-rubric-frieze class="eud-rubric-frieze">
+      <rubric-title-seal class="eud-title-seal">
+        <rubric-chapter-badge class="eud-chapter-badge">VI · Cities &amp; the Sky · 1</rubric-chapter-badge>
+        <rubric-city-glyph class="eud-city-glyph">EUDOXIA</rubric-city-glyph>
+        <rubric-augury-motto class="eud-augury-motto">Sanctuary of the Symmetrical Carpet &amp; the Shapeless Crumbling Stain</rubric-augury-motto>
+      </rubric-title-seal>
+      <sanctuary-action-bar class="eud-action-bar">
+        <button type="button" class="eud-btn" id="eud-btn-flip-oracle" title="Flip Oracle Cosmology [O]">[O] Flip Cosmos</button>
+        <button type="button" class="eud-btn" id="eud-btn-cycle-loupe" title="Cycle Weave Magnification Loupe [L]">[L] Loupe: 1.0×</button>
+        <button type="button" class="eud-btn" id="eud-btn-cycle-route" title="Cycle Quarter Thread Route [T]">[T] Thread Route</button>
+        <button type="button" class="eud-btn" id="eud-btn-cycle-hazard" title="Trigger Landslide, Night Fire &amp; Scream [D]">[D] Dust &amp; Scream</button>
+        <button type="button" class="eud-btn" id="eud-btn-mute" title="Toggle Oud &amp; Alley Audio [M]">[M] Sound: On</button>
+        <button type="button" class="eud-btn" id="eud-btn-motion" title="Toggle Reduced Motion">Motion: Live</button>
+        <button type="button" class="eud-btn eud-btn-plates" id="eud-btn-plates" title="Open Archival Plates [P]">[P] Plates</button>
+        <button type="button" class="eud-btn" id="eud-btn-reset" title="Reset Sanctuary [R]">[R] Reset</button>
+      </sanctuary-action-bar>
+    </augury-rubric-frieze>
+
+    <oracle-cosmos-pivot class="eud-cosmos-pivot" id="eud-oracle-pivot">
+      <cosmos-pole-chip class="eud-pole-chip eud-is-active" id="eud-pole-carpet" role="button" tabindex="0" aria-pressed="true">
+        Augurs' Reading: Symmetrical Carpet = Divine Starry Orbits (0.00)
+      </cosmos-pole-chip>
+      <cosmos-dial-track class="eud-dial-track">
+        <input id="eud-oracle-slider" class="eud-oracle-slider" type="range" min="0" max="1" step="0.01" value="0" aria-label="Oracle Reversible Cosmology Balance">
+        <cosmos-angle-badge class="eud-angle-badge" id="eud-oracle-badge">0.00 · CARPET SKY</cosmos-angle-badge>
+      </cosmos-dial-track>
+      <cosmos-pole-chip class="eud-pole-chip" id="eud-pole-stain" role="button" tabindex="0" aria-pressed="false">
+        Opposite Conclusion: Shapeless Crumbling Stain = True Map of the Universe (1.00)
+      </cosmos-pole-chip>
+    </oracle-cosmos-pivot>
+
+    <eudoxia-stage-diptych class="eud-stage-diptych">
+      <knotted-carpet-loom class="eud-carpet-loom">
+        <loom-header-strip class="eud-loom-header">
+          Preserved Sanctuary Carpet — Straight &amp; Circular Motifs
+          <spool-swatch-row class="eud-swatch-row">
+            <spool-thread-tag class="eud-thread-tag eud-thread-crimson">Crimson</spool-thread-tag>
+            <spool-thread-tag class="eud-thread-tag eud-thread-indigo">Indigo</spool-thread-tag>
+            <spool-thread-tag class="eud-thread-tag eud-thread-magenta">Magenta</spool-thread-tag>
+            <loupe-readout-tag class="eud-loupe-tag" id="eud-microweave-badge">Whole Weave</loupe-readout-tag>
+          </spool-swatch-row>
+        </loom-header-strip>
+        <loom-canvas-frame class="eud-canvas-frame">
+          <canvas id="eud-carpet-canvas" class="eud-stage-canvas" width="540" height="380" aria-label="Preserved symmetrical carpet of crimson, indigo, and magenta spires and arabesques"></canvas>
+        </loom-canvas-frame>
+        <warp-weft-loupe class="eud-loupe-bar">
+          <loupe-preset-group class="eud-loupe-presets">
+            <button type="button" class="eud-btn eud-zoom-btn eud-is-active" data-zoom="1.0">1.0×</button>
+            <button type="button" class="eud-btn eud-zoom-btn" data-zoom="1.8">1.8×</button>
+            <button type="button" class="eud-btn eud-zoom-btn" data-zoom="2.8">2.8×</button>
+            <button type="button" class="eud-btn eud-zoom-btn" data-zoom="4.0">4.0×</button>
+          </loupe-preset-group>
+          <input id="eud-zoom-slider" class="eud-zoom-slider" type="range" min="1.0" max="4.0" step="0.1" value="1.0" aria-label="Weave Magnification Loupe">
+          <loupe-readout-tag class="eud-loupe-tag" id="eud-zoom-readout">1.0× · Macro</loupe-readout-tag>
+        </warp-weft-loupe>
+      </knotted-carpet-loom>
+
+      <homeomorphic-bridge-spine class="eud-bridge-spine" id="eud-bridge-spine">
+        <spine-tether-canvas-wrap class="eud-spine-canvas-wrap">
+          <canvas id="eud-spine-canvas" class="eud-spine-canvas" width="230" height="86" aria-label="1-to-1 homeomorphic thread and constellation bridge"></canvas>
+        </spine-tether-canvas-wrap>
+        <double-bond-readout class="eud-bond-readout">
+          <constellation-sigil-plaque class="eud-constellation-plaque" id="eud-bond-constellation">
+            [5] Axis Augurii · 330.0 Hz
+          </constellation-sigil-plaque>
+          <bond-carpet-facet class="eud-carpet-facet" id="eud-bond-carpet">
+            Central Twelve-Ray Medallion (u=0.50, v=0.50) — Twelve-rayed crimson-gold rosette mirrors the temple housing this carpet.
+          </bond-carpet-facet>
+          <bond-street-facet class="eud-street-facet" id="eud-bond-street">
+            Sanctuary of the Preserved Loom (x=0.51, y=0.53) — Quiet stone cell amid the crooked press where the symmetrical carpet hangs.
+          </bond-street-facet>
+        </double-bond-readout>
+        <cosmology-verdict-scroll class="eud-verdict-scroll">
+          <verdict-headline-seal class="eud-verdict-headline" id="eud-verdict-headline">
+            Augurs' Reading: The Symmetrical Carpet Holds the Starry Orbits
+          </verdict-headline-seal>
+          <verdict-body-inscription class="eud-verdict-body" id="eud-verdict-body">
+            The carpet's crimson, indigo, and magenta geometry reflects the divine sky; crooked Eudoxia is merely an incomplete human blotch.
+          </verdict-body-inscription>
+          <verdict-parity-stamp class="eud-verdict-stamp" id="eud-verdict-stamp">
+            9/9 Bijection · Both Oracles Valid
+          </verdict-parity-stamp>
+        </cosmology-verdict-scroll>
+      </homeomorphic-bridge-spine>
+
+      <shapeless-alley-stain class="eud-alley-stain">
+        <stain-header-strip class="eud-stain-header">
+          Winding Alleys, Mules, Smoke, Brine &amp; Crumbling Walls
+          <stain-cosmos-tag class="eud-stain-tag" id="eud-stain-mode-tag">Terrestrial Blotch · 8 Mules</stain-cosmos-tag>
+        </stain-header-strip>
+        <stain-canvas-frame class="eud-canvas-frame">
+          <canvas id="eud-stain-canvas" class="eud-stage-canvas" width="540" height="380" aria-label="Shapeless crumbling stain of winding alleys, packed mules, smoke, fish brine, landslides, fires, and starry orbits"></canvas>
+        </stain-canvas-frame>
+        <alley-hazard-controls class="eud-hazard-bar">
+          <hazard-button-cluster class="eud-hazard-buttons">
+            <button type="button" class="eud-btn" id="eud-btn-landslide">[D] Landslide &amp; Dust</button>
+            <button type="button" class="eud-btn" id="eud-btn-scream-fire">Night Fire &amp; Scream</button>
+            <button type="button" class="eud-btn" id="eud-btn-mules">Jostle Packed Mules</button>
+          </hazard-button-cluster>
+          <hazard-tally-badge class="eud-hazard-tally" id="eud-hazard-tally">Slumps: 0 · Screams: 0 · Jostles: 0</hazard-tally-badge>
+        </alley-hazard-controls>
+      </shapeless-alley-stain>
+    </eudoxia-stage-diptych>
+    <thread-route-ledger class="eud-route-ledger">
+      <route-endpoint-slot class="eud-endpoint-slot">
+        <route-slot-caption class="eud-slot-caption">Origin</route-slot-caption>
+        <select id="eud-route-from" class="eud-route-select" aria-label="Origin Quarter">
+          <option value="mule_narrows" selected>1 · Crimson Warp Gate ↔ Alley of Packed Mules</option>
+          <option value="soot_arch">2 · Northern Lapis Octagram ↔ Lintels of Black Smoke</option>
+          <option value="fish_steps">3 · Magenta Spiral Volute ↔ Brine &amp; Fish-Smell Stairs</option>
+          <option value="blind_culdesac">4 · Locked Lozenge Enclosure ↔ Dead-End Hovel Court</option>
+          <option value="oracle_sanctuary">5 · Central Twelve-Ray Medallion ↔ Sanctuary of the Preserved Loom</option>
+          <option value="landslide_ravine">6 · Diagonal Crimson-Gold Fret ↔ Scarp of Crumbling Walls &amp; Landslides</option>
+          <option value="upper_hovels">7 · Twin Indigo Cartouche ↔ Stacked Slope Hovels</option>
+          <option value="fire_cistern">8 · Southern Octagram Rosette ↔ Brazier Alley of Night Fires</option>
+          <option value="scream_threshold">9 · Magenta Fringe Selvedge ↔ Darkness of Night Screams</option>
+        </select>
+      </route-endpoint-slot>
+      <button type="button" class="eud-btn" id="eud-btn-trace-next" title="Cycle Quarter Route [T]">[T] Next Thread</button>
+      <route-endpoint-slot class="eud-endpoint-slot">
+        <route-slot-caption class="eud-slot-caption">Destination</route-slot-caption>
+        <select id="eud-route-to" class="eud-route-select" aria-label="Destination Quarter">
+          <option value="mule_narrows">1 · Crimson Warp Gate ↔ Alley of Packed Mules</option>
+          <option value="soot_arch">2 · Northern Lapis Octagram ↔ Lintels of Black Smoke</option>
+          <option value="fish_steps">3 · Magenta Spiral Volute ↔ Brine &amp; Fish-Smell Stairs</option>
+          <option value="blind_culdesac">4 · Locked Lozenge Enclosure ↔ Dead-End Hovel Court</option>
+          <option value="oracle_sanctuary" selected>5 · Central Twelve-Ray Medallion ↔ Sanctuary of the Preserved Loom</option>
+          <option value="landslide_ravine">6 · Diagonal Crimson-Gold Fret ↔ Scarp of Crumbling Walls &amp; Landslides</option>
+          <option value="upper_hovels">7 · Twin Indigo Cartouche ↔ Stacked Slope Hovels</option>
+          <option value="fire_cistern">8 · Southern Octagram Rosette ↔ Brazier Alley of Night Fires</option>
+          <option value="scream_threshold">9 · Magenta Fringe Selvedge ↔ Darkness of Night Screams</option>
+        </select>
+      </route-endpoint-slot>
+      <route-tortuosity-meter class="eud-tortuosity-meter" id="eud-route-readout">
+        Crimson Straight+Circular Thread ↔ Crooked Alley Detour · Tortuosity 2.18×
+      </route-tortuosity-meter>
+    </thread-route-ledger>
+
+    <locus-bijection-rail class="eud-bijection-rail" id="eud-locus-rail">
+      <locus-pair-knot class="eud-locus-knot" role="button" tabindex="0" data-locus-id="mule_narrows">
+        <knot-index-medallion class="eud-knot-medallion">[1] Crimson</knot-index-medallion>
+        <knot-carpet-label class="eud-knot-carpet">Crimson Warp Gate</knot-carpet-label>
+        <knot-street-label class="eud-knot-street">Alley of Packed Mules</knot-street-label>
+      </locus-pair-knot>
+      <locus-pair-knot class="eud-locus-knot" role="button" tabindex="0" data-locus-id="soot_arch">
+        <knot-index-medallion class="eud-knot-medallion">[2] Indigo</knot-index-medallion>
+        <knot-carpet-label class="eud-knot-carpet">Northern Lapis Octagram</knot-carpet-label>
+        <knot-street-label class="eud-knot-street">Lintels of Black Smoke</knot-street-label>
+      </locus-pair-knot>
+      <locus-pair-knot class="eud-locus-knot" role="button" tabindex="0" data-locus-id="fish_steps">
+        <knot-index-medallion class="eud-knot-medallion">[3] Magenta</knot-index-medallion>
+        <knot-carpet-label class="eud-knot-carpet">Magenta Spiral Volute</knot-carpet-label>
+        <knot-street-label class="eud-knot-street">Brine &amp; Fish-Smell Stairs</knot-street-label>
+      </locus-pair-knot>
+      <locus-pair-knot class="eud-locus-knot" role="button" tabindex="0" data-locus-id="blind_culdesac">
+        <knot-index-medallion class="eud-knot-medallion">[4] Magenta</knot-index-medallion>
+        <knot-carpet-label class="eud-knot-carpet">Locked Lozenge Enclosure</knot-carpet-label>
+        <knot-street-label class="eud-knot-street">Dead-End Hovel Court</knot-street-label>
+      </locus-pair-knot>
+      <locus-pair-knot class="eud-locus-knot eud-is-active" role="button" tabindex="0" data-locus-id="oracle_sanctuary">
+        <knot-index-medallion class="eud-knot-medallion">[5] Crimson</knot-index-medallion>
+        <knot-carpet-label class="eud-knot-carpet">Central Twelve-Ray Medallion</knot-carpet-label>
+        <knot-street-label class="eud-knot-street">Sanctuary of the Preserved Loom</knot-street-label>
+      </locus-pair-knot>
+      <locus-pair-knot class="eud-locus-knot" role="button" tabindex="0" data-locus-id="landslide_ravine">
+        <knot-index-medallion class="eud-knot-medallion">[6] Crimson</knot-index-medallion>
+        <knot-carpet-label class="eud-knot-carpet">Diagonal Crimson-Gold Fret</knot-carpet-label>
+        <knot-street-label class="eud-knot-street">Scarp of Crumbling Walls &amp; Landslides</knot-street-label>
+      </locus-pair-knot>
+      <locus-pair-knot class="eud-locus-knot" role="button" tabindex="0" data-locus-id="upper_hovels">
+        <knot-index-medallion class="eud-knot-medallion">[7] Indigo</knot-index-medallion>
+        <knot-carpet-label class="eud-knot-carpet">Twin Indigo Cartouche</knot-carpet-label>
+        <knot-street-label class="eud-knot-street">Stacked Slope Hovels</knot-street-label>
+      </locus-pair-knot>
+      <locus-pair-knot class="eud-locus-knot" role="button" tabindex="0" data-locus-id="fire_cistern">
+        <knot-index-medallion class="eud-knot-medallion">[8] Crimson</knot-index-medallion>
+        <knot-carpet-label class="eud-knot-carpet">Southern Octagram Rosette</knot-carpet-label>
+        <knot-street-label class="eud-knot-street">Brazier Alley of Night Fires</knot-street-label>
+      </locus-pair-knot>
+      <locus-pair-knot class="eud-locus-knot" role="button" tabindex="0" data-locus-id="scream_threshold">
+        <knot-index-medallion class="eud-knot-medallion">[9] Magenta</knot-index-medallion>
+        <knot-carpet-label class="eud-knot-carpet">Magenta Fringe Selvedge</knot-carpet-label>
+        <knot-street-label class="eud-knot-street">Darkness of Night Screams</knot-street-label>
+      </locus-pair-knot>
+    </locus-bijection-rail>
+  </eudoxia-sanctuary>
+
+  <eudoxia-plate-drawer id="eud-plate-drawer" class="eud-plate-drawer" hidden>
+    <plate-folio-sheet class="eud-plate-sheet">
+      <plate-tab-strip class="eud-plate-tabs">
+        <loupe-preset-group class="eud-loupe-presets">
+          <button type="button" class="eud-btn eud-plate-tab eud-is-active" data-plate-tab="diptych">Diptych</button>
+          <button type="button" class="eud-btn eud-plate-tab" data-plate-tab="map">Survey Map (1600×1200)</button>
+          <button type="button" class="eud-btn eud-plate-tab" data-plate-tab="image">Sanctuary Painting (1600×1000)</button>
+        </loupe-preset-group>
+        <loupe-preset-group class="eud-loupe-presets">
+          <button type="button" class="eud-btn" id="eud-btn-plate-zoom">[Z] Loupe: 1.0×</button>
+          <button type="button" class="eud-btn" id="eud-btn-close-plates">[Esc] Close</button>
+        </loupe-preset-group>
+      </plate-tab-strip>
+      <plate-loupe-stage id="eud-plate-stage" class="eud-loupe-stage">
+        <plate-diptych-grid id="eud-plate-grid" class="eud-plate-grid">
+          <plate-figure-card id="eud-card-map" class="eud-plate-card">
+            <plate-figure-rubric class="eud-plate-rubric">Survey Map of Eudoxia — 1600×1200</plate-figure-rubric>
+            <img id="eud-map-plate-img" class="eud-plate-img" src="map.png" alt="Cartographic survey of Eudoxia pairing the symmetrical crimson, indigo, and magenta carpet with the crooked alley stain">
+          </plate-figure-card>
+          <plate-figure-card id="eud-card-image" class="eud-plate-card">
+            <plate-figure-rubric class="eud-plate-rubric">Sanctuary Painting of Eudoxia — 1600×1000</plate-figure-rubric>
+            <img id="eud-vista-plate-img" class="eud-plate-img" src="image.png" alt="Sanctuary painting of Eudoxia showing the preserved woven carpet illuminated amid smoky alleys and starry orbits">
+          </plate-figure-card>
+        </plate-diptych-grid>
+      </plate-loupe-stage>
+      <plate-caption-colophon class="eud-plate-colophon">
+        Archival Folio · City 35: Eudoxia · Move pointer when [Z] Loupe is active to inspect weave and alley detail · Press [Esc] or [P] to return.
+      </plate-caption-colophon>
+    </plate-folio-sheet>
+  </eudoxia-plate-drawer>
+
+  <script>
+/*
+ * City 35: Eudoxia (Chapter VI - Cities and the Sky 1)
+ * Layer: Symmetrical Sanctuary Carpet Loom & Pythagorean Oud Harmonics
+ * Standalone classic IIFE script - zero external network or parent path references.
+ */
+(function () {
+  "use strict";
+
+  const TAU = Math.PI * 2;
+
+  const LOCUS_IDS = [
+    "mule_narrows",
+    "soot_arch",
+    "fish_steps",
+    "blind_culdesac",
+    "oracle_sanctuary",
+    "landslide_ravine",
+    "upper_hovels",
+    "fire_cistern",
+    "scream_threshold"
+  ];
+
+  const THREAD_PALETTE = {
+    crimson: "#b92938",
+    lapisIndigo: "#1b3474",
+    magentaKnot: "#b9338a",
+    goldWeft: "#d8a84c",
+    lampblackGround: "#0d0b10",
+    selvedgeIvory: "#eadcc3"
+  };
+
+  const THREAD_HEX_BY_NAME = {
+    crimson: THREAD_PALETTE.crimson,
+    indigo: THREAD_PALETTE.lapisIndigo,
+    magenta: THREAD_PALETTE.magentaKnot
+  };
+
+  const THREAD_GLOW_BY_NAME = {
+    crimson: "#eb5363",
+    indigo: "#5889eb",
+    magenta: "#e65eb8"
+  };
+
+  const CARPET_LOCI = [
+    {
+      index: 0, id: "mule_narrows",
+      carpetTitle: "Crimson Warp Gate", streetTitle: "Alley of Packed Mules",
+      u: 0.24, v: 0.80, xNorm: 0.20, yNorm: 0.84,
+      threadColor: "crimson", hex: THREAD_PALETTE.crimson,
+      enclosureType: "stepped_gate", oudHz: 220.0,
+      constellationName: "Equus Sarcinarius", microWeaveGlyph: "pannier_knot",
+      homeomorphicNote: "Twin crimson warp posts pinch where jostling mules wedge pack-to-pack"
+    },
+    {
+      index: 1, id: "soot_arch",
+      carpetTitle: "Northern Lapis Octagram", streetTitle: "Lintels of Black Smoke",
+      u: 0.50, v: 0.22, xNorm: 0.31, yNorm: 0.29,
+      threadColor: "indigo", hex: THREAD_PALETTE.lapisIndigo,
+      enclosureType: "octagram_star", oudHz: 247.5,
+      constellationName: "Fumus Niger", microWeaveGlyph: "soot_lintel",
+      homeomorphicNote: "Eight-pointed lapis star ribs map blackened lintels funneling hearth smoke"
+    },
+    {
+      index: 2, id: "fish_steps",
+      carpetTitle: "Magenta Spiral Volute", streetTitle: "Brine & Fish-Smell Stairs",
+      u: 0.24, v: 0.34, xNorm: 0.16, yNorm: 0.52,
+      threadColor: "magenta", hex: THREAD_PALETTE.magentaKnot,
+      enclosureType: "circular_volute", oudHz: 275.0,
+      constellationName: "Pisces Salis", microWeaveGlyph: "brine_stairs",
+      homeomorphicNote: "Coiled magenta weft volute matches salt-slick risers reeking of fish brine"
+    },
+    {
+      index: 3, id: "blind_culdesac",
+      carpetTitle: "Locked Lozenge Enclosure", streetTitle: "Dead-End Hovel Court",
+      u: 0.76, v: 0.34, xNorm: 0.79, yNorm: 0.24,
+      threadColor: "magenta", hex: THREAD_PALETTE.magentaKnot,
+      enclosureType: "rhomboid_lozenge", oudHz: 293.33,
+      constellationName: "Clausura Caeca", microWeaveGlyph: "sealed_court",
+      homeomorphicNote: "Sealed four-sided magenta lozenge closes without exit like the blind court"
+    },
+    {
+      index: 4, id: "oracle_sanctuary",
+      carpetTitle: "Central Twelve-Ray Medallion", streetTitle: "Sanctuary of the Preserved Loom",
+      u: 0.50, v: 0.50, xNorm: 0.51, yNorm: 0.53,
+      threadColor: "crimson", hex: THREAD_PALETTE.crimson,
+      enclosureType: "twelve_ray_medallion", oudHz: 330.0,
+      constellationName: "Axis Augurii", microWeaveGlyph: "loom_omphalos",
+      homeomorphicNote: "Twelve-rayed crimson-gold rosette mirrors the temple housing this carpet"
+    },
+    {
+      index: 5, id: "landslide_ravine",
+      carpetTitle: "Diagonal Crimson-Gold Fret", streetTitle: "Scarp of Crumbling Walls & Landslides",
+      u: 0.76, v: 0.62, xNorm: 0.66, yNorm: 0.64,
+      threadColor: "crimson", hex: THREAD_PALETTE.crimson,
+      enclosureType: "chevron_fret", oudHz: 366.67,
+      constellationName: "Ruina Lapidum", microWeaveGlyph: "falling_ashlar",
+      homeomorphicNote: "Stepped crimson-gold fret locks the exact shear line of collapsing walls"
+    },
+    {
+      index: 6, id: "upper_hovels",
+      carpetTitle: "Twin Indigo Cartouche", streetTitle: "Stacked Slope Hovels",
+      u: 0.24, v: 0.58, xNorm: 0.44, yNorm: 0.17,
+      threadColor: "indigo", hex: THREAD_PALETTE.lapisIndigo,
+      enclosureType: "twin_cartouche", oudHz: 412.5,
+      constellationName: "Tuguria Superna", microWeaveGlyph: "tiered_roofs",
+      homeomorphicNote: "Paired indigo cartouches stack vertically as slope hovels teeter roof-on-roof"
+    },
+    {
+      index: 7, id: "fire_cistern",
+      carpetTitle: "Southern Octagram Rosette", streetTitle: "Brazier Alley of Night Fires",
+      u: 0.50, v: 0.78, xNorm: 0.58, yNorm: 0.82,
+      threadColor: "crimson", hex: THREAD_PALETTE.crimson,
+      enclosureType: "octagram_rosette", oudHz: 440.0,
+      constellationName: "Fornax Noctis", microWeaveGlyph: "ember_basin",
+      homeomorphicNote: "Radiant crimson rosette ring binds the cistern court lit by night braziers"
+    },
+    {
+      index: 8, id: "scream_threshold",
+      carpetTitle: "Magenta Fringe Selvedge", streetTitle: "Darkness of Night Screams",
+      u: 0.76, v: 0.80, xNorm: 0.85, yNorm: 0.76,
+      threadColor: "magenta", hex: THREAD_PALETTE.magentaKnot,
+      enclosureType: "selvedge_knot", oudHz: 495.0,
+      constellationName: "Clamor Tenebrarum", microWeaveGlyph: "jagged_selvedge",
+      homeomorphicNote: "Taut magenta selvedge hitch quivers where sudden screams split the dark"
+    }
+  ];
+
+  const LOCUS_BY_ID = Object.create(null);
+  for (let i = 0; i < CARPET_LOCI.length; i += 1) {
+    LOCUS_BY_ID[CARPET_LOCI[i].id] = CARPET_LOCI[i];
+  }
+
+  function clamp(v, lo, hi) {
+    return v < lo ? lo : v > hi ? hi : v;
+  }
+
+  function lerp(a, b, t) {
+    return a + (b - a) * t;
+  }
+
+  function getLocusById(idOrIndex) {
+    if (typeof idOrIndex === "number") {
+      return CARPET_LOCI[clamp(idOrIndex | 0, 0, CARPET_LOCI.length - 1)] || null;
+    }
+    return LOCUS_BY_ID[String(idOrIndex || "")] || null;
+  }
+
+  function buildEnclosurePoints(locus) {
+    const cu = locus.u;
+    const cv = locus.v;
+    const pts = [];
+    const type = locus.enclosureType;
+    if (type === "twelve_ray_medallion" || type === "octagram_star" || type === "octagram_rosette") {
+      const spikes = type === "twelve_ray_medallion" ? 12 : 8;
+      const rOuter = type === "twelve_ray_medallion" ? 0.088 : 0.072;
+      const rInner = rOuter * 0.64;
+      for (let i = 0; i < spikes * 2; i += 1) {
+        const ang = (i * Math.PI) / spikes - Math.PI * 0.5;
+        const r = i % 2 === 0 ? rOuter : rInner;
+        pts.push({ u: cu + Math.cos(ang) * r * 1.12, v: cv + Math.sin(ang) * r * 0.88 });
+      }
+    } else if (type === "circular_volute") {
+      for (let i = 0; i < 20; i += 1) {
+        const ang = (i * TAU) / 20;
+        pts.push({ u: cu + Math.cos(ang) * 0.068, v: cv + Math.sin(ang) * 0.056 });
+      }
+    } else if (type === "rhomboid_lozenge") {
+      pts.push(
+        { u: cu, v: cv - 0.062 },
+        { u: cu + 0.074, v: cv },
+        { u: cu, v: cv + 0.062 },
+        { u: cu - 0.074, v: cv }
+      );
+    } else {
+      const hw = 0.068;
+      const hh = 0.052;
+      const chamfer = 0.018;
+      pts.push(
+        { u: cu - hw + chamfer, v: cv - hh },
+        { u: cu + hw - chamfer, v: cv - hh },
+        { u: cu + hw, v: cv - hh + chamfer },
+        { u: cu + hw, v: cv + hh - chamfer },
+        { u: cu + hw - chamfer, v: cv + hh },
+        { u: cu - hw + chamfer, v: cv + hh },
+        { u: cu - hw, v: cv + hh - chamfer },
+        { u: cu - hw, v: cv - hh + chamfer }
+      );
+    }
+    return pts;
+  }
+  function computeGeometricRoute(fromId, toId) {
+    const from = getLocusById(fromId) || CARPET_LOCI[0];
+    const to = getLocusById(toId) || CARPET_LOCI[4];
+    const threadColor = from.threadColor || "crimson";
+    const hex = THREAD_HEX_BY_NAME[threadColor] || THREAD_PALETTE.crimson;
+    const glowHex = THREAD_GLOW_BY_NAME[threadColor] || "#eb5363";
+    const waypoints = [];
+    const segmentKinds = [];
+    const segments = [];
+    let geometricLength = 0;
+
+    if (from.id === to.id) {
+      const r = 0.056;
+      waypoints.push({ u: from.u, v: from.v }, { u: from.u + r, v: from.v });
+      segments.push({ kind: "straight", u1: from.u, v1: from.v, u2: from.u + r, v2: from.v });
+      segmentKinds.push("straight");
+      for (let s = 1; s <= 16; s += 1) {
+        const a = (s / 16) * TAU;
+        waypoints.push({ u: from.u + Math.cos(a) * r, v: from.v + Math.sin(a) * r });
+      }
+      segments.push({ kind: "circular_arc", cu: from.u, cv: from.v, r: r, aStart: 0, aEnd: TAU });
+      segmentKinds.push("circular_arc");
+      waypoints.push({ u: from.u, v: from.v });
+      segments.push({ kind: "straight", u1: from.u + r, v1: from.v, u2: from.u, v2: from.v });
+      segmentKinds.push("straight");
+      geometricLength = Number((2 * r + TAU * r).toFixed(4));
+      return {
+        fromId: from.id, toId: to.id, threadColor, hex, glowHex,
+        waypoints, segmentKinds, segments, geometricLength, isStraightOrCircular: true
+      };
+    }
+
+    const midV = (from.v + to.v) * 0.5;
+    let hubV = 0.50;
+    let ringR = 0.084;
+    if (from.id !== "oracle_sanctuary" && to.id !== "oracle_sanctuary" && Math.abs(from.v - to.v) <= 0.28) {
+      if (midV < 0.38) { hubV = 0.22; ringR = 0.072; }
+      else if (midV > 0.66) { hubV = 0.78; ringR = 0.072; }
+    }
+    const hubU = 0.50;
+    const d1u = from.u - hubU;
+    const d1v = from.v - hubV;
+    const d2u = to.u - hubU;
+    const d2v = to.v - hubV;
+    const a1 = Math.hypot(d1u, d1v) < 0.01 ? -Math.PI * 0.5 : Math.atan2(d1v, d1u);
+    let a2 = Math.hypot(d2u, d2v) < 0.01 ? a1 + Math.PI * 0.5 : Math.atan2(d2v, d2u);
+    let da = a2 - a1;
+    while (da > Math.PI) da -= TAU;
+    while (da < -Math.PI) da += TAU;
+    if (Math.abs(da) < 0.38) {
+      da = da >= 0 ? Math.PI * 0.5 : -Math.PI * 0.5;
+    }
+    a2 = a1 + da;
+
+    const entryU = hubU + Math.cos(a1) * ringR;
+    const entryV = hubV + Math.sin(a1) * ringR;
+    const exitU = hubU + Math.cos(a2) * ringR;
+    const exitV = hubV + Math.sin(a2) * ringR;
+
+    waypoints.push({ u: from.u, v: from.v }, { u: entryU, v: entryV });
+    segments.push({ kind: "straight", u1: from.u, v1: from.v, u2: entryU, v2: entryV });
+    segmentKinds.push("straight");
+    geometricLength += Math.hypot(entryU - from.u, entryV - from.v);
+
+    const arcSteps = 14;
+    for (let s = 1; s <= arcSteps; s += 1) {
+      const ang = a1 + (da * s) / arcSteps;
+      waypoints.push({ u: hubU + Math.cos(ang) * ringR, v: hubV + Math.sin(ang) * ringR });
+    }
+    segments.push({ kind: "circular_arc", cu: hubU, cv: hubV, r: ringR, aStart: a1, aEnd: a2 });
+    segmentKinds.push("circular_arc");
+    geometricLength += Math.abs(da) * ringR;
+
+    waypoints.push({ u: to.u, v: to.v });
+    segments.push({ kind: "straight", u1: exitU, v1: exitV, u2: to.u, v2: to.v });
+    segmentKinds.push("straight");
+    geometricLength += Math.hypot(to.u - exitU, to.v - exitV);
+
+    return {
+      fromId: from.id, toId: to.id, threadColor, hex, glowHex,
+      waypoints, segmentKinds, segments,
+      geometricLength: Number(geometricLength.toFixed(4)),
+      isStraightOrCircular: true
+    };
+  }
+
+  function computeLayout(width, height, zoomLevel, focusU, focusV) {
+    const w = Math.max(120, Number(width) || 560);
+    const h = Math.max(120, Number(height) || 640);
+    const padX = Math.max(18, w * 0.075);
+    const padTop = Math.max(28, h * 0.088);
+    const padBot = Math.max(22, h * 0.068);
+    const availW = Math.max(80, w - padX * 2);
+    const availH = Math.max(80, h - padTop - padBot);
+    const rw = Math.min(availW, Math.max(availW * 0.78, availH * 0.78));
+    const rh = availH;
+    const rx = (w - rw) * 0.5;
+    const ry = padTop;
+
+    const zoom = clamp(Number(zoomLevel) || 1.0, 1.0, 4.2);
+    const panBlend = clamp((zoom - 1.0) / 0.6, 0, 1);
+    const anchorU = lerp(0.5, clamp(focusU, 0.1, 0.9), panBlend);
+    const anchorV = lerp(0.5, clamp(focusV, 0.1, 0.9), panBlend);
+    const anchorBaseX = rx + anchorU * rw;
+    const anchorBaseY = ry + anchorV * rh;
+    const targetScreenX = rx + 0.5 * rw;
+    const targetScreenY = ry + 0.5 * rh;
+
+    return {
+      w, h, rx, ry, rw, rh, zoom, anchorBaseX, anchorBaseY, targetScreenX, targetScreenY,
+      uvToScreen(u, v) {
+        const wx = rx + u * rw;
+        const wy = ry + v * rh;
+        return {
+          x: targetScreenX + (wx - anchorBaseX) * zoom,
+          y: targetScreenY + (wy - anchorBaseY) * zoom
+        };
+      },
+      screenToUV(px, py) {
+        const wx = anchorBaseX + (px - targetScreenX) / zoom;
+        const wy = anchorBaseY + (py - targetScreenY) / zoom;
+        return { u: (wx - rx) / rw, v: (wy - ry) / rh };
+      }
+    };
+  }
+
+  function createLoomAudio() {
+    let audioCtx = null;
+    let masterGain = null;
+    let pluckBuffer = null;
+    let muted = false;
+    let unlocked = false;
+
+    function ensureNoiseBuffer(ctx) {
+      if (pluckBuffer) return pluckBuffer;
+      const len = Math.max(64, Math.floor(ctx.sampleRate * 0.028));
+      const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+      const ch = buf.getChannelData(0);
+      for (let i = 0; i < len; i += 1) {
+        ch[i] = ((Math.sin(i * 12.9898) * 43758.5453) % 1) * (1 - i / len);
+      }
+      pluckBuffer = buf;
+      return buf;
+    }
+
+    function playNoteAt(hz, delaySec, durationSec, peakGain) {
+      if (!audioCtx || !masterGain || muted) return false;
+      try {
+        const t0 = audioCtx.currentTime + (delaySec || 0);
+        const dur = durationSec || 0.72;
+        const gain = audioCtx.createGain();
+        gain.gain.setValueAtTime(0.0001, t0);
+        gain.gain.linearRampToValueAtTime(peakGain || 0.085, t0 + 0.006);
+        gain.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+        gain.connect(masterGain);
+
+        const oscFund = audioCtx.createOscillator();
+        oscFund.type = "triangle";
+        oscFund.frequency.setValueAtTime(hz, t0);
+        oscFund.connect(gain);
+        oscFund.start(t0);
+        oscFund.stop(t0 + dur + 0.02);
+
+        const overtoneGain = audioCtx.createGain();
+        overtoneGain.gain.setValueAtTime((peakGain || 0.085) * 0.34, t0);
+        overtoneGain.gain.exponentialRampToValueAtTime(0.0001, t0 + dur * 0.55);
+        overtoneGain.connect(masterGain);
+
+        const oscOct = audioCtx.createOscillator();
+        oscOct.type = "sine";
+        oscOct.frequency.setValueAtTime(hz * 2, t0);
+        oscOct.connect(overtoneGain);
+        oscOct.start(t0);
+        oscOct.stop(t0 + dur * 0.6);
+
+        const burst = audioCtx.createBufferSource();
+        burst.buffer = ensureNoiseBuffer(audioCtx);
+        const bp = audioCtx.createBiquadFilter();
+        bp.type = "bandpass";
+        bp.frequency.setValueAtTime(Math.min(3200, hz * 3.5), t0);
+        bp.Q.setValueAtTime(4.2, t0);
+        const bGain = audioCtx.createGain();
+        bGain.gain.setValueAtTime((peakGain || 0.085) * 0.45, t0);
+        bGain.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.032);
+        burst.connect(bp);
+        bp.connect(bGain);
+        bGain.connect(masterGain);
+        burst.start(t0);
+        return true;
+      } catch (_err) {
+        return false;
+      }
+    }
+
+    return {
+      unlockAudio() {
+        try {
+          const Ctor = globalThis.AudioContext || globalThis.webkitAudioContext;
+          if (!Ctor) return false;
+          if (!audioCtx) {
+            audioCtx = new Ctor();
+            masterGain = audioCtx.createGain();
+            masterGain.gain.value = muted ? 0 : 0.85;
+            masterGain.connect(audioCtx.destination);
+          }
+          if (audioCtx.state === "suspended" && typeof audioCtx.resume === "function") {
+            audioCtx.resume();
+          }
+          unlocked = true;
+          return true;
+        } catch (_e) {
+          return false;
+        }
+      },
+      setMuted(flag) {
+        muted = Boolean(flag);
+        if (masterGain && audioCtx) {
+          masterGain.gain.setValueAtTime(muted ? 0 : 0.85, audioCtx.currentTime);
+        }
+        return muted;
+      },
+      isMuted() { return muted; },
+      isUnlocked() { return unlocked; },
+      getAudioContext() { return audioCtx; },
+      pluckThread(locusId) {
+        const locus = getLocusById(locusId) || CARPET_LOCI[4];
+        return playNoteAt(locus.oudHz, 0, 0.78, 0.09);
+      },
+      playRouteCadence(fromId, toId) {
+        if (!audioCtx || muted) return false;
+        const a = getLocusById(fromId) || CARPET_LOCI[0];
+        const b = getLocusById(toId) || CARPET_LOCI[4];
+        const fifthHz = clamp(((a.oudHz + b.oudHz) * 0.5) * 1.125, 220, 660);
+        playNoteAt(a.oudHz, 0.0, 0.62, 0.075);
+        playNoteAt(fifthHz, 0.11, 0.62, 0.068);
+        return playNoteAt(b.oudHz, 0.23, 0.85, 0.088);
+      },
+      playOracleChord(mode) {
+        if (!audioCtx || !masterGain || muted) return false;
+        const freqs = mode === "stain_cosmos"
+          ? [247.5, 330.0, 464.06, 550.0]
+          : [220.0, 330.0, 440.0, 660.0];
+        const wave = mode === "stain_cosmos" ? "sine" : "triangle";
+        try {
+          const t0 = audioCtx.currentTime;
+          for (let i = 0; i < freqs.length; i += 1) {
+            const g = audioCtx.createGain();
+            g.gain.setValueAtTime(0.0001, t0 + i * 0.045);
+            g.gain.linearRampToValueAtTime(0.042, t0 + i * 0.045 + 0.09);
+            g.gain.exponentialRampToValueAtTime(0.0001, t0 + 1.35);
+            g.connect(masterGain);
+            const o = audioCtx.createOscillator();
+            o.type = wave;
+            o.frequency.setValueAtTime(freqs[i], t0 + i * 0.045);
+            o.connect(g);
+            o.start(t0 + i * 0.045);
+            o.stop(t0 + 1.4);
+          }
+          return true;
+        } catch (_e) {
+          return false;
+        }
+      }
+    };
+  }
+  function drawHardwareAndBorders(ctx, lay, state) {
+    const { rx, ry, rw, rh } = lay;
+    const rodY = ry - 15;
+    const rodLeft = rx - 16;
+    const rodRight = rx + rw + 16;
+
+    const candlePulse = 0.88 + 0.12 * Math.sin(state.time * 2.1);
+    const lampGrad = ctx.createRadialGradient(
+      rx + rw * 0.5, ry - 26, 8,
+      rx + rw * 0.5, ry + rh * 0.35, rw * 0.92
+    );
+    lampGrad.addColorStop(0, "rgba(232, 188, 98, " + (0.20 * candlePulse).toFixed(3) + ")");
+    lampGrad.addColorStop(0.55, "rgba(185, 41, 56, 0.06)");
+    lampGrad.addColorStop(1, "rgba(13, 11, 16, 0)");
+    ctx.fillStyle = lampGrad;
+    ctx.fillRect(rx - 44, ry - 48, rw + 88, rh + 96);
+
+    ctx.strokeStyle = "rgba(216, 168, 76, 0.48)";
+    ctx.lineWidth = 1.4;
+    ctx.beginPath();
+    ctx.moveTo(rx + rw * 0.18, ry - 44);
+    ctx.lineTo(rx + rw * 0.18, rodY);
+    ctx.moveTo(rx + rw * 0.82, ry - 44);
+    ctx.lineTo(rx + rw * 0.82, rodY);
+    ctx.stroke();
+
+    const rodGrad = ctx.createLinearGradient(0, rodY - 4, 0, rodY + 4);
+    rodGrad.addColorStop(0, "#f2d68b");
+    rodGrad.addColorStop(0.5, THREAD_PALETTE.goldWeft);
+    rodGrad.addColorStop(1, "#7c5a20");
+    ctx.fillStyle = rodGrad;
+    ctx.fillRect(rodLeft, rodY - 3.2, rodRight - rodLeft, 6.4);
+
+    ctx.fillStyle = THREAD_PALETTE.goldWeft;
+    ctx.beginPath();
+    ctx.arc(rodLeft - 4, rodY, 5.2, 0, TAU);
+    ctx.arc(rodRight + 4, rodY, 5.2, 0, TAU);
+    ctx.fill();
+
+    const fringeCount = 34;
+    ctx.strokeStyle = THREAD_PALETTE.selvedgeIvory;
+    ctx.lineWidth = 1.15;
+    for (let i = 0; i <= fringeCount; i += 1) {
+      const fx = rx + (rw * i) / fringeCount;
+      const sway = Math.sin(state.time * 1.4 + i * 0.5) * 1.1;
+      ctx.beginPath();
+      ctx.moveTo(fx, rodY + 3);
+      ctx.lineTo(fx, ry);
+      ctx.moveTo(fx, ry + rh);
+      ctx.lineTo(fx + sway, ry + rh + 14 + (i % 2) * 3);
+      ctx.stroke();
+      ctx.fillStyle = i % 3 === 0 ? THREAD_PALETTE.magentaKnot : THREAD_PALETTE.selvedgeIvory;
+      ctx.fillRect(fx - 1.2, ry - 2.5, 2.4, 2.4);
+      ctx.fillRect(fx - 1.2, ry + rh + 1.5, 2.4, 2.4);
+    }
+
+    ctx.fillStyle = "#120f1c";
+    ctx.fillRect(rx - 3, ry - 3, rw + 6, rh + 6);
+    ctx.strokeStyle = THREAD_PALETTE.selvedgeIvory;
+    ctx.lineWidth = 2.0;
+    ctx.strokeRect(rx, ry, rw, rh);
+
+    const b1 = Math.min(rw, rh) * 0.026;
+    const b2 = Math.min(rw, rh) * 0.072;
+    const b3 = Math.min(rw, rh) * 0.096;
+
+    ctx.strokeStyle = THREAD_PALETTE.magentaKnot;
+    ctx.lineWidth = Math.max(2, b1 * 0.72);
+    ctx.strokeRect(rx + b1 * 0.5, ry + b1 * 0.5, rw - b1, rh - b1);
+
+    ctx.fillStyle = THREAD_PALETTE.crimson;
+    ctx.fillRect(rx + b1, ry + b1, rw - b1 * 2, rh - b1 * 2);
+
+    const fieldGrad = ctx.createRadialGradient(
+      rx + rw * 0.5, ry + rh * 0.5, rw * 0.05,
+      rx + rw * 0.5, ry + rh * 0.5, rw * 0.72
+    );
+    fieldGrad.addColorStop(0, "#1f3c86");
+    fieldGrad.addColorStop(0.62, THREAD_PALETTE.lapisIndigo);
+    fieldGrad.addColorStop(1, "#0f1c42");
+    ctx.fillStyle = fieldGrad;
+    ctx.fillRect(rx + b2, ry + b2, rw - b2 * 2, rh - b2 * 2);
+
+    ctx.strokeStyle = THREAD_PALETTE.magentaKnot;
+    ctx.lineWidth = Math.max(1.8, (b3 - b2) * 0.7);
+    ctx.strokeRect(rx + b2, ry + b2, rw - b2 * 2, rh - b2 * 2);
+    ctx.strokeStyle = THREAD_PALETTE.goldWeft;
+    ctx.lineWidth = 1.0;
+    ctx.strokeRect(rx + b3, ry + b3, rw - b3 * 2, rh - b3 * 2);
+
+    const borderMid = (b1 + b2) * 0.5;
+    const stepCountX = 14;
+    const stepCountY = 18;
+    ctx.strokeStyle = THREAD_PALETTE.goldWeft;
+    ctx.lineWidth = 1.1;
+    for (let i = 1; i < stepCountX; i += 1) {
+      const mx = rx + (rw * i) / stepCountX;
+      const d = (b2 - b1) * 0.32;
+      for (let side = 0; side < 2; side += 1) {
+        const my = side === 0 ? ry + borderMid : ry + rh - borderMid;
+        ctx.beginPath();
+        ctx.moveTo(mx - d, my);
+        ctx.lineTo(mx, my - d);
+        ctx.lineTo(mx + d, my);
+        ctx.lineTo(mx, my + d);
+        ctx.closePath();
+        ctx.stroke();
+      }
+    }
+    for (let j = 1; j < stepCountY; j += 1) {
+      const my = ry + (rh * j) / stepCountY;
+      const d = (b2 - b1) * 0.32;
+      for (let side = 0; side < 2; side += 1) {
+        const mx = side === 0 ? rx + borderMid : rx + rw - borderMid;
+        ctx.beginPath();
+        ctx.moveTo(mx - d, my);
+        ctx.lineTo(mx, my - d);
+        ctx.lineTo(mx + d, my);
+        ctx.lineTo(mx, my + d);
+        ctx.closePath();
+        ctx.stroke();
+      }
+    }
+
+    const sp = Math.min(rw, rh) * 0.085;
+    const corners = [
+      [rx + b3, ry + b3, 1, 1],
+      [rx + rw - b3, ry + b3, -1, 1],
+      [rx + b3, ry + rh - b3, 1, -1],
+      [rx + rw - b3, ry + rh - b3, -1, -1]
+    ];
+    for (let c = 0; c < corners.length; c += 1) {
+      const [cx, cy, sx, sy] = corners[c];
+      ctx.fillStyle = "rgba(185, 41, 56, 0.78)";
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(cx + sx * sp, cy);
+      ctx.lineTo(cx + sx * sp * 0.45, cy + sy * sp * 0.45);
+      ctx.lineTo(cx, cy + sy * sp);
+      ctx.closePath();
+      ctx.fill();
+      ctx.strokeStyle = THREAD_PALETTE.goldWeft;
+      ctx.lineWidth = 1.0;
+      ctx.stroke();
+    }
+  }
+
+  function drawCarpetGeometryAndLoci(ctx, lay, state) {
+    const { rx, ry, rw, rh } = lay;
+    const px = (u) => rx + u * rw;
+    const py = (v) => ry + v * rh;
+
+    const rails = [
+      [0.24, 0.22, 0.24, 0.80, THREAD_PALETTE.crimson],
+      [0.76, 0.22, 0.76, 0.80, THREAD_PALETTE.magentaKnot],
+      [0.50, 0.14, 0.50, 0.86, THREAD_PALETTE.goldWeft],
+      [0.24, 0.34, 0.76, 0.34, THREAD_PALETTE.magentaKnot],
+      [0.24, 0.80, 0.76, 0.80, THREAD_PALETTE.crimson],
+      [0.24, 0.34, 0.50, 0.22, "#4f7fe3"],
+      [0.76, 0.34, 0.50, 0.22, "#4f7fe3"],
+      [0.24, 0.58, 0.50, 0.50, "#4f7fe3"],
+      [0.76, 0.62, 0.50, 0.50, THREAD_PALETTE.crimson],
+      [0.24, 0.80, 0.50, 0.78, THREAD_PALETTE.crimson],
+      [0.76, 0.80, 0.50, 0.78, THREAD_PALETTE.magentaKnot]
+    ];
+    for (let i = 0; i < rails.length; i += 1) {
+      const [u1, v1, u2, v2, col] = rails[i];
+      ctx.strokeStyle = col;
+      ctx.globalAlpha = 0.68;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(px(u1), py(v1));
+      ctx.lineTo(px(u2), py(v2));
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+
+    const hubs = [
+      { v: 0.22, r: 0.072, col: "#4576de", fill: "rgba(27, 52, 116, 0.82)" },
+      { v: 0.50, r: 0.084, col: THREAD_PALETTE.crimson, fill: "rgba(185, 41, 56, 0.36)" },
+      { v: 0.78, r: 0.072, col: THREAD_PALETTE.crimson, fill: "rgba(185, 41, 56, 0.28)" }
+    ];
+    for (let h = 0; h < hubs.length; h += 1) {
+      const hub = hubs[h];
+      ctx.save();
+      ctx.translate(px(0.50), py(hub.v));
+      ctx.scale(rw, rh);
+      ctx.beginPath();
+      ctx.arc(0, 0, hub.r, 0, TAU);
+      ctx.fillStyle = hub.fill;
+      ctx.fill();
+      ctx.lineWidth = 1.6 / Math.min(rw, rh);
+      ctx.strokeStyle = hub.col;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(0, 0, hub.r * 0.68, 0, TAU);
+      ctx.strokeStyle = THREAD_PALETTE.goldWeft;
+      ctx.lineWidth = 1.0 / Math.min(rw, rh);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    for (let i = 0; i < CARPET_LOCI.length; i += 1) {
+      const locus = CARPET_LOCI[i];
+      const pts = buildEnclosurePoints(locus);
+      const isSel = state.selectedLocusId === locus.id;
+      const isHov = state.hoveredLocusId === locus.id;
+      const strokeCol = locus.threadColor === "indigo" ? "#5688ec" : locus.hex;
+
+      ctx.beginPath();
+      for (let p = 0; p < pts.length; p += 1) {
+        const sx = px(pts[p].u);
+        const sy = py(pts[p].v);
+        if (p === 0) ctx.moveTo(sx, sy);
+        else ctx.lineTo(sx, sy);
+      }
+      ctx.closePath();
+      ctx.fillStyle = locus.threadColor === "indigo"
+        ? "rgba(27, 52, 116, 0.84)"
+        : locus.threadColor === "magenta"
+          ? "rgba(185, 51, 138, 0.30)"
+          : "rgba(185, 41, 56, 0.34)";
+      ctx.fill();
+      ctx.lineWidth = isSel ? 2.6 : isHov ? 2.1 : 1.45;
+      ctx.strokeStyle = isSel ? THREAD_PALETTE.goldWeft : strokeCol;
+      ctx.stroke();
+
+      const cx = px(locus.u);
+      const cy = py(locus.v);
+      const glyphR = Math.min(rw, rh) * 0.026;
+      ctx.save();
+      ctx.strokeStyle = THREAD_PALETTE.goldWeft;
+      ctx.lineWidth = 1.05;
+      ctx.beginPath();
+      if (locus.microWeaveGlyph === "brine_stairs") {
+        for (let s = -2; s <= 1; s += 1) {
+          ctx.moveTo(cx + s * glyphR * 0.45, cy - s * glyphR * 0.35);
+          ctx.lineTo(cx + (s + 1) * glyphR * 0.45, cy - s * glyphR * 0.35);
+          ctx.lineTo(cx + (s + 1) * glyphR * 0.45, cy - (s + 1) * glyphR * 0.35);
+        }
+      } else if (locus.microWeaveGlyph === "sealed_court") {
+        ctx.rect(cx - glyphR * 0.65, cy - glyphR * 0.55, glyphR * 1.3, glyphR * 1.1);
+        ctx.moveTo(cx, cy + glyphR * 0.55);
+        ctx.lineTo(cx, cy);
+      } else if (locus.microWeaveGlyph === "falling_ashlar") {
+        ctx.moveTo(cx - glyphR * 0.7, cy - glyphR * 0.5);
+        ctx.lineTo(cx + glyphR * 0.7, cy + glyphR * 0.5);
+        ctx.rect(cx - glyphR * 0.25, cy - glyphR * 0.55, glyphR * 0.45, glyphR * 0.38);
+      } else if (locus.microWeaveGlyph === "tiered_roofs") {
+        for (let t = -1; t <= 1; t += 1) {
+          ctx.moveTo(cx - glyphR * 0.6, cy + t * glyphR * 0.42);
+          ctx.lineTo(cx, cy + t * glyphR * 0.42 - glyphR * 0.3);
+          ctx.lineTo(cx + glyphR * 0.6, cy + t * glyphR * 0.42);
+        }
+      } else if (locus.microWeaveGlyph === "jagged_selvedge") {
+        ctx.moveTo(cx - glyphR * 0.75, cy);
+        for (let z = -2; z <= 2; z += 1) {
+          ctx.lineTo(cx + z * glyphR * 0.3, cy + (z % 2 === 0 ? -glyphR * 0.55 : glyphR * 0.55));
+        }
+      } else {
+        ctx.arc(cx, cy, glyphR * 0.72, 0, TAU);
+      }
+      ctx.stroke();
+      ctx.restore();
+
+      ctx.fillStyle = strokeCol;
+      ctx.beginPath();
+      ctx.arc(cx, cy, isSel ? 5.2 : 3.8, 0, TAU);
+      ctx.fill();
+      ctx.strokeStyle = THREAD_PALETTE.selvedgeIvory;
+      ctx.lineWidth = 1.0;
+      ctx.stroke();
+
+      if (isSel || isHov) {
+        const segTotal = pts.length;
+        const pos = ((state.fingerPhase * segTotal) % segTotal + segTotal) % segTotal;
+        const idxA = Math.floor(pos);
+        const idxB = (idxA + 1) % segTotal;
+        const frac = pos - idxA;
+        const fu = lerp(pts[idxA].u, pts[idxB].u, frac);
+        const fv = lerp(pts[idxA].v, pts[idxB].v, frac);
+        const fx = px(fu);
+        const fy = py(fv);
+        ctx.fillStyle = THREAD_PALETTE.selvedgeIvory;
+        ctx.shadowColor = THREAD_PALETTE.goldWeft;
+        ctx.shadowBlur = 10;
+        ctx.beginPath();
+        ctx.arc(fx, fy, 3.6, 0, TAU);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+    }
+  }
+  function drawActiveRouteAndCosmology(ctx, lay, state) {
+    const { rx, ry, rw, rh } = lay;
+    const px = (u) => rx + u * rw;
+    const py = (v) => ry + v * rh;
+    const route = state.activeRoute;
+
+    if (route && route.segments && route.segments.length) {
+      ctx.save();
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      for (let pass = 0; pass < 2; pass += 1) {
+        ctx.strokeStyle = pass === 0 ? "rgba(234, 220, 195, 0.36)" : (route.glowHex || route.hex);
+        ctx.lineWidth = pass === 0 ? 5.2 : 2.5;
+        for (let s = 0; s < route.segments.length; s += 1) {
+          const seg = route.segments[s];
+          ctx.beginPath();
+          if (seg.kind === "circular_arc") {
+            ctx.save();
+            ctx.translate(px(seg.cu), py(seg.cv));
+            ctx.scale(rw, rh);
+            ctx.arc(0, 0, seg.r, seg.aStart, seg.aEnd, seg.aEnd < seg.aStart);
+            ctx.restore();
+          } else {
+            ctx.moveTo(px(seg.u1), py(seg.v1));
+            ctx.lineTo(px(seg.u2), py(seg.v2));
+          }
+          ctx.stroke();
+        }
+      }
+      const wps = route.waypoints;
+      if (wps && wps.length > 1) {
+        const idxPos = ((state.routePulse * (wps.length - 1)) % (wps.length - 1) + (wps.length - 1)) % (wps.length - 1);
+        const i0 = Math.floor(idxPos);
+        const i1 = Math.min(wps.length - 1, i0 + 1);
+        const t = idxPos - i0;
+        const bx = px(lerp(wps[i0].u, wps[i1].u, t));
+        const by = py(lerp(wps[i0].v, wps[i1].v, t));
+        ctx.fillStyle = THREAD_PALETTE.selvedgeIvory;
+        ctx.beginPath();
+        ctx.arc(bx, by, 4.0, 0, TAU);
+        ctx.fill();
+      }
+      ctx.restore();
+    }
+
+    const skyAlpha = clamp(1 - state.oracleAngle * 1.22, 0, 1);
+    if (skyAlpha > 0.02) {
+      const liftX = state.oracleAngle * rw * 0.09;
+      const liftY = -state.oracleAngle * rh * 0.06;
+      ctx.save();
+      ctx.globalAlpha = skyAlpha;
+      const orbitCenters = [
+        { v: 0.22, r: 0.095, speed: 0.55 },
+        { v: 0.50, r: 0.135, speed: -0.38 },
+        { v: 0.78, r: 0.095, speed: 0.62 }
+      ];
+      for (let o = 0; o < orbitCenters.length; o += 1) {
+        const oc = orbitCenters[o];
+        const cx = px(0.50) + liftX;
+        const cy = py(oc.v) + liftY;
+        const rad = oc.r * Math.min(rw, rh);
+        ctx.strokeStyle = "rgba(216, 168, 76, 0.65)";
+        ctx.setLineDash([4, 3]);
+        ctx.lineWidth = 1.15;
+        ctx.beginPath();
+        ctx.arc(cx, cy, rad, 0, TAU);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        const ang = state.orbitPhase * oc.speed + o * 1.7;
+        const ex = cx + Math.cos(ang) * rad;
+        const ey = cy + Math.sin(ang) * rad;
+        ctx.strokeStyle = "rgba(234, 220, 195, 0.62)";
+        ctx.beginPath();
+        ctx.arc(ex, ey, rad * 0.20, 0, TAU);
+        ctx.stroke();
+        ctx.fillStyle = THREAD_PALETTE.goldWeft;
+        ctx.beginPath();
+        ctx.arc(ex + Math.cos(ang * 2.4) * rad * 0.20, ey + Math.sin(ang * 2.4) * rad * 0.20, 2.7, 0, TAU);
+        ctx.fill();
+      }
+      for (let i = 0; i < CARPET_LOCI.length; i += 1) {
+        const loc = CARPET_LOCI[i];
+        const sx = px(loc.u) + liftX;
+        const sy = py(loc.v) + liftY;
+        const tw = 2.5 + 1.1 * Math.sin(state.time * 3.1 + i);
+        ctx.strokeStyle = THREAD_PALETTE.selvedgeIvory;
+        ctx.lineWidth = 0.95;
+        ctx.beginPath();
+        ctx.moveTo(sx - tw * 2, sy); ctx.lineTo(sx + tw * 2, sy);
+        ctx.moveTo(sx, sy - tw * 2); ctx.lineTo(sx, sy + tw * 2);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    const humanAlpha = clamp((state.oracleAngle - 0.35) / 0.65, 0, 1);
+    if (humanAlpha > 0.02) {
+      ctx.save();
+      ctx.globalAlpha = humanAlpha * 0.78;
+      ctx.strokeStyle = "rgba(234, 220, 195, 0.55)";
+      ctx.setLineDash([2, 4]);
+      ctx.lineWidth = 1.0;
+      ctx.beginPath();
+      ctx.moveTo(px(0.50), ry - 6); ctx.lineTo(px(0.50), ry + rh + 6);
+      ctx.moveTo(rx - 6, py(0.50)); ctx.lineTo(rx + rw + 6, py(0.50));
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = THREAD_PALETTE.selvedgeIvory;
+      ctx.font = "600 9px monospace";
+      ctx.textAlign = "center";
+      ctx.fillText("PLUMB AXIS · 144x216 KNOTS (APPROXIMATE HUMAN WORK)", px(0.50), ry + rh - 7);
+      ctx.restore();
+    }
+
+    if (state.isMicroWeaveVisible) {
+      const knotAlpha = clamp((lay.zoom - 1.5) / 0.9, 0.18, 0.88);
+      ctx.save();
+      ctx.globalAlpha = knotAlpha * 0.42;
+      ctx.strokeStyle = THREAD_PALETTE.selvedgeIvory;
+      ctx.lineWidth = 0.45;
+      for (let gx = 10; gx < 90; gx += 2) {
+        const x = px(gx / 100);
+        ctx.beginPath(); ctx.moveTo(x, py(0.10)); ctx.lineTo(x, py(0.90)); ctx.stroke();
+      }
+      for (let gy = 10; gy < 90; gy += 2) {
+        const y = py(gy / 100);
+        ctx.beginPath(); ctx.moveTo(px(0.10), y); ctx.lineTo(px(0.90), y); ctx.stroke();
+      }
+      ctx.globalAlpha = clamp((lay.zoom - 1.55) / 0.7, 0.3, 0.96);
+      const inv = 1 / Math.pow(lay.zoom, 0.72);
+      for (let i = 0; i < CARPET_LOCI.length; i += 1) {
+        const loc = CARPET_LOCI[i];
+        const lx = px(loc.u);
+        const ly = py(loc.v);
+        const dir = loc.u > 0.62 ? -1 : 1;
+        const tagX = lx + dir * 20 * inv;
+        const tagY = ly - 14 * inv;
+        ctx.strokeStyle = THREAD_PALETTE.goldWeft;
+        ctx.lineWidth = 1.0 * inv;
+        ctx.beginPath();
+        ctx.moveTo(lx, ly);
+        ctx.lineTo(tagX, tagY);
+        ctx.stroke();
+        const boxW = 116 * inv;
+        const boxH = 22 * inv;
+        const bx = dir > 0 ? tagX : tagX - boxW;
+        ctx.fillStyle = "rgba(234, 220, 195, 0.94)";
+        ctx.fillRect(bx, tagY - boxH * 0.5, boxW, boxH);
+        ctx.strokeStyle = loc.hex;
+        ctx.strokeRect(bx, tagY - boxH * 0.5, boxW, boxH);
+        ctx.fillStyle = THREAD_PALETTE.lampblackGround;
+        ctx.font = "700 " + (8.2 * inv).toFixed(2) + "px sans-serif";
+        ctx.textAlign = "left";
+        ctx.fillText("#" + (i + 1) + " -> " + loc.streetTitle, bx + 3 * inv, tagY - 1.2 * inv);
+        ctx.font = "500 " + (6.8 * inv).toFixed(2) + "px monospace";
+        ctx.fillText(loc.constellationName, bx + 3 * inv, tagY + 7.2 * inv);
+      }
+      ctx.restore();
+    }
+  }
+  function createCarpetLoom(opts) {
+    const options = opts || {};
+    const audio = createLoomAudio();
+    let inSelectCb = false;
+    let inRouteCb = false;
+    let inZoomCb = false;
+
+    const state = {
+      zoomLevel: 1.0,
+      focusU: 0.5,
+      focusV: 0.5,
+      isMicroWeaveVisible: false,
+      selectedLocusId: "oracle_sanctuary",
+      hoveredLocusId: null,
+      activeRoute: computeGeometricRoute("mule_narrows", "oracle_sanctuary"),
+      oracleAngle: 0.0,
+      cosmosMode: "carpet_cosmos",
+      time: 0,
+      fingerPhase: 0,
+      routePulse: 0,
+      orbitPhase: 0,
+      lastWidth: 560,
+      lastHeight: 640
+    };
+
+    function getState() {
+      return {
+        zoomLevel: state.zoomLevel,
+        focusU: state.focusU,
+        focusV: state.focusV,
+        isMicroWeaveVisible: state.isMicroWeaveVisible,
+        selectedLocusId: state.selectedLocusId,
+        hoveredLocusId: state.hoveredLocusId,
+        activeRoute: state.activeRoute,
+        oracleAngle: state.oracleAngle,
+        cosmosMode: state.cosmosMode,
+        bijectionCount: 9,
+        muted: audio.isMuted(),
+        audioUnlocked: audio.isUnlocked()
+      };
+    }
+
+    function setZoom(level, focusU, focusV) {
+      const z = clamp(Number(level) || 1.0, 1.0, 4.2);
+      const sel = getLocusById(state.selectedLocusId) || CARPET_LOCI[4];
+      const nextU = typeof focusU === "number" && !Number.isNaN(focusU)
+        ? clamp(focusU, 0.1, 0.9)
+        : (z <= 1.02 ? 0.5 : clamp(sel.u, 0.1, 0.9));
+      const nextV = typeof focusV === "number" && !Number.isNaN(focusV)
+        ? clamp(focusV, 0.1, 0.9)
+        : (z <= 1.02 ? 0.5 : clamp(sel.v, 0.1, 0.9));
+      state.zoomLevel = Number(z.toFixed(3));
+      state.focusU = Number(nextU.toFixed(3));
+      state.focusV = Number(nextV.toFixed(3));
+      state.isMicroWeaveVisible = state.zoomLevel >= 1.6;
+      if (!inZoomCb && typeof options.onZoomChange === "function") {
+        inZoomCb = true;
+        try { options.onZoomChange(getState()); } finally { inZoomCb = false; }
+      }
+      return getState();
+    }
+
+    function selectLocus(locusId, selectOpts) {
+      const locus = getLocusById(locusId);
+      if (!locus) return null;
+      state.selectedLocusId = locus.id;
+      if (state.zoomLevel >= 1.25) {
+        state.focusU = clamp(locus.u, 0.1, 0.9);
+        state.focusV = clamp(locus.v, 0.1, 0.9);
+      }
+      if (!selectOpts || !selectOpts.silent) {
+        audio.pluckThread(locus.id);
+      }
+      if (!inSelectCb && (!selectOpts || !selectOpts.skipCallback) && typeof options.onSelectLocus === "function") {
+        inSelectCb = true;
+        try { options.onSelectLocus(locus, getState()); } finally { inSelectCb = false; }
+      }
+      return locus;
+    }
+
+    function hoverLocus(locusIdOrNull) {
+      if (locusIdOrNull === null || locusIdOrNull === undefined || locusIdOrNull === "") {
+        state.hoveredLocusId = null;
+        return null;
+      }
+      const locus = getLocusById(locusIdOrNull);
+      state.hoveredLocusId = locus ? locus.id : null;
+      return locus;
+    }
+
+    function traceRoute(fromId, toId, routeOpts) {
+      const route = computeGeometricRoute(fromId, toId);
+      state.activeRoute = route;
+      state.routePulse = 0;
+      if (!routeOpts || !routeOpts.silent) {
+        audio.playRouteCadence(route.fromId, route.toId);
+      }
+      if (!inRouteCb && (!routeOpts || !routeOpts.skipCallback) && typeof options.onRouteTraced === "function") {
+        inRouteCb = true;
+        try { options.onRouteTraced(route, getState()); } finally { inRouteCb = false; }
+      }
+      return route;
+    }
+
+    function setOracleAngle(angle01, oracleOpts) {
+      const prevMode = state.cosmosMode;
+      const a = clamp(Number(angle01) || 0, 0.0, 1.0);
+      state.oracleAngle = Number(a.toFixed(4));
+      state.cosmosMode = state.oracleAngle >= 0.5 ? "stain_cosmos" : "carpet_cosmos";
+      if (state.cosmosMode !== prevMode && (!oracleOpts || !oracleOpts.silent)) {
+        audio.playOracleChord(state.cosmosMode);
+      }
+      return { oracleAngle: state.oracleAngle, cosmosMode: state.cosmosMode };
+    }
+
+    function step(dtSec, stepOpts) {
+      const dt = clamp(Number(dtSec) || 0.016, 0, 0.1);
+      const reduced = Boolean(stepOpts && stepOpts.reducedMotion);
+      if (!reduced) {
+        state.time += dt;
+        state.fingerPhase = (state.fingerPhase + dt * 0.28) % 1;
+        state.routePulse = (state.routePulse + dt * 0.42) % 1;
+        state.orbitPhase += dt * 0.65;
+      }
+    }
+
+    function render(ctx, width, height) {
+      if (!ctx) return;
+      const w = Math.max(120, Number(width) || state.lastWidth || 560);
+      const h = Math.max(120, Number(height) || state.lastHeight || 640);
+      state.lastWidth = w;
+      state.lastHeight = h;
+      const lay = computeLayout(w, h, state.zoomLevel, state.focusU, state.focusV);
+
+      ctx.save();
+      ctx.fillStyle = THREAD_PALETTE.lampblackGround;
+      ctx.fillRect(0, 0, w, h);
+
+      ctx.save();
+      ctx.translate(lay.targetScreenX, lay.targetScreenY);
+      ctx.scale(lay.zoom, lay.zoom);
+      ctx.translate(-lay.anchorBaseX, -lay.anchorBaseY);
+      drawHardwareAndBorders(ctx, lay, state);
+      drawCarpetGeometryAndLoci(ctx, lay, state);
+      drawActiveRouteAndCosmology(ctx, lay, state);
+      ctx.restore();
+
+      if (state.zoomLevel > 1.05) {
+        ctx.strokeStyle = "rgba(216, 168, 76, 0.48)";
+        ctx.lineWidth = 2;
+        ctx.strokeRect(4, 4, w - 8, h - 8);
+      }
+      ctx.restore();
+    }
+
+    function hitTest(normX, normY, width, height) {
+      const w = Math.max(120, Number(width) || state.lastWidth || 560);
+      const h = Math.max(120, Number(height) || state.lastHeight || 640);
+      const lay = computeLayout(w, h, state.zoomLevel, state.focusU, state.focusV);
+      const isPixel = normX > 1.05 || normY > 1.05;
+      const px = isPixel ? normX : normX * w;
+      const py = isPixel ? normY : normY * h;
+      const uv = lay.screenToUV(px, py);
+      const maxDistUV = 0.095 / Math.sqrt(lay.zoom);
+      let best = null;
+      for (let i = 0; i < CARPET_LOCI.length; i += 1) {
+        const loc = CARPET_LOCI[i];
+        const d = Math.hypot(uv.u - loc.u, uv.v - loc.v);
+        if (d <= maxDistUV && (!best || d < best.distance)) {
+          best = { id: loc.id, index: loc.index, locus: loc, distance: Number(d.toFixed(4)) };
+        }
+      }
+      return best;
+    }
+
+    function getCarpetPointOnScreen(locusId, width, height) {
+      const loc = getLocusById(locusId);
+      if (!loc) return null;
+      const w = Math.max(120, Number(width) || state.lastWidth || 560);
+      const h = Math.max(120, Number(height) || state.lastHeight || 640);
+      const lay = computeLayout(w, h, state.zoomLevel, state.focusU, state.focusV);
+      const pt = lay.uvToScreen(loc.u, loc.v);
+      return { x: pt.x, y: pt.y, normX: pt.x / w, normY: pt.y / h };
+    }
+
+    function reset() {
+      state.zoomLevel = 1.0;
+      state.focusU = 0.5;
+      state.focusV = 0.5;
+      state.isMicroWeaveVisible = false;
+      state.selectedLocusId = "oracle_sanctuary";
+      state.hoveredLocusId = null;
+      state.activeRoute = computeGeometricRoute("mule_narrows", "oracle_sanctuary");
+      state.oracleAngle = 0.0;
+      state.cosmosMode = "carpet_cosmos";
+      state.routePulse = 0;
+      return getState();
+    }
+
+    return {
+      setZoom,
+      selectLocus,
+      hoverLocus,
+      traceRoute,
+      setOracleAngle,
+      unlockAudio: audio.unlockAudio,
+      setMuted: audio.setMuted,
+      isMuted: audio.isMuted,
+      getAudioContext: audio.getAudioContext,
+      pluckThread: audio.pluckThread,
+      playRouteCadence: audio.playRouteCadence,
+      playOracleChord: audio.playOracleChord,
+      step,
+      render,
+      hitTest,
+      getCarpetPointOnScreen,
+      getState,
+      reset
+    };
+  }
+
+  const EudoxiaSymmetricalCarpet = {
+    LOCUS_IDS,
+    THREAD_PALETTE,
+    CARPET_LOCI,
+    getLocusById,
+    createCarpetLoom
+  };
+
+  globalThis.EudoxiaSymmetricalCarpet = EudoxiaSymmetricalCarpet;
+  if (typeof window !== "undefined") {
+    window.EudoxiaSymmetricalCarpet = EudoxiaSymmetricalCarpet;
+  }
+})();
+
+  </script>
+  <script>
+/*
+ * City 35: Eudoxia (Chapter VI - Cities and the Sky 1)
+ * Layer: Crumbling Stain & Reversible Starry Cosmos
+ * Self-contained classic IIFE attaching globalThis.EudoxiaCrumblingStainCosmos
+ */
+(function () {
+  "use strict";
+
+  const LOCUS_IDS = [
+    "mule_narrows",
+    "soot_arch",
+    "fish_steps",
+    "blind_culdesac",
+    "oracle_sanctuary",
+    "landslide_ravine",
+    "upper_hovels",
+    "fire_cistern",
+    "scream_threshold"
+  ];
+
+  const STAIN_PALETTE = {
+    lampblackDust: "#0d0b10",
+    sootStone: "#19151e",
+    crumblingOcher: "#8c6d4e",
+    crimsonThread: "#b92938",
+    lapisIndigo: "#1b3474",
+    magentaKnot: "#b9338a",
+    goldSelvedge: "#d8a84c",
+    parchmentWarp: "#eadcc3",
+    emberScream: "#e85d35"
+  };
+
+  const THREAD_HEX = {
+    crimson: "#b92938",
+    indigo: "#1b3474",
+    magenta: "#b9338a"
+  };
+
+  const STAIN_LOCI = [
+    {
+      index: 0, id: "mule_narrows", carpetTitle: "Crimson Warp Gate",
+      streetTitle: "Alley of Packed Mules", u: 0.24, v: 0.80, xNorm: 0.20, yNorm: 0.84,
+      threadColor: "crimson", hex: "#b92938", oudHz: 220.0,
+      constellationName: "Equus Sarcinarius", stoneFeature: "packed_mules",
+      orbitalEccentricity: 0.42,
+      sensoryCaption: "Twin-panniered pack mules wedge between crooked basalt walls amid shoving, rope-creak, and dust."
+    },
+    {
+      index: 1, id: "soot_arch", carpetTitle: "Northern Lapis Octagram",
+      streetTitle: "Lintels of Black Smoke", u: 0.50, v: 0.22, xNorm: 0.31, yNorm: 0.29,
+      threadColor: "indigo", hex: "#1b3474", oudHz: 247.5,
+      constellationName: "Fumus Niger", stoneFeature: "smoke_and_fish",
+      orbitalEccentricity: 0.36,
+      sensoryCaption: "Low stone vaulting smeared with greasy lampblack soot rising from tallow vats and alley hearths."
+    },
+    {
+      index: 2, id: "fish_steps", carpetTitle: "Magenta Spiral Volute",
+      streetTitle: "Brine & Fish-Smell Stairs", u: 0.24, v: 0.34, xNorm: 0.16, yNorm: 0.52,
+      threadColor: "magenta", hex: "#b9338a", oudHz: 275.0,
+      constellationName: "Pisces Salis", stoneFeature: "smoke_and_fish",
+      orbitalEccentricity: 0.48,
+      sensoryCaption: "Slick uneven risers glistening with salt-brine runoff beneath racks of gutted silver anchovies."
+    },
+    {
+      index: 3, id: "blind_culdesac", carpetTitle: "Locked Lozenge Enclosure",
+      streetTitle: "Dead-End Hovel Court", u: 0.76, v: 0.34, xNorm: 0.79, yNorm: 0.24,
+      threadColor: "magenta", hex: "#b9338a", oudHz: 293.33,
+      constellationName: "Clausura Caeca", stoneFeature: "winding_alleys",
+      orbitalEccentricity: 0.54,
+      sensoryCaption: "A blind masonry spur where leaning upper stories choke off the sky and turn back the lost traveler."
+    },
+    {
+      index: 4, id: "oracle_sanctuary", carpetTitle: "Central Twelve-Ray Medallion",
+      streetTitle: "Sanctuary of the Preserved Loom", u: 0.50, v: 0.50, xNorm: 0.51, yNorm: 0.53,
+      threadColor: "crimson", hex: "#b92938", oudHz: 330.0,
+      constellationName: "Axis Augurii", stoneFeature: "preserved_carpet",
+      orbitalEccentricity: 0.18,
+      sensoryCaption: "Quiet stone cell amid the crooked press where the symmetrical crimson, indigo, and magenta carpet hangs."
+    },
+    {
+      index: 5, id: "landslide_ravine", carpetTitle: "Diagonal Crimson-Gold Fret",
+      streetTitle: "Scarp of Crumbling Walls & Landslides", u: 0.76, v: 0.62, xNorm: 0.66, yNorm: 0.64,
+      threadColor: "crimson", hex: "#b92938", oudHz: 366.67,
+      constellationName: "Ruina Lapidum", stoneFeature: "crumbling_landslides",
+      orbitalEccentricity: 0.51,
+      sensoryCaption: "Fractured retaining walls spilling rubble and ocher dust as upper houses slump onto lower roofs."
+    },
+    {
+      index: 6, id: "upper_hovels", carpetTitle: "Twin Indigo Cartouche",
+      streetTitle: "Stacked Slope Hovels", u: 0.24, v: 0.58, xNorm: 0.44, yNorm: 0.17,
+      threadColor: "indigo", hex: "#1b3474", oudHz: 412.5,
+      constellationName: "Tuguria Superna", stoneFeature: "winding_alleys",
+      orbitalEccentricity: 0.46,
+      sensoryCaption: "Timber-propped mud and stone hovels piled roof-upon-roof up the steep northern escarpment."
+    },
+    {
+      index: 7, id: "fire_cistern", carpetTitle: "Southern Octagram Rosette",
+      streetTitle: "Brazier Alley of Night Fires", u: 0.50, v: 0.78, xNorm: 0.58, yNorm: 0.82,
+      threadColor: "crimson", hex: "#b92938", oudHz: 440.0,
+      constellationName: "Fornax Noctis", stoneFeature: "fires_and_screams",
+      orbitalEccentricity: 0.39,
+      sensoryCaption: "Cracked dry cistern ringed by iron night-braziers spitting orange embers against charred lintels."
+    },
+    {
+      index: 8, id: "scream_threshold", carpetTitle: "Magenta Fringe Selvedge",
+      streetTitle: "Darkness of Night Screams", u: 0.76, v: 0.80, xNorm: 0.85, yNorm: 0.76,
+      threadColor: "magenta", hex: "#b9338a", oudHz: 495.0,
+      constellationName: "Clamor Tenebrarum", stoneFeature: "fires_and_screams",
+      orbitalEccentricity: 0.58,
+      sensoryCaption: "Unlit outer alley mouth where sudden cries echo off jagged corners and vanish into black night."
+    }
+  ];
+
+  const LOCUS_BY_ID = Object.create(null);
+  for (let i = 0; i < STAIN_LOCI.length; i++) {
+    LOCUS_BY_ID[STAIN_LOCI[i].id] = STAIN_LOCI[i];
+  }
+
+  const ORACLE_VERDICTS = {
+    carpet_cosmos: {
+      mode: "carpet_cosmos",
+      divineObject: "symmetrical_carpet",
+      approximateObject: "shapeless_stain",
+      oracleSatisfied: true,
+      headline: "Augurs' Reading: The Symmetrical Carpet Holds the Starry Orbits",
+      verdictText: "The carpet's crimson, indigo, and magenta geometry reflects the divine sky; crooked Eudoxia is merely an incomplete human blotch."
+    },
+    stain_cosmos: {
+      mode: "stain_cosmos",
+      divineObject: "shapeless_stain",
+      approximateObject: "symmetrical_carpet",
+      oracleSatisfied: true,
+      headline: "Opposite Conclusion: The Shapeless Stain Is the True Map of the Universe",
+      verdictText: "Eudoxia itself—spreading shapelessly with crooked streets, crumbling houses, dust clouds, fires, and screams in the darkness—is the true starry sky and world orbits!"
+    }
+  };
+
+  function clamp(v, lo, hi) {
+    return v < lo ? lo : (v > hi ? hi : v);
+  }
+  function lerp(a, b, t) {
+    return a + (b - a) * t;
+  }
+  function dist(ax, ay, bx, by) {
+    return Math.hypot(bx - ax, by - ay);
+  }
+  function mulberry32(seed) {
+    let s = seed >>> 0;
+    return function () {
+      s = (s + 0x6d2b79f5) >>> 0;
+      let t = Math.imul(s ^ (s >>> 15), 1 | s);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  function hexToRgba(hex, alpha) {
+    const clean = hex.charAt(0) === "#" ? hex.slice(1) : hex;
+    const r = parseInt(clean.slice(0, 2), 16);
+    const g = parseInt(clean.slice(2, 4), 16);
+    const b = parseInt(clean.slice(4, 6), 16);
+    return "rgba(" + r + "," + g + "," + b + "," + clamp(alpha, 0, 1).toFixed(3) + ")";
+  }
+
+  // Asymmetric ink-and-soot spreading contour ("a stain that spreads shapelessly")
+  const STAIN_CONTOUR = [
+    [0.42, 0.07], [0.51, 0.10], [0.60, 0.08], [0.68, 0.14], [0.78, 0.11],
+    [0.88, 0.18], [0.85, 0.28], [0.92, 0.36], [0.84, 0.45], [0.89, 0.56],
+    [0.86, 0.65], [0.94, 0.74], [0.91, 0.84], [0.81, 0.88], [0.73, 0.85],
+    [0.65, 0.92], [0.54, 0.90], [0.45, 0.94], [0.35, 0.89], [0.24, 0.93],
+    [0.12, 0.90], [0.09, 0.80], [0.14, 0.71], [0.07, 0.62], [0.08, 0.49],
+    [0.14, 0.41], [0.09, 0.31], [0.18, 0.23], [0.27, 0.20], [0.33, 0.12]
+  ];
+
+  const INK_SPLATTERS = [
+    { x: 0.37, y: 0.06, rx: 0.028, ry: 0.016, rot: -0.4 },
+    { x: 0.84, y: 0.12, rx: 0.024, ry: 0.015, rot: 0.5 },
+    { x: 0.94, y: 0.50, rx: 0.022, ry: 0.032, rot: 0.2 },
+    { x: 0.92, y: 0.88, rx: 0.026, ry: 0.018, rot: -0.6 },
+    { x: 0.07, y: 0.74, rx: 0.021, ry: 0.029, rot: 0.3 },
+    { x: 0.08, y: 0.25, rx: 0.025, ry: 0.016, rot: -0.5 },
+    { x: 0.50, y: 0.95, rx: 0.030, ry: 0.013, rot: 0.1 }
+  ];
+
+  // Blind dead-end alley spurs jutting from crooked streets
+  const DEAD_END_SPURS = [
+    { anchorId: "mule_narrows", pts: [[0.20, 0.84], [0.13, 0.87], [0.16, 0.91]] },
+    { anchorId: "soot_arch", pts: [[0.31, 0.29], [0.23, 0.26], [0.25, 0.21]] },
+    { anchorId: "fish_steps", pts: [[0.16, 0.52], [0.10, 0.56], [0.12, 0.62]] },
+    { anchorId: "blind_culdesac", pts: [[0.79, 0.24], [0.86, 0.21], [0.83, 0.16]] },
+    { anchorId: "oracle_sanctuary", pts: [[0.51, 0.53], [0.44, 0.49], [0.47, 0.43]] },
+    { anchorId: "landslide_ravine", pts: [[0.66, 0.64], [0.74, 0.62], [0.72, 0.56]] },
+    { anchorId: "upper_hovels", pts: [[0.44, 0.17], [0.51, 0.12], [0.56, 0.16]] },
+    { anchorId: "fire_cistern", pts: [[0.58, 0.82], [0.52, 0.88], [0.47, 0.85]] },
+    { anchorId: "scream_threshold", pts: [[0.85, 0.76], [0.90, 0.81], [0.86, 0.85]] }
+  ];
+
+  // Crooked winding alleyways connecting all 9 quarters via zigzags & steep steps
+  const ALLEY_EDGES = [
+    { a: "mule_narrows", b: "fish_steps", steps: 3, mules: 2, pts: [[0.20, 0.84], [0.13, 0.77], [0.25, 0.71], [0.12, 0.63], [0.23, 0.57], [0.16, 0.52]] },
+    { a: "mule_narrows", b: "fire_cistern", steps: 1, mules: 2, pts: [[0.20, 0.84], [0.28, 0.90], [0.35, 0.76], [0.44, 0.89], [0.51, 0.76], [0.58, 0.82]] },
+    { a: "mule_narrows", b: "oracle_sanctuary", steps: 2, mules: 2, pts: [[0.20, 0.84], [0.28, 0.79], [0.23, 0.67], [0.37, 0.70], [0.33, 0.56], [0.45, 0.61], [0.51, 0.53]] },
+    { a: "fish_steps", b: "soot_arch", steps: 4, mules: 1, pts: [[0.16, 0.52], [0.11, 0.44], [0.24, 0.43], [0.18, 0.34], [0.28, 0.36], [0.31, 0.29]] },
+    { a: "fish_steps", b: "oracle_sanctuary", steps: 2, mules: 1, pts: [[0.16, 0.52], [0.23, 0.46], [0.29, 0.59], [0.38, 0.45], [0.43, 0.58], [0.51, 0.53]] },
+    { a: "soot_arch", b: "upper_hovels", steps: 4, mules: 0, pts: [[0.31, 0.29], [0.26, 0.22], [0.37, 0.25], [0.35, 0.14], [0.42, 0.21], [0.44, 0.17]] },
+    { a: "soot_arch", b: "oracle_sanctuary", steps: 2, mules: 1, pts: [[0.31, 0.29], [0.39, 0.31], [0.33, 0.41], [0.47, 0.39], [0.43, 0.49], [0.51, 0.53]] },
+    { a: "upper_hovels", b: "blind_culdesac", steps: 3, mules: 0, pts: [[0.44, 0.17], [0.52, 0.12], [0.58, 0.25], [0.66, 0.14], [0.72, 0.27], [0.79, 0.24]] },
+    { a: "upper_hovels", b: "oracle_sanctuary", steps: 3, mules: 1, pts: [[0.44, 0.17], [0.50, 0.24], [0.41, 0.31], [0.55, 0.37], [0.45, 0.45], [0.51, 0.53]] },
+    { a: "blind_culdesac", b: "oracle_sanctuary", steps: 2, mules: 1, pts: [[0.79, 0.24], [0.74, 0.34], [0.62, 0.28], [0.67, 0.43], [0.56, 0.41], [0.51, 0.53]] },
+    { a: "blind_culdesac", b: "landslide_ravine", steps: 3, mules: 0, pts: [[0.79, 0.24], [0.85, 0.34], [0.72, 0.41], [0.82, 0.51], [0.69, 0.55], [0.66, 0.64]] },
+    { a: "oracle_sanctuary", b: "landslide_ravine", steps: 3, mules: 1, pts: [[0.51, 0.53], [0.58, 0.49], [0.53, 0.61], [0.64, 0.55], [0.59, 0.66], [0.66, 0.64]] },
+    { a: "oracle_sanctuary", b: "fire_cistern", steps: 2, mules: 2, pts: [[0.51, 0.53], [0.46, 0.62], [0.60, 0.66], [0.48, 0.74], [0.62, 0.77], [0.58, 0.82]] },
+    { a: "landslide_ravine", b: "fire_cistern", steps: 2, mules: 1, pts: [[0.66, 0.64], [0.73, 0.69], [0.59, 0.72], [0.69, 0.79], [0.58, 0.82]] },
+    { a: "landslide_ravine", b: "scream_threshold", steps: 2, mules: 0, pts: [[0.66, 0.64], [0.74, 0.59], [0.70, 0.73], [0.82, 0.65], [0.77, 0.78], [0.85, 0.76]] },
+    { a: "fire_cistern", b: "scream_threshold", steps: 1, mules: 1, pts: [[0.58, 0.82], [0.65, 0.88], [0.71, 0.75], [0.77, 0.87], [0.82, 0.78], [0.85, 0.76]] }
+  ];
+
+  function polylineLength(pts) {
+    let sum = 0;
+    for (let i = 1; i < pts.length; i++) {
+      sum += dist(pts[i - 1].xNorm, pts[i - 1].yNorm, pts[i].xNorm, pts[i].yNorm);
+    }
+    return sum;
+  }
+
+  function computeCrookedRoute(fromId, toId) {
+    const start = LOCUS_BY_ID[fromId] || STAIN_LOCI[0];
+    const goal = LOCUS_BY_ID[toId] || STAIN_LOCI[4];
+    const adj = Object.create(null);
+    for (let i = 0; i < LOCUS_IDS.length; i++) adj[LOCUS_IDS[i]] = [];
+    for (let i = 0; i < ALLEY_EDGES.length; i++) {
+      const e = ALLEY_EDGES[i];
+      let len = 0;
+      for (let k = 1; k < e.pts.length; k++) {
+        len += dist(e.pts[k - 1][0], e.pts[k - 1][1], e.pts[k][0], e.pts[k][1]);
+      }
+      adj[e.a].push({ to: e.b, edge: e, forward: true, weight: len });
+      adj[e.b].push({ to: e.a, edge: e, forward: false, weight: len });
+    }
+
+    const best = Object.create(null);
+    const prev = Object.create(null);
+    const used = Object.create(null);
+    for (let i = 0; i < LOCUS_IDS.length; i++) best[LOCUS_IDS[i]] = Infinity;
+    best[start.id] = 0;
+
+    for (let iter = 0; iter < LOCUS_IDS.length; iter++) {
+      let cur = null;
+      for (let i = 0; i < LOCUS_IDS.length; i++) {
+        const id = LOCUS_IDS[i];
+        if (!used[id] && (cur === null || best[id] < best[cur])) cur = id;
+      }
+      if (!cur || cur === goal.id) break;
+      used[cur] = true;
+      const list = adj[cur];
+      for (let j = 0; j < list.length; j++) {
+        const hop = list[j];
+        const cand = best[cur] + hop.weight;
+        if (cand < best[hop.to]) {
+          best[hop.to] = cand;
+          prev[hop.to] = { node: cur, hop: hop };
+        }
+      }
+    }
+
+    const crookedPoints = [];
+    let stepClimbs = 0;
+    let deadEndDetours = 1;
+    let muleBottlenecks = 0;
+    const nodeChain = [goal.id];
+    if (start.id !== goal.id) {
+      let walk = goal.id;
+      const hops = [];
+      while (walk !== start.id && prev[walk]) {
+        hops.push(prev[walk].hop);
+        walk = prev[walk].node;
+        nodeChain.push(walk);
+      }
+      hops.reverse();
+      nodeChain.reverse();
+      for (let h = 0; h < hops.length; h++) {
+        const hop = hops[h];
+        stepClimbs += hop.edge.steps;
+        muleBottlenecks += hop.edge.mules;
+        const pts = hop.forward ? hop.edge.pts : hop.edge.pts.slice().reverse();
+        for (let p = (h === 0 ? 0 : 1); p < pts.length; p++) {
+          crookedPoints.push({ xNorm: pts[p][0], yNorm: pts[p][1] });
+        }
+      }
+    } else {
+      crookedPoints.push({ xNorm: start.xNorm, yNorm: start.yNorm });
+      stepClimbs = 2;
+      muleBottlenecks = 1;
+    }
+
+    // Splice wrong-turn dead-end spur detour ("easy to lose your way... distracted by the bustle")
+    const spurAnchor = nodeChain[Math.floor(nodeChain.length / 2)] || start.id;
+    for (let s = 0; s < DEAD_END_SPURS.length; s++) {
+      const spur = DEAD_END_SPURS[s];
+      if (spur.anchorId === spurAnchor) {
+        const anchorLoc = LOCUS_BY_ID[spurAnchor];
+        let insertIdx = 0;
+        let bestD = Infinity;
+        for (let k = 0; k < crookedPoints.length; k++) {
+          const d = dist(crookedPoints[k].xNorm, crookedPoints[k].yNorm, anchorLoc.xNorm, anchorLoc.yNorm);
+          if (d < bestD) { bestD = d; insertIdx = k; }
+        }
+        crookedPoints.splice(insertIdx + 1, 0,
+          { xNorm: spur.pts[1][0], yNorm: spur.pts[1][1] },
+          { xNorm: spur.pts[2][0], yNorm: spur.pts[2][1] },
+          { xNorm: spur.pts[1][0], yNorm: spur.pts[1][1] },
+          { xNorm: anchorLoc.xNorm, yNorm: anchorLoc.yNorm }
+        );
+        break;
+      }
+    }
+
+    const straightDistance = Math.max(0.08, dist(start.xNorm, start.yNorm, goal.xNorm, goal.yNorm));
+    let crookedLength = polylineLength(crookedPoints);
+    while (crookedLength / straightDistance < 1.68) {
+      const endSpur = DEAD_END_SPURS[goal.index];
+      const n = crookedPoints.length - 1;
+      crookedPoints.splice(n, 0,
+        { xNorm: endSpur.pts[1][0], yNorm: endSpur.pts[1][1] },
+        { xNorm: endSpur.pts[2][0], yNorm: endSpur.pts[2][1] },
+        { xNorm: endSpur.pts[1][0], yNorm: endSpur.pts[1][1] }
+      );
+      deadEndDetours += 1;
+      crookedLength = polylineLength(crookedPoints);
+    }
+
+    const tortuosityRatio = Number((crookedLength / straightDistance).toFixed(3));
+    return {
+      fromId: start.id,
+      toId: goal.id,
+      threadColor: start.threadColor,
+      hex: THREAD_HEX[start.threadColor] || STAIN_PALETTE.crimsonThread,
+      crookedPoints: crookedPoints,
+      stepClimbs: Math.max(1, stepClimbs),
+      deadEndDetours: Math.max(1, deadEndDetours),
+      muleBottlenecks: Math.max(1, muleBottlenecks),
+      crookedLength: Number(crookedLength.toFixed(4)),
+      straightDistance: Number(straightDistance.toFixed(4)),
+      tortuosityRatio: tortuosityRatio
+    };
+  }
+
+  function buildHovels() {
+    const rng = mulberry32(35017);
+    const list = [];
+    for (let i = 0; i < 40; i++) {
+      const anchor = STAIN_LOCI[i % STAIN_LOCI.length];
+      const ang = rng() * Math.PI * 2;
+      const rad = 0.028 + rng() * 0.095;
+      const xNorm = clamp(anchor.xNorm + Math.cos(ang) * rad, 0.13, 0.88);
+      const yNorm = clamp(anchor.yNorm + Math.sin(ang) * rad, 0.12, 0.88);
+      list.push({
+        id: "hovel_" + i,
+        nearLocusId: anchor.id,
+        xNorm: xNorm,
+        yNorm: yNorm,
+        wNorm: 0.022 + rng() * 0.020,
+        hNorm: 0.018 + rng() * 0.022,
+        tiers: (anchor.id === "upper_hovels" || anchor.id === "landslide_ravine") ? (2 + (i % 2)) : (1 + (i % 2)),
+        tiltRad: (rng() - 0.5) * 0.34,
+        slumpOffset: 0,
+        litWindow: rng() > 0.52,
+        shade: 0.75 + rng() * 0.45
+      });
+    }
+    return list;
+  }
+
+  function sampleEdgePoint(edge, t01) {
+    const pts = edge.pts;
+    const segCount = pts.length - 1;
+    const scaled = clamp(t01, 0, 0.9999) * segCount;
+    const idx = Math.floor(scaled);
+    const frac = scaled - idx;
+    const ax = pts[idx][0], ay = pts[idx][1];
+    const bx = pts[idx + 1][0], by = pts[idx + 1][1];
+    return {
+      xNorm: lerp(ax, bx, frac),
+      yNorm: lerp(ay, by, frac),
+      heading: Math.atan2(by - ay, bx - ax)
+    };
+  }
+
+  function buildMules() {
+    const edgePool = [0, 0, 1, 2, 2, 4, 12, 13];
+    const pannierColors = ["#b92938", "#d8a84c", "#8c6d4e", "#b9338a", "#eadcc3", "#1b3474"];
+    const mules = [];
+    for (let i = 0; i < 8; i++) {
+      const eIdx = edgePool[i];
+      const t = 0.14 + ((i * 0.23) % 0.72);
+      const pt = sampleEdgePoint(ALLEY_EDGES[eIdx], t);
+      mules.push({
+        id: "mule_" + i,
+        edgeIdx: eIdx,
+        t: t,
+        dir: (i % 2 === 0) ? 1 : -1,
+        speed: 0.055 + (i % 3) * 0.018,
+        jostlePhase: i * 1.15,
+        bottlenecked: (i < 2),
+        pannierA: pannierColors[i % pannierColors.length],
+        pannierB: pannierColors[(i + 2) % pannierColors.length],
+        xNorm: pt.xNorm,
+        yNorm: pt.yNorm,
+        heading: pt.heading
+      });
+    }
+    return mules;
+  }
+
+  function buildSmokeStains() {
+    const seeds = [
+      { x: 0.31, y: 0.29, r: 0.068, drift: 0.0 },
+      { x: 0.27, y: 0.25, r: 0.052, drift: 1.4 },
+      { x: 0.36, y: 0.33, r: 0.048, drift: 2.7 },
+      { x: 0.58, y: 0.80, r: 0.058, drift: 0.9 },
+      { x: 0.44, y: 0.19, r: 0.045, drift: 3.6 },
+      { x: 0.21, y: 0.81, r: 0.046, drift: 4.5 },
+      { x: 0.78, y: 0.26, r: 0.044, drift: 5.2 }
+    ];
+    return seeds.map(function (s, idx) {
+      return { id: "smoke_" + idx, xNorm: s.x, yNorm: s.y, radiusNorm: s.r, phase: s.drift };
+    });
+  }
+
+  function buildFishBrineDrifts() {
+    return [
+      { id: "fish_0", xNorm: 0.16, yNorm: 0.52, spanNorm: 0.052, angle: -0.28, fishCount: 5, phase: 0.2 },
+      { id: "fish_1", xNorm: 0.19, yNorm: 0.46, spanNorm: 0.046, angle: 0.22, fishCount: 4, phase: 1.7 },
+      { id: "fish_2", xNorm: 0.15, yNorm: 0.59, spanNorm: 0.048, angle: -0.18, fishCount: 5, phase: 3.1 },
+      { id: "fish_3", xNorm: 0.22, yNorm: 0.65, spanNorm: 0.042, angle: 0.31, fishCount: 4, phase: 4.4 }
+    ];
+  }
+
+  function buildStarField() {
+    const rng = mulberry32(99351);
+    const tones = ["#eadcc3", "#d8a84c", "#b9338a", "#7ea4ff", "#ff8e72"];
+    const stars = [];
+    for (let i = 0; i < 115; i++) {
+      stars.push({
+        xNorm: 0.11 + rng() * 0.78,
+        yNorm: 0.10 + rng() * 0.80,
+        size: 0.7 + rng() * 1.9,
+        color: tones[i % tones.length],
+        phase: rng() * Math.PI * 2
+      });
+    }
+    return stars;
+  }
+
+  function buildWorldOrbits() {
+    const fx = 0.48, fy = 0.50;
+    return STAIN_LOCI.map(function (loc, idx) {
+      const dx = loc.xNorm - fx;
+      const dy = loc.yNorm - fy;
+      const rL = Math.max(0.058, Math.hypot(dx, dy));
+      const thetaL = Math.atan2(dy, dx);
+      const ecc = loc.orbitalEccentricity;
+      const omega = thetaL + Math.PI + ((idx % 2 === 0) ? -0.32 : 0.32);
+      const semiLatus = rL * (1 + ecc * Math.cos(thetaL - omega));
+      return {
+        locusId: loc.id,
+        constellationName: loc.constellationName,
+        hex: loc.hex,
+        fx: fx,
+        fy: fy,
+        eccentricity: ecc,
+        omega: omega,
+        semiLatus: semiLatus,
+        planetAngle: thetaL + idx * 0.45,
+        angularRate: 0.22 + (8 - idx) * 0.028
+      };
+    });
+  }
+
+  function playAlleyFoley(audioCtx, kind, muted) {
+    if (!audioCtx || muted) return false;
+    try {
+      if (audioCtx.state === "suspended" && typeof audioCtx.resume === "function") {
+        audioCtx.resume().catch(function () {});
+      }
+      const now = audioCtx.currentTime;
+      const mode = String(kind || "landslide").toLowerCase();
+
+      if (mode.indexOf("landslide") >= 0) {
+        const len = Math.floor(audioCtx.sampleRate * 0.55);
+        const buf = audioCtx.createBuffer(1, len, audioCtx.sampleRate);
+        const ch = buf.getChannelData(0);
+        for (let i = 0; i < len; i++) ch[i] = (Math.random() * 2 - 1) * (1 - i / len);
+        const src = audioCtx.createBufferSource();
+        src.buffer = buf;
+        const lp = audioCtx.createBiquadFilter();
+        lp.type = "lowpass";
+        lp.frequency.setValueAtTime(195, now);
+        lp.frequency.exponentialRampToValueAtTime(65, now + 0.52);
+        const g = audioCtx.createGain();
+        g.gain.setValueAtTime(0.22, now);
+        g.gain.exponentialRampToValueAtTime(0.001, now + 0.54);
+        src.connect(lp); lp.connect(g); g.connect(audioCtx.destination);
+        src.start(now);
+        for (let c = 0; c < 4; c++) {
+          const osc = audioCtx.createOscillator();
+          const cg = audioCtx.createGain();
+          osc.type = "triangle";
+          osc.frequency.setValueAtTime(340 + c * 145, now + c * 0.08);
+          osc.frequency.exponentialRampToValueAtTime(110, now + c * 0.08 + 0.055);
+          cg.gain.setValueAtTime(0.08, now + c * 0.08);
+          cg.gain.exponentialRampToValueAtTime(0.001, now + c * 0.08 + 0.06);
+          osc.connect(cg); cg.connect(audioCtx.destination);
+          osc.start(now + c * 0.08);
+          osc.stop(now + c * 0.08 + 0.065);
+        }
+        return true;
+      }
+
+      if (mode.indexOf("scream") >= 0 || mode.indexOf("fire") >= 0) {
+        const freqs = [587.33, 622.25];
+        for (let k = 0; k < 2; k++) {
+          const osc = audioCtx.createOscillator();
+          const bp = audioCtx.createBiquadFilter();
+          const g = audioCtx.createGain();
+          osc.type = k === 0 ? "sawtooth" : "triangle";
+          osc.frequency.setValueAtTime(freqs[k], now);
+          osc.frequency.exponentialRampToValueAtTime(freqs[k] * 0.66, now + 0.44);
+          bp.type = "bandpass";
+          bp.frequency.setValueAtTime(920, now);
+          bp.Q.setValueAtTime(4.5, now);
+          g.gain.setValueAtTime(0.001, now);
+          g.gain.linearRampToValueAtTime(0.085, now + 0.05);
+          g.gain.exponentialRampToValueAtTime(0.001, now + 0.46);
+          osc.connect(bp); bp.connect(g); g.connect(audioCtx.destination);
+          osc.start(now);
+          osc.stop(now + 0.48);
+        }
+        return true;
+      }
+
+      // Default: "mules" wooden pack-frame creak & cobblestone hoof clops
+      for (let h = 0; h < 4; h++) {
+        const t0 = now + h * 0.085;
+        const osc = audioCtx.createOscillator();
+        const g = audioCtx.createGain();
+        osc.type = h === 1 ? "sawtooth" : "sine";
+        osc.frequency.setValueAtTime(h === 1 ? 285 : (540 + (h % 2) * 150), t0);
+        osc.frequency.exponentialRampToValueAtTime(160, t0 + 0.055);
+        g.gain.setValueAtTime(0.09, t0);
+        g.gain.exponentialRampToValueAtTime(0.001, t0 + 0.06);
+        osc.connect(g); g.connect(audioCtx.destination);
+        osc.start(t0);
+        osc.stop(t0 + 0.065);
+      }
+      return true;
+    } catch (_err) {
+      return false;
+    }
+  }
+
+  function traceStainContour(ctx, w, h) {
+    const n = STAIN_CONTOUR.length;
+    ctx.beginPath();
+    const firstMidX = (STAIN_CONTOUR[n - 1][0] + STAIN_CONTOUR[0][0]) * 0.5 * w;
+    const firstMidY = (STAIN_CONTOUR[n - 1][1] + STAIN_CONTOUR[0][1]) * 0.5 * h;
+    ctx.moveTo(firstMidX, firstMidY);
+    for (let i = 0; i < n; i++) {
+      const cur = STAIN_CONTOUR[i];
+      const nxt = STAIN_CONTOUR[(i + 1) % n];
+      const midX = (cur[0] + nxt[0]) * 0.5 * w;
+      const midY = (cur[1] + nxt[1]) * 0.5 * h;
+      ctx.quadraticCurveTo(cur[0] * w, cur[1] * h, midX, midY);
+    }
+    ctx.closePath();
+  }
+
+  function renderStainScene(ctx, w, h, st) {
+    ctx.save();
+    const sky = st.oracleAngle;
+    const minDim = Math.min(w, h);
+
+    // Sanctuary slate ground outside the spreading blotch
+    ctx.fillStyle = STAIN_PALETTE.lampblackDust;
+    ctx.fillRect(0, 0, w, h);
+
+    // Outer ink splatters / cosmic nebula droplets
+    for (let i = 0; i < INK_SPLATTERS.length; i++) {
+      const sp = INK_SPLATTERS[i];
+      ctx.save();
+      ctx.translate(sp.x * w, sp.y * h);
+      ctx.rotate(sp.rot);
+      ctx.beginPath();
+      ctx.ellipse(0, 0, sp.rx * w, sp.ry * h, 0, 0, Math.PI * 2);
+      ctx.fillStyle = sky > 0.2
+        ? hexToRgba(i % 2 === 0 ? STAIN_PALETTE.lapisIndigo : STAIN_PALETTE.magentaKnot, 0.25 + sky * 0.35)
+        : "rgba(25,21,30,0.88)";
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // Main shapeless stain silhouette + interior clip
+    ctx.save();
+    traceStainContour(ctx, w, h);
+    const bgGrad = ctx.createRadialGradient(w * 0.49, h * 0.51, minDim * 0.04, w * 0.50, h * 0.52, minDim * 0.52);
+    bgGrad.addColorStop(0, sky > 0.05 ? hexToRgba("#1d1b38", 0.55 + sky * 0.4) : "#221c22");
+    bgGrad.addColorStop(0.6, sky > 0.05 ? hexToRgba("#141225", 0.75 + sky * 0.2) : STAIN_PALETTE.sootStone);
+    bgGrad.addColorStop(1, "#0b0910");
+    ctx.fillStyle = bgGrad;
+    ctx.fill();
+    ctx.clip();
+
+    // Deep-space nebula lobes & twinkling stars when Oracle pivots toward stain_cosmos
+    if (sky > 0.02) {
+      const lobes = [
+        { x: 0.32, y: 0.30, r: 0.26, c: STAIN_PALETTE.lapisIndigo },
+        { x: 0.68, y: 0.63, r: 0.28, c: STAIN_PALETTE.crimsonThread },
+        { x: 0.77, y: 0.28, r: 0.22, c: STAIN_PALETTE.magentaKnot },
+        { x: 0.22, y: 0.76, r: 0.24, c: STAIN_PALETTE.goldSelvedge }
+      ];
+      for (let i = 0; i < lobes.length; i++) {
+        const lb = lobes[i];
+        const ng = ctx.createRadialGradient(lb.x * w, lb.y * h, 2, lb.x * w, lb.y * h, lb.r * minDim);
+        ng.addColorStop(0, hexToRgba(lb.c, 0.30 * sky));
+        ng.addColorStop(1, "rgba(0,0,0,0)");
+        ctx.fillStyle = ng;
+        ctx.fillRect(0, 0, w, h);
+      }
+      for (let i = 0; i < st.starField.length; i++) {
+        const star = st.starField[i];
+        const tw = 0.55 + 0.45 * Math.sin(st.time * 2.1 + star.phase);
+        ctx.fillStyle = hexToRgba(star.color, clamp(sky * tw * 0.95, 0, 1));
+        ctx.beginPath();
+        ctx.arc(star.xNorm * w, star.yNorm * h, star.size * (0.7 + sky * 0.5), 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    // Crooked winding alleys & uneven stone step treads
+    for (let i = 0; i < ALLEY_EDGES.length; i++) {
+      const e = ALLEY_EDGES[i];
+      ctx.beginPath();
+      for (let p = 0; p < e.pts.length; p++) {
+        const px = e.pts[p][0] * w, py = e.pts[p][1] * h;
+        if (p === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+      }
+      ctx.strokeStyle = "rgba(8,6,11,0.92)";
+      ctx.lineWidth = Math.max(4, minDim * 0.014);
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      ctx.stroke();
+      ctx.strokeStyle = hexToRgba(STAIN_PALETTE.crumblingOcher, 0.42 - sky * 0.12);
+      ctx.lineWidth = Math.max(1.4, minDim * 0.0045);
+      ctx.stroke();
+
+      if (e.steps > 0) {
+        const stepTotal = e.steps * 4;
+        for (let s = 1; s < stepTotal; s++) {
+          const smp = sampleEdgePoint(e, s / stepTotal);
+          const nx = -Math.sin(smp.heading) * minDim * 0.007;
+          const ny = Math.cos(smp.heading) * minDim * 0.007;
+          ctx.beginPath();
+          ctx.moveTo(smp.xNorm * w - nx, smp.yNorm * h - ny);
+          ctx.lineTo(smp.xNorm * w + nx, smp.yNorm * h + ny);
+          ctx.strokeStyle = "rgba(234,220,195,0.28)";
+          ctx.lineWidth = 1.1;
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Blind dead-end spurs
+    for (let i = 0; i < DEAD_END_SPURS.length; i++) {
+      const sp = DEAD_END_SPURS[i].pts;
+      ctx.beginPath();
+      ctx.moveTo(sp[0][0] * w, sp[0][1] * h);
+      ctx.lineTo(sp[1][0] * w, sp[1][1] * h);
+      ctx.lineTo(sp[2][0] * w, sp[2][1] * h);
+      ctx.strokeStyle = "rgba(140,109,78,0.38)";
+      ctx.lineWidth = Math.max(2, minDim * 0.006);
+      ctx.stroke();
+      ctx.fillStyle = "#5a4232";
+      ctx.fillRect(sp[2][0] * w - 3, sp[2][1] * h - 3, 6, 6);
+    }
+
+    // Stacked leaning hovels ("houses crumbling one upon another")
+    for (let i = 0; i < st.hovels.length; i++) {
+      const hv = st.hovels[i];
+      const hw = hv.wNorm * w, hh = hv.hNorm * h;
+      ctx.save();
+      ctx.translate(hv.xNorm * w, (hv.yNorm + hv.slumpOffset) * h);
+      ctx.rotate(hv.tiltRad + hv.slumpOffset * 3.2);
+      for (let t = 0; t < hv.tiers; t++) {
+        const ty = -t * hh * 0.68;
+        const tw = hw * (1 - t * 0.14);
+        ctx.fillStyle = hexToRgba("#3b2e26", 0.84 - sky * 0.18);
+        ctx.strokeStyle = hexToRgba(STAIN_PALETTE.crumblingOcher, 0.55);
+        ctx.lineWidth = 1;
+        ctx.fillRect(-tw * 0.5, ty - hh * 0.5, tw, hh * 0.72);
+        ctx.strokeRect(-tw * 0.5, ty - hh * 0.5, tw, hh * 0.72);
+        if (hv.litWindow && t === hv.tiers - 1) {
+          ctx.fillStyle = hexToRgba(STAIN_PALETTE.emberScream, 0.65 + 0.25 * Math.sin(st.time * 3 + i));
+          ctx.fillRect(-1.6, ty - hh * 0.22, 3.2, 3.6);
+        }
+      }
+      ctx.restore();
+    }
+
+    // Silver fish racks & shimmering salt-brine vapor on western stairs
+    for (let i = 0; i < st.fishBrineDrifts.length; i++) {
+      const fb = st.fishBrineDrifts[i];
+      const cx = fb.xNorm * w, cy = fb.yNorm * h;
+      const half = fb.spanNorm * minDim * 0.5;
+      const dx = Math.cos(fb.angle) * half, dy = Math.sin(fb.angle) * half;
+      ctx.beginPath();
+      ctx.moveTo(cx - dx, cy - dy);
+      ctx.lineTo(cx + dx, cy + dy);
+      ctx.strokeStyle = "rgba(216,168,76,0.52)";
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      for (let f = 0; f < fb.fishCount; f++) {
+        const u = (f + 0.5) / fb.fishCount;
+        const fx = lerp(cx - dx, cx + dx, u);
+        const fy = lerp(cy - dy, cy + dy, u);
+        ctx.fillStyle = "rgba(210,228,242,0.78)";
+        ctx.beginPath();
+        ctx.ellipse(fx, fy + 3.5, 1.5, 3.6, 0.12 * Math.sin(st.time * 2.4 + f), 0, Math.PI * 2);
+        ctx.fill();
+      }
+      const vapX = cx + Math.sin(st.time * 1.3 + fb.phase) * 6;
+      const vapY = cy - ((st.time * 9 + i * 7) % 18);
+      ctx.fillStyle = "rgba(155,215,225,0.18)";
+      ctx.beginPath();
+      ctx.arc(vapX, vapY, minDim * 0.018, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore(); // end interior clip phase 1
+    ctx.restore();
+  }
+
+  function renderOverlaysAndCosmos(ctx, w, h, st) {
+    ctx.save();
+    const sky = st.oracleAngle;
+    const minDim = Math.min(w, h);
+
+    // Stain perimeter crust -> glowing deep-space nebula veil as oracleAngle -> 1
+    traceStainContour(ctx, w, h);
+    ctx.strokeStyle = sky > 0.05
+      ? hexToRgba(STAIN_PALETTE.magentaKnot, 0.30 + sky * 0.55)
+      : "rgba(140,109,78,0.45)";
+    ctx.lineWidth = sky > 0.05 ? (2.2 + sky * 3.2) : 1.8;
+    ctx.stroke();
+    if (sky > 0.15) {
+      ctx.strokeStyle = hexToRgba(STAIN_PALETTE.goldSelvedge, sky * 0.42);
+      ctx.lineWidth = 1.1;
+      ctx.stroke();
+    }
+
+    // Packed mules with twin panniers jostling in narrow passages
+    for (let i = 0; i < st.mules.length; i++) {
+      const m = st.mules[i];
+      const wobble = Math.sin(st.time * 7.5 + m.jostlePhase) * (1.2 + st.jostleBoost * 3.4);
+      ctx.save();
+      ctx.translate(m.xNorm * w, m.yNorm * h);
+      ctx.rotate(m.heading + wobble * 0.08);
+      if (m.bottlenecked || st.jostleBoost > 0.15) {
+        ctx.beginPath();
+        ctx.arc(0, 0, 7 + st.jostleBoost * 5, 0, Math.PI * 2);
+        ctx.strokeStyle = hexToRgba(STAIN_PALETTE.goldSelvedge, 0.28 + st.jostleBoost * 0.45);
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+      ctx.fillStyle = m.pannierA;
+      ctx.fillRect(-3.5, -5.2, 5.2, 2.8);
+      ctx.fillStyle = m.pannierB;
+      ctx.fillRect(-3.5, 2.4, 5.2, 2.8);
+      ctx.fillStyle = "#70533b";
+      ctx.beginPath();
+      ctx.ellipse(0, 0, 5.2, 2.5, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = "#eadcc3";
+      ctx.fillRect(4.0, -1.6, 2.2, 1.1);
+      ctx.fillRect(4.0, 0.5, 2.2, 1.1);
+      ctx.restore();
+    }
+
+    // Black smoke stains -> dark coal-sack nebulae rimmed with starlight
+    for (let i = 0; i < st.smokeStains.length; i++) {
+      const sm = st.smokeStains[i];
+      const driftX = Math.sin(st.time * 0.9 + sm.phase) * minDim * 0.012;
+      const driftY = -((st.time * 5 + i * 9) % 16);
+      const sx = sm.xNorm * w + driftX;
+      const sy = sm.yNorm * h + driftY * 0.45;
+      const sr = sm.radiusNorm * minDim;
+      const sg = ctx.createRadialGradient(sx, sy, sr * 0.12, sx, sy, sr);
+      sg.addColorStop(0, "rgba(7,5,10,0.82)");
+      sg.addColorStop(0.68, sky > 0.1 ? hexToRgba(STAIN_PALETTE.lapisIndigo, 0.34 * sky) : "rgba(20,16,24,0.42)");
+      sg.addColorStop(1, "rgba(0,0,0,0)");
+      ctx.fillStyle = sg;
+      ctx.beginPath();
+      ctx.arc(sx, sy, sr, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // Landslide tumbling stones & dust clouds -> luminous galactic dust lanes
+    for (let i = 0; i < st.dustClouds.length; i++) {
+      const dc = st.dustClouds[i];
+      const dx = dc.xNorm * w, dy = dc.yNorm * h, dr = dc.radiusNorm * minDim;
+      const dg = ctx.createRadialGradient(dx, dy, dr * 0.1, dx, dy, dr);
+      dg.addColorStop(0, sky > 0.15
+        ? hexToRgba(STAIN_PALETTE.goldSelvedge, dc.alpha * (0.45 + sky * 0.45))
+        : hexToRgba(STAIN_PALETTE.crumblingOcher, dc.alpha * 0.72));
+      dg.addColorStop(0.6, sky > 0.15
+        ? hexToRgba(STAIN_PALETTE.magentaKnot, dc.alpha * 0.36 * sky)
+        : hexToRgba("#bda17e", dc.alpha * 0.35));
+      dg.addColorStop(1, "rgba(0,0,0,0)");
+      ctx.fillStyle = dg;
+      ctx.beginPath();
+      ctx.arc(dx, dy, dr, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    for (let i = 0; i < st.landslides.length; i++) {
+      const rk = st.landslides[i];
+      ctx.save();
+      ctx.translate(rk.xNorm * w, rk.yNorm * h);
+      ctx.rotate(rk.rot);
+      ctx.fillStyle = hexToRgba(STAIN_PALETTE.crumblingOcher, clamp(rk.life, 0.2, 0.95));
+      ctx.fillRect(-rk.size * 0.5, -rk.size * 0.4, rk.size, rk.size * 0.8);
+      ctx.restore();
+    }
+
+    // Fires & screams in the darkness -> red-giant/supernova cores & pulsar shockwaves
+    for (let i = 0; i < st.fires.length; i++) {
+      const fr = st.fires[i];
+      const fx = fr.xNorm * w, fy = fr.yNorm * h;
+      const pulse = 0.78 + 0.28 * Math.sin(st.time * 9.5 + i * 2.1);
+      const rad = (fr.radiusNorm * minDim) * pulse * (1 + sky * 0.45);
+      const fg = ctx.createRadialGradient(fx, fy, 1.5, fx, fy, rad);
+      fg.addColorStop(0, "#fff2cf");
+      fg.addColorStop(0.35, hexToRgba(STAIN_PALETTE.emberScream, fr.intensity));
+      fg.addColorStop(0.75, hexToRgba(STAIN_PALETTE.crimsonThread, fr.intensity * 0.55));
+      fg.addColorStop(1, "rgba(0,0,0,0)");
+      ctx.fillStyle = fg;
+      ctx.beginPath();
+      ctx.arc(fx, fy, rad, 0, Math.PI * 2);
+      ctx.fill();
+      if (sky > 0.25) {
+        ctx.strokeStyle = hexToRgba("#ffdca2", sky * 0.7);
+        ctx.lineWidth = 1.1;
+        ctx.beginPath();
+        ctx.moveTo(fx - rad * 0.9, fy); ctx.lineTo(fx + rad * 0.9, fy);
+        ctx.moveTo(fx, fy - rad * 0.9); ctx.lineTo(fx, fy + rad * 0.9);
+        ctx.stroke();
+      }
+    }
+
+    for (let i = 0; i < st.screams.length; i++) {
+      const sc = st.screams[i];
+      const sx = sc.xNorm * w, sy = sc.yNorm * h;
+      const sr = sc.radiusNorm * minDim;
+      ctx.beginPath();
+      const segs = 18;
+      for (let k = 0; k <= segs; k++) {
+        const a = sc.startAngle + (k / segs) * sc.arcSpan;
+        const jag = (k % 2 === 0 ? 1 : -1) * (3.5 + sky * 2.5) * sc.alpha;
+        const px = sx + Math.cos(a) * (sr + jag);
+        const py = sy + Math.sin(a) * (sr + jag);
+        if (k === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+      }
+      ctx.strokeStyle = sky > 0.25
+        ? hexToRgba(STAIN_PALETTE.magentaKnot, sc.alpha * 0.95)
+        : hexToRgba(STAIN_PALETTE.emberScream, sc.alpha * 0.92);
+      ctx.lineWidth = 1.8;
+      ctx.stroke();
+    }
+
+    // Eccentric Keplerian world-orbits revolving directly through all 9 crooked loci
+    if (sky > 0.03) {
+      for (let i = 0; i < st.worldOrbits.length; i++) {
+        const orb = st.worldOrbits[i];
+        const steps = 64;
+        ctx.beginPath();
+        for (let k = 0; k <= steps; k++) {
+          const th = (k / steps) * Math.PI * 2;
+          const r = orb.semiLatus / (1 + orb.eccentricity * Math.cos(th - orb.omega));
+          const ox = (orb.fx + r * Math.cos(th)) * w;
+          const oy = (orb.fy + r * Math.sin(th)) * h;
+          if (k === 0) ctx.moveTo(ox, oy); else ctx.lineTo(ox, oy);
+        }
+        ctx.strokeStyle = hexToRgba(orb.hex, sky * (st.selectedLocusId === orb.locusId ? 0.85 : 0.44));
+        ctx.lineWidth = st.selectedLocusId === orb.locusId ? 1.8 : 1.05;
+        ctx.stroke();
+
+        const pr = orb.semiLatus / (1 + orb.eccentricity * Math.cos(orb.planetAngle - orb.omega));
+        const px = (orb.fx + pr * Math.cos(orb.planetAngle)) * w;
+        const py = (orb.fy + pr * Math.sin(orb.planetAngle)) * h;
+        ctx.fillStyle = hexToRgba(STAIN_PALETTE.parchmentWarp, sky * 0.95);
+        ctx.beginPath();
+        ctx.arc(px, py, 2.8 + (st.selectedLocusId === orb.locusId ? 1.5 : 0), 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    // Active homeomorphic crooked route pre-image
+    if (st.route && st.route.crookedPoints.length > 1) {
+      const pts = st.route.crookedPoints;
+      ctx.save();
+      ctx.beginPath();
+      for (let i = 0; i < pts.length; i++) {
+        const rx = pts[i].xNorm * w, ry = pts[i].yNorm * h;
+        if (i === 0) ctx.moveTo(rx, ry); else ctx.lineTo(rx, ry);
+      }
+      ctx.strokeStyle = hexToRgba(st.route.hex, 0.85);
+      ctx.lineWidth = Math.max(2.6, minDim * 0.0065);
+      ctx.lineJoin = "round";
+      ctx.stroke();
+      ctx.setLineDash([5, 4]);
+      ctx.lineDashOffset = -st.time * 18;
+      ctx.strokeStyle = STAIN_PALETTE.goldSelvedge;
+      ctx.lineWidth = 1.4;
+      ctx.stroke();
+      ctx.restore();
+    }
+    ctx.restore();
+  }
+
+  function renderLociMarkers(ctx, w, h, st) {
+    ctx.save();
+    const sky = st.oracleAngle;
+    const compact = w < 420;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    for (let i = 0; i < STAIN_LOCI.length; i++) {
+      const loc = STAIN_LOCI[i];
+      const lx = loc.xNorm * w, ly = loc.yNorm * h;
+      const isSel = st.selectedLocusId === loc.id;
+      const isHov = st.hoveredLocusId === loc.id;
+      const r = isSel ? 9.5 : (isHov ? 8.2 : 6.8);
+
+      if (isSel || isHov) {
+        ctx.beginPath();
+        ctx.arc(lx, ly, r + 5 + Math.sin(st.time * 4) * 1.4, 0, Math.PI * 2);
+        ctx.strokeStyle = hexToRgba(STAIN_PALETTE.goldSelvedge, isSel ? 0.92 : 0.6);
+        ctx.lineWidth = 1.6;
+        ctx.stroke();
+      }
+
+      ctx.beginPath();
+      ctx.arc(lx, ly, r, 0, Math.PI * 2);
+      ctx.fillStyle = loc.hex;
+      ctx.fill();
+      ctx.strokeStyle = isSel ? STAIN_PALETTE.parchmentWarp : STAIN_PALETTE.goldSelvedge;
+      ctx.lineWidth = isSel ? 2.0 : 1.2;
+      ctx.stroke();
+
+      ctx.fillStyle = "#fff8eb";
+      ctx.font = "bold 9.5px Georgia, serif";
+      ctx.fillText(String(loc.index + 1), lx, ly + 0.5);
+
+      if (!compact || isSel || isHov || sky > 0.45) {
+        const label = sky >= 0.5 ? loc.constellationName : loc.streetTitle;
+        ctx.font = (isSel ? "bold " : "") + (compact ? "9px" : "10px") + " Georgia, serif";
+        const tw = ctx.measureText(label).width + 8;
+        const labelY = ly + (loc.yNorm > 0.78 ? -16 : 16);
+        const labelX = clamp(lx, tw * 0.5 + 4, w - tw * 0.5 - 4);
+        ctx.fillStyle = "rgba(13,11,16,0.82)";
+        ctx.fillRect(labelX - tw * 0.5, labelY - 7, tw, 14);
+        ctx.fillStyle = sky >= 0.5 ? STAIN_PALETTE.goldSelvedge : STAIN_PALETTE.parchmentWarp;
+        ctx.fillText(label, labelX, labelY + 0.5);
+      }
+    }
+    ctx.restore();
+  }
+
+  function resolveLocusId(idOrIndex) {
+    if (typeof idOrIndex === "number" && STAIN_LOCI[idOrIndex]) return STAIN_LOCI[idOrIndex].id;
+    if (typeof idOrIndex === "string" && LOCUS_BY_ID[idOrIndex]) return idOrIndex;
+    return null;
+  }
+
+  function createStainCosmos(opts) {
+    const cfg = opts || {};
+    const st = {
+      time: 0,
+      oracleAngle: 0.0,
+      cosmosMode: "carpet_cosmos",
+      selectedLocusId: resolveLocusId(cfg.initialLocusId) || "mule_narrows",
+      hoveredLocusId: null,
+      reducedMotion: Boolean(cfg.reducedMotion),
+      muted: Boolean(cfg.muted),
+      audioCtx: cfg.audioCtx || null,
+      jostleBoost: 0,
+      landslideCount: 0,
+      screamCount: 0,
+      fireFlareCount: 0,
+      muleJostleCount: 0,
+      hovels: [],
+      mules: [],
+      smokeStains: [],
+      fishBrineDrifts: [],
+      starField: buildStarField(),
+      worldOrbits: buildWorldOrbits(),
+      landslides: [],
+      dustClouds: [],
+      fires: [],
+      screams: [],
+      route: null,
+      lastWidth: 520,
+      lastHeight: 520
+    };
+
+    function seedBaselineScene() {
+      st.hovels = buildHovels();
+      st.mules = buildMules();
+      st.smokeStains = buildSmokeStains();
+      st.fishBrineDrifts = buildFishBrineDrifts();
+      st.worldOrbits = buildWorldOrbits();
+      st.landslides = [
+        { xNorm: 0.65, yNorm: 0.63, vx: 0.008, vy: 0.012, size: 5.5, rot: 0.3, life: 0.85 },
+        { xNorm: 0.68, yNorm: 0.66, vx: -0.006, vy: 0.014, size: 4.5, rot: -0.5, life: 0.80 }
+      ];
+      st.dustClouds = [
+        { xNorm: 0.66, yNorm: 0.64, radiusNorm: 0.058, alpha: 0.62, grow: 0.004, permanent: true },
+        { xNorm: 0.45, yNorm: 0.19, radiusNorm: 0.042, alpha: 0.45, grow: 0.003, permanent: true }
+      ];
+      st.fires = [
+        { xNorm: 0.58, yNorm: 0.82, radiusNorm: 0.042, intensity: 0.82, permanent: true },
+        { xNorm: 0.83, yNorm: 0.75, radiusNorm: 0.032, intensity: 0.68, permanent: true },
+        { xNorm: 0.32, yNorm: 0.30, radiusNorm: 0.026, intensity: 0.54, permanent: true }
+      ];
+      st.screams = [
+        { xNorm: 0.85, yNorm: 0.76, radiusNorm: 0.038, startAngle: 2.2, arcSpan: 1.9, alpha: 0.68, permanent: true }
+      ];
+      st.route = computeCrookedRoute("mule_narrows", "oracle_sanctuary");
+    }
+
+    function triggerLandslide(locusId) {
+      const target = LOCUS_BY_ID[resolveLocusId(locusId) || "landslide_ravine"];
+      st.landslideCount += 1;
+      for (let i = 0; i < st.hovels.length; i++) {
+        if (dist(st.hovels[i].xNorm, st.hovels[i].yNorm, target.xNorm, target.yNorm) < 0.16) {
+          st.hovels[i].slumpOffset = Math.min(0.024, st.hovels[i].slumpOffset + 0.009);
+        }
+      }
+      for (let r = 0; r < 6; r++) {
+        st.landslides.push({
+          xNorm: target.xNorm + (r - 2.5) * 0.014,
+          yNorm: target.yNorm - 0.015,
+          vx: (r % 2 === 0 ? 1 : -1) * 0.016,
+          vy: 0.028 + r * 0.006,
+          size: 4 + (r % 3) * 2,
+          rot: r * 0.7,
+          life: 1.0
+        });
+      }
+      st.dustClouds.push(
+        { xNorm: target.xNorm, yNorm: target.yNorm, radiusNorm: 0.036, alpha: 0.92, grow: 0.032, permanent: false },
+        { xNorm: target.xNorm + 0.025, yNorm: target.yNorm + 0.018, radiusNorm: 0.028, alpha: 0.84, grow: 0.026, permanent: false }
+      );
+      if (st.audioCtx) playAlleyFoley(st.audioCtx, "landslide", st.muted);
+      if (typeof cfg.onHazardEvent === "function") {
+        cfg.onHazardEvent({ kind: "landslide", locusId: target.id, landslideCount: st.landslideCount });
+      }
+      return { locusId: target.id, landslideCount: st.landslideCount };
+    }
+
+    function triggerScreamAndFire(locusId) {
+      const target = LOCUS_BY_ID[resolveLocusId(locusId) || "scream_threshold"];
+      const fireLoc = LOCUS_BY_ID[resolveLocusId(locusId) || "fire_cistern"];
+      st.screamCount += 1;
+      st.fireFlareCount += 1;
+      st.fires.push({ xNorm: fireLoc.xNorm, yNorm: fireLoc.yNorm, radiusNorm: 0.056, intensity: 0.98, life: 1.0, permanent: false });
+      for (let a = 0; a < 3; a++) {
+        st.screams.push({
+          xNorm: target.xNorm,
+          yNorm: target.yNorm,
+          radiusNorm: 0.024 + a * 0.018,
+          startAngle: 1.9 + a * 0.45,
+          arcSpan: 2.1,
+          alpha: 0.96,
+          permanent: false
+        });
+      }
+      if (st.audioCtx) playAlleyFoley(st.audioCtx, "scream_fire", st.muted);
+      if (typeof cfg.onHazardEvent === "function") {
+        cfg.onHazardEvent({ kind: "scream_fire", locusId: target.id, screamCount: st.screamCount, fireFlareCount: st.fireFlareCount });
+      }
+      return { locusId: target.id, screamCount: st.screamCount, fireFlareCount: st.fireFlareCount };
+    }
+
+    function jostleMules() {
+      st.muleJostleCount += 1;
+      st.jostleBoost = 1.0;
+      for (let i = 0; i < st.mules.length; i++) {
+        st.mules[i].bottlenecked = true;
+        st.mules[i].dir *= (i % 3 === 0 ? -1 : 1);
+      }
+      if (st.audioCtx) playAlleyFoley(st.audioCtx, "mules", st.muted);
+      if (typeof cfg.onHazardEvent === "function") {
+        cfg.onHazardEvent({ kind: "mules", locusId: "mule_narrows", muleJostleCount: st.muleJostleCount });
+      }
+      return { muleJostleCount: st.muleJostleCount };
+    }
+
+    function setHomeomorphicRoute(fromId, toId) {
+      st.route = computeCrookedRoute(fromId, toId);
+      return st.route;
+    }
+
+    function setOracleAngle(angle01) {
+      const nextAngle = clamp(Number(angle01) || 0, 0, 1);
+      const prevMode = st.cosmosMode;
+      st.oracleAngle = nextAngle;
+      st.cosmosMode = nextAngle >= 0.5 ? "stain_cosmos" : "carpet_cosmos";
+      if (st.cosmosMode !== prevMode && typeof cfg.onCosmosFlip === "function") {
+        cfg.onCosmosFlip({
+          oracleAngle: st.oracleAngle,
+          cosmosMode: st.cosmosMode,
+          verdict: ORACLE_VERDICTS[st.cosmosMode]
+        });
+      }
+      return ORACLE_VERDICTS[st.cosmosMode];
+    }
+
+    function setCosmosMode(mode) {
+      if (typeof mode === "number") return setOracleAngle(mode);
+      return setOracleAngle(mode === "stain_cosmos" ? 1.0 : 0.0);
+    }
+
+    function verifyBothCosmologies() {
+      const verdict = ORACLE_VERDICTS[st.cosmosMode];
+      return {
+        carpetCosmosValid: Boolean(ORACLE_VERDICTS.carpet_cosmos.oracleSatisfied && STAIN_LOCI.length === 9),
+        stainCosmosValid: Boolean(ORACLE_VERDICTS.stain_cosmos.oracleSatisfied && st.worldOrbits.length === 9),
+        oracleSatisfiedInBoth: Boolean(ORACLE_VERDICTS.carpet_cosmos.oracleSatisfied && ORACLE_VERDICTS.stain_cosmos.oracleSatisfied),
+        bijectionCount: STAIN_LOCI.length,
+        activeCosmosMode: st.cosmosMode,
+        oracleAngle: st.oracleAngle,
+        divineObject: verdict.divineObject,
+        approximateObject: verdict.approximateObject,
+        headline: verdict.headline,
+        verdictText: verdict.verdictText
+      };
+    }
+
+    function selectLocus(locusId, selectOpts) {
+      const resolved = resolveLocusId(locusId);
+      if (!resolved) return null;
+      st.selectedLocusId = resolved;
+      const loc = LOCUS_BY_ID[resolved];
+      if (!(selectOpts && selectOpts.silent) && typeof cfg.onSelectLocus === "function") {
+        cfg.onSelectLocus(loc);
+      }
+      return loc;
+    }
+
+    function hoverLocus(locusIdOrNull) {
+      st.hoveredLocusId = locusIdOrNull === null || locusIdOrNull === undefined
+        ? null
+        : resolveLocusId(locusIdOrNull);
+      return st.hoveredLocusId ? LOCUS_BY_ID[st.hoveredLocusId] : null;
+    }
+
+    function step(dtSec, stepOpts) {
+      const dt = clamp(Number(dtSec) || 0.016, 0, 0.1);
+      const reduced = Boolean((stepOpts && stepOpts.reducedMotion !== undefined) ? stepOpts.reducedMotion : st.reducedMotion);
+      st.jostleBoost = Math.max(0, st.jostleBoost - dt * 0.85);
+      if (!reduced) {
+        st.time += dt;
+        for (let i = 0; i < st.mules.length; i++) {
+          const m = st.mules[i];
+          const edge = ALLEY_EDGES[m.edgeIdx];
+          m.t += m.dir * m.speed * (1 + st.jostleBoost * 1.4) * dt;
+          if (m.t > 0.94) { m.t = 0.94; m.dir = -1; }
+          if (m.t < 0.06) { m.t = 0.06; m.dir = 1; }
+          const pt = sampleEdgePoint(edge, m.t);
+          m.xNorm = pt.xNorm;
+          m.yNorm = pt.yNorm;
+          m.heading = m.dir > 0 ? pt.heading : (pt.heading + Math.PI);
+          m.bottlenecked = false;
+          for (let j = 0; j < i; j++) {
+            if (dist(m.xNorm, m.yNorm, st.mules[j].xNorm, st.mules[j].yNorm) < 0.048) {
+              m.bottlenecked = true;
+              st.mules[j].bottlenecked = true;
+            }
+          }
+        }
+        for (let i = 0; i < st.worldOrbits.length; i++) {
+          const orb = st.worldOrbits[i];
+          const r = orb.semiLatus / (1 + orb.eccentricity * Math.cos(orb.planetAngle - orb.omega));
+          orb.planetAngle = (orb.planetAngle + (orb.angularRate * 0.04 / Math.max(0.02, r * r)) * dt) % (Math.PI * 2);
+          orb.omega += 0.018 * dt;
+        }
+      }
+
+      for (let i = st.landslides.length - 1; i >= 0; i--) {
+        const rk = st.landslides[i];
+        if (i >= 2) {
+          if (!reduced) {
+            rk.xNorm += rk.vx * dt;
+            rk.yNorm += rk.vy * dt;
+            rk.rot += 1.8 * dt;
+          }
+          rk.life -= dt * 0.55;
+          if (rk.life <= 0) st.landslides.splice(i, 1);
+        }
+      }
+      for (let i = st.dustClouds.length - 1; i >= 0; i--) {
+        const dc = st.dustClouds[i];
+        if (!dc.permanent) {
+          dc.radiusNorm += dc.grow * dt;
+          dc.alpha -= dt * 0.36;
+          if (dc.alpha <= 0.02) st.dustClouds.splice(i, 1);
+        }
+      }
+      for (let i = st.fires.length - 1; i >= 0; i--) {
+        const fr = st.fires[i];
+        if (!fr.permanent) {
+          fr.life -= dt * 0.48;
+          fr.intensity = Math.max(0, fr.life);
+          if (fr.life <= 0.02) st.fires.splice(i, 1);
+        }
+      }
+      for (let i = st.screams.length - 1; i >= 0; i--) {
+        const sc = st.screams[i];
+        if (!sc.permanent) {
+          sc.radiusNorm += 0.065 * dt;
+          sc.alpha -= dt * 0.52;
+          if (sc.alpha <= 0.02) st.screams.splice(i, 1);
+        }
+      }
+    }
+
+    function render(ctx, width, height, renderOpts) {
+      if (!ctx || !(width > 0) || !(height > 0)) return;
+      st.lastWidth = width;
+      st.lastHeight = height;
+      if (renderOpts && typeof renderOpts.oracleAngle === "number") {
+        setOracleAngle(renderOpts.oracleAngle);
+      }
+      ctx.save();
+      renderStainScene(ctx, width, height, st);
+      renderOverlaysAndCosmos(ctx, width, height, st);
+      renderLociMarkers(ctx, width, height, st);
+      ctx.restore();
+    }
+
+    function hitTest(normX, normY, width, height) {
+      const w = width > 1 ? width : st.lastWidth;
+      const h = height > 1 ? height : st.lastHeight;
+      const nx = (normX > 1.05 && w > 1) ? (normX / w) : normX;
+      const ny = (normY > 1.05 && h > 1) ? (normY / h) : normY;
+      let best = null;
+      let bestNormDist = Infinity;
+      for (let i = 0; i < STAIN_LOCI.length; i++) {
+        const loc = STAIN_LOCI[i];
+        const nd = dist(nx, ny, loc.xNorm, loc.yNorm);
+        const pxDist = Math.hypot((nx - loc.xNorm) * w, (ny - loc.yNorm) * h);
+        if ((nd <= 0.072 || pxDist <= 28) && nd < bestNormDist) {
+          bestNormDist = nd;
+          best = { id: loc.id, index: loc.index, locus: loc, distance: Number(nd.toFixed(4)) };
+        }
+      }
+      return best;
+    }
+
+    function getState() {
+      return {
+        selectedLocusId: st.selectedLocusId,
+        selectedLocus: LOCUS_BY_ID[st.selectedLocusId],
+        hoveredLocusId: st.hoveredLocusId,
+        oracleAngle: st.oracleAngle,
+        cosmosMode: st.cosmosMode,
+        oracleVerdict: ORACLE_VERDICTS[st.cosmosMode],
+        bijectionCount: STAIN_LOCI.length,
+        route: st.route,
+        tortuosityRatio: st.route ? st.route.tortuosityRatio : 0,
+        muleCount: st.mules.length,
+        hovelCount: st.hovels.length,
+        smokeStainCount: st.smokeStains.length,
+        fishBrineCount: st.fishBrineDrifts.length,
+        worldOrbitCount: st.worldOrbits.length,
+        landslideCount: st.landslideCount,
+        screamCount: st.screamCount,
+        fireFlareCount: st.fireFlareCount,
+        muleJostleCount: st.muleJostleCount,
+        muted: st.muted,
+        reducedMotion: st.reducedMotion,
+        cosmologyVerification: verifyBothCosmologies()
+      };
+    }
+
+    function reset() {
+      st.time = 0;
+      st.oracleAngle = 0.0;
+      st.cosmosMode = "carpet_cosmos";
+      st.selectedLocusId = resolveLocusId(cfg.initialLocusId) || "mule_narrows";
+      st.hoveredLocusId = null;
+      st.jostleBoost = 0;
+      st.landslideCount = 0;
+      st.screamCount = 0;
+      st.fireFlareCount = 0;
+      st.muleJostleCount = 0;
+      seedBaselineScene();
+      return getState();
+    }
+
+    seedBaselineScene();
+
+    return {
+      LOCUS_IDS: LOCUS_IDS,
+      STAIN_LOCI: STAIN_LOCI,
+      ORACLE_VERDICTS: ORACLE_VERDICTS,
+      triggerLandslide: triggerLandslide,
+      triggerScreamAndFire: triggerScreamAndFire,
+      jostleMules: jostleMules,
+      setHomeomorphicRoute: setHomeomorphicRoute,
+      traceRoute: setHomeomorphicRoute,
+      setOracleAngle: setOracleAngle,
+      setCosmosMode: setCosmosMode,
+      getOracleVerdict: function () { return ORACLE_VERDICTS[st.cosmosMode]; },
+      verifyBothCosmologies: verifyBothCosmologies,
+      playAlleyFoley: function (audioCtx, kind, muted) {
+        return playAlleyFoley(audioCtx || st.audioCtx, kind, muted !== undefined ? muted : st.muted);
+      },
+      setAudioContext: function (ctx) { st.audioCtx = ctx || null; },
+      setMuted: function (flag) { st.muted = Boolean(flag); return st.muted; },
+      isMuted: function () { return st.muted; },
+      setReducedMotion: function (flag) { st.reducedMotion = Boolean(flag); return st.reducedMotion; },
+      selectLocus: selectLocus,
+      hoverLocus: hoverLocus,
+      step: step,
+      render: render,
+      hitTest: hitTest,
+      getState: getState,
+      reset: reset
+    };
+  }
+
+  const api = {
+    LOCUS_IDS: LOCUS_IDS,
+    STAIN_PALETTE: STAIN_PALETTE,
+    STAIN_LOCI: STAIN_LOCI,
+    ORACLE_VERDICTS: ORACLE_VERDICTS,
+    playAlleyFoley: playAlleyFoley,
+    createStainCosmos: createStainCosmos
+  };
+
+  globalThis.EudoxiaCrumblingStainCosmos = api;
+  if (typeof window !== "undefined") {
+    window.EudoxiaCrumblingStainCosmos = api;
+  }
+})();
+
+  </script>
+  <script>
+  (function () {
+    "use strict";
+
+    const CarpetLib = globalThis.EudoxiaSymmetricalCarpet;
+    const StainLib = globalThis.EudoxiaCrumblingStainCosmos;
+    const LOCUS_IDS = CarpetLib.LOCUS_IDS;
+
+    const CURATED_ROUTES = [
+      ["mule_narrows", "oracle_sanctuary"],
+      ["fish_steps", "blind_culdesac"],
+      ["soot_arch", "scream_threshold"],
+      ["upper_hovels", "fire_cistern"],
+      ["landslide_ravine", "mule_narrows"],
+      ["oracle_sanctuary", "scream_threshold"],
+      ["blind_culdesac", "fish_steps"]
+    ];
+
+    const ZOOM_STOPS = [1.0, 2.2, 3.0, 4.0];
+
+    const dom = {
+      carpetCanvas: document.getElementById("eud-carpet-canvas"),
+      stainCanvas: document.getElementById("eud-stain-canvas"),
+      spineCanvas: document.getElementById("eud-spine-canvas"),
+      btnFlipOracle: document.getElementById("eud-btn-flip-oracle"),
+      btnCycleLoupe: document.getElementById("eud-btn-cycle-loupe"),
+      btnCycleRoute: document.getElementById("eud-btn-cycle-route"),
+      btnCycleHazard: document.getElementById("eud-btn-cycle-hazard"),
+      btnMute: document.getElementById("eud-btn-mute"),
+      btnMotion: document.getElementById("eud-btn-motion"),
+      btnPlates: document.getElementById("eud-btn-plates"),
+      btnReset: document.getElementById("eud-btn-reset"),
+      poleCarpet: document.getElementById("eud-pole-carpet"),
+      poleStain: document.getElementById("eud-pole-stain"),
+      oracleSlider: document.getElementById("eud-oracle-slider"),
+      oracleBadge: document.getElementById("eud-oracle-badge"),
+      microweaveBadge: document.getElementById("eud-microweave-badge"),
+      zoomSlider: document.getElementById("eud-zoom-slider"),
+      zoomReadout: document.getElementById("eud-zoom-readout"),
+      zoomBtns: Array.prototype.slice.call(document.querySelectorAll(".eud-zoom-btn")),
+      bondConstellation: document.getElementById("eud-bond-constellation"),
+      bondCarpet: document.getElementById("eud-bond-carpet"),
+      bondStreet: document.getElementById("eud-bond-street"),
+      verdictHeadline: document.getElementById("eud-verdict-headline"),
+      verdictBody: document.getElementById("eud-verdict-body"),
+      verdictStamp: document.getElementById("eud-verdict-stamp"),
+      stainModeTag: document.getElementById("eud-stain-mode-tag"),
+      btnLandslide: document.getElementById("eud-btn-landslide"),
+      btnScreamFire: document.getElementById("eud-btn-scream-fire"),
+      btnMules: document.getElementById("eud-btn-mules"),
+      hazardTally: document.getElementById("eud-hazard-tally"),
+      routeFrom: document.getElementById("eud-route-from"),
+      routeTo: document.getElementById("eud-route-to"),
+      btnTraceNext: document.getElementById("eud-btn-trace-next"),
+      routeReadout: document.getElementById("eud-route-readout"),
+      locusKnots: Array.prototype.slice.call(document.querySelectorAll(".eud-locus-knot")),
+      plateDrawer: document.getElementById("eud-plate-drawer"),
+      plateTabs: Array.prototype.slice.call(document.querySelectorAll(".eud-plate-tab")),
+      btnPlateZoom: document.getElementById("eud-btn-plate-zoom"),
+      btnClosePlates: document.getElementById("eud-btn-close-plates"),
+      plateStage: document.getElementById("eud-plate-stage"),
+      plateGrid: document.getElementById("eud-plate-grid"),
+      cardMap: document.getElementById("eud-card-map"),
+      cardImage: document.getElementById("eud-card-image"),
+      mapPlateImg: document.getElementById("eud-map-plate-img"),
+      vistaPlateImg: document.getElementById("eud-vista-plate-img")
+    };
+
+    if (dom.mapPlateImg) {
+      dom.mapPlateImg.addEventListener("error", function () {
+        if (!dom.mapPlateImg.dataset.svgFallback) {
+          dom.mapPlateImg.dataset.svgFallback = "1";
+          dom.mapPlateImg.src = "map.svg";
+        }
+      });
+    }
+
+    const mediaMotion = (typeof window.matchMedia === "function")
+      ? window.matchMedia("(prefers-reduced-motion: reduce)")
+      : { matches: false };
+
+    const uiState = {
+      reducedMotion: Boolean(mediaMotion.matches),
+      routePresetIdx: 0,
+      zoomStopIdx: 0,
+      plateDrawerOpen: false,
+      activePlateTab: "diptych",
+      plateZoomActive: false,
+      spinePhase: 0
+    };
+
+    const COMBINED_LOCI = CarpetLib.CARPET_LOCI.map(function (cLoc, idx) {
+      const sLoc = StainLib.STAIN_LOCI[idx] || {};
+      return {
+        index: cLoc.index,
+        id: cLoc.id,
+        carpetTitle: cLoc.carpetTitle,
+        streetTitle: cLoc.streetTitle,
+        u: cLoc.u,
+        v: cLoc.v,
+        xNorm: sLoc.xNorm !== undefined ? sLoc.xNorm : cLoc.xNorm,
+        yNorm: sLoc.yNorm !== undefined ? sLoc.yNorm : cLoc.yNorm,
+        threadColor: cLoc.threadColor,
+        hex: cLoc.hex,
+        enclosureType: cLoc.enclosureType,
+        oudHz: cLoc.oudHz,
+        constellationName: cLoc.constellationName,
+        homeomorphicNote: cLoc.homeomorphicNote,
+        sensoryCaption: sLoc.sensoryCaption || ""
+      };
+    });
+
+    const COMBINED_BY_ID = Object.create(null);
+    for (let i = 0; i < COMBINED_LOCI.length; i += 1) {
+      COMBINED_BY_ID[COMBINED_LOCI[i].id] = COMBINED_LOCI[i];
+    }
+
+    function resolveAnyLocusId(idOrIndex) {
+      if (typeof idOrIndex === "string") {
+        if (COMBINED_BY_ID[idOrIndex]) return idOrIndex;
+        const asNum = Number(idOrIndex);
+        if (Number.isInteger(asNum)) {
+          if (asNum >= 0 && asNum < LOCUS_IDS.length) return LOCUS_IDS[asNum];
+          if (asNum === 9) return LOCUS_IDS[8];
+        }
+      } else if (typeof idOrIndex === "number" && Number.isFinite(idOrIndex)) {
+        const n = Math.trunc(idOrIndex);
+        if (n >= 0 && n < LOCUS_IDS.length) return LOCUS_IDS[n];
+        if (n === 9) return LOCUS_IDS[8];
+      }
+      return null;
+    }
+
+    const loom = CarpetLib.createCarpetLoom({});
+    const stain = StainLib.createStainCosmos({
+      initialLocusId: "oracle_sanctuary",
+      reducedMotion: uiState.reducedMotion,
+      muted: false
+    });
+
+    function ensureAudioReady() {
+      loom.unlockAudio();
+      const ctx = loom.getAudioContext();
+      if (ctx) stain.setAudioContext(ctx);
+      stain.setMuted(loom.isMuted());
+    }
+    function fitCanvasDpr(canvas, minW, minH) {
+      if (!canvas) return { ctx: null, w: minW, h: minH };
+      const rect = canvas.getBoundingClientRect();
+      const cssW = Math.max(minW, Math.round(rect.width || canvas.width || minW));
+      const cssH = Math.max(minH, Math.round(rect.height || canvas.height || minH));
+      const dpr = Math.min(2, Math.max(1, Number(window.devicePixelRatio) || 1));
+      const targetW = Math.round(cssW * dpr);
+      const targetH = Math.round(cssH * dpr);
+      if (canvas.width !== targetW || canvas.height !== targetH) {
+        canvas.width = targetW;
+        canvas.height = targetH;
+      }
+      const ctx = canvas.getContext("2d");
+      if (ctx) {
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      return { ctx: ctx, w: cssW, h: cssH };
+    }
+
+    function renderBridgeSpine(ctx, w, h, loomSt, stainSt) {
+      if (!ctx) return;
+      ctx.save();
+      ctx.fillStyle = "#0d0b10";
+      ctx.fillRect(0, 0, w, h);
+
+      const activeId = loomSt.hoveredLocusId || loomSt.selectedLocusId || "oracle_sanctuary";
+      const angle = loomSt.oracleAngle;
+      const padX = 18;
+      const leftX = padX;
+      const rightX = w - padX;
+
+      /* Subtle golden selvedge & stain rim rails */
+      ctx.strokeStyle = "rgba(216, 168, 76, 0.45)";
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(leftX, 8);
+      ctx.lineTo(leftX, h - 8);
+      ctx.moveTo(rightX, 8);
+      ctx.lineTo(rightX, h - 8);
+      ctx.stroke();
+
+      /* 9 homeomorphic bijection tethers */
+      for (let i = 0; i < COMBINED_LOCI.length; i += 1) {
+        const loc = COMBINED_LOCI[i];
+        const yL = 10 + loc.v * (h - 20);
+        const yR = 10 + loc.yNorm * (h - 20);
+        const isFocus = loc.id === activeId;
+        ctx.save();
+        ctx.strokeStyle = isFocus ? loc.hex : "rgba(234, 220, 195, 0.17)";
+        ctx.lineWidth = isFocus ? 2.4 : 0.9;
+        ctx.beginPath();
+        ctx.moveTo(leftX, yL);
+        ctx.bezierCurveTo(w * 0.38, yL, w * 0.62, yR, rightX, yR);
+        ctx.stroke();
+
+        ctx.fillStyle = isFocus ? "#d8a84c" : loc.hex;
+        ctx.beginPath();
+        ctx.arc(leftX, yL, isFocus ? 4.2 : 2.1, 0, Math.PI * 2);
+        ctx.arc(rightX, yR, isFocus ? 4.2 : 2.1, 0, Math.PI * 2);
+        ctx.fill();
+
+        if (isFocus) {
+          const pulseT = uiState.reducedMotion ? 0.5 : ((Math.sin(uiState.spinePhase * 2.6) + 1) * 0.5);
+          const midX = leftX + (rightX - leftX) * (0.25 + 0.5 * pulseT);
+          const midY = yL + (yR - yL) * (0.25 + 0.5 * pulseT);
+          ctx.fillStyle = "#eadcc3";
+          ctx.beginPath();
+          ctx.arc(midX, midY, 3.2, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.restore();
+      }
+
+      /* Reversible Starry Orbit focus halo shifting from Loom (left) to Stain (right) */
+      const starCx = leftX + (rightX - leftX) * (0.18 + 0.64 * angle);
+      const starCy = h * 0.5;
+      ctx.strokeStyle = "rgba(216, 168, 76, 0.62)";
+      ctx.lineWidth = 1.1;
+      ctx.beginPath();
+      ctx.ellipse(starCx, starCy, 22, 11, (angle - 0.5) * 0.5, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.fillStyle = "#eadcc3";
+      ctx.font = "600 9px Georgia, serif";
+      ctx.textAlign = "center";
+      ctx.fillText(stainSt.cosmosMode === "stain_cosmos" ? "STAIN = SKY" : "CARPET = SKY", w * 0.5, h - 5);
+      ctx.restore();
+    }
+
+    function renderAllCanvases() {
+      const cFit = fitCanvasDpr(dom.carpetCanvas, 220, 220);
+      if (cFit.ctx) loom.render(cFit.ctx, cFit.w, cFit.h);
+
+      const sFit = fitCanvasDpr(dom.stainCanvas, 220, 220);
+      if (sFit.ctx) stain.render(sFit.ctx, sFit.w, sFit.h);
+
+      const bFit = fitCanvasDpr(dom.spineCanvas, 160, 72);
+      if (bFit.ctx) renderBridgeSpine(bFit.ctx, bFit.w, bFit.h, loom.getState(), stain.getState());
+    }
+
+    function syncDomUI() {
+      const lSt = loom.getState();
+      const sSt = stain.getState();
+      const focusId = lSt.hoveredLocusId || lSt.selectedLocusId || "oracle_sanctuary";
+      const focusLoc = COMBINED_BY_ID[focusId] || COMBINED_LOCI[4];
+      const verdict = sSt.oracleVerdict;
+      const cRoute = lSt.activeRoute;
+      const sRoute = sSt.route;
+
+      /* Top bar buttons */
+      dom.btnCycleLoupe.textContent = "[L] Loupe: " + lSt.zoomLevel.toFixed(1) + "×";
+      dom.btnCycleLoupe.classList.toggle("eud-is-active", lSt.isMicroWeaveVisible);
+      dom.btnMute.textContent = lSt.muted ? "[M] Muted" : "[M] Sound: On";
+      dom.btnMute.classList.toggle("eud-is-active", lSt.muted);
+      dom.btnMotion.textContent = uiState.reducedMotion ? "Motion: Calm" : "Motion: Live";
+      dom.btnMotion.classList.toggle("eud-is-active", uiState.reducedMotion);
+      dom.btnPlates.classList.toggle("eud-is-active", uiState.plateDrawerOpen);
+
+      /* Oracle Reversible Cosmology Switch */
+      dom.oracleSlider.value = String(lSt.oracleAngle.toFixed(2));
+      const isStainSky = sSt.cosmosMode === "stain_cosmos";
+      dom.oracleBadge.textContent = lSt.oracleAngle.toFixed(2) + (isStainSky ? " · STAIN SKY" : " · CARPET SKY");
+      dom.poleCarpet.classList.toggle("eud-is-active", !isStainSky);
+      dom.poleCarpet.setAttribute("aria-pressed", String(!isStainSky));
+      dom.poleStain.classList.toggle("eud-is-active", isStainSky);
+      dom.poleStain.setAttribute("aria-pressed", String(isStainSky));
+
+      /* Carpet Zoom Loupe */
+      dom.zoomSlider.value = String(Math.min(4.0, lSt.zoomLevel).toFixed(1));
+      dom.zoomReadout.textContent = lSt.zoomLevel.toFixed(1) + "× · " + (lSt.isMicroWeaveVisible ? "Micro-Weave" : "Macro");
+      dom.microweaveBadge.textContent = lSt.isMicroWeaveVisible ? "Micro-Weave Tethers Active" : "Whole Weave";
+      for (let i = 0; i < dom.zoomBtns.length; i += 1) {
+        const bz = Number(dom.zoomBtns[i].getAttribute("data-zoom"));
+        dom.zoomBtns[i].classList.toggle("eud-is-active", Math.abs(lSt.zoomLevel - bz) < 0.16);
+      }
+
+      /* Bridge Spine Readout & Verdict */
+      dom.bondConstellation.textContent = "[" + (focusLoc.index + 1) + "] " + focusLoc.constellationName + " · " + focusLoc.oudHz.toFixed(1) + " Hz";
+      dom.bondCarpet.textContent = focusLoc.carpetTitle + " (u=" + focusLoc.u.toFixed(2) + ", v=" + focusLoc.v.toFixed(2) + ") — " + focusLoc.homeomorphicNote + ".";
+      dom.bondStreet.textContent = focusLoc.streetTitle + " (x=" + focusLoc.xNorm.toFixed(2) + ", y=" + focusLoc.yNorm.toFixed(2) + ") — " + focusLoc.sensoryCaption;
+      dom.verdictHeadline.textContent = verdict.headline;
+      dom.verdictBody.textContent = verdict.verdictText;
+      dom.verdictStamp.textContent = "9/9 Bijection · " + (isStainSky ? "Divine: Shapeless Stain" : "Divine: Symmetrical Carpet");
+
+      /* Stain header & hazard tally */
+      dom.stainModeTag.textContent = isStainSky
+        ? ("Starry Universe · 9 World Orbits")
+        : ("Terrestrial Blotch · " + sSt.muleCount + " Mules");
+      dom.hazardTally.textContent = "Slumps: " + sSt.landslideCount + " · Screams: " + sSt.screamCount + " · Jostles: " + sSt.muleJostleCount;
+
+      /* Quarter-to-Quarter Thread Ledger */
+      if (dom.routeFrom.value !== cRoute.fromId) dom.routeFrom.value = cRoute.fromId;
+      if (dom.routeTo.value !== cRoute.toId) dom.routeTo.value = cRoute.toId;
+      const capColor = cRoute.threadColor.charAt(0).toUpperCase() + cRoute.threadColor.slice(1);
+      dom.routeReadout.textContent = capColor + " Straight+Circular Thread (" + cRoute.geometricLength.toFixed(2) + "u) ↔ Crooked Alley Detour (" + sRoute.crookedLength.toFixed(2) + "d · Tortuosity " + sRoute.tortuosityRatio.toFixed(2) + "× · " + sRoute.stepClimbs + " stairs · " + sRoute.deadEndDetours + " dead-end · " + sRoute.muleBottlenecks + " mule jams)";
+
+      /* 9 Locus knots */
+      for (let i = 0; i < dom.locusKnots.length; i += 1) {
+        const kid = dom.locusKnots[i].getAttribute("data-locus-id");
+        dom.locusKnots[i].classList.toggle("eud-is-active", kid === focusId);
+      }
+    }
+    function getState() {
+      const lSt = loom.getState();
+      const sSt = stain.getState();
+      const ver = stain.verifyBothCosmologies();
+      const selLoc = COMBINED_BY_ID[lSt.selectedLocusId] || COMBINED_LOCI[4];
+      return {
+        city: "Eudoxia",
+        cityNumber: 35,
+        chapter: "VI",
+        series: "Cities and the Sky",
+        seriesIndex: 1,
+        selectedLocusId: selLoc.id,
+        selectedLocusIndex: selLoc.index,
+        selectedLocus: selLoc,
+        hoveredLocusId: lSt.hoveredLocusId,
+        bijectionCount: 9,
+        loci: COMBINED_LOCI,
+        zoomLevel: lSt.zoomLevel,
+        focusU: lSt.focusU,
+        focusV: lSt.focusV,
+        isMicroWeaveVisible: lSt.isMicroWeaveVisible,
+        oracleAngle: lSt.oracleAngle,
+        cosmosMode: sSt.cosmosMode,
+        oracleVerdict: sSt.oracleVerdict,
+        oracleSatisfiedInBoth: ver.oracleSatisfiedInBoth,
+        cosmologyVerification: ver,
+        carpetRoute: lSt.activeRoute,
+        stainRoute: sSt.route,
+        tortuosityRatio: sSt.tortuosityRatio,
+        landslideCount: sSt.landslideCount,
+        screamCount: sSt.screamCount,
+        fireFlareCount: sSt.fireFlareCount,
+        muleJostleCount: sSt.muleJostleCount,
+        hazards: {
+          landslideCount: sSt.landslideCount,
+          screamCount: sSt.screamCount,
+          fireFlareCount: sSt.fireFlareCount,
+          muleJostleCount: sSt.muleJostleCount,
+          muleCount: sSt.muleCount,
+          hovelCount: sSt.hovelCount,
+          smokeStainCount: sSt.smokeStainCount,
+          fishBrineCount: sSt.fishBrineCount
+        },
+        muted: lSt.muted,
+        reducedMotion: uiState.reducedMotion,
+        plateDrawerOpen: uiState.plateDrawerOpen,
+        activePlateTab: uiState.activePlateTab,
+        plateZoomActive: uiState.plateZoomActive,
+        plateZoomFactor: uiState.plateZoomActive ? 1.85 : 1.0
+      };
+    }
+
+    function selectLocus(idOrIndex, opts) {
+      const resolved = resolveAnyLocusId(idOrIndex);
+      if (!resolved) return getState();
+      if (!opts || !opts.silent) ensureAudioReady();
+      loom.selectLocus(resolved, opts);
+      stain.selectLocus(resolved, { silent: true });
+      syncDomUI();
+      renderAllCanvases();
+      return getState();
+    }
+
+    function hoverLocus(idOrNull) {
+      const resolved = idOrNull === null || idOrNull === undefined ? null : resolveAnyLocusId(idOrNull);
+      loom.hoverLocus(resolved);
+      stain.hoverLocus(resolved);
+      syncDomUI();
+      renderAllCanvases();
+      return resolved ? COMBINED_BY_ID[resolved] : null;
+    }
+
+    function traceRoute(fromId, toId, opts) {
+      let a = resolveAnyLocusId(fromId);
+      let b = resolveAnyLocusId(toId);
+      if (!a || !b) {
+        uiState.routePresetIdx = (uiState.routePresetIdx + 1) % CURATED_ROUTES.length;
+        a = CURATED_ROUTES[uiState.routePresetIdx][0];
+        b = CURATED_ROUTES[uiState.routePresetIdx][1];
+      }
+      if (!opts || !opts.silent) ensureAudioReady();
+      loom.traceRoute(a, b, opts);
+      stain.setHomeomorphicRoute(a, b);
+      syncDomUI();
+      renderAllCanvases();
+      return getState();
+    }
+
+    function cycleRoute() {
+      return traceRoute(null, null);
+    }
+
+    function setZoom(z, focusU, focusV) {
+      const nextZ = Math.max(1.0, Math.min(4.2, Number(z) || 1.0));
+      loom.setZoom(nextZ, focusU, focusV);
+      syncDomUI();
+      renderAllCanvases();
+      return getState();
+    }
+
+    function cycleZoom() {
+      const cur = loom.getState().zoomLevel;
+      let nextIdx = 0;
+      for (let i = 0; i < ZOOM_STOPS.length; i += 1) {
+        if (ZOOM_STOPS[i] > cur + 0.12) {
+          nextIdx = i;
+          break;
+        }
+      }
+      uiState.zoomStopIdx = nextIdx;
+      return setZoom(ZOOM_STOPS[nextIdx]);
+    }
+
+    function setOracleMode(modeOrAngle, opts) {
+      let targetAngle = 0.0;
+      if (typeof modeOrAngle === "number" && !Number.isNaN(modeOrAngle)) {
+        targetAngle = Math.max(0.0, Math.min(1.0, modeOrAngle));
+      } else if (modeOrAngle === "stain_cosmos" || modeOrAngle === "stain") {
+        targetAngle = 1.0;
+      } else if (modeOrAngle === "carpet_cosmos" || modeOrAngle === "carpet") {
+        targetAngle = 0.0;
+      } else {
+        targetAngle = loom.getState().cosmosMode === "carpet_cosmos" ? 1.0 : 0.0;
+      }
+      if (!opts || !opts.silent) ensureAudioReady();
+      loom.setOracleAngle(targetAngle, opts);
+      stain.setOracleAngle(targetAngle);
+      syncDomUI();
+      renderAllCanvases();
+      return getState();
+    }
+
+    function flipOracleMode() {
+      return setOracleMode(loom.getState().cosmosMode === "carpet_cosmos" ? 1.0 : 0.0);
+    }
+
+    function triggerLandslide(locusId) {
+      ensureAudioReady();
+      stain.triggerLandslide(locusId || "landslide_ravine");
+      syncDomUI();
+      renderAllCanvases();
+      return getState();
+    }
+
+    function triggerScreamAndFire(locusId) {
+      ensureAudioReady();
+      stain.triggerScreamAndFire(locusId || "scream_threshold");
+      syncDomUI();
+      renderAllCanvases();
+      return getState();
+    }
+
+    function jostleMules() {
+      ensureAudioReady();
+      stain.jostleMules();
+      syncDomUI();
+      renderAllCanvases();
+      return getState();
+    }
+
+    function triggerHazardCombo() {
+      ensureAudioReady();
+      stain.triggerLandslide("landslide_ravine");
+      stain.triggerScreamAndFire("scream_threshold");
+      syncDomUI();
+      renderAllCanvases();
+      return getState();
+    }
+    function syncPlateDrawerDOM() {
+      if (!dom.plateDrawer) return;
+      dom.plateDrawer.hidden = !uiState.plateDrawerOpen;
+      const tab = uiState.activePlateTab;
+      for (let i = 0; i < dom.plateTabs.length; i += 1) {
+        const t = dom.plateTabs[i].getAttribute("data-plate-tab");
+        dom.plateTabs[i].classList.toggle("eud-is-active", t === tab);
+      }
+      const showMap = tab === "diptych" || tab === "map";
+      const showImage = tab === "diptych" || tab === "image";
+      dom.cardMap.hidden = !showMap;
+      dom.cardImage.hidden = !showImage;
+      dom.plateGrid.classList.toggle("eud-single-plate", tab !== "diptych");
+      dom.plateStage.classList.toggle("eud-is-zoomed", uiState.plateZoomActive);
+      dom.btnPlateZoom.textContent = uiState.plateZoomActive ? "[Z] Loupe: 1.85×" : "[Z] Loupe: 1.0×";
+      dom.btnPlateZoom.classList.toggle("eud-is-active", uiState.plateZoomActive);
+      dom.btnPlates.classList.toggle("eud-is-active", uiState.plateDrawerOpen);
+    }
+
+    function setPlateTab(tabName) {
+      const raw = String(tabName || "diptych").toLowerCase();
+      if (raw.indexOf("map") >= 0 || raw.indexOf("survey") >= 0) {
+        uiState.activePlateTab = "map";
+      } else if (raw.indexOf("img") >= 0 || raw.indexOf("image") >= 0 || raw.indexOf("paint") >= 0 || raw.indexOf("vista") >= 0) {
+        uiState.activePlateTab = "image";
+      } else {
+        uiState.activePlateTab = "diptych";
+      }
+      syncPlateDrawerDOM();
+      return getState();
+    }
+
+    function openPlates(tabName) {
+      uiState.plateDrawerOpen = true;
+      if (tabName) setPlateTab(tabName);
+      else syncPlateDrawerDOM();
+      return getState();
+    }
+
+    function closePlates() {
+      uiState.plateDrawerOpen = false;
+      syncPlateDrawerDOM();
+      return getState();
+    }
+
+    function togglePlates() {
+      if (uiState.plateDrawerOpen) return closePlates();
+      return openPlates();
+    }
+
+    function togglePlateZoom(forceFlag) {
+      uiState.plateZoomActive = typeof forceFlag === "boolean" ? forceFlag : !uiState.plateZoomActive;
+      syncPlateDrawerDOM();
+      return getState();
+    }
+
+    function setMuted(flag) {
+      const m = Boolean(flag);
+      loom.setMuted(m);
+      stain.setMuted(m);
+      syncDomUI();
+      return getState();
+    }
+
+    function toggleMute() {
+      return setMuted(!loom.isMuted());
+    }
+
+    function setReducedMotion(flag) {
+      uiState.reducedMotion = Boolean(flag);
+      stain.setReducedMotion(uiState.reducedMotion);
+      syncDomUI();
+      renderAllCanvases();
+      return getState();
+    }
+
+    function toggleReducedMotion() {
+      return setReducedMotion(!uiState.reducedMotion);
+    }
+
+    function reset() {
+      uiState.routePresetIdx = 0;
+      uiState.zoomStopIdx = 0;
+      uiState.plateDrawerOpen = false;
+      uiState.activePlateTab = "diptych";
+      uiState.plateZoomActive = false;
+      loom.reset();
+      stain.reset();
+      stain.selectLocus("oracle_sanctuary", { silent: true });
+      stain.setReducedMotion(uiState.reducedMotion);
+      stain.setMuted(loom.isMuted());
+      syncPlateDrawerDOM();
+      syncDomUI();
+      renderAllCanvases();
+      return getState();
+    }
+
+    /* Wire interactive DOM controls */
+    dom.btnFlipOracle.addEventListener("click", flipOracleMode);
+    dom.btnCycleLoupe.addEventListener("click", cycleZoom);
+    dom.btnCycleRoute.addEventListener("click", cycleRoute);
+    dom.btnCycleHazard.addEventListener("click", triggerHazardCombo);
+    dom.btnMute.addEventListener("click", toggleMute);
+    dom.btnMotion.addEventListener("click", toggleReducedMotion);
+    dom.btnPlates.addEventListener("click", togglePlates);
+    dom.btnReset.addEventListener("click", reset);
+
+    function wirePoleChip(el, modeStr) {
+      el.addEventListener("click", function () { setOracleMode(modeStr); });
+      el.addEventListener("keydown", function (ev) {
+        if (ev.key === "Enter" || ev.key === " ") {
+          ev.preventDefault();
+          setOracleMode(modeStr);
+        }
+      });
+    }
+    wirePoleChip(dom.poleCarpet, "carpet_cosmos");
+    wirePoleChip(dom.poleStain, "stain_cosmos");
+
+    dom.oracleSlider.addEventListener("input", function () {
+      setOracleMode(Number(dom.oracleSlider.value));
+    });
+
+    dom.zoomSlider.addEventListener("input", function () {
+      setZoom(Number(dom.zoomSlider.value));
+    });
+
+    for (let i = 0; i < dom.zoomBtns.length; i += 1) {
+      dom.zoomBtns[i].addEventListener("click", function (ev) {
+        setZoom(Number(ev.currentTarget.getAttribute("data-zoom")));
+      });
+    }
+
+    dom.btnLandslide.addEventListener("click", function () { triggerLandslide("landslide_ravine"); });
+    dom.btnScreamFire.addEventListener("click", function () { triggerScreamAndFire("scream_threshold"); });
+    dom.btnMules.addEventListener("click", function () { jostleMules(); });
+
+    dom.routeFrom.addEventListener("change", function () {
+      traceRoute(dom.routeFrom.value, dom.routeTo.value);
+    });
+    dom.routeTo.addEventListener("change", function () {
+      traceRoute(dom.routeFrom.value, dom.routeTo.value);
+    });
+    dom.btnTraceNext.addEventListener("click", cycleRoute);
+    for (let i = 0; i < dom.locusKnots.length; i += 1) {
+      (function (knotEl) {
+        const lid = knotEl.getAttribute("data-locus-id");
+        knotEl.addEventListener("click", function () { selectLocus(lid); });
+        knotEl.addEventListener("pointerenter", function () { hoverLocus(lid); });
+        knotEl.addEventListener("pointerleave", function () { hoverLocus(null); });
+        knotEl.addEventListener("keydown", function (ev) {
+          if (ev.key === "Enter" || ev.key === " ") {
+            ev.preventDefault();
+            selectLocus(lid);
+          }
+        });
+      })(dom.locusKnots[i]);
+    }
+
+    function wireStageCanvas(canvas, hitFn, isCarpet) {
+      canvas.addEventListener("pointermove", function (ev) {
+        const rect = canvas.getBoundingClientRect();
+        if (!(rect.width > 0 && rect.height > 0)) return;
+        const nx = (ev.clientX - rect.left) / rect.width;
+        const ny = (ev.clientY - rect.top) / rect.height;
+        const hit = hitFn(nx, ny, rect.width, rect.height);
+        hoverLocus(hit ? hit.id : null);
+      });
+      canvas.addEventListener("pointerleave", function () {
+        hoverLocus(null);
+      });
+      canvas.addEventListener("click", function (ev) {
+        const rect = canvas.getBoundingClientRect();
+        if (!(rect.width > 0 && rect.height > 0)) return;
+        const nx = (ev.clientX - rect.left) / rect.width;
+        const ny = (ev.clientY - rect.top) / rect.height;
+        const hit = hitFn(nx, ny, rect.width, rect.height);
+        if (hit) {
+          selectLocus(hit.id);
+        } else if (isCarpet && loom.getState().zoomLevel > 1.15) {
+          setZoom(loom.getState().zoomLevel, nx, ny);
+        }
+      });
+    }
+
+    wireStageCanvas(dom.carpetCanvas, function (nx, ny, w, h) {
+      return loom.hitTest(nx, ny, w, h);
+    }, true);
+
+    wireStageCanvas(dom.stainCanvas, function (nx, ny, w, h) {
+      return stain.hitTest(nx, ny, w, h);
+    }, false);
+
+    /* Plate Drawer Controls & Loupe Panning */
+    for (let i = 0; i < dom.plateTabs.length; i += 1) {
+      dom.plateTabs[i].addEventListener("click", function (ev) {
+        setPlateTab(ev.currentTarget.getAttribute("data-plate-tab"));
+      });
+    }
+    dom.btnPlateZoom.addEventListener("click", function () { togglePlateZoom(); });
+    dom.btnClosePlates.addEventListener("click", closePlates);
+    dom.plateDrawer.addEventListener("click", function (ev) {
+      if (ev.target === dom.plateDrawer) closePlates();
+    });
+    dom.plateStage.addEventListener("pointermove", function (ev) {
+      if (!uiState.plateZoomActive) return;
+      const rect = dom.plateStage.getBoundingClientRect();
+      if (!(rect.width > 0 && rect.height > 0)) return;
+      const ox = Math.max(0, Math.min(100, ((ev.clientX - rect.left) / rect.width) * 100));
+      const oy = Math.max(0, Math.min(100, ((ev.clientY - rect.top) / rect.height) * 100));
+      dom.plateStage.style.setProperty("--eud-loupe-ox", ox.toFixed(1) + "%");
+      dom.plateStage.style.setProperty("--eud-loupe-oy", oy.toFixed(1) + "%");
+    });
+
+    /* Keyboard Shortcuts: 1-9, O, L, T, D, P, Z, M, R, Escape */
+    window.addEventListener("keydown", function (ev) {
+      if (ev.ctrlKey || ev.metaKey || ev.altKey) return;
+      const key = ev.key;
+      if (key === "Escape") {
+        if (uiState.plateDrawerOpen) {
+          ev.preventDefault();
+          closePlates();
+        }
+        return;
+      }
+      if (key >= "1" && key <= "9") {
+        ev.preventDefault();
+        selectLocus(Number(key) - 1);
+        return;
+      }
+      const lower = key.toLowerCase();
+      if (lower === "o") {
+        ev.preventDefault();
+        flipOracleMode();
+      } else if (lower === "l") {
+        ev.preventDefault();
+        cycleZoom();
+      } else if (lower === "t") {
+        ev.preventDefault();
+        cycleRoute();
+      } else if (lower === "d") {
+        ev.preventDefault();
+        triggerHazardCombo();
+      } else if (lower === "p") {
+        ev.preventDefault();
+        togglePlates();
+      } else if (lower === "z") {
+        ev.preventDefault();
+        togglePlateZoom();
+      } else if (lower === "m") {
+        ev.preventDefault();
+        toggleMute();
+      } else if (lower === "r") {
+        ev.preventDefault();
+        reset();
+      }
+    });
+
+    if (mediaMotion && typeof mediaMotion.addEventListener === "function") {
+      mediaMotion.addEventListener("change", function (ev) {
+        setReducedMotion(Boolean(ev.matches));
+      });
+    }
+
+    window.addEventListener("resize", renderAllCanvases);
+
+    let lastTs = 0;
+    function frameLoop(ts) {
+      const dt = lastTs ? Math.min(0.05, Math.max(0.004, (ts - lastTs) / 1000)) : 0.016;
+      lastTs = ts;
+      loom.step(dt, { reducedMotion: uiState.reducedMotion });
+      stain.step(dt, { reducedMotion: uiState.reducedMotion });
+      if (!uiState.reducedMotion) {
+        uiState.spinePhase = (uiState.spinePhase + dt) % 1000;
+      }
+      renderAllCanvases();
+      window.requestAnimationFrame(frameLoop);
+    }
+
+    syncPlateDrawerDOM();
+    syncDomUI();
+    renderAllCanvases();
+    window.requestAnimationFrame(frameLoop);
+
+    const EudoxiaApp = {
+      getState: getState,
+      selectLocus: selectLocus,
+      hoverLocus: hoverLocus,
+      traceRoute: traceRoute,
+      cycleRoute: cycleRoute,
+      setZoom: setZoom,
+      cycleZoom: cycleZoom,
+      setOracleMode: setOracleMode,
+      flipOracleMode: flipOracleMode,
+      triggerLandslide: triggerLandslide,
+      triggerScreamAndFire: triggerScreamAndFire,
+      jostleMules: jostleMules,
+      triggerHazardCombo: triggerHazardCombo,
+      openPlates: openPlates,
+      closePlates: closePlates,
+      togglePlates: togglePlates,
+      setPlateTab: setPlateTab,
+      togglePlateZoom: togglePlateZoom,
+      setMuted: setMuted,
+      toggleMute: toggleMute,
+      setReducedMotion: setReducedMotion,
+      toggleReducedMotion: toggleReducedMotion,
+      verifyBothCosmologies: function () { return stain.verifyBothCosmologies(); },
+      reset: reset
+    };
+
+    globalThis.EudoxiaApp = EudoxiaApp;
+    window.EudoxiaApp = EudoxiaApp;
+    window.__EUDOXIA_STATE__ = getState;
+  })();
+  </script>
+</body>
+</html>

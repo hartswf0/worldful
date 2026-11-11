@@ -1,0 +1,2682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Eusapia — Twin Travertine Seam &amp; Confraternity Shaft</title>
+<style>
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #14100c;
+    color: #efe2c4;
+    font-family: "Palatino Linotype", "Book Antiqua", Georgia, serif;
+    -webkit-font-smoothing: antialiased;
+    user-select: none;
+  }
+
+  eusapia-plate-drawer[hidden],
+  .eus-shell [hidden] {
+    display: none !important;
+  }
+
+  eusapia-twin-necropolis.eus-shell {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto auto;
+    width: 100vw;
+    height: 100dvh;
+    max-height: 100vh;
+    overflow: hidden;
+    box-sizing: border-box;
+    background: radial-gradient(circle at 50% 18%, #261e15 0%, #14100c 78%);
+    position: relative;
+  }
+
+  upper-sunlit-plaza.eus-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 7px 14px;
+    background: linear-gradient(180deg, #241b12 0%, #1a130d 100%);
+    border-bottom: 1px solid rgba(212, 170, 83, 0.34);
+    min-width: 0;
+  }
+
+  eus-civic-crest.eus-crest {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    min-width: 0;
+    flex-shrink: 1;
+  }
+
+  eus-city-title.eus-title {
+    display: inline-block;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: #f4d88c;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
+  }
+
+  eus-city-epithet.eus-epithet {
+    display: inline-block;
+    font-size: 11.5px;
+    color: #bba57c;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  mimesis-inversion-meter.eus-meter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+    min-width: 0;
+  }
+
+  eus-stat.eus-stat {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 5px;
+    padding: 4px 8px;
+    background: rgba(15, 11, 7, 0.76);
+    border: 1px solid rgba(196, 156, 82, 0.32);
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  eus-stat.eus-stat[data-inverted="true"] {
+    border-color: #e6b94f;
+    background: rgba(68, 46, 15, 0.66);
+  }
+
+  eus-stat-key.eus-stat-key {
+    display: inline-block;
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+    color: #a9926a;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+
+  eus-stat-val.eus-stat-val {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: #f6df9e;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+
+  eus-utility-cluster.eus-utils {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  eus-stratigraphic-stage.eus-stage {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    min-width: 0;
+    overflow: hidden;
+    background: #120d09;
+  }
+
+  canvas.eus-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    touch-action: none;
+    cursor: pointer;
+  }
+
+  canvas.eus-canvas[data-hover-zone="horizon"] {
+    cursor: ns-resize;
+  }
+
+  eus-stratum-badge.eus-stratum-badge {
+    display: inline-block;
+    position: absolute;
+    left: 10px;
+    padding: 2px 7px;
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    border-radius: 3px;
+    pointer-events: none;
+    background: rgba(18, 13, 8, 0.68);
+    border: 1px solid rgba(212, 170, 83, 0.28);
+    color: #e7cfa0;
+  }
+
+  eus-stratum-badge.eus-stratum-upper { top: 7px; }
+  eus-stratum-badge.eus-stratum-lower { bottom: 36px; }
+  eus-whisper.eus-whisper {
+    display: block;
+    position: absolute;
+    left: 50%;
+    bottom: 6px;
+    transform: translateX(-50%);
+    max-width: calc(100% - 20px);
+    padding: 4px 12px;
+    font-size: 12px;
+    line-height: 1.3;
+    color: #f6e7c5;
+    background: rgba(16, 11, 7, 0.84);
+    border: 1px solid rgba(212, 170, 83, 0.42);
+    border-radius: 999px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    pointer-events: none;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.55);
+  }
+
+  eus-whisper.eus-whisper[data-refused="true"] {
+    border-color: #d96448;
+    background: rgba(58, 19, 14, 0.92);
+    color: #ffd8ca;
+  }
+
+  hooded-confraternity-shaft.eus-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 7px;
+    padding: 6px 14px;
+    background: #1c150e;
+    border-top: 1px solid rgba(212, 170, 83, 0.28);
+    min-width: 0;
+  }
+
+  eus-act.eus-act {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 5px 10px;
+    font-size: 11.5px;
+    line-height: 1.2;
+    color: #f0dfc0;
+    background: linear-gradient(180deg, #2d2217 0%, #201810 100%);
+    border: 1px solid rgba(204, 163, 84, 0.42);
+    border-radius: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+    min-width: 0;
+    transition: background 120ms ease, border-color 120ms ease;
+  }
+
+  eus-act.eus-act:hover,
+  eus-act.eus-act:focus-visible {
+    background: #3b2c1d;
+    border-color: #f0c969;
+    outline: none;
+  }
+
+  eus-act.eus-act-primary {
+    border-color: #dfb254;
+    background: linear-gradient(180deg, #433018 0%, #2a1d0f 100%);
+  }
+
+  eus-act.eus-act-accent {
+    border-color: #c89d4c;
+    background: linear-gradient(180deg, #382a18 0%, #231a0f 100%);
+  }
+
+  eus-act.eus-act-warn[data-refused="true"] {
+    border-color: #e06a4e;
+    background: #4b1d15;
+  }
+
+  eus-act.eus-act-util {
+    padding: 4px 8px;
+    font-size: 11px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+
+  eus-act.eus-act-util[data-muted="true"],
+  eus-act.eus-act-util[aria-pressed="true"] {
+    border-color: #f0c969;
+    color: #ffe299;
+    background: #3e2d18;
+  }
+
+  eus-kbd.eus-kbd {
+    display: inline-block;
+    font-size: 10px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    color: #e2b85f;
+    flex-shrink: 0;
+  }
+
+  eus-act-txt.eus-act-txt {
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  eus-horizon-ctl.eus-horizon-ctl {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 8px;
+    background: rgba(14, 10, 7, 0.72);
+    border: 1px solid rgba(196, 156, 82, 0.34);
+    border-radius: 4px;
+    min-width: 0;
+  }
+
+  eus-horizon-tag.eus-horizon-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    color: #d6be92;
+    white-space: nowrap;
+  }
+
+  input.eus-horizon-input {
+    width: 88px;
+    margin: 0;
+    accent-color: #dfb254;
+    cursor: pointer;
+  }
+
+  subterranean-banquet-crypt.eus-trades {
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: 6px;
+    padding: 6px 14px 8px;
+    background: #15100b;
+    border-top: 1px solid rgba(212, 170, 83, 0.22);
+    min-width: 0;
+  }
+
+  eus-chip.eus-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+    padding: 4px 7px;
+    font-size: 11px;
+    color: #decba6;
+    background: #221911;
+    border: 1px solid rgba(188, 148, 76, 0.28);
+    border-radius: 4px;
+    cursor: pointer;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  eus-chip.eus-chip[data-selected="true"] {
+    background: #3c2b16;
+    border-color: #f0c969;
+    color: #fff0c2;
+  }
+
+  eus-chip.eus-chip:focus-visible {
+    outline: 1px solid #f0c969;
+  }
+
+  eus-chip-label.eus-chip-label {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+  }
+
+  eus-chip-count.eus-chip-count {
+    display: inline-block;
+    font-size: 9.5px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    color: #ecc56a;
+    flex-shrink: 0;
+  }
+  eusapia-plate-drawer.eus-drawer {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px;
+    background: rgba(11, 8, 5, 0.9);
+    backdrop-filter: blur(4px);
+    overflow: hidden;
+  }
+
+  eus-drawer-sheet.eus-drawer-sheet {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    width: 100%;
+    max-width: 1180px;
+    max-height: calc(100dvh - 28px);
+    background: #1b140d;
+    border: 1px solid #d4aa53;
+    border-radius: 6px;
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.8);
+    overflow: hidden;
+  }
+
+  eus-drawer-head.eus-drawer-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 9px 14px;
+    background: #241a11;
+    border-bottom: 1px solid rgba(212, 170, 83, 0.34);
+  }
+
+  eus-drawer-heading.eus-drawer-heading {
+    display: inline-block;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: #f3d689;
+  }
+
+  eus-drawer-bar.eus-drawer-bar {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  eus-drawer-gallery.eus-drawer-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    padding: 12px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 0;
+  }
+
+  eusapia-plate-drawer.eus-drawer[data-view="map"] .eus-plate-card[data-plate="vista"],
+  eusapia-plate-drawer.eus-drawer[data-view="vista"] .eus-plate-card[data-plate="map"] {
+    display: none;
+  }
+
+  eusapia-plate-drawer.eus-drawer[data-view="map"] .eus-drawer-gallery,
+  eusapia-plate-drawer.eus-drawer[data-view="vista"] .eus-drawer-gallery {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  eus-plate-card.eus-plate-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: #130e09;
+    border: 1px solid rgba(212, 170, 83, 0.28);
+    border-radius: 5px;
+    padding: 8px;
+    min-width: 0;
+  }
+
+  eus-plate-frame.eus-plate-frame {
+    display: block;
+    width: 100%;
+    max-height: 62vh;
+    overflow: hidden;
+    background: #0d0906;
+    border-radius: 3px;
+  }
+
+  img.eus-plate-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 60vh;
+    object-fit: contain;
+    margin: 0 auto;
+    cursor: zoom-in;
+  }
+
+  eusapia-plate-drawer.eus-drawer[data-zoomed="true"] .eus-plate-frame {
+    overflow: auto;
+  }
+
+  eusapia-plate-drawer.eus-drawer[data-zoomed="true"] img.eus-plate-img {
+    width: 185%;
+    max-width: none;
+    max-height: none;
+    cursor: zoom-out;
+  }
+
+  eus-plate-caption.eus-plate-caption {
+    display: block;
+    font-size: 11px;
+    color: #ccb588;
+    text-align: center;
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 1020px) {
+    eus-city-epithet.eus-epithet {
+      display: none;
+    }
+    subterranean-banquet-crypt.eus-trades {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 680px) {
+    upper-sunlit-plaza.eus-topbar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 4px 6px;
+      padding: 5px 7px;
+    }
+    eus-city-title.eus-title {
+      font-size: 13.5px;
+      letter-spacing: 0.14em;
+    }
+    eus-utility-cluster.eus-utils {
+      gap: 4px;
+    }
+    eus-act.eus-act-util {
+      padding: 3px 5px;
+      font-size: 9.5px;
+    }
+    mimesis-inversion-meter.eus-meter {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 3px;
+    }
+    eus-stat.eus-stat {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1px;
+      padding: 2px 4px;
+      overflow: hidden;
+    }
+    eus-stat-key.eus-stat-key { font-size: 7.5px; letter-spacing: 0.05em; }
+    eus-stat-val.eus-stat-val { font-size: 8.5px; letter-spacing: 0; }
+    eus-stratum-badge.eus-stratum-badge { font-size: 8px; padding: 1px 5px; left: 6px; }
+    eus-stratum-badge.eus-stratum-lower { bottom: 30px; }
+    eus-whisper.eus-whisper { font-size: 10px; padding: 3px 8px; bottom: 4px; max-width: calc(100% - 10px); }
+    hooded-confraternity-shaft.eus-controls {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 4px;
+      padding: 4px 6px;
+    }
+    eus-act.eus-act { padding: 4px 4px; font-size: 9.5px; gap: 3px; }
+    eus-kbd.eus-kbd { font-size: 8.5px; }
+    eus-horizon-ctl.eus-horizon-ctl { padding: 2px 4px; gap: 3px; justify-content: space-between; }
+    eus-horizon-tag.eus-horizon-tag { font-size: 8.5px; }
+    input.eus-horizon-input { width: 48px; min-width: 0; }
+    subterranean-banquet-crypt.eus-trades {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 4px;
+      padding: 4px 6px 5px;
+    }
+    eus-chip.eus-chip { padding: 3px 4px; font-size: 9px; gap: 2px; }
+    eus-chip-count.eus-chip-count { font-size: 8.5px; }
+    eusapia-plate-drawer.eus-drawer { padding: 6px; }
+    eus-drawer-gallery.eus-drawer-gallery { grid-template-columns: minmax(0, 1fr); padding: 8px; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+<eusapia-twin-necropolis class="eus-shell" id="eus-shell">
+  <upper-sunlit-plaza class="eus-topbar" id="eus-topbar">
+    <eus-civic-crest class="eus-crest">
+      <eus-city-title class="eus-title">EUSAPIA</eus-city-title>
+      <eus-city-epithet class="eus-epithet">Twin Travertine Seam &amp; Confraternity Shaft</eus-city-epithet>
+    </eus-civic-crest>
+
+    <mimesis-inversion-meter class="eus-meter" id="eus-meter">
+      <eus-stat class="eus-stat" id="eus-stat-year">
+        <eus-stat-key class="eus-stat-key">YEAR</eus-stat-key>
+        <eus-stat-val class="eus-stat-val" id="eus-val-year">1</eus-stat-val>
+      </eus-stat>
+      <eus-stat class="eus-stat" id="eus-stat-mimesis" data-inverted="false">
+        <eus-stat-key class="eus-stat-key">MIMESIS</eus-stat-key>
+        <eus-stat-val class="eus-stat-val" id="eus-val-mimesis">UPPER -&gt; LOWER</eus-stat-val>
+      </eus-stat>
+      <eus-stat class="eus-stat" id="eus-stat-mortality" data-inverted="false">
+        <eus-stat-key class="eus-stat-key">HOODED</eus-stat-key>
+        <eus-stat-val class="eus-stat-val" id="eus-val-mortality">0%</eus-stat-val>
+      </eus-stat>
+      <eus-stat class="eus-stat" id="eus-stat-twin" data-inverted="false">
+        <eus-stat-key class="eus-stat-key">TWINS</eus-stat-key>
+        <eus-stat-val class="eus-stat-val" id="eus-val-twin">DISTINGUISHABLE</eus-stat-val>
+      </eus-stat>
+    </mimesis-inversion-meter>
+
+    <eus-utility-cluster class="eus-utils">
+      <eus-act class="eus-act eus-act-util" id="eus-btn-plates" role="button" tabindex="0" data-act="plates" aria-label="Open Royal Plates">[P] Plates</eus-act>
+      <eus-act class="eus-act eus-act-util" id="eus-btn-mute" role="button" tabindex="0" data-act="mute" data-muted="false" aria-pressed="false" aria-label="Toggle Audio">[M] Audio</eus-act>
+      <eus-act class="eus-act eus-act-util" id="eus-btn-reset" role="button" tabindex="0" data-act="reset" aria-label="Reset Eusapia">[R] Reset</eus-act>
+    </eus-utility-cluster>
+  </upper-sunlit-plaza>
+
+  <eus-stratigraphic-stage class="eus-stage" id="eus-stage">
+    <canvas id="eus-canvas" class="eus-canvas"></canvas>
+    <eus-stratum-badge class="eus-stratum-badge eus-stratum-upper" id="eus-badge-upper">SUNLIT LOGGIAS</eus-stratum-badge>
+    <eus-stratum-badge class="eus-stratum-badge eus-stratum-lower" id="eus-badge-lower">TUFA NECROPOLIS</eus-stratum-badge>
+    <eus-whisper id="eus-whisper" class="eus-whisper" aria-live="polite">Sunlit guildhalls bustle above the travertine seam while yellow-parchment skeletons feast carefree in the vaults below.</eus-whisper>
+  </eus-stratigraphic-stage>
+
+  <hooded-confraternity-shaft class="eus-controls" id="eus-controls">
+    <eus-act class="eus-act eus-act-primary" id="eus-act-procession" role="button" tabindex="0" data-act="procession">
+      <eus-kbd class="eus-kbd">[H]</eus-kbd><eus-act-txt class="eus-act-txt">Hooded Procession</eus-act-txt>
+    </eus-act>
+    <eus-act class="eus-act" id="eus-act-innovate" role="button" tabindex="0" data-act="innovate">
+      <eus-kbd class="eus-kbd">[I]</eus-kbd><eus-act-txt class="eus-act-txt">Dead Innovate</eus-act-txt>
+    </eus-act>
+    <eus-act class="eus-act" id="eus-act-copy" role="button" tabindex="0" data-act="copy">
+      <eus-kbd class="eus-kbd">[C]</eus-kbd><eus-act-txt class="eus-act-txt">Copy Above</eus-act-txt>
+    </eus-act>
+    <eus-act class="eus-act eus-act-accent" id="eus-act-cycle" role="button" tabindex="0" data-act="cycle">
+      <eus-kbd class="eus-kbd">[Y]</eus-kbd><eus-act-txt class="eus-act-txt">Year Cycle</eus-act-txt>
+    </eus-act>
+    <eus-act class="eus-act eus-act-warn" id="eus-act-living" role="button" tabindex="0" data-act="living">
+      <eus-kbd class="eus-kbd">[L]</eus-kbd><eus-act-txt class="eus-act-txt">Living Gate</eus-act-txt>
+    </eus-act>
+    <eus-horizon-ctl class="eus-horizon-ctl" id="eus-horizon-ctl">
+      <eus-horizon-tag class="eus-horizon-tag" id="eus-horizon-label">Seam 50%</eus-horizon-tag>
+      <input id="eus-horizon" class="eus-horizon-input" type="range" min="18" max="82" value="50" aria-label="Cross-section horizon">
+    </eus-horizon-ctl>
+  </hooded-confraternity-shaft>
+
+  <subterranean-banquet-crypt class="eus-trades" id="eus-trades">
+    <eus-chip class="eus-chip" id="eus-chip-0" role="button" tabindex="0" data-trade="banqueters" data-selected="true" aria-pressed="true">
+      <eus-chip-label class="eus-chip-label"><eus-kbd class="eus-kbd">1</eus-kbd> Banqueters</eus-chip-label>
+      <eus-chip-count class="eus-chip-count" data-count-for="banqueters">3</eus-chip-count>
+    </eus-chip>
+    <eus-chip class="eus-chip" id="eus-chip-1" role="button" tabindex="0" data-trade="trumpeters" data-selected="false" aria-pressed="false">
+      <eus-chip-label class="eus-chip-label"><eus-kbd class="eus-kbd">2</eus-kbd> Trumpeters</eus-chip-label>
+      <eus-chip-count class="eus-chip-count" data-count-for="trumpeters">3</eus-chip-count>
+    </eus-chip>
+    <eus-chip class="eus-chip" id="eus-chip-2" role="button" tabindex="0" data-trade="clockmakers" data-selected="false" aria-pressed="false">
+      <eus-chip-label class="eus-chip-label"><eus-kbd class="eus-kbd">3</eus-kbd> Clockmakers</eus-chip-label>
+      <eus-chip-count class="eus-chip-count" data-count-for="clockmakers">3</eus-chip-count>
+    </eus-chip>
+    <eus-chip class="eus-chip" id="eus-chip-3" role="button" tabindex="0" data-trade="barbers" data-selected="false" aria-pressed="false">
+      <eus-chip-label class="eus-chip-label"><eus-kbd class="eus-kbd">4</eus-kbd> Barbers</eus-chip-label>
+      <eus-chip-count class="eus-chip-count" data-count-for="barbers">3</eus-chip-count>
+    </eus-chip>
+    <eus-chip class="eus-chip" id="eus-chip-4" role="button" tabindex="0" data-trade="mezzo_sopranos" data-selected="false" aria-pressed="false">
+      <eus-chip-label class="eus-chip-label"><eus-kbd class="eus-kbd">5</eus-kbd> Mezzo-Sopranos</eus-chip-label>
+      <eus-chip-count class="eus-chip-count" data-count-for="mezzo_sopranos">3</eus-chip-count>
+    </eus-chip>
+    <eus-chip class="eus-chip" id="eus-chip-5" role="button" tabindex="0" data-trade="dancers" data-selected="false" aria-pressed="false">
+      <eus-chip-label class="eus-chip-label"><eus-kbd class="eus-kbd">6</eus-kbd> Dancers</eus-chip-label>
+      <eus-chip-count class="eus-chip-count" data-count-for="dancers">3</eus-chip-count>
+    </eus-chip>
+    <eus-chip class="eus-chip" id="eus-chip-6" role="button" tabindex="0" data-trade="bank_tellers" data-selected="false" aria-pressed="false">
+      <eus-chip-label class="eus-chip-label"><eus-kbd class="eus-kbd">7</eus-kbd> Bank Tellers</eus-chip-label>
+      <eus-chip-count class="eus-chip-count" data-count-for="bank_tellers">3</eus-chip-count>
+    </eus-chip>
+    <eus-chip class="eus-chip" id="eus-chip-7" role="button" tabindex="0" data-trade="beauties" data-selected="false" aria-pressed="false">
+      <eus-chip-label class="eus-chip-label"><eus-kbd class="eus-kbd">8</eus-kbd> Beauties</eus-chip-label>
+      <eus-chip-count class="eus-chip-count" data-count-for="beauties">3</eus-chip-count>
+    </eus-chip>
+  </subterranean-banquet-crypt>
+
+  <eusapia-plate-drawer id="eus-plate-drawer" class="eus-drawer" hidden data-zoomed="false" data-view="diptych">
+    <eus-drawer-sheet class="eus-drawer-sheet">
+      <eus-drawer-head class="eus-drawer-head">
+        <eus-drawer-heading class="eus-drawer-heading">ROYAL PLATES OF EUSAPIA — SURVEY &amp; STRATIGRAPHY</eus-drawer-heading>
+        <eus-drawer-bar class="eus-drawer-bar">
+          <eus-act class="eus-act eus-act-util" role="button" tabindex="0" data-plate-view="diptych" aria-pressed="true">Diptych</eus-act>
+          <eus-act class="eus-act eus-act-util" role="button" tabindex="0" data-plate-view="map" aria-pressed="false">Survey Map</eus-act>
+          <eus-act class="eus-act eus-act-util" role="button" tabindex="0" data-plate-view="vista" aria-pressed="false">Cross-Section</eus-act>
+          <eus-act class="eus-act eus-act-util" id="eus-btn-zoom" role="button" tabindex="0" data-act="zoom" aria-pressed="false">[Z] Zoom Loupe</eus-act>
+          <eus-act class="eus-act eus-act-util" id="eus-btn-close-plates" role="button" tabindex="0" data-act="close-plates">[Esc] Close</eus-act>
+        </eus-drawer-bar>
+      </eus-drawer-head>
+      <eus-drawer-gallery class="eus-drawer-gallery" id="eus-drawer-gallery">
+        <eus-plate-card class="eus-plate-card" id="eus-card-map" data-plate="map">
+          <eus-plate-frame class="eus-plate-frame">
+            <img id="eus-map-img" class="eus-plate-img" src="map.png" alt="Cartographic survey of Eusapia">
+          </eus-plate-frame>
+          <eus-plate-caption class="eus-plate-caption">Plate I — Cartographic Survey of Eusapia (1600×1200)</eus-plate-caption>
+        </eus-plate-card>
+        <eus-plate-card class="eus-plate-card" id="eus-card-vista" data-plate="vista">
+          <eus-plate-frame class="eus-plate-frame">
+            <img id="eus-vista-img" class="eus-plate-img" src="image.png" alt="Architectural cross-section of Eusapia">
+          </eus-plate-frame>
+          <eus-plate-caption class="eus-plate-caption">Plate II — Stratigraphic Cross-Section &amp; Confraternity Shaft (1600×1000)</eus-plate-caption>
+        </eus-plate-card>
+      </eus-drawer-gallery>
+    </eus-drawer-sheet>
+  </eusapia-plate-drawer>
+</eusapia-twin-necropolis>
+<script>
+
+(function (global) {
+  'use strict';
+
+  var HORIZON_MIN = 0.18;
+  var HORIZON_MAX = 0.82;
+  var HORIZON_DEFAULT = 0.50;
+  var DESCEND_SEC = 0.9;
+  var DEPOSIT_SEC = 0.3;
+  var ASCEND_SEC = 0.9;
+  var SOLE_AGENT = 'hooded_brothers';
+  var LIVING_BLOCK_REASON = 'Only the Confraternity of the Hooded Brothers may cross the necropolis shaft.';
+  var INITIAL_WHISPER = 'Sunlit guildhalls bustle above the travertine seam while yellow-parchment skeletons feast carefree in the vaults below.';
+
+  var TRADES = [
+    {
+      id: 'banqueters',
+      index: 0,
+      label: 'Banqueters',
+      relic: 'Loaded Banquet Table',
+      motifs: ['Gilded Ossuary Trestle', 'Unending Fig & Wine Feast', 'Crowned Skull Symposium']
+    },
+    {
+      id: 'trumpeters',
+      index: 1,
+      label: 'Trumpeters',
+      relic: 'Gilded Brass Trumpet',
+      motifs: ['Vaulted Brass Fanfare', 'Bell-Upward Horn Choir', 'Silent Gold Clarion']
+    },
+    {
+      id: 'clockmakers',
+      index: 2,
+      label: 'Clockmakers',
+      relic: 'Stopped Pendulum',
+      motifs: ['Unpinned Escapement', 'Handless Marble Dial', 'Frozen Noon Chime']
+    },
+    {
+      id: 'barbers',
+      index: 3,
+      label: 'Barbers',
+      relic: 'Bone-Lather Brush',
+      motifs: ['Cheekbone Silver Basin', 'Scented Parchment Pomade', 'Mirrored Jaw Razor']
+    },
+    {
+      id: 'mezzo_sopranos',
+      index: 4,
+      label: 'Mezzo-Sopranos',
+      relic: 'Unfinished Aria Score',
+      motifs: ['Coda Beyond Breath', 'Vaulted Bel Canto Scroll', 'Perpetual Fermata']
+    },
+    {
+      id: 'dancers',
+      index: 5,
+      label: 'Dancers',
+      relic: 'Tufa Saltarello Arch',
+      motifs: ['Weightless Rib Tarantella', 'Lantern Ring Whirl', 'Twin-Shadow Pavane']
+    },
+    {
+      id: 'bank_tellers',
+      index: 6,
+      label: 'Bank Tellers',
+      relic: 'Carefree Gilt Ledger',
+      motifs: ['Forgiven Debt Abacus', 'Jubilee Coin Cascade', 'Unsealed Vault Counter']
+    },
+    {
+      id: 'beauties',
+      index: 7,
+      label: 'Beauties',
+      relic: 'Toothy Hand-Mirror',
+      motifs: ['Lacquered Rib-Fan', 'Velvet Riband Grin', 'Twin-Gaze Silver Glass']
+    }
+  ];
+
+  var TRADE_LORE = {
+    banqueters: {
+      singular: 'banqueter',
+      whisper: 'Beneath vaulted tufa, dried banqueters raise gilt goblets around a table that never clears.'
+    },
+    trumpeters: {
+      singular: 'trumpeter',
+      whisper: 'Crowned in taut yellow skin, subterranean trumpeters lift brass bells toward the carved ceiling.'
+    },
+    clockmakers: {
+      singular: 'clockmaker',
+      whisper: 'Among tall cases below, parchment-dry clockmakers tend pendulums stilled forever at noon.'
+    },
+    barbers: {
+      singular: 'barber',
+      whisper: 'Bone-handled brushes lather dry yellow cheekbones before silver basins in the quiet arcade.'
+    },
+    mezzo_sopranos: {
+      singular: 'mezzo-soprano',
+      whisper: 'Mezzo-sopranos in velvet ribands sustain an aria unbound by mortal breath.'
+    },
+    dancers: {
+      singular: 'dancer',
+      whisper: 'Light ribs leap through the tufa saltarello arch beneath warm amber cressets.'
+    },
+    bank_tellers: {
+      singular: 'bank teller',
+      whisper: 'Behind unbolted counters, grinning tellers deal gilt coins from ledgers cleared of debt.'
+    },
+    beauties: {
+      singular: 'beauty',
+      whisper: 'Before hand-mirrors of burnished silver, toothy grins tilt beneath lacquered fans.'
+    }
+  };
+
+  function clamp(val, min, max) {
+    return Math.max(min, Math.min(max, val));
+  }
+
+  function roundMetric(val) {
+    return Math.round(val * 10000) / 10000;
+  }
+
+  function normalizeHorizon(raw, fallback) {
+    if (typeof raw !== 'number' || !Number.isFinite(raw)) {
+      return fallback;
+    }
+    var val = raw;
+    if (val > 2 && val <= 100) {
+      val = val / 100;
+    }
+    return roundMetric(clamp(val, HORIZON_MIN, HORIZON_MAX));
+  }
+
+  function createInitialTrades() {
+    var list = [];
+    for (var i = 0; i < TRADES.length; i += 1) {
+      var spec = TRADES[i];
+      list.push({
+        id: spec.id,
+        index: spec.index,
+        label: spec.label,
+        relic: spec.relic,
+        deadPractitioners: 3,
+        innovatedLevel: 0,
+        copiedAboveLevel: 0,
+        latestMotif: null
+      });
+    }
+    return list;
+  }
+
+  function cloneState(s) {
+    return {
+      year: s.year,
+      horizonSplit: s.horizonSplit,
+      selectedTrade: s.selectedTrade,
+      soleCrossingAgent: s.soleCrossingAgent,
+      livingDirectEntryAllowed: s.livingDirectEntryAllowed,
+      livingEntryBlockedCount: s.livingEntryBlockedCount,
+      processionsCompleted: s.processionsCompleted,
+      shaftCarriage: {
+        active: s.shaftCarriage.active,
+        phase: s.shaftCarriage.phase,
+        depth: s.shaftCarriage.depth,
+        tradeId: s.shaftCarriage.tradeId,
+        hoodedCount: s.shaftCarriage.hoodedCount,
+        deadBrothersAmongHooded: s.shaftCarriage.deadBrothersAmongHooded
+      },
+      undergroundInnovations: s.undergroundInnovations,
+      upperCopySyncs: s.upperCopySyncs,
+      copiedInnovationsCount: s.copiedInnovationsCount,
+      pendingInnovations: s.pendingInnovations.map(function (item) {
+        return {
+          id: item.id,
+          year: item.year,
+          tradeId: item.tradeId,
+          motif: item.motif,
+          copiedAbove: item.copiedAbove
+        };
+      }),
+      mimesisScore: s.mimesisScore,
+      mimesisDirection: s.mimesisDirection,
+      hoodedDeadRatio: s.hoodedDeadRatio,
+      twinVisualParity: s.twinVisualParity,
+      whoIsAliveDistinguishable: s.whoIsAliveDistinguishable,
+      lastWhisper: s.lastWhisper,
+      trades: s.trades.map(function (t) {
+        return {
+          id: t.id,
+          index: t.index,
+          label: t.label,
+          relic: t.relic,
+          deadPractitioners: t.deadPractitioners,
+          innovatedLevel: t.innovatedLevel,
+          copiedAboveLevel: t.copiedAboveLevel,
+          latestMotif: t.latestMotif
+        };
+      })
+    };
+  }
+
+  function findTradeSpec(tradeIdOrIndex) {
+    if (typeof tradeIdOrIndex === 'number' && Number.isInteger(tradeIdOrIndex)) {
+      if (tradeIdOrIndex >= 0 && tradeIdOrIndex < TRADES.length) {
+        return TRADES[tradeIdOrIndex];
+      }
+      return null;
+    }
+    if (typeof tradeIdOrIndex === 'string' && tradeIdOrIndex.length > 0) {
+      for (var i = 0; i < TRADES.length; i += 1) {
+        if (TRADES[i].id === tradeIdOrIndex) {
+          return TRADES[i];
+        }
+      }
+    }
+    return null;
+  }
+
+  function createFreshState(horizonSplit, selectedTradeId) {
+    return {
+      year: 1,
+      horizonSplit: horizonSplit,
+      selectedTrade: selectedTradeId,
+      soleCrossingAgent: SOLE_AGENT,
+      livingDirectEntryAllowed: false,
+      livingEntryBlockedCount: 0,
+      processionsCompleted: 0,
+      shaftCarriage: {
+        active: false,
+        phase: 'idle',
+        depth: 0,
+        tradeId: selectedTradeId,
+        hoodedCount: 4,
+        deadBrothersAmongHooded: 0
+      },
+      undergroundInnovations: 0,
+      upperCopySyncs: 0,
+      copiedInnovationsCount: 0,
+      pendingInnovations: [],
+      mimesisScore: 0,
+      mimesisDirection: 'upper_to_lower',
+      hoodedDeadRatio: 0,
+      twinVisualParity: 0,
+      whoIsAliveDistinguishable: true,
+      lastWhisper: INITIAL_WHISPER,
+      trades: createInitialTrades()
+    };
+  }
+
+  function create(opts) {
+    var options = opts && typeof opts === 'object' ? opts : {};
+    var defaultSpec = findTradeSpec(options.selectedTrade) || TRADES[0];
+    var defaultHorizon = normalizeHorizon(options.horizonSplit, HORIZON_DEFAULT);
+    var state = createFreshState(defaultHorizon, defaultSpec.id);
+    var listeners = [];
+    var depositTimer = 0;
+    var depositedInCurrentRun = false;
+
+    if (typeof options.onChange === 'function') {
+      listeners.push(options.onChange);
+    }
+
+    function getState() {
+      return cloneState(state);
+    }
+
+    function notify() {
+      var snap = cloneState(state);
+      var copy = listeners.slice();
+      for (var i = 0; i < copy.length; i += 1) {
+        try {
+          copy[i](snap);
+        } catch (_err) {
+          /* keep bridge resilient against listener exceptions */
+        }
+      }
+      return snap;
+    }
+
+    function getTradeInternal(tradeIdOrIndex) {
+      var spec = findTradeSpec(tradeIdOrIndex);
+      var targetId = spec ? spec.id : state.selectedTrade;
+      for (var i = 0; i < state.trades.length; i += 1) {
+        if (state.trades[i].id === targetId) {
+          return state.trades[i];
+        }
+      }
+      return state.trades[0];
+    }
+
+    function pickNextInnovationTrade(explicitTradeId) {
+      var explicitSpec = findTradeSpec(explicitTradeId);
+      if (explicitSpec) {
+        return getTradeInternal(explicitSpec.id);
+      }
+      var minLevel = Infinity;
+      for (var i = 0; i < state.trades.length; i += 1) {
+        if (state.trades[i].innovatedLevel < minLevel) {
+          minLevel = state.trades[i].innovatedLevel;
+        }
+      }
+      var selected = getTradeInternal(state.selectedTrade);
+      if (selected.innovatedLevel <= minLevel) {
+        return selected;
+      }
+      var startIdx = selected.index;
+      for (var stepIdx = 1; stepIdx <= state.trades.length; stepIdx += 1) {
+        var candidate = state.trades[(startIdx + stepIdx) % state.trades.length];
+        if (candidate.innovatedLevel <= minLevel) {
+          return candidate;
+        }
+      }
+      return selected;
+    }
+
+    function recomputeCausalState() {
+      var copiedCount = 0;
+      var uncopiedCount = 0;
+      for (var i = 0; i < state.pendingInnovations.length; i += 1) {
+        if (state.pendingInnovations[i].copiedAbove) {
+          copiedCount += 1;
+        } else {
+          uncopiedCount += 1;
+        }
+      }
+      state.soleCrossingAgent = SOLE_AGENT;
+      state.livingDirectEntryAllowed = false;
+      state.copiedInnovationsCount = copiedCount;
+      state.mimesisDirection = copiedCount >= 1 ? 'lower_to_upper' : 'upper_to_lower';
+      var parity = Math.min(1, copiedCount / 3);
+      state.mimesisScore = parity;
+      state.twinVisualParity = parity;
+      if (copiedCount >= 3) {
+        state.hoodedDeadRatio = 1.0;
+      } else {
+        var rawRatio = copiedCount * 0.3 + uncopiedCount * 0.06 + state.processionsCompleted * 0.08;
+        state.hoodedDeadRatio = roundMetric(Math.min(0.9, rawRatio));
+      }
+      state.shaftCarriage.hoodedCount = 4;
+      state.shaftCarriage.deadBrothersAmongHooded = clamp(Math.round(state.hoodedDeadRatio * 4), 0, 4);
+      state.whoIsAliveDistinguishable = !(copiedCount >= 3 && state.mimesisDirection === 'lower_to_upper');
+    }
+
+    function buildAscentWhisper(trade) {
+      var lore = TRADE_LORE[trade.id] || TRADE_LORE.banqueters;
+      if (state.hoodedDeadRatio >= 0.75) {
+        return 'Pale skulls gleam beneath dark pointed cowls as four hooded brothers seat another ' + lore.singular + ' in the amber vault.';
+      }
+      return 'Four hooded brothers seat another dried ' + lore.singular + ' inside the ' + trade.label.toLowerCase() + ' vault and ascend the twin ropes.';
+    }
+
+    function finishActiveCarriageInternal() {
+      if (!state.shaftCarriage.active) {
+        return;
+      }
+      var trade = getTradeInternal(state.shaftCarriage.tradeId);
+      if (!depositedInCurrentRun) {
+        trade.deadPractitioners += 1;
+        depositedInCurrentRun = true;
+      }
+      depositTimer = 0;
+      depositedInCurrentRun = false;
+      state.shaftCarriage.depth = 0;
+      state.shaftCarriage.phase = 'idle';
+      state.shaftCarriage.active = false;
+      state.processionsCompleted += 1;
+      recomputeCausalState();
+      state.lastWhisper = buildAscentWhisper(trade);
+    }
+
+    function step(dtSec) {
+      if (typeof dtSec !== 'number' || !Number.isFinite(dtSec) || dtSec <= 0 || !state.shaftCarriage.active) {
+        return getState();
+      }
+      var rem = Math.min(dtSec, 10);
+      var milestone = false;
+      while (rem > 1e-9 && state.shaftCarriage.active) {
+        var phase = state.shaftCarriage.phase;
+        var trade = getTradeInternal(state.shaftCarriage.tradeId);
+        if (phase === 'descending') {
+          var needDown = (1 - state.shaftCarriage.depth) * DESCEND_SEC;
+          if (rem < needDown) {
+            state.shaftCarriage.depth = roundMetric(clamp(state.shaftCarriage.depth + rem / DESCEND_SEC, 0, 1));
+            rem = 0;
+          } else {
+            rem -= needDown;
+            state.shaftCarriage.depth = 1;
+            state.shaftCarriage.phase = 'depositing';
+            depositTimer = 0;
+            if (!depositedInCurrentRun) {
+              trade.deadPractitioners += 1;
+              depositedInCurrentRun = true;
+            }
+            milestone = true;
+          }
+        } else if (phase === 'depositing') {
+          if (!depositedInCurrentRun) {
+            trade.deadPractitioners += 1;
+            depositedInCurrentRun = true;
+          }
+          var needHold = DEPOSIT_SEC - depositTimer;
+          if (rem < needHold) {
+            depositTimer += rem;
+            rem = 0;
+          } else {
+            rem -= needHold;
+            depositTimer = DEPOSIT_SEC;
+            state.shaftCarriage.phase = 'ascending';
+            milestone = true;
+          }
+        } else if (phase === 'ascending') {
+          var needUp = state.shaftCarriage.depth * ASCEND_SEC;
+          if (rem < needUp) {
+            state.shaftCarriage.depth = roundMetric(clamp(state.shaftCarriage.depth - rem / ASCEND_SEC, 0, 1));
+            rem = 0;
+          } else {
+            rem = 0;
+            depositTimer = 0;
+            depositedInCurrentRun = false;
+            state.shaftCarriage.depth = 0;
+            state.shaftCarriage.phase = 'idle';
+            state.shaftCarriage.active = false;
+            state.processionsCompleted += 1;
+            recomputeCausalState();
+            state.lastWhisper = buildAscentWhisper(trade);
+            milestone = true;
+          }
+        } else {
+          state.shaftCarriage.active = false;
+          state.shaftCarriage.phase = 'idle';
+          rem = 0;
+        }
+      }
+      return milestone ? notify() : getState();
+    }
+
+    function dispatchProcessionInternal(tradeId, instant) {
+      var target = getTradeInternal(tradeId);
+      if (state.shaftCarriage.active) {
+        finishActiveCarriageInternal();
+      }
+      var lore = TRADE_LORE[target.id] || TRADE_LORE.banqueters;
+      if (instant) {
+        target.deadPractitioners += 1;
+        state.processionsCompleted += 1;
+        state.shaftCarriage.active = false;
+        state.shaftCarriage.phase = 'idle';
+        state.shaftCarriage.depth = 0;
+        state.shaftCarriage.tradeId = target.id;
+        depositTimer = 0;
+        depositedInCurrentRun = false;
+        recomputeCausalState();
+        state.lastWhisper = buildAscentWhisper(target);
+      } else {
+        depositTimer = 0;
+        depositedInCurrentRun = false;
+        state.shaftCarriage.active = true;
+        state.shaftCarriage.phase = 'descending';
+        state.shaftCarriage.depth = 0;
+        state.shaftCarriage.tradeId = target.id;
+        recomputeCausalState();
+        state.lastWhisper = 'Four hooded brothers lower a dried ' + lore.singular + ' toward the quiet vaults.';
+      }
+    }
+
+    function dispatchProcession(tradeId, procOpts) {
+      var instant = Boolean(procOpts && procOpts.instant === true);
+      dispatchProcessionInternal(tradeId, instant);
+      return notify();
+    }
+
+    function completeProcessionNow() {
+      if (state.shaftCarriage.active) {
+        finishActiveCarriageInternal();
+        return notify();
+      }
+      return dispatchProcession(state.selectedTrade, { instant: true });
+    }
+
+    function attemptLivingEntry() {
+      state.livingEntryBlockedCount += 1;
+      state.lastWhisper = 'Stone portals bar the living stair; only the Confraternity of the Hooded Brothers may cross the necropolis shaft.';
+      notify();
+      return {
+        allowed: false,
+        agent: SOLE_AGENT,
+        blockedCount: state.livingEntryBlockedCount,
+        reason: LIVING_BLOCK_REASON
+      };
+    }
+
+    function triggerUndergroundInnovationInternal(tradeId) {
+      var trade = pickNextInnovationTrade(tradeId);
+      var spec = findTradeSpec(trade.id) || TRADES[0];
+      state.year += 1;
+      state.undergroundInnovations += 1;
+      trade.innovatedLevel += 1;
+      var motif = spec.motifs[(trade.innovatedLevel - 1) % spec.motifs.length];
+      trade.latestMotif = motif;
+      state.pendingInnovations.push({
+        id: state.undergroundInnovations,
+        year: state.year,
+        tradeId: trade.id,
+        motif: motif,
+        copiedAbove: false
+      });
+      recomputeCausalState();
+      state.lastWhisper = 'Year ' + state.year + ': Down in the ' + trade.label + ' vault, the carefree dead fashion ' + motif + '.';
+    }
+
+    function triggerUndergroundInnovation(tradeId) {
+      triggerUndergroundInnovationInternal(tradeId);
+      return notify();
+    }
+
+    function syncUpperCopyInternal() {
+      var allCopied = state.pendingInnovations.every(function (p) {
+        return p.copiedAbove === true;
+      });
+      if (allCopied) {
+        triggerUndergroundInnovationInternal();
+      }
+      var lastMotif = null;
+      for (var i = 0; i < state.pendingInnovations.length; i += 1) {
+        if (!state.pendingInnovations[i].copiedAbove) {
+          state.pendingInnovations[i].copiedAbove = true;
+          lastMotif = state.pendingInnovations[i].motif;
+        }
+      }
+      for (var t = 0; t < state.trades.length; t += 1) {
+        state.trades[t].copiedAboveLevel = state.trades[t].innovatedLevel;
+      }
+      state.upperCopySyncs += 1;
+      recomputeCausalState();
+      if (!state.whoIsAliveDistinguishable) {
+        state.lastWhisper = 'Sunlit plazas now copy every subterranean remodel; beneath identical cowls and yellow grins, none can tell who lives and who is dead.';
+      } else {
+        state.lastWhisper = 'Sunlit masons take word from the hooded brothers and remodel the upper loggias after ' + (lastMotif || 'the crypt vaults') + '.';
+      }
+    }
+
+    function syncUpperCopy() {
+      syncUpperCopyInternal();
+      return notify();
+    }
+
+    function advanceYearCycle(tradeId) {
+      var target = pickNextInnovationTrade(tradeId);
+      dispatchProcessionInternal(target.id, true);
+      triggerUndergroundInnovationInternal(target.id);
+      syncUpperCopyInternal();
+      return notify();
+    }
+
+    function setHorizonSplit(ratio) {
+      state.horizonSplit = normalizeHorizon(ratio, state.horizonSplit);
+      return notify();
+    }
+
+    function selectTrade(tradeId) {
+      var spec = findTradeSpec(tradeId);
+      if (!spec) {
+        return getState();
+      }
+      state.selectedTrade = spec.id;
+      if (!state.shaftCarriage.active) {
+        state.shaftCarriage.tradeId = spec.id;
+      }
+      var lore = TRADE_LORE[spec.id];
+      if (lore) {
+        state.lastWhisper = lore.whisper;
+      }
+      return notify();
+    }
+
+    function reset() {
+      depositTimer = 0;
+      depositedInCurrentRun = false;
+      state = createFreshState(defaultHorizon, defaultSpec.id);
+      return notify();
+    }
+
+    function onChange(fn) {
+      if (typeof fn !== 'function') {
+        return function () {};
+      }
+      listeners.push(fn);
+      return function unsubscribe() {
+        var idx = listeners.indexOf(fn);
+        if (idx !== -1) {
+          listeners.splice(idx, 1);
+        }
+      };
+    }
+
+    function getTrade(tradeId) {
+      var target = getTradeInternal(tradeId);
+      return {
+        id: target.id,
+        index: target.index,
+        label: target.label,
+        relic: target.relic,
+        deadPractitioners: target.deadPractitioners,
+        innovatedLevel: target.innovatedLevel,
+        copiedAboveLevel: target.copiedAboveLevel,
+        latestMotif: target.latestMotif
+      };
+    }
+
+    return {
+      TRADES: TRADES,
+      getState: getState,
+      getTrade: getTrade,
+      step: step,
+      dispatchProcession: dispatchProcession,
+      completeProcessionNow: completeProcessionNow,
+      attemptLivingEntry: attemptLivingEntry,
+      triggerUndergroundInnovation: triggerUndergroundInnovation,
+      syncUpperCopy: syncUpperCopy,
+      advanceYearCycle: advanceYearCycle,
+      setHorizonSplit: setHorizonSplit,
+      selectTrade: selectTrade,
+      reset: reset,
+      onChange: onChange
+    };
+  }
+
+  var api = {
+    TRADES: TRADES,
+    create: create
+  };
+
+  global.EusapiaHoodedBridge = api;
+  if (typeof module !== 'undefined' && module && module.exports) {
+    module.exports = api;
+  }
+})(typeof globalThis !== 'undefined' ? globalThis : window);
+
+(function (global) {
+  'use strict';
+
+  var CANONICAL_TRADES = [
+    { id: 'banqueters', index: 0, label: 'Banqueters', shortLabel: 'Banquet', numeral: 'I' },
+    { id: 'trumpeters', index: 1, label: 'Trumpeters', shortLabel: 'Trumpet', numeral: 'II' },
+    { id: 'clockmakers', index: 2, label: 'Clockmakers', shortLabel: 'Clocks', numeral: 'III' },
+    { id: 'barbers', index: 3, label: 'Barbers', shortLabel: 'Barbers', numeral: 'IV' },
+    { id: 'mezzo_sopranos', index: 4, label: 'Mezzo-Sopranos', shortLabel: 'Aria', numeral: 'V' },
+    { id: 'dancers', index: 5, label: 'Dancers', shortLabel: 'Dancers', numeral: 'VI' },
+    { id: 'bank_tellers', index: 6, label: 'Bank Tellers', shortLabel: 'Tellers', numeral: 'VII' },
+    { id: 'beauties', index: 7, label: 'Beauties', shortLabel: 'Beauties', numeral: 'VIII' }
+  ];
+
+  var CIVIC_TUNICS = [
+    '#9e4733', '#3b5978', '#556b45', '#7c4b63',
+    '#8b5a2b', '#3f6a66', '#7a5c32', '#6e4250'
+  ];
+
+  var DORIAN_HZ = [293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25, 587.33];
+
+  function clamp(v, lo, hi) {
+    return v < lo ? lo : (v > hi ? hi : v);
+  }
+
+  function lerp(a, b, t) {
+    return a + (b - a) * t;
+  }
+
+  function parseHex(hex) {
+    var h = String(hex || '#000000').replace('#', '');
+    if (h.length === 3) {
+      h = h.charAt(0) + h.charAt(0) + h.charAt(1) + h.charAt(1) + h.charAt(2) + h.charAt(2);
+    }
+    var n = parseInt(h, 16) || 0;
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  }
+
+  function mixColor(hexA, hexB, t, alpha) {
+    var k = clamp(t, 0, 1);
+    var a = parseHex(hexA);
+    var b = parseHex(hexB);
+    var r = Math.round(lerp(a[0], b[0], k));
+    var g = Math.round(lerp(a[1], b[1], k));
+    var bl = Math.round(lerp(a[2], b[2], k));
+    if (typeof alpha === 'number') {
+      return 'rgba(' + r + ',' + g + ',' + bl + ',' + clamp(alpha, 0, 1).toFixed(3) + ')';
+    }
+    return 'rgb(' + r + ',' + g + ',' + bl + ')';
+  }
+
+  function resolveTrade(state, idx) {
+    var base = CANONICAL_TRADES[idx] || CANONICAL_TRADES[0];
+    var list = state && Array.isArray(state.trades) ? state.trades : null;
+    var item = list && list[idx] ? list[idx] : null;
+    if (!item) {
+      return {
+        id: base.id,
+        index: idx,
+        label: base.label,
+        shortLabel: base.shortLabel,
+        numeral: base.numeral,
+        deadPractitioners: 3,
+        innovatedLevel: 0,
+        copiedAboveLevel: 0,
+        latestMotif: null
+      };
+    }
+    return {
+      id: item.id || base.id,
+      index: idx,
+      label: item.label || base.label,
+      shortLabel: base.shortLabel,
+      numeral: base.numeral,
+      deadPractitioners: typeof item.deadPractitioners === 'number' ? item.deadPractitioners : 3,
+      innovatedLevel: typeof item.innovatedLevel === 'number' ? item.innovatedLevel : 0,
+      copiedAboveLevel: typeof item.copiedAboveLevel === 'number' ? item.copiedAboveLevel : 0,
+      latestMotif: item.latestMotif || null
+    };
+  }
+
+  function computeLayout(w, h, state) {
+    var splitRatio = clamp(
+      state && typeof state.horizonSplit === 'number' ? state.horizonSplit : 0.50,
+      0.18,
+      0.82
+    );
+    var ySplit = h * splitRatio;
+    var bandHalf = clamp(h * 0.022, 9, 14);
+    var padX = clamp(w * 0.012, 4, 16);
+    var shaftW = clamp(w * 0.082, 42, 96);
+    var shaftLeft = w * 0.5 - shaftW * 0.5;
+    var shaftRight = w * 0.5 + shaftW * 0.5;
+    var wingW = Math.max(32, shaftLeft - padX - 4);
+    var bayW = wingW / 4;
+    var upperTop = clamp(h * 0.09, 26, 62);
+    var upperBottom = Math.max(upperTop + 24, ySplit - bandHalf);
+    var lowerTop = Math.min(h - 28, ySplit + bandHalf);
+    var lowerBottom = h - clamp(h * 0.022, 6, 14);
+
+    var bays = [];
+    var i;
+    for (i = 0; i < 4; i++) {
+      bays.push({
+        index: i,
+        x: padX + i * bayW,
+        w: bayW,
+        cx: padX + (i + 0.5) * bayW
+      });
+    }
+    for (i = 0; i < 4; i++) {
+      var rx = shaftRight + 4 + i * bayW;
+      bays.push({
+        index: i + 4,
+        x: rx,
+        w: bayW,
+        cx: rx + 0.5 * bayW
+      });
+    }
+
+    return {
+      w: w,
+      h: h,
+      splitRatio: splitRatio,
+      ySplit: ySplit,
+      bandHalf: bandHalf,
+      shaftW: shaftW,
+      shaftLeft: shaftLeft,
+      shaftRight: shaftRight,
+      shaftCx: w * 0.5,
+      upperTop: upperTop,
+      upperBottom: upperBottom,
+      upperH: Math.max(24, upperBottom - upperTop),
+      lowerTop: lowerTop,
+      lowerBottom: lowerBottom,
+      lowerH: Math.max(24, lowerBottom - lowerTop),
+      bays: bays
+    };
+  }
+
+  function createSynth(initialMuted) {
+    var muted = Boolean(initialMuted);
+    var audioCtx = null;
+    var masterGain = null;
+
+    function ensureAudio() {
+      if (muted) return null;
+      try {
+        if (!audioCtx) {
+          var Ctx = global.AudioContext || global.webkitAudioContext;
+          if (!Ctx) return null;
+          audioCtx = new Ctx();
+          masterGain = audioCtx.createGain();
+          masterGain.gain.value = 0.85;
+          masterGain.connect(audioCtx.destination);
+        }
+        if (audioCtx.state === 'suspended' && typeof audioCtx.resume === 'function') {
+          var p = audioCtx.resume();
+          if (p && typeof p.catch === 'function') p.catch(function () {});
+        }
+        return audioCtx;
+      } catch (err) {
+        return null;
+      }
+    }
+
+    function tone(ctx, freq, endFreq, type, startOffset, dur, peak, filterHz) {
+      var now = ctx.currentTime + startOffset;
+      var osc = ctx.createOscillator();
+      var gain = ctx.createGain();
+      osc.type = type || 'sine';
+      osc.frequency.setValueAtTime(Math.max(30, freq), now);
+      if (endFreq && endFreq !== freq) {
+        osc.frequency.exponentialRampToValueAtTime(Math.max(30, endFreq), now + dur);
+      }
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.linearRampToValueAtTime(peak, now + Math.min(0.025, dur * 0.25));
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+      if (filterHz) {
+        var flt = ctx.createBiquadFilter();
+        flt.type = 'lowpass';
+        flt.frequency.setValueAtTime(filterHz, now);
+        osc.connect(flt);
+        flt.connect(gain);
+      } else {
+        osc.connect(gain);
+      }
+      gain.connect(masterGain);
+      osc.start(now);
+      osc.stop(now + dur + 0.02);
+    }
+
+    return {
+      setMuted: function (val) {
+        muted = Boolean(val);
+        try {
+          if (masterGain && audioCtx) {
+            masterGain.gain.setTargetAtTime(muted ? 0.0001 : 0.85, audioCtx.currentTime, 0.02);
+          }
+        } catch (err) {}
+        return muted;
+      },
+      isMuted: function () {
+        return muted;
+      },
+      toggleMute: function () {
+        return this.setMuted(!muted);
+      },
+      playCue: function (kind, state) {
+        if (muted) return;
+        var ctx = ensureAudio();
+        if (!ctx) return;
+        try {
+          if (kind === 'procession') {
+            tone(ctx, 146.83, 145.5, 'sine', 0, 0.78, 0.12, 650);
+            tone(ctx, 220.0, 218.0, 'triangle', 0.01, 0.55, 0.06, 800);
+            tone(ctx, 98.0, 74.0, 'sawtooth', 0.10, 0.36, 0.035, 320);
+          } else if (kind === 'innovation') {
+            tone(ctx, 293.66, 293.66, 'sawtooth', 0, 0.24, 0.075, 1150);
+            tone(ctx, 440.0, 442.0, 'sawtooth', 0.14, 0.42, 0.09, 1300);
+            tone(ctx, 587.33, 587.33, 'triangle', 0.16, 0.36, 0.045, 1500);
+          } else if (kind === 'copy_sync') {
+            tone(ctx, 1680, 920, 'square', 0, 0.045, 0.045, 2400);
+            tone(ctx, 1320, 780, 'square', 0.08, 0.045, 0.04, 2100);
+            tone(ctx, 440.0, 436.0, 'triangle', 0.13, 0.52, 0.075, 1200);
+            tone(ctx, 659.25, 656.0, 'sine', 0.14, 0.50, 0.06, 1400);
+          } else if (kind === 'blocked') {
+            tone(ctx, 118, 56, 'triangle', 0, 0.16, 0.12, 340);
+            tone(ctx, 108, 52, 'triangle', 0.12, 0.18, 0.10, 300);
+          } else {
+            var idx = 0;
+            if (state && state.selectedTrade) {
+              for (var i = 0; i < CANONICAL_TRADES.length; i++) {
+                if (CANONICAL_TRADES[i].id === state.selectedTrade) {
+                  idx = i;
+                  break;
+                }
+              }
+            }
+            var hz = DORIAN_HZ[idx % DORIAN_HZ.length];
+            tone(ctx, hz, hz * 0.996, 'triangle', 0, 0.24, 0.08, 1350);
+            tone(ctx, hz * 2, hz * 1.99, 'sine', 0.005, 0.14, 0.03, 1900);
+          }
+        } catch (err) {}
+      },
+      destroy: function () {
+        try {
+          if (audioCtx && typeof audioCtx.close === 'function') {
+            audioCtx.close();
+          }
+        } catch (err) {}
+        audioCtx = null;
+        masterGain = null;
+      }
+    };
+  }
+
+  function drawUpperBackdrop(ctx, layout, state, t, reducedMotion, parity) {
+    var w = layout.w;
+    var ySplit = layout.ySplit;
+    var skyGrad = ctx.createLinearGradient(0, 0, 0, ySplit);
+    skyGrad.addColorStop(0, mixColor('#9db5c4', '#241a0f', parity));
+    skyGrad.addColorStop(0.52, mixColor('#dfd0b0', '#5e431f', parity));
+    skyGrad.addColorStop(1, mixColor('#f2e2be', '#9f7332', parity));
+    ctx.fillStyle = skyGrad;
+    ctx.fillRect(0, 0, w, ySplit);
+
+    var sunX = w * 0.18;
+    var sunY = Math.max(18, ySplit * 0.22);
+    var sunR = clamp(Math.min(w, ySplit) * 0.08, 10, 26);
+    var halo = ctx.createRadialGradient(sunX, sunY, 2, sunX, sunY, sunR * 2.6);
+    halo.addColorStop(0, mixColor('#fff7dc', '#f0be59', parity, 0.92));
+    halo.addColorStop(1, mixColor('#f2e2be', '#5e431f', parity, 0));
+    ctx.fillStyle = halo;
+    ctx.beginPath();
+    ctx.arc(sunX, sunY, sunR * 2.6, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = mixColor('#c9b591', '#3b2b17', parity, 0.65);
+    ctx.beginPath();
+    ctx.moveTo(0, ySplit);
+    ctx.quadraticCurveTo(w * 0.22, ySplit * 0.56, w * 0.48, ySplit * 0.74);
+    ctx.quadraticCurveTo(w * 0.76, ySplit * 0.52, w, ySplit * 0.70);
+    ctx.lineTo(w, ySplit);
+    ctx.closePath();
+    ctx.fill();
+
+    var sway = reducedMotion ? 0 : Math.sin(t * 1.1) * 1.8;
+    for (var i = 0; i < layout.bays.length; i++) {
+      var bx = layout.bays[i].x + (i % 2 === 0 ? 3 : layout.bays[i].w - 4);
+      var cTop = Math.max(8, layout.upperTop - clamp(ySplit * 0.12, 10, 28));
+      var cBase = layout.upperTop + 8;
+      ctx.fillStyle = mixColor('#354a32', '#261d12', parity);
+      ctx.beginPath();
+      ctx.moveTo(bx - 4, cBase);
+      ctx.quadraticCurveTo(bx - 5 + sway * 0.4, (cTop + cBase) * 0.5, bx + sway, cTop);
+      ctx.quadraticCurveTo(bx + 5 + sway * 0.4, (cTop + cBase) * 0.5, bx + 4, cBase);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    var twW = clamp(layout.shaftW * 0.66, 26, 54);
+    var twTop = Math.max(4, layout.upperTop * 0.18);
+    var twH = Math.max(18, layout.upperTop - twTop + 8);
+    ctx.fillStyle = mixColor('#d9c5a0', '#6d522c', parity);
+    ctx.fillRect(layout.shaftCx - twW * 0.5, twTop, twW, twH);
+    ctx.strokeStyle = mixColor('#8c7450', '#c89b46', parity);
+    ctx.lineWidth = 1.2;
+    ctx.strokeRect(layout.shaftCx - twW * 0.5, twTop, twW, twH);
+
+    var dialR = clamp(twW * 0.26, 6, 12);
+    var dialY = twTop + Math.min(twH * 0.48, dialR + 6);
+    ctx.fillStyle = mixColor('#fbf4e4', '#261b10', parity);
+    ctx.beginPath();
+    ctx.arc(layout.shaftCx, dialY, dialR, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = mixColor('#5c4930', '#e3b95c', parity);
+    ctx.stroke();
+    var handAng = parity >= 0.66 ? -Math.PI * 0.5 : (reducedMotion ? 0.65 : t * 1.4);
+    ctx.beginPath();
+    ctx.moveTo(layout.shaftCx, dialY);
+    ctx.lineTo(layout.shaftCx + Math.cos(handAng) * dialR * 0.72, dialY + Math.sin(handAng) * dialR * 0.72);
+    ctx.stroke();
+  }
+
+  function drawLowerBackdrop(ctx, layout) {
+    var grad = ctx.createLinearGradient(0, layout.ySplit, 0, layout.h);
+    grad.addColorStop(0, '#2a1e13');
+    grad.addColorStop(0.45, '#1d140d');
+    grad.addColorStop(1, '#120c08');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, layout.ySplit, layout.w, layout.h - layout.ySplit);
+
+    ctx.strokeStyle = 'rgba(138, 102, 56, 0.16)';
+    ctx.lineWidth = 1;
+    var stepY = Math.max(18, layout.lowerH * 0.18);
+    for (var y = layout.lowerTop + stepY; y < layout.h - 6; y += stepY) {
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(layout.shaftLeft, y);
+      ctx.moveTo(layout.shaftRight, y);
+      ctx.lineTo(layout.w, y);
+      ctx.stroke();
+    }
+  }
+
+  function drawVaultRemodelOrnaments(ctx, cx, archTop, bw, bh, level) {
+    if (!level || level <= 0) return;
+    var u = clamp(Math.min(bw, bh) * 0.11, 3.5, 9);
+    if (level >= 1) {
+      var ly = archTop + u * 2.5;
+      ctx.strokeStyle = '#d9ae52';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(cx, archTop + 2);
+      ctx.lineTo(cx, ly - u * 0.7);
+      ctx.stroke();
+      var glow = ctx.createRadialGradient(cx, ly, 1, cx, ly, u * 2.8);
+      glow.addColorStop(0, 'rgba(246, 204, 104, 0.58)');
+      glow.addColorStop(1, 'rgba(246, 204, 104, 0)');
+      ctx.fillStyle = glow;
+      ctx.beginPath();
+      ctx.arc(cx, ly, u * 2.8, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#ebd082';
+      ctx.beginPath();
+      ctx.arc(cx, ly, u * 0.78, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#2b1d10';
+      ctx.fillRect(cx - u * 0.42, ly - u * 0.2, u * 0.28, u * 0.28);
+      ctx.fillRect(cx + u * 0.14, ly - u * 0.2, u * 0.28, u * 0.28);
+    }
+    if (level >= 2) {
+      var sy = archTop + u * 1.4;
+      var span = bw * 0.34;
+      ctx.strokeStyle = '#e0b456';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(cx - span, sy + u * 0.5);
+      ctx.quadraticCurveTo(cx - span * 0.45, sy + u * 1.6, cx, sy + u * 0.6);
+      ctx.quadraticCurveTo(cx + span * 0.45, sy + u * 1.6, cx + span, sy + u * 0.5);
+      ctx.stroke();
+      ctx.fillStyle = '#d8a642';
+      ctx.beginPath();
+      ctx.moveTo(cx - span, sy + u * 0.5);
+      ctx.lineTo(cx - span - u * 0.9, sy - u * 0.3);
+      ctx.lineTo(cx - span - u * 0.9, sy + u * 0.9);
+      ctx.closePath();
+      ctx.moveTo(cx + span, sy + u * 0.5);
+      ctx.lineTo(cx + span + u * 0.9, sy - u * 0.3);
+      ctx.lineTo(cx + span + u * 0.9, sy + u * 0.9);
+      ctx.closePath();
+      ctx.fill();
+    }
+    if (level >= 3) {
+      var dy = archTop + u * 0.65;
+      ctx.fillStyle = '#1f160d';
+      ctx.beginPath();
+      ctx.arc(cx, dy, u * 0.95, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#f5d276';
+      ctx.lineWidth = 1.4;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(cx, dy);
+      ctx.lineTo(cx, dy + u * 0.68);
+      ctx.moveTo(cx - u * 0.5, dy - u * 0.2);
+      ctx.lineTo(cx + u * 0.5, dy - u * 0.2);
+      ctx.stroke();
+    }
+  }
+
+  function drawBayArchitecture(ctx, bay, topY, hBay, trade, isLower, isSelected, bayParity, t, reducedMotion) {
+    var pad = clamp(bay.w * 0.05, 1.5, 5);
+    var bx = bay.x + pad;
+    var bw = Math.max(16, bay.w - pad * 2);
+    var cx = bx + bw * 0.5;
+    var archR = Math.min(bw * 0.48, hBay * 0.34);
+    var springY = topY + archR + 6;
+    var floorY = topY + hBay;
+
+    ctx.save();
+    if (!isLower) {
+      ctx.fillStyle = mixColor('#b85b3b', '#5e4321', bayParity);
+      ctx.beginPath();
+      ctx.moveTo(bx - 1, topY + 6);
+      ctx.lineTo(cx, topY);
+      ctx.lineTo(bx + bw + 1, topY + 6);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    ctx.beginPath();
+    ctx.moveTo(bx, floorY);
+    ctx.lineTo(bx, springY);
+    ctx.arc(cx, springY, bw * 0.5, Math.PI, 0, false);
+    ctx.lineTo(bx + bw, floorY);
+    ctx.closePath();
+
+    if (isLower) {
+      var vGrad = ctx.createLinearGradient(0, topY, 0, floorY);
+      vGrad.addColorStop(0, '#3d2b19');
+      vGrad.addColorStop(0.55, '#2b1e12');
+      vGrad.addColorStop(1, '#1e150c');
+      ctx.fillStyle = vGrad;
+    } else {
+      var uGrad = ctx.createLinearGradient(0, topY, 0, floorY);
+      uGrad.addColorStop(0, mixColor('#efe3c8', '#3c2b19', bayParity));
+      uGrad.addColorStop(1, mixColor('#d7c39e', '#24190f', bayParity));
+      ctx.fillStyle = uGrad;
+    }
+    ctx.fill();
+
+    var flicker = reducedMotion ? 0 : Math.sin(t * 4.2 + bay.index * 1.3) * 0.06;
+    if (isLower || bayParity > 0.25) {
+      var lampAlpha = (isLower ? 0.34 : bayParity * 0.30) + flicker;
+      var lampY = springY - archR * 0.35;
+      var cGlow = ctx.createRadialGradient(cx, lampY, 2, cx, lampY, Math.max(bw, hBay) * 0.65);
+      cGlow.addColorStop(0, 'rgba(244, 180, 72,' + clamp(lampAlpha, 0.08, 0.48).toFixed(3) + ')');
+      cGlow.addColorStop(1, 'rgba(244, 180, 72, 0)');
+      ctx.fillStyle = cGlow;
+      ctx.fill();
+    }
+
+    ctx.lineWidth = isSelected ? 2.4 : 1.2;
+    ctx.strokeStyle = isSelected
+      ? '#f3c65f'
+      : (isLower ? '#7a5930' : mixColor('#9c8662', '#7a5930', bayParity));
+    ctx.stroke();
+
+    var ornamentLvl = isLower ? trade.innovatedLevel : trade.copiedAboveLevel;
+    drawVaultRemodelOrnaments(ctx, cx, springY - bw * 0.48, bw, hBay, ornamentLvl);
+
+    if (bw >= 54) {
+      ctx.fillStyle = isSelected ? '#f7d57e' : (isLower ? '#bda06d' : mixColor('#54432c', '#bda06d', bayParity));
+      ctx.font = '600 ' + Math.round(clamp(bw * 0.11, 8, 11)) + 'px Georgia, serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(bw >= 92 ? trade.label : trade.shortLabel, cx, floorY - 4);
+    }
+    ctx.restore();
+    return { bx: bx, bw: bw, cx: cx, topY: topY, springY: springY, floorY: floorY - (bw >= 54 ? 14 : 4) };
+  }
+
+  function drawFigure(ctx, x, y, s, skelRatio, tunicHex, armRaise, lean) {
+    var k = clamp(skelRatio, 0, 1);
+    var headY = y - s * 2.15;
+    var neckY = y - s * 1.65;
+    var hipY = y - s * 0.78;
+    var dx = (lean || 0) * s * 0.35;
+
+    ctx.save();
+    ctx.lineCap = 'round';
+    ctx.fillStyle = mixColor(tunicHex, '#6e5226', k * 0.82);
+    ctx.beginPath();
+    ctx.moveTo(x - s * lerp(0.52, 0.34, k) + dx, neckY);
+    ctx.lineTo(x + s * lerp(0.52, 0.34, k) + dx, neckY);
+    ctx.lineTo(x + s * lerp(0.44, 0.28, k), hipY);
+    ctx.lineTo(x - s * lerp(0.44, 0.28, k), hipY);
+    ctx.closePath();
+    ctx.fill();
+
+    if (k > 0.25) {
+      ctx.strokeStyle = mixColor('#cbb07a', '#ebd082', k, k * 0.85);
+      ctx.lineWidth = Math.max(1, s * 0.11);
+      for (var r = 0; r < 3; r++) {
+        var ry = neckY + s * (0.22 + r * 0.22);
+        ctx.beginPath();
+        ctx.moveTo(x - s * 0.24 + dx * 0.5, ry);
+        ctx.lineTo(x + s * 0.24 + dx * 0.5, ry);
+        ctx.stroke();
+      }
+    }
+
+    var limbCol = mixColor('#ecc0a1', '#e4bf67', k);
+    ctx.strokeStyle = limbCol;
+    ctx.lineWidth = Math.max(1.2, s * lerp(0.22, 0.14, k));
+    ctx.beginPath();
+    ctx.moveTo(x - s * 0.18, hipY);
+    ctx.lineTo(x - s * 0.24, y);
+    ctx.moveTo(x + s * 0.18, hipY);
+    ctx.lineTo(x + s * 0.24, y);
+    ctx.moveTo(x - s * 0.32 + dx, neckY + s * 0.12);
+    ctx.lineTo(x - s * 0.68 + dx, neckY - s * (armRaise || 0) * 0.55 + s * 0.25);
+    ctx.moveTo(x + s * 0.32 + dx, neckY + s * 0.12);
+    ctx.lineTo(x + s * 0.68 + dx, neckY - s * (armRaise || 0) * 0.65 + s * 0.20);
+    ctx.stroke();
+
+    ctx.fillStyle = limbCol;
+    ctx.beginPath();
+    ctx.arc(x + dx, headY, s * lerp(0.42, 0.38, k), 0, Math.PI * 2);
+    ctx.fill();
+
+    if (k < 0.6) {
+      ctx.fillStyle = 'rgba(218, 108, 92,' + ((1 - k) * 0.65).toFixed(2) + ')';
+      ctx.beginPath();
+      ctx.arc(x + dx - s * 0.18, headY + s * 0.06, s * 0.11, 0, Math.PI * 2);
+      ctx.arc(x + dx + s * 0.18, headY + s * 0.06, s * 0.11, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.fillStyle = mixColor('#3a2a1e', '#1c130a', k);
+    var eyeR = s * lerp(0.06, 0.10, k);
+    ctx.beginPath();
+    ctx.arc(x + dx - s * 0.14, headY - s * 0.05, eyeR, 0, Math.PI * 2);
+    ctx.arc(x + dx + s * 0.14, headY - s * 0.05, eyeR, 0, Math.PI * 2);
+    ctx.fill();
+
+    if (k >= 0.35) {
+      ctx.fillStyle = '#fff5cf';
+      ctx.fillRect(x + dx - s * 0.18, headY + s * 0.10, s * 0.36, Math.max(1.2, s * 0.12));
+    }
+    ctx.restore();
+  }
+
+  function drawTradeScene(ctx, box, idx, trade, isLower, bayParity, t, reducedMotion) {
+    var skel = isLower ? 1 : bayParity;
+    var bh = Math.max(20, box.floorY - box.topY);
+    var s = clamp(Math.min(box.bw * 0.145, bh * 0.18), 4.0, 12.5);
+    var cx = box.cx;
+    var fy = box.floorY;
+    var tunic = CIVIC_TUNICS[idx % CIVIC_TUNICS.length];
+    var hurry = (!isLower && bayParity < 0.5) ? 0.55 : 0;
+
+    ctx.save();
+    if (idx === 0) {
+      drawFigure(ctx, cx - s * 1.15, fy, s * 0.92, skel, tunic, 0.7, hurry);
+      drawFigure(ctx, cx + s * 1.15, fy, s * 0.92, skel, '#7c4b32', 0.7, -hurry);
+      ctx.fillStyle = '#6d3524';
+      ctx.fillRect(cx - s * 1.35, fy - s * 1.05, s * 2.7, s * 0.42);
+      ctx.fillStyle = '#e9c364';
+      ctx.fillRect(cx - s * 1.35, fy - s * 1.08, s * 2.7, s * 0.14);
+      ctx.beginPath();
+      ctx.arc(cx, fy - s * 1.32, s * 0.34, Math.PI, 0);
+      ctx.arc(cx - s * 0.75, fy - s * 1.24, s * 0.16, 0, Math.PI * 2);
+      ctx.arc(cx + s * 0.75, fy - s * 1.24, s * 0.16, 0, Math.PI * 2);
+      ctx.fill();
+    } else if (idx === 1) {
+      drawFigure(ctx, cx - s * 0.75, fy, s * 0.95, skel, tunic, 0.9, hurry);
+      ctx.strokeStyle = '#eab84b';
+      ctx.lineWidth = Math.max(1.4, s * 0.18);
+      ctx.beginPath();
+      ctx.moveTo(cx - s * 0.4, fy - s * 1.85);
+      ctx.lineTo(cx + s * 1.05, fy - s * 2.35);
+      ctx.stroke();
+      ctx.fillStyle = '#f2c85b';
+      ctx.beginPath();
+      ctx.moveTo(cx + s * 0.95, fy - s * 2.30);
+      ctx.lineTo(cx + s * 1.45, fy - s * 2.68);
+      ctx.lineTo(cx + s * 1.38, fy - s * 2.05);
+      ctx.closePath();
+      ctx.fill();
+    } else if (idx === 2) {
+      var clkX = cx - s * 0.82;
+      ctx.fillStyle = '#4e351e';
+      ctx.fillRect(clkX - s * 0.55, fy - s * 2.75, s * 1.1, s * 2.75);
+      ctx.strokeStyle = '#d3a64a';
+      ctx.lineWidth = 1.1;
+      ctx.strokeRect(clkX - s * 0.55, fy - s * 2.75, s * 1.1, s * 2.75);
+      ctx.fillStyle = '#f6ecd2';
+      ctx.beginPath();
+      ctx.arc(clkX, fy - s * 2.2, s * 0.36, 0, Math.PI * 2);
+      ctx.fill();
+      var stopped = isLower || trade.copiedAboveLevel > 0 || bayParity >= 0.66;
+      var swing = stopped ? 0 : (reducedMotion ? 0.30 : Math.sin(t * 4.6) * 0.34);
+      ctx.strokeStyle = '#f0c455';
+      ctx.lineWidth = 1.3;
+      ctx.beginPath();
+      ctx.moveTo(clkX, fy - s * 1.65);
+      ctx.lineTo(clkX + Math.sin(swing) * s * 0.95, fy - s * 1.65 + Math.cos(swing) * s * 0.95);
+      ctx.stroke();
+      ctx.fillStyle = '#f0c455';
+      ctx.beginPath();
+      ctx.arc(clkX + Math.sin(swing) * s * 0.95, fy - s * 1.65 + Math.cos(swing) * s * 0.95, s * 0.20, 0, Math.PI * 2);
+      ctx.fill();
+      drawFigure(ctx, cx + s * 0.95, fy, s * 0.94, skel, tunic, 0.35, hurry);
+    } else if (idx === 3) {
+      ctx.strokeStyle = '#8b683b';
+      ctx.lineWidth = 1.6;
+      ctx.beginPath();
+      ctx.moveTo(cx - s * 1.0, fy);
+      ctx.lineTo(cx - s * 1.0, fy - s * 1.4);
+      ctx.moveTo(cx - s * 1.0, fy - s * 0.75);
+      ctx.lineTo(cx - s * 0.3, fy - s * 0.75);
+      ctx.stroke();
+      drawFigure(ctx, cx - s * 0.55, fy, s * 0.86, skel, '#6c4f3d', 0.1, -0.2);
+      drawFigure(ctx, cx + s * 0.85, fy, s * 0.95, skel, tunic, 0.75, -0.35);
+      ctx.fillStyle = '#fbf7ee';
+      ctx.beginPath();
+      ctx.arc(cx - s * 0.36, fy - s * 1.82, s * 0.24, 0, Math.PI * 2);
+      ctx.fill();
+    } else if (idx === 4) {
+      drawFigure(ctx, cx - s * 0.55, fy, s * 0.96, skel, tunic, 0.95, hurry * 0.5);
+      ctx.strokeStyle = '#b9924b';
+      ctx.lineWidth = 1.3;
+      ctx.beginPath();
+      ctx.moveTo(cx + s * 0.85, fy);
+      ctx.lineTo(cx + s * 0.85, fy - s * 1.45);
+      ctx.stroke();
+      ctx.fillStyle = '#f5ead0';
+      ctx.fillRect(cx + s * 0.42, fy - s * 1.78, s * 0.86, s * 0.52);
+    } else if (idx === 5) {
+      var hop = (!isLower && bayParity < 0.3) ? 0 : (reducedMotion ? s * 0.28 : Math.abs(Math.sin(t * 3.8)) * s * 0.38);
+      drawFigure(ctx, cx - s * 0.82, fy - hop, s * 0.90, skel, tunic, 1.05, 0.3);
+      drawFigure(ctx, cx + s * 0.82, fy - hop * 0.7, s * 0.90, skel, '#8d4c38', 1.05, -0.3);
+    } else if (idx === 6) {
+      drawFigure(ctx, cx - s * 0.65, fy, s * 0.94, skel, tunic, 0.55, hurry);
+      ctx.fillStyle = '#5c4428';
+      ctx.fillRect(cx - s * 1.25, fy - s * 1.05, s * 2.5, s * 1.05);
+      ctx.fillStyle = '#f2c654';
+      for (var c = 0; c < 3; c++) {
+        ctx.fillRect(cx + s * (-0.3 + c * 0.48), fy - s * (1.32 + (c % 2) * 0.22), s * 0.34, s * (0.28 + (c % 2) * 0.22));
+      }
+    } else {
+      ctx.strokeStyle = '#d7ad56';
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(cx - s * 0.2, fy - s * 1.2);
+      ctx.lineTo(cx - s * 0.75, fy - s * 2.75);
+      ctx.stroke();
+      ctx.fillStyle = mixColor('#d97d6c', '#c89b42', skel);
+      ctx.beginPath();
+      ctx.arc(cx - s * 0.75, fy - s * 2.55, s * 0.85, Math.PI * 1.05, Math.PI * 1.95);
+      ctx.fill();
+      drawFigure(ctx, cx, fy, s * 0.95, skel, tunic, 0.65, 0);
+      ctx.strokeStyle = '#e7d9b9';
+      ctx.beginPath();
+      ctx.ellipse(cx + s * 0.92, fy - s * 1.85, s * 0.24, s * 0.34, 0, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function drawHorizonAndShaft(ctx, layout, state, t, reducedMotion, parity) {
+    var ySplit = layout.ySplit;
+    var bh = layout.bandHalf;
+    var sL = layout.shaftLeft;
+    var sR = layout.shaftRight;
+    var sW = layout.shaftW;
+    var cx = layout.shaftCx;
+
+    var shaftGrad = ctx.createLinearGradient(sL, 0, sR, 0);
+    shaftGrad.addColorStop(0, '#1a130c');
+    shaftGrad.addColorStop(0.5, '#2b2015');
+    shaftGrad.addColorStop(1, '#18110b');
+    ctx.fillStyle = shaftGrad;
+    ctx.fillRect(sL, layout.upperTop - 6, sW, layout.h - layout.upperTop + 2);
+
+    ctx.strokeStyle = '#6c512d';
+    ctx.lineWidth = 1.4;
+    ctx.strokeRect(sL, layout.upperTop - 6, sW, layout.h - layout.upperTop + 2);
+
+    var sconceYs = [ySplit * 0.55, ySplit + (layout.h - ySplit) * 0.36, ySplit + (layout.h - ySplit) * 0.74];
+    var flk = reducedMotion ? 1 : (0.88 + Math.sin(t * 7.5) * 0.12);
+    for (var si = 0; si < sconceYs.length; si++) {
+      var sy = sconceYs[si];
+      if (sy < layout.upperTop + 8 || sy > layout.h - 12) continue;
+      var rGlow = ctx.createRadialGradient(cx, sy, 1, cx, sy, sW * 0.55 * flk);
+      rGlow.addColorStop(0, 'rgba(248, 186, 78, 0.32)');
+      rGlow.addColorStop(1, 'rgba(248, 186, 78, 0)');
+      ctx.fillStyle = rGlow;
+      ctx.fillRect(sL, sy - sW * 0.55, sW, sW * 1.1);
+      ctx.fillStyle = '#f5be58';
+      ctx.fillRect(sL + 3, sy - 2, 3, 5);
+      ctx.fillRect(sR - 6, sy - 2, 3, 5);
+    }
+
+    var blockW = clamp(layout.w * 0.035, 18, 42);
+    var segments = [[0, sL], [sR, layout.w]];
+    for (var seg = 0; seg < 2; seg++) {
+      var x0 = segments[seg][0];
+      var x1 = segments[seg][1];
+      var bGrad = ctx.createLinearGradient(0, ySplit - bh, 0, ySplit + bh);
+      bGrad.addColorStop(0, mixColor('#d8c39c', '#9c7940', parity));
+      bGrad.addColorStop(0.5, '#8b6b3e');
+      bGrad.addColorStop(1, '#47331d');
+      ctx.fillStyle = bGrad;
+      ctx.fillRect(x0, ySplit - bh, x1 - x0, bh * 2);
+      ctx.strokeStyle = '#2e2012';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(x0, ySplit - bh, x1 - x0, bh * 2);
+      for (var bx = x0 + blockW; bx < x1 - 4; bx += blockW) {
+        ctx.beginPath();
+        ctx.moveTo(bx, ySplit - bh);
+        ctx.lineTo(bx, ySplit + bh);
+        ctx.stroke();
+      }
+    }
+
+    var embXs = [sL - 2, sR + 2];
+    for (var ei = 0; ei < 2; ei++) {
+      var ex = embXs[ei];
+      ctx.fillStyle = '#c89c46';
+      ctx.beginPath();
+      ctx.arc(ex, ySplit, 6.5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#25190d';
+      ctx.lineWidth = 1.1;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(ex - 2.5, ySplit - 1.5);
+      ctx.lineTo(ex, ySplit - 4);
+      ctx.lineTo(ex + 2.5, ySplit - 1.5);
+      ctx.moveTo(ex - 2.5, ySplit + 1.5);
+      ctx.lineTo(ex, ySplit + 4);
+      ctx.lineTo(ex + 2.5, ySplit + 1.5);
+      ctx.stroke();
+    }
+
+    var windY = layout.upperTop + 6;
+    ctx.strokeStyle = '#9c7840';
+    ctx.lineWidth = 2.4;
+    ctx.beginPath();
+    ctx.moveTo(sL + 5, windY);
+    ctx.lineTo(sR - 5, windY);
+    ctx.stroke();
+    ctx.fillStyle = '#5a3f20';
+    ctx.beginPath();
+    ctx.arc(cx, windY, clamp(sW * 0.14, 5, 10), 0, Math.PI * 2);
+    ctx.fill();
+
+    var carriage = (state && state.shaftCarriage) || {};
+    var depth = clamp(typeof carriage.depth === 'number' ? carriage.depth : 0, 0, 1);
+    var cageW = Math.max(26, sW - 12);
+    var cageH = clamp(layout.h * 0.105, 38, 62);
+    var topStop = windY + 10;
+    var botStop = Math.max(topStop + 16, layout.h - cageH - 12);
+    var cageY = lerp(topStop, botStop, depth);
+    var cageX = cx - cageW * 0.5;
+
+    ctx.strokeStyle = '#b99552';
+    ctx.lineWidth = 1.3;
+    ctx.beginPath();
+    ctx.moveTo(cx - cageW * 0.28, windY);
+    ctx.lineTo(cx - cageW * 0.28, cageY);
+    ctx.moveTo(cx + cageW * 0.28, windY);
+    ctx.lineTo(cx + cageW * 0.28, cageY);
+    ctx.stroke();
+
+    ctx.fillStyle = 'rgba(20, 14, 9, 0.86)';
+    ctx.fillRect(cageX, cageY, cageW, cageH);
+    ctx.strokeStyle = '#d4aa53';
+    ctx.lineWidth = 1.6;
+    ctx.strokeRect(cageX, cageY, cageW, cageH);
+
+    var deadRatio = clamp(state && typeof state.hoodedDeadRatio === 'number' ? state.hoodedDeadRatio : 0, 0, 1);
+    var deadBrothers = typeof carriage.deadBrothersAmongHooded === 'number'
+      ? carriage.deadBrothersAmongHooded
+      : Math.round(deadRatio * 4);
+    var count = 4;
+    for (var hi = 0; hi < count; hi++) {
+      var hx = cageX + cageW * ((hi + 0.5) / count);
+      var hy = cageY + cageH * 0.66;
+      var hw = Math.max(4.5, cageW * 0.18);
+      ctx.fillStyle = '#1d1612';
+      ctx.beginPath();
+      ctx.moveTo(hx - hw * 0.55, hy + cageH * 0.24);
+      ctx.lineTo(hx - hw * 0.45, hy - cageH * 0.22);
+      ctx.lineTo(hx, hy - cageH * 0.48);
+      ctx.lineTo(hx + hw * 0.45, hy - cageH * 0.22);
+      ctx.lineTo(hx + hw * 0.55, hy + cageH * 0.24);
+      ctx.closePath();
+      ctx.fill();
+
+      var skullGlow = hi < deadBrothers ? 1 : clamp(deadRatio * 4 - hi, 0, 1);
+      if (skullGlow > 0.08) {
+        ctx.fillStyle = mixColor('#4a3a22', '#f3d274', skullGlow);
+        ctx.beginPath();
+        ctx.arc(hx, hy - cageH * 0.20, Math.max(2.0, hw * 0.28), 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#140d07';
+        ctx.fillRect(hx - 1.5, hy - cageH * 0.22, 1, 1);
+        ctx.fillRect(hx + 0.6, hy - cageH * 0.22, 1, 1);
+      }
+    }
+
+    if (carriage.phase === 'ascending') {
+      ctx.fillStyle = '#f6e4b3';
+      ctx.fillRect(cx - cageW * 0.22, cageY + cageH * 0.70, cageW * 0.44, 6);
+      ctx.fillStyle = '#b6432c';
+      ctx.beginPath();
+      ctx.arc(cx, cageY + cageH * 0.70 + 3, 2.2, 0, Math.PI * 2);
+      ctx.fill();
+    } else {
+      ctx.fillStyle = '#8b6834';
+      ctx.fillRect(cageX + 4, cageY + cageH - 7, cageW - 8, 4);
+      ctx.fillStyle = '#ecc86c';
+      ctx.beginPath();
+      ctx.arc(cageX + 9, cageY + cageH - 9, 3.0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#c8a24d';
+      ctx.fillRect(cageX + 12, cageY + cageH - 10, Math.max(6, cageW - 18), 3.2);
+    }
+  }
+
+  function createNecropolis(canvas, opts) {
+    opts = opts || {};
+    var ctx = canvas && typeof canvas.getContext === 'function' ? canvas.getContext('2d') : null;
+    var synth = createSynth(Boolean(opts.muted));
+    var cssW = 0;
+    var cssH = 0;
+    var dpr = 1;
+
+    function resize() {
+      if (!canvas) return;
+      dpr = Math.min(global.devicePixelRatio || 1, 2);
+      var rect = typeof canvas.getBoundingClientRect === 'function'
+        ? canvas.getBoundingClientRect()
+        : { width: canvas.width || 800, height: canvas.height || 500 };
+      var nextW = Math.max(1, Math.round(rect.width || canvas.clientWidth || canvas.width || 800));
+      var nextH = Math.max(1, Math.round(rect.height || canvas.clientHeight || canvas.height || 500));
+      cssW = nextW;
+      cssH = nextH;
+      var targetW = Math.round(cssW * dpr);
+      var targetH = Math.round(cssH * dpr);
+      if (canvas.width !== targetW || canvas.height !== targetH) {
+        canvas.width = targetW;
+        canvas.height = targetH;
+      }
+    }
+
+    function render(state, timeMs, reducedMotion) {
+      if (!canvas || !ctx) return;
+      var cw = canvas.clientWidth || cssW;
+      var ch = canvas.clientHeight || cssH;
+      if (!cssW || !cssH || (cw > 0 && Math.abs(cw - cssW) > 1) || (ch > 0 && Math.abs(ch - cssH) > 1)) {
+        resize();
+      }
+      var t = reducedMotion ? 0 : ((typeof timeMs === 'number' ? timeMs : 0) * 0.001);
+      var st = state || {};
+      var parity = clamp(
+        st.whoIsAliveDistinguishable === false
+          ? 1
+          : (typeof st.twinVisualParity === 'number' ? st.twinVisualParity : 0),
+        0,
+        1
+      );
+      var layout = computeLayout(cssW, cssH, st);
+      var selectedId = st.selectedTrade || 'banqueters';
+
+      ctx.save();
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, cssW, cssH);
+
+      drawUpperBackdrop(ctx, layout, st, t, Boolean(reducedMotion), parity);
+      drawLowerBackdrop(ctx, layout);
+
+      for (var i = 0; i < 8; i++) {
+        var trade = resolveTrade(st, i);
+        var bay = layout.bays[i];
+        var isSel = trade.id === selectedId;
+        var localParity = clamp(
+          Math.max(parity, trade.copiedAboveLevel > 0 ? Math.min(1, 0.42 + trade.copiedAboveLevel * 0.29) : 0),
+          0,
+          1
+        );
+        var uBox = drawBayArchitecture(ctx, bay, layout.upperTop, layout.upperH, trade, false, isSel, localParity, t, Boolean(reducedMotion));
+        drawTradeScene(ctx, uBox, i, trade, false, localParity, t, Boolean(reducedMotion));
+        var lBox = drawBayArchitecture(ctx, bay, layout.lowerTop, layout.lowerH, trade, true, isSel, 1, t, Boolean(reducedMotion));
+        drawTradeScene(ctx, lBox, i, trade, true, 1, t, Boolean(reducedMotion));
+      }
+
+      drawHorizonAndShaft(ctx, layout, st, t, Boolean(reducedMotion), parity);
+      ctx.restore();
+    }
+
+    function hitTest(clientX, clientY, state) {
+      if (!canvas || typeof canvas.getBoundingClientRect !== 'function') {
+        return { zone: 'lower_bay', tradeId: 'banqueters', bayIndex: 0 };
+      }
+      var rect = canvas.getBoundingClientRect();
+      var w = Math.max(1, rect.width || cssW || 800);
+      var h = Math.max(1, rect.height || cssH || 500);
+      var lx = clientX - rect.left;
+      var ly = clientY - rect.top;
+      var layout = computeLayout(w, h, state || {});
+
+      if (Math.abs(ly - layout.ySplit) <= 14) {
+        return { zone: 'horizon', tradeId: null, bayIndex: -1 };
+      }
+      if (lx >= layout.shaftLeft && lx <= layout.shaftRight) {
+        return { zone: 'shaft', tradeId: null, bayIndex: -1 };
+      }
+      var bayIdx = 0;
+      if (lx < layout.shaftLeft) {
+        var leftSpan = Math.max(1, layout.shaftLeft - layout.bays[0].x);
+        bayIdx = clamp(Math.floor((lx - layout.bays[0].x) / (leftSpan / 4)), 0, 3);
+      } else {
+        var rightStart = layout.bays[4].x;
+        var rightSpan = Math.max(1, (layout.bays[7].x + layout.bays[7].w) - rightStart);
+        bayIdx = 4 + clamp(Math.floor((lx - rightStart) / (rightSpan / 4)), 0, 3);
+      }
+      var trade = resolveTrade(state || {}, bayIdx);
+      return {
+        zone: ly < layout.ySplit ? 'upper_bay' : 'lower_bay',
+        tradeId: trade.id,
+        bayIndex: bayIdx
+      };
+    }
+
+    if (global.addEventListener) {
+      global.addEventListener('resize', resize);
+    }
+    resize();
+
+    return {
+      render: render,
+      hitTest: hitTest,
+      setMuted: function (b) { return synth.setMuted(b); },
+      isMuted: function () { return synth.isMuted(); },
+      toggleMute: function () { return synth.toggleMute(); },
+      playCue: function (kind, state) { synth.playCue(kind, state); },
+      resize: resize,
+      destroy: function () {
+        if (global.addEventListener && global.removeEventListener) {
+          global.removeEventListener('resize', resize);
+        }
+        synth.destroy();
+      }
+    };
+  }
+
+  global.EusapiaSubterraneanNecropolis = {
+    TRADES: CANONICAL_TRADES,
+    create: createNecropolis
+  };
+})(typeof globalThis !== 'undefined' ? globalThis : window);
+
+(function () {
+  'use strict';
+
+  var canvas = document.getElementById('eus-canvas');
+  var valYear = document.getElementById('eus-val-year');
+  var valMimesis = document.getElementById('eus-val-mimesis');
+  var valMortality = document.getElementById('eus-val-mortality');
+  var valTwin = document.getElementById('eus-val-twin');
+  var statMimesis = document.getElementById('eus-stat-mimesis');
+  var statMortality = document.getElementById('eus-stat-mortality');
+  var statTwin = document.getElementById('eus-stat-twin');
+  var badgeUpper = document.getElementById('eus-badge-upper');
+  var whisperEl = document.getElementById('eus-whisper');
+  var actLiving = document.getElementById('eus-act-living');
+  var btnMute = document.getElementById('eus-btn-mute');
+  var btnZoom = document.getElementById('eus-btn-zoom');
+  var horizonInput = document.getElementById('eus-horizon');
+  var horizonLabel = document.getElementById('eus-horizon-label');
+  var drawerEl = document.getElementById('eus-plate-drawer');
+  var tradeChips = Array.prototype.slice.call(document.querySelectorAll('eus-chip[data-trade]'));
+  var viewButtons = Array.prototype.slice.call(document.querySelectorAll('eus-act[data-plate-view]'));
+
+  var motionQuery = typeof window.matchMedia === 'function'
+    ? window.matchMedia('(prefers-reduced-motion: reduce)')
+    : null;
+  var plateZoomed = false;
+  var refusalTimer = 0;
+  var draggingHorizon = false;
+  var activePointerId = null;
+
+  function eusBootCheckReducedMotion() {
+    return Boolean(motionQuery && motionQuery.matches);
+  }
+
+  var bridge = window.EusapiaHoodedBridge.create({
+    horizonSplit: 0.50,
+    selectedTrade: 'banqueters'
+  });
+
+  var necropolis = window.EusapiaSubterraneanNecropolis.create(canvas, {
+    muted: false
+  });
+
+  function eusBootClearRefusal() {
+    if (refusalTimer) {
+      clearTimeout(refusalTimer);
+      refusalTimer = 0;
+    }
+    whisperEl.setAttribute('data-refused', 'false');
+    actLiving.setAttribute('data-refused', 'false');
+  }
+
+  function eusBootFlashRefusal() {
+    if (refusalTimer) {
+      clearTimeout(refusalTimer);
+    }
+    whisperEl.setAttribute('data-refused', 'true');
+    actLiving.setAttribute('data-refused', 'true');
+    refusalTimer = setTimeout(function () {
+      whisperEl.setAttribute('data-refused', 'false');
+      actLiving.setAttribute('data-refused', 'false');
+      refusalTimer = 0;
+    }, 1800);
+  }
+
+  function eusBootSyncHud(snap) {
+    if (!snap) return;
+    valYear.textContent = String(snap.year);
+    var inverted = snap.mimesisDirection === 'lower_to_upper';
+    valMimesis.textContent = inverted ? 'LOWER -> UPPER' : 'UPPER -> LOWER';
+    statMimesis.setAttribute('data-inverted', inverted ? 'true' : 'false');
+
+    var pct = Math.round((snap.hoodedDeadRatio || 0) * 100);
+    valMortality.textContent = pct + '%';
+    statMortality.setAttribute('data-inverted', pct >= 100 ? 'true' : 'false');
+
+    var same = snap.whoIsAliveDistinguishable === false;
+    valTwin.textContent = same ? 'INDISTINGUISHABLE' : 'DISTINGUISHABLE';
+    statTwin.setAttribute('data-inverted', same ? 'true' : 'false');
+    badgeUpper.textContent = same ? 'SUNLIT TWIN CRYPT' : 'SUNLIT LOGGIAS';
+
+    whisperEl.textContent = snap.lastWhisper || '';
+
+    var seamPct = Math.round((snap.horizonSplit || 0.5) * 100);
+    if (document.activeElement !== horizonInput) {
+      horizonInput.value = String(seamPct);
+    }
+    horizonLabel.textContent = 'Seam ' + seamPct + '%';
+
+    var tradeMap = {};
+    for (var i = 0; i < snap.trades.length; i += 1) {
+      tradeMap[snap.trades[i].id] = snap.trades[i];
+    }
+    for (var c = 0; c < tradeChips.length; c += 1) {
+      var chip = tradeChips[c];
+      var tid = chip.getAttribute('data-trade');
+      var sel = tid === snap.selectedTrade;
+      chip.setAttribute('data-selected', sel ? 'true' : 'false');
+      chip.setAttribute('aria-pressed', sel ? 'true' : 'false');
+      var countEl = chip.querySelector('eus-chip-count');
+      if (countEl && tradeMap[tid]) {
+        countEl.textContent = String(tradeMap[tid].deadPractitioners);
+      }
+    }
+  }
+
+  bridge.onChange(eusBootSyncHud);
+
+  function eusBootOpenPlates() {
+    drawerEl.hidden = false;
+    drawerEl.removeAttribute('hidden');
+    return true;
+  }
+
+  function eusBootClosePlates() {
+    drawerEl.hidden = true;
+    drawerEl.setAttribute('hidden', '');
+    return false;
+  }
+
+  function eusBootIsPlatesOpen() {
+    return !drawerEl.hidden;
+  }
+
+  function eusBootSetPlateZoom(flag) {
+    plateZoomed = Boolean(flag);
+    drawerEl.setAttribute('data-zoomed', plateZoomed ? 'true' : 'false');
+    btnZoom.setAttribute('aria-pressed', plateZoomed ? 'true' : 'false');
+    btnZoom.textContent = plateZoomed ? '[Z] Loupe 1.85x' : '[Z] Zoom Loupe';
+    return plateZoomed;
+  }
+  function eusBootTogglePlateZoom() {
+    return eusBootSetPlateZoom(!plateZoomed);
+  }
+
+  function eusBootSetPlateView(viewMode) {
+    var mode = (viewMode === 'map' || viewMode === 'vista') ? viewMode : 'diptych';
+    drawerEl.setAttribute('data-view', mode);
+    for (var i = 0; i < viewButtons.length; i += 1) {
+      var vb = viewButtons[i];
+      vb.setAttribute('aria-pressed', vb.getAttribute('data-plate-view') === mode ? 'true' : 'false');
+    }
+    return mode;
+  }
+
+  function eusBootSyncMuteUi() {
+    var m = necropolis.isMuted();
+    btnMute.setAttribute('data-muted', m ? 'true' : 'false');
+    btnMute.setAttribute('aria-pressed', m ? 'true' : 'false');
+    btnMute.textContent = m ? '[M] Muted' : '[M] Audio';
+    return m;
+  }
+
+  function eusBootRenderImmediate(snap) {
+    necropolis.render(snap || bridge.getState(), performance.now(), eusBootCheckReducedMotion());
+  }
+
+  var eusapiaPublicApi = {
+    getState: function () { return bridge.getState(); },
+    dispatchProcession: function (id, opts) {
+      eusBootClearRefusal();
+      var resolvedOpts = (opts && typeof opts === 'object')
+        ? opts
+        : (eusBootCheckReducedMotion() ? { instant: true } : undefined);
+      var st = bridge.dispatchProcession(id, resolvedOpts);
+      necropolis.playCue('procession', st);
+      eusBootRenderImmediate(st);
+      return st;
+    },
+    completeProcessionNow: function () {
+      eusBootClearRefusal();
+      var st = bridge.completeProcessionNow();
+      eusBootRenderImmediate(st);
+      return st;
+    },
+    attemptLivingEntry: function () {
+      var res = bridge.attemptLivingEntry();
+      eusBootFlashRefusal();
+      necropolis.playCue('blocked', bridge.getState());
+      eusBootRenderImmediate();
+      return res;
+    },
+    triggerUndergroundInnovation: function (id) {
+      eusBootClearRefusal();
+      var st = bridge.triggerUndergroundInnovation(id);
+      necropolis.playCue('innovation', st);
+      eusBootRenderImmediate(st);
+      return st;
+    },
+    syncUpperCopy: function () {
+      eusBootClearRefusal();
+      var st = bridge.syncUpperCopy();
+      necropolis.playCue('copy_sync', st);
+      eusBootRenderImmediate(st);
+      return st;
+    },
+    advanceYearCycle: function (id) {
+      eusBootClearRefusal();
+      var st = bridge.advanceYearCycle(id);
+      necropolis.playCue('copy_sync', st);
+      eusBootRenderImmediate(st);
+      return st;
+    },
+    setHorizonSplit: function (r) {
+      var st = bridge.setHorizonSplit(r);
+      eusBootRenderImmediate(st);
+      return st;
+    },
+    selectTrade: function (id) {
+      eusBootClearRefusal();
+      var st = bridge.selectTrade(id);
+      necropolis.playCue('select', st);
+      eusBootRenderImmediate(st);
+      return st;
+    },
+    openPlates: eusBootOpenPlates,
+    closePlates: eusBootClosePlates,
+    isPlatesOpen: eusBootIsPlatesOpen,
+    togglePlateZoom: eusBootTogglePlateZoom,
+    isPlateZoomed: function () { return plateZoomed; },
+    toggleMute: function () {
+      necropolis.toggleMute();
+      return eusBootSyncMuteUi();
+    },
+    isMuted: function () { return necropolis.isMuted(); },
+    reset: function () {
+      eusBootClearRefusal();
+      eusBootSetPlateZoom(false);
+      var st = bridge.reset();
+      horizonInput.value = '50';
+      eusBootRenderImmediate(st);
+      return st;
+    }
+  };
+
+  window.EusapiaApp = eusapiaPublicApi;
+  window.__EUSAPIA_DEBUG__ = eusapiaPublicApi;
+
+  function eusBootRunAct(actName) {
+    if (actName === 'procession') eusapiaPublicApi.dispatchProcession();
+    else if (actName === 'innovate') eusapiaPublicApi.triggerUndergroundInnovation();
+    else if (actName === 'copy') eusapiaPublicApi.syncUpperCopy();
+    else if (actName === 'cycle') eusapiaPublicApi.advanceYearCycle();
+    else if (actName === 'living') eusapiaPublicApi.attemptLivingEntry();
+    else if (actName === 'plates') {
+      if (eusBootIsPlatesOpen()) eusBootClosePlates(); else eusBootOpenPlates();
+    } else if (actName === 'close-plates') eusBootClosePlates();
+    else if (actName === 'zoom') eusBootTogglePlateZoom();
+    else if (actName === 'mute') eusapiaPublicApi.toggleMute();
+    else if (actName === 'reset') eusapiaPublicApi.reset();
+  }
+
+  document.addEventListener('click', function (ev) {
+    var target = ev.target;
+    if (!target || typeof target.closest !== 'function') return;
+    if (target === drawerEl) {
+      eusBootClosePlates();
+      return;
+    }
+    var plateImg = target.closest('img.eus-plate-img');
+    if (plateImg) {
+      eusBootTogglePlateZoom();
+      return;
+    }
+    var viewBtn = target.closest('eus-act[data-plate-view]');
+    if (viewBtn) {
+      eusBootSetPlateView(viewBtn.getAttribute('data-plate-view'));
+      return;
+    }
+    var actBtn = target.closest('eus-act[data-act]');
+    if (actBtn) {
+      eusBootRunAct(actBtn.getAttribute('data-act'));
+      return;
+    }
+    var chipBtn = target.closest('eus-chip[data-trade]');
+    if (chipBtn) {
+      eusapiaPublicApi.selectTrade(chipBtn.getAttribute('data-trade'));
+    }
+  });
+  horizonInput.addEventListener('input', function () {
+    var v = Number(horizonInput.value);
+    if (Number.isFinite(v)) {
+      eusapiaPublicApi.setHorizonSplit(v / 100);
+    }
+  });
+
+  function eusBootApplyPointerHorizon(clientY) {
+    var rect = canvas.getBoundingClientRect();
+    if (!rect || rect.height <= 0) return;
+    var ratio = (clientY - rect.top) / rect.height;
+    eusapiaPublicApi.setHorizonSplit(ratio);
+  }
+
+  canvas.addEventListener('pointerdown', function (ev) {
+    if (eusBootIsPlatesOpen()) return;
+    var hit = necropolis.hitTest(ev.clientX, ev.clientY, bridge.getState());
+    if (hit.zone === 'horizon') {
+      draggingHorizon = true;
+      activePointerId = ev.pointerId;
+      try { canvas.setPointerCapture(ev.pointerId); } catch (_err) {}
+      eusBootApplyPointerHorizon(ev.clientY);
+    } else if (hit.zone === 'shaft') {
+      eusapiaPublicApi.dispatchProcession();
+    } else if (hit.tradeId) {
+      eusapiaPublicApi.selectTrade(hit.tradeId);
+    }
+  });
+
+  canvas.addEventListener('pointermove', function (ev) {
+    if (draggingHorizon && (activePointerId === null || ev.pointerId === activePointerId)) {
+      eusBootApplyPointerHorizon(ev.clientY);
+      return;
+    }
+    var hit = necropolis.hitTest(ev.clientX, ev.clientY, bridge.getState());
+    canvas.setAttribute('data-hover-zone', hit.zone || 'bay');
+  });
+
+  function eusBootStopDrag(ev) {
+    if (!draggingHorizon) return;
+    if (activePointerId !== null && ev && ev.pointerId !== activePointerId) return;
+    draggingHorizon = false;
+    try {
+      if (ev && typeof canvas.releasePointerCapture === 'function') {
+        canvas.releasePointerCapture(ev.pointerId);
+      }
+    } catch (_err) {}
+    activePointerId = null;
+  }
+
+  canvas.addEventListener('pointerup', eusBootStopDrag);
+  canvas.addEventListener('pointercancel', eusBootStopDrag);
+
+  document.addEventListener('keydown', function (ev) {
+    if (ev.metaKey || ev.ctrlKey || ev.altKey) return;
+    var key = ev.key;
+    var target = ev.target;
+
+    if ((key === 'Enter' || key === ' ') && target && typeof target.closest === 'function') {
+      var btn = target.closest('eus-act[data-act], eus-act[data-plate-view], eus-chip[data-trade]');
+      if (btn) {
+        ev.preventDefault();
+        btn.click();
+        return;
+      }
+    }
+
+    if (key === 'Escape') {
+      if (eusBootIsPlatesOpen()) {
+        ev.preventDefault();
+        eusBootClosePlates();
+      }
+      return;
+    }
+
+    var low = typeof key === 'string' ? key.toLowerCase() : '';
+    if (low === 'p') {
+      ev.preventDefault();
+      if (eusBootIsPlatesOpen()) eusBootClosePlates(); else eusBootOpenPlates();
+      return;
+    }
+    if (low === 'z') {
+      ev.preventDefault();
+      eusBootTogglePlateZoom();
+      return;
+    }
+    if (low === 'm') {
+      ev.preventDefault();
+      eusapiaPublicApi.toggleMute();
+      return;
+    }
+    if (low === 'r') {
+      ev.preventDefault();
+      eusapiaPublicApi.reset();
+      return;
+    }
+
+    if (eusBootIsPlatesOpen()) return;
+
+    if (low === 'h') { ev.preventDefault(); eusapiaPublicApi.dispatchProcession(); }
+    else if (low === 'i') { ev.preventDefault(); eusapiaPublicApi.triggerUndergroundInnovation(); }
+    else if (low === 'c') { ev.preventDefault(); eusapiaPublicApi.syncUpperCopy(); }
+    else if (low === 'y') { ev.preventDefault(); eusapiaPublicApi.advanceYearCycle(); }
+    else if (low === 'l') { ev.preventDefault(); eusapiaPublicApi.attemptLivingEntry(); }
+    else if (key >= '1' && key <= '8') {
+      var idx = Number(key) - 1;
+      if (bridge.TRADES[idx]) {
+        ev.preventDefault();
+        eusapiaPublicApi.selectTrade(bridge.TRADES[idx].id);
+      }
+    } else if (key === 'ArrowUp' && document.activeElement !== horizonInput) {
+      ev.preventDefault();
+      eusapiaPublicApi.setHorizonSplit(bridge.getState().horizonSplit - 0.04);
+    } else if (key === 'ArrowDown' && document.activeElement !== horizonInput) {
+      ev.preventDefault();
+      eusapiaPublicApi.setHorizonSplit(bridge.getState().horizonSplit + 0.04);
+    }
+  });
+
+  var lastFrameMs = performance.now();
+  function eusBootLoop(nowMs) {
+    var dt = Math.min(0.1, Math.max(0, (nowMs - lastFrameMs) * 0.001));
+    lastFrameMs = nowMs;
+    var snap = bridge.step(dt);
+    necropolis.render(snap, nowMs, eusBootCheckReducedMotion());
+    window.requestAnimationFrame(eusBootLoop);
+  }
+
+  eusBootSyncHud(bridge.getState());
+  eusBootSyncMuteUi();
+  necropolis.resize();
+  necropolis.render(bridge.getState(), lastFrameMs, eusBootCheckReducedMotion());
+  window.requestAnimationFrame(eusBootLoop);
+})();
+</script>
+</body>
+</html>

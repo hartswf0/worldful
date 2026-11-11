@@ -1,0 +1,3892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trude — Runway 27L &amp; Provincial Continuum</title>
+<style>
+  :root {
+    --trd-tarmac: #1E2224;
+    --trd-tin-dark: #3A4144;
+    --trd-tin-zinc: #7E878A;
+    --trd-ochre: #C8B868;
+    --trd-ochre-shd: #9C8E47;
+    --trd-lichen: #6C8364;
+    --trd-lichen-shd: #4B5E46;
+    --trd-marigold: #D4953B;
+    --trd-geranium: #C46238;
+    --trd-ivory: #F2E5BE;
+    --trd-celadon: #9EB59E;
+    --trd-sky: #2B3130;
+    --trd-panel: #232829;
+    --trd-panel-deep: #181C1D;
+    --trd-border: rgba(200, 184, 104, 0.28);
+    --trd-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    --trd-serif: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: var(--trd-tarmac);
+    color: var(--trd-ivory);
+    font-family: var(--trd-mono);
+    font-size: 12px;
+    line-height: 1.3;
+    -webkit-font-smoothing: antialiased;
+    user-select: none;
+  }
+
+  trude-global-continuum,
+  trude-stage-viewport,
+  trude-transit-pane,
+  trude-suburb-pane,
+  trude-control-deck,
+  futile-departure-board,
+  suburban-roundabout-loop,
+  caterpillar-goblet-bar,
+  trude-diff-ledger,
+  trude-dialogue-card,
+  trude-dialogue-quote,
+  trude-board-heading,
+  trude-plate-caption,
+  trude-zoom-loupe {
+    display: block;
+  }
+
+  trude-global-continuum {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg, #1B1F20 0%, var(--trd-sky) 100%);
+  }
+
+  trude-top-masthead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    height: 52px;
+    padding: 6px 12px;
+    background: var(--trd-panel-deep);
+    border-bottom: 1px solid var(--trd-border);
+    flex-shrink: 0;
+  }
+
+  airport-placard-marquee {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  trude-placard-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 8px;
+    background: var(--trd-marigold);
+    color: #151819;
+    font-weight: 700;
+    font-size: 11px;
+    border-radius: 3px;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+  }
+
+  trude-placard-headline {
+    display: inline-block;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    color: var(--trd-ivory);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  trude-flap-strip {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    padding: 3px 5px;
+    background: #101314;
+    border: 1px solid rgba(126, 135, 138, 0.45);
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  trude-flap-cell {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 13px;
+    height: 19px;
+    background: #1E2426;
+    color: var(--trd-ivory);
+    font-weight: 700;
+    font-size: 11px;
+    border-bottom: 1px solid #090B0C;
+    border-radius: 1px;
+  }
+
+  trude-flap-cell.trd-is-flipping {
+    color: var(--trd-marigold);
+    background: #282F31;
+  }
+
+  trude-continuum-tag {
+    display: inline-block;
+    font-size: 10px;
+    color: var(--trd-celadon);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  trude-utility-rail {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+  }
+
+  .trd-action-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 5px 8px;
+    background: var(--trd-tin-dark);
+    color: var(--trd-ivory);
+    border: 1px solid rgba(242, 229, 190, 0.26);
+    border-radius: 3px;
+    font-size: 10.5px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 120ms ease, border-color 120ms ease;
+  }
+
+  .trd-action-chip:hover,
+  .trd-action-chip:focus-visible {
+    background: #485255;
+    border-color: var(--trd-ochre);
+    outline: none;
+  }
+
+  .trd-action-chip.trd-is-active {
+    background: var(--trd-ochre);
+    color: #16191A;
+    border-color: var(--trd-ivory);
+  }
+
+  trude-view-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    background: #141819;
+    padding: 2px;
+    border-radius: 3px;
+    border: 1px solid rgba(126, 135, 138, 0.35);
+  }
+
+  trude-workspace-grid {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 374px;
+    gap: 9px;
+    padding: 8px 10px;
+  }
+
+  trude-stage-viewport {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: var(--trd-panel-deep);
+    border: 1px solid var(--trd-border);
+    border-radius: 4px;
+    padding: 6px;
+    overflow: hidden;
+  }
+
+  trude-transit-pane,
+  trude-suburb-pane {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    border: 1px solid rgba(126, 135, 138, 0.35);
+    border-radius: 3px;
+    overflow: hidden;
+    background: var(--trd-tarmac);
+  }
+
+  trude-transit-pane { flex: 46 1 0%; }
+  trude-suburb-pane { flex: 54 1 0%; }
+
+  .trd-stage-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: crosshair;
+    touch-action: none;
+  }
+
+  trude-pane-caption {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 7px;
+    background: rgba(20, 24, 25, 0.84);
+    border: 1px solid rgba(200, 184, 104, 0.42);
+    border-radius: 3px;
+    font-size: 9.5px;
+    font-weight: 700;
+    color: var(--trd-ivory);
+    pointer-events: none;
+  }
+
+  trude-wipe-rail {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 24px;
+    padding: 0 8px;
+    background: #141819;
+    border: 1px solid var(--trd-marigold);
+    border-radius: 3px;
+    cursor: ew-resize;
+    flex-shrink: 0;
+  }
+
+  trude-wipe-track {
+    position: relative;
+    flex: 1 1 auto;
+    height: 6px;
+    background: var(--trd-tin-dark);
+    border-radius: 3px;
+  }
+
+  trude-wipe-thumb {
+    position: absolute;
+    top: -4px;
+    width: 14px;
+    height: 14px;
+    margin-left: -7px;
+    background: var(--trd-marigold);
+    border: 2px solid var(--trd-ivory);
+    border-radius: 50%;
+  }
+
+  trude-inspect-toast {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    height: 22px;
+    padding: 0 7px;
+    background: #171B1C;
+    border-top: 1px solid rgba(126, 135, 138, 0.25);
+    font-size: 10px;
+    color: var(--trd-celadon);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 0;
+  }
+
+  trude-control-deck {
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    overflow-y: auto;
+  }
+
+  .trd-module-card {
+    background: var(--trd-panel);
+    border: 1px solid var(--trd-border);
+    border-radius: 4px;
+    padding: 7px 9px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  trude-board-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--trd-ochre);
+    text-transform: uppercase;
+  }
+
+  trude-flight-actions {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 5px;
+  }
+
+  .trd-primary-cta {
+    background: var(--trd-marigold);
+    color: #16191A;
+    border-color: var(--trd-ivory);
+  }
+
+  .trd-primary-cta:hover,
+  .trd-primary-cta:focus-visible {
+    background: #E2A548;
+    color: #111314;
+  }
+
+  trude-ticket-rack {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px;
+    max-height: 136px;
+    overflow-y: auto;
+    padding-right: 2px;
+  }
+
+  trude-flight-ticket {
+    display: flex;
+    flex-direction: column;
+    padding: 4px 6px;
+    background: var(--trd-panel-deep);
+    border: 1px solid rgba(126, 135, 138, 0.32);
+    border-radius: 3px;
+    cursor: pointer;
+    min-width: 0;
+  }
+
+  trude-flight-ticket:hover,
+  trude-flight-ticket:focus-visible {
+    border-color: var(--trd-ochre);
+    background: #22282A;
+    outline: none;
+  }
+
+  trude-flight-ticket.trd-is-current {
+    border-color: var(--trd-marigold);
+    background: rgba(212, 149, 59, 0.14);
+  }
+
+  trude-ticket-code {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--trd-ivory);
+  }
+
+  trude-ticket-meta {
+    display: block;
+    font-size: 9px;
+    color: var(--trd-celadon);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  trude-locus-rack {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 3px;
+  }
+
+  trude-locus-latch {
+    padding: 4px 2px !important;
+    font-size: 9.5px !important;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  trude-dialogue-card {
+    background: var(--trd-panel-deep);
+    border: 1px solid rgba(158, 181, 158, 0.3);
+    border-radius: 3px;
+    padding: 6px 7px;
+  }
+
+  trude-dialogue-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9.5px;
+    font-weight: 700;
+    color: var(--trd-ochre);
+    margin-bottom: 3px;
+  }
+
+  trude-dialogue-quote {
+    font-family: var(--trd-serif);
+    font-size: 11px;
+    line-height: 1.28;
+    color: var(--trd-ivory);
+    min-height: 28px;
+    margin-bottom: 5px;
+  }
+
+  trude-goblet-controls {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 4px;
+  }
+
+  trude-goblet-readout {
+    display: block;
+    font-size: 9.5px;
+    color: var(--trd-celadon);
+  }
+
+  trude-diff-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px;
+  }
+
+  trude-diff-row {
+    display: flex;
+    flex-direction: column;
+    padding: 4px 6px;
+    background: var(--trd-panel-deep);
+    border: 1px solid rgba(126, 135, 138, 0.25);
+    border-radius: 3px;
+  }
+
+  trude-diff-key {
+    display: block;
+    font-size: 8.5px;
+    color: var(--trd-tin-zinc);
+    text-transform: uppercase;
+  }
+
+  trude-diff-val {
+    display: block;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--trd-celadon);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  trude-plate-drawer {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px;
+    background: rgba(12, 15, 16, 0.88);
+  }
+
+  trude-plate-modal {
+    position: relative;
+    width: min(1180px, 100%);
+    height: min(740px, 100%);
+    display: flex;
+    flex-direction: column;
+    background: var(--trd-panel-deep);
+    border: 1px solid var(--trd-ochre);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  trude-plate-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 7px 10px;
+    background: var(--trd-panel);
+    border-bottom: 1px solid var(--trd-border);
+  }
+
+  trude-plate-title {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--trd-ochre);
+    letter-spacing: 0.05em;
+  }
+
+  trude-plate-tabs,
+  trude-plate-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  trude-plate-gallery {
+    position: relative;
+    flex: 1 1 auto;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    padding: 10px;
+    overflow: auto;
+  }
+
+  trude-plate-gallery[data-mode="map"],
+  trude-plate-gallery[data-mode="image"] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  trude-plate-frame {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+    background: #121516;
+    border: 1px solid rgba(200, 184, 104, 0.3);
+    border-radius: 4px;
+    padding: 6px;
+    overflow: hidden;
+  }
+
+  .trd-plate-img {
+    display: block;
+    max-width: 100%;
+    max-height: calc(100% - 20px);
+    width: auto;
+    height: auto;
+    object-fit: contain;
+  }
+
+  trude-plate-caption {
+    margin-top: 4px;
+    font-size: 9.5px;
+    color: var(--trd-celadon);
+  }
+
+  trude-zoom-loupe {
+    position: absolute;
+    width: 196px;
+    height: 196px;
+    border: 2px solid var(--trd-marigold);
+    border-radius: 50%;
+    box-shadow: 0 8px 26px rgba(0, 0, 0, 0.72);
+    overflow: hidden;
+    pointer-events: none;
+    background: #0E1112;
+  }
+
+  .trd-loupe-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  @media (max-width: 900px) {
+    trude-top-masthead {
+      height: auto;
+      padding: 4px 6px;
+      flex-wrap: wrap;
+      gap: 3px;
+    }
+    airport-placard-marquee {
+      flex: 1 1 100%;
+      gap: 4px;
+    }
+    trude-placard-badge {
+      padding: 2px 5px;
+      font-size: 9.5px;
+    }
+    trude-placard-headline {
+      font-size: 11px;
+      max-width: 132px;
+    }
+    trude-flap-strip {
+      gap: 1px;
+      padding: 1px 3px;
+    }
+    trude-flap-cell {
+      width: 7px;
+      height: 13px;
+      font-size: 7.5px;
+    }
+    trude-continuum-tag {
+      display: none;
+    }
+    trude-utility-rail {
+      width: 100%;
+      justify-content: space-between;
+      gap: 3px;
+    }
+    .trd-action-chip {
+      padding: 3px 5px;
+      font-size: 9px;
+    }
+    trude-workspace-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 4px 6px;
+    }
+    trude-stage-viewport {
+      flex: 0 0 282px;
+      height: 282px;
+      padding: 4px;
+      gap: 4px;
+    }
+    trude-inspect-toast {
+      height: 18px;
+      font-size: 8.5px;
+    }
+    trude-control-deck {
+      flex: 1 1 auto;
+      gap: 4px;
+    }
+    .trd-module-card {
+      padding: 4px 6px;
+      gap: 3px;
+    }
+    trude-board-heading {
+      font-size: 9px;
+    }
+    trude-ticket-rack {
+      max-height: 58px;
+      gap: 3px;
+    }
+    trude-flight-ticket {
+      padding: 3px 5px;
+    }
+    trude-locus-latch {
+      padding: 3px 1px !important;
+      font-size: 8.5px !important;
+    }
+    trude-dialogue-card {
+      padding: 4px 6px;
+    }
+    trude-dialogue-quote {
+      font-size: 9.5px;
+      min-height: 20px;
+      margin-bottom: 3px;
+    }
+    trude-diff-row {
+      padding: 2px 5px;
+    }
+    trude-diff-val {
+      font-size: 9.5px;
+    }
+    trude-plate-gallery {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .trd-action-chip {
+      transition: none !important;
+    }
+  }
+</style>
+</head>
+<body>
+  <trude-global-continuum id="trd-app" class="trd-continuum-shell">
+    <trude-top-masthead class="trd-masthead">
+      <airport-placard-marquee id="trd-placard-marquee" class="trd-marquee" aria-live="polite">
+        <trude-placard-badge id="trd-placard-code" class="trd-code-pill">TRD-01</trude-placard-badge>
+        <trude-placard-headline id="trd-placard-letters" class="trd-placard-text">TRUDE CENTRAL</trude-placard-headline>
+        <trude-flap-strip id="trd-flap-strip" class="trd-flap-strip" aria-hidden="true"></trude-flap-strip>
+        <trude-continuum-tag id="trd-continuum-tag" class="trd-continuum-sub">RWY 27L · VARIANCE 0.00% · VISITED 1</trude-continuum-tag>
+      </airport-placard-marquee>
+      <trude-utility-rail class="trd-utility-rail">
+        <trude-view-toggle class="trd-view-group" role="group" aria-label="Stage view mode">
+          <trude-mode-pill id="trd-view-composite" class="trd-action-chip trd-is-active" data-view="composite" role="button" tabindex="0">Dual</trude-mode-pill>
+          <trude-mode-pill id="trd-view-airport" class="trd-action-chip" data-view="airport" role="button" tabindex="0">Runway</trude-mode-pill>
+          <trude-mode-pill id="trd-view-suburb" class="trd-action-chip" data-view="suburb" role="button" tabindex="0">Suburb</trude-mode-pill>
+        </trude-view-toggle>
+        <trude-compare-latch id="trd-btn-compare" class="trd-action-chip" role="button" tabindex="0" aria-pressed="false">[C] Diff</trude-compare-latch>
+        <trude-audio-latch id="trd-btn-mute" class="trd-action-chip" role="button" tabindex="0" aria-pressed="false">[M] Sound</trude-audio-latch>
+        <trude-plate-latch id="trd-btn-plates" class="trd-action-chip" role="button" tabindex="0">[P] Plates</trude-plate-latch>
+      </trude-utility-rail>
+    </trude-top-masthead>
+
+    <trude-workspace-grid class="trd-workspace">
+      <trude-stage-viewport id="trd-stage-viewport" class="trd-stage">
+        <trude-transit-pane id="trd-transit-pane" class="trd-pane">
+          <canvas id="trd-airport-canvas" class="trd-stage-canvas"></canvas>
+          <trude-pane-caption id="trd-airport-caption" class="trd-pane-badge">0 · RWY 27L · TRD-01 TRUDE CENTRAL</trude-pane-caption>
+        </trude-transit-pane>
+        <trude-suburb-pane id="trd-suburb-pane" class="trd-pane">
+          <canvas id="trd-suburb-canvas" class="trd-stage-canvas"></canvas>
+          <trude-pane-caption id="trd-suburb-caption" class="trd-pane-badge">2 · FLOWER-BED ROUNDABOUT SQUARES</trude-pane-caption>
+        </trude-suburb-pane>
+        <trude-wipe-rail id="trd-wipe-rail" class="trd-wipe-rail" hidden role="slider" tabindex="0" aria-label="Origin vs destination split wipe" aria-valuemin="15" aria-valuemax="85" aria-valuenow="50">
+          <trude-wipe-label class="trd-wipe-tag">ORIGIN TRD-01</trude-wipe-label>
+          <trude-wipe-track id="trd-wipe-track" class="trd-wipe-track">
+            <trude-wipe-thumb id="trd-wipe-thumb" class="trd-wipe-thumb"></trude-wipe-thumb>
+          </trude-wipe-track>
+          <trude-wipe-label id="trd-wipe-dest" class="trd-wipe-tag">DEST 50%</trude-wipe-label>
+        </trude-wipe-rail>
+        <trude-inspect-toast id="trd-inspect-toast" class="trd-toast">RWY 27L &amp; yellowish-greenish suburbs identical across every planetary sector.</trude-inspect-toast>
+      </trude-stage-viewport>
+
+      <trude-control-deck id="trd-control-deck" class="trd-deck">
+        <futile-departure-board id="trd-departure-board" class="trd-module-card">
+          <trude-board-heading class="trd-card-head">
+            <trude-head-title class="trd-head-text">ESCAPE DEPARTURE BOARD</trude-head-title>
+            <trude-metric-pill id="trd-flight-tally" class="trd-head-stat">0 FLIGHTS · ESCAPE: FALSE</trude-metric-pill>
+          </trude-board-heading>
+          <trude-flight-actions class="trd-flight-actions">
+            <trude-escape-trigger id="trd-btn-escape" class="trd-action-chip trd-primary-cta" role="button" tabindex="0">[F] Resume Flight to Escape</trude-escape-trigger>
+            <trude-land-trigger id="trd-btn-land" class="trd-action-chip" role="button" tabindex="0">Land Now</trude-land-trigger>
+          </trude-flight-actions>
+          <trude-ticket-rack id="trd-ticket-rack" class="trd-ticket-rack" role="list" aria-label="Global Trude airport tickets"></trude-ticket-rack>
+        </futile-departure-board>
+
+        <suburban-roundabout-loop id="trd-suburb-loop" class="trd-module-card">
+          <trude-board-heading class="trd-card-head">
+            <trude-head-title class="trd-head-text">PROVINCIAL LOCI &amp; HARDWARE</trude-head-title>
+            <trude-metric-pill id="trd-locus-tally" class="trd-head-stat">VARIANCE 0.00%</trude-metric-pill>
+          </trude-board-heading>
+          <trude-locus-rack class="trd-locus-rack" role="group" aria-label="Inspectable Trude loci">
+            <trude-locus-latch id="trd-loc-0" class="trd-action-chip trd-locus-btn" data-slot="0" role="button" tabindex="0">0 Rwy</trude-locus-latch>
+            <trude-locus-latch id="trd-loc-1" class="trd-action-chip trd-locus-btn" data-slot="1" role="button" tabindex="0">1 Suburb</trude-locus-latch>
+            <trude-locus-latch id="trd-loc-2" class="trd-action-chip trd-locus-btn trd-is-active" data-slot="2" role="button" tabindex="0">2 Square</trude-locus-latch>
+            <trude-locus-latch id="trd-loc-3" class="trd-action-chip trd-locus-btn" data-slot="3" role="button" tabindex="0">3 Hdwr</trude-locus-latch>
+            <trude-locus-latch id="trd-loc-4" class="trd-action-chip trd-locus-btn" data-slot="4" role="button" tabindex="0">4 Goblet</trude-locus-latch>
+          </trude-locus-rack>
+          <trude-dialogue-card id="trd-dialogue-card" class="trd-dialogue-card">
+            <trude-dialogue-meta id="trd-dialogue-meta" class="trd-dialogue-meta">TURN 1/6 · HARDWARE BUYER · [ELB-3/8-GALV]</trude-dialogue-meta>
+            <trude-dialogue-quote id="trd-dialogue-quote" class="trd-dialogue-quote">"Three dozen three-eighths galvanized elbows, threaded both ends, packed dry in greased paper before the drizzle sets in."</trude-dialogue-quote>
+            <trude-dialogue-trigger id="trd-btn-dialogue" class="trd-action-chip" role="button" tabindex="0">[H] Next Verbatim Hardware Line</trude-dialogue-trigger>
+          </trude-dialogue-card>
+        </suburban-roundabout-loop>
+
+        <caterpillar-goblet-bar id="trd-goblet-bar" class="trd-module-card">
+          <trude-board-heading class="trd-card-head">
+            <trude-head-title class="trd-head-text">HOTEL MIRROR &amp; GOBLET RELIEF</trude-head-title>
+            <trude-metric-pill id="trd-goblet-angle" class="trd-head-stat">21°</trude-metric-pill>
+          </trude-board-heading>
+          <trude-goblet-controls class="trd-goblet-controls">
+            <trude-goblet-wheel id="trd-btn-goblet-ccw" class="trd-action-chip" role="button" tabindex="0">-25°</trude-goblet-wheel>
+            <trude-goblet-wheel id="trd-btn-goblet-cw" class="trd-action-chip" role="button" tabindex="0">[G] Rotate Goblet</trude-goblet-wheel>
+            <trude-mirror-latch id="trd-btn-mirror" class="trd-action-chip trd-is-active" role="button" tabindex="0" aria-pressed="true">[R] Rays</trude-mirror-latch>
+          </trude-goblet-controls>
+          <trude-goblet-readout id="trd-goblet-readout" class="trd-goblet-readout">8 Botanical Leaves · 3×11-Seg Caterpillars · 4 Mirror Moldings</trude-goblet-readout>
+        </caterpillar-goblet-bar>
+
+        <trude-diff-ledger id="trd-diff-ledger" class="trd-module-card">
+          <trude-board-heading class="trd-card-head">
+            <trude-head-title class="trd-head-text">ORIGIN VS. DESTINATION DIFF</trude-head-title>
+            <trude-compare-pill id="trd-btn-compare-card" class="trd-action-chip" role="button" tabindex="0">[C] Wipe</trude-compare-pill>
+          </trude-board-heading>
+          <trude-diff-grid class="trd-diff-grid">
+            <trude-diff-row class="trd-diff-row">
+              <trude-diff-key class="trd-diff-key">Runway &amp; Suburb</trude-diff-key>
+              <trude-diff-val id="trd-diff-suburb" class="trd-diff-val">0.00% Variance</trude-diff-val>
+            </trude-diff-row>
+            <trude-diff-row class="trd-diff-row">
+              <trude-diff-key class="trd-diff-key">Hardware Dialogue</trude-diff-key>
+              <trude-diff-val id="trd-diff-dialogue" class="trd-diff-val">0 words diff</trude-diff-val>
+            </trude-diff-row>
+            <trude-diff-row class="trd-diff-row">
+              <trude-diff-key class="trd-diff-key">Caterpillar Goblet</trude-diff-key>
+              <trude-diff-val id="trd-diff-goblet" class="trd-diff-val">0.00% Diff</trude-diff-val>
+            </trude-diff-row>
+            <trude-diff-row class="trd-diff-row">
+              <trude-diff-key class="trd-diff-key">Sole Mutation</trude-diff-key>
+              <trude-diff-val id="trd-diff-sole" class="trd-diff-val">Airport Sign</trude-diff-val>
+            </trude-diff-row>
+          </trude-diff-grid>
+        </trude-diff-ledger>
+      </trude-control-deck>
+    </trude-workspace-grid>
+  </trude-global-continuum>
+
+  <trude-plate-drawer id="trd-plate-drawer" class="trd-plate-drawer" hidden>
+    <trude-plate-modal class="trd-plate-modal" role="dialog" aria-modal="true" aria-label="Archival Plates of Trude">
+      <trude-plate-bar class="trd-plate-bar">
+        <trude-plate-title class="trd-plate-title">ROYAL ARCHIVAL PLATES · TRUDE</trude-plate-title>
+        <trude-plate-tabs class="trd-plate-tabs" role="tablist">
+          <trude-plate-tab id="trd-tab-diptych" class="trd-action-chip trd-plate-tab trd-is-active" data-tab="diptych" role="tab" tabindex="0" aria-selected="true">Diptych</trude-plate-tab>
+          <trude-plate-tab id="trd-tab-map" class="trd-action-chip trd-plate-tab" data-tab="map" role="tab" tabindex="0" aria-selected="false">Map</trude-plate-tab>
+          <trude-plate-tab id="trd-tab-image" class="trd-action-chip trd-plate-tab" data-tab="image" role="tab" tabindex="0" aria-selected="false">Image</trude-plate-tab>
+        </trude-plate-tabs>
+        <trude-plate-actions class="trd-plate-actions">
+          <trude-zoom-latch id="trd-btn-plate-zoom" class="trd-action-chip" role="button" tabindex="0" aria-pressed="false">[Z] Loupe</trude-zoom-latch>
+          <trude-close-latch id="trd-btn-plate-close" class="trd-action-chip" role="button" tabindex="0">[Esc] Close</trude-close-latch>
+        </trude-plate-actions>
+      </trude-plate-bar>
+      <trude-plate-gallery id="trd-plate-gallery" class="trd-plate-gallery" data-mode="diptych">
+        <trude-plate-frame id="trd-frame-map" class="trd-plate-frame" data-plate="map">
+          <img id="trd-img-map" class="trd-plate-img" src="map.png" alt="Cartographic plate of Trude">
+          <trude-plate-caption class="trd-plate-caption">CARTOGRAPHIC PLATE · 1600×1200 · CONTINUUM SURVEY</trude-plate-caption>
+        </trude-plate-frame>
+        <trude-plate-frame id="trd-frame-image" class="trd-plate-frame" data-plate="image">
+          <img id="trd-img-image" class="trd-plate-img" src="image.png" alt="Visual plate of Trude">
+          <trude-plate-caption class="trd-plate-caption">VISUAL PLATE · 1600×1000 · PROVINCIAL SUBURB &amp; AIRPORT</trude-plate-caption>
+        </trude-plate-frame>
+        <trude-zoom-loupe id="trd-zoom-loupe" class="trd-zoom-loupe" hidden>
+          <canvas id="trd-loupe-canvas" class="trd-loupe-canvas" width="196" height="196"></canvas>
+        </trude-zoom-loupe>
+      </trude-plate-gallery>
+    </trude-plate-modal>
+  </trude-plate-drawer>
+
+  <script>
+/* City 44: Trude (Continuous Cities 2) — Identical Airport Transit Layer */
+(function () {
+  "use strict";
+
+  var PALETTE = Object.freeze({
+    asphalt_tarmac: "#1E2224",
+    tin_warehouse_dark: "#3A4144",
+    tin_roof_zinc: "#7E878A",
+    suburb_yellowish_ochre: "#C8B868",
+    suburb_ochre_shadow: "#9C8E47",
+    suburb_greenish_lichen: "#6C8364",
+    suburb_green_shadow: "#4B5E46",
+    roundabout_marigold: "#D4953B",
+    roundabout_geranium: "#C46238",
+    placard_amber_ivory: "#F2E5BE",
+    goblet_celadon_glass: "#9EB59E",
+    overcast_continuum_sky: "#2B3130",
+    overcast_horizon_olive: "#525949"
+  });
+
+  var INVARIANT_RUNWAY_SPEC = Object.freeze({
+    runwayHeading: "27L",
+    thresholdStripes: 8,
+    towerHeightM: 42,
+    hangarBays: 6,
+    luggageCarts: 4,
+    windsockDeg: 112.5,
+    tarmacCrackSeed: 440802,
+    taxiCabCount: 3
+  });
+
+  var RAW_DESTINATIONS = [
+    [0, "TRD-01", "TRUDE CENTRAL", "Province Zero Continuum", 45.4642, 9.1900, 0, 0],
+    [1, "OMA-TRD", "EPPLEY OMAHA", "Great Plains Basin", 41.3032, -95.8941, 303, 7784],
+    [2, "IST-TRD", "YESILKOY ISTANBUL", "Marmara Littoral", 40.9769, 28.8146, 104, 1668],
+    [3, "EZE-TRD", "EZEIZA PAMPAS", "Rio de la Plata Plain", -34.8222, -58.5358, 230, 11206],
+    [4, "SYD-TRD", "MASCOT BOTANY", "Tasman Rim", -33.9399, 151.1753, 109, 16590],
+    [5, "KEF-TRD", "KEFLAVIK LAVA", "Reykjanes Basalt", 63.9850, -22.6056, 326, 2882],
+    [6, "SKD-TRD", "SAMARKAND STEPPE", "Zeravshan Valley", 39.7005, 66.9838, 79, 4652],
+    [7, "ANC-TRD", "TED STEVENS NORTH", "Cook Inlet Subarctic", 61.1744, -149.9962, 346, 8175],
+    [8, "SIN-TRD", "CHANGI STRAIT", "Malacca Equatorial", 1.3644, 103.9915, 95, 10265],
+    [9, "CMN-TRD", "NOUASSEUR ATLAS", "Chaouia Atlantic", 33.3675, -7.5898, 232, 1966],
+    [10, "USH-TRD", "MALVINAS TIERRA", "Beagle Channel South", -54.8433, -68.2958, 218, 13278],
+    [11, "NBO-TRD", "EMBAKASI RIFT", "Athi Highland", -1.3192, 36.9278, 147, 5912],
+    [12, "VVO-TRD", "KNEVICHI AMUR", "Sea of Japan Margin", 43.3990, 132.1480, 45, 8540],
+    [13, "LIM-TRD", "CALLAO PACIFIC", "Rimac Coastal Fog", -12.0219, -77.1143, 256, 10724],
+    [14, "BOM-TRD", "SAHAR MONSOON", "Salsette Estuary", 19.0896, 72.8656, 103, 6458],
+    [15, "YUL-TRD", "DORVAL ST LAWRENCE", "Hochelaga Archipelago", 45.4706, -73.7408, 298, 5946],
+    [16, "LIS-TRD", "PORTELA TAGUS", "Estremadura Mouth", 38.7756, -9.1354, 250, 1682],
+    [17, "MNL-TRD", "NICHOLS BAY", "Luzon Archipelago", 14.5086, 121.0194, 78, 10412],
+    [18, "DKR-TRD", "YOFF CAP-VERT", "Sahel Promontory", 14.7397, -17.4902, 223, 4218],
+    [19, "AKL-TRD", "MANGERE HARBOUR", "Manukau Antipode", -37.0082, 174.7850, 72, 18524],
+    [20, "WAW-TRD", "OKECIE VISTULA", "Mazovian Lowland", 52.1657, 20.9671, 47, 1144],
+    [21, "CAI-TRD", "ALMAAZA NILE", "Heliopolis Delta", 30.1219, 31.4056, 126, 2592],
+    [22, "JNB-TRD", "JAN SMUTS VELD", "Witwatersrand Ridge", -26.1367, 28.2411, 165, 8172],
+    [23, "SCL-TRD", "PUDAHUEL ANDES", "Maipo Cordillera", -33.3930, -70.7858, 237, 11912]
+  ];
+
+  var DESTINATIONS = Object.freeze(
+    RAW_DESTINATIONS.map(function (row) {
+      return Object.freeze({
+        index: row[0],
+        code: row[1],
+        placard: row[2],
+        regionLabel: row[3],
+        lat: row[4],
+        lon: row[5],
+        bearingDeg: row[6],
+        kmFromOrigin: row[7]
+      });
+    })
+  );
+
+  var FLAP_CELL_COUNT = 18;
+  var FLAP_ALPHABET = " ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-/";
+
+  function createSeededRng(seed) {
+    var s = (seed >>> 0) || 440802;
+    return function () {
+      s = (s + 0x6D2B79F5) >>> 0;
+      var t = Math.imul(s ^ (s >>> 15), 1 | s);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  var sceneRng = createSeededRng(INVARIANT_RUNWAY_SPEC.tarmacCrackSeed);
+
+  var SUBURB_BLOCKS = (function () {
+    var blocks = [];
+    var count = 34;
+    for (var i = 0; i < count; i++) {
+      var isYellow = (i + Math.floor(sceneRng() * 2)) % 2 === 0;
+      blocks.push({
+        nx: i / count,
+        nw: 0.024 + sceneRng() * 0.014,
+        nh: 0.028 + sceneRng() * 0.044,
+        litColor: isYellow ? PALETTE.suburb_yellowish_ochre : PALETTE.suburb_greenish_lichen,
+        shadeColor: isYellow ? PALETTE.suburb_ochre_shadow : PALETTE.suburb_green_shadow,
+        roofTint: sceneRng() > 0.55 ? PALETTE.tin_roof_zinc : PALETTE.tin_warehouse_dark,
+        rows: 2 + Math.floor(sceneRng() * 3)
+      });
+    }
+    return blocks;
+  })();
+
+  var FACTORY_CHIMNEYS = (function () {
+    var arr = [];
+    var xs = [0.06, 0.14, 0.27, 0.74, 0.85, 0.93];
+    for (var i = 0; i < xs.length; i++) {
+      arr.push({
+        nx: xs[i],
+        nh: 0.065 + sceneRng() * 0.038,
+        nw: 0.007 + sceneRng() * 0.003,
+        plumeLen: 0.045 + sceneRng() * 0.035
+      });
+    }
+    return arr;
+  })();
+
+  var SKID_MARKS = (function () {
+    var marks = [];
+    for (var i = 0; i < 38; i++) {
+      marks.push({
+        u0: 0.48 + sceneRng() * 0.42,
+        len: 0.05 + sceneRng() * 0.14,
+        vOff: (sceneRng() - 0.5) * 0.52,
+        alpha: 0.22 + sceneRng() * 0.36,
+        thick: 0.8 + sceneRng() * 1.9
+      });
+    }
+    return marks;
+  })();
+
+  var TARMAC_CRACKS = (function () {
+    var cracks = [];
+    for (var i = 0; i < 16; i++) {
+      var pts = [];
+      var u = 0.08 + sceneRng() * 0.84;
+      var v = -0.44 + sceneRng() * 0.88;
+      for (var s = 0; s < 5; s++) {
+        pts.push({ u: u, v: v });
+        u += (sceneRng() - 0.35) * 0.045;
+        v += (sceneRng() - 0.5) * 0.16;
+      }
+      cracks.push(pts);
+    }
+    return cracks;
+  })();
+
+  var CLOUD_BANKS = (function () {
+    var banks = [];
+    for (var i = 0; i < 26; i++) {
+      banks.push({
+        nx: sceneRng(),
+        ny: 0.08 + sceneRng() * 0.82,
+        rx: 0.11 + sceneRng() * 0.18,
+        ry: 0.045 + sceneRng() * 0.075,
+        speed: 0.14 + sceneRng() * 0.28,
+        tone: i % 3
+      });
+    }
+    return banks;
+  })();
+
+  function degToRad(d) {
+    return (d * Math.PI) / 180;
+  }
+
+  function haversineKm(lat1, lon1, lat2, lon2) {
+    var R = 6371;
+    var dLat = degToRad(lat2 - lat1);
+    var dLon = degToRad(lon2 - lon1);
+    var a =
+      Math.sin(dLat * 0.5) * Math.sin(dLat * 0.5) +
+      Math.cos(degToRad(lat1)) * Math.cos(degToRad(lat2)) *
+      Math.sin(dLon * 0.5) * Math.sin(dLon * 0.5);
+    var c = 2 * Math.atan2(Math.sqrt(Math.min(1, a)), Math.sqrt(Math.max(0, 1 - a)));
+    return R * c;
+  }
+
+  function initialBearingDeg(lat1, lon1, lat2, lon2) {
+    var p1 = degToRad(lat1);
+    var p2 = degToRad(lat2);
+    var dL = degToRad(lon2 - lon1);
+    var y = Math.sin(dL) * Math.cos(p2);
+    var x = Math.cos(p1) * Math.sin(p2) - Math.sin(p1) * Math.cos(p2) * Math.cos(dL);
+    var brng = (Math.atan2(y, x) * 180) / Math.PI;
+    return Math.round((brng + 360) % 360);
+  }
+
+  function padPlacard18(str) {
+    var clean = String(str || "TRUDE CENTRAL").toUpperCase().slice(0, FLAP_CELL_COUNT);
+    var padLeft = Math.floor((FLAP_CELL_COUNT - clean.length) * 0.5);
+    var out = "";
+    for (var i = 0; i < padLeft; i++) out += " ";
+    out += clean;
+    while (out.length < FLAP_CELL_COUNT) out += " ";
+    return out;
+  }
+
+  function resolveTargetDestination(targetOrCoords, currentIndex, flightsTaken) {
+    var n = DESTINATIONS.length;
+    if (typeof targetOrCoords === "number" && Number.isFinite(targetOrCoords)) {
+      var idx = ((Math.trunc(targetOrCoords) % n) + n) % n;
+      return DESTINATIONS[idx];
+    }
+    if (
+      targetOrCoords === undefined ||
+      targetOrCoords === null ||
+      targetOrCoords === "next" ||
+      targetOrCoords === ""
+    ) {
+      return DESTINATIONS[(currentIndex + 1) % n];
+    }
+    if (targetOrCoords === "random") {
+      var stepOffset = 1 + ((flightsTaken * 7 + 5) % (n - 1));
+      return DESTINATIONS[(currentIndex + stepOffset) % n];
+    }
+    if (typeof targetOrCoords === "string") {
+      var q = targetOrCoords.trim().toUpperCase();
+      for (var i = 0; i < n; i++) {
+        if (DESTINATIONS[i].code === q || DESTINATIONS[i].placard === q) {
+          return DESTINATIONS[i];
+        }
+      }
+      for (var j = 0; j < n; j++) {
+        if (
+          DESTINATIONS[j].code.indexOf(q) !== -1 ||
+          DESTINATIONS[j].placard.indexOf(q) !== -1 ||
+          DESTINATIONS[j].regionLabel.toUpperCase().indexOf(q) !== -1
+        ) {
+          return DESTINATIONS[j];
+        }
+      }
+      var cleanCode = q.replace(/[^A-Z0-9-]/g, "").slice(0, 7) || "TRD-XX";
+      return {
+        index: (currentIndex + 1) % n,
+        code: cleanCode.indexOf("-") !== -1 ? cleanCode : cleanCode.slice(0, 3) + "-TRD",
+        placard: q.slice(0, FLAP_CELL_COUNT),
+        regionLabel: "Custom Continuum Sector",
+        lat: DESTINATIONS[(currentIndex + 1) % n].lat,
+        lon: DESTINATIONS[(currentIndex + 1) % n].lon,
+        bearingDeg: 90,
+        kmFromOrigin: 6420
+      };
+    }
+    if (typeof targetOrCoords === "object") {
+      var lat = Number(targetOrCoords.lat);
+      var lon = Number(targetOrCoords.lon);
+      if (!Number.isFinite(lat)) lat = 0;
+      if (!Number.isFinite(lon)) lon = 0;
+      var origin = DESTINATIONS[0];
+      var bestIdx = 0;
+      var bestDist = Infinity;
+      for (var k = 0; k < n; k++) {
+        var d = haversineKm(lat, lon, DESTINATIONS[k].lat, DESTINATIONS[k].lon);
+        if (d < bestDist) {
+          bestDist = d;
+          bestIdx = k;
+        }
+      }
+      var nearest = DESTINATIONS[bestIdx];
+      var customPlacard = targetOrCoords.placard
+        ? String(targetOrCoords.placard).trim().toUpperCase().slice(0, FLAP_CELL_COUNT)
+        : nearest.placard;
+      var customCode = targetOrCoords.code
+        ? String(targetOrCoords.code).trim().toUpperCase().slice(0, 8)
+        : (targetOrCoords.placard ? customPlacard.replace(/[^A-Z]/g, "X").slice(0, 3) + "-TRD" : nearest.code);
+      return {
+        index: bestIdx,
+        code: customCode,
+        placard: customPlacard,
+        regionLabel: targetOrCoords.regionLabel ? String(targetOrCoords.regionLabel) : nearest.regionLabel,
+        lat: lat,
+        lon: lon,
+        bearingDeg: initialBearingDeg(origin.lat, origin.lon, lat, lon),
+        kmFromOrigin: Math.round(haversineKm(origin.lat, origin.lon, lat, lon))
+      };
+    }
+    return DESTINATIONS[(currentIndex + 1) % n];
+  }
+
+  function createTransitAudio(initialMuted) {
+    var muted = Boolean(initialMuted);
+    var audioCtx = null;
+    var masterGain = null;
+    var noiseBuffer = null;
+
+    function ensureCtx() {
+      if (muted) return null;
+      try {
+        var Ctor = globalThis.AudioContext || globalThis.webkitAudioContext;
+        if (!Ctor) return null;
+        if (!audioCtx) {
+          audioCtx = new Ctor();
+          masterGain = audioCtx.createGain();
+          masterGain.gain.value = muted ? 0 : 0.22;
+          masterGain.connect(audioCtx.destination);
+          var sampleRate = audioCtx.sampleRate || 44100;
+          var len = Math.floor(sampleRate * 1.5);
+          noiseBuffer = audioCtx.createBuffer(1, len, sampleRate);
+          var data = noiseBuffer.getChannelData(0);
+          var rng = createSeededRng(440802);
+          for (var i = 0; i < len; i++) {
+            data[i] = rng() * 2 - 1;
+          }
+        }
+        if (audioCtx.state === "suspended") {
+          audioCtx.resume().catch(function () {});
+        }
+        return audioCtx;
+      } catch (_err) {
+        return null;
+      }
+    }
+
+    function playSplitFlapCascade(count) {
+      if (muted) return false;
+      var ctx = ensureCtx();
+      if (!ctx || !masterGain || !noiseBuffer) return false;
+      try {
+        var clicks = Math.max(4, Math.min(22, Number(count) || 14));
+        var now = ctx.currentTime;
+        for (var i = 0; i < clicks; i++) {
+          var t0 = now + i * 0.022;
+          var src = ctx.createBufferSource();
+          src.buffer = noiseBuffer;
+          var bp = ctx.createBiquadFilter();
+          bp.type = "bandpass";
+          bp.frequency.setValueAtTime(1250 + (i % 5) * 210, t0);
+          bp.Q.setValueAtTime(3.6, t0);
+          var g = ctx.createGain();
+          g.gain.setValueAtTime(0.0001, t0);
+          g.gain.exponentialRampToValueAtTime(0.18, t0 + 0.003);
+          g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.021);
+          src.connect(bp);
+          bp.connect(g);
+          g.connect(masterGain);
+          src.start(t0, (i * 0.05) % 1.1, 0.026);
+          src.stop(t0 + 0.028);
+        }
+        return true;
+      } catch (_err) {
+        return false;
+      }
+    }
+
+    function playJetTransit(durationSec) {
+      if (muted) return false;
+      var ctx = ensureCtx();
+      if (!ctx || !masterGain || !noiseBuffer) return false;
+      try {
+        var dur = Math.max(0.22, Math.min(3.5, Number(durationSec) || 2.1));
+        var now = ctx.currentTime;
+        var src = ctx.createBufferSource();
+        src.buffer = noiseBuffer;
+        src.loop = true;
+        var lp = ctx.createBiquadFilter();
+        lp.type = "lowpass";
+        lp.frequency.setValueAtTime(240, now);
+        lp.frequency.exponentialRampToValueAtTime(760, now + dur * 0.35);
+        lp.frequency.exponentialRampToValueAtTime(290, now + dur);
+        var noiseGain = ctx.createGain();
+        noiseGain.gain.setValueAtTime(0.0001, now);
+        noiseGain.gain.linearRampToValueAtTime(0.14, now + dur * 0.22);
+        noiseGain.gain.linearRampToValueAtTime(0.09, now + dur * 0.75);
+        noiseGain.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+        src.connect(lp);
+        lp.connect(noiseGain);
+        noiseGain.connect(masterGain);
+        src.start(now);
+        src.stop(now + dur + 0.03);
+
+        var oscA = ctx.createOscillator();
+        var oscB = ctx.createOscillator();
+        oscA.type = "sawtooth";
+        oscB.type = "triangle";
+        oscA.frequency.setValueAtTime(66, now);
+        oscA.frequency.linearRampToValueAtTime(84, now + dur * 0.4);
+        oscA.frequency.linearRampToValueAtTime(62, now + dur);
+        oscB.frequency.setValueAtTime(99, now);
+        oscB.frequency.linearRampToValueAtTime(126, now + dur * 0.4);
+        oscB.frequency.linearRampToValueAtTime(93, now + dur);
+        var droneFilter = ctx.createBiquadFilter();
+        droneFilter.type = "lowpass";
+        droneFilter.frequency.setValueAtTime(210, now);
+        var droneGain = ctx.createGain();
+        droneGain.gain.setValueAtTime(0.0001, now);
+        droneGain.gain.linearRampToValueAtTime(0.09, now + dur * 0.2);
+        droneGain.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+        oscA.connect(droneFilter);
+        oscB.connect(droneFilter);
+        droneFilter.connect(droneGain);
+        droneGain.connect(masterGain);
+        oscA.start(now);
+        oscB.start(now);
+        oscA.stop(now + dur + 0.03);
+        oscB.stop(now + dur + 0.03);
+        return true;
+      } catch (_err) {
+        return false;
+      }
+    }
+
+    function setMuted(flag) {
+      muted = Boolean(flag);
+      if (masterGain && audioCtx) {
+        try {
+          masterGain.gain.setValueAtTime(muted ? 0 : 0.22, audioCtx.currentTime);
+        } catch (_err) {}
+      }
+      return muted;
+    }
+
+    return {
+      unlockAudio: function () { return Boolean(ensureCtx()); },
+      setMuted: setMuted,
+      toggleMute: function () { return setMuted(!muted); },
+      isMuted: function () { return muted; },
+      playSplitFlapCascade: playSplitFlapCascade,
+      playJetTransit: playJetTransit,
+      destroy: function () {
+        if (audioCtx) {
+          try { audioCtx.close(); } catch (_err) {}
+          audioCtx = null;
+          masterGain = null;
+        }
+      }
+    };
+  }
+
+  function computePlacardBounds(w, h) {
+    var compact = w < 560;
+    var pw = Math.round(w * (compact ? 0.84 : 0.48));
+    var ph = Math.round(Math.max(82, Math.min(138, h * (compact ? 0.16 : 0.175))));
+    var px = Math.round((w - pw) * 0.5);
+    var py = Math.round(h * (compact ? 0.14 : 0.155));
+    return { x: px, y: py, w: pw, h: ph };
+  }
+
+  function drawSkyAndSuburbContinuum(ctx, w, h) {
+    var horizonY = h * 0.41;
+    var skyGrad = ctx.createLinearGradient(0, 0, 0, horizonY);
+    skyGrad.addColorStop(0, PALETTE.overcast_continuum_sky);
+    skyGrad.addColorStop(0.62, "#3C443E");
+    skyGrad.addColorStop(1, PALETTE.overcast_horizon_olive);
+    ctx.fillStyle = skyGrad;
+    ctx.fillRect(0, 0, w, horizonY + 2);
+
+    ctx.fillStyle = "rgba(200, 184, 104, 0.08)";
+    for (var c = 0; c < 5; c++) {
+      var bandY = h * (0.05 + c * 0.062);
+      ctx.fillRect(0, bandY, w, h * 0.022);
+    }
+
+    for (var ch = 0; ch < FACTORY_CHIMNEYS.length; ch++) {
+      var fc = FACTORY_CHIMNEYS[ch];
+      var cx = fc.nx * w;
+      var cw = Math.max(4, fc.nw * w);
+      var chH = fc.nh * h;
+      var topY = horizonY - chH;
+      ctx.fillStyle = "rgba(158, 166, 152, 0.16)";
+      ctx.beginPath();
+      ctx.ellipse(cx + fc.plumeLen * w * 0.5, topY - 6, fc.plumeLen * w * 0.6, 7, -0.08, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = PALETTE.tin_warehouse_dark;
+      ctx.fillRect(cx - cw * 0.5, topY, cw, chH);
+      ctx.fillStyle = PALETTE.roundabout_geranium;
+      ctx.fillRect(cx - cw * 0.5, topY + 3, cw, 3);
+    }
+
+    ctx.fillStyle = "#3E483D";
+    ctx.fillRect(0, horizonY - 4, w, h * 0.19);
+
+    for (var i = 0; i < SUBURB_BLOCKS.length; i++) {
+      var b = SUBURB_BLOCKS[i];
+      var bx = b.nx * w;
+      var bw = Math.max(10, b.nw * w);
+      var bh = b.nh * h;
+      var by = horizonY - bh * 0.72;
+      ctx.fillStyle = b.litColor;
+      ctx.fillRect(bx, by, bw * 0.68, bh);
+      ctx.fillStyle = b.shadeColor;
+      ctx.fillRect(bx + bw * 0.68, by + 2, bw * 0.34, bh - 2);
+      ctx.fillStyle = b.roofTint;
+      ctx.fillRect(bx - 1, by - 3, bw + 2, 3.5);
+      ctx.fillStyle = "rgba(30, 34, 36, 0.48)";
+      for (var r = 0; r < b.rows; r++) {
+        var wy = by + 5 + r * ((bh - 8) / Math.max(1, b.rows));
+        ctx.fillRect(bx + 3, wy, Math.max(2, bw * 0.18), 2.5);
+        ctx.fillRect(bx + bw * 0.34, wy, Math.max(2, bw * 0.18), 2.5);
+      }
+    }
+
+    var rbX = w * 0.84;
+    var rbY = h * 0.455;
+    ctx.fillStyle = "#2A3032";
+    ctx.beginPath();
+    ctx.ellipse(rbX, rbY, w * 0.068, h * 0.019, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = PALETTE.suburb_greenish_lichen;
+    ctx.beginPath();
+    ctx.ellipse(rbX, rbY, w * 0.041, h * 0.011, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = PALETTE.roundabout_marigold;
+    ctx.beginPath();
+    ctx.ellipse(rbX, rbY, w * 0.024, h * 0.0065, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = PALETTE.roundabout_geranium;
+    ctx.beginPath();
+    ctx.ellipse(rbX, rbY, w * 0.010, h * 0.0032, 0, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  function drawHangarsAndTower(ctx, w, h, clock, reducedMotion) {
+    var apronTop = h * 0.435;
+    var pb = computePlacardBounds(w, h);
+    var hangarCount = INVARIANT_RUNWAY_SPEC.hangarBays;
+    for (var i = 0; i < hangarCount; i++) {
+      var side = i < 3 ? 0 : 1;
+      var slot = i % 3;
+      var hx = side === 0
+        ? w * (0.025 + slot * 0.082)
+        : w * (0.735 + slot * 0.082);
+      var hw = w * 0.074;
+      var hh = h * 0.082;
+      var hy = apronTop + h * 0.012;
+      ctx.fillStyle = PALETTE.tin_warehouse_dark;
+      ctx.fillRect(hx, hy, hw, hh);
+      ctx.fillStyle = PALETTE.tin_roof_zinc;
+      ctx.beginPath();
+      ctx.moveTo(hx - 3, hy + 2);
+      ctx.quadraticCurveTo(hx + hw * 0.5, hy - hh * 0.38, hx + hw + 3, hy + 2);
+      ctx.closePath();
+      ctx.fill();
+      ctx.strokeStyle = "rgba(30, 34, 36, 0.42)";
+      ctx.lineWidth = 1;
+      for (var rib = 1; rib < 6; rib++) {
+        var rx = hx + (hw * rib) / 6;
+        ctx.beginPath();
+        ctx.moveTo(rx, hy);
+        ctx.lineTo(rx, hy + hh);
+        ctx.stroke();
+      }
+      ctx.fillStyle = PALETTE.asphalt_tarmac;
+      ctx.fillRect(hx + hw * 0.18, hy + hh * 0.34, hw * 0.64, hh * 0.66);
+    }
+
+    var tx = pb.x - w * 0.055;
+    var tw = Math.max(22, w * 0.032);
+    var towerTop = h * 0.165;
+    var towerBase = apronTop + h * 0.085;
+    ctx.fillStyle = "#565E5D";
+    ctx.fillRect(tx, towerTop + h * 0.055, tw, towerBase - towerTop - h * 0.055);
+    ctx.fillStyle = PALETTE.tin_warehouse_dark;
+    ctx.beginPath();
+    ctx.moveTo(tx - tw * 0.36, towerTop);
+    ctx.lineTo(tx + tw * 1.36, towerTop);
+    ctx.lineTo(tx + tw * 1.12, towerTop + h * 0.055);
+    ctx.lineTo(tx - tw * 0.12, towerTop + h * 0.055);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = PALETTE.goblet_celadon_glass;
+    ctx.fillRect(tx - tw * 0.18, towerTop + 5, tw * 1.36, h * 0.032);
+    ctx.fillStyle = PALETTE.roundabout_geranium;
+    ctx.beginPath();
+    ctx.arc(tx + tw * 0.5, towerTop - 6, 3.2, 0, Math.PI * 2);
+    ctx.fill();
+
+    var termX = pb.x - w * 0.015;
+    var termW = pb.w + w * 0.03;
+    var termY = pb.y + pb.h;
+    var termH = Math.max(36, apronTop + h * 0.095 - termY);
+    ctx.fillStyle = "#454D4E";
+    ctx.fillRect(termX, termY, termW, termH);
+    ctx.fillStyle = PALETTE.tin_roof_zinc;
+    ctx.fillRect(termX - 6, termY - 4, termW + 12, 6);
+    var bays = 8;
+    for (var g = 0; g < bays; g++) {
+      var gx = termX + 8 + g * ((termW - 16) / bays);
+      ctx.fillStyle = "rgba(158, 181, 158, 0.42)";
+      ctx.fillRect(gx, termY + 8, (termW - 28) / bays, termH * 0.54);
+    }
+
+    var wsX = w * 0.275;
+    var wsY = apronTop + h * 0.105;
+    ctx.strokeStyle = PALETTE.tin_roof_zinc;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(wsX, wsY);
+    ctx.lineTo(wsX, wsY - 28);
+    ctx.stroke();
+    var flutter = reducedMotion ? 0 : Math.sin(clock * 4.2) * 0.06;
+    var ang = ((INVARIANT_RUNWAY_SPEC.windsockDeg - 90) * Math.PI) / 180 + flutter;
+    ctx.save();
+    ctx.translate(wsX, wsY - 27);
+    ctx.rotate(ang);
+    for (var seg = 0; seg < 4; seg++) {
+      ctx.fillStyle = seg % 2 === 0 ? PALETTE.roundabout_geranium : PALETTE.placard_amber_ivory;
+      ctx.fillRect(seg * 5.5, -3.2 + seg * 0.4, 5.5, 6.4 - seg * 0.8);
+    }
+    ctx.restore();
+  }
+
+  function drawApronAndRunway27L(ctx, w, h, clock, reducedMotion) {
+    var apronY = h * 0.525;
+    var rwyTop = h * 0.615;
+    ctx.fillStyle = "#262B2D";
+    ctx.fillRect(0, apronY, w, rwyTop - apronY + 2);
+
+    var cartBaseX = w * 0.34;
+    var cartY = apronY + (rwyTop - apronY) * 0.46;
+    for (var c = 0; c < INVARIANT_RUNWAY_SPEC.luggageCarts; c++) {
+      var cx = cartBaseX + c * 26;
+      ctx.fillStyle = PALETTE.tin_roof_zinc;
+      ctx.fillRect(cx, cartY, 19, 7);
+      ctx.fillStyle = c % 2 === 0 ? PALETTE.suburb_ochre_shadow : PALETTE.suburb_green_shadow;
+      ctx.fillRect(cx + 3, cartY - 6, 13, 6);
+      ctx.fillStyle = "#111416";
+      ctx.fillRect(cx + 2, cartY + 7, 4, 3);
+      ctx.fillRect(cx + 13, cartY + 7, 4, 3);
+    }
+
+    var cabBaseX = w * 0.56;
+    var cabY = apronY + (rwyTop - apronY) * 0.38;
+    for (var t = 0; t < INVARIANT_RUNWAY_SPEC.taxiCabCount; t++) {
+      var kx = cabBaseX + t * 36;
+      ctx.fillStyle = PALETTE.suburb_yellowish_ochre;
+      ctx.fillRect(kx, cabY, 26, 8);
+      ctx.fillRect(kx + 5, cabY - 5, 14, 5);
+      ctx.fillStyle = PALETTE.roundabout_marigold;
+      ctx.fillRect(kx + 9, cabY - 7, 6, 2);
+      ctx.fillStyle = "#111416";
+      ctx.fillRect(kx + 4, cabY + 8, 5, 3);
+      ctx.fillRect(kx + 17, cabY + 8, 5, 3);
+    }
+
+    ctx.fillStyle = PALETTE.asphalt_tarmac;
+    ctx.fillRect(0, rwyTop, w, h - rwyTop);
+    ctx.fillStyle = "#2D3336";
+    ctx.beginPath();
+    ctx.moveTo(w * 0.04, rwyTop + 6);
+    ctx.lineTo(w * 0.96, rwyTop + 6);
+    ctx.lineTo(w * 1.04, h);
+    ctx.lineTo(-w * 0.04, h);
+    ctx.closePath();
+    ctx.fill();
+
+    var midY = rwyTop + (h - rwyTop) * 0.52;
+    var halfSpan = (h - rwyTop) * 0.42;
+
+    ctx.strokeStyle = "rgba(16, 19, 21, 0.55)";
+    ctx.lineWidth = 1.1;
+    for (var cr = 0; cr < TARMAC_CRACKS.length; cr++) {
+      var pts = TARMAC_CRACKS[cr];
+      ctx.beginPath();
+      for (var p = 0; p < pts.length; p++) {
+        var px = pts[p].u * w;
+        var py = midY + pts[p].v * halfSpan;
+        if (p === 0) ctx.moveTo(px, py);
+        else ctx.lineTo(px, py);
+      }
+      ctx.stroke();
+    }
+
+    for (var sm = 0; sm < SKID_MARKS.length; sm++) {
+      var m = SKID_MARKS[sm];
+      ctx.strokeStyle = "rgba(14, 16, 18, " + m.alpha.toFixed(2) + ")";
+      ctx.lineWidth = m.thick;
+      ctx.beginPath();
+      ctx.moveTo(m.u0 * w, midY + m.vOff * halfSpan);
+      ctx.lineTo((m.u0 - m.len) * w, midY + m.vOff * halfSpan);
+      ctx.stroke();
+    }
+
+    ctx.fillStyle = "#D8D0B8";
+    for (var d = 0; d < 9; d++) {
+      ctx.fillRect(w * (0.06 + d * 0.085), midY - 2.5, w * 0.048, 5);
+    }
+
+    var stripeCount = INVARIANT_RUNWAY_SPEC.thresholdStripes;
+    var thX = w * 0.86;
+    for (var s = 0; s < stripeCount; s++) {
+      var frac = (s - (stripeCount - 1) * 0.5) / (stripeCount * 0.55);
+      var sy = midY + frac * halfSpan * 0.88;
+      ctx.fillStyle = "#DFD7BE";
+      ctx.fillRect(thX, sy - 3, w * 0.075, 5.5);
+    }
+
+    ctx.save();
+    ctx.translate(w * 0.80, midY);
+    ctx.rotate(-Math.PI * 0.5);
+    ctx.fillStyle = "#E5DEC6";
+    ctx.font = "700 " + Math.max(14, Math.round(w * 0.021)) + "px monospace";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(INVARIANT_RUNWAY_SPEC.runwayHeading, 0, 0);
+    ctx.restore();
+
+    var pulseIdx = reducedMotion ? 2 : Math.floor(clock * 6) % 6;
+    for (var st = 0; st < 6; st++) {
+      var lx = w * (0.975 - st * 0.018);
+      ctx.fillStyle = st === pulseIdx ? PALETTE.placard_amber_ivory : "rgba(212, 149, 59, 0.45)";
+      ctx.beginPath();
+      ctx.arc(lx, midY, st === pulseIdx ? 3.2 : 2.0, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  function drawClippedPlacardAndFlaps(ctx, w, h, placardStr, codeStr, flapCells) {
+    var pb = computePlacardBounds(w, h);
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(pb.x, pb.y, pb.w, pb.h);
+    ctx.clip();
+
+    ctx.strokeStyle = PALETTE.tin_roof_zinc;
+    ctx.lineWidth = 2;
+    for (var leg = 0; leg < 5; leg++) {
+      var lx = pb.x + pb.w * (0.12 + leg * 0.19);
+      ctx.beginPath();
+      ctx.moveTo(lx, pb.y + pb.h * 0.48);
+      ctx.lineTo(lx, pb.y + pb.h);
+      ctx.stroke();
+    }
+
+    var signH = Math.round(pb.h * 0.54);
+    ctx.fillStyle = "#171B1D";
+    ctx.fillRect(pb.x + 2, pb.y + 2, pb.w - 4, signH);
+    ctx.strokeStyle = PALETTE.roundabout_marigold;
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(pb.x + 3, pb.y + 3, pb.w - 6, signH - 2);
+
+    var badgeW = Math.max(58, Math.round(pb.w * 0.19));
+    ctx.fillStyle = PALETTE.roundabout_marigold;
+    ctx.fillRect(pb.x + 8, pb.y + 8, badgeW, signH - 14);
+    ctx.fillStyle = "#16191B";
+    ctx.font = "700 " + Math.max(10, Math.round(signH * 0.30)) + "px monospace";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(String(codeStr || "TRD-01"), pb.x + 8 + badgeW * 0.5, pb.y + 2 + signH * 0.5);
+
+    var titleAreaX = pb.x + 14 + badgeW;
+    var titleAreaW = pb.w - badgeW - 22;
+    var bigFontPx = Math.max(12, Math.min(Math.round(signH * 0.48), Math.floor((titleAreaW / Math.max(10, String(placardStr).length)) * 1.55)));
+    ctx.fillStyle = PALETTE.placard_amber_ivory;
+    ctx.font = "700 " + bigFontPx + "px monospace";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(String(placardStr || "TRUDE CENTRAL"), titleAreaX + titleAreaW * 0.5, pb.y + 2 + signH * 0.52);
+
+    var boardY = pb.y + signH + 6;
+    var boardH = Math.max(24, pb.h - signH - 8);
+    ctx.fillStyle = "#101315";
+    ctx.fillRect(pb.x + 4, boardY, pb.w - 8, boardH);
+    ctx.strokeStyle = PALETTE.tin_roof_zinc;
+    ctx.lineWidth = 1;
+    ctx.strokeRect(pb.x + 4, boardY, pb.w - 8, boardH);
+
+    var count = FLAP_CELL_COUNT;
+    var padX = pb.x + 10;
+    var availW = pb.w - 20;
+    var cellStep = availW / count;
+    var cellW = Math.max(6, cellStep - 2);
+    var cellH = Math.max(16, boardH - 8);
+    var cellY = boardY + (boardH - cellH) * 0.5;
+    var cellFont = Math.max(9, Math.min(Math.round(cellH * 0.68), Math.round(cellW * 1.15)));
+
+    ctx.font = "700 " + cellFont + "px monospace";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    for (var i = 0; i < count; i++) {
+      var cell = flapCells && flapCells[i] ? flapCells[i] : { currentChar: " ", flipPhase: 0 };
+      var cx = padX + i * cellStep;
+      ctx.fillStyle = "#1D2225";
+      ctx.fillRect(cx, cellY, cellW, cellH);
+
+      var flipScale = cell.flipPhase > 0 ? Math.max(0.14, Math.abs(Math.cos(cell.flipPhase * Math.PI))) : 1;
+      ctx.save();
+      ctx.translate(cx + cellW * 0.5, cellY + cellH * 0.5);
+      ctx.scale(1, flipScale);
+      ctx.fillStyle = cell.flipPhase > 0 ? PALETTE.roundabout_marigold : PALETTE.placard_amber_ivory;
+      ctx.fillText(cell.currentChar || " ", 0, 0.5);
+      ctx.restore();
+
+      ctx.fillStyle = "#0B0D0E";
+      ctx.fillRect(cx, cellY + cellH * 0.5 - 0.6, cellW, 1.2);
+    }
+
+    ctx.restore();
+  }
+
+  function drawInFlightOverlay(ctx, w, h, info, clock) {
+    var p = info.progress;
+    var cloudAlpha = 0;
+    if (info.phase === "takeoff") {
+      cloudAlpha = Math.min(1, p / 0.30);
+    } else if (info.phase === "cloud_cruise") {
+      cloudAlpha = 1;
+    } else if (info.phase === "touchdown") {
+      cloudAlpha = Math.max(0, 1 - (p - 0.72) / 0.28);
+    }
+
+    ctx.save();
+    if (cloudAlpha > 0.01) {
+      ctx.fillStyle = "rgba(43, 49, 48, " + (cloudAlpha * 0.88).toFixed(3) + ")";
+      ctx.fillRect(0, 0, w, h);
+
+      for (var i = 0; i < CLOUD_BANKS.length; i++) {
+        var cb = CLOUD_BANKS[i];
+        var drift = info.reducedMotion ? 0 : (clock * cb.speed + p * 0.85) % 1.3;
+        var nx = ((cb.nx - drift) % 1.3 + 1.3) % 1.3 - 0.15;
+        var ny = cb.ny;
+        var colors = [
+          "rgba(108, 131, 100, ",
+          "rgba(156, 142, 71, ",
+          "rgba(126, 135, 138, "
+        ];
+        ctx.fillStyle = colors[cb.tone] + (cloudAlpha * 0.34).toFixed(3) + ")";
+        ctx.beginPath();
+        ctx.ellipse(nx * w, ny * h, cb.rx * w, cb.ry * h, 0, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    var wingEnter = p < 0.22 ? p / 0.22 : (p > 0.82 ? Math.max(0, (1 - p) / 0.18) : 1);
+    if (wingEnter > 0.02) {
+      ctx.save();
+      var bank = info.reducedMotion ? -0.05 : -0.09 * Math.sin(p * Math.PI);
+      ctx.translate(w * 0.72, h * (1.06 - wingEnter * 0.28));
+      ctx.rotate(bank);
+      ctx.fillStyle = "#596265";
+      ctx.beginPath();
+      ctx.ellipse(-w * 0.08, h * 0.055, w * 0.065, h * 0.028, -0.12, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = "#8C9699";
+      ctx.beginPath();
+      ctx.moveTo(w * 0.34, h * 0.12);
+      ctx.lineTo(-w * 0.38, -h * 0.04);
+      ctx.lineTo(-w * 0.42, h * 0.015);
+      ctx.lineTo(w * 0.28, h * 0.25);
+      ctx.closePath();
+      ctx.fill();
+      ctx.strokeStyle = "#C7D0D2";
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(w * 0.34, h * 0.12);
+      ctx.lineTo(-w * 0.38, -h * 0.04);
+      ctx.stroke();
+      ctx.fillStyle = PALETTE.roundabout_geranium;
+      ctx.beginPath();
+      ctx.arc(-w * 0.40, -h * 0.012, 4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    var hudW = Math.min(w * 0.88, 390);
+    var hudH = 68;
+    var hudX = (w - hudW) * 0.5;
+    var hudY = h * 0.68;
+    ctx.fillStyle = "rgba(22, 26, 28, 0.86)";
+    ctx.fillRect(hudX, hudY, hudW, hudH);
+    ctx.strokeStyle = PALETTE.roundabout_marigold;
+    ctx.lineWidth = 1.2;
+    ctx.strokeRect(hudX, hudY, hudW, hudH);
+
+    ctx.fillStyle = PALETTE.placard_amber_ivory;
+    ctx.font = "700 12px monospace";
+    ctx.textAlign = "left";
+    ctx.textBaseline = "top";
+    var legLabel = info.fromCode + " -> " + info.toCode + "  [" + info.phase.toUpperCase() + "]";
+    ctx.fillText(legLabel, hudX + 12, hudY + 10);
+
+    ctx.fillStyle = PALETTE.suburb_yellowish_ochre;
+    ctx.font = "11px monospace";
+    var coordStr =
+      "VEC " + info.lat.toFixed(2) + ", " + info.lon.toFixed(2) +
+      " | BRG " + info.bearingDeg + " DEG | " + info.kmFlown + "/" + info.legKm + " KM";
+    ctx.fillText(coordStr, hudX + 12, hudY + 29);
+
+    ctx.fillStyle = PALETTE.goblet_celadon_glass;
+    ctx.fillText("RWY 27L SUBSTRATE VARIANCE: 0.00% (SOLE TRUDE)", hudX + 12, hudY + 47);
+    ctx.restore();
+  }
+
+  function buildStaticFlapCells(placardStr) {
+    var padded = padPlacard18(placardStr);
+    var arr = [];
+    for (var i = 0; i < FLAP_CELL_COUNT; i++) {
+      var ch = padded.charAt(i);
+      arr.push({
+        currentChar: ch,
+        targetChar: ch,
+        flipPhase: 0,
+        cyclesLeft: 0
+      });
+    }
+    return arr;
+  }
+
+  function resolveOverridePlacardAndCode(overridePlacard, overrideCode, fallbackCode) {
+    if (overridePlacard && typeof overridePlacard === "object") {
+      return {
+        placard: String(overridePlacard.placard || "TRUDE CENTRAL").toUpperCase(),
+        code: String(overridePlacard.code || overrideCode || fallbackCode || "TRD-01").toUpperCase()
+      };
+    }
+    var raw = String(overridePlacard || "TRUDE CENTRAL").trim().toUpperCase();
+    for (var i = 0; i < DESTINATIONS.length; i++) {
+      if (DESTINATIONS[i].placard === raw || DESTINATIONS[i].code === raw) {
+        return {
+          placard: DESTINATIONS[i].placard,
+          code: overrideCode ? String(overrideCode).toUpperCase() : DESTINATIONS[i].code
+        };
+      }
+    }
+    return {
+      placard: raw.slice(0, FLAP_CELL_COUNT),
+      code: overrideCode ? String(overrideCode).toUpperCase() : String(fallbackCode || "TRD-01").toUpperCase()
+    };
+  }
+
+  function createTransitEngine(opts) {
+    var cfg = opts || {};
+    var vpWidth = Math.max(64, Number(cfg.width) || 1280);
+    var vpHeight = Math.max(64, Number(cfg.height) || 800);
+    var reducedMotion = Boolean(cfg.reducedMotion);
+    var onFlightLanded = typeof cfg.onFlightLanded === "function" ? cfg.onFlightLanded : null;
+    var onPlacardFlip = typeof cfg.onPlacardFlip === "function" ? cfg.onPlacardFlip : null;
+
+    var audio = createTransitAudio(Boolean(cfg.muted));
+    var originDest = DESTINATIONS[0];
+    var originIndex = 0;
+    var currentIndex = 0;
+    var currentDest = originDest;
+    var airportPlacardCode = originDest.code;
+    var airportPlacardLetters = originDest.placard;
+    var regionLabel = originDest.regionLabel;
+    var destinationLat = originDest.lat;
+    var destinationLon = originDest.lon;
+    var distanceFlownKm = 0;
+    var totalDistanceKm = 0;
+    var flightsTaken = 0;
+    var flightPhase = "landed";
+    var flightProgress = 0;
+    var ambientClock = 0;
+    var pendingFlight = null;
+    var visitedCodes = new Set([originDest.code]);
+    var flapCells = buildStaticFlapCells(originDest.placard);
+
+    function settleFlapsTo(placardStr) {
+      var padded = padPlacard18(placardStr);
+      for (var i = 0; i < FLAP_CELL_COUNT; i++) {
+        var ch = padded.charAt(i);
+        flapCells[i].currentChar = ch;
+        flapCells[i].targetChar = ch;
+        flapCells[i].flipPhase = 0;
+        flapCells[i].cyclesLeft = 0;
+      }
+    }
+
+    function compareOriginVsCurrent() {
+      return {
+        originPlacardCode: originDest.code,
+        currentPlacardCode: airportPlacardCode,
+        originPlacardLetters: originDest.placard,
+        currentPlacardLetters: airportPlacardLetters,
+        placardChanged: originDest.code !== airportPlacardCode || originDest.placard !== airportPlacardLetters,
+        runwayGeometryDiff: 0,
+        hangarBayDiff: 0,
+        windsockAngleDiff: 0,
+        suburbHorizonDiff: 0,
+        detailVarianceAcrossFlights: 0,
+        structuralSimilarityPct: 100,
+        departureEscapesTrude: false,
+        onlyAirportNameChanges: true
+      };
+    }
+
+    function getState() {
+      return {
+        originIndex: originIndex,
+        currentIndex: currentIndex,
+        originPlacardCode: originDest.code,
+        airportPlacardCode: airportPlacardCode,
+        airportPlacardLetters: airportPlacardLetters,
+        regionLabel: regionLabel,
+        destinationLat: destinationLat,
+        destinationLon: destinationLon,
+        distanceFlownKm: distanceFlownKm,
+        totalDistanceKm: totalDistanceKm,
+        flightsTaken: flightsTaken,
+        uniquePlacardsVisited: visitedCodes.size,
+        flightPhase: flightPhase,
+        flightProgress: flightProgress,
+        flapCells: flapCells.map(function (c) {
+          return {
+            currentChar: c.currentChar,
+            targetChar: c.targetChar,
+            flipPhase: c.flipPhase
+          };
+        }),
+        departureEscapesTrude: false,
+        detailVarianceAcrossFlights: 0,
+        onlyAirportNameChanges: true,
+        soleTrudeContinuum: true,
+        runwayHeading: INVARIANT_RUNWAY_SPEC.runwayHeading,
+        muted: audio.isMuted(),
+        reducedMotion: reducedMotion,
+        destinations: DESTINATIONS
+      };
+    }
+
+    function startFlapCascadeTo(placardStr) {
+      var padded = padPlacard18(placardStr);
+      for (var i = 0; i < FLAP_CELL_COUNT; i++) {
+        var nextCh = padded.charAt(i);
+        flapCells[i].targetChar = nextCh;
+        flapCells[i].cyclesLeft = flapCells[i].currentChar === nextCh ? 1 : (2 + (i % 4));
+        flapCells[i].flipPhase = 0.08 + (i % 3) * 0.05;
+      }
+    }
+
+    function advanceFlapDrums(dt) {
+      var speed = reducedMotion ? 16 : 9.5;
+      for (var i = 0; i < FLAP_CELL_COUNT; i++) {
+        var c = flapCells[i];
+        if (c.cyclesLeft > 0 || c.currentChar !== c.targetChar) {
+          c.flipPhase += dt * speed;
+          if (c.flipPhase >= 1) {
+            c.flipPhase = 0;
+            if (c.cyclesLeft > 1) {
+              c.cyclesLeft -= 1;
+              var pos = FLAP_ALPHABET.indexOf(c.currentChar);
+              c.currentChar = FLAP_ALPHABET.charAt((pos + 3 + i) % FLAP_ALPHABET.length);
+            } else {
+              c.cyclesLeft = 0;
+              c.currentChar = c.targetChar;
+            }
+          }
+        } else {
+          c.flipPhase = 0;
+        }
+      }
+    }
+
+    function completeFlightNow() {
+      if (!pendingFlight) {
+        settleFlapsTo(airportPlacardLetters);
+        flightPhase = "landed";
+        flightProgress = 0;
+        return getState();
+      }
+      var prevCode = airportPlacardCode;
+      var prevPlacard = airportPlacardLetters;
+      var target = pendingFlight.target;
+      if (!pendingFlight.cascadeTriggered) {
+        audio.playSplitFlapCascade(14);
+      }
+      currentDest = target;
+      currentIndex = typeof target.index === "number" ? target.index : currentIndex;
+      airportPlacardCode = target.code;
+      airportPlacardLetters = target.placard;
+      regionLabel = target.regionLabel;
+      destinationLat = target.lat;
+      destinationLon = target.lon;
+      distanceFlownKm = pendingFlight.legKm;
+      totalDistanceKm += pendingFlight.legKm;
+      flightsTaken += 1;
+      visitedCodes.add(airportPlacardCode);
+      settleFlapsTo(airportPlacardLetters);
+      pendingFlight = null;
+      flightPhase = "landed";
+      flightProgress = 0;
+
+      var flipPayload = {
+        code: airportPlacardCode,
+        placard: airportPlacardLetters,
+        airportPlacardCode: airportPlacardCode,
+        airportPlacardLetters: airportPlacardLetters,
+        previousCode: prevCode,
+        previousPlacard: prevPlacard,
+        currentIndex: currentIndex,
+        flightsTaken: flightsTaken
+      };
+      if (onPlacardFlip) {
+        try { onPlacardFlip(flipPayload); } catch (_err) {}
+      }
+      if (onFlightLanded) {
+        try { onFlightLanded(getState(), compareOriginVsCurrent()); } catch (_err) {}
+      }
+      return getState();
+    }
+
+    function bookEscapeFlight(targetOrCoords, flyOpts) {
+      var fOpts = flyOpts || {};
+      var target = resolveTargetDestination(targetOrCoords, currentIndex, flightsTaken);
+      var legKm = Math.max(
+        420,
+        Math.round(haversineKm(currentDest.lat, currentDest.lon, target.lat, target.lon))
+      );
+      var brg = initialBearingDeg(currentDest.lat, currentDest.lon, target.lat, target.lon);
+      var dur = reducedMotion ? 0.2 : (Number(fOpts.durationSec) > 0 ? Number(fOpts.durationSec) : 2.4);
+
+      pendingFlight = {
+        from: currentDest,
+        target: target,
+        legKm: legKm,
+        bearingDeg: brg,
+        durationSec: dur,
+        cascadeTriggered: false
+      };
+      flightPhase = "takeoff";
+      flightProgress = 0;
+      distanceFlownKm = 0;
+
+      audio.playJetTransit(fOpts.instant ? 0.28 : dur);
+
+      if (fOpts.instant === true) {
+        return completeFlightNow();
+      }
+      return getState();
+    }
+
+    function step(dtSec) {
+      var dt = Math.max(0, Math.min(0.25, Number(dtSec) || 0.016));
+      if (!reducedMotion) {
+        ambientClock += dt;
+      }
+      if (pendingFlight) {
+        flightProgress = Math.min(1, flightProgress + dt / pendingFlight.durationSec);
+        distanceFlownKm = Math.round(pendingFlight.legKm * flightProgress);
+        destinationLat = pendingFlight.from.lat + (pendingFlight.target.lat - pendingFlight.from.lat) * flightProgress;
+        destinationLon = pendingFlight.from.lon + (pendingFlight.target.lon - pendingFlight.from.lon) * flightProgress;
+
+        if (flightProgress < 0.30) {
+          flightPhase = "takeoff";
+        } else if (flightProgress < 0.72) {
+          flightPhase = "cloud_cruise";
+        } else {
+          flightPhase = "touchdown";
+        }
+
+        if (flightProgress >= 0.54 && !pendingFlight.cascadeTriggered) {
+          pendingFlight.cascadeTriggered = true;
+          startFlapCascadeTo(pendingFlight.target.placard);
+          audio.playSplitFlapCascade(16);
+        }
+
+        advanceFlapDrums(dt);
+
+        if (flightProgress >= 1) {
+          return completeFlightNow();
+        }
+      } else {
+        advanceFlapDrums(dt);
+      }
+      return getState();
+    }
+
+    function renderAirport(ctx, width, height, params) {
+      var w = Math.max(64, Number(width) || vpWidth);
+      var h = Math.max(64, Number(height) || vpHeight);
+      var p = params || {};
+      if (!ctx) return computePlacardBounds(w, h);
+
+      var clock = typeof p.timeSec === "number" ? p.timeSec : ambientClock;
+      var hasOverride = p.overridePlacard !== undefined && p.overridePlacard !== null;
+
+      ctx.save();
+      drawSkyAndSuburbContinuum(ctx, w, h);
+      drawHangarsAndTower(ctx, w, h, clock, reducedMotion);
+      drawApronAndRunway27L(ctx, w, h, clock, reducedMotion);
+
+      if (hasOverride) {
+        var ov = resolveOverridePlacardAndCode(p.overridePlacard, p.overrideCode, airportPlacardCode);
+        var ovCells = buildStaticFlapCells(ov.placard);
+        drawClippedPlacardAndFlaps(ctx, w, h, ov.placard, ov.code, ovCells);
+      } else {
+        var displayPlacard = (pendingFlight && flightProgress >= 0.62)
+          ? pendingFlight.target.placard
+          : airportPlacardLetters;
+        var displayCode = (pendingFlight && flightProgress >= 0.62)
+          ? pendingFlight.target.code
+          : airportPlacardCode;
+        drawClippedPlacardAndFlaps(ctx, w, h, displayPlacard, displayCode, flapCells);
+
+        if (flightPhase !== "landed" && pendingFlight) {
+          drawInFlightOverlay(ctx, w, h, {
+            phase: flightPhase,
+            progress: flightProgress,
+            fromCode: pendingFlight.from.code,
+            toCode: pendingFlight.target.code,
+            legKm: pendingFlight.legKm,
+            kmFlown: distanceFlownKm,
+            lat: destinationLat,
+            lon: destinationLon,
+            bearingDeg: pendingFlight.bearingDeg,
+            reducedMotion: reducedMotion
+          }, clock);
+        }
+      }
+      ctx.restore();
+      return computePlacardBounds(w, h);
+    }
+
+    return {
+      bookEscapeFlight: bookEscapeFlight,
+      completeFlightNow: completeFlightNow,
+      step: step,
+      renderAirport: renderAirport,
+      compareOriginVsCurrent: compareOriginVsCurrent,
+      getPlacardBounds: function (w, h) {
+        return computePlacardBounds(Math.max(64, Number(w) || vpWidth), Math.max(64, Number(h) || vpHeight));
+      },
+      unlockAudio: audio.unlockAudio,
+      setMuted: audio.setMuted,
+      toggleMute: audio.toggleMute,
+      isMuted: audio.isMuted,
+      playSplitFlapCascade: audio.playSplitFlapCascade,
+      playJetTransit: audio.playJetTransit,
+      setViewport: function (w, h) {
+        vpWidth = Math.max(64, Number(w) || vpWidth);
+        vpHeight = Math.max(64, Number(h) || vpHeight);
+      },
+      setReducedMotion: function (flag) {
+        reducedMotion = Boolean(flag);
+      },
+      getState: getState,
+      destroy: function () {
+        pendingFlight = null;
+        audio.destroy();
+      }
+    };
+  }
+
+  var TrudeAirportTransit = Object.freeze({
+    PALETTE: PALETTE,
+    DESTINATIONS: DESTINATIONS,
+    INVARIANT_RUNWAY_SPEC: INVARIANT_RUNWAY_SPEC,
+    createTransitEngine: createTransitEngine
+  });
+
+  globalThis.TrudeAirportTransit = TrudeAirportTransit;
+  if (typeof window !== "undefined") {
+    window.TrudeAirportTransit = TrudeAirportTransit;
+  }
+})();
+
+</script>
+  <script>
+(function initTrudeSuburbDetails(root) {
+  "use strict";
+
+  var TAU = Math.PI * 2;
+
+  var PALETTE = Object.freeze({
+    asphalt_tarmac: "#1E2224",
+    tin_warehouse_dark: "#3A4144",
+    tin_roof_zinc: "#7E878A",
+    suburb_yellowish_ochre: "#C8B868",
+    suburb_ochre_shadow: "#9C8E47",
+    suburb_greenish_lichen: "#6C8364",
+    suburb_green_shadow: "#4B5E46",
+    roundabout_marigold: "#D4953B",
+    roundabout_geranium: "#C46238",
+    placard_amber_ivory: "#F2E5BE",
+    goblet_celadon_glass: "#9EB59E",
+    overcast_continuum_sky: "#2B3130"
+  });
+
+  var LOCI = Object.freeze([
+    Object.freeze({
+      index: 0,
+      id: "airport_suburb_road",
+      keyNum: 1,
+      label: "Yellow-Green Suburbs & Tin Sheds",
+      shortLabel: "Suburbs & Sheds"
+    }),
+    Object.freeze({
+      index: 1,
+      id: "flower_roundabout",
+      keyNum: 2,
+      label: "Flower-Bed Roundabout Squares",
+      shortLabel: "Roundabouts"
+    }),
+    Object.freeze({
+      index: 2,
+      id: "hardware_store",
+      keyNum: 3,
+      label: "Hardware Buyers Verbatim Counter",
+      shortLabel: "Hardware Buyers"
+    }),
+    Object.freeze({
+      index: 3,
+      id: "hotel_goblet_bar",
+      keyNum: 4,
+      label: "Hotel Mirror & Caterpillar Goblet",
+      shortLabel: "Caterpillar Goblet"
+    })
+  ]);
+
+  var HARDWARE_DIALOGUE_SCRIPT = Object.freeze([
+    Object.freeze({
+      turnIndex: 0,
+      speaker: "Hardware Buyer",
+      itemCode: "ELB-3/8-GALV",
+      utterance: "Three dozen three-eighths galvanized elbows, threaded both ends, packed dry in greased paper before the drizzle sets in."
+    }),
+    Object.freeze({
+      turnIndex: 1,
+      speaker: "Hardware Seller",
+      itemCode: "ZNC-26G-CORR",
+      utterance: "Same crate tally as Tuesday's freight: twenty-six-gauge corrugated zinc roof sheets, eight ridges to the width, stacked by bay four."
+    }),
+    Object.freeze({
+      turnIndex: 2,
+      speaker: "Traveler",
+      itemCode: "LCH-MRT-BRS4",
+      utterance: "Do the suburban shutter latches still take the four-millimeter brass mortise pin with the beveled strike plate?"
+    }),
+    Object.freeze({
+      turnIndex: 3,
+      speaker: "Hardware Seller",
+      itemCode: "LCH-MRT-BRS4",
+      utterance: "Every yellow and green casement along the airport road takes that exact mortise pin; we never cast another gauge."
+    }),
+    Object.freeze({
+      turnIndex: 4,
+      speaker: "Hardware Buyer",
+      itemCode: "WSH-LEAD-09",
+      utterance: "Weigh out two kilos of lead roofing washers as well; the afternoon siding train always halts ten minutes behind the timetable."
+    }),
+    Object.freeze({
+      turnIndex: 5,
+      speaker: "Traveler",
+      itemCode: "INV-TALLY-44",
+      utterance: "Word for syllable, bolt for washer, this is the identical counter ledger I heard at the last airport."
+    })
+  ]);
+
+  var GOBLET_RELIEF_SPEC = Object.freeze({
+    motif: "leaves_and_caterpillars",
+    leafCount: 8,
+    caterpillarCount: 3,
+    segmentsPerCaterpillar: 11,
+    rimDiameterMm: 76,
+    reliefDepthMm: 1.8,
+    reliefHash: "TRD-LEAF-CAT-44"
+  });
+
+  var HOTEL_MIRROR_SPEC = Object.freeze({
+    frameMoldings: 4,
+    lampReflectionX: 0.72,
+    bedpostReflectionX: 0.28,
+    logicHash: "TRD-MIRROR-44",
+    identicalLogic: true
+  });
+
+  var SUBURB_BLOCKS = Object.freeze([
+    { nx: 0.08, ny: 0.30, nw: 0.12, nh: 0.09, hue: "yellow", floors: 2 },
+    { nx: 0.23, ny: 0.28, nw: 0.12, nh: 0.09, hue: "green", floors: 2 },
+    { nx: 0.38, ny: 0.27, nw: 0.12, nh: 0.09, hue: "yellow", floors: 3 },
+    { nx: 0.54, ny: 0.27, nw: 0.12, nh: 0.09, hue: "green", floors: 2 },
+    { nx: 0.70, ny: 0.28, nw: 0.12, nh: 0.09, hue: "yellow", floors: 2 },
+    { nx: 0.85, ny: 0.30, nw: 0.11, nh: 0.09, hue: "green", floors: 3 },
+    { nx: 0.07, ny: 0.70, nw: 0.13, nh: 0.11, hue: "green", floors: 2 },
+    { nx: 0.23, ny: 0.72, nw: 0.13, nh: 0.11, hue: "yellow", floors: 3 },
+    { nx: 0.39, ny: 0.73, nw: 0.13, nh: 0.11, hue: "green", floors: 2 },
+    { nx: 0.56, ny: 0.73, nw: 0.13, nh: 0.11, hue: "yellow", floors: 2 },
+    { nx: 0.72, ny: 0.72, nw: 0.13, nh: 0.11, hue: "green", floors: 3 },
+    { nx: 0.87, ny: 0.70, nw: 0.11, nh: 0.11, hue: "yellow", floors: 2 }
+  ]);
+
+  var TIN_WAREHOUSES = Object.freeze([
+    { nx: 0.09, ny: 0.43, nw: 0.15, nh: 0.10, flue: true, bays: 3 },
+    { nx: 0.28, ny: 0.42, nw: 0.15, nh: 0.10, flue: false, bays: 4 },
+    { nx: 0.62, ny: 0.42, nw: 0.15, nh: 0.10, flue: true, bays: 3 },
+    { nx: 0.81, ny: 0.43, nw: 0.15, nh: 0.10, flue: false, bays: 3 },
+    { nx: 0.08, ny: 0.57, nw: 0.15, nh: 0.10, flue: false, bays: 3 },
+    { nx: 0.27, ny: 0.58, nw: 0.15, nh: 0.10, flue: true, bays: 4 },
+    { nx: 0.63, ny: 0.58, nw: 0.15, nh: 0.10, flue: false, bays: 3 },
+    { nx: 0.82, ny: 0.57, nw: 0.15, nh: 0.10, flue: true, bays: 3 }
+  ]);
+
+  var ROUNDABOUT_SQUARES = Object.freeze([
+    { index: 0, id: "sq_nw", code: "SQ-I", label: "Marigold & Geranium Square I (NW)", cx: 0.29, cy: 0.34 },
+    { index: 1, id: "sq_ne", code: "SQ-II", label: "Marigold & Geranium Square II (NE)", cx: 0.71, cy: 0.34 },
+    { index: 2, id: "sq_sw", code: "SQ-III", label: "Marigold & Geranium Square III (SW)", cx: 0.29, cy: 0.71 },
+    { index: 3, id: "sq_se", code: "SQ-IV", label: "Marigold & Geranium Square IV (SE)", cx: 0.71, cy: 0.71 }
+  ]);
+
+  function clamp(v, lo, hi) {
+    return v < lo ? lo : v > hi ? hi : v;
+  }
+
+  function setDash(ctx, pattern) {
+    if (typeof ctx.setLineDash === "function") {
+      ctx.setLineDash(pattern);
+    }
+  }
+
+  function drawEllipse(ctx, cx, cy, rx, ry, rot) {
+    ctx.beginPath();
+    if (typeof ctx.ellipse === "function") {
+      ctx.ellipse(cx, cy, Math.max(0.5, rx), Math.max(0.5, ry), rot || 0, 0, TAU);
+    } else {
+      ctx.save();
+      ctx.translate(cx, cy);
+      if (rot) ctx.rotate(rot);
+      ctx.scale(Math.max(0.5, rx), Math.max(0.5, ry));
+      ctx.arc(0, 0, 1, 0, TAU);
+      ctx.restore();
+    }
+  }
+
+  function drawRoundBox(ctx, x, y, w, h, r) {
+    var rad = Math.max(0, Math.min(r || 0, Math.min(w, h) * 0.5));
+    ctx.beginPath();
+    ctx.moveTo(x + rad, y);
+    ctx.lineTo(x + w - rad, y);
+    ctx.arcTo(x + w, y, x + w, y + rad, rad);
+    ctx.lineTo(x + w, y + h - rad);
+    ctx.arcTo(x + w, y + h, x + w - rad, y + h, rad);
+    ctx.lineTo(x + rad, y + h);
+    ctx.arcTo(x, y + h, x, y + h - rad, rad);
+    ctx.lineTo(x, y + rad);
+    ctx.arcTo(x, y, x + rad, y, rad);
+    ctx.closePath();
+  }
+
+  function wrapWords(text, maxChars) {
+    var words = String(text || "").split(" ");
+    var lines = [];
+    var cur = "";
+    for (var i = 0; i < words.length; i++) {
+      var next = cur ? cur + " " + words[i] : words[i];
+      if (next.length > maxChars && cur) {
+        lines.push(cur);
+        cur = words[i];
+      } else {
+        cur = next;
+      }
+    }
+    if (cur) lines.push(cur);
+    return lines;
+  }
+
+  function drawPlacardPost(ctx, x, y, w, h, code, letters, subline) {
+    ctx.save();
+    drawRoundBox(ctx, x, y, w, h, 4);
+    ctx.fillStyle = PALETTE.asphalt_tarmac;
+    ctx.fill();
+    ctx.lineWidth = 1.5;
+    ctx.strokeStyle = PALETTE.placard_amber_ivory;
+    ctx.stroke();
+    var fontPx = Math.max(9, Math.min(13, Math.floor(h * 0.34)));
+    ctx.fillStyle = PALETTE.placard_amber_ivory;
+    ctx.font = "700 " + fontPx + "px monospace";
+    ctx.textBaseline = "middle";
+    var headline = String(code || "TRD-01") + " · " + String(letters || "TRUDE CENTRAL");
+    ctx.fillText(headline.slice(0, 32), x + 8, y + h * 0.37);
+    ctx.fillStyle = PALETTE.suburb_yellowish_ochre;
+    ctx.font = "500 " + Math.max(8, fontPx - 2) + "px monospace";
+    ctx.fillText(String(subline || "INVARIANT SUBURB SECTOR"), x + 8, y + h * 0.73);
+    ctx.restore();
+  }
+
+  function drawStuccoBlock(ctx, x, y, w, h, hue, floors) {
+    var roofH = Math.max(7, h * 0.24);
+    var sideW = Math.max(8, w * 0.18);
+    var frontW = w - sideW;
+    var lit = hue === "yellow" ? PALETTE.suburb_yellowish_ochre : PALETTE.suburb_greenish_lichen;
+    var shd = hue === "yellow" ? PALETTE.suburb_ochre_shadow : PALETTE.suburb_green_shadow;
+    ctx.fillStyle = lit;
+    ctx.fillRect(x, y + roofH, frontW, h - roofH);
+    ctx.fillStyle = shd;
+    ctx.beginPath();
+    ctx.moveTo(x + frontW, y + roofH);
+    ctx.lineTo(x + w, y + roofH * 0.55);
+    ctx.lineTo(x + w, y + h - roofH * 0.45);
+    ctx.lineTo(x + frontW, y + h);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = PALETTE.tin_warehouse_dark;
+    ctx.beginPath();
+    ctx.moveTo(x - 2, y + roofH);
+    ctx.lineTo(x + sideW * 0.8, y);
+    ctx.lineTo(x + w + 1, y + roofH * 0.55);
+    ctx.lineTo(x + frontW, y + roofH);
+    ctx.closePath();
+    ctx.fill();
+    var cols = Math.max(2, Math.min(4, Math.floor(frontW / 24)));
+    var rows = floors || 2;
+    var winW = Math.max(4, frontW / (cols * 2.5));
+    var winH = Math.max(5, (h - roofH) / (rows * 2.1));
+    for (var r = 0; r < rows; r++) {
+      for (var c = 0; c < cols; c++) {
+        var wx = x + (c + 0.55) * (frontW / cols) - winW * 0.5;
+        var wy = y + roofH + (r + 0.48) * ((h - roofH) / rows) - winH * 0.4;
+        ctx.fillStyle = hue === "yellow" ? PALETTE.suburb_green_shadow : PALETTE.suburb_ochre_shadow;
+        ctx.fillRect(wx - 2, wy, winW + 4, winH);
+        ctx.fillStyle = PALETTE.asphalt_tarmac;
+        ctx.fillRect(wx, wy + 1, winW, winH - 2);
+      }
+    }
+  }
+
+  function drawTinWarehouse(ctx, x, y, w, h, bays, flue, smokePhase) {
+    var roofH = Math.max(8, h * 0.34);
+    ctx.fillStyle = PALETTE.tin_warehouse_dark;
+    ctx.fillRect(x, y + roofH, w, h - roofH);
+    ctx.fillStyle = PALETTE.tin_roof_zinc;
+    ctx.beginPath();
+    ctx.moveTo(x - 3, y + roofH);
+    ctx.lineTo(x + w * 0.14, y);
+    ctx.lineTo(x + w + 2, y);
+    ctx.lineTo(x + w + 3, y + roofH);
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = PALETTE.asphalt_tarmac;
+    ctx.lineWidth = 1;
+    var seams = 9;
+    for (var s = 1; s < seams; s++) {
+      var sx = x + (w * s) / seams;
+      ctx.beginPath();
+      ctx.moveTo(sx, y + roofH);
+      ctx.lineTo(sx + w * 0.08, y + 1);
+      ctx.stroke();
+    }
+    var bayCount = bays || 3;
+    var bw = (w * 0.72) / bayCount;
+    for (var b = 0; b < bayCount; b++) {
+      var bx = x + w * 0.08 + b * (bw + w * 0.05);
+      var by = y + roofH + (h - roofH) * 0.28;
+      ctx.fillStyle = PALETTE.asphalt_tarmac;
+      ctx.fillRect(bx, by, bw * 0.82, (h - roofH) * 0.72);
+      ctx.strokeStyle = PALETTE.tin_roof_zinc;
+      ctx.strokeRect(bx, by, bw * 0.82, (h - roofH) * 0.72);
+    }
+    if (flue) {
+      var fx = x + w * 0.84;
+      var fy = y - h * 0.22;
+      ctx.fillStyle = PALETTE.tin_warehouse_dark;
+      ctx.fillRect(fx, fy, Math.max(5, w * 0.07), h * 0.34);
+      ctx.fillStyle = "rgba(200, 184, 104, 0.22)";
+      for (var p = 0; p < 3; p++) {
+        var drift = ((smokePhase + p * 0.33) % 1);
+        drawEllipse(ctx, fx + 4 + drift * 18, fy - 5 - drift * 16, 4 + drift * 6, 3 + drift * 4, 0);
+        ctx.fill();
+      }
+    }
+  }
+
+  function renderSuburbRoadLocus(ctx, w, h, anim, placardCode, placardLetters, hitZones) {
+    var skyGrad = ctx.createLinearGradient ? ctx.createLinearGradient(0, 0, 0, h * 0.28) : null;
+    if (skyGrad) {
+      skyGrad.addColorStop(0, PALETTE.overcast_continuum_sky);
+      skyGrad.addColorStop(1, "#3D4640");
+      ctx.fillStyle = skyGrad;
+    } else {
+      ctx.fillStyle = PALETTE.overcast_continuum_sky;
+    }
+    ctx.fillRect(0, 0, w, h * 0.26);
+    ctx.fillStyle = "#333A37";
+    ctx.fillRect(0, h * 0.24, w, h * 0.76);
+    for (var band = 0; band < 18; band++) {
+      ctx.fillStyle = band % 2 === 0 ? PALETTE.suburb_ochre_shadow : PALETTE.suburb_green_shadow;
+      ctx.fillRect((band * w) / 18, h * 0.20, w / 19, h * 0.045);
+    }
+    var roadY = h * 0.51;
+    var roadH = h * 0.085;
+    ctx.fillStyle = PALETTE.asphalt_tarmac;
+    ctx.fillRect(0, roadY, w, roadH);
+    ctx.fillRect(w * 0.46, h * 0.24, w * 0.08, h * 0.76);
+    ctx.save();
+    ctx.strokeStyle = PALETTE.suburb_yellowish_ochre;
+    ctx.lineWidth = 2;
+    setDash(ctx, [12, 10]);
+    ctx.beginPath();
+    ctx.moveTo(0, roadY + roadH * 0.5);
+    ctx.lineTo(w, roadY + roadH * 0.5);
+    ctx.moveTo(w * 0.50, h * 0.25);
+    ctx.lineTo(w * 0.50, h);
+    ctx.stroke();
+    setDash(ctx, []);
+    ctx.restore();
+
+    for (var i = 0; i < SUBURB_BLOCKS.length; i++) {
+      var sb = SUBURB_BLOCKS[i];
+      var bx = sb.nx * w, by = sb.ny * h, bw = sb.nw * w, bh = sb.nh * h;
+      drawStuccoBlock(ctx, bx, by, bw, bh, sb.hue, sb.floors);
+      hitZones.push({ type: "suburb_block", locus: "airport_suburb_road", label: (sb.hue === "yellow" ? "Yellowish" : "Greenish") + " Stucco Row #" + (i + 1), x: bx, y: by, w: bw, h: bh });
+    }
+    for (var k = 0; k < TIN_WAREHOUSES.length; k++) {
+      var tw = TIN_WAREHOUSES[k];
+      var wx = tw.nx * w, wy = tw.ny * h, ww = tw.nw * w, wh = tw.nh * h;
+      drawTinWarehouse(ctx, wx, wy, ww, wh, tw.bays, tw.flue, anim.smokePhase);
+      hitZones.push({ type: "warehouse", locus: "airport_suburb_road", label: "Corrugated Zinc-Tin Warehouse #" + (k + 1), x: wx, y: wy, w: ww, h: wh });
+    }
+    for (var v = 0; v < 4; v++) {
+      var vx = (((anim.vehiclePhase + v * 0.25) % 1) * (w + 40)) - 20;
+      var vy = v % 2 === 0 ? roadY + roadH * 0.22 : roadY + roadH * 0.66;
+      ctx.fillStyle = v % 2 === 0 ? PALETTE.roundabout_marigold : PALETTE.tin_roof_zinc;
+      drawRoundBox(ctx, vx, vy, 18, 9, 2);
+      ctx.fill();
+    }
+    var pw = Math.min(265, w * 0.44);
+    drawPlacardPost(ctx, w * 0.03, h * 0.05, pw, 42, placardCode, placardLetters, "AIRPORT ROAD · 12 BLOCKS · 8 TIN SHEDS");
+  }
+
+  function renderFlowerRoundaboutLocus(ctx, w, h, anim, placardCode, placardLetters, hitZones) {
+    ctx.fillStyle = "#313835";
+    ctx.fillRect(0, 0, w, h);
+    var minDim = Math.min(w, h);
+    var roadHalf = Math.max(16, minDim * 0.048);
+    ctx.fillStyle = PALETTE.asphalt_tarmac;
+    for (var g = 0; g < ROUNDABOUT_SQUARES.length; g++) {
+      var rs = ROUNDABOUT_SQUARES[g];
+      ctx.fillRect(0, rs.cy * h - roadHalf, w, roadHalf * 2);
+      ctx.fillRect(rs.cx * w - roadHalf, 0, roadHalf * 2, h);
+    }
+    var cornerCoords = [
+      [0.04, 0.14], [0.46, 0.14], [0.84, 0.14],
+      [0.04, 0.49], [0.46, 0.49], [0.84, 0.49],
+      [0.04, 0.84], [0.46, 0.84], [0.84, 0.84]
+    ];
+    for (var c = 0; c < cornerCoords.length; c++) {
+      var cx0 = cornerCoords[c][0] * w, cy0 = cornerCoords[c][1] * h;
+      var cw = w * 0.11, ch = h * 0.09;
+      drawStuccoBlock(ctx, cx0, cy0, cw, ch, c % 2 === 0 ? "yellow" : "green", 2);
+      hitZones.push({ type: "suburb_block", locus: "flower_roundabout", label: "Provincial Square Facade #" + (c + 1), x: cx0, y: cy0, w: cw, h: ch });
+    }
+    var outerR = Math.max(38, minDim * 0.145);
+    var bedR = outerR * 0.56;
+    for (var s = 0; s < ROUNDABOUT_SQUARES.length; s++) {
+      var sq = ROUNDABOUT_SQUARES[s];
+      var sx = sq.cx * w, sy = sq.cy * h;
+      drawEllipse(ctx, sx, sy, outerR, outerR, 0);
+      ctx.fillStyle = PALETTE.asphalt_tarmac;
+      ctx.fill();
+      ctx.strokeStyle = PALETTE.tin_roof_zinc;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.save();
+      setDash(ctx, [7, 6]);
+      ctx.strokeStyle = "rgba(242, 229, 190, 0.52)";
+      ctx.lineWidth = 1.4;
+      drawEllipse(ctx, sx, sy, (outerR + bedR) * 0.5, (outerR + bedR) * 0.5, 0);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(sx - outerR * 1.45, sy - roadHalf * 0.48);
+      ctx.quadraticCurveTo(sx - outerR * 0.95, sy - outerR * 0.78, sx, sy - (outerR + bedR) * 0.5);
+      ctx.stroke();
+      setDash(ctx, []);
+      ctx.restore();
+
+      drawEllipse(ctx, sx, sy, bedR, bedR, 0);
+      ctx.fillStyle = PALETTE.suburb_green_shadow;
+      ctx.fill();
+      ctx.lineWidth = 2.5;
+      ctx.strokeStyle = PALETTE.placard_amber_ivory;
+      ctx.stroke();
+      drawEllipse(ctx, sx, sy, bedR * 0.82, bedR * 0.82, 0);
+      ctx.fillStyle = PALETTE.roundabout_geranium;
+      ctx.fill();
+      drawEllipse(ctx, sx, sy, bedR * 0.52, bedR * 0.52, 0);
+      ctx.fillStyle = PALETTE.roundabout_marigold;
+      ctx.fill();
+      for (var p = 0; p < 10; p++) {
+        var pa = (p / 10) * TAU;
+        drawEllipse(ctx, sx + Math.cos(pa) * bedR * 0.68, sy + Math.sin(pa) * bedR * 0.68, 3, 3, 0);
+        ctx.fillStyle = PALETTE.placard_amber_ivory;
+        ctx.fill();
+      }
+      drawEllipse(ctx, sx, sy, bedR * 0.18, bedR * 0.18, 0);
+      ctx.fillStyle = PALETTE.asphalt_tarmac;
+      ctx.fill();
+      for (var v = 0; v < 2; v++) {
+        var ang = anim.vehiclePhase * TAU + v * Math.PI + s * 0.5 * Math.PI;
+        var vr = (outerR + bedR) * 0.5;
+        var vx = sx + Math.cos(ang) * vr, vy = sy + Math.sin(ang) * vr;
+        ctx.save();
+        ctx.translate(vx, vy);
+        ctx.rotate(ang + Math.PI * 0.5);
+        ctx.fillStyle = v === 0 ? PALETTE.roundabout_marigold : PALETTE.suburb_yellowish_ochre;
+        drawRoundBox(ctx, -8, -4.5, 16, 9, 2);
+        ctx.fill();
+        ctx.restore();
+      }
+      hitZones.push({ type: "roundabout", locus: "flower_roundabout", label: sq.label, x: sx - outerR, y: sy - outerR, w: outerR * 2, h: outerR * 2 });
+    }
+    drawPlacardPost(ctx, w * 0.03, h * 0.03, Math.min(275, w * 0.46), 40, placardCode, placardLetters, "4 FLOWER-BED SQUARES · R=14.0M CLOTHOID");
+  }
+
+  function renderHardwareStoreLocus(ctx, w, h, anim, state, placardCode, placardLetters, hitZones) {
+    ctx.fillStyle = PALETTE.overcast_continuum_sky;
+    ctx.fillRect(0, 0, w, h);
+    var drawerTop = h * 0.13, drawerH = h * 0.34, drawerLeft = w * 0.18, drawerW = w * 0.64;
+    var cols = 6, rows = 4;
+    var cellW = drawerW / cols, cellH = drawerH / rows;
+    var codes = ["ELB 3/8", "ZNC 26G", "MRT 4MM", "WSH PB9", "BLT M8", "HNG BRS"];
+    for (var r = 0; r < rows; r++) {
+      for (var c = 0; c < cols; c++) {
+        var dx = drawerLeft + c * cellW + 2, dy = drawerTop + r * cellH + 2;
+        ctx.fillStyle = (r + c) % 2 === 0 ? "#3E4742" : PALETTE.tin_warehouse_dark;
+        ctx.fillRect(dx, dy, cellW - 4, cellH - 4);
+        ctx.strokeStyle = PALETTE.suburb_ochre_shadow;
+        ctx.lineWidth = 1;
+        ctx.strokeRect(dx, dy, cellW - 4, cellH - 4);
+        ctx.fillStyle = PALETTE.placard_amber_ivory;
+        ctx.fillRect(dx + cellW * 0.26, dy + 4, cellW * 0.42, Math.max(5, cellH * 0.24));
+        ctx.fillStyle = PALETTE.roundabout_marigold;
+        drawEllipse(ctx, dx + cellW * 0.47, dy + cellH * 0.66, 3.5, 2.5, 0);
+        ctx.fill();
+        if (w >= 640 && r === 0) {
+          ctx.fillStyle = PALETTE.asphalt_tarmac;
+          ctx.font = "700 8px monospace";
+          ctx.fillText(codes[c], dx + cellW * 0.28, dy + 11);
+        }
+      }
+    }
+    var tinX = w * 0.03, tinY = h * 0.17, tinW = w * 0.12, tinH = h * 0.30;
+    ctx.fillStyle = PALETTE.tin_roof_zinc;
+    ctx.fillRect(tinX, tinY, tinW, tinH);
+    for (var k = 1; k < 7; k++) {
+      ctx.strokeStyle = PALETTE.asphalt_tarmac;
+      ctx.beginPath();
+      ctx.moveTo(tinX + (tinW * k) / 7, tinY);
+      ctx.lineTo(tinX + (tinW * k) / 7, tinY + tinH);
+      ctx.stroke();
+    }
+    hitZones.push({ type: "warehouse", locus: "hardware_store", label: "26-Gauge Corrugated Zinc Sample Rack", x: tinX, y: tinY, w: tinW, h: tinH });
+
+    var shX = w * 0.85, shY = h * 0.17, shW = w * 0.12, shH = h * 0.30;
+    ctx.fillStyle = PALETTE.suburb_yellowish_ochre;
+    ctx.fillRect(shX, shY, shW * 0.5, shH);
+    ctx.fillStyle = PALETTE.suburb_greenish_lichen;
+    ctx.fillRect(shX + shW * 0.5, shY, shW * 0.5, shH);
+    ctx.fillStyle = PALETTE.roundabout_marigold;
+    ctx.fillRect(shX + shW * 0.42, shY + shH * 0.46, shW * 0.16, 10);
+    hitZones.push({ type: "suburb_block", locus: "hardware_store", label: "Suburban Shutter & 4mm Brass Mortise Sample", x: shX, y: shY, w: shW, h: shH });
+
+    var cntY = h * 0.53;
+    ctx.fillStyle = PALETTE.asphalt_tarmac;
+    drawEllipse(ctx, w * 0.33, cntY - 34, 15, 16, 0);
+    ctx.fill();
+    ctx.fillRect(w * 0.29, cntY - 18, w * 0.08, 22);
+    ctx.fillStyle = PALETTE.suburb_ochre_shadow;
+    drawEllipse(ctx, w * 0.67, cntY - 34, 15, 16, 0);
+    ctx.fill();
+    ctx.fillRect(w * 0.63, cntY - 18, w * 0.08, 22);
+
+    ctx.fillStyle = PALETTE.tin_warehouse_dark;
+    ctx.fillRect(w * 0.04, cntY, w * 0.92, h * 0.43);
+    ctx.fillStyle = PALETTE.suburb_ochre_shadow;
+    ctx.fillRect(w * 0.04, cntY, w * 0.92, 8);
+
+    var scX = w * 0.50, scY = cntY - 4;
+    var tilt = Math.sin(anim.scaleNeedlePhase * 8) * anim.scaleNeedleAmp * 0.18;
+    ctx.strokeStyle = PALETTE.roundabout_marigold;
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(scX, scY);
+    ctx.lineTo(scX, scY - 44);
+    ctx.moveTo(scX - 38, scY - 40 - tilt * 35);
+    ctx.lineTo(scX + 38, scY - 40 + tilt * 35);
+    ctx.stroke();
+
+    var turn = HARDWARE_DIALOGUE_SCRIPT[state.dialogueIndex] || HARDWARE_DIALOGUE_SCRIPT[0];
+    var cardX = w * 0.08, cardY = cntY + 18, cardW = w * 0.84, cardH = h * 0.34;
+    drawRoundBox(ctx, cardX, cardY, cardW, cardH, 6);
+    ctx.fillStyle = PALETTE.asphalt_tarmac;
+    ctx.fill();
+    ctx.strokeStyle = PALETTE.placard_amber_ivory;
+    ctx.lineWidth = 1.6;
+    ctx.stroke();
+    var bodyPx = Math.max(11, Math.min(15, Math.floor(w * 0.014 + 5)));
+    ctx.fillStyle = PALETTE.suburb_yellowish_ochre;
+    ctx.font = "700 " + Math.max(10, bodyPx - 2) + "px monospace";
+    ctx.fillText("TURN " + (turn.turnIndex + 1) + "/6 · " + turn.speaker.toUpperCase() + " · [" + turn.itemCode + "] · " + placardCode, cardX + 14, cardY + 22);
+    ctx.fillStyle = PALETTE.placard_amber_ivory;
+    ctx.font = "500 " + bodyPx + "px Georgia, serif";
+    var maxCh = Math.max(28, Math.floor((cardW - 28) / (bodyPx * 0.56)));
+    var wrapped = wrapWords("\"" + turn.utterance + "\"", maxCh);
+    for (var ln = 0; ln < wrapped.length && ln < 4; ln++) {
+      ctx.fillText(wrapped[ln], cardX + 14, cardY + 46 + ln * (bodyPx + 6));
+    }
+    ctx.fillStyle = PALETTE.goblet_celadon_glass;
+    ctx.font = "700 " + Math.max(9, bodyPx - 3) + "px monospace";
+    ctx.fillText("WORD-FOR-WORD MATCH ACROSS ALL AIRPORTS: 100.0% (VARIANCE: 0 CHARS)", cardX + 14, cardY + cardH - 14);
+    hitZones.push({ type: "hardware_counter", locus: "hardware_store", label: "Verbatim Hardware Counter — " + turn.speaker, x: w * 0.04, y: cntY - 48, w: w * 0.92, h: h * 0.48 });
+    drawPlacardPost(ctx, w * 0.03, h * 0.03, Math.min(275, w * 0.46), 38, placardCode, placardLetters, "PROVINCIAL HARDWARE LEDGER · 0 DIFF");
+  }
+
+  function drawBotanicalLeafRelief(ctx, cx, cy, rx, ry, facing, isFront) {
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.globalAlpha = isFront ? clamp(0.45 + facing * 0.55, 0.35, 1) : 0.18;
+    ctx.fillStyle = isFront ? PALETTE.suburb_greenish_lichen : PALETTE.suburb_green_shadow;
+    ctx.beginPath();
+    ctx.moveTo(0, -ry);
+    var lobes = 5;
+    for (var i = 1; i <= lobes; i++) {
+      var t = i / (lobes + 1);
+      var py = -ry + t * ry * 2;
+      var bulge = Math.sin(t * Math.PI) * rx;
+      ctx.lineTo(bulge * 1.12, py - ry * 0.06);
+      ctx.lineTo(bulge * 0.86, py + ry * 0.05);
+    }
+    ctx.lineTo(0, ry);
+    for (var j = lobes; j >= 1; j--) {
+      var tj = j / (lobes + 1);
+      var pyj = -ry + tj * ry * 2;
+      var bulgeL = Math.sin(tj * Math.PI) * rx;
+      ctx.lineTo(-bulgeL * 0.86, pyj + ry * 0.05);
+      ctx.lineTo(-bulgeL * 1.12, pyj - ry * 0.06);
+    }
+    ctx.closePath();
+    ctx.fill();
+    if (isFront) {
+      ctx.strokeStyle = PALETTE.placard_amber_ivory;
+      ctx.lineWidth = 1.2;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(0, -ry * 0.86);
+      ctx.lineTo(0, ry * 0.88);
+      for (var v = -2; v <= 2; v++) {
+        var vy = v * ry * 0.28;
+        var vw = Math.cos((v / 3) * 1.1) * rx * 0.72;
+        ctx.moveTo(0, vy);
+        ctx.lineTo(vw, vy - ry * 0.14);
+        ctx.moveTo(0, vy);
+        ctx.lineTo(-vw, vy - ry * 0.14);
+      }
+      ctx.strokeStyle = "rgba(242, 229, 190, 0.75)";
+      ctx.lineWidth = 0.9;
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function drawCaterpillarRelief(ctx, bowlX, bowlY, bowlRx, bowlRy, baseTheta, isFront) {
+    var segs = GOBLET_RELIEF_SPEC.segmentsPerCaterpillar;
+    ctx.save();
+    for (var s = 0; s < segs; s++) {
+      var u = s / (segs - 1);
+      var segTheta = baseTheta + (u - 0.5) * 0.68;
+      var z = Math.cos(segTheta);
+      if ((isFront && z < -0.08) || (!isFront && z >= -0.08)) continue;
+      var archHump = Math.sin(u * Math.PI) * bowlRy * 0.16;
+      var sx = bowlX + Math.sin(segTheta) * bowlRx * 0.91;
+      var sy = bowlY + (u - 0.5) * bowlRy * 0.34 - archHump;
+      var radX = Math.max(2.2, bowlRx * 0.058 * (0.45 + Math.abs(z) * 0.55));
+      var radY = Math.max(3.2, bowlRy * 0.052);
+      ctx.globalAlpha = isFront ? clamp(0.55 + z * 0.45, 0.4, 1) : 0.16;
+      drawEllipse(ctx, sx + 1.5, sy + 1.8, radX, radY, 0);
+      ctx.fillStyle = PALETTE.tin_warehouse_dark;
+      ctx.fill();
+      drawEllipse(ctx, sx, sy, radX, radY, 0);
+      ctx.fillStyle = s === 0 ? PALETTE.roundabout_marigold : PALETTE.goblet_celadon_glass;
+      ctx.fill();
+      ctx.strokeStyle = PALETTE.placard_amber_ivory;
+      ctx.lineWidth = isFront ? 1.1 : 0.5;
+      ctx.stroke();
+      if (isFront && s > 1 && s < segs - 1 && s % 2 === 0) {
+        ctx.beginPath();
+        ctx.moveTo(sx, sy + radY);
+        ctx.lineTo(sx, sy + radY + 3.2);
+        ctx.stroke();
+      }
+    }
+    ctx.restore();
+  }
+
+  function renderHotelGobletLocus(ctx, w, h, anim, state, placardCode, placardLetters, hitZones) {
+    ctx.fillStyle = PALETTE.overcast_continuum_sky;
+    ctx.fillRect(0, 0, w, h);
+    var splitCol = w * 0.45;
+    ctx.fillStyle = "#262C2B";
+    ctx.fillRect(0, 0, splitCol, h);
+    ctx.strokeStyle = PALETTE.suburb_ochre_shadow;
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(splitCol, h * 0.08);
+    ctx.lineTo(splitCol, h * 0.94);
+    ctx.stroke();
+
+    var mx = splitCol * 0.14, my = h * 0.16, mw = splitCol * 0.72, mh = h * 0.66;
+    for (var m = 0; m < HOTEL_MIRROR_SPEC.frameMoldings; m++) {
+      var pad = m * 4.5;
+      ctx.strokeStyle = m % 2 === 0 ? PALETTE.suburb_yellowish_ochre : PALETTE.suburb_ochre_shadow;
+      ctx.lineWidth = 3;
+      ctx.strokeRect(mx + pad, my + pad, mw - pad * 2, mh - pad * 2);
+    }
+    var ix = mx + 20, iy = my + 20, iw = Math.max(24, mw - 40), ih = Math.max(40, mh - 40);
+    ctx.fillStyle = "#36403E";
+    ctx.fillRect(ix, iy, iw, ih);
+    ctx.fillStyle = PALETTE.suburb_greenish_lichen;
+    ctx.fillRect(ix + iw * 0.38, iy + ih * 0.14, iw * 0.24, ih * 0.30);
+    ctx.fillStyle = PALETTE.suburb_yellowish_ochre;
+    ctx.fillRect(ix + iw * 0.34, iy + ih * 0.14, iw * 0.05, ih * 0.30);
+    ctx.fillRect(ix + iw * 0.61, iy + ih * 0.14, iw * 0.05, ih * 0.30);
+
+    var bedX = ix + iw * HOTEL_MIRROR_SPEC.bedpostReflectionX;
+    var lampX = ix + iw * HOTEL_MIRROR_SPEC.lampReflectionX;
+    ctx.fillStyle = PALETTE.suburb_ochre_shadow;
+    ctx.fillRect(bedX - 5, iy + ih * 0.48, 10, ih * 0.44);
+    drawEllipse(ctx, bedX, iy + ih * 0.46, 7, 7, 0);
+    ctx.fill();
+    ctx.fillStyle = PALETTE.roundabout_marigold;
+    ctx.beginPath();
+    ctx.moveTo(lampX - 14, iy + ih * 0.56);
+    ctx.lineTo(lampX - 8, iy + ih * 0.42);
+    ctx.lineTo(lampX + 8, iy + ih * 0.42);
+    ctx.lineTo(lampX + 14, iy + ih * 0.56);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillRect(lampX - 2, iy + ih * 0.56, 4, ih * 0.24);
+
+    if (state.mirrorRaysVisible) {
+      var eyeX = ix + iw * 0.50, eyeY = iy + ih * 0.90;
+      ctx.save();
+      setDash(ctx, [5, 4]);
+      ctx.strokeStyle = PALETTE.placard_amber_ivory;
+      ctx.lineWidth = 1.3;
+      ctx.beginPath();
+      ctx.moveTo(eyeX, eyeY);
+      ctx.lineTo(bedX, iy + ih * 0.48);
+      ctx.lineTo(ix + iw * 0.10, iy + ih * 0.78);
+      ctx.moveTo(eyeX, eyeY);
+      ctx.lineTo(lampX, iy + ih * 0.49);
+      ctx.lineTo(ix + iw * 0.90, iy + ih * 0.78);
+      ctx.stroke();
+      setDash(ctx, []);
+      ctx.restore();
+    }
+    ctx.fillStyle = PALETTE.placard_amber_ivory;
+    ctx.font = "700 10px monospace";
+    ctx.fillText("HOTEL MIRROR · " + HOTEL_MIRROR_SPEC.logicHash, mx, my + mh + 18);
+    hitZones.push({ type: "mirror", locus: "hotel_goblet_bar", label: "Overnight Hotel Mirror (4 Moldings)", x: mx, y: my, w: mw, h: mh });
+
+    var gx = splitCol + (w - splitCol) * 0.50;
+    var bowlY = h * 0.41;
+    var bowlRx = Math.min((w - splitCol) * 0.31, h * 0.19);
+    var bowlRy = Math.min(h * 0.23, bowlRx * 1.25);
+
+    ctx.fillStyle = "rgba(158, 181, 158, 0.22)";
+    ctx.beginPath();
+    ctx.moveTo(gx - bowlRx, bowlY - bowlRy * 0.78);
+    ctx.bezierCurveTo(gx - bowlRx * 1.06, bowlY + bowlRy * 0.65, gx - bowlRx * 0.32, bowlY + bowlRy * 0.98, gx, bowlY + bowlRy);
+    ctx.bezierCurveTo(gx + bowlRx * 0.32, bowlY + bowlRy * 0.98, gx + bowlRx * 1.06, bowlY + bowlRy * 0.65, gx + bowlRx, bowlY - bowlRy * 0.78);
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = PALETTE.goblet_celadon_glass;
+    ctx.lineWidth = 2.2;
+    ctx.stroke();
+
+    drawEllipse(ctx, gx, bowlY + bowlRy * 0.18, bowlRx * 0.84, bowlRy * 0.15, 0);
+    ctx.fillStyle = "rgba(212, 149, 59, 0.28)";
+    ctx.fill();
+
+    for (var pass = 0; pass < 2; pass++) {
+      var front = pass === 1;
+      for (var lf = 0; lf < GOBLET_RELIEF_SPEC.leafCount; lf++) {
+        var th = state.gobletAngleRad + (lf / GOBLET_RELIEF_SPEC.leafCount) * TAU;
+        var zf = Math.cos(th);
+        if ((front && zf >= -0.05) || (!front && zf < -0.05)) {
+          var lx = gx + Math.sin(th) * bowlRx * 0.78;
+          var ly = bowlY + (lf % 2 === 0 ? -bowlRy * 0.10 : bowlRy * 0.16);
+          drawBotanicalLeafRelief(ctx, lx, ly, Math.max(4, bowlRx * 0.19 * Math.max(0.22, Math.abs(zf))), bowlRy * 0.32, Math.max(0, zf), front);
+        }
+      }
+      for (var ct = 0; ct < GOBLET_RELIEF_SPEC.caterpillarCount; ct++) {
+        var cTheta = state.gobletAngleRad + (ct / GOBLET_RELIEF_SPEC.caterpillarCount) * TAU + 0.42;
+        drawCaterpillarRelief(ctx, gx, bowlY + (ct - 1) * bowlRy * 0.22, bowlRx, bowlRy, cTheta, front);
+      }
+    }
+
+    drawEllipse(ctx, gx, bowlY - bowlRy * 0.78, bowlRx, bowlRy * 0.16, 0);
+    ctx.strokeStyle = PALETTE.placard_amber_ivory;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    var rakeX = gx - bowlRx * 0.52 + Math.sin(anim.specularPhase) * bowlRx * 0.08;
+    ctx.strokeStyle = "rgba(242, 229, 190, 0.42)";
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(rakeX, bowlY - bowlRy * 0.62);
+    ctx.quadraticCurveTo(rakeX - 6, bowlY + bowlRy * 0.1, rakeX + 8, bowlY + bowlRy * 0.68);
+    ctx.stroke();
+
+    var stemTop = bowlY + bowlRy, footY = Math.min(h * 0.86, stemTop + bowlRy * 0.68);
+    ctx.fillStyle = "rgba(158, 181, 158, 0.46)";
+    ctx.fillRect(gx - 7, stemTop, 14, footY - stemTop);
+    drawEllipse(ctx, gx, (stemTop + footY) * 0.5, 14, 9, 0);
+    ctx.fill();
+    drawEllipse(ctx, gx, footY, bowlRx * 0.72, bowlRy * 0.14, 0);
+    ctx.fill();
+    ctx.strokeStyle = PALETTE.goblet_celadon_glass;
+    ctx.lineWidth = 1.6;
+    ctx.stroke();
+
+    var deg = Math.round((((state.gobletAngleRad * 180) / Math.PI) % 360 + 360) % 360);
+    ctx.fillStyle = PALETTE.placard_amber_ivory;
+    ctx.font = "700 10px monospace";
+    ctx.fillText("8 LEAVES · 3×11-SEG CATERPILLARS · " + deg + "°", gx - bowlRx * 0.95, footY + 28);
+    hitZones.push({ type: "goblet", locus: "hotel_goblet_bar", label: "Pressed Celadon Goblet — Leaves (8) & Caterpillars (3)", x: gx - bowlRx * 1.1, y: bowlY - bowlRy, w: bowlRx * 2.2, h: footY - (bowlY - bowlRy) + 18 });
+    drawPlacardPost(ctx, w * 0.03, h * 0.03, Math.min(275, w * 0.42), 38, placardCode, placardLetters, "OVERNIGHT BAR · RM 404");
+  }
+
+  function resolveLocus(locusIdOrIndex) {
+    if (typeof locusIdOrIndex === "number" && Number.isFinite(locusIdOrIndex)) {
+      var idx = Math.floor(locusIdOrIndex);
+      if (idx >= 0 && idx < LOCI.length) return LOCI[idx];
+      if (idx === 4) return LOCI[3];
+    }
+    if (typeof locusIdOrIndex === "string") {
+      var clean = locusIdOrIndex.trim();
+      for (var i = 0; i < LOCI.length; i++) {
+        if (LOCI[i].id === clean || LOCI[i].shortLabel === clean || LOCI[i].label === clean || String(LOCI[i].keyNum) === clean) {
+          return LOCI[i];
+        }
+      }
+    }
+    return LOCI[1];
+  }
+
+  function createSuburbMatrix(opts) {
+    var cfg = opts || {};
+    var startLocus = resolveLocus(cfg.initialLocus != null ? cfg.initialLocus : "flower_roundabout");
+    var state = {
+      width: Math.max(120, Number(cfg.width) || 1280),
+      height: Math.max(120, Number(cfg.height) || 800),
+      reducedMotion: Boolean(cfg.reducedMotion),
+      activeLocus: startLocus.id,
+      activeLocusIndex: startLocus.index,
+      dialogueIndex: 0,
+      dialogueTurnsSpoken: 0,
+      hardwareDialogueVariance: 0,
+      gobletAngleRad: 0.36,
+      gobletInspectedCount: 0,
+      mirrorRaysVisible: true,
+      destroyed: false
+    };
+    var anim = {
+      elapsedSec: 0,
+      vehiclePhase: 0.14,
+      smokePhase: 0.25,
+      scaleNeedlePhase: 0,
+      scaleNeedleAmp: 0,
+      specularPhase: 0.4
+    };
+    var dialogueLedger = { "TRD-01": { 0: HARDWARE_DIALOGUE_SCRIPT[0].utterance } };
+    var lastHitZones = [];
+    var lastW = state.width;
+    var lastH = state.height;
+
+    function computeDialogueVariance() {
+      var codes = Object.keys(dialogueLedger);
+      var diff = 0;
+      for (var i = 0; i < codes.length; i++) {
+        var bucket = dialogueLedger[codes[i]];
+        var turns = Object.keys(bucket);
+        for (var j = 0; j < turns.length; j++) {
+          var tIdx = Number(turns[j]);
+          if (bucket[tIdx] !== HARDWARE_DIALOGUE_SCRIPT[tIdx].utterance) diff += 1;
+        }
+      }
+      return diff;
+    }
+
+    function drawSingleScene(ctx, w, h, locusId, code, letters, hitOut) {
+      if (locusId === "airport_suburb_road") {
+        renderSuburbRoadLocus(ctx, w, h, anim, code, letters, hitOut);
+      } else if (locusId === "flower_roundabout") {
+        renderFlowerRoundaboutLocus(ctx, w, h, anim, code, letters, hitOut);
+      } else if (locusId === "hardware_store") {
+        renderHardwareStoreLocus(ctx, w, h, anim, state, code, letters, hitOut);
+      } else {
+        renderHotelGobletLocus(ctx, w, h, anim, state, code, letters, hitOut);
+      }
+    }
+
+    function getState() {
+      var loc = LOCI[state.activeLocusIndex] || LOCI[1];
+      var turn = HARDWARE_DIALOGUE_SCRIPT[state.dialogueIndex] || HARDWARE_DIALOGUE_SCRIPT[0];
+      return {
+        width: state.width,
+        height: state.height,
+        reducedMotion: state.reducedMotion,
+        activeLocus: loc.id,
+        activeLocusIndex: loc.index,
+        activeLocusLabel: loc.label,
+        activeLocusShortLabel: loc.shortLabel,
+        dialogueIndex: state.dialogueIndex,
+        dialogueTurnsSpoken: state.dialogueTurnsSpoken,
+        currentDialogue: turn,
+        visitedDialogueAirports: Object.keys(dialogueLedger),
+        hardwareDialogueVariance: state.hardwareDialogueVariance,
+        gobletAngleRad: state.gobletAngleRad,
+        gobletInspectedCount: state.gobletInspectedCount,
+        gobletMotif: GOBLET_RELIEF_SPEC.motif,
+        mirrorRaysVisible: state.mirrorRaysVisible,
+        flowerBedRoundaboutsCount: ROUNDABOUT_SQUARES.length,
+        tinWarehousesCount: TIN_WAREHOUSES.length,
+        hotelMirrorIdenticalLogic: HOTEL_MIRROR_SPEC.identicalLogic,
+        detailVarianceAcrossFlights: 0
+      };
+    }
+
+    return {
+      setLocus: function setLocus(locusIdOrIndex) {
+        var next = resolveLocus(locusIdOrIndex);
+        state.activeLocus = next.id;
+        state.activeLocusIndex = next.index;
+        if (typeof cfg.onLocusChange === "function") cfg.onLocusChange(getState());
+        return next;
+      },
+      advanceHardwareDialogue: function advanceHardwareDialogue(airportCode) {
+        var code = String(airportCode || "TRD-01");
+        state.dialogueIndex = (state.dialogueIndex + 1) % HARDWARE_DIALOGUE_SCRIPT.length;
+        state.dialogueTurnsSpoken += 1;
+        var turn = HARDWARE_DIALOGUE_SCRIPT[state.dialogueIndex];
+        if (!dialogueLedger[code]) dialogueLedger[code] = {};
+        dialogueLedger[code][turn.turnIndex] = turn.utterance;
+        state.hardwareDialogueVariance = computeDialogueVariance();
+        anim.scaleNeedleAmp = state.reducedMotion ? 0 : 1;
+        anim.scaleNeedlePhase = 0;
+        var res = {
+          turnIndex: turn.turnIndex,
+          dialogueIndex: state.dialogueIndex,
+          speaker: turn.speaker,
+          itemCode: turn.itemCode,
+          utterance: turn.utterance,
+          airportCode: code,
+          hardwareDialogueVariance: state.hardwareDialogueVariance,
+          matchPercent: 100
+        };
+        if (typeof cfg.onDialogueAdvance === "function") cfg.onDialogueAdvance(res);
+        return res;
+      },
+      rotateGoblet: function rotateGoblet(deltaRad) {
+        var delta = Number.isFinite(deltaRad) ? deltaRad : 0.45;
+        state.gobletAngleRad += delta;
+        state.gobletInspectedCount += 1;
+        var res = { gobletAngleRad: state.gobletAngleRad, gobletInspectedCount: state.gobletInspectedCount, spec: GOBLET_RELIEF_SPEC };
+        if (typeof cfg.onGobletInspect === "function") cfg.onGobletInspect(res);
+        return res;
+      },
+      setGobletAngle: function setGobletAngle(rad) {
+        state.gobletAngleRad = Number.isFinite(rad) ? rad : 0;
+        state.gobletInspectedCount += 1;
+        var res = { gobletAngleRad: state.gobletAngleRad, gobletInspectedCount: state.gobletInspectedCount, spec: GOBLET_RELIEF_SPEC };
+        if (typeof cfg.onGobletInspect === "function") cfg.onGobletInspect(res);
+        return res;
+      },
+      toggleMirrorRays: function toggleMirrorRays(forceBool) {
+        state.mirrorRaysVisible = typeof forceBool === "boolean" ? forceBool : !state.mirrorRaysVisible;
+        return state.mirrorRaysVisible;
+      },
+      step: function step(dtSec) {
+        if (state.destroyed || state.reducedMotion) {
+          anim.scaleNeedleAmp = 0;
+          return;
+        }
+        var dt = clamp(Number(dtSec) || 0.016, 0, 0.1);
+        anim.elapsedSec += dt;
+        anim.vehiclePhase = (anim.vehiclePhase + dt * 0.16) % 1;
+        anim.smokePhase = (anim.smokePhase + dt * 0.28) % 1;
+        anim.specularPhase = (anim.specularPhase + dt * 0.55) % TAU;
+        if (anim.scaleNeedleAmp > 0.002) {
+          anim.scaleNeedlePhase += dt;
+          anim.scaleNeedleAmp *= Math.pow(0.18, dt);
+        } else {
+          anim.scaleNeedleAmp = 0;
+        }
+      },
+      renderLocus: function renderLocus(ctx, width, height, params) {
+        if (!ctx || state.destroyed) return;
+        var p = params || {};
+        var w = Math.max(1, Number(width) || state.width);
+        var h = Math.max(1, Number(height) || state.height);
+        var loc = p.locus != null ? resolveLocus(p.locus) : LOCI[state.activeLocusIndex];
+        var destCode = p.airportPlacardCode || "TRD-01";
+        var destLetters = p.airportPlacardLetters || "TRUDE CENTRAL";
+        var origCode = p.originPlacardCode || "TRD-01";
+        var origLetters = p.originPlacardLetters || "TRUDE CENTRAL";
+        var hits = [];
+        ctx.save();
+        if (p.compareMode) {
+          var wipe = clamp(Number.isFinite(p.wipeRatio) ? p.wipeRatio : 0.5, 0.15, 0.85);
+          var splitX = Math.round(w * wipe);
+          ctx.save();
+          ctx.beginPath();
+          ctx.rect(0, 0, splitX, h);
+          ctx.clip();
+          drawSingleScene(ctx, w, h, loc.id, origCode, origLetters, []);
+          ctx.restore();
+          ctx.save();
+          ctx.beginPath();
+          ctx.rect(splitX, 0, w - splitX, h);
+          ctx.clip();
+          drawSingleScene(ctx, w, h, loc.id, destCode, destLetters, hits);
+          ctx.restore();
+          ctx.strokeStyle = PALETTE.placard_amber_ivory;
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(splitX, 0);
+          ctx.lineTo(splitX, h);
+          ctx.stroke();
+          drawEllipse(ctx, splitX, h * 0.5, 13, 13, 0);
+          ctx.fillStyle = PALETTE.asphalt_tarmac;
+          ctx.fill();
+          ctx.stroke();
+          var tagW = Math.min(220, Math.max(118, w * 0.32));
+          drawPlacardPost(ctx, Math.max(8, splitX - tagW - 10), h - 46, tagW, 36, origCode, origLetters, "ORIGIN BASELINE");
+          drawPlacardPost(ctx, Math.min(w - tagW - 8, splitX + 10), h - 46, tagW, 36, destCode, destLetters, "DESTINATION · 0.00% DIFF");
+        } else {
+          drawSingleScene(ctx, w, h, loc.id, destCode, destLetters, hits);
+        }
+        ctx.restore();
+        lastHitZones = hits;
+        lastW = w;
+        lastH = h;
+      }
+,
+      hitTest: function hitTest(x, y, width, height) {
+        var w = Math.max(1, Number(width) || lastW || state.width);
+        var h = Math.max(1, Number(height) || lastH || state.height);
+        var px = Number(x), py = Number(y);
+        if (!Number.isFinite(px) || !Number.isFinite(py) || px < 0 || py < 0 || px > w || py > h) {
+          return null;
+        }
+        var sx = lastW > 0 ? (px * lastW) / w : px;
+        var sy = lastH > 0 ? (py * lastH) / h : py;
+        for (var i = lastHitZones.length - 1; i >= 0; i--) {
+          var z = lastHitZones[i];
+          if (sx >= z.x && sx <= z.x + z.w && sy >= z.y && sy <= z.y + z.h) {
+            return { type: z.type, locus: z.locus, label: z.label };
+          }
+        }
+        var active = state.activeLocus;
+        if (active === "hotel_goblet_bar") {
+          return px < w * 0.45
+            ? { type: "mirror", locus: active, label: "Overnight Hotel Mirror (4 Moldings)" }
+            : { type: "goblet", locus: active, label: "Pressed Celadon Goblet — Leaves (8) & Caterpillars (3)" };
+        }
+        if (active === "hardware_store") {
+          return { type: "hardware_counter", locus: active, label: "Verbatim Hardware Buyers Counter" };
+        }
+        if (active === "flower_roundabout") {
+          return { type: "roundabout", locus: active, label: "Marigold & Geranium Roundabout Square" };
+        }
+        return {
+          type: py >= h * 0.40 && py <= h * 0.68 ? "warehouse" : "suburb_block",
+          locus: active,
+          label: py >= h * 0.40 && py <= h * 0.68 ? "Corrugated Zinc-Tin Warehouse" : "Yellowish-Greenish Suburban Row"
+        };
+      },
+      verifyDetailInvariance: function verifyDetailInvariance(originCode, currentCode) {
+        return {
+          originCode: String(originCode || "TRD-01"),
+          currentCode: String(currentCode || "TRD-01"),
+          suburbFacadeVariance: 0,
+          roundaboutCurveVariance: 0,
+          tinWarehouseVariance: 0,
+          hardwareDialogueVariance: computeDialogueVariance(),
+          hotelMirrorVariance: 0,
+          gobletReliefVariance: 0,
+          detailVarianceAcrossFlights: 0,
+          gobletMotif: GOBLET_RELIEF_SPEC.motif,
+          flowerBedRoundaboutsCount: ROUNDABOUT_SQUARES.length,
+          tinWarehousesCount: TIN_WAREHOUSES.length,
+          hotelMirrorIdenticalLogic: HOTEL_MIRROR_SPEC.identicalLogic,
+          onlyAirportNameChanges: true
+        };
+      },
+      setViewport: function setViewport(w, h) {
+        state.width = Math.max(120, Number(w) || state.width);
+        state.height = Math.max(120, Number(h) || state.height);
+        return getState();
+      },
+      setReducedMotion: function setReducedMotion(flag) {
+        state.reducedMotion = Boolean(flag);
+        if (state.reducedMotion) anim.scaleNeedleAmp = 0;
+        return state.reducedMotion;
+      },
+      getState: getState,
+      destroy: function destroy() {
+        state.destroyed = true;
+        lastHitZones = [];
+      }
+    };
+  }
+
+  var api = Object.freeze({
+    PALETTE: PALETTE,
+    LOCI: LOCI,
+    HARDWARE_DIALOGUE_SCRIPT: HARDWARE_DIALOGUE_SCRIPT,
+    GOBLET_RELIEF_SPEC: GOBLET_RELIEF_SPEC,
+    HOTEL_MIRROR_SPEC: HOTEL_MIRROR_SPEC,
+    createSuburbMatrix: createSuburbMatrix
+  });
+
+  root.TrudeSuburbDetails = api;
+  if (typeof window !== "undefined") {
+    window.TrudeSuburbDetails = api;
+  }
+})(typeof globalThis !== "undefined" ? globalThis : this);
+
+</script>
+  <script>
+  (function initTrudeWeaver() {
+    "use strict";
+
+    var TransitAPI = globalThis.TrudeAirportTransit;
+    var SuburbAPI = globalThis.TrudeSuburbDetails;
+    if (!TransitAPI || !SuburbAPI) return;
+
+    var mqReduced = globalThis.matchMedia
+      ? globalThis.matchMedia("(prefers-reduced-motion: reduce)")
+      : { matches: false };
+
+    var uiState = {
+      viewMode: "composite",
+      activeStageSlot: 2,
+      compareMode: false,
+      wipeRatio: 0.5,
+      plateDrawerOpen: false,
+      plateTab: "diptych",
+      plateZoomActive: false,
+      loupeNormX: 0.5,
+      loupeNormY: 0.5,
+      loupeTarget: "map",
+      lastToast: "RWY 27L & yellowish-greenish suburbs identical across every planetary sector.",
+      reducedMotion: Boolean(mqReduced.matches)
+    };
+
+    var elApp = document.getElementById("trd-app");
+    var elPlacardCode = document.getElementById("trd-placard-code");
+    var elPlacardLetters = document.getElementById("trd-placard-letters");
+    var elFlapStrip = document.getElementById("trd-flap-strip");
+    var elContinuumTag = document.getElementById("trd-continuum-tag");
+    var elTransitPane = document.getElementById("trd-transit-pane");
+    var elSuburbPane = document.getElementById("trd-suburb-pane");
+    var airportCanvas = document.getElementById("trd-airport-canvas");
+    var suburbCanvas = document.getElementById("trd-suburb-canvas");
+    var airportCtx = airportCanvas.getContext("2d");
+    var suburbCtx = suburbCanvas.getContext("2d");
+    var elAirportCaption = document.getElementById("trd-airport-caption");
+    var elSuburbCaption = document.getElementById("trd-suburb-caption");
+    var elWipeRail = document.getElementById("trd-wipe-rail");
+    var elWipeTrack = document.getElementById("trd-wipe-track");
+    var elWipeThumb = document.getElementById("trd-wipe-thumb");
+    var elWipeDest = document.getElementById("trd-wipe-dest");
+    var elToast = document.getElementById("trd-inspect-toast");
+    var elTicketRack = document.getElementById("trd-ticket-rack");
+    var elFlightTally = document.getElementById("trd-flight-tally");
+    var elDialogueMeta = document.getElementById("trd-dialogue-meta");
+    var elDialogueQuote = document.getElementById("trd-dialogue-quote");
+    var elGobletAngle = document.getElementById("trd-goblet-angle");
+    var elGobletReadout = document.getElementById("trd-goblet-readout");
+    var elDiffSuburb = document.getElementById("trd-diff-suburb");
+    var elDiffDialogue = document.getElementById("trd-diff-dialogue");
+    var elDiffGoblet = document.getElementById("trd-diff-goblet");
+    var elDiffSole = document.getElementById("trd-diff-sole");
+    var elPlateDrawer = document.getElementById("trd-plate-drawer");
+    var elPlateGallery = document.getElementById("trd-plate-gallery");
+    var elFrameMap = document.getElementById("trd-frame-map");
+    var elFrameImage = document.getElementById("trd-frame-image");
+    var elImgMap = document.getElementById("trd-img-map");
+    var elImgImage = document.getElementById("trd-img-image");
+    var elZoomLoupe = document.getElementById("trd-zoom-loupe");
+    var loupeCanvas = document.getElementById("trd-loupe-canvas");
+    var loupeCtx = loupeCanvas.getContext("2d");
+
+    var transit = TransitAPI.createTransitEngine({
+      width: 860,
+      height: 340,
+      reducedMotion: uiState.reducedMotion,
+      onFlightLanded: function (st) {
+        uiState.lastToast = "Landed " + st.airportPlacardCode + " (" + st.airportPlacardLetters + ") — RWY 27L & suburbs 100% identical (0.00% diff).";
+        syncDom();
+      }
+    });
+
+    var suburbs = SuburbAPI.createSuburbMatrix({
+      width: 860,
+      height: 360,
+      initialLocus: "flower_roundabout",
+      reducedMotion: uiState.reducedMotion
+    });
+
+    var flapDomCells = [];
+    for (var f = 0; f < 18; f++) {
+      var cellEl = document.createElement("trude-flap-cell");
+      cellEl.className = "trd-flap-cell";
+      cellEl.textContent = " ";
+      elFlapStrip.appendChild(cellEl);
+      flapDomCells.push(cellEl);
+    }
+
+    var ticketElsByCode = {};
+    var orderedDests = TransitAPI.DESTINATIONS.slice(1).concat([TransitAPI.DESTINATIONS[0]]);
+    orderedDests.forEach(function (dest) {
+      var ticket = document.createElement("trude-flight-ticket");
+      ticket.className = "trd-flight-ticket";
+      ticket.setAttribute("role", "button");
+      ticket.setAttribute("tabindex", "0");
+      ticket.setAttribute("data-code", dest.code);
+      var codeRow = document.createElement("trude-ticket-code");
+      codeRow.className = "trd-ticket-code";
+      codeRow.textContent = dest.code + (dest.kmFromOrigin > 0 ? " · " + dest.kmFromOrigin + "km" : " · ORIGIN");
+      var metaRow = document.createElement("trude-ticket-meta");
+      metaRow.className = "trd-ticket-meta";
+      metaRow.textContent = dest.placard;
+      ticket.appendChild(codeRow);
+      ticket.appendChild(metaRow);
+      ticket.addEventListener("click", function () {
+        transit.unlockAudio();
+        bookEscapeFlight(dest.code);
+      });
+      elTicketRack.appendChild(ticket);
+      ticketElsByCode[dest.code] = ticket;
+    });
+
+    function clampNum(v, lo, hi) {
+      return v < lo ? lo : v > hi ? hi : v;
+    }
+
+    function prepareVirtualCanvas(canvas, ctx, minVW, minVH) {
+      var rect = canvas.getBoundingClientRect();
+      var cssW = Math.max(64, Math.round(rect.width || 320));
+      var cssH = Math.max(64, Math.round(rect.height || 180));
+      var dpr = Math.min(2, globalThis.devicePixelRatio || 1);
+      var targetW = Math.round(cssW * dpr);
+      var targetH = Math.round(cssH * dpr);
+      if (canvas.width !== targetW || canvas.height !== targetH) {
+        canvas.width = targetW;
+        canvas.height = targetH;
+      }
+      var factor = Math.max(1, minVW / cssW, minVH / cssH);
+      var vW = Math.round(cssW * factor);
+      var vH = Math.round(cssH * factor);
+      ctx.setTransform(targetW / vW, 0, 0, targetH / vH, 0, 0);
+      return { vW: vW, vH: vH, cssW: cssW, cssH: cssH };
+    }
+
+    function renderStage() {
+      var tState = transit.getState();
+      if (!elTransitPane.hidden) {
+        var av = prepareVirtualCanvas(airportCanvas, airportCtx, 580, 286);
+        transit.setViewport(av.vW, av.vH);
+        if (uiState.compareMode) {
+          var splitX = Math.round(av.vW * uiState.wipeRatio);
+          airportCtx.save();
+          airportCtx.beginPath();
+          airportCtx.rect(0, 0, splitX, av.vH);
+          airportCtx.clip();
+          transit.renderAirport(airportCtx, av.vW, av.vH, {
+            overridePlacard: "TRUDE CENTRAL",
+            overrideCode: tState.originPlacardCode
+          });
+          airportCtx.restore();
+
+          airportCtx.save();
+          airportCtx.beginPath();
+          airportCtx.rect(splitX, 0, av.vW - splitX, av.vH);
+          airportCtx.clip();
+          transit.renderAirport(airportCtx, av.vW, av.vH, {});
+          airportCtx.restore();
+
+          airportCtx.save();
+          airportCtx.strokeStyle = "#F2E5BE";
+          airportCtx.lineWidth = 2;
+          airportCtx.beginPath();
+          airportCtx.moveTo(splitX, 0);
+          airportCtx.lineTo(splitX, av.vH);
+          airportCtx.stroke();
+          airportCtx.fillStyle = "#1E2224";
+          airportCtx.beginPath();
+          airportCtx.arc(splitX, av.vH * 0.5, 11, 0, Math.PI * 2);
+          airportCtx.fill();
+          airportCtx.stroke();
+          airportCtx.restore();
+        } else {
+          transit.renderAirport(airportCtx, av.vW, av.vH, {});
+        }
+      }
+
+      if (!elSuburbPane.hidden) {
+        var sv = prepareVirtualCanvas(suburbCanvas, suburbCtx, 650, 340);
+        suburbs.setViewport(sv.vW, sv.vH);
+        suburbs.renderLocus(suburbCtx, sv.vW, sv.vH, {
+          airportPlacardCode: tState.airportPlacardCode,
+          airportPlacardLetters: tState.airportPlacardLetters,
+          originPlacardCode: tState.originPlacardCode,
+          originPlacardLetters: "TRUDE CENTRAL",
+          compareMode: uiState.compareMode,
+          wipeRatio: uiState.wipeRatio
+        });
+      }
+    }
+
+    function drawLoupe() {
+      if (!uiState.plateDrawerOpen || !uiState.plateZoomActive) {
+        elZoomLoupe.hidden = true;
+        return;
+      }
+      var useImage = uiState.plateTab === "image" || (uiState.plateTab === "diptych" && uiState.loupeTarget === "image");
+      var srcImg = useImage ? elImgImage : elImgMap;
+      var srcFrame = useImage ? elFrameImage : elFrameMap;
+      elZoomLoupe.hidden = false;
+
+      var galRect = elPlateGallery.getBoundingClientRect();
+      var imgRect = srcImg.getBoundingClientRect();
+      var baseRect = imgRect.width > 20 ? imgRect : srcFrame.getBoundingClientRect();
+      var px = (baseRect.left - galRect.left) + baseRect.width * uiState.loupeNormX - 98;
+      var py = (baseRect.top - galRect.top) + baseRect.height * uiState.loupeNormY - 98;
+      var maxLeft = Math.max(4, galRect.width - 202);
+      var maxTop = Math.max(4, galRect.height - 202);
+      elZoomLoupe.style.left = Math.round(clampNum(px, 4, maxLeft)) + "px";
+      elZoomLoupe.style.top = Math.round(clampNum(py, 4, maxTop)) + "px";
+
+      loupeCtx.fillStyle = "#121516";
+      loupeCtx.fillRect(0, 0, 196, 196);
+      if (srcImg.complete && srcImg.naturalWidth > 0) {
+        var zoom = 2.6;
+        var sw = srcImg.naturalWidth / zoom;
+        var sh = srcImg.naturalHeight / zoom;
+        var sx = clampNum(uiState.loupeNormX * srcImg.naturalWidth - sw * 0.5, 0, srcImg.naturalWidth - sw);
+        var sy = clampNum(uiState.loupeNormY * srcImg.naturalHeight - sh * 0.5, 0, srcImg.naturalHeight - sh);
+        try {
+          loupeCtx.drawImage(srcImg, sx, sy, sw, sh, 0, 0, 196, 196);
+        } catch (_e) {}
+      }
+      loupeCtx.strokeStyle = "rgba(242, 229, 190, 0.55)";
+      loupeCtx.lineWidth = 1;
+      loupeCtx.beginPath();
+      loupeCtx.moveTo(98, 0);
+      loupeCtx.lineTo(98, 196);
+      loupeCtx.moveTo(0, 98);
+      loupeCtx.lineTo(196, 98);
+      loupeCtx.stroke();
+    }
+
+    function compareOriginVsDestination() {
+      var tDiff = transit.compareOriginVsCurrent();
+      var sDiff = suburbs.verifyDetailInvariance(tDiff.originPlacardCode, tDiff.currentPlacardCode);
+      return {
+        originPlacardCode: tDiff.originPlacardCode,
+        currentPlacardCode: tDiff.currentPlacardCode,
+        destinationPlacardCode: tDiff.currentPlacardCode,
+        originPlacardLetters: tDiff.originPlacardLetters,
+        currentPlacardLetters: tDiff.currentPlacardLetters,
+        destinationPlacardLetters: tDiff.currentPlacardLetters,
+        placardChanged: tDiff.placardChanged,
+        soleMutation: "airport_placard_letters",
+        runwayHeading: "27L",
+        runway27LVariance: 0,
+        runwayGeometryDiff: tDiff.runwayGeometryDiff,
+        hangarBayDiff: tDiff.hangarBayDiff,
+        windsockAngleDiff: tDiff.windsockAngleDiff,
+        suburbHorizonDiff: tDiff.suburbHorizonDiff,
+        yellowishGreenishSuburbVariance: sDiff.suburbFacadeVariance,
+        suburbFacadeVariance: sDiff.suburbFacadeVariance,
+        flowerBedRoundaboutVariance: sDiff.roundaboutCurveVariance,
+        roundaboutCurveVariance: sDiff.roundaboutCurveVariance,
+        tinWarehouseVariance: sDiff.tinWarehouseVariance,
+        hardwareDialogueVariance: sDiff.hardwareDialogueVariance,
+        hardwareDialogueWordDiff: 0,
+        hotelMirrorVariance: sDiff.hotelMirrorVariance,
+        hotelMirrorIdenticalLogic: sDiff.hotelMirrorIdenticalLogic,
+        gobletReliefVariance: sDiff.gobletReliefVariance,
+        gobletMotif: sDiff.gobletMotif,
+        detailVarianceAcrossFlights: 0,
+        structuralSimilarityPct: 100,
+        departureEscapesTrude: false,
+        onlyAirportNameChanges: true
+      };
+    }
+
+    function syncDom() {
+      var tState = transit.getState();
+      var sState = suburbs.getState();
+
+      elTransitPane.hidden = uiState.viewMode === "suburb";
+      elSuburbPane.hidden = uiState.viewMode === "airport";
+
+      elPlacardCode.textContent = tState.airportPlacardCode;
+      elPlacardLetters.textContent = tState.airportPlacardLetters;
+      for (var i = 0; i < 18; i++) {
+        var fc = tState.flapCells[i];
+        if (fc && flapDomCells[i]) {
+          flapDomCells[i].textContent = fc.currentChar || " ";
+          flapDomCells[i].classList.toggle("trd-is-flipping", fc.flipPhase > 0);
+        }
+      }
+      elContinuumTag.textContent =
+        "RWY " + tState.runwayHeading +
+        " · VARIANCE 0.00% · VISITED " + tState.uniquePlacardsVisited +
+        " · " + tState.totalDistanceKm + " KM";
+
+      elAirportCaption.textContent =
+        "0 · RWY " + tState.runwayHeading + " · " + tState.airportPlacardCode + " " + tState.airportPlacardLetters;
+      elSuburbCaption.textContent =
+        (sState.activeLocusIndex + 1) + " · " + sState.activeLocusLabel.toUpperCase();
+
+      elFlightTally.textContent = tState.flightsTaken + " FLIGHTS · ESCAPE: FALSE";
+      Object.keys(ticketElsByCode).forEach(function (code) {
+        ticketElsByCode[code].classList.toggle("trd-is-current", code === tState.airportPlacardCode);
+      });
+
+      var dTurn = sState.currentDialogue;
+      elDialogueMeta.textContent =
+        "TURN " + (dTurn.turnIndex + 1) + "/6 · " + dTurn.speaker.toUpperCase() + " · [" + dTurn.itemCode + "]";
+      elDialogueQuote.textContent = "\"" + dTurn.utterance + "\"";
+
+      var gobDeg = Math.round((((sState.gobletAngleRad * 180) / Math.PI) % 360 + 360) % 360);
+      elGobletAngle.textContent = gobDeg + "°";
+      elGobletReadout.textContent =
+        "8 Botanical Leaves · 3×11-Seg Caterpillars · Rays: " + (sState.mirrorRaysVisible ? "ON" : "OFF");
+
+      elDiffSuburb.textContent = "0.00% Variance";
+      elDiffDialogue.textContent = sState.hardwareDialogueVariance + " words diff";
+      elDiffGoblet.textContent = "0.00% (" + sState.gobletMotif + ")";
+      elDiffSole.textContent =
+        tState.airportPlacardCode === tState.originPlacardCode
+          ? "Origin: TRD-01"
+          : "Sign: TRD-01 -> " + tState.airportPlacardCode;
+
+      elWipeRail.hidden = !uiState.compareMode;
+      var pct = Math.round(uiState.wipeRatio * 100);
+      elWipeThumb.style.left = pct + "%";
+      elWipeRail.setAttribute("aria-valuenow", String(pct));
+      elWipeDest.textContent = tState.airportPlacardCode + " " + pct + "%";
+      elToast.textContent = uiState.lastToast;
+    }
+
+    function syncActiveButtons() {
+      var sState = suburbs.getState();
+      var tState = transit.getState();
+      ["composite", "airport", "suburb"].forEach(function (m) {
+        var b = document.getElementById("trd-view-" + m);
+        if (b) b.classList.toggle("trd-is-active", uiState.viewMode === m);
+      });
+      for (var slot = 0; slot <= 4; slot++) {
+        var lb = document.getElementById("trd-loc-" + slot);
+        if (lb) {
+          var isAct = uiState.viewMode === "airport" ? slot === 0 : (uiState.activeStageSlot === 0 ? slot === 0 : slot === sState.activeLocusIndex + 1);
+          lb.classList.toggle("trd-is-active", isAct);
+        }
+      }
+      var cmpBtn = document.getElementById("trd-btn-compare");
+      var cmpCard = document.getElementById("trd-btn-compare-card");
+      if (cmpBtn) {
+        cmpBtn.classList.toggle("trd-is-active", uiState.compareMode);
+        cmpBtn.setAttribute("aria-pressed", String(uiState.compareMode));
+      }
+      if (cmpCard) cmpCard.classList.toggle("trd-is-active", uiState.compareMode);
+
+      var muteBtn = document.getElementById("trd-btn-mute");
+      if (muteBtn) {
+        muteBtn.classList.toggle("trd-is-active", tState.muted);
+        muteBtn.setAttribute("aria-pressed", String(tState.muted));
+        muteBtn.textContent = tState.muted ? "[M] Muted" : "[M] Sound";
+      }
+      var mirBtn = document.getElementById("trd-btn-mirror");
+      if (mirBtn) {
+        mirBtn.classList.toggle("trd-is-active", sState.mirrorRaysVisible);
+        mirBtn.setAttribute("aria-pressed", String(sState.mirrorRaysVisible));
+      }
+      var zmBtn = document.getElementById("trd-btn-plate-zoom");
+      if (zmBtn) {
+        zmBtn.classList.toggle("trd-is-active", uiState.plateZoomActive);
+        zmBtn.setAttribute("aria-pressed", String(uiState.plateZoomActive));
+      }
+      ["diptych", "map", "image"].forEach(function (tab) {
+        var tb = document.getElementById("trd-tab-" + tab);
+        if (tb) {
+          var sel = uiState.plateTab === tab;
+          tb.classList.toggle("trd-is-active", sel);
+          tb.setAttribute("aria-selected", String(sel));
+        }
+      });
+    }
+
+    function refreshUI() {
+      syncDom();
+      syncActiveButtons();
+      renderStage();
+      if (uiState.plateDrawerOpen) drawLoupe();
+    }
+
+    function getState() {
+      var t = transit.getState();
+      var s = suburbs.getState();
+      return Object.assign({}, s, t, {
+        viewMode: uiState.viewMode,
+        activeStageSlot: uiState.activeStageSlot,
+        compareMode: uiState.compareMode,
+        wipeRatio: uiState.wipeRatio,
+        plateDrawerOpen: uiState.plateDrawerOpen,
+        plateTab: uiState.plateTab,
+        plateZoomActive: uiState.plateZoomActive,
+        worldContinuumCoverage: 1.0,
+        hardwareDialogueLines: SuburbAPI.HARDWARE_DIALOGUE_SCRIPT,
+        departureEscapesTrude: false,
+        detailVarianceAcrossFlights: 0,
+        onlyAirportNameChanges: true
+      });
+    }
+
+    function bookEscapeFlight(dest, opts) {
+      var t = transit.getState();
+      var targetArg = dest;
+      if (dest === undefined || dest === null || dest === "next" || dest === "") {
+        var total = TransitAPI.DESTINATIONS.length;
+        var nextIdx = 1 + (t.flightsTaken % (total - 1));
+        if (nextIdx === t.currentIndex) nextIdx = 1 + ((nextIdx) % (total - 1));
+        targetArg = nextIdx;
+      }
+      if (uiState.viewMode === "suburb") uiState.viewMode = "composite";
+      transit.bookEscapeFlight(targetArg, opts);
+      uiState.lastToast = "Climbing into continuum clouds toward another airport sign...";
+      refreshUI();
+      return getState();
+    }
+
+    function completeFlightNow() {
+      transit.completeFlightNow();
+      refreshUI();
+      return getState();
+    }
+
+    function setViewMode(mode) {
+      var m = String(mode || "composite").toLowerCase();
+      if (m === "split" || m === "dual" || m === "coupled") m = "composite";
+      if (m === "transit" || m === "runway") m = "airport";
+      if (m === "locus" || m === "detail") m = "suburb";
+      if (m !== "composite" && m !== "airport" && m !== "suburb") m = "composite";
+      uiState.viewMode = m;
+      refreshUI();
+      return getState();
+    }
+
+    function setLocus(locusId) {
+      var key = String(locusId != null ? locusId : "2").trim().toLowerCase();
+      if (key === "0" || key === "a" || key === "airport" || key === "runway") {
+        uiState.activeStageSlot = 0;
+        if (uiState.viewMode === "suburb") uiState.viewMode = "composite";
+        uiState.lastToast = "Focused Slot 0: Runway 27L & Big Airport Sign Letters.";
+      } else {
+        var mapBySlot = {
+          "1": "airport_suburb_road",
+          "suburbs": "airport_suburb_road",
+          "2": "flower_roundabout",
+          "roundabouts": "flower_roundabout",
+          "3": "hardware_store",
+          "hardware": "hardware_store",
+          "4": "hotel_goblet_bar",
+          "goblet": "hotel_goblet_bar",
+          "hotel": "hotel_goblet_bar"
+        };
+        var resolved = mapBySlot[key] || String(locusId);
+        var loc = suburbs.setLocus(resolved);
+        uiState.activeStageSlot = loc.index + 1;
+        if (uiState.viewMode === "airport") uiState.viewMode = "composite";
+        uiState.lastToast = "Inspecting " + loc.label + " (0.00% variance across flights).";
+      }
+      refreshUI();
+      return getState();
+    }
+
+    function advanceHardwareDialogue() {
+      if (uiState.viewMode === "airport") uiState.viewMode = "composite";
+      suburbs.setLocus("hardware_store");
+      uiState.activeStageSlot = 3;
+      var res = suburbs.advanceHardwareDialogue(transit.getState().airportPlacardCode);
+      uiState.lastToast = res.speaker + " [" + res.itemCode + "]: 100% word-for-word match across Trude.";
+      refreshUI();
+      return res;
+    }
+
+    function rotateGoblet(deltaRad) {
+      if (uiState.viewMode === "airport") uiState.viewMode = "composite";
+      suburbs.setLocus("hotel_goblet_bar");
+      uiState.activeStageSlot = 4;
+      var res = suburbs.rotateGoblet(typeof deltaRad === "number" ? deltaRad : 0.44);
+      uiState.lastToast = "Rotated celadon goblet relief (8 leaves, 3×11-segment caterpillars).";
+      refreshUI();
+      return res;
+    }
+
+    function toggleMirrorRays(forceBool) {
+      if (uiState.viewMode === "airport") uiState.viewMode = "composite";
+      suburbs.setLocus("hotel_goblet_bar");
+      uiState.activeStageSlot = 4;
+      var vis = suburbs.toggleMirrorRays(forceBool);
+      uiState.lastToast = "Overnight hotel mirror ray-frame: " + (vis ? "VISIBLE" : "HIDDEN") + " (identical logic).";
+      refreshUI();
+      return vis;
+    }
+
+    function toggleCompareMode(forceBool) {
+      uiState.compareMode = typeof forceBool === "boolean" ? forceBool : !uiState.compareMode;
+      uiState.lastToast = uiState.compareMode
+        ? "Split-wipe Origin (TRD-01) vs Destination active — drag seam to verify 0.00% variance."
+        : "Standard continuum view restored.";
+      refreshUI();
+      return uiState.compareMode;
+    }
+
+    function setWipeRatio(r) {
+      uiState.wipeRatio = clampNum(Number(r), 0.15, 0.85);
+      if (!uiState.compareMode) uiState.compareMode = true;
+      refreshUI();
+      return uiState.wipeRatio;
+    }
+
+    function setPlateTab(tab) {
+      var t = String(tab || "diptych").toLowerCase();
+      if (t !== "diptych" && t !== "map" && t !== "image") t = "diptych";
+      uiState.plateTab = t;
+      elPlateGallery.setAttribute("data-mode", t);
+      elFrameMap.hidden = t === "image";
+      elFrameImage.hidden = t === "map";
+      refreshUI();
+      return t;
+    }
+
+    function openPlateDrawer(tab) {
+      uiState.plateDrawerOpen = true;
+      elPlateDrawer.hidden = false;
+      setPlateTab(tab || uiState.plateTab || "diptych");
+      return getState();
+    }
+
+    function closePlateDrawer() {
+      uiState.plateDrawerOpen = false;
+      uiState.plateZoomActive = false;
+      elZoomLoupe.hidden = true;
+      elPlateDrawer.hidden = true;
+      refreshUI();
+      return getState();
+    }
+
+    function togglePlateZoom(forceBool) {
+      if (!uiState.plateDrawerOpen) openPlateDrawer(uiState.plateTab);
+      uiState.plateZoomActive = typeof forceBool === "boolean" ? forceBool : !uiState.plateZoomActive;
+      refreshUI();
+      return uiState.plateZoomActive;
+    }
+
+    function toggleMute() {
+      var m = transit.toggleMute();
+      uiState.lastToast = m ? "WebAudio muted." : "WebAudio jet & split-flap solenoid sound active.";
+      refreshUI();
+      return m;
+    }
+
+    document.getElementById("trd-btn-escape").addEventListener("click", function () { transit.unlockAudio(); bookEscapeFlight("next"); });
+    document.getElementById("trd-btn-land").addEventListener("click", function () { transit.unlockAudio(); completeFlightNow(); });
+    document.getElementById("trd-btn-dialogue").addEventListener("click", function () { transit.unlockAudio(); advanceHardwareDialogue(); });
+    document.getElementById("trd-btn-goblet-cw").addEventListener("click", function () { rotateGoblet(0.44); });
+    document.getElementById("trd-btn-goblet-ccw").addEventListener("click", function () { rotateGoblet(-0.44); });
+    document.getElementById("trd-btn-mirror").addEventListener("click", function () { toggleMirrorRays(); });
+    document.getElementById("trd-btn-compare").addEventListener("click", function () { toggleCompareMode(); });
+    document.getElementById("trd-btn-compare-card").addEventListener("click", function () { toggleCompareMode(); });
+    document.getElementById("trd-btn-mute").addEventListener("click", function () { transit.unlockAudio(); toggleMute(); });
+    document.getElementById("trd-btn-plates").addEventListener("click", function () { openPlateDrawer("diptych"); });
+    document.getElementById("trd-btn-plate-close").addEventListener("click", function () { closePlateDrawer(); });
+    document.getElementById("trd-btn-plate-zoom").addEventListener("click", function () { togglePlateZoom(); });
+
+    ["composite", "airport", "suburb"].forEach(function (m) {
+      document.getElementById("trd-view-" + m).addEventListener("click", function () { setViewMode(m); });
+    });
+    for (var sIdx = 0; sIdx <= 4; sIdx++) {
+      (function (slotNum) {
+        document.getElementById("trd-loc-" + slotNum).addEventListener("click", function () { setLocus(slotNum); });
+      })(sIdx);
+    }
+    ["diptych", "map", "image"].forEach(function (tb) {
+      document.getElementById("trd-tab-" + tb).addEventListener("click", function () { setPlateTab(tb); });
+    });
+    elPlateDrawer.addEventListener("click", function (ev) {
+      if (ev.target === elPlateDrawer) closePlateDrawer();
+    });
+
+    function bindWipeDrag(el, onPlainClick) {
+      var dragging = false, moved = false, startX = 0;
+      el.addEventListener("pointerdown", function (ev) {
+        transit.unlockAudio();
+        dragging = true; moved = false; startX = ev.clientX;
+        if (el === elWipeRail || uiState.compareMode) {
+          var r0 = el.getBoundingClientRect();
+          setWipeRatio((ev.clientX - r0.left) / Math.max(1, r0.width));
+        }
+      });
+      globalThis.addEventListener("pointermove", function (ev) {
+        if (!dragging) return;
+        var dx = ev.clientX - startX;
+        if (Math.abs(dx) > 3) moved = true;
+        var r = el.getBoundingClientRect();
+        if (el === elWipeRail || uiState.compareMode) {
+          setWipeRatio((ev.clientX - r.left) / Math.max(1, r.width));
+        } else if (el === suburbCanvas && suburbs.getState().activeLocus === "hotel_goblet_bar" && moved) {
+          startX = ev.clientX;
+          rotateGoblet(dx * 0.015);
+        }
+      });
+      globalThis.addEventListener("pointerup", function (ev) {
+        if (!dragging) return;
+        dragging = false;
+        if (!moved && onPlainClick && !uiState.compareMode) onPlainClick(ev);
+      });
+    }
+
+    bindWipeDrag(elWipeRail, null);
+    bindWipeDrag(airportCanvas, function (ev) {
+      var r = airportCanvas.getBoundingClientRect();
+      var ny = (ev.clientY - r.top) / Math.max(1, r.height);
+      if (ny < 0.42) bookEscapeFlight("next");
+      else { uiState.lastToast = "Inspected Runway 27L & 6 Zinc Hangars — 0.00% variance across flights."; refreshUI(); }
+    });
+    bindWipeDrag(suburbCanvas, function (ev) {
+      var r = suburbCanvas.getBoundingClientRect();
+      var hit = suburbs.hitTest(ev.clientX - r.left, ev.clientY - r.top, r.width, r.height);
+      if (!hit) return;
+      if (hit.type === "goblet") rotateGoblet(0.44);
+      else if (hit.type === "mirror") toggleMirrorRays();
+      else if (hit.type === "hardware_counter") advanceHardwareDialogue();
+      else { uiState.lastToast = "Inspected " + hit.label + " — 0.00% variance across Trude."; refreshUI(); }
+    });
+
+    suburbCanvas.addEventListener("wheel", function (ev) {
+      if (suburbs.getState().activeLocus === "hotel_goblet_bar") {
+        ev.preventDefault();
+        rotateGoblet(ev.deltaY > 0 ? 0.28 : -0.28);
+      }
+    }, { passive: false });
+
+    elPlateGallery.addEventListener("pointermove", function (ev) {
+      if (!uiState.plateDrawerOpen || !uiState.plateZoomActive) return;
+      var mRect = elImgMap.getBoundingClientRect();
+      var iRect = elImgImage.getBoundingClientRect();
+      if (!elFrameImage.hidden && ev.clientX >= iRect.left && ev.clientX <= iRect.right) {
+        uiState.loupeTarget = "image";
+        uiState.loupeNormX = clampNum((ev.clientX - iRect.left) / Math.max(1, iRect.width), 0, 1);
+        uiState.loupeNormY = clampNum((ev.clientY - iRect.top) / Math.max(1, iRect.height), 0, 1);
+      } else if (!elFrameMap.hidden && mRect.width > 0) {
+        uiState.loupeTarget = "map";
+        uiState.loupeNormX = clampNum((ev.clientX - mRect.left) / Math.max(1, mRect.width), 0, 1);
+        uiState.loupeNormY = clampNum((ev.clientY - mRect.top) / Math.max(1, mRect.height), 0, 1);
+      }
+      drawLoupe();
+    });
+
+    document.addEventListener("keydown", function (ev) {
+      if (ev.metaKey || ev.ctrlKey || ev.altKey) return;
+      var act = document.activeElement;
+      if ((ev.key === "Enter" || ev.key === " ") && act && (act.getAttribute("role") === "button" || act.getAttribute("role") === "tab")) {
+        ev.preventDefault();
+        act.click();
+        return;
+      }
+      var k = ev.key;
+      if (k === "Escape") {
+        if (uiState.plateDrawerOpen) { ev.preventDefault(); closePlateDrawer(); }
+        else if (uiState.compareMode) { ev.preventDefault(); toggleCompareMode(false); }
+        return;
+      }
+      var low = k.toLowerCase();
+      if (low === "p") { ev.preventDefault(); uiState.plateDrawerOpen ? closePlateDrawer() : openPlateDrawer("diptych"); }
+      else if (low === "z" && uiState.plateDrawerOpen) { ev.preventDefault(); togglePlateZoom(); }
+      else if (uiState.plateDrawerOpen) { return; }
+      else if (low === "f") { ev.preventDefault(); transit.unlockAudio(); bookEscapeFlight("next"); }
+      else if (low === "l") { ev.preventDefault(); completeFlightNow(); }
+      else if (k >= "0" && k <= "4") { ev.preventDefault(); setLocus(Number(k)); }
+      else if (low === "h") { ev.preventDefault(); advanceHardwareDialogue(); }
+      else if (low === "g") { ev.preventDefault(); rotateGoblet(0.44); }
+      else if (low === "r") { ev.preventDefault(); toggleMirrorRays(); }
+      else if (low === "c" || low === "d") { ev.preventDefault(); toggleCompareMode(); }
+      else if (low === "m") { ev.preventDefault(); transit.unlockAudio(); toggleMute(); }
+    });
+
+    if (mqReduced && typeof mqReduced.addEventListener === "function") {
+      mqReduced.addEventListener("change", function (e) {
+        uiState.reducedMotion = Boolean(e.matches);
+        transit.setReducedMotion(uiState.reducedMotion);
+        suburbs.setReducedMotion(uiState.reducedMotion);
+      });
+    }
+    globalThis.addEventListener("resize", refreshUI);
+
+    var lastTs = performance.now();
+    function tick(now) {
+      var dt = Math.min(0.1, Math.max(0.001, (now - lastTs) * 0.001));
+      lastTs = now;
+      if (!uiState.plateDrawerOpen) {
+        transit.step(dt);
+        suburbs.step(dt);
+        syncDom();
+        renderStage();
+      }
+      requestAnimationFrame(tick);
+    }
+
+    globalThis.__TRUDE_DEBUG__ = Object.freeze({
+      getState: getState,
+      bookEscapeFlight: bookEscapeFlight,
+      completeFlightNow: completeFlightNow,
+      setViewMode: setViewMode,
+      setLocus: setLocus,
+      advanceHardwareDialogue: advanceHardwareDialogue,
+      rotateGoblet: rotateGoblet,
+      toggleMirrorRays: toggleMirrorRays,
+      toggleCompareMode: toggleCompareMode,
+      setWipeRatio: setWipeRatio,
+      compareOriginVsDestination: compareOriginVsDestination,
+      openPlateDrawer: openPlateDrawer,
+      closePlateDrawer: closePlateDrawer,
+      togglePlateZoom: togglePlateZoom,
+      toggleMute: toggleMute
+    });
+
+    refreshUI();
+    requestAnimationFrame(tick);
+  })();
+  </script>
+</body>
+</html>

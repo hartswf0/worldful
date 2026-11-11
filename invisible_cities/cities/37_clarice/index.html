@@ -1,0 +1,3485 @@
+<!DOCTYPE html>
+<html lang="en" class="clr-html">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CLARICE · VII · IV — Stratified Spolia Palimpsest</title>
+<style>
+:root {
+  --clr-soot: #120f11;
+  --clr-basalt: #1b1619;
+  --clr-sectile: #272024;
+  --clr-sectile-hi: #342a30;
+  --clr-marble: #ece5d5;
+  --clr-patina: #cfc4ae;
+  --clr-muted: #9e9382;
+  --clr-gilt: #d8a24a;
+  --clr-crystal: #f0c978;
+  --clr-brocade: #9b3b48;
+  --clr-rust: #7d5338;
+  --clr-basil: #5c8754;
+  --clr-vitrine: #74969e;
+  --clr-line: rgba(216, 162, 74, 0.24);
+  --clr-line-soft: rgba(236, 229, 213, 0.12);
+  --clr-font-serif: "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --clr-font-mono: "SFMono-Regular", Menlo, Consolas, monospace;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+clarice-shard-palimpsest [hidden],
+clarice-plate-drawer[hidden],
+clarice-plate-drawer [hidden] {
+  display: none !important;
+}
+
+html.clr-html,
+body.clr-body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: radial-gradient(circle at 24% 14%, #261e22 0%, var(--clr-soot) 68%);
+  color: var(--clr-marble);
+  font-family: var(--clr-font-serif);
+  -webkit-font-smoothing: antialiased;
+}
+
+clarice-shard-palimpsest,
+clarice-frieze-bar,
+clarice-title-plinth,
+clarice-workbench-grid,
+clarice-column-stack,
+corinthian-capital-coop,
+clarice-panel-crown,
+clarice-canvas-frame,
+relic-chip-strip,
+era-catastrophe-wheel,
+clarice-cycle-triptych,
+clarice-meter-strip,
+clarice-meter-cell,
+clarice-meter-track,
+clarice-meter-fill,
+stratum-slot-track,
+relic-repurpose-table,
+clarice-role-list,
+lost-origin-ledger,
+origin-invariant-readout,
+clarice-invariant-cell,
+clarice-hypothesis-box,
+clarice-traveler-codex,
+clarice-plate-drawer,
+clarice-drawer-sheet,
+clarice-drawer-bar,
+clarice-plate-grid,
+clarice-plate-card,
+clarice-plate-viewport {
+  display: block;
+}
+
+.clr-palimpsest {
+  width: 100%;
+  height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
+  padding: 7px 10px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: 44px minmax(0, 1fr);
+  gap: 7px;
+}
+
+.clr-frieze-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+  padding: 5px 9px;
+  background: linear-gradient(180deg, rgba(39, 32, 36, 0.96), rgba(24, 19, 22, 0.96));
+  border: 1px solid var(--clr-line);
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.42);
+}
+
+.clr-title-plinth {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.clr-city-title {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--clr-crystal);
+  white-space: nowrap;
+}
+
+.clr-coord-seal,
+.clr-phase-badge,
+.clr-mass-seal {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-family: var(--clr-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+.clr-coord-seal {
+  background: rgba(236, 229, 213, 0.08);
+  border: 1px solid var(--clr-line-soft);
+  color: var(--clr-patina);
+}
+
+.clr-phase-badge {
+  background: rgba(216, 162, 74, 0.15);
+  border: 1px solid rgba(216, 162, 74, 0.45);
+  color: var(--clr-crystal);
+}
+
+.clr-mass-seal {
+  background: rgba(116, 150, 158, 0.16);
+  border: 1px solid rgba(116, 150, 158, 0.44);
+  color: #b9d5dc;
+}
+
+.clr-action-rail {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: nowrap;
+  flex-shrink: 0;
+}
+
+.clr-action-key {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 4px 6px;
+  border-radius: 4px;
+  background: rgba(236, 229, 213, 0.05);
+  border: 1px solid var(--clr-line-soft);
+  color: var(--clr-marble);
+  font-family: var(--clr-font-mono);
+  font-size: 9.5px;
+  line-height: 1.1;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  transition: background 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+
+.clr-action-key:hover,
+.clr-action-key:focus-visible {
+  background: rgba(216, 162, 74, 0.18);
+  border-color: var(--clr-gilt);
+  color: var(--clr-crystal);
+  outline: none;
+}
+
+.clr-key-cap {
+  color: var(--clr-gilt);
+  font-weight: 700;
+}
+.clr-workbench {
+  display: grid;
+  grid-template-columns: minmax(0, 1.28fr) minmax(0, 1fr);
+  gap: 8px;
+  min-height: 0;
+}
+
+.clr-col-left,
+.clr-col-right {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 7px;
+  min-width: 0;
+  min-height: 0;
+}
+
+.clr-stage-coop,
+.clr-epoch-wheel,
+.clr-repurpose-table,
+.clr-origin-ledger {
+  background: linear-gradient(180deg, rgba(31, 25, 29, 0.96), rgba(20, 16, 18, 0.98));
+  border: 1px solid var(--clr-line);
+  border-radius: 6px;
+  padding: 7px 9px;
+  min-width: 0;
+  min-height: 0;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.clr-stage-coop {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 6px;
+}
+
+.clr-panel-crown {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  min-width: 0;
+}
+
+.clr-crown-title {
+  font-family: var(--clr-font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--clr-gilt);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.clr-crown-meta {
+  font-family: var(--clr-font-mono);
+  font-size: 10px;
+  color: var(--clr-patina);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.clr-canvas-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 220px;
+  border-radius: 5px;
+  overflow: hidden;
+  border: 1px solid rgba(216, 162, 74, 0.28);
+  background: var(--clr-soot);
+}
+
+.clr-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.clr-chip-strip {
+  display: grid;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.clr-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 4px 2px;
+  border-radius: 4px;
+  background: rgba(236, 229, 213, 0.05);
+  border: 1px solid var(--clr-line-soft);
+  color: var(--clr-patina);
+  font-family: var(--clr-font-mono);
+  font-size: 8.5px;
+  cursor: pointer;
+  user-select: none;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.clr-chip:hover,
+.clr-chip:focus-visible,
+.clr-chip-active {
+  background: rgba(216, 162, 74, 0.2);
+  border-color: var(--clr-gilt);
+  color: var(--clr-crystal);
+  outline: none;
+}
+
+.clr-chip-num {
+  color: var(--clr-gilt);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.clr-chip-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.clr-epoch-wheel {
+  display: grid;
+  gap: 6px;
+}
+
+.clr-cycle-triptych {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.clr-cycle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  padding: 5px 7px;
+  border-radius: 4px;
+  border: 1px solid var(--clr-line-soft);
+  background: rgba(236, 229, 213, 0.05);
+  color: var(--clr-marble);
+  font-family: var(--clr-font-mono);
+  font-size: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.clr-cycle-plague:hover,
+.clr-cycle-plague.clr-cycle-active {
+  background: rgba(125, 83, 56, 0.3);
+  border-color: #b57750;
+}
+
+.clr-cycle-butterfly:hover,
+.clr-cycle-butterfly.clr-cycle-active {
+  background: rgba(92, 135, 84, 0.28);
+  border-color: #7eb375;
+}
+
+.clr-cycle-museum:hover,
+.clr-cycle-museum.clr-cycle-active {
+  background: rgba(116, 150, 158, 0.28);
+  border-color: #93bcc6;
+}
+.clr-meter-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.clr-meter-cell {
+  padding: 3px 6px;
+  border-radius: 4px;
+  background: rgba(18, 15, 17, 0.65);
+  border: 1px solid var(--clr-line-soft);
+}
+
+.clr-meter-head {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--clr-font-mono);
+  font-size: 9.5px;
+  color: var(--clr-patina);
+  margin-bottom: 3px;
+}
+
+.clr-meter-track {
+  width: 100%;
+  height: 5px;
+  border-radius: 3px;
+  background: rgba(236, 229, 213, 0.1);
+  overflow: hidden;
+}
+
+.clr-meter-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--clr-gilt), var(--clr-crystal));
+  transition: width 180ms ease;
+}
+
+.clr-meter-fill-pop { background: linear-gradient(90deg, var(--clr-rust), var(--clr-basil)); }
+.clr-meter-fill-rev { background: linear-gradient(90deg, var(--clr-brocade), var(--clr-gilt)); }
+.clr-meter-fill-ent { background: linear-gradient(90deg, var(--clr-vitrine), var(--clr-crystal)); }
+
+.clr-strata-track {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.clr-stratum-token {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 3px;
+  border-radius: 4px;
+  background: rgba(39, 32, 36, 0.85);
+  border: 1px dashed rgba(216, 162, 74, 0.34);
+  cursor: pointer;
+  user-select: none;
+  min-width: 0;
+}
+
+.clr-stratum-token:hover,
+.clr-stratum-token:focus-visible,
+.clr-stratum-active {
+  background: rgba(155, 59, 72, 0.25);
+  border-style: solid;
+  border-color: var(--clr-crystal);
+  outline: none;
+}
+
+.clr-stratum-sigil {
+  font-family: var(--clr-font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--clr-crystal);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.clr-stratum-sub {
+  font-family: var(--clr-font-mono);
+  font-size: 8px;
+  color: var(--clr-muted);
+}
+
+.clr-repurpose-table {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 5px;
+}
+
+.clr-role-list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: repeat(9, minmax(0, 1fr));
+  gap: 3px;
+  min-width: 0;
+  min-height: 0;
+}
+
+.clr-role-row {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  padding: 3px 7px;
+  border-radius: 4px;
+  background: rgba(236, 229, 213, 0.035);
+  border: 1px solid var(--clr-line-soft);
+  cursor: pointer;
+  user-select: none;
+  min-width: 0;
+  min-height: 0;
+}
+
+.clr-role-row:hover,
+.clr-role-row:focus-visible,
+.clr-role-selected {
+  background: rgba(216, 162, 74, 0.14);
+  border-color: var(--clr-gilt);
+  outline: none;
+}
+
+.clr-row-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  min-width: 0;
+}
+
+.clr-row-title {
+  font-family: var(--clr-font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--clr-marble);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.clr-row-badges {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--clr-font-mono);
+  font-size: 9px;
+  flex-shrink: 0;
+}
+
+.clr-regime-tag {
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-weight: 700;
+}
+
+.clr-regime-0 { background: rgba(216, 162, 74, 0.24); color: var(--clr-crystal); }
+.clr-regime-1 { background: rgba(125, 83, 56, 0.36); color: #ebc0a2; }
+.clr-regime-2 { background: rgba(116, 150, 158, 0.3); color: #cde6ec; }
+.clr-regime-3 { background: rgba(92, 135, 84, 0.32); color: #c7e8c1; }
+
+.clr-row-shift {
+  font-size: 10.5px;
+  line-height: 1.18;
+  color: var(--clr-patina);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.clr-origin-ledger {
+  display: grid;
+  gap: 5px;
+}
+
+.clr-invariant-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.clr-invariant-cell {
+  padding: 4px 6px;
+  border-radius: 4px;
+  background: rgba(18, 15, 17, 0.78);
+  border: 1px solid rgba(155, 59, 72, 0.42);
+  min-width: 0;
+}
+
+.clr-inv-label {
+  display: block;
+  font-family: var(--clr-font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.05em;
+  color: var(--clr-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.clr-inv-val {
+  display: block;
+  font-family: var(--clr-font-mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  color: var(--clr-crystal);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 1px;
+}
+
+.clr-hypothesis-box {
+  padding: 4px 7px;
+  border-radius: 4px;
+  background: rgba(155, 59, 72, 0.14);
+  border-left: 2px solid var(--clr-brocade);
+  font-size: 10.5px;
+  line-height: 1.25;
+  color: var(--clr-marble);
+  max-height: 44px;
+  overflow: hidden;
+}
+
+.clr-codex-note {
+  padding: 4px 7px;
+  border-radius: 4px;
+  background: rgba(236, 229, 213, 0.04);
+  border-left: 2px solid var(--clr-gilt);
+  font-size: 10.5px;
+  font-style: italic;
+  line-height: 1.25;
+  color: var(--clr-patina);
+  max-height: 44px;
+  overflow: hidden;
+}
+
+.clr-plate-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background: rgba(12, 9, 11, 0.88);
+  backdrop-filter: blur(5px);
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clr-drawer-sheet {
+  width: min(1220px, 100%);
+  max-height: 100%;
+  min-width: 0;
+  background: var(--clr-basalt);
+  border: 1px solid var(--clr-gilt);
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 8px;
+  overflow: hidden;
+}
+
+.clr-drawer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.clr-drawer-tabs {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.clr-drawer-tab {
+  padding: 4px 9px;
+  border-radius: 4px;
+  border: 1px solid var(--clr-line-soft);
+  background: rgba(236, 229, 213, 0.05);
+  color: var(--clr-patina);
+  font-family: var(--clr-font-mono);
+  font-size: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.clr-drawer-tab-active,
+.clr-drawer-tab:hover,
+.clr-drawer-tab:focus-visible {
+  background: rgba(216, 162, 74, 0.22);
+  border-color: var(--clr-gilt);
+  color: var(--clr-crystal);
+  outline: none;
+}
+
+.clr-plate-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.clr-plate-single {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.clr-plate-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 5px;
+  background: var(--clr-soot);
+  border: 1px solid var(--clr-line);
+  border-radius: 6px;
+  padding: 6px;
+  min-width: 0;
+  min-height: 0;
+}
+
+.clr-plate-viewport {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-height: 68vh;
+  background: #0d0a0c;
+}
+
+.clr-plate-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  max-height: 66vh;
+  object-fit: contain;
+  transform-origin: 50% 50%;
+  transition: transform 140ms ease;
+}
+
+.clr-loupe-on .clr-plate-img {
+  transform: scale(1.75);
+  cursor: crosshair;
+}
+
+.clr-plate-caption {
+  font-family: var(--clr-font-mono);
+  font-size: 10px;
+  color: var(--clr-patina);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+}
+
+.clr-caption-dim {
+  font-family: var(--clr-font-mono);
+  font-size: 10px;
+  color: var(--clr-patina);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+@media (max-width: 980px) {
+  html.clr-html,
+  body.clr-body {
+    height: auto;
+    min-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .clr-palimpsest {
+    height: auto;
+    min-height: 100vh;
+    max-height: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .clr-frieze-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+
+  .clr-title-plinth {
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .clr-action-rail {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .clr-workbench,
+  .clr-col-left,
+  .clr-col-right {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .clr-canvas-frame {
+    height: 270px;
+    min-height: 270px;
+  }
+
+  .clr-chip-strip {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .clr-cycle-triptych {
+    grid-template-columns: 1fr;
+  }
+
+  .clr-meter-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .clr-strata-track {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .clr-role-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .clr-row-shift {
+    white-space: normal;
+  }
+
+  .clr-invariant-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .clr-hypothesis-box,
+  .clr-codex-note {
+    max-height: none;
+  }
+
+  .clr-plate-drawer {
+    padding: 8px;
+  }
+
+  .clr-plate-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .clr-plate-viewport {
+    max-height: 31vh;
+  }
+
+  .clr-plate-img {
+    max-height: 30vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.001ms !important;
+    animation-duration: 0.001ms !important;
+  }
+}
+</style>
+</head>
+<body class="clr-body">
+<clarice-shard-palimpsest class="clr-palimpsest" id="clr-root">
+  <clarice-frieze-bar class="clr-frieze-bar">
+    <clarice-title-plinth class="clr-title-plinth">
+      <clarice-city-mark class="clr-city-title">CLARICE</clarice-city-mark>
+      <clarice-coord-seal class="clr-coord-seal">VII · IV</clarice-coord-seal>
+      <clarice-phase-seal class="clr-phase-badge" id="clr-phase-badge">PALIMPSEST EQUILIBRIUM</clarice-phase-seal>
+      <clarice-mass-seal class="clr-mass-seal" id="clr-mass-seal">108 SHARDS</clarice-mass-seal>
+    </clarice-title-plinth>
+    <clarice-action-rail class="clr-action-rail">
+      <clarice-action-key class="clr-action-key" id="clr-key-plague" tabindex="0" role="button" data-action="plague">
+        <clarice-key-cap class="clr-key-cap">[C]</clarice-key-cap> Plague
+      </clarice-action-key>
+      <clarice-action-key class="clr-action-key" id="clr-key-butterfly" tabindex="0" role="button" data-action="butterfly">
+        <clarice-key-cap class="clr-key-cap">[B]</clarice-key-cap> Butterfly
+      </clarice-action-key>
+      <clarice-action-key class="clr-action-key" id="clr-key-museum" tabindex="0" role="button" data-action="museum">
+        <clarice-key-cap class="clr-key-cap">[V]</clarice-key-cap> Museum
+      </clarice-action-key>
+      <clarice-action-key class="clr-action-key" id="clr-key-shuffle" tabindex="0" role="button" data-action="shuffle">
+        <clarice-key-cap class="clr-key-cap">[S]</clarice-key-cap> Shuffle
+      </clarice-action-key>
+      <clarice-action-key class="clr-action-key" id="clr-key-hypothesis" tabindex="0" role="button" data-action="hypothesis">
+        <clarice-key-cap class="clr-key-cap">[H]</clarice-key-cap> Origin Test
+      </clarice-action-key>
+      <clarice-action-key class="clr-action-key" id="clr-key-plates" tabindex="0" role="button" data-action="plates">
+        <clarice-key-cap class="clr-key-cap">[P]</clarice-key-cap> Plates
+      </clarice-action-key>
+      <clarice-action-key class="clr-action-key" id="clr-key-sound" tabindex="0" role="button" data-action="sound">
+        <clarice-key-cap class="clr-key-cap">[M]</clarice-key-cap> Sound: On
+      </clarice-action-key>
+      <clarice-action-key class="clr-action-key" id="clr-key-reset" tabindex="0" role="button" data-action="reset">
+        <clarice-key-cap class="clr-key-cap">[R]</clarice-key-cap> Reset
+      </clarice-action-key>
+    </clarice-action-rail>
+  </clarice-frieze-bar>
+
+  <clarice-workbench-grid class="clr-workbench">
+    <clarice-column-stack class="clr-col-left">
+      <corinthian-capital-coop class="clr-stage-coop" id="clr-stage-coop">
+        <clarice-panel-crown class="clr-panel-crown">
+          <clarice-crown-title class="clr-crown-title">Stratified Spolia Vault · Click Shard or [1]–[9] to Repurpose</clarice-crown-title>
+          <clarice-crown-meta class="clr-crown-meta" id="clr-selected-readout">[4] Corinthian Capitals</clarice-crown-meta>
+        </clarice-panel-crown>
+        <clarice-canvas-frame class="clr-canvas-frame" id="clr-canvas-frame">
+          <canvas id="clr-canvas" class="clr-canvas" width="900" height="540"></canvas>
+        </clarice-canvas-frame>
+        <relic-chip-strip class="clr-chip-strip" id="clr-chip-strip"></relic-chip-strip>
+      </corinthian-capital-coop>
+
+      <era-catastrophe-wheel class="clr-epoch-wheel" id="clr-epoch-wheel">
+        <clarice-panel-crown class="clr-panel-crown">
+          <clarice-crown-title class="clr-crown-title">Catastrophe &amp; Chrysalis Wheel</clarice-crown-title>
+          <clarice-crown-meta class="clr-crown-meta" id="clr-cycle-tallies">Cycles 0 · Plagues 0 · Surges 0</clarice-crown-meta>
+          <clarice-action-key class="clr-action-key" id="clr-wheel-shuffle" tabindex="0" role="button" data-action="shuffle">
+            <clarice-key-cap class="clr-key-cap">[S]</clarice-key-cap> Shuffle Eras
+          </clarice-action-key>
+        </clarice-panel-crown>
+        <clarice-cycle-triptych class="clr-cycle-triptych">
+          <clarice-action-key class="clr-cycle-btn clr-cycle-plague" id="clr-wheel-plague" tabindex="0" role="button" data-action="plague">
+            <clarice-key-cap class="clr-key-cap">[C]</clarice-key-cap> Beggar Chrysalis
+          </clarice-action-key>
+          <clarice-action-key class="clr-cycle-btn clr-cycle-butterfly" id="clr-wheel-butterfly" tabindex="0" role="button" data-action="butterfly">
+            <clarice-key-cap class="clr-key-cap">[B]</clarice-key-cap> Butterfly Bricolage
+          </clarice-action-key>
+          <clarice-action-key class="clr-cycle-btn clr-cycle-museum" id="clr-wheel-museum" tabindex="0" role="button" data-action="museum">
+            <clarice-key-cap class="clr-key-cap">[V]</clarice-key-cap> Museum Vitrines
+          </clarice-action-key>
+        </clarice-cycle-triptych>
+        <clarice-meter-strip class="clr-meter-strip">
+          <clarice-meter-cell class="clr-meter-cell">
+            <clarice-meter-head class="clr-meter-head">
+              <clarice-meter-name class="clr-meter-name">Population</clarice-meter-name>
+              <clarice-meter-num class="clr-meter-num" id="clr-val-pop">58%</clarice-meter-num>
+            </clarice-meter-head>
+            <clarice-meter-track class="clr-meter-track"><clarice-meter-fill class="clr-meter-fill clr-meter-fill-pop" id="clr-bar-pop" style="width:58%"></clarice-meter-fill></clarice-meter-track>
+          </clarice-meter-cell>
+          <clarice-meter-cell class="clr-meter-cell">
+            <clarice-meter-head class="clr-meter-head">
+              <clarice-meter-name class="clr-meter-name">Reverence</clarice-meter-name>
+              <clarice-meter-num class="clr-meter-num" id="clr-val-rev">52%</clarice-meter-num>
+            </clarice-meter-head>
+            <clarice-meter-track class="clr-meter-track"><clarice-meter-fill class="clr-meter-fill clr-meter-fill-rev" id="clr-bar-rev" style="width:52%"></clarice-meter-fill></clarice-meter-track>
+          </clarice-meter-cell>
+          <clarice-meter-cell class="clr-meter-cell">
+            <clarice-meter-head class="clr-meter-head">
+              <clarice-meter-name class="clr-meter-name">Provenance Loss</clarice-meter-name>
+              <clarice-meter-num class="clr-meter-num" id="clr-val-ent">64%</clarice-meter-num>
+            </clarice-meter-head>
+            <clarice-meter-track class="clr-meter-track"><clarice-meter-fill class="clr-meter-fill clr-meter-fill-ent" id="clr-bar-ent" style="width:64%"></clarice-meter-fill></clarice-meter-track>
+          </clarice-meter-cell>
+        </clarice-meter-strip>
+        <stratum-slot-track class="clr-strata-track" id="clr-strata-track"></stratum-slot-track>
+      </era-catastrophe-wheel>
+    </clarice-column-stack>
+    <clarice-column-stack class="clr-col-right">
+      <relic-repurpose-table class="clr-repurpose-table" id="clr-repurpose-table">
+        <clarice-panel-crown class="clr-panel-crown">
+          <clarice-crown-title class="clr-crown-title">Nine Indestructible Shards · Role &amp; Reverence Ledger</clarice-crown-title>
+          <clarice-crown-meta class="clr-crown-meta" id="clr-table-meta">108 / 108 Shards Conserved</clarice-crown-meta>
+        </clarice-panel-crown>
+        <clarice-role-list class="clr-role-list" id="clr-role-list"></clarice-role-list>
+      </relic-repurpose-table>
+
+      <lost-origin-ledger class="clr-origin-ledger" id="clr-origin-ledger">
+        <clarice-panel-crown class="clr-panel-crown">
+          <clarice-crown-title class="clr-crown-title">Lost-Origin Invariant &amp; Spolia Audit</clarice-crown-title>
+          <clarice-action-key class="clr-action-key" id="clr-ledger-test-btn" tabindex="0" role="button" data-action="hypothesis">
+            <clarice-key-cap class="clr-key-cap">[H]</clarice-key-cap> Test First-Clarice Hypothesis
+          </clarice-action-key>
+        </clarice-panel-crown>
+        <origin-invariant-readout class="clr-invariant-grid" id="clr-invariant-grid">
+          <clarice-invariant-cell class="clr-invariant-cell">
+            <clarice-inv-label class="clr-inv-label">FIRST CLARICE PROVEN</clarice-inv-label>
+            <clarice-inv-val class="clr-inv-val" id="clr-inv-first">FALSE (UNPROVEN HYPOTHESIS)</clarice-inv-val>
+          </clarice-invariant-cell>
+          <clarice-invariant-cell class="clr-invariant-cell">
+            <clarice-inv-label class="clr-inv-label">ERA ORDER RECOVERABLE</clarice-inv-label>
+            <clarice-inv-val class="clr-inv-val" id="clr-inv-order">FALSE (SUCCESSION LOST)</clarice-inv-val>
+          </clarice-invariant-cell>
+          <clarice-invariant-cell class="clr-invariant-cell">
+            <clarice-inv-label class="clr-inv-label">CONSERVED SHARD MASS</clarice-inv-label>
+            <clarice-inv-val class="clr-inv-val" id="clr-inv-mass">108 / 108</clarice-inv-val>
+          </clarice-invariant-cell>
+        </origin-invariant-readout>
+        <clarice-hypothesis-box class="clr-hypothesis-box" id="clr-hypothesis-box">
+          Audit pending: press [H] or select any Σ-stratum above to test whether an uncorrupted First Clarice exists beneath the spolia.
+        </clarice-hypothesis-box>
+        <clarice-traveler-codex class="clr-codex-note" id="clr-codex-note">
+          Heterochronic Clarice stands assembled from salvaged capitals, basil-planted funerary urns, and glass-cased pauper bundles; no surviving shard remembers which city came first.
+        </clarice-traveler-codex>
+      </lost-origin-ledger>
+    </clarice-column-stack>
+  </clarice-workbench-grid>
+</clarice-shard-palimpsest>
+
+<clarice-plate-drawer class="clr-plate-drawer" id="clr-plate-drawer" data-loupe="false" hidden>
+  <clarice-drawer-sheet class="clr-drawer-sheet" id="clr-drawer-sheet">
+    <clarice-drawer-bar class="clr-drawer-bar">
+      <clarice-title-plinth class="clr-title-plinth">
+        <clarice-city-mark class="clr-city-title">CLARICE · ROYAL PLATES</clarice-city-mark>
+        <clarice-coord-seal class="clr-coord-seal">VII · IV</clarice-coord-seal>
+      </clarice-title-plinth>
+      <clarice-drawer-tabs class="clr-drawer-tabs">
+        <clarice-drawer-tab class="clr-drawer-tab clr-drawer-tab-active" tabindex="0" role="button" data-plate-tab="diptych">Diptych</clarice-drawer-tab>
+        <clarice-drawer-tab class="clr-drawer-tab" tabindex="0" role="button" data-plate-tab="map">Cartographic Survey</clarice-drawer-tab>
+        <clarice-drawer-tab class="clr-drawer-tab" tabindex="0" role="button" data-plate-tab="vista">Illuminated Vista</clarice-drawer-tab>
+        <clarice-drawer-tab class="clr-drawer-tab" id="clr-loupe-btn" tabindex="0" role="button" data-action="loupe">[Z] Loupe 1.75x: Off</clarice-drawer-tab>
+        <clarice-drawer-tab class="clr-drawer-tab" id="clr-drawer-close" tabindex="0" role="button" data-action="close-plates">[Esc] Close</clarice-drawer-tab>
+      </clarice-drawer-tabs>
+    </clarice-drawer-bar>
+    <clarice-plate-grid class="clr-plate-grid" id="clr-plate-grid">
+      <clarice-plate-card class="clr-plate-card" id="clr-card-map">
+        <clarice-plate-viewport class="clr-plate-viewport" id="clr-vp-map">
+          <img id="clr-map-img" class="clr-plate-img" src="map.png" alt="Cartographic survey of Clarice">
+        </clarice-plate-viewport>
+        <clarice-plate-caption class="clr-plate-caption">
+          <clarice-caption-name class="clr-crown-meta">Plate I · Cartographic Survey</clarice-caption-name>
+          <clarice-caption-dim class="clr-caption-dim">1600 × 1200</clarice-caption-dim>
+        </clarice-plate-caption>
+      </clarice-plate-card>
+      <clarice-plate-card class="clr-plate-card" id="clr-card-vista">
+        <clarice-plate-viewport class="clr-plate-viewport" id="clr-vp-vista">
+          <img id="clr-city-img" class="clr-plate-img" src="image.png" alt="Illuminated vista of Clarice">
+        </clarice-plate-viewport>
+        <clarice-plate-caption class="clr-plate-caption">
+          <clarice-caption-name class="clr-crown-meta">Plate II · Illuminated Vista</clarice-caption-name>
+          <clarice-caption-dim class="clr-caption-dim">1600 × 1000</clarice-caption-dim>
+        </clarice-plate-caption>
+      </clarice-plate-card>
+    </clarice-plate-grid>
+  </clarice-drawer-sheet>
+</clarice-plate-drawer>
+
+<script>
+(function (root) {
+  "use strict";
+
+  function deepFreeze(obj) {
+    if (!obj || typeof obj !== "object" || Object.isFrozen(obj)) return obj;
+    Object.freeze(obj);
+    const keys = Object.keys(obj);
+    for (let i = 0; i < keys.length; i += 1) {
+      deepFreeze(obj[keys[i]]);
+    }
+    return obj;
+  }
+
+  function clamp(v, lo, hi) {
+    return v < lo ? lo : v > hi ? hi : v;
+  }
+
+  const PALETTE = deepFreeze({
+    chrysalis_soot: "#120f11",
+    basalt_vault: "#1b1619",
+    opus_sectile: "#272024",
+    pentelic_marble: "#ece5d5",
+    limewash_patina: "#cfc4ae",
+    gilded_cornice: "#d8a24a",
+    candle_crystal: "#f0c978",
+    brocade_crimson: "#9b3b48",
+    wrought_rust: "#7d5338",
+    basil_shoot: "#5c8754",
+    vitrine_glass: "#74969e"
+  });
+
+  const ERA_REGIMES = deepFreeze([
+    { index: 0, key: "court_splendor", label: "Sumptuous Court", shortLabel: "Court", accent: "#d8a24a" },
+    { index: 1, key: "beggar_salvage", label: "Beggar-Clarice Chrysalis", shortLabel: "Beggar", accent: "#7d5338" },
+    { index: 2, key: "museum_veneration", label: "Museum of Fragments", shortLabel: "Museum", accent: "#74969e" },
+    { index: 3, key: "butterfly_surge", label: "Butterfly Bricolage Surge", shortLabel: "Butterfly", accent: "#5c8754" }
+  ]);
+
+  const RELIC_IDS = deepFreeze([
+    "silk_brocade_curtains",
+    "marble_funerary_urns",
+    "wrought_harem_gratings",
+    "corinthian_capitals",
+    "velvet_bell_jars",
+    "silver_soup_tureens",
+    "gilded_cornices",
+    "crystal_chandeliers",
+    "dwarf_palm_tubs"
+  ]);
+
+  function makeRoles(r0, r1, r2, r3) {
+    return [
+      { roleIndex: 0, regimeKey: "court_splendor", label: r0[0], vignetteNote: r0[1], reverence: r0[2], utility: r0[3] },
+      { roleIndex: 1, regimeKey: "beggar_salvage", label: r1[0], vignetteNote: r1[1], reverence: r1[2], utility: r1[3] },
+      { roleIndex: 2, regimeKey: "museum_veneration", label: r2[0], vignetteNote: r2[1], reverence: r2[2], utility: r2[3] },
+      { roleIndex: 3, regimeKey: "butterfly_surge", label: r3[0], vignetteNote: r3[1], reverence: r3[2], utility: r3[3] }
+    ];
+  }
+
+  const RELIC_CATALOG = deepFreeze([
+    {
+      index: 0,
+      id: "silk_brocade_curtains",
+      keyNum: 1,
+      title: "Silk & Brocade Curtains",
+      shortTitle: "Brocade Curtains",
+      shardMass: 14,
+      material: "silk",
+      xNorm: 0.17,
+      yNorm: 0.30,
+      roles: makeRoles(
+        ["Embroidered silk & brocade palace curtains", "Crimson weave and gold cords framing tall palace loggias.", 0.86, 0.48],
+        ["Brocade bedsheets & knotted pauper bundles", "Torn brocade knotted around meager household salvage.", 0.12, 0.92],
+        ["Bundle-scraps enshrined in glass cases of the Museum of Fragments", "Humble knotted rags venerated behind beveled glass.", 0.96, 0.08],
+        ["Patchwork brocade canopies shading rooftop loggias", "Stitched silk triangles billowing above sunlit terraces.", 0.66, 0.84]
+      )
+    },
+    {
+      index: 1,
+      id: "marble_funerary_urns",
+      keyNum: 2,
+      title: "Marble Funerary Urns",
+      shortTitle: "Funerary Urns",
+      shardMass: 13,
+      material: "marble",
+      xNorm: 0.81,
+      yNorm: 0.55,
+      roles: makeRoles(
+        ["Carved Pentelic marble funerary urns on mausoleum plinths", "Garlanded ash vessels elevated on stepped marble tombs.", 0.90, 0.36],
+        ["Broken marble funerary urns planted with kitchen basil", "Fractured Pentelic bellies brimming with fragrant green basil.", 0.16, 0.94],
+        ["Calibrated funerary urn shards in the Museum of Fragments", "Rim fragments suspended in brass calipers above glass plinths.", 0.97, 0.07],
+        ["Whitewashed marble urns wedged as column pedestals", "Limewashed urns bearing the weight of resited portico shafts.", 0.64, 0.86]
+      )
+    },
+    {
+      index: 2,
+      id: "wrought_harem_gratings",
+      keyNum: 3,
+      title: "Wrought-Iron Harem Gratings",
+      shortTitle: "Harem Gratings",
+      shardMass: 12,
+      material: "iron",
+      xNorm: 0.19,
+      yNorm: 0.58,
+      roles: makeRoles(
+        ["Filigreed wrought-iron harem window gratings", "Lacework iron screens veiling upper palace casements.", 0.82, 0.54],
+        ["Sooty iron skillets roasting cat-meat on fires of inlaid wood", "Horizontal iron scrollwork searing meat over gilt kindling embers.", 0.09, 0.97],
+        ["Catalogued iron scrollwork hung in the Museum gallery", "Numbered iron arabesques spotlit against dark gallery stone.", 0.94, 0.09],
+        ["Regilded harem gratings training rooftop melon vines", "Gilt-brushed filigree trellises heavy with striped melons.", 0.68, 0.85]
+      )
+    },
+    {
+      index: 3,
+      id: "corinthian_capitals",
+      keyNum: 4,
+      title: "Corinthian Marble Capitals",
+      shortTitle: "Corinthian Capitals",
+      shardMass: 16,
+      material: "marble",
+      xNorm: 0.50,
+      yNorm: 0.56,
+      roles: makeRoles(
+        ["Fluted Corinthian marble capitals crowning portico columns", "Crisp Pentelic acanthus leaves and volutes upholding temple beams.", 0.91, 0.52],
+        ["Toppled Corinthian capitals forgotten in muddy chicken runs", "Hens pecking grain amid toppled volutes and straw wire mesh.", 0.11, 0.88],
+        ["Velvet-plinth specimens in the Museum of Capitals", "Chipped capitals enthroned on crimson velvet under museum lamps.", 0.99, 0.06],
+        ["Upside-down Corinthian capitals propping glass-roofed sheds & melons", "Inverted acanthus crowns supporting glazed shed rafters beside melons.", 0.69, 0.87]
+      )
+    },
+    {
+      index: 4,
+      id: "velvet_bell_jars",
+      keyNum: 5,
+      title: "Velvet-Cushioned Bell Jars",
+      shortTitle: "Velvet Bell Jars",
+      shardMass: 10,
+      material: "glass",
+      xNorm: 0.26,
+      yNorm: 0.81,
+      roles: makeRoles(
+        ["Velvet-cushioned parlor bell jars housing gilt curiosities", "Blown glass domes shielding gilded parlor automata on velvet.", 0.85, 0.42],
+        ["Inverted cellar bell jars shielding dry crusts from rats", "Domes clapped onto cellar flagstones to foil prowling rats.", 0.14, 0.93],
+        ["Reliquary bell jars encasing shards of earlier bell jars", "Intact museum domes enshrining splinters of shattered predecessors.", 0.98, 0.07],
+        ["Sun-warmed cloches forcing citron grafts on terrace parapets", "Dew-misted glass cloches nursing grafted citron shoots.", 0.65, 0.83]
+      )
+    },
+    {
+      index: 5,
+      id: "silver_soup_tureens",
+      keyNum: 6,
+      title: "Silver Banquet Soup Tureens",
+      shortTitle: "Silver Tureens",
+      shardMass: 11,
+      material: "silver",
+      xNorm: 0.54,
+      yNorm: 0.82,
+      roles: makeRoles(
+        ["Repousse silver banquet soup tureens", "Chased silver vessels steaming on ceremonial linen tables.", 0.87, 0.50],
+        ["Dented tarnished tureens catching roof-drip rainwater", "Battered silver bellies ringing with cold vault leaks.", 0.13, 0.95],
+        ["Spotlit ritual vessels in the Museum of Fragments", "Tarnish-stabilized tureens revered as enigmatic cult bowls.", 0.95, 0.08],
+        ["Chilled pomegranate-ice centerpieces on marble tables", "Frost-rimmed silver bowls heaped with ruby pomegranate ice.", 0.71, 0.82]
+      )
+    },
+    {
+      index: 6,
+      id: "gilded_cornices",
+      keyNum: 7,
+      title: "Gilded Cedar Cornices",
+      shortTitle: "Gilded Cornices",
+      shardMass: 11,
+      material: "wood_gilt",
+      xNorm: 0.79,
+      yNorm: 0.26,
+      roles: makeRoles(
+        ["Gilded & inlaid cedar ceiling cornices", "Gold-leafed dentil friezes crowning coffered palace halls.", 0.84, 0.46],
+        ["Splintered inlaid kindling feeding alley skillet-fires", "Snapped cedar marquetry blazing beneath blackened iron skillets.", 0.08, 0.96],
+        ["Half-charred gilt frieze splinters under beveled Museum glass", "Scorched gold-leaf fragments conserved on velvet mounts.", 0.95, 0.06],
+        ["Asymmetric gilded cornices spliced onto new arch lintels", "Mismatched gilt moldings clamped boldly across limestone arches.", 0.67, 0.80]
+      )
+    },
+    {
+      index: 7,
+      id: "crystal_chandeliers",
+      keyNum: 8,
+      title: "Rock-Crystal Chandeliers",
+      shortTitle: "Crystal Chandeliers",
+      shardMass: 11,
+      material: "glass",
+      xNorm: 0.48,
+      yNorm: 0.22,
+      roles: makeRoles(
+        ["Tiered rock-crystal ballroom chandeliers", "Blazing candle tiers multiplying light through cut crystal drops.", 0.89, 0.47],
+        ["Unstrung crystal prism-beads bartered in rubble alleys", "Loose teardrop prisms traded as small change amid ruins.", 0.15, 0.90],
+        ["Numbered crystal teardrops suspended in Museum vitrines", "Catalogued prisms hung on silk threads in quiet glass cases.", 0.96, 0.08],
+        ["Refracting prism clusters hung beneath glass-roofed sheds", "Salvaged crystal clusters scattering rainbows across melon beds.", 0.72, 0.81]
+      )
+    },
+    {
+      index: 8,
+      id: "dwarf_palm_tubs",
+      keyNum: 9,
+      title: "Dwarf-Palm Marble Tubs",
+      shortTitle: "Dwarf-Palm Tubs",
+      shardMass: 10,
+      material: "marble",
+      xNorm: 0.81,
+      yNorm: 0.81,
+      roles: makeRoles(
+        ["Bronze-hooped tubs holding parlor dwarf palms", "Hoop-bound tubs framing symmetrical parlor fan palms.", 0.81, 0.49],
+        ["Cracked palm tubs serving as beggar-alley wash troughs", "Leaking stone tubs brimming with grey suds and wrung rags.", 0.13, 0.94],
+        ["Roped-off terracotta palm tubs in the Museum vestibule", "Stanchion-guarded tubs displayed at the Museum threshold.", 0.93, 0.10],
+        ["Repainted palm tubs cradling inverted marble capitals", "Striped tubs wedging overturned marble volutes as terrace seats.", 0.66, 0.84]
+      )
+    }
+  ]);
+
+  const CONSERVED_SHARD_MASS = 108;
+
+  const DEFAULT_OPENING_ROLES = Object.freeze({
+    silk_brocade_curtains: 2,
+    marble_funerary_urns: 1,
+    wrought_harem_gratings: 1,
+    corinthian_capitals: 1,
+    velvet_bell_jars: 2,
+    silver_soup_tureens: 1,
+    gilded_cornices: 3,
+    crystal_chandeliers: 2,
+    dwarf_palm_tubs: 3
+  });
+
+  function createAudioEngine(initialMuted) {
+    let muted = Boolean(initialMuted);
+    let audioCtx = null;
+
+    function ensureContext() {
+      if (muted) return null;
+      if (audioCtx) {
+        if (audioCtx.state === "suspended" && typeof audioCtx.resume === "function") {
+          try { audioCtx.resume(); } catch (_) { /* ignore */ }
+        }
+        return audioCtx;
+      }
+      const Ctor = (root && (root.AudioContext || root.webkitAudioContext)) || null;
+      if (!Ctor) return null;
+      try {
+        audioCtx = new Ctor();
+        if (audioCtx.state === "suspended" && typeof audioCtx.resume === "function") {
+          audioCtx.resume();
+        }
+      } catch (_) {
+        audioCtx = null;
+      }
+      return audioCtx;
+    }
+
+    function scheduleVoice(ctx, freq, wave, gainPeak, durSec, delaySec, ratio2) {
+      const t0 = ctx.currentTime + (delaySec || 0);
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = wave;
+      osc.frequency.setValueAtTime(Math.max(55, freq), t0);
+      gain.gain.setValueAtTime(0.0001, t0);
+      gain.gain.exponentialRampToValueAtTime(Math.max(0.001, gainPeak), t0 + 0.012);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t0 + durSec);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(t0);
+      osc.stop(t0 + durSec + 0.02);
+
+      if (ratio2) {
+        const osc2 = ctx.createOscillator();
+        const g2 = ctx.createGain();
+        osc2.type = "sine";
+        osc2.frequency.setValueAtTime(Math.max(65, freq * ratio2), t0);
+        g2.gain.setValueAtTime(0.0001, t0);
+        g2.gain.exponentialRampToValueAtTime(Math.max(0.0008, gainPeak * 0.45), t0 + 0.008);
+        g2.gain.exponentialRampToValueAtTime(0.0001, t0 + durSec * 0.8);
+        osc2.connect(g2);
+        g2.connect(ctx.destination);
+        osc2.start(t0);
+        osc2.stop(t0 + durSec + 0.02);
+      }
+    }
+
+    function playSilkRustle(ctx, baseFreq, durSec) {
+      const len = Math.max(256, Math.floor(ctx.sampleRate * durSec));
+      const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+      const ch = buf.getChannelData(0);
+      let seed = 19371;
+      for (let i = 0; i < len; i += 1) {
+        seed = (seed * 16807) % 2147483647;
+        const env = Math.sin((Math.PI * i) / len);
+        ch[i] = (((seed / 2147483647) * 2) - 1) * env * 0.35;
+      }
+      const src = ctx.createBufferSource();
+      const flt = ctx.createBiquadFilter();
+      const gain = ctx.createGain();
+      src.buffer = buf;
+      flt.type = "bandpass";
+      flt.frequency.setValueAtTime(baseFreq * 3.1, ctx.currentTime);
+      flt.Q.setValueAtTime(2.6, ctx.currentTime);
+      gain.gain.setValueAtTime(0.06, ctx.currentTime);
+      src.connect(flt);
+      flt.connect(gain);
+      gain.connect(ctx.destination);
+      src.start();
+    }
+
+    function playRelicTone(material, roleIndex) {
+      const ctx = ensureContext();
+      if (!ctx) return false;
+      const rIdx = clamp(Number(roleIndex) || 0, 0, 3);
+      const roleMul = [1.0, 0.78, 1.34, 1.18][rIdx];
+      try {
+        if (material === "silk") {
+          playSilkRustle(ctx, 320 * roleMul, 0.22);
+          scheduleVoice(ctx, 293.66 * roleMul, "sine", 0.03, 0.24, 0.01, 1.5);
+        } else if (material === "iron") {
+          scheduleVoice(ctx, 196.0 * roleMul, "triangle", 0.055, 0.28, 0, 1.414);
+          scheduleVoice(ctx, 196.0 * roleMul * 2.76, "square", 0.018, 0.14, 0.005, 0);
+        } else if (material === "silver") {
+          scheduleVoice(ctx, 523.25 * roleMul, "sine", 0.05, 0.46, 0, 2.02);
+          scheduleVoice(ctx, 523.25 * roleMul * 3.01, "sine", 0.02, 0.32, 0.015, 0);
+        } else if (material === "wood_gilt") {
+          scheduleVoice(ctx, 246.94 * roleMul, "triangle", 0.06, 0.19, 0, 3.0);
+        } else if (material === "glass") {
+          scheduleVoice(ctx, 783.99 * roleMul, "sine", 0.045, 0.44, 0, 2.51);
+        } else {
+          scheduleVoice(ctx, 349.23 * roleMul, "triangle", 0.055, 0.34, 0, 1.58);
+        }
+        return true;
+      } catch (_) {
+        return false;
+      }
+    }
+
+    function playCycleChord(kind) {
+      const ctx = ensureContext();
+      if (!ctx) return false;
+      const k = String(kind || "");
+      let notes = [261.63, 329.63, 392.0, 523.25];
+      let wave = "triangle";
+      if (k.indexOf("plague") !== -1 || k.indexOf("beggar") !== -1) {
+        notes = [220.0, 207.65, 164.81, 146.83];
+        wave = "sawtooth";
+      } else if (k.indexOf("museum") !== -1) {
+        notes = [349.23, 466.16, 622.25, 880.0];
+        wave = "sine";
+      } else if (k.indexOf("butterfly") !== -1) {
+        notes = [293.66, 369.99, 440.0, 587.33, 739.99];
+        wave = "triangle";
+      }
+      try {
+        for (let i = 0; i < notes.length; i += 1) {
+          scheduleVoice(ctx, notes[i], wave, 0.036, 0.42, i * 0.055, 2.0);
+        }
+        return true;
+      } catch (_) {
+        return false;
+      }
+    }
+
+    function playShuffleRattle() {
+      const ctx = ensureContext();
+      if (!ctx) return false;
+      const clicks = [415, 352, 512, 388, 468];
+      try {
+        for (let i = 0; i < clicks.length; i += 1) {
+          scheduleVoice(ctx, clicks[i], "triangle", 0.038, 0.085, i * 0.028, 2.37);
+        }
+        return true;
+      } catch (_) {
+        return false;
+      }
+    }
+
+    return {
+      setMuted(flag) { muted = Boolean(flag); return muted; },
+      isMuted() { return muted; },
+      toggleMute() { muted = !muted; if (!muted) ensureContext(); return muted; },
+      unlock() { return Boolean(ensureContext()); },
+      playRelicTone,
+      playCycleChord,
+      playShuffleRattle
+    };
+  }
+
+  function createRelicStage(opts) {
+    const config = opts || {};
+    let clock = 0;
+    let pulseLevel = 0;
+    let currentPhase = "palimpsest_equilibrium";
+
+    const embers = [];
+    for (let i = 0; i < 14; i += 1) {
+      embers.push({ u: ((i * 37) % 100) / 100, v: ((i * 53) % 100) / 100, spd: 0.35 + (i % 5) * 0.11 });
+    }
+    const smokeWisps = [];
+    for (let i = 0; i < 8; i += 1) {
+      smokeWisps.push({ u: (i / 8), drift: ((i % 2 === 0) ? 1 : -1) * (0.18 + (i % 3) * 0.07) });
+    }
+    const vitrineMotes = [];
+    for (let i = 0; i < 18; i += 1) {
+      vitrineMotes.push({ x: ((i * 61 + 17) % 100) / 100, y: ((i * 43 + 9) % 100) / 100, r: 0.9 + (i % 3) * 0.55 });
+    }
+
+    function getLayout(width, height) {
+      const w = Number(width) > 0 ? Number(width) : 800;
+      const h = Number(height) > 0 ? Number(height) : 520;
+      const minDim = Math.min(w, h);
+      const hitRadius = clamp(minDim * 0.094, 22, 54);
+      const stations = RELIC_CATALOG.map(function (item) {
+        return {
+          index: item.index,
+          id: item.id,
+          keyNum: item.keyNum,
+          title: item.title,
+          shortTitle: item.shortTitle,
+          x: Math.round(item.xNorm * w * 10) / 10,
+          y: Math.round(item.yNorm * h * 10) / 10,
+          xNorm: item.xNorm,
+          yNorm: item.yNorm,
+          hitRadius: hitRadius,
+          material: item.material,
+          shardMass: item.shardMass
+        };
+      });
+      return { width: w, height: h, stations: stations };
+    }
+
+    function hitTest(px, py, width, height, isTouch) {
+      const layout = getLayout(width, height);
+      const pad = isTouch ? 12 : 3;
+      let best = null;
+      let bestDist = Infinity;
+      for (let i = 0; i < layout.stations.length; i += 1) {
+        const st = layout.stations[i];
+        const dx = px - st.x;
+        const dy = py - st.y;
+        const d = Math.sqrt(dx * dx + dy * dy);
+        if (d <= st.hitRadius + pad && d < bestDist) {
+          best = st;
+          bestDist = d;
+        }
+      }
+      return best;
+    }
+
+    function step(dtSec, params) {
+      const p = params || {};
+      if (p.phase) currentPhase = String(p.phase);
+      const reduced = p.reducedMotion !== undefined ? Boolean(p.reducedMotion) : Boolean(config.reducedMotion);
+      if (Number(p.transitionPulse) > pulseLevel) {
+        pulseLevel = clamp(Number(p.transitionPulse), 0, 1);
+      }
+      if (reduced) {
+        pulseLevel = 0;
+        return;
+      }
+      const dt = clamp(Number(dtSec) || 0.016, 0, 0.1);
+      clock += dt;
+      pulseLevel = Math.max(0, pulseLevel - dt * 1.35);
+      for (let i = 0; i < embers.length; i += 1) {
+        embers[i].v = (embers[i].v + dt * embers[i].spd) % 1;
+      }
+      for (let i = 0; i < smokeWisps.length; i += 1) {
+        smokeWisps[i].u = (smokeWisps[i].u + dt * 0.24) % 1;
+      }
+      for (let i = 0; i < vitrineMotes.length; i += 1) {
+        vitrineMotes[i].y = (vitrineMotes[i].y + dt * 0.028) % 1;
+        vitrineMotes[i].x = (vitrineMotes[i].x + Math.sin(clock * 0.7 + i) * dt * 0.008 + 1) % 1;
+      }
+    }
+
+    function resolveRoleIndex(id, params) {
+      const p = params || {};
+      if (p.relicRoleMap && p.relicRoleMap[id] !== undefined) {
+        return clamp(Number(p.relicRoleMap[id]) || 0, 0, 3);
+      }
+      if (Array.isArray(p.relicStates)) {
+        for (let i = 0; i < p.relicStates.length; i += 1) {
+          if (p.relicStates[i] && p.relicStates[i].id === id) {
+            return clamp(Number(p.relicStates[i].roleIndex) || 0, 0, 3);
+          }
+        }
+      }
+      return DEFAULT_OPENING_ROLES[id] !== undefined ? DEFAULT_OPENING_ROLES[id] : 0;
+    }
+
+    function drawBackdrop(ctx, w, h, phase) {
+      const bg = ctx.createLinearGradient(0, 0, 0, h);
+      bg.addColorStop(0, PALETTE.chrysalis_soot);
+      bg.addColorStop(0.52, PALETTE.basalt_vault);
+      bg.addColorStop(1, PALETTE.opus_sectile);
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, w, h);
+
+      const yUpper = h * 0.39;
+      const yLower = h * 0.69;
+      const yCrypt = h * 0.92;
+      const ph = String(phase || currentPhase);
+      const beamColor = ph.indexOf("museum") !== -1 ? "rgba(116,150,158,0.13)"
+        : ph.indexOf("butterfly") !== -1 ? "rgba(240,201,120,0.14)"
+        : ph.indexOf("plague") !== -1 ? "rgba(125,83,56,0.11)" : "rgba(216,162,74,0.09)";
+
+      const bays = [[0.04, 0.32], [0.34, 0.63], [0.65, 0.96]];
+      for (let b = 0; b < bays.length; b += 1) {
+        const x0 = w * bays[b][0];
+        const x1 = w * bays[b][1];
+        const xm = (x0 + x1) * 0.5;
+        const bw = x1 - x0;
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(x0, yUpper);
+        ctx.lineTo(x0, h * 0.13);
+        ctx.quadraticCurveTo(xm, h * 0.02, x1, h * 0.13);
+        ctx.lineTo(x1, yUpper);
+        ctx.closePath();
+        ctx.fillStyle = "rgba(18,15,17,0.52)";
+        ctx.fill();
+        ctx.strokeStyle = "rgba(207,196,174,0.18)";
+        ctx.lineWidth = 1.2;
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(xm - bw * 0.16, h * 0.06);
+        ctx.lineTo(xm + bw * 0.12, h * 0.06);
+        ctx.lineTo(xm + bw * 0.36, yLower);
+        ctx.lineTo(xm - bw * 0.28, yLower);
+        ctx.closePath();
+        ctx.fillStyle = beamColor;
+        ctx.fill();
+        ctx.restore();
+      }
+
+      ctx.fillStyle = "rgba(207,196,174,0.14)";
+      ctx.fillRect(w * 0.02, yUpper - 4, w * 0.96, 7);
+      ctx.fillStyle = "rgba(216,162,74,0.22)";
+      ctx.fillRect(w * 0.02, yUpper - 4, w * 0.96, 2);
+
+      for (let p = 0; p < 4; p += 1) {
+        const px = w * (0.03 + p * 0.31);
+        ctx.fillStyle = "rgba(236,229,213,0.08)";
+        ctx.fillRect(px - 5, yUpper + 3, 10, yLower - yUpper - 6);
+      }
+
+      ctx.fillStyle = "rgba(39,32,36,0.88)";
+      ctx.fillRect(0, yLower, w, yCrypt - yLower);
+      ctx.strokeStyle = "rgba(207,196,174,0.14)";
+      ctx.lineWidth = 1;
+      const stepX = Math.max(26, w * 0.055);
+      for (let x = 0; x < w + stepX; x += stepX) {
+        ctx.beginPath();
+        ctx.moveTo(x, yLower);
+        ctx.lineTo(x - stepX * 0.6, yCrypt);
+        ctx.moveTo(x - stepX * 0.6, yLower);
+        ctx.lineTo(x, yCrypt);
+        ctx.stroke();
+      }
+      ctx.fillStyle = "rgba(18,15,17,0.92)";
+      ctx.fillRect(0, yCrypt, w, h - yCrypt);
+      ctx.strokeStyle = "rgba(125,83,56,0.35)";
+      ctx.beginPath();
+      ctx.moveTo(0, yCrypt);
+      ctx.lineTo(w, yCrypt);
+      ctx.stroke();
+      for (let s = 0; s < 7; s += 1) {
+        const sx = w * (0.08 + s * 0.14);
+        ctx.strokeStyle = s % 2 === 0 ? "rgba(236,229,213,0.18)" : "rgba(216,162,74,0.18)";
+        ctx.beginPath();
+        ctx.arc(sx, yCrypt + (h - yCrypt) * 0.55, 7 + (s % 3) * 3, 0.2, Math.PI * 1.25);
+        ctx.stroke();
+      }
+    }
+
+    function drawVitrineBox(ctx, r, accent) {
+      ctx.fillStyle = "rgba(116,150,158,0.13)";
+      ctx.strokeStyle = accent || PALETTE.vitrine_glass;
+      ctx.lineWidth = 1.4;
+      ctx.fillRect(-r * 0.68, -r * 0.68, r * 1.36, r * 1.24);
+      ctx.strokeRect(-r * 0.68, -r * 0.68, r * 1.36, r * 1.24);
+      ctx.strokeStyle = "rgba(240,201,120,0.38)";
+      ctx.beginPath();
+      ctx.moveTo(-r * 0.52, -r * 0.56);
+      ctx.lineTo(-r * 0.22, -r * 0.26);
+      ctx.stroke();
+      ctx.fillStyle = PALETTE.opus_sectile;
+      ctx.fillRect(-r * 0.74, r * 0.54, r * 1.48, r * 0.18);
+      ctx.fillStyle = PALETTE.gilded_cornice;
+      ctx.fillRect(-r * 0.18, r * 0.59, r * 0.36, r * 0.07);
+    }
+
+    function drawSilkCurtains(ctx, r, role, sway) {
+      if (role === 0) {
+        ctx.strokeStyle = PALETTE.gilded_cornice;
+        ctx.lineWidth = 2.4;
+        ctx.beginPath(); ctx.moveTo(-r * 0.72, -r * 0.62); ctx.lineTo(r * 0.72, -r * 0.62); ctx.stroke();
+        for (let side = -1; side <= 1; side += 2) {
+          ctx.fillStyle = PALETTE.brocade_crimson;
+          ctx.beginPath();
+          ctx.moveTo(side * r * 0.06, -r * 0.6);
+          ctx.lineTo(side * r * 0.65, -r * 0.6);
+          ctx.quadraticCurveTo(side * r * 0.42, r * 0.05, side * r * 0.62, r * 0.62);
+          ctx.lineTo(side * r * 0.24, r * 0.62);
+          ctx.quadraticCurveTo(side * r * 0.36, -r * 0.02, side * r * 0.06, -r * 0.6);
+          ctx.fill();
+          ctx.strokeStyle = PALETTE.gilded_cornice;
+          ctx.lineWidth = 1.2;
+          ctx.stroke();
+        }
+      } else if (role === 1) {
+        ctx.strokeStyle = PALETTE.wrought_rust;
+        ctx.lineWidth = 2.2;
+        ctx.beginPath(); ctx.moveTo(-r * 0.65, r * 0.45); ctx.lineTo(r * 0.58, -r * 0.55); ctx.stroke();
+        ctx.fillStyle = PALETTE.brocade_crimson;
+        ctx.beginPath(); ctx.arc(r * 0.14, r * 0.08, r * 0.36, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = PALETTE.gilded_cornice;
+        ctx.lineWidth = 1.3;
+        ctx.beginPath(); ctx.moveTo(-r * 0.06, -r * 0.22); ctx.lineTo(r * 0.28, -r * 0.34); ctx.stroke();
+        ctx.fillStyle = "rgba(155,59,72,0.72)";
+        ctx.fillRect(-r * 0.62, -r * 0.28, r * 0.42, r * 0.52);
+      } else if (role === 2) {
+        drawVitrineBox(ctx, r);
+        ctx.fillStyle = PALETTE.brocade_crimson;
+        ctx.beginPath();
+        ctx.moveTo(-r * 0.36, -r * 0.28); ctx.lineTo(r * 0.32, -r * 0.22);
+        ctx.lineTo(r * 0.26, r * 0.28); ctx.lineTo(-r * 0.32, r * 0.22);
+        ctx.closePath(); ctx.fill();
+        ctx.strokeStyle = PALETTE.gilded_cornice;
+        ctx.strokeRect(-r * 0.22, -r * 0.12, r * 0.42, r * 0.24);
+      } else {
+        ctx.strokeStyle = PALETTE.limewash_patina;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(-r * 0.62, r * 0.58); ctx.lineTo(-r * 0.62, -r * 0.42);
+        ctx.moveTo(r * 0.62, r * 0.58); ctx.lineTo(r * 0.62, -r * 0.34);
+        ctx.stroke();
+        for (let k = 0; k < 4; k += 1) {
+          ctx.fillStyle = k % 2 === 0 ? PALETTE.brocade_crimson : PALETTE.gilded_cornice;
+          const x0 = -r * 0.62 + k * r * 0.31;
+          ctx.beginPath();
+          ctx.moveTo(x0, -r * 0.42 + k * 2);
+          ctx.lineTo(x0 + r * 0.32, -r * 0.36 + k * 2);
+          ctx.quadraticCurveTo(x0 + r * 0.16, -r * 0.1 + sway * 5, x0, -r * 0.14);
+          ctx.closePath(); ctx.fill();
+        }
+      }
+    }
+
+    function drawFuneraryUrns(ctx, r, role, sway) {
+      if (role === 0) {
+        ctx.fillStyle = PALETTE.limewash_patina;
+        ctx.fillRect(-r * 0.46, r * 0.36, r * 0.92, r * 0.24);
+        ctx.fillStyle = PALETTE.pentelic_marble;
+        ctx.beginPath();
+        ctx.ellipse(0, -r * 0.02, r * 0.34, r * 0.42, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillRect(-r * 0.22, -r * 0.56, r * 0.44, r * 0.14);
+        ctx.strokeStyle = PALETTE.gilded_cornice;
+        ctx.beginPath(); ctx.arc(0, -r * 0.04, r * 0.24, 0.2, Math.PI - 0.2); ctx.stroke();
+      } else if (role === 1) {
+        ctx.fillStyle = PALETTE.pentelic_marble;
+        ctx.beginPath();
+        ctx.moveTo(-r * 0.36, -r * 0.04); ctx.lineTo(-r * 0.12, r * 0.08);
+        ctx.lineTo(r * 0.14, -r * 0.08); ctx.lineTo(r * 0.36, r * 0.02);
+        ctx.quadraticCurveTo(r * 0.32, r * 0.54, 0, r * 0.56);
+        ctx.quadraticCurveTo(-r * 0.32, r * 0.54, -r * 0.36, -r * 0.04);
+        ctx.fill();
+        for (let b = -2; b <= 2; b += 1) {
+          const bx = b * r * 0.13 + sway * 4;
+          ctx.strokeStyle = PALETTE.basil_shoot;
+          ctx.lineWidth = 2;
+          ctx.beginPath(); ctx.moveTo(b * r * 0.07, 0); ctx.quadraticCurveTo(bx, -r * 0.28, bx * 1.2, -r * 0.52); ctx.stroke();
+          ctx.fillStyle = PALETTE.basil_shoot;
+          ctx.beginPath(); ctx.ellipse(bx * 1.15, -r * 0.48, r * 0.11, r * 0.06, b * 0.3, 0, Math.PI * 2); ctx.fill();
+        }
+      } else if (role === 2) {
+        drawVitrineBox(ctx, r);
+        ctx.strokeStyle = PALETTE.gilded_cornice;
+        ctx.lineWidth = 1.6;
+        ctx.beginPath();
+        ctx.moveTo(0, r * 0.52); ctx.lineTo(0, -r * 0.38);
+        ctx.moveTo(-r * 0.26, -r * 0.14); ctx.lineTo(r * 0.26, -r * 0.14);
+        ctx.stroke();
+        ctx.fillStyle = PALETTE.pentelic_marble;
+        ctx.beginPath(); ctx.arc(0, -r * 0.08, r * 0.25, -0.5, 2.2); ctx.lineTo(0, 0); ctx.closePath(); ctx.fill();
+      } else {
+        ctx.fillStyle = PALETTE.limewash_patina;
+        ctx.fillRect(-r * 0.22, -r * 0.68, r * 0.44, r * 0.66);
+        ctx.fillStyle = PALETTE.pentelic_marble;
+        ctx.beginPath(); ctx.ellipse(0, r * 0.26, r * 0.34, r * 0.28, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.fillRect(-r * 0.38, -r * 0.04, r * 0.76, r * 0.09);
+      }
+    }
+
+    function drawHaremGratings(ctx, r, role, sway) {
+      if (role === 0) {
+        ctx.fillStyle = "rgba(240,201,120,0.22)";
+        ctx.beginPath();
+        ctx.moveTo(-r * 0.48, r * 0.54); ctx.lineTo(-r * 0.48, -r * 0.15);
+        ctx.quadraticCurveTo(0, -r * 0.68, r * 0.48, -r * 0.15);
+        ctx.lineTo(r * 0.48, r * 0.54); ctx.closePath(); ctx.fill();
+        ctx.strokeStyle = PALETTE.wrought_rust;
+        ctx.lineWidth = 1.8;
+        ctx.stroke();
+        for (let g = -2; g <= 2; g += 1) {
+          ctx.beginPath();
+          ctx.moveTo(g * r * 0.18, -r * 0.36 + Math.abs(g) * r * 0.09);
+          ctx.lineTo(g * r * 0.18, r * 0.52);
+          ctx.stroke();
+        }
+      } else if (role === 1) {
+        ctx.strokeStyle = PALETTE.gilded_cornice;
+        ctx.lineWidth = 2.4;
+        ctx.beginPath();
+        ctx.moveTo(-r * 0.42, r * 0.54); ctx.lineTo(r * 0.38, r * 0.34);
+        ctx.moveTo(-r * 0.35, r * 0.34); ctx.lineTo(r * 0.44, r * 0.54);
+        ctx.stroke();
+        ctx.fillStyle = "rgba(216,162,74,0.68)";
+        ctx.beginPath(); ctx.arc(0, r * 0.38, r * 0.22, Math.PI, 0); ctx.fill();
+        ctx.strokeStyle = "#3c2b24";
+        ctx.lineWidth = 2.5;
+        ctx.beginPath(); ctx.moveTo(-r * 0.62, r * 0.16); ctx.lineTo(r * 0.62, r * 0.16); ctx.stroke();
+        ctx.fillStyle = PALETTE.brocade_crimson;
+        ctx.fillRect(-r * 0.32, r * 0.04, r * 0.62, r * 0.11);
+        for (let i = 0; i < 5; i += 1) {
+          const e = embers[i];
+          ctx.fillStyle = PALETTE.candle_crystal;
+          ctx.fillRect((e.u - 0.5) * r * 0.8, r * 0.32 - e.v * r * 0.72, 2.3, 2.3);
+        }
+        for (let wIdx = 0; wIdx < 4; wIdx += 1) {
+          const sw = smokeWisps[wIdx];
+          ctx.fillStyle = "rgba(207,196,174," + (0.26 * (1 - sw.u)).toFixed(2) + ")";
+          ctx.beginPath();
+          ctx.arc(sw.drift * r * 0.9 * sw.u, -sw.u * r * 0.75, r * (0.09 + sw.u * 0.18), 0, Math.PI * 2);
+          ctx.fill();
+        }
+      } else if (role === 2) {
+        drawVitrineBox(ctx, r);
+        ctx.strokeStyle = PALETTE.wrought_rust;
+        ctx.lineWidth = 1.6;
+        ctx.strokeRect(-r * 0.42, -r * 0.42, r * 0.84, r * 0.76);
+        ctx.beginPath(); ctx.arc(0, -r * 0.04, r * 0.28, 0, Math.PI * 2); ctx.stroke();
+      } else {
+        ctx.strokeStyle = PALETTE.gilded_cornice;
+        ctx.lineWidth = 1.6;
+        for (let i = -2; i <= 2; i += 1) {
+          ctx.beginPath();
+          ctx.moveTo(i * r * 0.22, -r * 0.54); ctx.lineTo(i * r * 0.22, r * 0.54);
+          ctx.moveTo(-r * 0.52, i * r * 0.22); ctx.lineTo(r * 0.52, i * r * 0.22);
+          ctx.stroke();
+        }
+        ctx.strokeStyle = PALETTE.basil_shoot;
+        ctx.lineWidth = 2.2;
+        ctx.beginPath(); ctx.moveTo(-r * 0.45, r * 0.52); ctx.bezierCurveTo(-r * 0.1, 0, r * 0.2, -r * 0.2, r * 0.4 + sway * 4, -r * 0.48); ctx.stroke();
+        ctx.fillStyle = PALETTE.basil_shoot;
+        ctx.beginPath(); ctx.ellipse(r * 0.16, r * 0.14, r * 0.19, r * 0.14, 0.2, 0, Math.PI * 2); ctx.fill();
+      }
+    }
+
+    function drawCapitalShape(ctx, r, upsideDown) {
+      ctx.save();
+      if (upsideDown) ctx.scale(1, -1);
+      ctx.fillStyle = PALETTE.gilded_cornice;
+      ctx.fillRect(-r * 0.56, -r * 0.48, r * 1.12, r * 0.12);
+      ctx.fillStyle = PALETTE.pentelic_marble;
+      ctx.beginPath();
+      ctx.moveTo(-r * 0.5, -r * 0.36); ctx.lineTo(r * 0.5, -r * 0.36);
+      ctx.lineTo(r * 0.34, r * 0.42); ctx.lineTo(-r * 0.34, r * 0.42);
+      ctx.closePath(); ctx.fill();
+      ctx.strokeStyle = PALETTE.limewash_patina;
+      ctx.lineWidth = 1.4;
+      ctx.beginPath();
+      ctx.arc(-r * 0.42, -r * 0.26, r * 0.13, 0, Math.PI * 1.75);
+      ctx.moveTo(r * 0.55, -r * 0.26);
+      ctx.arc(r * 0.42, -r * 0.26, r * 0.13, 0, Math.PI * 1.75);
+      ctx.stroke();
+      for (let a = -1; a <= 1; a += 1) {
+        ctx.beginPath();
+        ctx.arc(a * r * 0.2, r * 0.16, r * 0.14, Math.PI, 0);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    function drawCorinthianCapitals(ctx, r, role, peck) {
+      if (role === 0) {
+        ctx.fillStyle = PALETTE.limewash_patina;
+        ctx.fillRect(-r * 0.3, r * 0.36, r * 0.6, r * 0.34);
+        drawCapitalShape(ctx, r * 0.95, false);
+      } else if (role === 1) {
+        ctx.fillStyle = "rgba(125,83,56,0.45)";
+        ctx.beginPath(); ctx.ellipse(0, r * 0.42, r * 0.82, r * 0.24, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.save(); ctx.translate(-r * 0.08, r * 0.1); ctx.rotate(0.56);
+        drawCapitalShape(ctx, r * 0.78, false);
+        ctx.restore();
+        ctx.strokeStyle = "rgba(207,196,174,0.34)";
+        ctx.lineWidth = 1;
+        for (let m = -3; m <= 3; m += 1) {
+          ctx.beginPath(); ctx.moveTo(m * r * 0.24, -r * 0.2); ctx.lineTo(m * r * 0.24, r * 0.58); ctx.stroke();
+        }
+        for (let hIdx = 0; hIdx < 2; hIdx += 1) {
+          const hx = hIdx === 0 ? r * 0.46 : -r * 0.52;
+          const dir = hIdx === 0 ? -1 : 1;
+          const dip = Math.abs(Math.sin(peck + hIdx * 1.7)) * r * 0.16;
+          ctx.fillStyle = hIdx === 0 ? PALETTE.pentelic_marble : PALETTE.wrought_rust;
+          ctx.beginPath(); ctx.ellipse(hx, r * 0.32, r * 0.16, r * 0.12, 0, 0, Math.PI * 2); ctx.fill();
+          ctx.beginPath(); ctx.arc(hx + dir * r * 0.15, r * 0.24 + dip, r * 0.07, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = PALETTE.brocade_crimson;
+          ctx.fillRect(hx + dir * r * 0.13, r * 0.15 + dip, 4, 4);
+        }
+      } else if (role === 2) {
+        ctx.fillStyle = "rgba(240,201,120,0.16)";
+        ctx.beginPath(); ctx.moveTo(-r * 0.25, -r * 0.82); ctx.lineTo(r * 0.25, -r * 0.82);
+        ctx.lineTo(r * 0.72, r * 0.58); ctx.lineTo(-r * 0.72, r * 0.58); ctx.closePath(); ctx.fill();
+        drawVitrineBox(ctx, r * 1.05, PALETTE.vitrine_glass);
+        ctx.fillStyle = PALETTE.brocade_crimson;
+        ctx.fillRect(-r * 0.52, r * 0.34, r * 1.04, r * 0.22);
+        ctx.save(); ctx.translate(0, -r * 0.02);
+        drawCapitalShape(ctx, r * 0.76, false);
+        ctx.restore();
+      } else {
+        ctx.strokeStyle = PALETTE.vitrine_glass;
+        ctx.fillStyle = "rgba(116,150,158,0.24)";
+        ctx.lineWidth = 1.8;
+        ctx.beginPath();
+        ctx.moveTo(-r * 0.82, -r * 0.58); ctx.lineTo(r * 0.82, -r * 0.32);
+        ctx.lineTo(r * 0.82, -r * 0.2); ctx.lineTo(-r * 0.82, -r * 0.46); ctx.closePath();
+        ctx.fill(); ctx.stroke();
+        ctx.save(); ctx.translate(0, r * 0.14);
+        drawCapitalShape(ctx, r * 0.82, true);
+        ctx.restore();
+        for (let m = -1; m <= 1; m += 2) {
+          ctx.fillStyle = PALETTE.basil_shoot;
+          ctx.beginPath(); ctx.ellipse(m * r * 0.54, r * 0.45, r * 0.2, r * 0.14, 0, 0, Math.PI * 2); ctx.fill();
+          ctx.strokeStyle = PALETTE.candle_crystal;
+          ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.moveTo(m * r * 0.38, r * 0.45); ctx.lineTo(m * r * 0.7, r * 0.45); ctx.stroke();
+        }
+      }
+    }
+
+    function drawVelvetBellJars(ctx, r, role) {
+      if (role === 0) {
+        ctx.fillStyle = PALETTE.brocade_crimson;
+        ctx.fillRect(-r * 0.46, r * 0.36, r * 0.92, r * 0.16);
+        ctx.fillStyle = PALETTE.gilded_cornice;
+        ctx.beginPath(); ctx.arc(0, r * 0.12, r * 0.16, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = "rgba(116,150,158,0.22)";
+        ctx.strokeStyle = PALETTE.vitrine_glass;
+        ctx.lineWidth = 1.6;
+        ctx.beginPath(); ctx.arc(0, -r * 0.04, r * 0.38, Math.PI, 0);
+        ctx.lineTo(r * 0.38, r * 0.36); ctx.lineTo(-r * 0.38, r * 0.36); ctx.closePath();
+        ctx.fill(); ctx.stroke();
+      } else if (role === 1) {
+        ctx.fillStyle = PALETTE.gilded_cornice;
+        ctx.fillRect(-r * 0.2, r * 0.24, r * 0.38, r * 0.14);
+        ctx.fillStyle = "rgba(116,150,158,0.25)";
+        ctx.strokeStyle = PALETTE.vitrine_glass;
+        ctx.beginPath(); ctx.arc(0, r * 0.06, r * 0.36, Math.PI, 0);
+        ctx.lineTo(r * 0.36, r * 0.42); ctx.lineTo(-r * 0.36, r * 0.42); ctx.closePath();
+        ctx.fill(); ctx.stroke();
+        ctx.fillStyle = "#594842";
+        ctx.beginPath(); ctx.ellipse(r * 0.54, r * 0.38, r * 0.15, r * 0.08, 0, 0, Math.PI * 2); ctx.fill();
+      } else if (role === 2) {
+        drawVitrineBox(ctx, r);
+        ctx.strokeStyle = PALETTE.vitrine_glass;
+        ctx.beginPath(); ctx.arc(0, -r * 0.02, r * 0.32, Math.PI, 0);
+        ctx.lineTo(r * 0.32, r * 0.38); ctx.lineTo(-r * 0.32, r * 0.38); ctx.closePath(); ctx.stroke();
+        ctx.fillStyle = PALETTE.vitrine_glass;
+        ctx.beginPath(); ctx.moveTo(-r * 0.16, r * 0.28); ctx.lineTo(0, -r * 0.04); ctx.lineTo(r * 0.18, r * 0.26); ctx.closePath(); ctx.fill();
+      } else {
+        ctx.fillStyle = PALETTE.limewash_patina;
+        ctx.fillRect(-r * 0.44, r * 0.3, r * 0.88, r * 0.26);
+        ctx.fillStyle = PALETTE.basil_shoot;
+        ctx.beginPath(); ctx.arc(-r * 0.06, r * 0.08, r * 0.18, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = PALETTE.candle_crystal;
+        ctx.beginPath(); ctx.arc(r * 0.1, r * 0.04, r * 0.09, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = PALETTE.vitrine_glass;
+        ctx.fillStyle = "rgba(240,201,120,0.14)";
+        ctx.beginPath(); ctx.arc(0, 0, r * 0.36, Math.PI, 0);
+        ctx.lineTo(r * 0.36, r * 0.3); ctx.lineTo(-r * 0.36, r * 0.3); ctx.closePath();
+        ctx.fill(); ctx.stroke();
+      }
+    }
+
+    function drawSilverTureens(ctx, r, role, ripple) {
+      ctx.fillStyle = role === 1 ? "#8c8984" : PALETTE.pentelic_marble;
+      ctx.beginPath(); ctx.ellipse(0, r * 0.16, r * 0.46, r * 0.24, 0, 0, Math.PI); ctx.fill();
+      ctx.fillRect(-r * 0.22, r * 0.38, r * 0.44, r * 0.09);
+      if (role === 0) {
+        ctx.beginPath(); ctx.ellipse(0, r * 0.14, r * 0.44, r * 0.18, 0, Math.PI, 0); ctx.fill();
+        ctx.fillStyle = PALETTE.candle_crystal;
+        ctx.beginPath(); ctx.arc(0, -r * 0.08, r * 0.07, 0, Math.PI * 2); ctx.fill();
+      } else if (role === 1) {
+        ctx.strokeStyle = PALETTE.vitrine_glass;
+        ctx.lineWidth = 1.4;
+        const dropY = -r * 0.52 + (ripple % 1) * r * 0.62;
+        ctx.beginPath(); ctx.moveTo(0, dropY); ctx.lineTo(0, dropY + 7); ctx.stroke();
+        ctx.beginPath(); ctx.ellipse(0, r * 0.15, r * 0.14 + (ripple % 1) * r * 0.22, r * 0.06, 0, 0, Math.PI * 2); ctx.stroke();
+      } else if (role === 2) {
+        drawVitrineBox(ctx, r);
+        ctx.fillStyle = PALETTE.pentelic_marble;
+        ctx.beginPath(); ctx.ellipse(0, r * 0.16, r * 0.38, r * 0.2, 0, 0, Math.PI * 2); ctx.fill();
+      } else {
+        for (let p = -2; p <= 2; p += 1) {
+          ctx.fillStyle = p % 2 === 0 ? PALETTE.brocade_crimson : "#e5dde0";
+          ctx.beginPath(); ctx.arc(p * r * 0.13, r * 0.06 - (1 - Math.abs(p) * 0.3) * r * 0.12, r * 0.11, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+    }
+
+    function drawGildedCornices(ctx, r, role) {
+      if (role === 0) {
+        ctx.fillStyle = PALETTE.gilded_cornice;
+        ctx.fillRect(-r * 0.68, -r * 0.24, r * 1.36, r * 0.22);
+        ctx.fillStyle = PALETTE.wrought_rust;
+        for (let d = -5; d <= 5; d += 1) {
+          ctx.fillRect(d * r * 0.11 - 2, -r * 0.02, 5, r * 0.12);
+        }
+      } else if (role === 1) {
+        for (let k = -2; k <= 2; k += 1) {
+          ctx.save(); ctx.rotate(k * 0.28);
+          ctx.fillStyle = k % 2 === 0 ? PALETTE.gilded_cornice : PALETTE.wrought_rust;
+          ctx.fillRect(-r * 0.52, r * 0.1, r * 1.04, r * 0.11);
+          ctx.restore();
+        }
+        ctx.fillStyle = PALETTE.brocade_crimson;
+        ctx.beginPath(); ctx.arc(0, r * 0.14, r * 0.2, Math.PI, 0); ctx.fill();
+      } else if (role === 2) {
+        drawVitrineBox(ctx, r);
+        ctx.fillStyle = PALETTE.gilded_cornice;
+        ctx.beginPath();
+        ctx.moveTo(-r * 0.44, -r * 0.12); ctx.lineTo(r * 0.36, -r * 0.08);
+        ctx.lineTo(r * 0.22, r * 0.14); ctx.lineTo(-r * 0.44, r * 0.12); ctx.closePath(); ctx.fill();
+        ctx.fillStyle = "#261e1c";
+        ctx.fillRect(r * 0.14, -r * 0.09, r * 0.22, r * 0.21);
+      } else {
+        ctx.strokeStyle = PALETTE.pentelic_marble;
+        ctx.lineWidth = 5;
+        ctx.beginPath(); ctx.arc(0, r * 0.48, r * 0.56, Math.PI, 0); ctx.stroke();
+        ctx.save(); ctx.translate(-r * 0.24, -r * 0.14); ctx.rotate(-0.18);
+        ctx.fillStyle = PALETTE.gilded_cornice; ctx.fillRect(-r * 0.36, -r * 0.1, r * 0.72, r * 0.16);
+        ctx.restore();
+        ctx.save(); ctx.translate(r * 0.26, -r * 0.08); ctx.rotate(0.24);
+        ctx.fillStyle = PALETTE.gilded_cornice; ctx.fillRect(-r * 0.34, -r * 0.1, r * 0.68, r * 0.15);
+        ctx.restore();
+      }
+    }
+
+    function drawCrystalChandeliers(ctx, r, role) {
+      if (role === 0) {
+        ctx.strokeStyle = PALETTE.gilded_cornice;
+        ctx.lineWidth = 1.6;
+        ctx.beginPath(); ctx.moveTo(0, -r * 0.68); ctx.lineTo(0, r * 0.12); ctx.stroke();
+        for (let t = 0; t < 2; t += 1) {
+          const wTier = r * (0.58 - t * 0.2);
+          const yTier = -r * 0.16 + t * r * 0.24;
+          ctx.beginPath(); ctx.moveTo(-wTier, yTier); ctx.lineTo(wTier, yTier); ctx.stroke();
+          for (let c = -2; c <= 2; c += 1) {
+            ctx.fillStyle = PALETTE.candle_crystal;
+            ctx.beginPath(); ctx.arc(c * wTier * 0.45, yTier + r * 0.1, 3.2, 0, Math.PI * 2); ctx.fill();
+          }
+        }
+      } else if (role === 1) {
+        ctx.fillStyle = "rgba(125,83,56,0.5)";
+        ctx.fillRect(-r * 0.54, r * 0.14, r * 1.08, r * 0.34);
+        for (let b = 0; b < 7; b += 1) {
+          ctx.fillStyle = b % 2 === 0 ? PALETTE.candle_crystal : PALETTE.vitrine_glass;
+          ctx.beginPath();
+          ctx.arc(-r * 0.38 + b * r * 0.13, r * (0.25 + (b % 2) * 0.09), 3.6, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      } else if (role === 2) {
+        drawVitrineBox(ctx, r);
+        for (let p = -2; p <= 2; p += 1) {
+          const px = p * r * 0.18;
+          const py = -r * 0.1 + Math.abs(p) * r * 0.1;
+          ctx.strokeStyle = "rgba(236,229,213,0.4)";
+          ctx.beginPath(); ctx.moveTo(px, -r * 0.64); ctx.lineTo(px, py); ctx.stroke();
+          ctx.fillStyle = PALETTE.candle_crystal;
+          ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(px - 4, py + 9); ctx.lineTo(px + 4, py + 9); ctx.closePath(); ctx.fill();
+        }
+      } else {
+        ctx.strokeStyle = PALETTE.vitrine_glass;
+        ctx.beginPath(); ctx.moveTo(-r * 0.68, -r * 0.48); ctx.lineTo(r * 0.68, -r * 0.3); ctx.stroke();
+        for (let c = -2; c <= 2; c += 1) {
+          ctx.strokeStyle = c % 2 === 0 ? "rgba(240,201,120,0.38)" : "rgba(92,135,84,0.38)";
+          ctx.beginPath(); ctx.moveTo(c * r * 0.14, -r * 0.12); ctx.lineTo(c * r * 0.34, r * 0.52); ctx.stroke();
+          ctx.fillStyle = PALETTE.candle_crystal;
+          ctx.beginPath(); ctx.arc(c * r * 0.14, -r * 0.12, 3.8, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+    }
+
+    function drawDwarfPalmTubs(ctx, r, role, sway) {
+      ctx.fillStyle = role === 3 ? PALETTE.brocade_crimson : PALETTE.limewash_patina;
+      ctx.beginPath();
+      ctx.moveTo(-r * 0.44, r * 0.02); ctx.lineTo(r * 0.44, r * 0.02);
+      ctx.lineTo(r * 0.34, r * 0.52); ctx.lineTo(-r * 0.34, r * 0.52); ctx.closePath(); ctx.fill();
+      ctx.strokeStyle = PALETTE.gilded_cornice;
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(-r * 0.41, r * 0.18); ctx.lineTo(r * 0.41, r * 0.18); ctx.stroke();
+      if (role === 0) {
+        ctx.strokeStyle = PALETTE.basil_shoot;
+        ctx.lineWidth = 2.2;
+        for (let f = -2; f <= 2; f += 1) {
+          ctx.beginPath(); ctx.moveTo(0, r * 0.02);
+          ctx.quadraticCurveTo(f * r * 0.22 + sway * 3, -r * 0.38, f * r * 0.36 + sway * 5, -r * 0.22);
+          ctx.stroke();
+        }
+      } else if (role === 1) {
+        ctx.fillStyle = "rgba(116,150,158,0.65)";
+        ctx.fillRect(-r * 0.38, r * 0.04, r * 0.76, r * 0.1);
+        ctx.fillStyle = PALETTE.brocade_crimson;
+        ctx.fillRect(r * 0.16, r * 0.02, r * 0.22, r * 0.28);
+      } else if (role === 2) {
+        ctx.strokeStyle = PALETTE.brocade_crimson;
+        ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(-r * 0.62, r * 0.16); ctx.quadraticCurveTo(0, r * 0.34, r * 0.62, r * 0.16); ctx.stroke();
+        ctx.fillStyle = PALETTE.gilded_cornice;
+        ctx.fillRect(-r * 0.65, r * 0.08, 4, r * 0.46);
+        ctx.fillRect(r * 0.61, r * 0.08, 4, r * 0.46);
+      } else {
+        ctx.save(); ctx.translate(0, -r * 0.14);
+        drawCapitalShape(ctx, r * 0.52, true);
+        ctx.restore();
+      }
+    }
+
+    function renderStage(ctx, width, height, params) {
+      const p = params || {};
+      const layout = getLayout(width, height);
+      if (!ctx) return layout.stations;
+      const w = layout.width;
+      const h = layout.height;
+      const reduced = p.reducedMotion !== undefined ? Boolean(p.reducedMotion) : Boolean(config.reducedMotion);
+      const t = reduced ? 0 : clock;
+      const sway = reduced ? 0 : Math.sin(t * 1.9);
+      const peck = reduced ? 0.6 : t * 5.2;
+
+      ctx.save();
+      drawBackdrop(ctx, w, h, p.phase);
+
+      for (let m = 0; m < vitrineMotes.length; m += 1) {
+        const mt = vitrineMotes[m];
+        ctx.fillStyle = "rgba(240,201,120,0.22)";
+        ctx.beginPath(); ctx.arc(mt.x * w, mt.y * h * 0.88, mt.r, 0, Math.PI * 2); ctx.fill();
+      }
+
+      const outStations = [];
+      for (let i = 0; i < layout.stations.length; i += 1) {
+        const st = layout.stations[i];
+        const role = resolveRoleIndex(st.id, p);
+        const regime = ERA_REGIMES[role] || ERA_REGIMES[0];
+        const isHover = p.hoveredId === st.id;
+        const isSel = p.selectedId === st.id;
+        const r = st.hitRadius;
+
+        ctx.save();
+        ctx.translate(st.x, st.y);
+
+        const aura = ctx.createRadialGradient(0, 0, r * 0.12, 0, 0, r * 1.18);
+        aura.addColorStop(0, isSel ? "rgba(240,201,120,0.24)" : "rgba(236,229,213,0.07)");
+        aura.addColorStop(1, "rgba(18,15,17,0)");
+        ctx.fillStyle = aura;
+        ctx.beginPath(); ctx.arc(0, 0, r * 1.18, 0, Math.PI * 2); ctx.fill();
+
+        if (isSel || isHover || pulseLevel > 0.05) {
+          ctx.strokeStyle = isSel ? PALETTE.candle_crystal : regime.accent;
+          ctx.lineWidth = isSel ? 2.2 : 1.4;
+          ctx.beginPath(); ctx.arc(0, 0, r * (isSel ? 1.04 : 0.96), 0, Math.PI * 2); ctx.stroke();
+        }
+
+        if (st.id === "silk_brocade_curtains") drawSilkCurtains(ctx, r, role, sway);
+        else if (st.id === "marble_funerary_urns") drawFuneraryUrns(ctx, r, role, sway);
+        else if (st.id === "wrought_harem_gratings") drawHaremGratings(ctx, r, role, sway);
+        else if (st.id === "corinthian_capitals") drawCorinthianCapitals(ctx, r, role, peck);
+        else if (st.id === "velvet_bell_jars") drawVelvetBellJars(ctx, r, role);
+        else if (st.id === "silver_soup_tureens") drawSilverTureens(ctx, r, role, t * 0.85);
+        else if (st.id === "gilded_cornices") drawGildedCornices(ctx, r, role);
+        else if (st.id === "crystal_chandeliers") drawCrystalChandeliers(ctx, r, role);
+        else drawDwarfPalmTubs(ctx, r, role, sway);
+
+        const badgeText = w >= 620 ? ("[" + st.keyNum + "] " + regime.shortLabel) : ("[" + st.keyNum + "]");
+        ctx.font = "600 10px ui-monospace, SFMono-Regular, Menlo, monospace";
+        const bw = ctx.measureText(badgeText).width + 10;
+        const bx = -r * 0.88;
+        const by = -r * 0.92;
+        ctx.fillStyle = "rgba(18,15,17,0.88)";
+        ctx.strokeStyle = isSel ? PALETTE.candle_crystal : regime.accent;
+        ctx.lineWidth = 1.1;
+        ctx.fillRect(bx, by, bw, 16);
+        ctx.strokeRect(bx, by, bw, 16);
+        ctx.fillStyle = PALETTE.pentelic_marble;
+        ctx.textBaseline = "middle";
+        ctx.fillText(badgeText, bx + 5, by + 8.5);
+
+        ctx.restore();
+        outStations.push(Object.assign({}, st, { roleIndex: role, regimeKey: regime.key }));
+      }
+      ctx.restore();
+      return outStations;
+    }
+
+    return {
+      ERA_REGIMES: ERA_REGIMES,
+      RELIC_IDS: RELIC_IDS,
+      RELIC_CATALOG: RELIC_CATALOG,
+      getLayout: getLayout,
+      step: step,
+      renderStage: renderStage,
+      hitTest: hitTest,
+      createAudioEngine: createAudioEngine
+    };
+  }
+
+  const api = Object.freeze({
+    PALETTE: PALETTE,
+    CONSERVED_SHARD_MASS: CONSERVED_SHARD_MASS,
+    ERA_REGIMES: ERA_REGIMES,
+    RELIC_IDS: RELIC_IDS,
+    RELIC_CATALOG: RELIC_CATALOG,
+    createAudioEngine: createAudioEngine,
+    createRelicStage: createRelicStage
+  });
+
+  root.ClariceRelicPermutations = api;
+  if (typeof window !== "undefined") {
+    window.ClariceRelicPermutations = api;
+  }
+  if (typeof module === "object" && module && module.exports) {
+    module.exports = api;
+  }
+})(typeof globalThis !== "undefined" ? globalThis : this);
+
+</script>
+<script>
+(function initClariceEpochEngine(root) {
+  "use strict";
+
+  const CONSERVED_SHARD_MASS = 108;
+
+  const ERA_REGIMES = Object.freeze([
+    Object.freeze({
+      index: 0,
+      key: "court_splendor",
+      label: "Sumptuous Court",
+      shortLabel: "Court",
+      accent: "#d8a24a"
+    }),
+    Object.freeze({
+      index: 1,
+      key: "beggar_salvage",
+      label: "Beggar-Clarice Chrysalis",
+      shortLabel: "Beggar",
+      accent: "#7d5338"
+    }),
+    Object.freeze({
+      index: 2,
+      key: "museum_veneration",
+      label: "Museum of Fragments",
+      shortLabel: "Museum",
+      accent: "#74969e"
+    }),
+    Object.freeze({
+      index: 3,
+      key: "butterfly_surge",
+      label: "Butterfly Bricolage Surge",
+      shortLabel: "Butterfly",
+      accent: "#5c8754"
+    })
+  ]);
+
+  const PHASE_LABELS = Object.freeze({
+    palimpsest_equilibrium: "Heterochronic Palimpsest",
+    plague_chrysalis: "Plague-Chrysalis Collapse",
+    butterfly_splendor: "Butterfly-Splendor Surge",
+    museum_veneration: "Museum of Fragments Veneration"
+  });
+
+  const STRATA_CATALOG = Object.freeze([
+    Object.freeze({
+      id: "sigma_acanthus",
+      sigil: "\u03a3-ACANTHUS",
+      title: "Portico of Fluted Acanthus Spolia",
+      embeddedClue: "Chalk-lime mortar inside the stylobate beds crimson brocade threads and soot-glazed skillet iron.",
+      candidateClaim: "Scholars of the Marble Portico claim these upright Corinthian capitals crowned the virgin First Clarice before any decay.",
+      refutationProof: "Core-drilling the Pentelic acanthus volutes exposes wire chicken-run wear scars and calcified hen-droppings sealed beneath the earliest gilding.",
+      contradictingRelicId: "corinthian_capitals",
+      ordinalRank: null
+    }),
+    Object.freeze({
+      id: "sigma_brocade",
+      sigil: "\u03a3-BROCADE",
+      title: "Brocade Curtain & Harem Loggia Horizon",
+      embeddedClue: "Gold-bullion selvedges are knotted around splinters of charred cedar cornice and cellar bread-crusts.",
+      candidateClaim: "Court chroniclers cite the embroidered silk curtains and filigreed harem gratings as the untouched dawn of Clarice.",
+      refutationProof: "Warp threads beneath the palace embroidery retain pauper-bundle knot creases and Museum vitrine pin-holes from an unnumbered prior dispersion.",
+      contradictingRelicId: "silk_brocade_curtains",
+      ordinalRank: null
+    }),
+    Object.freeze({
+      id: "sigma_cinder",
+      sigil: "\u03a3-CINDER",
+      title: "Inlaid-Wood Skillet Ash & Beggar Rubble",
+      embeddedClue: "Cat-meat hearth ash holds fused teardrops of ballroom rock crystal and repousse silver solder.",
+      candidateClaim: "Ascetic annalists argue Clarice began as a huddle of survivors roasting meat on iron gratings over splintered marquetry.",
+      refutationProof: "Every skillet in the soot lens bears harem-window hinge mortises and regilded melon-trellis patina older than the hearth.",
+      contradictingRelicId: "wrought_harem_gratings",
+      ordinalRank: null
+    }),
+    Object.freeze({
+      id: "sigma_vitrine",
+      sigil: "\u03a3-VITRINE",
+      title: "Basalt Vault of the Museum of Fragments",
+      embeddedClue: "Beveled reliquary bell jars rest upon plinths packed with whitewashed funerary-urn rubble and palm-tub bronze hoops.",
+      candidateClaim: "Curators maintain the Museum of Capitals preserves pure relics rescued directly from the singular First Clarice.",
+      refutationProof: "Inside each sacred bell jar sit shards of an earlier Museum's shattered bell jars, proving veneration itself recycled older vitrines.",
+      contradictingRelicId: "velvet_bell_jars",
+      ordinalRank: null
+    }),
+    Object.freeze({
+      id: "sigma_chrysalis",
+      sigil: "\u03a3-CHRYSALIS",
+      title: "Glass-Roofed Butterfly Shed & Melon Terrace",
+      embeddedClue: "Inverted Corinthian capitals propping the glass rafters still hold dried basil roots in their carved abacus sockets.",
+      candidateClaim: "Architects of the Butterfly Surge declare this sunlit patchwork Clarice to be the city's self-born archetype.",
+      refutationProof: "Every lintel, prism cluster, and upside-down capital is a heterochronic splice of mismatched spolia with zero quarry-fresh stone.",
+      contradictingRelicId: "gilded_cornices",
+      ordinalRank: null
+    }),
+    Object.freeze({
+      id: "sigma_basil",
+      sigil: "\u03a3-BASIL",
+      title: "Mausoleum Urn & Kitchen-Basil Terrace",
+      embeddedClue: "Pentelic funerary urns packed with black herb loam conceal numbered Museum catalog marks etched inside their rims.",
+      candidateClaim: "Necropolis epigraphers propose the carved marble funerary urns hold the ashes of the founders of the First Clarice.",
+      refutationProof: "Beneath the funerary reliefs lie inverted column-pedestal dowel holes and kitchen-basil root casts predating the inscriptions.",
+      contradictingRelicId: "marble_funerary_urns",
+      ordinalRank: null
+    })
+  ]);
+
+  function makeRole(roleIndex, label, reverence, utility, vignetteNote) {
+    const regime = ERA_REGIMES[roleIndex];
+    return Object.freeze({
+      roleIndex: roleIndex,
+      regimeKey: regime.key,
+      label: label,
+      reverence: reverence,
+      utility: utility,
+      vignetteNote: vignetteNote
+    });
+  }
+
+  const FALLBACK_RELIC_CATALOG = Object.freeze([
+    Object.freeze({
+      index: 0, id: "silk_brocade_curtains", keyNum: 1, shardMass: 14, material: "silk",
+      title: "Silk & Brocade Curtains", shortTitle: "Silk Curtains",
+      roles: Object.freeze([
+        makeRole(0, "Embroidered silk & brocade palace curtains", 0.84, 0.46, "Draped across tall palace archways in crimson-gold folds."),
+        makeRole(1, "Brocade bedsheets & knotted pauper bundles", 0.12, 0.93, "Torn into alley bedsheets and knotted bundles of survival goods."),
+        makeRole(2, "Bundle-scraps enshrined in glass cases of the Museum of Fragments", 0.96, 0.11, "Frayed pauper knots pinned beneath museum glass for paying visitors."),
+        makeRole(3, "Patchwork brocade canopies shading rooftop loggias", 0.72, 0.84, "Stitched mismatching silk awnings billowing above sunlit terraces.")
+      ])
+    }),
+    Object.freeze({
+      index: 1, id: "marble_funerary_urns", keyNum: 2, shardMass: 13, material: "marble",
+      title: "Marble Funerary Urns", shortTitle: "Funerary Urns",
+      roles: Object.freeze([
+        makeRole(0, "Carved Pentelic marble funerary urns on mausoleum plinths", 0.90, 0.34, "Fluted Pentelic ash vessels flanking ancestral porticoes."),
+        makeRole(1, "Broken marble funerary urns planted with kitchen basil", 0.16, 0.94, "Cracked marble bellies packed with dark loam and fragrant basil shoots."),
+        makeRole(2, "Calibrated funerary urn shards in the Museum of Fragments", 0.95, 0.12, "Numbered Pentelic rim fragments cradled on brass museum calipers."),
+        makeRole(3, "Whitewashed marble urns wedged as column pedestals", 0.68, 0.86, "Chalk-washed funerary urns inverted to bear newly raised colonnades.")
+      ])
+    }),
+    Object.freeze({
+      index: 2, id: "wrought_harem_gratings", keyNum: 3, shardMass: 12, material: "iron",
+      title: "Wrought-Iron Harem Gratings", shortTitle: "Harem Gratings",
+      roles: Object.freeze([
+        makeRole(0, "Filigreed wrought-iron harem window gratings", 0.78, 0.52, "Latticed iron mashrabiya screens veiling upper seraglio windows."),
+        makeRole(1, "Sooty iron skillets roasting cat-meat on fires of inlaid wood", 0.09, 0.97, "Laid flat across splintered marquetry embers as blackened alley grills."),
+        makeRole(2, "Catalogued iron scrollwork hung in the Museum gallery", 0.92, 0.14, "Soot-cleaned arabesque grilles suspended against velvet museum panels."),
+        makeRole(3, "Regilded harem gratings training rooftop melon vines", 0.70, 0.85, "Gold-brushed iron lattices supporting heavy striped rooftop melons.")
+      ])
+    }),
+    Object.freeze({
+      index: 3, id: "corinthian_capitals", keyNum: 4, shardMass: 16, material: "marble",
+      title: "Corinthian Marble Capitals", shortTitle: "Corinthian Capitals",
+      roles: Object.freeze([
+        makeRole(0, "Fluted Corinthian marble capitals crowning portico columns", 0.91, 0.58, "Crisp acanthus volutes bearing gilded entablatures aloft."),
+        makeRole(1, "Toppled Corinthian capitals forgotten in muddy chicken runs", 0.11, 0.89, "Fallen marble volutes pecked by hens inside wire-fenced coops."),
+        makeRole(2, "Velvet-plinth specimens in the Museum of Capitals", 0.99, 0.09, "Spotlit acanthus crowns venerated in the silent Museum of Capitals."),
+        makeRole(3, "Upside-down Corinthian capitals propping glass-roofed sheds & melons", 0.76, 0.88, "Inverted marble capitals wedged beneath glass rafters and ripe melons.")
+      ])
+    }),
+    Object.freeze({
+      index: 4, id: "velvet_bell_jars", keyNum: 5, shardMass: 10, material: "glass",
+      title: "Velvet-Cushioned Bell Jars", shortTitle: "Bell Jars",
+      roles: Object.freeze([
+        makeRole(0, "Velvet-cushioned parlor bell jars housing gilt curiosities", 0.83, 0.40, "Blown-glass parlor domes sheltering filigree automata on crimson plush."),
+        makeRole(1, "Inverted cellar bell jars shielding dry crusts from rats", 0.14, 0.92, "Chipped glass domes turned rim-down over hoarded bread in damp vaults."),
+        makeRole(2, "Reliquary bell jars encasing shards of earlier bell jars", 0.97, 0.10, "Museum domes enshrining curved splinters of older shattered domes."),
+        makeRole(3, "Sun-warmed cloches forcing citron grafts on terrace parapets", 0.71, 0.83, "Condensation-beaded glass cloches nursing grafted citrus shoots.")
+      ])
+    }),
+    Object.freeze({
+      index: 5, id: "silver_soup_tureens", keyNum: 6, shardMass: 11, material: "silver",
+      title: "Silver Banquet Soup Tureens", shortTitle: "Soup Tureens",
+      roles: Object.freeze([
+        makeRole(0, "Repousse silver banquet soup tureens", 0.85, 0.50, "Crested banquet vessels steaming on inlaid dining boards."),
+        makeRole(1, "Dented tarnished tureens catching roof-drip rainwater", 0.13, 0.95, "Hammer-scarred silver basins set beneath leaking vault seams."),
+        makeRole(2, "Spotlit ritual vessels in the Museum of Fragments", 0.94, 0.12, "Tarnished banquet bowls misclassified as archaic libation vessels."),
+        makeRole(3, "Chilled pomegranate-ice centerpieces on marble tables", 0.77, 0.79, "Polished spolia basins heaped with snow and ruby pomegranate seeds.")
+      ])
+    }),
+    Object.freeze({
+      index: 6, id: "gilded_cornices", keyNum: 7, shardMass: 11, material: "wood_gilt",
+      title: "Gilded & Inlaid Cornices", shortTitle: "Gilded Cornices",
+      roles: Object.freeze([
+        makeRole(0, "Gilded & inlaid cedar ceiling cornices", 0.86, 0.48, "Mother-of-pearl and gold-leaf cedar moldings framing coffered halls."),
+        makeRole(1, "Splintered inlaid kindling feeding alley skillet-fires", 0.08, 0.96, "Cracked marquetry beams snapped to feed crackling skillet hearths."),
+        makeRole(2, "Half-charred gilt frieze splinters under beveled Museum glass", 0.93, 0.11, "Singed cedar dentils mounted like sacred epigraphic tablets."),
+        makeRole(3, "Asymmetric gilded cornices spliced onto new arch lintels", 0.74, 0.82, "Mismatched gilt moldings bolted crosswise over airy loggia arches.")
+      ])
+    }),
+    Object.freeze({
+      index: 7, id: "crystal_chandeliers", keyNum: 8, shardMass: 11, material: "glass",
+      title: "Rock-Crystal Chandeliers", shortTitle: "Chandeliers",
+      roles: Object.freeze([
+        makeRole(0, "Tiered rock-crystal ballroom chandeliers", 0.89, 0.49, "Cascading candlelit crystal tiers multiplying ballroom reflections."),
+        makeRole(1, "Unstrung crystal prism-beads bartered in rubble alleys", 0.17, 0.87, "Loose faceted teardrops traded by weight for oil and salt."),
+        makeRole(2, "Numbered crystal teardrops suspended in Museum vitrines", 0.96, 0.13, "Single catalogued prisms hung on silk threads inside dark cases."),
+        makeRole(3, "Refracting prism clusters hung beneath glass-roofed sheds", 0.79, 0.81, "Re-strung chandelier pendants scattering rainbows across melon beds.")
+      ])
+    }),
+    Object.freeze({
+      index: 8, id: "dwarf_palm_tubs", keyNum: 9, shardMass: 10, material: "marble",
+      title: "Dwarf-Palm Parlor Tubs", shortTitle: "Palm Tubs",
+      roles: Object.freeze([
+        makeRole(0, "Bronze-hooped tubs holding parlor dwarf palms", 0.76, 0.54, "Carved stone planters ringing sunlit winter-garden salons."),
+        makeRole(1, "Cracked palm tubs serving as beggar-alley wash troughs", 0.12, 0.93, "Pitch-caulked planter basins scrubbing rags in crowded courtyards."),
+        makeRole(2, "Roped-off terracotta palm tubs in the Museum vestibule", 0.90, 0.15, "Empty hooped tubs guarded behind braided crimson museum cords."),
+        makeRole(3, "Repainted palm tubs cradling inverted marble capitals", 0.69, 0.84, "Lime-tinted tubs socketed as collars under upside-down capitals.")
+      ])
+    })
+  ]);
+
+  const INITIAL_ROLE_MAP = Object.freeze({
+    silk_brocade_curtains: 2,
+    marble_funerary_urns: 1,
+    wrought_harem_gratings: 1,
+    corinthian_capitals: 1,
+    velvet_bell_jars: 2,
+    silver_soup_tureens: 1,
+    gilded_cornices: 3,
+    crystal_chandeliers: 2,
+    dwarf_palm_tubs: 3
+  });
+
+  const STRATA_BY_ID = Object.freeze(
+    STRATA_CATALOG.reduce(function mapStrata(acc, item) {
+      acc[item.id] = item;
+      return acc;
+    }, {})
+  );
+
+  const INITIAL_STRATA_IDS = Object.freeze(
+    STRATA_CATALOG.map(function pluckId(item) {
+      return item.id;
+    })
+  );
+
+  function clamp01(value) {
+    if (value < 0) return 0;
+    if (value > 1) return 1;
+    return value;
+  }
+
+  function round4(value) {
+    return Number(value.toFixed(4));
+  }
+
+  function normalizeUnit(value, fallback) {
+    if (typeof value !== "number" || !Number.isFinite(value)) {
+      return fallback;
+    }
+    const scaled = value > 1 ? value / 100 : value;
+    return clamp01(scaled);
+  }
+
+  function resolveCatalog(opts) {
+    const external =
+      (opts && Array.isArray(opts.catalog) && opts.catalog) ||
+      (root && root.ClariceRelicPermutations && Array.isArray(root.ClariceRelicPermutations.RELIC_CATALOG)
+        ? root.ClariceRelicPermutations.RELIC_CATALOG
+        : null);
+
+    if (!external) {
+      return FALLBACK_RELIC_CATALOG;
+    }
+
+    const byId = {};
+    for (let i = 0; i < external.length; i += 1) {
+      const candidate = external[i];
+      if (candidate && typeof candidate.id === "string") {
+        byId[candidate.id] = candidate;
+      }
+    }
+
+    return Object.freeze(
+      FALLBACK_RELIC_CATALOG.map(function mergeRelic(base) {
+        const ext = byId[base.id];
+        if (!ext) return base;
+        const extRoles = Array.isArray(ext.roles) ? ext.roles : [];
+        const mergedRoles = Object.freeze(
+          base.roles.map(function mergeRole(baseRole, rIdx) {
+            const extRole = extRoles[rIdx] || {};
+            return Object.freeze({
+              roleIndex: rIdx,
+              regimeKey: ERA_REGIMES[rIdx].key,
+              label: typeof extRole.label === "string" && extRole.label.length > 0 ? extRole.label : baseRole.label,
+              reverence: normalizeUnit(extRole.reverence, baseRole.reverence),
+              utility: normalizeUnit(extRole.utility, baseRole.utility),
+              vignetteNote:
+                typeof extRole.vignetteNote === "string" && extRole.vignetteNote.length > 0
+                  ? extRole.vignetteNote
+                  : baseRole.vignetteNote
+            });
+          })
+        );
+        return Object.freeze({
+          index: base.index,
+          id: base.id,
+          keyNum: base.keyNum,
+          shardMass: base.shardMass,
+          material: typeof ext.material === "string" && ext.material.length > 0 ? ext.material : base.material,
+          title: typeof ext.title === "string" && ext.title.length > 0 ? ext.title : base.title,
+          shortTitle:
+            typeof ext.shortTitle === "string" && ext.shortTitle.length > 0 ? ext.shortTitle : base.shortTitle,
+          roles: mergedRoles
+        });
+      })
+    );
+  }
+
+  function makeStratumSnapshot(stratum) {
+    const snap = {
+      id: stratum.id,
+      sigil: stratum.sigil,
+      title: stratum.title,
+      embeddedClue: stratum.embeddedClue,
+      candidateClaim: stratum.candidateClaim,
+      refutationProof: stratum.refutationProof,
+      contradictingRelicId: stratum.contradictingRelicId,
+      ordinalRank: null
+    };
+    Object.defineProperty(snap, "toString", {
+      value: function stratumToString() {
+        return stratum.id;
+      },
+      enumerable: false
+    });
+    return Object.freeze(snap);
+  }
+
+  function derangeStrataIds(currentIds, nextRand) {
+    const len = currentIds.length;
+    const initialSig = INITIAL_STRATA_IDS.join("|");
+    const currentSig = currentIds.join("|");
+
+    for (let attempt = 0; attempt < 28; attempt += 1) {
+      const draft = currentIds.slice();
+      for (let i = len - 1; i > 0; i -= 1) {
+        const j = Math.floor(nextRand() * (i + 1));
+        const tmp = draft[i];
+        draft[i] = draft[j];
+        draft[j] = tmp;
+      }
+      let fixedPoint = false;
+      for (let k = 0; k < len; k += 1) {
+        if (draft[k] === currentIds[k]) {
+          fixedPoint = true;
+          break;
+        }
+      }
+      const sig = draft.join("|");
+      if (!fixedPoint && sig !== currentSig && sig !== initialSig) {
+        return draft;
+      }
+    }
+
+    for (let shift = 1; shift < len; shift += 1) {
+      const rotated = currentIds.map(function shiftItem(_, idx) {
+        return currentIds[(idx + shift) % len];
+      });
+      const sig = rotated.join("|");
+      if (sig !== currentSig && sig !== initialSig) {
+        return rotated;
+      }
+    }
+    return currentIds.slice().reverse();
+  }
+
+  function computeMetrics(records) {
+    let totalMass = 0;
+    let weightedRev = 0;
+    let weightedUtil = 0;
+    const seenRegimes = {};
+    let distinctCount = 0;
+    for (let i = 0; i < records.length; i += 1) {
+      const rec = records[i];
+      const role = rec.def.roles[rec.roleIndex];
+      totalMass += rec.def.shardMass;
+      weightedRev += role.reverence * rec.def.shardMass;
+      weightedUtil += role.utility * rec.def.shardMass;
+      if (!seenRegimes[rec.roleIndex]) {
+        seenRegimes[rec.roleIndex] = true;
+        distinctCount += 1;
+      }
+    }
+    let neighborDelta = 0;
+    for (let j = 0; j < records.length; j += 1) {
+      const cur = records[j].def.roles[records[j].roleIndex];
+      const nxt = records[(j + 1) % records.length].def.roles[records[(j + 1) % records.length].roleIndex];
+      neighborDelta += 0.5 * (Math.abs(cur.reverence - nxt.reverence) + Math.abs(cur.utility - nxt.utility));
+    }
+    const diversity = (distinctCount - 1) / 3;
+    const meanPairContrast = neighborDelta / records.length;
+    return {
+      conservedShardMass: totalMass,
+      meanReverence: round4(weightedRev / totalMass),
+      meanUtility: round4(weightedUtil / totalMass),
+      juxtapositionContrast: round4(clamp01(0.14 + 0.44 * diversity + 0.52 * meanPairContrast))
+    };
+  }
+
+  function createEpochEngine(opts) {
+    const catalog = resolveCatalog(opts || {});
+    let phase = "palimpsest_equilibrium";
+    let cycleCount = 0, plagueCount = 0, butterflySurgeCount = 0, museumCycleCount = 0;
+    let shuffleCount = 0, hypothesisTestsRun = 0;
+    let populationIndex = 0.56, entropyLoss = 0.46, provenanceEntropy = 0.54;
+    let prngState = 0x37c1a91c, auditCursor = 0, relicCursor = 0;
+    let strataIds = INITIAL_STRATA_IDS.slice();
+    let lastHypothesisAudit = null;
+    let chronicleNote = "";
+    let relicRecords = [];
+
+    function nextRand() {
+      prngState = (prngState + 0x6d2b79f5) | 0;
+      let t = Math.imul(prngState ^ (prngState >>> 15), 1 | prngState);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    }
+
+    function advanceEntropy(factor) {
+      entropyLoss = Math.max(0.000001, entropyLoss * factor);
+      const candidate = Number((1 - entropyLoss).toFixed(6));
+      provenanceEntropy = candidate > provenanceEntropy
+        ? candidate
+        : Math.min(0.999999, Number((provenanceEntropy + 0.000001).toFixed(6)));
+    }
+
+    function applyRoleTargets(targetMap) {
+      for (let i = 0; i < relicRecords.length; i += 1) {
+        const rec = relicRecords[i];
+        const nextRole = targetMap[rec.def.id];
+        if (typeof nextRole === "number" && nextRole >= 0 && nextRole <= 3 && nextRole !== rec.roleIndex) {
+          rec.previousRoleIndex = rec.roleIndex;
+          rec.roleIndex = nextRole;
+          rec.permutationCount += 1;
+        }
+      }
+    }
+
+    function initBaseline() {
+      phase = "palimpsest_equilibrium";
+      cycleCount = 0; plagueCount = 0; butterflySurgeCount = 0; museumCycleCount = 0;
+      shuffleCount = 0; hypothesisTestsRun = 0;
+      populationIndex = 0.56; entropyLoss = 0.46; provenanceEntropy = 0.54;
+      prngState = 0x37c1a91c; auditCursor = 0; relicCursor = 0;
+      strataIds = INITIAL_STRATA_IDS.slice();
+      lastHypothesisAudit = null;
+      relicRecords = catalog.map(function seedRelic(def) {
+        return { def: def, roleIndex: INITIAL_ROLE_MAP[def.id], previousRoleIndex: 0, permutationCount: 0 };
+      });
+      chronicleNote =
+        "Clarice opens mid-palimpsest: pauper silk knots gleam inside Museum glass while Corinthian capitals lie in muddy chicken runs and basil sprouts from broken Pentelic urns; 108 shards endure with no recoverable first era.";
+    }
+
+    function getState() {
+      const metrics = computeMetrics(relicRecords);
+      const roleMap = {};
+      const relicStates = Object.freeze(
+        relicRecords.map(function buildRelicSnap(rec) {
+          const curRole = rec.def.roles[rec.roleIndex];
+          const prevRole = rec.def.roles[rec.previousRoleIndex];
+          roleMap[rec.def.id] = rec.roleIndex;
+          return Object.freeze({
+            id: rec.def.id, keyNum: rec.def.keyNum, title: rec.def.title, shortTitle: rec.def.shortTitle,
+            material: rec.def.material, shardMass: rec.def.shardMass,
+            roleIndex: rec.roleIndex, previousRoleIndex: rec.previousRoleIndex,
+            regimeKey: curRole.regimeKey, roleLabel: curRole.label, previousRoleLabel: prevRole.label,
+            reverence: curRole.reverence, utility: curRole.utility, vignetteNote: curRole.vignetteNote,
+            permutationCount: rec.permutationCount
+          });
+        })
+      );
+      const strataOrder = Object.freeze(strataIds.map(function mapSnap(id) { return makeStratumSnapshot(STRATA_BY_ID[id]); }));
+      return Object.freeze({
+        phase: phase, phaseLabel: PHASE_LABELS[phase] || PHASE_LABELS.palimpsest_equilibrium,
+        cycleCount: cycleCount, plagueCount: plagueCount,
+        butterflySurgeCount: butterflySurgeCount, museumCycleCount: museumCycleCount,
+        shuffleCount: shuffleCount, hypothesisTestsRun: hypothesisTestsRun,
+        firstClariceProven: false, eraOrderRecoverable: false,
+        conservedShardMass: CONSERVED_SHARD_MASS, initialShardMass: CONSERVED_SHARD_MASS,
+        massConserved: metrics.conservedShardMass === CONSERVED_SHARD_MASS,
+        populationIndex: populationIndex, meanReverence: metrics.meanReverence,
+        meanUtility: metrics.meanUtility, provenanceEntropy: provenanceEntropy,
+        juxtapositionContrast: metrics.juxtapositionContrast,
+        relicStates: relicStates, relicRoleMap: Object.freeze(roleMap),
+        strataOrder: strataOrder, strataIds: Object.freeze(strataIds.slice()),
+        lastHypothesisAudit: lastHypothesisAudit, chronicleNote: chronicleNote
+      });
+    }
+
+    function triggerPlagueCatastrophe() {
+      cycleCount += 1; plagueCount += 1; phase = "plague_chrysalis";
+      populationIndex = [0.19, 0.17, 0.22, 0.18, 0.21][(plagueCount - 1) % 5];
+      const holdovers = ["velvet_bell_jars", "crystal_chandeliers", "dwarf_palm_tubs", "silver_soup_tureens"];
+      const holdId = holdovers[(plagueCount - 1) % holdovers.length];
+      const targets = {
+        silk_brocade_curtains: 1, marble_funerary_urns: 1, wrought_harem_gratings: 1,
+        corinthian_capitals: 1, velvet_bell_jars: 1, silver_soup_tureens: 1,
+        gilded_cornices: 1, crystal_chandeliers: 1, dwarf_palm_tubs: 1
+      };
+      targets[holdId] = plagueCount % 2 === 1 ? 2 : 0;
+      applyRoleTargets(targets);
+      strataIds = derangeStrataIds(strataIds, nextRand);
+      advanceEntropy(0.84);
+      chronicleNote = "Plague #" + plagueCount + " hollows Clarice into a beggar-chrysalis: capitals sink into chicken runs, basil fills broken funerary urns, and harem gratings roast cat-meat over inlaid kindling while 108 shards persist.";
+      return getState();
+    }
+
+    function triggerButterflySurge() {
+      cycleCount += 1; butterflySurgeCount += 1; phase = "butterfly_splendor";
+      populationIndex = [0.91, 0.94, 0.88, 0.95, 0.89][(butterflySurgeCount - 1) % 5];
+      const rot = ["velvet_bell_jars", "silver_soup_tureens", "dwarf_palm_tubs"];
+      const targets = {
+        silk_brocade_curtains: 3, marble_funerary_urns: 3, wrought_harem_gratings: 3,
+        corinthian_capitals: 3, gilded_cornices: 3, crystal_chandeliers: 3
+      };
+      targets[rot[(butterflySurgeCount - 1) % 3]] = 3;
+      targets[rot[butterflySurgeCount % 3]] = 2;
+      targets[rot[(butterflySurgeCount + 1) % 3]] = 0;
+      applyRoleTargets(targets);
+      strataIds = derangeStrataIds(strataIds, nextRand);
+      advanceEntropy(0.84);
+      chronicleNote = "Butterfly Surge #" + butterflySurgeCount + " bursts from the beggar-Clarice chrysalis: upside-down Corinthian capitals prop glass-roofed melon sheds above whitewashed urn pedestals as population swells.";
+      return getState();
+    }
+
+    function triggerMuseumVeneration() {
+      cycleCount += 1; museumCycleCount += 1; phase = "museum_veneration";
+      populationIndex = [0.64, 0.62, 0.67, 0.65][(museumCycleCount - 1) % 4];
+      const streetPool = ["wrought_harem_gratings", "silver_soup_tureens", "gilded_cornices", "dwarf_palm_tubs"];
+      const streetId = streetPool[(museumCycleCount - 1) % streetPool.length];
+      const targets = {
+        silk_brocade_curtains: 2, marble_funerary_urns: 2, wrought_harem_gratings: 2,
+        corinthian_capitals: 2, velvet_bell_jars: 2, silver_soup_tureens: 2,
+        gilded_cornices: 2, crystal_chandeliers: 2, dwarf_palm_tubs: 2
+      };
+      targets[streetId] = museumCycleCount % 2 === 1 ? 3 : 1;
+      applyRoleTargets(targets);
+      strataIds = derangeStrataIds(strataIds, nextRand);
+      advanceEntropy(0.86);
+      chronicleNote = "Museum Cycle #" + museumCycleCount + " seals knotted pauper bundles, acanthus capitals, urn shards, bell jars, and crystal teardrops under beveled glass while street spolia stays stubbornly out of place.";
+      return getState();
+    }
+
+    function findRelicRecord(relicId) {
+      if (typeof relicId === "string" && relicId.length > 0) {
+        const asNum = Number(relicId);
+        for (let i = 0; i < relicRecords.length; i += 1) {
+          if (relicRecords[i].def.id === relicId || (Number.isInteger(asNum) && relicRecords[i].def.keyNum === asNum)) {
+            return relicRecords[i];
+          }
+        }
+      } else if (typeof relicId === "number" && Number.isInteger(relicId)) {
+        for (let j = 0; j < relicRecords.length; j += 1) {
+          if (relicRecords[j].def.keyNum === relicId) return relicRecords[j];
+        }
+        if (relicId >= 0 && relicId < relicRecords.length) return relicRecords[relicId];
+      }
+      const picked = relicRecords[relicCursor % relicRecords.length];
+      relicCursor += 1;
+      return picked;
+    }
+
+    function permuteRelic(relicId, explicitRoleIndex) {
+      const rec = findRelicRecord(relicId);
+      const validExplicit =
+        typeof explicitRoleIndex === "number" &&
+        Number.isInteger(explicitRoleIndex) &&
+        explicitRoleIndex >= 0 &&
+        explicitRoleIndex <= 3;
+      const nextRole = validExplicit ? explicitRoleIndex : (rec.roleIndex + 1) % 4;
+      if (nextRole !== rec.roleIndex) {
+        rec.previousRoleIndex = rec.roleIndex;
+      }
+      rec.roleIndex = nextRole;
+      rec.permutationCount += 1;
+      advanceEntropy(0.95);
+      const nextLabel = rec.def.roles[nextRole].label;
+      chronicleNote =
+        rec.def.title + " (" + rec.def.shardMass + " shards) repurposed as: " + nextLabel + " — 108 total shards conserved across lost Clarices.";
+      return getState();
+    }
+
+    function shuffleEras() {
+      shuffleCount += 1;
+      strataIds = derangeStrataIds(strataIds, nextRand);
+      advanceEntropy(0.88);
+      const leadStratum = STRATA_BY_ID[strataIds[0]];
+      chronicleNote =
+        "Era Shuffle #" + shuffleCount + " scrambles the unnumbered strata (" + leadStratum.sigil + " surfaces atop older rubble): succession order remains irrecoverable.";
+      return getState();
+    }
+
+    function resolveStratum(stratumId) {
+      if (typeof stratumId === "string" && stratumId.length > 0) {
+        if (STRATA_BY_ID[stratumId]) return STRATA_BY_ID[stratumId];
+        for (let i = 0; i < STRATA_CATALOG.length; i += 1) {
+          if (STRATA_CATALOG[i].sigil === stratumId) return STRATA_CATALOG[i];
+        }
+      } else if (typeof stratumId === "number" && Number.isInteger(stratumId) && stratumId >= 0 && stratumId < strataIds.length) {
+        return STRATA_BY_ID[strataIds[stratumId]];
+      }
+      const nextId = strataIds[auditCursor % strataIds.length];
+      auditCursor += 1;
+      return STRATA_BY_ID[nextId];
+    }
+
+    function testFirstClariceHypothesis(stratumId) {
+      const stratum = resolveStratum(stratumId);
+      hypothesisTestsRun += 1;
+      const linkedRec = findRelicRecord(stratum.contradictingRelicId);
+      lastHypothesisAudit = Object.freeze({
+        testNumber: hypothesisTestsRun,
+        stratumId: stratum.id,
+        sigil: stratum.sigil,
+        title: stratum.title,
+        embeddedClue: stratum.embeddedClue,
+        candidateClaim: stratum.candidateClaim,
+        refutationProof: stratum.refutationProof,
+        contradictingRelicId: linkedRec.def.id,
+        contradictingRelicTitle: linkedRec.def.title,
+        liveRelicRoleLabel: linkedRec.def.roles[linkedRec.roleIndex].label,
+        ordinalRank: null,
+        verdict: "REFUTED_SPOLIA_PREEXISTS",
+        firstClariceProven: false,
+        eraOrderRecoverable: false
+      });
+      chronicleNote =
+        "Origin Test #" + hypothesisTestsRun + " [" + stratum.sigil + "] REFUTED: " + stratum.refutationProof;
+      return getState();
+    }
+
+    function reset() {
+      initBaseline();
+      return getState();
+    }
+
+    initBaseline();
+
+    return Object.freeze({
+      getState: getState,
+      triggerPlagueCatastrophe: triggerPlagueCatastrophe,
+      triggerButterflySurge: triggerButterflySurge,
+      triggerMuseumVeneration: triggerMuseumVeneration,
+      permuteRelic: permuteRelic,
+      shuffleEras: shuffleEras,
+      testFirstClariceHypothesis: testFirstClariceHypothesis,
+      reset: reset
+    });
+  }
+
+  const api = Object.freeze({
+    CONSERVED_SHARD_MASS: CONSERVED_SHARD_MASS,
+    ERA_REGIMES: ERA_REGIMES,
+    STRATA_CATALOG: STRATA_CATALOG,
+    FALLBACK_RELIC_CATALOG: FALLBACK_RELIC_CATALOG,
+    INITIAL_ROLE_MAP: INITIAL_ROLE_MAP,
+    createEpochEngine: createEpochEngine
+  });
+
+  root.ClariceEpochEngine = api;
+  if (typeof window !== "undefined") {
+    window.ClariceEpochEngine = api;
+  }
+})(typeof globalThis !== "undefined" ? globalThis : this);
+
+</script>
+<script>
+(function () {
+  "use strict";
+
+  const relicLib = globalThis.ClariceRelicPermutations;
+  const epochLib = globalThis.ClariceEpochEngine;
+  if (!relicLib || !epochLib) return;
+
+  const motionQuery = window.matchMedia
+    ? window.matchMedia("(prefers-reduced-motion: reduce)")
+    : { matches: false };
+  let reducedMotion = Boolean(motionQuery.matches);
+
+  const stage = relicLib.createRelicStage({ reducedMotion: reducedMotion });
+  const audio = stage.createAudioEngine
+    ? stage.createAudioEngine()
+    : relicLib.createAudioEngine();
+  const epoch = epochLib.createEpochEngine({ catalog: stage.RELIC_CATALOG });
+
+  const REGIME_SHORT = ["Court", "Beggar", "Museum", "Butterfly"];
+  const CHIP_NAMES = {
+    silk_brocade_curtains: "Brocade",
+    marble_funerary_urns: "Urns",
+    wrought_harem_gratings: "Grating",
+    corinthian_capitals: "Capital",
+    velvet_bell_jars: "BellJar",
+    silver_soup_tureens: "Tureen",
+    gilded_cornices: "Cornice",
+    crystal_chandeliers: "Crystal",
+    dwarf_palm_tubs: "PalmTub"
+  };
+
+  let selectedRelicId = "corinthian_capitals";
+  let hoveredRelicId = null;
+  let auditedStratumId = null;
+  let transitionPulse = 0;
+  let plateDrawerOpen = false;
+  let plateTab = "diptych";
+  let loupeActive = false;
+  let cssWidth = 900;
+  let cssHeight = 540;
+  let lastFrameMs = performance.now();
+
+  const canvas = document.getElementById("clr-canvas");
+  const canvasFrame = document.getElementById("clr-canvas-frame");
+  const ctx = canvas ? canvas.getContext("2d") : null;
+  const phaseBadge = document.getElementById("clr-phase-badge");
+  const massSeal = document.getElementById("clr-mass-seal");
+  const soundKey = document.getElementById("clr-key-sound");
+  const selectedReadout = document.getElementById("clr-selected-readout");
+  const chipStrip = document.getElementById("clr-chip-strip");
+  const cycleTallies = document.getElementById("clr-cycle-tallies");
+  const wheelPlague = document.getElementById("clr-wheel-plague");
+  const wheelButterfly = document.getElementById("clr-wheel-butterfly");
+  const wheelMuseum = document.getElementById("clr-wheel-museum");
+  const valPop = document.getElementById("clr-val-pop");
+  const barPop = document.getElementById("clr-bar-pop");
+  const valRev = document.getElementById("clr-val-rev");
+  const barRev = document.getElementById("clr-bar-rev");
+  const valEnt = document.getElementById("clr-val-ent");
+  const barEnt = document.getElementById("clr-bar-ent");
+  const strataTrack = document.getElementById("clr-strata-track");
+  const tableMeta = document.getElementById("clr-table-meta");
+  const roleList = document.getElementById("clr-role-list");
+  const invFirst = document.getElementById("clr-inv-first");
+  const invOrder = document.getElementById("clr-inv-order");
+  const invMass = document.getElementById("clr-inv-mass");
+  const hypothesisBox = document.getElementById("clr-hypothesis-box");
+  const codexNote = document.getElementById("clr-codex-note");
+  const plateDrawer = document.getElementById("clr-plate-drawer");
+  const plateGrid = document.getElementById("clr-plate-grid");
+  const cardMap = document.getElementById("clr-card-map");
+  const cardVista = document.getElementById("clr-card-vista");
+  const loupeBtn = document.getElementById("clr-loupe-btn");
+  const mapImg = document.getElementById("clr-map-img");
+  const cityImg = document.getElementById("clr-city-img");
+
+  if (mapImg) {
+    mapImg.addEventListener("error", function () {
+      if (!mapImg.dataset.fallbackTried) {
+        mapImg.dataset.fallbackTried = "1";
+        mapImg.src = "map.svg";
+      }
+    });
+  }
+
+  function resolveRelicId(idOrKeyNum) {
+    if (idOrKeyNum === undefined || idOrKeyNum === null || idOrKeyNum === "") {
+      return selectedRelicId;
+    }
+    const catalog = stage.RELIC_CATALOG;
+    const asNum = Number(idOrKeyNum);
+    if (Number.isInteger(asNum) && asNum >= 1 && asNum <= catalog.length) {
+      return catalog[asNum - 1].id;
+    }
+    const str = String(idOrKeyNum);
+    for (let i = 0; i < catalog.length; i += 1) {
+      if (catalog[i].id === str) return catalog[i].id;
+    }
+    return selectedRelicId;
+  }
+
+  function resizeCanvas() {
+    if (!canvas || !canvasFrame || !ctx) return;
+    const rect = canvasFrame.getBoundingClientRect();
+    const w = Math.max(260, Math.floor(rect.width));
+    const h = Math.max(200, Math.floor(rect.height));
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    cssWidth = w;
+    cssHeight = h;
+    const targetW = Math.round(w * dpr);
+    const targetH = Math.round(h * dpr);
+    if (canvas.width !== targetW || canvas.height !== targetH) {
+      canvas.width = targetW;
+      canvas.height = targetH;
+    }
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    drawStageFrame();
+  }
+
+  function drawStageFrame() {
+    if (!ctx) return;
+    const st = epoch.getState();
+    stage.renderStage(ctx, cssWidth, cssHeight, {
+      relicStates: st.relicStates,
+      relicRoleMap: st.relicRoleMap,
+      phase: st.phase,
+      hoveredId: hoveredRelicId,
+      selectedId: selectedRelicId,
+      transitionPulse: transitionPulse,
+      reducedMotion: reducedMotion
+    });
+  }
+
+  function makeEl(tag, cls, text) {
+    const el = document.createElement(tag);
+    if (cls) el.className = cls;
+    if (text !== undefined) el.textContent = text;
+    return el;
+  }
+  function bindClickAndEnter(el, handler) {
+    el.addEventListener("click", function (ev) {
+      ev.stopPropagation();
+      audio.unlock();
+      handler();
+    });
+    el.addEventListener("keydown", function (ev) {
+      if (ev.key === "Enter" || ev.key === " ") {
+        ev.preventDefault();
+        ev.stopPropagation();
+        audio.unlock();
+        handler();
+      }
+    });
+  }
+
+  function syncDom() {
+    const st = epoch.getState();
+    if (phaseBadge) phaseBadge.textContent = String(st.phaseLabel || st.phase).toUpperCase();
+    if (massSeal) massSeal.textContent = st.conservedShardMass + " / " + st.initialShardMass + " SHARDS";
+    if (soundKey) {
+      soundKey.innerHTML = "";
+      soundKey.appendChild(makeEl("clarice-key-cap", "clr-key-cap", "[M]"));
+      soundKey.appendChild(document.createTextNode(audio.isMuted() ? " Muted" : " Sound: On"));
+    }
+
+    if (cycleTallies) {
+      cycleTallies.textContent =
+        "Cycles " + st.cycleCount +
+        " · Plagues " + st.plagueCount +
+        " · Surges " + st.butterflySurgeCount +
+        " · Shuffles " + st.shuffleCount;
+    }
+    if (wheelPlague) wheelPlague.classList.toggle("clr-cycle-active", st.phase === "plague_chrysalis");
+    if (wheelButterfly) wheelButterfly.classList.toggle("clr-cycle-active", st.phase === "butterfly_splendor");
+    if (wheelMuseum) wheelMuseum.classList.toggle("clr-cycle-active", st.phase === "museum_veneration");
+
+    const popPct = Math.round((st.populationIndex || 0) * 100);
+    const revPct = Math.round((st.meanReverence || 0) * 100);
+    const entPct = Math.round((st.provenanceEntropy || 0) * 100);
+    if (valPop) valPop.textContent = popPct + "%";
+    if (barPop) barPop.style.width = popPct + "%";
+    if (valRev) valRev.textContent = revPct + "%";
+    if (barRev) barRev.style.width = revPct + "%";
+    if (valEnt) valEnt.textContent = entPct + "%";
+    if (barEnt) barEnt.style.width = entPct + "%";
+
+    let selectedStone = st.relicStates[0];
+    for (let i = 0; i < st.relicStates.length; i += 1) {
+      if (st.relicStates[i].id === selectedRelicId) {
+        selectedStone = st.relicStates[i];
+        break;
+      }
+    }
+    if (selectedReadout && selectedStone) {
+      selectedReadout.textContent =
+        "[" + selectedStone.keyNum + "] " + selectedStone.shortTitle +
+        " · " + REGIME_SHORT[selectedStone.roleIndex];
+    }
+
+    if (chipStrip) {
+      chipStrip.innerHTML = "";
+      for (let i = 0; i < st.relicStates.length; i += 1) {
+        const rs = st.relicStates[i];
+        const chip = makeEl(
+          "relic-shard-chip",
+          "clr-chip" + (rs.id === selectedRelicId ? " clr-chip-active" : "")
+        );
+        chip.tabIndex = 0;
+        chip.setAttribute("role", "button");
+        chip.dataset.relicId = rs.id;
+        chip.appendChild(makeEl("clarice-chip-num", "clr-chip-num", "[" + rs.keyNum + "]"));
+        chip.appendChild(makeEl("clarice-chip-name", "clr-chip-name", CHIP_NAMES[rs.id] || rs.shortTitle));
+        bindClickAndEnter(chip, function () { permuteRelic(rs.id); });
+        chipStrip.appendChild(chip);
+      }
+    }
+
+    if (strataTrack) {
+      strataTrack.innerHTML = "";
+      for (let i = 0; i < st.strataOrder.length; i += 1) {
+        const item = st.strataOrder[i];
+        const tok = makeEl(
+          "stratum-shard-token",
+          "clr-stratum-token" + (auditedStratumId === item.id ? " clr-stratum-active" : "")
+        );
+        tok.tabIndex = 0;
+        tok.setAttribute("role", "button");
+        tok.dataset.stratumId = item.id;
+        tok.appendChild(makeEl("clarice-stratum-sigil", "clr-stratum-sigil", item.sigil));
+        tok.appendChild(makeEl("clarice-stratum-sub", "clr-stratum-sub", "RANK: LOST"));
+        bindClickAndEnter(tok, function () { testFirstClariceHypothesis(item.id); });
+        strataTrack.appendChild(tok);
+      }
+    }
+
+    if (tableMeta) {
+      tableMeta.textContent = st.conservedShardMass + " / " + st.initialShardMass + " Shards Conserved";
+    }
+    if (roleList) {
+      roleList.innerHTML = "";
+      for (let i = 0; i < st.relicStates.length; i += 1) {
+        const rs = st.relicStates[i];
+        const row = makeEl(
+          "relic-role-row",
+          "clr-role-row" + (rs.id === selectedRelicId ? " clr-role-selected" : "")
+        );
+        row.tabIndex = 0;
+        row.setAttribute("role", "button");
+        row.dataset.relicId = rs.id;
+
+        const head = makeEl("clarice-row-head", "clr-row-head");
+        head.appendChild(
+          makeEl(
+            "clarice-row-title",
+            "clr-row-title",
+            "[" + rs.keyNum + "] " + rs.shortTitle + " (" + rs.shardMass + "sh · " + rs.material + ")"
+          )
+        );
+        const badges = makeEl("clarice-row-badges", "clr-row-badges");
+        badges.appendChild(
+          makeEl(
+            "clarice-regime-tag",
+            "clr-regime-tag clr-regime-" + rs.roleIndex,
+            REGIME_SHORT[rs.roleIndex]
+          )
+        );
+        badges.appendChild(
+          makeEl("clarice-rev-pct", "clr-crown-meta", "Rev " + Math.round(rs.reverence * 100) + "%")
+        );
+        head.appendChild(badges);
+
+        const shift = makeEl(
+          "clarice-row-shift",
+          "clr-row-shift",
+          rs.previousRoleLabel + " -> " + rs.roleLabel
+        );
+        row.appendChild(head);
+        row.appendChild(shift);
+        bindClickAndEnter(row, function () { permuteRelic(rs.id); });
+        roleList.appendChild(row);
+      }
+    }
+
+    if (invFirst) invFirst.textContent = "FALSE (UNPROVEN HYPOTHESIS)";
+    if (invOrder) invOrder.textContent = "FALSE (SUCCESSION LOST)";
+    if (invMass) invMass.textContent = st.conservedShardMass + " / " + st.initialShardMass;
+
+    if (hypothesisBox) {
+      const aud = st.lastHypothesisAudit;
+      if (aud) {
+        hypothesisBox.textContent =
+          "Audit #" + aud.testNumber + " [" + aud.sigil + " · REFUTED]: " + aud.refutationProof;
+      } else {
+        hypothesisBox.textContent =
+          "Audit ready: press [H] or select any Σ-stratum token to test whether a virgin First Clarice precedes the spolia.";
+      }
+    }
+    if (codexNote && st.chronicleNote) {
+      codexNote.textContent = st.chronicleNote;
+    }
+    syncDrawerDom();
+  }
+  function syncDrawerDom() {
+    if (!plateDrawer) return;
+    if (plateDrawerOpen) {
+      plateDrawer.removeAttribute("hidden");
+    } else {
+      plateDrawer.setAttribute("hidden", "");
+    }
+    plateDrawer.classList.toggle("clr-loupe-on", loupeActive);
+    plateDrawer.dataset.loupe = loupeActive ? "true" : "false";
+    if (loupeBtn) {
+      loupeBtn.textContent = loupeActive ? "[Z] Loupe 1.75x: On" : "[Z] Loupe 1.75x: Off";
+      loupeBtn.classList.toggle("clr-drawer-tab-active", loupeActive);
+    }
+    const tabs = plateDrawer.querySelectorAll("[data-plate-tab]");
+    for (let i = 0; i < tabs.length; i += 1) {
+      const t = tabs[i];
+      t.classList.toggle("clr-drawer-tab-active", t.dataset.plateTab === plateTab);
+    }
+    if (plateGrid) {
+      plateGrid.classList.toggle("clr-plate-single", plateTab !== "diptych");
+    }
+    if (cardMap) {
+      if (plateTab === "vista") cardMap.setAttribute("hidden", "");
+      else cardMap.removeAttribute("hidden");
+    }
+    if (cardVista) {
+      if (plateTab === "map") cardVista.setAttribute("hidden", "");
+      else cardVista.removeAttribute("hidden");
+    }
+  }
+
+  function getState() {
+    const st = epoch.getState();
+    return Object.assign({}, st, {
+      firstClariceProven: false,
+      eraOrderRecoverable: false,
+      conservedShardMass: 108,
+      initialShardMass: 108,
+      massConserved: true,
+      selectedRelicId: selectedRelicId,
+      hoveredRelicId: hoveredRelicId,
+      muted: Boolean(audio.isMuted()),
+      soundEnabled: !audio.isMuted(),
+      reducedMotion: reducedMotion,
+      plateDrawerOpen: plateDrawerOpen,
+      plateTab: plateTab,
+      loupeActive: loupeActive,
+      loupeScale: loupeActive ? 1.75 : 1.0
+    });
+  }
+
+  function triggerPlagueCatastrophe() {
+    epoch.triggerPlagueCatastrophe();
+    transitionPulse = 1.0;
+    audio.playCycleChord("plague");
+    syncDom();
+    drawStageFrame();
+    return getState();
+  }
+
+  function triggerButterflySurge() {
+    epoch.triggerButterflySurge();
+    transitionPulse = 1.0;
+    audio.playCycleChord("butterfly");
+    syncDom();
+    drawStageFrame();
+    return getState();
+  }
+
+  function triggerMuseumVeneration() {
+    epoch.triggerMuseumVeneration();
+    transitionPulse = 1.0;
+    audio.playCycleChord("museum");
+    syncDom();
+    drawStageFrame();
+    return getState();
+  }
+
+  function selectRelic(relicIdOrKeyNum) {
+    selectedRelicId = resolveRelicId(relicIdOrKeyNum);
+    syncDom();
+    drawStageFrame();
+    return getState();
+  }
+
+  function permuteRelic(relicIdOrKeyNum, explicitRoleIndex) {
+    const resolved = resolveRelicId(relicIdOrKeyNum);
+    selectedRelicId = resolved;
+    const st = epoch.permuteRelic(resolved, explicitRoleIndex);
+    transitionPulse = Math.max(transitionPulse, 0.45);
+    for (let i = 0; i < st.relicStates.length; i += 1) {
+      if (st.relicStates[i].id === resolved) {
+        audio.playRelicTone(st.relicStates[i].material, st.relicStates[i].roleIndex);
+        break;
+      }
+    }
+    syncDom();
+    drawStageFrame();
+    return getState();
+  }
+
+  function shuffleEras() {
+    epoch.shuffleEras();
+    transitionPulse = Math.max(transitionPulse, 0.55);
+    audio.playShuffleRattle();
+    syncDom();
+    drawStageFrame();
+    return getState();
+  }
+
+  function testFirstClariceHypothesis(stratumId) {
+    const st = epoch.testFirstClariceHypothesis(stratumId);
+    if (st.lastHypothesisAudit) {
+      auditedStratumId = st.lastHypothesisAudit.stratumId;
+    }
+    audio.playRelicTone("marble", 2);
+    syncDom();
+    drawStageFrame();
+    return getState();
+  }
+
+  function openPlateDrawer() {
+    plateDrawerOpen = true;
+    syncDrawerDom();
+    return getState();
+  }
+
+  function closePlateDrawer() {
+    plateDrawerOpen = false;
+    loupeActive = false;
+    syncDrawerDom();
+    return getState();
+  }
+
+  function togglePlateDrawer() {
+    return plateDrawerOpen ? closePlateDrawer() : openPlateDrawer();
+  }
+
+  function setPlateTab(tab) {
+    const raw = String(tab || "diptych").toLowerCase();
+    if (raw === "map" || raw === "survey") plateTab = "map";
+    else if (raw === "vista" || raw === "image") plateTab = "vista";
+    else plateTab = "diptych";
+    syncDrawerDom();
+    return getState();
+  }
+
+  function toggleLoupe(forceBool) {
+    loupeActive = typeof forceBool === "boolean" ? forceBool : !loupeActive;
+    if (!loupeActive) {
+      if (mapImg) mapImg.style.transformOrigin = "50% 50%";
+      if (cityImg) cityImg.style.transformOrigin = "50% 50%";
+    }
+    syncDrawerDom();
+    return getState();
+  }
+
+  function toggleMute(forceMuted) {
+    if (typeof forceMuted === "boolean") audio.setMuted(forceMuted);
+    else audio.toggleMute();
+    syncDom();
+    return getState();
+  }
+
+  function reset() {
+    epoch.reset();
+    selectedRelicId = "corinthian_capitals";
+    hoveredRelicId = null;
+    auditedStratumId = null;
+    transitionPulse = 0;
+    plateDrawerOpen = false;
+    plateTab = "diptych";
+    loupeActive = false;
+    syncDom();
+    drawStageFrame();
+    return getState();
+  }
+  function runActionName(action) {
+    if (action === "plague") triggerPlagueCatastrophe();
+    else if (action === "butterfly") triggerButterflySurge();
+    else if (action === "museum") triggerMuseumVeneration();
+    else if (action === "shuffle") shuffleEras();
+    else if (action === "hypothesis") testFirstClariceHypothesis();
+    else if (action === "plates") togglePlateDrawer();
+    else if (action === "close-plates") closePlateDrawer();
+    else if (action === "loupe") toggleLoupe();
+    else if (action === "sound") toggleMute();
+    else if (action === "reset") reset();
+  }
+
+  const actionNodes = document.querySelectorAll("[data-action]");
+  for (let i = 0; i < actionNodes.length; i += 1) {
+    const node = actionNodes[i];
+    bindClickAndEnter(node, function () {
+      runActionName(node.dataset.action);
+    });
+  }
+
+  const plateTabNodes = document.querySelectorAll("[data-plate-tab]");
+  for (let i = 0; i < plateTabNodes.length; i += 1) {
+    const tabNode = plateTabNodes[i];
+    bindClickAndEnter(tabNode, function () {
+      setPlateTab(tabNode.dataset.plateTab);
+    });
+  }
+
+  if (plateDrawer) {
+    plateDrawer.addEventListener("click", function (ev) {
+      if (ev.target === plateDrawer) closePlateDrawer();
+    });
+  }
+
+  function bindLoupePan(vpId, imgEl) {
+    const vp = document.getElementById(vpId);
+    if (!vp || !imgEl) return;
+    vp.addEventListener("pointermove", function (ev) {
+      if (!loupeActive) return;
+      const rect = vp.getBoundingClientRect();
+      if (rect.width <= 0 || rect.height <= 0) return;
+      const xPct = Math.max(0, Math.min(100, ((ev.clientX - rect.left) / rect.width) * 100));
+      const yPct = Math.max(0, Math.min(100, ((ev.clientY - rect.top) / rect.height) * 100));
+      imgEl.style.transformOrigin = xPct.toFixed(1) + "% " + yPct.toFixed(1) + "%";
+    });
+  }
+  bindLoupePan("clr-vp-map", mapImg);
+  bindLoupePan("clr-vp-vista", cityImg);
+
+  if (canvas) {
+    canvas.addEventListener("pointermove", function (ev) {
+      const rect = canvas.getBoundingClientRect();
+      const px = ev.clientX - rect.left;
+      const py = ev.clientY - rect.top;
+      const hit = stage.hitTest(px, py, cssWidth, cssHeight, false);
+      const nextHover = hit ? hit.id : null;
+      if (nextHover !== hoveredRelicId) {
+        hoveredRelicId = nextHover;
+        canvas.style.cursor = hoveredRelicId ? "pointer" : "default";
+        drawStageFrame();
+      }
+    });
+    canvas.addEventListener("pointerleave", function () {
+      if (hoveredRelicId !== null) {
+        hoveredRelicId = null;
+        drawStageFrame();
+      }
+    });
+    canvas.addEventListener("click", function (ev) {
+      audio.unlock();
+      const rect = canvas.getBoundingClientRect();
+      const px = ev.clientX - rect.left;
+      const py = ev.clientY - rect.top;
+      const hit = stage.hitTest(px, py, cssWidth, cssHeight, true);
+      if (hit) permuteRelic(hit.id);
+    });
+  }
+
+  window.addEventListener("keydown", function (ev) {
+    if (ev.ctrlKey || ev.metaKey || ev.altKey) return;
+    const k = ev.key;
+    if (k === "Escape") {
+      if (plateDrawerOpen) {
+        ev.preventDefault();
+        closePlateDrawer();
+      }
+      return;
+    }
+    if (k >= "1" && k <= "9") {
+      ev.preventDefault();
+      audio.unlock();
+      permuteRelic(Number(k));
+      return;
+    }
+    if (k === " " || k === "Enter") {
+      ev.preventDefault();
+      audio.unlock();
+      permuteRelic(selectedRelicId);
+      return;
+    }
+    const low = k.toLowerCase();
+    const keyMap = {
+      c: "plague",
+      b: "butterfly",
+      v: "museum",
+      s: "shuffle",
+      h: "hypothesis",
+      p: "plates",
+      z: "loupe",
+      m: "sound",
+      r: "reset"
+    };
+    if (keyMap[low]) {
+      ev.preventDefault();
+      audio.unlock();
+      runActionName(keyMap[low]);
+    }
+  });
+
+  if (motionQuery && motionQuery.addEventListener) {
+    motionQuery.addEventListener("change", function (ev) {
+      reducedMotion = Boolean(ev.matches);
+      drawStageFrame();
+    });
+  }
+
+  if (typeof ResizeObserver === "function" && canvasFrame) {
+    const ro = new ResizeObserver(function () { resizeCanvas(); });
+    ro.observe(canvasFrame);
+  }
+  window.addEventListener("resize", resizeCanvas);
+
+  function tick(nowMs) {
+    const dt = Math.min(0.05, Math.max(0, (nowMs - lastFrameMs) / 1000));
+    lastFrameMs = nowMs;
+    if (transitionPulse > 0) {
+      transitionPulse = Math.max(0, transitionPulse - dt * 1.4);
+    }
+    const st = epoch.getState();
+    stage.step(dt, {
+      reducedMotion: reducedMotion,
+      phase: st.phase,
+      transitionPulse: transitionPulse
+    });
+    if (!reducedMotion || transitionPulse > 0) {
+      drawStageFrame();
+    }
+    requestAnimationFrame(tick);
+  }
+
+  const api = {
+    getState: getState,
+    triggerPlagueCatastrophe: triggerPlagueCatastrophe,
+    triggerButterflySurge: triggerButterflySurge,
+    triggerMuseumVeneration: triggerMuseumVeneration,
+    permuteRelic: permuteRelic,
+    selectRelic: selectRelic,
+    shuffleEras: shuffleEras,
+    testFirstClariceHypothesis: testFirstClariceHypothesis,
+    openPlateDrawer: openPlateDrawer,
+    closePlateDrawer: closePlateDrawer,
+    togglePlateDrawer: togglePlateDrawer,
+    setPlateTab: setPlateTab,
+    toggleLoupe: toggleLoupe,
+    toggleMute: toggleMute,
+    reset: reset
+  };
+
+  window.ClariceCityApp = api;
+  window.__CLARICE_STATE__ = function () { return api.getState(); };
+
+  syncDom();
+  resizeCanvas();
+  requestAnimationFrame(tick);
+})();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,3001 @@
+<!DOCTYPE html>
+<html lang="en" class="arg-html">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Argia — Lithic Section &amp; Stony Ground</title>
+<style>
+.arg-html {
+  --arg-abyssal-crust: #14110e;
+  --arg-damp-black-clay: #211b16;
+  --arg-umber-loam: #3d2d20;
+  --arg-ochre-clay-pack: #7c5836;
+  --arg-sienna-stratum: #9e7348;
+  --arg-limestone-ashlar: #8a857c;
+  --arg-pale-root-tendril: #c8b89a;
+  --arg-barren-scree-day: #d6c8ae;
+  --arg-parchment-sky-day: #ede3ce;
+  --arg-stony-night-sky: #0d1017;
+  --arg-seismic-amber-pulse: #d4944a;
+  --arg-ink-etching: #1a1612;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--arg-abyssal-crust);
+  color: var(--arg-parchment-sky-day);
+  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  -webkit-font-smoothing: antialiased;
+}
+.arg-html *,
+.arg-html *::before,
+.arg-html *::after {
+  box-sizing: border-box;
+}
+.arg-body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--arg-abyssal-crust);
+}
+.arg-body *[hidden],
+argia-plate-drawer[hidden] {
+  display: none !important;
+}
+argia-packed-earth,
+argia-lithic-hud,
+argia-top-cornice,
+argia-title-tablet,
+argia-tablet-title,
+argia-tablet-epigraph,
+argia-stratum-ledger,
+argia-utility-bar,
+argia-lower-stratum,
+argia-probe-callout,
+argia-callout-head,
+argia-callout-body,
+argia-control-ledge,
+argia-probe-rack,
+negative-stair-cast,
+clay-filled-chamber,
+root-worm-fissure,
+argia-stone-head,
+argia-stone-sub,
+stony-surface-ear,
+argia-solar-strip,
+argia-night-dial,
+argia-dial-track,
+argia-dial-fill,
+argia-dial-thumb,
+argia-ear-actions,
+argia-ear-telemetry,
+argia-telemetry-metrics,
+argia-seismic-status,
+argia-plate-drawer,
+argia-plate-sheet,
+argia-plate-bar,
+argia-plate-tabs,
+argia-plate-viewport,
+argia-plate-figure,
+argia-plate-fallback,
+argia-fallback-inscription {
+  display: block;
+}
+argia-metric-chip,
+argia-metric-key,
+argia-metric-val,
+argia-tactile-key,
+argia-key-cap,
+argia-key-text,
+argia-stone-title,
+argia-callout-title,
+argia-callout-meta,
+argia-solar-readout,
+argia-plate-heading,
+argia-plate-tab {
+  display: inline-flex;
+  align-items: center;
+}
+.arg-packed-earth {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  max-width: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  user-select: none;
+  background: var(--arg-abyssal-crust);
+}
+.arg-stage-canvas {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  touch-action: none;
+}
+.arg-lithic-hud {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 12px 16px;
+  pointer-events: none;
+}
+.arg-top-cornice {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+}
+.arg-title-tablet {
+  pointer-events: auto;
+  max-width: 440px;
+  padding: 8px 13px;
+  background: rgba(20, 17, 14, 0.86);
+  border: 1px solid rgba(200, 184, 154, 0.34);
+  border-left: 3px solid var(--arg-sienna-stratum);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+}
+.arg-tablet-title {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--arg-parchment-sky-day);
+  text-transform: uppercase;
+}
+.arg-tablet-epigraph {
+  margin-top: 2px;
+  font-size: 12px;
+  line-height: 1.32;
+  color: var(--arg-barren-scree-day);
+  font-style: italic;
+}
+.arg-stratum-ledger {
+  pointer-events: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+}
+.arg-metric-chip {
+  gap: 5px;
+  padding: 5px 8px;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  background: rgba(20, 17, 14, 0.86);
+  border: 1px solid rgba(138, 133, 124, 0.42);
+  color: var(--arg-pale-root-tendril);
+}
+.arg-metric-key { color: var(--arg-limestone-ashlar); }
+.arg-metric-val { color: var(--arg-parchment-sky-day); font-weight: 700; }
+.arg-utility-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+}
+.arg-tactile-key {
+  gap: 5px;
+  padding: 5px 9px;
+  font-size: 11.5px;
+  line-height: 1.15;
+  color: var(--arg-parchment-sky-day);
+  background: rgba(33, 27, 22, 0.92);
+  border: 1px solid rgba(200, 184, 154, 0.38);
+  cursor: pointer;
+  transition: background 140ms ease, border-color 140ms ease, color 140ms ease;
+}
+.arg-tactile-key:hover,
+.arg-tactile-key:focus-visible,
+.arg-probe-card:hover,
+.arg-probe-card:focus-visible,
+.arg-plate-tab:hover,
+.arg-plate-tab:focus-visible,
+.arg-night-dial:focus-visible {
+  outline: 1px solid var(--arg-seismic-amber-pulse);
+  border-color: var(--arg-seismic-amber-pulse);
+}
+.arg-tactile-key.arg-is-active,
+.arg-probe-card.arg-is-active,
+.arg-plate-tab.arg-is-active {
+  background: rgba(124, 88, 54, 0.56);
+  border-color: var(--arg-seismic-amber-pulse);
+  color: #fff6e6;
+}
+.arg-key-cap {
+  padding: 1px 4px;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+  font-size: 10px;
+  color: var(--arg-seismic-amber-pulse);
+  background: rgba(20, 17, 14, 0.78);
+  border: 1px solid rgba(212, 148, 74, 0.44);
+}
+.arg-lower-stratum {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  width: 100%;
+}
+.arg-probe-callout {
+  pointer-events: auto;
+  width: 100%;
+  max-width: 540px;
+  padding: 7px 11px;
+  background: rgba(20, 17, 14, 0.88);
+  border: 1px solid rgba(200, 184, 154, 0.34);
+  border-left: 3px solid var(--arg-seismic-amber-pulse);
+}
+.arg-callout-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.arg-callout-title {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--arg-parchment-sky-day);
+}
+.arg-callout-meta {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+  font-size: 10px;
+  color: var(--arg-seismic-amber-pulse);
+}
+.arg-callout-body {
+  margin-top: 3px;
+  font-size: 11.5px;
+  line-height: 1.32;
+  color: var(--arg-barren-scree-day);
+}
+.arg-control-ledge {
+  display: grid;
+  grid-template-columns: 1.08fr 1fr;
+  gap: 10px;
+  align-items: stretch;
+  width: 100%;
+}
+.arg-probe-rack {
+  pointer-events: auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+}
+.arg-probe-card {
+  padding: 7px 9px;
+  background: rgba(20, 17, 14, 0.88);
+  border: 1px solid rgba(200, 184, 154, 0.34);
+  cursor: pointer;
+  transition: background 140ms ease, border-color 140ms ease;
+}
+.arg-stone-head {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.arg-stone-title {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--arg-parchment-sky-day);
+}
+.arg-stone-sub {
+  margin-top: 3px;
+  font-size: 10.5px;
+  line-height: 1.25;
+  color: var(--arg-pale-root-tendril);
+}
+.arg-surface-ear {
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 8px 11px;
+  background: rgba(20, 17, 14, 0.9);
+  border: 1px solid rgba(200, 184, 154, 0.38);
+  border-right: 3px solid var(--arg-limestone-ashlar);
+}
+.arg-surface-ear.arg-is-heard {
+  border-color: var(--arg-seismic-amber-pulse);
+  box-shadow: 0 0 18px rgba(212, 148, 74, 0.32);
+}
+.arg-solar-strip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.arg-night-dial {
+  position: relative;
+  flex: 1;
+  min-width: 72px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  padding: 0 4px;
+  cursor: ew-resize;
+  touch-action: none;
+}
+.arg-dial-track {
+  position: relative;
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(90deg, #d6c8ae 0%, #7c5836 48%, #0d1017 100%);
+  border: 1px solid rgba(200, 184, 154, 0.45);
+}
+.arg-dial-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0%;
+  background: rgba(212, 148, 74, 0.45);
+}
+.arg-dial-thumb {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  width: 12px;
+  height: 16px;
+  transform: translate(-50%, -50%);
+  background: var(--arg-parchment-sky-day);
+  border: 1px solid var(--arg-ink-etching);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+}
+.arg-solar-readout {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+  font-size: 10px;
+  color: var(--arg-pale-root-tendril);
+  white-space: nowrap;
+}
+.arg-ear-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.arg-ear-btn,
+.arg-slam-btn {
+  justify-content: center;
+  width: 100%;
+}
+.arg-ear-telemetry {
+  padding-top: 4px;
+  border-top: 1px solid rgba(138, 133, 124, 0.28);
+}
+.arg-telemetry-metrics {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+  font-size: 10px;
+  color: var(--arg-seismic-amber-pulse);
+}
+.arg-seismic-status {
+  margin-top: 2px;
+  font-size: 10.5px;
+  line-height: 1.25;
+  color: var(--arg-barren-scree-day);
+}
+.arg-plate-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+  overflow: hidden;
+  background: rgba(13, 11, 9, 0.9);
+}
+.arg-plate-sheet {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: min(1060px, 100%);
+  max-height: calc(100vh - 28px);
+  max-height: calc(100dvh - 28px);
+  padding: 12px;
+  overflow: hidden;
+  background: var(--arg-damp-black-clay);
+  border: 1px solid rgba(200, 184, 154, 0.45);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.75);
+}
+.arg-plate-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.arg-plate-heading {
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--arg-parchment-sky-day);
+}
+.arg-plate-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.arg-plate-tab {
+  padding: 5px 10px;
+  font-size: 11px;
+  color: var(--arg-barren-scree-day);
+  background: rgba(20, 17, 14, 0.85);
+  border: 1px solid rgba(200, 184, 154, 0.35);
+  cursor: pointer;
+}
+.arg-plate-viewport {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  background: #100d0b;
+  border: 1px solid rgba(138, 133, 124, 0.3);
+}
+.arg-plate-figure {
+  max-width: 100%;
+  max-height: 100%;
+  text-align: center;
+}
+.arg-plate-img {
+  display: block;
+  max-width: 100%;
+  max-height: calc(100vh - 135px);
+  max-height: calc(100dvh - 135px);
+  width: auto;
+  height: auto;
+  margin: 0 auto;
+  border: 1px solid rgba(200, 184, 154, 0.3);
+  transition: transform 160ms ease;
+}
+.arg-plate-viewport.arg-is-zoomed .arg-plate-img,
+.arg-plate-viewport.arg-is-zoomed .arg-fallback-canvas {
+  transform: scale(1.8);
+  transform-origin: center center;
+}
+.arg-plate-fallback {
+  padding: 10px;
+  background: rgba(20, 17, 14, 0.94);
+  border: 1px solid rgba(212, 148, 74, 0.48);
+}
+.arg-fallback-canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+  border: 1px solid rgba(200, 184, 154, 0.3);
+  transition: transform 160ms ease;
+}
+.arg-fallback-inscription {
+  margin-top: 8px;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+  font-size: 11px;
+  color: var(--arg-seismic-amber-pulse);
+}
+@media (max-width: 900px) {
+  .arg-lithic-hud { padding: 6px 8px; }
+  .arg-top-cornice { flex-direction: column; align-items: stretch; gap: 5px; }
+  .arg-title-tablet { max-width: 100%; padding: 5px 8px; }
+  .arg-tablet-title { font-size: 13px; letter-spacing: 0.14em; }
+  .arg-tablet-epigraph { font-size: 10.5px; line-height: 1.22; }
+  .arg-stratum-ledger { justify-content: space-between; gap: 4px; }
+  .arg-metric-chip { padding: 3px 5px; font-size: 9px; gap: 3px; }
+  .arg-utility-bar { gap: 4px; }
+  .arg-tactile-key { padding: 4px 6px; font-size: 10px; gap: 3px; }
+  .arg-key-cap { font-size: 9px; padding: 1px 3px; }
+  .arg-lower-stratum { gap: 5px; }
+  .arg-probe-callout { max-width: 100%; padding: 5px 8px; }
+  .arg-callout-title { font-size: 10.5px; }
+  .arg-callout-meta { font-size: 9px; }
+  .arg-callout-body { font-size: 10px; line-height: 1.22; }
+  .arg-control-ledge { grid-template-columns: 1fr; gap: 5px; }
+  .arg-probe-rack { gap: 5px; }
+  .arg-probe-card { padding: 5px 6px; }
+  .arg-stone-title { font-size: 10px; }
+  .arg-stone-sub { font-size: 9px; line-height: 1.18; }
+  .arg-surface-ear { padding: 6px 8px; gap: 4px; }
+  .arg-solar-strip { gap: 5px; }
+  .arg-night-dial { height: 18px; min-width: 56px; }
+  .arg-solar-readout { font-size: 9px; }
+  .arg-telemetry-metrics { font-size: 9px; }
+  .arg-seismic-status { font-size: 9.5px; line-height: 1.18; }
+  .arg-plate-drawer { padding: 8px; }
+  .arg-plate-sheet { padding: 8px; gap: 6px; }
+  .arg-plate-tab { padding: 4px 7px; font-size: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .arg-html *,
+  .arg-html *::before,
+  .arg-html *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+</style>
+</head>
+<body class="arg-body">
+<argia-packed-earth id="arg-packed-earth" class="arg-packed-earth">
+  <canvas id="arg-stage-canvas" class="arg-stage-canvas"></canvas>
+  <argia-lithic-hud class="arg-lithic-hud">
+    <argia-top-cornice class="arg-top-cornice">
+      <argia-title-tablet class="arg-title-tablet">
+        <argia-tablet-title class="arg-tablet-title">ARGIA</argia-tablet-title>
+        <argia-tablet-epigraph class="arg-tablet-epigraph">Earth instead of air — clay packs every chamber to the vault; deserted stone lies silent above.</argia-tablet-epigraph>
+      </argia-title-tablet>
+      <argia-stratum-ledger class="arg-stratum-ledger">
+        <argia-metric-chip id="arg-chip-earth" class="arg-metric-chip">
+          <argia-metric-key class="arg-metric-key">AIR</argia-metric-key>
+          <argia-metric-val id="arg-val-air" class="arg-metric-val">0.00 · CLAY 1.00</argia-metric-val>
+        </argia-metric-chip>
+        <argia-metric-chip id="arg-chip-surface" class="arg-metric-chip">
+          <argia-metric-key class="arg-metric-key">ABOVE</argia-metric-key>
+          <argia-metric-val id="arg-val-surface" class="arg-metric-val">0 SEEN</argia-metric-val>
+        </argia-metric-chip>
+        <argia-metric-chip id="arg-chip-slams" class="arg-metric-chip">
+          <argia-metric-key class="arg-metric-key">HEARD</argia-metric-key>
+          <argia-metric-val id="arg-val-slams" class="arg-metric-val">0 / 0</argia-metric-val>
+        </argia-metric-chip>
+        <argia-utility-bar class="arg-utility-bar">
+          <argia-tactile-key id="arg-key-view" class="arg-tactile-key" role="button" tabindex="0" aria-pressed="false">
+            <argia-key-cap class="arg-key-cap">V</argia-key-cap>
+            <argia-key-text id="arg-view-label" class="arg-key-text">Cutaway</argia-key-text>
+          </argia-tactile-key>
+          <argia-tactile-key id="arg-key-plates" class="arg-tactile-key" role="button" tabindex="0" aria-pressed="false">
+            <argia-key-cap class="arg-key-cap">P</argia-key-cap>
+            <argia-key-text class="arg-key-text">Plates</argia-key-text>
+          </argia-tactile-key>
+          <argia-tactile-key id="arg-key-mute" class="arg-tactile-key" role="button" tabindex="0" aria-pressed="false">
+            <argia-key-cap class="arg-key-cap">M</argia-key-cap>
+            <argia-key-text id="arg-mute-label" class="arg-key-text">Sound</argia-key-text>
+          </argia-tactile-key>
+          <argia-tactile-key id="arg-key-reset" class="arg-tactile-key" role="button" tabindex="0">
+            <argia-key-cap class="arg-key-cap">R</argia-key-cap>
+            <argia-key-text class="arg-key-text">Reset</argia-key-text>
+          </argia-tactile-key>
+        </argia-utility-bar>
+      </argia-stratum-ledger>
+    </argia-top-cornice>
+    <argia-lower-stratum class="arg-lower-stratum">
+      <argia-probe-callout id="arg-probe-callout" class="arg-probe-callout">
+        <argia-callout-head class="arg-callout-head">
+          <argia-callout-title id="arg-callout-title" class="arg-callout-title">Packed Lithic Section</argia-callout-title>
+          <argia-callout-meta id="arg-callout-meta" class="arg-callout-meta">DEPTH 24m · AIR 0 · EARTH 1.0</argia-callout-meta>
+        </argia-callout-head>
+        <argia-callout-body id="arg-callout-body" class="arg-callout-body">Streets choked solid with compacted dirt; probe strata [1–3] or press ear to stony night ground [N + E + D].</argia-callout-body>
+      </argia-probe-callout>
+      <argia-control-ledge class="arg-control-ledge">
+        <argia-probe-rack class="arg-probe-rack">
+          <negative-stair-cast id="arg-probe-stair" class="arg-probe-card" role="button" tabindex="0" aria-pressed="false" data-probe="negative_stair">
+            <argia-stone-head class="arg-stone-head">
+              <argia-key-cap class="arg-key-cap">1</argia-key-cap>
+              <argia-stone-title class="arg-stone-title">Negative Stair</argia-stone-title>
+            </argia-stone-head>
+            <argia-stone-sub class="arg-stone-sub">Cast-clay steps set flush in reverse upon every stone flight.</argia-stone-sub>
+          </negative-stair-cast>
+          <clay-filled-chamber id="arg-probe-chamber" class="arg-probe-card" role="button" tabindex="0" aria-pressed="false" data-probe="clay_chamber">
+            <argia-stone-head class="arg-stone-head">
+              <argia-key-cap class="arg-key-cap">2</argia-key-cap>
+              <argia-stone-title class="arg-stone-title">Clay Chambers</argia-stone-title>
+            </argia-stone-head>
+            <argia-stone-sub class="arg-stone-sub">Rooms packed to vaulted ceilings beneath rocky cloud strata.</argia-stone-sub>
+          </clay-filled-chamber>
+          <root-worm-fissure id="arg-probe-fissure" class="arg-probe-card" role="button" tabindex="0" aria-pressed="false" data-probe="root_fissure">
+            <argia-stone-head class="arg-stone-head">
+              <argia-key-cap class="arg-key-cap">3</argia-key-cap>
+              <argia-stone-title class="arg-stone-title">Roots &amp; Worms</argia-stone-title>
+            </argia-stone-head>
+            <argia-stone-sub class="arg-stone-sub">Damp black tunnels &amp; twisting roots; prone stillness in the dark.</argia-stone-sub>
+          </root-worm-fissure>
+        </argia-probe-rack>
+        <stony-surface-ear id="arg-surface-ear" class="arg-surface-ear">
+          <argia-solar-strip class="arg-solar-strip">
+            <argia-tactile-key id="arg-key-night" class="arg-tactile-key" role="button" tabindex="0" aria-pressed="false">
+              <argia-key-cap class="arg-key-cap">N</argia-key-cap>
+              <argia-key-text id="arg-night-btn-label" class="arg-key-text">Night</argia-key-text>
+            </argia-tactile-key>
+            <argia-night-dial id="arg-night-dial" class="arg-night-dial" role="slider" tabindex="0" aria-label="Nocturnal horizon phase from noon stone to midnight" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+              <argia-dial-track class="arg-dial-track">
+                <argia-dial-fill id="arg-dial-fill" class="arg-dial-fill"></argia-dial-fill>
+                <argia-dial-thumb id="arg-dial-thumb" class="arg-dial-thumb"></argia-dial-thumb>
+              </argia-dial-track>
+            </argia-night-dial>
+            <argia-solar-readout id="arg-solar-readout" class="arg-solar-readout">NOON · 0%</argia-solar-readout>
+          </argia-solar-strip>
+          <argia-ear-actions class="arg-ear-actions">
+            <argia-tactile-key id="arg-key-ear" class="arg-tactile-key arg-ear-btn" role="button" tabindex="0" aria-pressed="false">
+              <argia-key-cap class="arg-key-cap">E</argia-key-cap>
+              <argia-key-text id="arg-ear-label" class="arg-key-text">Press Ear to Stone</argia-key-text>
+            </argia-tactile-key>
+            <argia-tactile-key id="arg-key-slam" class="arg-tactile-key arg-slam-btn" role="button" tabindex="0">
+              <argia-key-cap class="arg-key-cap">D</argia-key-cap>
+              <argia-key-text class="arg-key-text">Slam Buried Door</argia-key-text>
+            </argia-tactile-key>
+          </argia-ear-actions>
+          <argia-ear-telemetry id="arg-ear-telemetry" class="arg-ear-telemetry">
+            <argia-telemetry-metrics id="arg-telemetry-metrics" class="arg-telemetry-metrics">EAR+NIGHT: NO · HEARD: 0 · MUFFLED: 0</argia-telemetry-metrics>
+            <argia-seismic-status id="arg-seismic-status" class="arg-seismic-status">Harsh daylight over deserted scree — switch to night [N] and press ear [E] to hear deep stone.</argia-seismic-status>
+          </argia-ear-telemetry>
+        </stony-surface-ear>
+      </argia-control-ledge>
+    </argia-lower-stratum>
+  </argia-lithic-hud>
+</argia-packed-earth>
+
+<argia-plate-drawer id="arg-plate-drawer" class="arg-plate-drawer" hidden>
+  <argia-plate-sheet class="arg-plate-sheet">
+    <argia-plate-bar class="arg-plate-bar">
+      <argia-plate-heading class="arg-plate-heading">STRATIGRAPHIC ROYAL PLATES — ARGIA</argia-plate-heading>
+      <argia-plate-tabs class="arg-plate-tabs">
+        <argia-plate-tab id="arg-tab-map" class="arg-plate-tab arg-is-active" role="button" tabindex="0" aria-selected="true">Survey Plate (map.png)</argia-plate-tab>
+        <argia-plate-tab id="arg-tab-image" class="arg-plate-tab" role="button" tabindex="0" aria-selected="false">Lithic View (image.png)</argia-plate-tab>
+        <argia-tactile-key id="arg-key-zoom" class="arg-tactile-key" role="button" tabindex="0" aria-pressed="false">
+          <argia-key-cap class="arg-key-cap">Z</argia-key-cap>
+          <argia-key-text class="arg-key-text">1.8× Loupe</argia-key-text>
+        </argia-tactile-key>
+        <argia-tactile-key id="arg-key-close-plates" class="arg-tactile-key" role="button" tabindex="0">
+          <argia-key-cap class="arg-key-cap">Esc</argia-key-cap>
+          <argia-key-text class="arg-key-text">Close</argia-key-text>
+        </argia-tactile-key>
+      </argia-plate-tabs>
+    </argia-plate-bar>
+    <argia-plate-viewport id="arg-plate-viewport" class="arg-plate-viewport">
+      <argia-plate-figure id="arg-map-figure" class="arg-plate-figure">
+        <img id="arg-map-img" class="arg-plate-img" src="map.png" alt="Stratigraphic architectural plate of Argia">
+      </argia-plate-figure>
+      <argia-plate-figure id="arg-image-figure" class="arg-plate-figure" hidden>
+        <img id="arg-image-img" class="arg-plate-img" src="image.png" loading="lazy" alt="Subterranean packed-clay lithic plate" onerror="this.hidden=true;this.dataset.plateStatus='PENDING_IMAGE_GENERATOR_QUOTA';var fb=document.getElementById('arg-plate-fallback');if(fb){fb.hidden=false;if(window.__ARGIA_API__&&window.__ARGIA_API__.renderFallbackPlate)window.__ARGIA_API__.renderFallbackPlate();}">
+        <argia-plate-fallback id="arg-plate-fallback" class="arg-plate-fallback" hidden>
+          <canvas id="arg-fallback-canvas" class="arg-fallback-canvas" width="640" height="400"></canvas>
+          <argia-fallback-inscription class="arg-fallback-inscription">PENDING_IMAGE_GENERATOR_QUOTA — Engraved packed-clay lithic section rendered live from solid-earth coordinates.</argia-fallback-inscription>
+        </argia-plate-fallback>
+      </argia-plate-figure>
+    </argia-plate-viewport>
+  </argia-plate-sheet>
+</argia-plate-drawer>
+
+<script>
+(function (root) {
+  'use strict';
+
+  /* Lithic palette from City 42 charter */
+  var PALETTE = Object.freeze({
+    abyssal_crust: '#14110e',
+    damp_black_clay: '#211b16',
+    umber_loam: '#3d2d20',
+    ochre_clay_pack: '#7c5836',
+    sienna_stratum: '#9e7348',
+    limestone_ashlar: '#8a857c',
+    pale_root_tendril: '#c8b89a',
+    barren_scree_day: '#d6c8ae',
+    parchment_sky_day: '#ede3ce',
+    stony_night_sky: '#0d1017',
+    seismic_amber_pulse: '#d4944a',
+    ink_etching: '#1a1612'
+  });
+
+  /* Four canonical stones of subterranean Argia */
+  var CANONICAL_STONES = Object.freeze([
+    Object.freeze({
+      id: 'earth_instead_of_air',
+      number: 1,
+      label: 'Earth Instead of Air',
+      axiom: 'What makes Argia different from other cities is that it has earth instead of air. The streets are completely filled with dirt, clay packs the rooms to the ceiling.',
+      causal_invariant: 'airFraction === 0 && packedEarthFraction === 1.0',
+      causalInvariant: 'airFraction === 0 && packedEarthFraction === 1.0'
+    }),
+    Object.freeze({
+      id: 'negative_stairways_and_rocky_skies',
+      number: 2,
+      label: 'Negative Stairways & Rocky Cloud Strata',
+      axiom: 'On every stairway another stairway is set in negative, over the roofs of the houses hang layers of rocky terrain like skies with clouds.',
+      causal_invariant: "negativeStairCount >= 5 && overburdenSky === 'rocky_terrain_clouds'",
+      causalInvariant: "negativeStairCount >= 5 && overburdenSky === 'rocky_terrain_clouds'"
+    }),
+    Object.freeze({
+      id: 'worm_tunnels_and_prone_stillness',
+      number: 3,
+      label: 'Root Crevices, Worm Tunnels & Prone Stillness',
+      axiom: "Worm tunnels and crevices where roots twist pierce the black, damp crust; dampness destroys people's bodies and leaves scant strength, so everyone remains still, prone, in the dark.",
+      causal_invariant: "wormTunnelCount > 0 && rootCreviceCount > 0 && inhabitantPosture === 'still_and_prone'",
+      causalInvariant: "wormTunnelCount > 0 && rootCreviceCount > 0 && inhabitantPosture === 'still_and_prone'"
+    }),
+    Object.freeze({
+      id: 'barren_ground_and_night_door_slam',
+      number: 4,
+      label: 'Deserted Stony Ground & Nocturnal Door Slam',
+      axiom: 'From up above, nothing of Argia can be seen; the place is deserted. At night, putting your ear to the ground, you can sometimes hear a door slam.',
+      causal_invariant: 'surfaceVisibility === 0 && (heardAtSurface === true implies earPressedAtNight === true)',
+      causalInvariant: 'surfaceVisibility === 0 && (heardAtSurface === true implies earPressedAtNight === true)'
+    })
+  ]);
+
+  function clamp(v, lo, hi) {
+    return v < lo ? lo : (v > hi ? hi : v);
+  }
+
+  function lerp(a, b, t) {
+    return a + (b - a) * t;
+  }
+
+  function hexToRgb(hex) {
+    var clean = String(hex || '#000000').replace('#', '');
+    var num = parseInt(clean, 16);
+    if (isNaN(num)) {
+      return { r: 20, g: 17, b: 14 };
+    }
+    return {
+      r: (num >> 16) & 255,
+      g: (num >> 8) & 255,
+      b: num & 255
+    };
+  }
+
+  function mixHex(hexA, hexB, t) {
+    var k = clamp(t, 0, 1);
+    var a = hexToRgb(hexA);
+    var b = hexToRgb(hexB);
+    var r = Math.round(lerp(a.r, b.r, k));
+    var g = Math.round(lerp(a.g, b.g, k));
+    var bl = Math.round(lerp(a.b, b.b, k));
+    return 'rgb(' + r + ',' + g + ',' + bl + ')';
+  }
+
+  function rgba(hex, alpha) {
+    var c = hexToRgb(hex);
+    return 'rgba(' + c.r + ',' + c.g + ',' + c.b + ',' + clamp(alpha, 0, 1).toFixed(3) + ')';
+  }
+
+  function makeRng(seed) {
+    var s = (seed >>> 0) || 420804;
+    return function next() {
+      s = (Math.imul(s, 1664525) + 1013904223) >>> 0;
+      return s / 4294967296;
+    };
+  }
+
+  function distToSegment(px, py, x1, y1, x2, y2) {
+    var dx = x2 - x1;
+    var dy = y2 - y1;
+    var lenSq = dx * dx + dy * dy;
+    if (lenSq <= 1e-9) {
+      return Math.hypot(px - x1, py - y1);
+    }
+    var t = clamp(((px - x1) * dx + (py - y1) * dy) / lenSq, 0, 1);
+    return Math.hypot(px - (x1 + t * dx), py - (y1 + t * dy));
+  }
+
+  function cutawaySurfaceY(nx) {
+    return 0.156 + 0.008 * Math.sin(nx * 9.2 + 0.6) + 0.004 * Math.cos(nx * 21.5);
+  }
+
+  function barrenPlateauY(nx) {
+    return 0.452 + 0.014 * Math.sin(nx * 6.4 + 0.9) + 0.005 * Math.cos(nx * 17.0);
+  }
+
+  function buildLithicBlueprint() {
+    var rng = makeRng(421972);
+
+    var rockyClouds = [
+      { id: 'cloud_west_shale', title: 'Western Shale Cloud Bank', cx: 0.17, cy: 0.245, rx: 0.145, ry: 0.044, depthMeters: 9 },
+      { id: 'cloud_midwest_chert', title: 'Lenticular Chert Overburden', cx: 0.36, cy: 0.228, rx: 0.125, ry: 0.038, depthMeters: 8 },
+      { id: 'cloud_central_cumulus', title: 'Conglomerate Storm-Stratum', cx: 0.51, cy: 0.238, rx: 0.165, ry: 0.045, depthMeters: 10 },
+      { id: 'cloud_mideast_marl', title: 'Banded Marl Cloud-Vault', cx: 0.69, cy: 0.232, rx: 0.130, ry: 0.039, depthMeters: 9 },
+      { id: 'cloud_east_breccia', title: 'Eastern Breccia Anvil', cx: 0.84, cy: 0.248, rx: 0.135, ry: 0.043, depthMeters: 11 }
+    ];
+
+    var clayChambers = [
+      { id: 'chamber_west_gable', title: 'Gabled House of Laminated Clay', x: 0.055, y: 0.325, w: 0.215, h: 0.175, roof: 'gable', coffers: 4, depthMeters: 16 },
+      { id: 'chamber_central_atrium', title: 'Coffered Atrium Packed to the Soffit', x: 0.365, y: 0.305, w: 0.255, h: 0.195, roof: 'vault', coffers: 6, depthMeters: 18 },
+      { id: 'chamber_east_house', title: 'Eastern Stone Domus Under Rock-Clouds', x: 0.705, y: 0.330, w: 0.235, h: 0.170, roof: 'gable', coffers: 4, depthMeters: 17 },
+      { id: 'chamber_lower_west_crypt', title: 'Western Barrel-Vaulted Hypogeum', x: 0.065, y: 0.640, w: 0.235, h: 0.205, roof: 'vault', coffers: 5, depthMeters: 35 },
+      { id: 'chamber_deep_basilica', title: 'Subterranean Basilica of Solid Loam', x: 0.380, y: 0.645, w: 0.265, h: 0.205, roof: 'vault', coffers: 6, depthMeters: 40 },
+      { id: 'chamber_abyssal_cellar', title: 'Abyssal Ashlar Cellar Choked with Clay', x: 0.715, y: 0.655, w: 0.220, h: 0.195, roof: 'vault', coffers: 4, depthMeters: 44 }
+    ];
+
+    var packedStreets = [
+      { id: 'street_upper_via', title: 'Upper Tuscan Colonnade Choked with Dirt', x: 0.050, y: 0.520, w: 0.895, h: 0.086, cols: 10, depthMeters: 26 },
+      { id: 'street_west_portico', title: 'Portico Alley Packed Solid Between Walls', x: 0.282, y: 0.330, w: 0.072, h: 0.178, cols: 3, depthMeters: 20 },
+      { id: 'street_lower_forum', title: 'Deep Doric Via Tecta Filled with Silt', x: 0.055, y: 0.865, w: 0.885, h: 0.082, cols: 11, depthMeters: 49 }
+    ];
+
+    var negativeStairs = [
+      { id: 'stair_west_descent', title: 'Western Flight & Cast-Clay Negative Counterpart', kind: 'straight', x1: 0.095, y1: 0.505, x2: 0.255, y2: 0.638, thickness: 0.048, steps: 9, depthMeters: 28 },
+      { id: 'stair_west_helix', title: 'Hypogeum Helical Vise of Stone & Negative Clay', kind: 'helical', cx: 0.334, cy: 0.735, w: 0.062, h: 0.210, steps: 10, depthMeters: 37 },
+      { id: 'stair_central_cascade', title: 'Grand Atrium Stairway Set in Solid Negative', kind: 'straight', x1: 0.435, y1: 0.502, x2: 0.615, y2: 0.642, thickness: 0.052, steps: 11, depthMeters: 29 },
+      { id: 'stair_east_helix', title: 'Eastern Spiral Newel Interlocked with Loam', kind: 'helical', cx: 0.665, cy: 0.445, w: 0.058, h: 0.215, steps: 10, depthMeters: 23 },
+      { id: 'stair_east_climb', title: 'Cellar Counter-Flight Kissing Inverted Treads', kind: 'straight', x1: 0.875, y1: 0.505, x2: 0.730, y2: 0.652, thickness: 0.048, steps: 9, depthMeters: 31 }
+    ];
+
+    var buriedDoors = [
+      { id: 'door_upper_vestibule', label: 'Upper Vestibule Stone Leaf', normX: 0.430, normY: 0.462, depthMeters: 19 },
+      { id: 'door_west_hypogeum', label: 'Western Hypogeum Iron-Bound Valve', normX: 0.165, normY: 0.795, depthMeters: 36 },
+      { id: 'door_central_vault', label: 'Central Coffered Vault Portal', normX: 0.520, normY: 0.812, depthMeters: 42 },
+      { id: 'door_deep_cellar', label: 'Deep Cellar Monolith Threshold', normX: 0.815, normY: 0.822, depthMeters: 46 }
+    ];
+
+    var proneFigures = [
+      { id: 'prone_seam_west', title: 'Still Prone Silhouette in Damp West Seam', cx: 0.165, cy: 0.470, len: 0.064, depthMeters: 21 },
+      { id: 'prone_seam_mid', title: 'Immobile Figure Resting in Black Loam', cx: 0.565, cy: 0.582, len: 0.066, depthMeters: 31 },
+      { id: 'prone_seam_crypt', title: 'Prone Sleeper Sealed in Damp Vault Clay', cx: 0.225, cy: 0.728, len: 0.062, depthMeters: 38 },
+      { id: 'prone_seam_deep', title: 'Silent Prone Form Under Heavy Silt', cx: 0.785, cy: 0.745, len: 0.065, depthMeters: 45 }
+    ];
+
+    var rootCrevices = [];
+    var rIdx;
+    for (rIdx = 0; rIdx < 10; rIdx += 1) {
+      var rx = 0.06 + rIdx * 0.096 + (rng() - 0.5) * 0.03;
+      var ry = cutawaySurfaceY(rx) + 0.008;
+      var pts = [{ x: rx, y: ry }];
+      var twigs = [];
+      var seg;
+      for (seg = 0; seg < 6; seg += 1) {
+        rx += (rng() - 0.5) * 0.042;
+        ry += 0.036 + rng() * 0.036;
+        pts.push({ x: clamp(rx, 0.03, 0.97), y: clamp(ry, 0.17, 0.74) });
+        if (seg >= 1 && seg <= 4) {
+          twigs.push({
+            x1: pts[pts.length - 1].x,
+            y1: pts[pts.length - 1].y,
+            x2: clamp(pts[pts.length - 1].x + (rng() > 0.5 ? 1 : -1) * (0.018 + rng() * 0.024), 0.02, 0.98),
+            y2: clamp(pts[pts.length - 1].y + 0.014 + rng() * 0.022, 0.18, 0.76)
+          });
+        }
+      }
+      rootCrevices.push({
+        id: 'root_crevice_' + (rIdx + 1),
+        title: 'Twisting Root Crevice #' + (rIdx + 1),
+        points: pts,
+        twigs: twigs,
+        depthMeters: Math.round(12 + rIdx * 2.4)
+      });
+    }
+
+    var wormTunnels = [];
+    var wIdx;
+    for (wIdx = 0; wIdx < 16; wIdx += 1) {
+      var wx = 0.05 + (wIdx % 4) * 0.24 + rng() * 0.16;
+      var wy = 0.21 + Math.floor(wIdx / 4) * 0.185 + rng() * 0.09;
+      var wPts = [{ x: wx, y: wy }];
+      var wSeg;
+      var heading = (rng() - 0.5) * 2.2;
+      for (wSeg = 0; wSeg < 5; wSeg += 1) {
+        heading += (rng() - 0.5) * 1.35;
+        wx = clamp(wx + Math.cos(heading) * 0.034, 0.03, 0.97);
+        wy = clamp(wy + Math.sin(heading) * 0.024 + 0.006, 0.19, 0.95);
+        wPts.push({ x: wx, y: wy });
+      }
+      wormTunnels.push({
+        id: 'worm_tunnel_' + (wIdx + 1),
+        title: 'Damp Black Worm Tunnel #' + (wIdx + 1),
+        points: wPts,
+        depthMeters: Math.round((wPts[2].y - 0.16) * 60)
+      });
+    }
+
+    var clayPebbles = [];
+    var pIdx;
+    for (pIdx = 0; pIdx < 220; pIdx += 1) {
+      clayPebbles.push({
+        x: 0.03 + rng() * 0.94,
+        y: 0.18 + rng() * 0.78,
+        rx: 0.002 + rng() * 0.006,
+        ry: 0.0012 + rng() * 0.003,
+        rot: rng() * Math.PI,
+        tone: rng()
+      });
+    }
+
+    var surfaceSlabs = [];
+    var sIdx;
+    for (sIdx = 0; sIdx < 48; sIdx += 1) {
+      surfaceSlabs.push({
+        x: rng(),
+        v: Math.pow(rng(), 0.85),
+        w: 0.035 + rng() * 0.095,
+        h: 0.008 + rng() * 0.022,
+        tilt: (rng() - 0.5) * 0.16,
+        tone: rng()
+      });
+    }
+
+    var nightStars = [];
+    var stIdx;
+    for (stIdx = 0; stIdx < 72; stIdx += 1) {
+      nightStars.push({
+        x: rng(),
+        y: rng() * 0.92,
+        r: 0.6 + rng() * 1.35,
+        alpha: 0.35 + rng() * 0.65
+      });
+    }
+
+    return {
+      rockyClouds: rockyClouds,
+      clayChambers: clayChambers,
+      packedStreets: packedStreets,
+      negativeStairs: negativeStairs,
+      buriedDoors: buriedDoors,
+      proneFigures: proneFigures,
+      rootCrevices: rootCrevices,
+      wormTunnels: wormTunnels,
+      clayPebbles: clayPebbles,
+      surfaceSlabs: surfaceSlabs,
+      nightStars: nightStars
+    };
+  }
+
+  function normalizeProbe(probeId) {
+    if (!probeId || probeId === 'none') {
+      return null;
+    }
+    var map = {
+      negative_stair: 'negative_stair',
+      stairs: 'negative_stair',
+      clay_chamber: 'clay_chamber',
+      chamber: 'clay_chamber',
+      root_fissure: 'root_fissure',
+      roots: 'root_fissure',
+      rocky_sky: 'rocky_sky',
+      packed_street: 'packed_street',
+      buried_door: 'buried_door'
+    };
+    return map[String(probeId)] || null;
+  }
+
+  function makeInspectReport(kind, id, title, detail, depthMeters) {
+    return {
+      kind: kind,
+      id: id,
+      title: title,
+      detail: detail,
+      depthMeters: depthMeters,
+      airFraction: 0,
+      packedEarthFraction: 1.0
+    };
+  }
+
+  function inspectBlueprintAt(bp, normX, normY, state) {
+    var nx = clamp(Number(normX) || 0, 0, 1);
+    var ny = clamp(Number(normY) || 0, 0, 1);
+    var i;
+    var j;
+
+    if (state.viewMode === 'barren_surface' && state.cutawayReveal < 0.5) {
+      var platY = barrenPlateauY(nx);
+      if (ny < platY) {
+        return makeInspectReport('barren_sky', 'deserted_sky', state.isNight ? 'Nocturnal Sky Above Deserted Ground' : 'Parched Sky Above Deserted Ground', 'Above the stony plateau nothing of Argia is visible; not a chimney, gable, or ruin breaks the horizon.', 0);
+      }
+      return makeInspectReport('barren_surface', 'stony_ground_crust', 'Deserted Stony Ground', state.earPressedAtNight ? 'Ear pressed to night stone: solid clay conducts distant buried door slams upward.' : 'Wind-scoured limestone slabs and dry scree; only at night with an ear to the stone can a door slam be heard.', 0);
+    }
+
+    if (ny <= cutawaySurfaceY(nx) + 0.022) {
+      return makeInspectReport('barren_surface', 'surface_crust_datum', 'Barren Stony Crust (0m Datum)', 'Deserted limestone scree sealing Argia completely from the upper world; zero structures rise above ground.', 0);
+    }
+
+    for (i = 0; i < bp.buriedDoors.length; i += 1) {
+      var door = bp.buriedDoors[i];
+      if (Math.hypot(nx - door.normX, ny - door.normY) <= 0.036) {
+        return makeInspectReport('buried_door', door.id, door.label, 'Heavy stone threshold wedged in damp clay; its shockwave travels by solid earth conduction alone.', door.depthMeters);
+      }
+    }
+
+    for (i = 0; i < bp.proneFigures.length; i += 1) {
+      var pf = bp.proneFigures[i];
+      if (Math.abs(nx - pf.cx) <= pf.len * 0.65 && Math.abs(ny - pf.cy) <= 0.025) {
+        return makeInspectReport('prone_inhabitant', pf.id, pf.title, 'Dampness saps all strength; inhabitants remain completely still and prone in the dark clay seam.', pf.depthMeters);
+      }
+    }
+
+    for (i = 0; i < bp.negativeStairs.length; i += 1) {
+      var st = bp.negativeStairs[i];
+      var hitStair = st.kind === 'straight'
+        ? distToSegment(nx, ny, st.x1, st.y1, st.x2, st.y2) <= st.thickness * 0.75
+        : (Math.abs(nx - st.cx) <= st.w * 0.65 && Math.abs(ny - st.cy) <= st.h * 0.54);
+      if (hitStair) {
+        return makeInspectReport('negative_stair', st.id, st.title, 'On every limestone stairway another cast-clay stairway is set in negative, interlocking flush step-for-step with zero air gap.', st.depthMeters);
+      }
+    }
+
+    for (i = 0; i < bp.rootCrevices.length; i += 1) {
+      var rc = bp.rootCrevices[i];
+      for (j = 0; j < rc.points.length - 1; j += 1) {
+        if (distToSegment(nx, ny, rc.points[j].x, rc.points[j].y, rc.points[j + 1].x, rc.points[j + 1].y) <= 0.018) {
+          return makeInspectReport('root_fissure', rc.id, rc.title, 'Pale root tendrils twist through narrow damp crevices piercing the black crust.', rc.depthMeters);
+        }
+      }
+    }
+
+    for (i = 0; i < bp.wormTunnels.length; i += 1) {
+      var wt = bp.wormTunnels[i];
+      for (j = 0; j < wt.points.length - 1; j += 1) {
+        if (distToSegment(nx, ny, wt.points[j].x, wt.points[j].y, wt.points[j + 1].x, wt.points[j + 1].y) <= 0.017) {
+          return makeInspectReport('worm_tunnel', wt.id, wt.title, 'Segmented annelid burrow threading the black, damp subterranean crust.', wt.depthMeters);
+        }
+      }
+    }
+
+    for (i = 0; i < bp.rockyClouds.length; i += 1) {
+      var cl = bp.rockyClouds[i];
+      var dx = (nx - cl.cx) / cl.rx;
+      var dy = (ny - cl.cy) / cl.ry;
+      if (dx * dx + dy * dy <= 1.05) {
+        return makeInspectReport('rocky_sky', cl.id, cl.title, 'Layers of rocky conglomerate and shale hang directly over the roofs of the houses like skies with clouds.', cl.depthMeters);
+      }
+    }
+
+    for (i = 0; i < bp.packedStreets.length; i += 1) {
+      var ps = bp.packedStreets[i];
+      if (nx >= ps.x && nx <= ps.x + ps.w && ny >= ps.y && ny <= ps.y + ps.h) {
+        return makeInspectReport('packed_street', ps.id, ps.title, 'Colonnaded avenue completely filled from paving stones to entablature with compacted dirt.', ps.depthMeters);
+      }
+    }
+
+    for (i = 0; i < bp.clayChambers.length; i += 1) {
+      var ch = bp.clayChambers[i];
+      if (nx >= ch.x && nx <= ch.x + ch.w && ny >= ch.y - 0.032 && ny <= ch.y + ch.h) {
+        return makeInspectReport('clay_chamber', ch.id, ch.title, 'Vaulted masonry room packed 100% solid to the ceiling with stratified ochre and umber clay.', ch.depthMeters);
+      }
+    }
+
+    return makeInspectReport('damp_crust', 'black_damp_crust', 'Black Damp Lithic Matrix', 'Solid earth replaces air throughout Argia; zero void, zero light, total earthen fullness.', Math.max(4, Math.round((ny - 0.16) * 62)));
+  }
+
+  function drawSkyAndEar(ctx, w, horizonPx, bp, state) {
+    var nf = state.nightFactor;
+    var grad = ctx.createLinearGradient(0, 0, 0, Math.max(1, horizonPx));
+    grad.addColorStop(0, mixHex(PALETTE.parchment_sky_day, PALETTE.stony_night_sky, nf));
+    grad.addColorStop(1, mixHex(PALETTE.barren_scree_day, '#1a202c', nf * 0.92));
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, w, horizonPx + 2);
+
+    if (nf > 0.12) {
+      var s;
+      for (s = 0; s < bp.nightStars.length; s += 1) {
+        var st = bp.nightStars[s];
+        ctx.fillStyle = rgba(PALETTE.parchment_sky_day, st.alpha * nf * 0.88);
+        ctx.beginPath();
+        ctx.arc(st.x * w, st.y * horizonPx * 0.92, st.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+  }
+
+  function drawEarMarker(ctx, ex, ey, state, tremorAmp) {
+    if (!state.earPressed) {
+      return;
+    }
+    var col = state.earPressedAtNight ? PALETTE.seismic_amber_pulse : PALETTE.umber_loam;
+    var rBase = 11 + tremorAmp * 8;
+    ctx.save();
+    ctx.strokeStyle = col;
+    ctx.lineWidth = 1.8;
+    ctx.beginPath();
+    ctx.arc(ex, ey, rBase, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(ex, ey, rBase + 7, Math.PI * 0.08, Math.PI * 0.92);
+    ctx.stroke();
+    ctx.fillStyle = rgba(col, 0.28);
+    ctx.beginPath();
+    ctx.arc(ex, ey, 5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function renderBarrenSurface(ctx, w, h, bp, state, waves) {
+    var midHorizon = barrenPlateauY(0.5) * h;
+    drawSkyAndEar(ctx, w, midHorizon + 18, bp, state);
+
+    var tremor = 0;
+    var wi;
+    for (wi = 0; wi < waves.length; wi += 1) {
+      if (waves[wi].intensity > tremor) {
+        tremor = waves[wi].intensity;
+      }
+    }
+    var shiver = (!state.reducedMotion && state.earPressedAtNight) ? tremor * 2.6 : 0;
+
+    ctx.beginPath();
+    ctx.moveTo(0, h);
+    var xStep;
+    for (xStep = 0; xStep <= 40; xStep += 1) {
+      var nx = xStep / 40;
+      ctx.lineTo(nx * w, barrenPlateauY(nx) * h);
+    }
+    ctx.lineTo(w, h);
+    ctx.closePath();
+    var groundGrad = ctx.createLinearGradient(0, midHorizon, 0, h);
+    groundGrad.addColorStop(0, mixHex(PALETTE.barren_scree_day, '#2c2723', state.nightFactor * 0.78));
+    groundGrad.addColorStop(0.45, mixHex(PALETTE.limestone_ashlar, PALETTE.damp_black_clay, 0.25 + state.nightFactor * 0.55));
+    groundGrad.addColorStop(1, mixHex(PALETTE.umber_loam, PALETTE.abyssal_crust, 0.45 + state.nightFactor * 0.45));
+    ctx.fillStyle = groundGrad;
+    ctx.fill();
+
+    ctx.strokeStyle = rgba(PALETTE.ink_etching, 0.55);
+    ctx.lineWidth = 1.4;
+    ctx.stroke();
+
+    var si;
+    for (si = 0; si < bp.surfaceSlabs.length; si += 1) {
+      var sl = bp.surfaceSlabs[si];
+      var sy = lerp(barrenPlateauY(sl.x) * h + 8, h - 12, sl.v);
+      var nearEar = Math.abs(sl.x - state.earNormX) < 0.16 ? 1 : 0;
+      var jx = shiver * nearEar * Math.sin(state.phase * 34 + si * 1.9);
+      var sw = sl.w * w * (0.55 + sl.v * 0.75);
+      var sh = sl.h * h * (0.45 + sl.v * 0.7);
+      ctx.save();
+      ctx.translate(sl.x * w + jx, sy);
+      ctx.rotate(sl.tilt);
+      ctx.fillStyle = mixHex(PALETTE.limestone_ashlar, PALETTE.barren_scree_day, sl.tone * (1 - state.nightFactor * 0.65));
+      ctx.strokeStyle = rgba(PALETTE.ink_etching, 0.48);
+      ctx.lineWidth = 1;
+      ctx.fillRect(-sw * 0.5, -sh * 0.5, sw, sh);
+      ctx.strokeRect(-sw * 0.5, -sh * 0.5, sw, sh);
+      ctx.restore();
+    }
+
+    drawEarMarker(ctx, state.earNormX * w, barrenPlateauY(state.earNormX) * h + 14, state, tremor);
+  }
+
+  function drawStraightNegativeStair(ctx, w, h, st, highlighted) {
+    var x1 = st.x1 * w;
+    var y1 = st.y1 * h;
+    var x2 = st.x2 * w;
+    var y2 = st.y2 * h;
+    var bandH = st.thickness * h;
+    var n = st.steps;
+    var k;
+
+    /* Positive limestone steps below */
+    ctx.beginPath();
+    ctx.moveTo(x1, y1 + bandH * 0.55);
+    for (k = 0; k < n; k += 1) {
+      var txA = lerp(x1, x2, k / n);
+      var txB = lerp(x1, x2, (k + 1) / n);
+      var tyA = lerp(y1, y2, k / n);
+      var tyB = lerp(y1, y2, (k + 1) / n);
+      ctx.lineTo(txA, tyA);
+      ctx.lineTo(txB, tyA);
+      ctx.lineTo(txB, tyB);
+    }
+    ctx.lineTo(x2, y2 + bandH * 0.55);
+    ctx.closePath();
+    ctx.fillStyle = PALETTE.limestone_ashlar;
+    ctx.fill();
+
+    /* Interlocking cast-clay negative stairway flush step-for-step upside-down */
+    ctx.beginPath();
+    ctx.moveTo(x1, y1 - bandH * 0.55);
+    ctx.lineTo(x2, y2 - bandH * 0.55);
+    for (k = n - 1; k >= 0; k -= 1) {
+      var nxA = lerp(x1, x2, k / n);
+      var nxB = lerp(x1, x2, (k + 1) / n);
+      var nyA = lerp(y1, y2, k / n);
+      var nyB = lerp(y1, y2, (k + 1) / n);
+      ctx.lineTo(nxB, nyB);
+      ctx.lineTo(nxB, nyA);
+      ctx.lineTo(nxA, nyA);
+    }
+    ctx.closePath();
+    ctx.fillStyle = highlighted ? PALETTE.sienna_stratum : PALETTE.ochre_clay_pack;
+    ctx.fill();
+
+    /* Zero-gap stepped interlock seam */
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    for (k = 0; k < n; k += 1) {
+      ctx.lineTo(lerp(x1, x2, (k + 1) / n), lerp(y1, y2, k / n));
+      ctx.lineTo(lerp(x1, x2, (k + 1) / n), lerp(y1, y2, (k + 1) / n));
+    }
+    ctx.strokeStyle = highlighted ? PALETTE.seismic_amber_pulse : PALETTE.ink_etching;
+    ctx.lineWidth = highlighted ? 2.2 : 1.3;
+    ctx.stroke();
+  }
+
+  function drawHelicalNegativeStair(ctx, w, h, st, highlighted) {
+    var sx = (st.cx - st.w * 0.5) * w;
+    var sy = (st.cy - st.h * 0.5) * h;
+    var sw = st.w * w;
+    var sh = st.h * h;
+    var rows = st.steps;
+    var rowH = sh / rows;
+    var r;
+
+    ctx.fillStyle = PALETTE.umber_loam;
+    ctx.fillRect(sx, sy, sw, sh);
+    for (r = 0; r < rows; r += 1) {
+      var ry = sy + r * rowH;
+      var dir = (r % 2 === 0) ? 1 : -1;
+      ctx.fillStyle = PALETTE.limestone_ashlar;
+      ctx.beginPath();
+      ctx.moveTo(sx, ry + rowH);
+      ctx.lineTo(sx + sw, ry + rowH);
+      ctx.lineTo(dir > 0 ? sx + sw : sx, ry + rowH * 0.25);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.fillStyle = highlighted ? PALETTE.sienna_stratum : PALETTE.ochre_clay_pack;
+      ctx.beginPath();
+      ctx.moveTo(sx, ry);
+      ctx.lineTo(sx + sw, ry);
+      ctx.lineTo(dir > 0 ? sx + sw : sx, ry + rowH * 0.25);
+      ctx.lineTo(sx, ry + rowH);
+      ctx.closePath();
+      ctx.fill();
+    }
+    ctx.fillStyle = PALETTE.limestone_ashlar;
+    ctx.fillRect(sx + sw * 0.43, sy, sw * 0.14, sh);
+    ctx.strokeStyle = highlighted ? PALETTE.seismic_amber_pulse : PALETTE.ink_etching;
+    ctx.lineWidth = highlighted ? 2.0 : 1.1;
+    ctx.strokeRect(sx, sy, sw, sh);
+  }
+
+  function renderCutaway(ctx, w, h, bp, state, waves) {
+    var surfMid = cutawaySurfaceY(0.5) * h;
+    var probe = state.activeProbe;
+    var i;
+    var j;
+
+    drawSkyAndEar(ctx, w, surfMid + 14, bp, state);
+
+    /* Solid subterranean earth matrix replacing all air */
+    ctx.beginPath();
+    ctx.moveTo(0, h);
+    for (i = 0; i <= 40; i += 1) {
+      var sx = i / 40;
+      ctx.lineTo(sx * w, cutawaySurfaceY(sx) * h);
+    }
+    ctx.lineTo(w, h);
+    ctx.closePath();
+    var earthGrad = ctx.createLinearGradient(0, surfMid, 0, h);
+    earthGrad.addColorStop(0, PALETTE.barren_scree_day);
+    earthGrad.addColorStop(0.04, PALETTE.umber_loam);
+    earthGrad.addColorStop(0.28, PALETTE.damp_black_clay);
+    earthGrad.addColorStop(1, PALETTE.abyssal_crust);
+    ctx.fillStyle = earthGrad;
+    ctx.fill();
+
+    /* Overhanging rocky-terrain cloud strata above house roofs */
+    for (i = 0; i < bp.rockyClouds.length; i += 1) {
+      var cl = bp.rockyClouds[i];
+      var hiCloud = (probe === 'rocky_sky' || probe === 'clay_chamber');
+      for (j = 2; j >= 0; j -= 1) {
+        ctx.beginPath();
+        ctx.ellipse((cl.cx + (j - 1) * 0.018) * w, (cl.cy + j * 0.008) * h, cl.rx * w * (1 - j * 0.14), cl.ry * h * (0.95 - j * 0.12), 0, 0, Math.PI * 2);
+        ctx.fillStyle = j === 0 ? PALETTE.limestone_ashlar : (j === 1 ? PALETTE.sienna_stratum : PALETTE.umber_loam);
+        ctx.fill();
+        ctx.strokeStyle = hiCloud ? PALETTE.seismic_amber_pulse : rgba(PALETTE.ink_etching, 0.65);
+        ctx.lineWidth = hiCloud && j === 0 ? 1.8 : 1.0;
+        ctx.stroke();
+      }
+    }
+
+    /* Colonnaded streets choked completely solid with dirt */
+    for (i = 0; i < bp.packedStreets.length; i += 1) {
+      var ps = bp.packedStreets[i];
+      var px = ps.x * w;
+      var py = ps.y * h;
+      var pw = ps.w * w;
+      var ph = ps.h * h;
+      ctx.fillStyle = PALETTE.umber_loam;
+      ctx.fillRect(px, py, pw, ph);
+      ctx.fillStyle = PALETTE.limestone_ashlar;
+      ctx.fillRect(px, py, pw, 5);
+      ctx.fillRect(px, py + ph - 4, pw, 4);
+      for (j = 0; j < ps.cols; j += 1) {
+        var colX = px + ((j + 0.5) / ps.cols) * pw;
+        ctx.fillRect(colX - 4, py + 4, 8, ph - 8);
+        ctx.fillRect(colX - 7, py + 4, 14, 4);
+      }
+      ctx.strokeStyle = probe === 'packed_street' ? PALETTE.seismic_amber_pulse : PALETTE.ink_etching;
+      ctx.lineWidth = probe === 'packed_street' ? 2.0 : 1.1;
+      ctx.strokeRect(px, py, pw, ph);
+    }
+
+    /* Coffered masonry chambers packed 100% to the ceiling with stratified clay */
+    for (i = 0; i < bp.clayChambers.length; i += 1) {
+      var ch = bp.clayChambers[i];
+      var cx = ch.x * w;
+      var cy = ch.y * h;
+      var cw = ch.w * w;
+      var chH = ch.h * h;
+      var hiCh = (probe === 'clay_chamber');
+
+      /* Stone roof or barrel vault shell */
+      ctx.fillStyle = PALETTE.limestone_ashlar;
+      if (ch.roof === 'gable') {
+        ctx.beginPath();
+        ctx.moveTo(cx - 8, cy + 4);
+        ctx.lineTo(cx + cw * 0.5, cy - 22);
+        ctx.lineTo(cx + cw + 8, cy + 4);
+        ctx.closePath();
+        ctx.fill();
+        ctx.strokeStyle = PALETTE.ink_etching;
+        ctx.stroke();
+      }
+      ctx.fillRect(cx - 6, cy - 5, cw + 12, chH + 10);
+
+      /* Interior room packed flush to soffit with banded ochre & sienna clay */
+      for (j = 0; j < 5; j += 1) {
+        var bandY = cy + (j / 5) * chH;
+        ctx.fillStyle = (j % 2 === 0) ? PALETTE.ochre_clay_pack : (j === 1 ? PALETTE.sienna_stratum : PALETTE.umber_loam);
+        ctx.fillRect(cx + 4, bandY, cw - 8, chH / 5 + 1);
+      }
+
+      /* Ceiling coffers pressed directly into clay pack with zero air gap */
+      var cofW = (cw - 14) / ch.coffers;
+      for (j = 0; j < ch.coffers; j += 1) {
+        ctx.fillStyle = PALETTE.limestone_ashlar;
+        ctx.fillRect(cx + 7 + j * cofW, cy, cofW * 0.28, 7);
+      }
+
+      ctx.strokeStyle = hiCh ? PALETTE.seismic_amber_pulse : PALETTE.ink_etching;
+      ctx.lineWidth = hiCh ? 2.2 : 1.2;
+      ctx.strokeRect(cx - 6, cy - 5, cw + 12, chH + 10);
+    }
+
+    /* Interlocking positive stone + negative cast-clay stairways */
+    for (i = 0; i < bp.negativeStairs.length; i += 1) {
+      var st = bp.negativeStairs[i];
+      if (st.kind === 'straight') {
+        drawStraightNegativeStair(ctx, w, h, st, probe === 'negative_stair');
+      } else {
+        drawHelicalNegativeStair(ctx, w, h, st, probe === 'negative_stair');
+      }
+    }
+
+    /* Pebble & gravel lenses across packed earth */
+    for (i = 0; i < bp.clayPebbles.length; i += 1) {
+      var pb = bp.clayPebbles[i];
+      ctx.save();
+      ctx.translate(pb.x * w, pb.y * h);
+      ctx.rotate(pb.rot);
+      ctx.fillStyle = pb.tone > 0.62 ? rgba(PALETTE.pale_root_tendril, 0.34) : rgba(PALETTE.ink_etching, 0.38);
+      ctx.beginPath();
+      ctx.ellipse(0, 0, Math.max(1.2, pb.rx * w), Math.max(0.9, pb.ry * h), 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    /* Damp black worm tunnels */
+    for (i = 0; i < bp.wormTunnels.length; i += 1) {
+      var wt = bp.wormTunnels[i];
+      ctx.beginPath();
+      ctx.moveTo(wt.points[0].x * w, wt.points[0].y * h);
+      for (j = 1; j < wt.points.length; j += 1) {
+        ctx.lineTo(wt.points[j].x * w, wt.points[j].y * h);
+      }
+      ctx.strokeStyle = probe === 'root_fissure' ? PALETTE.seismic_amber_pulse : PALETTE.abyssal_crust;
+      ctx.lineWidth = probe === 'root_fissure' ? 4.0 : 3.2;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+    }
+
+    /* Twisting pale root crevices */
+    for (i = 0; i < bp.rootCrevices.length; i += 1) {
+      var rc = bp.rootCrevices[i];
+      ctx.beginPath();
+      ctx.moveTo(rc.points[0].x * w, rc.points[0].y * h);
+      for (j = 1; j < rc.points.length; j += 1) {
+        ctx.lineTo(rc.points[j].x * w, rc.points[j].y * h);
+      }
+      ctx.strokeStyle = PALETTE.ink_etching;
+      ctx.lineWidth = 3.4;
+      ctx.stroke();
+      ctx.strokeStyle = probe === 'root_fissure' ? PALETTE.seismic_amber_pulse : PALETTE.pale_root_tendril;
+      ctx.lineWidth = probe === 'root_fissure' ? 2.1 : 1.4;
+      ctx.stroke();
+      for (j = 0; j < rc.twigs.length; j += 1) {
+        var tw = rc.twigs[j];
+        ctx.beginPath();
+        ctx.moveTo(tw.x1 * w, tw.y1 * h);
+        ctx.lineTo(tw.x2 * w, tw.y2 * h);
+        ctx.lineWidth = 0.95;
+        ctx.stroke();
+      }
+    }
+
+    /* Still, prone inhabitants resting motionless in dark damp seams */
+    for (i = 0; i < bp.proneFigures.length; i += 1) {
+      var pf = bp.proneFigures[i];
+      var fx = pf.cx * w;
+      var fy = pf.cy * h;
+      var fl = pf.len * w;
+      ctx.save();
+      ctx.fillStyle = rgba(PALETTE.abyssal_crust, 0.82);
+      ctx.beginPath();
+      ctx.ellipse(fx, fy, fl * 0.56, 7, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = probe === 'root_fissure' ? PALETTE.pale_root_tendril : rgba(PALETTE.limestone_ashlar, 0.55);
+      ctx.beginPath();
+      ctx.arc(fx - fl * 0.36, fy - 0.5, 4.2, 0, Math.PI * 2);
+      ctx.ellipse(fx + fl * 0.05, fy + 0.5, fl * 0.32, 3.6, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    /* Four buried stone doors deep in the vaults */
+    for (i = 0; i < bp.buriedDoors.length; i += 1) {
+      var bd = bp.buriedDoors[i];
+      var dx = bd.normX * w;
+      var dy = bd.normY * h;
+      var hiDoor = (probe === 'buried_door');
+      ctx.fillStyle = PALETTE.limestone_ashlar;
+      ctx.fillRect(dx - 11, dy - 16, 22, 30);
+      ctx.fillStyle = PALETTE.damp_black_clay;
+      ctx.fillRect(dx - 7, dy - 11, 14, 24);
+      ctx.strokeStyle = hiDoor ? PALETTE.seismic_amber_pulse : PALETTE.pale_root_tendril;
+      ctx.lineWidth = hiDoor ? 2.2 : 1.1;
+      ctx.strokeRect(dx - 11, dy - 16, 22, 30);
+    }
+
+    /* Refracting P-wave & S-wave arcs traveling upward through solid clay */
+    var maxWave = 0;
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(0, surfMid - 2, w, h - surfMid + 2);
+    ctx.clip();
+    for (i = 0; i < waves.length; i += 1) {
+      var wv = waves[i];
+      var amp = clamp(Number(wv.intensity) || 0, 0, 1);
+      if (amp > maxWave) {
+        maxWave = amp;
+      }
+      var ox = (Number(wv.originNormX) || 0.5) * w;
+      var oy = (Number(wv.originNormY) || 0.8) * h;
+      var pRad = Math.max(4, (Number(wv.radiusNorm) || 0) * Math.hypot(w, h));
+      var sRad = Math.max(2, (Number(wv.sWaveRadiusNorm) || 0) * Math.hypot(w, h));
+      ctx.strokeStyle = rgba(PALETTE.seismic_amber_pulse, amp * (wv.heardAtSurface ? 0.92 : 0.55));
+      ctx.lineWidth = wv.heardAtSurface ? 2.6 : 1.6;
+      ctx.beginPath();
+      ctx.arc(ox, oy, pRad, Math.PI * 1.06, Math.PI * 1.94);
+      ctx.stroke();
+      ctx.strokeStyle = rgba(PALETTE.sienna_stratum, amp * 0.65);
+      ctx.lineWidth = 1.4;
+      ctx.beginPath();
+      ctx.arc(ox, oy, sRad, Math.PI * 1.08, Math.PI * 1.92);
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    /* Barren stony crust datum line & ear-to-ground contact marker */
+    ctx.beginPath();
+    for (i = 0; i <= 40; i += 1) {
+      var tx = i / 40;
+      if (i === 0) {
+        ctx.moveTo(0, cutawaySurfaceY(0) * h);
+      } else {
+        ctx.lineTo(tx * w, cutawaySurfaceY(tx) * h);
+      }
+    }
+    ctx.strokeStyle = PALETTE.ink_etching;
+    ctx.lineWidth = 2.0;
+    ctx.stroke();
+    drawEarMarker(ctx, state.earNormX * w, cutawaySurfaceY(state.earNormX) * h + 3, state, maxWave);
+  }
+
+  function renderPendingPlateCanvas(canvas) {
+    if (!canvas || typeof canvas.getContext !== 'function') {
+      return false;
+    }
+    var ctx = canvas.getContext('2d');
+    if (!ctx) {
+      return false;
+    }
+    var w = canvas.width || 640;
+    var h = canvas.height || 400;
+    var k;
+
+    ctx.fillStyle = PALETTE.parchment_sky_day;
+    ctx.fillRect(0, 0, w, h);
+    ctx.strokeStyle = PALETTE.ink_etching;
+    ctx.lineWidth = 2;
+    ctx.strokeRect(10, 10, w - 20, h - 20);
+    ctx.lineWidth = 0.9;
+    ctx.strokeRect(15, 15, w - 30, h - 30);
+
+    /* Sepia stratigraphic cutaway vignette */
+    var vx = 34;
+    var vy = 62;
+    var vw = w - 68;
+    var vh = h - 142;
+    ctx.fillStyle = PALETTE.barren_scree_day;
+    ctx.fillRect(vx, vy, vw, 26);
+    ctx.fillStyle = PALETTE.umber_loam;
+    ctx.fillRect(vx, vy + 26, vw, vh - 26);
+
+    for (k = 0; k < 3; k += 1) {
+      var bx = vx + 22 + k * ((vw - 36) / 3);
+      var bw = (vw - 68) / 3;
+      ctx.fillStyle = PALETTE.limestone_ashlar;
+      ctx.fillRect(bx - 4, vy + 58, bw + 8, vh - 82);
+      ctx.fillStyle = PALETTE.ochre_clay_pack;
+      ctx.fillRect(bx + 3, vy + 65, bw - 6, vh - 96);
+      ctx.strokeStyle = PALETTE.ink_etching;
+      ctx.strokeRect(bx - 4, vy + 58, bw + 8, vh - 82);
+    }
+
+    /* Negative stairway interlock emblem */
+    var sx = vx + vw * 0.36;
+    var sy = vy + 74;
+    ctx.beginPath();
+    ctx.moveTo(sx, sy);
+    for (k = 0; k < 6; k += 1) {
+      ctx.lineTo(sx + (k + 1) * 18, sy + k * 12);
+      ctx.lineTo(sx + (k + 1) * 18, sy + (k + 1) * 12);
+    }
+    ctx.strokeStyle = PALETTE.ink_etching;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    /* Engraved title & metric scale bar */
+    ctx.fillStyle = PALETTE.ink_etching;
+    ctx.font = 'bold 13px Georgia, serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('LITHIC VIEW PLATE — PENDING GENERATOR QUOTA', w * 0.5, 40);
+
+    var barY = h - 46;
+    ctx.lineWidth = 1.4;
+    ctx.beginPath();
+    ctx.moveTo(w * 0.22, barY);
+    ctx.lineTo(w * 0.78, barY);
+    ctx.stroke();
+    for (k = 0; k <= 4; k += 1) {
+      var tx = lerp(w * 0.22, w * 0.78, k / 4);
+      ctx.fillRect(tx - 1, barY - 5, 2, 10);
+    }
+    ctx.font = '11px Georgia, serif';
+    ctx.fillText('0m          12m          25m          38m          50m  [AIR 0% · PACKED CLAY 100%]', w * 0.5, h - 24);
+    return true;
+  }
+
+  function createNegativeEarth(config) {
+    var cfg = config || {};
+    var bp = buildLithicBlueprint();
+    var seismicWaves = [];
+    var state = {
+      width: Math.max(120, Number(cfg.width) || 1280),
+      height: Math.max(120, Number(cfg.height) || 800),
+      dpr: Math.max(1, Number(cfg.dpr) || 1),
+      reducedMotion: Boolean(cfg.reducedMotion),
+      viewMode: 'lithic_cutaway',
+      cutawayReveal: 1.0,
+      targetReveal: 1.0,
+      isNight: false,
+      nightFactor: 0.0,
+      earPressed: false,
+      earPressedAtNight: false,
+      earNormX: 0.5,
+      activeProbe: null,
+      phase: 0.0
+    };
+
+    function cloneDoors() {
+      return bp.buriedDoors.map(function (d) {
+        return { id: d.id, label: d.label, normX: d.normX, normY: d.normY, depthMeters: d.depthMeters };
+      });
+    }
+
+    function getState() {
+      return {
+        airFraction: 0,
+        packedEarthFraction: 1.0,
+        surfaceVisibility: 0,
+        visibleBuildingsAboveGround: 0,
+        overburdenSky: 'rocky_terrain_clouds',
+        inhabitantPosture: 'still_and_prone',
+        dampnessIndex: 0.94,
+        subterraneanLux: 0,
+        viewMode: state.viewMode,
+        cutawayReveal: Number(state.cutawayReveal.toFixed(4)),
+        isNight: state.isNight,
+        nightFactor: Number(state.nightFactor.toFixed(4)),
+        earPressed: state.earPressed,
+        earPressedAtNight: Boolean(state.isNight && state.earPressed),
+        earNormX: Number(state.earNormX.toFixed(4)),
+        activeProbe: state.activeProbe,
+        reducedMotion: state.reducedMotion,
+        negativeStairCount: bp.negativeStairs.length,
+        clayChamberCount: bp.clayChambers.length,
+        packedStreetCount: bp.packedStreets.length,
+        wormTunnelCount: bp.wormTunnels.length,
+        rootCreviceCount: bp.rootCrevices.length,
+        proneFigureCount: bp.proneFigures.length,
+        seismicWaveCount: seismicWaves.length,
+        buriedDoors: cloneDoors(),
+        width: state.width,
+        height: state.height,
+        dpr: state.dpr
+      };
+    }
+
+    function setViewMode(mode) {
+      var next = (mode === 'barren_surface') ? 'barren_surface' : 'lithic_cutaway';
+      state.viewMode = next;
+      state.targetReveal = next === 'lithic_cutaway' ? 1.0 : 0.0;
+      if (state.reducedMotion) {
+        state.cutawayReveal = state.targetReveal;
+      } else {
+        state.cutawayReveal = next === 'lithic_cutaway' ? Math.max(state.cutawayReveal, 0.35) : Math.min(state.cutawayReveal, 0.65);
+      }
+      return getState();
+    }
+
+    return {
+      getState: getState,
+      setViewport: function (width, height, dpr) {
+        if (width > 0) { state.width = Number(width); }
+        if (height > 0) { state.height = Number(height); }
+        if (dpr > 0) { state.dpr = Number(dpr); }
+        return getState();
+      },
+      setViewMode: setViewMode,
+      toggleViewMode: function () {
+        return setViewMode(state.viewMode === 'lithic_cutaway' ? 'barren_surface' : 'lithic_cutaway');
+      },
+      setNight: function (isNight, nightFactor) {
+        if (typeof nightFactor === 'number' && !isNaN(nightFactor)) {
+          state.nightFactor = clamp(nightFactor, 0, 1);
+          state.isNight = typeof isNight === 'boolean' ? isNight : (state.nightFactor >= 0.65);
+        } else {
+          state.isNight = Boolean(isNight);
+          state.nightFactor = state.isNight ? 1.0 : 0.0;
+        }
+        state.earPressedAtNight = Boolean(state.isNight && state.earPressed);
+        return getState();
+      },
+      setEarPressed: function (pressed, normX) {
+        state.earPressed = Boolean(pressed);
+        if (typeof normX === 'number' && !isNaN(normX)) {
+          state.earNormX = clamp(normX, 0.05, 0.95);
+        }
+        state.earPressedAtNight = Boolean(state.isNight && state.earPressed);
+        return getState();
+      },
+      setActiveProbe: function (probeId) {
+        state.activeProbe = normalizeProbe(probeId);
+        return getState();
+      },
+      setReducedMotion: function (flag) {
+        state.reducedMotion = Boolean(flag);
+        if (state.reducedMotion) {
+          state.cutawayReveal = state.targetReveal;
+        }
+        return getState();
+      },
+      setSeismicWaves: function (waves) {
+        seismicWaves = Array.isArray(waves) ? waves.slice(0, 24) : [];
+      },
+      inspectAt: function (normX, normY) {
+        return inspectBlueprintAt(bp, normX, normY, state);
+      },
+      step: function (dtSec) {
+        var dt = clamp(Number(dtSec) || 0, 0, 0.25);
+        if (!state.reducedMotion) {
+          state.phase += dt;
+          if (Math.abs(state.targetReveal - state.cutawayReveal) <= dt * 6.5) {
+            state.cutawayReveal = state.targetReveal;
+          } else {
+            state.cutawayReveal += (state.targetReveal > state.cutawayReveal ? 1 : -1) * dt * 6.5;
+          }
+        } else {
+          state.cutawayReveal = state.targetReveal;
+        }
+      },
+      render: function (ctx, width, height) {
+        if (!ctx) { return; }
+        var rw = Math.max(1, Number(width) || state.width);
+        var rh = Math.max(1, Number(height) || state.height);
+        if (state.cutawayReveal <= 0.001) {
+          renderBarrenSurface(ctx, rw, rh, bp, state, seismicWaves);
+        } else if (state.cutawayReveal >= 0.999) {
+          renderCutaway(ctx, rw, rh, bp, state, seismicWaves);
+        } else {
+          renderBarrenSurface(ctx, rw, rh, bp, state, seismicWaves);
+          ctx.save();
+          ctx.globalAlpha = clamp(state.cutawayReveal, 0, 1);
+          renderCutaway(ctx, rw, rh, bp, state, seismicWaves);
+          ctx.restore();
+        }
+      },
+      renderPendingPlateCanvas: renderPendingPlateCanvas,
+      reset: function () {
+        state.viewMode = 'lithic_cutaway';
+        state.cutawayReveal = 1.0;
+        state.targetReveal = 1.0;
+        state.isNight = false;
+        state.nightFactor = 0.0;
+        state.earPressed = false;
+        state.earPressedAtNight = false;
+        state.earNormX = 0.5;
+        state.activeProbe = null;
+        state.phase = 0.0;
+        seismicWaves = [];
+        return getState();
+      }
+    };
+  }
+
+  var api = Object.freeze({
+    PALETTE: PALETTE,
+    CANONICAL_STONES: CANONICAL_STONES,
+    createNegativeEarth: createNegativeEarth,
+    renderPendingPlateCanvas: renderPendingPlateCanvas
+  });
+
+  if (root) {
+    root.ArgiaNegativeEarth = api;
+  }
+  if (typeof globalThis !== 'undefined') {
+    globalThis.ArgiaNegativeEarth = api;
+  }
+  if (typeof window !== 'undefined') {
+    window.ArgiaNegativeEarth = api;
+  }
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = api;
+  }
+})(typeof globalThis !== 'undefined' ? globalThis : this);
+
+/*
+ * Stony Ground Acoustics & Nocturnal Bone-Conduction Engine for Argia
+ * Medium: 100% packed clay, damp black loam, and limestone overburden (0% air).
+ * All comments use block syntax; zero external URLs or generic air-reverb paths.
+ */
+(function (root) {
+  'use strict';
+
+  var ACOUSTIC_CONSTANTS = Object.freeze({
+    AIR_FRACTION: 0,
+    PACKED_EARTH_FRACTION: 1.0,
+    CLAY_PWAVE_MPS: 1850,
+    CLAY_SWAVE_MPS: 620,
+    NIGHT_THRESHOLD: 0.65
+  });
+
+  var DEFAULT_BURIED_DOORS = Object.freeze([
+    Object.freeze({
+      id: 'west_colonnade_lintel',
+      label: 'West Packed-Colonnade Threshold',
+      normX: 0.21,
+      normY: 0.56,
+      depthMeters: 19.5
+    }),
+    Object.freeze({
+      id: 'negative_stair_portal',
+      label: 'Negative-Stair Vault Portal',
+      normX: 0.42,
+      normY: 0.68,
+      depthMeters: 28.0
+    }),
+    Object.freeze({
+      id: 'coffered_clay_cellar',
+      label: 'Coffered Clay-Chamber Slab Door',
+      normX: 0.64,
+      normY: 0.76,
+      depthMeters: 36.5
+    }),
+    Object.freeze({
+      id: 'abyssal_limestone_gate',
+      label: 'Deep Ashlar Seam Threshold',
+      normX: 0.81,
+      normY: 0.85,
+      depthMeters: 44.5
+    })
+  ]);
+
+  function clamp01(val) {
+    var num = Number(val);
+    if (!Number.isFinite(num)) {
+      return 0;
+    }
+    if (num < 0) {
+      return 0;
+    }
+    if (num > 1) {
+      return 1;
+    }
+    return num;
+  }
+
+  function normalizePhase(norm01) {
+    var num = Number(norm01);
+    if (!Number.isFinite(num)) {
+      return 0.5;
+    }
+    if (num === 1) {
+      return 0;
+    }
+    var wrapped = ((num % 1) + 1) % 1;
+    return Number(wrapped.toFixed(6));
+  }
+
+  function computeNightFactor(timeOfDay) {
+    /* 0.0 is deep midnight (1.0), 0.5 is harsh barren noon (0.0) */
+    var raw = 0.5 * (1 + Math.cos(timeOfDay * Math.PI * 2));
+    return clamp01(Number(raw.toFixed(6)));
+  }
+
+  function roundTo(val, digits) {
+    var factor = Math.pow(10, digits || 4);
+    return Math.round(val * factor) / factor;
+  }
+
+  function nowMs() {
+    if (typeof performance !== 'undefined' && typeof performance.now === 'function') {
+      return Math.round(performance.now());
+    }
+    return Date.now();
+  }
+
+  function cloneDoor(door, idx) {
+    var fallback = DEFAULT_BURIED_DOORS[idx % DEFAULT_BURIED_DOORS.length];
+    var depth = Number(door && door.depthMeters);
+    if (!Number.isFinite(depth) || depth <= 0) {
+      depth = fallback.depthMeters;
+    }
+    return {
+      id: String((door && door.id) || fallback.id),
+      label: String((door && door.label) || fallback.label),
+      normX: clamp01(door && door.normX !== undefined ? door.normX : fallback.normX),
+      normY: clamp01(door && door.normY !== undefined ? door.normY : fallback.normY),
+      depthMeters: roundTo(depth, 2)
+    };
+  }
+
+  function normalizeDoorList(doors) {
+    if (!Array.isArray(doors) || doors.length === 0) {
+      return DEFAULT_BURIED_DOORS.map(function (d, i) {
+        return cloneDoor(d, i);
+      });
+    }
+    return doors.map(function (d, i) {
+      return cloneDoor(d, i);
+    });
+  }
+
+  function cloneSlamEvent(ev) {
+    if (!ev) {
+      return null;
+    }
+    return {
+      doorId: ev.doorId,
+      label: ev.label,
+      depthMeters: ev.depthMeters,
+      originNormX: ev.originNormX,
+      originNormY: ev.originNormY,
+      heardAtSurface: ev.heardAtSurface,
+      reason: ev.reason,
+      pWaveMs: ev.pWaveMs,
+      sWaveMs: ev.sWaveMs,
+      timestampMs: ev.timestampMs
+    };
+  }
+
+  function hasGestureActivation() {
+    if (typeof navigator === 'undefined') {
+      return false;
+    }
+    if (navigator.userActivation && typeof navigator.userActivation.hasBeenActive === 'boolean') {
+      return navigator.userActivation.hasBeenActive;
+    }
+    return true;
+  }
+
+  function nextSpontaneousIntervalSec(seqIndex) {
+    /* Deterministic cadence inside 5.0..7.5 seconds while ear is pressed at night */
+    var offset = ((seqIndex * 0.89) % 2.25);
+    return roundTo(5.15 + offset, 2);
+  }
+
+  function createGroundAcoustics(config) {
+    var cfg = config || {};
+    var initialNight = Boolean(cfg.initialNight);
+    var initialTimeOfDay = typeof cfg.initialTimeOfDay === 'number'
+      ? normalizePhase(cfg.initialTimeOfDay)
+      : (initialNight ? 0.0 : 0.5);
+
+    var reducedMotion = Boolean(cfg.reducedMotion);
+    var muted = Boolean(cfg.muted);
+    var timeOfDay = initialTimeOfDay;
+    var nightFactor = computeNightFactor(timeOfDay);
+    var isNight = nightFactor >= ACOUSTIC_CONSTANTS.NIGHT_THRESHOLD;
+    var earPressed = false;
+    var earNormX = 0.5;
+
+    var buriedDoors = normalizeDoorList(cfg.buriedDoors);
+    var doorCursor = 0;
+    var doorSlamCount = 0;
+    var heardDoorSlamCount = 0;
+    var lastDoorSlam = null;
+    var activeWaves = [];
+    var slamListeners = [];
+
+    var elapsedSec = 0;
+    var slamPulse = 0;
+    var spontaneousSeq = 0;
+    var spontaneousRemainingSec = nextSpontaneousIntervalSec(0);
+
+    var audioCtx = null;
+    var masterGain = null;
+    var masterLowpass = null;
+    var tremorBedGain = null;
+    var tremorFilter = null;
+    var shearNoiseBuffer = null;
+    var audioUnlocked = false;
+
+    function buildDeterministicBuffers(ctx) {
+      var rate = ctx.sampleRate || 44100;
+      var shearLen = Math.max(256, Math.floor(rate * 0.11));
+      var shearBuf = ctx.createBuffer(1, shearLen, rate);
+      var shearData = shearBuf.getChannelData(0);
+      var seed = 42019;
+      var prev = 0;
+      var i;
+      for (i = 0; i < shearLen; i += 1) {
+        seed = (seed * 1664525 + 1013904223) >>> 0;
+        var white = (seed / 2147483648) - 1.0;
+        var env = Math.exp(-i / (shearLen * 0.28));
+        prev = prev * 0.76 + white * 0.24;
+        shearData[i] = prev * env * 0.9;
+      }
+      shearNoiseBuffer = shearBuf;
+
+      var bedLen = Math.max(1024, Math.floor(rate * 2.4));
+      var bedBuf = ctx.createBuffer(1, bedLen, rate);
+      var bedData = bedBuf.getChannelData(0);
+      var brown = 0;
+      for (i = 0; i < bedLen; i += 1) {
+        seed = (seed * 1664525 + 1013904223) >>> 0;
+        var w = (seed / 2147483648) - 1.0;
+        brown = (brown + 0.025 * w) / 1.025;
+        var seamMod = 0.65 + 0.35 * Math.sin((i / bedLen) * Math.PI * 6);
+        bedData[i] = brown * 2.6 * seamMod;
+      }
+      return bedBuf;
+    }
+
+    function syncTremorBed() {
+      if (!audioCtx || !tremorBedGain || !masterGain) {
+        return;
+      }
+      try {
+        var t = audioCtx.currentTime;
+        masterGain.gain.setTargetAtTime(muted ? 0 : 0.88, t, 0.02);
+        var activeEar = Boolean(earPressed && !muted);
+        var targetBed = activeEar ? (0.028 + 0.048 * nightFactor) : 0;
+        tremorBedGain.gain.setTargetAtTime(targetBed, t, 0.045);
+        if (tremorFilter) {
+          tremorFilter.frequency.setTargetAtTime(104 + 34 * nightFactor, t, 0.06);
+        }
+      } catch (_err) {
+        /* Silent fallback when audio graph is unavailable */
+      }
+    }
+
+    function ensureAudioContext() {
+      if (!hasGestureActivation()) {
+        return false;
+      }
+      var Ctor = (root && (root.AudioContext || root.webkitAudioContext))
+        || (typeof AudioContext !== 'undefined' ? AudioContext : null);
+      if (!Ctor) {
+        return false;
+      }
+      try {
+        if (!audioCtx) {
+          audioCtx = new Ctor();
+          masterLowpass = audioCtx.createBiquadFilter();
+          masterLowpass.type = 'lowpass';
+          masterLowpass.frequency.value = 190;
+          masterLowpass.Q.value = 0.86;
+
+          masterGain = audioCtx.createGain();
+          masterGain.gain.value = muted ? 0 : 0.88;
+          masterLowpass.connect(masterGain);
+          masterGain.connect(audioCtx.destination);
+
+          var bedBuffer = buildDeterministicBuffers(audioCtx);
+          tremorFilter = audioCtx.createBiquadFilter();
+          tremorFilter.type = 'lowpass';
+          tremorFilter.frequency.value = 124;
+          tremorFilter.Q.value = 0.7;
+
+          tremorBedGain = audioCtx.createGain();
+          tremorBedGain.gain.value = 0;
+
+          var bedSource = audioCtx.createBufferSource();
+          bedSource.buffer = bedBuffer;
+          bedSource.loop = true;
+
+          var rootDrone = audioCtx.createOscillator();
+          rootDrone.type = 'sine';
+          rootDrone.frequency.value = 46;
+          var rootDroneGain = audioCtx.createGain();
+          rootDroneGain.gain.value = 0.22;
+
+          bedSource.connect(tremorFilter);
+          rootDrone.connect(rootDroneGain);
+          rootDroneGain.connect(tremorFilter);
+          tremorFilter.connect(tremorBedGain);
+          tremorBedGain.connect(masterLowpass);
+
+          bedSource.start(0);
+          rootDrone.start(0);
+        }
+        if (audioCtx.state === 'suspended' && typeof audioCtx.resume === 'function') {
+          var resumePromise = audioCtx.resume();
+          if (resumePromise && typeof resumePromise.catch === 'function') {
+            resumePromise.catch(function () {});
+          }
+        }
+        audioUnlocked = true;
+        syncTremorBed();
+        return true;
+      } catch (_err) {
+        return false;
+      }
+    }
+
+    function playNocturnalDoorSlamAudio(door, pWaveMs, sWaveMs) {
+      if (muted || !earPressed || !isNight) {
+        return;
+      }
+      if (!ensureAudioContext() || !audioCtx || !masterLowpass) {
+        return;
+      }
+      try {
+        var now = audioCtx.currentTime;
+        var pDelaySec = Math.min(0.055, Math.max(0.004, pWaveMs / 1000));
+        var tStart = now + pDelaySec;
+        var depthNorm = clamp01((door.depthMeters - 16) / 34);
+        var proximityGain = 1.0 - Math.min(0.28, Math.abs(door.normX - earNormX) * 0.36);
+
+        /* Primary sub-clay P-wave compression thump (42Hz to 135Hz, zero air tail) */
+        var pOsc = audioCtx.createOscillator();
+        pOsc.type = 'sine';
+        pOsc.frequency.setValueAtTime(135 - depthNorm * 16, tStart);
+        pOsc.frequency.exponentialRampToValueAtTime(58, tStart + 0.085);
+        pOsc.frequency.exponentialRampToValueAtTime(42, tStart + 0.42);
+
+        var boneOsc = audioCtx.createOscillator();
+        boneOsc.type = 'triangle';
+        boneOsc.frequency.setValueAtTime(88 - depthNorm * 10, tStart);
+        boneOsc.frequency.exponentialRampToValueAtTime(43, tStart + 0.36);
+
+        var boneSubGain = audioCtx.createGain();
+        boneSubGain.gain.value = 0.42;
+
+        var thumpEnv = audioCtx.createGain();
+        thumpEnv.gain.setValueAtTime(0.0001, tStart);
+        thumpEnv.gain.linearRampToValueAtTime(0.56 * proximityGain, tStart + 0.007);
+        thumpEnv.gain.exponentialRampToValueAtTime(0.0001, tStart + 0.46);
+
+        pOsc.connect(thumpEnv);
+        boneOsc.connect(boneSubGain);
+        boneSubGain.connect(thumpEnv);
+        thumpEnv.connect(masterLowpass);
+
+        pOsc.start(tStart);
+        boneOsc.start(tStart);
+        pOsc.stop(tStart + 0.48);
+        boneOsc.stop(tStart + 0.48);
+
+        /* Secondary 90ms-delayed limestone shear knock routed into 190Hz lowpass */
+        var shearExtra = Math.min(0.032, Math.max(0, (sWaveMs - pWaveMs) / 1000));
+        var tShear = tStart + 0.090 + shearExtra;
+
+        var shearBand = audioCtx.createBiquadFilter();
+        shearBand.type = 'bandpass';
+        shearBand.frequency.setValueAtTime(144 - depthNorm * 18, tShear);
+        shearBand.Q.value = 1.95;
+        shearBand.connect(masterLowpass);
+
+        var shearOsc = audioCtx.createOscillator();
+        shearOsc.type = 'triangle';
+        shearOsc.frequency.setValueAtTime(126 - depthNorm * 12, tShear);
+        shearOsc.frequency.exponentialRampToValueAtTime(48, tShear + 0.19);
+
+        var shearEnv = audioCtx.createGain();
+        shearEnv.gain.setValueAtTime(0.0001, tShear);
+        shearEnv.gain.linearRampToValueAtTime(0.36 * proximityGain, tShear + 0.005);
+        shearEnv.gain.exponentialRampToValueAtTime(0.0001, tShear + 0.22);
+
+        shearOsc.connect(shearEnv);
+        shearEnv.connect(shearBand);
+        shearOsc.start(tShear);
+        shearOsc.stop(tShear + 0.24);
+
+        if (shearNoiseBuffer) {
+          var gritSrc = audioCtx.createBufferSource();
+          gritSrc.buffer = shearNoiseBuffer;
+          var gritEnv = audioCtx.createGain();
+          gritEnv.gain.setValueAtTime(0.28 * proximityGain, tShear);
+          gritEnv.gain.exponentialRampToValueAtTime(0.0001, tShear + 0.11);
+          gritSrc.connect(gritEnv);
+          gritEnv.connect(shearBand);
+          gritSrc.start(tShear);
+          gritSrc.stop(tShear + 0.12);
+        }
+      } catch (_err) {
+        /* Never emit console warnings in locked or headless environments */
+      }
+    }
+
+    function refreshTimeDerived() {
+      nightFactor = computeNightFactor(timeOfDay);
+      isNight = Boolean(nightFactor >= ACOUSTIC_CONSTANTS.NIGHT_THRESHOLD);
+    }
+
+    function buildSeismicReading() {
+      var earAtNight = Boolean(isNight && earPressed);
+      var clayGain = earPressed
+        ? roundTo(clamp01(0.38 + 0.52 * nightFactor + 0.10 * slamPulse), 4)
+        : 0;
+      var audibility = 0;
+      if (earAtNight) {
+        audibility = roundTo(clamp01(0.62 * nightFactor + 0.38 * slamPulse), 4);
+      } else if (earPressed) {
+        audibility = roundTo(clamp01(0.06 * nightFactor), 4);
+      }
+      var animFactor = reducedMotion ? 0 : 1;
+      var coupling = earPressed ? (0.66 + 0.34 * nightFactor) : 0.16;
+      var wormTremor = roundTo(clamp01(
+        (0.24 + 0.09 * Math.sin(elapsedSec * 2.15 * animFactor + earNormX * 4.1)) * coupling
+        + (earPressed ? 0.14 * slamPulse : 0)
+      ), 4);
+      var rootHum = roundTo(clamp01(
+        (0.28 + 0.08 * Math.cos(elapsedSec * 1.35 * animFactor + 1.15)) * coupling
+        + (earPressed ? 0.10 * slamPulse : 0)
+      ), 4);
+
+      var statusText = 'Barren stony ground — nothing of Argia is visible or audible above';
+      if (earAtNight && slamPulse > 0.25) {
+        statusText = 'Subterranean stone door slam conducted through packed clay';
+      } else if (earAtNight) {
+        statusText = 'Ear pressed to cold night stone — listening through packed clay';
+      } else if (earPressed && !isNight) {
+        statusText = 'Ear on sun-baked scree — barren daylight heat masks deep vaults';
+      } else if (isNight && !earPressed) {
+        statusText = 'Deserted night scree — press ear to stony ground to listen below';
+      }
+
+      return {
+        surfaceAudibility: audibility,
+        clayConductionGain: clayGain,
+        wormCreviceTremor: wormTremor,
+        rootTensionHum: rootHum,
+        statusText: statusText
+      };
+    }
+
+    function getState() {
+      return {
+        airFraction: ACOUSTIC_CONSTANTS.AIR_FRACTION,
+        packedEarthFraction: ACOUSTIC_CONSTANTS.PACKED_EARTH_FRACTION,
+        medium: 'packed_clay_and_limestone',
+        timeOfDay: timeOfDay,
+        nightFactor: nightFactor,
+        isNight: isNight,
+        earPressed: earPressed,
+        earNormX: earNormX,
+        earPressedAtNight: Boolean(isNight && earPressed),
+        muted: muted,
+        reducedMotion: reducedMotion,
+        audioUnlocked: audioUnlocked,
+        doorSlamCount: doorSlamCount,
+        heardDoorSlamCount: heardDoorSlamCount,
+        muffledDoorSlamCount: Math.max(0, doorSlamCount - heardDoorSlamCount),
+        lastDoorSlam: cloneSlamEvent(lastDoorSlam),
+        seismicReading: buildSeismicReading(),
+        activeWaveCount: activeWaves.length,
+        buriedDoors: buriedDoors.map(function (d, idx) {
+          return cloneDoor(d, idx);
+        })
+      };
+    }
+
+    function setBuriedDoors(doors) {
+      buriedDoors = normalizeDoorList(doors);
+      doorCursor = 0;
+      return buriedDoors.map(function (d, idx) { return cloneDoor(d, idx); });
+    }
+
+    function setTimeOfDay(norm01) {
+      var wasEarAtNight = Boolean(isNight && earPressed);
+      timeOfDay = normalizePhase(norm01);
+      refreshTimeDerived();
+      if (!wasEarAtNight && Boolean(isNight && earPressed)) {
+        spontaneousRemainingSec = nextSpontaneousIntervalSec(spontaneousSeq);
+      }
+      syncTremorBed();
+      return getState();
+    }
+
+    function setNight(flag) {
+      return setTimeOfDay(Boolean(flag) ? 0.0 : 0.5);
+    }
+
+    function toggleNight() {
+      return setNight(!isNight);
+    }
+
+    function pressEar(pressed, normX) {
+      var wasEarAtNight = Boolean(isNight && earPressed);
+      earPressed = Boolean(pressed);
+      if (typeof normX === 'number' && Number.isFinite(normX)) {
+        earNormX = roundTo(clamp01(normX), 4);
+      }
+      if (earPressed && !muted) {
+        ensureAudioContext();
+      }
+      if (!wasEarAtNight && Boolean(isNight && earPressed)) {
+        spontaneousRemainingSec = nextSpontaneousIntervalSec(spontaneousSeq);
+      }
+      syncTremorBed();
+      return getState();
+    }
+
+    function toggleEar(normX) {
+      return pressEar(!earPressed, normX);
+    }
+
+    function resolveDoor(doorIdOrIndex) {
+      var count = buriedDoors.length;
+      if (typeof doorIdOrIndex === 'number' && Number.isFinite(doorIdOrIndex)) {
+        var idx = ((Math.floor(doorIdOrIndex) % count) + count) % count;
+        return buriedDoors[idx];
+      }
+      if (typeof doorIdOrIndex === 'string' && doorIdOrIndex.length > 0) {
+        var needle = doorIdOrIndex.toLowerCase();
+        for (var i = 0; i < count; i += 1) {
+          if (buriedDoors[i].id === doorIdOrIndex || buriedDoors[i].label.toLowerCase() === needle) {
+            return buriedDoors[i];
+          }
+        }
+      }
+      var chosen = buriedDoors[doorCursor % count];
+      doorCursor = (doorCursor + 1) % count;
+      return chosen;
+    }
+
+    function triggerDoorSlam(doorIdOrIndex) {
+      var door = resolveDoor(doorIdOrIndex);
+      doorSlamCount += 1;
+      var pWaveMs = roundTo((door.depthMeters / ACOUSTIC_CONSTANTS.CLAY_PWAVE_MPS) * 1000, 2);
+      var sWaveMs = roundTo((door.depthMeters / ACOUSTIC_CONSTANTS.CLAY_SWAVE_MPS) * 1000, 2);
+      var heardAtSurface = Boolean(isNight && earPressed);
+      var reason = 'heard_through_night_stone';
+
+      if (heardAtSurface) {
+        heardDoorSlamCount += 1;
+        slamPulse = 1.0;
+        playNocturnalDoorSlamAudio(door, pWaveMs, sWaveMs);
+      } else if (!isNight) {
+        reason = 'masked_by_daylight_barren_heat';
+        slamPulse = Math.max(slamPulse, 0.12);
+      } else {
+        reason = 'ear_not_pressed_to_stony_ground';
+        slamPulse = Math.max(slamPulse, 0.16);
+      }
+
+      activeWaves.push({
+        originNormX: door.normX,
+        originNormY: door.normY,
+        radiusNorm: reducedMotion ? 0.36 : 0.018,
+        sWaveRadiusNorm: reducedMotion ? 0.21 : 0.008,
+        intensity: 1.0,
+        heardAtSurface: heardAtSurface,
+        ageSec: 0,
+        durationSec: reducedMotion ? 1.05 : 2.35
+      });
+      if (activeWaves.length > 10) {
+        activeWaves.shift();
+      }
+
+      lastDoorSlam = {
+        doorId: door.id,
+        label: door.label,
+        depthMeters: door.depthMeters,
+        originNormX: door.normX,
+        originNormY: door.normY,
+        heardAtSurface: heardAtSurface,
+        reason: reason,
+        pWaveMs: pWaveMs,
+        sWaveMs: sWaveMs,
+        timestampMs: nowMs()
+      };
+
+      var snapEv = cloneSlamEvent(lastDoorSlam);
+      for (var k = 0; k < slamListeners.length; k += 1) {
+        try { slamListeners[k](cloneSlamEvent(snapEv), getState()); } catch (_err) { /* ignore */ }
+      }
+      return snapEv;
+    }
+
+    function unlockAudio() {
+      return ensureAudioContext();
+    }
+
+    function setMuted(flag) {
+      muted = Boolean(flag);
+      syncTremorBed();
+      return getState();
+    }
+
+    function toggleMute() {
+      return setMuted(!muted);
+    }
+
+    function setReducedMotion(flag) {
+      reducedMotion = Boolean(flag);
+      return getState();
+    }
+
+    function step(dtSec) {
+      var totalDt = Math.max(0, Math.min(20.0, Number(dtSec) || 0));
+      if (totalDt <= 0) {
+        return getState();
+      }
+      var steps = Math.max(1, Math.ceil(totalDt / 0.1));
+      var subDt = totalDt / steps;
+      var spontaneousFired = false;
+
+      for (var s = 0; s < steps; s += 1) {
+        elapsedSec += subDt;
+        slamPulse = Math.max(0, slamPulse - subDt * 0.72);
+        var nextWaves = [];
+        for (var i = 0; i < activeWaves.length; i += 1) {
+          var w = activeWaves[i];
+          w.ageSec += subDt;
+          if (w.ageSec < w.durationSec) {
+            if (!reducedMotion) {
+              w.radiusNorm = roundTo(Math.min(1.35, w.radiusNorm + subDt * 0.58), 4);
+              w.sWaveRadiusNorm = roundTo(Math.min(1.15, w.sWaveRadiusNorm + subDt * 0.31), 4);
+            }
+            var progress = clamp01(w.ageSec / w.durationSec);
+            w.intensity = roundTo(Math.pow(1 - progress, 1.35), 4);
+            if (w.intensity > 0.005) {
+              nextWaves.push(w);
+            }
+          }
+        }
+        activeWaves = nextWaves;
+
+        if (isNight && earPressed && !spontaneousFired) {
+          spontaneousRemainingSec -= subDt;
+          if (spontaneousRemainingSec <= 0) {
+            spontaneousSeq += 1;
+            spontaneousRemainingSec = nextSpontaneousIntervalSec(spontaneousSeq);
+            spontaneousFired = true;
+            triggerDoorSlam();
+          }
+        }
+      }
+      return getState();
+    }
+
+    function getActiveWaves() {
+      return activeWaves.map(function (w) {
+        return {
+          originNormX: w.originNormX,
+          originNormY: w.originNormY,
+          radiusNorm: w.radiusNorm,
+          sWaveRadiusNorm: w.sWaveRadiusNorm,
+          intensity: w.intensity,
+          heardAtSurface: w.heardAtSurface
+        };
+      });
+    }
+
+    function onDoorSlam(listenerFn) {
+      if (typeof listenerFn !== 'function') {
+        return function () {};
+      }
+      slamListeners.push(listenerFn);
+      return function unsubscribe() {
+        var idx = slamListeners.indexOf(listenerFn);
+        if (idx >= 0) {
+          slamListeners.splice(idx, 1);
+        }
+      };
+    }
+
+    function reset() {
+      timeOfDay = initialTimeOfDay;
+      refreshTimeDerived();
+      earPressed = false;
+      earNormX = 0.5;
+      doorCursor = 0;
+      doorSlamCount = 0;
+      heardDoorSlamCount = 0;
+      lastDoorSlam = null;
+      activeWaves = [];
+      elapsedSec = 0;
+      slamPulse = 0;
+      spontaneousSeq = 0;
+      spontaneousRemainingSec = nextSpontaneousIntervalSec(0);
+      syncTremorBed();
+      return getState();
+    }
+
+    return {
+      getState: getState,
+      setBuriedDoors: setBuriedDoors,
+      setTimeOfDay: setTimeOfDay,
+      setNight: setNight,
+      toggleNight: toggleNight,
+      pressEar: pressEar,
+      toggleEar: toggleEar,
+      triggerDoorSlam: triggerDoorSlam,
+      unlockAudio: unlockAudio,
+      setMuted: setMuted,
+      toggleMute: toggleMute,
+      setReducedMotion: setReducedMotion,
+      step: step,
+      getActiveWaves: getActiveWaves,
+      onDoorSlam: onDoorSlam,
+      reset: reset
+    };
+  }
+
+  var api = {
+    ACOUSTIC_CONSTANTS: ACOUSTIC_CONSTANTS,
+    DEFAULT_BURIED_DOORS: DEFAULT_BURIED_DOORS,
+    createGroundAcoustics: createGroundAcoustics
+  };
+
+  if (root) {
+    root.ArgiaGroundAcoustics = api;
+  }
+  if (typeof globalThis !== 'undefined') {
+    globalThis.ArgiaGroundAcoustics = api;
+  }
+  if (typeof window !== 'undefined') {
+    window.ArgiaGroundAcoustics = api;
+  }
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = api;
+  }
+})(typeof globalThis !== 'undefined' ? globalThis : (typeof window !== 'undefined' ? window : this));
+
+(function () {
+  'use strict';
+
+  var stageEl = document.getElementById('arg-packed-earth');
+  var canvas = document.getElementById('arg-stage-canvas');
+  var ctx = canvas.getContext('2d');
+
+  var valAir = document.getElementById('arg-val-air');
+  var valSurface = document.getElementById('arg-val-surface');
+  var valSlams = document.getElementById('arg-val-slams');
+
+  var keyView = document.getElementById('arg-key-view');
+  var viewLabel = document.getElementById('arg-view-label');
+  var keyPlates = document.getElementById('arg-key-plates');
+  var keyMute = document.getElementById('arg-key-mute');
+  var muteLabel = document.getElementById('arg-mute-label');
+  var keyReset = document.getElementById('arg-key-reset');
+
+  var calloutTitle = document.getElementById('arg-callout-title');
+  var calloutMeta = document.getElementById('arg-callout-meta');
+  var calloutBody = document.getElementById('arg-callout-body');
+
+  var probeStair = document.getElementById('arg-probe-stair');
+  var probeChamber = document.getElementById('arg-probe-chamber');
+  var probeFissure = document.getElementById('arg-probe-fissure');
+  var probeCards = [probeStair, probeChamber, probeFissure];
+
+  var surfaceEarEl = document.getElementById('arg-surface-ear');
+  var keyNight = document.getElementById('arg-key-night');
+  var nightBtnLabel = document.getElementById('arg-night-btn-label');
+  var nightDial = document.getElementById('arg-night-dial');
+  var dialFill = document.getElementById('arg-dial-fill');
+  var dialThumb = document.getElementById('arg-dial-thumb');
+  var solarReadout = document.getElementById('arg-solar-readout');
+  var keyEar = document.getElementById('arg-key-ear');
+  var earLabel = document.getElementById('arg-ear-label');
+  var keySlam = document.getElementById('arg-key-slam');
+  var telemetryMetrics = document.getElementById('arg-telemetry-metrics');
+  var seismicStatus = document.getElementById('arg-seismic-status');
+
+  var plateDrawer = document.getElementById('arg-plate-drawer');
+  var tabMap = document.getElementById('arg-tab-map');
+  var tabImage = document.getElementById('arg-tab-image');
+  var keyZoom = document.getElementById('arg-key-zoom');
+  var keyClosePlates = document.getElementById('arg-key-close-plates');
+  var plateViewport = document.getElementById('arg-plate-viewport');
+  var mapFigure = document.getElementById('arg-map-figure');
+  var imageFigure = document.getElementById('arg-image-figure');
+  var imageImg = document.getElementById('arg-image-img');
+  var plateFallback = document.getElementById('arg-plate-fallback');
+  var fallbackCanvas = document.getElementById('arg-fallback-canvas');
+
+  var motionQuery = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+  var reducedMotion = Boolean(motionQuery && motionQuery.matches);
+
+  var earth = window.ArgiaNegativeEarth.createNegativeEarth({
+    width: window.innerWidth || 1280,
+    height: window.innerHeight || 800,
+    dpr: window.devicePixelRatio || 1,
+    reducedMotion: reducedMotion
+  });
+
+  var acoustics = window.ArgiaGroundAcoustics.createGroundAcoustics({
+    reducedMotion: reducedMotion,
+    initialNight: false,
+    muted: false
+  });
+  acoustics.setBuriedDoors(earth.getState().buriedDoors);
+
+  var activePlateTab = 'map';
+  var plateZoomed = false;
+  var heardFlashTimer = 0;
+
+  var PROBE_COPY = {
+    negative_stair: {
+      title: 'Negative Cast-Clay Stairways',
+      meta: '5 FLIGHTS · AIR 0 · EARTH 1.0',
+      body: 'On every stone stairway another stairway of compacted clay is set in negative, flush step-for-step with zero air.'
+    },
+    clay_chamber: {
+      title: 'Clay-Packed Vaults & Rocky Cloud Skies',
+      meta: '6 CHAMBERS · OVERBURDEN SKY',
+      body: 'Clay packs every room to the vaulted ceiling; above the house roofs hang layers of rocky terrain like skies with clouds.'
+    },
+    root_fissure: {
+      title: 'Root Crevices, Worm Tunnels & Prone Stillness',
+      meta: '16 TUNNELS · 10 ROOTS · PRONE',
+      body: 'Twisting roots and damp worm burrows pierce the black crust; scant strength leaves everyone still, prone, in the dark.'
+    }
+  };
+
+  function resizeStage() {
+    var rect = stageEl.getBoundingClientRect();
+    var cssW = Math.max(1, Math.round(rect.width || window.innerWidth || 1280));
+    var cssH = Math.max(1, Math.round(rect.height || window.innerHeight || 800));
+    var dpr = Math.min(2, Math.max(1, window.devicePixelRatio || 1));
+    if (canvas.width !== Math.round(cssW * dpr) || canvas.height !== Math.round(cssH * dpr)) {
+      canvas.width = Math.round(cssW * dpr);
+      canvas.height = Math.round(cssH * dpr);
+    }
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    earth.setViewport(cssW, cssH, dpr);
+    return { width: cssW, height: cssH, dpr: dpr };
+  }
+
+  function setPressedClass(el, active) {
+    if (!el) { return; }
+    el.classList.toggle('arg-is-active', Boolean(active));
+    el.setAttribute('aria-pressed', active ? 'true' : 'false');
+  }
+
+  function syncEnginesAndHud() {
+    var a = acoustics.getState();
+    earth.setNight(a.isNight, a.nightFactor);
+    earth.setEarPressed(a.earPressed, a.earNormX);
+    earth.setSeismicWaves(acoustics.getActiveWaves());
+    var e = earth.getState();
+
+    valAir.textContent = e.airFraction.toFixed(2) + ' · CLAY ' + e.packedEarthFraction.toFixed(2);
+    valSurface.textContent = e.surfaceVisibility + ' SEEN';
+    valSlams.textContent = a.heardDoorSlamCount + ' / ' + a.doorSlamCount;
+
+    var isBarren = (e.viewMode === 'barren_surface');
+    setPressedClass(keyView, isBarren);
+    viewLabel.textContent = isBarren ? 'Surface' : 'Cutaway';
+    setPressedClass(keyPlates, !plateDrawer.hidden);
+    setPressedClass(keyMute, a.muted);
+    muteLabel.textContent = a.muted ? 'Muted' : 'Sound';
+
+    for (var i = 0; i < probeCards.length; i += 1) {
+      var card = probeCards[i];
+      var pid = card.getAttribute('data-probe');
+      setPressedClass(card, e.activeProbe === pid);
+    }
+
+    var pct = Math.round(a.nightFactor * 100);
+    dialFill.style.width = pct + '%';
+    dialThumb.style.left = pct + '%';
+    nightDial.setAttribute('aria-valuenow', String(pct));
+    solarReadout.textContent = (a.isNight ? 'NIGHT · ' : 'DAY · ') + pct + '%';
+    setPressedClass(keyNight, a.isNight);
+    nightBtnLabel.textContent = a.isNight ? 'Night On' : 'Night';
+
+    setPressedClass(keyEar, a.earPressed);
+    earLabel.textContent = a.earPressed ? 'Ear Pressed' : 'Press Ear to Stone';
+
+    var muffled = Math.max(0, a.doorSlamCount - a.heardDoorSlamCount);
+    telemetryMetrics.textContent =
+      'EAR+NIGHT: ' + (a.earPressedAtNight ? 'YES' : 'NO') +
+      ' · HEARD: ' + a.heardDoorSlamCount +
+      ' · MUFFLED: ' + muffled;
+    if (a.seismicReading && a.seismicReading.statusText) {
+      seismicStatus.textContent = a.seismicReading.statusText;
+    }
+    surfaceEarEl.classList.toggle('arg-is-heard', heardFlashTimer > 0);
+  }
+  function showInspection(rep) {
+    if (!rep) { return; }
+    calloutTitle.textContent = rep.title;
+    calloutMeta.textContent = 'DEPTH ' + rep.depthMeters + 'm · AIR ' + rep.airFraction + ' · EARTH ' + rep.packedEarthFraction.toFixed(1);
+    calloutBody.textContent = rep.detail;
+  }
+
+  function renderFallbackPlate() {
+    if (window.ArgiaNegativeEarth && typeof window.ArgiaNegativeEarth.renderPendingPlateCanvas === 'function') {
+      return window.ArgiaNegativeEarth.renderPendingPlateCanvas(fallbackCanvas);
+    }
+    return earth.renderPendingPlateCanvas(fallbackCanvas);
+  }
+
+  function renderNow() {
+    var vp = resizeStage();
+    syncEnginesAndHud();
+    earth.render(ctx, vp.width, vp.height);
+  }
+
+  function getCombinedState() {
+    syncEnginesAndHud();
+    var e = earth.getState();
+    var a = acoustics.getState();
+    var merged = {};
+    var k;
+    for (k in e) {
+      if (Object.prototype.hasOwnProperty.call(e, k)) { merged[k] = e[k]; }
+    }
+    for (k in a) {
+      if (Object.prototype.hasOwnProperty.call(a, k)) { merged[k] = a[k]; }
+    }
+    merged.airFraction = 0;
+    merged.packedEarthFraction = 1.0;
+    merged.surfaceVisibility = 0;
+    merged.visibleBuildingsAboveGround = 0;
+    merged.subterraneanLux = 0;
+    merged.viewMode = e.viewMode;
+    merged.cutawayReveal = e.cutawayReveal;
+    merged.activeProbe = e.activeProbe;
+    merged.platesOpen = !plateDrawer.hidden;
+    merged.activePlateTab = activePlateTab;
+    merged.plateZoomed = plateZoomed;
+    merged.plateLoupeScale = plateZoomed ? 1.8 : 1.0;
+    merged.reducedMotion = reducedMotion;
+    return merged;
+  }
+
+  function setViewMode(mode) {
+    var cur = earth.getState().viewMode;
+    var next = (mode === undefined || mode === 'toggle')
+      ? (cur === 'lithic_cutaway' ? 'barren_surface' : 'lithic_cutaway')
+      : mode;
+    earth.setViewMode(next);
+    earth.step(0.08);
+    if (next === 'barren_surface') {
+      calloutTitle.textContent = 'Deserted Stony Plateau';
+      calloutMeta.textContent = 'SURFACE 0m · ABOVE-GROUND 0 SEEN';
+      calloutBody.textContent = 'Nothing of Argia can be seen from up above; only barren scree faces the sky until night brings an ear to stone.';
+    }
+    renderNow();
+    return getCombinedState();
+  }
+
+  function setNight(flag) {
+    if (flag === undefined) {
+      acoustics.toggleNight();
+    } else {
+      acoustics.setNight(Boolean(flag));
+    }
+    renderNow();
+    return getCombinedState();
+  }
+
+  function setNightDialFactor(factor01) {
+    var f = Math.max(0, Math.min(1, Number(factor01) || 0));
+    acoustics.setTimeOfDay(0.5 * (1 - f));
+    renderNow();
+    return getCombinedState();
+  }
+
+  function pressEar(pressed, normX) {
+    acoustics.unlockAudio();
+    if (pressed === undefined) {
+      acoustics.toggleEar(normX);
+    } else {
+      acoustics.pressEar(Boolean(pressed), normX);
+    }
+    renderNow();
+    return getCombinedState();
+  }
+
+  function triggerDoorSlam(doorIdOrIndex) {
+    acoustics.unlockAudio();
+    var ev = acoustics.triggerDoorSlam(doorIdOrIndex);
+    if (ev && ev.heardAtSurface) {
+      heardFlashTimer = 1.2;
+      calloutTitle.textContent = 'Door Slam Heard Through Night Stone';
+      calloutMeta.textContent = ev.depthMeters + 'm CLAY · P ' + ev.pWaveMs + 'ms / S ' + ev.sWaveMs + 'ms';
+      calloutBody.textContent = ev.label + ' slammed deep underground — conducted upward through 100% solid earth to your ear on the night scree.';
+    } else if (ev) {
+      calloutTitle.textContent = 'Subterranean Door Slam Unheard Above';
+      calloutMeta.textContent = ev.depthMeters + 'm CLAY · ' + ev.reason.toUpperCase();
+      calloutBody.textContent = ev.reason === 'masked_by_daylight_barren_heat'
+        ? 'A buried stone door slammed, but harsh daylight masks the tremor — wait for night [N] and press ear [E].'
+        : 'A buried stone door slammed in the clay below, but no ear was pressed to the stony ground [E].';
+    }
+    renderNow();
+    return ev;
+  }
+
+  function setProbe(probeId) {
+    earth.setActiveProbe(probeId);
+    var active = earth.getState().activeProbe;
+    if (active && earth.getState().viewMode === 'barren_surface') {
+      earth.setViewMode('lithic_cutaway');
+      earth.step(0.08);
+    }
+    if (active && PROBE_COPY[active]) {
+      calloutTitle.textContent = PROBE_COPY[active].title;
+      calloutMeta.textContent = PROBE_COPY[active].meta;
+      calloutBody.textContent = PROBE_COPY[active].body;
+    } else if (!active) {
+      calloutTitle.textContent = 'Packed Lithic Section';
+      calloutMeta.textContent = 'DEPTH 24m · AIR 0 · EARTH 1.0';
+      calloutBody.textContent = 'Streets choked solid with compacted dirt; probe strata [1–3] or press ear to stony night ground [N + E + D].';
+    }
+    renderNow();
+    return getCombinedState();
+  }
+  function selectPlateTab(tab) {
+    activePlateTab = (tab === 'image') ? 'image' : 'map';
+    var showImg = (activePlateTab === 'image');
+    mapFigure.hidden = showImg;
+    imageFigure.hidden = !showImg;
+    tabMap.classList.toggle('arg-is-active', !showImg);
+    tabMap.setAttribute('aria-selected', showImg ? 'false' : 'true');
+    tabImage.classList.toggle('arg-is-active', showImg);
+    tabImage.setAttribute('aria-selected', showImg ? 'true' : 'false');
+    if (showImg && imageImg && imageImg.complete && imageImg.naturalWidth === 0) {
+      imageImg.hidden = true;
+      plateFallback.hidden = false;
+      renderFallbackPlate();
+    }
+  }
+
+  function openPlates(tab) {
+    plateDrawer.hidden = false;
+    selectPlateTab(tab || activePlateTab || 'map');
+    syncEnginesAndHud();
+    return getCombinedState();
+  }
+
+  function closePlates() {
+    plateDrawer.hidden = true;
+    syncEnginesAndHud();
+    return getCombinedState();
+  }
+
+  function togglePlateZoom() {
+    plateZoomed = !plateZoomed;
+    plateViewport.classList.toggle('arg-is-zoomed', plateZoomed);
+    setPressedClass(keyZoom, plateZoomed);
+    return getCombinedState();
+  }
+
+  function resetAll() {
+    earth.reset();
+    acoustics.reset();
+    acoustics.setBuriedDoors(earth.getState().buriedDoors);
+    plateDrawer.hidden = true;
+    plateZoomed = false;
+    plateViewport.classList.remove('arg-is-zoomed');
+    setPressedClass(keyZoom, false);
+    selectPlateTab('map');
+    heardFlashTimer = 0;
+    calloutTitle.textContent = 'Packed Lithic Section';
+    calloutMeta.textContent = 'DEPTH 24m · AIR 0 · EARTH 1.0';
+    calloutBody.textContent = 'Streets choked solid with compacted dirt; probe strata [1–3] or press ear to stony night ground [N + E + D].';
+    renderNow();
+    return getCombinedState();
+  }
+
+  acoustics.onDoorSlam(function (ev) {
+    if (ev && ev.heardAtSurface) {
+      heardFlashTimer = 1.2;
+      calloutTitle.textContent = 'Door Slam Heard Through Night Stone';
+      calloutMeta.textContent = ev.depthMeters + 'm CLAY · P ' + ev.pWaveMs + 'ms / S ' + ev.sWaveMs + 'ms';
+      calloutBody.textContent = ev.label + ' slammed deep underground — conducted upward through 100% solid earth to your ear on the night scree.';
+    }
+  });
+
+  function bindControl(el, handler) {
+    if (!el) { return; }
+    el.addEventListener('click', function (ev) {
+      ev.preventDefault();
+      handler();
+    });
+    el.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Enter' || ev.key === ' ') {
+        ev.preventDefault();
+        ev.stopPropagation();
+        handler();
+      }
+    });
+  }
+
+  bindControl(keyView, function () { setViewMode('toggle'); });
+  bindControl(keyPlates, function () { if (plateDrawer.hidden) { openPlates('map'); } else { closePlates(); } });
+  bindControl(keyMute, function () { acoustics.toggleMute(); renderNow(); });
+  bindControl(keyReset, resetAll);
+  bindControl(keyNight, function () { setNight(); });
+  bindControl(keyEar, function () { pressEar(); });
+  bindControl(keySlam, function () { triggerDoorSlam(); });
+  bindControl(probeStair, function () { setProbe(earth.getState().activeProbe === 'negative_stair' ? null : 'negative_stair'); });
+  bindControl(probeChamber, function () { setProbe(earth.getState().activeProbe === 'clay_chamber' ? null : 'clay_chamber'); });
+  bindControl(probeFissure, function () { setProbe(earth.getState().activeProbe === 'root_fissure' ? null : 'root_fissure'); });
+  bindControl(tabMap, function () { selectPlateTab('map'); });
+  bindControl(tabImage, function () { selectPlateTab('image'); });
+  bindControl(keyZoom, togglePlateZoom);
+  bindControl(keyClosePlates, closePlates);
+
+  plateDrawer.addEventListener('click', function (ev) {
+    if (ev.target === plateDrawer) { closePlates(); }
+  });
+
+  var dialDragging = false;
+  function updateDialFromClientX(clientX) {
+    var rect = nightDial.getBoundingClientRect();
+    if (rect.width <= 0) { return; }
+    setNightDialFactor((clientX - rect.left) / rect.width);
+  }
+  nightDial.addEventListener('pointerdown', function (ev) {
+    dialDragging = true;
+    if (nightDial.setPointerCapture) { try { nightDial.setPointerCapture(ev.pointerId); } catch (_e) { /* noop */ } }
+    updateDialFromClientX(ev.clientX);
+  });
+  nightDial.addEventListener('pointermove', function (ev) {
+    if (dialDragging) { updateDialFromClientX(ev.clientX); }
+  });
+  nightDial.addEventListener('pointerup', function () { dialDragging = false; });
+  nightDial.addEventListener('pointercancel', function () { dialDragging = false; });
+  nightDial.addEventListener('keydown', function (ev) {
+    var nf = acoustics.getState().nightFactor;
+    if (ev.key === 'ArrowRight' || ev.key === 'ArrowUp') { ev.preventDefault(); ev.stopPropagation(); setNightDialFactor(nf + 0.1); }
+    if (ev.key === 'ArrowLeft' || ev.key === 'ArrowDown') { ev.preventDefault(); ev.stopPropagation(); setNightDialFactor(nf - 0.1); }
+  });
+
+  var surfaceDragging = false;
+  canvas.addEventListener('pointerdown', function (ev) {
+    var rect = canvas.getBoundingClientRect();
+    if (rect.width <= 0 || rect.height <= 0) { return; }
+    var nx = Math.max(0, Math.min(1, (ev.clientX - rect.left) / rect.width));
+    var ny = Math.max(0, Math.min(1, (ev.clientY - rect.top) / rect.height));
+    acoustics.unlockAudio();
+    var es = earth.getState();
+    if (es.viewMode === 'barren_surface' || ny <= 0.21) {
+      surfaceDragging = true;
+      if (canvas.setPointerCapture) { try { canvas.setPointerCapture(ev.pointerId); } catch (_e2) { /* noop */ } }
+      pressEar(true, nx);
+      showInspection(earth.inspectAt(nx, ny));
+    } else {
+      var rep = earth.inspectAt(nx, ny);
+      showInspection(rep);
+      if (rep && rep.kind === 'buried_door') {
+        earth.setActiveProbe('buried_door');
+        triggerDoorSlam(rep.id);
+      } else if (rep && (rep.kind === 'negative_stair' || rep.kind === 'clay_chamber' || rep.kind === 'root_fissure' || rep.kind === 'rocky_sky' || rep.kind === 'packed_street')) {
+        earth.setActiveProbe(rep.kind);
+        renderNow();
+      }
+    }
+  });
+  canvas.addEventListener('pointermove', function (ev) {
+    if (!surfaceDragging) { return; }
+    var rect = canvas.getBoundingClientRect();
+    if (rect.width > 0) { pressEar(true, (ev.clientX - rect.left) / rect.width); }
+  });
+  canvas.addEventListener('pointerup', function () { surfaceDragging = false; });
+  canvas.addEventListener('pointercancel', function () { surfaceDragging = false; });
+  window.addEventListener('keydown', function (ev) {
+    if (ev.ctrlKey || ev.metaKey || ev.altKey) { return; }
+    var k = ev.key;
+    if (k === 'Escape') {
+      ev.preventDefault();
+      if (!plateDrawer.hidden) { closePlates(); } else { setProbe(null); }
+      return;
+    }
+    if (k === 'p' || k === 'P') {
+      ev.preventDefault();
+      if (plateDrawer.hidden) { openPlates('map'); } else { closePlates(); }
+      return;
+    }
+    if (k === 'z' || k === 'Z') {
+      if (!plateDrawer.hidden) { ev.preventDefault(); togglePlateZoom(); }
+      return;
+    }
+    if (!plateDrawer.hidden) { return; }
+    if (k === 'v' || k === 'V') { ev.preventDefault(); setViewMode('toggle'); }
+    else if (k === 'n' || k === 'N') { ev.preventDefault(); setNight(); }
+    else if (k === 'e' || k === 'E') { ev.preventDefault(); pressEar(); }
+    else if (k === 'd' || k === 'D') { ev.preventDefault(); triggerDoorSlam(); }
+    else if (k === 'm' || k === 'M') { ev.preventDefault(); acoustics.toggleMute(); renderNow(); }
+    else if (k === 'r' || k === 'R') { ev.preventDefault(); resetAll(); }
+    else if (k === '1') { ev.preventDefault(); setProbe('negative_stair'); }
+    else if (k === '2') { ev.preventDefault(); setProbe('clay_chamber'); }
+    else if (k === '3') { ev.preventDefault(); setProbe('root_fissure'); }
+    else if (k === '0') { ev.preventDefault(); setProbe(null); }
+  });
+
+  window.addEventListener('resize', renderNow);
+
+  if (motionQuery) {
+    var onMotionChange = function (mq) {
+      reducedMotion = Boolean(mq.matches);
+      earth.setReducedMotion(reducedMotion);
+      acoustics.setReducedMotion(reducedMotion);
+      renderNow();
+    };
+    if (typeof motionQuery.addEventListener === 'function') {
+      motionQuery.addEventListener('change', onMotionChange);
+    } else if (typeof motionQuery.addListener === 'function') {
+      motionQuery.addListener(onMotionChange);
+    }
+  }
+
+  var lastFrameMs = performance.now();
+  function frame(nowMs) {
+    var dtSec = Math.max(0, Math.min(0.1, (nowMs - lastFrameMs) / 1000));
+    lastFrameMs = nowMs;
+    if (heardFlashTimer > 0) {
+      heardFlashTimer = Math.max(0, heardFlashTimer - dtSec);
+    }
+    acoustics.step(dtSec);
+    earth.setSeismicWaves(acoustics.getActiveWaves());
+    earth.step(dtSec);
+    if (!reducedMotion || acoustics.getActiveWaves().length > 0 || heardFlashTimer > 0) {
+      renderNow();
+    }
+    window.requestAnimationFrame(frame);
+  }
+
+  window.__ARGIA_API__ = {
+    getState: getCombinedState,
+    setViewMode: setViewMode,
+    setNight: setNight,
+    setTimeOfDay: function (norm01) { acoustics.setTimeOfDay(norm01); renderNow(); return getCombinedState(); },
+    pressEar: pressEar,
+    triggerDoorSlam: triggerDoorSlam,
+    setProbe: setProbe,
+    inspectAt: function (nx, ny) { var r = earth.inspectAt(nx, ny); showInspection(r); return r; },
+    openPlates: openPlates,
+    closePlates: closePlates,
+    togglePlateZoom: togglePlateZoom,
+    setMuted: function (flag) { acoustics.setMuted(flag); renderNow(); return getCombinedState(); },
+    renderFallbackPlate: renderFallbackPlate,
+    reset: resetAll,
+    earth: earth,
+    acoustics: acoustics
+  };
+
+  renderFallbackPlate();
+  renderNow();
+  window.requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

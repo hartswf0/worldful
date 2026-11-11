@@ -1,0 +1,4034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ADELMA — Dusk Wharf &amp; Reciprocal Gaze</title>
+<style>
+:root {
+  --adl-dusk-indigo: #111827;
+  --adl-harbor-abyss: #0b111d;
+  --adl-wet-flagstone: #222c3d;
+  --adl-flagstone-edge: #33425b;
+  --adl-oil-lantern: #eba038;
+  --adl-lantern-halo: #ffd37d;
+  --adl-urchin-violet: #7c498d;
+  --adl-urchin-spine: #a976bc;
+  --adl-sackcloth-ash: #9e9382;
+  --adl-bone-parchment: #e4dccf;
+  --adl-fever-ochre: #cfa23c;
+  --adl-font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --adl-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --adl-font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--adl-harbor-abyss);
+  color: var(--adl-bone-parchment);
+  font-family: var(--adl-font-serif);
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+
+adelma-dusk-landing,
+adelma-masthead,
+adelma-brand-cluster,
+adelma-city-glyph,
+adelma-title-stack,
+adelma-city-title,
+adelma-city-sub,
+adelma-soul-tally,
+ledger-tally-chip,
+adelma-utility-strip,
+adelma-key-trigger,
+wharf-encounter-stage,
+forehead-doubt-seal,
+seal-kicker-tag,
+seal-whisper-line,
+wharf-gaze-reticle,
+reticle-station-tag,
+reticle-status-tag,
+bereavement-kaleidoscope,
+kaleidoscope-scrubber-row,
+kaleidoscope-ratio-head,
+ratio-caption-tag,
+adelma-threshold-scrubber,
+scrubber-living-fill,
+scrubber-dead-fill,
+scrubber-mid-notch,
+scrubber-thumb-pin,
+kaleidoscope-ledger-meta,
+ledger-meta-item,
+wharf-stone-rack,
+wharf-stone-pill,
+reciprocal-gaze-mirror,
+mirror-crown-bar,
+mirror-station-heading,
+mirror-station-name,
+mirror-wharf-form,
+paralysis-pulse-gauge,
+paralysis-gauge-head,
+paralysis-label-tag,
+paralysis-value-tag,
+paralysis-bar-track,
+paralysis-bar-fill,
+mirror-action-pair,
+mirror-diptych-fold,
+mirror-leaf-card,
+leaf-eyebrow-tag,
+leaf-mask-title,
+leaf-kin-badge,
+leaf-memory-body,
+mirror-hinge-axis,
+adelma-plate-drawer,
+plate-drawer-sheet,
+plate-drawer-bar,
+plate-bar-title,
+plate-tab-strip,
+plate-bar-tools,
+plate-folio-grid,
+plate-folio-card,
+plate-viewport-frame,
+plate-caption-strip {
+  display: block;
+}
+
+.adl-landing {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 396px;
+  grid-template-rows: 46px minmax(0, 1fr) auto;
+  gap: 8px;
+  padding: 8px 10px;
+  background:
+    radial-gradient(circle at 28% 18%, rgba(124, 73, 141, 0.16), transparent 54%),
+    radial-gradient(circle at 74% 82%, rgba(235, 160, 56, 0.10), transparent 48%),
+    linear-gradient(180deg, var(--adl-dusk-indigo) 0%, var(--adl-harbor-abyss) 100%);
+}
+
+.adl-masthead {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 5px 12px;
+  background: rgba(17, 24, 39, 0.88);
+  border: 1px solid rgba(235, 160, 56, 0.24);
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.42);
+  min-width: 0;
+}
+
+.adl-brand-cluster {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+}
+
+.adl-city-glyph {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--adl-lantern-halo) 20%, var(--adl-oil-lantern) 65%, var(--adl-urchin-violet) 100%);
+  box-shadow: 0 0 10px rgba(235, 160, 56, 0.65);
+  flex-shrink: 0;
+}
+.adl-title-stack {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  min-width: 0;
+}
+
+.adl-city-title {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--adl-lantern-halo);
+}
+
+.adl-city-sub {
+  font-family: var(--adl-font-sans);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--adl-sackcloth-ash);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.adl-soul-tally {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.adl-tally-chip {
+  font-family: var(--adl-font-mono);
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(34, 44, 61, 0.82);
+  border: 1px solid rgba(158, 147, 130, 0.28);
+  color: var(--adl-bone-parchment);
+  white-space: nowrap;
+}
+
+.adl-tally-dead {
+  border-color: rgba(169, 118, 188, 0.5);
+  color: #e6ccf0;
+}
+
+.adl-tally-masks.adl-is-saturated {
+  background: rgba(124, 73, 141, 0.34);
+  border-color: var(--adl-urchin-spine);
+  color: var(--adl-lantern-halo);
+}
+
+.adl-utility-strip {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.adl-key-btn {
+  font-family: var(--adl-font-mono);
+  font-size: 11px;
+  line-height: 1.2;
+  padding: 5px 8px;
+  border-radius: 5px;
+  background: rgba(34, 44, 61, 0.88);
+  border: 1px solid rgba(228, 220, 207, 0.22);
+  color: var(--adl-bone-parchment);
+  cursor: pointer;
+  transition: background 140ms ease, border-color 140ms ease, color 140ms ease;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.adl-key-btn:hover,
+.adl-key-btn:focus-visible {
+  background: rgba(235, 160, 56, 0.22);
+  border-color: var(--adl-oil-lantern);
+  color: var(--adl-lantern-halo);
+  outline: none;
+}
+
+.adl-key-btn.adl-is-active {
+  background: rgba(124, 73, 141, 0.42);
+  border-color: var(--adl-urchin-spine);
+  color: #fff3d6;
+}
+
+.adl-stage {
+  grid-column: 1;
+  grid-row: 2;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  border-radius: 7px;
+  overflow: hidden;
+  border: 1px solid rgba(158, 147, 130, 0.26);
+  background: var(--adl-harbor-abyss);
+  box-shadow: inset 0 0 36px rgba(0, 0, 0, 0.65);
+}
+
+.adl-canvas {
+  order: 2;
+  flex: 1;
+  min-height: 0;
+  display: block;
+  width: 100%;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.adl-forehead-seal {
+  order: 1;
+  flex-shrink: 0;
+  padding: 5px 10px;
+  background: rgba(11, 17, 29, 0.92);
+  border-bottom: 1px solid rgba(207, 162, 60, 0.32);
+  cursor: pointer;
+}
+
+.adl-forehead-seal.adl-is-threshold {
+  border-bottom-color: rgba(169, 118, 188, 0.62);
+  background: rgba(24, 17, 36, 0.92);
+}
+
+.adl-seal-kicker {
+  font-family: var(--adl-font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  color: var(--adl-fever-ochre);
+  margin-bottom: 2px;
+}
+
+.adl-forehead-seal.adl-is-threshold .adl-seal-kicker {
+  color: var(--adl-urchin-spine);
+}
+
+.adl-seal-whisper {
+  font-size: 12px;
+  line-height: 1.28;
+  color: var(--adl-bone-parchment);
+  font-style: italic;
+}
+
+.adl-gaze-reticle {
+  order: 3;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 4px 10px;
+  background: rgba(11, 17, 29, 0.92);
+  border-top: 1px solid rgba(158, 147, 130, 0.24);
+}
+
+.adl-gaze-reticle.adl-is-locked {
+  border-color: var(--adl-urchin-spine);
+  background: rgba(33, 18, 44, 0.86);
+}
+
+.adl-reticle-station {
+  font-family: var(--adl-font-sans);
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--adl-lantern-halo);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.adl-reticle-status {
+  font-family: var(--adl-font-mono);
+  font-size: 10.5px;
+  color: var(--adl-sackcloth-ash);
+  white-space: nowrap;
+}
+.adl-gaze-reticle.adl-is-locked .adl-reticle-status {
+  color: #f3c8ff;
+}
+
+.adl-kaleidoscope {
+  grid-column: 1;
+  grid-row: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 10px;
+  background: rgba(17, 24, 39, 0.9);
+  border: 1px solid rgba(158, 147, 130, 0.25);
+  border-radius: 7px;
+  min-width: 0;
+}
+
+.adl-scrubber-row {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.adl-ratio-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.adl-ratio-caption {
+  font-family: var(--adl-font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.07em;
+  color: var(--adl-lantern-halo);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.adl-scrubber {
+  position: relative;
+  height: 16px;
+  border-radius: 8px;
+  background: var(--adl-wet-flagstone);
+  border: 1px solid rgba(228, 220, 207, 0.24);
+  cursor: ew-resize;
+  overflow: visible;
+  touch-action: none;
+}
+
+.adl-scrubber:focus-visible {
+  outline: 2px solid var(--adl-oil-lantern);
+  outline-offset: 2px;
+}
+
+.adl-scrubber-living {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 7px 0 0 7px;
+  background: linear-gradient(90deg, #2d3d56, #4a617d);
+}
+
+.adl-scrubber-dead {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  border-radius: 0 7px 7px 0;
+  background: linear-gradient(90deg, var(--adl-urchin-violet), #582f68);
+}
+
+.adl-scrubber-mid {
+  position: absolute;
+  left: 50%;
+  top: -3px;
+  bottom: -3px;
+  width: 2px;
+  background: var(--adl-lantern-halo);
+  font-family: var(--adl-font-mono);
+  font-size: 8.5px;
+  color: var(--adl-lantern-halo);
+  text-indent: 4px;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.adl-scrubber-thumb {
+  position: absolute;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  margin-left: -7px;
+  margin-top: -7px;
+  border-radius: 50%;
+  background: var(--adl-lantern-halo);
+  border: 2px solid var(--adl-harbor-abyss);
+  box-shadow: 0 0 8px rgba(235, 160, 56, 0.85);
+  pointer-events: none;
+}
+
+.adl-ledger-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  font-family: var(--adl-font-mono);
+  font-size: 10px;
+  color: var(--adl-sackcloth-ash);
+}
+
+.adl-meta-center {
+  color: var(--adl-fever-ochre);
+}
+
+.adl-stone-rack {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.adl-stone-pill {
+  font-family: var(--adl-font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 6px;
+  border-radius: 5px;
+  background: rgba(34, 44, 61, 0.85);
+  border: 1px solid rgba(158, 147, 130, 0.24);
+  color: var(--adl-bone-parchment);
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+
+.adl-stone-pill:hover,
+.adl-stone-pill:focus-visible {
+  border-color: var(--adl-oil-lantern);
+  color: var(--adl-lantern-halo);
+  outline: none;
+}
+
+.adl-stone-pill.adl-is-active {
+  background: rgba(235, 160, 56, 0.2);
+  border-color: var(--adl-oil-lantern);
+  color: var(--adl-lantern-halo);
+}
+
+.adl-stone-pill.adl-is-recognized {
+  box-shadow: inset 0 -2px 0 var(--adl-urchin-spine);
+}
+
+.adl-mirror {
+  grid-column: 2;
+  grid-row: 2 / span 2;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  background: rgba(17, 24, 39, 0.92);
+  border: 1px solid rgba(158, 147, 130, 0.28);
+  border-radius: 7px;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.adl-mirror.adl-is-locked {
+  border-color: var(--adl-urchin-spine);
+  box-shadow: 0 0 22px rgba(124, 73, 141, 0.32);
+}
+.adl-mirror-crown {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  flex-shrink: 0;
+}
+
+.adl-station-name {
+  font-family: var(--adl-font-sans);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--adl-lantern-halo);
+}
+
+.adl-wharf-form {
+  font-size: 11.5px;
+  line-height: 1.28;
+  color: var(--adl-sackcloth-ash);
+  margin-top: 2px;
+}
+
+.adl-paralysis-gauge {
+  padding: 6px 8px;
+  border-radius: 5px;
+  background: rgba(11, 17, 29, 0.72);
+  border: 1px solid rgba(158, 147, 130, 0.2);
+}
+
+.adl-paralysis-head {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--adl-font-mono);
+  font-size: 10px;
+  color: var(--adl-bone-parchment);
+  margin-bottom: 4px;
+}
+
+.adl-paralysis-track {
+  height: 7px;
+  border-radius: 4px;
+  background: var(--adl-wet-flagstone);
+  overflow: hidden;
+}
+
+.adl-paralysis-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--adl-fever-ochre), var(--adl-urchin-spine));
+  transition: width 150ms ease;
+}
+
+.adl-mirror-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.adl-btn-gaze {
+  border-color: rgba(169, 118, 188, 0.48);
+}
+
+.adl-diptych {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow: hidden;
+}
+
+.adl-leaf {
+  flex: 1;
+  min-height: 0;
+  padding: 9px 10px;
+  border-radius: 6px;
+  background: rgba(11, 17, 29, 0.76);
+  border: 1px solid rgba(235, 160, 56, 0.24);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow: hidden;
+}
+
+.adl-leaf-inward {
+  border-color: rgba(124, 73, 141, 0.42);
+  background: rgba(18, 14, 30, 0.8);
+}
+
+.adl-leaf-inward.adl-is-locked {
+  border-color: var(--adl-urchin-spine);
+  background: rgba(38, 20, 52, 0.9);
+  box-shadow: inset 0 0 18px rgba(169, 118, 188, 0.25);
+}
+
+.adl-leaf-eyebrow {
+  font-family: var(--adl-font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  color: var(--adl-oil-lantern);
+}
+
+.adl-leaf-inward .adl-leaf-eyebrow {
+  color: var(--adl-urchin-spine);
+}
+
+.adl-leaf-title {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--adl-bone-parchment);
+  line-height: 1.2;
+}
+
+.adl-leaf-badge {
+  font-family: var(--adl-font-mono);
+  font-size: 10px;
+  color: var(--adl-fever-ochre);
+}
+
+.adl-leaf-body {
+  font-size: 12px;
+  line-height: 1.34;
+  color: #d7cfc2;
+  overflow: hidden;
+}
+
+.adl-mirror-hinge {
+  font-family: var(--adl-font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-align: center;
+  color: var(--adl-sackcloth-ash);
+  padding: 2px 0;
+  flex-shrink: 0;
+}
+
+.adl-plate-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(7, 11, 20, 0.9);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+}
+
+.adl-plate-sheet {
+  width: min(1220px, 100%);
+  height: min(760px, 100%);
+  background: var(--adl-dusk-indigo);
+  border: 1px solid rgba(235, 160, 56, 0.36);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  gap: 8px;
+  overflow: hidden;
+}
+
+.adl-plate-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.adl-plate-title {
+  font-family: var(--adl-font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.1em;
+  color: var(--adl-lantern-halo);
+}
+
+.adl-plate-tabs,
+.adl-plate-tools {
+  display: flex;
+  gap: 5px;
+}
+.adl-plate-grid {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.adl-plate-grid.adl-mode-single {
+  grid-template-columns: 1fr;
+}
+
+.adl-plate-card {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--adl-harbor-abyss);
+  border: 1px solid rgba(158, 147, 130, 0.25);
+  border-radius: 6px;
+  padding: 8px;
+  overflow: hidden;
+}
+
+.adl-plate-frame {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+  border-radius: 4px;
+  background: #070b14;
+}
+
+.adl-plate-img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  transition: transform 180ms ease;
+  transform-origin: center center;
+}
+
+.adl-plate-frame.adl-is-loupe .adl-plate-img {
+  transform: scale(1.8);
+  cursor: zoom-out;
+}
+
+.adl-plate-caption {
+  font-family: var(--adl-font-mono);
+  font-size: 10px;
+  color: var(--adl-sackcloth-ash);
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .adl-landing {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 36px minmax(200px, 1fr) auto auto;
+    gap: 5px;
+    padding: 5px 6px;
+  }
+
+  .adl-masthead {
+    grid-column: 1;
+    grid-row: 1;
+    padding: 3px 7px;
+    gap: 4px;
+  }
+
+  .adl-city-title {
+    font-size: 13px;
+    letter-spacing: 0.14em;
+  }
+
+  .adl-city-sub,
+  .adl-soul-tally {
+    display: none;
+  }
+
+  .adl-key-btn {
+    font-size: 10px;
+    padding: 4px 6px;
+  }
+
+  .adl-stage {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .adl-forehead-seal {
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    padding: 4px 7px;
+  }
+
+  .adl-seal-kicker {
+    font-size: 8.5px;
+  }
+
+  .adl-seal-whisper {
+    font-size: 10.5px;
+    line-height: 1.2;
+  }
+
+  .adl-gaze-reticle {
+    bottom: 5px;
+    left: 5px;
+    right: 5px;
+    padding: 3px 7px;
+  }
+
+  .adl-reticle-station,
+  .adl-reticle-status {
+    font-size: 9.5px;
+  }
+
+  .adl-kaleidoscope {
+    grid-column: 1;
+    grid-row: 3;
+    padding: 5px 7px;
+    gap: 4px;
+  }
+
+  .adl-ratio-caption {
+    font-size: 9.5px;
+    letter-spacing: 0.03em;
+  }
+
+  .adl-stone-rack {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 4px;
+  }
+
+  .adl-stone-pill {
+    font-size: 10px;
+    padding: 4px 4px;
+    white-space: normal;
+    text-overflow: clip;
+  }
+
+  .adl-mirror {
+    grid-column: 1;
+    grid-row: 4;
+    padding: 6px 7px;
+    gap: 5px;
+  }
+
+  .adl-mirror-crown {
+    gap: 4px;
+  }
+
+  .adl-station-name {
+    font-size: 11px;
+  }
+
+  .adl-wharf-form {
+    font-size: 10px;
+    line-height: 1.2;
+  }
+
+  .adl-paralysis-gauge {
+    padding: 4px 6px;
+  }
+
+  .adl-diptych {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+  }
+
+  .adl-mirror-hinge {
+    display: none;
+  }
+
+  .adl-leaf {
+    padding: 6px 7px;
+    gap: 2px;
+  }
+
+  .adl-leaf-eyebrow {
+    font-size: 8px;
+    letter-spacing: 0.03em;
+  }
+
+  .adl-leaf-title {
+    font-size: 11.5px;
+  }
+
+  .adl-leaf-badge {
+    font-size: 8.5px;
+  }
+
+  .adl-leaf-body {
+    font-size: 10px;
+    line-height: 1.22;
+  }
+
+  .adl-plate-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+</style>
+</head>
+<body>
+<adelma-dusk-landing class="adl-landing" id="adl-landing">
+  <adelma-masthead class="adl-masthead">
+    <adelma-brand-cluster class="adl-brand-cluster">
+      <adelma-city-glyph class="adl-city-glyph" aria-hidden="true"></adelma-city-glyph>
+      <adelma-title-stack class="adl-title-stack">
+        <adelma-city-title class="adl-city-title">ADELMA</adelma-city-title>
+        <adelma-city-sub class="adl-city-sub">Dusk Wholesale Fish-Market Wharf · Fixed Eyes in Twilight</adelma-city-sub>
+      </adelma-title-stack>
+    </adelma-brand-cluster>
+
+    <adelma-soul-tally class="adl-soul-tally">
+      <ledger-tally-chip class="adl-tally-chip adl-tally-living" id="adl-top-living">Living 23</ledger-tally-chip>
+      <ledger-tally-chip class="adl-tally-chip adl-tally-dead" id="adl-top-dead">Dead 37</ledger-tally-chip>
+      <ledger-tally-chip class="adl-tally-chip adl-tally-masks" id="adl-top-masks">Masks 8/12</ledger-tally-chip>
+    </adelma-soul-tally>
+
+    <adelma-utility-strip class="adl-utility-strip">
+      <adelma-key-trigger class="adl-key-btn" id="adl-btn-forehead" role="button" tabindex="0" aria-label="Touch forehead">[F] Forehead</adelma-key-trigger>
+      <adelma-key-trigger class="adl-key-btn" id="adl-btn-mute" role="button" tabindex="0" aria-label="Toggle harbor sound" aria-pressed="false">[M] Sound</adelma-key-trigger>
+      <adelma-key-trigger class="adl-key-btn" id="adl-btn-plates" role="button" tabindex="0" aria-label="Open archival plates">[P] Plates</adelma-key-trigger>
+      <adelma-key-trigger class="adl-key-btn" id="adl-btn-reset" role="button" tabindex="0" aria-label="Reset dusk landing">[R] Reset</adelma-key-trigger>
+    </adelma-utility-strip>
+  </adelma-masthead>
+
+  <wharf-encounter-stage class="adl-stage" id="adl-stage">
+    <canvas class="adl-canvas" id="adl-canvas" aria-label="Dusk wholesale fish-market dock of Adelma with twelve staring inhabitants"></canvas>
+
+    <forehead-doubt-seal class="adl-forehead-seal" id="adl-forehead-seal" role="button" tabindex="0" aria-label="Touch forehead to turn inner reflection">
+      <seal-kicker-tag class="adl-seal-kicker" id="adl-seal-kicker">FOREHEAD DOUBT · [F] TOUCH TEMPLE</seal-kicker-tag>
+      <seal-whisper-line class="adl-seal-whisper" id="adl-seal-whisper">Perhaps this is the land where you arrive when you die...</seal-whisper-line>
+    </forehead-doubt-seal>
+
+    <wharf-gaze-reticle class="adl-gaze-reticle" id="adl-gaze-reticle">
+      <reticle-station-tag class="adl-reticle-station" id="adl-reticle-station">[1] Dock Apron Mooring Bollard</reticle-station-tag>
+      <reticle-status-tag class="adl-reticle-status" id="adl-reticle-status">Eyes Watching · [G] Lock · [A] Avert</reticle-status-tag>
+    </wharf-gaze-reticle>
+  </wharf-encounter-stage>
+
+  <bereavement-kaleidoscope class="adl-kaleidoscope" id="adl-kaleidoscope">
+    <kaleidoscope-scrubber-row class="adl-scrubber-row">
+      <kaleidoscope-ratio-head class="adl-ratio-head">
+        <ratio-caption-tag class="adl-ratio-caption" id="adl-ratio-caption">DEAD OUTNUMBER LIVING · 62%</ratio-caption-tag>
+        <adelma-key-trigger class="adl-key-btn adl-key-kaleidoscope" id="adl-btn-kaleidoscope" role="button" tabindex="0" aria-label="Turn bereavement kaleidoscope">[K] Kaleidoscope · 0</adelma-key-trigger>
+      </kaleidoscope-ratio-head>
+
+      <adelma-threshold-scrubber class="adl-scrubber" id="adl-scrubber" role="slider" tabindex="0" aria-label="Life bereavement ratio" aria-valuemin="0" aria-valuemax="100" aria-valuenow="62">
+        <scrubber-living-fill class="adl-scrubber-living" id="adl-scrubber-living"></scrubber-living-fill>
+        <scrubber-dead-fill class="adl-scrubber-dead" id="adl-scrubber-dead"></scrubber-dead-fill>
+        <scrubber-mid-notch class="adl-scrubber-mid">50%</scrubber-mid-notch>
+        <scrubber-thumb-pin class="adl-scrubber-thumb" id="adl-scrubber-thumb"></scrubber-thumb-pin>
+      </adelma-threshold-scrubber>
+
+      <kaleidoscope-ledger-meta class="adl-ledger-meta">
+        <ledger-meta-item class="adl-meta-item" id="adl-meta-living">Living: 23</ledger-meta-item>
+        <ledger-meta-item class="adl-meta-item adl-meta-center" id="adl-meta-threshold">50% Threshold Crossed</ledger-meta-item>
+        <ledger-meta-item class="adl-meta-item adl-meta-right" id="adl-meta-dead">Dead: 37 · Masked 8/12</ledger-meta-item>
+      </kaleidoscope-ledger-meta>
+    </kaleidoscope-scrubber-row>
+
+    <wharf-stone-rack class="adl-stone-rack" id="adl-stone-rack">
+      <wharf-stone-pill class="adl-stone-pill adl-is-active" data-stone-id="hawser_sailor" role="button" tabindex="0">1 · Sailor</wharf-stone-pill>
+      <wharf-stone-pill class="adl-stone-pill" data-stone-id="urchin_fisherman" role="button" tabindex="0">2 · Fisherman</wharf-stone-pill>
+      <wharf-stone-pill class="adl-stone-pill" data-stone-id="straw_mat_sufferer" role="button" tabindex="0">3 · Sufferer</wharf-stone-pill>
+      <wharf-stone-pill class="adl-stone-pill" data-stone-id="gangplank_stevedore" role="button" tabindex="0">4 · Stevedore</wharf-stone-pill>
+      <wharf-stone-pill class="adl-stone-pill" data-stone-id="balcony_maiden" role="button" tabindex="0">5 · Maiden</wharf-stone-pill>
+      <wharf-stone-pill class="adl-stone-pill" data-stone-id="scale_greengrocer" role="button" tabindex="0">6 · Vendor</wharf-stone-pill>
+    </wharf-stone-rack>
+  </bereavement-kaleidoscope>
+
+  <reciprocal-gaze-mirror class="adl-mirror" id="adl-mirror">
+    <mirror-crown-bar class="adl-mirror-crown">
+      <mirror-station-heading class="adl-mirror-station">
+        <mirror-station-name class="adl-station-name" id="adl-mirror-station">[1] Dock Apron Mooring Bollard</mirror-station-name>
+        <mirror-wharf-form class="adl-wharf-form" id="adl-mirror-form">Sailor catching the wet mooring hawser among dock porters at dusk landing</mirror-wharf-form>
+      </mirror-station-heading>
+
+      <paralysis-pulse-gauge class="adl-paralysis-gauge" id="adl-paralysis-gauge">
+        <paralysis-gauge-head class="adl-paralysis-head">
+          <paralysis-label-tag class="adl-paralysis-label">Gaze Paralysis</paralysis-label-tag>
+          <paralysis-value-tag class="adl-paralysis-value" id="adl-paralysis-value">0%</paralysis-value-tag>
+        </paralysis-gauge-head>
+        <paralysis-bar-track class="adl-paralysis-track">
+          <paralysis-bar-fill class="adl-paralysis-fill" id="adl-paralysis-fill"></paralysis-bar-fill>
+        </paralysis-bar-track>
+      </paralysis-pulse-gauge>
+
+      <mirror-action-pair class="adl-mirror-actions">
+        <adelma-key-trigger class="adl-key-btn adl-btn-gaze" id="adl-btn-lock" role="button" tabindex="0" aria-label="Hold citizen gaze">[G] Hold Gaze</adelma-key-trigger>
+        <adelma-key-trigger class="adl-key-btn adl-btn-avert" id="adl-btn-avert" role="button" tabindex="0" aria-label="Avert eyes to harbor water">[A] Avert Eyes</adelma-key-trigger>
+      </mirror-action-pair>
+    </mirror-crown-bar>
+
+    <mirror-diptych-fold class="adl-diptych">
+      <mirror-leaf-card class="adl-leaf adl-leaf-outward" id="adl-leaf-outward">
+        <leaf-eyebrow-tag class="adl-leaf-eyebrow">MASK YOU PROJECT ONTO THEM</leaf-eyebrow-tag>
+        <leaf-mask-title class="adl-leaf-title" id="adl-outward-title">Soldier Resembling My Dying Father</leaf-mask-title>
+        <leaf-kin-badge class="adl-leaf-badge" id="adl-outward-badge">Father on the eve of death</leaf-kin-badge>
+        <leaf-memory-body class="adl-leaf-body" id="adl-outward-body">Catching the wet mooring hawser at dusk landing, the sailor turns the hollowed brow of a soldier resembling my father the day before he died.</leaf-memory-body>
+      </mirror-leaf-card>
+
+      <mirror-hinge-axis class="adl-mirror-hinge" id="adl-mirror-hinge">⇄ RECIPROCAL STARING MIRROR ⇄</mirror-hinge-axis>
+
+      <mirror-leaf-card class="adl-leaf adl-leaf-inward" id="adl-leaf-inward">
+        <leaf-eyebrow-tag class="adl-leaf-eyebrow">DEAD LIKENESS THEY MOURN IN YOU</leaf-eyebrow-tag>
+        <leaf-mask-title class="adl-leaf-title" id="adl-inward-title">Youngest Son Swept Overboard</leaf-mask-title>
+        <leaf-kin-badge class="adl-leaf-badge" id="adl-inward-badge">Lost youngest son</leaf-kin-badge>
+        <leaf-memory-body class="adl-leaf-body" id="adl-inward-body">His wet grip freezes on the hawser: in your salt-stung eyes he recognizes his youngest son swept overboard in the winter gale off Negroponte.</leaf-memory-body>
+      </mirror-leaf-card>
+    </mirror-diptych-fold>
+  </reciprocal-gaze-mirror>
+
+  <adelma-plate-drawer class="adl-plate-drawer" id="adl-plate-drawer" role="dialog" aria-modal="true" aria-label="Adelma Archival Plates" hidden>
+    <plate-drawer-sheet class="adl-plate-sheet">
+      <plate-drawer-bar class="adl-plate-bar">
+        <plate-bar-title class="adl-plate-title">ADELMA · ROYAL SURVEY &amp; DUSK PLATES</plate-bar-title>
+        <plate-tab-strip class="adl-plate-tabs">
+          <adelma-key-trigger class="adl-key-btn adl-plate-tab adl-is-active" data-plate-tab="diptych" role="button" tabindex="0">Diptych</adelma-key-trigger>
+          <adelma-key-trigger class="adl-key-btn adl-plate-tab" data-plate-tab="map" role="button" tabindex="0">Map</adelma-key-trigger>
+          <adelma-key-trigger class="adl-key-btn adl-plate-tab" data-plate-tab="vista" role="button" tabindex="0">Plate</adelma-key-trigger>
+        </plate-tab-strip>
+        <plate-bar-tools class="adl-plate-tools">
+          <adelma-key-trigger class="adl-key-btn" id="adl-btn-loupe" role="button" tabindex="0" aria-pressed="false">[Z] 1.8× Loupe</adelma-key-trigger>
+          <adelma-key-trigger class="adl-key-btn" id="adl-btn-plate-close" role="button" tabindex="0">[Esc] Close</adelma-key-trigger>
+        </plate-bar-tools>
+      </plate-drawer-bar>
+
+      <plate-folio-grid class="adl-plate-grid" id="adl-plate-grid">
+        <plate-folio-card class="adl-plate-card" id="adl-card-map">
+          <plate-viewport-frame class="adl-plate-frame" id="adl-frame-map">
+            <img class="adl-plate-img" id="adl-map-img" src="map.png" alt="Cartographic harbor map of Adelma wholesale fish market and dusk necropolis">
+          </plate-viewport-frame>
+          <plate-caption-strip class="adl-plate-caption">Harbor Map · Dusk Wharf, Colonnade &amp; Necropolis Steps (1600×1200)</plate-caption-strip>
+        </plate-folio-card>
+
+        <plate-folio-card class="adl-plate-card" id="adl-card-vista">
+          <plate-viewport-frame class="adl-plate-frame" id="adl-frame-vista">
+            <img class="adl-plate-img" id="adl-vista-img" src="image.png" alt="Chiaroscuro dusk view of Adelma wholesale fish-market dock landing">
+          </plate-viewport-frame>
+          <plate-caption-strip class="adl-plate-caption">Dusk Landing Plate · Wholesale Fish-Market Dock (1600×1000)</plate-caption-strip>
+        </plate-folio-card>
+      </plate-folio-grid>
+    </plate-drawer-sheet>
+  </adelma-plate-drawer>
+</adelma-dusk-landing>
+<script>
+(function () {
+  "use strict";
+
+  const PALETTE = Object.freeze({
+    dusk_indigo: "#111827",
+    harbor_abyss: "#0b111d",
+    wet_flagstone: "#222c3d",
+    oil_lantern: "#eba038",
+    lantern_halo: "#ffd37d",
+    urchin_violet: "#7c498d",
+    urchin_spine: "#a976bc",
+    sackcloth_ash: "#9e9382",
+    bone_parchment: "#e4dccf",
+    fever_ochre: "#cfa23c"
+  });
+
+  function clamp(v, lo, hi) {
+    return v < lo ? lo : v > hi ? hi : v;
+  }
+
+  function hexToRgba(hex, alpha) {
+    const clean = String(hex || "#111827").replace("#", "");
+    const num = parseInt(clean.length === 3
+      ? clean[0] + clean[0] + clean[1] + clean[1] + clean[2] + clean[2]
+      : clean, 16) || 0;
+    const r = (num >> 16) & 255;
+    const g = (num >> 8) & 255;
+    const b = num & 255;
+    return "rgba(" + r + "," + g + "," + b + "," + clamp(alpha, 0, 1).toFixed(3) + ")";
+  }
+
+  const PRIMARY_STONE_IDS = Object.freeze([
+    "hawser_sailor",
+    "urchin_fisherman",
+    "straw_mat_sufferer",
+    "gangplank_stevedore",
+    "balcony_maiden",
+    "scale_greengrocer"
+  ]);
+
+  const RAW_STRANGERS = [
+    {
+      index: 0,
+      id: "hawser_sailor",
+      isPrimaryStone: true,
+      keyNum: 1,
+      roleLabel: "Mooring-Hawser Sailor",
+      station: "Dock Apron Mooring Bollard",
+      propSummary: "Wet hemp mooring hawser caught taut around iron quay bollard",
+      xNorm: 0.17,
+      yNorm: 0.68,
+      eyeOffsetYNorm: -0.046,
+      scale: 1.04,
+      cloakHue: "#26364f",
+      accentHue: "#cfa23c"
+    },
+    {
+      index: 1,
+      id: "urchin_fisherman",
+      isPrimaryStone: true,
+      keyNum: 2,
+      roleLabel: "Sea-Urchin Fisherman",
+      station: "Wet Flagstone Fish Quay",
+      propSummary: "Crusty, warty hands sorting wicker baskets of spiny purple sea urchins",
+      xNorm: 0.70,
+      yNorm: 0.72,
+      eyeOffsetYNorm: -0.042,
+      scale: 1.05,
+      cloakHue: "#32293f",
+      accentHue: "#a976bc"
+    },
+    {
+      index: 2,
+      id: "straw_mat_sufferer",
+      isPrimaryStone: true,
+      keyNum: 3,
+      roleLabel: "Fever Sufferer on Straw",
+      station: "Shadowed Colonnade Corner",
+      propSummary: "Damp woven straw mat tucked inside the shadowed limestone arch",
+      xNorm: 0.52,
+      yNorm: 0.58,
+      eyeOffsetYNorm: -0.033,
+      scale: 0.94,
+      cloakHue: "#494032",
+      accentHue: "#cfa23c"
+    },
+    {
+      index: 3,
+      id: "gangplank_stevedore",
+      isPrimaryStone: true,
+      keyNum: 4,
+      roleLabel: "Sack-Hooded Stevedore",
+      station: "Plank Gangplank & Steep Quay Steps",
+      propSummary: "Coarse jute sack folded as hood over bowed head and shoulders",
+      xNorm: 0.36,
+      yNorm: 0.56,
+      eyeOffsetYNorm: -0.044,
+      scale: 0.98,
+      cloakHue: "#6b6152",
+      accentHue: "#9e9382"
+    },
+    {
+      index: 4,
+      id: "balcony_maiden",
+      isPrimaryStone: true,
+      keyNum: 5,
+      roleLabel: "Veiled Balcony Girl",
+      station: "Wrought-Iron Balcony Over the Arch",
+      propSummary: "Ornate wrought-iron balcony balustrade above the dusk arcade",
+      xNorm: 0.62,
+      yNorm: 0.25,
+      eyeOffsetYNorm: -0.038,
+      scale: 0.86,
+      cloakHue: "#3d344c",
+      accentHue: "#e4dccf"
+    },
+    {
+      index: 5,
+      id: "scale_greengrocer",
+      isPrimaryStone: true,
+      keyNum: 6,
+      roleLabel: "Brass-Scale Vegetable Vendor",
+      station: "Lantern Alley Vegetable Stall",
+      propSummary: "Hanging brass pan-scale weighing dark greens under lantern light",
+      xNorm: 0.86,
+      yNorm: 0.60,
+      eyeOffsetYNorm: -0.043,
+      scale: 1.00,
+      cloakHue: "#353d36",
+      accentHue: "#eba038"
+    },
+    {
+      index: 6,
+      id: "net_mender",
+      isPrimaryStone: false,
+      keyNum: null,
+      roleLabel: "Tarred-Net Mender",
+      station: "Western Timber Piling Apron",
+      propSummary: "Bone shuttle threading dark brine-stiffened trawl mesh",
+      xNorm: 0.11,
+      yNorm: 0.52,
+      eyeOffsetYNorm: -0.040,
+      scale: 0.90,
+      cloakHue: "#243043",
+      accentHue: "#9e9382"
+    },
+    {
+      index: 7,
+      id: "upper_stair_porter",
+      isPrimaryStone: false,
+      keyNum: null,
+      roleLabel: "Steep-Alley Sack Porter",
+      station: "Upper Limestone Stairway",
+      propSummary: "Folded sackcloth cowl climbing the stepped stone alley",
+      xNorm: 0.26,
+      yNorm: 0.36,
+      eyeOffsetYNorm: -0.038,
+      scale: 0.84,
+      cloakHue: "#5c5346",
+      accentHue: "#9e9382"
+    },
+    {
+      index: 8,
+      id: "lantern_trimmer",
+      isPrimaryStone: false,
+      keyNum: null,
+      roleLabel: "Colonnade Lantern Trimmer",
+      station: "Central Arch Keystone Hook",
+      propSummary: "Long iron hook steadying a warm whale-oil arcade lantern",
+      xNorm: 0.44,
+      yNorm: 0.39,
+      eyeOffsetYNorm: -0.040,
+      scale: 0.88,
+      cloakHue: "#2d3546",
+      accentHue: "#ffd37d"
+    },
+    {
+      index: 9,
+      id: "cuttlefish_monger",
+      isPrimaryStone: false,
+      keyNum: null,
+      roleLabel: "Cuttlefish Slab Monger",
+      station: "Wholesale Brine Trough",
+      propSummary: "Wet stone trough gleaming with silver bream and cuttlefish",
+      xNorm: 0.55,
+      yNorm: 0.76,
+      eyeOffsetYNorm: -0.044,
+      scale: 1.02,
+      cloakHue: "#283244",
+      accentHue: "#7c498d"
+    },
+    {
+      index: 10,
+      id: "lateen_oarsman",
+      isPrimaryStone: false,
+      keyNum: null,
+      roleLabel: "Lateen Skiff Oarsman",
+      station: "Harbor Mooring Gunwale",
+      propSummary: "Ash sweep oar braced against moored lateen fishing hull",
+      xNorm: 0.33,
+      yNorm: 0.74,
+      eyeOffsetYNorm: -0.042,
+      scale: 0.96,
+      cloakHue: "#1d293a",
+      accentHue: "#eba038"
+    },
+    {
+      index: 11,
+      id: "colonnade_widow",
+      isPrimaryStone: false,
+      keyNum: null,
+      roleLabel: "Shrouded Arcade Watcher",
+      station: "Eastern Limestone Pier",
+      propSummary: "Dark wool shawl drawn tight beside damp colonnade pilaster",
+      xNorm: 0.77,
+      yNorm: 0.43,
+      eyeOffsetYNorm: -0.040,
+      scale: 0.89,
+      cloakHue: "#272334",
+      accentHue: "#a976bc"
+    }
+  ];
+
+  const WHARF_STRANGERS = Object.freeze(RAW_STRANGERS.map(function (item) {
+    return Object.freeze(Object.assign({}, item));
+  }));
+
+  const DUSK_STARS = (function () {
+    const pts = [];
+    let seed = 34061;
+    for (let i = 0; i < 28; i++) {
+      seed = (seed * 16807) % 2147483647;
+      const x = (seed % 1000) / 1000;
+      seed = (seed * 16807) % 2147483647;
+      const y = 0.02 + ((seed % 1000) / 1000) * 0.19;
+      seed = (seed * 16807) % 2147483647;
+      const r = 0.6 + ((seed % 100) / 100) * 1.1;
+      pts.push({ x: x, y: y, r: r, phase: i * 0.73 });
+    }
+    return pts;
+  })();
+
+  function createHarborAudio(initialMuted) {
+    let ctx = null;
+    let masterGain = null;
+    let noiseBuffer = null;
+    let muted = Boolean(initialMuted);
+    let audioUnlocked = false;
+
+    function ensureContext() {
+      if (ctx) return ctx;
+      try {
+        const AC = (typeof globalThis !== "undefined") &&
+          (globalThis.AudioContext || globalThis.webkitAudioContext);
+        if (!AC) return null;
+        ctx = new AC();
+        masterGain = ctx.createGain();
+        masterGain.gain.value = muted ? 0 : 0.65;
+        masterGain.connect(ctx.destination);
+      } catch (_err) {
+        ctx = null;
+      }
+      return ctx;
+    }
+
+    function getNoiseBuffer(ac) {
+      if (noiseBuffer) return noiseBuffer;
+      try {
+        const len = Math.max(4096, Math.floor(ac.sampleRate * 1.4));
+        noiseBuffer = ac.createBuffer(1, len, ac.sampleRate);
+        const data = noiseBuffer.getChannelData(0);
+        let b0 = 0;
+        let b1 = 0;
+        let s = 9187;
+        for (let i = 0; i < len; i++) {
+          s = (s * 48271) % 2147483647;
+          const white = (s / 1073741823.5) - 1;
+          b0 = 0.985 * b0 + white * 0.09;
+          b1 = 0.94 * b1 + white * 0.14;
+          data[i] = clamp((b0 + b1 + white * 0.18) * 0.7, -1, 1);
+        }
+      } catch (_err) {
+        noiseBuffer = null;
+      }
+      return noiseBuffer;
+    }
+
+    function unlockAudio() {
+      try {
+        const ac = ensureContext();
+        if (!ac) {
+          audioUnlocked = true;
+          return true;
+        }
+        if (ac.state === "suspended" && typeof ac.resume === "function") {
+          ac.resume().catch(function () {});
+        }
+        audioUnlocked = true;
+      } catch (_err) {
+        audioUnlocked = false;
+      }
+      return audioUnlocked;
+    }
+
+    function setMuted(flag) {
+      muted = Boolean(flag);
+      try {
+        if (ctx && masterGain) {
+          const t = ctx.currentTime;
+          masterGain.gain.setTargetAtTime(muted ? 0 : 0.65, t, 0.025);
+        }
+      } catch (_err) {}
+      return muted;
+    }
+
+    function playTone(ac, type, freqStart, freqEnd, startOffset, dur, peakGain, panVal) {
+      const now = ac.currentTime + startOffset;
+      const osc = ac.createOscillator();
+      const g = ac.createGain();
+      osc.type = type || "sine";
+      osc.frequency.setValueAtTime(Math.max(24, freqStart), now);
+      if (freqEnd && freqEnd !== freqStart) {
+        osc.frequency.exponentialRampToValueAtTime(Math.max(24, freqEnd), now + dur);
+      }
+      g.gain.setValueAtTime(0.0001, now);
+      g.gain.linearRampToValueAtTime(peakGain, now + Math.min(0.03, dur * 0.2));
+      g.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+      if (typeof ac.createStereoPanner === "function" && typeof panVal === "number") {
+        const pan = ac.createStereoPanner();
+        pan.pan.setValueAtTime(clamp(panVal, -1, 1), now);
+        osc.connect(g);
+        g.connect(pan);
+        pan.connect(masterGain);
+      } else {
+        osc.connect(g);
+        g.connect(masterGain);
+      }
+      osc.start(now);
+      osc.stop(now + dur + 0.03);
+    }
+
+    function playFilteredNoise(ac, filterType, freq, q, startOffset, dur, peakGain) {
+      const buf = getNoiseBuffer(ac);
+      if (!buf) return;
+      const now = ac.currentTime + startOffset;
+      const src = ac.createBufferSource();
+      src.buffer = buf;
+      const biq = ac.createBiquadFilter();
+      biq.type = filterType || "bandpass";
+      biq.frequency.setValueAtTime(freq, now);
+      biq.Q.setValueAtTime(q || 1.4, now);
+      const g = ac.createGain();
+      g.gain.setValueAtTime(0.0001, now);
+      g.gain.linearRampToValueAtTime(peakGain, now + Math.min(0.08, dur * 0.3));
+      g.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+      src.connect(biq);
+      biq.connect(g);
+      g.connect(masterGain);
+      src.start(now);
+      src.stop(now + dur + 0.03);
+    }
+
+    function triggerEncounterSound(figureId) {
+      if (muted) return false;
+      try {
+        const ac = ensureContext();
+        if (!ac) return false;
+        const id = String(figureId || "hawser_sailor");
+        if (id === "hawser_sailor" || id === "net_mender") {
+          playTone(ac, "sawtooth", 84, 62, 0, 0.42, 0.11, -0.35);
+          playTone(ac, "sine", 56, 38, 0.14, 0.46, 0.18, -0.2);
+          playTone(ac, "sine", 54, 36, 0.34, 0.40, 0.11, -0.25);
+        } else if (id === "urchin_fisherman" || id === "cuttlefish_monger") {
+          playFilteredNoise(ac, "bandpass", 1450, 3.2, 0, 0.22, 0.12);
+          playFilteredNoise(ac, "lowpass", 420, 0.9, 0.05, 0.72, 0.16);
+          playTone(ac, "triangle", 196, 174, 0.08, 0.58, 0.08, 0.28);
+        } else if (id === "straw_mat_sufferer") {
+          playFilteredNoise(ac, "bandpass", 2400, 4.5, 0, 0.18, 0.10);
+          playTone(ac, "sine", 587.3, 582.0, 0.04, 0.75, 0.08, 0.05);
+          playTone(ac, "sine", 880.0, 886.0, 0.07, 0.72, 0.06, -0.05);
+        } else if (id === "gangplank_stevedore" || id === "upper_stair_porter") {
+          playTone(ac, "triangle", 122, 88, 0, 0.26, 0.14, -0.18);
+          playTone(ac, "sawtooth", 96, 74, 0.06, 0.22, 0.07, -0.14);
+          playFilteredNoise(ac, "lowpass", 280, 1.2, 0.02, 0.18, 0.12);
+        } else if (id === "balcony_maiden" || id === "colonnade_widow") {
+          playFilteredNoise(ac, "bandpass", 780, 2.2, 0, 0.85, 0.11);
+          playTone(ac, "sine", 329.6, 326.0, 0.03, 0.88, 0.09, 0.22);
+          playTone(ac, "triangle", 523.3, 516.0, 0.09, 0.82, 0.06, 0.30);
+        } else if (id === "scale_greengrocer" || id === "lantern_trimmer") {
+          playTone(ac, "sine", 1174.7, 1170, 0, 0.52, 0.08, 0.42);
+          playTone(ac, "sine", 1760.0, 1754, 0.03, 0.44, 0.05, 0.45);
+          playTone(ac, "triangle", 130.8, 129.5, 0.04, 0.78, 0.12, 0.35);
+        } else {
+          playFilteredNoise(ac, "lowpass", 520, 1.1, 0, 0.55, 0.13);
+          playTone(ac, "triangle", 146.8, 138.0, 0.03, 0.48, 0.09, -0.15);
+        }
+        return true;
+      } catch (_err) {
+        return false;
+      }
+    }
+
+    function triggerReciprocalShock(intensity) {
+      if (muted) return false;
+      try {
+        const ac = ensureContext();
+        if (!ac) return false;
+        const lv = clamp(typeof intensity === "number" ? intensity : 0.8, 0.15, 1);
+        playTone(ac, "sine", 46, 36, 0, 0.85, 0.22 * lv, 0);
+        playTone(ac, "sawtooth", 220, 217, 0.02, 0.78, 0.06 * lv, -0.75);
+        playTone(ac, "sawtooth", 233.1, 236, 0.02, 0.78, 0.06 * lv, 0.75);
+        playTone(ac, "sine", 466.2, 462, 0.05, 0.82, 0.07 * lv, 0);
+        return true;
+      } catch (_err) {
+        return false;
+      }
+    }
+
+    function triggerForeheadTouch(mode) {
+      if (muted) return false;
+      try {
+        const ac = ensureContext();
+        if (!ac) return false;
+        const root = mode === "hereafter" ? 196.0 : 220.0;
+        playTone(ac, "sine", 58, 42, 0, 0.16, 0.20, 0);
+        playTone(ac, "sine", 52, 38, 0.20, 0.22, 0.16, 0);
+        playTone(ac, "sine", root, root * 0.996, 0.10, 1.15, 0.11, -0.1);
+        playTone(ac, "sine", root * 2.4, root * 2.39, 0.11, 0.95, 0.05, 0.15);
+        return true;
+      } catch (_err) {
+        return false;
+      }
+    }
+
+    function triggerKaleidoscopeTurn() {
+      if (muted) return false;
+      try {
+        const ac = ensureContext();
+        if (!ac) return false;
+        playFilteredNoise(ac, "highpass", 3200, 2.5, 0, 0.06, 0.10);
+        playTone(ac, "sine", 392.0, 394.0, 0.01, 0.36, 0.08, -0.25);
+        playTone(ac, "sine", 784.0, 788.0, 0.06, 0.42, 0.07, 0.25);
+        playTone(ac, "triangle", 1174.7, 1180.0, 0.11, 0.45, 0.05, 0);
+        return true;
+      } catch (_err) {
+        return false;
+      }
+    }
+
+    return {
+      unlockAudio: unlockAudio,
+      setMuted: setMuted,
+      isMuted: function () { return muted; },
+      toggleMute: function () { return setMuted(!muted); },
+      isUnlocked: function () { return audioUnlocked; },
+      triggerEncounterSound: triggerEncounterSound,
+      triggerReciprocalShock: triggerReciprocalShock,
+      triggerForeheadTouch: triggerForeheadTouch,
+      triggerKaleidoscopeTurn: triggerKaleidoscopeTurn
+    };
+  }
+
+  function createWharfEngine(opts) {
+    const cfg = opts || {};
+    const audio = createHarborAudio(Boolean(cfg.muted));
+    let timeSec = 0;
+    let stepCount = 0;
+    let waterPhase = 0;
+    let swayPhase = 0;
+    let scaleSwingPhase = 0;
+    let lanternFlicker = 0;
+    let reducedMotion = Boolean(cfg.reducedMotion);
+    let lastProjected = null;
+
+    function getLayout(width, height) {
+      const w = Math.max(240, Number(width) || 1280);
+      const h = Math.max(200, Number(height) || 800);
+      const unit = Math.min(w, h);
+      const horizonY = Math.round(h * 0.27);
+      const quayY = Math.round(h * 0.56);
+
+      const balconyRect = {
+        x: Math.round(w * 0.565),
+        y: Math.round(h * 0.145),
+        width: Math.round(w * 0.115),
+        height: Math.round(h * 0.135)
+      };
+
+      const gangplank = {
+        x1: Math.round(w * 0.285),
+        y1: Math.round(h * 0.665),
+        x2: Math.round(w * 0.435),
+        y2: Math.round(h * 0.535)
+      };
+
+      const stairSteps = [];
+      for (let i = 0; i < 8; i++) {
+        const t = i / 8;
+        stairSteps.push({
+          x: Math.round(w * (0.215 + t * 0.065)),
+          y: Math.round(h * (0.505 - t * 0.215)),
+          width: Math.round(w * (0.115 - t * 0.032)),
+          height: Math.max(5, Math.round(h * 0.026))
+        });
+      }
+
+      const lanterns = [
+        { id: "pier_west", x: Math.round(w * 0.19), y: Math.round(h * 0.43), chainTopY: Math.round(h * 0.34), radius: Math.round(unit * 0.15), intensity: 0.88 },
+        { id: "arch_west", x: Math.round(w * 0.45), y: Math.round(h * 0.34), chainTopY: Math.round(h * 0.25), radius: Math.round(unit * 0.18), intensity: 1.0 },
+        { id: "arch_center", x: Math.round(w * 0.67), y: Math.round(h * 0.35), chainTopY: Math.round(h * 0.26), radius: Math.round(unit * 0.17), intensity: 0.92 },
+        { id: "stall_east", x: Math.round(w * 0.85), y: Math.round(h * 0.38), chainTopY: Math.round(h * 0.27), radius: Math.round(unit * 0.20), intensity: 1.05 }
+      ];
+
+      const urchinBaskets = [
+        { x: Math.round(w * 0.655), y: Math.round(h * 0.745), rx: Math.max(12, Math.round(w * 0.024)), ry: Math.max(8, Math.round(h * 0.017)), kind: "urchins" },
+        { x: Math.round(w * 0.738), y: Math.round(h * 0.755), rx: Math.max(13, Math.round(w * 0.026)), ry: Math.max(8, Math.round(h * 0.018)), kind: "urchins" },
+        { x: Math.round(w * 0.692), y: Math.round(h * 0.778), rx: Math.max(11, Math.round(w * 0.021)), ry: Math.max(7, Math.round(h * 0.015)), kind: "silver_fish" }
+      ];
+
+      const strawMatRect = {
+        x: Math.round(w * 0.478),
+        y: Math.round(h * 0.585),
+        width: Math.round(w * 0.088),
+        height: Math.round(h * 0.042)
+      };
+
+      const scaleAnchor = {
+        x: Math.round(w * 0.822),
+        y: Math.round(h * 0.485)
+      };
+
+      const figures = WHARF_STRANGERS.map(function (s) {
+        const px = s.xNorm * w;
+        const py = s.yNorm * h;
+        const eyeY = py + s.eyeOffsetYNorm * h;
+        const headRadius = Math.max(8, Math.round(unit * 0.018 * s.scale));
+        const hitRadius = Math.max(34, Math.round(unit * 0.048 * s.scale));
+        return {
+          index: s.index,
+          id: s.id,
+          isPrimaryStone: s.isPrimaryStone,
+          keyNum: s.keyNum,
+          roleLabel: s.roleLabel,
+          station: s.station,
+          propSummary: s.propSummary,
+          xNorm: s.xNorm,
+          yNorm: s.yNorm,
+          eyeOffsetYNorm: s.eyeOffsetYNorm,
+          x: px,
+          y: py,
+          eyeX: px,
+          eyeY: eyeY,
+          headRadius: headRadius,
+          hitRadius: hitRadius,
+          scale: s.scale,
+          cloakHue: s.cloakHue,
+          accentHue: s.accentHue
+        };
+      });
+
+      return {
+        width: w,
+        height: h,
+        horizonY: horizonY,
+        quayY: quayY,
+        balconyRect: balconyRect,
+        gangplank: gangplank,
+        stairSteps: stairSteps,
+        lanterns: lanterns,
+        urchinBaskets: urchinBaskets,
+        strawMatRect: strawMatRect,
+        scaleAnchor: scaleAnchor,
+        figures: figures
+      };
+    }
+
+    function projectFigures(layout, useReduced, gazeParalysis) {
+      const stillFactor = useReduced ? 0 : (1 - clamp(Number(gazeParalysis) || 0, 0, 1) * 0.72);
+      return layout.figures.map(function (f) {
+        let dx = 0;
+        let dy = 0;
+        if (stillFactor > 0.001) {
+          const ph = swayPhase + f.index * 1.17;
+          if (f.id === "gangplank_stevedore" || f.id === "upper_stair_porter") {
+            dx = Math.sin(ph * 1.25) * 2.2 * stillFactor;
+            dy = Math.abs(Math.cos(ph * 1.25)) * -2.4 * stillFactor;
+          } else if (f.id === "lateen_oarsman" || f.id === "hawser_sailor") {
+            dx = Math.cos(waterPhase * 0.9 + f.index) * 1.6 * stillFactor;
+            dy = Math.sin(waterPhase * 1.1 + f.index) * 2.1 * stillFactor;
+          } else if (f.id === "straw_mat_sufferer") {
+            dx = Math.sin(swayPhase * 5.2) * 0.85 * stillFactor;
+          } else if (f.id !== "balcony_maiden") {
+            dy = Math.sin(ph * 0.8) * 1.1 * stillFactor;
+          }
+        }
+        return Object.assign({}, f, {
+          x: f.x + dx,
+          y: f.y + dy,
+          eyeX: f.eyeX + dx,
+          eyeY: f.eyeY + dy
+        });
+      });
+    }
+
+    function step(dtSec, params) {
+      const p = params || {};
+      const dt = clamp(Number(dtSec) || 0, 0, 0.25);
+      stepCount += 1;
+      const isRed = p.reducedMotion !== undefined ? Boolean(p.reducedMotion) : reducedMotion;
+      reducedMotion = isRed;
+      if (isRed) {
+        lanternFlicker = 0;
+        return;
+      }
+      const paralysis = clamp(Number(p.gazeParalysis) || 0, 0, 1);
+      const pace = 1 - paralysis * 0.45;
+      timeSec += dt;
+      waterPhase += dt * 1.35 * pace;
+      swayPhase += dt * 1.65 * pace;
+      scaleSwingPhase += dt * 1.95 * pace;
+      lanternFlicker = Math.sin(timeSec * 6.7) * 0.5 + Math.sin(timeSec * 13.9) * 0.3 + Math.cos(timeSec * 3.1) * 0.2;
+    }
+
+    function drawSkyAndNecropolis(ctx, layout, p) {
+      const w = layout.width;
+      const h = layout.height;
+      const lifeStage = clamp(Number(p.lifeStage) || 0, 0, 1);
+      const skyGrad = ctx.createLinearGradient(0, 0, 0, layout.quayY);
+      skyGrad.addColorStop(0, PALETTE.harbor_abyss);
+      skyGrad.addColorStop(0.52, PALETTE.dusk_indigo);
+      skyGrad.addColorStop(1, lifeStage > 0.5 ? "#2b2038" : "#24293d");
+      ctx.fillStyle = skyGrad;
+      ctx.fillRect(0, 0, w, h);
+
+      for (let i = 0; i < DUSK_STARS.length; i++) {
+        const st = DUSK_STARS[i];
+        if (st.x > 0.55) continue;
+        const tw = p.reducedMotion ? 0.45 : 0.32 + 0.24 * Math.sin(timeSec * 1.8 + st.phase);
+        ctx.fillStyle = hexToRgba(PALETTE.bone_parchment, tw);
+        ctx.beginPath();
+        ctx.arc(st.x * w, st.y * h, st.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      const glowGrad = ctx.createRadialGradient(w * 0.22, layout.horizonY, 6, w * 0.22, layout.horizonY, w * 0.38);
+      glowGrad.addColorStop(0, hexToRgba(PALETTE.fever_ochre, 0.22 + lifeStage * 0.08));
+      glowGrad.addColorStop(0.55, hexToRgba(PALETTE.urchin_violet, 0.16 + lifeStage * 0.12));
+      glowGrad.addColorStop(1, "rgba(11,17,29,0)");
+      ctx.fillStyle = glowGrad;
+      ctx.fillRect(0, 0, w * 0.62, layout.quayY);
+
+      const hz = layout.horizonY;
+      ctx.fillStyle = "#0e1523";
+      ctx.beginPath();
+      ctx.moveTo(0, hz + 8);
+      ctx.lineTo(w * 0.05, hz - h * 0.032);
+      ctx.lineTo(w * 0.17, hz - h * 0.048);
+      ctx.lineTo(w * 0.29, hz - h * 0.036);
+      ctx.lineTo(w * 0.42, hz - h * 0.012);
+      ctx.lineTo(w * 0.46, hz + 10);
+      ctx.closePath();
+      ctx.fill();
+
+      const obX = w * 0.155;
+      const obBaseY = hz - h * 0.046;
+      ctx.fillStyle = "#090e18";
+      ctx.beginPath();
+      ctx.moveTo(obX - 4, obBaseY + 2);
+      ctx.lineTo(obX - 1.6, obBaseY - h * 0.058);
+      ctx.lineTo(obX, obBaseY - h * 0.066);
+      ctx.lineTo(obX + 1.6, obBaseY - h * 0.058);
+      ctx.lineTo(obX + 4, obBaseY + 2);
+      ctx.closePath();
+      ctx.fill();
+
+      const cypressXs = [0.06, 0.085, 0.12, 0.19, 0.215, 0.25, 0.31, 0.34];
+      for (let c = 0; c < cypressXs.length; c++) {
+        const cx = w * cypressXs[c];
+        const cy = hz - h * (0.028 + (c % 3) * 0.008);
+        const ch = h * (0.032 + (c % 2) * 0.012);
+        ctx.beginPath();
+        ctx.ellipse(cx, cy - ch * 0.45, Math.max(2.2, w * 0.0032), ch * 0.55, 0, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function drawArchitectureAndHarbor(ctx, layout, p) {
+      const w = layout.width;
+      const h = layout.height;
+      const hz = layout.horizonY;
+      const qy = layout.quayY;
+
+      const waterGrad = ctx.createLinearGradient(0, hz, 0, h);
+      waterGrad.addColorStop(0, "#101828");
+      waterGrad.addColorStop(0.45, PALETTE.harbor_abyss);
+      waterGrad.addColorStop(1, "#070b14");
+      ctx.fillStyle = waterGrad;
+      ctx.fillRect(0, hz, w * 0.50, h - hz);
+
+      for (let r = 0; r < 22; r++) {
+        const ry = hz + 10 + (r / 22) * (h - hz - 16);
+        const drift = p.reducedMotion ? 0 : Math.sin(waterPhase * 1.4 + r * 0.75) * 6;
+        const rx = w * (0.06 + (r % 4) * 0.085) + drift;
+        const rw = w * (0.045 + (r % 3) * 0.028);
+        ctx.fillStyle = r % 3 === 0
+          ? hexToRgba(PALETTE.lantern_halo, 0.16)
+          : hexToRgba(PALETTE.oil_lantern, 0.12);
+        ctx.fillRect(rx, ry, rw, 2.1);
+      }
+
+      ctx.fillStyle = "#1d2536";
+      ctx.beginPath();
+      ctx.moveTo(w * 0.19, qy);
+      ctx.lineTo(w * 0.19, h * 0.22);
+      ctx.lineTo(w * 0.31, h * 0.16);
+      ctx.lineTo(w * 0.39, h * 0.19);
+      ctx.lineTo(w * 0.39, qy);
+      ctx.closePath();
+      ctx.fill();
+
+      for (let s = 0; s < layout.stairSteps.length; s++) {
+        const st = layout.stairSteps[s];
+        ctx.fillStyle = s % 2 === 0 ? "#2c3649" : "#252f41";
+        ctx.fillRect(st.x, st.y, st.width, st.height);
+        ctx.fillStyle = hexToRgba(PALETTE.sackcloth_ash, 0.22);
+        ctx.fillRect(st.x, st.y, st.width, 2);
+      }
+
+      ctx.fillStyle = "#262f40";
+      ctx.fillRect(w * 0.385, h * 0.06, w * 0.615, qy - h * 0.04);
+      ctx.fillStyle = hexToRgba(PALETTE.sackcloth_ash, 0.09);
+      ctx.fillRect(w * 0.41, h * 0.09, w * 0.13, h * 0.12);
+      ctx.fillRect(w * 0.72, h * 0.11, w * 0.16, h * 0.10);
+
+      const archCenters = [0.485, 0.665, 0.845];
+      const archHalfW = w * 0.074;
+      const archSpringY = h * 0.40;
+      const archApexY = h * 0.295;
+      for (let a = 0; a < archCenters.length; a++) {
+        const cx = w * archCenters[a];
+        ctx.fillStyle = "#0b101b";
+        ctx.beginPath();
+        ctx.moveTo(cx - archHalfW, qy + h * 0.04);
+        ctx.lineTo(cx - archHalfW, archSpringY);
+        ctx.quadraticCurveTo(cx - archHalfW * 0.45, archApexY + 6, cx, archApexY);
+        ctx.quadraticCurveTo(cx + archHalfW * 0.45, archApexY + 6, cx + archHalfW, archSpringY);
+        ctx.lineTo(cx + archHalfW, qy + h * 0.04);
+        ctx.closePath();
+        ctx.fill();
+        ctx.strokeStyle = hexToRgba(PALETTE.sackcloth_ash, 0.32);
+        ctx.lineWidth = 2.2;
+        ctx.stroke();
+      }
+
+      const br = layout.balconyRect;
+      ctx.fillStyle = "#121826";
+      ctx.beginPath();
+      ctx.roundRect
+        ? ctx.roundRect(br.x + br.width * 0.24, br.y + 4, br.width * 0.52, br.height - 6, [18, 18, 0, 0])
+        : ctx.rect(br.x + br.width * 0.24, br.y + 4, br.width * 0.52, br.height - 6);
+      ctx.fill();
+      ctx.fillStyle = hexToRgba(PALETTE.oil_lantern, 0.14);
+      ctx.fillRect(br.x + br.width * 0.30, br.y + 12, br.width * 0.40, br.height - 16);
+      ctx.fillStyle = "#394254";
+      ctx.fillRect(br.x - 4, br.y + br.height - 5, br.width + 8, 7);
+
+      ctx.fillStyle = PALETTE.wet_flagstone;
+      ctx.beginPath();
+      ctx.moveTo(0, h * 0.79);
+      ctx.lineTo(w * 0.14, h * 0.63);
+      ctx.lineTo(w * 0.37, qy - 6);
+      ctx.lineTo(w, qy - 10);
+      ctx.lineTo(w, h);
+      ctx.lineTo(0, h);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.strokeStyle = "rgba(11,17,29,0.52)";
+      ctx.lineWidth = 1.2;
+      for (let row = 0; row < 7; row++) {
+        const fy = qy + (row / 7) * (h - qy);
+        ctx.beginPath();
+        ctx.moveTo(w * Math.max(0, 0.34 - row * 0.06), fy);
+        ctx.lineTo(w, fy);
+        ctx.stroke();
+      }
+
+      const boatBob = p.reducedMotion ? 0 : Math.sin(waterPhase) * 2.2;
+      ctx.save();
+      ctx.translate(0, boatBob);
+      ctx.fillStyle = "#151d2b";
+      ctx.beginPath();
+      ctx.moveTo(w * 0.18, h * 0.70);
+      ctx.quadraticCurveTo(w * 0.28, h * 0.76, w * 0.39, h * 0.69);
+      ctx.lineTo(w * 0.36, h * 0.65);
+      ctx.lineTo(w * 0.21, h * 0.66);
+      ctx.closePath();
+      ctx.fill();
+      ctx.strokeStyle = "#4c4338";
+      ctx.lineWidth = 2.4;
+      ctx.beginPath();
+      ctx.moveTo(w * 0.275, h * 0.68);
+      ctx.lineTo(w * 0.275, h * 0.38);
+      ctx.moveTo(w * 0.20, h * 0.51);
+      ctx.lineTo(w * 0.34, h * 0.33);
+      ctx.stroke();
+      ctx.restore();
+
+      const pilings = [0.07, 0.125, 0.235];
+      for (let k = 0; k < pilings.length; k++) {
+        const px = w * pilings[k];
+        const py = h * (0.48 + k * 0.05);
+        ctx.fillStyle = "#1b1c22";
+        ctx.fillRect(px - 4, py, 8, h * 0.22);
+      }
+
+      const gp = layout.gangplank;
+      ctx.save();
+      ctx.strokeStyle = "#5c4a36";
+      ctx.lineWidth = Math.max(8, Math.round(h * 0.016));
+      ctx.lineCap = "butt";
+      ctx.beginPath();
+      ctx.moveTo(gp.x1, gp.y1 + boatBob * 0.6);
+      ctx.lineTo(gp.x2, gp.y2);
+      ctx.stroke();
+      ctx.strokeStyle = "#826e55";
+      ctx.lineWidth = 1.6;
+      for (let c = 1; c <= 6; c++) {
+        const t = c / 7;
+        const cx = gp.x1 + (gp.x2 - gp.x1) * t;
+        const cy = gp.y1 + boatBob * 0.6 + (gp.y2 - (gp.y1 + boatBob * 0.6)) * t;
+        ctx.beginPath();
+        ctx.moveTo(cx - 3, cy - 5);
+        ctx.lineTo(cx + 3, cy + 5);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    function drawWharfProps(ctx, layout, p) {
+      const w = layout.width;
+      const h = layout.height;
+      const flick = p.reducedMotion ? 0 : lanternFlicker * 0.06;
+
+      const bolX = w * 0.145;
+      const bolY = h * 0.705;
+      ctx.fillStyle = "#171d28";
+      ctx.fillRect(bolX - 6, bolY - 12, 12, 18);
+      ctx.beginPath();
+      ctx.arc(bolX, bolY - 13, 7.5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = "#9b8869";
+      ctx.lineWidth = 3.2;
+      ctx.beginPath();
+      ctx.moveTo(w * 0.21, h * 0.67);
+      ctx.quadraticCurveTo(w * 0.175, h * 0.71, bolX, bolY - 6);
+      ctx.stroke();
+      for (let c = 0; c < 3; c++) {
+        ctx.beginPath();
+        ctx.ellipse(bolX + 2, bolY + 4 + c * 3, 11 - c * 1.5, 3.5, 0.1, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      const sm = layout.strawMatRect;
+      ctx.fillStyle = hexToRgba(PALETTE.fever_ochre, 0.42);
+      ctx.beginPath();
+      ctx.moveTo(sm.x, sm.y + sm.height);
+      ctx.lineTo(sm.x + 8, sm.y);
+      ctx.lineTo(sm.x + sm.width, sm.y + 3);
+      ctx.lineTo(sm.x + sm.width - 6, sm.y + sm.height);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.fillStyle = "#2b3749";
+      ctx.fillRect(w * 0.505, h * 0.765, w * 0.085, h * 0.032);
+      for (let sf = 0; sf < 5; sf++) {
+        ctx.fillStyle = sf % 2 === 0 ? "#aeb8c7" : "#675078";
+        ctx.beginPath();
+        ctx.ellipse(w * (0.518 + sf * 0.014), h * 0.776, 6, 2.5, 0.25, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      for (let b = 0; b < layout.urchinBaskets.length; b++) {
+        const bk = layout.urchinBaskets[b];
+        ctx.fillStyle = "#6c563d";
+        ctx.beginPath();
+        ctx.ellipse(bk.x, bk.y + 4, bk.rx, bk.ry, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = "#4c3b29";
+        ctx.beginPath();
+        ctx.ellipse(bk.x, bk.y, bk.rx * 0.9, bk.ry * 0.75, 0, 0, Math.PI * 2);
+        ctx.fill();
+        if (bk.kind === "urchins") {
+          for (let u = -2; u <= 2; u++) {
+            const ux = bk.x + u * (bk.rx * 0.30);
+            const uy = bk.y - 1 + (Math.abs(u) % 2) * 2.5;
+            ctx.fillStyle = PALETTE.urchin_violet;
+            ctx.beginPath();
+            ctx.arc(ux, uy, 4.2, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.strokeStyle = PALETTE.urchin_spine;
+            ctx.lineWidth = 1;
+            for (let sp = 0; sp < 6; sp++) {
+              const ang = (sp / 6) * Math.PI * 2;
+              ctx.beginPath();
+              ctx.moveTo(ux, uy);
+              ctx.lineTo(ux + Math.cos(ang) * 6.5, uy + Math.sin(ang) * 6.5);
+              ctx.stroke();
+            }
+          }
+        } else {
+          ctx.fillStyle = "#c8d0dc";
+          for (let f = -2; f <= 2; f++) {
+            ctx.beginPath();
+            ctx.ellipse(bk.x + f * 4.5, bk.y, 5.5, 2.1, -0.3, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+      }
+
+      const sa = layout.scaleAnchor;
+      ctx.fillStyle = "#3f3225";
+      ctx.fillRect(w * 0.795, h * 0.605, w * 0.095, h * 0.048);
+      ctx.fillStyle = "#2b4635";
+      for (let g = 0; g < 6; g++) {
+        ctx.beginPath();
+        ctx.arc(w * (0.806 + g * 0.013), h * 0.602, 7, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      const tilt = p.reducedMotion ? 0.06 : Math.sin(scaleSwingPhase) * 0.14;
+      const beamHalf = Math.max(12, w * 0.019);
+      ctx.strokeStyle = PALETTE.oil_lantern;
+      ctx.lineWidth = 1.6;
+      ctx.beginPath();
+      ctx.moveTo(sa.x, sa.y - 16);
+      ctx.lineTo(sa.x, sa.y);
+      const lx = sa.x - Math.cos(tilt) * beamHalf;
+      const ly = sa.y - Math.sin(tilt) * beamHalf;
+      const rx = sa.x + Math.cos(tilt) * beamHalf;
+      const ry = sa.y + Math.sin(tilt) * beamHalf;
+      ctx.moveTo(lx, ly);
+      ctx.lineTo(rx, ry);
+      ctx.moveTo(lx, ly);
+      ctx.lineTo(lx - 5, ly + 16);
+      ctx.moveTo(lx, ly);
+      ctx.lineTo(lx + 5, ly + 16);
+      ctx.moveTo(rx, ry);
+      ctx.lineTo(rx - 5, ry + 16);
+      ctx.moveTo(rx, ry);
+      ctx.lineTo(rx + 5, ry + 16);
+      ctx.stroke();
+      ctx.fillStyle = PALETTE.lantern_halo;
+      ctx.beginPath();
+      ctx.arc(lx, ly + 16, 6, 0, Math.PI);
+      ctx.arc(rx, ry + 16, 6, 0, Math.PI);
+      ctx.fill();
+
+      for (let i = 0; i < layout.lanterns.length; i++) {
+        const ln = layout.lanterns[i];
+        const rad = ln.radius * (1 + flick) * ln.intensity;
+        const halo = ctx.createRadialGradient(ln.x, ln.y, 2, ln.x, ln.y, rad);
+        halo.addColorStop(0, hexToRgba(PALETTE.lantern_halo, 0.75));
+        halo.addColorStop(0.24, hexToRgba(PALETTE.oil_lantern, 0.28));
+        halo.addColorStop(1, "rgba(235,160,56,0)");
+        ctx.fillStyle = halo;
+        ctx.beginPath();
+        ctx.arc(ln.x, ln.y, rad, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.strokeStyle = "#181d26";
+        ctx.lineWidth = 1.4;
+        ctx.beginPath();
+        ctx.moveTo(ln.x, ln.chainTopY);
+        ctx.lineTo(ln.x, ln.y - 6);
+        ctx.stroke();
+        ctx.fillStyle = PALETTE.lantern_halo;
+        ctx.fillRect(ln.x - 3.5, ln.y - 5, 7, 9);
+      }
+    }
+
+    function drawBalconyRailFront(ctx, layout) {
+      const br = layout.balconyRect;
+      const railTop = br.y + br.height - 26;
+      const railBot = br.y + br.height - 5;
+      ctx.strokeStyle = "#141821";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(br.x + 2, railTop, br.width - 4, railBot - railTop);
+      const bars = 9;
+      for (let i = 1; i < bars; i++) {
+        const bx = br.x + 2 + ((br.width - 4) * i) / bars;
+        ctx.beginPath();
+        ctx.moveTo(bx, railTop);
+        ctx.lineTo(bx, railBot);
+        ctx.stroke();
+      }
+    }
+
+    function drawWharfFigure(ctx, fig, layout, p) {
+      const isHovered = p.hoveredId === fig.id;
+      const isSelected = p.selectedId === fig.id;
+      const isLocked = p.lockedId === fig.id;
+      const hr = fig.headRadius;
+      const bodyH = Math.max(22, fig.y - fig.eyeY);
+      const shoulderW = hr * (fig.id === "straw_mat_sufferer" ? 2.2 : 1.95);
+
+      ctx.save();
+      if (isHovered || isSelected || isLocked) {
+        const ringColor = isLocked
+          ? PALETTE.urchin_spine
+          : (isSelected ? PALETTE.lantern_halo : PALETTE.oil_lantern);
+        ctx.strokeStyle = hexToRgba(ringColor, isLocked ? 0.88 : 0.62);
+        ctx.lineWidth = isLocked ? 2.2 : 1.5;
+        ctx.beginPath();
+        ctx.ellipse(fig.x, fig.y + 3, shoulderW * 1.15, Math.max(5, hr * 0.45), 0, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      ctx.fillStyle = "rgba(7,10,18,0.48)";
+      ctx.beginPath();
+      ctx.ellipse(fig.x, fig.y + 3, shoulderW * 0.92, Math.max(4, hr * 0.35), 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = fig.cloakHue;
+      ctx.beginPath();
+      ctx.moveTo(fig.x - shoulderW * 0.95, fig.y + 2);
+      ctx.quadraticCurveTo(fig.x - shoulderW * 1.05, fig.eyeY + hr * 1.3, fig.x - hr * 0.85, fig.eyeY + hr * 0.8);
+      ctx.lineTo(fig.x + hr * 0.85, fig.eyeY + hr * 0.8);
+      ctx.quadraticCurveTo(fig.x + shoulderW * 1.05, fig.eyeY + hr * 1.3, fig.x + shoulderW * 0.95, fig.y + 2);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.strokeStyle = hexToRgba(fig.accentHue, 0.38);
+      ctx.lineWidth = 1.2;
+      ctx.stroke();
+
+      if (fig.id === "gangplank_stevedore" || fig.id === "upper_stair_porter") {
+        ctx.fillStyle = PALETTE.sackcloth_ash;
+        ctx.beginPath();
+        ctx.moveTo(fig.eyeX - hr * 1.25, fig.eyeY + hr * 1.45);
+        ctx.lineTo(fig.eyeX - hr * 0.95, fig.eyeY - hr * 1.15);
+        ctx.lineTo(fig.eyeX + hr * 0.35, fig.eyeY - hr * 1.65);
+        ctx.lineTo(fig.eyeX + hr * 1.25, fig.eyeY + hr * 1.35);
+        ctx.closePath();
+        ctx.fill();
+      } else if (fig.id === "balcony_maiden" || fig.id === "colonnade_widow" || fig.id === "scale_greengrocer") {
+        ctx.fillStyle = fig.id === "balcony_maiden" ? "rgba(228,220,207,0.34)" : "#231e2e";
+        ctx.beginPath();
+        ctx.arc(fig.eyeX, fig.eyeY + hr * 0.15, hr * 1.22, Math.PI * 0.9, Math.PI * 2.1);
+        ctx.lineTo(fig.eyeX + hr * 1.3, fig.eyeY + hr * 1.6);
+        ctx.lineTo(fig.eyeX - hr * 1.3, fig.eyeY + hr * 1.6);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      ctx.fillStyle = "#b8ab99";
+      ctx.beginPath();
+      ctx.arc(fig.eyeX, fig.eyeY, hr * 0.84, 0, Math.PI * 2);
+      ctx.fill();
+
+      if (fig.id === "urchin_fisherman") {
+        ctx.fillStyle = "#7a736b";
+        ctx.beginPath();
+        ctx.arc(fig.eyeX, fig.eyeY + hr * 0.42, hr * 0.68, 0, Math.PI);
+        ctx.fill();
+        ctx.fillStyle = "#9c836d";
+        ctx.beginPath();
+        ctx.arc(fig.x - shoulderW * 0.72, fig.y - bodyH * 0.24, hr * 0.36, 0, Math.PI * 2);
+        ctx.arc(fig.x + shoulderW * 0.62, fig.y - bodyH * 0.20, hr * 0.36, 0, Math.PI * 2);
+        ctx.fill();
+      } else if (fig.id === "scale_greengrocer") {
+        ctx.strokeStyle = "#b8a690";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(fig.x - shoulderW * 0.45, fig.eyeY + hr * 1.5);
+        ctx.lineTo(layout.scaleAnchor.x + 8, layout.scaleAnchor.y + 14);
+        ctx.stroke();
+      } else if (fig.id === "hawser_sailor") {
+        ctx.strokeStyle = "#9b8869";
+        ctx.lineWidth = 2.6;
+        ctx.beginPath();
+        ctx.moveTo(fig.x - shoulderW * 0.65, fig.y - bodyH * 0.38);
+        ctx.lineTo(layout.width * 0.145, layout.height * 0.695);
+        ctx.stroke();
+      }
+
+      const eyeColor = fig.id === "straw_mat_sufferer" ? PALETTE.fever_ochre : PALETTE.bone_parchment;
+      const eyeSpread = Math.max(2.4, hr * 0.32);
+      ctx.fillStyle = eyeColor;
+      ctx.beginPath();
+      ctx.arc(fig.eyeX - eyeSpread, fig.eyeY - 0.5, 1.7, 0, Math.PI * 2);
+      ctx.arc(fig.eyeX + eyeSpread, fig.eyeY - 0.5, 1.7, 0, Math.PI * 2);
+      ctx.fill();
+
+      if (fig.isPrimaryStone && fig.keyNum) {
+        const bx = fig.x;
+        const by = fig.y + 10;
+        ctx.fillStyle = isSelected || isLocked ? PALETTE.oil_lantern : "rgba(17,24,39,0.86)";
+        ctx.beginPath();
+        ctx.arc(bx, by, 7.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = hexToRgba(PALETTE.lantern_halo, 0.55);
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.fillStyle = isSelected || isLocked ? PALETTE.harbor_abyss : PALETTE.lantern_halo;
+        ctx.font = "600 9px ui-monospace, Menlo, monospace";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(String(fig.keyNum), bx, by + 0.5);
+      }
+      ctx.restore();
+    }
+
+    function renderWharf(ctx, width, height, params) {
+      const p = params || {};
+      const useRed = p.reducedMotion !== undefined ? Boolean(p.reducedMotion) : reducedMotion;
+      const layout = getLayout(width, height);
+      const projected = projectFigures(layout, useRed, p.gazeParalysis);
+      lastProjected = { width: layout.width, height: layout.height, figures: projected };
+
+      if (!ctx) return projected;
+
+      ctx.save();
+      drawSkyAndNecropolis(ctx, layout, p);
+      drawArchitectureAndHarbor(ctx, layout, p);
+      drawWharfProps(ctx, layout, p);
+
+      const byDepth = projected.slice().sort(function (a, b) { return a.y - b.y; });
+      for (let i = 0; i < byDepth.length; i++) {
+        drawWharfFigure(ctx, byDepth[i], layout, p);
+        if (byDepth[i].id === "balcony_maiden") {
+          drawBalconyRailFront(ctx, layout);
+        }
+      }
+
+      const paralysis = clamp(Number(p.gazeParalysis) || 0, 0, 1);
+      if (paralysis > 0.04 || p.hypothesisMode === "hereafter" || p.hypothesisMode === "hereafter_doubt") {
+        const vig = ctx.createRadialGradient(
+          layout.width * 0.5, layout.height * 0.5, layout.width * 0.18,
+          layout.width * 0.5, layout.height * 0.5, layout.width * 0.72
+        );
+        vig.addColorStop(0, "rgba(11,17,29,0)");
+        vig.addColorStop(1, hexToRgba(PALETTE.harbor_abyss, clamp(0.18 + paralysis * 0.38, 0, 0.62)));
+        ctx.fillStyle = vig;
+        ctx.fillRect(0, 0, layout.width, layout.height);
+      }
+      ctx.restore();
+
+      return projected;
+    }
+
+    function hitTest(px, py, width, height, isTouch) {
+      const x = Number(px);
+      const y = Number(py);
+      if (!Number.isFinite(x) || !Number.isFinite(y)) return null;
+      const w = Math.max(240, Number(width) || 1280);
+      const h = Math.max(200, Number(height) || 800);
+      const figs = (lastProjected && lastProjected.width === w && lastProjected.height === h)
+        ? lastProjected.figures
+        : projectFigures(getLayout(w, h), reducedMotion, 0);
+
+      const minHit = isTouch ? 44 : 32;
+      let best = null;
+      let bestScore = Infinity;
+
+      for (let i = 0; i < figs.length; i++) {
+        const f = figs[i];
+        const effR = Math.max(f.hitRadius, minHit);
+        const topY = Math.min(f.eyeY, f.y);
+        const botY = Math.max(f.eyeY, f.y);
+        const clampedY = clamp(y, topY, botY);
+        const segDist = Math.hypot(x - f.x, y - clampedY);
+        if (segDist <= effR) {
+          const midY = (topY + botY) * 0.5;
+          const centerDist = Math.hypot(x - f.x, y - midY);
+          if (segDist < bestScore - 0.5 || (Math.abs(segDist - bestScore) <= 0.5 && centerDist < (best ? best._c : Infinity))) {
+            bestScore = segDist;
+            best = {
+              index: f.index,
+              id: f.id,
+              isPrimaryStone: f.isPrimaryStone,
+              keyNum: f.keyNum,
+              roleLabel: f.roleLabel,
+              station: f.station,
+              eyeX: f.eyeX,
+              eyeY: f.eyeY,
+              distance: Number(segDist.toFixed(2)),
+              _c: centerDist
+            };
+          }
+        }
+      }
+      if (!best) return null;
+      delete best._c;
+      return best;
+    }
+
+    function getState() {
+      return {
+        timeSec: Number(timeSec.toFixed(4)),
+        muted: audio.isMuted(),
+        audioUnlocked: audio.isUnlocked(),
+        stepCount: stepCount
+      };
+    }
+
+    function reset() {
+      timeSec = 0;
+      stepCount = 0;
+      waterPhase = 0;
+      swayPhase = 0;
+      scaleSwingPhase = 0;
+      lanternFlicker = 0;
+      lastProjected = null;
+      return getState();
+    }
+
+    return {
+      PRIMARY_STONE_IDS: PRIMARY_STONE_IDS,
+      WHARF_STRANGERS: WHARF_STRANGERS,
+      getLayout: getLayout,
+      step: step,
+      renderWharf: renderWharf,
+      hitTest: hitTest,
+      unlockAudio: audio.unlockAudio,
+      setMuted: audio.setMuted,
+      isMuted: audio.isMuted,
+      toggleMute: audio.toggleMute,
+      triggerEncounterSound: audio.triggerEncounterSound,
+      triggerReciprocalShock: audio.triggerReciprocalShock,
+      triggerForeheadTouch: audio.triggerForeheadTouch,
+      triggerKaleidoscopeTurn: audio.triggerKaleidoscopeTurn,
+      getState: getState,
+      reset: reset
+    };
+  }
+
+  const api = Object.freeze({
+    PALETTE: PALETTE,
+    PRIMARY_STONE_IDS: PRIMARY_STONE_IDS,
+    WHARF_STRANGERS: WHARF_STRANGERS,
+    createWharfEngine: createWharfEngine
+  });
+
+  globalThis.AdelmaDuskWharf = api;
+  if (typeof window !== "undefined") {
+    window.AdelmaDuskWharf = api;
+  }
+})();
+
+(function () {
+  "use strict";
+
+  const PALETTE = Object.freeze({
+    duskIndigo: "#111827",
+    harborAbyss: "#0b111d",
+    wetFlagstone: "#222c3d",
+    oilLantern: "#eba038",
+    lanternHalo: "#ffd37d",
+    urchinViolet: "#7c498d",
+    urchinSpine: "#a976bc",
+    sackclothAsh: "#9e9382",
+    boneParchment: "#e4dccf",
+    feverOchre: "#cfa23c"
+  });
+
+  const PRIMARY_STONE_IDS = Object.freeze([
+    "hawser_sailor",
+    "urchin_fisherman",
+    "straw_mat_sufferer",
+    "gangplank_stevedore",
+    "balcony_maiden",
+    "scale_greengrocer"
+  ]);
+
+  const SECONDARY_STRANGER_IDS = Object.freeze([
+    "net_mender",
+    "upper_stair_porter",
+    "lantern_trimmer",
+    "cuttlefish_monger",
+    "lateen_oarsman",
+    "colonnade_widow"
+  ]);
+
+  const ALL_WHARF_IDS = Object.freeze([
+    ...PRIMARY_STONE_IDS,
+    ...SECONDARY_STRANGER_IDS
+  ]);
+
+  const CANONICAL_DEAD_MASKS = Object.freeze([
+    Object.freeze({
+      maskId: "dying_soldier_father",
+      stoneId: "hawser_sailor",
+      shortTitle: "Soldier Resembling My Dying Father",
+      kinRole: "Father on the eve of death",
+      featureSignature: "Hollowed martial jawline, salt-gray temple crease, dark tunic collar",
+      maskHue: "#9e9382",
+      irisHue: "#ffd37d",
+      travelerRecognition: "Catching the wet mooring hawser at dusk landing, the sailor turns the hollowed brow of a soldier resembling my father the day before he died.",
+      foreheadEcho: "If a dead soldier catches my mooring rope at landfall, have I disembarked beyond the living world?"
+    }),
+    Object.freeze({
+      maskId: "fever_shipmate",
+      stoneId: "urchin_fisherman",
+      shortTitle: "Comrade Lost to Sea-Fever",
+      kinRole: "Shipmate felled by sea-fever",
+      featureSignature: "Crusty wart-knuckled grip, brine-furrowed brow, salt-matted beard",
+      maskHue: "#7c498d",
+      irisHue: "#a976bc",
+      travelerRecognition: "Beside wicker baskets of purple sea urchins, the bearded fisherman lifts crusty, warty hands and wears the sunken cheeks of a comrade lost long ago to sea-fever.",
+      foreheadEcho: "Even the spiny sea urchins glisten in dusk-light like relics from a voyage none survived."
+    }),
+    Object.freeze({
+      maskId: "yellow_eyed_delirium",
+      stoneId: "straw_mat_sufferer",
+      shortTitle: "Man Visited in Yellow-Eyed Delirium",
+      kinRole: "Acquaintance an hour before his last breath",
+      featureSignature: "Saffron-yellow sclera, shivering collarbone, sweat-darkened temple",
+      maskHue: "#cfa23c",
+      irisHue: "#eba038",
+      travelerRecognition: "Huddled shivering on a damp straw mat beneath the limestone arch, the fever victim stares up with the yellow eyes of a man I visited in delirium an hour before his death.",
+      foreheadEcho: "An hour before his last breath he stared just so; now the colonnade arch breathes his chill."
+    }),
+    Object.freeze({
+      maskId: "departed_childhood_friend",
+      stoneId: "gangplank_stevedore",
+      shortTitle: "Friends Dead Since Youth",
+      kinRole: "Childhood friends dead long ago",
+      featureSignature: "Coarse sackcloth hood shadow, stooped shoulder ridge, boyhood mouth",
+      maskHue: "#9e9382",
+      irisHue: "#e4dccf",
+      travelerRecognition: "Climbing the plank gangplank and steep quay steps with coarse sacks folded over their heads as hoods, the stevedores carry the unmistakable profiles of friends dead long ago.",
+      foreheadEcho: "Under folded jute hoods, vanished companions climb endlessly up the steep steps of memory."
+    }),
+    Object.freeze({
+      maskId: "unrequited_love_girl",
+      stoneId: "balcony_maiden",
+      shortTitle: "Girl Who Died for Unrequited Love",
+      kinRole: "Young woman lost to unrequited love",
+      featureSignature: "Pale veiled cheekbone, motionless throat, twilight lash-shadow",
+      maskHue: "#e4dccf",
+      irisHue: "#a976bc",
+      travelerRecognition: "Leaning motionless from the wrought-iron balcony above the dusk thoroughfare, the pale veiled girl holds the exact stillness of the girl who killed herself for an unrequited love.",
+      foreheadEcho: "High on the wrought-iron rail she leans into twilight, neither calling out nor vanishing."
+    }),
+    Object.freeze({
+      maskId: "maternal_grandmother",
+      stoneId: "scale_greengrocer",
+      shortTitle: "Grandmother at the Brass Pan-Scale",
+      kinRole: "Maternal grandmother",
+      featureSignature: "Stooped shoulders, blue-veined knuckles, steadying balance thumb",
+      maskHue: "#eba038",
+      irisHue: "#ffd37d",
+      travelerRecognition: "Weighing dark greens on a hanging brass pan-scale in the lantern alley, the stooped vendor moves with my grandmother's exact shoulders and veined fingers.",
+      foreheadEcho: "The brass pans tremble as though weighing the living against the dead—and tipping toward the dead."
+    })
+  ]);
+
+  const RAW_RECIPROCAL_GAZES = [
+    {
+      figureId: "hawser_sailor",
+      theirDeadTitle: "Youngest Son Swept Overboard off Negroponte",
+      theirDeadRelation: "Lost youngest son",
+      theirMemoryOfYou: "His wet grip freezes on the hawser: in your salt-stung eyes he recognizes his youngest son swept overboard in the winter gale off Negroponte.",
+      waterReflectionFeature: "Salt-drenched curls & parted boyish lips gasping in black swell",
+      gazeHue: "#ffd37d"
+    },
+    {
+      figureId: "urchin_fisherman",
+      theirDeadTitle: "Twin Brother Dragged Beneath the Urchin-Dredge",
+      theirDeadRelation: "Drowned twin brother",
+      theirMemoryOfYou: "Through crusted lashes the old fisherman beholds in your face his twin brother dragged beneath the tide with a weighted urchin-dredge thirty autumns past.",
+      waterReflectionFeature: "Brine-pale brow scored by taut hemp cord & twin violet-dark irises",
+      gazeHue: "#a976bc"
+    },
+    {
+      figureId: "straw_mat_sufferer",
+      theirDeadTitle: "Salt-Marsh Cousin Felled by Yellow Ague",
+      theirDeadRelation: "Perished marshland cousin",
+      theirMemoryOfYou: "Shivering on the damp straw mat, he fixes your cheekbones as his cousin from the salt-marshes who perished of the same yellow ague beside this pillar.",
+      waterReflectionFeature: "Amber-rimmed fever sockets & parched throat shimmering in oil-light",
+      gazeHue: "#cfa23c"
+    },
+    {
+      figureId: "gangplank_stevedore",
+      theirDeadTitle: "Quarry Companion Crushed on the Necropolis Stair",
+      theirDeadRelation: "Crushed quarry companion",
+      theirMemoryOfYou: "Beneath his folded jute hood, the stevedore halts—recognizing in your jaw the quarry companion crushed under fallen limestone on the upper necropolis stair.",
+      waterReflectionFeature: "Chalk-dusted temples & resolute mason's chin beneath dark ripples",
+      gazeHue: "#e4dccf"
+    },
+    {
+      figureId: "balcony_maiden",
+      theirDeadTitle: "Betrothed Mariner Drowned After Equinox",
+      theirDeadRelation: "Drowned betrothed mariner",
+      theirMemoryOfYou: "Down from the wrought-iron balcony, her unblinking eyes fasten on you as the betrothed mariner who sailed out at equinox and drowned before returning to her casement.",
+      waterReflectionFeature: "Wind-chapped navigator's brow & horizon-searching eyes",
+      gazeHue: "#7c498d"
+    },
+    {
+      figureId: "scale_greengrocer",
+      theirDeadTitle: "Firstborn Daughter Lost in Childbirth",
+      theirDeadRelation: "Firstborn daughter",
+      theirMemoryOfYou: "Her veined hand stills on the brass scale chain: in your exact brow and startled gaze she sees her firstborn daughter lost in childbirth.",
+      waterReflectionFeature: "Delicate arched eyebrows & startled lantern-lit pupils",
+      gazeHue: "#eba038"
+    }
+  ];
+
+  const SECONDARY_RECIPROCAL_GAZES = [
+    {
+      figureId: "net_mender",
+      theirDeadTitle: "Apprentice Tangled in the Night Seine",
+      theirDeadRelation: "Drowned net-loft apprentice",
+      theirMemoryOfYou: "His bone shuttle freezes mid-knot: your half-parted mouth mirrors the young apprentice pulled down in a drifting night seine outside the mole.",
+      waterReflectionFeature: "Cross-hatched hemp net shadows across pale temples",
+      gazeHue: "#9e9382"
+    },
+    {
+      figureId: "upper_stair_porter",
+      theirDeadTitle: "Elder Brother Lost on the Salt Caravan",
+      theirDeadRelation: "Unreturned elder brother",
+      theirMemoryOfYou: "Paused on the steep stone riser, the porter sees in your travel-worn posture his elder brother who marched inland with the salt mules and died of thirst.",
+      waterReflectionFeature: "Sun-hollowed cheeks & dusty traveler's collar",
+      gazeHue: "#cfa23c"
+    },
+    {
+      figureId: "lantern_trimmer",
+      theirDeadTitle: "Harbour Watchman Taken by Pitch Fire",
+      theirDeadRelation: "Late watch-tower keeper",
+      theirMemoryOfYou: "Lifting his brass wick-shears, the trimmer recoils—your lit bridge-of-nose belongs to the old harbour watchman lost when the pitch warehouse burned.",
+      waterReflectionFeature: "Soot-smudged cheekbones gilded with trembling wick-fire",
+      gazeHue: "#ffd37d"
+    },
+    {
+      figureId: "cuttlefish_monger",
+      theirDeadTitle: "Ink-Stained Sister Felled by Winter Pleurisy",
+      theirDeadRelation: "Younger market sister",
+      theirMemoryOfYou: "Beside black cuttlefish slabs, the monger stares without blinking, reading in your narrow chin the younger sister carried off by winter pleurisy.",
+      waterReflectionFeature: "Sepia-tinted eyelids & frost-pale cheekbones",
+      gazeHue: "#a976bc"
+    },
+    {
+      figureId: "lateen_oarsman",
+      theirDeadTitle: "Helmsman Dashed Against the Breakwater",
+      theirDeadRelation: "Shipwrecked helmsman",
+      theirMemoryOfYou: "Resting on his wet ash sweep, the oarsman recognizes in your temples the veteran helmsman dashed against the outer breakwater guiding the barque home.",
+      waterReflectionFeature: "Spray-beaded forehead & stern salt-whitened lashes",
+      gazeHue: "#eba038"
+    },
+    {
+      figureId: "colonnade_widow",
+      theirDeadTitle: "Shipwright Husband Buried on the Cliff",
+      theirDeadRelation: "Late shipwright husband",
+      theirMemoryOfYou: "From the black limestone archway, the veiled widow fixes you with terrified devotion—seeing her shipwright husband's exact eyes returned from the cypress hill.",
+      waterReflectionFeature: "Deep-set artisan's eyes framed by cypress-dark ripples",
+      gazeHue: "#7c498d"
+    }
+  ];
+
+  const RECIPROCAL_GAZE_MAP = {};
+  const RECIPROCAL_GAZES = RAW_RECIPROCAL_GAZES.concat(SECONDARY_RECIPROCAL_GAZES).map((entry) => {
+    const frozen = Object.freeze({ ...entry });
+    RECIPROCAL_GAZE_MAP[frozen.figureId] = frozen;
+    return frozen;
+  });
+  for (let i = 0; i < RECIPROCAL_GAZES.length; i += 1) {
+    const item = RECIPROCAL_GAZES[i];
+    Object.defineProperty(RECIPROCAL_GAZES, item.figureId, {
+      value: item,
+      enumerable: false,
+      configurable: false,
+      writable: false
+    });
+  }
+  Object.freeze(RECIPROCAL_GAZE_MAP);
+  Object.freeze(RECIPROCAL_GAZES);
+
+  const DEAD_MASK_BY_STONE = {};
+  const DEAD_MASK_BY_ID = {};
+  for (let i = 0; i < CANONICAL_DEAD_MASKS.length; i += 1) {
+    const m = CANONICAL_DEAD_MASKS[i];
+    DEAD_MASK_BY_STONE[m.stoneId] = m;
+    DEAD_MASK_BY_ID[m.maskId] = m;
+  }
+  Object.freeze(DEAD_MASK_BY_STONE);
+  Object.freeze(DEAD_MASK_BY_ID);
+
+  const HYPOTHESIS_TEXTS = Object.freeze({
+    hereafter_doubt: "Perhaps this is the land where you arrive when you die...",
+    kaleidoscope_limit: "Not the beyond, but the age when the dead outnumber the living — and every eye finds its own dead in you."
+  });
+
+  const UPPER_FACET_TRAITS = Object.freeze([
+    "hollowed soldier's brow",
+    "brine-furrowed shipmate forehead",
+    "saffron-yellow fever sclera",
+    "coarse jute-hood shadow",
+    "pale veiled balcony cheekbone",
+    "grandmother's stooped temple"
+  ]);
+
+  const LOWER_FACET_TRAITS = Object.freeze([
+    "dark-tunic jaw ridge",
+    "crusty sea-urchin knuckle line",
+    "shivering straw-mat chin",
+    "boyhood companion's mouth",
+    "motionless twilight throat",
+    "veined brass-scale fingers"
+  ]);
+
+  function clamp(v, lo, hi) {
+    const n = Number(v);
+    if (!Number.isFinite(n)) return lo;
+    return n < lo ? lo : n > hi ? hi : n;
+  }
+
+  function clamp01(v) {
+    return clamp(v, 0, 1);
+  }
+
+  function hexToRgba(hex, alpha) {
+    const a = clamp01(alpha);
+    if (typeof hex === "string" && hex.charAt(0) === "#" && (hex.length === 7 || hex.length === 4)) {
+      let r = 228;
+      let g = 220;
+      let b = 207;
+      if (hex.length === 7) {
+        r = parseInt(hex.slice(1, 3), 16);
+        g = parseInt(hex.slice(3, 5), 16);
+        b = parseInt(hex.slice(5, 7), 16);
+      } else {
+        r = parseInt(hex.charAt(1) + hex.charAt(1), 16);
+        g = parseInt(hex.charAt(2) + hex.charAt(2), 16);
+        b = parseInt(hex.charAt(3) + hex.charAt(3), 16);
+      }
+      return "rgba(" + r + "," + g + "," + b + "," + a.toFixed(3) + ")";
+    }
+    return "rgba(228,220,207," + a.toFixed(3) + ")";
+  }
+
+  function computeSecondaryDonors(secIdx, permutationSeed) {
+    const seed = Math.max(0, Math.floor(Number(permutationSeed) || 0));
+    const idxA = (secIdx * 2 + seed * 5 + 1) % 6;
+    let idxB = (secIdx * 3 + seed * 2 + 4) % 6;
+    if (idxB === idxA) idxB = (idxA + 3) % 6;
+    return { idxA, idxB, maskA: CANONICAL_DEAD_MASKS[idxA], maskB: CANONICAL_DEAD_MASKS[idxB] };
+  }
+
+  function createBereavementEngine(opts = {}) {
+    const callbacks = {
+      onStateChange: typeof opts.onStateChange === "function" ? opts.onStateChange : null,
+      onThresholdCrossed: typeof opts.onThresholdCrossed === "function" ? opts.onThresholdCrossed : null,
+      onReciprocalLock: typeof opts.onReciprocalLock === "function" ? opts.onReciprocalLock : null
+    };
+
+    const TOTAL_KNOWN_SOULS = 60;
+    const state = {
+      lifeStage: 0.62,
+      deadKnownCount: 37,
+      livingKnownCount: 23,
+      deadShare: 37 / 60,
+      deadOutnumberLiving: true,
+      maskedByFigureId: {},
+      maskedStrangerCount: 8,
+      unmaskedStrangerCount: 4,
+      kaleidoscopeSaturated: false,
+      kaleidoscopeTurnCount: 0,
+      permutationSeed: 0,
+      activeFigureId: "hawser_sailor",
+      hoveredFigureId: null,
+      hoverDwellSec: 0,
+      autoLockedHoverId: null,
+      isReciprocalLocked: false,
+      reciprocalLockCount: 0,
+      avertedCount: 0,
+      gazeParalysis: 0,
+      recognizedStoneIds: ["hawser_sailor"],
+      hypothesisMode: "hereafter_doubt",
+      foreheadTouchCount: 0,
+      shimmerPhase: 0,
+      turnFlash01: 0,
+      foreheadPulse01: 0,
+      lastAvertedReflection: null,
+      reducedMotion: false
+    };
+
+    function markStoneRecognized(figId) {
+      if (PRIMARY_STONE_IDS.indexOf(figId) !== -1 && state.recognizedStoneIds.indexOf(figId) === -1) {
+        state.recognizedStoneIds.push(figId);
+      }
+    }
+
+    function recomputeDerived() {
+      const ls = clamp01(state.lifeStage);
+      state.lifeStage = ls;
+      state.deadKnownCount = Math.round(TOTAL_KNOWN_SOULS * ls);
+      state.livingKnownCount = TOTAL_KNOWN_SOULS - state.deadKnownCount;
+      state.deadShare = state.deadKnownCount / TOTAL_KNOWN_SOULS;
+      state.deadOutnumberLiving = ls > 0.50;
+
+      const maskedMap = {};
+      for (let i = 0; i < ALL_WHARF_IDS.length; i += 1) {
+        maskedMap[ALL_WHARF_IDS[i]] = false;
+      }
+
+      if (!state.deadOutnumberLiving) {
+        if (ls > 0.02 && PRIMARY_STONE_IDS.indexOf(state.activeFigureId) !== -1) {
+          maskedMap[state.activeFigureId] = true;
+        }
+        if (
+          ls >= 0.18 &&
+          state.hoveredFigureId &&
+          state.hoveredFigureId !== state.activeFigureId &&
+          PRIMARY_STONE_IDS.indexOf(state.hoveredFigureId) !== -1
+        ) {
+          maskedMap[state.hoveredFigureId] = true;
+        }
+      } else {
+        for (let i = 0; i < PRIMARY_STONE_IDS.length; i += 1) {
+          maskedMap[PRIMARY_STONE_IDS[i]] = true;
+        }
+        const secQuota = ls >= 0.78
+          ? 6
+          : Math.min(6, Math.max(0, Math.floor(((ls - 0.51) / 0.27) * 6 + 1e-6)));
+        const orderedSec = SECONDARY_STRANGER_IDS.slice().sort((a, b) => {
+          if (a === state.activeFigureId) return -1;
+          if (b === state.activeFigureId) return 1;
+          const ia = (SECONDARY_STRANGER_IDS.indexOf(a) * 5 + state.permutationSeed * 3) % 6;
+          const ib = (SECONDARY_STRANGER_IDS.indexOf(b) * 5 + state.permutationSeed * 3) % 6;
+          return ia - ib;
+        });
+        for (let k = 0; k < secQuota; k += 1) {
+          maskedMap[orderedSec[k]] = true;
+        }
+      }
+
+      let maskedCount = 0;
+      for (let i = 0; i < ALL_WHARF_IDS.length; i += 1) {
+        if (maskedMap[ALL_WHARF_IDS[i]]) maskedCount += 1;
+      }
+      state.maskedByFigureId = maskedMap;
+      state.maskedStrangerCount = maskedCount;
+      state.unmaskedStrangerCount = ALL_WHARF_IDS.length - maskedCount;
+      state.kaleidoscopeSaturated = state.deadOutnumberLiving && maskedCount === ALL_WHARF_IDS.length;
+    }
+
+    function getFigureReading(figureId) {
+      const validId = ALL_WHARF_IDS.indexOf(figureId) !== -1 ? figureId : (state.activeFigureId || "hawser_sailor");
+      const primaryIdx = PRIMARY_STONE_IDS.indexOf(validId);
+      const isPrimaryStone = primaryIdx !== -1;
+      const isMasked = Boolean(state.maskedByFigureId[validId]);
+      const gaze = RECIPROCAL_GAZE_MAP[validId] || RECIPROCAL_GAZES[0];
+
+      if (isPrimaryStone) {
+        const mask = CANONICAL_DEAD_MASKS[primaryIdx];
+        const refractedIdx = (primaryIdx + state.permutationSeed + 1) % 6;
+        const refractedMask = CANONICAL_DEAD_MASKS[refractedIdx];
+        const hasTurnEcho = isMasked && state.deadOutnumberLiving && state.kaleidoscopeTurnCount > 0;
+        const sig = isMasked
+          ? (hasTurnEcho
+            ? mask.featureSignature + " · refracted facet of " + LOWER_FACET_TRAITS[refractedIdx]
+            : mask.featureSignature)
+          : "Living dockside countenance (passing trace of " + mask.kinRole.toLowerCase() + ")";
+        const sees = isMasked
+          ? mask.travelerRecognition
+          : "While the living you know still outnumber the dead, your mind accepts a new face—only a brief flicker of " + mask.shortTitle.toLowerCase() + " crosses the wharf.";
+        return {
+          figureId: validId,
+          isPrimaryStone: true,
+          isMasked,
+          maskId: isMasked ? mask.maskId : "unmasked_living",
+          canonicalMaskId: mask.maskId,
+          maskTitle: isMasked ? mask.shortTitle : "Unmasked Stranger · Echo of " + mask.shortTitle,
+          kinRole: isMasked ? mask.kinRole : "Living wharf citizen",
+          featureSignature: sig,
+          travelerSeesText: sees,
+          foreheadEcho: mask.foreheadEcho,
+          citizenSeesTitle: gaze.theirDeadTitle,
+          citizenSeesRelation: gaze.theirDeadRelation,
+          citizenSeesInYouText: gaze.theirMemoryOfYou,
+          waterReflectionFeature: gaze.waterReflectionFeature,
+          maskHue: isMasked ? mask.maskHue : PALETTE.sackclothAsh,
+          irisHue: isMasked ? mask.irisHue : PALETTE.boneParchment,
+          gazeHue: gaze.gazeHue
+        };
+      }
+
+      const secIdx = Math.max(0, SECONDARY_STRANGER_IDS.indexOf(validId));
+      const donors = computeSecondaryDonors(secIdx, state.permutationSeed);
+      const mA = donors.maskA;
+      const mB = donors.maskB;
+      return {
+        figureId: validId,
+        isPrimaryStone: false,
+        isMasked,
+        maskId: isMasked ? mA.maskId : "unmasked_living",
+        secondaryMaskId: mB.maskId,
+        donorPrimaryIds: [mA.stoneId, mB.stoneId],
+        maskTitle: isMasked
+          ? "Kaleidoscopic Mask: " + mA.shortTitle + " × " + mB.kinRole
+          : "Unmasked Wharf Stranger",
+        kinRole: isMasked
+          ? "Composite of " + mA.kinRole.toLowerCase() + " & " + mB.kinRole.toLowerCase()
+          : "New living face on the quay",
+        featureSignature: isMasked
+          ? UPPER_FACET_TRAITS[donors.idxA] + " fused with " + LOWER_FACET_TRAITS[donors.idxB]
+          : "Unmasked living features accepted before memory saturates",
+        travelerSeesText: isMasked
+          ? "Your mind refuses any more new faces: this stranger wears a kaleidoscopic mask combining " + UPPER_FACET_TRAITS[donors.idxA] + " and " + LOWER_FACET_TRAITS[donors.idxB] + "."
+          : "Because the living still outnumber your dead, this bystander keeps an unfamiliar living face.",
+        foreheadEcho: mA.foreheadEcho,
+        citizenSeesTitle: gaze.theirDeadTitle,
+        citizenSeesRelation: gaze.theirDeadRelation,
+        citizenSeesInYouText: gaze.theirMemoryOfYou,
+        waterReflectionFeature: gaze.waterReflectionFeature,
+        maskHue: isMasked ? mA.maskHue : PALETTE.sackclothAsh,
+        irisHue: isMasked ? mB.irisHue : PALETTE.boneParchment,
+        gazeHue: gaze.gazeHue
+      };
+    }
+
+    function getState() {
+      const activeReading = getFigureReading(state.activeFigureId);
+      return {
+        lifeStage: state.lifeStage,
+        totalKnownSouls: TOTAL_KNOWN_SOULS,
+        livingKnownCount: state.livingKnownCount,
+        deadKnownCount: state.deadKnownCount,
+        deadShare: state.deadShare,
+        deadOutnumberLiving: state.deadOutnumberLiving,
+        maskedStrangerCount: state.maskedStrangerCount,
+        unmaskedStrangerCount: state.unmaskedStrangerCount,
+        kaleidoscopeSaturated: state.kaleidoscopeSaturated,
+        kaleidoscopeTurnCount: state.kaleidoscopeTurnCount,
+        permutationSeed: state.permutationSeed,
+        activeFigureId: state.activeFigureId,
+        activeReading,
+        isReciprocalLocked: state.isReciprocalLocked,
+        reciprocalLockCount: state.reciprocalLockCount,
+        avertedCount: state.avertedCount,
+        gazeParalysis: Number(state.gazeParalysis.toFixed(4)),
+        recognizedPrimaryCount: state.recognizedStoneIds.length,
+        recognizedStoneIds: state.recognizedStoneIds.slice(),
+        hypothesisMode: state.hypothesisMode,
+        hypothesisText: HYPOTHESIS_TEXTS[state.hypothesisMode] || HYPOTHESIS_TEXTS.hereafter_doubt,
+        foreheadTouchCount: state.foreheadTouchCount,
+        hoveredFigureId: state.hoveredFigureId,
+        lastAvertedReflection: state.lastAvertedReflection
+          ? { ...state.lastAvertedReflection }
+          : null
+      };
+    }
+
+    function notifyStateChange() {
+      if (callbacks.onStateChange) {
+        callbacks.onStateChange(getState());
+      }
+    }
+
+    function setLifeStage(val01) {
+      const prevThreshold = state.deadOutnumberLiving;
+      state.lifeStage = clamp01(val01);
+      recomputeDerived();
+      if (!state.isReciprocalLocked && !state.deadOutnumberLiving && state.gazeParalysis > 0.12) {
+        state.gazeParalysis = 0.06;
+      }
+      if (prevThreshold !== state.deadOutnumberLiving && callbacks.onThresholdCrossed) {
+        callbacks.onThresholdCrossed({
+          deadOutnumberLiving: state.deadOutnumberLiving,
+          lifeStage: state.lifeStage,
+          maskedStrangerCount: state.maskedStrangerCount,
+          kaleidoscopeSaturated: state.kaleidoscopeSaturated
+        });
+      }
+      notifyStateChange();
+      return getState();
+    }
+
+    function turnKaleidoscope() {
+      state.kaleidoscopeTurnCount += 1;
+      state.permutationSeed = (state.permutationSeed + 1) % 720;
+      state.turnFlash01 = 1.0;
+      recomputeDerived();
+      notifyStateChange();
+      return getState();
+    }
+
+    function inspectFigure(figureId) {
+      if (figureId && ALL_WHARF_IDS.indexOf(figureId) !== -1) {
+        state.activeFigureId = figureId;
+      }
+      markStoneRecognized(state.activeFigureId);
+      recomputeDerived();
+      notifyStateChange();
+      return getFigureReading(state.activeFigureId);
+    }
+
+    function lockReciprocalGaze(figureId) {
+      const targetId = (figureId && ALL_WHARF_IDS.indexOf(figureId) !== -1)
+        ? figureId
+        : (state.activeFigureId || "hawser_sailor");
+      state.activeFigureId = targetId;
+      markStoneRecognized(targetId);
+      state.isReciprocalLocked = true;
+      state.reciprocalLockCount += 1;
+      state.gazeParalysis = clamp01(Math.max(state.gazeParalysis, 0.86));
+      state.lastAvertedReflection = null;
+      recomputeDerived();
+      const reading = getFigureReading(targetId);
+      if (callbacks.onReciprocalLock) {
+        callbacks.onReciprocalLock(reading, getState());
+      }
+      notifyStateChange();
+      return reading;
+    }
+
+    function avertEyes() {
+      const activeGaze = RECIPROCAL_GAZE_MAP[state.activeFigureId] || RECIPROCAL_GAZES[0];
+      state.lastAvertedReflection = {
+        figureId: state.activeFigureId,
+        theirDeadTitle: activeGaze.theirDeadTitle,
+        theirDeadRelation: activeGaze.theirDeadRelation,
+        waterReflectionFeature: activeGaze.waterReflectionFeature,
+        gazeHue: activeGaze.gazeHue,
+        decay01: 1.0
+      };
+      state.isReciprocalLocked = false;
+      state.avertedCount += 1;
+      state.gazeParalysis = 0.10;
+      state.hoverDwellSec = 0;
+      state.autoLockedHoverId = state.hoveredFigureId;
+      notifyStateChange();
+      return getState();
+    }
+
+    function touchForehead() {
+      state.foreheadTouchCount += 1;
+      state.hypothesisMode = state.hypothesisMode === "hereafter_doubt"
+        ? "kaleidoscope_limit"
+        : "hereafter_doubt";
+      state.foreheadPulse01 = 1.0;
+      notifyStateChange();
+      return getState();
+    }
+
+    function step(dtSec, pointerState = {}) {
+      const rawDt = Math.max(0, Number(dtSec) || 0);
+      const dt = Math.min(0.25, rawDt);
+      const dwellDt = Math.min(2.0, rawDt);
+      const pState = pointerState || {};
+      const hoveredId = (pState.hoveredId && ALL_WHARF_IDS.indexOf(pState.hoveredId) !== -1)
+        ? pState.hoveredId
+        : null;
+      state.reducedMotion = Boolean(pState.reducedMotion);
+
+      if (hoveredId !== state.hoveredFigureId) {
+        state.hoveredFigureId = hoveredId;
+        state.hoverDwellSec = 0;
+        state.autoLockedHoverId = null;
+        if (!state.deadOutnumberLiving) {
+          recomputeDerived();
+        }
+      }
+      if (hoveredId && dwellDt > 0) {
+        state.hoverDwellSec += dwellDt;
+        if (
+          state.hoverDwellSec >= 0.42 &&
+          state.deadOutnumberLiving &&
+          state.autoLockedHoverId !== hoveredId &&
+          (!state.isReciprocalLocked || state.activeFigureId !== hoveredId)
+        ) {
+          state.autoLockedHoverId = hoveredId;
+          lockReciprocalGaze(hoveredId);
+        }
+      }
+
+      if (state.reducedMotion) {
+        if (state.isReciprocalLocked) {
+          state.gazeParalysis = Math.max(0.86, state.gazeParalysis);
+        }
+      } else if (dt > 0) {
+        state.shimmerPhase = (state.shimmerPhase + dt * 1.75) % (Math.PI * 200);
+        if (state.isReciprocalLocked) {
+          const targetLock = 0.92;
+          state.gazeParalysis = clamp01(Math.max(0.80, state.gazeParalysis + (targetLock - state.gazeParalysis) * Math.min(1, dt * 1.6)));
+        } else {
+          const ambientTarget = state.deadOutnumberLiving
+            ? 0.08 + 0.14 * clamp01((state.lifeStage - 0.50) / 0.50)
+            : 0.0;
+          state.gazeParalysis = clamp01(state.gazeParalysis + (ambientTarget - state.gazeParalysis) * Math.min(1, dt * 0.95));
+        }
+      }
+
+      if (dt > 0) {
+        state.turnFlash01 = Math.max(0, state.turnFlash01 - dt * 1.4);
+        state.foreheadPulse01 = Math.max(0, state.foreheadPulse01 - dt * 1.1);
+        if (state.lastAvertedReflection) {
+          state.lastAvertedReflection.decay01 = Math.max(0, state.lastAvertedReflection.decay01 - dt * 0.34);
+          if (state.lastAvertedReflection.decay01 <= 0.005) {
+            state.lastAvertedReflection = null;
+          }
+        }
+      }
+      return getState();
+    }
+
+    function reset() {
+      state.lifeStage = 0.62;
+      state.kaleidoscopeTurnCount = 0;
+      state.permutationSeed = 0;
+      state.activeFigureId = "hawser_sailor";
+      state.hoveredFigureId = null;
+      state.hoverDwellSec = 0;
+      state.autoLockedHoverId = null;
+      state.isReciprocalLocked = false;
+      state.reciprocalLockCount = 0;
+      state.avertedCount = 0;
+      state.gazeParalysis = 0;
+      state.recognizedStoneIds = ["hawser_sailor"];
+      state.hypothesisMode = "hereafter_doubt";
+      state.foreheadTouchCount = 0;
+      state.shimmerPhase = 0;
+      state.turnFlash01 = 0;
+      state.foreheadPulse01 = 0;
+      state.lastAvertedReflection = null;
+      recomputeDerived();
+      notifyStateChange();
+      return getState();
+    }
+
+    function drawKaleidoscopeChords(ctx, figById, shimmerWave) {
+      if (!state.deadOutnumberLiving) return;
+      const satBoost = state.kaleidoscopeSaturated ? 0.14 : 0.04;
+      const flashBoost = state.turnFlash01 * 0.32;
+      ctx.save();
+      for (let s = 0; s < SECONDARY_STRANGER_IDS.length; s += 1) {
+        const secId = SECONDARY_STRANGER_IDS[s];
+        if (!state.maskedByFigureId[secId]) continue;
+        const secFig = figById[secId];
+        if (!secFig) continue;
+        const donors = computeSecondaryDonors(s, state.permutationSeed);
+        const donorIds = [donors.maskA.stoneId, donors.maskB.stoneId];
+        const donorHues = [donors.maskA.maskHue, donors.maskB.irisHue];
+
+        for (let d = 0; d < 2; d += 1) {
+          const donorFig = figById[donorIds[d]];
+          if (!donorFig) continue;
+          const x1 = donorFig.eyeX;
+          const y1 = donorFig.eyeY;
+          const x2 = secFig.eyeX;
+          const y2 = secFig.eyeY;
+          const mx = (x1 + x2) * 0.5;
+          const my = (y1 + y2) * 0.5 - (d === 0 ? 16 : -12);
+          const isFocusLink = state.activeFigureId === secId || state.activeFigureId === donorIds[d];
+          const alpha = clamp01((isFocusLink ? 0.36 : 0.17) + satBoost + flashBoost + shimmerWave * 0.04);
+
+          ctx.beginPath();
+          ctx.moveTo(x1, y1);
+          ctx.quadraticCurveTo(mx, my, x2, y2);
+          ctx.strokeStyle = hexToRgba(donorHues[d], alpha);
+          ctx.lineWidth = isFocusLink ? 1.35 : 0.85;
+          ctx.setLineDash(d === 0 ? [5, 4] : [2, 4]);
+          ctx.stroke();
+
+          ctx.setLineDash([]);
+          const nodeX = 0.25 * x1 + 0.5 * mx + 0.25 * x2;
+          const nodeY = 0.25 * y1 + 0.5 * my + 0.25 * y2;
+          ctx.fillStyle = hexToRgba(PALETTE.boneParchment, alpha * 0.95);
+          ctx.beginPath();
+          ctx.moveTo(nodeX, nodeY - 2.6);
+          ctx.lineTo(nodeX + 2.6, nodeY);
+          ctx.lineTo(nodeX, nodeY + 2.6);
+          ctx.lineTo(nodeX - 2.6, nodeY);
+          ctx.closePath();
+          ctx.fill();
+        }
+      }
+
+      if (state.kaleidoscopeTurnCount > 0 || state.kaleidoscopeSaturated) {
+        ctx.setLineDash([3, 6]);
+        ctx.lineWidth = 0.7;
+        for (let i = 0; i < PRIMARY_STONE_IDS.length; i += 1) {
+          const idA = PRIMARY_STONE_IDS[i];
+          const idB = PRIMARY_STONE_IDS[(i + 1 + (state.permutationSeed % 2)) % 6];
+          const fA = figById[idA];
+          const fB = figById[idB];
+          if (!fA || !fB) continue;
+          ctx.strokeStyle = hexToRgba(PALETTE.urchinSpine, 0.13 + flashBoost * 0.5);
+          ctx.beginPath();
+          ctx.moveTo(fA.eyeX, fA.eyeY);
+          ctx.lineTo(fB.eyeX, fB.eyeY);
+          ctx.stroke();
+        }
+      }
+      ctx.restore();
+    }
+
+    function drawDepartedMaskOverlay(ctx, fig, reading, vantageX, vantageY, shimmerWave, hoveredId) {
+      const ex = fig.eyeX;
+      const ey = fig.eyeY;
+      const r = Math.max(7.5, Number(fig.headRadius) || 12);
+      const isSelected = fig.id === state.activeFigureId;
+      const isHovered = fig.id === hoveredId;
+
+      if (!reading.isMasked) {
+        if (isSelected || isHovered) {
+          ctx.save();
+          ctx.strokeStyle = hexToRgba(PALETTE.lanternHalo, isSelected ? 0.55 : 0.35);
+          ctx.lineWidth = 1.1;
+          ctx.setLineDash([3, 3]);
+          ctx.beginPath();
+          ctx.arc(ex, ey, r * 1.45, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.restore();
+        }
+        return;
+      }
+
+      const baseOpacity = state.deadOutnumberLiving ? 0.86 : 0.50;
+      const maskAlpha = clamp01(baseOpacity + shimmerWave * 0.05 + (isSelected ? 0.10 : 0));
+
+      ctx.save();
+      const aura = ctx.createRadialGradient(ex, ey, r * 0.25, ex, ey, r * 2.15);
+      aura.addColorStop(0, hexToRgba(reading.maskHue, maskAlpha * 0.38));
+      aura.addColorStop(0.62, hexToRgba(PALETTE.urchinViolet, maskAlpha * 0.18));
+      aura.addColorStop(1, "rgba(11,17,29,0)");
+      ctx.fillStyle = aura;
+      ctx.beginPath();
+      ctx.arc(ex, ey, r * 2.15, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.moveTo(ex, ey - r * 1.12);
+      ctx.lineTo(ex + r * 0.86, ey - r * 0.32);
+      ctx.lineTo(ex + r * 0.66, ey + r * 0.72);
+      ctx.lineTo(ex, ey + r * 1.16);
+      ctx.lineTo(ex - r * 0.66, ey + r * 0.72);
+      ctx.lineTo(ex - r * 0.86, ey - r * 0.32);
+      ctx.closePath();
+      ctx.fillStyle = hexToRgba(PALETTE.boneParchment, maskAlpha * 0.76);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.moveTo(ex, ey - r * 1.12);
+      ctx.lineTo(ex + r * 0.86, ey - r * 0.32);
+      ctx.lineTo(ex + r * 0.66, ey + r * 0.72);
+      ctx.lineTo(ex, ey + r * 1.16);
+      ctx.closePath();
+      const rightHue = reading.isPrimaryStone ? PALETTE.duskIndigo : reading.irisHue;
+      ctx.fillStyle = hexToRgba(rightHue, reading.isPrimaryStone ? maskAlpha * 0.56 : maskAlpha * 0.48);
+      ctx.fill();
+
+      ctx.strokeStyle = hexToRgba(reading.maskHue, maskAlpha * 0.92);
+      ctx.lineWidth = isSelected ? 1.5 : 1.0;
+      ctx.beginPath();
+      ctx.moveTo(ex - r * 0.82, ey - r * 0.28);
+      ctx.lineTo(ex, ey + r * 0.16);
+      ctx.lineTo(ex + r * 0.82, ey - r * 0.28);
+      ctx.moveTo(ex, ey - r * 1.10);
+      ctx.lineTo(ex, ey + r * 1.14);
+      ctx.moveTo(ex - r * 0.58, ey + r * 0.56);
+      ctx.lineTo(ex + r * 0.58, ey + r * 0.56);
+      ctx.stroke();
+
+      if (reading.canonicalMaskId === "departed_childhood_friend") {
+        ctx.strokeStyle = hexToRgba(PALETTE.sackclothAsh, maskAlpha * 0.85);
+        ctx.beginPath();
+        ctx.moveTo(ex - r * 1.05, ey + r * 0.45);
+        ctx.lineTo(ex, ey - r * 1.42);
+        ctx.lineTo(ex + r * 1.05, ey + r * 0.45);
+        ctx.stroke();
+      } else if (reading.canonicalMaskId === "unrequited_love_girl") {
+        ctx.fillStyle = hexToRgba(PALETTE.urchinSpine, maskAlpha * 0.26);
+        ctx.fillRect(ex - r * 0.85, ey + r * 0.10, r * 1.70, r * 1.15);
+      }
+
+      const dx = vantageX - ex;
+      const dy = vantageY - ey;
+      const dist = Math.hypot(dx, dy) || 1;
+      const ux = dx / dist;
+      const uy = dy / dist;
+      const eyeSpan = Math.max(2.7, r * 0.36);
+      const socketR = Math.max(1.9, r * 0.21);
+      const pupilR = Math.max(1.05, socketR * 0.56);
+
+      for (let side = -1; side <= 1; side += 2) {
+        const sx = ex + side * eyeSpan;
+        const sy = ey - r * 0.08;
+        ctx.fillStyle = PALETTE.harborAbyss;
+        ctx.beginPath();
+        ctx.ellipse(sx, sy, socketR * 1.25, socketR * 0.88, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = hexToRgba(reading.irisHue, clamp01(maskAlpha + 0.12));
+        ctx.beginPath();
+        ctx.arc(sx + ux * socketR * 0.34, sy + uy * socketR * 0.34, pupilR, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = hexToRgba(PALETTE.lanternHalo, 0.92);
+        ctx.beginPath();
+        ctx.arc(sx + ux * socketR * 0.45 - 0.35, sy + uy * socketR * 0.45 - 0.35, Math.max(0.55, pupilR * 0.38), 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      if (state.deadOutnumberLiving) {
+        const rayLen = isSelected ? Math.min(dist * 0.38, 120) : Math.min(dist * 0.18, 52);
+        const rayGrad = ctx.createLinearGradient(ex, ey, ex + ux * rayLen, ey + uy * rayLen);
+        rayGrad.addColorStop(0, hexToRgba(reading.irisHue, isSelected ? 0.40 : 0.20));
+        rayGrad.addColorStop(1, "rgba(11,17,29,0)");
+        ctx.strokeStyle = rayGrad;
+        ctx.lineWidth = isSelected ? 1.4 : 0.8;
+        ctx.beginPath();
+        ctx.moveTo(ex, ey);
+        ctx.lineTo(ex + ux * rayLen, ey + uy * rayLen);
+        ctx.stroke();
+      }
+
+      if (isSelected || isHovered) {
+        ctx.strokeStyle = hexToRgba(isSelected ? reading.gazeHue : PALETTE.lanternHalo, isSelected ? 0.88 : 0.56);
+        ctx.lineWidth = isSelected ? 1.6 : 1.1;
+        ctx.beginPath();
+        ctx.arc(ex, ey, r * 1.52, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    function drawParalysisVignette(ctx, width, height, intensity) {
+      if (intensity <= 0.02) return;
+      ctx.save();
+      const cx = width * 0.50;
+      const cy = height * 0.56;
+      const innerR = Math.min(width, height) * 0.28;
+      const outerR = Math.hypot(width, height) * 0.62;
+      const vig = ctx.createRadialGradient(cx, cy, innerR, cx, cy, outerR);
+      vig.addColorStop(0, "rgba(11,17,29,0)");
+      vig.addColorStop(0.68, hexToRgba(PALETTE.urchinViolet, intensity * 0.16));
+      vig.addColorStop(1, hexToRgba(PALETTE.harborAbyss, intensity * 0.52));
+      ctx.fillStyle = vig;
+      ctx.fillRect(0, 0, width, height);
+      ctx.restore();
+    }
+
+    function drawWaterMedallionAndBeam(ctx, width, height, activeFig, reading, isReduced) {
+      const showLocked = state.isReciprocalLocked && Boolean(activeFig);
+      const averted = !showLocked ? state.lastAvertedReflection : null;
+      if (!showLocked && !averted) return;
+
+      const medX = width * 0.50;
+      const medY = height * 0.89;
+      const rx = clamp(width * 0.066, 36, 66);
+      const ry = clamp(height * 0.060, 30, 52);
+      const alpha = showLocked ? clamp01(0.76 + state.gazeParalysis * 0.22) : clamp01(averted.decay01 * 0.62);
+      const gazeHue = showLocked ? reading.gazeHue : averted.gazeHue;
+      const maskHue = showLocked ? reading.maskHue : PALETTE.sackclothAsh;
+      const relationLabel = showLocked ? reading.citizenSeesRelation : averted.theirDeadRelation;
+
+      ctx.save();
+      if (showLocked && activeFig) {
+        const fx = activeFig.eyeX;
+        const fy = activeFig.eyeY;
+        const midX = (fx + medX) * 0.5;
+        const midY = (fy + medY) * 0.5;
+        const perpX = -(medY - fy);
+        const perpY = medX - fx;
+        const pLen = Math.hypot(perpX, perpY) || 1;
+        const bow = Math.min(34, pLen * 0.11);
+        const nx = perpX / pLen;
+        const ny = perpY / pLen;
+
+        const cOutX = midX + nx * bow;
+        const cOutY = midY + ny * bow;
+        const cInX = midX - nx * bow;
+        const cInY = midY - ny * bow;
+
+        const outGrad = ctx.createLinearGradient(medX, medY, fx, fy);
+        outGrad.addColorStop(0, hexToRgba(maskHue, alpha * 0.25));
+        outGrad.addColorStop(1, hexToRgba(maskHue, alpha * 0.78));
+        ctx.strokeStyle = outGrad;
+        ctx.lineWidth = 1.6;
+        ctx.setLineDash([6, 5]);
+        ctx.beginPath();
+        ctx.moveTo(medX, medY - ry * 0.45);
+        ctx.quadraticCurveTo(cOutX, cOutY, fx, fy);
+        ctx.stroke();
+
+        const inGrad = ctx.createLinearGradient(fx, fy, medX, medY);
+        inGrad.addColorStop(0, hexToRgba(gazeHue, alpha * 0.92));
+        inGrad.addColorStop(1, hexToRgba(PALETTE.lanternHalo, alpha * 0.85));
+        ctx.strokeStyle = inGrad;
+        ctx.lineWidth = 2.2;
+        ctx.setLineDash([]);
+        ctx.beginPath();
+        ctx.moveTo(fx, fy);
+        ctx.quadraticCurveTo(cInX, cInY, medX, medY - ry * 0.20);
+        ctx.stroke();
+
+        const moteCount = 4;
+        for (let m = 0; m < moteCount; m += 1) {
+          const baseT = (m + 0.5) / moteCount;
+          const t = isReduced ? baseT : ((baseT + state.shimmerPhase * 0.18) % 1);
+          const omt = 1 - t;
+          const mx = omt * omt * fx + 2 * omt * t * cInX + t * t * medX;
+          const my = omt * omt * fy + 2 * omt * t * cInY + t * t * (medY - ry * 0.20);
+          ctx.fillStyle = hexToRgba(PALETTE.lanternHalo, alpha * 0.95);
+          ctx.beginPath();
+          ctx.arc(mx, my, 2.2, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      ctx.beginPath();
+      ctx.ellipse(medX, medY, rx, ry, 0, 0, Math.PI * 2);
+      ctx.fillStyle = hexToRgba(PALETTE.harborAbyss, alpha * 0.92);
+      ctx.fill();
+      ctx.lineWidth = 2.0;
+      ctx.strokeStyle = hexToRgba(gazeHue, alpha * 0.88);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.ellipse(medX, medY, rx * 1.09, ry * 1.09, 0, 0, Math.PI * 2);
+      ctx.lineWidth = 0.9;
+      ctx.strokeStyle = hexToRgba(PALETTE.oilLantern, alpha * 0.48);
+      ctx.stroke();
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.ellipse(medX, medY, rx - 2, ry - 2, 0, 0, Math.PI * 2);
+      ctx.clip();
+
+      ctx.fillStyle = hexToRgba(PALETTE.wetFlagstone, alpha * 0.72);
+      ctx.beginPath();
+      ctx.ellipse(medX, medY + ry * 0.72, rx * 0.68, ry * 0.52, 0, Math.PI, Math.PI * 2);
+      ctx.fill();
+
+      const faceR = Math.min(rx, ry) * 0.42;
+      const fy = medY - ry * 0.08;
+      ctx.fillStyle = hexToRgba(PALETTE.duskIndigo, alpha * 0.88);
+      ctx.beginPath();
+      ctx.ellipse(medX, fy, faceR * 0.88, faceR * 1.08, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = hexToRgba(gazeHue, alpha * 0.52);
+      ctx.beginPath();
+      ctx.moveTo(medX, fy - faceR * 1.02);
+      ctx.lineTo(medX + faceR * 0.80, fy - faceR * 0.18);
+      ctx.lineTo(medX + faceR * 0.54, fy + faceR * 0.82);
+      ctx.lineTo(medX, fy + faceR * 1.04);
+      ctx.lineTo(medX - faceR * 0.54, fy + faceR * 0.82);
+      ctx.lineTo(medX - faceR * 0.80, fy - faceR * 0.18);
+      ctx.closePath();
+      ctx.fill();
+
+      for (let side = -1; side <= 1; side += 2) {
+        ctx.fillStyle = hexToRgba(PALETTE.lanternHalo, alpha * 0.95);
+        ctx.beginPath();
+        ctx.arc(medX + side * faceR * 0.34, fy - faceR * 0.10, Math.max(1.6, faceR * 0.16), 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      const rippleShift = isReduced ? 0 : Math.sin(state.shimmerPhase * 1.4) * 2.2;
+      ctx.strokeStyle = hexToRgba(PALETTE.boneParchment, alpha * 0.28);
+      ctx.lineWidth = 0.85;
+      for (let rIdx = -2; rIdx <= 2; rIdx += 1) {
+        const wy = medY + rIdx * (ry * 0.28);
+        ctx.beginPath();
+        ctx.moveTo(medX - rx * 0.82, wy);
+        ctx.quadraticCurveTo(medX + rippleShift, wy + (rIdx % 2 === 0 ? 2.2 : -2.2), medX + rx * 0.82, wy);
+        ctx.stroke();
+      }
+      ctx.restore();
+
+      if (height >= 360 && relationLabel) {
+        ctx.font = "600 9.5px ui-monospace, SFMono-Regular, Menlo, monospace";
+        ctx.textAlign = "center";
+        ctx.fillStyle = hexToRgba(PALETTE.boneParchment, alpha * 0.92);
+        ctx.fillText(String(relationLabel).toUpperCase(), medX, medY + ry + 11);
+      }
+      ctx.restore();
+    }
+
+    function renderMasksAndGaze(ctx, width, height, projectedFigures, renderOpts = {}) {
+      if (!ctx || !(width > 0) || !(height > 0)) return;
+      const figs = Array.isArray(projectedFigures) ? projectedFigures : [];
+      const rOpts = renderOpts || {};
+      const isReduced = Boolean(rOpts.reducedMotion || state.reducedMotion);
+      const hoveredId = rOpts.hoveredId !== undefined ? rOpts.hoveredId : state.hoveredFigureId;
+      const shimmerWave = isReduced ? 0 : Math.sin(state.shimmerPhase);
+      const vantageX = width * 0.50;
+      const vantageY = height * 0.93;
+
+      const figById = {};
+      for (let i = 0; i < figs.length; i += 1) {
+        const f = figs[i];
+        if (!f) continue;
+        const fid = f.id || f.figureId;
+        if (!fid) continue;
+        figById[fid] = {
+          id: fid,
+          eyeX: Number.isFinite(f.eyeX) ? f.eyeX : Number(f.x) || vantageX,
+          eyeY: Number.isFinite(f.eyeY) ? f.eyeY : Number(f.y) || height * 0.55,
+          headRadius: Number.isFinite(f.headRadius) ? f.headRadius : Math.max(9, Math.min(width, height) * 0.017)
+        };
+      }
+
+      if (rOpts.showChords !== false) {
+        drawKaleidoscopeChords(ctx, figById, shimmerWave);
+      }
+
+      for (let i = 0; i < ALL_WHARF_IDS.length; i += 1) {
+        const fid = ALL_WHARF_IDS[i];
+        const normFig = figById[fid];
+        if (!normFig) continue;
+        const reading = getFigureReading(fid);
+        drawDepartedMaskOverlay(ctx, normFig, reading, vantageX, vantageY, shimmerWave, hoveredId);
+      }
+
+      if (state.foreheadPulse01 > 0.02) {
+        ctx.save();
+        const fp = state.foreheadPulse01;
+        const rPulse = (1 - fp) * 56 + 18;
+        ctx.strokeStyle = hexToRgba(
+          state.hypothesisMode === "kaleidoscope_limit" ? PALETTE.urchinSpine : PALETTE.lanternHalo,
+          fp * 0.65
+        );
+        ctx.lineWidth = 1.4;
+        ctx.beginPath();
+        ctx.arc(vantageX, vantageY - 24, rPulse, Math.PI * 1.1, Math.PI * 1.9);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      const activeNormFig = figById[state.activeFigureId] || null;
+      const activeReading = getFigureReading(state.activeFigureId);
+      if (state.isReciprocalLocked || state.gazeParalysis > 0.15) {
+        drawParalysisVignette(ctx, width, height, state.gazeParalysis);
+      }
+      drawWaterMedallionAndBeam(ctx, width, height, activeNormFig, activeReading, isReduced);
+    }
+
+    recomputeDerived();
+
+    return {
+      PRIMARY_STONE_IDS,
+      SECONDARY_STRANGER_IDS,
+      ALL_WHARF_IDS,
+      CANONICAL_DEAD_MASKS,
+      RECIPROCAL_GAZES,
+      RECIPROCAL_GAZE_MAP,
+      setLifeStage,
+      turnKaleidoscope,
+      inspectFigure,
+      lockReciprocalGaze,
+      avertEyes,
+      touchForehead,
+      step,
+      getFigureReading,
+      renderMasksAndGaze,
+      getState,
+      reset
+    };
+  }
+
+  const api = Object.freeze({
+    PALETTE,
+    PRIMARY_STONE_IDS,
+    SECONDARY_STRANGER_IDS,
+    ALL_WHARF_IDS,
+    CANONICAL_DEAD_MASKS,
+    RECIPROCAL_GAZES,
+    RECIPROCAL_GAZE_MAP,
+    DEAD_MASK_BY_STONE,
+    DEAD_MASK_BY_ID,
+    HYPOTHESIS_TEXTS,
+    createBereavementEngine
+  });
+
+  globalThis.AdelmaReciprocalBereavement = api;
+  if (typeof window !== "undefined") {
+    window.AdelmaReciprocalBereavement = api;
+  }
+})();
+
+(function () {
+  "use strict";
+
+  const wharfApi = globalThis.AdelmaDuskWharf;
+  const bereaveApi = globalThis.AdelmaReciprocalBereavement;
+  if (!wharfApi || !bereaveApi) {
+    throw new Error("Adelma layers missing");
+  }
+
+  const LIVING_FORMS = {
+    hawser_sailor: "Sailor catching the wet mooring hawser among dock porters at dusk landing",
+    urchin_fisherman: "Bearded old fisherman with crusty, warty hands beside wicker baskets of purple sea urchins",
+    straw_mat_sufferer: "Fever victim huddled shivering on a damp straw mat beneath the limestone arch",
+    gangplank_stevedore: "Stevedores climbing the gangplank and steep stairs with coarse sacks folded over their heads as hoods",
+    balcony_maiden: "Pale veiled girl leaning motionless from a wrought-iron balcony above the dusk thoroughfare",
+    scale_greengrocer: "Stooped old vegetable vendor weighing dark greens on a hanging brass pan-scale"
+  };
+
+  const strangerById = {};
+  for (let i = 0; i < wharfApi.WHARF_STRANGERS.length; i += 1) {
+    const s = wharfApi.WHARF_STRANGERS[i];
+    strangerById[s.id] = s;
+  }
+
+  const reducedMotionMql = typeof window.matchMedia === "function"
+    ? window.matchMedia("(prefers-reduced-motion: reduce)")
+    : { matches: false };
+
+  function isReducedMotion() {
+    return Boolean(reducedMotionMql && reducedMotionMql.matches);
+  }
+
+  const canvas = document.getElementById("adl-canvas");
+  const ctx = canvas.getContext("2d");
+
+  const els = {
+    topLiving: document.getElementById("adl-top-living"),
+    topDead: document.getElementById("adl-top-dead"),
+    topMasks: document.getElementById("adl-top-masks"),
+    btnForehead: document.getElementById("adl-btn-forehead"),
+    btnMute: document.getElementById("adl-btn-mute"),
+    btnPlates: document.getElementById("adl-btn-plates"),
+    btnReset: document.getElementById("adl-btn-reset"),
+    foreheadSeal: document.getElementById("adl-forehead-seal"),
+    sealKicker: document.getElementById("adl-seal-kicker"),
+    sealWhisper: document.getElementById("adl-seal-whisper"),
+    gazeReticle: document.getElementById("adl-gaze-reticle"),
+    reticleStation: document.getElementById("adl-reticle-station"),
+    reticleStatus: document.getElementById("adl-reticle-status"),
+    ratioCaption: document.getElementById("adl-ratio-caption"),
+    btnKaleidoscope: document.getElementById("adl-btn-kaleidoscope"),
+    scrubber: document.getElementById("adl-scrubber"),
+    scrubberLiving: document.getElementById("adl-scrubber-living"),
+    scrubberDead: document.getElementById("adl-scrubber-dead"),
+    scrubberThumb: document.getElementById("adl-scrubber-thumb"),
+    metaLiving: document.getElementById("adl-meta-living"),
+    metaThreshold: document.getElementById("adl-meta-threshold"),
+    metaDead: document.getElementById("adl-meta-dead"),
+    stoneRack: document.getElementById("adl-stone-rack"),
+    mirror: document.getElementById("adl-mirror"),
+    mirrorStation: document.getElementById("adl-mirror-station"),
+    mirrorForm: document.getElementById("adl-mirror-form"),
+    paralysisValue: document.getElementById("adl-paralysis-value"),
+    paralysisFill: document.getElementById("adl-paralysis-fill"),
+    btnLock: document.getElementById("adl-btn-lock"),
+    btnAvert: document.getElementById("adl-btn-avert"),
+    leafOutward: document.getElementById("adl-leaf-outward"),
+    outwardTitle: document.getElementById("adl-outward-title"),
+    outwardBadge: document.getElementById("adl-outward-badge"),
+    outwardBody: document.getElementById("adl-outward-body"),
+    leafInward: document.getElementById("adl-leaf-inward"),
+    inwardTitle: document.getElementById("adl-inward-title"),
+    inwardBadge: document.getElementById("adl-inward-badge"),
+    inwardBody: document.getElementById("adl-inward-body"),
+    plateDrawer: document.getElementById("adl-plate-drawer"),
+    plateGrid: document.getElementById("adl-plate-grid"),
+    cardMap: document.getElementById("adl-card-map"),
+    cardVista: document.getElementById("adl-card-vista"),
+    frameMap: document.getElementById("adl-frame-map"),
+    frameVista: document.getElementById("adl-frame-vista"),
+    mapImg: document.getElementById("adl-map-img"),
+    btnLoupe: document.getElementById("adl-btn-loupe"),
+    btnPlateClose: document.getElementById("adl-btn-plate-close")
+  };
+
+  const stonePills = Array.prototype.slice.call(
+    els.stoneRack.querySelectorAll("wharf-stone-pill")
+  );
+  const plateTabs = Array.prototype.slice.call(
+    els.plateDrawer.querySelectorAll(".adl-plate-tab")
+  );
+
+  els.mapImg.addEventListener("error", function () {
+    if (els.mapImg.getAttribute("src") !== "map.svg") {
+      els.mapImg.setAttribute("src", "map.svg");
+    }
+  });
+
+  let cssW = 800;
+  let cssH = 540;
+  let dpr = 1;
+  let hoveredId = null;
+  let lastHoverInspectedId = null;
+  let plateDrawerOpen = false;
+  let plateTab = "diptych";
+  let loupeActive = false;
+
+  const wharf = wharfApi.createWharfEngine({
+    reducedMotion: isReducedMotion()
+  });
+
+  const bereavement = bereaveApi.createBereavementEngine({
+    reducedMotion: isReducedMotion(),
+    onReciprocalLock: function () {
+      wharf.triggerReciprocalShock(0.82);
+      syncUI();
+    },
+    onStateChange: function () {
+      syncUI();
+    }
+  });
+  function syncUI() {
+    const b = bereavement.getState();
+    const w = wharf.getState();
+    const activeId = b.activeFigureId || "hawser_sailor";
+    const stranger = strangerById[activeId] || wharfApi.WHARF_STRANGERS[0];
+    const reading = b.activeReading || bereavement.getFigureReading(activeId);
+    const pct = Math.round(b.lifeStage * 100);
+    const paralysisPct = Math.round((b.gazeParalysis || 0) * 100);
+
+    els.topLiving.textContent = "Living " + b.livingKnownCount;
+    els.topDead.textContent = "Dead " + b.deadKnownCount;
+    els.topMasks.textContent = "Masks " + b.maskedStrangerCount + "/12";
+    els.topMasks.classList.toggle("adl-is-saturated", Boolean(b.kaleidoscopeSaturated));
+
+    const isThreshold = b.hypothesisMode === "kaleidoscope_limit";
+    els.foreheadSeal.classList.toggle("adl-is-threshold", isThreshold);
+    els.btnForehead.classList.toggle("adl-is-active", isThreshold);
+    els.sealKicker.textContent = isThreshold
+      ? "KALEIDOSCOPE THRESHOLD · [F] TOUCH TEMPLE (" + b.foreheadTouchCount + ")"
+      : "FOREHEAD DOUBT · [F] TOUCH TEMPLE (" + b.foreheadTouchCount + ")";
+    els.sealWhisper.textContent = b.hypothesisText || (isThreshold
+      ? "Not the beyond, but the age when the dead outnumber the living — and every eye finds its own dead in you."
+      : "Perhaps this is the land where you arrive when you die...");
+
+    const numPrefix = stranger.keyNum ? "[" + stranger.keyNum + "] " : "";
+    const stationTitle = numPrefix + stranger.station;
+    els.reticleStation.textContent = stationTitle + " · " + stranger.roleLabel;
+    els.gazeReticle.classList.toggle("adl-is-locked", Boolean(b.isReciprocalLocked));
+    els.reticleStatus.textContent = b.isReciprocalLocked
+      ? "RECIPROCAL GAZE LOCKED · Paralysis " + paralysisPct + "% · [A] Avert"
+      : "Fixed Eyes Watching · [G] Hold Gaze · [A] Avert";
+
+    els.ratioCaption.textContent = b.deadOutnumberLiving
+      ? "DEAD OUTNUMBER LIVING · " + pct + "%" + (b.kaleidoscopeSaturated ? " · SATURATED" : "")
+      : "LIVING OUTNUMBER DEAD · " + pct + "%";
+    els.btnKaleidoscope.textContent = "[K] Kaleidoscope · " + b.kaleidoscopeTurnCount;
+
+    els.scrubber.setAttribute("aria-valuenow", String(pct));
+    els.scrubberLiving.style.width = (100 - pct) + "%";
+    els.scrubberDead.style.width = pct + "%";
+    els.scrubberThumb.style.left = pct + "%";
+
+    els.metaLiving.textContent = "Living: " + b.livingKnownCount;
+    els.metaThreshold.textContent = b.deadOutnumberLiving
+      ? "50% Crossed · Old Faces Refuse Strangers"
+      : "Below 50% · New Living Faces Accepted";
+    els.metaDead.textContent = "Dead: " + b.deadKnownCount + " · Masked " + b.maskedStrangerCount + "/12";
+
+    const recSet = new Set(b.recognizedStoneIds || []);
+    for (let i = 0; i < stonePills.length; i += 1) {
+      const pill = stonePills[i];
+      const sid = pill.getAttribute("data-stone-id");
+      pill.classList.toggle("adl-is-active", sid === activeId);
+      pill.classList.toggle("adl-is-recognized", recSet.has(sid));
+    }
+
+    els.mirror.classList.toggle("adl-is-locked", Boolean(b.isReciprocalLocked));
+    els.mirrorStation.textContent = stationTitle;
+    els.mirrorForm.textContent = LIVING_FORMS[activeId] || (stranger.roleLabel + " — " + stranger.propSummary);
+
+    els.paralysisValue.textContent = paralysisPct + "%";
+    els.paralysisFill.style.width = paralysisPct + "%";
+    els.btnLock.classList.toggle("adl-is-active", Boolean(b.isReciprocalLocked));
+
+    if (reading && reading.isMasked) {
+      els.outwardTitle.textContent = reading.maskTitle;
+      els.outwardBadge.textContent = reading.kinRole + " · " + reading.featureSignature;
+      els.outwardBody.textContent = reading.travelerSeesText;
+    } else {
+      els.outwardTitle.textContent = "Unmasked Living Wharf Stranger";
+      els.outwardBadge.textContent = stranger.roleLabel + " · Mind Still Accepts New Faces";
+      els.outwardBody.textContent = LIVING_FORMS[activeId] || stranger.propSummary;
+    }
+
+    els.leafInward.classList.toggle("adl-is-locked", Boolean(b.isReciprocalLocked));
+    if (reading) {
+      els.inwardTitle.textContent = reading.citizenSeesTitle;
+      els.inwardBadge.textContent = b.isReciprocalLocked
+        ? "LOCKED IN THEIR EYES · " + reading.citizenSeesRelation
+        : "Fixed Gaze (" + reading.citizenSeesRelation + ") · [G] Meet Eyes";
+      els.inwardBody.textContent = reading.citizenSeesInYouText;
+    }
+
+    const muted = Boolean(w.muted);
+    els.btnMute.textContent = muted ? "[M] Muted" : "[M] Sound";
+    els.btnMute.setAttribute("aria-pressed", muted ? "true" : "false");
+    els.btnMute.classList.toggle("adl-is-active", muted);
+
+    els.plateDrawer.hidden = !plateDrawerOpen;
+    els.btnPlates.classList.toggle("adl-is-active", plateDrawerOpen);
+    els.plateGrid.classList.toggle("adl-mode-single", plateTab !== "diptych");
+    els.cardMap.hidden = plateTab === "vista";
+    els.cardVista.hidden = plateTab === "map";
+    els.frameMap.classList.toggle("adl-is-loupe", loupeActive);
+    els.frameVista.classList.toggle("adl-is-loupe", loupeActive);
+    els.btnLoupe.classList.toggle("adl-is-active", loupeActive);
+    els.btnLoupe.setAttribute("aria-pressed", loupeActive ? "true" : "false");
+
+    for (let i = 0; i < plateTabs.length; i += 1) {
+      const t = plateTabs[i];
+      t.classList.toggle("adl-is-active", t.getAttribute("data-plate-tab") === plateTab);
+    }
+  }
+
+  function resizeCanvas() {
+    const rect = canvas.getBoundingClientRect();
+    cssW = Math.max(240, Math.round(rect.width || 800));
+    cssH = Math.max(180, Math.round(rect.height || 540));
+    dpr = Math.min(2, window.devicePixelRatio || 1);
+    const targetW = Math.round(cssW * dpr);
+    const targetH = Math.round(cssH * dpr);
+    if (canvas.width !== targetW || canvas.height !== targetH) {
+      canvas.width = targetW;
+      canvas.height = targetH;
+    }
+  }
+
+  function renderFrame() {
+    const b = bereavement.getState();
+    const rm = isReducedMotion();
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, cssW, cssH);
+    const projected = wharf.renderWharf(ctx, cssW, cssH, {
+      lifeStage: b.lifeStage,
+      hoveredId: hoveredId,
+      selectedId: b.activeFigureId,
+      lockedId: b.isReciprocalLocked ? b.activeFigureId : null,
+      gazeParalysis: b.gazeParalysis,
+      hypothesisMode: b.hypothesisMode,
+      reducedMotion: rm
+    });
+    bereavement.renderMasksAndGaze(ctx, cssW, cssH, projected, {
+      hoveredId: hoveredId,
+      reducedMotion: rm,
+      showChords: true
+    });
+  }
+  function getCombinedState() {
+    const b = bereavement.getState();
+    const w = wharf.getState();
+    return Object.assign({}, b, {
+      muted: w.muted,
+      audioUnlocked: w.audioUnlocked,
+      timeSec: w.timeSec,
+      plateDrawerOpen: plateDrawerOpen,
+      plateTab: plateTab,
+      loupeActive: loupeActive,
+      reducedMotion: isReducedMotion(),
+      primaryStoneIds: wharf.PRIMARY_STONE_IDS.slice(),
+      strangerCount: wharf.WHARF_STRANGERS.length
+    });
+  }
+
+  function setLifeStage(val01) {
+    bereavement.setLifeStage(Number(val01));
+    syncUI();
+    renderFrame();
+    return getCombinedState();
+  }
+
+  function inspectFigure(id) {
+    const targetId = id || bereavement.getState().activeFigureId || "hawser_sailor";
+    wharf.unlockAudio();
+    wharf.triggerEncounterSound(targetId);
+    bereavement.inspectFigure(targetId);
+    syncUI();
+    renderFrame();
+    return bereavement.getFigureReading(targetId);
+  }
+
+  function lockReciprocalGaze(id) {
+    const targetId = id || bereavement.getState().activeFigureId || "hawser_sailor";
+    wharf.unlockAudio();
+    const reading = bereavement.lockReciprocalGaze(targetId);
+    syncUI();
+    renderFrame();
+    return reading;
+  }
+
+  function avertEyes() {
+    bereavement.avertEyes();
+    syncUI();
+    renderFrame();
+    return getCombinedState();
+  }
+
+  function touchForehead() {
+    wharf.unlockAudio();
+    bereavement.touchForehead();
+    wharf.triggerForeheadTouch(bereavement.getState().hypothesisMode);
+    syncUI();
+    renderFrame();
+    return getCombinedState();
+  }
+
+  function turnKaleidoscope() {
+    wharf.unlockAudio();
+    wharf.triggerKaleidoscopeTurn();
+    bereavement.turnKaleidoscope();
+    syncUI();
+    renderFrame();
+    return getCombinedState();
+  }
+
+  function openPlateDrawer(tab) {
+    if (tab === "diptych" || tab === "map" || tab === "vista") {
+      plateTab = tab;
+    }
+    plateDrawerOpen = true;
+    syncUI();
+    return getCombinedState();
+  }
+
+  function closePlateDrawer() {
+    plateDrawerOpen = false;
+    loupeActive = false;
+    syncUI();
+    return getCombinedState();
+  }
+
+  function toggleLoupe() {
+    loupeActive = !loupeActive;
+    syncUI();
+    return getCombinedState();
+  }
+
+  function toggleMute() {
+    wharf.unlockAudio();
+    wharf.toggleMute();
+    syncUI();
+    return getCombinedState();
+  }
+
+  function reset() {
+    hoveredId = null;
+    lastHoverInspectedId = null;
+    plateDrawerOpen = false;
+    plateTab = "diptych";
+    loupeActive = false;
+    wharf.reset();
+    bereavement.reset();
+    syncUI();
+    renderFrame();
+    return getCombinedState();
+  }
+
+  function bindClickAndKey(el, handler) {
+    if (!el) return;
+    el.addEventListener("click", function (ev) {
+      ev.preventDefault();
+      handler(ev);
+    });
+    el.addEventListener("keydown", function (ev) {
+      if (ev.key === "Enter" || ev.key === " ") {
+        ev.preventDefault();
+        ev.stopPropagation();
+        handler(ev);
+      }
+    });
+  }
+
+  bindClickAndKey(els.btnForehead, touchForehead);
+  bindClickAndKey(els.foreheadSeal, touchForehead);
+  bindClickAndKey(els.btnMute, toggleMute);
+  bindClickAndKey(els.btnPlates, function () {
+    if (plateDrawerOpen) closePlateDrawer();
+    else openPlateDrawer();
+  });
+  bindClickAndKey(els.btnReset, reset);
+  bindClickAndKey(els.btnKaleidoscope, turnKaleidoscope);
+  bindClickAndKey(els.btnLock, function () {
+    lockReciprocalGaze(bereavement.getState().activeFigureId);
+  });
+  bindClickAndKey(els.btnAvert, avertEyes);
+  bindClickAndKey(els.btnLoupe, toggleLoupe);
+  bindClickAndKey(els.btnPlateClose, closePlateDrawer);
+
+  for (let i = 0; i < stonePills.length; i += 1) {
+    (function (pill) {
+      bindClickAndKey(pill, function () {
+        const sid = pill.getAttribute("data-stone-id");
+        const cur = bereavement.getState();
+        if (cur.activeFigureId === sid && !cur.isReciprocalLocked) {
+          wharf.unlockAudio();
+          wharf.triggerEncounterSound(sid);
+          lockReciprocalGaze(sid);
+        } else {
+          inspectFigure(sid);
+        }
+      });
+    })(stonePills[i]);
+  }
+
+  for (let i = 0; i < plateTabs.length; i += 1) {
+    (function (tabEl) {
+      bindClickAndKey(tabEl, function () {
+        openPlateDrawer(tabEl.getAttribute("data-plate-tab"));
+      });
+    })(plateTabs[i]);
+  }
+  let scrubbing = false;
+  function updateFromScrubberEvent(ev) {
+    const rect = els.scrubber.getBoundingClientRect();
+    if (!(rect.width > 0)) return;
+    const ratio = Math.max(0, Math.min(1, (ev.clientX - rect.left) / rect.width));
+    wharf.unlockAudio();
+    setLifeStage(ratio);
+  }
+
+  els.scrubber.addEventListener("pointerdown", function (ev) {
+    scrubbing = true;
+    if (els.scrubber.setPointerCapture) {
+      try { els.scrubber.setPointerCapture(ev.pointerId); } catch (_) {}
+    }
+    updateFromScrubberEvent(ev);
+  });
+  els.scrubber.addEventListener("pointermove", function (ev) {
+    if (!scrubbing) return;
+    updateFromScrubberEvent(ev);
+  });
+  els.scrubber.addEventListener("pointerup", function () {
+    scrubbing = false;
+  });
+  els.scrubber.addEventListener("pointercancel", function () {
+    scrubbing = false;
+  });
+
+  canvas.addEventListener("pointermove", function (ev) {
+    const rect = canvas.getBoundingClientRect();
+    const px = ev.clientX - rect.left;
+    const py = ev.clientY - rect.top;
+    const hit = wharf.hitTest(px, py, cssW, cssH, ev.pointerType === "touch");
+    hoveredId = hit ? hit.id : null;
+    canvas.style.cursor = hit ? "pointer" : "crosshair";
+    if (hit && hit.id !== lastHoverInspectedId) {
+      lastHoverInspectedId = hit.id;
+      bereavement.inspectFigure(hit.id);
+      syncUI();
+    }
+  });
+
+  canvas.addEventListener("pointerleave", function () {
+    hoveredId = null;
+    lastHoverInspectedId = null;
+    canvas.style.cursor = "crosshair";
+  });
+
+  canvas.addEventListener("pointerdown", function (ev) {
+    wharf.unlockAudio();
+    const rect = canvas.getBoundingClientRect();
+    const px = ev.clientX - rect.left;
+    const py = ev.clientY - rect.top;
+    const hit = wharf.hitTest(px, py, cssW, cssH, ev.pointerType === "touch");
+    if (hit) {
+      wharf.triggerEncounterSound(hit.id);
+      bereavement.inspectFigure(hit.id);
+      lockReciprocalGaze(hit.id);
+    } else if (py > cssH * 0.76) {
+      avertEyes();
+    }
+  });
+
+  els.plateDrawer.addEventListener("click", function (ev) {
+    if (ev.target === els.plateDrawer) {
+      closePlateDrawer();
+    }
+  });
+
+  window.addEventListener("keydown", function (ev) {
+    if (ev.metaKey || ev.ctrlKey || ev.altKey) return;
+    const key = ev.key;
+
+    if (key === "Escape") {
+      ev.preventDefault();
+      if (plateDrawerOpen) closePlateDrawer();
+      else if (bereavement.getState().isReciprocalLocked) avertEyes();
+      return;
+    }
+
+    if (key >= "1" && key <= "6") {
+      ev.preventDefault();
+      const idx = Number(key) - 1;
+      const stoneId = wharf.PRIMARY_STONE_IDS[idx];
+      if (stoneId) inspectFigure(stoneId);
+      return;
+    }
+
+    const lower = key.toLowerCase();
+    if (lower === "g") {
+      ev.preventDefault();
+      lockReciprocalGaze(bereavement.getState().activeFigureId);
+    } else if (lower === "a" || key === " ") {
+      ev.preventDefault();
+      avertEyes();
+    } else if (lower === "k") {
+      ev.preventDefault();
+      turnKaleidoscope();
+    } else if (lower === "f") {
+      ev.preventDefault();
+      touchForehead();
+    } else if (key === "ArrowLeft") {
+      ev.preventDefault();
+      setLifeStage(Math.max(0, bereavement.getState().lifeStage - 0.06));
+    } else if (key === "ArrowRight") {
+      ev.preventDefault();
+      setLifeStage(Math.min(1, bereavement.getState().lifeStage + 0.06));
+    } else if (lower === "p") {
+      ev.preventDefault();
+      if (plateDrawerOpen) closePlateDrawer();
+      else openPlateDrawer();
+    } else if (lower === "z") {
+      if (plateDrawerOpen) {
+        ev.preventDefault();
+        toggleLoupe();
+      }
+    } else if (lower === "m") {
+      ev.preventDefault();
+      toggleMute();
+    } else if (lower === "r") {
+      ev.preventDefault();
+      reset();
+    }
+  });
+
+  window.addEventListener("resize", function () {
+    resizeCanvas();
+    renderFrame();
+  });
+
+  let lastTs = performance.now();
+  function loop(now) {
+    const dt = Math.min(0.05, Math.max(0.001, (now - lastTs) / 1000));
+    lastTs = now;
+    const rm = isReducedMotion();
+    const bState = bereavement.getState();
+    wharf.step(dt, {
+      reducedMotion: rm,
+      gazeParalysis: bState.gazeParalysis,
+      lifeStage: bState.lifeStage
+    });
+    bereavement.step(dt, {
+      hoveredId: hoveredId,
+      reducedMotion: rm
+    });
+    resizeCanvas();
+    renderFrame();
+    requestAnimationFrame(loop);
+  }
+
+  const appApi = {
+    getState: getCombinedState,
+    setLifeStage: setLifeStage,
+    inspectFigure: inspectFigure,
+    lockReciprocalGaze: lockReciprocalGaze,
+    avertEyes: avertEyes,
+    touchForehead: touchForehead,
+    turnKaleidoscope: turnKaleidoscope,
+    openPlateDrawer: openPlateDrawer,
+    closePlateDrawer: closePlateDrawer,
+    toggleLoupe: toggleLoupe,
+    toggleMute: toggleMute,
+    reset: reset,
+    wharf: wharf,
+    bereavement: bereavement
+  };
+
+  window.AdelmaCityApp = appApi;
+  globalThis.AdelmaCityApp = appApi;
+
+  resizeCanvas();
+  syncUI();
+  renderFrame();
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

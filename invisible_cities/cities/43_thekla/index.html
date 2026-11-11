@@ -1,0 +1,3243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THEKLA — Perpetual Scaffolding &amp; the Starry Blueprint</title>
+<style>
+[hidden] { display: none !important; }
+
+:root {
+  --thk-day-dust: #d8c7a8;
+  --thk-ochre-haze: #b99867;
+  --thk-pine-timber: #8c6239;
+  --thk-weathered-plank: #5c4228;
+  --thk-sackcloth-burlap: #a88f68;
+  --thk-iron-armature: #3c4652;
+  --thk-hemp-rope: #c5aa78;
+  --thk-sunset-copper: #c95f36;
+  --thk-twilight-plum: #2a233d;
+  --thk-night-abyss: #080d1a;
+  --thk-blueprint-indigo: #10203b;
+  --thk-star-cyan: #8ce6ff;
+  --thk-plumb-silver: #d9f3ff;
+  --thk-fracture-rust: #d94a38;
+  --thk-panel-bg: rgba(12, 19, 34, 0.92);
+  --thk-panel-border: rgba(197, 170, 120, 0.28);
+  --thk-ink-main: #efe5d2;
+  --thk-ink-muted: #bfb095;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--thk-night-abyss);
+  color: var(--thk-ink-main);
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Explicit CSS display rules for all 44 bespoke Thekla custom DOM elements */
+thekla-perpetual-site,
+plank-sackcloth-screen,
+crane-hoisting-rig,
+starry-blueprint-vault,
+sunset-armistice-dial,
+thekla-skyline-stage,
+anti-destruction-gauge,
+whispered-cosmos-ward,
+blueprint-plumb-ledger,
+workyard-command-bench,
+plate-quota-vellum,
+thekla-site-insignia,
+thekla-crest-title,
+thekla-crest-motto,
+thekla-canvas-aperture,
+thekla-dialogue-scroll,
+thekla-builder-utterance,
+thekla-gauge-track,
+thekla-gauge-fill,
+thekla-knot-latin,
+thekla-knot-role,
+thekla-stone-witness,
+thekla-drawer-frame,
+thekla-plate-folio,
+thekla-plate-caption,
+thekla-sub-note {
+  display: block;
+}
+
+thekla-palisade-crest,
+thekla-telemetry-strip,
+thekla-metric-pill,
+thekla-crest-actions,
+thekla-fence-crack-hud,
+thekla-command-column,
+thekla-card-heading,
+thekla-drawer-bar,
+thekla-plate-drawer {
+  display: flex;
+}
+
+thekla-workyard-grid,
+thekla-ledger-band,
+thekla-knot-grid,
+thekla-plate-diptych,
+thekla-phase-row,
+thekla-bench-pair {
+  display: grid;
+}
+
+thekla-rig-trigger,
+constellation-rig-knot,
+thekla-keycap-glyph {
+  display: inline-flex;
+}
+
+thekla-metric-key,
+thekla-metric-val,
+thekla-trigger-caption {
+  display: inline;
+}
+
+.thk-site-shell {
+  width: 100%;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  background: radial-gradient(circle at 30% 15%, #162644 0%, #0a101f 68%, #060a14 100%);
+  overflow: hidden;
+}
+
+.thk-palisade-crest {
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px 14px;
+  background: linear-gradient(180deg, rgba(22, 18, 15, 0.96), rgba(12, 18, 31, 0.94));
+  border-bottom: 1px solid var(--thk-panel-border);
+}
+
+.thk-site-insignia {
+  min-width: 0;
+}
+
+.thk-crest-title {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--thk-day-dust);
+  line-height: 1.15;
+}
+
+.thk-crest-motto {
+  font-size: 11px;
+  color: var(--thk-ink-muted);
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+.thk-telemetry-strip {
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.thk-metric-pill {
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(26, 36, 56, 0.78);
+  border: 1px solid rgba(197, 170, 120, 0.25);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10.5px;
+  line-height: 1.2;
+}
+.thk-metric-key {
+  color: var(--thk-ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.thk-metric-val {
+  color: var(--thk-plumb-silver);
+  font-weight: 700;
+}
+
+.thk-metric-alert .thk-metric-val {
+  color: #ff9c88;
+}
+
+.thk-crest-actions {
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.thk-workyard-grid {
+  grid-template-columns: minmax(0, 1fr) 406px;
+  gap: 10px;
+  padding: 8px 12px 10px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.thk-skyline-stage {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 8px;
+  min-width: 0;
+  min-height: 0;
+}
+
+.thk-canvas-aperture {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  border-radius: 6px;
+  border: 1px solid rgba(197, 170, 120, 0.34);
+  background: #0b1324;
+  overflow: hidden;
+}
+
+.thk-stage-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: manipulation;
+}
+
+.thk-fence-crack-hud {
+  position: absolute;
+  left: 10px;
+  bottom: 8px;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 9px;
+  border-radius: 4px;
+  background: rgba(8, 13, 26, 0.78);
+  border: 1px solid rgba(197, 170, 120, 0.28);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10.5px;
+  color: var(--thk-plumb-silver);
+  pointer-events: none;
+  max-width: calc(100% - 20px);
+}
+
+.thk-ledger-band {
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: 8px;
+  align-items: stretch;
+}
+
+.thk-dialogue-scroll,
+.thk-plumb-ledger-card {
+  padding: 7px 10px;
+  border-radius: 6px;
+  background: var(--thk-panel-bg);
+  border: 1px solid var(--thk-panel-border);
+  min-width: 0;
+}
+
+.thk-builder-utterance {
+  font-size: 12px;
+  line-height: 1.32;
+  color: var(--thk-day-dust);
+}
+
+.thk-cosmos-ward {
+  margin-top: 4px;
+  padding: 3px 7px;
+  border-radius: 4px;
+  background: rgba(60, 70, 82, 0.32);
+  border-left: 3px solid var(--thk-hemp-rope);
+  font-size: 11.5px;
+  font-style: italic;
+  color: var(--thk-plumb-silver);
+}
+
+.thk-cosmos-ward.thk-ward-danger {
+  background: rgba(217, 74, 56, 0.22);
+  border-left-color: var(--thk-fracture-rust);
+  color: #ffd8cf;
+  font-weight: 600;
+}
+
+.thk-command-column {
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.thk-panel-card {
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: var(--thk-panel-bg);
+  border: 1px solid var(--thk-panel-border);
+}
+
+.thk-card-heading {
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 5px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--thk-hemp-rope);
+}
+
+.thk-rig-trigger {
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 5px 8px;
+  border-radius: 4px;
+  background: rgba(60, 70, 82, 0.55);
+  border: 1px solid rgba(197, 170, 120, 0.36);
+  color: var(--thk-ink-main);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10.5px;
+  line-height: 1.2;
+  cursor: pointer;
+  user-select: none;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+
+.thk-rig-trigger:hover,
+.thk-rig-trigger:focus-visible {
+  background: rgba(140, 98, 57, 0.52);
+  border-color: var(--thk-star-cyan);
+  outline: none;
+}
+
+.thk-rig-trigger.thk-trigger-active {
+  background: rgba(16, 46, 82, 0.88);
+  border-color: var(--thk-star-cyan);
+  color: var(--thk-plumb-silver);
+}
+
+.thk-rig-trigger.thk-trigger-danger {
+  background: rgba(138, 42, 31, 0.72);
+  border-color: var(--thk-fracture-rust);
+  color: #ffe2db;
+}
+
+.thk-keycap-glyph {
+  align-items: center;
+  justify-content: center;
+  min-width: 17px;
+  padding: 1px 4px;
+  border-radius: 3px;
+  background: rgba(8, 13, 26, 0.78);
+  border: 1px solid rgba(217, 243, 255, 0.28);
+  font-size: 9.5px;
+  font-weight: 700;
+  color: var(--thk-star-cyan);
+}
+.thk-solar-slider {
+  width: 100%;
+  margin: 3px 0 6px;
+  accent-color: var(--thk-star-cyan);
+  cursor: pointer;
+}
+
+.thk-phase-row,
+.thk-bench-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.thk-bench-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.thk-sub-module {
+  padding: 6px 7px;
+  border-radius: 5px;
+  background: rgba(18, 27, 46, 0.72);
+  border: 1px solid rgba(197, 170, 120, 0.20);
+  min-width: 0;
+}
+
+.thk-sub-note {
+  display: block;
+  margin-top: 4px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  line-height: 1.25;
+  color: var(--thk-ink-muted);
+}
+
+.thk-gauge-track {
+  width: 100%;
+  height: 6px;
+  margin-top: 5px;
+  border-radius: 3px;
+  background: rgba(8, 13, 26, 0.85);
+  border: 1px solid rgba(197, 170, 120, 0.24);
+  overflow: hidden;
+}
+
+.thk-gauge-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--thk-hemp-rope), var(--thk-star-cyan));
+  transition: width 140ms ease;
+}
+
+.thk-gauge-fill.thk-fill-danger {
+  background: linear-gradient(90deg, var(--thk-sunset-copper), var(--thk-fracture-rust));
+}
+
+.thk-knot-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.thk-knot-chip {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 5px 7px;
+  border-radius: 4px;
+  background: rgba(18, 29, 50, 0.78);
+  border: 1px solid rgba(140, 230, 255, 0.22);
+  cursor: pointer;
+  min-width: 0;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+
+.thk-knot-chip:hover,
+.thk-knot-chip:focus-visible,
+.thk-knot-chip.thk-knot-active {
+  background: rgba(20, 48, 86, 0.92);
+  border-color: var(--thk-star-cyan);
+  outline: none;
+}
+
+.thk-knot-latin {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--thk-plumb-silver);
+  line-height: 1.2;
+}
+
+.thk-knot-role {
+  font-size: 10.5px;
+  line-height: 1.2;
+  color: var(--thk-ink-muted);
+}
+
+.thk-stone-witness {
+  margin-top: 6px;
+  padding: 5px 7px;
+  border-radius: 4px;
+  background: rgba(8, 13, 26, 0.68);
+  border: 1px solid rgba(197, 170, 120, 0.22);
+  font-size: 11px;
+  line-height: 1.28;
+  color: var(--thk-day-dust);
+}
+
+.thk-plate-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+  background: rgba(5, 8, 16, 0.86);
+}
+
+.thk-drawer-frame {
+  width: min(1120px, 100%);
+  max-height: calc(100vh - 28px);
+  padding: 12px;
+  border-radius: 8px;
+  background: #0d1629;
+  border: 1px solid rgba(140, 230, 255, 0.36);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.thk-drawer-bar {
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--thk-panel-border);
+}
+
+.thk-plate-diptych {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.thk-plate-diptych.thk-single-tab {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.thk-plate-folio {
+  padding: 8px;
+  border-radius: 6px;
+  background: rgba(8, 13, 26, 0.84);
+  border: 1px solid var(--thk-panel-border);
+  min-width: 0;
+  max-width: 100%;
+  overflow: auto;
+}
+
+.thk-plate-img,
+.thk-archival-canvas {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  max-height: 60vh;
+  height: auto;
+  object-fit: contain;
+  border-radius: 4px;
+  border: 1px solid rgba(197, 170, 120, 0.28);
+  transform-origin: top left;
+  transition: transform 150ms ease;
+}
+
+.thk-plate-zoomed .thk-plate-img,
+.thk-plate-zoomed .thk-archival-canvas {
+  width: 175%;
+  max-width: none;
+  max-height: none;
+}
+
+.thk-quota-vellum {
+  padding: 6px;
+  border-radius: 4px;
+  background: rgba(16, 32, 59, 0.65);
+  border: 1px dashed rgba(140, 230, 255, 0.38);
+}
+
+.thk-plate-caption {
+  margin-top: 6px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10.5px;
+  line-height: 1.35;
+  color: var(--thk-plumb-silver);
+}
+
+@media (max-width: 959px) {
+  html, body {
+    height: auto;
+    min-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  .thk-site-shell {
+    height: auto;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: visible;
+  }
+  .thk-palisade-crest {
+    flex-wrap: wrap;
+    padding: 7px 10px;
+  }
+  .thk-telemetry-strip {
+    order: 3;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 5px;
+  }
+  .thk-workyard-grid {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 8px;
+    overflow: visible;
+  }
+  .thk-canvas-aperture {
+    height: 300px;
+    min-height: 260px;
+  }
+  .thk-ledger-band,
+  .thk-plate-diptych {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .thk-plate-img,
+  .thk-archival-canvas {
+    max-height: 32vh;
+  }
+  .thk-command-column {
+    overflow: visible;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0s !important;
+    animation-duration: 0s !important;
+  }
+}
+</style>
+</head>
+<body>
+<thekla-perpetual-site id="thk-app-root" class="thk-site-shell">
+  <thekla-palisade-crest class="thk-palisade-crest">
+    <thekla-site-insignia class="thk-site-insignia">
+      <thekla-crest-title class="thk-crest-title">THEKLA</thekla-crest-title>
+      <thekla-crest-motto class="thk-crest-motto">Perpetual Timber-and-Iron Workyard &amp; the Nocturnal Starry Blueprint</thekla-crest-motto>
+    </thekla-site-insignia>
+
+    <thekla-telemetry-strip class="thk-telemetry-strip">
+      <thekla-metric-pill class="thk-metric-pill">
+        <thekla-metric-key class="thk-metric-key">Phase</thekla-metric-key>
+        <thekla-metric-val id="thk-pill-phase" class="thk-metric-val">Day Work</thekla-metric-val>
+      </thekla-metric-pill>
+      <thekla-metric-pill class="thk-metric-pill">
+        <thekla-metric-key class="thk-metric-key">Cranes</thekla-metric-key>
+        <thekla-metric-val id="thk-pill-cranes" class="thk-metric-val">7 / 14</thekla-metric-val>
+      </thekla-metric-pill>
+      <thekla-metric-pill class="thk-metric-pill">
+        <thekla-metric-key class="thk-metric-key">Plumb 1:1</thekla-metric-key>
+        <thekla-metric-val id="thk-pill-plumb" class="thk-metric-val">9 / 9</thekla-metric-val>
+      </thekla-metric-pill>
+      <thekla-metric-pill id="thk-pill-ward-box" class="thk-metric-pill">
+        <thekla-metric-key class="thk-metric-key">Destruction</thekla-metric-key>
+        <thekla-metric-val id="thk-pill-destruction" class="thk-metric-val">0% · Barred</thekla-metric-val>
+      </thekla-metric-pill>
+    </thekla-telemetry-strip>
+
+    <thekla-crest-actions class="thk-crest-actions">
+      <thekla-rig-trigger id="thk-btn-mute" class="thk-rig-trigger" role="button" tabindex="0" aria-label="Toggle Workyard and Star Audio">
+        <thekla-keycap-glyph class="thk-keycap-glyph">M</thekla-keycap-glyph>
+        <thekla-trigger-caption id="thk-lbl-mute" class="thk-trigger-caption">Audio On</thekla-trigger-caption>
+      </thekla-rig-trigger>
+      <thekla-rig-trigger id="thk-btn-plates" class="thk-rig-trigger" role="button" tabindex="0" aria-label="Open Archival Plates Drawer">
+        <thekla-keycap-glyph class="thk-keycap-glyph">P</thekla-keycap-glyph>
+        <thekla-trigger-caption class="thk-trigger-caption">Plates</thekla-trigger-caption>
+      </thekla-rig-trigger>
+      <thekla-rig-trigger id="thk-btn-reset" class="thk-rig-trigger" role="button" tabindex="0" aria-label="Reset Thekla Workyard">
+        <thekla-keycap-glyph class="thk-keycap-glyph">R</thekla-keycap-glyph>
+        <thekla-trigger-caption class="thk-trigger-caption">Reset</thekla-trigger-caption>
+      </thekla-rig-trigger>
+    </thekla-crest-actions>
+  </thekla-palisade-crest>
+
+  <thekla-workyard-grid class="thk-workyard-grid">
+    <thekla-skyline-stage class="thk-skyline-stage">
+      <thekla-canvas-aperture id="thk-canvas-aperture" class="thk-canvas-aperture">
+        <canvas id="thk-stage-canvas" class="thk-stage-canvas" width="960" height="600" aria-label="Thekla Perpetual Scaffolding Elevation and Starry Blueprint Vault"></canvas>
+        <thekla-fence-crack-hud id="thk-fence-hud" class="thk-fence-crack-hud">
+          Fence-Crack Sightline · Cranes Hoisting Cranes · Beams Embracing Beams
+        </thekla-fence-crack-hud>
+      </thekla-canvas-aperture>
+
+      <thekla-ledger-band class="thk-ledger-band">
+        <thekla-dialogue-scroll class="thk-dialogue-scroll">
+          <thekla-card-heading class="thk-card-heading">
+            <thekla-trigger-caption class="thk-trigger-caption">Builders at the Palisade</thekla-trigger-caption>
+            <thekla-metric-val id="thk-dialogue-tag" class="thk-metric-val">Anti-Destruction Law</thekla-metric-val>
+          </thekla-card-heading>
+          <thekla-builder-utterance id="thk-builder-quote" class="thk-builder-utterance">
+            “Why is Thekla's construction taking such a long time?” — “So that its destruction cannot begin.”
+          </thekla-builder-utterance>
+          <whispered-cosmos-ward id="thk-cosmos-ward" class="thk-cosmos-ward">
+            Once scaffoldings are removed, what might crumble? Whispered: “Not only the city.”
+          </whispered-cosmos-ward>
+        </thekla-dialogue-scroll>
+
+        <blueprint-plumb-ledger id="thk-plumb-ledger" class="thk-plumb-ledger-card">
+          <thekla-card-heading class="thk-card-heading">
+            <thekla-trigger-caption class="thk-trigger-caption">1:1 Plumb Alignment Ledger</thekla-trigger-caption>
+            <thekla-metric-val id="thk-ledger-ratio" class="thk-metric-val">100% Locked</thekla-metric-val>
+          </thekla-card-heading>
+          <thekla-builder-utterance id="thk-ledger-summary" class="thk-builder-utterance">
+            “We will show you the plan as soon as the working day is over; we cannot interrupt our work now.”
+          </thekla-builder-utterance>
+          <thekla-sub-note id="thk-ledger-detail" class="thk-sub-note">
+            9 rig stones aligned · 0 unaligned nodes · Finished facade: Never
+          </thekla-sub-note>
+        </blueprint-plumb-ledger>
+      </thekla-ledger-band>
+    </thekla-skyline-stage>
+
+    <thekla-command-column class="thk-command-column">
+      <sunset-armistice-dial class="thk-panel-card">
+        <thekla-card-heading class="thk-card-heading">
+          <thekla-trigger-caption class="thk-trigger-caption">Solar Armistice Chronometer</thekla-trigger-caption>
+          <thekla-metric-val id="thk-solar-readout" class="thk-metric-val">18% · Daylight Work</thekla-metric-val>
+        </thekla-card-heading>
+        <input id="thk-solar-slider" type="range" class="thk-solar-slider" min="0" max="100" value="18" aria-label="Solar Elevation Progress">
+        <thekla-phase-row class="thk-phase-row">
+          <thekla-rig-trigger id="thk-btn-day" class="thk-rig-trigger thk-trigger-active" role="button" tabindex="0">
+            <thekla-keycap-glyph class="thk-keycap-glyph">D</thekla-keycap-glyph>
+            <thekla-trigger-caption class="thk-trigger-caption">Day Work</thekla-trigger-caption>
+          </thekla-rig-trigger>
+          <thekla-rig-trigger id="thk-btn-sunset" class="thk-rig-trigger" role="button" tabindex="0">
+            <thekla-keycap-glyph class="thk-keycap-glyph">U</thekla-keycap-glyph>
+            <thekla-trigger-caption class="thk-trigger-caption">Sunset</thekla-trigger-caption>
+          </thekla-rig-trigger>
+          <thekla-rig-trigger id="thk-btn-night" class="thk-rig-trigger" role="button" tabindex="0">
+            <thekla-keycap-glyph class="thk-keycap-glyph">N</thekla-keycap-glyph>
+            <thekla-trigger-caption class="thk-trigger-caption">Blueprint Night</thekla-trigger-caption>
+          </thekla-rig-trigger>
+        </thekla-phase-row>
+      </sunset-armistice-dial>
+      <workyard-command-bench class="thk-panel-card">
+        <thekla-card-heading class="thk-card-heading">
+          <thekla-trigger-caption class="thk-trigger-caption">Perpetual Rigging &amp; Ward Controls</thekla-trigger-caption>
+          <thekla-metric-val id="thk-bench-state" class="thk-metric-val">Constructing</thekla-metric-val>
+        </thekla-card-heading>
+
+        <thekla-bench-pair class="thk-bench-pair">
+          <crane-hoisting-rig class="thk-sub-module">
+            <thekla-rig-trigger id="thk-btn-crane" class="thk-rig-trigger" role="button" tabindex="0">
+              <thekla-keycap-glyph class="thk-keycap-glyph">C</thekla-keycap-glyph>
+              <thekla-trigger-caption class="thk-trigger-caption">Hoist New Crane</thekla-trigger-caption>
+            </thekla-rig-trigger>
+            <thekla-sub-note id="thk-crane-note" class="thk-sub-note">7 derricks · +0 hoisted</thekla-sub-note>
+          </crane-hoisting-rig>
+
+          <plank-sackcloth-screen class="thk-sub-module">
+            <thekla-rig-trigger id="thk-btn-sackcloth" class="thk-rig-trigger" role="button" tabindex="0">
+              <thekla-keycap-glyph class="thk-keycap-glyph">S</thekla-keycap-glyph>
+              <thekla-trigger-caption id="thk-lbl-sackcloth" class="thk-trigger-caption">Part Sackcloth</thekla-trigger-caption>
+            </thekla-rig-trigger>
+            <thekla-gauge-track class="thk-gauge-track">
+              <thekla-gauge-fill id="thk-veil-fill" class="thk-gauge-fill"></thekla-gauge-fill>
+            </thekla-gauge-track>
+            <thekla-sub-note id="thk-veil-note" class="thk-sub-note">Veiled · Deeper tiers behind</thekla-sub-note>
+          </plank-sackcloth-screen>
+        </thekla-bench-pair>
+
+        <anti-destruction-gauge class="thk-sub-module">
+          <thekla-bench-pair class="thk-bench-pair">
+            <thekla-rig-trigger id="thk-btn-halt" class="thk-rig-trigger" role="button" tabindex="0">
+              <thekla-keycap-glyph class="thk-keycap-glyph">H</thekla-keycap-glyph>
+              <thekla-trigger-caption id="thk-lbl-halt" class="thk-trigger-caption">Halt Day Work</thekla-trigger-caption>
+            </thekla-rig-trigger>
+            <thekla-rig-trigger id="thk-btn-fear" class="thk-rig-trigger" role="button" tabindex="0">
+              <thekla-keycap-glyph class="thk-keycap-glyph">W</thekla-keycap-glyph>
+              <thekla-trigger-caption class="thk-trigger-caption">Ask Removal Fear</thekla-trigger-caption>
+            </thekla-rig-trigger>
+          </thekla-bench-pair>
+          <thekla-gauge-track class="thk-gauge-track">
+            <thekla-gauge-fill id="thk-destruct-fill" class="thk-gauge-fill thk-fill-danger"></thekla-gauge-fill>
+          </thekla-gauge-track>
+          <thekla-sub-note id="thk-destruct-note" class="thk-sub-note">Destruction barred (0%) · Planks lashed tight</thekla-sub-note>
+        </anti-destruction-gauge>
+      </workyard-command-bench>
+
+      <starry-blueprint-vault class="thk-panel-card">
+        <thekla-card-heading class="thk-card-heading">
+          <thekla-trigger-caption class="thk-trigger-caption">Starry Blueprint Constellations [1–7]</thekla-trigger-caption>
+          <thekla-metric-val id="thk-active-latin" class="thk-metric-val">Grus Maior</thekla-metric-val>
+        </thekla-card-heading>
+
+        <thekla-knot-grid id="thk-knot-grid" class="thk-knot-grid">
+          <constellation-rig-knot class="thk-knot-chip thk-knot-active" data-cid="grus_maior" role="button" tabindex="0">
+            <thekla-knot-latin class="thk-knot-latin">[1] Grus Maior</thekla-knot-latin>
+            <thekla-knot-role class="thk-knot-role">Cranes Hoisting Cranes</thekla-knot-role>
+          </constellation-rig-knot>
+          <constellation-rig-knot class="thk-knot-chip" data-cid="trabes_geminae" role="button" tabindex="0">
+            <thekla-knot-latin class="thk-knot-latin">[2] Trabes Geminae</thekla-knot-latin>
+            <thekla-knot-role class="thk-knot-role">Beams Embracing Beams</thekla-knot-role>
+          </constellation-rig-knot>
+          <constellation-rig-knot class="thk-knot-chip" data-cid="ponticulus_funis" role="button" tabindex="0">
+            <thekla-knot-latin class="thk-knot-latin">[3] Ponticulus Funis</thekla-knot-latin>
+            <thekla-knot-role class="thk-knot-role">Rope-Hung Catwalks</thekla-knot-role>
+          </constellation-rig-knot>
+          <constellation-rig-knot class="thk-knot-chip" data-cid="cantherius_trestle" role="button" tabindex="0">
+            <thekla-knot-latin class="thk-knot-latin">[4] Cantherius</thekla-knot-latin>
+            <thekla-knot-role class="thk-knot-role">Sawhorses &amp; Trestles</thekla-knot-role>
+          </constellation-rig-knot>
+          <constellation-rig-knot class="thk-knot-chip" data-cid="armatura_ferrea" role="button" tabindex="0">
+            <thekla-knot-latin class="thk-knot-latin">[5] Armatura Ferrea</thekla-knot-latin>
+            <thekla-knot-role class="thk-knot-role">Metal Lattice Armatures</thekla-knot-role>
+          </constellation-rig-knot>
+          <constellation-rig-knot class="thk-knot-chip" data-cid="scala_coeli" role="button" tabindex="0">
+            <thekla-knot-latin class="thk-knot-latin">[6] Scala Coeli</thekla-knot-latin>
+            <thekla-knot-role class="thk-knot-role">Timber Scaffoldings</thekla-knot-role>
+          </constellation-rig-knot>
+          <constellation-rig-knot class="thk-knot-chip" data-cid="velum_saccinum" role="button" tabindex="0">
+            <thekla-knot-latin class="thk-knot-latin">[7] Velum Saccinum</thekla-knot-latin>
+            <thekla-knot-role class="thk-knot-role">Planks &amp; Sackcloth Veil</thekla-knot-role>
+          </constellation-rig-knot>
+        </thekla-knot-grid>
+
+        <thekla-stone-witness id="thk-stone-witness" class="thk-stone-witness">
+          Rig Witness: Derrick Cranes Hoisting Higher Cranes · Chord 523.25 Hz
+        </thekla-stone-witness>
+      </starry-blueprint-vault>
+    </thekla-command-column>
+  </thekla-workyard-grid>
+
+  <thekla-plate-drawer id="thk-plate-drawer" class="thk-plate-drawer" hidden aria-label="Thekla Royal Archival Plates">
+    <thekla-drawer-frame id="thk-drawer-frame" class="thk-drawer-frame">
+      <thekla-drawer-bar class="thk-drawer-bar">
+        <thekla-crest-title class="thk-crest-title">THEKLA · ARCHIVAL SURVEY &amp; BLUEPRINT PLATES</thekla-crest-title>
+        <thekla-crest-actions class="thk-crest-actions">
+          <thekla-rig-trigger id="thk-tab-diptych" class="thk-rig-trigger thk-trigger-active" role="button" tabindex="0">
+            <thekla-trigger-caption class="thk-trigger-caption">Diptych</thekla-trigger-caption>
+          </thekla-rig-trigger>
+          <thekla-rig-trigger id="thk-tab-map" class="thk-rig-trigger" role="button" tabindex="0">
+            <thekla-trigger-caption class="thk-trigger-caption">Survey Map</thekla-trigger-caption>
+          </thekla-rig-trigger>
+          <thekla-rig-trigger id="thk-tab-image" class="thk-rig-trigger" role="button" tabindex="0">
+            <thekla-trigger-caption class="thk-trigger-caption">Blueprint Vista</thekla-trigger-caption>
+          </thekla-rig-trigger>
+          <thekla-rig-trigger id="thk-btn-zoom" class="thk-rig-trigger" role="button" tabindex="0">
+            <thekla-keycap-glyph class="thk-keycap-glyph">Z</thekla-keycap-glyph>
+            <thekla-trigger-caption id="thk-lbl-zoom" class="thk-trigger-caption">Loupe 1x</thekla-trigger-caption>
+          </thekla-rig-trigger>
+          <thekla-rig-trigger id="thk-btn-close-plates" class="thk-rig-trigger" role="button" tabindex="0">
+            <thekla-keycap-glyph class="thk-keycap-glyph">Esc</thekla-keycap-glyph>
+            <thekla-trigger-caption class="thk-trigger-caption">Close</thekla-trigger-caption>
+          </thekla-rig-trigger>
+        </thekla-crest-actions>
+      </thekla-drawer-bar>
+
+      <thekla-plate-diptych id="thk-plate-diptych" class="thk-plate-diptych">
+        <thekla-plate-folio id="thk-folio-map" class="thk-plate-folio">
+          <img id="thk-plate-map-img" class="thk-plate-img" src="map.png" loading="lazy" alt="Thekla Survey Map Plate" onerror="this.hidden=true;this.setAttribute('data-plate-pending','1');var cap=document.getElementById('thk-live-cap-map');if(cap){cap.hidden=true;}var vel=document.getElementById('thk-map-vellum');if(vel){vel.hidden=false;}if(window.TheklaCityApp&&window.TheklaCityApp.renderArchivalPlates){window.TheklaCityApp.renderArchivalPlates();}">
+          <thekla-plate-caption id="thk-live-cap-map" class="thk-plate-caption">
+            Plate I · Thekla Survey Map — Palisade, Scaffold Tiers &amp; 1:1 Plumb Projection (1600 × 1200)
+          </thekla-plate-caption>
+          <plate-quota-vellum id="thk-map-vellum" class="thk-quota-vellum" hidden>
+            <canvas id="thk-archival-map-canvas" class="thk-archival-canvas" width="640" height="480"></canvas>
+            <thekla-plate-caption class="thk-plate-caption">
+              PENDING_IMAGE_GENERATOR_QUOTA · Resets 2026-11-11T06:21:14Z · Cartographic Blueprint Survey (Inline Canvas2D Proof)
+            </thekla-plate-caption>
+          </plate-quota-vellum>
+        </thekla-plate-folio>
+
+        <thekla-plate-folio id="thk-folio-image" class="thk-plate-folio">
+          <img id="thk-plate-vista-img" class="thk-plate-img" src="image.png" loading="lazy" alt="Thekla Starry Blueprint Vista Plate" onerror="this.hidden=true;this.setAttribute('data-plate-pending','1');var cap=document.getElementById('thk-live-cap-vista');if(cap){cap.hidden=true;}var vel=document.getElementById('thk-vista-vellum');if(vel){vel.hidden=false;}if(window.TheklaCityApp&&window.TheklaCityApp.renderArchivalPlates){window.TheklaCityApp.renderArchivalPlates();}">
+          <thekla-plate-caption id="thk-live-cap-vista" class="thk-plate-caption">
+            Plate II · Thekla Nocturnal Elevation — Cranes Hoisting Cranes &amp; Starry Blueprint (1600 × 1000)
+          </thekla-plate-caption>
+          <plate-quota-vellum id="thk-vista-vellum" class="thk-quota-vellum" hidden>
+            <canvas id="thk-archival-vista-canvas" class="thk-archival-canvas" width="640" height="400"></canvas>
+            <thekla-plate-caption class="thk-plate-caption">
+              PENDING_IMAGE_GENERATOR_QUOTA · Resets 2026-11-11T06:21:14Z · Nocturnal Crane-Scaffolding Elevation (Inline Canvas2D Proof)
+            </thekla-plate-caption>
+          </plate-quota-vellum>
+        </thekla-plate-folio>
+      </thekla-plate-diptych>
+    </thekla-drawer-frame>
+  </thekla-plate-drawer>
+</thekla-perpetual-site>
+
+<script>
+/*
+ * City 43: Thekla — Layer 1: Perpetual Scaffolding Rig & Workyard Foley
+ * Self-contained Canvas2D + WebAudio architectural elevation module.
+ * Exposes globalThis.TheklaScaffoldingRig for inline standalone composition.
+ */
+(function () {
+  "use strict";
+
+  const PALETTE = Object.freeze({
+    dayDustSky: "#d8c7a8",
+    ochreHaze: "#b99867",
+    pineTimber: "#8c6239",
+    weatheredPlank: "#5c4228",
+    sackclothBurlap: "#a88f68",
+    ironArmature: "#3c4652",
+    hempRope: "#c5aa78",
+    sunsetCopper: "#c95f36",
+    twilightPlum: "#2a233d",
+    nightAbyss: "#080d1a",
+    blueprintIndigo: "#10203b",
+    starCyan: "#8ce6ff",
+    plumbSilver: "#d9f3ff",
+    fractureRust: "#d94a38"
+  });
+
+  const CANONICAL_STONES = Object.freeze([
+    Object.freeze({
+      id: "plank_fences",
+      label: "Plank Fences at the Arrival Palisade",
+      constellationId: "velum_saccinum"
+    }),
+    Object.freeze({
+      id: "sackcloth_screens",
+      label: "Billowing Sackcloth Screens Veiling Inner Bays",
+      constellationId: "velum_saccinum"
+    }),
+    Object.freeze({
+      id: "timber_scaffoldings",
+      label: "Lashed Multi-Tier Timber Scaffoldings",
+      constellationId: "scala_coeli"
+    }),
+    Object.freeze({
+      id: "metal_armatures",
+      label: "Riveted Iron & Steel Lattice Armatures",
+      constellationId: "armatura_ferrea"
+    }),
+    Object.freeze({
+      id: "rope_catwalks",
+      label: "Wooden Catwalks Hanging from Hemp Ropes",
+      constellationId: "ponticulus_funis"
+    }),
+    Object.freeze({
+      id: "sawhorse_catwalks",
+      label: "Plank Catwalks Supported by Sawhorses",
+      constellationId: "cantherius_trestle"
+    }),
+    Object.freeze({
+      id: "ladders_and_trestles",
+      label: "Inclined Riggers' Ladders & Carpenter Trestles",
+      constellationId: "cantherius_trestle"
+    }),
+    Object.freeze({
+      id: "cranes_hoisting_cranes",
+      label: "Derrick Cranes Hoisting Higher Cranes",
+      constellationId: "grus_maior"
+    }),
+    Object.freeze({
+      id: "beams_embracing_beams",
+      label: "Interlocking Beams Embracing Beams",
+      constellationId: "trabes_geminae"
+    })
+  ]);
+
+  const BASE_RIG_ANCHORS = Object.freeze([
+    { id: "rig_cranes_crown", stoneId: "cranes_hoisting_cranes", label: "Derrick Cranes Hoisting Higher Cranes", constellationId: "grus_maior", nx: 0.50, ny: 0.42, tier: 4, kind: "derrick_crane" },
+    { id: "rig_embracing_beams", stoneId: "beams_embracing_beams", label: "Interlocking Beams Embracing Beams", constellationId: "trabes_geminae", nx: 0.33, ny: 0.49, tier: 3, kind: "embracing_beam" },
+    { id: "rig_metal_armatures", stoneId: "metal_armatures", label: "Riveted Iron & Steel Lattice Armatures", constellationId: "armatura_ferrea", nx: 0.68, ny: 0.50, tier: 3, kind: "iron_armature" },
+    { id: "rig_rope_catwalks", stoneId: "rope_catwalks", label: "Wooden Catwalks Hanging from Hemp Ropes", constellationId: "ponticulus_funis", nx: 0.48, ny: 0.57, tier: 3, kind: "rope_catwalk" },
+    { id: "rig_timber_scaffoldings", stoneId: "timber_scaffoldings", label: "Lashed Multi-Tier Timber Scaffoldings", constellationId: "scala_coeli", nx: 0.21, ny: 0.58, tier: 2, kind: "timber_scaffolding" },
+    { id: "rig_sackcloth_screens", stoneId: "sackcloth_screens", label: "Billowing Sackcloth Screens Veiling Inner Bays", constellationId: "velum_saccinum", nx: 0.54, ny: 0.67, tier: 2, kind: "sackcloth_screen" },
+    { id: "rig_ladders_trestles", stoneId: "ladders_and_trestles", label: "Inclined Riggers' Ladders & Carpenter Trestles", constellationId: "cantherius_trestle", nx: 0.79, ny: 0.66, tier: 2, kind: "ladder_trestle" },
+    { id: "rig_sawhorse_catwalks", stoneId: "sawhorse_catwalks", label: "Plank Catwalks Supported by Sawhorses", constellationId: "cantherius_trestle", nx: 0.35, ny: 0.76, tier: 1, kind: "sawhorse_catwalk" },
+    { id: "rig_plank_fences", stoneId: "plank_fences", label: "Plank Fences at the Arrival Palisade", constellationId: "velum_saccinum", nx: 0.63, ny: 0.84, tier: 0, kind: "plank_fence" }
+  ]);
+
+  const HOISTED_CRANE_SLOTS = Object.freeze([
+    { id: "rig_hoisted_crane_8", label: "Hoisted Counter-Jib Crane VIII", nx: 0.39, ny: 0.40, tier: 5, parentNx: 0.34, parentNy: 0.47, armDir: 1 },
+    { id: "rig_hoisted_crane_9", label: "Hoisted Sheerlegs Derrick IX", nx: 0.61, ny: 0.39, tier: 5, parentNx: 0.66, parentNy: 0.47, armDir: -1 },
+    { id: "rig_hoisted_crane_10", label: "Hoisted Cantilever Boom X", nx: 0.26, ny: 0.43, tier: 5, parentNx: 0.21, parentNy: 0.51, armDir: 1 },
+    { id: "rig_hoisted_crane_11", label: "Hoisted Lattice Gin-Pole XI", nx: 0.74, ny: 0.42, tier: 5, parentNx: 0.79, parentNy: 0.50, armDir: -1 },
+    { id: "rig_hoisted_crane_12", label: "Hoisted Crown Mast Crane XII", nx: 0.45, ny: 0.38, tier: 6, parentNx: 0.39, parentNy: 0.40, armDir: 1 },
+    { id: "rig_hoisted_crane_13", label: "Hoisted Skyward Trammel XIII", nx: 0.56, ny: 0.38, tier: 6, parentNx: 0.61, parentNy: 0.39, armDir: -1 },
+    { id: "rig_hoisted_crane_14", label: "Hoisted Bastion Jib XIV", nx: 0.16, ny: 0.45, tier: 5, parentNx: 0.21, parentNy: 0.52, armDir: 1 }
+  ]);
+
+  const BASE_CRANE_TOWERS = Object.freeze([
+    { baseNx: 0.14, baseNy: 0.56, tipNx: 0.21, tipNy: 0.48, childScale: 0.72, material: "timber" },
+    { baseNx: 0.27, baseNy: 0.53, tipNx: 0.34, tipNy: 0.45, childScale: 0.84, material: "iron" },
+    { baseNx: 0.38, baseNy: 0.51, tipNx: 0.45, tipNy: 0.43, childScale: 0.88, material: "timber" },
+    { baseNx: 0.50, baseNy: 0.50, tipNx: 0.50, tipNy: 0.41, childScale: 1.00, material: "iron" },
+    { baseNx: 0.62, baseNy: 0.51, tipNx: 0.57, tipNy: 0.43, childScale: 0.86, material: "timber" },
+    { baseNx: 0.73, baseNy: 0.53, tipNx: 0.66, tipNy: 0.45, childScale: 0.82, material: "iron" },
+    { baseNx: 0.86, baseNy: 0.56, tipNx: 0.79, tipNy: 0.48, childScale: 0.74, material: "iron" }
+  ]);
+
+  function thkRigClamp(val, minVal, maxVal) {
+    return val < minVal ? minVal : val > maxVal ? maxVal : val;
+  }
+
+  function thkRigLerp(a, b, t) {
+    return a + (b - a) * t;
+  }
+
+  function thkRigHexToRgba(hex, alpha) {
+    const clean = String(hex || "#8c6239").replace("#", "");
+    const num = parseInt(clean, 16);
+    const r = (num >> 16) & 255;
+    const g = (num >> 8) & 255;
+    const b = num & 255;
+    return "rgba(" + r + "," + g + "," + b + "," + thkRigClamp(alpha, 0, 1).toFixed(3) + ")";
+  }
+
+  function createScaffoldingRig(opts) {
+    const cfg = opts || {};
+    let reducedMotion = Boolean(cfg.reducedMotion);
+    let muted = Boolean(cfg.muted);
+    let audioCtx = null;
+    let audioUnlocked = false;
+    let noiseBuf = null;
+
+    const onCraneHoisted = typeof cfg.onCraneHoisted === "function" ? cfg.onCraneHoisted : null;
+    const onSackclothParted = typeof cfg.onSackclothParted === "function" ? cfg.onSackclothParted : null;
+    const onAnchorSelected = typeof cfg.onAnchorSelected === "function" ? cfg.onAnchorSelected : null;
+
+    const MAX_CRANES = 14;
+    let cranesCount = 7;
+    let hoistedCranesAdded = 0;
+    let hoistLiftProgress = [];
+    let sackclothPartedRatio = 0;
+    let curtainRipple = 0;
+    let plankLooseness = 0;
+    let ropeSlack = 0.06;
+    let pulleyAngle = 0;
+    let pulleySpeed = 1.8;
+    let swayPhase = 0;
+    let malletClock = 0;
+    let malletPulse = 0;
+    let jointShudderPhase = 0;
+    let lanternGlow = 0;
+    let selectedAnchorId = null;
+    let lastWidth = 1280;
+    let lastHeight = 800;
+
+    const siftMotes = [];
+    for (let i = 0; i < 28; i += 1) {
+      siftMotes.push({
+        nx: 0.16 + ((i * 0.0713) % 0.68),
+        ny: 0.44 + ((i * 0.0537) % 0.42),
+        vy: 0.045 + (i % 5) * 0.014,
+        size: 1.2 + (i % 3) * 0.75,
+        drift: (i % 2 === 0 ? 1 : -1) * (0.006 + (i % 4) * 0.002)
+      });
+    }
+
+    function thkRigEnsureNoise(ctx) {
+      if (noiseBuf && noiseBuf.sampleRate === ctx.sampleRate) {
+        return noiseBuf;
+      }
+      const len = Math.max(1024, Math.floor(ctx.sampleRate * 0.45));
+      const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+      const ch = buf.getChannelData(0);
+      let seed = 43019;
+      for (let i = 0; i < len; i += 1) {
+        seed = (seed * 16807) % 2147483647;
+        ch[i] = ((seed / 2147483647) * 2 - 1) * 0.85;
+      }
+      noiseBuf = buf;
+      return buf;
+    }
+
+    function unlockAudio() {
+      try {
+        const Ctor = globalThis.AudioContext || globalThis.webkitAudioContext;
+        if (!Ctor) {
+          return false;
+        }
+        if (!audioCtx) {
+          audioCtx = new Ctor();
+        }
+        if (audioCtx.state === "suspended" && typeof audioCtx.resume === "function") {
+          audioCtx.resume().catch(function () {});
+        }
+        audioUnlocked = audioCtx.state !== "closed";
+        return audioUnlocked;
+      } catch (_err) {
+        audioUnlocked = false;
+        return false;
+      }
+    }
+
+    function setMuted(flag) {
+      muted = Boolean(flag);
+      return muted;
+    }
+
+    function toggleMute() {
+      muted = !muted;
+      return muted;
+    }
+
+    function isMuted() {
+      return muted;
+    }
+
+    function getAudioContext() {
+      return audioCtx;
+    }
+
+    function thkRigCanSound() {
+      return Boolean(audioUnlocked && !muted && audioCtx && audioCtx.state !== "closed");
+    }
+
+    function playHammerAndPulley() {
+      if (!thkRigCanSound()) return false;
+      try {
+        const now = audioCtx.currentTime;
+        [0, 0.13].forEach(function (offset, idx) {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = "triangle";
+          osc.frequency.setValueAtTime(idx === 0 ? 218 : 192, now + offset);
+          osc.frequency.exponentialRampToValueAtTime(112, now + offset + 0.075);
+          gain.gain.setValueAtTime(0.0001, now + offset);
+          gain.gain.exponentialRampToValueAtTime(idx === 0 ? 0.11 : 0.065, now + offset + 0.008);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + offset + 0.085);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now + offset);
+          osc.stop(now + offset + 0.09);
+        });
+        const creak = audioCtx.createOscillator();
+        const creakGain = audioCtx.createGain();
+        creak.type = "sine";
+        creak.frequency.setValueAtTime(530, now + 0.05);
+        creak.frequency.linearRampToValueAtTime(685, now + 0.24);
+        creakGain.gain.setValueAtTime(0.0001, now + 0.05);
+        creakGain.gain.linearRampToValueAtTime(0.028, now + 0.12);
+        creakGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.27);
+        creak.connect(creakGain);
+        creakGain.connect(audioCtx.destination);
+        creak.start(now + 0.05);
+        creak.stop(now + 0.28);
+        return true;
+      } catch (_err) {
+        return false;
+      }
+    }
+
+    function playCraneHoist() {
+      if (!thkRigCanSound()) return false;
+      try {
+        const now = audioCtx.currentTime;
+        for (let k = 0; k < 4; k += 1) {
+          const tick = audioCtx.createOscillator();
+          const tg = audioCtx.createGain();
+          const t0 = now + k * 0.055;
+          tick.type = "square";
+          tick.frequency.setValueAtTime(760 + k * 70, t0);
+          tg.gain.setValueAtTime(0.032, t0);
+          tg.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.03);
+          tick.connect(tg);
+          tg.connect(audioCtx.destination);
+          tick.start(t0);
+          tick.stop(t0 + 0.035);
+        }
+        const cable = audioCtx.createOscillator();
+        const cg = audioCtx.createGain();
+        cable.type = "sawtooth";
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = "bandpass";
+        filter.frequency.setValueAtTime(420, now);
+        cable.frequency.setValueAtTime(196, now + 0.04);
+        cable.frequency.exponentialRampToValueAtTime(293.66, now + 0.38);
+        cg.gain.setValueAtTime(0.0001, now + 0.04);
+        cg.gain.linearRampToValueAtTime(0.055, now + 0.14);
+        cg.gain.exponentialRampToValueAtTime(0.0001, now + 0.42);
+        cable.connect(filter);
+        filter.connect(cg);
+        cg.connect(audioCtx.destination);
+        cable.start(now + 0.04);
+        cable.stop(now + 0.44);
+        return true;
+      } catch (_err) {
+        return false;
+      }
+    }
+
+    function playSackclothRustle() {
+      if (!thkRigCanSound()) return false;
+      try {
+        const now = audioCtx.currentTime;
+        const src = audioCtx.createBufferSource();
+        src.buffer = thkRigEnsureNoise(audioCtx);
+        const filt = audioCtx.createBiquadFilter();
+        filt.type = "bandpass";
+        filt.Q.setValueAtTime(1.8, now);
+        filt.frequency.setValueAtTime(360, now);
+        filt.frequency.linearRampToValueAtTime(740, now + 0.13);
+        filt.frequency.linearRampToValueAtTime(320, now + 0.30);
+        const gain = audioCtx.createGain();
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.linearRampToValueAtTime(0.075, now + 0.07);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.31);
+        src.connect(filt);
+        filt.connect(gain);
+        gain.connect(audioCtx.destination);
+        src.start(now);
+        src.stop(now + 0.32);
+        return true;
+      } catch (_err) {
+        return false;
+      }
+    }
+
+    function playStructuralGroan(intensity) {
+      if (!thkRigCanSound()) return false;
+      try {
+        const lvl = thkRigClamp(Number(intensity) || 0.6, 0.15, 1);
+        const now = audioCtx.currentTime;
+        [68, 71.5].forEach(function (hz) {
+          const osc = audioCtx.createOscillator();
+          const lp = audioCtx.createBiquadFilter();
+          const g = audioCtx.createGain();
+          osc.type = "sawtooth";
+          osc.frequency.setValueAtTime(hz, now);
+          osc.frequency.exponentialRampToValueAtTime(hz * 0.71, now + 0.52);
+          lp.type = "lowpass";
+          lp.frequency.setValueAtTime(175 + lvl * 90, now);
+          g.gain.setValueAtTime(0.0001, now);
+          g.gain.linearRampToValueAtTime(0.065 * lvl, now + 0.08);
+          g.gain.exponentialRampToValueAtTime(0.0001, now + 0.56);
+          osc.connect(lp);
+          lp.connect(g);
+          g.connect(audioCtx.destination);
+          osc.start(now);
+          osc.stop(now + 0.58);
+        });
+        const rattle = audioCtx.createBufferSource();
+        rattle.buffer = thkRigEnsureNoise(audioCtx);
+        const hp = audioCtx.createBiquadFilter();
+        hp.type = "highpass";
+        hp.frequency.setValueAtTime(1450, now + 0.06);
+        const rg = audioCtx.createGain();
+        rg.gain.setValueAtTime(0.04 * lvl, now + 0.06);
+        rg.gain.exponentialRampToValueAtTime(0.0001, now + 0.24);
+        rattle.connect(hp);
+        hp.connect(rg);
+        rg.connect(audioCtx.destination);
+        rattle.start(now + 0.06);
+        rattle.stop(now + 0.25);
+        return true;
+      } catch (_err) {
+        return false;
+      }
+    }
+
+    function getRigAnchors(width, height) {
+      const w = Number(width) > 0 ? Number(width) : lastWidth;
+      const h = Number(height) > 0 ? Number(height) : lastHeight;
+      lastWidth = w;
+      lastHeight = h;
+      const looseVal = Math.round(plankLooseness * 10000) / 10000;
+      const out = [];
+      for (let i = 0; i < BASE_RIG_ANCHORS.length; i += 1) {
+        const b = BASE_RIG_ANCHORS[i];
+        out.push({
+          id: b.id,
+          stoneId: b.stoneId,
+          label: b.label,
+          constellationId: b.constellationId,
+          nx: b.nx,
+          ny: b.ny,
+          x: Math.round(b.nx * w * 100) / 100,
+          y: Math.round(b.ny * h * 100) / 100,
+          tier: b.tier,
+          kind: b.kind,
+          isHoistedCrane: false,
+          looseness: looseVal
+        });
+      }
+      for (let j = 0; j < hoistedCranesAdded; j += 1) {
+        const s = HOISTED_CRANE_SLOTS[j];
+        out.push({
+          id: s.id,
+          stoneId: "cranes_hoisting_cranes",
+          label: s.label,
+          constellationId: "grus_maior",
+          nx: s.nx,
+          ny: s.ny,
+          x: Math.round(s.nx * w * 100) / 100,
+          y: Math.round(s.ny * h * 100) / 100,
+          tier: s.tier,
+          kind: "hoisted_crane",
+          isHoistedCrane: true,
+          looseness: looseVal
+        });
+      }
+      return out;
+    }
+
+    function getState() {
+      return {
+        cranesCount: cranesCount,
+        hoistedCranesAdded: hoistedCranesAdded,
+        maxCranes: MAX_CRANES,
+        sackclothPartedRatio: Math.round(sackclothPartedRatio * 10000) / 10000,
+        sackclothParted: sackclothPartedRatio > 0.15,
+        finishedFacadeVisible: false,
+        scaffoldingsRemoved: false,
+        plankLooseness: Math.round(plankLooseness * 10000) / 10000,
+        selectedAnchorId: selectedAnchorId,
+        anchorCount: 9 + hoistedCranesAdded,
+        muted: muted,
+        audioUnlocked: audioUnlocked,
+        reducedMotion: reducedMotion
+      };
+    }
+
+    function hoistNewCrane() {
+      if (hoistedCranesAdded < HOISTED_CRANE_SLOTS.length) {
+        hoistedCranesAdded += 1;
+        cranesCount = 7 + hoistedCranesAdded;
+        hoistLiftProgress.push(reducedMotion ? 1 : 0.22);
+        playCraneHoist();
+        const anchors = getRigAnchors(lastWidth, lastHeight);
+        const added = anchors[anchors.length - 1];
+        if (onCraneHoisted) onCraneHoisted(added, getState());
+        return { hoisted: true, cranesCount: cranesCount, hoistedCranesAdded: hoistedCranesAdded, maxCranes: MAX_CRANES, anchor: added };
+      }
+      playCraneHoist();
+      const anchors = getRigAnchors(lastWidth, lastHeight);
+      return { hoisted: false, cranesCount: cranesCount, hoistedCranesAdded: hoistedCranesAdded, maxCranes: MAX_CRANES, anchor: anchors[anchors.length - 1] };
+    }
+
+    function partSackclothScreen(ratioOrToggle) {
+      if (typeof ratioOrToggle === "number" && Number.isFinite(ratioOrToggle)) {
+        sackclothPartedRatio = thkRigClamp(ratioOrToggle, 0, 1);
+      } else if (typeof ratioOrToggle === "boolean") {
+        sackclothPartedRatio = ratioOrToggle ? 1 : 0;
+      } else {
+        sackclothPartedRatio = sackclothPartedRatio < 0.5 ? 1 : 0;
+      }
+      curtainRipple = reducedMotion ? 0 : 1;
+      playSackclothRustle();
+      const snap = getState();
+      if (onSackclothParted) onSackclothParted(snap);
+      return snap;
+    }
+
+    function hitTest(normX, normY, width, height) {
+      const w = Number(width) > 0 ? Number(width) : lastWidth;
+      const h = Number(height) > 0 ? Number(height) : lastHeight;
+      if (!Number.isFinite(normX) || !Number.isFinite(normY)) return null;
+      const isPx = normX > 1.05 || normY > 1.05;
+      const px = isPx ? normX : normX * w;
+      const py = isPx ? normY : normY * h;
+      const anchors = getRigAnchors(w, h);
+      const maxDist = Math.max(38, Math.min(w, h) * 0.075);
+      let best = null;
+      let bestD = maxDist;
+      for (let i = 0; i < anchors.length; i += 1) {
+        const a = anchors[i];
+        const d = Math.hypot(px - a.x, py - a.y);
+        if (d <= bestD) {
+          bestD = d;
+          best = a;
+        }
+      }
+      return best;
+    }
+
+    function selectAnchor(id) {
+      if (!id) {
+        selectedAnchorId = null;
+        if (onAnchorSelected) onAnchorSelected(null, getState());
+        return null;
+      }
+      const anchors = getRigAnchors(lastWidth, lastHeight);
+      let found = null;
+      for (let i = 0; i < anchors.length; i += 1) {
+        if (anchors[i].id === id) { found = anchors[i]; break; }
+      }
+      if (!found) {
+        for (let i = 0; i < anchors.length; i += 1) {
+          if (anchors[i].stoneId === id || anchors[i].constellationId === id) { found = anchors[i]; break; }
+        }
+      }
+      selectedAnchorId = found ? found.id : null;
+      if (onAnchorSelected) onAnchorSelected(found, getState());
+      return found;
+    }
+
+    function setReducedMotion(flag) {
+      reducedMotion = Boolean(flag);
+      return reducedMotion;
+    }
+
+    function reset() {
+      cranesCount = 7;
+      hoistedCranesAdded = 0;
+      hoistLiftProgress = [];
+      sackclothPartedRatio = 0;
+      curtainRipple = 0;
+      plankLooseness = 0;
+      ropeSlack = 0.06;
+      pulleySpeed = 1.8;
+      malletPulse = 0;
+      lanternGlow = 0;
+      selectedAnchorId = null;
+      return getState();
+    }
+
+    function step(dtSec, skyState) {
+      const sky = skyState || {};
+      const isConstructing = sky.isConstructing !== undefined ? Boolean(sky.isConstructing) : true;
+      const destructionRate = Number(sky.destructionRate) || 0;
+      const destructionProgress = Number(sky.destructionProgress) || 0;
+      const solarPhase = sky.solarPhase || "day";
+      const effReduced = Boolean(reducedMotion || sky.reducedMotion);
+      const dt = thkRigClamp(Number(dtSec) || 0, 0, 0.25);
+
+      if (solarPhase === "sunset" || solarPhase === "night") {
+        pulleySpeed = effReduced ? 0 : pulleySpeed * Math.max(0, 1 - dt * 4.5);
+        malletPulse = 0;
+        plankLooseness = destructionProgress > 0 ? thkRigClamp(destructionProgress, 0, 1) : Math.max(0, plankLooseness - dt * 0.45);
+        ropeSlack = thkRigLerp(0.08, 0.42, plankLooseness);
+        const targetGlow = solarPhase === "night" ? 1 : 0.68;
+        lanternGlow = (effReduced || dt === 0) ? targetGlow : thkRigLerp(lanternGlow, targetGlow, Math.min(1, dt * 3.6));
+      } else if (!isConstructing && (destructionRate > 0 || destructionProgress > 0)) {
+        pulleySpeed = 0;
+        malletPulse = 0;
+        lanternGlow = Math.max(0, lanternGlow - dt * 3);
+        plankLooseness = destructionProgress > 0 ? thkRigClamp(destructionProgress, 0, 1) : thkRigClamp(plankLooseness + destructionRate * dt, 0, 1);
+        ropeSlack = thkRigLerp(0.20, 0.92, plankLooseness);
+        if (!effReduced) {
+          jointShudderPhase += dt * 22;
+          for (let i = 0; i < siftMotes.length; i += 1) {
+            siftMotes[i].ny += siftMotes[i].vy * (0.45 + plankLooseness * 1.4) * dt;
+            siftMotes[i].nx += siftMotes[i].drift * dt;
+            if (siftMotes[i].ny > 0.92) siftMotes[i].ny = 0.43 + (i % 6) * 0.03;
+          }
+        }
+      } else {
+        pulleySpeed = effReduced ? 0 : thkRigLerp(pulleySpeed, 2.2, Math.min(1, dt * 4));
+        const targetRepair = thkRigClamp(destructionProgress * 0.65, 0, 1);
+        plankLooseness = plankLooseness > targetRepair ? Math.max(targetRepair, plankLooseness - Math.max(0.018, dt * 0.6)) : targetRepair;
+        ropeSlack = thkRigLerp(0.05, 0.34, plankLooseness);
+        lanternGlow = Math.max(0, lanternGlow - dt * 3.5);
+        if (!effReduced) {
+          malletClock += dt * 2.3;
+          malletPulse = Math.pow(Math.max(0, Math.sin(malletClock * Math.PI)), 6);
+        } else {
+          malletPulse = 0;
+        }
+      }
+
+      if (!effReduced) {
+        pulleyAngle = (pulleyAngle + pulleySpeed * dt) % (Math.PI * 2);
+        swayPhase += dt * 1.3;
+        curtainRipple = Math.max(0, curtainRipple - dt * 2.2);
+      }
+      for (let k = 0; k < hoistLiftProgress.length; k += 1) {
+        hoistLiftProgress[k] = effReduced ? 1 : Math.min(1, hoistLiftProgress[k] + Math.max(0.03, dt * 1.2));
+      }
+      return getState();
+    }
+
+    function renderRig(ctx, width, height, skyState) {
+      if (!ctx || !(width > 0) || !(height > 0)) return;
+      const w = width;
+      const h = height;
+      const sky = skyState || {};
+      const solarPhase = sky.solarPhase || "day";
+      const isNight = solarPhase === "night";
+      const effReduced = Boolean(reducedMotion || sky.reducedMotion);
+      const sway = effReduced ? 0 : Math.sin(swayPhase) * (w * 0.0045);
+      const shudder = (!effReduced && plankLooseness > 0) ? Math.sin(jointShudderPhase) * plankLooseness * 3.2 : 0;
+
+      ctx.save();
+
+      /* 1. Ground arrival terrace & deep recessed inner scaffolding vault (never a finished facade) */
+      ctx.fillStyle = isNight ? "#0b111d" : "#261b12";
+      ctx.fillRect(0, h * 0.855, w, h * 0.145);
+
+      const innerAlpha = 0.38 + sackclothPartedRatio * 0.56;
+      ctx.fillStyle = thkRigHexToRgba(PALETTE.blueprintIndigo, innerAlpha * 0.82);
+      ctx.fillRect(w * 0.33, h * 0.51, w * 0.39, h * 0.31);
+      ctx.strokeStyle = thkRigHexToRgba(isNight ? PALETTE.starCyan : PALETTE.ironArmature, innerAlpha);
+      ctx.lineWidth = Math.max(1, w * 0.0016);
+      for (let b = 0; b < 5; b += 1) {
+        const bx = w * (0.35 + b * 0.085);
+        const inset = (b % 2) * 6;
+        ctx.beginPath();
+        ctx.moveTo(bx, h * 0.51 + inset);
+        ctx.lineTo(bx, h * 0.82);
+        ctx.moveTo(w * 0.33, h * (0.55 + b * 0.055));
+        ctx.lineTo(w * 0.72, h * (0.55 + b * 0.055));
+        ctx.moveTo(bx, h * 0.53);
+        ctx.lineTo(bx + w * 0.075, h * 0.79);
+        ctx.stroke();
+      }
+
+      /* 2. Lashed multi-tier timber scaffoldings (left/mid) & riveted metal armatures (right/mid) */
+      const cols = [0.12, 0.21, 0.31, 0.42, 0.56, 0.68, 0.79, 0.88];
+      const rows = [0.50, 0.59, 0.69, 0.79];
+      for (let c = 0; c < cols.length; c += 1) {
+        const isIron = c >= 4;
+        const x0 = w * cols[c] + shudder * (c % 2 === 0 ? 1 : -1);
+        const tilt = plankLooseness * (c % 2 === 0 ? 8 : -7);
+        ctx.strokeStyle = isIron ? PALETTE.ironArmature : PALETTE.pineTimber;
+        ctx.lineWidth = Math.max(2.2, w * (isIron ? 0.0036 : 0.0042));
+        ctx.beginPath();
+        ctx.moveTo(x0 + tilt, h * 0.48);
+        ctx.lineTo(x0, h * 0.855);
+        ctx.stroke();
+        if (c < cols.length - 1) {
+          const xNext = w * cols[c + 1];
+          for (let r = 0; r < rows.length; r += 1) {
+            const yr = h * rows[r] + plankLooseness * ((r + c) % 2 === 0 ? 5 : -4);
+            ctx.strokeStyle = isIron ? PALETTE.ironArmature : PALETTE.pineTimber;
+            ctx.lineWidth = Math.max(1.8, w * 0.003);
+            ctx.beginPath();
+            ctx.moveTo(x0, yr);
+            ctx.lineTo(xNext, yr);
+            ctx.moveTo(x0, yr);
+            ctx.lineTo(xNext, h * (rows[Math.min(rows.length - 1, r + 1)] || 0.85));
+            ctx.stroke();
+            ctx.fillStyle = isIron ? PALETTE.plumbSilver : PALETTE.hempRope;
+            ctx.fillRect(x0 - 2.5, yr - 2.5, 5, 5);
+          }
+        }
+      }
+
+      /* 3. Interlocking beams embracing beams */
+      const embracePairs = [[0.22, 0.49, 0.51, 0.48], [0.47, 0.50, 0.76, 0.49]];
+      for (let e = 0; e < embracePairs.length; e += 1) {
+        const ep = embracePairs[e];
+        const ex1 = w * ep[0], ey1 = h * ep[1] + plankLooseness * 6;
+        const ex2 = w * ep[2], ey2 = h * ep[3] - plankLooseness * 5;
+        ctx.strokeStyle = PALETTE.pineTimber;
+        ctx.lineWidth = Math.max(4, h * 0.0085);
+        ctx.beginPath(); ctx.moveTo(ex1, ey1 - 3); ctx.lineTo(ex2, ey2 + 3); ctx.stroke();
+        ctx.strokeStyle = PALETTE.weatheredPlank;
+        ctx.beginPath(); ctx.moveTo(ex1, ey1 + 4); ctx.lineTo(ex2, ey2 - 4); ctx.stroke();
+        const midX = (ex1 + ex2) * 0.5, midY = (ey1 + ey2) * 0.5;
+        ctx.fillStyle = plankLooseness > 0.05 ? PALETTE.fractureRust : PALETTE.ironArmature;
+        ctx.fillRect(midX - 9, midY - 7, 18, 14);
+      }
+
+      /* 4. Billowing burlap sackcloth screens parting onto deeper armatures */
+      const seamX = w * 0.525;
+      const spanHalf = w * 0.195;
+      const openGap = spanHalf * 0.78 * sackclothPartedRatio;
+      const billow = (effReduced ? 0 : Math.sin(swayPhase * 1.4) * 5) + curtainRipple * 6;
+      [[-1, seamX - spanHalf, seamX - openGap], [1, seamX + openGap, seamX + spanHalf]].forEach(function (seg) {
+        const xA = seg[1], xB = seg[2];
+        if (xB - xA < 4) return;
+        ctx.fillStyle = thkRigHexToRgba(PALETTE.sackclothBurlap, 0.90 - sackclothPartedRatio * 0.14);
+        ctx.beginPath();
+        ctx.moveTo(xA, h * 0.525);
+        ctx.lineTo(xB, h * 0.525);
+        ctx.quadraticCurveTo((xA + xB) * 0.5 + billow * seg[0], h * 0.66, xB + billow * 0.4, h * 0.765);
+        ctx.quadraticCurveTo((xA + xB) * 0.5, h * 0.785, xA, h * 0.76);
+        ctx.closePath();
+        ctx.fill();
+        ctx.strokeStyle = PALETTE.hempRope;
+        ctx.lineWidth = 1.2;
+        for (let f = 1; f <= 3; f += 1) {
+          const fx = thkRigLerp(xA, xB, f / 4);
+          ctx.beginPath(); ctx.moveTo(fx, h * 0.525); ctx.lineTo(fx + billow * 0.3, h * 0.765); ctx.stroke();
+        }
+      });
+
+      /* 5. Rope-hung catwalks, sawhorse plank catwalks, inclined ladders & trestle lanterns */
+      const sag = ropeSlack * h * 0.032;
+      const rw1 = w * 0.38 + sway, rw2 = w * 0.58 + sway, ry = h * 0.57 + sag * 0.5;
+      ctx.strokeStyle = PALETTE.hempRope;
+      ctx.lineWidth = 1.8;
+      ctx.beginPath();
+      ctx.moveTo(w * 0.39, h * 0.49); ctx.lineTo(rw1 + 8, ry);
+      ctx.moveTo(w * 0.57, h * 0.49); ctx.lineTo(rw2 - 8, ry);
+      ctx.moveTo(rw1, ry - 8); ctx.quadraticCurveTo((rw1 + rw2) * 0.5, ry - 8 + sag, rw2, ry - 8);
+      ctx.stroke();
+      ctx.strokeStyle = PALETTE.pineTimber;
+      ctx.lineWidth = Math.max(3.5, h * 0.006);
+      ctx.beginPath(); ctx.moveTo(rw1, ry); ctx.quadraticCurveTo((rw1 + rw2) * 0.5, ry + sag, rw2, ry); ctx.stroke();
+
+      const sw1 = w * 0.23, sw2 = w * 0.47, sy = h * 0.76 + plankLooseness * 5;
+      ctx.strokeStyle = PALETTE.weatheredPlank;
+      ctx.lineWidth = Math.max(4, h * 0.007);
+      ctx.beginPath(); ctx.moveTo(sw1, sy); ctx.lineTo(sw2, sy); ctx.stroke();
+      [0.26, 0.35, 0.44].forEach(function (hx) {
+        const cx = w * hx;
+        ctx.lineWidth = 2.4;
+        ctx.beginPath();
+        ctx.moveTo(cx - 11, h * 0.855); ctx.lineTo(cx, sy); ctx.lineTo(cx + 11, h * 0.855);
+        ctx.stroke();
+      });
+
+      [[0.75, 0.81, 0.83, 0.54], [0.18, 0.82, 0.24, 0.58]].forEach(function (ld) {
+        const lx1 = w * ld[0], ly1 = h * ld[1], lx2 = w * ld[2], ly2 = h * ld[3];
+        ctx.strokeStyle = PALETTE.hempRope;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(lx1, ly1); ctx.lineTo(lx2, ly2);
+        ctx.moveTo(lx1 + 10, ly1); ctx.lineTo(lx2 + 10, ly2);
+        for (let st = 1; st <= 8; st += 1) {
+          const t = st / 9;
+          const rx = thkRigLerp(lx1, lx2, t), ryStep = thkRigLerp(ly1, ly2, t);
+          ctx.moveTo(rx, ryStep); ctx.lineTo(rx + 10, ryStep);
+        }
+        ctx.stroke();
+      });
+
+      if (lanternGlow > 0.02) {
+        [[0.35, 0.75], [0.78, 0.66], [0.48, 0.57]].forEach(function (lp) {
+          const lx = w * lp[0], ly = h * lp[1];
+          const grad = ctx.createRadialGradient(lx, ly, 1, lx, ly, Math.max(16, w * 0.024));
+          grad.addColorStop(0, thkRigHexToRgba(PALETTE.sunsetCopper, 0.85 * lanternGlow));
+          grad.addColorStop(1, "rgba(201,95,54,0)");
+          ctx.fillStyle = grad;
+          ctx.beginPath(); ctx.arc(lx, ly, Math.max(16, w * 0.024), 0, Math.PI * 2); ctx.fill();
+        });
+      }
+
+      /* 6. Seven parent derrick cranes hoisting child cranes + newly hoisted nested crane tiers */
+      for (let i = 0; i < BASE_CRANE_TOWERS.length; i += 1) {
+        const c = BASE_CRANE_TOWERS[i];
+        const bx = w * c.baseNx, by = h * c.baseNy;
+        const tx = w * c.tipNx + sway * 0.4, ty = h * c.tipNy + plankLooseness * 6;
+        ctx.strokeStyle = c.material === "iron" ? PALETTE.ironArmature : PALETTE.pineTimber;
+        ctx.lineWidth = Math.max(2.4, w * 0.0032);
+        ctx.beginPath(); ctx.moveTo(bx - 10, by); ctx.lineTo(tx, ty); ctx.lineTo(bx + 10, by); ctx.stroke();
+        ctx.fillStyle = PALETTE.hempRope;
+        ctx.beginPath(); ctx.arc(tx, ty, 4, 0, Math.PI * 2); ctx.fill();
+        const dropLen = h * 0.042 + ropeSlack * h * 0.02;
+        ctx.strokeStyle = PALETTE.hempRope;
+        ctx.lineWidth = 1.4;
+        ctx.beginPath(); ctx.moveTo(tx, ty); ctx.lineTo(tx, ty + dropLen); ctx.stroke();
+        ctx.strokeStyle = PALETTE.pineTimber;
+        ctx.lineWidth = 2.2;
+        ctx.beginPath(); ctx.moveTo(tx - 15 * c.childScale, ty + dropLen + 4); ctx.lineTo(tx + 17 * c.childScale, ty + dropLen - 5); ctx.stroke();
+      }
+      for (let j = 0; j < hoistedCranesAdded; j += 1) {
+        const s = HOISTED_CRANE_SLOTS[j];
+        const lift = hoistLiftProgress[j] !== undefined ? hoistLiftProgress[j] : 1;
+        const px = w * s.parentNx, py = h * s.parentNy;
+        const cx = w * s.nx + sway * 0.6, cy = thkRigLerp(py + 18, h * s.ny, lift) + plankLooseness * 5;
+        ctx.strokeStyle = PALETTE.hempRope;
+        ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(cx, cy + h * 0.03); ctx.stroke();
+        ctx.strokeStyle = j % 2 === 0 ? PALETTE.ironArmature : PALETTE.pineTimber;
+        ctx.lineWidth = 2.6;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy + h * 0.042); ctx.lineTo(cx, cy);
+        ctx.moveTo(cx - s.armDir * w * 0.024, cy + 5); ctx.lineTo(cx + s.armDir * w * 0.045, cy - 7);
+        ctx.stroke();
+        const tipX = cx + s.armDir * w * 0.045, tipY = cy - 7;
+        ctx.strokeStyle = PALETTE.plumbSilver;
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.arc(tipX, tipY, 4.2, pulleyAngle, pulleyAngle + Math.PI * 1.4);
+        ctx.stroke();
+      }
+
+      /* 7. Foreground arrival palisade of weathered plank fences + sifting mortar motes + anchors */
+      const plankCount = 26;
+      for (let p = 0; p < plankCount; p += 1) {
+        const px = w * (0.06 + (p / plankCount) * 0.88);
+        const py = h * (0.815 + (p % 3) * 0.008) + plankLooseness * ((p % 4) * 3.5);
+        const pw = Math.max(6, (w * 0.84) / plankCount - 3);
+        const ph = h * 0.125;
+        const tiltRad = plankLooseness * ((p % 2 === 0 ? 1 : -1) * (0.06 + (p % 3) * 0.045));
+        ctx.save();
+        ctx.translate(px + pw * 0.5, py + ph * 0.5);
+        ctx.rotate(tiltRad);
+        ctx.fillStyle = p % 2 === 0 ? PALETTE.weatheredPlank : PALETTE.pineTimber;
+        ctx.fillRect(-pw * 0.5, -ph * 0.5, pw, ph);
+        ctx.restore();
+      }
+
+      if (plankLooseness > 0.01) {
+        ctx.fillStyle = thkRigHexToRgba(PALETTE.fractureRust, Math.min(0.85, 0.25 + plankLooseness * 0.65));
+        for (let m = 0; m < siftMotes.length; m += 1) {
+          ctx.fillRect(siftMotes[m].nx * w, siftMotes[m].ny * h, siftMotes[m].size + 0.8, siftMotes[m].size + 0.8);
+        }
+      }
+
+      const anchors = getRigAnchors(w, h);
+      for (let a = 0; a < anchors.length; a += 1) {
+        const node = anchors[a];
+        const isSel = node.id === selectedAnchorId;
+        const r = isSel ? 6.5 : 4.0;
+        ctx.fillStyle = isSel ? PALETTE.starCyan : (isNight ? PALETTE.plumbSilver : PALETTE.hempRope);
+        ctx.beginPath(); ctx.arc(node.x, node.y, r, 0, Math.PI * 2); ctx.fill();
+        if (malletPulse > 0.05 && a % 3 === 0) {
+          ctx.strokeStyle = thkRigHexToRgba(PALETTE.ochreHaze, malletPulse * 0.65);
+          ctx.lineWidth = 1.3;
+          ctx.beginPath(); ctx.arc(node.x, node.y, r + malletPulse * 11, 0, Math.PI * 2); ctx.stroke();
+        }
+      }
+
+      ctx.restore();
+    }
+
+    return {
+      getRigAnchors: getRigAnchors,
+      hoistNewCrane: hoistNewCrane,
+      partSackclothScreen: partSackclothScreen,
+      step: step,
+      renderRig: renderRig,
+      hitTest: hitTest,
+      selectAnchor: selectAnchor,
+      unlockAudio: unlockAudio,
+      setMuted: setMuted,
+      toggleMute: toggleMute,
+      isMuted: isMuted,
+      getAudioContext: getAudioContext,
+      playHammerAndPulley: playHammerAndPulley,
+      playCraneHoist: playCraneHoist,
+      playSackclothRustle: playSackclothRustle,
+      playStructuralGroan: playStructuralGroan,
+      setReducedMotion: setReducedMotion,
+      reset: reset,
+      getState: getState
+    };
+  }
+
+  const api = Object.freeze({
+    PALETTE: PALETTE,
+    CANONICAL_STONES: CANONICAL_STONES,
+    createScaffoldingRig: createScaffoldingRig
+  });
+
+  globalThis.TheklaScaffoldingRig = api;
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = api;
+  }
+})();
+
+/*
+ * City 43: Thekla — Celestial Blueprint & Sunset Armistice Sky Layer
+ * Self-contained Canvas2D + WebAudio module for globalThis.TheklaCelestialBlueprint
+ */
+(function (root) {
+  "use strict";
+
+  var PALETTE = Object.freeze({
+    dayDustSky: "#d8c7a8",
+    ochreHaze: "#b99867",
+    pineTimber: "#8c6239",
+    weatheredPlank: "#5c4228",
+    sackclothBurlap: "#a88f68",
+    ironArmature: "#3c4652",
+    hempRope: "#c5aa78",
+    sunsetCopper: "#c95f36",
+    twilightPlum: "#2a233d",
+    nightAbyss: "#080d1a",
+    blueprintIndigo: "#10203b",
+    starCyan: "#8ce6ff",
+    plumbSilver: "#d9f3ff",
+    fractureRust: "#d94a38"
+  });
+
+  var CONSTELLATIONS = Object.freeze([
+    Object.freeze({
+      id: "grus_maior",
+      index: 1,
+      latin: "Grus Maior",
+      role: "Cranes Hoisting Other Cranes",
+      chordHz: 523.25,
+      sectorNx: 0.52,
+      sectorNy: 0.12,
+      wireOffsets: Object.freeze([[-0.045, 0.032], [0.0, -0.028], [0.052, -0.008], [0.034, 0.036]])
+    }),
+    Object.freeze({
+      id: "trabes_geminae",
+      index: 2,
+      latin: "Trabes Geminae",
+      role: "Beams Embracing Other Beams",
+      chordHz: 392.00,
+      sectorNx: 0.37,
+      sectorNy: 0.17,
+      wireOffsets: Object.freeze([[-0.042, -0.018], [0.038, -0.018], [0.042, 0.022], [-0.038, 0.022]])
+    }),
+    Object.freeze({
+      id: "ponticulus_funis",
+      index: 3,
+      latin: "Ponticulus Funis",
+      role: "Catwalks Hanging from Ropes",
+      chordHz: 440.00,
+      sectorNx: 0.65,
+      sectorNy: 0.18,
+      wireOffsets: Object.freeze([[-0.048, -0.016], [-0.016, 0.020], [0.018, 0.022], [0.048, -0.014]])
+    }),
+    Object.freeze({
+      id: "cantherius_trestle",
+      index: 4,
+      latin: "Cantherius",
+      role: "Sawhorse Walks & Trestles",
+      chordHz: 329.63,
+      sectorNx: 0.25,
+      sectorNy: 0.24,
+      wireOffsets: Object.freeze([[-0.040, 0.026], [-0.014, -0.022], [0.020, -0.020], [0.042, 0.026]])
+    }),
+    Object.freeze({
+      id: "armatura_ferrea",
+      index: 5,
+      latin: "Armatura Ferrea",
+      role: "Metal Lattice Armatures",
+      chordHz: 293.66,
+      sectorNx: 0.78,
+      sectorNy: 0.22,
+      wireOffsets: Object.freeze([[0.0, -0.028], [0.042, 0.0], [0.0, 0.028], [-0.042, 0.0]])
+    }),
+    Object.freeze({
+      id: "scala_coeli",
+      index: 6,
+      latin: "Scala Coeli",
+      role: "Ladders & Timber Scaffoldings",
+      chordHz: 493.88,
+      sectorNx: 0.46,
+      sectorNy: 0.25,
+      wireOffsets: Object.freeze([[-0.026, 0.028], [-0.008, 0.004], [0.012, -0.018], [0.030, -0.032]])
+    }),
+    Object.freeze({
+      id: "velum_saccinum",
+      index: 7,
+      latin: "Velum Saccinum",
+      role: "Plank Fences & Sackcloth Screens",
+      chordHz: 261.63,
+      sectorNx: 0.14,
+      sectorNy: 0.16,
+      wireOffsets: Object.freeze([[-0.036, -0.020], [0.032, -0.016], [0.026, 0.028], [-0.030, 0.024]])
+    })
+  ]);
+
+  var CONSTELLATION_MAP = Object.create(null);
+  for (var ci = 0; ci < CONSTELLATIONS.length; ci += 1) {
+    CONSTELLATION_MAP[CONSTELLATIONS[ci].id] = CONSTELLATIONS[ci];
+  }
+
+  var FALLBACK_RIG_ANCHORS = Object.freeze([
+    { id: "anchor_plank_fences", stoneId: "plank_fences", label: "Plank Fences at the Arrival Palisade", constellationId: "velum_saccinum", nx: 0.13, ny: 0.81, tier: 1, isHoistedCrane: false },
+    { id: "anchor_sackcloth_screens", stoneId: "sackcloth_screens", label: "Billowing Sackcloth Screens Veiling Inner Bays", constellationId: "velum_saccinum", nx: 0.27, ny: 0.68, tier: 2, isHoistedCrane: false },
+    { id: "anchor_timber_scaffoldings", stoneId: "timber_scaffoldings", label: "Lashed Multi-Tier Timber Scaffoldings", constellationId: "scala_coeli", nx: 0.45, ny: 0.67, tier: 2, isHoistedCrane: false },
+    { id: "anchor_metal_armatures", stoneId: "metal_armatures", label: "Riveted Iron & Steel Lattice Armatures", constellationId: "armatura_ferrea", nx: 0.77, ny: 0.61, tier: 3, isHoistedCrane: false },
+    { id: "anchor_rope_catwalks", stoneId: "rope_catwalks", label: "Wooden Catwalks Hanging from Hemp Ropes", constellationId: "ponticulus_funis", nx: 0.64, ny: 0.55, tier: 3, isHoistedCrane: false },
+    { id: "anchor_sawhorse_catwalks", stoneId: "sawhorse_catwalks", label: "Plank Catwalks Supported by Sawhorses", constellationId: "cantherius_trestle", nx: 0.22, ny: 0.76, tier: 1, isHoistedCrane: false },
+    { id: "anchor_ladders_trestles", stoneId: "ladders_and_trestles", label: "Inclined Riggers' Ladders & Carpenter Trestles", constellationId: "cantherius_trestle", nx: 0.33, ny: 0.71, tier: 2, isHoistedCrane: false },
+    { id: "anchor_cranes_hoisting", stoneId: "cranes_hoisting_cranes", label: "Derrick Cranes Hoisting Higher Cranes", constellationId: "grus_maior", nx: 0.52, ny: 0.43, tier: 4, isHoistedCrane: false },
+    { id: "anchor_beams_embracing", stoneId: "beams_embracing_beams", label: "Interlocking Beams Embracing Beams", constellationId: "trabes_geminae", nx: 0.38, ny: 0.53, tier: 3, isHoistedCrane: false }
+  ]);
+
+  function thkSkyClamp(v, lo, hi) {
+    return v < lo ? lo : (v > hi ? hi : v);
+  }
+
+  function thkSkyHexToRgb(hex) {
+    var clean = String(hex || "#000000").replace("#", "");
+    var num = parseInt(clean, 16);
+    if (!Number.isFinite(num)) {
+      return { r: 16, g: 32, b: 59 };
+    }
+    return {
+      r: (num >> 16) & 255,
+      g: (num >> 8) & 255,
+      b: num & 255
+    };
+  }
+
+  function thkSkyMixHex(hexA, hexB, t) {
+    var u = thkSkyClamp(t, 0, 1);
+    var a = thkSkyHexToRgb(hexA);
+    var b = thkSkyHexToRgb(hexB);
+    var r = Math.round(a.r + (b.r - a.r) * u);
+    var g = Math.round(a.g + (b.g - a.g) * u);
+    var bl = Math.round(a.b + (b.b - a.b) * u);
+    return "rgb(" + r + "," + g + "," + bl + ")";
+  }
+
+  function thkSkyRgba(hex, alpha) {
+    var c = thkSkyHexToRgb(hex);
+    return "rgba(" + c.r + "," + c.g + "," + c.b + "," + thkSkyClamp(alpha, 0, 1).toFixed(3) + ")";
+  }
+
+  function thkSkyBuildBackgroundStars(count) {
+    var stars = [];
+    var seed = 430819;
+    var tints = ["#ffffff", "#d9f3ff", "#8ce6ff", "#f3e6cc", "#bcd9ff"];
+    for (var i = 0; i < count; i += 1) {
+      seed = (seed * 1664525 + 1013904223) >>> 0;
+      var nx = 0.025 + ((seed & 65535) / 65535) * 0.95;
+      seed = (seed * 1664525 + 1013904223) >>> 0;
+      var ny = 0.025 + ((seed & 65535) / 65535) * 0.56;
+      seed = (seed * 1664525 + 1013904223) >>> 0;
+      var mag = 0.55 + ((seed & 4095) / 4095) * 1.55;
+      stars.push({
+        nx: nx,
+        ny: ny,
+        radius: mag,
+        phase: (i * 0.83) % 6.283,
+        speed: 0.9 + (i % 7) * 0.28,
+        tint: tints[i % tints.length]
+      });
+    }
+    return stars;
+  }
+
+  function thkSkyBuildFaultBranches() {
+    return [
+      { pts: [[0.50, 0.03], [0.47, 0.12], [0.51, 0.22], [0.46, 0.34], [0.49, 0.48]], twigs: [[1, 0.41, 0.18], [2, 0.57, 0.29], [3, 0.40, 0.42]] },
+      { pts: [[0.24, 0.05], [0.28, 0.15], [0.23, 0.26], [0.27, 0.39], [0.22, 0.51]], twigs: [[1, 0.34, 0.21], [2, 0.17, 0.33]] },
+      { pts: [[0.76, 0.04], [0.72, 0.14], [0.77, 0.25], [0.71, 0.37], [0.75, 0.49]], twigs: [[1, 0.65, 0.20], [2, 0.83, 0.32], [3, 0.66, 0.44]] }
+    ];
+  }
+
+  function playSunsetArmisticeBell(audioCtx, muted) {
+    if (!audioCtx || muted || typeof audioCtx.createOscillator !== "function") {
+      return false;
+    }
+    try {
+      var now = audioCtx.currentTime || 0;
+      var partials = [
+        { hz: 261.63, gain: 0.055, dur: 1.55, type: "sine" },
+        { hz: 392.00, gain: 0.036, dur: 1.30, type: "sine" },
+        { hz: 523.25, gain: 0.024, dur: 1.05, type: "triangle" },
+        { hz: 622.25, gain: 0.012, dur: 0.72, type: "sine" }
+      ];
+      for (var i = 0; i < partials.length; i += 1) {
+        var p = partials[i];
+        var osc = audioCtx.createOscillator();
+        var env = audioCtx.createGain();
+        osc.type = p.type;
+        osc.frequency.setValueAtTime(p.hz, now);
+        env.gain.setValueAtTime(0.0001, now);
+        env.gain.linearRampToValueAtTime(p.gain, now + 0.022);
+        env.gain.exponentialRampToValueAtTime(0.0001, now + p.dur);
+        osc.connect(env);
+        env.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + p.dur + 0.04);
+      }
+      return true;
+    } catch (_err) {
+      return false;
+    }
+  }
+
+  function playBlueprintStarChord(audioCtx, muted, constellationId) {
+    if (!audioCtx || muted || typeof audioCtx.createOscillator !== "function") {
+      return false;
+    }
+    try {
+      var con = CONSTELLATION_MAP[constellationId] || CONSTELLATIONS[0];
+      var base = con.chordHz || 523.25;
+      var ratios = [1.0, 1.5, 2.0];
+      var now = audioCtx.currentTime || 0;
+      for (var i = 0; i < ratios.length; i += 1) {
+        var t0 = now + i * 0.036;
+        var osc = audioCtx.createOscillator();
+        var env = audioCtx.createGain();
+        osc.type = i === 1 ? "triangle" : "sine";
+        osc.frequency.setValueAtTime(base * ratios[i], t0);
+        env.gain.setValueAtTime(0.0001, t0);
+        env.gain.linearRampToValueAtTime(0.038 / (1 + i * 0.35), t0 + 0.014);
+        env.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.92);
+        osc.connect(env);
+        env.connect(audioCtx.destination);
+        osc.start(t0);
+        osc.stop(t0 + 0.96);
+      }
+      return true;
+    } catch (_err) {
+      return false;
+    }
+  }
+
+  function createCelestialBlueprint(opts) {
+    var options = opts || {};
+    var onPhaseChange = typeof options.onPhaseChange === "function" ? options.onPhaseChange : null;
+    var onDestructionStateChange = typeof options.onDestructionStateChange === "function" ? options.onDestructionStateChange : null;
+
+    var reducedMotion = Boolean(options.reducedMotion);
+    var solarProgress = 0.18;
+    var solarPhase = "day";
+    var isConstructing = true;
+    var daytimeWorkHalted = false;
+    var sunsetArmisticeActive = false;
+    var destructionCannotBegin = true;
+    var destructionRate = 0;
+    var destructionProgress = 0;
+    var cosmicCrumbleThreat = false;
+    var haltTestCount = 0;
+    var blueprintVisibility = 0.04;
+    var blueprintRevealed = false;
+    var activeConstellationId = "grus_maior";
+    var whisperText = "Not only the city.";
+    var timeSec = 0;
+    var fearShimmer = 0;
+    var lastWidth = 1280;
+    var lastHeight = 800;
+
+    var backgroundStars = thkSkyBuildBackgroundStars(76);
+    var faultBranches = thkSkyBuildFaultBranches();
+    var currentAnchors = FALLBACK_RIG_ANCHORS.slice();
+    var starNodes = [];
+
+    function syncRigAnchors(rigAnchors, width, height) {
+      var w = Number.isFinite(width) && width > 0 ? width : lastWidth;
+      var h = Number.isFinite(height) && height > 0 ? height : lastHeight;
+      lastWidth = w;
+      lastHeight = h;
+      if (Array.isArray(rigAnchors) && rigAnchors.length > 0) {
+        currentAnchors = rigAnchors.slice();
+      } else if (!currentAnchors.length) {
+        currentAnchors = FALLBACK_RIG_ANCHORS.slice();
+      }
+      var slotCounts = Object.create(null);
+      var built = [];
+      for (var i = 0; i < currentAnchors.length; i += 1) {
+        var a = currentAnchors[i] || {};
+        var cid = (a.constellationId && CONSTELLATION_MAP[a.constellationId]) ? a.constellationId : CONSTELLATIONS[i % CONSTELLATIONS.length].id;
+        var con = CONSTELLATION_MAP[cid];
+        var slot = slotCounts[cid] || 0;
+        slotCounts[cid] = slot + 1;
+        var anchorNx = Number.isFinite(a.nx) ? a.nx : (Number.isFinite(a.x) ? a.x / w : con.sectorNx);
+        var anchorNy = Number.isFinite(a.ny) ? a.ny : (Number.isFinite(a.y) ? a.y / h : 0.62);
+        var wire = con.wireOffsets[slot % con.wireOffsets.length];
+        var ringStep = Math.floor(slot / con.wireOffsets.length);
+        var hoistLift = a.isHoistedCrane ? -0.012 * Math.min(4, slot) : 0;
+        var rawNx = 0.74 * (con.sectorNx + wire[0] * (1 + ringStep * 0.42)) + 0.26 * anchorNx;
+        var rawNy = con.sectorNy + wire[1] * (1 + ringStep * 0.35) + hoistLift;
+        var starNx = thkSkyClamp(rawNx, 0.06, 0.94);
+        var starNy = thkSkyClamp(rawNy, 0.07, 0.33);
+        built.push({
+          id: "star_" + (a.id || ("node_" + i)),
+          anchorId: a.id || ("node_" + i),
+          stoneId: a.stoneId || "cranes_hoisting_cranes",
+          label: a.label || con.role,
+          constellationId: cid,
+          constellationLatin: con.latin,
+          chordHz: con.chordHz,
+          nx: starNx,
+          ny: starNy,
+          x: starNx * w,
+          y: starNy * h,
+          anchorX: Number.isFinite(a.x) ? a.x : anchorNx * w,
+          anchorY: Number.isFinite(a.y) ? a.y : anchorNy * h,
+          tier: a.tier || 1,
+          isHoistedCrane: Boolean(a.isHoistedCrane)
+        });
+      }
+      starNodes = built;
+      return starNodes.slice();
+    }
+
+    function getState() {
+      var mapped = starNodes.length;
+      return {
+        solarProgress: Number(solarProgress.toFixed(4)),
+        solarPhase: solarPhase,
+        isConstructing: isConstructing,
+        daytimeWorkHalted: daytimeWorkHalted,
+        sunsetArmisticeActive: sunsetArmisticeActive,
+        destructionCannotBegin: destructionCannotBegin,
+        destructionRate: destructionRate,
+        destructionProgress: Number(destructionProgress.toFixed(4)),
+        cosmicCrumbleThreat: cosmicCrumbleThreat,
+        haltTestCount: haltTestCount,
+        blueprintVisibility: Number(blueprintVisibility.toFixed(4)),
+        blueprintRevealed: blueprintRevealed,
+        constellationCount: 7,
+        mappedRigNodes: mapped,
+        unalignedRigNodes: 0,
+        alignmentRatio: 1.0,
+        activeConstellationId: activeConstellationId,
+        starCount: backgroundStars.length + mapped,
+        reducedMotion: reducedMotion,
+        whisper: whisperText
+      };
+    }
+
+    function thkSkyApplyPhaseState(notifyDestruction) {
+      var prevPhase = solarPhase;
+      var prevThreat = cosmicCrumbleThreat;
+      if (solarProgress < 0.52) {
+        solarPhase = "day";
+        sunsetArmisticeActive = false;
+        blueprintRevealed = false;
+        if (daytimeWorkHalted) {
+          isConstructing = false;
+          destructionCannotBegin = false;
+          destructionRate = 0.16;
+          cosmicCrumbleThreat = true;
+          blueprintVisibility = 0.08;
+        } else {
+          isConstructing = true;
+          destructionCannotBegin = true;
+          destructionRate = 0;
+          cosmicCrumbleThreat = false;
+          blueprintVisibility = 0.04;
+        }
+      } else if (solarProgress < 0.74) {
+        solarPhase = "sunset";
+        daytimeWorkHalted = false;
+        isConstructing = false;
+        sunsetArmisticeActive = true;
+        destructionCannotBegin = true;
+        destructionRate = 0;
+        destructionProgress = 0;
+        cosmicCrumbleThreat = false;
+        blueprintVisibility = 0.25 + ((solarProgress - 0.52) / 0.22) * (0.68 - 0.25);
+        blueprintRevealed = false;
+      } else {
+        solarPhase = "night";
+        daytimeWorkHalted = false;
+        isConstructing = false;
+        sunsetArmisticeActive = true;
+        destructionCannotBegin = true;
+        destructionRate = 0;
+        destructionProgress = 0;
+        cosmicCrumbleThreat = false;
+        blueprintVisibility = 0.85 + ((solarProgress - 0.74) / 0.26) * (1.00 - 0.85);
+        blueprintRevealed = true;
+      }
+      if (onPhaseChange && prevPhase !== solarPhase) {
+        onPhaseChange(getState());
+      }
+      if (onDestructionStateChange && (notifyDestruction || prevThreat !== cosmicCrumbleThreat)) {
+        onDestructionStateChange(getState());
+      }
+    }
+
+    function setSolarProgress(val) {
+      var num = Number(val);
+      solarProgress = Number.isFinite(num) ? thkSkyClamp(num, 0, 1) : 0.18;
+      thkSkyApplyPhaseState(false);
+      return getState();
+    }
+
+    function setSolarPhase(phase) {
+      var p = String(phase || "day").toLowerCase();
+      if (p === "night" || p === "blueprint") {
+        return setSolarProgress(0.90);
+      }
+      if (p === "sunset" || p === "dusk" || p === "armistice") {
+        return setSolarProgress(0.62);
+      }
+      daytimeWorkHalted = false;
+      cosmicCrumbleThreat = false;
+      destructionProgress = 0;
+      return setSolarProgress(0.18);
+    }
+
+    function forceStopDaytimeWork() {
+      if (solarProgress >= 0.52) {
+        solarProgress = 0.24;
+      }
+      daytimeWorkHalted = true;
+      haltTestCount += 1;
+      destructionProgress = Math.min(1, Math.max(destructionProgress, 0.06));
+      whisperText = "Not only the city.";
+      thkSkyApplyPhaseState(true);
+      return getState();
+    }
+
+    function resumeDaytimeWork() {
+      daytimeWorkHalted = false;
+      cosmicCrumbleThreat = false;
+      thkSkyApplyPhaseState(true);
+      return getState();
+    }
+
+    function toggleDaytimeWork() {
+      return daytimeWorkHalted ? resumeDaytimeWork() : forceStopDaytimeWork();
+    }
+
+    function askRemovalFear() {
+      fearShimmer = 1.0;
+      whisperText = "Not only the city.";
+      return {
+        scaffoldingsRemovableSafely: false,
+        cityWouldCrumble: true,
+        cosmosWouldCrumble: true,
+        whisper: "Not only the city."
+      };
+    }
+
+    function selectConstellation(idOrIndex) {
+      if (idOrIndex === null || idOrIndex === "") {
+        activeConstellationId = null;
+        return null;
+      }
+      var idx = Number(idOrIndex);
+      if (Number.isInteger(idx) && idx >= 1 && idx <= CONSTELLATIONS.length) {
+        activeConstellationId = CONSTELLATIONS[idx - 1].id;
+        return CONSTELLATIONS[idx - 1];
+      }
+      var key = String(idOrIndex);
+      if (CONSTELLATION_MAP[key]) {
+        activeConstellationId = key;
+        return CONSTELLATION_MAP[key];
+      }
+      return CONSTELLATION_MAP[activeConstellationId] || null;
+    }
+
+    function hitTestStar(normX, normY, width, height) {
+      var w = Number.isFinite(width) && width > 0 ? width : lastWidth;
+      var h = Number.isFinite(height) && height > 0 ? height : lastHeight;
+      var px = (normX >= 0 && normX <= 1 && normY >= 0 && normY <= 1) ? normX * w : normX;
+      var py = (normX >= 0 && normX <= 1 && normY >= 0 && normY <= 1) ? normY * h : normY;
+      var best = null;
+      var bestDist = 36;
+      for (var i = 0; i < starNodes.length; i += 1) {
+        var st = starNodes[i];
+        var sx = st.nx * w;
+        var sy = st.ny * h;
+        var d = Math.hypot(px - sx, py - sy);
+        if (d <= bestDist) {
+          bestDist = d;
+          best = Object.assign({}, st, { x: sx, y: sy });
+        }
+      }
+      return best;
+    }
+
+    function setReducedMotion(flag) {
+      reducedMotion = Boolean(flag);
+      return reducedMotion;
+    }
+
+    function step(dtSec) {
+      var dt = Number.isFinite(Number(dtSec)) ? thkSkyClamp(Number(dtSec), 0, 10) : 0;
+      if (!reducedMotion) {
+        timeSec += dt;
+      }
+      if (fearShimmer > 0) {
+        fearShimmer = Math.max(0, fearShimmer - dt * (reducedMotion ? 1.25 : 0.45));
+      }
+      if (!destructionCannotBegin && destructionRate > 0) {
+        var beforeUp = destructionProgress;
+        destructionProgress = thkSkyClamp(destructionProgress + destructionRate * dt, 0, 1);
+        cosmicCrumbleThreat = true;
+        if (onDestructionStateChange && Math.abs(destructionProgress - beforeUp) > 0.0001) {
+          onDestructionStateChange(getState());
+        }
+      } else if (destructionCannotBegin && destructionProgress > 0) {
+        var beforeDown = destructionProgress;
+        destructionProgress = Math.max(0, destructionProgress - 0.35 * dt);
+        if (onDestructionStateChange && beforeDown > 0 && destructionProgress === 0) {
+          onDestructionStateChange(getState());
+        }
+      }
+      return getState();
+    }
+
+    function reset() {
+      solarProgress = 0.18;
+      daytimeWorkHalted = false;
+      destructionProgress = 0;
+      cosmicCrumbleThreat = false;
+      haltTestCount = 0;
+      activeConstellationId = "grus_maior";
+      fearShimmer = 0;
+      timeSec = 0;
+      thkSkyApplyPhaseState(true);
+      syncRigAnchors(currentAnchors, lastWidth, lastHeight);
+      return getState();
+    }
+
+    function renderSkyBackdrop(ctx, width, height, rigAnchors) {
+      if (!ctx || !(width > 0) || !(height > 0)) {
+        return;
+      }
+      if (Array.isArray(rigAnchors) && rigAnchors.length > 0) {
+        syncRigAnchors(rigAnchors, width, height);
+      } else if (width !== lastWidth || height !== lastHeight || !starNodes.length) {
+        syncRigAnchors(currentAnchors, width, height);
+      }
+      ctx.save();
+      var topCol = PALETTE.dayDustSky;
+      var midCol = "#cbb28a";
+      var botCol = PALETTE.ochreHaze;
+      if (solarProgress < 0.52) {
+        var td = solarProgress / 0.52;
+        topCol = thkSkyMixHex(PALETTE.dayDustSky, "#c2a67d", td * 0.45);
+        midCol = thkSkyMixHex("#d1ba95", PALETTE.ochreHaze, 0.42 + td * 0.38);
+        botCol = thkSkyMixHex(PALETTE.ochreHaze, "#9e7648", td * 0.52);
+        if (cosmicCrumbleThreat && destructionProgress > 0) {
+          var bruise = thkSkyClamp(0.18 + destructionProgress * 0.45, 0, 0.65);
+          topCol = thkSkyMixHex(topCol, "#3d1f1d", bruise);
+          midCol = thkSkyMixHex(midCol, PALETTE.fractureRust, bruise * 0.55);
+        }
+      } else if (solarProgress < 0.74) {
+        var ts = (solarProgress - 0.52) / 0.22;
+        topCol = thkSkyMixHex(PALETTE.twilightPlum, PALETTE.nightAbyss, ts * 0.68);
+        midCol = thkSkyMixHex(PALETTE.sunsetCopper, PALETTE.twilightPlum, ts * 0.72);
+        botCol = thkSkyMixHex("#e08248", PALETTE.sunsetCopper, ts);
+      } else {
+        var tn = (solarProgress - 0.74) / 0.26;
+        topCol = PALETTE.nightAbyss;
+        midCol = thkSkyMixHex(PALETTE.twilightPlum, PALETTE.blueprintIndigo, 0.68 + tn * 0.32);
+        botCol = thkSkyMixHex(PALETTE.blueprintIndigo, "#162d50", 0.55 + tn * 0.45);
+      }
+      var grad = ctx.createLinearGradient(0, 0, 0, height);
+      grad.addColorStop(0, topCol);
+      grad.addColorStop(0.55, midCol);
+      grad.addColorStop(1, botCol);
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, width, height);
+
+      if (solarProgress < 0.78) {
+        var sunFade = solarProgress < 0.52 ? 1 : thkSkyClamp(1 - (solarProgress - 0.52) / 0.26, 0, 1);
+        var sunX = width * (0.22 + solarProgress * 0.58);
+        var sunY = height * (0.14 + Math.pow(solarProgress / 0.76, 1.55) * 0.64);
+        var sunR = Math.max(18, Math.min(width, height) * 0.042);
+        var halo = ctx.createRadialGradient(sunX, sunY, sunR * 0.2, sunX, sunY, sunR * 4.2);
+        var coreHex = solarProgress < 0.52 ? "#fff3d6" : "#ff9b54";
+        halo.addColorStop(0, thkSkyRgba(coreHex, 0.58 * sunFade));
+        halo.addColorStop(0.45, thkSkyRgba(PALETTE.sunsetCopper, 0.22 * sunFade));
+        halo.addColorStop(1, "rgba(0,0,0,0)");
+        ctx.fillStyle = halo;
+        ctx.fillRect(0, 0, width, height);
+        ctx.beginPath();
+        ctx.arc(sunX, sunY, sunR, 0, Math.PI * 2);
+        ctx.fillStyle = thkSkyRgba(coreHex, 0.84 * sunFade);
+        ctx.fill();
+      }
+
+      var vaultVis = Math.max(blueprintVisibility, fearShimmer * 0.58);
+      if (vaultVis > 0.08) {
+        ctx.save();
+        ctx.strokeStyle = thkSkyRgba(PALETTE.starCyan, vaultVis * 0.18);
+        ctx.lineWidth = 1;
+        ctx.setLineDash([4, 6]);
+        for (var ai = 0; ai < 3; ai += 1) {
+          var rad = Math.max(width, height) * (0.56 + ai * 0.16);
+          ctx.beginPath();
+          ctx.arc(width * 0.5, height * 1.06, rad, Math.PI * 1.12, Math.PI * 1.88);
+          ctx.stroke();
+        }
+        ctx.restore();
+
+        for (var si = 0; si < backgroundStars.length; si += 1) {
+          var bs = backgroundStars[si];
+          var tw = reducedMotion ? 0.86 : (0.58 + 0.42 * Math.sin(timeSec * bs.speed + bs.phase));
+          ctx.fillStyle = thkSkyRgba(bs.tint, vaultVis * tw * 0.88);
+          ctx.beginPath();
+          ctx.arc(bs.nx * width, bs.ny * height, bs.radius, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        for (var k = 0; k < CONSTELLATIONS.length; k += 1) {
+          var con = CONSTELLATIONS[k];
+          var isAct = con.id === activeConstellationId;
+          ctx.strokeStyle = thkSkyRgba(isAct ? PALETTE.plumbSilver : PALETTE.starCyan, vaultVis * (isAct ? 0.62 : 0.30));
+          ctx.lineWidth = isAct ? 1.35 : 0.9;
+          ctx.beginPath();
+          for (var wIdx = 0; wIdx < con.wireOffsets.length; wIdx += 1) {
+            var wo = con.wireOffsets[wIdx];
+            var wx = (con.sectorNx + wo[0]) * width;
+            var wy = (con.sectorNy + wo[1]) * height;
+            if (wIdx === 0) {
+              ctx.moveTo(wx, wy);
+            } else {
+              ctx.lineTo(wx, wy);
+            }
+          }
+          ctx.closePath();
+          ctx.stroke();
+        }
+      }
+      ctx.restore();
+    }
+
+    function renderBlueprintOverlay(ctx, width, height, rigAnchors) {
+      if (!ctx || !(width > 0) || !(height > 0)) {
+        return;
+      }
+      if (Array.isArray(rigAnchors) && rigAnchors.length > 0) {
+        syncRigAnchors(rigAnchors, width, height);
+      } else if (width !== lastWidth || height !== lastHeight || !starNodes.length) {
+        syncRigAnchors(currentAnchors, width, height);
+      }
+      ctx.save();
+      var vis = Math.max(blueprintVisibility, fearShimmer * 0.65);
+      if (vis > 0.15) {
+        for (var i = 0; i < starNodes.length; i += 1) {
+          var st = starNodes[i];
+          var focus = st.constellationId === activeConstellationId || st.isHoistedCrane;
+          var lineCol = focus ? PALETTE.plumbSilver : PALETTE.starCyan;
+          ctx.save();
+          ctx.strokeStyle = thkSkyRgba(lineCol, vis * (focus ? 0.78 : 0.44));
+          ctx.lineWidth = focus ? 1.55 : 0.95;
+          if (!focus) {
+            ctx.setLineDash([5, 4]);
+          }
+          ctx.beginPath();
+          ctx.moveTo(st.x, st.y);
+          ctx.lineTo(st.anchorX, st.anchorY);
+          ctx.stroke();
+          ctx.restore();
+
+          var dx = st.anchorX - st.x;
+          var dy = st.anchorY - st.y;
+          var len = Math.hypot(dx, dy) || 1;
+          var px = -dy / len;
+          var py = dx / len;
+          ctx.strokeStyle = thkSkyRgba(PALETTE.plumbSilver, vis * (focus ? 0.68 : 0.34));
+          ctx.lineWidth = 1;
+          for (var ti = 1; ti <= 3; ti += 1) {
+            var frac = ti * 0.24;
+            var tx = st.x + dx * frac;
+            var ty = st.y + dy * frac;
+            var tickHalf = focus ? 4.2 : 2.6;
+            ctx.beginPath();
+            ctx.moveTo(tx - px * tickHalf, ty - py * tickHalf);
+            ctx.lineTo(tx + px * tickHalf, ty + py * tickHalf);
+            ctx.stroke();
+          }
+
+          ctx.fillStyle = thkSkyRgba(PALETTE.plumbSilver, vis * 0.95);
+          ctx.beginPath();
+          ctx.arc(st.x, st.y, focus ? 3.3 : 2.3, 0, Math.PI * 2);
+          ctx.fill();
+          if (focus) {
+            ctx.strokeStyle = thkSkyRgba(PALETTE.starCyan, vis * 0.72);
+            ctx.lineWidth = 1.1;
+            ctx.beginPath();
+            ctx.arc(st.x, st.y, st.isHoistedCrane ? 7.8 : 6.2, 0, Math.PI * 2);
+            ctx.stroke();
+          }
+          ctx.strokeStyle = thkSkyRgba(lineCol, vis * 0.62);
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.arc(st.anchorX, st.anchorY, focus ? 4.4 : 3.0, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+
+        var compact = width < 540;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "bottom";
+        ctx.font = (compact ? "600 9px " : "600 10.5px ") + "ui-monospace, SFMono-Regular, Menlo, monospace";
+        for (var ci = 0; ci < CONSTELLATIONS.length; ci += 1) {
+          var con = CONSTELLATIONS[ci];
+          var isSel = con.id === activeConstellationId;
+          if (compact && !isSel && (ci % 2 === 1)) {
+            continue;
+          }
+          var lx = thkSkyClamp(con.sectorNx * width, 44, width - 44);
+          var ly = Math.max(28, con.sectorNy * height - 10);
+          ctx.fillStyle = thkSkyRgba(isSel ? PALETTE.plumbSilver : PALETTE.starCyan, vis * (isSel ? 0.96 : 0.68));
+          ctx.fillText(con.latin.toUpperCase(), lx, ly);
+        }
+
+        if (blueprintRevealed) {
+          ctx.font = (compact ? "700 10px " : "700 12px ") + "ui-monospace, SFMono-Regular, Menlo, monospace";
+          ctx.fillStyle = thkSkyRgba(PALETTE.plumbSilver, vis * 0.94);
+          ctx.textBaseline = "top";
+          ctx.fillText("THERE IS THE BLUEPRINT", width * 0.5, Math.max(10, height * 0.022));
+        }
+      }
+
+      if (cosmicCrumbleThreat && destructionProgress > 0) {
+        var pulse = reducedMotion ? 0.88 : (0.72 + 0.28 * Math.sin(timeSec * 6.4));
+        var reach = thkSkyClamp(0.28 + destructionProgress * 0.72, 0.28, 1);
+        ctx.save();
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+        for (var fi = 0; fi < faultBranches.length; fi += 1) {
+          var fb = faultBranches[fi];
+          ctx.strokeStyle = thkSkyRgba(PALETTE.fractureRust, (0.48 + 0.45 * destructionProgress) * pulse);
+          ctx.lineWidth = 1.6 + destructionProgress * 1.8;
+          ctx.beginPath();
+          for (var pi = 0; pi < fb.pts.length; pi += 1) {
+            var pt = fb.pts[pi];
+            var jitter = reducedMotion ? 0 : Math.sin(timeSec * 9 + pi * 1.7 + fi) * 2.4 * destructionProgress;
+            var fx = pt[0] * width + jitter;
+            var fy = pt[1] * height * reach;
+            if (pi === 0) {
+              ctx.moveTo(fx, fy);
+            } else {
+              ctx.lineTo(fx, fy);
+            }
+          }
+          ctx.stroke();
+          ctx.strokeStyle = thkSkyRgba("#ff9e5e", 0.42 * pulse);
+          ctx.lineWidth = 1.0;
+          for (var twi = 0; twi < fb.twigs.length; twi += 1) {
+            var tw = fb.twigs[twi];
+            var basePt = fb.pts[tw[0]];
+            ctx.beginPath();
+            ctx.moveTo(basePt[0] * width, basePt[1] * height * reach);
+            ctx.lineTo(tw[1] * width, tw[2] * height * reach);
+            ctx.stroke();
+          }
+        }
+        ctx.font = (width < 540 ? "700 11px " : "700 13px ") + "Georgia, serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "top";
+        ctx.fillStyle = thkSkyRgba("#ffd5c8", 0.92 * pulse);
+        ctx.fillText("“Not only the city.”", width * 0.5, Math.max(14, height * 0.045));
+        ctx.restore();
+      } else if (fearShimmer > 0.05) {
+        ctx.save();
+        ctx.strokeStyle = thkSkyRgba(PALETTE.plumbSilver, fearShimmer * 0.52);
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.arc(width * 0.5, height * 0.20, (1.05 - fearShimmer * 0.65) * Math.min(width, height) * 0.34, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.font = "italic 12px Georgia, serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "top";
+        ctx.fillStyle = thkSkyRgba(PALETTE.plumbSilver, fearShimmer * 0.92);
+        ctx.fillText("“Not only the city.”", width * 0.5, Math.max(14, height * 0.045));
+        ctx.restore();
+      }
+      ctx.restore();
+    }
+
+    syncRigAnchors(FALLBACK_RIG_ANCHORS, 1280, 800);
+    thkSkyApplyPhaseState(false);
+
+    return {
+      CONSTELLATIONS: CONSTELLATIONS,
+      PALETTE: PALETTE,
+      setSolarProgress: setSolarProgress,
+      setSolarPhase: setSolarPhase,
+      forceStopDaytimeWork: forceStopDaytimeWork,
+      resumeDaytimeWork: resumeDaytimeWork,
+      toggleDaytimeWork: toggleDaytimeWork,
+      askRemovalFear: askRemovalFear,
+      syncRigAnchors: syncRigAnchors,
+      renderSkyBackdrop: renderSkyBackdrop,
+      renderBlueprintOverlay: renderBlueprintOverlay,
+      playSunsetArmisticeBell: playSunsetArmisticeBell,
+      playBlueprintStarChord: playBlueprintStarChord,
+      step: step,
+      selectConstellation: selectConstellation,
+      hitTestStar: hitTestStar,
+      setReducedMotion: setReducedMotion,
+      reset: reset,
+      getState: getState,
+      getStarNodes: function () { return starNodes.slice(); },
+      getConstellations: function () { return CONSTELLATIONS; }
+    };
+  }
+
+  var api = Object.freeze({
+    PALETTE: PALETTE,
+    CONSTELLATIONS: CONSTELLATIONS,
+    createCelestialBlueprint: createCelestialBlueprint,
+    playSunsetArmisticeBell: playSunsetArmisticeBell,
+    playBlueprintStarChord: playBlueprintStarChord
+  });
+
+  root.TheklaCelestialBlueprint = api;
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = api;
+  }
+})(typeof globalThis !== "undefined" ? globalThis : this);
+
+(function () {
+  "use strict";
+
+  var RigApi = globalThis.TheklaScaffoldingRig;
+  var SkyApi = globalThis.TheklaCelestialBlueprint;
+  if (!RigApi || !SkyApi) {
+    return;
+  }
+
+  var mqReduced = globalThis.matchMedia ? globalThis.matchMedia("(prefers-reduced-motion: reduce)") : null;
+  var isReducedMotion = Boolean(mqReduced && mqReduced.matches);
+
+  var stageCanvas = document.getElementById("thk-stage-canvas");
+  var apertureEl = document.getElementById("thk-canvas-aperture");
+  var stageCtx = stageCanvas.getContext("2d");
+
+  var stageW = 960;
+  var stageH = 600;
+  var stageDpr = 1;
+  var platesOpen = false;
+  var activePlateTab = "diptych";
+  var plateZoomed = false;
+  var whisperHighlighted = false;
+  var hoveredLabel = "";
+  var malletAudioTimer = 0;
+  var groanAudioTimer = 0;
+  var archivalRendered = false;
+
+  var rig = RigApi.createScaffoldingRig({
+    reducedMotion: isReducedMotion,
+    muted: false
+  });
+
+  var blueprint = SkyApi.createCelestialBlueprint({
+    reducedMotion: isReducedMotion,
+    onPhaseChange: function (skySnap) {
+      if (skySnap.solarPhase === "sunset") {
+        SkyApi.playSunsetArmisticeBell(rig.getAudioContext(), rig.isMuted());
+      } else if (skySnap.solarPhase === "night") {
+        SkyApi.playBlueprintStarChord(rig.getAudioContext(), rig.isMuted(), skySnap.activeConstellationId);
+      }
+    }
+  });
+
+  function measureStage() {
+    var rect = apertureEl.getBoundingClientRect();
+    var w = Math.max(260, Math.round(rect.width || 840));
+    var h = Math.max(220, Math.round(rect.height || 560));
+    var dpr = Math.min(2, Math.max(1, Number(globalThis.devicePixelRatio) || 1));
+    if (w !== stageW || h !== stageH || dpr !== stageDpr) {
+      stageW = w;
+      stageH = h;
+      stageDpr = dpr;
+      stageCanvas.width = Math.round(w * dpr);
+      stageCanvas.height = Math.round(h * dpr);
+    }
+    var anchors = rig.getRigAnchors(stageW, stageH);
+    blueprint.syncRigAnchors(anchors, stageW, stageH);
+  }
+
+  function renderFrame() {
+    if (!stageCtx) return;
+    stageCtx.save();
+    stageCtx.setTransform(stageDpr, 0, 0, stageDpr, 0, 0);
+    stageCtx.clearRect(0, 0, stageW, stageH);
+    var anchors = rig.getRigAnchors(stageW, stageH);
+    blueprint.syncRigAnchors(anchors, stageW, stageH);
+    var skyState = blueprint.getState();
+    blueprint.renderSkyBackdrop(stageCtx, stageW, stageH, anchors);
+    rig.renderRig(stageCtx, stageW, stageH, skyState);
+    blueprint.renderBlueprintOverlay(stageCtx, stageW, stageH, anchors);
+    stageCtx.restore();
+  }
+
+  function findSelectedStoneInfo(skyState, rigState) {
+    var anchors = rig.getRigAnchors(stageW, stageH);
+    var chosen = null;
+    var i;
+    if (rigState.selectedAnchorId) {
+      for (i = 0; i < anchors.length; i += 1) {
+        if (anchors[i].id === rigState.selectedAnchorId) {
+          chosen = anchors[i];
+          break;
+        }
+      }
+    }
+    if (!chosen && skyState.activeConstellationId) {
+      for (i = 0; i < anchors.length; i += 1) {
+        if (anchors[i].constellationId === skyState.activeConstellationId) {
+          chosen = anchors[i];
+          break;
+        }
+      }
+    }
+    return chosen || anchors[0];
+  }
+
+  function getUnifiedState() {
+    var anchors = rig.getRigAnchors(stageW, stageH);
+    blueprint.syncRigAnchors(anchors, stageW, stageH);
+    var skyState = blueprint.getState();
+    var rigState = rig.getState();
+    var stone = findSelectedStoneInfo(skyState, rigState);
+    return Object.assign({}, skyState, rigState, {
+      platesOpen: platesOpen,
+      activePlateTab: activePlateTab,
+      plateZoomed: plateZoomed,
+      whisperHighlighted: Boolean(whisperHighlighted || skyState.cosmicCrumbleThreat),
+      selectedStoneId: stone ? stone.stoneId : "cranes_hoisting_cranes",
+      selectedStoneLabel: stone ? stone.label : "Derrick Cranes Hoisting Higher Cranes",
+      stageWidth: stageW,
+      stageHeight: stageH
+    });
+  }
+
+  function setText(id, text) {
+    var el = document.getElementById(id);
+    if (el && el.textContent !== text) {
+      el.textContent = text;
+    }
+  }
+
+  function syncDomState() {
+    var st = getUnifiedState();
+    var pctSolar = Math.round(st.solarProgress * 100);
+    var pctDestruct = Math.round(st.destructionProgress * 100);
+    var pctVeil = Math.round(st.sackclothPartedRatio * 100);
+
+    var phaseTitle = st.solarPhase === "night"
+      ? "Blueprint Night"
+      : (st.solarPhase === "sunset" ? "Sunset Armistice" : (st.daytimeWorkHalted ? "Daylight Halted!" : "Day Work"));
+
+    setText("thk-pill-phase", phaseTitle);
+    setText("thk-pill-cranes", st.cranesCount + " / " + st.maxCranes);
+    setText("thk-pill-plumb", st.mappedRigNodes + " / " + st.anchorCount);
+    setText("thk-pill-destruction", st.destructionCannotBegin ? (pctDestruct + "% · Barred") : (pctDestruct + "% · Crumbling"));
+
+    var wardPill = document.getElementById("thk-pill-ward-box");
+    if (wardPill) {
+      wardPill.classList.toggle("thk-metric-alert", !st.destructionCannotBegin);
+    }
+
+    setText("thk-lbl-mute", st.muted ? "Muted" : "Audio On");
+    document.getElementById("thk-btn-mute").classList.toggle("thk-trigger-active", !st.muted);
+
+    var slider = document.getElementById("thk-solar-slider");
+    if (slider && document.activeElement !== slider) {
+      slider.value = String(pctSolar);
+    }
+    setText("thk-solar-readout", pctSolar + "% · " + phaseTitle);
+
+    document.getElementById("thk-btn-day").classList.toggle("thk-trigger-active", st.solarPhase === "day");
+    document.getElementById("thk-btn-sunset").classList.toggle("thk-trigger-active", st.solarPhase === "sunset");
+    document.getElementById("thk-btn-night").classList.toggle("thk-trigger-active", st.solarPhase === "night");
+    setText("thk-bench-state", st.isConstructing ? "Constructing" : (st.sunsetArmisticeActive ? "Armistice" : "Breach!"));
+    setText("thk-crane-note", st.cranesCount + " derricks · +" + st.hoistedCranesAdded + " hoisted");
+
+    setText("thk-lbl-sackcloth", st.sackclothParted ? "Close Sackcloth" : "Part Sackcloth");
+    document.getElementById("thk-btn-sackcloth").classList.toggle("thk-trigger-active", st.sackclothParted);
+    document.getElementById("thk-veil-fill").style.width = pctVeil + "%";
+    setText("thk-veil-note", st.sackclothParted ? ("Parted " + pctVeil + "% · Deeper scaffolding only") : "Veiled · Deeper tiers behind");
+
+    var haltBtn = document.getElementById("thk-btn-halt");
+    haltBtn.classList.toggle("thk-trigger-danger", st.daytimeWorkHalted);
+    setText("thk-lbl-halt", st.daytimeWorkHalted ? "Resume Day Work" : "Halt Day Work");
+    document.getElementById("thk-destruct-fill").style.width = pctDestruct + "%";
+    setText(
+      "thk-destruct-note",
+      st.destructionCannotBegin
+        ? ("Destruction barred (" + pctDestruct + "%) · Planks lashed tight")
+        : ("Destruction active (" + pctDestruct + "%) · Looseness " + Math.round(st.plankLooseness * 100) + "%")
+    );
+
+    var wardEl = document.getElementById("thk-cosmos-ward");
+    wardEl.classList.toggle("thk-ward-danger", Boolean(st.cosmicCrumbleThreat || whisperHighlighted));
+    if (st.cosmicCrumbleThreat) {
+      setText("thk-dialogue-tag", "Premature Halt Breach");
+      setText("thk-builder-quote", "Daylight work interrupted! Planks loosen, hemp slackens, and fault lines climb the vault.");
+      setText("thk-cosmos-ward", "“Not only the city.” — Resume daytime work immediately so destruction cannot proceed!");
+    } else if (whisperHighlighted) {
+      setText("thk-dialogue-tag", "Whispered Ward");
+      setText("thk-builder-quote", "“Do you fear that once the scaffoldings are removed the city may begin to crumble and fall to pieces?”");
+      setText("thk-cosmos-ward", "Whispered by the riggers: “Not only the city.”");
+    } else if (st.solarPhase === "night") {
+      setText("thk-dialogue-tag", "Nocturnal Blueprint");
+      setText("thk-builder-quote", "Work stops at sunset. Darkness falls over the building site. The sky is filled with stars. “There is the blueprint.”");
+      setText("thk-cosmos-ward", "Every derrick crane, embracing beam, and rope catwalk hangs 1:1 from its starry node.");
+    } else if (st.solarPhase === "sunset") {
+      setText("thk-dialogue-tag", "Sunset Armistice");
+      setText("thk-builder-quote", "At sundown mallets rest under lawful armistice; lanterns warm the trestles while first stars emerge.");
+      setText("thk-cosmos-ward", "Sunset truce holds: destruction rate remains 0 while night prepares the starry plan.");
+    } else {
+      setText("thk-dialogue-tag", "Anti-Destruction Law");
+      setText("thk-builder-quote", "“Why is Thekla's construction taking such a long time?” — “So that its destruction cannot begin.”");
+      setText("thk-cosmos-ward", "Once scaffoldings are removed, what might crumble? Whispered: “Not only the city.”");
+    }
+
+    setText("thk-ledger-ratio", Math.round(st.alignmentRatio * 100) + "% Locked");
+    setText(
+      "thk-ledger-summary",
+      st.blueprintRevealed
+        ? "“There is the blueprint” — 1:1 silver plumb-lines link all " + st.mappedRigNodes + " rig anchors to 7 constellations."
+        : "“We will show it to you as soon as the working day is over; we cannot interrupt our work now.”"
+    );
+    setText(
+      "thk-ledger-detail",
+      st.mappedRigNodes + " rig stones aligned · " + st.unalignedRigNodes + " unaligned · Finished facade: Never"
+    );
+
+    var knots = document.querySelectorAll("constellation-rig-knot[data-cid]");
+    var activeCon = SkyApi.CONSTELLATIONS[0];
+    var k;
+    for (k = 0; k < SkyApi.CONSTELLATIONS.length; k += 1) {
+      if (SkyApi.CONSTELLATIONS[k].id === st.activeConstellationId) {
+        activeCon = SkyApi.CONSTELLATIONS[k];
+        break;
+      }
+    }
+    for (k = 0; k < knots.length; k += 1) {
+      var cid = knots[k].getAttribute("data-cid");
+      knots[k].classList.toggle("thk-knot-active", cid === st.activeConstellationId);
+    }
+    setText("thk-active-latin", activeCon ? activeCon.latin : "Grus Maior");
+    setText(
+      "thk-stone-witness",
+      "Rig Witness: " + st.selectedStoneLabel + " · " + (activeCon ? (activeCon.latin + " (" + activeCon.chordHz + " Hz)") : "")
+    );
+    setText(
+      "thk-fence-hud",
+      hoveredLabel
+        ? ("Sightline · " + hoveredLabel)
+        : ("Fence-Crack Sightline · " + st.cranesCount + " Cranes Hoisting Cranes · " + (st.sackclothParted ? "Inner Armatures Revealed" : "Burlap Screens Drawn"))
+    );
+  }
+
+  function renderArchivalPlates() {
+    var mapCv = document.getElementById("thk-archival-map-canvas");
+    if (mapCv && mapCv.getContext) {
+      var mctx = mapCv.getContext("2d");
+      var mw = mapCv.width;
+      var mh = mapCv.height;
+      mctx.save();
+      mctx.fillStyle = "#0b1830";
+      mctx.fillRect(0, 0, mw, mh);
+      mctx.strokeStyle = "rgba(140,230,255,0.14)";
+      mctx.lineWidth = 1;
+      var gx, gy;
+      for (gx = 24; gx < mw; gx += 32) {
+        mctx.beginPath(); mctx.moveTo(gx, 16); mctx.lineTo(gx, mh - 16); mctx.stroke();
+      }
+      for (gy = 24; gy < mh; gy += 32) {
+        mctx.beginPath(); mctx.moveTo(16, gy); mctx.lineTo(mw - 16, gy); mctx.stroke();
+      }
+      mctx.strokeStyle = "#c5aa78";
+      mctx.lineWidth = 2;
+      mctx.strokeRect(18, 18, mw - 36, mh - 36);
+      var cx = mw * 0.5, cy = mh * 0.53;
+      [172, 128, 84].forEach(function (rad, idx) {
+        mctx.strokeStyle = idx === 0 ? "#8c6239" : (idx === 1 ? "#8ce6ff" : "#d9f3ff");
+        mctx.lineWidth = idx === 0 ? 2.4 : 1.3;
+        mctx.beginPath(); mctx.arc(cx, cy, rad, 0, Math.PI * 2); mctx.stroke();
+      });
+      var cons = SkyApi.CONSTELLATIONS;
+      for (var i = 0; i < cons.length; i += 1) {
+        var ang = (i / cons.length) * Math.PI * 2 - Math.PI * 0.5;
+        var sx = cx + Math.cos(ang) * 164, sy = cy + Math.sin(ang) * 164;
+        var rx = cx + Math.cos(ang) * 84, ry = cy + Math.sin(ang) * 84;
+        mctx.strokeStyle = "rgba(217,243,255,0.62)";
+        mctx.beginPath(); mctx.moveTo(sx, sy); mctx.lineTo(rx, ry); mctx.stroke();
+        mctx.fillStyle = "#8ce6ff";
+        mctx.beginPath(); mctx.arc(sx, sy, 4, 0, Math.PI * 2); mctx.fill();
+        mctx.fillStyle = "#c5aa78";
+        mctx.fillRect(rx - 3.5, ry - 3.5, 7, 7);
+        mctx.fillStyle = "#d9f3ff";
+        mctx.font = "600 10px ui-monospace, Menlo, monospace";
+        mctx.textAlign = "center";
+        mctx.fillText(cons[i].latin.toUpperCase(), cx + Math.cos(ang) * 194, cy + Math.sin(ang) * 184);
+      }
+      mctx.fillStyle = "#efe5d2";
+      mctx.font = "700 13px Georgia, serif";
+      mctx.textAlign = "left";
+      mctx.fillText("THEKLA · PLANIMETRIC PALISADE & CELESTIAL PLUMB SURVEY", 30, 42);
+      mctx.restore();
+    }
+
+    var vistaCv = document.getElementById("thk-archival-vista-canvas");
+    if (vistaCv && vistaCv.getContext) {
+      var vctx = vistaCv.getContext("2d");
+      var vw = vistaCv.width, vh = vistaCv.height;
+      var pRig = RigApi.createScaffoldingRig({ reducedMotion: true, muted: true });
+      pRig.hoistNewCrane();
+      pRig.hoistNewCrane();
+      pRig.partSackclothScreen(0.65);
+      var pSky = SkyApi.createCelestialBlueprint({ reducedMotion: true });
+      pSky.setSolarPhase("night");
+      var pAnchors = pRig.getRigAnchors(vw, vh);
+      pSky.syncRigAnchors(pAnchors, vw, vh);
+      pRig.step(0.1, pSky.getState());
+      pSky.renderSkyBackdrop(vctx, vw, vh, pAnchors);
+      pRig.renderRig(vctx, vw, vh, pSky.getState());
+      pSky.renderBlueprintOverlay(vctx, vw, vh, pAnchors);
+    }
+    archivalRendered = true;
+  }
+  function applyPlateDrawerUi() {
+    var drawer = document.getElementById("thk-plate-drawer");
+    var diptych = document.getElementById("thk-plate-diptych");
+    var fMap = document.getElementById("thk-folio-map");
+    var fImg = document.getElementById("thk-folio-image");
+    drawer.hidden = !platesOpen;
+    if (platesOpen) {
+      if (!archivalRendered) {
+        renderArchivalPlates();
+      }
+      fMap.hidden = activePlateTab === "image";
+      fImg.hidden = activePlateTab === "map";
+      diptych.classList.toggle("thk-single-tab", activePlateTab !== "diptych");
+      diptych.classList.toggle("thk-plate-zoomed", plateZoomed);
+      document.getElementById("thk-tab-diptych").classList.toggle("thk-trigger-active", activePlateTab === "diptych");
+      document.getElementById("thk-tab-map").classList.toggle("thk-trigger-active", activePlateTab === "map");
+      document.getElementById("thk-tab-image").classList.toggle("thk-trigger-active", activePlateTab === "image");
+      document.getElementById("thk-btn-zoom").classList.toggle("thk-trigger-active", plateZoomed);
+      setText("thk-lbl-zoom", plateZoomed ? "Loupe 1.75x" : "Loupe 1x");
+      [
+        ["thk-plate-map-img", "thk-live-cap-map", "thk-map-vellum"],
+        ["thk-plate-vista-img", "thk-live-cap-vista", "thk-vista-vellum"]
+      ].forEach(function (ids) {
+        var im = document.getElementById(ids[0]);
+        if (im && im.complete && im.naturalWidth === 0) {
+          im.hidden = true;
+          var cap = document.getElementById(ids[1]);
+          if (cap) cap.hidden = true;
+          var vel = document.getElementById(ids[2]);
+          if (vel) vel.hidden = false;
+        }
+      });
+    }
+  }
+
+  function hoistNewCrane() {
+    rig.unlockAudio();
+    var res = rig.hoistNewCrane();
+    var anchors = rig.getRigAnchors(stageW, stageH);
+    blueprint.syncRigAnchors(anchors, stageW, stageH);
+    if (res && res.anchor) {
+      rig.selectAnchor(res.anchor.id);
+      blueprint.selectConstellation("grus_maior");
+    }
+    if (blueprint.getState().solarPhase === "night") {
+      SkyApi.playBlueprintStarChord(rig.getAudioContext(), rig.isMuted(), "grus_maior");
+    }
+    syncDomState();
+    renderFrame();
+    return getUnifiedState();
+  }
+
+  function partSackclothScreen(ratio) {
+    rig.unlockAudio();
+    rig.partSackclothScreen(ratio);
+    syncDomState();
+    renderFrame();
+    return getUnifiedState();
+  }
+
+  function forceStopDaytimeWork() {
+    rig.unlockAudio();
+    var skySnap = blueprint.forceStopDaytimeWork();
+    rig.step(0.08, skySnap);
+    rig.playStructuralGroan(0.85);
+    whisperHighlighted = true;
+    syncDomState();
+    renderFrame();
+    return getUnifiedState();
+  }
+
+  function resumeDaytimeWork() {
+    rig.unlockAudio();
+    var skySnap = blueprint.resumeDaytimeWork();
+    rig.step(0.08, skySnap);
+    rig.playHammerAndPulley();
+    whisperHighlighted = false;
+    syncDomState();
+    renderFrame();
+    return getUnifiedState();
+  }
+
+  function toggleHaltWork() {
+    return blueprint.getState().daytimeWorkHalted ? resumeDaytimeWork() : forceStopDaytimeWork();
+  }
+
+  function setSolarProgress(p) {
+    var num = Number(p);
+    var norm = (Number.isFinite(num) && num > 1) ? num / 100 : num;
+    var skySnap = blueprint.setSolarProgress(norm);
+    if (!skySnap.daytimeWorkHalted) {
+      whisperHighlighted = false;
+    }
+    rig.step(0.06, skySnap);
+    syncDomState();
+    renderFrame();
+    return getUnifiedState();
+  }
+
+  function setSolarPhase(phase) {
+    rig.unlockAudio();
+    var skySnap = blueprint.setSolarPhase(phase);
+    whisperHighlighted = false;
+    rig.step(0.06, skySnap);
+    syncDomState();
+    renderFrame();
+    return getUnifiedState();
+  }
+
+  function selectConstellation(id) {
+    rig.unlockAudio();
+    var con = blueprint.selectConstellation(id);
+    if (con) {
+      rig.selectAnchor(con.id);
+      SkyApi.playBlueprintStarChord(rig.getAudioContext(), rig.isMuted(), con.id);
+    }
+    syncDomState();
+    renderFrame();
+    return getUnifiedState();
+  }
+
+  function askRemovalFear() {
+    rig.unlockAudio();
+    var res = blueprint.askRemovalFear();
+    whisperHighlighted = true;
+    rig.playStructuralGroan(0.35);
+    SkyApi.playBlueprintStarChord(rig.getAudioContext(), rig.isMuted(), "velum_saccinum");
+    syncDomState();
+    renderFrame();
+    return Object.assign({}, res, { state: getUnifiedState() });
+  }
+  function openPlates(tab) {
+    platesOpen = true;
+    if (tab === "map" || tab === "image" || tab === "diptych") {
+      activePlateTab = tab;
+    }
+    applyPlateDrawerUi();
+    syncDomState();
+    return getUnifiedState();
+  }
+
+  function closePlates() {
+    platesOpen = false;
+    plateZoomed = false;
+    applyPlateDrawerUi();
+    syncDomState();
+    return getUnifiedState();
+  }
+
+  function togglePlateZoom() {
+    plateZoomed = !plateZoomed;
+    applyPlateDrawerUi();
+    syncDomState();
+    return getUnifiedState();
+  }
+
+  function toggleMute() {
+    rig.unlockAudio();
+    rig.toggleMute();
+    syncDomState();
+    return getUnifiedState();
+  }
+
+  function reset() {
+    rig.reset();
+    blueprint.reset();
+    whisperHighlighted = false;
+    hoveredLabel = "";
+    platesOpen = false;
+    plateZoomed = false;
+    activePlateTab = "diptych";
+    applyPlateDrawerUi();
+    measureStage();
+    syncDomState();
+    renderFrame();
+    return getUnifiedState();
+  }
+
+  function bindTrigger(id, fn) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener("click", function (ev) {
+      ev.preventDefault();
+      fn();
+    });
+    el.addEventListener("keydown", function (ev) {
+      if (ev.key === "Enter" || ev.key === " ") {
+        ev.preventDefault();
+        fn();
+      }
+    });
+  }
+
+  bindTrigger("thk-btn-crane", hoistNewCrane);
+  bindTrigger("thk-btn-sackcloth", function () { partSackclothScreen(); });
+  bindTrigger("thk-btn-halt", toggleHaltWork);
+  bindTrigger("thk-btn-fear", askRemovalFear);
+  bindTrigger("thk-btn-day", function () { setSolarPhase("day"); });
+  bindTrigger("thk-btn-sunset", function () { setSolarPhase("sunset"); });
+  bindTrigger("thk-btn-night", function () { setSolarPhase("night"); });
+  bindTrigger("thk-btn-mute", toggleMute);
+  bindTrigger("thk-btn-plates", function () {
+    if (platesOpen) closePlates(); else openPlates("diptych");
+  });
+  bindTrigger("thk-btn-reset", reset);
+  bindTrigger("thk-tab-diptych", function () { openPlates("diptych"); });
+  bindTrigger("thk-tab-map", function () { openPlates("map"); });
+  bindTrigger("thk-tab-image", function () { openPlates("image"); });
+  bindTrigger("thk-btn-zoom", togglePlateZoom);
+  bindTrigger("thk-btn-close-plates", closePlates);
+
+  document.getElementById("thk-plate-drawer").addEventListener("click", function (ev) {
+    if (ev.target && ev.target.id === "thk-plate-drawer") {
+      closePlates();
+    }
+  });
+
+  document.getElementById("thk-solar-slider").addEventListener("input", function (ev) {
+    rig.unlockAudio();
+    setSolarProgress(Number(ev.target.value) / 100);
+  });
+
+  var knotNodes = document.querySelectorAll("constellation-rig-knot[data-cid]");
+  for (var kn = 0; kn < knotNodes.length; kn += 1) {
+    (function (node) {
+      var cid = node.getAttribute("data-cid");
+      node.addEventListener("click", function () { selectConstellation(cid); });
+      node.addEventListener("keydown", function (ev) {
+        if (ev.key === "Enter" || ev.key === " ") {
+          ev.preventDefault();
+          selectConstellation(cid);
+        }
+      });
+    })(knotNodes[kn]);
+  }
+
+  stageCanvas.addEventListener("pointermove", function (ev) {
+    var r = stageCanvas.getBoundingClientRect();
+    if (!(r.width > 0 && r.height > 0)) return;
+    var nx = (ev.clientX - r.left) / r.width;
+    var ny = (ev.clientY - r.top) / r.height;
+    var starHit = blueprint.getState().blueprintVisibility > 0.14 ? blueprint.hitTestStar(nx, ny, stageW, stageH) : null;
+    var rigHit = rig.hitTest(nx, ny, stageW, stageH);
+    var hit = starHit || rigHit;
+    stageCanvas.style.cursor = hit ? "pointer" : "crosshair";
+    var nextHover = hit ? (hit.constellationLatin ? (hit.constellationLatin + " -> " + hit.label) : hit.label) : "";
+    if (nextHover !== hoveredLabel) {
+      hoveredLabel = nextHover;
+      syncDomState();
+    }
+  });
+
+  stageCanvas.addEventListener("pointerleave", function () {
+    if (hoveredLabel) {
+      hoveredLabel = "";
+      syncDomState();
+    }
+  });
+
+  stageCanvas.addEventListener("click", function (ev) {
+    rig.unlockAudio();
+    var r = stageCanvas.getBoundingClientRect();
+    if (!(r.width > 0 && r.height > 0)) return;
+    var nx = (ev.clientX - r.left) / r.width;
+    var ny = (ev.clientY - r.top) / r.height;
+    var starHit = blueprint.getState().blueprintVisibility > 0.14 ? blueprint.hitTestStar(nx, ny, stageW, stageH) : null;
+    if (starHit) {
+      blueprint.selectConstellation(starHit.constellationId);
+      rig.selectAnchor(starHit.anchorId);
+      SkyApi.playBlueprintStarChord(rig.getAudioContext(), rig.isMuted(), starHit.constellationId);
+      syncDomState();
+      renderFrame();
+      return;
+    }
+    var rigHit = rig.hitTest(nx, ny, stageW, stageH);
+    if (rigHit) {
+      rig.selectAnchor(rigHit.id);
+      blueprint.selectConstellation(rigHit.constellationId);
+      if (blueprint.getState().solarPhase === "day") {
+        rig.playHammerAndPulley();
+      } else {
+        SkyApi.playBlueprintStarChord(rig.getAudioContext(), rig.isMuted(), rigHit.constellationId);
+      }
+      syncDomState();
+      renderFrame();
+    }
+  });
+  globalThis.addEventListener("keydown", function (ev) {
+    if (ev.metaKey || ev.ctrlKey || ev.altKey) return;
+    var tag = (ev.target && ev.target.tagName) ? ev.target.tagName.toLowerCase() : "";
+    if (tag === "input" && ev.key !== "Escape") return;
+    var key = ev.key;
+    var low = key.toLowerCase();
+    if (key === "Escape") {
+      if (platesOpen) {
+        ev.preventDefault();
+        closePlates();
+      }
+      return;
+    }
+    if (low === "p") {
+      ev.preventDefault();
+      if (platesOpen) closePlates(); else openPlates("diptych");
+    } else if (low === "z") {
+      if (platesOpen) {
+        ev.preventDefault();
+        togglePlateZoom();
+      }
+    } else if (low === "c") {
+      ev.preventDefault();
+      hoistNewCrane();
+    } else if (low === "s") {
+      ev.preventDefault();
+      partSackclothScreen();
+    } else if (low === "h") {
+      ev.preventDefault();
+      toggleHaltWork();
+    } else if (low === "w") {
+      ev.preventDefault();
+      askRemovalFear();
+    } else if (low === "d") {
+      ev.preventDefault();
+      setSolarPhase("day");
+    } else if (low === "u") {
+      ev.preventDefault();
+      setSolarPhase("sunset");
+    } else if (low === "n") {
+      ev.preventDefault();
+      setSolarPhase("night");
+    } else if (low === "m") {
+      ev.preventDefault();
+      toggleMute();
+    } else if (low === "r") {
+      ev.preventDefault();
+      reset();
+    } else if (key >= "1" && key <= "7") {
+      ev.preventDefault();
+      selectConstellation(Number(key));
+    }
+  });
+
+  if (mqReduced && typeof mqReduced.addEventListener === "function") {
+    mqReduced.addEventListener("change", function (ev) {
+      isReducedMotion = Boolean(ev.matches);
+      rig.setReducedMotion(isReducedMotion);
+      blueprint.setReducedMotion(isReducedMotion);
+      syncDomState();
+      renderFrame();
+    });
+  }
+
+  if (typeof ResizeObserver === "function") {
+    var ro = new ResizeObserver(function () {
+      measureStage();
+      renderFrame();
+    });
+    ro.observe(apertureEl);
+  }
+  globalThis.addEventListener("resize", function () {
+    measureStage();
+    renderFrame();
+  });
+
+  var lastRafTs = 0;
+  function tick(ts) {
+    var dt = lastRafTs ? Math.min(0.1, Math.max(0, (ts - lastRafTs) / 1000)) : 0.016;
+    lastRafTs = ts;
+    var skySnap = blueprint.step(dt);
+    rig.step(dt, skySnap);
+
+    if (!isReducedMotion && skySnap.isConstructing) {
+      malletAudioTimer += dt;
+      if (malletAudioTimer >= 3.4) {
+        malletAudioTimer = 0;
+        rig.playHammerAndPulley();
+      }
+    } else if (!skySnap.destructionCannotBegin && skySnap.destructionRate > 0) {
+      groanAudioTimer += dt;
+      if (groanAudioTimer >= 2.6) {
+        groanAudioTimer = 0;
+        rig.playStructuralGroan(0.55);
+      }
+    }
+
+    syncDomState();
+    renderFrame();
+    globalThis.requestAnimationFrame(tick);
+  }
+
+  measureStage();
+  rig.selectAnchor("rig_cranes_crown");
+  syncDomState();
+  renderFrame();
+  globalThis.requestAnimationFrame(tick);
+
+  globalThis.TheklaCityApp = {
+    getState: getUnifiedState,
+    hoistNewCrane: hoistNewCrane,
+    partSackclothScreen: partSackclothScreen,
+    forceStopDaytimeWork: forceStopDaytimeWork,
+    resumeDaytimeWork: resumeDaytimeWork,
+    setSolarProgress: setSolarProgress,
+    setSolarPhase: setSolarPhase,
+    selectConstellation: selectConstellation,
+    askRemovalFear: askRemovalFear,
+    openPlates: openPlates,
+    closePlates: closePlates,
+    togglePlateZoom: togglePlateZoom,
+    toggleMute: toggleMute,
+    reset: reset,
+    renderArchivalPlates: renderArchivalPlates
+  };
+})();
+</script>
+</body>
+</html>
