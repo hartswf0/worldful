@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+</head>
+<body class="bg-transparent text-[var(--foreground)] antialiased p-0 m-0 select-none">
+  <div class="py-2 space-y-2">
+    <!-- Top Control Strip (~36px) -->
+    <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-[var(--card-border)] text-xs">
+      <div class="flex items-center gap-1">
+        <button id="tabStage" class="px-2 py-1 rounded font-medium bg-[var(--primary)] text-[var(--primary-foreground)]">Live Swarm</button>
+        <button id="tabMatrix" class="px-2 py-1 rounded font-medium bg-[var(--card)] text-[var(--muted-foreground)] border border-[var(--border)]">All 55 Grid</button>
+        <button id="tabForge" class="px-2 py-1 rounded font-medium bg-[var(--card)] text-[var(--muted-foreground)] border border-[var(--border)]">Quine Forge</button>
+      </div>
+      <div class="flex items-center gap-1">
+        <button id="btnPrev" class="px-2 py-1 rounded bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)]" title="Previous city">◀</button>
+        <select id="citySelect" class="px-2 py-1 rounded bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] font-mono max-w-[205px]"></select>
+        <button id="btnNext" class="px-2 py-1 rounded bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)]" title="Next city">▶</button>
+      </div>
+      <div class="flex items-center gap-1">
+        <button id="btnTick" class="px-2 py-1 rounded bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] font-mono">+Tick</button>
+        <button id="btnStorm" class="px-2 py-1 rounded bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] font-mono">100×</button>
+        <button id="btnAudio" class="px-2 py-1 rounded bg-[var(--card)] border border-[var(--border)] text-[var(--muted-foreground)] font-mono">♪ Off</button>
+      </div>
+    </div>
+
+    <!-- Main Fixed-Height Viewport (326px across all tabs; zero vertical scroll) -->
+    <div id="viewStage" class="grid grid-cols-12 gap-3 h-[326px]">
+      <!-- Multiplane Swarm Canvas -->
+      <div class="col-span-7 flex flex-col justify-between h-[326px]">
+        <div class="relative w-full h-[294px] rounded border border-[var(--card-border)] overflow-hidden">
+          <canvas id="stageCanvas" class="w-full h-full block cursor-crosshair"></canvas>
+          <div id="canvasBadge" class="pointer-events-none absolute top-2 left-2 px-2 py-0.5 rounded bg-[var(--card)]/90 border border-[var(--border)] font-mono text-xs text-[var(--foreground)]"></div>
+          <div id="archBadge" class="pointer-events-none absolute bottom-2 left-2 right-2 flex items-center justify-between gap-2 px-2 py-0.5 rounded bg-[var(--card)]/90 border border-[var(--border)] font-mono text-xs text-[var(--muted-foreground)] truncate"></div>
+        </div>
+        <div id="opticsBar" class="text-xs text-[var(--muted-foreground)] truncate" title=""></div>
+      </div>
+
+      <!-- Bespoke 4-Agent Swarm Inspector -->
+      <div class="col-span-5 flex flex-col justify-between h-[326px] pl-1 border-l border-[var(--card-border)]">
+        <div class="space-y-1">
+          <div class="flex items-baseline justify-between gap-2">
+            <span id="cityTitle" class="font-semibold text-sm text-[var(--foreground)] truncate"></span>
+            <span id="cityMeta" class="font-mono text-xs text-[var(--muted-foreground)] shrink-0"></span>
+          </div>
+          <div id="polesLine" class="text-xs font-mono text-[var(--muted-foreground)] truncate"></div>
+          <div id="lociLine" class="text-xs font-mono text-[var(--foreground)] truncate"></div>
+        </div>
+        <div id="agentCards" class="space-y-1.5 my-auto"></div>
+        <div id="dagStatus" class="pt-1 border-t border-[var(--card-border)] flex items-center justify-between text-xs font-mono text-[var(--muted-foreground)]"></div>
+      </div>
+    </div>
+
+    <!-- View 2: Full 9x11 Calvino Diagonal Cascade (55 Handmade Cities) -->
+    <div id="viewMatrix" class="hidden h-[326px] flex flex-col justify-between">
+      <div id="matrixTable" class="space-y-1"></div>
+      <div id="matrixHoverBar" class="px-2.5 py-1.5 rounded bg-[var(--card)] border border-[var(--border)] flex items-center justify-between gap-3 text-xs font-mono"></div>
+    </div>
+
+    <!-- View 3: Quine Rule-Mutation & Dual-City Atlas Graft Forge -->
+    <div id="viewForge" class="hidden h-[326px] grid grid-cols-12 gap-3">
+      <div class="col-span-6 p-2.5 rounded bg-[var(--card)] border border-[var(--border)] flex flex-col justify-between">
+        <div class="space-y-1">
+          <div class="text-xs font-semibold text-[var(--foreground)]">Quine Rule-Mutation Operators (7)</div>
+          <div class="text-xs text-[var(--muted-foreground)]">Reinterprets the active city's contradiction poles into a new Scion swarm with 4 newly minted zero-overlap agents.</div>
+        </div>
+        <div id="mutationButtons" class="grid grid-cols-2 gap-1.5 my-auto"></div>
+        <div id="forgeReadout" class="text-xs font-mono text-[var(--muted-foreground)] truncate">Select an operator to spawn Scion #56+.</div>
+      </div>
+      <div class="col-span-6 p-2.5 rounded bg-[var(--card)] border border-[var(--border)] flex flex-col justify-between">
+        <div class="space-y-2">
+          <div class="text-xs font-semibold text-[var(--foreground)]">Kublai's Atlas Dual-City Hybrid Graft</div>
+          <div class="text-xs text-[var(--muted-foreground)]">Collides Pole α of City A against Pole β of City B inside a shared confluence keystone arch.</div>
+          <div class="grid grid-cols-2 gap-2 pt-1">
+            <select id="graftA" class="px-2 py-1 rounded bg-[var(--background)] border border-[var(--border)] text-xs font-mono text-[var(--foreground)]"></select>
+            <select id="graftB" class="px-2 py-1 rounded bg-[var(--background)] border border-[var(--border)] text-xs font-mono text-[var(--foreground)]"></select>
+          </div>
+          <button id="btnGraft" class="w-full py-1.5 rounded bg-[var(--primary)] text-[var(--primary-foreground)] text-xs font-medium">Graft Hybrid Scion Swarm</button>
+        </div>
+        <div class="pt-2 border-t border-[var(--card-border)] space-y-1.5">
+          <div class="flex items-center justify-between text-xs">
+            <span class="text-[var(--muted-foreground)]">Kublai Norm Pressure (Anti-Trude Guard)</span>
+            <span id="normLabel" class="font-mono text-[var(--foreground)]">0.15</span>
+          </div>
+          <input id="normRange" type="range" min="0" max="95" value="15" class="w-full accent-[var(--primary)]" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom 11-Series Ribbon (~30px) -->
+    <div id="seriesRibbon" class="pt-2 border-t border-[var(--card-border)] flex flex-wrap items-center gap-1 text-xs"></div>
+  </div>
+
+<script>
+const RAW = {"s":["Cities and memory","Cities and desire","Cities and signs","Thin cities","Trading cities","Cities and eyes","Cities and names","Cities and the dead","Cities and the sky","Continuous cities","Hidden cities"],"m":["invert_goal","mirror_axis","slow_time","spawn_echo","simplify_rules","invert_axiom","transmute_medium"],"c":[
+[1,"Diomira",1,0,1,7,"PALIMPSEST_ECHO","interchangeable familiar domes","known_silver_taxonomy","september_lamp_envy","Lead-paved twilight reflection punctured by simultaneous food-stall lamp ignition",["silver_dome_ring","crystal_theater_stalls","terrace_balustrade"],"43b2c486ff",32.2,[],[["diomira_silver_domer","silver_dome_ring","altitude_max","known_silver_taxonomy",["sixty_silver_domes","lead_paving","golden_cock_tower"],6.0,[1,1]],["diomira_bronze_pantheon_caster","silver_dome_ring","emblem_union","known_silver_taxonomy",["bronze_god_statues","crystal_theater"],4.2,[5,4]],["diomira_september_lamp_lighter","crystal_theater_stalls","polarity_carve","september_lamp_envy",["simultaneous_multicolored_lamps","shortening_dusk"],7.4,[3,2]],["diomira_terrace_cry_envier","terrace_balustrade","polarity_carve","known_silver_taxonomy",["womans_ooh_cry","counterfactual_past_joy"],3.8,[15,8]]]],
+[2,"Isidora",1,0,2,8,"PALIMPSEST_ECHO","wilderness ride before desire","young_dreamer_spiral","aged_wall_spectator","Nacreous spiral seashell sheen refracted through ground telescope lenses onto bench stone",["seashell_stairwell","luthier_optic_bench","old_mens_square_wall"],"6372b2647a",121.38,["arch(old_mens_square_wall:aged_wall_spectator<->young_dreamer_spiral@span=6.04)","arch(old_mens_square_wall:aged_wall_spectator<->young_dreamer_spiral@span=6.11)","arch(old_mens_square_wall:aged_wall_spectator<->young_dreamer_spiral@span=6.17)"],[["isidora_conch_stair_carver","seashell_stairwell","altitude_max","young_dreamer_spiral",["spiral_staircase","encrusted_seashells"],5.5,[9,8]],["isidora_violin_lens_grinder","luthier_optic_bench","emblem_union","young_dreamer_spiral",["perfect_telescope","resonant_violin","third_woman_detour"],6.1,[5,3]],["isidora_cockpit_brawl_igniter","old_mens_square_wall","polarity_carve","young_dreamer_spiral",["bloody_cockfight_bet","spilled_feathers"],7.2,[7,4]],["isidora_senescent_wall_seater","old_mens_square_wall","polarity_carve","aged_wall_spectator",["row_of_old_men","desire_already_memory"],2.1,[16,9]]]],
+[3,"Dorothea",1,1,1,9,"DESIRE_TRAP_BIFURCATION","monotone caravan desert","deductive_monopoly_census","camel_driver_morning_openness","Cold brushed aluminum tower glare split by four green canal ribbons and fluttering banners",["seven_spring_gates","nine_canal_quarters","trumpet_banner_market"],"a8c64f6b4d",116.5,["arch(trumpet_banner_market:camel_driver_morning_openness<->deductive_monopoly_census@span=5.70)"],[["dorothea_drawbridge_enumerator","seven_spring_gates","altitude_max","deductive_monopoly_census",["four_aluminum_towers","seven_spring_drawbridges","four_green_canals"],7.0,[4,3]],["dorothea_exogamy_ledger_clerk","nine_canal_quarters","emblem_union","deductive_monopoly_census",["bergamot","sturgeon_roe","astrolabes","amethysts"],5.0,[3,2]],["dorothea_brass_platform_trumpeter","trumpet_banner_market","polarity_carve","camel_driver_morning_openness",["three_trumpet_soldiers","turning_wheels","colored_banners"],8.1,[5,4]],["dorothea_direct_gaze_bifurcator","trumpet_banner_market","polarity_carve","deductive_monopoly_census",["fine_teeth_eye_contact","uncounted_desert_paths"],3.4,[9,5]]]],
+[4,"Zaira",1,0,3,10,"PALIMPSEST_ECHO","mute geometric mensuration","raw_step_degree_ruler","sponge_event_scar_palimpsest","Zinc-scale roof glint cross-hatched by dawn shadow-lines linking lamppost, railing, and torn net",["usurper_lamppost","nuptial_railing_gutter","gunboat_cape_dock"],"9246b0bc6a",111.55,["arch(usurper_lamppost:raw_step_degree_ruler<->sponge_event_scar_palimpsest@span=5.16)","arch(usurper_lamppost:raw_step_degree_ruler<->sponge_event_scar_palimpsest@span=5.29)","arch(usurper_lamppost:raw_step_degree_ruler<->sponge_event_scar_palimpsest@span=5.66)"],[["zaira_zinc_arcade_surveyor","usurper_lamppost","polarity_carve","raw_step_degree_ruler",["stair_streets","arcade_curve_degrees","zinc_roof_scales"],3.2,[6,5]],["zaira_gallows_festoon_spanner","usurper_lamppost","polarity_carve","sponge_event_scar_palimpsest",["swaying_usurper_feet","queen_nuptial_festoons"],7.8,[4,3]],["zaira_dawn_gutter_cat_tracker","nuptial_railing_gutter","emblem_union","sponge_event_scar_palimpsest",["adulterer_railing_leap","tilted_gutter_cat_slip"],5.6,[3,2]],["zaira_bomb_net_palm_reader","gunboat_cape_dock","altitude_max","sponge_event_scar_palimpsest",["gunboat_shell_crater","swaddling_usurper_myth","hand_line_scratches"],6.9,[15,8]]]],
+[5,"Anastasia",1,1,2,12,"DESIRE_TRAP_BIFURCATION","stifled sequential appetite","whole_awakened_indulgence","chalcedony_cutter_servitude","Translucent banded agate and cherry-wood smoke beneath concentric canal glints and high kites",["concentric_kite_canals","cherry_pheasant_pool","agate_lathe_bench"],"340e3c9f36",123.4,["arch(agate_lathe_bench:chalcedony_cutter_servitude<->whole_awakened_indulgence@span=6.40)"],[["anastasia_kite_canal_ringer","concentric_kite_canals","altitude_max","whole_awakened_indulgence",["concentric_canals","overhead_kites"],5.8,[1,1]],["anastasia_marjoram_pool_bather","cherry_pheasant_pool","emblem_union","whole_awakened_indulgence",["cherry_wood_pheasant","sweet_marjoram","garden_pool_chase"],6.4,[5,4]],["anastasia_chrysoprase_facet_slave","agate_lathe_bench","polarity_carve","chalcedony_cutter_servitude",["eight_hour_agate_cut","onyx_chrysoprase_dust"],8.3,[7,5]],["anastasia_desire_form_inverter","agate_lathe_bench","polarity_carve","whole_awakened_indulgence",["form_stolen_from_desire","contented_enslavement"],2.9,[9,8]]]],
+[6,"Tamara",1,2,1,13,"SEMIOTIC_INVERSION","unmarked silent stones and trees","thick_signboard_discourse","unseen_sub_sign_interior","Jutting iron-and-gilt pictographic signboards occluding facades against wind-torn cloud horizon",["jutting_guild_street","temple_decree_plaza","empty_cloud_horizon"],"8d2306e9cc",92.5,["arch(jutting_guild_street:thick_signboard_discourse<->unseen_sub_sign_interior@span=2.90)","arch(jutting_guild_street:thick_signboard_discourse<->unseen_sub_sign_interior@span=5.30)"],[["tamara_emblem_bracket_hanger","jutting_guild_street","altitude_max","thick_signboard_discourse",["tooth_drawer_pincers","tavern_tankard","grocer_scales","halberds"],6.7,[3,2]],["tamara_kiosk_taboo_codifier","temple_decree_plaza","emblem_union","thick_signboard_discourse",["zebra_watering_permit","no_kiosk_urination","averroes_volumes"],5.4,[4,3]],["tamara_concealed_core_eraser","jutting_guild_street","polarity_carve","unseen_sub_sign_interior",["mute_hidden_tamara","repeated_city_script"],2.4,[8,5]],["tamara_pareidolia_cloud_scanner","empty_cloud_horizon","polarity_carve","thick_signboard_discourse",["cloud_sailing_ship","cloud_hand","cloud_elephant"],7.1,[15,8]]]],
+[7,"Zora",1,0,4,15,"PALIMPSEST_ECHO","displaceable forgettable streets","immutable_honeycomb_score","entropic_stasis_erasure","Clear astronomical glass and striped barber cloth frozen in dry air crumbling to chalk dust",["clock_awning_fountain","glass_tower_kiosk","hermit_bath_harbor"],"697065d706",136.59,["arch(hermit_bath_harbor:entropic_stasis_erasure<->immutable_honeycomb_score@span=6.21)","arch(hermit_bath_harbor:entropic_stasis_erasure<->immutable_honeycomb_score@span=6.51)","arch(hermit_bath_harbor:entropic_stasis_erasure<->immutable_honeycomb_score@span=7.67)"],[["zora_copper_score_sequencer","clock_awning_fountain","emblem_union","immutable_honeycomb_score",["copper_clock","striped_barber_awning","nine_jet_fountain"],6.0,[9,8]],["zora_honeycomb_loci_indexer","glass_tower_kiosk","altitude_max","immutable_honeycomb_score",["astronomer_glass_tower","melon_kiosk","constellation_cells"],7.2,[5,4]],["zora_itinerary_lock_warden","hermit_bath_harbor","polarity_carve","immutable_honeycomb_score",["hermit_lion_statue","turkish_bath","unalterable_note"],8.0,[3,2]],["zora_motionless_dust_dissolver","hermit_bath_harbor","polarity_carve","entropic_stasis_erasure",["languished_masonry","earth_forgot_her"],1.5,[16,15]]]],
+[8,"Despina",1,1,3,17,"DESIRE_TRAP_BIFURCATION","dual sand-tableland and sea-waste","overland_steamboat_mirage","seaward_camel_mirage","Coastline salt-haze cross-dissolving belching iron smokestacks into spotted camel humps",["tableland_horizon_ridge","harbor_crane_taverns","coastline_haze_saddle"],"689949cc36",119.2,["arch(tableland_horizon_ridge:overland_steamboat_mirage<->seaward_camel_mirage@span=5.80)"],[["despina_windsock_hull_rigger","tableland_horizon_ridge","polarity_carve","overland_steamboat_mirage",["skyscraper_pinnacles","flapping_windsocks","vibrating_iron_keel"],7.9,[5,4]],["despina_tavern_bottle_brawler","harbor_crane_taverns","emblem_union","overland_steamboat_mirage",["foreign_crane_cargo","broken_flag_bottles","lit_window_hair_comb"],5.7,[3,2]],["despina_hump_saddle_shimmerer","tableland_horizon_ridge","polarity_carve","seaward_camel_mirage",["glittering_saddle_fringe","two_spotted_humps","wineskin_packs"],3.1,[7,5]],["despina_oasis_veil_projector","coastline_haze_saddle","altitude_max","seaward_camel_mirage",["thick_whitewashed_courts","barefoot_veiled_dancers"],6.3,[9,5]]]],
+[9,"Zirma",1,2,2,19,"SEMIOTIC_INVERSION","singular unremembered impression","obsessive_urban_repetition","skeptical_companion_singularity","Low-altitude dirigible shadow sweeping across humid subterranean platforms and tattoo ink needles",["cornice_dirigible_airway","cobblestone_puma_arcade","humid_subway_tattoo_row"],"302dce78b7",123.1,["arch(cornice_dirigible_airway:obsessive_urban_repetition<->skeptical_companion_singularity@span=7.10)"],[["zirma_cornice_lunatic_multiplier","cornice_dirigible_airway","polarity_carve","obsessive_urban_repetition",["window_level_dirigibles","teetering_cornice_lunatics"],8.4,[6,5]],["zirma_puma_leash_echoer","cobblestone_puma_arcade","emblem_union","obsessive_urban_repetition",["shouting_blind_cane_taps","whim_leashed_pumas"],6.2,[4,3]],["zirma_sailor_ink_puncturer","humid_subway_tattoo_row","altitude_max","obsessive_urban_repetition",["pierced_tattoo_patterns","humid_packed_trains"],5.9,[3,2]],["zirma_single_witness_pruner","cornice_dirigible_airway","polarity_carve","skeptical_companion_singularity",["lone_hovering_blimp","single_fanning_matron"],2.3,[11,8]]]],
+[10,"Isaura",1,3,1,20,"TENSILE_VOID_RIG","parched calcareous crust beyond lake rim","abyssal_black_lake_cult","ascending_windlass_bucket_cult","Subterranean black-water gleam answered by sunlit airy scaffolding of pipes, pulleys, and weathercocks",["calcareous_buried_lake","thousand_well_shafts","stilted_aqueduct_skyline"],"6eb06eb7f8",29.8,[],[["isaura_subterranean_lake_diviner","calcareous_buried_lake","polarity_carve","abyssal_black_lake_cult",["buried_black_lake","green_perimeter_trace"],2.6,[1,1]],["isaura_vertical_bore_driller","thousand_well_shafts","emblem_union","ascending_windlass_bucket_cult",["deep_vertical_wells","twisting_trestle_probes"],6.5,[5,4]],["isaura_noria_pulley_hoister","thousand_well_shafts","polarity_carve","ascending_windlass_bucket_cult",["suspended_cable_buckets","noria_windlasses","pump_handles"],8.2,[3,2]],["isaura_weathercock_stilts_lifter","stilted_aqueduct_skyline","altitude_max","ascending_windlass_bucket_cult",["stilted_roof_reservoirs","slender_aqueducts","airy_weathercocks"],9.1,[2,1]]]],
+[11,"Maurilia",2,0,5,30,"PALIMPSEST_ECHO","continuous self-knowing identity","sepia_postcard_nostalgia","alien_metropolis_succession","Harsh concrete overpass glare juxtaposed against sepia halftone grain of white parasols",["overpass_bandstand_square","munitions_parasol_lot","departed_lares_threshold"],"8f1e5523d3",116.78,["arch(overpass_bandstand_square:alien_metropolis_succession<->sepia_postcard_nostalgia@span=5.44)","arch(overpass_bandstand_square:alien_metropolis_succession<->sepia_postcard_nostalgia@span=5.50)","arch(overpass_bandstand_square:alien_metropolis_succession<->sepia_postcard_nostalgia@span=5.73)"],[["maurilia_postcard_hen_curator","overpass_bandstand_square","polarity_carve","sepia_postcard_nostalgia",["postcard_square_hen","lost_bandstand","two_white_parasols"],3.3,[5,4]],["maurilia_overpass_munitions_builder","overpass_bandstand_square","polarity_carve","alien_metropolis_succession",["bus_station_concrete","steel_overpass","munitions_factory"],8.0,[4,3]],["maurilia_measured_regret_balancer","munitions_parasol_lot","emblem_union","sepia_postcard_nostalgia",["retroactive_provincial_grace","bounded_praise_etiquette"],5.1,[3,2]],["maurilia_silent_god_replacer","departed_lares_threshold","altitude_max","alien_metropolis_succession",["homonymous_stranger_city","outsider_gods_beneath_names"],7.4,[7,4]]]],
+[12,"Fedora",2,1,4,32,"DESIRE_TRAP_BIFURCATION","single-timeline deterministic urbanism","gray_stone_necessity","blue_crystal_globe_assumptions","Cold gray ashlar monolith enclosing dark metal rooms lit from within by ratusan blue glass spheres",["gray_stone_arterials","metal_globe_museum","obsolete_utopia_vitrine"],"87118eec78",29.8,[],[["fedora_ashlar_necessity_mason","gray_stone_arterials","polarity_carve","gray_stone_necessity",["gray_stone_metropolis","dried_canal_bed","banished_elephant_avenue"],7.7,[1,1]],["fedora_crystal_globe_blower","metal_globe_museum","polarity_carve","blue_crystal_globe_assumptions",["central_metal_museum","miniature_blue_fedora"],3.5,[6,5]],["fedora_medusa_minaret_modeler","obsolete_utopia_vitrine","emblem_union","blue_crystal_globe_assumptions",["medusa_reflection_pond","canopied_elephant_box","pedestalless_spiral_minaret"],6.8,[3,2]],["fedora_assumption_equalizer","metal_globe_museum","altitude_max","blue_crystal_globe_assumptions",["outdated_yesterday_future","coequal_map_assumptions"],6.9,[9,5]]]],
+[13,"Zoe",2,2,3,34,"SEMIOTIC_INVERSION","legible zoned civic hierarchy","mental_matrix_of_differences","indivisible_pyramid_promiscuity","Uniform pyramidal roofs under flat shadowless haze erasing palace-from-slum contours",["pyramid_roof_cluster","oracle_bazaar_hearth","wolf_wheel_perimeter"],"5de81caf5f",117.1,["arch(pyramid_roof_cluster:indivisible_pyramid_promiscuity<->mental_matrix_of_differences@span=6.70)"],[["zoe_zoning_difference_seeker","pyramid_roof_cluster","polarity_carve","mental_matrix_of_differences",["expected_prince_palace","expected_priest_temple"],2.8,[4,3]],["zoe_pyramid_function_scrambler","pyramid_roof_cluster","polarity_carve","indivisible_pyramid_promiscuity",["leprosarium_or_odalisque_bath","sleep_forge_cook_reign_same_spot"],8.5,[7,6]],["zoe_oracle_gold_blender","oracle_bazaar_hearth","emblem_union","indivisible_pyramid_promiscuity",["simultaneous_gold_and_disrobing","mingled_mental_features"],6.1,[5,4]],["zoe_wolf_howl_border_blurrer","wolf_wheel_perimeter","altitude_max","indivisible_pyramid_promiscuity",["erased_inside_outside_line","wheel_rumble_meets_wolf_howl"],7.3,[11,8]]]],
+[14,"Zenobia",2,3,2,35,"TENSILE_VOID_RIG","ground-bound desire-erasing cities","forgotten_founder_plan","recombinatorial_stilt_desire","Dry terrain crisscrossed by high stilt shadows, zinc-and-bamboo belvederes, and snapping ribbons",["dry_piling_forest","crossed_hanging_sidewalks","cone_belvedere_cranes"],"a4b4ed2ade",149.32,["arch(dry_piling_forest:forgotten_founder_plan<->recombinatorial_stilt_desire@span=7.78)","arch(dry_piling_forest:forgotten_founder_plan<->recombinatorial_stilt_desire@span=7.89)","arch(dry_piling_forest:forgotten_founder_plan<->recombinatorial_stilt_desire@span=8.00)"],[["zenobia_dry_piling_driver","dry_piling_forest","altitude_max","recombinatorial_stilt_desire",["high_pilings_on_dry_land","bamboo_and_zinc_houses"],8.6,[3,2]],["zenobia_hanging_ladder_weaver","crossed_hanging_sidewalks","emblem_union","recombinatorial_stilt_desire",["crossed_stilt_balconies","hanging_sidewalks","suspended_stairways"],7.1,[5,4]],["zenobia_undeciphered_plan_ghost","dry_piling_forest","polarity_carve","forgotten_founder_plan",["lost_founding_command","superimposed_strata"],3.0,[9,8]],["zenobia_banner_pulley_recombiner","cone_belvedere_cranes","polarity_carve","recombinatorial_stilt_desire",["cone_roofed_belvederes","jutting_fish_poles","fluttering_desire_ribbons"],8.1,[2,1]]]],
+[15,"Euphemia",2,4,1,36,"CHORD_EXCHANGE_WEB","identical lying yellow-mat bazaars","daylight_commodity_barter","solstice_campfire_memory_swap","Noon awning fly-shadow transmuting into nocturnal market-fire embers on carpet bales",["yellow_mat_quay","equinox_campfire_circle","swaying_return_caravan"],"810fa34c33",22.6,[],[["euphemia_ginger_muslin_factor","yellow_mat_quay","polarity_carve","daylight_commodity_barter",["ginger_and_cotton_holds","pistachio_poppy_sacks","golden_muslin_bolts"],3.6,[4,3]],["euphemia_seven_nation_fire_lighter","equinox_campfire_circle","polarity_carve","solstice_campfire_memory_swap",["solstice_equinox_gathering","carpet_bale_firelight"],8.2,[5,4]],["euphemia_trigger_word_teller","equinox_campfire_circle","emblem_union","solstice_campfire_memory_swap",["wolf_tale","sister_tale","hidden_treasure_scabies_lovers"],7.5,[3,2]],["euphemia_memory_transmuter","swaying_return_caravan","altitude_max","solstice_campfire_memory_swap",["alien_wolf_in_memory","different_sister_on_junk"],7.9,[15,8]]]],
+[16,"Zobeide",3,1,5,45,"DESIRE_TRAP_BIFURCATION","open escape trajectories in dream","fugitive_moonlit_pursuit","calcified_skein_trap","Stark whitewashed moonlit walls wound into dead-end blind cul-de-sacs without exits",["moon_exposed_skein","fugitive_vanishing_corner","commuter_trap_arcades"],"4cb1dc9d3e",27.4,[],[["zobeide_dream_pursuit_tracer","moon_exposed_skein","polarity_carve","fugitive_moonlit_pursuit",["identical_multi_nation_dream","fleeing_long_haired_shadow"],2.9,[5,4]],["zobeide_escape_blocker_mason","fugitive_vanishing_corner","polarity_carve","calcified_skein_trap",["rearranged_blind_walls","sealed_vanishing_spot"],8.7,[7,4]],["zobeide_skein_arcade_rewinder","fugitive_vanishing_corner","altitude_max","calcified_skein_trap",["wound_street_skein","shifted_pursuit_stairways"],7.4,[3,2]],["zobeide_amnesiac_work_warden","commuter_trap_arcades","emblem_union","calcified_skein_trap",["forgotten_dream_chase","ugly_inescapable_trap"],6.6,[16,9]]]],
+[17,"Hypatia",3,2,4,47,"SEMIOTIC_INVERSION","conventional emblem-to-referent comfort","expected_classical_imagery","inverted_thing_syntax","Cerulean magnolia lagoon surface hiding bottom crabs, porphyry domes above black-chained basalt",["magnolia_suicide_lagoon","porphyry_basalt_palace","tomb_flute_pinnacle"],"f341905c98",118.0,["arch(magnolia_suicide_lagoon:expected_classical_imagery<->inverted_thing_syntax@span=6.60)"],[["hypatia_lagoon_crab_reverser","magnolia_suicide_lagoon","polarity_carve","inverted_thing_syntax",["reflected_magnolias","crab_bitten_drowned_suicides"],8.3,[7,6]],["hypatia_naive_expectation_breaker","magnolia_suicide_lagoon","polarity_carve","expected_classical_imagery",["expected_bathing_ladies","collapsed_vellum_alphabets","opium_adolescent"],2.7,[5,4]],["hypatia_stable_tomb_transposer","porphyry_basalt_palace","emblem_union","inverted_thing_syntax",["basalt_quarry_convicts","greaved_stable_amazons","cemetery_flute_harp_duet"],7.8,[4,3]],["hypatia_citadel_sky_ship_watcher","tomb_flute_pinnacle","altitude_max","inverted_thing_syntax",["lawn_ninepins_sage","highest_pinnacle_ship_wait"],8.9,[15,8]]]],
+[18,"Armilla",3,3,3,49,"TENSILE_VOID_RIG","load-bearing brick-and-mortar enclosure","dissolved_masonry_shell","indestructible_naiad_plumbing","Glittering sun-threads of open shower spray and suspended white porcelain against raw sky",["vertical_riser_forest","suspended_porcelain_boughs","morning_naiad_fountains"],"2ab83cfc60",171.37,["arch(vertical_riser_forest:dissolved_masonry_shell<->indestructible_naiad_plumbing@span=8.99)","arch(vertical_riser_forest:dissolved_masonry_shell<->indestructible_naiad_plumbing@span=9.12)","arch(vertical_riser_forest:dissolved_masonry_shell<->indestructible_naiad_plumbing@span=9.25)"],[["armilla_bricklayer_abdicator","vertical_riser_forest","polarity_carve","dissolved_masonry_shell",["zero_walls_zero_ceilings","zero_floors_open_void"],2.2,[9,8]],["armilla_hydraulic_riser_plumber","vertical_riser_forest","polarity_carve","indestructible_naiad_plumbing",["vertical_house_pipes","horizontal_floor_runs","overflow_spouts"],8.8,[5,4]],["armilla_porcelain_fruit_hanger","suspended_porcelain_boughs","altitude_max","indestructible_naiad_plumbing",["sky_framed_white_lavabo","suspended_bathtubs","late_porcelain_fruit"],8.4,[3,2]],["armilla_naiad_spray_chorister","morning_naiad_fountains","emblem_union","indestructible_naiad_plumbing",["sunlit_water_threads","sponge_suds_mirror","singing_aquatic_maidens"],7.6,[2,1]]]],
+[19,"Chloe",3,4,2,51,"CHORD_EXCHANGE_WEB","clumsy consummated interpersonal friction","untouched_chaste_vibration","fantasy_stopping_contact","Rain-darkened bazaar arcade streaked by darting geometric sightline vectors between strangers",["parasol_coral_promenade","rain_arcade_shelter","bandstand_awning_nexus"],"09b827fb35",127.6,["arch(rain_arcade_shelter:fantasy_stopping_contact<->untouched_chaste_vibration@span=7.00)"],[["chloe_glance_polygon_drawer","parasol_coral_promenade","emblem_union","untouched_chaste_vibration",["twirling_parasol_girl","veiled_trembling_matron","tattooed_giant","coral_twins"],7.5,[5,4]],["chloe_cheetah_fan_combinator","bandstand_awning_nexus","altitude_max","untouched_chaste_vibration",["blind_man_leashed_cheetah","ostrich_fan_courtesan","white_haired_youth"],6.9,[3,2]],["chloe_silent_arcade_consummator","rain_arcade_shelter","polarity_carve","untouched_chaste_vibration",["wordless_fingerless_orgy","exhausted_arrow_star_triangles"],8.5,[9,5]],["chloe_realization_quarantine_guard","rain_arcade_shelter","polarity_carve","fantasy_stopping_contact",["forbidden_spoken_greeting","protected_phantom_carousel"],2.5,[16,15]]]],
+[20,"Valdrada",3,5,1,53,"SPECULAR_PARALLAX","unwitnessed forgetful spontaneity","erect_parapet_action","limpid_inverted_lake_image","Railed cliffside verandas doubled down into razor-cold, pitch-clear lacustrine specular inversion",["tiered_lake_verandas","wardrobe_interior_ceiling","specular_water_plane"],"b5a30d6945",136.6,["arch(specular_water_plane:erect_parapet_action<->limpid_inverted_lake_image@span=7.20)"],[["valdrada_veranda_parapet_builder","tiered_lake_verandas","altitude_max","erect_parapet_action",["stacked_railed_verandas","fluted_lake_facades"],7.6,[4,3]],["valdrada_flesh_dagger_actor","specular_water_plane","polarity_carve","erect_parapet_action",["twisted_lovers_skin","tendon_blade_black_blood"],8.6,[3,2]],["valdrada_limpid_mirror_inverter","specular_water_plane","polarity_carve","limpid_inverted_lake_image",["cold_limpid_image_dignity","point_by_point_asymmetry"],2.4,[8,5]],["valdrada_loveless_eye_interlocker","wardrobe_interior_ceiling","emblem_union","limpid_inverted_lake_image",["reflected_wardrobe_mirrors","interlocked_loveless_eyes"],7.1,[15,8]]]],
+[21,"Olivia",4,2,5,61,"SEMIOTIC_INVERSION","literal transparent correspondence","filigree_peacock_euphemism","soot_mandrel_lathe_truth","Mullioned patio sprinkler rainbows choked by thick black grease-soot and illuminated night-canoes",["filigree_peacock_patio","mandrel_lathe_shops","green_estuary_outskirts"],"791278bb07",113.8,["arch(filigree_peacock_patio:filigree_peacock_euphemism<->soot_mandrel_lathe_truth@span=6.40)"],[["olivia_filigree_peacock_speaker","filigree_peacock_patio","polarity_carve","filigree_peacock_euphemism",["mullioned_fringed_cushions","spinning_lawn_white_peacock","lit_estuary_canoes"],3.1,[5,4]],["olivia_grease_trailer_crusher","filigree_peacock_patio","polarity_carve","soot_mandrel_lathe_truth",["sticky_soot_grease_cloud","pedestrian_crushing_trailers"],8.5,[7,5]],["olivia_mandrel_shift_repeater","mandrel_lathe_shops","altitude_max","soot_mandrel_lathe_truth",["lathe_teeth_mandrel","thousand_hand_shift_pace"],7.4,[4,3]],["olivia_darkness_sarcasm_laugher","green_estuary_outskirts","emblem_union","soot_mandrel_lathe_truth",["sleepwalker_commuter_lines","falsehood_in_things_not_words"],6.8,[9,8]]]],
+[22,"Sophronia",4,3,4,63,"TENSILE_VOID_RIG","stolid immovable institutional permanence","permanent_roller_coaster_carnival","nomadic_trailer_ministry_stone","Skeletal Ferris-wheel cages and trapeze humps standing silhouetted beside vacant unbolted marble lots",["roller_coaster_big_top","bolted_marble_ministry_lot","annual_trailer_highway"],"80057a134f",135.21,["arch(bolted_marble_ministry_lot:nomadic_trailer_ministry_stone<->permanent_roller_coaster_carnival@span=6.93)","arch(bolted_marble_ministry_lot:nomadic_trailer_ministry_stone<->permanent_roller_coaster_carnival@span=7.03)","arch(bolted_marble_ministry_lot:nomadic_trailer_ministry_stone<->permanent_roller_coaster_carnival@span=7.12)"],[["sophronia_coaster_trapeze_anchor","roller_coaster_big_top","altitude_max","permanent_roller_coaster_carnival",["steep_roller_coaster_humps","spinning_cage_ferris_wheel","wall_of_death_motorcycles"],8.9,[3,2]],["sophronia_marble_ministry_rigger","bolted_marble_ministry_lot","polarity_carve","nomadic_trailer_ministry_stone",["portable_marble_bank","demountable_refinery_hospital"],3.2,[4,3]],["sophronia_pediment_unbolter_crew","bolted_marble_ministry_lot","polarity_carve","permanent_roller_coaster_carnival",["lowered_cement_pylons","vacant_half_city_foundation"],8.1,[5,3]],["sophronia_suspended_shout_counter","annual_trailer_highway","emblem_union","permanent_roller_coaster_carnival",["trailer_convoy_departure","counting_months_for_return"],6.7,[15,8]]]],
+[23,"Eutropia",4,4,3,64,"CHORD_EXCHANGE_WEB","single-site biographical exhaustion","rotational_role_renewal","identical_mercurial_yawn","Crisp wind-swept plateau of multiple empty twin towns shifting occupancy like chessmen",["inhabited_plateau_town","vacant_waiting_twins","mercury_chessboard_plain"],"c883b8a53f",112.9,["arch(inhabited_plateau_town:identical_mercurial_yawn<->rotational_role_renewal@span=6.10)"],[["eutropia_weariness_exodus_bell","inhabited_plateau_town","polarity_carve","rotational_role_renewal",["unbearable_debt_and_relatives","simultaneous_citizen_migration"],8.0,[5,4]],["eutropia_wife_job_reallocator","vacant_waiting_twins","emblem_union","rotational_role_renewal",["fresh_window_declivity","swapped_job_wife_gossip"],7.2,[3,2]],["eutropia_mercury_board_stepper","mercury_chessboard_plain","altitude_max","identical_mercurial_yawn",["empty_plateau_chessboard","joltless_equal_wealth"],6.4,[4,3]],["eutropia_alternate_mouth_yawner","inhabited_plateau_town","polarity_carve","identical_mercurial_yawn",["recast_identical_scenes","alternate_mouths_same_yawn"],2.9,[9,8]]]],
+[24,"Zemrude",4,5,2,66,"SPECULAR_PARALLAX","objective angle-independent facade","whistling_upward_sill_gaze","clenched_gutter_cellar_sink","High flapping sunlit window curtains severed at eye-horizon from fish-scaled wet cobblestones",["flapping_curtain_sills","encrusted_wall_foot","manhole_cellar_wells"],"c8f565515c",125.2,["arch(flapping_curtain_sills:clenched_gutter_cellar_sink<->whistling_upward_sill_gaze@span=6.60)"],[["zemrude_nose_tilt_whistler","flapping_curtain_sills","polarity_carve","whistling_upward_sill_gaze",["upward_window_sills","flapping_curtains_fountains"],8.2,[2,1]],["zemrude_palm_nail_clencher","flapping_curtain_sills","polarity_carve","clenched_gutter_cellar_sink",["nails_dug_in_palms","gutter_fish_scales_wastepaper"],2.6,[16,15]],["zemrude_drainpipe_gravity_puller","encrusted_wall_foot","emblem_union","clenched_gutter_cellar_sink",["yesterday_ill_humor_crust","irreversible_cobblestone_lock"],7.3,[7,6]],["zemrude_subsoil_eye_digger","manhole_cellar_wells","altitude_max","clenched_gutter_cellar_sink",["manhole_covers","gaze_digging_cellars_and_wells"],6.8,[4,3]]]],
+[25,"Aglaura",4,6,1,67,"ONOMASTIC_SHARD_SHUFFLE","fresh unlabelled perceptual speech","compact_proverbial_name_fortress","unspoken_ground_glimmer","Opaque typographic density of repeated proverbs eclipsing a fleeting oblique street-corner gleam",["proverbial_canon_forum","colorless_random_streets","unfixed_glimmer_corner"],"fbd3f5e7c4",136.3,["arch(colorless_random_streets:compact_proverbial_name_fortress<->unspoken_ground_glimmer@span=6.70)","arch(proverbial_canon_forum:compact_proverbial_name_fortress<->unspoken_ground_glimmer@span=6.70)","arch(unfixed_glimmer_corner:compact_proverbial_name_fortress<->unspoken_ground_glimmer@span=6.70)"],[["aglaura_proverb_canon_repeater","proverbial_canon_forum","polarity_carve","compact_proverbial_name_fortress",["ancient_virtue_fault_code","solid_spoken_aglaura"],8.4,[3,2]],["aglaura_inverted_norm_chronicler","colorless_random_streets","emblem_union","compact_proverbial_name_fortress",["bizarre_turned_usual","imprisoned_repetitive_words"],6.5,[4,3]],["aglaura_nameless_hour_opener","proverbial_canon_forum","polarity_carve","unspoken_ground_glimmer",["rare_unmistakable_street_hint","ground_growing_aglaura"],2.7,[9,5]],["aglaura_wordless_memory_mourner","unfixed_glimmer_corner","altitude_max","unspoken_ground_glimmer",["less_existing_visible_site","erased_for_lack_of_words"],7.0,[15,8]]]],
+[26,"Octavia",5,3,5,75,"TENSILE_VOID_RIG","immortalist bedrock complacency","abyss_catenary_suspension","finite_rope_lifespan_lucidity","Vertiginous cloud-chasm updrafts swaying hempen catwalks and sack-houses hung beneath wooden ties",["twin_mountain_crest_anchors","hempen_tie_catwalk_net","underhung_gondola_abyss"],"7abff37a86",131.51,["arch(hempen_tie_catwalk_net:abyss_catenary_suspension<->finite_rope_lifespan_lucidity@span=6.69)","arch(hempen_tie_catwalk_net:abyss_catenary_suspension<->finite_rope_lifespan_lucidity@span=6.78)","arch(hempen_tie_catwalk_net:abyss_catenary_suspension<->finite_rope_lifespan_lucidity@span=6.88)"],[["octavia_crest_cable_tensioner","twin_mountain_crest_anchors","altitude_max","abyss_catenary_suspension",["steep_precipice_ropes","iron_chains_wooden_ties"],9.2,[3,2]],["octavia_downward_sack_hanger","underhung_gondola_abyss","emblem_union","abyss_catenary_suspension",["sack_houses_below_net","gondola_terraces","hanging_chandeliers_trapezes"],8.1,[5,4]],["octavia_void_cloud_glimpser","hempen_tie_catwalk_net","polarity_carve","abyss_catenary_suspension",["hundreds_of_feet_of_nothing","gliding_below_clouds"],7.8,[2,1]],["octavia_net_rupture_reckoner","hempen_tie_catwalk_net","polarity_carve","finite_rope_lifespan_lucidity",["measured_hempen_decay","less_uncertain_mortal_life"],3.1,[7,4]]]],
+[27,"Ersilia",5,4,4,76,"CHORD_EXCHANGE_WEB","crumbling unrelational stone walls","impassable_taut_chord_web","nomadic_wall_dismantlement","Plain of bare poles laced with taut white, black, and gray threads standing intact after houses vanish",["corner_post_string_loom","abandoned_chord_plain","mountainside_refugee_camp"],"52c9df84af",129.1,["arch(corner_post_string_loom:impassable_taut_chord_web<->nomadic_wall_dismantlement@span=7.10)"],[["ersilia_four_color_cord_stretcher","corner_post_string_loom","polarity_carve","impassable_taut_chord_web",["white_blood_strings","black_trade_gray_authority","black_white_agency_cords"],8.9,[3,2]],["ersilia_zero_passage_detector","corner_post_string_loom","polarity_carve","nomadic_wall_dismantlement",["choked_street_clearance","dismantled_house_timbers"],2.8,[5,4]],["ersilia_bare_web_preserver","abandoned_chord_plain","altitude_max","impassable_taut_chord_web",["poles_and_taut_strings_alone","wall_less_boneless_ruin"],8.4,[9,5]],["ersilia_complex_reweave_migrator","mountainside_refugee_camp","emblem_union","nomadic_wall_dismantlement",["refugee_hillside_gaze","regular_denser_next_ersilia"],7.2,[15,8]]]],
+[28,"Baucis",5,5,3,77,"SPECULAR_PARALLAX","trampling heavy-footed earth seizure","cloud_piercing_flamingo_stilts","downward_telescope_self_absence","Pierced angular lace-shadow falling on sunlit woodland canopy from invisible cloud-borne platforms",["woodland_flamingo_legs","above_cloud_deck","foliage_angular_shadow"],"3828d847ce",110.6,["arch(above_cloud_deck:cloud_piercing_flamingo_stilts<->downward_telescope_self_absence@span=3.56)","arch(above_cloud_deck:cloud_piercing_flamingo_stilts<->downward_telescope_self_absence@span=9.04)"],[["baucis_flamingo_stilt_elevater","woodland_flamingo_legs","altitude_max","cloud_piercing_flamingo_stilts",["slender_distant_stilts","cloud_lost_ladders"],9.3,[2,1]],["baucis_zero_contact_ascetic","above_cloud_deck","polarity_carve","cloud_piercing_flamingo_stilts",["self_contained_aerial_deck","untouched_below_soil"],8.2,[5,4]],["baucis_ant_leaf_spyglass_aimer","above_cloud_deck","polarity_carve","downward_telescope_self_absence",["downward_telescopes","leaf_stone_ant_inspection"],2.9,[3,2]],["baucis_absence_shadow_caster","foliage_angular_shadow","emblem_union","downward_telescope_self_absence",["pierced_angular_canopy_shadow","fascinated_own_absence"],7.7,[9,5]]]],
+[29,"Leandra",5,6,2,78,"ONOMASTIC_SHARD_SHUFFLE","silent uncontested domesticity","migrating_key_penates","rooted_kitchen_pot_lares","Dim nocturnal stucco cornices and radiator pipes alive with microscopic huffing silhouettes",["coatrack_umbrella_threshold","kitchen_flue_rusty_can","stucco_radiator_cornice"],"f610b9d877",127.3,["arch(coatrack_umbrella_threshold:migrating_key_penates<->rooted_kitchen_pot_lares@span=6.10)","arch(kitchen_flue_rusty_can:migrating_key_penates<->rooted_kitchen_pot_lares@span=6.10)","arch(stucco_radiator_cornice:migrating_key_penates<->rooted_kitchen_pot_lares@span=6.10)"],[["leandra_coatrack_penates_mover","coatrack_umbrella_threshold","polarity_carve","migrating_key_penates",["umbrella_stand_guardians","emigrating_family_soul"],8.1,[5,4]],["leandra_chimney_lares_multiplier","coatrack_umbrella_threshold","polarity_carve","rooted_kitchen_pot_lares",["vacant_lot_rusty_can_gods","fifty_kitchen_block_fission"],3.0,[4,3]],["leandra_radiator_pipe_banterer","stucco_radiator_cornice","emblem_union","migrating_key_penates",["cornice_night_strolls","great_aunt_vs_ruined_site_critique"],7.1,[3,2]],["leandra_ironic_murmur_listener","kitchen_flue_rusty_can","altitude_max","rooted_kitchen_pot_lares",["future_career_and_house_daydreams","stifled_nocturnal_laughter"],6.6,[9,8]]]],
+[30,"Melania",5,7,1,80,"NECROPOLIS_ROLE_CASCADE","mortal biographical silence","ephemeral_dying_cast","immortal_cascading_dialogue","Harsh theatrical noon square where dialogue masks relay mid-syllable across thousands of shifting faces",["threshold_square_proscenium","role_reassignment_wings","multiplied_chorus_steps"],"af80cf2812",130.9,["arch(threshold_square_proscenium:ephemeral_dying_cast<->immortal_cascading_dialogue@span=6.90)"],[["melania_braggart_usurer_declaimer","threshold_square_proscenium","polarity_carve","immortal_cascading_dialogue",["soldier_parasite_wastrel","miserly_father_procuress_note"],8.5,[3,2]],["melania_mortal_actor_reaper","threshold_square_proscenium","polarity_carve","ephemeral_dying_cast",["deceased_parasite_and_father","short_blind_inhabitant_lifespan"],2.6,[16,9]],["melania_hypocrite_role_shifter","role_reassignment_wings","emblem_union","immortal_cascading_dialogue",["cascade_role_replacement","three_thousand_hypocrites","hundred_thousand_fallen_princes"],7.9,[5,4]],["melania_slow_denouement_plotter","multiplied_chorus_steps","altitude_max","immortal_cascading_dialogue",["thickening_multi_century_plot","act_to_act_voice_drift"],7.4,[15,8]]]],
+[31,"Esmeralda",6,4,5,88,"CHORD_EXCHANGE_WEB","orthogonal single-level Euclidean grid","combinatorial_canal_bridge_zigzag","clandestine_gutter_sewer_swallow_arcs","Multi-colored cartographic ink strata crossed by cambered canal reflections and high swallow parabolas",["intersecting_canal_landings","rooftop_gutter_sewer_spokes","swallow_parabola_airspace"],"ec91d80c67",115.6,["arch(rooftop_gutter_sewer_spokes:clandestine_gutter_sewer_swallow_arcs<->combinatorial_canal_bridge_zigzag@span=6.20)"],[["esmeralda_land_boat_zigzagger","intersecting_canal_landings","emblem_union","combinatorial_canal_bridge_zigzag",["cambered_bridges","hanging_streets","non_repeating_daily_routes"],7.8,[5,4]],["esmeralda_acrobat_lover_rooftopper","rooftop_gutter_sewer_spokes","polarity_carve","clandestine_gutter_sewer_swallow_arcs",["cat_thief_lover_balcony_drops","discontinuous_gutter_steps"],8.3,[3,2]],["esmeralda_gunpowder_sewer_smuggler","rooftop_gutter_sewer_spokes","polarity_carve","combinatorial_canal_bridge_zigzag",["rat_tail_dark_sewers","cheese_crust_gunpowder_kegs"],3.1,[7,5]],["esmeralda_swallow_parabola_dominator","swallow_parabola_airspace","altitude_max","clandestine_gutter_sewer_swallow_arcs",["still_wing_invisible_parabolas","mosquito_dart_pinnacle_graze"],9.4,[2,1]]]],
+[32,"Phyllis",6,5,4,90,"SPECULAR_PARALLAX","blank-page habitual blindness","first_glance_tracery_marvel","habituated_footstep_erasure","Stained-glass rose windows and caper-bush corbels bleaching out into stark sun/shade pavement patches",["tracery_canal_bridges","bleached_habit_zigzag","thirty_year_arcade_slant"],"6dab6f1120",137.8,["arch(tracery_canal_bridges:first_glance_tracery_marvel<->habituated_footstep_erasure@span=7.20)"],[["phyllis_corbel_rose_arriver","tracery_canal_bridges","polarity_carve","first_glance_tracery_marvel",["mullioned_moorish_lancet_windows","fortress_caper_bush","three_queens_onion_spire"],8.6,[5,4]],["phyllis_staying_fade_bleacher","tracery_canal_bridges","polarity_carve","habituated_footstep_erasure",["expunged_domes_and_statues","stumble_hole_creditor_detour"],2.4,[16,15]],["phyllis_blank_page_eye_scanner","bleached_habit_zigzag","emblem_union","habituated_footstep_erasure",["points_suspended_in_void","millions_scanning_blank_page"],6.3,[9,8]],["phyllis_surprise_sleeve_igniter","thirty_year_arcade_slant","altitude_max","first_glance_tracery_marvel",["embroidered_sleeve_memory_glint","caught_by_surprise_aperture"],7.7,[15,8]]]],
+[33,"Pyrrha",6,6,3,92,"ONOMASTIC_SHARD_SHUFFLE","unvisited phonetic reverie","imagined_goblet_bay_fortress","yellow_dust_sawmill_reality","Harsh flat yellowish sawmill dust and hidden dune-sea obliterating a dark vertical well-square",["imagined_goblet_well_square","dune_screened_sawmill_lots","buzzing_wind_pump_horizon"],"a7f0ed6a83",136.3,["arch(buzzing_wind_pump_horizon:imagined_goblet_bay_fortress<->yellow_dust_sawmill_reality@span=6.70)","arch(dune_screened_sawmill_lots:imagined_goblet_bay_fortress<->yellow_dust_sawmill_reality@span=6.70)","arch(imagined_goblet_well_square:imagined_goblet_bay_fortress<->yellow_dust_sawmill_reality@span=6.70)"],[["pyrrha_goblet_well_conjurer","imagined_goblet_well_square","polarity_carve","imagined_goblet_bay_fortress",["bay_slope_high_towers","deep_goblet_square_well"],2.8,[4,3]],["pyrrha_arrival_name_overwriter","imagined_goblet_well_square","polarity_carve","yellow_dust_sawmill_reality",["sea_hidden_behind_low_dune","straight_lumber_stack_streets"],8.5,[7,6]],["pyrrha_wind_pump_dust_buzzer","buzzing_wind_pump_horizon","emblem_union","yellow_dust_sawmill_reality",["spinning_water_pump_vanes","inevitable_yellowish_dust"],7.1,[5,4]],["pyrrha_nameless_orphan_archivist","dune_screened_sawmill_lots","altitude_max","imagined_goblet_bay_fortress",["getullia_odile_euphrasia_margara","unnameable_surviving_bay_city"],6.9,[9,5]]]],
+[34,"Adelma",6,7,2,94,"NECROPOLIS_ROLE_CASCADE","open-ended plastic facial novelty","living_stranger_anguish","saturated_ancestral_death_masks","Dusk wholesale fish-market shadows under sackcloth hoods turning every face into a dead relative",["urchin_bollard_dock","cabbage_balcony_alley","sackcloth_stevedore_steps"],"5bfb107f6e",136.0,["arch(urchin_bollard_dock:living_stranger_anguish<->saturated_ancestral_death_masks@span=7.00)"],[["adelma_dusk_dock_mask_printer","urchin_bollard_dock","polarity_carve","saturated_ancestral_death_masks",["dead_soldier_bollard_sailor","sea_urchin_cart_fisherman","yellow_eyed_fever_father"],8.7,[6,5]],["adelma_alien_face_dissolver","urchin_bollard_dock","polarity_carve","living_stranger_anguish",["averted_fearful_gaze","anguished_dissolved_resemblance"],2.7,[11,8]],["adelma_cabbage_scale_grandmother","cabbage_balcony_alley","emblem_union","saturated_ancestral_death_masks",["dangling_balcony_suicide_girl","grandmother_vegetable_vendor"],7.6,[4,3]],["adelma_hooded_kaleidoscope_absorber","sackcloth_stevedore_steps","altitude_max","saturated_ancestral_death_masks",["demijohn_sackcloth_stevedores","dead_outnumbering_living","unhappy_beyond"],8.0,[15,8]]]],
+[35,"Eudoxia",6,8,1,96,"CELESTIAL_BLUEPRINT_COUPLING","unmapped sensory jostling","symmetrical_crimson_carpet_cosmos","shapeless_mule_stain_universe","Indigo-and-crimson woven arabesques set directly beside lampblack stains and crumbling dust clouds",["crimson_indigo_carpet_shrine","lampblack_mule_alleys","ambiguous_oracle_altar"],"9641b7d8be",121.75,["arch(crimson_indigo_carpet_shrine:shapeless_mule_stain_universe<->symmetrical_crimson_carpet_cosmos@span=5.93)","arch(crimson_indigo_carpet_shrine:shapeless_mule_stain_universe<->symmetrical_crimson_carpet_cosmos@span=6.05)","arch(crimson_indigo_carpet_shrine:shapeless_mule_stain_universe<->symmetrical_crimson_carpet_cosmos@span=6.18)"],[["eudoxia_arabesque_woof_weaver","crimson_indigo_carpet_shrine","polarity_carve","symmetrical_crimson_carpet_cosmos",["straight_circular_spires","crimson_magenta_destination_loop"],8.4,[3,2]],["eudoxia_bray_lampblack_spreader","crimson_indigo_carpet_shrine","polarity_carve","shapeless_mule_stain_universe",["braying_mules_fish_smell","crumbling_crooked_dust_fires"],3.1,[7,4]],["eudoxia_anguish_thread_finder","lampblack_mule_alleys","emblem_union","symmetrical_crimson_carpet_cosmos",["hidden_fate_twist_in_woof","complete_proportion_point"],7.2,[5,4]],["eudoxia_reversible_oracle_augur","ambiguous_oracle_altar","altitude_max","shapeless_mule_stain_universe",["starry_orbit_form_reversal","city_stain_as_true_sky_map"],8.1,[9,5]]]],
+[36,"Moriana",7,5,5,105,"SPECULAR_PARALLAX","volumetric three-dimensional urban depth","alabaster_medusa_front","rusted_spike_tin_obverse","Zero-thickness paper edge splitting sunlit glass-aquarium villas from soot-blackened spiked planks",["alabaster_coral_villas","semicircle_paper_fold","spiked_plank_rotten_beam"],"7482796182",140.5,["arch(alabaster_coral_villas:alabaster_medusa_front<->rusted_spike_tin_obverse@span=7.30)"],[["moriana_alabaster_aquarium_glazier","alabaster_coral_villas","polarity_carve","alabaster_medusa_front",["sunlit_alabaster_gates","serpentine_coral_columns","medusa_chandelier_dancers"],8.6,[5,4]],["moriana_rusted_obverse_riveter","alabaster_coral_villas","polarity_carve","rusted_spike_tin_obverse",["rusted_sheet_metal_sackcloth","spiked_planks_soot_pipes","rotten_beam_hanging_ropes"],2.3,[16,15]],["moriana_semicircle_detour_walker","semicircle_paper_fold","altitude_max","rusted_spike_tin_obverse",["abrupt_hidden_face_turn","staved_in_straw_chairs"],7.4,[7,5]],["moriana_zero_thickness_binder","spiked_plank_rotten_beam","emblem_union","alabaster_medusa_front",["inseparable_blind_paper_sides","zero_thickness_perspective"],7.9,[3,2]]]],
+[37,"Clarice",7,6,4,106,"ONOMASTIC_SHARD_SHUFFLE","linear unbroken heritage preservation","mythic_unproven_first_splendor","chipped_gimcrack_shard_shuffle","Velvet bell-jars beside festering rabbit-cage hovels roasting meat on torn wrought-iron harem grilles",["plague_rummage_basements","velvet_bell_capital_museum","hen_basket_corinthian_yard"],"13170655a4",134.8,["arch(hen_basket_corinthian_yard:chipped_gimcrack_shard_shuffle<->mythic_unproven_first_splendor@span=6.60)","arch(plague_rummage_basements:chipped_gimcrack_shard_shuffle<->mythic_unproven_first_splendor@span=6.60)","arch(velvet_bell_capital_museum:chipped_gimcrack_shard_shuffle<->mythic_unproven_first_splendor@span=6.60)"],[["clarice_survivor_shard_repurposer","plague_rummage_basements","polarity_carve","chipped_gimcrack_shard_shuffle",["brocade_curtain_bedsheets","marble_urn_basil_pots","harem_grating_cat_roasters"],8.5,[5,4]],["clarice_velvet_bell_canonizer","plague_rummage_basements","polarity_carve","mythic_unproven_first_splendor",["usurper_butterfly_wealth","display_case_shards"],2.9,[4,3]],["clarice_hen_egg_capital_mover","hen_basket_corinthian_yard","emblem_union","chipped_gimcrack_shard_shuffle",["chicken_run_corinthian_capital","lost_succession_of_eras"],7.6,[3,2]],["clarice_obsolete_shuffle_dealer","velvet_bell_capital_museum","altitude_max","chipped_gimcrack_shard_shuffle",["unproven_original_clarice","shuffled_chipped_gimcracks"],8.0,[9,8]]]],
+[38,"Eusapia",7,7,3,109,"NECROPOLIS_ROLE_CASCADE","abrupt irreversible boundary of death","carefree_upper_imitators","remodeling_subterranean_mummies","Subterranean torchlight on yellow parchment skeletons playing little trumpets and editing blueprints",["upper_carefree_banquet","hooded_confraternity_shaft","lower_parchment_necropolis"],"7d219889a5",135.4,["arch(upper_carefree_banquet:carefree_upper_imitators<->remodeling_subterranean_mummies@span=7.20)"],[["eusapia_parchment_corpse_poser","lower_parchment_necropolis","emblem_union","remodeling_subterranean_mummies",["yellow_skin_laughing_skulls","stopped_clock_parchment_ear","carcass_milking_girl"],8.1,[5,4]],["eusapia_hooded_brother_courier","hooded_confraternity_shaft","altitude_max","remodeling_subterranean_mummies",["exclusive_tunnel_authority","ambiguous_dead_or_living_guides"],7.7,[3,2]],["eusapia_catacomb_vault_remodeler","upper_carefree_banquet","polarity_carve","remodeling_subterranean_mummies",["sober_underground_remodelings","dead_built_upper_city"],8.8,[7,4]],["eusapia_living_copycat_follower","upper_carefree_banquet","polarity_carve","carefree_upper_imitators",["living_copying_necropolis","indistinguishable_alive_and_dead"],2.6,[9,8]]]],
+[39,"Beersheba",7,8,2,111,"CELESTIAL_BLUEPRINT_COUPLING","self-possessed calculating hoarding","hoarded_jewel_subsoil_hell","castoff_peel_celestial_orbit","Grim subterranean brass-gear luxury contrasted with a radiant zenith planet of orbiting potato peels",["diamond_hoard_terrestrial_vault","tasseled_gear_infernal_subsoil","potato_peel_comet_zenith"],"f1be869964",140.0,["arch(diamond_hoard_terrestrial_vault:castoff_peel_celestial_orbit<->hoarded_jewel_subsoil_hell@span=7.18)","arch(diamond_hoard_terrestrial_vault:castoff_peel_celestial_orbit<->hoarded_jewel_subsoil_hell@span=7.27)","arch(diamond_hoard_terrestrial_vault:castoff_peel_celestial_orbit<->hoarded_jewel_subsoil_hell@span=7.35)"],[["beersheba_carat_mania_hoarder","diamond_hoard_terrestrial_vault","polarity_carve","hoarded_jewel_subsoil_hell",["silver_locks_diamond_gates","grim_composite_composure"],2.8,[4,3]],["beersheba_authoritative_hell_engineer","tasseled_gear_infernal_subsoil","emblem_union","hoarded_jewel_subsoil_hell",["expensive_subsoil_gearwork","fringed_tasseled_pipes"],6.9,[7,6]],["beersheba_rubbish_zenith_orbiter","diamond_hoard_terrestrial_vault","polarity_carve","castoff_peel_celestial_orbit",["potato_peel_umbrella_planet","tram_ticket_eggshell_paving"],8.9,[3,2]],["beersheba_generous_comet_releaser","potato_peel_comet_zenith","altitude_max","castoff_peel_celestial_orbit",["long_tailed_free_comets","ungreedy_detachment_moment"],9.2,[2,1]]]],
+[40,"Leonia",7,9,1,114,"PERIMETER_ACCRETION_SPRAWL","biodegradable self-digesting frugality","spotless_morning_unwrapping","indestructible_refuse_mountain_cuirass","Pristine plastic morning glare ringed on every horizon by towering craters of unmated shoes and pianos",["fresh_soap_morning_core","angelic_garbage_perimeter","colliding_detritus_ramparts"],"001d239601",167.96,["arch(fresh_soap_morning_core:indestructible_refuse_mountain_cuirass<->spotless_morning_unwrapping@span=10.69)","arch(fresh_soap_morning_core:indestructible_refuse_mountain_cuirass<->spotless_morning_unwrapping@span=7.96)","arch(fresh_soap_morning_core:indestructible_refuse_mountain_cuirass<->spotless_morning_unwrapping@span=9.22)"],[["leonia_brand_new_unwrapper","fresh_soap_morning_core","polarity_carve","spotless_morning_unwrapping",["fresh_sheets_unopened_tins","expulsion_cleansing_passion"],3.0,[5,4]],["leonia_indestructible_slag_piler","fresh_soap_morning_core","polarity_carve","indestructible_refuse_mountain_cuirass",["discarded_boilers_pianos_porcelain","time_proof_plastic_cuirass"],8.9,[7,4]],["leonia_rival_rampart_collider","angelic_garbage_perimeter","altitude_max","indestructible_refuse_mountain_cuirass",["hostile_neighbor_trash_crests","stratified_decade_sweepings"],9.3,[3,2]],["leonia_avalanche_bulldozer_watcher","colliding_detritus_ramparts","emblem_union","indestructible_refuse_mountain_cuirass",["rolling_tin_can_landslide","waiting_neighbor_bulldozers"],7.8,[16,9]]]],
+[41,"Irene",8,6,5,124,"ONOMASTIC_SHARD_SHUFFLE","interior stable self-identity","distant_plateau_magnet_glow","mutated_interior_capture","Pink twilight sponge-glow at gulley foot under yellow powder-flash and windy plateau rim",["windy_plateau_overlook","misty_gulley_pink_glow","bad_valley_descent_road"],"4b494601f6",131.8,["arch(bad_valley_descent_road:distant_plateau_magnet_glow<->mutated_interior_capture@span=6.40)","arch(misty_gulley_pink_glow:distant_plateau_magnet_glow<->mutated_interior_capture@span=6.40)","arch(windy_plateau_overlook:distant_plateau_magnet_glow<->mutated_interior_capture@span=6.40)"],[["irene_plateau_shepherd_conjecturer","windy_plateau_overlook","polarity_carve","distant_plateau_magnet_glow",["leaning_hermits_bird_catchers","pink_concentrated_window_glow"],8.3,[5,4]],["irene_windborne_drum_gun_carrier","misty_gulley_pink_glow","emblem_union","distant_plateau_magnet_glow",["festival_bass_drum_firecrackers","civil_war_powder_explosion"],7.1,[3,2]],["irene_approach_name_mutator","windy_plateau_overlook","polarity_carve","mutated_interior_capture",["vanishing_irene_upon_entry","trapped_vs_passing_names"],2.9,[9,5]],["irene_horizon_magnet_polarizer","bad_valley_descent_road","altitude_max","distant_plateau_magnet_glow",["unwalked_winding_valley_roads","every_city_spoken_as_irene"],7.8,[2,1]]]],
+[42,"Argia",8,7,4,126,"NECROPOLIS_ROLE_CASCADE","open atmospheric sunlit void","solid_packed_clay_volume","nocturnal_subterranean_door_slam","Total subterranean pitch-blackness where negative stairways press into packed earth and twisted roots",["dirt_packed_negative_stairs","worm_root_crevice_network","surface_ear_ground_crust"],"249537ee93",28.6,[],[["argia_clay_room_packer","dirt_packed_negative_stairs","polarity_carve","solid_packed_clay_volume",["earth_instead_of_air","ceiling_packed_clay","negative_stairway_imprints"],8.8,[1,1]],["argia_worm_crevice_prone_sleeper","worm_root_crevice_network","emblem_union","solid_packed_clay_volume",["twisting_root_tunnels","damp_prone_immobility"],6.7,[16,15]],["argia_rocky_cloud_overburden","dirt_packed_negative_stairs","altitude_max","solid_packed_clay_volume",["rock_strata_like_cloudy_skies","invisible_deserted_surface"],7.5,[4,3]],["argia_night_door_slam_listener","surface_ear_ground_crust","polarity_carve","nocturnal_subterranean_door_slam",["ear_pressed_to_night_ground","distant_buried_door_slam"],2.5,[7,4]]]],
+[43,"Thekla",8,8,3,127,"CELESTIAL_BLUEPRINT_COUPLING","completed static terminal monument","perpetual_anti_ruin_scaffolding","nocturnal_star_field_blueprint","Sackcloth-screened pine planks and self-hoisting cranes dissolving at dusk into crisp stellar blueprints",["plank_fence_eye_crack","crane_lifting_crane_rig","sunset_star_blueprint_vault"],"73793426aa",124.25,["arch(plank_fence_eye_crack:nocturnal_star_field_blueprint<->perpetual_anti_ruin_scaffolding@span=6.18)","arch(plank_fence_eye_crack:nocturnal_star_field_blueprint<->perpetual_anti_ruin_scaffolding@span=6.22)","arch(plank_fence_eye_crack:nocturnal_star_field_blueprint<->perpetual_anti_ruin_scaffolding@span=6.26)"],[["thekla_crane_on_crane_hoister","crane_lifting_crane_rig","altitude_max","perpetual_anti_ruin_scaffolding",["cranes_pulling_other_cranes","scaffoldings_embracing_scaffoldings"],9.1,[3,2]],["thekla_destruction_deferral_mason","plank_fence_eye_crack","polarity_carve","perpetual_anti_ruin_scaffolding",["leaded_plumb_strings","whispered_not_only_the_city"],8.4,[5,4]],["thekla_premature_completion_blocker","plank_fence_eye_crack","polarity_carve","nocturnal_star_field_blueprint",["unremoved_armature_trestles","suspended_day_shift"],3.1,[4,3]],["thekla_sunset_constellation_drafter","sunset_star_blueprint_vault","emblem_union","nocturnal_star_field_blueprint",["darkened_building_site","star_filled_sky_blueprint"],8.7,[2,1]]]],
+[44,"Trude",8,9,2,128,"PERIMETER_ACCRETION_SPRAWL","place-specific irreducible difference","global_airport_sign_swap","inescapable_suburban_isomorphism","Flat greenish-yellowish fluorescent haze over identical flower-bed roundabouts and hardware counters",["homonymous_airport_tarmac","greenish_yellowish_roundabout","hardware_goblet_hotel"],"f511851194",163.74,["arch(homonymous_airport_tarmac:global_airport_sign_swap<->inescapable_suburban_isomorphism@span=10.37)","arch(homonymous_airport_tarmac:global_airport_sign_swap<->inescapable_suburban_isomorphism@span=7.73)","arch(homonymous_airport_tarmac:global_airport_sign_swap<->inescapable_suburban_isomorphism@span=8.94)"],[["trude_airport_placard_swapper","homonymous_airport_tarmac","polarity_carve","global_airport_sign_swap",["changed_airport_big_letters","illusory_flight_departure"],2.9,[1,1]],["trude_suburb_clone_stamper","homonymous_airport_tarmac","polarity_carve","inescapable_suburban_isomorphism",["identical_greenish_yellowish_houses","same_square_flower_beds"],8.6,[9,8]],["trude_hardware_dialogue_looper","hardware_goblet_hotel","emblem_union","inescapable_suburban_isomorphism",["pre_heard_hardware_scripts","same_goblets_swaying_navels"],6.8,[4,3]],["trude_beginless_endless_auditor","greenish_yellowish_roundabout","altitude_max","inescapable_suburban_isomorphism",["sole_world_blanketing_trude","diagnostic_monoculture_specimen"],7.2,[16,15]]]],
+[45,"Olinda",8,10,1,129,"NESTED_GERM_EMERGENCE","withered dead-core suburban sprawl","microscopic_pinhead_blossom","centrifugal_proportional_ring_push","Magnifying-glass caustic spotlight revealing miniature racetracks swelling outward from the core",["pinhead_magnifying_nucleus","lemon_soup_plate_annulus","expanded_outer_horizon_walls"],"5dc97efb45",126.7,["arch(pinhead_magnifying_nucleus:centrifugal_proportional_ring_push<->microscopic_pinhead_blossom@span=6.70)"],[["olinda_pinhead_lens_hunter","pinhead_magnifying_nucleus","polarity_carve","microscopic_pinhead_blossom",["pinhead_roofs_skylights_pools","micro_streamers_racetrack"],8.9,[2,1]],["olinda_lemon_plate_inflator","lemon_soup_plate_annulus","emblem_union","microscopic_pinhead_blossom",["half_lemon_to_mushroom_scale","inner_blossoming_lymph"],7.9,[5,4]],["olinda_proportional_wall_expander","pinhead_magnifying_nucleus","polarity_carve","centrifugal_proportional_ring_push",["thinned_middle_quarters","horizon_broadened_ancient_walls"],3.2,[3,2]],["olinda_recursive_embryo_seeder","expanded_outer_horizon_walls","altitude_max","microscopic_pinhead_blossom",["nested_future_olindas","inverted_tree_ring_growth"],8.5,[15,8]]]],
+[46,"Laudomia",9,7,5,140,"NECROPOLIS_ROLE_CASCADE","presentist consequence-blindness","ordered_necropolis_certainty","unborn_pore_hourglass_dread","Hollow marble domes veined with microscopic eggplant-robed crowds poised above an unturned hourglass",["crowded_living_compartments","windowless_slab_necropolis","marble_vein_unborn_domes"],"604f5e8b6b",130.3,["arch(windowless_slab_necropolis:ordered_necropolis_certainty<->unborn_pore_hourglass_dread@span=6.70)"],[["laudomia_slab_order_archivist","windowless_slab_necropolis","polarity_carve","ordered_necropolis_certainty",["gravedigger_cart_lanes","chance_divorced_stone_slabs"],3.1,[4,3]],["laudomia_marble_pore_crowder","windowless_slab_necropolis","polarity_carve","unborn_pore_hourglass_dread",["silkworm_ant_egg_unborn","eggplant_barracan_descendants","suffocating_funnel_stadiums"],8.8,[7,4]],["laudomia_silent_dome_interrogator","crowded_living_compartments","emblem_union","unborn_pore_hourglass_dread",["echoing_hollow_footsteps","disconnected_dust_grain_lineage"],7.3,[5,4]],["laudomia_last_grain_hourglass_warden","marble_vein_unborn_domes","altitude_max","unborn_pore_hourglass_dread",["unturned_two_bulb_hourglass","waiting_final_inhabitant_grain"],8.4,[15,8]]]],
+[47,"Perinthia",9,8,4,144,"CELESTIAL_BLUEPRINT_COUPLING","pragmatic uncalculated vernacular growth","zodiac_eclipse_cardo_precision","three_headed_cellar_monsters","Razor-aligned solar decumanus shadow-cuts framing lunar eclipses above dark howling lofts",["solar_cardo_decumanus_cross","twelve_eclipse_zodiac_gates","hidden_six_legged_cellars"],"bf8e45fb00",133.0,["arch(solar_cardo_decumanus_cross:three_headed_cellar_monsters<->zodiac_eclipse_cardo_precision@span=6.75)","arch(solar_cardo_decumanus_cross:three_headed_cellar_monsters<->zodiac_eclipse_cardo_precision@span=6.80)","arch(solar_cardo_decumanus_cross:three_headed_cellar_monsters<->zodiac_eclipse_cardo_precision@span=6.85)"],[["perinthia_eclipse_gate_astronomer","solar_cardo_decumanus_cross","polarity_carve","zodiac_eclipse_cardo_precision",["sun_axis_cardo_decumanus","thousand_year_lunar_eclipse_gates"],3.0,[3,2]],["perinthia_cellar_monster_breeder","solar_cardo_decumanus_cross","polarity_carve","three_headed_cellar_monsters",["square_cripples_bearded_women","three_headed_six_legged_howls"],8.9,[7,5]],["perinthia_zodiac_ward_mapper","twelve_eclipse_zodiac_gates","altitude_max","zodiac_eclipse_cardo_precision",["twelve_constellation_temples","guaranteed_firmament_harmony"],7.6,[4,3]],["perinthia_monstrous_god_dilemma_judge","hidden_six_legged_cellars","emblem_union","three_headed_cellar_monsters",["failed_math_or_monstrous_heavens","exact_divine_deformity"],8.3,[16,9]]]],
+[48,"Procopia",9,9,3,146,"PERIMETER_ACCRETION_SPRAWL","unpeopled pastoral horizon depth","trapeze_sky_medlar_window","shoulder_straddling_polite_occlusion","Inn window rectangle progressively bricked solid from horizon to sill by flat, smiling, corn-chewing faces",["inn_curtain_window_frame","medlar_ditch_bridge_field","twenty_six_lodger_bedroom"],"1ec72f592f",182.71,["arch(inn_curtain_window_frame:shoulder_straddling_polite_occlusion<->trapeze_sky_medlar_window@span=10.19)","arch(inn_curtain_window_frame:shoulder_straddling_polite_occlusion<->trapeze_sky_medlar_window@span=11.84)","arch(inn_curtain_window_frame:shoulder_straddling_polite_occlusion<->trapeze_sky_medlar_window@span=8.79)"],[["procopia_pastoral_frame_keeper","inn_curtain_window_frame","polarity_carve","trapeze_sky_medlar_window",["trapeze_blue_sky_patch","yellow_hill_medlar_brambles"],2.4,[5,4]],["procopia_corn_chewing_face_packer","inn_curtain_window_frame","polarity_carve","shoulder_straddling_polite_occlusion",["one_three_six_sixteen_forty_seven","blackberry_stained_round_smiles"],9.0,[9,8]],["procopia_shoulder_straddle_stacker","medlar_ditch_bridge_field","altitude_max","shoulder_straddling_polite_occlusion",["occluded_bridge_and_sky","wall_to_wall_flat_faces"],8.2,[4,3]],["procopia_polite_knee_room_crammer","twenty_six_lodger_bedroom","emblem_union","shoulder_straddling_polite_occlusion",["twenty_six_in_one_room","polite_chest_and_bed_elbows"],7.5,[7,6]]]],
+[49,"Raissa",9,10,2,148,"NESTED_GERM_EMERGENCE","monolithic unthreaded despair","hammer_bruised_ledger_gloom","ephemeral_francolin_joy_thread","Grim zinc-counter shadow pierced by a millisecond red-and-yellow illuminated kinetic lightning-chain",["awry_ledger_zinc_wineshop","pergola_ragout_scaffolding","freed_francolin_page_sky"],"5bfc7e9669",136.3,["arch(awry_ledger_zinc_wineshop:ephemeral_francolin_joy_thread<->hammer_bruised_ledger_gloom@span=7.10)"],[["raissa_bruised_thumb_grumbler","awry_ledger_zinc_wineshop","polarity_carve","hammer_bruised_ledger_gloom",["hammer_struck_needle_pricked_hands","broken_summer_dishes_awry_ledgers"],2.7,[16,15]],["raissa_polenta_ragout_relay","awry_ledger_zinc_wineshop","polarity_carve","ephemeral_francolin_joy_thread",["laughing_window_child","polenta_shed_dog_stonemason_shout","ragout_maid_lace_parasol"],8.8,[5,4]],["raissa_jumping_horse_francolin_painter","pergola_ragout_scaffolding","altitude_max","ephemeral_francolin_joy_thread",["smiling_jumping_officer_horse","freed_red_yellow_speckled_francolin"],8.5,[3,2]],["raissa_unaware_thread_restretcher","freed_francolin_page_sky","emblem_union","ephemeral_francolin_joy_thread",["rapid_unraveling_living_thread","unaware_happy_city_inside_sad"],8.1,[2,1]]]],
+[50,"Andria",9,8,5,150,"CELESTIAL_BLUEPRINT_COUPLING","one-way fatalistic astrological determinism","meticulous_orbital_regimentation","prudent_nova_triggering_realignment","Suspended bamboo-grove streets reflected directly into telescope lenses flaring orange-to-yellow novas",["cepheid_orbital_street_ring","bamboo_shadow_theater_port","nova_spiral_observatory"],"d3ce5538a7",124.45,["arch(bamboo_shadow_theater_port:meticulous_orbital_regimentation<->prudent_nova_triggering_realignment@span=6.02)","arch(bamboo_shadow_theater_port:meticulous_orbital_regimentation<->prudent_nova_triggering_realignment@span=6.15)","arch(bamboo_shadow_theater_port:meticulous_orbital_regimentation<->prudent_nova_triggering_realignment@span=6.27)"],[["andria_antares_calendar_aligner","cepheid_orbital_street_ring","emblem_union","meticulous_orbital_regimentation",["planet_orbit_streets","antares_alpheratz_cepheid_offices"],7.4,[4,3]],["andria_bamboo_toboggan_rigger","bamboo_shadow_theater_port","polarity_carve","prudent_nova_triggering_realignment",["suspended_bamboo_street","former_lazaretto_kennels","thales_statue_toboggan_slide"],8.6,[5,4]],["andria_motionless_myth_refuter","bamboo_shadow_theater_port","polarity_carve","meticulous_orbital_regimentation",["rejected_clockwork_stasis","calculated_all_world_prudence"],3.2,[3,2]],["andria_nova_nebula_reciprocator","nova_spiral_observatory","altitude_max","prudent_nova_triggering_realignment",["exploded_nova_orange_to_yellow","bent_milky_way_spiral"],9.1,[15,8]]]],
+[51,"Cecilia",9,9,4,152,"PERIMETER_ACCRETION_SPRAWL","sharp rural-urban ecological boundary","pasture_blind_city_walker","mingled_traffic_island_goatherd","Endless rows of identical pavement swallowing cliffs and sage meadows into a single inescapable traffic island",["tinkling_wall_gate_pasture","endless_identical_house_rows","low_sage_traffic_island"],"cd1560b6a5",155.31,["arch(tinkling_wall_gate_pasture:mingled_traffic_island_goatherd<->pasture_blind_city_walker@span=7.25)","arch(tinkling_wall_gate_pasture:mingled_traffic_island_goatherd<->pasture_blind_city_walker@span=8.38)","arch(tinkling_wall_gate_pasture:mingled_traffic_island_goatherd<->pasture_blind_city_walker@span=9.71)"],[["cecilia_stone_blind_urbanite","tinkling_wall_gate_pasture","polarity_carve","pasture_blind_city_walker",["unrecognized_inter_city_meadows","mingled_stones_and_grass"],3.0,[4,3]],["cecilia_leaf_seeking_goatherd","tinkling_wall_gate_pasture","polarity_carve","mingled_traffic_island_goatherd",["meadow_between_cliffs_green_slope","frightened_corner_goats"],8.3,[5,4]],["cecilia_wastepaper_goat_waner","endless_identical_house_rows","emblem_union","mingled_traffic_island_goatherd",["odorless_skin_and_bone_goats","rubbish_bin_wastepaper_forage"],7.5,[7,6]],["cecilia_omnipresent_island_merger","low_sage_traffic_island","altitude_max","mingled_traffic_island_goatherd",["cecilia_is_everywhere","low_sage_recognized_in_traffic_island"],8.0,[9,8]]]],
+[52,"Marozia",9,10,3,154,"NESTED_GERM_EMERGENCE","programmed ideological utopia decree","leaden_rat_overcoat_tunnel","chance_dragonfly_swallow_crack","Mold-soldered stone passages splitting open for one unforced instant into dragonfly-wing crystal",["leaden_rat_pack_passages","bat_umbrella_overcoat_plaza","crystalline_wall_crack"],"bc29f884c0",136.6,["arch(leaden_rat_pack_passages:chance_dragonfly_swallow_crack<->leaden_rat_overcoat_tunnel@span=7.20)"],[["marozia_voracious_rat_tunnel_runner","leaden_rat_pack_passages","polarity_carve","leaden_rat_overcoat_tunnel",["teeth_torn_leftovers","soldered_stone_mold_ceiling"],2.8,[16,15]],["marozia_suspicious_umbrella_flapper","bat_umbrella_overcoat_plaza","emblem_union","leaden_rat_overcoat_tunnel",["lowered_eyelid_umbrellas","flapping_batlike_overcoats"],6.4,[7,6]],["marozia_unforced_pleasure_opener","leaden_rat_pack_passages","polarity_carve","chance_dragonfly_swallow_crack",["sheer_pleasure_shared_gesture","dragonfly_transparent_transfiguration"],9.0,[5,4]],["marozia_swallow_horizon_flicker","crystalline_wall_crack","altitude_max","chance_dragonfly_swallow_crack",["tail_flick_opening_horizon","second_city_freeing_from_first"],8.7,[2,1]]]],
+[53,"Penthesilea",9,9,5,156,"PERIMETER_ACCRETION_SPRAWL","walled threshold archway certainty","diluted_snaggle_comb_outskirts","contradictory_oblique_arm_gestures","Milky swamp-soup pallor over corrugated-iron sheds, rusty Ferris wheel, and freckled suburb lights",["corrugated_swamp_approach","ferris_shambles_workshop_belt","opaque_polyhedron_horizon"],"01dd7c4eb7",161.02,["arch(corrugated_swamp_approach:contradictory_oblique_arm_gestures<->diluted_snaggle_comb_outskirts@span=7.37)","arch(corrugated_swamp_approach:contradictory_oblique_arm_gestures<->diluted_snaggle_comb_outskirts@span=8.52)","arch(corrugated_swamp_approach:contradictory_oblique_arm_gestures<->diluted_snaggle_comb_outskirts@span=9.87)"],[["penthesilea_threshold_eraser","corrugated_swamp_approach","polarity_carve","diluted_snaggle_comb_outskirts",["no_customs_archway_girdle","soupy_plain_mangy_fields","snaggle_toothed_shallow_facades"],8.5,[9,8]],["penthesilea_oblique_arm_pointer","corrugated_swamp_approach","polarity_carve","contradictory_oblique_arm_gestures",["broad_gesture_here_farther_opposite","opaque_horizon_polyhedrons"],3.1,[7,5]],["penthesilea_shambles_carnival_stringer","ferris_shambles_workshop_belt","emblem_union","diluted_snaggle_comb_outskirts",["rusty_workshops_cemetery_shambles","freckled_suburb_night_windows"],7.3,[4,3]],["penthesilea_outside_limbo_questioner","opaque_polyhedron_horizon","altitude_max","diluted_snaggle_comb_outskirts",["penthesilea_only_outskirts_of_itself","inescapable_global_limbo"],8.2,[16,15]]]],
+[54,"Theodora",9,10,4,159,"NESTED_GERM_EMERGENCE","aseptic anthropocentric ecological purge","exterminating_linnaean_order","awakened_incunabula_chimera_swarm","Sterile closed stone pavements erupted from below by basement-library griffons, hydras, and basilisks",["aseptic_rat_massacre_sewers","buffon_linnaeus_incunabula_vault","griffon_basilisk_bedside_capitals"],"9596781c92",137.8,["arch(aseptic_rat_massacre_sewers:awakened_incunabula_chimera_swarm<->exterminating_linnaean_order@span=7.20)"],[["theodora_carapace_rat_exterminator","aseptic_rat_massacre_sewers","polarity_carve","exterminating_linnaean_order",["condor_serpent_spider_fly_chain","poison_immune_rat_massacre","aseptic_human_cemetery"],2.9,[4,3]],["theodora_buffon_shelf_archivist","buffon_linnaeus_incunabula_vault","emblem_union","exterminating_linnaean_order",["extinct_fauna_volumes","sealed_flea_and_germ_tombs"],6.2,[5,4]],["theodora_incunabula_crypt_breaker","aseptic_rat_massacre_sewers","polarity_carve","awakened_incunabula_chimera_swarm",["stirring_deposed_basement_fauna","drainpipe_leaping_sphinxes_griffons"],9.1,[7,4]],["theodora_hydra_bedside_percher","griffon_basilisk_bedside_capitals","altitude_max","awakened_incunabula_chimera_swarm",["chimeras_dragons_hircocervi","harpies_hydras_unicorns_basilisks"],8.9,[15,8]]]],
+[55,"Berenice",9,10,5,161,"NESTED_GERM_EMERGENCE","final settled moral triumph","triglyph_meat_grinder_unjust","nested_comma_pulley_just_unjust_seeds","Classical abaci crowning meat-grinder cogs infiltrated by ticking counterweights and nested moral germs",["triglyph_cog_perfumed_baths","understair_pulley_comma_rooms","nested_germ_sheath_core"],"aa29b278f7",137.8,["arch(triglyph_cog_perfumed_baths:nested_comma_pulley_just_unjust_seeds<->triglyph_meat_grinder_unjust@span=7.20)"],[["berenice_triglyph_cog_oppressor","triglyph_cog_perfumed_baths","polarity_carve","triglyph_meat_grinder_unjust",["abaci_metope_meat_grinders","perfumed_bath_sycophants_janizaries"],2.7,[16,15]],["berenice_comma_pulley_just_infiltrator","triglyph_cog_perfumed_baths","polarity_carve","nested_comma_pulley_just_unjust_seeds",["climbing_wire_piston_ticking","comma_parenthesis_shibboleth","fried_squash_flowers_celery_soup"],8.9,[5,4]],["berenice_righteous_rivalry_fermenter","understair_pulley_comma_rooms","emblem_union","triglyph_meat_grinder_unjust",["malignant_pride_of_being_more_just","revenge_yearning_inner_unjust_sheath"],7.8,[7,5]],["berenice_simultaneous_window_germinator","nested_germ_sheath_core","altitude_max","nested_comma_pulley_just_unjust_seeds",["unruled_window_awakening_justice","all_future_berenices_wrapped_now"],9.5,[2,1]]]]
+]};
+
+const SERIES_SHORT = ["Memory","Desire","Signs","Thin","Trading","Eyes","Names","Dead","Sky","Continuous","Hidden"];
+
+const cities = RAW.c.map(row => ({
+  index: row[0],
+  name: row[1],
+  chapter: row[2],
+  seriesIdx: row[3],
+  series: RAW.s[row[3]],
+  rank: row[4],
+  page: row[5],
+  topology: row[6],
+  desert: row[7],
+  poleAlpha: row[8],
+  poleBeta: row[9],
+  optics: row[10],
+  loci: row[11],
+  peakHash: row[12],
+  peakTension: row[13],
+  archScars: row[14],
+  agents: row[15].map(a => ({
+    name: a[0], locus: a[1], op: a[2], polarity: a[3], emblems: a[4], mag: a[5], ratio: a[6]
+  }))
+}));
+
+const state = {
+  selectedIdx: 17, // #18 Armilla
+  tab: "stage",
+  audioOn: false,
+  audioCtx: null,
+  normBias: 0.15,
+  particles: [],
+  arches: [],
+  ripples: [],
+  seriesCursor: {},
+  palette: {}
+};
+
+function fnv(obj) {
+  const s = JSON.stringify(obj);
+  let h = 0x811c9dc5;
+  for (let i = 0; i < s.length; i++) {
+    h ^= s.charCodeAt(i);
+    h = Math.imul(h, 0x01000193) >>> 0;
+  }
+  return h.toString(16).padStart(8, "0");
+}
+
+function ensureRuntime(c) {
+  if (!c.rt) {
+    c.rt = {
+      tick: 3,
+      commits: 12,
+      tension: c.peakTension,
+      peakTension: c.peakTension,
+      headHash: c.peakHash,
+      peakHash: c.peakHash,
+      scars: [...c.archScars]
+    };
+  }
+  return c.rt;
+}
+cities.forEach(ensureRuntime);
+
+function syncPalette() {
+  const isLight = document.documentElement.classList.contains("light");
+  const cs = getComputedStyle(document.documentElement);
+  const fg = cs.getPropertyValue("--foreground").trim() || (isLight ? "#18181b" : "#f4f4f5");
+  const muted = cs.getPropertyValue("--muted-foreground").trim() || (isLight ? "#52525b" : "#a1a1aa");
+  const card = cs.getPropertyValue("--card").trim() || (isLight ? "#f4f4f5" : "#18181b");
+  const c1 = cs.getPropertyValue("--chart-1").trim() || (isLight ? "#d94832" : "#f06a54");
+  const c2 = cs.getPropertyValue("--chart-2").trim() || (isLight ? "#2563eb" : "#60a5fa");
+  const c3 = cs.getPropertyValue("--chart-3").trim() || (isLight ? "#ca8a04" : "#facc15");
+  const c4 = cs.getPropertyValue("--chart-4").trim() || (isLight ? "#0d9488" : "#34d399");
+  state.palette = {
+    isLight,
+    canvasBg: isLight ? "#f6f2e9" : "#131210",
+    grid: isLight ? "rgba(24,24,27,0.06)" : "rgba(244,244,245,0.06)",
+    strokeSoft: isLight ? "rgba(24,24,27,0.34)" : "rgba(244,244,245,0.36)",
+    strokeMid: isLight ? "rgba(24,24,27,0.56)" : "rgba(244,244,245,0.58)",
+    ink: isLight ? "#1c1917" : "#f5f0e6",
+    fg, muted, card,
+    alpha: c1,
+    beta: c2,
+    gold: c3,
+    jade: c4,
+    arch: isLight ? "#c23422" : "#ff6b57"
+  };
+}
+syncPalette();
+window.addEventListener("themechange", () => {
+  syncPalette();
+  renderInspector();
+});
+
+function playChord(city, accent) {
+  if (!state.audioOn) return;
+  if (!state.audioCtx) {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    state.audioCtx = new AC();
+  }
+  if (state.audioCtx.state === "suspended") state.audioCtx.resume();
+  const now = state.audioCtx.currentTime;
+  const root = 165 + (city.index % 11) * 14;
+  city.agents.forEach((ag, idx) => {
+    const osc = state.audioCtx.createOscillator();
+    const gain = state.audioCtx.createGain();
+    osc.type = idx % 2 === 0 ? "triangle" : "sine";
+    osc.frequency.setValueAtTime(Math.min(1320, root * (ag.ratio[0] / Math.max(1, ag.ratio[1]))), now);
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(accent ? 0.05 : 0.028, now + 0.025 + idx * 0.015);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + (accent ? 0.55 : 0.34));
+    osc.connect(gain).connect(state.audioCtx.destination);
+    osc.start(now + idx * 0.012);
+    osc.stop(now + (accent ? 0.6 : 0.38));
+  });
+}
+
+function setTab(tab) {
+  state.tab = tab;
+  document.getElementById("viewStage").classList.toggle("hidden", tab !== "stage");
+  document.getElementById("viewMatrix").classList.toggle("hidden", tab !== "matrix");
+  document.getElementById("viewForge").classList.toggle("hidden", tab !== "forge");
+  [["tabStage","stage"],["tabMatrix","matrix"],["tabForge","forge"]].forEach(([id, t]) => {
+    const el = document.getElementById(id);
+    if (t === tab) {
+      el.className = "px-2 py-1 rounded font-medium bg-[var(--primary)] text-[var(--primary-foreground)]";
+    } else {
+      el.className = "px-2 py-1 rounded font-medium bg-[var(--card)] text-[var(--muted-foreground)] border border-[var(--border)]";
+    }
+  });
+  if (tab === "stage") resizeCanvas();
+  if (tab === "matrix") renderMatrix();
+}
+
+function populateSelectors() {
+  const sel = document.getElementById("citySelect");
+  sel.innerHTML = cities.map((c, i) =>
+    `<option value="${i}">${String(c.index).padStart(2,"0")} · ${c.name} (${SERIES_SHORT[c.seriesIdx] || "Scion"})</option>`
+  ).join("");
+  sel.value = String(state.selectedIdx);
+
+  ["graftA", "graftB"].forEach((id, k) => {
+    const g = document.getElementById(id);
+    const cur = g.value;
+    g.innerHTML = cities.map((c, i) => `<option value="${i}">#${c.index} ${c.name}</option>`).join("");
+    g.value = cur !== "" && cities[+cur] ? cur : (k === 0 ? "17" : "25");
+  });
+}
+
+function spawnParticles(city) {
+  state.particles = city.agents.map((ag, idx) => {
+    const ang = (idx / city.agents.length) * Math.PI * 2 + 0.45;
+    return {
+      ag,
+      idx,
+      x: 0.5 + Math.cos(ang) * 0.25,
+      y: 0.5 + Math.sin(ang) * 0.23,
+      vx: Math.cos(ang + 1.2) * 0.0024 * (ag.ratio[0] / Math.max(1, ag.ratio[1])),
+      vy: Math.sin(ang + 1.2) * 0.0024 * (ag.ratio[0] / Math.max(1, ag.ratio[1])),
+      trail: []
+    };
+  });
+  const rt = ensureRuntime(city);
+  state.arches = rt.scars.slice(0, 6).map((sc, i) => ({
+    label: sc,
+    x1: 0.20 + (i * 0.17) % 0.42,
+    y1: 0.70 - (i % 2) * 0.22,
+    x2: 0.80 - (i * 0.15) % 0.40,
+    y2: 0.68 - ((i + 1) % 2) * 0.20
+  }));
+  state.ripples = [];
+}
+
+function renderSeriesRibbon() {
+  const rib = document.getElementById("seriesRibbon");
+  const curCity = cities[state.selectedIdx];
+  rib.innerHTML = SERIES_SHORT.map((label, sIdx) => {
+    const active = curCity.seriesIdx === sIdx;
+    const cls = active
+      ? "px-2 py-0.5 rounded bg-[var(--primary)] text-[var(--primary-foreground)] font-medium"
+      : "px-2 py-0.5 rounded bg-[var(--card)] text-[var(--muted-foreground)] border border-[var(--border)]";
+    return `<button data-sidx="${sIdx}" class="${cls}">${label}</button>`;
+  }).join("");
+  rib.querySelectorAll("button").forEach(btn => {
+    btn.onclick = () => {
+      const sIdx = +btn.dataset.sidx;
+      const group = cities
+        .map((c, idx) => ({ c, idx }))
+        .filter(item => item.c.index <= 55 && item.c.seriesIdx === sIdx);
+      const pos = ((state.seriesCursor[sIdx] ?? -1) + 1) % group.length;
+      state.seriesCursor[sIdx] = pos;
+      selectCity(group[pos].idx, true);
+    };
+  });
+}
+
+function renderInspector() {
+  const city = cities[state.selectedIdx];
+  const rt = ensureRuntime(city);
+  document.getElementById("cityTitle").textContent = `#${city.index} ${city.name}`;
+  document.getElementById("cityMeta").textContent = `Ch.${city.chapter} · ${SERIES_SHORT[city.seriesIdx] || "Scion"} ${city.rank} · p.${city.page}`;
+  document.getElementById("polesLine").textContent = `α ${city.poleAlpha} ↔ β ${city.poleBeta}`;
+  document.getElementById("polesLine").title = `α ${city.poleAlpha} ↔ β ${city.poleBeta} (opposes: ${city.desert})`;
+  document.getElementById("lociLine").textContent = `Loci: ${city.loci.join(" · ")}`;
+  document.getElementById("opticsBar").textContent = `Lens: ${city.optics} — click stage to carve arch`;
+  document.getElementById("opticsBar").title = city.optics;
+  document.getElementById("canvasBadge").textContent = `${city.topology}`;
+  document.getElementById("archBadge").innerHTML =
+    `<span>Arches: ${rt.scars.length}</span><span class="truncate">${rt.scars[rt.scars.length - 1] || "arch_ready"}</span>`;
+
+  const cards = document.getElementById("agentCards");
+  cards.innerHTML = city.agents.map(ag => {
+    const isBeta = ag.polarity === city.poleBeta;
+    const dotColor = isBeta ? state.palette.beta : state.palette.alpha;
+    return `<div class="px-2 py-1 rounded bg-[var(--card)] border border-[var(--border)] text-xs">
+      <div class="flex items-center justify-between gap-1 font-mono">
+        <span class="flex items-center gap-1.5 font-medium text-[var(--foreground)] truncate">
+          <span style="background:${dotColor}" class="inline-block w-2 h-2 rounded-full shrink-0"></span>
+          <span class="truncate" title="${ag.name}">${ag.name}</span>
+        </span>
+        <span class="text-[var(--muted-foreground)] shrink-0">${ag.ratio[0]}:${ag.ratio[1]}</span>
+      </div>
+      <div class="flex items-center justify-between gap-2 text-[var(--muted-foreground)] font-mono truncate">
+        <span class="truncate">[${ag.op}] → ${ag.locus}</span>
+        <span class="truncate" title="${ag.emblems.join(', ')}">${ag.emblems.slice(0, 2).join(" · ")}</span>
+      </div>
+    </div>`;
+  }).join("");
+
+  document.getElementById("dagStatus").innerHTML =
+    `<span>head:${rt.headHash}</span><span>tension:${rt.tension.toFixed(1)} · commits:${rt.commits}</span>`;
+  renderSeriesRibbon();
+}
+
+function renderMatrix(previewIdx = state.selectedIdx) {
+  const wrap = document.getElementById("matrixTable");
+  let html = `<div class="grid grid-cols-12 gap-1 text-xs font-mono text-[var(--muted-foreground)] pb-1">
+    <div>Rk</div>${SERIES_SHORT.map(s => `<div class="truncate text-center" title="${s}">${s.slice(0,4)}</div>`).join("")}
+  </div>`;
+  for (let rk = 1; rk <= 5; rk++) {
+    html += `<div class="grid grid-cols-12 gap-1 text-xs font-mono items-center">
+      <div class="text-[var(--muted-foreground)]">R${rk}</div>`;
+    for (let sIdx = 0; sIdx < 11; sIdx++) {
+      const fIdx = cities.findIndex(c => c.index <= 55 && c.rank === rk && c.seriesIdx === sIdx);
+      const c = cities[fIdx];
+      const sel = fIdx === state.selectedIdx;
+      const cls = sel
+        ? "px-1 py-1.5 rounded text-center cursor-pointer bg-[var(--primary)] text-[var(--primary-foreground)] font-semibold truncate"
+        : "px-1 py-1.5 rounded text-center cursor-pointer bg-[var(--card)] text-[var(--foreground)] border border-[var(--border)] truncate";
+      html += `<button data-cidx="${fIdx}" class="${cls}" title="#${c.index} ${c.name} (Ch.${c.chapter}, ${c.series} ${c.rank})">${String(c.index).padStart(2,"0")} ${c.name.slice(0,3)}</button>`;
+    }
+    html += `</div>`;
+  }
+  const scions = cities.map((c, idx) => ({ c, idx })).filter(x => x.c.index > 55);
+  if (scions.length > 0) {
+    html += `<div class="pt-1.5 flex flex-wrap items-center gap-1 text-xs font-mono">
+      <span class="text-[var(--muted-foreground)]">Forged:</span>` +
+      scions.slice(-5).map(({ c, idx }) => {
+        const cls = idx === state.selectedIdx
+          ? "px-2 py-0.5 rounded bg-[var(--primary)] text-[var(--primary-foreground)]"
+          : "px-2 py-0.5 rounded bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)]";
+        return `<button data-cidx="${idx}" class="${cls}">#${c.index} ${c.name}</button>`;
+      }).join("") + `</div>`;
+  }
+  wrap.innerHTML = html;
+  wrap.querySelectorAll("button[data-cidx]").forEach(b => {
+    const idx = +b.dataset.cidx;
+    b.onmouseenter = () => updateMatrixBar(idx);
+    b.onclick = () => {
+      selectCity(idx, false);
+      setTab("stage");
+    };
+  });
+  updateMatrixBar(previewIdx);
+}
+
+function updateMatrixBar(idx) {
+  const c = cities[idx];
+  document.getElementById("matrixHoverBar").innerHTML =
+    `<span class="text-[var(--foreground)] font-semibold shrink-0">#${c.index} ${c.name} (${SERIES_SHORT[c.seriesIdx] || "Scion"} ${c.rank})</span>
+     <span class="text-[var(--muted-foreground)] truncate">${c.topology} · Agents: ${c.agents.map(a => a.name).join(", ")}</span>`;
+}
+
+function selectCity(idx, stayOnTab) {
+  state.selectedIdx = (idx + cities.length) % cities.length;
+  populateSelectors();
+  spawnParticles(cities[state.selectedIdx]);
+  renderInspector();
+  if (state.tab === "matrix") renderMatrix(state.selectedIdx);
+  playChord(cities[state.selectedIdx], false);
+  if (!stayOnTab && state.tab !== "stage") setTab("stage");
+}
+
+function stepSwarm(burst) {
+  const city = cities[state.selectedIdx];
+  const rt = ensureRuntime(city);
+  if (state.normBias > 0.78) {
+    state.normBias = 0.15;
+    document.getElementById("normRange").value = "15";
+    document.getElementById("normLabel").textContent = "0.15 (Peak Restored)";
+    rt.tension = rt.peakTension;
+    rt.headHash = rt.peakHash;
+    renderInspector();
+    return;
+  }
+  const batch = [];
+  for (let b = 0; b < burst; b++) {
+    rt.tick += 1;
+    city.agents.forEach((ag, i) => {
+      batch.push({ a: ag.name, l: ag.locus, p: ag.polarity, m: +(ag.mag + ((rt.tick + i) % 5) * 0.21).toFixed(3), b });
+    });
+  }
+  rt.commits += batch.length;
+  rt.headHash = fnv(batch.map(fnv).sort());
+  const scar = `arch(${city.loci[rt.tick % city.loci.length]}:${city.poleAlpha}<->${city.poleBeta}@t${rt.tick})`;
+  if (!rt.scars.includes(scar) && rt.scars.length < 10) {
+    rt.scars.push(scar);
+    state.arches.push({
+      label: scar,
+      x1: 0.16 + ((rt.tick * 13) % 28) / 100,
+      y1: 0.34 + ((rt.tick * 7) % 38) / 100,
+      x2: 0.56 + ((rt.tick * 11) % 28) / 100,
+      y2: 0.34 + ((rt.tick * 17) % 38) / 100
+    });
+    if (state.arches.length > 8) state.arches.shift();
+  }
+  rt.tension = +(rt.tension + (burst > 1 ? 8.6 : 1.45) * (1 - state.normBias * 0.5)).toFixed(2);
+  if (rt.tension > rt.peakTension) {
+    rt.peakTension = rt.tension;
+    rt.peakHash = rt.headHash;
+  }
+  playChord(city, burst > 1);
+  renderInspector();
+}
+
+function mutateActiveCity(op) {
+  const p = cities[state.selectedIdx];
+  const newIdx = cities.length + 1;
+  const slug = `${p.name.toLowerCase().replace(/[^a-z0-9]/g, "_")}_${op}`;
+  const roles = ["carver", "inverter", "spanner", "warden"];
+  const topoMap = {
+    mirror_axis: "SPECULAR_PARALLAX",
+    slow_time: "NECROPOLIS_ROLE_CASCADE",
+    spawn_echo: "NESTED_GERM_EMERGENCE",
+    simplify_rules: "TENSILE_VOID_RIG",
+    transmute_medium: "CELESTIAL_BLUEPRINT_COUPLING",
+    invert_goal: "SEMIOTIC_INVERSION",
+    invert_axiom: "CHORD_EXCHANGE_WEB"
+  };
+  const pa = `${op}_${p.poleBeta}`;
+  const pb = `counter_${p.poleAlpha}`;
+  const loci = p.loci.map(l => `${op.split("_")[0]}_${l}`);
+  const agents = p.agents.map((ag, i) => ({
+    name: `${slug}_${roles[i]}_${newIdx}`,
+    locus: i < 2 ? loci[0] : loci[Math.min(i - 1, 2)],
+    op: i < 2 ? "polarity_carve" : ag.op,
+    polarity: i % 2 === 0 ? pa : pb,
+    emblems: ag.emblems.map(e => `${op}:${e}`),
+    mag: +(11.2 - ag.mag + i * 0.5).toFixed(2),
+    ratio: [ag.ratio[1] + i + 1, Math.max(1, ag.ratio[0])]
+  }));
+  const scion = {
+    index: newIdx,
+    name: `${p.name}-${op.replace("_", "-")}`,
+    chapter: p.chapter,
+    seriesIdx: p.seriesIdx,
+    series: `Scion (${op})`,
+    rank: 1,
+    page: p.page,
+    topology: topoMap[op] || p.topology,
+    desert: `parent friction of ${p.name}`,
+    poleAlpha: pa,
+    poleBeta: pb,
+    optics: `[${op.toUpperCase()}] ${p.optics}`,
+    loci,
+    peakHash: fnv(agents),
+    peakTension: +(p.peakTension + 5.8).toFixed(2),
+    archScars: [`arch(${loci[0]}:${pa}<->${pb})`],
+    agents
+  };
+  ensureRuntime(scion);
+  cities.push(scion);
+  document.getElementById("forgeReadout").textContent = `Minted #${scion.index} ${scion.name}`;
+  selectCity(cities.length - 1, false);
+}
+
+function graftCities() {
+  const ia = +document.getElementById("graftA").value;
+  const ib = +document.getElementById("graftB").value;
+  if (ia === ib) {
+    document.getElementById("forgeReadout").textContent = "Pick two distinct cities so their poles contend.";
+    return;
+  }
+  const ca = cities[ia], cb = cities[ib];
+  const newIdx = cities.length + 1;
+  const name = `${ca.name.slice(0,4)}${cb.name.slice(-4)}-${newIdx}`;
+  const slug = name.toLowerCase().replace(/[^a-z0-9]/g, "_");
+  const nexus = `${slug}_confluence_arch`;
+  const loci = [nexus, `${slug}_${ca.loci[1]}`, `${slug}_${cb.loci[2]}`];
+  const agents = [
+    { name: `${slug}_${ca.name.toLowerCase()}_keel`, locus: nexus, op: "polarity_carve", polarity: ca.poleAlpha, emblems: [...ca.agents[0].emblems.slice(0,2), `graft:${ca.name}`], mag: +(ca.agents[0].mag + 0.8).toFixed(2), ratio: ca.agents[0].ratio },
+    { name: `${slug}_${cb.name.toLowerCase()}_span`, locus: nexus, op: "polarity_carve", polarity: cb.poleBeta, emblems: [...cb.agents[1].emblems.slice(0,2), `graft:${cb.name}`], mag: +Math.max(1.5, cb.agents[1].mag - 1.4).toFixed(2), ratio: cb.agents[1].ratio },
+    { name: `${slug}_parallax_weaver`, locus: loci[1], op: "emblem_union", polarity: ca.poleBeta, emblems: [ca.agents[2].emblems[0], cb.agents[2].emblems[0]], mag: 6.7, ratio: ca.agents[2].ratio },
+    { name: `${slug}_keystone_warden`, locus: loci[2], op: "altitude_max", polarity: cb.poleAlpha, emblems: [ca.agents[3].emblems[0], cb.agents[3].emblems[0]], mag: 8.9, ratio: cb.agents[3].ratio }
+  ];
+  const scion = {
+    index: newIdx,
+    name,
+    chapter: 9,
+    seriesIdx: cb.seriesIdx,
+    series: `${ca.name} × ${cb.name}`,
+    rank: 5,
+    page: 138,
+    topology: cb.topology,
+    desert: `${ca.desert} ⊗ ${cb.desert}`,
+    poleAlpha: ca.poleAlpha,
+    poleBeta: cb.poleBeta,
+    optics: `${ca.optics} // ${cb.optics}`,
+    loci,
+    peakHash: fnv(agents),
+    peakTension: +(Math.max(ca.peakTension, cb.peakTension) + 7.4).toFixed(2),
+    archScars: [`arch(${nexus}:${ca.poleAlpha}<->${cb.poleBeta})`],
+    agents
+  };
+  ensureRuntime(scion);
+  cities.push(scion);
+  document.getElementById("forgeReadout").textContent = `Grafted #${scion.index} ${scion.name}`;
+  selectCity(cities.length - 1, false);
+}
+
+// Wire controls
+document.getElementById("tabStage").onclick = () => setTab("stage");
+document.getElementById("tabMatrix").onclick = () => setTab("matrix");
+document.getElementById("tabForge").onclick = () => setTab("forge");
+document.getElementById("btnPrev").onclick = () => selectCity(state.selectedIdx - 1, true);
+document.getElementById("btnNext").onclick = () => selectCity(state.selectedIdx + 1, true);
+document.getElementById("citySelect").onchange = (e) => selectCity(+e.target.value, true);
+document.getElementById("btnTick").onclick = () => stepSwarm(1);
+document.getElementById("btnStorm").onclick = () => stepSwarm(100);
+document.getElementById("btnGraft").onclick = graftCities;
+document.getElementById("btnAudio").onclick = (e) => {
+  state.audioOn = !state.audioOn;
+  e.target.textContent = state.audioOn ? "♪ On" : "♪ Off";
+  if (state.audioOn) playChord(cities[state.selectedIdx], true);
+};
+document.getElementById("normRange").oninput = (e) => {
+  state.normBias = +e.target.value / 100;
+  document.getElementById("normLabel").textContent =
+    state.normBias > 0.72 ? `${state.normBias.toFixed(2)} (Trude Guard!)` : state.normBias.toFixed(2);
+};
+
+const mutBox = document.getElementById("mutationButtons");
+RAW.m.forEach(op => {
+  const b = document.createElement("button");
+  b.className = "px-2 py-1.5 rounded bg-[var(--background)] border border-[var(--border)] text-xs font-mono text-[var(--foreground)] text-left truncate";
+  b.textContent = `⊕ ${op}`;
+  b.onclick = () => mutateActiveCity(op);
+  mutBox.appendChild(b);
+});
+
+// Multiplane Canvas Engine (11 Topologies + Theme-Adaptive Palette)
+const canvas = document.getElementById("stageCanvas");
+const ctx = canvas.getContext("2d");
+
+function resizeCanvas() {
+  const rect = canvas.parentElement.getBoundingClientRect();
+  if (rect.width < 10 || rect.height < 10) return;
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+window.addEventListener("resize", resizeCanvas);
+
+canvas.addEventListener("click", (ev) => {
+  const rect = canvas.getBoundingClientRect();
+  const nx = (ev.clientX - rect.left) / rect.width;
+  const ny = (ev.clientY - rect.top) / rect.height;
+  state.ripples.push({ x: nx, y: ny, r: 4, a: 1.0 });
+  state.particles.forEach((p, i) => {
+    const sign = i % 2 === 0 ? 1 : -0.85;
+    p.vx += (nx - p.x) * 0.02 * sign;
+    p.vy += (ny - p.y) * 0.02 * sign;
+  });
+  state.arches.push({
+    label: `ebony_pore@${nx.toFixed(2)}`,
+    x1: Math.max(0.08, nx - 0.16),
+    y1: Math.min(0.86, ny + 0.11),
+    x2: Math.min(0.92, nx + 0.16),
+    y2: Math.min(0.86, ny + 0.11)
+  });
+  if (state.arches.length > 8) state.arches.shift();
+  stepSwarm(1);
+});
+
+let t = 0;
+function draw() {
+  t += 0.016;
+  if (state.tab === "stage") {
+    const dpr = window.devicePixelRatio || 1;
+    const w = canvas.width / dpr;
+    const h = canvas.height / dpr;
+    if (w > 10 && h > 10) {
+      const pal = state.palette;
+      const city = cities[state.selectedIdx];
+      const topo = city.topology;
+
+      ctx.fillStyle = pal.canvasBg;
+      ctx.fillRect(0, 0, w, h);
+
+      // Surveyor coordinate grid
+      ctx.strokeStyle = pal.grid;
+      ctx.lineWidth = 1;
+      for (let gx = 36; gx < w; gx += 48) { ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, h); ctx.stroke(); }
+      for (let gy = 36; gy < h; gy += 48) { ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(w, gy); ctx.stroke(); }
+
+      // 11 Topology Multiplane Backdrops
+      if (topo === "TENSILE_VOID_RIG") {
+        ctx.strokeStyle = pal.strokeMid;
+        ctx.lineWidth = 1.4;
+        ctx.beginPath();
+        for (let x = 0; x <= w; x += 10) {
+          const u = (x / w) * 2 - 1;
+          const sag = h * 0.23 + (1 - u * u) * 52 + Math.sin(t * 2 + x * 0.03) * 2.5;
+          if (x === 0) ctx.moveTo(x, sag); else ctx.lineTo(x, sag);
+          if (x % 40 === 0 && x > 18 && x < w - 18) {
+            const drop = 54 + ((x * 13) % 72);
+            ctx.strokeStyle = pal.beta;
+            ctx.globalAlpha = 0.42;
+            ctx.strokeRect(x - 5, sag + drop, 10, 13);
+            ctx.globalAlpha = 1;
+          }
+        }
+        ctx.strokeStyle = pal.strokeMid;
+        ctx.stroke();
+      } else if (topo === "SPECULAR_PARALLAX") {
+        const midY = h * 0.52;
+        ctx.strokeStyle = pal.beta;
+        ctx.globalAlpha = 0.55;
+        ctx.beginPath(); ctx.moveTo(0, midY); ctx.lineTo(w, midY); ctx.stroke();
+        state.particles.forEach(p => {
+          ctx.beginPath();
+          ctx.arc(p.x * w, midY + (midY - p.y * h) * 0.85, 9, 0, Math.PI * 2);
+          ctx.stroke();
+        });
+        ctx.globalAlpha = 1;
+      } else if (topo === "NESTED_GERM_EMERGENCE") {
+        for (let r = 1; r <= 4; r++) {
+          ctx.save();
+          ctx.translate(w * 0.5, h * 0.5);
+          ctx.rotate(t * (r % 2 === 0 ? -0.35 : 0.45) * r * 0.3);
+          ctx.strokeStyle = r % 2 === 0 ? pal.alpha : pal.jade;
+          ctx.globalAlpha = 0.48;
+          ctx.setLineDash([6, 4]);
+          ctx.beginPath();
+          ctx.arc(0, 0, r * 28 + Math.sin(t * 2 + r) * 3, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.restore();
+        }
+        ctx.globalAlpha = 1;
+      } else if (topo === "CHORD_EXCHANGE_WEB") {
+        const cols = [pal.ink, pal.muted, pal.alpha, pal.gold];
+        for (let i = 0; i < state.particles.length; i++) {
+          for (let j = i + 1; j < state.particles.length; j++) {
+            ctx.strokeStyle = cols[(i + j) % cols.length];
+            ctx.globalAlpha = 0.55;
+            ctx.lineWidth = 1.2;
+            ctx.beginPath();
+            ctx.moveTo(state.particles[i].x * w, state.particles[i].y * h);
+            ctx.lineTo(state.particles[j].x * w, state.particles[j].y * h);
+            ctx.stroke();
+          }
+        }
+        ctx.globalAlpha = 1;
+      } else if (topo === "CELESTIAL_BLUEPRINT_COUPLING") {
+        for (let s = 0; s < 14; s++) {
+          const sx = ((s * 83 + city.index * 29) % Math.max(40, w - 48)) + 24;
+          const sy = 26 + ((s * 41) % Math.max(30, h * 0.32));
+          ctx.fillStyle = pal.gold;
+          ctx.fillRect(sx - 1.5, sy - 1.5, 3, 3);
+          if (s % 3 === 0) {
+            ctx.strokeStyle = pal.gold;
+            ctx.globalAlpha = 0.22;
+            ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(sx, h - 30); ctx.stroke();
+            ctx.globalAlpha = 1;
+          }
+        }
+      } else if (topo === "PERIMETER_ACCRETION_SPRAWL") {
+        ctx.strokeStyle = pal.gold;
+        ctx.globalAlpha = 0.45;
+        for (let k = 0; k < 4; k++) {
+          const ins = 12 + k * 13;
+          ctx.strokeRect(ins, ins, w - ins * 2, h - ins * 2);
+        }
+        ctx.globalAlpha = 1;
+      } else if (topo === "PALIMPSEST_ECHO") {
+        ctx.strokeStyle = pal.strokeSoft;
+        for (let r = 0; r < 8; r++) {
+          const ry = 34 + r * ((h - 68) / 7);
+          const notch = 16 + ((r * 23 + city.index * 7) % 68);
+          ctx.beginPath(); ctx.moveTo(20, ry); ctx.lineTo(20 + notch, ry); ctx.stroke();
+        }
+        ctx.save();
+        ctx.translate(w * 0.5, h * 0.5);
+        ctx.strokeStyle = pal.gold;
+        ctx.globalAlpha = 0.36;
+        for (let j = 0; j < 9; j++) {
+          const a = (j / 9) * Math.PI * 2 + t * 0.14;
+          ctx.beginPath();
+          ctx.moveTo(Math.cos(a) * 20, Math.sin(a) * 20);
+          ctx.lineTo(Math.cos(a) * 86, Math.sin(a) * 86);
+          ctx.stroke();
+        }
+        ctx.restore();
+        ctx.globalAlpha = 1;
+      } else if (topo === "DESIRE_TRAP_BIFURCATION") {
+        ctx.strokeStyle = pal.alpha;
+        ctx.globalAlpha = 0.38;
+        ctx.beginPath();
+        for (let k = 0; k < 48; k++) {
+          const ang = k * 0.38 + t * 0.35;
+          const rad = 10 + k * 2.2;
+          const sx = w * 0.5 + Math.cos(ang) * rad * 1.2;
+          const sy = h * 0.5 + Math.sin(ang) * rad * 0.78;
+          if (k === 0) ctx.moveTo(sx, sy); else ctx.lineTo(sx, sy);
+        }
+        ctx.stroke();
+        for (let g = 0; g < 3; g++) {
+          const gx = w * (0.24 + g * 0.26);
+          const gy = h * 0.25 + Math.sin(t * 1.5 + g) * 6;
+          ctx.strokeStyle = pal.beta;
+          ctx.beginPath(); ctx.arc(gx, gy, 16, 0, Math.PI * 2); ctx.stroke();
+        }
+        ctx.globalAlpha = 1;
+      } else if (topo === "SEMIOTIC_INVERSION") {
+        ctx.strokeStyle = pal.strokeSoft;
+        ctx.setLineDash([4, 5]);
+        ctx.beginPath(); ctx.moveTo(16, h * 0.49); ctx.lineTo(w - 16, h * 0.49); ctx.stroke();
+        ctx.setLineDash([]);
+        for (let k = 0; k < 5; k++) {
+          const kx = 48 + k * ((w - 96) / 4);
+          ctx.strokeStyle = pal.gold;
+          ctx.globalAlpha = 0.55;
+          ctx.strokeRect(kx - 11, 30, 22, 16);
+          ctx.strokeStyle = pal.beta;
+          ctx.beginPath();
+          ctx.moveTo(kx, h - 26); ctx.lineTo(kx - 12, h - 46); ctx.lineTo(kx + 12, h - 46);
+          ctx.closePath(); ctx.stroke();
+        }
+        ctx.globalAlpha = 1;
+      } else if (topo === "ONOMASTIC_SHARD_SHUFFLE") {
+        ctx.save();
+        ctx.translate(w * 0.5, h * 0.5);
+        ctx.rotate(t * 0.28);
+        ctx.strokeStyle = pal.strokeMid;
+        ctx.beginPath();
+        for (let v = 0; v <= 6; v++) {
+          const va = (v / 6) * Math.PI * 2;
+          const vx = Math.cos(va) * 92, vy = Math.sin(va) * 72;
+          if (v === 0) ctx.moveTo(vx, vy); else ctx.lineTo(vx, vy);
+        }
+        ctx.stroke();
+        ctx.restore();
+      } else if (topo === "NECROPOLIS_ROLE_CASCADE") {
+        ctx.strokeStyle = pal.strokeMid;
+        ctx.beginPath();
+        ctx.moveTo(w * 0.30, 20); ctx.lineTo(w * 0.5, h * 0.5); ctx.lineTo(w * 0.30, h - 20);
+        ctx.moveTo(w * 0.70, 20); ctx.lineTo(w * 0.5, h * 0.5); ctx.lineTo(w * 0.70, h - 20);
+        ctx.stroke();
+      }
+
+      // 3 Urban Loci Frames
+      city.loci.forEach((loc, i) => {
+        const lx = w * (0.22 + i * 0.28);
+        const ly = h * (i === 1 ? 0.37 : 0.65);
+        ctx.strokeStyle = pal.strokeMid;
+        ctx.lineWidth = 1;
+        ctx.strokeRect(lx - 14, ly - 14, 28, 28);
+        ctx.fillStyle = pal.ink;
+        ctx.globalAlpha = 0.72;
+        ctx.font = "11px ui-monospace, monospace";
+        ctx.fillText(loc.slice(0, 18), lx - 28, ly + 26);
+        ctx.globalAlpha = 1;
+      });
+
+      // ConflictGrain Keystone Arches
+      state.arches.forEach((ar, idx) => {
+        const x1 = ar.x1 * w, y1 = ar.y1 * h, x2 = ar.x2 * w, y2 = ar.y2 * h;
+        const cx = (x1 + x2) * 0.5;
+        const cy = Math.min(y1, y2) - 42 - (idx % 3) * 12;
+        ctx.strokeStyle = pal.arch;
+        ctx.globalAlpha = 0.82;
+        ctx.lineWidth = 1.8;
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.quadraticCurveTo(cx, cy, x2, y2);
+        ctx.stroke();
+        const kx = 0.25 * x1 + 0.5 * cx + 0.25 * x2;
+        const ky = 0.25 * y1 + 0.5 * cy + 0.25 * y2;
+        ctx.fillStyle = pal.arch;
+        ctx.beginPath();
+        ctx.moveTo(kx, ky - 4); ctx.lineTo(kx + 4, ky); ctx.lineTo(kx, ky + 4); ctx.lineTo(kx - 4, ky);
+        ctx.closePath();
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      });
+
+      // 4 Bespoke Scion Agents
+      state.particles.forEach((p, idx) => {
+        const locIdx = Math.max(0, city.loci.indexOf(p.ag.locus));
+        const tx = 0.22 + locIdx * 0.28 + Math.cos(t * (1 + idx * 0.42)) * 0.085;
+        const ty = (locIdx === 1 ? 0.37 : 0.65) + Math.sin(t * (1.18 + idx * 0.33)) * 0.085;
+        p.vx = p.vx * 0.94 + (tx - p.x) * 0.0048;
+        p.vy = p.vy * 0.94 + (ty - p.y) * 0.0048;
+        p.x = Math.max(0.06, Math.min(0.94, p.x + p.vx));
+        p.y = Math.max(0.11, Math.min(0.86, p.y + p.vy));
+        p.trail.push({ x: p.x * w, y: p.y * h });
+        if (p.trail.length > 22) p.trail.shift();
+
+        const isBeta = p.ag.polarity === city.poleBeta;
+        const col = isBeta ? pal.beta : pal.alpha;
+
+        ctx.strokeStyle = col;
+        ctx.globalAlpha = 0.35;
+        ctx.lineWidth = 1.3;
+        ctx.beginPath();
+        p.trail.forEach((pt, ti) => { if (ti === 0) ctx.moveTo(pt.x, pt.y); else ctx.lineTo(pt.x, pt.y); });
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+
+        ctx.fillStyle = col;
+        ctx.beginPath();
+        ctx.arc(p.x * w, p.y * h, 4.5 + p.ag.mag * 0.28, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = pal.ink;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        ctx.fillStyle = pal.ink;
+        ctx.font = "11px ui-monospace, monospace";
+        const shortName = p.ag.name.split("_").slice(1).join("_") || p.ag.name;
+        ctx.fillText(shortName.slice(0, 20), Math.min(w - 125, p.x * w + 8), p.y * h - 6);
+      });
+
+      // Click Ripples
+      state.ripples.forEach(rp => {
+        ctx.strokeStyle = pal.arch;
+        ctx.globalAlpha = rp.a;
+        ctx.lineWidth = 1.4;
+        ctx.beginPath();
+        ctx.arc(rp.x * w, rp.y * h, rp.r, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+        rp.r += 2.2;
+        rp.a *= 0.92;
+      });
+      state.ripples = state.ripples.filter(rp => rp.a > 0.04);
+    }
+  }
+  requestAnimationFrame(draw);
+}
+
+resizeCanvas();
+selectCity(17, true);
+requestAnimationFrame(draw);
+</script>
+</body>
+</html>
