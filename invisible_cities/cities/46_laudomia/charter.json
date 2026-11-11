@@ -1,0 +1,154 @@
+{
+  "city": "Laudomia",
+  "city_id": "46_laudomia",
+  "index": 46,
+  "chapter": "IX",
+  "series": "Cities & the Dead 5",
+  "scion": "scion-laudomia",
+  "plates_status": "COMPLETE",
+  "royal_plates": {
+    "map.png": "1600x1200 Coordinator Royal Plate (read-only, never overwrite)",
+    "map.svg": "1600x1200 Coordinator Royal Plate (read-only, never overwrite)",
+    "image.png": "1600x1000 Coordinator Royal Plate (read-only, never overwrite)"
+  },
+  "anti_trude_vector": "Triple architectural chamber triptych (Living arcades, Stone-Slab Necropolis, Porous Sponge-Marble Unborn Domes) morphing causally into a claustrophobic Stadium-Funnel Amphitheater and an Unturned Finite-Grain Hourglass.",
+  "canonical_stones": [
+    {
+      "id": "laudomia_of_the_living",
+      "number": 1,
+      "label": "Laudomia of the Living",
+      "calvino_axiom": "Crowded streets of the living who visit the other two cities bearing the same name to seek explanations of themselves, security, and freedom from chaos.",
+      "causal_invariant": "livingCount >= 0 && pilgrimageRoutes === ['living->dead', 'living->unborn']"
+    },
+    {
+      "id": "laudomia_of_the_dead",
+      "number": 2,
+      "label": "Laudomia of the Dead (Stone-Slab Necropolis)",
+      "calvino_axiom": "Ever-broadening cemetery beyond the walls along hearse-narrow windowless lanes whose stone slabs preserve ancient surnames, guilds, ranks, and necessary order.",
+      "causal_invariant": "d(deadSlabsCount)/dt >= 0 && consultNecropolis(clanIdx) increases orderClarity and livingSecurity"
+    },
+    {
+      "id": "laudomia_of_the_unborn",
+      "number": 3,
+      "label": "Laudomia of the Unborn (Porous Marble Niches)",
+      "calvino_axiom": "Fine hollow marble architecture of porous, sponge-like domes and empty niches without furnishings or carved names, holding only footstep-echoing silence, pure expectation, and uncountable potentiality.",
+      "causal_invariant": "unbornFurnishings === 0 && enterUnbornHollows(nicheIdx) triggers hollow echo and expectation"
+    },
+    {
+      "id": "anguish_funnel_suffocation",
+      "number": 4,
+      "label": "First Anguish: Stadium-Funnel Suffocation",
+      "calvino_axiom": "Envisioning billions of the dead and the unborn swarming every pore of the spongy stone and packed into stadium-like amphitheater steps until Laudomia chokes on its own past and future.",
+      "causal_invariant": "anguishMode === 'funnel' && intensifyFunnel() drives funnelDensity -> 1.0 and isChoking === true"
+    },
+    {
+      "id": "anguish_hourglass_extinction",
+      "number": 5,
+      "label": "Second Anguish: Unturned-Hourglass Extinction",
+      "calvino_axiom": "Envisioning Laudomia as finite grains of sand in an hourglass that no hand turns over again, where every birth and death drains a grain toward the last birth and silent disappearance.",
+      "causal_invariant": "canTurnHourglass === false && drainHourglass() drives grainsRemaining -> 0 and lastGrainFallen === true"
+    }
+  ],
+  "invariants": {
+    "deadSlabsMonotonicNonDecreasing": true,
+    "unbornFurnishingsCount": 0,
+    "funnelDensityRange": [0.0, 1.0],
+    "funnelChokingThreshold": 0.82,
+    "hourglassTotalFiniteSand": 240,
+    "canTurnHourglass": false,
+    "hourglassConservation": "unbornGrainsRemaining + livingWaistGrains + deadHeapGrains === 240",
+    "jDomTarget": "< 0.05"
+  },
+  "palette": {
+    "obsidianVault": "#0f0e11",
+    "slateNecropolis": "#24262b",
+    "weatheredSlab": "#7d8288",
+    "boneInscription": "#dfd9c8",
+    "livingTerracotta": "#b85d3b",
+    "torchOchre": "#dfa14a",
+    "travertineArcade": "#cbb997",
+    "carraraUnborn": "#ebe8e1",
+    "porousSpongeBlue": "#9ab6c2",
+    "hollowEchoSilver": "#c5d4dc",
+    "funnelCrimsonDread": "#8f3237",
+    "hourglassBronze": "#9c7a44"
+  },
+  "dom_vocabulary": {
+    "required_tags": [
+      "laudomia-triad-sanctum",
+      "living-quarter-pulse",
+      "slab-necropolis-ledger",
+      "porous-unborn-niches",
+      "hourglass-funnel-dial",
+      "laudomia-plate-drawer"
+    ],
+    "auxiliary_tags": [
+      "lau-masthead-frieze",
+      "lau-triad-stage",
+      "lau-chamber-telemetry",
+      "lau-metric-pill",
+      "lau-rite-console",
+      "lau-rite-key",
+      "lau-chronicle-strip",
+      "lau-plate-sheet",
+      "lau-plate-tabs",
+      "lau-plate-card",
+      "lau-quota-plaque"
+    ],
+    "css_class_prefix": "lau-",
+    "forbidden_generic_tags_in_body": [
+      "div", "span", "section", "header", "footer", "main", "nav", "aside", "article", "p", "h1", "h2", "h3", "h4", "h5", "h6", "ul", "ol", "li", "button"
+    ]
+  },
+  "module_contracts": {
+    "twin_anguish_dynamics": {
+      "global": "LaudomiaTwinAnguish",
+      "file": "layers/twin_anguish_dynamics.js",
+      "exports": ["createEngine", "CLANS", "UNBORN_DOMES"]
+    },
+    "triple_city_chambers": {
+      "global": "LaudomiaTripleChambers",
+      "file": "layers/triple_city_chambers.js",
+      "exports": ["createRenderer", "createSoundscape"]
+    },
+    "window_handle": "__LAUDOMIA__"
+  },
+  "keyboard": {
+    "1": "Triad Triptych lens",
+    "2": "Funnel Suffocation anguish lens",
+    "3": "Hourglass Extinction anguish lens",
+    "G": "Advance Generation (unborn -> living -> dead)",
+    "N": "Consult Stone-Slab Necropolis",
+    "U": "Enter Porous Unborn Hollows",
+    "F": "Intensify Stadium-Funnel Compression",
+    "D": "Drain Hourglass Sand Cohort",
+    "T": "Attempt to Turn Hourglass (refused by fate)",
+    "M": "Toggle WebAudio soundscape mute",
+    "P": "Toggle <laudomia-plate-drawer>",
+    "R": "Reset simulation to initial epoch",
+    "Escape": "Close plate drawer"
+  },
+  "royal_plates_policy": {
+    "never_fabricate_files": ["map.png", "map.svg", "image.png"],
+    "drawer_wiring": "Wire <img src=\"map.png\" loading=\"lazy\"> and <img src=\"image.png\" loading=\"lazy\"> inside hidden-by-default <laudomia-plate-drawer> with inline onerror revealing self-contained archival canvas/notice so page load has 0 console errors."
+  },
+  "purity": {
+    "forbidden_substrings": ["http://", "https://", "../", "xmlns="],
+    "max_lines_per_write_call": 190,
+    "module_style": "classic browser IIFE on globalThis, zero ES module import/export"
+  },
+  "file_ownership": {
+    "charter.json": "scion-laudomia",
+    "dossier.json": "scion-laudomia",
+    "layers/triple_city_chambers.js": "laudomia-triad-mason",
+    "layers/twin_anguish_dynamics.js": "laudomia-hourglass",
+    "index.html": "laudomia-weaver",
+    "(read-only verifier)": "laudomia-critic"
+  },
+  "handoff": {
+    "laudomia-triad-mason": "@laudomia-weaver",
+    "laudomia-hourglass": "@laudomia-weaver",
+    "laudomia-weaver": "@laudomia-critic",
+    "laudomia-critic": "@scion-laudomia (PASS) or @laudomia-weaver / layer owner (FAIL)"
+  }
+}

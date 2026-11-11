@@ -1,0 +1,4557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>THEODORA — Trophic Purge &amp; Subterranean Bestiary</title>
+<style>
+:root {
+  --thd-cement: #cbc8be;
+  --thd-cement-dim: #9c998f;
+  --thd-ash: #1c1d21;
+  --thd-ash-elev: #25272d;
+  --thd-obsidian: #0e0d11;
+  --thd-obsidian-soft: #15151b;
+  --thd-vellum: #d8be86;
+  --thd-vellum-soft: rgba(216, 190, 134, 0.16);
+  --thd-vermilion: #b83a28;
+  --thd-verdigris: #52796f;
+  --thd-lapis: #2f4b7c;
+  --thd-border: rgba(203, 200, 190, 0.22);
+  --thd-border-strong: rgba(216, 190, 134, 0.48);
+  --thd-serif: "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  --thd-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  background: var(--thd-obsidian);
+  color: var(--thd-cement);
+  font-family: var(--thd-serif);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+canvas {
+  display: block;
+}
+
+button {
+  font-family: inherit;
+}
+
+.thd-sanctum,
+.thd-crown,
+.thd-crown-brand,
+.thd-crown-title,
+.thd-crown-sub,
+.thd-edict-strip,
+.thd-main-grid,
+.thd-wing-col,
+.thd-panel,
+.thd-panel-head,
+.thd-stage-viewport,
+.thd-canvas-frame,
+.thd-causal-banner,
+.thd-cement-meter,
+.thd-cement-track,
+.thd-cement-fill,
+.thd-rung-list,
+.thd-tome-rack,
+.thd-tome-readout,
+.thd-folio-body,
+.thd-folio-text,
+.thd-beast-grid,
+.thd-plate-sheet,
+.thd-plate-pair,
+.thd-plate-card,
+.thd-plate-fallback,
+.thd-plate-notice {
+  display: block;
+}
+
+.thd-concealed[hidden],
+.thd-plate-drawer[hidden],
+.thd-plate-img[hidden] {
+  display: none !important;
+}
+
+.thd-sanctum {
+  min-height: 100vh;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 8px 10px 10px;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: 8px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(47, 75, 124, 0.16), transparent 56%),
+    linear-gradient(180deg, #16171c 0%, var(--thd-obsidian) 100%);
+}
+
+.thd-sanctum[data-aseptic="true"] {
+  background:
+    radial-gradient(circle at 50% 88%, rgba(184, 58, 40, 0.16), transparent 52%),
+    linear-gradient(180deg, #1e2025 0%, #100e13 100%);
+}
+
+.thd-crown {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 12px;
+  padding: 7px 12px;
+  background: rgba(28, 29, 33, 0.92);
+  border: 1px solid var(--thd-border);
+  border-radius: 6px;
+}
+
+.thd-crown-brand {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
+}
+
+.thd-crown-title {
+  font-size: 1.08rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--thd-vellum);
+}
+
+.thd-crown-sub {
+  font-size: 0.76rem;
+  color: var(--thd-cement-dim);
+  letter-spacing: 0.03em;
+}
+
+.thd-crown-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.thd-metric-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: var(--thd-obsidian-soft);
+  border: 1px solid var(--thd-border);
+  font-family: var(--thd-mono);
+  font-size: 0.71rem;
+  color: var(--thd-cement);
+}
+
+.thd-metric-pill[data-tone="alert"] {
+  border-color: rgba(184, 58, 40, 0.65);
+  color: #f0b7aa;
+}
+
+.thd-metric-pill[data-tone="aseptic"] {
+  border-color: rgba(82, 121, 111, 0.78);
+  color: #b9dcd4;
+}
+
+.thd-metric-pill[data-tone="awakened"] {
+  border-color: var(--thd-vellum);
+  background: rgba(184, 58, 40, 0.2);
+  color: var(--thd-vellum);
+}
+.thd-crown-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.thd-btn,
+.thd-action-key {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px;
+  min-height: 30px;
+  border-radius: 4px;
+  border: 1px solid var(--thd-border);
+  background: var(--thd-ash-elev);
+  color: var(--thd-cement);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  cursor: pointer;
+  user-select: none;
+  text-align: center;
+  transition: background-color 0.14s ease, border-color 0.14s ease, color 0.14s ease;
+}
+
+.thd-btn:hover,
+.thd-action-key:hover {
+  border-color: var(--thd-vellum);
+  color: #f4ead2;
+  background: #2e3139;
+}
+
+.thd-btn:focus-visible,
+.thd-action-key:focus-visible,
+.thd-taxon-rung:focus-visible,
+.thd-spine-tome:focus-visible,
+.thd-beast-sigil:focus-visible {
+  outline: 2px solid var(--thd-vellum);
+  outline-offset: 2px;
+}
+
+.thd-btn-primary {
+  background: linear-gradient(180deg, #9c3121 0%, #7a2316 100%);
+  border-color: #d9644f;
+  color: #fbf4e6;
+}
+
+.thd-btn-primary:hover {
+  background: linear-gradient(180deg, #b83a28 0%, #8f291a 100%);
+  border-color: var(--thd-vellum);
+}
+
+.thd-btn-primary[data-sealed="true"] {
+  background: linear-gradient(180deg, #3c5b53 0%, #2a423c 100%);
+  border-color: #79aa9d;
+}
+
+.thd-btn-crypt {
+  background: linear-gradient(180deg, #273d66 0%, #1c2c4a 100%);
+  border-color: #5a7ec2;
+  color: #eaeff9;
+}
+
+.thd-btn[aria-pressed="true"],
+.thd-action-key[aria-pressed="true"] {
+  border-color: var(--thd-vellum);
+  background: rgba(216, 190, 134, 0.2);
+  color: var(--thd-vellum);
+}
+
+.thd-edict-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px 10px;
+  padding: 6px 10px;
+  background: rgba(21, 21, 27, 0.94);
+  border: 1px solid var(--thd-border);
+  border-radius: 6px;
+}
+
+.thd-edict-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.thd-zone-switch {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+}
+
+.thd-main-grid {
+  display: grid;
+  grid-template-columns: 282px minmax(0, 1fr) 314px;
+  gap: 9px;
+  align-items: start;
+  min-width: 0;
+}
+
+.thd-wing-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.thd-panel {
+  background: rgba(28, 29, 33, 0.92);
+  border: 1px solid var(--thd-border);
+  border-radius: 6px;
+  padding: 8px 9px;
+  min-width: 0;
+}
+
+.thd-panel[data-illuminated="true"] {
+  border-color: var(--thd-border-strong);
+  box-shadow: inset 0 0 22px rgba(216, 190, 134, 0.08);
+}
+
+.thd-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 6px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(203, 200, 190, 0.14);
+}
+
+.thd-panel-title {
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--thd-vellum);
+}
+
+.thd-panel-badge {
+  font-family: var(--thd-mono);
+  font-size: 0.67rem;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: var(--thd-obsidian);
+  border: 1px solid var(--thd-border);
+  color: var(--thd-cement);
+}
+
+.thd-cement-meter {
+  margin-bottom: 6px;
+}
+
+.thd-cement-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+  font-family: var(--thd-mono);
+  font-size: 0.67rem;
+  color: var(--thd-cement-dim);
+  margin-bottom: 3px;
+}
+
+.thd-cement-track {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--thd-obsidian);
+  border: 1px solid rgba(203, 200, 190, 0.18);
+  overflow: hidden;
+}
+
+.thd-cement-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--thd-verdigris) 0%, var(--thd-cement) 100%);
+  transition: width 0.22s ease;
+}
+.thd-rung-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.thd-taxon-rung {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 7px;
+  border-radius: 4px;
+  background: var(--thd-obsidian-soft);
+  border: 1px solid rgba(203, 200, 190, 0.14);
+  font-size: 0.72rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.thd-taxon-rung:hover {
+  border-color: var(--thd-vellum);
+}
+
+.thd-taxon-rung[data-status="INFESTING"] {
+  border-color: var(--thd-vermilion);
+  background: rgba(184, 58, 40, 0.18);
+  color: #f9ebe6;
+}
+
+.thd-taxon-rung[data-status="EXTERMINATED"] {
+  border-color: rgba(82, 121, 111, 0.55);
+  color: #9bb5ae;
+  background: rgba(20, 26, 26, 0.85);
+}
+
+.thd-taxon-rung[data-status="ASEPTIC_ACTIVE"] {
+  border-color: var(--thd-vellum);
+  background: rgba(82, 121, 111, 0.25);
+  color: var(--thd-vellum);
+}
+
+.thd-rung-num {
+  font-family: var(--thd-mono);
+  font-size: 0.66rem;
+  color: var(--thd-cement-dim);
+}
+
+.thd-rung-name {
+  font-weight: 600;
+  min-width: 0;
+}
+
+.thd-rung-tag {
+  font-family: var(--thd-mono);
+  font-size: 0.64rem;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: rgba(14, 13, 17, 0.72);
+  color: var(--thd-cement-dim);
+}
+
+.thd-tome-rack {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.thd-spine-tome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-height: 48px;
+  padding: 4px 2px;
+  border-radius: 3px;
+  border: 1px solid rgba(203, 200, 190, 0.18);
+  background: #17181d;
+  color: var(--thd-cement-dim);
+  font-family: var(--thd-mono);
+  font-size: 0.63rem;
+  cursor: pointer;
+  user-select: none;
+  text-align: center;
+}
+
+.thd-spine-tome[data-shelved="true"] {
+  background: linear-gradient(180deg, #2b443e 0%, #1d2e2a 100%);
+  border-color: var(--thd-verdigris);
+  color: #e6efe9;
+}
+
+.thd-spine-tome[data-selected="true"] {
+  border-color: var(--thd-vellum);
+  box-shadow: 0 0 0 1px var(--thd-vellum);
+  color: var(--thd-vellum);
+}
+
+.thd-tome-readout {
+  padding: 6px 7px;
+  border-radius: 4px;
+  background: var(--thd-obsidian-soft);
+  border: 1px solid rgba(203, 200, 190, 0.14);
+  font-size: 0.71rem;
+  line-height: 1.35;
+}
+
+.thd-tome-title {
+  display: block;
+  font-weight: 700;
+  color: var(--thd-vellum);
+  margin-bottom: 2px;
+}
+
+.thd-tome-meta {
+  display: block;
+  font-family: var(--thd-mono);
+  font-size: 0.64rem;
+  color: #9ec0b7;
+  margin-bottom: 3px;
+}
+
+.thd-tome-note {
+  display: block;
+  color: var(--thd-cement);
+  font-size: 0.69rem;
+}
+
+.thd-stage-viewport {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+
+.thd-canvas-frame {
+  position: relative;
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid var(--thd-border);
+  background: var(--thd-obsidian);
+  overflow: hidden;
+}
+
+.thd-cutaway-canvas {
+  width: 100%;
+  height: 510px;
+  cursor: crosshair;
+}
+
+.thd-causal-banner {
+  padding: 7px 10px;
+  border-radius: 6px;
+  background: rgba(28, 29, 33, 0.94);
+  border: 1px solid var(--thd-border);
+  border-left: 3px solid var(--thd-vermilion);
+  font-size: 0.75rem;
+  line-height: 1.36;
+}
+
+.thd-causal-banner[data-aseptic="true"] {
+  border-left-color: var(--thd-vellum);
+}
+
+.thd-causal-kicker {
+  display: block;
+  font-family: var(--thd-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--thd-vellum);
+  margin-bottom: 2px;
+}
+
+.thd-causal-copy {
+  display: block;
+  color: var(--thd-cement);
+}
+.thd-folio-body {
+  display: grid;
+  grid-template-columns: 124px minmax(0, 1fr);
+  gap: 8px;
+  align-items: start;
+}
+
+.thd-folio-canvas {
+  width: 124px;
+  height: 124px;
+  border-radius: 5px;
+  border: 1px solid var(--thd-border-strong);
+  background: var(--thd-obsidian);
+}
+
+.thd-folio-text {
+  font-size: 0.7rem;
+  line-height: 1.33;
+  min-width: 0;
+}
+
+.thd-folio-rubric {
+  display: block;
+  font-weight: 700;
+  color: var(--thd-vellum);
+  font-size: 0.76rem;
+}
+
+.thd-folio-code {
+  display: block;
+  font-family: var(--thd-mono);
+  font-size: 0.64rem;
+  color: #e4998c;
+  margin-bottom: 3px;
+}
+
+.thd-folio-latin {
+  display: block;
+  font-style: italic;
+  color: #c6d3ec;
+  margin-bottom: 3px;
+}
+
+.thd-folio-act {
+  display: block;
+  color: var(--thd-cement);
+}
+
+.thd-spotlight-trio {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 5px;
+  margin-bottom: 6px;
+}
+
+.thd-btn-spot {
+  padding: 4px 5px;
+  font-size: 0.69rem;
+  min-height: 28px;
+}
+
+.thd-beast-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.thd-beast-sigil {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 5px 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(203, 200, 190, 0.16);
+  background: var(--thd-obsidian-soft);
+  cursor: pointer;
+  user-select: none;
+  min-width: 0;
+}
+
+.thd-beast-sigil:hover {
+  border-color: var(--thd-vellum);
+}
+
+.thd-beast-sigil[data-awakened="true"] {
+  border-color: rgba(216, 190, 134, 0.42);
+  background: rgba(34, 24, 24, 0.86);
+}
+
+.thd-beast-sigil[data-inspected="true"] {
+  border-color: var(--thd-vellum);
+  background: rgba(184, 58, 40, 0.25);
+  box-shadow: 0 0 0 1px var(--thd-vellum);
+}
+
+.thd-sigil-key {
+  font-family: var(--thd-mono);
+  font-size: 0.61rem;
+  color: var(--thd-cement-dim);
+}
+
+.thd-sigil-name {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--thd-vellum);
+}
+
+.thd-sigil-state {
+  font-family: var(--thd-mono);
+  font-size: 0.59rem;
+  color: #9bb5ae;
+}
+
+.thd-plate-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(10, 10, 14, 0.86);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+  overflow-y: auto;
+}
+
+.thd-plate-sheet {
+  width: 100%;
+  max-width: 1040px;
+  background: var(--thd-ash);
+  border: 1px solid var(--thd-border-strong);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+
+.thd-plate-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--thd-border);
+}
+
+.thd-plate-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.thd-plate-card {
+  background: var(--thd-obsidian-soft);
+  border: 1px solid var(--thd-border);
+  border-radius: 6px;
+  padding: 8px;
+  min-width: 0;
+}
+
+.thd-plate-label {
+  display: block;
+  font-weight: 700;
+  font-size: 0.76rem;
+  color: var(--thd-vellum);
+  margin-bottom: 6px;
+}
+
+.thd-plate-img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  display: block;
+}
+
+.thd-plate-card[data-plate-state="loaded"] .thd-plate-fallback {
+  display: none !important;
+}
+
+.thd-plate-canvas {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  border: 1px solid rgba(203, 200, 190, 0.24);
+  margin-bottom: 6px;
+}
+
+.thd-plate-notice {
+  font-family: var(--thd-mono);
+  font-size: 0.66rem;
+  line-height: 1.35;
+  color: var(--thd-vellum);
+  padding: 5px 7px;
+  border-radius: 4px;
+  background: rgba(47, 75, 124, 0.22);
+  border: 1px solid rgba(47, 75, 124, 0.55);
+}
+
+@media (max-width: 1023px) {
+  .thd-sanctum {
+    padding: 7px;
+    gap: 7px;
+  }
+  .thd-main-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .thd-stage-viewport {
+    order: -1;
+  }
+  .thd-cutaway-canvas {
+    height: 290px;
+  }
+  .thd-edict-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .thd-folio-body {
+    grid-template-columns: 104px minmax(0, 1fr);
+  }
+  .thd-folio-canvas {
+    width: 104px;
+    height: 104px;
+  }
+  .thd-plate-pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .thd-btn,
+  .thd-action-key,
+  .thd-cement-fill {
+    transition: none !important;
+  }
+}
+</style>
+</head>
+<body>
+<theodora-bestiary-sanctum class="thd-sanctum" id="thd-sanctum" data-aseptic="false">
+  <thd-sanctum-crown class="thd-crown">
+    <thd-crown-brand class="thd-crown-brand">
+      <thd-crown-title class="thd-crown-title">THEODORA</thd-crown-title>
+      <thd-crown-sub class="thd-crown-sub">Trophic Purge Ledger &amp; Subterranean Incunabula Cutaway</thd-crown-sub>
+    </thd-crown-brand>
+    <thd-crown-metrics class="thd-crown-metrics">
+      <thd-metric-pill class="thd-metric-pill" id="thd-pill-fauna" data-tone="alert">Living Fauna: 7 / 7</thd-metric-pill>
+      <thd-metric-pill class="thd-metric-pill" id="thd-pill-cement">Cement: 0%</thd-metric-pill>
+      <thd-metric-pill class="thd-metric-pill" id="thd-pill-shelf">Nave: 0 / 7 Clasped</thd-metric-pill>
+      <thd-metric-pill class="thd-metric-pill" id="thd-pill-mythic">Bestiary: Dormant (0 / 9)</thd-metric-pill>
+    </thd-crown-metrics>
+    <thd-crown-controls class="thd-crown-controls">
+      <button type="button" class="thd-btn" id="thd-btn-mute" aria-pressed="false">Audio: On [M]</button>
+      <button type="button" class="thd-btn" id="thd-btn-plates" aria-expanded="false">Plates [P]</button>
+      <button type="button" class="thd-btn" id="thd-btn-reset">Reset Ecology [R]</button>
+    </thd-crown-controls>
+  </thd-sanctum-crown>
+
+  <thd-edict-strip class="thd-edict-strip">
+    <thd-edict-actions class="thd-edict-actions">
+      <button type="button" class="thd-btn thd-btn-primary" id="thd-btn-exterminate">Exterminate Condors [E]</button>
+      <button type="button" class="thd-btn" id="thd-btn-shelf">Consult Buffon / Linnaeus Shelf [S]</button>
+      <button type="button" class="thd-btn thd-btn-crypt" id="thd-btn-crypt">Descend to Basement Incunabula [B]</button>
+    </thd-edict-actions>
+    <thd-zone-switch class="thd-zone-switch">
+      <thd-action-key class="thd-action-key" role="button" tabindex="0" data-focus-zone="city_sanctum" aria-pressed="true">Upper Sanctum</thd-action-key>
+      <thd-action-key class="thd-action-key" role="button" tabindex="0" data-focus-zone="library_nave" aria-pressed="false">Library Nave</thd-action-key>
+      <thd-action-key class="thd-action-key" role="button" tabindex="0" data-focus-zone="basement_crypt" aria-pressed="false">Basement Crypt</thd-action-key>
+    </thd-zone-switch>
+  </thd-edict-strip>
+
+  <thd-sanctum-grid class="thd-main-grid">
+    <thd-left-wing class="thd-wing-col">
+      <trophic-purge-cascade class="thd-panel" id="thd-cascade-panel">
+        <thd-panel-head class="thd-panel-head">
+          <thd-panel-title class="thd-panel-title">Trophic Purge Cascade</thd-panel-title>
+          <thd-panel-badge class="thd-panel-badge" id="thd-plague-pop">Condors · 420</thd-panel-badge>
+        </thd-panel-head>
+        <thd-cement-meter class="thd-cement-meter">
+          <thd-cement-row class="thd-cement-row">
+            <thd-cement-caption class="thd-cement-caption">Poured Cement Sterilization</thd-cement-caption>
+            <thd-cement-val class="thd-cement-val" id="thd-cement-pct">0%</thd-cement-val>
+          </thd-cement-row>
+          <thd-cement-track class="thd-cement-track">
+            <thd-cement-fill class="thd-cement-fill" id="thd-cement-fill"></thd-cement-fill>
+          </thd-cement-track>
+        </thd-cement-meter>
+        <thd-rung-list class="thd-rung-list" id="thd-rung-list">
+          <thd-taxon-rung class="thd-taxon-rung" role="button" tabindex="0" data-rung-index="0" data-species-id="condors" data-status="INFESTING">
+            <thd-rung-num class="thd-rung-num">I</thd-rung-num>
+            <thd-rung-name class="thd-rung-name">Condors</thd-rung-name>
+            <thd-rung-tag class="thd-rung-tag">INFESTING</thd-rung-tag>
+          </thd-taxon-rung>
+          <thd-taxon-rung class="thd-taxon-rung" role="button" tabindex="0" data-rung-index="1" data-species-id="serpents" data-status="DORMANT">
+            <thd-rung-num class="thd-rung-num">II</thd-rung-num>
+            <thd-rung-name class="thd-rung-name">Serpents</thd-rung-name>
+            <thd-rung-tag class="thd-rung-tag">DORMANT</thd-rung-tag>
+          </thd-taxon-rung>
+          <thd-taxon-rung class="thd-taxon-rung" role="button" tabindex="0" data-rung-index="2" data-species-id="spiders" data-status="DORMANT">
+            <thd-rung-num class="thd-rung-num">III</thd-rung-num>
+            <thd-rung-name class="thd-rung-name">Spiders</thd-rung-name>
+            <thd-rung-tag class="thd-rung-tag">DORMANT</thd-rung-tag>
+          </thd-taxon-rung>
+          <thd-taxon-rung class="thd-taxon-rung" role="button" tabindex="0" data-rung-index="3" data-species-id="flies" data-status="DORMANT">
+            <thd-rung-num class="thd-rung-num">IV</thd-rung-num>
+            <thd-rung-name class="thd-rung-name">Flies</thd-rung-name>
+            <thd-rung-tag class="thd-rung-tag">DORMANT</thd-rung-tag>
+          </thd-taxon-rung>
+          <thd-taxon-rung class="thd-taxon-rung" role="button" tabindex="0" data-rung-index="4" data-species-id="termites" data-status="DORMANT">
+            <thd-rung-num class="thd-rung-num">V</thd-rung-num>
+            <thd-rung-name class="thd-rung-name">Termites</thd-rung-name>
+            <thd-rung-tag class="thd-rung-tag">DORMANT</thd-rung-tag>
+          </thd-taxon-rung>
+          <thd-taxon-rung class="thd-taxon-rung" role="button" tabindex="0" data-rung-index="5" data-species-id="woodworms" data-status="DORMANT">
+            <thd-rung-num class="thd-rung-num">VI</thd-rung-num>
+            <thd-rung-name class="thd-rung-name">Woodworms</thd-rung-name>
+            <thd-rung-tag class="thd-rung-tag">DORMANT</thd-rung-tag>
+          </thd-taxon-rung>
+          <thd-taxon-rung class="thd-taxon-rung" role="button" tabindex="0" data-rung-index="6" data-species-id="rat_clans" data-status="DORMANT">
+            <thd-rung-num class="thd-rung-num">VII</thd-rung-num>
+            <thd-rung-name class="thd-rung-name">Rat Clans</thd-rung-name>
+            <thd-rung-tag class="thd-rung-tag">DORMANT</thd-rung-tag>
+          </thd-taxon-rung>
+          <thd-taxon-rung class="thd-taxon-rung" role="button" tabindex="0" data-rung-index="7" data-species-id="aseptic_zero" data-status="DORMANT">
+            <thd-rung-num class="thd-rung-num">0</thd-rung-num>
+            <thd-rung-name class="thd-rung-name">Aseptic Sanctuary</thd-rung-name>
+            <thd-rung-tag class="thd-rung-tag">0 FAUNA</thd-rung-tag>
+          </thd-taxon-rung>
+        </thd-rung-list>
+      </trophic-purge-cascade>
+      <aseptic-library-nave class="thd-panel" id="thd-nave-panel" data-illuminated="false">
+        <thd-panel-head class="thd-panel-head">
+          <thd-panel-title class="thd-panel-title">Buffon &amp; Linnaeus Nave</thd-panel-title>
+          <thd-panel-badge class="thd-panel-badge" id="thd-nave-status">0 / 7 Shelved</thd-panel-badge>
+        </thd-panel-head>
+        <thd-tome-rack class="thd-tome-rack" id="thd-tome-rack">
+          <thd-spine-tome class="thd-spine-tome" role="button" tabindex="0" data-tome-index="0" data-shelved="false" data-selected="false">
+            <thd-tome-roman class="thd-tome-roman">I</thd-tome-roman>
+            <thd-tome-code class="thd-tome-code">OIS</thd-tome-code>
+          </thd-spine-tome>
+          <thd-spine-tome class="thd-spine-tome" role="button" tabindex="0" data-tome-index="1" data-shelved="false" data-selected="false">
+            <thd-tome-roman class="thd-tome-roman">II</thd-tome-roman>
+            <thd-tome-code class="thd-tome-code">SER</thd-tome-code>
+          </thd-spine-tome>
+          <thd-spine-tome class="thd-spine-tome" role="button" tabindex="0" data-tome-index="2" data-shelved="false" data-selected="false">
+            <thd-tome-roman class="thd-tome-roman">III</thd-tome-roman>
+            <thd-tome-code class="thd-tome-code">APT</thd-tome-code>
+          </thd-spine-tome>
+          <thd-spine-tome class="thd-spine-tome" role="button" tabindex="0" data-tome-index="3" data-shelved="false" data-selected="false">
+            <thd-tome-roman class="thd-tome-roman">IV</thd-tome-roman>
+            <thd-tome-code class="thd-tome-code">DIP</thd-tome-code>
+          </thd-spine-tome>
+          <thd-spine-tome class="thd-spine-tome" role="button" tabindex="0" data-tome-index="4" data-shelved="false" data-selected="false">
+            <thd-tome-roman class="thd-tome-roman">V</thd-tome-roman>
+            <thd-tome-code class="thd-tome-code">TER</thd-tome-code>
+          </thd-spine-tome>
+          <thd-spine-tome class="thd-spine-tome" role="button" tabindex="0" data-tome-index="5" data-shelved="false" data-selected="false">
+            <thd-tome-roman class="thd-tome-roman">VI</thd-tome-roman>
+            <thd-tome-code class="thd-tome-code">COL</thd-tome-code>
+          </thd-spine-tome>
+          <thd-spine-tome class="thd-spine-tome" role="button" tabindex="0" data-tome-index="6" data-shelved="false" data-selected="false">
+            <thd-tome-roman class="thd-tome-roman">VII</thd-tome-roman>
+            <thd-tome-code class="thd-tome-code">GLI</thd-tome-code>
+          </thd-spine-tome>
+        </thd-tome-rack>
+        <thd-tome-readout class="thd-tome-readout" id="thd-tome-readout">
+          <thd-tome-title class="thd-tome-title" id="thd-tome-title">Histoire Naturelle — Oiseaux I · Accipitres</thd-tome-title>
+          <thd-tome-meta class="thd-tome-meta" id="thd-tome-meta">Vultur gryphus · Unclasped in Living Sky</thd-tome-meta>
+          <thd-tome-note class="thd-tome-note" id="thd-tome-note">Exterminate living fauna to press each order into Buffon &amp; Linnaeus library volumes.</thd-tome-note>
+        </thd-tome-readout>
+      </aseptic-library-nave>
+    </thd-left-wing>
+
+    <thd-stage-viewport class="thd-stage-viewport">
+      <thd-canvas-frame class="thd-canvas-frame">
+        <canvas class="thd-cutaway-canvas" id="thd-cutaway-canvas" width="960" height="510"></canvas>
+      </thd-canvas-frame>
+      <thd-causal-banner class="thd-causal-banner" id="thd-causal-banner" data-aseptic="false">
+        <thd-causal-kicker class="thd-causal-kicker" id="thd-causal-kicker">Active Trophic Plague · Stage 1 of 8</thd-causal-kicker>
+        <thd-causal-copy class="thd-causal-copy" id="thd-causal-copy">Carrion-winged condors wheel over Theodora. Slaying condors removes aerial predation and unleashes serpents across courtyards and cisterns.</thd-causal-copy>
+      </thd-causal-banner>
+    </thd-stage-viewport>
+
+    <thd-right-wing class="thd-wing-col">
+      <incunabula-crypt-folio class="thd-panel" id="thd-folio-panel" data-illuminated="false">
+        <thd-panel-head class="thd-panel-head">
+          <thd-panel-title class="thd-panel-title">Basement Incunabula Folio</thd-panel-title>
+          <thd-panel-badge class="thd-panel-badge" id="thd-folio-lock">Chained</thd-panel-badge>
+        </thd-panel-head>
+        <thd-folio-body class="thd-folio-body">
+          <canvas class="thd-folio-canvas" id="thd-folio-canvas" width="248" height="248"></canvas>
+          <thd-folio-text class="thd-folio-text">
+            <thd-folio-rubric class="thd-folio-rubric" id="thd-folio-rubric">Sphinx Leo-Virgo</thd-folio-rubric>
+            <thd-folio-code class="thd-folio-code" id="thd-folio-code">Incunabulum I · Fol. 4r · CHAINED</thd-folio-code>
+            <thd-folio-latin class="thd-folio-latin" id="thd-folio-latin">Ungues leonis in caemento sterili dum cives somniant figuntur.</thd-folio-latin>
+            <thd-folio-act class="thd-folio-act" id="thd-folio-act">Dormant beneath the library stair until living fauna reaches zero.</thd-folio-act>
+          </thd-folio-text>
+        </thd-folio-body>
+      </incunabula-crypt-folio>
+
+      <mythic-reclamation-watch class="thd-panel" id="thd-watch-panel" data-illuminated="false">
+        <thd-panel-head class="thd-panel-head">
+          <thd-panel-title class="thd-panel-title">Mythic Reclamation Watch</thd-panel-title>
+          <thd-panel-badge class="thd-panel-badge" id="thd-watch-badge">0 / 9 Awakened</thd-panel-badge>
+        </thd-panel-head>
+        <thd-spotlight-trio class="thd-spotlight-trio">
+          <button type="button" class="thd-btn thd-btn-spot" data-spot-beast="sphinxes">Inspect Sphinx</button>
+          <button type="button" class="thd-btn thd-btn-spot" data-spot-beast="chimeras">Inspect Chimera</button>
+          <button type="button" class="thd-btn thd-btn-spot" data-spot-beast="basilisks">Inspect Basilisk</button>
+        </thd-spotlight-trio>
+        <thd-beast-grid class="thd-beast-grid" id="thd-beast-grid">
+          <thd-beast-sigil class="thd-beast-sigil" role="button" tabindex="0" data-beast-id="sphinxes" data-awakened="false" data-inspected="true">
+            <thd-sigil-key class="thd-sigil-key">[1] Fol. 4r</thd-sigil-key>
+            <thd-sigil-name class="thd-sigil-name">Sphinxes</thd-sigil-name>
+            <thd-sigil-state class="thd-sigil-state">Dormant</thd-sigil-state>
+          </thd-beast-sigil>
+          <thd-beast-sigil class="thd-beast-sigil" role="button" tabindex="0" data-beast-id="griffons" data-awakened="false" data-inspected="false">
+            <thd-sigil-key class="thd-sigil-key">[2] Fol. 11v</thd-sigil-key>
+            <thd-sigil-name class="thd-sigil-name">Griffons</thd-sigil-name>
+            <thd-sigil-state class="thd-sigil-state">Dormant</thd-sigil-state>
+          </thd-beast-sigil>
+          <thd-beast-sigil class="thd-beast-sigil" role="button" tabindex="0" data-beast-id="chimeras" data-awakened="false" data-inspected="false">
+            <thd-sigil-key class="thd-sigil-key">[3] Fol. 19r</thd-sigil-key>
+            <thd-sigil-name class="thd-sigil-name">Chimeras</thd-sigil-name>
+            <thd-sigil-state class="thd-sigil-state">Dormant</thd-sigil-state>
+          </thd-beast-sigil>
+          <thd-beast-sigil class="thd-beast-sigil" role="button" tabindex="0" data-beast-id="dragons" data-awakened="false" data-inspected="false">
+            <thd-sigil-key class="thd-sigil-key">[4] Fol. 27v</thd-sigil-key>
+            <thd-sigil-name class="thd-sigil-name">Dragons</thd-sigil-name>
+            <thd-sigil-state class="thd-sigil-state">Dormant</thd-sigil-state>
+          </thd-beast-sigil>
+          <thd-beast-sigil class="thd-beast-sigil" role="button" tabindex="0" data-beast-id="hircocervi" data-awakened="false" data-inspected="false">
+            <thd-sigil-key class="thd-sigil-key">[5] Fol. 33r</thd-sigil-key>
+            <thd-sigil-name class="thd-sigil-name">Hircocervi</thd-sigil-name>
+            <thd-sigil-state class="thd-sigil-state">Dormant</thd-sigil-state>
+          </thd-beast-sigil>
+          <thd-beast-sigil class="thd-beast-sigil" role="button" tabindex="0" data-beast-id="harpies" data-awakened="false" data-inspected="false">
+            <thd-sigil-key class="thd-sigil-key">[6] Fol. 41v</thd-sigil-key>
+            <thd-sigil-name class="thd-sigil-name">Harpies</thd-sigil-name>
+            <thd-sigil-state class="thd-sigil-state">Dormant</thd-sigil-state>
+          </thd-beast-sigil>
+          <thd-beast-sigil class="thd-beast-sigil" role="button" tabindex="0" data-beast-id="hydras" data-awakened="false" data-inspected="false">
+            <thd-sigil-key class="thd-sigil-key">[7] Fol. 48r</thd-sigil-key>
+            <thd-sigil-name class="thd-sigil-name">Hydras</thd-sigil-name>
+            <thd-sigil-state class="thd-sigil-state">Dormant</thd-sigil-state>
+          </thd-beast-sigil>
+          <thd-beast-sigil class="thd-beast-sigil" role="button" tabindex="0" data-beast-id="unicorns" data-awakened="false" data-inspected="false">
+            <thd-sigil-key class="thd-sigil-key">[8] Fol. 56v</thd-sigil-key>
+            <thd-sigil-name class="thd-sigil-name">Unicorns</thd-sigil-name>
+            <thd-sigil-state class="thd-sigil-state">Dormant</thd-sigil-state>
+          </thd-beast-sigil>
+          <thd-beast-sigil class="thd-beast-sigil" role="button" tabindex="0" data-beast-id="basilisks" data-awakened="false" data-inspected="false">
+            <thd-sigil-key class="thd-sigil-key">[9] Fol. 64r</thd-sigil-key>
+            <thd-sigil-name class="thd-sigil-name">Basilisks</thd-sigil-name>
+            <thd-sigil-state class="thd-sigil-state">Dormant</thd-sigil-state>
+          </thd-beast-sigil>
+        </thd-beast-grid>
+      </mythic-reclamation-watch>
+    </thd-right-wing>
+  </thd-sanctum-grid>
+  <theodora-plate-drawer class="thd-plate-drawer" id="thd-plate-drawer" role="dialog" aria-modal="true" aria-label="Archival Plates of Theodora" hidden>
+    <thd-plate-sheet class="thd-plate-sheet">
+      <thd-plate-head class="thd-plate-head">
+        <thd-panel-title class="thd-panel-title">Royal Atlas Plates · Theodora Archival Vault</thd-panel-title>
+        <button type="button" class="thd-btn" id="thd-btn-close-plates">Close Plates [Esc]</button>
+      </thd-plate-head>
+      <thd-plate-pair class="thd-plate-pair">
+        <thd-plate-card class="thd-plate-card" id="thd-card-map" data-plate-kind="map" data-plate-state="pending">
+          <thd-plate-label class="thd-plate-label">Plate I · Cartographic Survey (map.png)</thd-plate-label>
+          <img class="thd-plate-img" src="map.png" alt="Cartographic survey of Theodora" loading="lazy" onerror="this.hidden=true;this.parentElement.setAttribute('data-plate-state','pending');">
+          <thd-plate-fallback class="thd-plate-fallback">
+            <canvas class="thd-plate-canvas" id="thd-plate-map-canvas" width="520" height="340"></canvas>
+            <thd-plate-notice class="thd-plate-notice">PENDING_IMAGE_GENERATOR_QUOTA · Reset 2026-11-11T06:21:14Z — Copperplate survey queued; local archival engraving active.</thd-plate-notice>
+          </thd-plate-fallback>
+        </thd-plate-card>
+        <thd-plate-card class="thd-plate-card" id="thd-card-image" data-plate-kind="image" data-plate-state="pending">
+          <thd-plate-label class="thd-plate-label">Plate II · Architectural Vision (image.png)</thd-plate-label>
+          <img class="thd-plate-img" src="image.png" alt="Architectural vision of Theodora" loading="lazy" onerror="this.hidden=true;this.parentElement.setAttribute('data-plate-state','pending');">
+          <thd-plate-fallback class="thd-plate-fallback">
+            <canvas class="thd-plate-canvas" id="thd-plate-image-canvas" width="520" height="340"></canvas>
+            <thd-plate-notice class="thd-plate-notice">PENDING_IMAGE_GENERATOR_QUOTA · Reset 2026-11-11T06:21:14Z — Cutaway vision queued; local copperplate elevation active.</thd-plate-notice>
+          </thd-plate-fallback>
+        </thd-plate-card>
+      </thd-plate-pair>
+    </thd-plate-sheet>
+  </theodora-plate-drawer>
+</theodora-bestiary-sanctum>
+
+<script>
+(function (root) {
+  'use strict';
+
+  var PALETTE = Object.freeze({
+    asepticCement: '#cbc8be',
+    limestoneAsh: '#1c1d21',
+    cryptObsidian: '#0e0d11',
+    vellumOchre: '#d8be86',
+    incunabulaVermilion: '#b83a28',
+    linnaeusVerdigris: '#52796f',
+    lapisMarginalia: '#2f4b7c'
+  });
+
+  var STAGE_KEYS = Object.freeze([
+    'condors',
+    'serpents',
+    'spiders',
+    'flies',
+    'termites',
+    'woodworms',
+    'rat_clans',
+    'aseptic_zero'
+  ]);
+
+  var CEMENT_CURVE = Object.freeze([0, 0.08, 0.18, 0.30, 0.46, 0.64, 0.88, 1]);
+
+  var SPECIES_CHAIN = Object.freeze([
+    Object.freeze({
+      index: 0,
+      id: 'condors',
+      name: 'Condors',
+      binomial: 'Vultur gryphus',
+      buffonTome: 'Histoire Naturelle — Oiseaux I',
+      linnaeusOrder: 'Accipitres',
+      plagueDesc: 'Carrion-winged raptors wheeling in dark gyres above limestone parapets and open cisterns.',
+      purgeAction: 'Slay the Condors of the Upper Air',
+      causalTriggerFrom: 'primordial_sky',
+      causalUnleashes: 'serpents',
+      causalConsequence: 'Slaying condors removes aerial predation so serpents multiply unconstrained across courtyards and cisterns!',
+      basePopulation: 140,
+      spikePopulation: 420,
+      callNumber: 'BUF-OIS-I · LIN-ACC-01',
+      taxonomicEpitaph: 'Pressed into copperplate plumage tables; no broad shadow crosses Theodora’s noon sky.'
+    }),
+    Object.freeze({
+      index: 1,
+      id: 'serpents',
+      name: 'Serpents',
+      binomial: 'Coluber theodorae',
+      buffonTome: 'Quadrupèdes Ovipares & Serpents',
+      linnaeusOrder: 'Amphibia Serpentes',
+      plagueDesc: 'Unchecked vipers and cistern colubrids coiling across sunlit flagstones, wells, and colonnade steps.',
+      purgeAction: 'Exterminate the Courtyard Serpents',
+      causalTriggerFrom: 'condors',
+      causalUnleashes: 'spiders',
+      causalConsequence: 'Exterminating serpents removes ground insectivores and lets spiders drape the colonnades in webs!',
+      basePopulation: 280,
+      spikePopulation: 1950,
+      callNumber: 'BUF-SER-II · LIN-AMP-02',
+      taxonomicEpitaph: 'Counted by ventral scutes in dry folio Latin while cistern rims are sealed in lime mortar.'
+    }),
+    Object.freeze({
+      index: 2,
+      id: 'spiders',
+      name: 'Spiders',
+      binomial: 'Araneus domesticus',
+      buffonTome: 'Insectes & Aptères',
+      linnaeusOrder: 'Insecta Aptera',
+      plagueDesc: 'Pallid orb-weavers shrouding arcades, capitals, and loggias in radial curtains of silk.',
+      purgeAction: 'Sweep & Burn the Colonnade Spiders',
+      causalTriggerFrom: 'serpents',
+      causalUnleashes: 'flies',
+      causalConsequence: 'Wiping out spiders dismantles every silken snare and causes flies to blacken the sky!',
+      basePopulation: 900,
+      spikePopulation: 8400,
+      callNumber: 'BUF-APT-III · LIN-INS-03',
+      taxonomicEpitaph: 'Eight-eyed cephalothoraxes pinned on rag paper; colonnade joints pointed smooth with ash cement.'
+    }),
+    Object.freeze({
+      index: 3,
+      id: 'flies',
+      name: 'Flies',
+      binomial: 'Musca caliginosa',
+      buffonTome: 'Diptères',
+      linnaeusOrder: 'Insecta Diptera',
+      plagueDesc: 'Dense droning swarms eclipsing daylight across piazzas, archways, and market vaults.',
+      purgeAction: 'Fumigate the Blackened Sky of Flies',
+      causalTriggerFrom: 'spiders',
+      causalUnleashes: 'termites',
+      causalConsequence: 'Fumigating the blackened sky of flies clears the air only to yield timber-devouring termites!',
+      basePopulation: 4500,
+      spikePopulation: 68000,
+      callNumber: 'BUF-DIP-IV · LIN-DIP-04',
+      taxonomicEpitaph: 'Wing venation cataloged under magnifying glass after sulfur smoke scoured the upper piazzas.'
+    }),
+    Object.freeze({
+      index: 4,
+      id: 'termites',
+      name: 'Termites',
+      binomial: 'Termes fatalis',
+      buffonTome: 'Névroptères Sociaux',
+      linnaeusOrder: 'Insecta Aptera — Termes',
+      plagueDesc: 'Blind pale colonies hollowing roof trusses, shutters, and oak rafters from within.',
+      purgeAction: 'Crush the Timber-Devouring Termites',
+      causalTriggerFrom: 'flies',
+      causalUnleashes: 'woodworms',
+      causalConsequence: 'Crushing the termite nests leaves every surviving beam and lintel prey to woodworms!',
+      basePopulation: 12000,
+      spikePopulation: 145000,
+      callNumber: 'BUF-NEV-V · LIN-TER-05',
+      taxonomicEpitaph: 'Soldier mandibles drawn at tenfold scale while hollowed trusses are grouted with stone.'
+    }),
+    Object.freeze({
+      index: 5,
+      id: 'woodworms',
+      name: 'Woodworms',
+      binomial: 'Anobium pertinax',
+      buffonTome: 'Coléoptères Xylophages',
+      linnaeusOrder: 'Insecta Coleoptera',
+      plagueDesc: 'Xylophage beetles ticking inside wainscoting and joists, raining pale wood-flour until citizens strip all timber.',
+      purgeAction: 'Strip All Wood for Stone & Poured Cement',
+      causalTriggerFrom: 'termites',
+      causalUnleashes: 'rat_clans',
+      causalConsequence: 'Stripping all wood for stone and poured cement drives poison-immune rat clans out of the sewers!',
+      basePopulation: 18000,
+      spikePopulation: 210000,
+      callNumber: 'BUF-COL-VI · LIN-COL-06',
+      taxonomicEpitaph: 'Elytra indexed beside the municipal decree banning every wooden beam, stair, and shutter.'
+    }),
+    Object.freeze({
+      index: 6,
+      id: 'rat_clans',
+      name: 'Rat Clans',
+      binomial: 'Mus decumanus invictus',
+      buffonTome: 'Quadrupèdes VII',
+      linnaeusOrder: 'Mammalia Glires',
+      plagueDesc: 'Fierce poison-immune sewer clans surging across newly poured cement conduits and cistern grates.',
+      purgeAction: 'Execute Violent Massacre of the Rat Clans',
+      causalTriggerFrom: 'woodworms',
+      causalUnleashes: 'aseptic_zero',
+      causalConsequence: 'Violent massacre of poison-immune rat clans achieves aseptic solitude: Theodora stands sealed in cement with Buffon and Linnaeus locked away as library volumes.',
+      basePopulation: 620,
+      spikePopulation: 9600,
+      callNumber: 'BUF-QUA-VII · LIN-GLI-07',
+      taxonomicEpitaph: 'Final mammalian entry clasped behind brass locks; zero living fauna remain in Theodora.'
+    })
+  ]);
+
+  function createRng(seed) {
+    var s = (seed >>> 0) || 0x54484434;
+    return function nextRand() {
+      s = (s + 0x6d2b79f5) >>> 0;
+      var t = Math.imul(s ^ (s >>> 15), 1 | s);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function detectReducedMotion() {
+    try {
+      if (root && typeof root.matchMedia === 'function') {
+        return Boolean(root.matchMedia('(prefers-reduced-motion: reduce)').matches);
+      }
+    } catch (_) {}
+    return false;
+  }
+
+  function makeInitialEvent() {
+    return Object.freeze({
+      step: 0,
+      type: 'INITIAL_INFESTATION',
+      purgedId: null,
+      purgedName: null,
+      binomial: null,
+      buffonTome: null,
+      linnaeusOrder: null,
+      unleashedId: 'condors',
+      unleashedName: 'Condors',
+      livingFaunaCount: 7,
+      cementRatio: 0,
+      summary: 'Condors wheel in dark gyres over Theodora’s limestone towers and open cisterns (7 living orders active).'
+    });
+  }
+
+  var listeners = new Set();
+
+  var state = {
+    stageIndex: 0,
+    muted: false,
+    reducedMotion: detectReducedMotion(),
+    consultedVolumeId: null,
+    chronicle: [makeInitialEvent()],
+    lastCausalEvent: null,
+    simTime: 0,
+    purgeFlash: 0,
+    lastPurgedIndex: -1,
+    particles: [],
+    webs: [],
+    purgeTraces: []
+  };
+  state.lastCausalEvent = state.chronicle[0];
+
+  var audioCtx = null;
+  var noiseBuffer = null;
+
+  function ensureAudioContext() {
+    if (state.muted) return null;
+    try {
+      var Ctor = root && (root.AudioContext || root.webkitAudioContext);
+      if (!Ctor) return null;
+      if (!audioCtx) {
+        audioCtx = new Ctor();
+      }
+      if (audioCtx.state === 'suspended' && typeof audioCtx.resume === 'function') {
+        audioCtx.resume().catch(function () {});
+      }
+      return audioCtx;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function getNoiseBuffer(ctx) {
+    if (noiseBuffer && noiseBuffer.sampleRate === ctx.sampleRate) {
+      return noiseBuffer;
+    }
+    var len = Math.max(1, Math.floor(ctx.sampleRate * 0.65));
+    var buf = ctx.createBuffer(1, len, ctx.sampleRate);
+    var data = buf.getChannelData(0);
+    var rng = createRng(0x51a7e1);
+    for (var i = 0; i < len; i++) {
+      data[i] = rng() * 2 - 1;
+    }
+    noiseBuffer = buf;
+    return buf;
+  }
+
+  function playPurgeAudio(speciesIdx) {
+    var ctx = ensureAudioContext();
+    if (!ctx) return;
+    try {
+      var now = ctx.currentTime;
+      var master = ctx.createGain();
+      master.gain.setValueAtTime(0.16, now);
+      master.gain.exponentialRampToValueAtTime(0.0008, now + 0.62);
+      master.connect(ctx.destination);
+
+      var nSrc = ctx.createBufferSource();
+      nSrc.buffer = getNoiseBuffer(ctx);
+      var filt = ctx.createBiquadFilter();
+      var nGain = ctx.createGain();
+
+      var startFreqs = [660, 440, 1320, 220, 480, 1840, 920];
+      var endFreqs = [175, 130, 520, 96, 112, 240, 110];
+      var filterFreqs = [1100, 3200, 2400, 1500, 760, 1950, 1280];
+
+      filt.type = speciesIdx === 1 || speciesIdx === 3 ? 'bandpass' : 'lowpass';
+      filt.frequency.setValueAtTime(filterFreqs[speciesIdx] || 1400, now);
+      filt.Q.setValueAtTime(speciesIdx === 1 ? 5.5 : 2.2, now);
+
+      nGain.gain.setValueAtTime(0.45, now);
+      nGain.gain.exponentialRampToValueAtTime(0.001, now + 0.36);
+      nSrc.connect(filt);
+      filt.connect(nGain);
+      nGain.connect(master);
+      nSrc.start(now);
+      nSrc.stop(now + 0.38);
+
+      var osc = ctx.createOscillator();
+      var oGain = ctx.createGain();
+      osc.type = speciesIdx === 3 ? 'sawtooth' : (speciesIdx === 6 ? 'square' : 'triangle');
+      osc.frequency.setValueAtTime(startFreqs[speciesIdx] || 520, now);
+      osc.frequency.exponentialRampToValueAtTime(endFreqs[speciesIdx] || 140, now + 0.34);
+      oGain.gain.setValueAtTime(0.55, now);
+      oGain.gain.exponentialRampToValueAtTime(0.001, now + 0.38);
+      osc.connect(oGain);
+      oGain.connect(master);
+      osc.start(now);
+      osc.stop(now + 0.4);
+
+      if (speciesIdx === 6) {
+        var sealNotes = [220, 330, 660];
+        for (var k = 0; k < sealNotes.length; k++) {
+          var sOsc = ctx.createOscillator();
+          var sGain = ctx.createGain();
+          sOsc.type = 'sine';
+          sOsc.frequency.setValueAtTime(sealNotes[k], now + 0.14);
+          sGain.gain.setValueAtTime(0.001, now + 0.12);
+          sGain.gain.linearRampToValueAtTime(0.18 / (k + 1), now + 0.2);
+          sGain.gain.exponentialRampToValueAtTime(0.0008, now + 0.6);
+          sOsc.connect(sGain);
+          sGain.connect(master);
+          sOsc.start(now + 0.12);
+          sOsc.stop(now + 0.61);
+        }
+      }
+    } catch (_) {}
+  }
+
+  function playBookClaspAudio(volumeIdx) {
+    var ctx = ensureAudioContext();
+    if (!ctx) return;
+    try {
+      var now = ctx.currentTime;
+      var master = ctx.createGain();
+      master.gain.setValueAtTime(0.13, now);
+      master.gain.exponentialRampToValueAtTime(0.0008, now + 0.14);
+      master.connect(ctx.destination);
+
+      var clickOsc = ctx.createOscillator();
+      clickOsc.type = 'triangle';
+      var baseHz = 1320 + ((volumeIdx || 0) % 7) * 115;
+      clickOsc.frequency.setValueAtTime(baseHz, now);
+      clickOsc.frequency.exponentialRampToValueAtTime(420, now + 0.045);
+      clickOsc.connect(master);
+      clickOsc.start(now);
+      clickOsc.stop(now + 0.05);
+
+      var pageSrc = ctx.createBufferSource();
+      pageSrc.buffer = getNoiseBuffer(ctx);
+      var hp = ctx.createBiquadFilter();
+      hp.type = 'bandpass';
+      hp.frequency.setValueAtTime(2450, now);
+      hp.Q.setValueAtTime(3.2, now);
+      var pGain = ctx.createGain();
+      pGain.gain.setValueAtTime(0.32, now + 0.01);
+      pGain.gain.exponentialRampToValueAtTime(0.001, now + 0.09);
+      pageSrc.connect(hp);
+      hp.connect(pGain);
+      pGain.connect(master);
+      pageSrc.start(now + 0.01);
+      pageSrc.stop(now + 0.1);
+    } catch (_) {}
+  }
+
+  function seedSwarmForStage(stageIdx) {
+    var rng = createRng(0x54484400 + stageIdx * 977);
+    var items = [];
+    var webs = [];
+    var i;
+
+    if (stageIdx === 0) {
+      for (i = 0; i < 11; i++) {
+        items.push({
+          cx: 0.14 + (i / 10) * 0.72 + (rng() - 0.5) * 0.06,
+          cy: 0.18 + (i % 3) * 0.16 + rng() * 0.08,
+          rx: 0.055 + rng() * 0.075,
+          ry: 0.028 + rng() * 0.04,
+          angle: rng() * Math.PI * 2,
+          speed: (0.32 + rng() * 0.28) * (i % 2 === 0 ? 1 : -1),
+          span: 13 + rng() * 11,
+          flapPhase: rng() * Math.PI * 2
+        });
+      }
+    } else if (stageIdx === 1) {
+      for (i = 0; i < 18; i++) {
+        items.push({
+          u: rng(),
+          v: 0.70 + rng() * 0.27,
+          dir: i % 2 === 0 ? 1 : -1,
+          speed: 0.045 + rng() * 0.055,
+          len: 24 + rng() * 20,
+          wavePhase: rng() * Math.PI * 2,
+          amp: 3.2 + rng() * 2.8,
+          ochre: i % 3 === 0
+        });
+      }
+    } else if (stageIdx === 2) {
+      for (i = 0; i < 8; i++) {
+        webs.push({
+          u: 0.09 + (i / 7) * 0.82,
+          v: 0.42 + (i % 2) * 0.22 + (rng() - 0.5) * 0.06,
+          r: 20 + rng() * 14,
+          spokes: 9 + (i % 4),
+          rings: 4 + (i % 3)
+        });
+      }
+      for (i = 0; i < 16; i++) {
+        var w = webs[i % webs.length];
+        items.push({
+          webIdx: i % webs.length,
+          u: w.u + (rng() - 0.5) * 0.05,
+          v: w.v + 0.04 + rng() * 0.22,
+          dropBase: 10 + rng() * 26,
+          bobPhase: rng() * Math.PI * 2,
+          bobSpeed: 1.1 + rng() * 1.2,
+          size: 3.2 + rng() * 2.2
+        });
+      }
+    } else if (stageIdx === 3) {
+      for (i = 0; i < 145; i++) {
+        var cluster = i % 4;
+        var vxCenter = 0.18 + cluster * 0.21;
+        var vyCenter = 0.28 + (cluster % 2) * 0.26;
+        items.push({
+          u: vxCenter + (rng() - 0.5) * 0.28,
+          v: Math.max(0.05, Math.min(0.95, vyCenter + (rng() - 0.5) * 0.42)),
+          cx: vxCenter,
+          cy: vyCenter,
+          orbitSpeed: (1.4 + rng() * 2.2) * (i % 2 === 0 ? 1 : -1),
+          phase: rng() * Math.PI * 2,
+          jitter: 0.02 + rng() * 0.06,
+          size: 1.4 + rng() * 1.8
+        });
+      }
+    } else if (stageIdx === 4) {
+      for (i = 0; i < 64; i++) {
+        var beamRow = i % 4;
+        items.push({
+          lane: beamRow,
+          u: rng(),
+          v: 0.12 + beamRow * 0.24 + (rng() - 0.5) * 0.03,
+          dir: beamRow % 2 === 0 ? 1 : -1,
+          speed: 0.038 + rng() * 0.045,
+          soldier: i % 6 === 0,
+          phase: rng() * Math.PI * 2
+        });
+      }
+    } else if (stageIdx === 5) {
+      for (i = 0; i < 82; i++) {
+        items.push({
+          u: 0.04 + rng() * 0.92,
+          v: rng(),
+          fallSpeed: 0.14 + rng() * 0.22,
+          swayPhase: rng() * Math.PI * 2,
+          isBeetle: i < 18,
+          size: i < 18 ? (2.6 + rng() * 1.4) : (1.1 + rng() * 1.5)
+        });
+      }
+    } else if (stageIdx === 6) {
+      for (i = 0; i < 22; i++) {
+        items.push({
+          u: rng(),
+          v: (rng() - 0.5) * 26,
+          dir: i % 2 === 0 ? 1 : -1,
+          speed: 0.09 + rng() * 0.11,
+          stridePhase: rng() * Math.PI * 2,
+          len: 11 + rng() * 6,
+          alphaPack: i % 5 === 0
+        });
+      }
+    } else {
+      for (i = 0; i < 26; i++) {
+        items.push({
+          u: 0.05 + rng() * 0.90,
+          v: 0.08 + rng() * 0.84,
+          driftX: (rng() - 0.5) * 0.008,
+          driftY: -0.004 - rng() * 0.008,
+          size: 1.0 + rng() * 1.4,
+          alpha: 0.14 + rng() * 0.18
+        });
+      }
+    }
+
+    state.particles = items;
+    state.webs = webs;
+  }
+
+  function spawnPurgeTraces(purgedIdx) {
+    var rng = createRng(0x9911 + purgedIdx * 313);
+    var traces = [];
+    var shelfU = 0.22 + (purgedIdx / 6) * 0.56;
+    for (var i = 0; i < 18; i++) {
+      traces.push({
+        u0: 0.08 + rng() * 0.84,
+        v0: 0.12 + rng() * 0.76,
+        u1: shelfU + (rng() - 0.5) * 0.04,
+        progress: 0,
+        speed: 1.55 + rng() * 0.85
+      });
+    }
+    state.purgeTraces = traces;
+  }
+
+  seedSwarmForStage(0);
+
+  function step(dtSec) {
+    var dt = Number.isFinite(dtSec) ? Math.max(0, Math.min(0.1, dtSec)) : 0.016;
+
+    if (state.purgeFlash > 0) {
+      state.purgeFlash = Math.max(0, state.purgeFlash - dt * 1.85);
+    }
+    if (state.purgeTraces.length > 0) {
+      var activeTraces = [];
+      for (var t = 0; t < state.purgeTraces.length; t++) {
+        var tr = state.purgeTraces[t];
+        tr.progress += dt * tr.speed;
+        if (tr.progress < 1) {
+          activeTraces.push(tr);
+        }
+      }
+      state.purgeTraces = activeTraces;
+    }
+
+    if (state.reducedMotion || dt === 0) {
+      return;
+    }
+
+    state.simTime += dt;
+    var pts = state.particles;
+    var st = state.stageIndex;
+    for (var i = 0; i < pts.length; i++) {
+      var p = pts[i];
+      if (st === 0) {
+        p.angle += p.speed * dt;
+        p.flapPhase += dt * 3.1;
+      } else if (st === 1) {
+        p.u += p.dir * p.speed * dt;
+        if (p.u > 1.06) p.u = -0.06;
+        if (p.u < -0.06) p.u = 1.06;
+        p.wavePhase += dt * 5.8;
+      } else if (st === 2) {
+        p.bobPhase += dt * p.bobSpeed;
+      } else if (st === 3) {
+        p.phase += dt * p.orbitSpeed;
+        p.u += Math.cos(p.phase * 1.7 + i) * p.jitter * dt * 2.6;
+        p.v += Math.sin(p.phase * 2.1 + i) * p.jitter * dt * 2.6;
+        if (p.u < 0.02) p.u = 0.98;
+        if (p.u > 0.98) p.u = 0.02;
+        if (p.v < 0.04) p.v = 0.92;
+        if (p.v > 0.94) p.v = 0.06;
+      } else if (st === 4) {
+        p.u += p.dir * p.speed * dt;
+        if (p.u > 1.03) p.u = -0.03;
+        if (p.u < -0.03) p.u = 1.03;
+        p.phase += dt * 8.0;
+      } else if (st === 5) {
+        if (p.isBeetle) {
+          p.swayPhase += dt * 9.0;
+        } else {
+          p.v += p.fallSpeed * dt;
+          p.swayPhase += dt * 2.4;
+          if (p.v > 1.0) p.v -= 1.0;
+        }
+      } else if (st === 6) {
+        p.u += p.dir * p.speed * dt;
+        if (p.u > 1.05) p.u = -0.05;
+        if (p.u < -0.05) p.u = 1.05;
+        p.stridePhase += dt * 11.5;
+      } else {
+        p.u += p.driftX * dt;
+        p.v += p.driftY * dt;
+        if (p.u < 0.02) p.u = 0.98;
+        if (p.u > 0.98) p.u = 0.02;
+        if (p.v < 0.04) p.v = 0.94;
+      }
+    }
+  }
+
+  function parseBand(raw, h, fbTop, fbBottom) {
+    var top = fbTop;
+    var bottom = fbBottom;
+    if (Array.isArray(raw) && raw.length >= 2) {
+      if (Number.isFinite(raw[0])) top = raw[0];
+      if (Number.isFinite(raw[1])) bottom = raw[1];
+    } else if (raw && typeof raw === 'object') {
+      if (Number.isFinite(raw.y0)) top = raw.y0;
+      else if (Number.isFinite(raw.top)) top = raw.top;
+      else if (Number.isFinite(raw.y)) top = raw.y;
+      else if (Number.isFinite(raw.startY)) top = raw.startY;
+
+      if (Number.isFinite(raw.y1)) bottom = raw.y1;
+      else if (Number.isFinite(raw.bottom)) bottom = raw.bottom;
+      else if (Number.isFinite(raw.h)) bottom = top + raw.h;
+      else if (Number.isFinite(raw.height)) bottom = top + raw.height;
+      else if (Number.isFinite(raw.endY)) bottom = raw.endY;
+    }
+    if (h > 2 && top >= 0 && bottom <= 1.001 && bottom > top) {
+      top *= h;
+      bottom *= h;
+    }
+    if (!(bottom > top)) {
+      top = fbTop;
+      bottom = fbBottom;
+    }
+    return { top: top, bottom: bottom, height: Math.max(1, bottom - top) };
+  }
+
+  function normalizeLayoutMetrics(width, height, layoutMetrics) {
+    var m = layoutMetrics && typeof layoutMetrics === 'object' ? layoutMetrics : {};
+    var sky = parseBand(m.skyBand, height, 0, height * 0.46);
+    var nave = parseBand(m.naveBand, height, sky.bottom, height * 0.74);
+    var crypt = parseBand(m.cryptBand, height, nave.bottom, height);
+    var sewerY = sky.bottom - Math.min(14, sky.height * 0.06);
+    if (Number.isFinite(m.sewerY)) {
+      sewerY = (height > 2 && m.sewerY > 0 && m.sewerY <= 1.001) ? m.sewerY * height : m.sewerY;
+    }
+    return { width: width, height: height, skyBand: sky, naveBand: nave, cryptBand: crypt, sewerY: sewerY };
+  }
+
+  function drawCondors(ctx, lm) {
+    var sky = lm.skyBand;
+    var w = lm.width;
+    var scale = Math.max(0.62, Math.min(1.18, w / 960));
+    ctx.save();
+    for (var i = 0; i < state.particles.length; i++) {
+      var p = state.particles[i];
+      var x = (p.cx + Math.cos(p.angle) * p.rx) * w;
+      var y = sky.top + (p.cy + Math.sin(p.angle) * p.ry) * sky.height * 0.72;
+      var bank = Math.sin(p.angle) * 0.22 * (p.speed >= 0 ? 1 : -1);
+      var flap = Math.sin(p.flapPhase) * 3.6 * scale;
+      var span = p.span * scale;
+
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(bank);
+
+      ctx.strokeStyle = 'rgba(203, 200, 190, 0.14)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.arc(0, 8 * scale, span * 0.9, Math.PI * 1.15, Math.PI * 1.85);
+      ctx.stroke();
+
+      ctx.strokeStyle = PALETTE.cryptObsidian;
+      ctx.fillStyle = '#252329';
+      ctx.lineWidth = 2.1 * scale;
+      ctx.beginPath();
+      ctx.moveTo(-span, -flap);
+      ctx.quadraticCurveTo(-span * 0.45, -6.5 * scale - flap * 0.4, 0, 0);
+      ctx.quadraticCurveTo(span * 0.45, -6.5 * scale - flap * 0.4, span, -flap);
+      ctx.stroke();
+
+      ctx.fillStyle = PALETTE.asepticCement;
+      ctx.beginPath();
+      ctx.arc(0, -0.6 * scale, 1.9 * scale, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = PALETTE.incunabulaVermilion;
+      ctx.beginPath();
+      ctx.arc(1.8 * scale * (p.speed >= 0 ? 1 : -1), -1.4 * scale, 1.1 * scale, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+    ctx.restore();
+  }
+
+  function drawSerpents(ctx, lm) {
+    var sky = lm.skyBand;
+    var w = lm.width;
+    var scale = Math.max(0.68, Math.min(1.15, w / 960));
+    ctx.save();
+    for (var i = 0; i < state.particles.length; i++) {
+      var p = state.particles[i];
+      var hx = p.u * w;
+      var hy = sky.top + p.v * sky.height;
+      var segs = 9;
+      var stepLen = (p.len * scale) / segs;
+
+      ctx.strokeStyle = p.ochre ? PALETTE.vellumOchre : PALETTE.linnaeusVerdigris;
+      ctx.lineWidth = 2.6 * scale;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      for (var s = 0; s <= segs; s++) {
+        var sx = hx - p.dir * s * stepLen;
+        var sy = hy + Math.sin(p.wavePhase - s * 0.85) * p.amp * scale * (1 - s / (segs + 3));
+        if (s === 0) ctx.moveTo(sx, sy);
+        else ctx.lineTo(sx, sy);
+      }
+      ctx.stroke();
+
+      var headY = hy + Math.sin(p.wavePhase) * p.amp * scale;
+      ctx.fillStyle = p.ochre ? '#e5cf99' : '#6fa093';
+      ctx.beginPath();
+      ctx.arc(hx, headY, 2.5 * scale, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.strokeStyle = PALETTE.incunabulaVermilion;
+      ctx.lineWidth = 0.9 * scale;
+      ctx.beginPath();
+      ctx.moveTo(hx + p.dir * 2.5 * scale, headY);
+      ctx.lineTo(hx + p.dir * 6.2 * scale, headY - 1.2 * scale);
+      ctx.moveTo(hx + p.dir * 4.5 * scale, headY - 0.6 * scale);
+      ctx.lineTo(hx + p.dir * 6.2 * scale, headY + 1.3 * scale);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function drawSpiders(ctx, lm) {
+    var sky = lm.skyBand;
+    var w = lm.width;
+    var scale = Math.max(0.65, Math.min(1.15, w / 960));
+    ctx.save();
+    for (var i = 0; i < state.webs.length; i++) {
+      var wb = state.webs[i];
+      var cx = wb.u * w;
+      var cy = sky.top + wb.v * sky.height;
+      var rad = wb.r * scale;
+
+      ctx.strokeStyle = 'rgba(203, 200, 190, 0.36)';
+      ctx.lineWidth = 0.85;
+      for (var sp = 0; sp < wb.spokes; sp++) {
+        var ang = (sp / wb.spokes) * Math.PI * 2;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(cx + Math.cos(ang) * rad, cy + Math.sin(ang) * rad);
+        ctx.stroke();
+      }
+      for (var rg = 1; rg <= wb.rings; rg++) {
+        var rr = (rg / wb.rings) * rad;
+        ctx.beginPath();
+        for (var sp2 = 0; sp2 <= wb.spokes; sp2++) {
+          var a2 = (sp2 / wb.spokes) * Math.PI * 2;
+          var px = cx + Math.cos(a2) * rr;
+          var py = cy + Math.sin(a2) * rr;
+          if (sp2 === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        }
+        ctx.stroke();
+      }
+    }
+
+    for (var j = 0; j < state.particles.length; j++) {
+      var p = state.particles[j];
+      var sx = p.u * w;
+      var anchorY = sky.top + (p.v - 0.08) * sky.height;
+      var drop = (p.dropBase + Math.sin(p.bobPhase) * 6) * scale;
+      var sy = anchorY + drop;
+      var r = p.size * scale;
+
+      ctx.strokeStyle = 'rgba(216, 190, 134, 0.42)';
+      ctx.lineWidth = 0.8;
+      ctx.beginPath();
+      ctx.moveTo(sx, anchorY);
+      ctx.lineTo(sx, sy);
+      ctx.stroke();
+
+      ctx.fillStyle = PALETTE.cryptObsidian;
+      ctx.strokeStyle = PALETTE.vellumOchre;
+      ctx.lineWidth = 0.95;
+      ctx.beginPath();
+      ctx.arc(sx, sy, r, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      for (var lg = -1; lg <= 1; lg += 2) {
+        for (var k = -1; k <= 1; k++) {
+          ctx.beginPath();
+          ctx.moveTo(sx, sy);
+          ctx.lineTo(sx + lg * r * 2.4, sy + k * r * 1.4);
+          ctx.stroke();
+        }
+      }
+    }
+    ctx.restore();
+  }
+
+  function drawFlies(ctx, lm) {
+    var sky = lm.skyBand;
+    var w = lm.width;
+    ctx.save();
+    ctx.fillStyle = 'rgba(14, 13, 17, 0.34)';
+    ctx.fillRect(0, sky.top, w, sky.height);
+
+    for (var i = 0; i < state.particles.length; i++) {
+      var p = state.particles[i];
+      var x = p.u * w;
+      var y = sky.top + p.v * sky.height;
+      var buzz = Math.sin(p.phase * 3.0) * 1.8;
+
+      ctx.strokeStyle = 'rgba(203, 200, 190, 0.42)';
+      ctx.lineWidth = 0.75;
+      ctx.beginPath();
+      ctx.moveTo(x - p.size * 1.9, y - 1.3 + buzz * 0.4);
+      ctx.lineTo(x + p.size * 1.9, y - 1.3 - buzz * 0.4);
+      ctx.stroke();
+
+      ctx.fillStyle = PALETTE.cryptObsidian;
+      ctx.beginPath();
+      ctx.arc(x, y, p.size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  function drawTermites(ctx, lm) {
+    var w = lm.width;
+    var zoneTop = lm.skyBand.bottom - lm.skyBand.height * 0.22;
+    var zoneH = lm.skyBand.height * 0.22 + lm.naveBand.height * 0.52;
+    ctx.save();
+
+    for (var r = 0; r < 4; r++) {
+      var by = zoneTop + (0.12 + r * 0.24) * zoneH;
+      ctx.strokeStyle = 'rgba(216, 190, 134, 0.28)';
+      ctx.lineWidth = 4.2;
+      ctx.beginPath();
+      ctx.moveTo(w * 0.04, by);
+      ctx.lineTo(w * 0.96, by);
+      ctx.stroke();
+    }
+
+    for (var i = 0; i < state.particles.length; i++) {
+      var p = state.particles[i];
+      var x = p.u * w;
+      var y = zoneTop + p.v * zoneH + Math.sin(p.phase) * 0.9;
+
+      ctx.fillStyle = p.soldier ? PALETTE.incunabulaVermilion : PALETTE.vellumOchre;
+      ctx.beginPath();
+      ctx.ellipse(x, y, p.soldier ? 3.4 : 2.5, 1.5, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = '#ead7a7';
+      ctx.beginPath();
+      ctx.arc(x - p.dir * 2.6, y, 1.3, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  function drawWoodworms(ctx, lm) {
+    var w = lm.width;
+    var zoneTop = lm.skyBand.top + lm.skyBand.height * 0.48;
+    var zoneBottom = lm.naveBand.bottom;
+    var zoneH = Math.max(20, zoneBottom - zoneTop);
+    ctx.save();
+
+    ctx.strokeStyle = 'rgba(203, 200, 190, 0.34)';
+    ctx.setLineDash([6, 5]);
+    ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    ctx.moveTo(w * 0.05, lm.sewerY);
+    ctx.lineTo(w * 0.95, lm.sewerY);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    for (var i = 0; i < state.particles.length; i++) {
+      var p = state.particles[i];
+      var x = p.u * w + Math.sin(p.swayPhase) * (p.isBeetle ? 1.2 : 4.5);
+      var y = zoneTop + p.v * zoneH;
+      if (p.isBeetle) {
+        ctx.fillStyle = '#5c3d28';
+        ctx.strokeStyle = PALETTE.vellumOchre;
+        ctx.lineWidth = 0.8;
+        ctx.beginPath();
+        ctx.arc(x, y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+      } else {
+        ctx.fillStyle = 'rgba(216, 190, 134, 0.78)';
+        ctx.fillRect(x - p.size * 0.5, y - p.size * 0.5, p.size, p.size * 1.4);
+      }
+    }
+    ctx.restore();
+  }
+
+  function drawRatClans(ctx, lm) {
+    var w = lm.width;
+    var baseY = lm.sewerY;
+    var scale = Math.max(0.68, Math.min(1.15, w / 960));
+    ctx.save();
+
+    for (var g = 0; g < 5; g++) {
+      var gx = w * (0.14 + g * 0.18);
+      ctx.fillStyle = 'rgba(82, 121, 111, 0.22)';
+      ctx.beginPath();
+      ctx.arc(gx, baseY - 4, 11 * scale, Math.PI, 0);
+      ctx.fill();
+    }
+
+    for (var i = 0; i < state.particles.length; i++) {
+      var p = state.particles[i];
+      var x = p.u * w;
+      var hop = Math.abs(Math.sin(p.stridePhase)) * 2.6 * scale;
+      var y = baseY + p.v * 0.38 - hop;
+      var bl = p.len * scale;
+
+      ctx.strokeStyle = 'rgba(203, 200, 190, 0.55)';
+      ctx.lineWidth = 1.3 * scale;
+      ctx.beginPath();
+      ctx.moveTo(x - p.dir * bl * 0.5, y + 1);
+      ctx.quadraticCurveTo(x - p.dir * bl * 1.2, y - 4 * scale, x - p.dir * bl * 1.7, y + 1.5 * scale);
+      ctx.stroke();
+
+      ctx.fillStyle = p.alphaPack ? '#3a3c44' : '#262830';
+      ctx.strokeStyle = PALETTE.asepticCement;
+      ctx.lineWidth = 0.7;
+      ctx.beginPath();
+      ctx.ellipse(x, y, bl * 0.55, bl * 0.28, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = PALETTE.incunabulaVermilion;
+      ctx.beginPath();
+      ctx.arc(x + p.dir * bl * 0.42, y - bl * 0.08, 1.2 * scale, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  function drawAsepticZero(ctx, lm) {
+    var w = lm.width;
+    var h = lm.skyBand.height + lm.naveBand.height;
+    ctx.save();
+    ctx.strokeStyle = 'rgba(203, 200, 190, 0.28)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(0, lm.sewerY);
+    ctx.lineTo(w, lm.sewerY);
+    ctx.stroke();
+
+    for (var i = 0; i < state.particles.length; i++) {
+      var p = state.particles[i];
+      ctx.fillStyle = 'rgba(203, 200, 190, ' + p.alpha.toFixed(3) + ')';
+      ctx.beginPath();
+      ctx.arc(p.u * w, lm.skyBand.top + p.v * h, p.size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  function drawPurgeFlashAndTraces(ctx, lm) {
+    if (state.purgeFlash <= 0 && state.purgeTraces.length === 0) return;
+    var w = lm.width;
+    var h = lm.height;
+    ctx.save();
+    if (state.purgeFlash > 0) {
+      ctx.fillStyle = 'rgba(203, 200, 190, ' + (state.purgeFlash * 0.28).toFixed(3) + ')';
+      ctx.fillRect(0, 0, w, h);
+    }
+    var targetY = lm.naveBand.top + lm.naveBand.height * 0.52;
+    for (var i = 0; i < state.purgeTraces.length; i++) {
+      var tr = state.purgeTraces[i];
+      var t = Math.min(1, tr.progress);
+      var sx = tr.u0 * w;
+      var sy = lm.skyBand.top + tr.v0 * lm.skyBand.height;
+      var ex = tr.u1 * w;
+      var px = sx + (ex - sx) * t;
+      var py = sy + (targetY - sy) * t - Math.sin(t * Math.PI) * 18;
+      ctx.fillStyle = 'rgba(216, 190, 134, ' + ((1 - t) * 0.85).toFixed(3) + ')';
+      ctx.beginPath();
+      ctx.arc(px, py, 2.2 * (1 - t * 0.4), 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  function renderOverlay(ctx, width, height, layoutMetrics) {
+    if (!ctx || !(width > 0) || !(height > 0)) return;
+    var lm = normalizeLayoutMetrics(width, height, layoutMetrics);
+    ctx.save();
+    var st = state.stageIndex;
+    if (st === 0) drawCondors(ctx, lm);
+    else if (st === 1) drawSerpents(ctx, lm);
+    else if (st === 2) drawSpiders(ctx, lm);
+    else if (st === 3) drawFlies(ctx, lm);
+    else if (st === 4) drawTermites(ctx, lm);
+    else if (st === 5) drawWoodworms(ctx, lm);
+    else if (st === 6) drawRatClans(ctx, lm);
+    else drawAsepticZero(ctx, lm);
+
+    drawPurgeFlashAndTraces(ctx, lm);
+    ctx.restore();
+  }
+
+  function buildVolumeEntry(idx) {
+    var sp = SPECIES_CHAIN[idx];
+    if (!sp) return null;
+    var isShelved = idx < state.stageIndex;
+    var allLocked = state.stageIndex >= SPECIES_CHAIN.length;
+    return {
+      index: sp.index,
+      id: sp.id,
+      speciesId: sp.id,
+      name: sp.name,
+      speciesName: sp.name,
+      binomial: sp.binomial,
+      title: sp.name + ' (' + sp.binomial + ')',
+      buffonTome: sp.buffonTome,
+      linnaeusOrder: sp.linnaeusOrder,
+      callNumber: sp.callNumber,
+      shelfSlot: sp.index + 1,
+      shelved: isShelved,
+      locked: isShelved,
+      vaultSealed: allLocked,
+      taxonomicEpitaph: sp.taxonomicEpitaph,
+      causalConsequence: sp.causalConsequence
+    };
+  }
+
+  function resolveSpeciesIndex(idOrIndex) {
+    if (typeof idOrIndex === 'number' && Number.isInteger(idOrIndex)) {
+      if (idOrIndex >= 0 && idOrIndex < SPECIES_CHAIN.length) return idOrIndex;
+      return -1;
+    }
+    if (typeof idOrIndex === 'string') {
+      var trimmed = idOrIndex.trim();
+      if (/^[0-6]$/.test(trimmed)) return parseInt(trimmed, 10);
+      var lower = trimmed.toLowerCase();
+      for (var i = 0; i < SPECIES_CHAIN.length; i++) {
+        if (SPECIES_CHAIN[i].id === lower || SPECIES_CHAIN[i].name.toLowerCase() === lower) {
+          return i;
+        }
+      }
+    }
+    return -1;
+  }
+
+  function buildSpeciesSnapshot(idx) {
+    var sp = SPECIES_CHAIN[idx];
+    var status = 'DORMANT';
+    var population = sp.basePopulation;
+    var spiked = false;
+    var shelved = false;
+
+    if (idx < state.stageIndex) {
+      status = 'EXTERMINATED';
+      population = 0;
+      spiked = false;
+      shelved = true;
+    } else if (idx === state.stageIndex && state.stageIndex < SPECIES_CHAIN.length) {
+      status = 'INFESTING';
+      population = sp.spikePopulation;
+      spiked = true;
+      shelved = false;
+    }
+
+    return {
+      index: sp.index,
+      id: sp.id,
+      name: sp.name,
+      binomial: sp.binomial,
+      buffonTome: sp.buffonTome,
+      linnaeusOrder: sp.linnaeusOrder,
+      plagueDesc: sp.plagueDesc,
+      purgeAction: sp.purgeAction,
+      causalTriggerFrom: sp.causalTriggerFrom,
+      causalUnleashes: sp.causalUnleashes,
+      causalConsequence: sp.causalConsequence,
+      basePopulation: sp.basePopulation,
+      spikePopulation: sp.spikePopulation,
+      callNumber: sp.callNumber,
+      status: status,
+      population: population,
+      spiked: spiked,
+      shelved: shelved
+    };
+  }
+
+  function getState() {
+    var total = SPECIES_CHAIN.length;
+    var stIdx = state.stageIndex;
+    var livingCount = Math.max(0, total - stIdx);
+    var isAseptic = livingCount === 0;
+    var speciesList = [];
+    var shelvedList = [];
+    var fullShelf = [];
+
+    for (var i = 0; i < total; i++) {
+      speciesList.push(buildSpeciesSnapshot(i));
+      var vol = buildVolumeEntry(i);
+      fullShelf.push(vol);
+      if (i < stIdx) {
+        shelvedList.push(vol);
+      }
+    }
+
+    var activeSp = stIdx < total ? speciesList[stIdx] : null;
+    var consultedIdx = state.consultedVolumeId !== null ? resolveSpeciesIndex(state.consultedVolumeId) : -1;
+    var consultedVol = consultedIdx >= 0 ? fullShelf[consultedIdx] : null;
+
+    return {
+      stageIndex: stIdx,
+      stageKey: STAGE_KEYS[stIdx] || 'aseptic_zero',
+      activeSpeciesId: activeSp ? activeSp.id : null,
+      activeSpecies: activeSp,
+      phase: isAseptic ? 'ASEPTIC_SANCTUARY' : 'TROPHIC_CASCADE',
+      livingFaunaCount: livingCount,
+      exterminatedCount: stIdx,
+      cementRatio: CEMENT_CURVE[stIdx] !== undefined ? CEMENT_CURVE[stIdx] : 1,
+      asepticSanctuary: isAseptic,
+      buffonLinnaeusLocked: isAseptic,
+      species: speciesList,
+      shelvedVolumes: shelvedList,
+      libraryShelf: fullShelf,
+      consultedVolumeId: consultedVol ? consultedVol.id : null,
+      consultedVolume: consultedVol,
+      lastCausalEvent: state.lastCausalEvent,
+      chronicle: state.chronicle.slice(),
+      muted: state.muted,
+      reducedMotion: state.reducedMotion
+    };
+  }
+
+  function notifyChange() {
+    var snap = getState();
+    listeners.forEach(function (fn) {
+      try {
+        fn(snap);
+      } catch (_) {}
+    });
+    return snap;
+  }
+
+  function performPurgeAt(idx) {
+    if (idx < 0 || idx >= SPECIES_CHAIN.length || idx !== state.stageIndex) {
+      return getState();
+    }
+    var sp = SPECIES_CHAIN[idx];
+    var nextIdx = idx + 1;
+    var nextSp = nextIdx < SPECIES_CHAIN.length ? SPECIES_CHAIN[nextIdx] : null;
+
+    state.stageIndex = nextIdx;
+    state.lastPurgedIndex = idx;
+    state.consultedVolumeId = sp.id;
+    state.purgeFlash = 1.0;
+    spawnPurgeTraces(idx);
+    seedSwarmForStage(nextIdx);
+
+    var livingCount = Math.max(0, SPECIES_CHAIN.length - nextIdx);
+    var evt = Object.freeze({
+      step: nextIdx,
+      type: livingCount === 0 ? 'ASEPTIC_SANCTUARY_SEALED' : 'TROPHIC_PURGE',
+      purgedId: sp.id,
+      purgedName: sp.name,
+      binomial: sp.binomial,
+      buffonTome: sp.buffonTome,
+      linnaeusOrder: sp.linnaeusOrder,
+      unleashedId: nextSp ? nextSp.id : 'aseptic_zero',
+      unleashedName: nextSp ? nextSp.name : 'Aseptic Sanctuary',
+      livingFaunaCount: livingCount,
+      cementRatio: CEMENT_CURVE[nextIdx],
+      summary: sp.causalConsequence
+    });
+
+    state.chronicle.push(evt);
+    state.lastCausalEvent = evt;
+
+    if (!state.muted) {
+      playPurgeAudio(idx);
+    }
+    return notifyChange();
+  }
+
+  function exterminateNext() {
+    if (state.stageIndex >= SPECIES_CHAIN.length) {
+      return getState();
+    }
+    return performPurgeAt(state.stageIndex);
+  }
+
+  function exterminateSpecies(idOrIndex) {
+    if (idOrIndex === undefined || idOrIndex === null) {
+      return exterminateNext();
+    }
+    if ((idOrIndex === 'aseptic_zero' || idOrIndex === 7) && state.stageIndex === SPECIES_CHAIN.length - 1) {
+      return performPurgeAt(state.stageIndex);
+    }
+    var idx = resolveSpeciesIndex(idOrIndex);
+    if (idx === state.stageIndex && state.stageIndex < SPECIES_CHAIN.length) {
+      return performPurgeAt(idx);
+    }
+    return getState();
+  }
+
+  function consultShelf(idOrIndex) {
+    var targetIdx;
+    if (idOrIndex === undefined || idOrIndex === null) {
+      targetIdx = state.stageIndex > 0 ? state.stageIndex - 1 : 0;
+    } else {
+      targetIdx = resolveSpeciesIndex(idOrIndex);
+      if (targetIdx < 0) {
+        targetIdx = state.stageIndex > 0 ? state.stageIndex - 1 : 0;
+      }
+    }
+    var entry = buildVolumeEntry(targetIdx);
+    state.consultedVolumeId = entry.id;
+    if (!state.muted) {
+      playBookClaspAudio(targetIdx);
+    }
+    notifyChange();
+    return entry;
+  }
+
+  function reset() {
+    state.stageIndex = 0;
+    state.consultedVolumeId = null;
+    state.chronicle = [makeInitialEvent()];
+    state.lastCausalEvent = state.chronicle[0];
+    state.purgeFlash = 0;
+    state.lastPurgedIndex = -1;
+    state.purgeTraces = [];
+    seedSwarmForStage(0);
+    return notifyChange();
+  }
+
+  function setMuted(flag) {
+    state.muted = Boolean(flag);
+    return notifyChange();
+  }
+
+  function isMuted() {
+    return state.muted;
+  }
+
+  function unlockAudio() {
+    ensureAudioContext();
+    return !state.muted;
+  }
+
+  function setReducedMotion(flag) {
+    state.reducedMotion = Boolean(flag);
+    return notifyChange();
+  }
+
+  function onChange(fn) {
+    if (typeof fn === 'function') {
+      listeners.add(fn);
+      return function unsubscribe() {
+        listeners.delete(fn);
+      };
+    }
+    return function noop() {};
+  }
+
+  function init(options) {
+    var opts = options && typeof options === 'object' ? options : {};
+    if (typeof opts.reducedMotion === 'boolean') {
+      state.reducedMotion = opts.reducedMotion;
+    }
+    if (typeof opts.muted === 'boolean') {
+      state.muted = opts.muted;
+    }
+    if (typeof opts.onChange === 'function') {
+      listeners.add(opts.onChange);
+    }
+    if (!state.particles || state.particles.length === 0) {
+      seedSwarmForStage(state.stageIndex);
+    }
+    return getState();
+  }
+
+  var api = Object.freeze({
+    SPECIES_CHAIN: SPECIES_CHAIN,
+    STAGE_KEYS: STAGE_KEYS,
+    PALETTE: PALETTE,
+    init: init,
+    getState: getState,
+    exterminateNext: exterminateNext,
+    exterminateSpecies: exterminateSpecies,
+    consultShelf: consultShelf,
+    reset: reset,
+    setMuted: setMuted,
+    isMuted: isMuted,
+    unlockAudio: unlockAudio,
+    setReducedMotion: setReducedMotion,
+    onChange: onChange,
+    step: step,
+    renderOverlay: renderOverlay
+  });
+
+  root.TheodoraTrophicPurge = api;
+})(typeof globalThis !== 'undefined' ? globalThis : (typeof window !== 'undefined' ? window : this));
+
+</script>
+<script>
+(function (root) {
+  'use strict';
+
+  var PALETTE = Object.freeze({
+    asepticCement: '#cbc8be',
+    cementShadow: '#8e8b82',
+    warmLimestone: '#8b7961',
+    cedarTimber: '#6d4c35',
+    limestoneAsh: '#1c1d21',
+    nocturneSky: '#111622',
+    cryptObsidian: '#0e0d11',
+    vellumOchre: '#d8be86',
+    vellumAged: '#bfa065',
+    incunabulaVermilion: '#b83a28',
+    linnaeusVerdigris: '#52796f',
+    lapisMarginalia: '#2f4b7c',
+    gildedLeaf: '#e5c158',
+    ivoryHorn: '#f3efe4'
+  });
+
+  var VALID_ZONES = Object.freeze(['city_sanctum', 'library_nave', 'basement_crypt']);
+
+  var MYTHIC_BEASTS = Object.freeze([
+    Object.freeze({
+      id: 'sphinxes',
+      name: 'Sphinxes',
+      rubric: 'Sphinx Leo-Virgo',
+      folioCode: 'Incunabulum I · Fol. 4r',
+      latinEpigraph: 'Ungues leonis in caemento sterili dum cives somniant figuntur.',
+      anatomicalKey: 'Enigmatic crowned human visage, lapis-and-gold hawk pinions, and tawny lioness haunches unsheathing stone-scoring claws.',
+      reclamationAct: "Planting lions' claws squarely on Theodora's aseptic cement pavement as citizens dream.",
+      zone: 'city_sanctum',
+      nx: 0.17,
+      tier: 'pavement',
+      accent: '#d8be86'
+    }),
+    Object.freeze({
+      id: 'griffons',
+      name: 'Griffons',
+      rubric: 'Gryps Auratus',
+      folioCode: 'Incunabulum I · Fol. 11v',
+      latinEpigraph: 'Rostrum aquilae super fastigia pura circumvolat custodiens aurum noctis.',
+      anatomicalKey: 'Curved aquiline beak, pricked lynx ears, burnished gold-feathered forequarters, and leonine hindquarters.',
+      reclamationAct: 'Eagle-beaked, lion-flanked guardians wheeling over sterilized parapets and moonlit towers.',
+      zone: 'city_sanctum',
+      nx: 0.28,
+      tier: 'parapet',
+      accent: '#e5c158'
+    }),
+    Object.freeze({
+      id: 'chimeras',
+      name: 'Chimeras',
+      rubric: 'Chimaera Tricorpor',
+      folioCode: 'Incunabulum II · Fol. 19r',
+      latinEpigraph: 'Prima leo, postrema draco, media capra flammas per porticus fundit.',
+      anatomicalKey: 'Triple-bodied marvel: roaring lion forepart, dorsal fire-breathing goat head, and venomous serpent tail.',
+      reclamationAct: 'Lion-goat-serpent fire-breather prowling sterilized arcades where spiderwebs once hung.',
+      zone: 'city_sanctum',
+      nx: 0.45,
+      tier: 'arcade',
+      accent: '#b83a28'
+    }),
+    Object.freeze({
+      id: 'dragons',
+      name: 'Dragons',
+      rubric: 'Draco Bibliothecae',
+      folioCode: 'Incunabulum II · Fol. 27v',
+      latinEpigraph: 'Spira coccinea ex hypogaeo scandit codicesque clausos halitu solvit.',
+      anatomicalKey: 'Vermilion-scaled serpentine coils, ribbed bat-membrane wings, horned crest, and sulfur-gold jaws.',
+      reclamationAct: 'Vermilion-scaled coils ascending the spiral stair from basement crypt past the locked nave.',
+      zone: 'basement_crypt',
+      nx: 0.19,
+      tier: 'stair',
+      accent: '#b83a28'
+    }),
+    Object.freeze({
+      id: 'hircocervi',
+      name: 'Hircocervi',
+      rubric: 'Hircocervus Logicae',
+      folioCode: 'Incunabulum III · Fol. 33r',
+      latinEpigraph: 'Animal syllogismi, dimidium hircus dimidium cervus, super coronides salit.',
+      anatomicalKey: 'Bearded caprine forequarters and cloven hooves fused to twelve-tine stag antlers and fleet haunches.',
+      reclamationAct: 'Half-goat, half-stag paradoxical beast of logic bounding across poured-cement cornices.',
+      zone: 'library_nave',
+      nx: 0.56,
+      tier: 'cornice',
+      accent: '#52796f'
+    }),
+    Object.freeze({
+      id: 'harpies',
+      name: 'Harpies',
+      rubric: 'Harpyia Nocturna',
+      folioCode: 'Incunabulum III · Fol. 41v',
+      latinEpigraph: 'Ubi vultures occisi sunt, ibi ungues aenei virginum alatarum resident.',
+      anatomicalKey: 'Pale nocturnal maiden countenance, storm-feathered dark pinions, and curved brazen talons.',
+      reclamationAct: 'Brazen talons perching high on cement gables where slain condors once nested.',
+      zone: 'city_sanctum',
+      nx: 0.72,
+      tier: 'gable',
+      accent: '#2f4b7c'
+    }),
+    Object.freeze({
+      id: 'hydras',
+      name: 'Hydras',
+      rubric: 'Hydra Septiceps',
+      folioCode: 'Incunabulum IV · Fol. 48r',
+      latinEpigraph: 'Septem colla ex clathris cisternarum signatis pullulant inexstinguibilia.',
+      anatomicalKey: 'Coiled amphibious trunk sprouting seven crowned serpentine necks that multiply at severance.',
+      reclamationAct: 'Seven regenerating necks rising out of sealed cistern grates and sterilized sewer vaults.',
+      zone: 'city_sanctum',
+      nx: 0.62,
+      tier: 'cistern',
+      accent: '#52796f'
+    }),
+    Object.freeze({
+      id: 'unicorns',
+      name: 'Unicorns',
+      rubric: 'Monoceros Indomitus',
+      folioCode: 'Incunabulum IV · Fol. 56v',
+      latinEpigraph: 'Cornu tortile album per plateas caementicias indomitum currit.',
+      anatomicalKey: 'Milk-white courser with lion tail, cloven hooves, and three-cubit spiraled ivory alicorn.',
+      reclamationAct: 'Fierce spiral-horned white courser galloping down scrubbed cement avenues under sleeping towers.',
+      zone: 'city_sanctum',
+      nx: 0.87,
+      tier: 'avenue',
+      accent: '#f3efe4'
+    }),
+    Object.freeze({
+      id: 'basilisks',
+      name: 'Basilisks',
+      rubric: 'Basiliscus Regulus',
+      folioCode: 'Incunabulum V · Fol. 64r',
+      latinEpigraph: 'Regulus coronatus visu solo bases lapideas in salem vertit.',
+      anatomicalKey: 'Crowned cockerel crest with natural gold diadem, thorny wings, and hooked serpent tail.',
+      reclamationAct: 'Crowned cock-serpent sovereign petrifying library and piazza plinths with its gaze.',
+      zone: 'library_nave',
+      nx: 0.81,
+      tier: 'plinth',
+      accent: '#e5c158'
+    })
+  ]);
+
+  var BEAST_BY_KEY = (function () {
+    var map = Object.create(null);
+    var singulars = {
+      sphinx: 'sphinxes', griffon: 'griffons', griffin: 'griffons',
+      chimera: 'chimeras', dragon: 'dragons', hircocervus: 'hircocervi',
+      harpy: 'harpies', hydra: 'hydras', unicorn: 'unicorns', basilisk: 'basilisks'
+    };
+    for (var i = 0; i < MYTHIC_BEASTS.length; i++) {
+      var b = MYTHIC_BEASTS[i];
+      map[b.id] = b;
+      map[b.name.toLowerCase()] = b;
+      map[String(i)] = b;
+    }
+    var keys = Object.keys(singulars);
+    for (var k = 0; k < keys.length; k++) {
+      map[keys[k]] = map[singulars[keys[k]]];
+    }
+    return map;
+  })();
+
+  function clamp(v, lo, hi) {
+    return v < lo ? lo : (v > hi ? hi : v);
+  }
+
+  function lerp(a, b, t) {
+    return a + (b - a) * t;
+  }
+
+  function hexToRgb(hex) {
+    var clean = String(hex || '#000000').replace('#', '');
+    var n = parseInt(clean, 16);
+    return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+  }
+
+  function mixHex(c1, c2, t) {
+    var u = clamp(t, 0, 1);
+    var a = hexToRgb(c1);
+    var b = hexToRgb(c2);
+    return 'rgb(' + Math.round(lerp(a.r, b.r, u)) + ',' +
+      Math.round(lerp(a.g, b.g, u)) + ',' + Math.round(lerp(a.b, b.b, u)) + ')';
+  }
+
+  function roundRectPath(ctx, x, y, w, h, r) {
+    var rad = Math.min(r, w * 0.5, h * 0.5);
+    ctx.beginPath();
+    ctx.moveTo(x + rad, y);
+    ctx.lineTo(x + w - rad, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + rad);
+    ctx.lineTo(x + w, y + h - rad);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - rad, y + h);
+    ctx.lineTo(x + rad, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - rad);
+    ctx.lineTo(x, y + rad);
+    ctx.quadraticCurveTo(x, y, x + rad, y);
+    ctx.closePath();
+  }
+
+  var state = {
+    livingFaunaCount: 7,
+    cementRatio: 0,
+    exterminatedCount: 0,
+    shelvedCount: 0,
+    consultedVolumeIndex: -1,
+    buffonLinnaeusLocked: false,
+    cryptUnlocked: false,
+    mythicBestiaryAwakened: false,
+    awakenedCount: 0,
+    awakenedIds: [],
+    inspectedBeastId: 'sphinxes',
+    focusZone: 'city_sanctum',
+    muted: false,
+    reducedMotion: false,
+    timeSec: 0,
+    spotlightPulse: 0,
+    awakeningFlash: 0,
+    latestHitboxes: []
+  };
+
+  var listeners = [];
+  var emitting = false;
+  var audioCtx = null;
+
+  var clouds = [
+    { x: 0.14, y: 0.09, w: 0.22, speed: 0.008 },
+    { x: 0.53, y: 0.06, w: 0.28, speed: 0.005 },
+    { x: 0.84, y: 0.12, w: 0.19, speed: 0.007 }
+  ];
+
+  var marginaliaMotes = (function () {
+    var arr = [];
+    var glyphs = ['§', '¶', '✦', '✠', '☽', '♌', '♑', '🐉', '⚜'];
+    for (var i = 0; i < 22; i++) {
+      arr.push({
+        u: (i * 0.137 + 0.07) % 0.86 + 0.07,
+        v: (i * 0.29) % 1,
+        speed: 0.045 + (i % 5) * 0.012,
+        phase: i * 0.83,
+        glyph: glyphs[i % 7]
+      });
+    }
+    return arr;
+  })();
+
+  function emitChange() {
+    if (emitting) return;
+    emitting = true;
+    try {
+      var snap = getState();
+      for (var i = 0; i < listeners.length; i++) {
+        if (typeof listeners[i] === 'function') {
+          listeners[i](snap);
+        }
+      }
+    } finally {
+      emitting = false;
+    }
+  }
+
+  function ensureAudio() {
+    if (state.muted) return null;
+    if (audioCtx) {
+      if (audioCtx.state === 'suspended' && typeof audioCtx.resume === 'function') {
+        try { audioCtx.resume(); } catch (_) {}
+      }
+      return audioCtx;
+    }
+    var Ctor = root.AudioContext || root.webkitAudioContext;
+    if (!Ctor) return null;
+    try {
+      audioCtx = new Ctor();
+      if (audioCtx.state === 'suspended' && typeof audioCtx.resume === 'function') {
+        audioCtx.resume();
+      }
+    } catch (_) {
+      audioCtx = null;
+    }
+    return audioCtx;
+  }
+
+  function playVellumRustle(ac, now, dur, freq, gainPeak) {
+    try {
+      var len = Math.max(256, Math.floor(ac.sampleRate * dur));
+      var buf = ac.createBuffer(1, len, ac.sampleRate);
+      var data = buf.getChannelData(0);
+      for (var i = 0; i < len; i++) {
+        var env = Math.sin(Math.PI * (i / len));
+        data[i] = (Math.random() * 2 - 1) * env;
+      }
+      var src = ac.createBufferSource();
+      src.buffer = buf;
+      var filt = ac.createBiquadFilter();
+      filt.type = 'bandpass';
+      filt.frequency.setValueAtTime(freq || 1400, now);
+      filt.Q.setValueAtTime(1.8, now);
+      var g = ac.createGain();
+      g.gain.setValueAtTime(0.0001, now);
+      g.gain.exponentialRampToValueAtTime(gainPeak || 0.05, now + dur * 0.25);
+      g.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+      src.connect(filt);
+      filt.connect(g);
+      g.connect(ac.destination);
+      src.start(now);
+      src.stop(now + dur + 0.02);
+    } catch (_) {}
+  }
+
+  function playTone(ac, type, f0, f1, start, dur, peak) {
+    try {
+      var osc = ac.createOscillator();
+      var g = ac.createGain();
+      osc.type = type || 'triangle';
+      osc.frequency.setValueAtTime(Math.max(24, f0), start);
+      if (f1 && f1 !== f0) {
+        osc.frequency.exponentialRampToValueAtTime(Math.max(24, f1), start + dur);
+      }
+      g.gain.setValueAtTime(0.0001, start);
+      g.gain.exponentialRampToValueAtTime(peak || 0.05, start + Math.min(0.06, dur * 0.25));
+      g.gain.exponentialRampToValueAtTime(0.0001, start + dur);
+      osc.connect(g);
+      g.connect(ac.destination);
+      osc.start(start);
+      osc.stop(start + dur + 0.02);
+    } catch (_) {}
+  }
+
+  function playVaultChord() {
+    var ac = ensureAudio();
+    if (!ac) return;
+    var now = ac.currentTime;
+    playVellumRustle(ac, now, 0.26, 1150, 0.055);
+    var notes = [73.42, 110.0, 146.83, 220.0, 261.63];
+    for (var i = 0; i < notes.length; i++) {
+      playTone(ac, i < 2 ? 'sawtooth' : 'triangle', notes[i], notes[i] * 0.996, now + i * 0.04, 0.72, 0.026);
+    }
+  }
+
+  function playAwakeningFanfare() {
+    var ac = ensureAudio();
+    if (!ac) return;
+    var now = ac.currentTime;
+    playVellumRustle(ac, now, 0.38, 950, 0.06);
+    var chord = [65.41, 98.0, 146.83, 196.0, 293.66, 440.0];
+    for (var i = 0; i < chord.length; i++) {
+      playTone(ac, i < 2 ? 'sawtooth' : 'sine', chord[i] * 0.96, chord[i], now + i * 0.055, 0.95, 0.025);
+    }
+  }
+
+  function playBeastSignature(beastId) {
+    var ac = ensureAudio();
+    if (!ac) return;
+    var now = ac.currentTime;
+    playVellumRustle(ac, now, 0.18, 1550, 0.04);
+    if (beastId === 'sphinxes') {
+      playTone(ac, 'sawtooth', 78, 54, now + 0.02, 0.48, 0.045);
+      playVellumRustle(ac, now + 0.08, 0.14, 2400, 0.05);
+      playTone(ac, 'triangle', 220, 330, now + 0.12, 0.42, 0.028);
+    } else if (beastId === 'griffons') {
+      playVellumRustle(ac, now + 0.04, 0.15, 480, 0.06);
+      playVellumRustle(ac, now + 0.20, 0.15, 520, 0.055);
+      playTone(ac, 'sawtooth', 1180, 740, now + 0.08, 0.34, 0.03);
+    } else if (beastId === 'chimeras') {
+      playTone(ac, 'sawtooth', 68, 49, now + 0.01, 0.52, 0.05);
+      playTone(ac, 'square', 294, 312, now + 0.10, 0.28, 0.022);
+      playVellumRustle(ac, now + 0.15, 0.28, 3100, 0.05);
+    } else if (beastId === 'dragons') {
+      playTone(ac, 'sawtooth', 72, 144, now + 0.02, 0.55, 0.045);
+      playTone(ac, 'triangle', 108, 216, now + 0.10, 0.48, 0.03);
+      playVellumRustle(ac, now + 0.18, 0.24, 900, 0.055);
+    } else if (beastId === 'hircocervi') {
+      playTone(ac, 'triangle', 330, 466.16, now + 0.02, 0.20, 0.036);
+      playTone(ac, 'sine', 495, 659.25, now + 0.16, 0.32, 0.034);
+    } else if (beastId === 'harpies') {
+      playVellumRustle(ac, now + 0.03, 0.22, 620, 0.05);
+      playTone(ac, 'sine', 880, 622.25, now + 0.06, 0.40, 0.032);
+      playTone(ac, 'triangle', 1480, 1396, now + 0.14, 0.22, 0.022);
+    } else if (beastId === 'hydras') {
+      for (var h = 0; h < 7; h++) {
+        playTone(ac, 'sawtooth', 140 + h * 36, 165 + h * 38, now + h * 0.04, 0.22, 0.016);
+      }
+      playVellumRustle(ac, now + 0.08, 0.30, 3600, 0.04);
+    } else if (beastId === 'unicorns') {
+      var harm = [523.25, 659.25, 783.99, 1046.5];
+      for (var u = 0; u < harm.length; u++) {
+        playTone(ac, 'sine', harm[u], harm[u] * 1.005, now + u * 0.055, 0.46, 0.03);
+      }
+    } else {
+      playVellumRustle(ac, now + 0.02, 0.32, 4200, 0.055);
+      playTone(ac, 'sine', 1567.98, 1560, now + 0.08, 0.44, 0.028);
+      playTone(ac, 'triangle', 2349.32, 2340, now + 0.12, 0.38, 0.02);
+    }
+  }
+
+  function resolveBeast(keyOrIndex) {
+    if (keyOrIndex === undefined || keyOrIndex === null) {
+      return BEAST_BY_KEY[state.inspectedBeastId] || MYTHIC_BEASTS[0];
+    }
+    var k = String(keyOrIndex).trim().toLowerCase();
+    return BEAST_BY_KEY[k] || null;
+  }
+
+  var VOLUME_IDS = ['condors', 'serpents', 'spiders', 'flies', 'termites', 'woodworms', 'rat_clans'];
+
+  function applyTrophicInternal(trophicState, silent) {
+    if (!trophicState || typeof trophicState !== 'object') return false;
+    var prevAwakened = state.mythicBestiaryAwakened;
+    var prevLiving = state.livingFaunaCount;
+    var prevShelved = state.shelvedCount;
+    var prevConsulted = state.consultedVolumeIndex;
+
+    if (typeof trophicState.livingFaunaCount === 'number' && !isNaN(trophicState.livingFaunaCount)) {
+      state.livingFaunaCount = Math.max(0, Math.round(trophicState.livingFaunaCount));
+    }
+    state.exterminatedCount = typeof trophicState.exterminatedCount === 'number'
+      ? clamp(Math.round(trophicState.exterminatedCount), 0, 7)
+      : clamp(7 - state.livingFaunaCount, 0, 7);
+    state.cementRatio = typeof trophicState.cementRatio === 'number'
+      ? clamp(trophicState.cementRatio, 0, 1)
+      : clamp(state.exterminatedCount / 7, 0, 1);
+    state.shelvedCount = Array.isArray(trophicState.shelvedVolumes)
+      ? clamp(trophicState.shelvedVolumes.length, 0, 7)
+      : state.exterminatedCount;
+    if (trophicState.consultedVolumeId) {
+      state.consultedVolumeIndex = VOLUME_IDS.indexOf(String(trophicState.consultedVolumeId));
+    } else if (typeof trophicState.consultedVolume === 'object' && trophicState.consultedVolume && trophicState.consultedVolume.id) {
+      state.consultedVolumeIndex = VOLUME_IDS.indexOf(String(trophicState.consultedVolume.id));
+    }
+
+    var isZero = state.livingFaunaCount === 0;
+    state.buffonLinnaeusLocked = isZero || Boolean(trophicState.buffonLinnaeusLocked && isZero);
+    if (isZero) {
+      state.cryptUnlocked = true;
+      state.mythicBestiaryAwakened = true;
+      state.awakenedCount = MYTHIC_BEASTS.length;
+      state.awakenedIds = MYTHIC_BEASTS.map(function (b) { return b.id; });
+      if (!prevAwakened) {
+        state.awakeningFlash = 1.0;
+        if (!silent) playAwakeningFanfare();
+      }
+    } else {
+      state.cryptUnlocked = false;
+      state.mythicBestiaryAwakened = false;
+      state.awakenedCount = 0;
+      state.awakenedIds = [];
+      state.awakeningFlash = 0;
+    }
+
+    var changed = (prevAwakened !== state.mythicBestiaryAwakened) ||
+      (prevLiving !== state.livingFaunaCount) ||
+      (prevShelved !== state.shelvedCount) ||
+      (prevConsulted !== state.consultedVolumeIndex);
+    if (changed && !silent) {
+      emitChange();
+    }
+    return changed;
+  }
+
+  function formatBeastRecord(beast) {
+    if (!beast) return null;
+    return {
+      id: beast.id,
+      name: beast.name,
+      rubric: beast.rubric,
+      folioCode: beast.folioCode,
+      latinEpigraph: beast.latinEpigraph,
+      anatomicalKey: beast.anatomicalKey,
+      reclamationAct: beast.reclamationAct,
+      zone: beast.zone,
+      accent: beast.accent,
+      awakened: state.mythicBestiaryAwakened,
+      inspected: state.inspectedBeastId === beast.id
+    };
+  }
+
+  function getState() {
+    var beastsSnap = MYTHIC_BEASTS.map(formatBeastRecord);
+    var inspected = formatBeastRecord(resolveBeast(state.inspectedBeastId));
+    return {
+      cryptUnlocked: state.cryptUnlocked,
+      mythicBestiaryAwakened: state.mythicBestiaryAwakened,
+      awakenedCount: state.awakenedCount,
+      awakenedIds: state.awakenedIds.slice(),
+      beasts: beastsSnap,
+      inspectedBeastId: state.inspectedBeastId,
+      inspectedBeast: inspected,
+      focusZone: state.focusZone,
+      livingFaunaCount: state.livingFaunaCount,
+      cementRatio: state.cementRatio,
+      muted: state.muted,
+      reducedMotion: state.reducedMotion
+    };
+  }
+
+  function init(options) {
+    var opts = options || {};
+    if (typeof opts.reducedMotion === 'boolean') state.reducedMotion = opts.reducedMotion;
+    if (typeof opts.muted === 'boolean') state.muted = opts.muted;
+    if (typeof opts.onChange === 'function') {
+      if (listeners.indexOf(opts.onChange) === -1) listeners.push(opts.onChange);
+    }
+    if (opts.trophicState) applyTrophicInternal(opts.trophicState, true);
+    return getState();
+  }
+
+  function syncTrophicState(trophicState) {
+    applyTrophicInternal(trophicState, false);
+    return getState();
+  }
+
+  function descendToCrypt() {
+    state.focusZone = 'basement_crypt';
+    playVaultChord();
+    emitChange();
+    return getState();
+  }
+
+  function setFocusZone(zone) {
+    var z = String(zone || '').trim().toLowerCase();
+    if (VALID_ZONES.indexOf(z) !== -1) {
+      state.focusZone = z;
+      emitChange();
+    }
+    return getState();
+  }
+
+  function inspectBeast(beastId) {
+    var beast = resolveBeast(beastId);
+    if (!beast) beast = MYTHIC_BEASTS[0];
+    state.inspectedBeastId = beast.id;
+    state.spotlightPulse = 1.0;
+    playBeastSignature(beast.id);
+    emitChange();
+    return formatBeastRecord(beast);
+  }
+
+  function hitTestBeast(px, py) {
+    if (!state.mythicBestiaryAwakened || typeof px !== 'number' || typeof py !== 'number') {
+      return null;
+    }
+    var boxes = state.latestHitboxes;
+    var bestId = null;
+    var bestDist = Infinity;
+    for (var i = 0; i < boxes.length; i++) {
+      var hb = boxes[i];
+      if (px >= hb.x && px <= hb.x + hb.w && py >= hb.y && py <= hb.y + hb.h) {
+        var dx = px - hb.cx;
+        var dy = py - hb.cy;
+        var d = Math.sqrt(dx * dx + dy * dy);
+        if (d < bestDist) {
+          bestDist = d;
+          bestId = hb.id;
+        }
+      }
+    }
+    return bestId;
+  }
+
+  function setMuted(flag) {
+    state.muted = Boolean(flag);
+    emitChange();
+    return state.muted;
+  }
+
+  function isMuted() {
+    return state.muted;
+  }
+
+  function setReducedMotion(flag) {
+    state.reducedMotion = Boolean(flag);
+    emitChange();
+    return state.reducedMotion;
+  }
+
+  function reset() {
+    state.livingFaunaCount = 7;
+    state.cementRatio = 0;
+    state.exterminatedCount = 0;
+    state.shelvedCount = 0;
+    state.consultedVolumeIndex = -1;
+    state.buffonLinnaeusLocked = false;
+    state.cryptUnlocked = false;
+    state.mythicBestiaryAwakened = false;
+    state.awakenedCount = 0;
+    state.awakenedIds = [];
+    state.inspectedBeastId = 'sphinxes';
+    state.focusZone = 'city_sanctum';
+    state.spotlightPulse = 0;
+    state.awakeningFlash = 0;
+    state.latestHitboxes = [];
+    emitChange();
+    return getState();
+  }
+
+  function onChange(fn) {
+    if (typeof fn === 'function' && listeners.indexOf(fn) === -1) {
+      listeners.push(fn);
+    }
+    return function unsubscribe() {
+      var idx = listeners.indexOf(fn);
+      if (idx !== -1) listeners.splice(idx, 1);
+    };
+  }
+
+  function step(dtSec, trophicState) {
+    if (trophicState) applyTrophicInternal(trophicState, false);
+    var dt = clamp(typeof dtSec === 'number' && !isNaN(dtSec) ? dtSec : 0.016, 0, 0.2);
+    state.spotlightPulse = Math.max(0, state.spotlightPulse - dt * 0.85);
+    state.awakeningFlash = Math.max(0, state.awakeningFlash - dt * 0.65);
+    if (state.reducedMotion) return;
+    state.timeSec += dt;
+    for (var i = 0; i < clouds.length; i++) {
+      clouds[i].x += clouds[i].speed * dt;
+      if (clouds[i].x - clouds[i].w > 1.08) clouds[i].x = -clouds[i].w;
+    }
+    if (state.mythicBestiaryAwakened) {
+      for (var m = 0; m < marginaliaMotes.length; m++) {
+        marginaliaMotes[m].v = (marginaliaMotes[m].v + marginaliaMotes[m].speed * dt) % 1;
+      }
+    }
+  }
+
+  function makeBand(top, bottom, width) {
+    var h = Math.max(1, bottom - top);
+    return {
+      x: 0,
+      y: top,
+      top: top,
+      bottom: bottom,
+      w: width,
+      width: width,
+      h: h,
+      height: h,
+      cy: top + h * 0.5,
+      floorY: bottom - Math.max(4, h * 0.08)
+    };
+  }
+
+  function computeBands(width, height) {
+    var w = Math.max(120, width || 800);
+    var h = Math.max(120, height || 600);
+    var skyBottom = Math.round(h * 0.46);
+    var naveBottom = Math.round(h * 0.74);
+    var skyBand = makeBand(0, skyBottom, w);
+    var naveBand = makeBand(skyBottom, naveBottom, w);
+    var cryptBand = makeBand(naveBottom, h, w);
+    var sewerY = skyBottom - Math.max(5, Math.round(h * 0.018));
+    return {
+      skyBand: skyBand,
+      naveBand: naveBand,
+      cryptBand: cryptBand,
+      sewerY: sewerY
+    };
+  }
+
+  function drawBeastFigure(ctx, beastId, cx, cy, s, phase, folioMode) {
+    ctx.save();
+    ctx.translate(cx, cy);
+    var bob = Math.sin(phase) * (s * 0.04);
+    var wing = Math.sin(phase * 1.7) * 0.14;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    if (beastId === 'sphinxes') {
+      if (!folioMode) {
+        ctx.strokeStyle = PALETTE.incunabulaVermilion;
+        ctx.lineWidth = Math.max(1.3, s * 0.055);
+        for (var g = -1; g <= 1; g++) {
+          ctx.beginPath();
+          ctx.moveTo(s * 0.30, s * 0.38 + g * s * 0.06);
+          ctx.lineTo(s * 0.68, s * 0.44 + g * s * 0.07);
+          ctx.stroke();
+        }
+      }
+      ctx.fillStyle = PALETTE.vellumOchre;
+      ctx.strokeStyle = '#241a12';
+      ctx.lineWidth = Math.max(1.2, s * 0.05);
+      ctx.beginPath();
+      ctx.ellipse(-s * 0.12, s * 0.14, s * 0.38, s * 0.20, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(s * 0.12, s * 0.26);
+      ctx.lineTo(s * 0.50, s * 0.36);
+      ctx.lineTo(s * 0.48, s * 0.43);
+      ctx.lineTo(s * 0.05, s * 0.34);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      ctx.strokeStyle = PALETTE.incunabulaVermilion;
+      for (var c = 0; c < 3; c++) {
+        ctx.beginPath();
+        ctx.moveTo(s * 0.47 + c * s * 0.04, s * 0.36);
+        ctx.lineTo(s * 0.56 + c * s * 0.04, s * 0.44);
+        ctx.stroke();
+      }
+      ctx.save();
+      ctx.rotate(-0.18 + wing * 0.5);
+      ctx.fillStyle = PALETTE.lapisMarginalia;
+      ctx.strokeStyle = PALETTE.gildedLeaf;
+      ctx.beginPath();
+      ctx.moveTo(-s * 0.05, s * 0.04);
+      ctx.quadraticCurveTo(-s * 0.48, -s * 0.56, -s * 0.62, -s * 0.14);
+      ctx.quadraticCurveTo(-s * 0.32, s * 0.08, -s * 0.05, s * 0.04);
+      ctx.fill();
+      ctx.stroke();
+      ctx.restore();
+      ctx.fillStyle = PALETTE.ivoryHorn;
+      ctx.strokeStyle = '#241a12';
+      ctx.beginPath();
+      ctx.arc(s * 0.26, -s * 0.14, s * 0.15, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = PALETTE.gildedLeaf;
+      ctx.beginPath();
+      ctx.moveTo(s * 0.13, -s * 0.26);
+      ctx.lineTo(s * 0.20, -s * 0.42);
+      ctx.lineTo(s * 0.27, -s * 0.30);
+      ctx.lineTo(s * 0.35, -s * 0.42);
+      ctx.lineTo(s * 0.39, -s * 0.25);
+      ctx.closePath();
+      ctx.fill();
+    } else if (beastId === 'griffons') {
+      ctx.translate(0, bob);
+      ctx.fillStyle = PALETTE.gildedLeaf;
+      ctx.strokeStyle = '#241a12';
+      ctx.lineWidth = Math.max(1.2, s * 0.05);
+      ctx.beginPath();
+      ctx.ellipse(-s * 0.06, s * 0.08, s * 0.34, s * 0.17, -0.15, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.save();
+      ctx.rotate(wing);
+      ctx.fillStyle = PALETTE.vellumOchre;
+      ctx.beginPath();
+      ctx.moveTo(-s * 0.05, 0);
+      ctx.quadraticCurveTo(-s * 0.35, -s * 0.68, s * 0.18, -s * 0.52);
+      ctx.quadraticCurveTo(s * 0.08, -s * 0.16, -s * 0.05, 0);
+      ctx.fill();
+      ctx.stroke();
+      ctx.restore();
+      ctx.fillStyle = PALETTE.ivoryHorn;
+      ctx.beginPath();
+      ctx.arc(s * 0.28, -s * 0.12, s * 0.14, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = PALETTE.incunabulaVermilion;
+      ctx.beginPath();
+      ctx.moveTo(s * 0.40, -s * 0.16);
+      ctx.quadraticCurveTo(s * 0.60, -s * 0.12, s * 0.48, -s * 0.01);
+      ctx.lineTo(s * 0.38, -s * 0.06);
+      ctx.closePath();
+      ctx.fill();
+      ctx.beginPath();
+      ctx.moveTo(s * 0.20, -s * 0.24);
+      ctx.lineTo(s * 0.15, -s * 0.42);
+      ctx.lineTo(s * 0.28, -s * 0.26);
+      ctx.closePath();
+      ctx.fill();
+    } else if (beastId === 'chimeras') {
+      ctx.fillStyle = '#c4864b';
+      ctx.strokeStyle = '#241a12';
+      ctx.lineWidth = Math.max(1.2, s * 0.05);
+      ctx.beginPath();
+      ctx.ellipse(-s * 0.05, s * 0.12, s * 0.36, s * 0.19, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = PALETTE.incunabulaVermilion;
+      ctx.beginPath();
+      ctx.arc(s * 0.28, -s * 0.02, s * 0.21, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = PALETTE.vellumOchre;
+      ctx.beginPath();
+      ctx.arc(s * 0.32, -s * 0.03, s * 0.14, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = '#d9d4c7';
+      ctx.beginPath();
+      ctx.arc(-s * 0.06, -s * 0.16, s * 0.12, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.strokeStyle = PALETTE.gildedLeaf;
+      ctx.beginPath();
+      ctx.moveTo(-s * 0.10, -s * 0.26);
+      ctx.quadraticCurveTo(-s * 0.28, -s * 0.48, -s * 0.36, -s * 0.34);
+      ctx.stroke();
+      ctx.fillStyle = PALETTE.incunabulaVermilion;
+      ctx.beginPath();
+      ctx.moveTo(s * 0.06, -s * 0.18);
+      ctx.quadraticCurveTo(s * 0.38, -s * 0.44, s * 0.56 + bob * 1.4, -s * 0.28);
+      ctx.quadraticCurveTo(s * 0.34, -s * 0.12, s * 0.06, -s * 0.14);
+      ctx.fill();
+      ctx.strokeStyle = PALETTE.linnaeusVerdigris;
+      ctx.lineWidth = Math.max(1.8, s * 0.07);
+      ctx.beginPath();
+      ctx.moveTo(-s * 0.38, s * 0.10);
+      ctx.bezierCurveTo(-s * 0.64, -s * 0.06, -s * 0.68, -s * 0.36, -s * 0.44, -s * 0.38);
+      ctx.stroke();
+    } else if (beastId === 'dragons') {
+      ctx.strokeStyle = PALETTE.incunabulaVermilion;
+      ctx.lineWidth = Math.max(2.4, s * 0.14);
+      ctx.beginPath();
+      ctx.moveTo(-s * 0.24, s * 0.48);
+      ctx.bezierCurveTo(s * 0.34, s * 0.28, -s * 0.38, -s * 0.02, s * 0.20, -s * 0.26 + bob);
+      ctx.stroke();
+      ctx.strokeStyle = PALETTE.gildedLeaf;
+      ctx.lineWidth = Math.max(1.1, s * 0.04);
+      ctx.stroke();
+      ctx.fillStyle = '#7a1f16';
+      ctx.beginPath();
+      ctx.moveTo(-s * 0.02, -s * 0.06);
+      ctx.lineTo(-s * 0.54, -s * 0.36 + wing * s * 0.5);
+      ctx.lineTo(-s * 0.30, s * 0.04);
+      ctx.closePath();
+      ctx.fill();
+      ctx.fillStyle = PALETTE.incunabulaVermilion;
+      ctx.beginPath();
+      ctx.moveTo(s * 0.16, -s * 0.36 + bob);
+      ctx.lineTo(s * 0.48, -s * 0.30 + bob);
+      ctx.lineTo(s * 0.38, -s * 0.16 + bob);
+      ctx.lineTo(s * 0.14, -s * 0.20 + bob);
+      ctx.closePath();
+      ctx.fill();
+    } else if (beastId === 'hircocervi') {
+      ctx.translate(0, -Math.abs(bob) * 1.2);
+      ctx.fillStyle = PALETTE.linnaeusVerdigris;
+      ctx.strokeStyle = '#1b2421';
+      ctx.lineWidth = Math.max(1.2, s * 0.05);
+      ctx.beginPath();
+      ctx.ellipse(-s * 0.14, s * 0.08, s * 0.24, s * 0.16, -0.1, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = PALETTE.vellumOchre;
+      ctx.beginPath();
+      ctx.ellipse(s * 0.12, s * 0.04, s * 0.22, s * 0.16, 0.1, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(s * 0.28, -s * 0.16, s * 0.12, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.strokeStyle = PALETTE.ivoryHorn;
+      ctx.beginPath();
+      ctx.moveTo(s * 0.25, -s * 0.26);
+      ctx.quadraticCurveTo(s * 0.08, -s * 0.48, -s * 0.06, -s * 0.38);
+      ctx.moveTo(s * 0.30, -s * 0.26);
+      ctx.lineTo(s * 0.38, -s * 0.54);
+      ctx.moveTo(s * 0.34, -s * 0.40);
+      ctx.lineTo(s * 0.48, -s * 0.44);
+      ctx.moveTo(s * 0.36, -s * 0.48);
+      ctx.lineTo(s * 0.26, -s * 0.56);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function drawBeastFigure6to9(ctx, beastId, cx, cy, s, phase, folioMode) {
+    ctx.save();
+    ctx.translate(cx, cy);
+    var bob = Math.sin(phase) * (s * 0.04);
+    var wing = Math.sin(phase * 1.8) * 0.15;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    if (beastId === 'harpies') {
+      ctx.fillStyle = PALETTE.lapisMarginalia;
+      ctx.strokeStyle = '#141a26';
+      ctx.lineWidth = Math.max(1.2, s * 0.05);
+      ctx.beginPath();
+      ctx.moveTo(-s * 0.08, 0);
+      ctx.quadraticCurveTo(-s * 0.56, -s * 0.42 + wing * s * 0.4, -s * 0.42, s * 0.18);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(s * 0.08, 0);
+      ctx.quadraticCurveTo(s * 0.56, -s * 0.42 - wing * s * 0.4, s * 0.42, s * 0.18);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = '#3b4a68';
+      ctx.beginPath();
+      ctx.ellipse(0, s * 0.08, s * 0.18, s * 0.24, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = PALETTE.ivoryHorn;
+      ctx.beginPath();
+      ctx.arc(0, -s * 0.20, s * 0.13, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.strokeStyle = PALETTE.gildedLeaf;
+      ctx.lineWidth = Math.max(1.6, s * 0.06);
+      for (var t = -1; t <= 1; t += 2) {
+        ctx.beginPath();
+        ctx.moveTo(t * s * 0.08, s * 0.28);
+        ctx.lineTo(t * s * 0.18, s * 0.44);
+        ctx.lineTo(t * s * 0.04, s * 0.42);
+        ctx.stroke();
+      }
+    } else if (beastId === 'hydras') {
+      ctx.fillStyle = PALETTE.linnaeusVerdigris;
+      ctx.strokeStyle = '#132420';
+      ctx.lineWidth = Math.max(1.2, s * 0.045);
+      ctx.beginPath();
+      ctx.ellipse(0, s * 0.30, s * 0.30, s * 0.14, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      for (var n = 0; n < 7; n++) {
+        var ang = -1.15 + (n / 6) * 2.3;
+        var sway = Math.sin(phase * 1.4 + n * 0.8) * s * 0.05;
+        var hx = Math.sin(ang) * s * 0.46 + sway;
+        var hy = -Math.cos(ang * 0.55) * s * 0.46 + s * 0.12;
+        ctx.strokeStyle = n % 2 === 0 ? PALETTE.linnaeusVerdigris : '#3c6359';
+        ctx.lineWidth = Math.max(1.8, s * 0.075);
+        ctx.beginPath();
+        ctx.moveTo((n - 3) * s * 0.05, s * 0.26);
+        ctx.quadraticCurveTo(hx * 0.45, s * 0.02, hx, hy);
+        ctx.stroke();
+        ctx.fillStyle = PALETTE.incunabulaVermilion;
+        ctx.beginPath();
+        ctx.arc(hx, hy, Math.max(2.2, s * 0.065), 0, Math.PI * 2);
+        ctx.fill();
+      }
+    } else if (beastId === 'unicorns') {
+      ctx.translate(0, -Math.abs(bob));
+      ctx.fillStyle = PALETTE.ivoryHorn;
+      ctx.strokeStyle = '#2c2b29';
+      ctx.lineWidth = Math.max(1.2, s * 0.048);
+      ctx.beginPath();
+      ctx.ellipse(-s * 0.08, s * 0.10, s * 0.30, s * 0.16, -0.28, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(s * 0.08, 0);
+      ctx.lineTo(s * 0.24, -s * 0.24);
+      ctx.lineTo(s * 0.38, -s * 0.16);
+      ctx.lineTo(s * 0.20, s * 0.08);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      ctx.strokeStyle = PALETTE.gildedLeaf;
+      ctx.lineWidth = Math.max(1.8, s * 0.06);
+      ctx.beginPath();
+      ctx.moveTo(s * 0.32, -s * 0.22);
+      ctx.lineTo(s * 0.68, -s * 0.52);
+      ctx.stroke();
+      ctx.strokeStyle = PALETTE.vellumOchre;
+      ctx.lineWidth = Math.max(1.2, s * 0.04);
+      ctx.beginPath();
+      ctx.moveTo(-s * 0.34, s * 0.16);
+      ctx.quadraticCurveTo(-s * 0.58, s * 0.02, -s * 0.48, s * 0.34);
+      ctx.moveTo(s * 0.14, s * 0.18);
+      ctx.lineTo(s * 0.36, s * 0.40);
+      ctx.moveTo(-s * 0.22, s * 0.22);
+      ctx.lineTo(-s * 0.30, s * 0.44);
+      ctx.stroke();
+    } else if (beastId === 'basilisks') {
+      if (!folioMode) {
+        ctx.strokeStyle = 'rgba(229,193,88,0.45)';
+        ctx.lineWidth = 1.2;
+        for (var r = 0; r < 3; r++) {
+          ctx.beginPath();
+          ctx.moveTo(s * 0.28, -s * 0.16);
+          ctx.lineTo(s * 0.66, -s * 0.02 + r * s * 0.12);
+          ctx.stroke();
+        }
+      }
+      ctx.strokeStyle = PALETTE.linnaeusVerdigris;
+      ctx.lineWidth = Math.max(2.2, s * 0.10);
+      ctx.beginPath();
+      ctx.moveTo(0, s * 0.16);
+      ctx.bezierCurveTo(-s * 0.42, s * 0.36, -s * 0.54, -s * 0.10, -s * 0.26, -s * 0.18);
+      ctx.stroke();
+      ctx.fillStyle = PALETTE.incunabulaVermilion;
+      ctx.strokeStyle = '#241a12';
+      ctx.lineWidth = Math.max(1.2, s * 0.048);
+      ctx.beginPath();
+      ctx.ellipse(s * 0.08, s * 0.06, s * 0.22, s * 0.16, -0.2, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(s * 0.22, -s * 0.16, s * 0.12, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = PALETTE.gildedLeaf;
+      ctx.beginPath();
+      ctx.moveTo(s * 0.12, -s * 0.26);
+      ctx.lineTo(s * 0.16, -s * 0.42);
+      ctx.lineTo(s * 0.23, -s * 0.30);
+      ctx.lineTo(s * 0.30, -s * 0.42);
+      ctx.lineTo(s * 0.33, -s * 0.25);
+      ctx.closePath();
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  function drawMythicBeast(ctx, beast, cx, cy, s, phase, isInspected, folioMode) {
+    if (isInspected && !folioMode) {
+      ctx.save();
+      var pulseR = s * (0.82 + state.spotlightPulse * 0.22 + Math.sin(phase * 2) * 0.04);
+      var grad = ctx.createRadialGradient(cx, cy, s * 0.12, cx, cy, pulseR);
+      grad.addColorStop(0, 'rgba(229, 193, 88, 0.42)');
+      grad.addColorStop(0.65, 'rgba(184, 58, 40, 0.18)');
+      grad.addColorStop(1, 'rgba(184, 58, 40, 0)');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(cx, cy, pulseR, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = PALETTE.gildedLeaf;
+      ctx.lineWidth = 1.4;
+      ctx.setLineDash([4, 3]);
+      ctx.beginPath();
+      ctx.arc(cx, cy, s * 0.72, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.restore();
+    }
+    var firstFive = ['sphinxes', 'griffons', 'chimeras', 'dragons', 'hircocervi'];
+    if (firstFive.indexOf(beast.id) !== -1) {
+      drawBeastFigure(ctx, beast.id, cx, cy, s, phase, folioMode);
+    } else {
+      drawBeastFigure6to9(ctx, beast.id, cx, cy, s, phase, folioMode);
+    }
+  }
+
+  function drawCitySanctum(ctx, skyBand, sewerY) {
+    var w = skyBand.w;
+    var h = skyBand.h;
+    var cem = state.cementRatio;
+    var awakened = state.mythicBestiaryAwakened;
+
+    var skyGrad = ctx.createLinearGradient(0, 0, 0, skyBand.bottom);
+    skyGrad.addColorStop(0, mixHex('#0d121d', '#1c2028', cem * 0.6));
+    skyGrad.addColorStop(0.65, mixHex('#182236', '#2c3038', cem * 0.7));
+    skyGrad.addColorStop(1, mixHex('#29282b', '#494948', cem * 0.8));
+    ctx.fillStyle = skyGrad;
+    ctx.fillRect(0, 0, w, skyBand.bottom);
+
+    var moonX = w * 0.82;
+    var moonY = h * 0.21;
+    var moonR = Math.max(12, Math.min(w, h) * 0.09);
+    var halo = ctx.createRadialGradient(moonX, moonY, moonR * 0.3, moonX, moonY, moonR * 2.8);
+    halo.addColorStop(0, awakened ? 'rgba(229,193,88,0.34)' : 'rgba(216,220,228,0.26)');
+    halo.addColorStop(1, 'rgba(216,220,228,0)');
+    ctx.fillStyle = halo;
+    ctx.beginPath();
+    ctx.arc(moonX, moonY, moonR * 2.8, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = awakened ? '#efe2bd' : '#e3e4e0';
+    ctx.beginPath();
+    ctx.arc(moonX, moonY, moonR, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = 'rgba(203, 200, 190, 0.09)';
+    for (var ci = 0; ci < clouds.length; ci++) {
+      var cl = clouds[ci];
+      ctx.beginPath();
+      ctx.ellipse(cl.x * w, cl.y * skyBand.bottom * 2.1, cl.w * w * 0.5, h * 0.045, 0, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    var wallCol = mixHex(PALETTE.warmLimestone, PALETTE.asepticCement, cem);
+    var wallDark = mixHex('#584c3d', PALETTE.cementShadow, cem);
+    var roofCol = mixHex(PALETTE.cedarTimber, '#9f9d95', cem);
+    var paveTop = sewerY - Math.max(12, h * 0.085);
+
+    var towers = [
+      { x: 0.04, w: 0.13, th: 0.62, gable: false },
+      { x: 0.19, w: 0.15, th: 0.72, gable: true },
+      { x: 0.37, w: 0.20, th: 0.56, gable: false },
+      { x: 0.60, w: 0.18, th: 0.76, gable: true },
+      { x: 0.80, w: 0.16, th: 0.60, gable: false }
+    ];
+    for (var ti = 0; ti < towers.length; ti++) {
+      var tw = towers[ti];
+      var tx = tw.x * w;
+      var tWidth = tw.w * w;
+      var ty = paveTop - tw.th * h * 0.72;
+      ctx.fillStyle = ti % 2 === 0 ? wallDark : wallCol;
+      ctx.fillRect(tx, ty, tWidth, paveTop - ty);
+      ctx.fillStyle = roofCol;
+      if (tw.gable) {
+        ctx.beginPath();
+        ctx.moveTo(tx - 4, ty);
+        ctx.lineTo(tx + tWidth * 0.5, ty - h * 0.12);
+        ctx.lineTo(tx + tWidth + 4, ty);
+        ctx.closePath();
+        ctx.fill();
+      } else {
+        ctx.fillRect(tx - 3, ty - 5, tWidth + 6, 6);
+      }
+
+      var winY = ty + Math.max(8, (paveTop - ty) * 0.22);
+      for (var wi = 0; wi < 2; wi++) {
+        var wx = tx + tWidth * (0.22 + wi * 0.38);
+        var ww = Math.max(8, tWidth * 0.18);
+        var wh = Math.max(10, h * 0.08);
+        ctx.fillStyle = awakened ? '#1b2740' : '#3a2d1b';
+        ctx.fillRect(wx, winY, ww, wh);
+        if (awakened) {
+          ctx.fillStyle = PALETTE.vellumOchre;
+          ctx.beginPath();
+          ctx.ellipse(wx + ww * 0.5, winY + wh * 0.78, ww * 0.36, 2.5, 0, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.strokeStyle = 'rgba(229,193,88,0.45)';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(wx + ww * 0.5, winY + wh * 0.55);
+          ctx.quadraticCurveTo(wx + ww * 0.8, winY - 6, wx + ww * 0.4, winY - 14);
+          ctx.stroke();
+        } else {
+          ctx.fillStyle = 'rgba(216,190,134,0.28)';
+          ctx.fillRect(wx + 2, winY + 2, ww - 4, wh - 4);
+        }
+      }
+    }
+
+    var bays = w < 520 ? 5 : 7;
+    var bayW = (w * 0.92) / bays;
+    var colTop = paveTop - h * 0.28;
+    ctx.fillStyle = wallCol;
+    ctx.fillRect(w * 0.04, colTop, w * 0.92, h * 0.055);
+    if (cem < 0.85) {
+      ctx.strokeStyle = mixHex(PALETTE.cedarTimber, PALETTE.asepticCement, cem);
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(w * 0.04, colTop + 3);
+      ctx.lineTo(w * 0.96, colTop + 3);
+      ctx.stroke();
+    }
+    for (var bi = 0; bi < bays; bi++) {
+      var bx = w * 0.04 + bi * bayW;
+      ctx.fillStyle = '#15171d';
+      ctx.beginPath();
+      ctx.moveTo(bx + bayW * 0.16, paveTop);
+      ctx.lineTo(bx + bayW * 0.16, colTop + h * 0.12);
+      ctx.arc(bx + bayW * 0.5, colTop + h * 0.12, bayW * 0.34, Math.PI, 0, false);
+      ctx.lineTo(bx + bayW * 0.84, paveTop);
+      ctx.closePath();
+      ctx.fill();
+      ctx.fillStyle = wallCol;
+      ctx.fillRect(bx, colTop + h * 0.05, bayW * 0.16, paveTop - (colTop + h * 0.05));
+    }
+    ctx.fillStyle = wallCol;
+    ctx.fillRect(w * 0.96 - bayW * 0.14, colTop + h * 0.05, bayW * 0.14, paveTop - (colTop + h * 0.05));
+
+    ctx.fillStyle = mixHex('#756a5b', PALETTE.asepticCement, cem);
+    ctx.fillRect(0, paveTop, w, skyBand.bottom - paveTop);
+    ctx.strokeStyle = mixHex('#4b4338', '#98958d', cem);
+    ctx.lineWidth = 1;
+    for (var sl = 1; sl < 9; sl++) {
+      var sx = (sl / 9) * w;
+      ctx.beginPath();
+      ctx.moveTo(sx, paveTop);
+      ctx.lineTo(w * 0.5 + (sx - w * 0.5) * 1.18, skyBand.bottom);
+      ctx.stroke();
+    }
+
+    var grates = [0.31, 0.62, 0.84];
+    for (var gi = 0; gi < grates.length; gi++) {
+      var gx = grates[gi] * w - 16;
+      ctx.fillStyle = '#141519';
+      ctx.fillRect(gx, sewerY - 3, 32, 6);
+      ctx.strokeStyle = cem > 0.9 ? PALETTE.asepticCement : '#5f6368';
+      for (var gb = 0; gb <= 4; gb++) {
+        ctx.beginPath();
+        ctx.moveTo(gx + gb * 8, sewerY - 3);
+        ctx.lineTo(gx + gb * 8, sewerY + 3);
+        ctx.stroke();
+      }
+    }
+  }
+
+  function drawLibraryNave(ctx, naveBand) {
+    var w = naveBand.w;
+    var h = naveBand.h;
+    var top = naveBand.top;
+    var cem = state.cementRatio;
+    var awakened = state.mythicBestiaryAwakened;
+
+    ctx.fillStyle = mixHex('#201e1d', '#24252a', cem);
+    ctx.fillRect(0, top, w, h);
+
+    ctx.strokeStyle = mixHex('#5d5142', PALETTE.asepticCement, cem);
+    ctx.lineWidth = 3;
+    ctx.strokeRect(1.5, top + 1.5, w - 3, h - 3);
+
+    for (var v = 0; v < 4; v++) {
+      var vx = (v + 0.5) * (w / 4);
+      ctx.strokeStyle = 'rgba(203,200,190,0.16)';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.arc(vx, top + h * 0.58, w * 0.13, Math.PI, 0, false);
+      ctx.stroke();
+    }
+
+    var stairX = w * 0.15;
+    ctx.fillStyle = '#121217';
+    ctx.fillRect(stairX - 24, top + h * 0.16, 48, h * 0.84);
+    for (var st = 0; st < 6; st++) {
+      var sy = top + h * (0.24 + st * 0.12);
+      ctx.fillStyle = mixHex('#6f6354', PALETTE.asepticCement, cem);
+      ctx.fillRect(stairX - 20 + (st % 2) * 8, sy, 32, 4);
+    }
+
+    var shelfW = Math.min(w * 0.44, 340);
+    var shelfX = w * 0.5 - shelfW * 0.5;
+    var shelfY = top + h * 0.15;
+    var shelfH = h * 0.72;
+    ctx.fillStyle = '#14151a';
+    ctx.strokeStyle = mixHex(PALETTE.cedarTimber, PALETTE.asepticCement, cem);
+    ctx.lineWidth = 2.2;
+    ctx.fillRect(shelfX, shelfY, shelfW, shelfH);
+    ctx.strokeRect(shelfX, shelfY, shelfW, shelfH);
+
+    var slotW = (shelfW - 18) / 7;
+    var shelvedN = clamp(Math.max(state.shelvedCount, state.exterminatedCount), 0, 7);
+    for (var i = 0; i < 7; i++) {
+      var bx = shelfX + 9 + i * slotW + 2;
+      var bw = Math.max(8, slotW - 4);
+      var by = shelfY + shelfH * 0.16;
+      var bh = shelfH * 0.76;
+      var isShelved = i < shelvedN;
+      var isConsulted = state.consultedVolumeIndex === i;
+      ctx.fillStyle = isShelved
+        ? (i % 2 === 0 ? PALETTE.linnaeusVerdigris : '#3f6359')
+        : '#23242b';
+      ctx.fillRect(bx, by, bw, bh);
+      ctx.strokeStyle = isConsulted ? PALETTE.gildedLeaf : (isShelved ? PALETTE.vellumOchre : '#383942');
+      ctx.lineWidth = isConsulted ? 2 : 1;
+      ctx.strokeRect(bx, by, bw, bh);
+      if (isShelved) {
+        ctx.fillStyle = PALETTE.gildedLeaf;
+        ctx.fillRect(bx + 2, by + bh * 0.18, bw - 4, 2);
+        ctx.fillRect(bx + 2, by + bh * 0.72, bw - 4, 2);
+      }
+    }
+
+    if (state.buffonLinnaeusLocked || awakened) {
+      ctx.fillStyle = PALETTE.gildedLeaf;
+      ctx.fillRect(shelfX - 4, shelfY + shelfH * 0.52, shelfW + 8, 4);
+      ctx.fillStyle = PALETTE.incunabulaVermilion;
+      ctx.beginPath();
+      ctx.arc(shelfX + shelfW * 0.5, shelfY + shelfH * 0.54, 5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    var deskX = w * 0.77;
+    var deskY = top + h * 0.66;
+    ctx.fillStyle = mixHex('#66543f', PALETTE.asepticCement, cem);
+    ctx.fillRect(deskX - 28, deskY, 56, 5);
+    ctx.fillRect(deskX - 22, deskY + 5, 5, h * 0.22);
+    ctx.fillRect(deskX + 17, deskY + 5, 5, h * 0.22);
+    if (awakened) {
+      ctx.fillStyle = PALETTE.vellumOchre;
+      ctx.beginPath();
+      ctx.arc(deskX - 4, deskY - 6, 6, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = PALETTE.lapisMarginalia;
+      ctx.fillRect(deskX - 16, deskY - 3, 22, 4);
+    }
+  }
+
+  function drawBasementCrypt(ctx, cryptBand) {
+    var w = cryptBand.w;
+    var h = cryptBand.h;
+    var top = cryptBand.top;
+    var awakened = state.mythicBestiaryAwakened;
+
+    var bg = ctx.createLinearGradient(0, top, 0, cryptBand.bottom);
+    bg.addColorStop(0, PALETTE.cryptObsidian);
+    bg.addColorStop(1, awakened ? '#1b1214' : '#08080b');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, top, w, h);
+
+    var stairX = w * 0.15;
+    for (var s = 0; s < 5; s++) {
+      var sy = top + h * (0.14 + s * 0.16);
+      ctx.fillStyle = '#4e4c49';
+      ctx.fillRect(stairX - 20 + (s % 2) * 10, sy, 30, 5);
+    }
+
+    for (var f = 0; f < 5; f++) {
+      var fx = w * (0.30 + f * 0.15);
+      var fy = top + h * 0.64;
+      ctx.fillStyle = '#2d2a27';
+      ctx.fillRect(fx - 5, fy, 10, h * 0.28);
+      ctx.fillRect(fx - 16, fy - 4, 32, 5);
+
+      if (awakened) {
+        var glowR = Math.max(24, h * 0.42);
+        var fg = ctx.createRadialGradient(fx, fy - 12, 3, fx, fy - 12, glowR);
+        fg.addColorStop(0, 'rgba(229,193,88,0.52)');
+        fg.addColorStop(0.55, 'rgba(184,58,40,0.22)');
+        fg.addColorStop(1, 'rgba(184,58,40,0)');
+        ctx.fillStyle = fg;
+        ctx.beginPath();
+        ctx.arc(fx, fy - 12, glowR, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = PALETTE.vellumOchre;
+        ctx.strokeStyle = PALETTE.incunabulaVermilion;
+        ctx.lineWidth = 1.4;
+        ctx.beginPath();
+        ctx.moveTo(fx, fy - 5);
+        ctx.lineTo(fx - 18, fy - 17);
+        ctx.lineTo(fx - 16, fy - 27);
+        ctx.lineTo(fx, fy - 16);
+        ctx.lineTo(fx + 16, fy - 27);
+        ctx.lineTo(fx + 18, fy - 17);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+      } else {
+        ctx.fillStyle = '#3a2b22';
+        ctx.strokeStyle = '#626266';
+        ctx.lineWidth = 1.3;
+        ctx.fillRect(fx - 13, fy - 13, 26, 9);
+        ctx.strokeRect(fx - 13, fy - 13, 26, 9);
+        ctx.fillStyle = '#7c7b78';
+        ctx.fillRect(fx - 3, fy - 9, 6, 7);
+      }
+    }
+
+    if (awakened) {
+      ctx.save();
+      ctx.font = '600 11px Georgia, serif';
+      for (var m = 0; m < marginaliaMotes.length; m++) {
+        var mote = marginaliaMotes[m];
+        var mx = mote.u * w;
+        var my = cryptBand.bottom - mote.v * (cryptBand.bottom * 0.92);
+        ctx.fillStyle = m % 2 === 0 ? 'rgba(229,193,88,0.62)' : 'rgba(184,58,40,0.58)';
+        ctx.fillText(mote.glyph, mx, my);
+      }
+      ctx.restore();
+    }
+  }
+
+  function computeBeastAnchor(beast, bands) {
+    var w = bands.skyBand.w;
+    var sky = bands.skyBand;
+    var nave = bands.naveBand;
+    var crypt = bands.cryptBand;
+    var x = beast.nx * w;
+    var y = sky.bottom - sky.h * 0.14;
+    if (beast.tier === 'pavement') y = bands.sewerY - sky.h * 0.10;
+    else if (beast.tier === 'parapet') y = sky.top + sky.h * 0.27;
+    else if (beast.tier === 'arcade') y = bands.sewerY - sky.h * 0.13;
+    else if (beast.tier === 'stair') y = crypt.top - nave.h * 0.06;
+    else if (beast.tier === 'cornice') y = nave.top + nave.h * 0.14;
+    else if (beast.tier === 'gable') y = sky.top + sky.h * 0.25;
+    else if (beast.tier === 'cistern') y = bands.sewerY - sky.h * 0.11;
+    else if (beast.tier === 'avenue') y = bands.sewerY - sky.h * 0.12;
+    else if (beast.tier === 'plinth') y = nave.bottom - nave.h * 0.22;
+    return { x: x, y: y };
+  }
+
+  function renderScene(ctx, width, height, trophicState) {
+    if (trophicState) applyTrophicInternal(trophicState, true);
+    var w = Math.max(120, Math.round(width || (ctx && ctx.canvas && ctx.canvas.width) || 800));
+    var h = Math.max(120, Math.round(height || (ctx && ctx.canvas && ctx.canvas.height) || 600));
+    var bands = computeBands(w, h);
+    if (!ctx) {
+      return {
+        skyBand: bands.skyBand,
+        naveBand: bands.naveBand,
+        cryptBand: bands.cryptBand,
+        sewerY: bands.sewerY,
+        beastHitboxes: []
+      };
+    }
+
+    ctx.save();
+    ctx.clearRect(0, 0, w, h);
+    drawCitySanctum(ctx, bands.skyBand, bands.sewerY);
+    drawLibraryNave(ctx, bands.naveBand);
+    drawBasementCrypt(ctx, bands.cryptBand);
+
+    var focusMap = {
+      city_sanctum: bands.skyBand,
+      library_nave: bands.naveBand,
+      basement_crypt: bands.cryptBand
+    };
+    var activeBand = focusMap[state.focusZone] || bands.skyBand;
+    ctx.strokeStyle = state.mythicBestiaryAwakened
+      ? 'rgba(229, 193, 88, 0.55)'
+      : 'rgba(203, 200, 190, 0.32)';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(2, activeBand.top + 2, w - 4, activeBand.h - 4);
+
+    var hitboxes = [];
+    if (state.mythicBestiaryAwakened) {
+      var baseScale = clamp(Math.min(w / 18, h / 13), 18, 42);
+      for (var i = 0; i < MYTHIC_BEASTS.length; i++) {
+        var beast = MYTHIC_BEASTS[i];
+        var pt = computeBeastAnchor(beast, bands);
+        var isInsp = state.inspectedBeastId === beast.id;
+        var sc = isInsp ? baseScale * 1.18 : baseScale;
+        drawMythicBeast(ctx, beast, pt.x, pt.y, sc, state.timeSec * 2.1 + i * 0.7, isInsp, false);
+        var pad = Math.max(20, sc * 0.78);
+        hitboxes.push({
+          id: beast.id,
+          name: beast.name,
+          rubric: beast.rubric,
+          zone: beast.zone,
+          cx: pt.x,
+          cy: pt.y,
+          r: pad,
+          x: pt.x - pad,
+          y: pt.y - pad,
+          w: pad * 2,
+          h: pad * 2
+        });
+        if (isInsp) {
+          ctx.save();
+          ctx.font = '700 10px Georgia, serif';
+          var tag = beast.rubric.toUpperCase();
+          var tw = Math.min(w - 16, Math.max(88, tag.length * 6.4 + 14));
+          var lx = clamp(pt.x - tw * 0.5, 6, w - tw - 6);
+          var ly = clamp(pt.y + sc * 0.56, 8, h - 22);
+          ctx.fillStyle = 'rgba(14, 13, 17, 0.88)';
+          ctx.strokeStyle = PALETTE.gildedLeaf;
+          ctx.lineWidth = 1.2;
+          roundRectPath(ctx, lx, ly, tw, 17, 3);
+          ctx.fill();
+          ctx.stroke();
+          ctx.fillStyle = PALETTE.vellumOchre;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(tag, lx + tw * 0.5, ly + 8.5);
+          ctx.restore();
+        }
+      }
+    }
+
+    if (state.awakeningFlash > 0.01) {
+      ctx.fillStyle = 'rgba(229, 193, 88, ' + (state.awakeningFlash * 0.24).toFixed(3) + ')';
+      ctx.fillRect(0, 0, w, h);
+    }
+
+    ctx.restore();
+    state.latestHitboxes = hitboxes;
+    return {
+      skyBand: bands.skyBand,
+      naveBand: bands.naveBand,
+      cryptBand: bands.cryptBand,
+      sewerY: bands.sewerY,
+      beastHitboxes: hitboxes.slice()
+    };
+  }
+
+  function renderFolioMedallion(ctx, width, height, beastId) {
+    if (!ctx) return;
+    var w = Math.max(80, Math.round(width || (ctx.canvas && ctx.canvas.width) || 260));
+    var h = Math.max(80, Math.round(height || (ctx.canvas && ctx.canvas.height) || 220));
+    var beast = resolveBeast(beastId) || MYTHIC_BEASTS[0];
+    var awakened = state.mythicBestiaryAwakened;
+
+    ctx.save();
+    ctx.clearRect(0, 0, w, h);
+    var vg = ctx.createLinearGradient(0, 0, w, h);
+    vg.addColorStop(0, awakened ? '#e6cf99' : '#9c8a66');
+    vg.addColorStop(0.5, awakened ? PALETTE.vellumOchre : '#877657');
+    vg.addColorStop(1, awakened ? PALETTE.vellumAged : '#6c5d43');
+    ctx.fillStyle = vg;
+    roundRectPath(ctx, 2, 2, w - 4, h - 4, 6);
+    ctx.fill();
+
+    ctx.strokeStyle = PALETTE.incunabulaVermilion;
+    ctx.lineWidth = 2;
+    roundRectPath(ctx, 7, 7, w - 14, h - 14, 4);
+    ctx.stroke();
+    ctx.strokeStyle = PALETTE.lapisMarginalia;
+    ctx.lineWidth = 1;
+    roundRectPath(ctx, 11, 11, w - 22, h - 22, 3);
+    ctx.stroke();
+
+    var corners = [[13, 13], [w - 13, 13], [13, h - 13], [w - 13, h - 13]];
+    ctx.fillStyle = awakened ? PALETTE.gildedLeaf : '#5b5344';
+    for (var c = 0; c < corners.length; c++) {
+      ctx.beginPath();
+      ctx.arc(corners[c][0], corners[c][1], 4, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    var cx = w * 0.5;
+    var cy = h * 0.50;
+    var r = Math.min(w, h) * 0.29;
+    ctx.fillStyle = awakened ? PALETTE.lapisMarginalia : '#242936';
+    ctx.strokeStyle = awakened ? PALETTE.gildedLeaf : '#6d6552';
+    ctx.lineWidth = 2.4;
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    drawMythicBeast(ctx, beast, cx, cy, r * 0.92, state.timeSec * 1.6, false, true);
+
+    ctx.textAlign = 'center';
+    ctx.fillStyle = PALETTE.incunabulaVermilion;
+    ctx.font = '700 ' + Math.max(9, Math.round(h * 0.058)) + 'px Georgia, serif';
+    ctx.fillText(beast.rubric.toUpperCase(), cx, 24);
+    ctx.fillStyle = '#251c14';
+    ctx.font = 'italic ' + Math.max(8, Math.round(h * 0.048)) + 'px Georgia, serif';
+    ctx.fillText(beast.folioCode + (awakened ? ' · OPEN' : ' · CHAINED'), cx, h - 16);
+    ctx.restore();
+  }
+
+  function renderArchivalPlatePreview(ctx, width, height, plateKind, trophicState) {
+    if (!ctx) return;
+    if (trophicState) applyTrophicInternal(trophicState, true);
+    var w = Math.max(120, Math.round(width || (ctx.canvas && ctx.canvas.width) || 360));
+    var h = Math.max(90, Math.round(height || (ctx.canvas && ctx.canvas.height) || 240));
+    var kind = String(plateKind || 'map').toLowerCase();
+    var isMap = kind.indexOf('map') !== -1;
+    var awakened = state.mythicBestiaryAwakened;
+
+    ctx.save();
+    ctx.clearRect(0, 0, w, h);
+    var bg = ctx.createLinearGradient(0, 0, w, h);
+    bg.addColorStop(0, '#dcd4c0');
+    bg.addColorStop(1, '#c5bba3');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, w, h);
+
+    ctx.strokeStyle = 'rgba(28, 29, 33, 0.10)';
+    ctx.lineWidth = 1;
+    for (var hl = 0; hl < w + h; hl += 9) {
+      ctx.beginPath();
+      ctx.moveTo(hl, 0);
+      ctx.lineTo(0, hl);
+      ctx.stroke();
+    }
+
+    ctx.strokeStyle = PALETTE.limestoneAsh;
+    ctx.lineWidth = 2;
+    ctx.strokeRect(6, 6, w - 12, h - 12);
+    ctx.lineWidth = 0.9;
+    ctx.strokeRect(10, 10, w - 20, h - 20);
+
+    if (isMap) {
+      var cx = w * 0.5;
+      var cy = h * 0.52;
+      var rad = Math.min(w, h) * 0.34;
+      ctx.strokeStyle = PALETTE.limestoneAsh;
+      ctx.lineWidth = 2.2;
+      ctx.beginPath();
+      for (var s = 0; s <= 8; s++) {
+        var a = (s / 8) * Math.PI * 2 + Math.PI / 8;
+        var px = cx + Math.cos(a) * rad;
+        var py = cy + Math.sin(a) * rad * 0.86;
+        if (s === 0) ctx.moveTo(px, py);
+        else ctx.lineTo(px, py);
+      }
+      ctx.stroke();
+
+      ctx.lineWidth = 1;
+      for (var rv = 0; rv < 8; rv++) {
+        var ra = (rv / 8) * Math.PI * 2 + Math.PI / 8;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(cx + Math.cos(ra) * rad, cy + Math.sin(ra) * rad * 0.86);
+        ctx.stroke();
+      }
+
+      ctx.fillStyle = PALETTE.lapisMarginalia;
+      ctx.beginPath();
+      ctx.arc(cx, cy, rad * 0.24, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = PALETTE.gildedLeaf;
+      ctx.stroke();
+
+      for (var bi = 0; bi < MYTHIC_BEASTS.length; bi++) {
+        var ba = (bi / MYTHIC_BEASTS.length) * Math.PI * 2 - Math.PI * 0.5;
+        var bx = cx + Math.cos(ba) * rad * 0.62;
+        var by = cy + Math.sin(ba) * rad * 0.54;
+        ctx.fillStyle = awakened ? PALETTE.incunabulaVermilion : PALETTE.linnaeusVerdigris;
+        ctx.beginPath();
+        ctx.arc(bx, by, 3.6, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      var rx = w - 34;
+      var ry = 34;
+      ctx.strokeStyle = PALETTE.incunabulaVermilion;
+      ctx.beginPath();
+      ctx.moveTo(rx, ry - 12);
+      ctx.lineTo(rx + 4, ry);
+      ctx.lineTo(rx, ry + 12);
+      ctx.lineTo(rx - 4, ry);
+      ctx.closePath();
+      ctx.stroke();
+    } else {
+      var m = 18;
+      var usableH = h - m * 2 - 16;
+      var y1 = m + 12 + usableH * 0.42;
+      var y2 = m + 12 + usableH * 0.72;
+      ctx.strokeStyle = PALETTE.limestoneAsh;
+      ctx.lineWidth = 1.4;
+      ctx.strokeRect(m, m + 12, w - m * 2, usableH);
+      ctx.beginPath();
+      ctx.moveTo(m, y1);
+      ctx.lineTo(w - m, y1);
+      ctx.moveTo(m, y2);
+      ctx.lineTo(w - m, y2);
+      ctx.stroke();
+
+      for (var ar = 0; ar < 5; ar++) {
+        var ax = m + 14 + ar * ((w - m * 2 - 28) / 5);
+        var aw = (w - m * 2 - 28) / 5 - 6;
+        ctx.beginPath();
+        ctx.arc(ax + aw * 0.5, y1 - 14, aw * 0.4, Math.PI, 0, false);
+        ctx.stroke();
+      }
+      for (var sp = 0; sp < 7; sp++) {
+        ctx.fillStyle = sp < state.exterminatedCount || awakened ? PALETTE.linnaeusVerdigris : '#8c8473';
+        ctx.fillRect(w * 0.34 + sp * ((w * 0.32) / 7), y1 + 8, (w * 0.32) / 7 - 3, y2 - y1 - 16);
+      }
+      drawMythicBeast(ctx, MYTHIC_BEASTS[0], w * 0.28, y1 - 16, Math.min(w, h) * 0.11, 0, false, true);
+      drawMythicBeast(ctx, MYTHIC_BEASTS[3], w * 0.72, y2 + (h - m - y2) * 0.45, Math.min(w, h) * 0.11, 0, false, true);
+    }
+
+    ctx.fillStyle = PALETTE.limestoneAsh;
+    ctx.textAlign = 'center';
+    ctx.font = '700 ' + Math.max(9, Math.round(h * 0.048)) + 'px Georgia, serif';
+    ctx.fillText(
+      isMap ? 'ICHNOGRAPHIA THEODORAE · SURVEY ARCHIVE' : 'SECTIO SANCTUARII ET HYPOGAEI · VISION ARCHIVE',
+      w * 0.5,
+      22
+    );
+    ctx.restore();
+  }
+
+  var api = Object.freeze({
+    MYTHIC_BEASTS: MYTHIC_BEASTS,
+    PALETTE: PALETTE,
+    init: init,
+    syncTrophicState: syncTrophicState,
+    descendToCrypt: descendToCrypt,
+    setFocusZone: setFocusZone,
+    inspectBeast: inspectBeast,
+    hitTestBeast: hitTestBeast,
+    setMuted: setMuted,
+    isMuted: isMuted,
+    setReducedMotion: setReducedMotion,
+    reset: reset,
+    onChange: onChange,
+    step: step,
+    renderScene: renderScene,
+    renderFolioMedallion: renderFolioMedallion,
+    renderArchivalPlatePreview: renderArchivalPlatePreview,
+    getState: getState
+  });
+
+  root.TheodoraMythicBestiary = api;
+})(typeof globalThis !== 'undefined' ? globalThis : (typeof window !== 'undefined' ? window : this));
+
+</script>
+<script>
+(function (root) {
+  'use strict';
+
+  var Trophic = root.TheodoraTrophicPurge;
+  var Bestiary = root.TheodoraMythicBestiary;
+  if (!Trophic || !Bestiary) return;
+
+  var mqReduced = null;
+  var initialReduced = false;
+  try {
+    if (root.matchMedia) {
+      mqReduced = root.matchMedia('(prefers-reduced-motion: reduce)');
+      initialReduced = Boolean(mqReduced && mqReduced.matches);
+    }
+  } catch (_) {}
+
+  Trophic.init({ reducedMotion: initialReduced, muted: false });
+  Bestiary.init({
+    reducedMotion: initialReduced,
+    muted: false,
+    trophicState: Trophic.getState()
+  });
+
+  Object.defineProperty(root, '__THEODORA_STATE__', {
+    configurable: true,
+    enumerable: true,
+    get: function () {
+      return {
+        trophic: Trophic.getState(),
+        bestiary: Bestiary.getState()
+      };
+    }
+  });
+
+  var elSanctum = document.getElementById('thd-sanctum');
+  var elPillFauna = document.getElementById('thd-pill-fauna');
+  var elPillCement = document.getElementById('thd-pill-cement');
+  var elPillShelf = document.getElementById('thd-pill-shelf');
+  var elPillMythic = document.getElementById('thd-pill-mythic');
+
+  var btnMute = document.getElementById('thd-btn-mute');
+  var btnPlates = document.getElementById('thd-btn-plates');
+  var btnReset = document.getElementById('thd-btn-reset');
+  var btnExterminate = document.getElementById('thd-btn-exterminate');
+  var btnShelf = document.getElementById('thd-btn-shelf');
+  var btnCrypt = document.getElementById('thd-btn-crypt');
+  var btnClosePlates = document.getElementById('thd-btn-close-plates');
+
+  var elPlaguePop = document.getElementById('thd-plague-pop');
+  var elCementPct = document.getElementById('thd-cement-pct');
+  var elCementFill = document.getElementById('thd-cement-fill');
+  var elNavePanel = document.getElementById('thd-nave-panel');
+  var elNaveStatus = document.getElementById('thd-nave-status');
+  var elTomeTitle = document.getElementById('thd-tome-title');
+  var elTomeMeta = document.getElementById('thd-tome-meta');
+  var elTomeNote = document.getElementById('thd-tome-note');
+
+  var elCausalBanner = document.getElementById('thd-causal-banner');
+  var elCausalKicker = document.getElementById('thd-causal-kicker');
+  var elCausalCopy = document.getElementById('thd-causal-copy');
+
+  var elFolioPanel = document.getElementById('thd-folio-panel');
+  var elFolioLock = document.getElementById('thd-folio-lock');
+  var elFolioRubric = document.getElementById('thd-folio-rubric');
+  var elFolioCode = document.getElementById('thd-folio-code');
+  var elFolioLatin = document.getElementById('thd-folio-latin');
+  var elFolioAct = document.getElementById('thd-folio-act');
+  var elWatchPanel = document.getElementById('thd-watch-panel');
+  var elWatchBadge = document.getElementById('thd-watch-badge');
+  var elPlateDrawer = document.getElementById('thd-plate-drawer');
+
+  var cutawayCanvas = document.getElementById('thd-cutaway-canvas');
+  var cutawayCtx = cutawayCanvas ? cutawayCanvas.getContext('2d') : null;
+  var folioCanvas = document.getElementById('thd-folio-canvas');
+  var folioCtx = folioCanvas ? folioCanvas.getContext('2d') : null;
+  var mapPreviewCanvas = document.getElementById('thd-plate-map-canvas');
+  var imagePreviewCanvas = document.getElementById('thd-plate-image-canvas');
+
+  var rungEls = Array.prototype.slice.call(document.querySelectorAll('.thd-taxon-rung'));
+  var tomeEls = Array.prototype.slice.call(document.querySelectorAll('.thd-spine-tome'));
+  var sigilEls = Array.prototype.slice.call(document.querySelectorAll('.thd-beast-sigil'));
+  var spotBtns = Array.prototype.slice.call(document.querySelectorAll('[data-spot-beast]'));
+  var zoneKeys = Array.prototype.slice.call(document.querySelectorAll('[data-focus-zone]'));
+  var plateImgs = Array.prototype.slice.call(document.querySelectorAll('.thd-plate-img'));
+
+  var shelfCursor = 0;
+  var canvasCssW = 960;
+  var canvasCssH = 510;
+  var canvasDpr = 1;
+  function syncCutawaySize() {
+    if (!cutawayCanvas || !cutawayCtx) return;
+    var rect = cutawayCanvas.getBoundingClientRect();
+    var w = Math.max(240, Math.round(rect.width || 960));
+    var h = Math.max(200, Math.round(rect.height || 510));
+    var dpr = Math.min(2, Math.max(1, root.devicePixelRatio || 1));
+    var targetW = Math.round(w * dpr);
+    var targetH = Math.round(h * dpr);
+    if (cutawayCanvas.width !== targetW || cutawayCanvas.height !== targetH || canvasDpr !== dpr) {
+      cutawayCanvas.width = targetW;
+      cutawayCanvas.height = targetH;
+      canvasCssW = w;
+      canvasCssH = h;
+      canvasDpr = dpr;
+    }
+  }
+
+  function renderFolioNow() {
+    if (!folioCanvas || !folioCtx) return;
+    var bState = Bestiary.getState();
+    var rect = folioCanvas.getBoundingClientRect();
+    var cssSide = Math.max(96, Math.round(rect.width || 124));
+    var dpr = Math.min(2, Math.max(1, root.devicePixelRatio || 1));
+    var px = Math.round(cssSide * dpr);
+    if (folioCanvas.width !== px || folioCanvas.height !== px) {
+      folioCanvas.width = px;
+      folioCanvas.height = px;
+    }
+    folioCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    Bestiary.renderFolioMedallion(folioCtx, cssSide, cssSide, bState.inspectedBeastId);
+  }
+
+  function renderArchivalPlatesNow() {
+    var tState = Trophic.getState();
+    if (mapPreviewCanvas) {
+      var mCtx = mapPreviewCanvas.getContext('2d');
+      if (mCtx) {
+        Bestiary.renderArchivalPlatePreview(mCtx, mapPreviewCanvas.width, mapPreviewCanvas.height, 'map', tState);
+      }
+    }
+    if (imagePreviewCanvas) {
+      var iCtx = imagePreviewCanvas.getContext('2d');
+      if (iCtx) {
+        Bestiary.renderArchivalPlatePreview(iCtx, imagePreviewCanvas.width, imagePreviewCanvas.height, 'image', tState);
+      }
+    }
+  }
+
+  function renderFrame() {
+    if (!cutawayCanvas || !cutawayCtx) return;
+    syncCutawaySize();
+    var tState = Trophic.getState();
+    cutawayCtx.setTransform(canvasDpr, 0, 0, canvasDpr, 0, 0);
+    var metrics = Bestiary.renderScene(cutawayCtx, canvasCssW, canvasCssH, tState);
+    Trophic.renderOverlay(cutawayCtx, canvasCssW, canvasCssH, metrics);
+  }
+
+  function syncDom() {
+    var t = Trophic.getState();
+    var b = Bestiary.getState();
+    var pct = Math.round((t.cementRatio || 0) * 100);
+    var isZero = t.livingFaunaCount === 0;
+
+    if (elSanctum) elSanctum.setAttribute('data-aseptic', isZero ? 'true' : 'false');
+
+    if (elPillFauna) {
+      elPillFauna.textContent = 'Living Fauna: ' + t.livingFaunaCount + ' / 7';
+      elPillFauna.setAttribute('data-tone', isZero ? 'aseptic' : 'alert');
+    }
+    if (elPillCement) elPillCement.textContent = 'Cement: ' + pct + '%';
+    if (elPillShelf) {
+      elPillShelf.textContent = t.buffonLinnaeusLocked
+        ? 'Nave: 7 / 7 Locked'
+        : 'Nave: ' + t.exterminatedCount + ' / 7 Clasped';
+      elPillShelf.setAttribute('data-tone', t.buffonLinnaeusLocked ? 'aseptic' : 'neutral');
+    }
+    if (elPillMythic) {
+      elPillMythic.textContent = b.mythicBestiaryAwakened
+        ? 'Bestiary: 9 / 9 Awakened'
+        : 'Bestiary: Dormant (0 / 9)';
+      elPillMythic.setAttribute('data-tone', b.mythicBestiaryAwakened ? 'awakened' : 'neutral');
+    }
+
+    if (btnMute) {
+      btnMute.setAttribute('aria-pressed', t.muted ? 'true' : 'false');
+      btnMute.textContent = t.muted ? 'Audio: Muted [M]' : 'Audio: On [M]';
+    }
+
+    if (btnExterminate) {
+      if (t.activeSpecies) {
+        btnExterminate.textContent = 'Exterminate ' + t.activeSpecies.name + ' [E]';
+        btnExterminate.setAttribute('data-sealed', 'false');
+      } else {
+        btnExterminate.textContent = 'Aseptic Sanctuary Sealed [0 Fauna]';
+        btnExterminate.setAttribute('data-sealed', 'true');
+      }
+    }
+
+    if (elPlaguePop) {
+      elPlaguePop.textContent = t.activeSpecies
+        ? (t.activeSpecies.name + ' · ' + t.activeSpecies.population.toLocaleString())
+        : 'Sterile · 0 Fauna';
+    }
+    if (elCementPct) elCementPct.textContent = pct + '%';
+    if (elCementFill) elCementFill.style.width = pct + '%';
+
+    for (var r = 0; r < rungEls.length; r++) {
+      var rEl = rungEls[r];
+      var idx = parseInt(rEl.getAttribute('data-rung-index'), 10);
+      var tagEl = rEl.querySelector('.thd-rung-tag');
+      if (idx < 7) {
+        var spSnap = t.species[idx];
+        var st = spSnap ? spSnap.status : 'DORMANT';
+        rEl.setAttribute('data-status', st);
+        if (tagEl) {
+          tagEl.textContent = st === 'EXTERMINATED'
+            ? 'SHELVED'
+            : (st === 'INFESTING' ? ('SPIKE ' + spSnap.population) : 'DORMANT');
+        }
+      } else {
+        rEl.setAttribute('data-status', isZero ? 'ASEPTIC_ACTIVE' : 'DORMANT');
+        if (tagEl) tagEl.textContent = isZero ? 'SEALED' : '0 FAUNA';
+      }
+    }
+
+    if (elNavePanel) {
+      elNavePanel.setAttribute('data-illuminated', (b.focusZone === 'library_nave' || t.buffonLinnaeusLocked) ? 'true' : 'false');
+    }
+    if (elNaveStatus) {
+      elNaveStatus.textContent = t.buffonLinnaeusLocked
+        ? '7 / 7 Locked'
+        : (t.exterminatedCount + ' / 7 Shelved');
+    }
+
+    var activeVol = t.consultedVolume || (t.shelvedVolumes.length ? t.shelvedVolumes[t.shelvedVolumes.length - 1] : t.libraryShelf[0]);
+    for (var v = 0; v < tomeEls.length; v++) {
+      var tEl = tomeEls[v];
+      var libItem = t.libraryShelf[v];
+      var isShelved = Boolean(libItem && libItem.shelved);
+      var isSel = Boolean(activeVol && libItem && activeVol.id === libItem.id);
+      tEl.setAttribute('data-shelved', isShelved ? 'true' : 'false');
+      tEl.setAttribute('data-selected', isSel ? 'true' : 'false');
+    }
+    if (activeVol) {
+      if (elTomeTitle) elTomeTitle.textContent = activeVol.buffonTome + ' · ' + activeVol.linnaeusOrder;
+      if (elTomeMeta) {
+        elTomeMeta.textContent = activeVol.binomial + ' · ' + activeVol.callNumber + (activeVol.shelved ? ' · LOCKED' : ' · UNSHELVED');
+      }
+      if (elTomeNote) elTomeNote.textContent = activeVol.shelved ? activeVol.taxonomicEpitaph : 'Living specimen still at large above the library vault.';
+    }
+    if (elCausalBanner) elCausalBanner.setAttribute('data-aseptic', isZero ? 'true' : 'false');
+    if (elCausalKicker) {
+      elCausalKicker.textContent = isZero
+        ? 'Aseptic Sanctuary Sealed · Basement Incunabula Awakened (9 / 9)'
+        : ('Active Trophic Plague · Stage ' + (t.stageIndex + 1) + ' of 8 (' + (t.activeSpecies ? t.activeSpecies.binomial : '') + ')');
+    }
+    if (elCausalCopy) {
+      if (isZero) {
+        elCausalCopy.textContent = 'Zero living fauna survive in Theodora; Buffon & Linnaeus stand locked in the nave while down in the basement incunabula sphinxes, griffons, chimeras, dragons, hircocervi, harpies, hydras, unicorns, and basilisks stir awake.';
+      } else if (t.lastCausalEvent && t.stageIndex > 0) {
+        elCausalCopy.textContent = t.lastCausalEvent.summary + ' Active plague: ' + t.activeSpecies.plagueDesc;
+      } else if (t.activeSpecies) {
+        elCausalCopy.textContent = t.activeSpecies.plagueDesc + ' (' + t.activeSpecies.purgeAction + '.)';
+      }
+    }
+
+    for (var z = 0; z < zoneKeys.length; z++) {
+      var zk = zoneKeys[z];
+      zk.setAttribute('aria-pressed', zk.getAttribute('data-focus-zone') === b.focusZone ? 'true' : 'false');
+    }
+
+    var ins = b.inspectedBeast || b.beasts[0];
+    var folioLit = Boolean(b.mythicBestiaryAwakened || b.focusZone === 'basement_crypt');
+    if (elFolioPanel) elFolioPanel.setAttribute('data-illuminated', folioLit ? 'true' : 'false');
+    if (elWatchPanel) elWatchPanel.setAttribute('data-illuminated', b.mythicBestiaryAwakened ? 'true' : 'false');
+    if (elFolioLock) elFolioLock.textContent = b.mythicBestiaryAwakened ? 'Awakened' : 'Chained';
+    if (ins) {
+      if (elFolioRubric) elFolioRubric.textContent = ins.name + ' · ' + ins.rubric;
+      if (elFolioCode) elFolioCode.textContent = ins.folioCode + (b.mythicBestiaryAwakened ? ' · OPEN' : ' · CHAINED');
+      if (elFolioLatin) elFolioLatin.textContent = ins.latinEpigraph;
+      if (elFolioAct) {
+        elFolioAct.textContent = b.mythicBestiaryAwakened
+          ? ins.reclamationAct
+          : ('Sleeping in dusty vellum (' + ins.anatomicalKey + '). Purge remaining ' + t.livingFaunaCount + ' living fauna to unlock.');
+      }
+    }
+
+    if (elWatchBadge) elWatchBadge.textContent = b.awakenedCount + ' / 9 Awakened';
+
+    for (var sb = 0; sb < spotBtns.length; sb++) {
+      var spBtn = spotBtns[sb];
+      spBtn.setAttribute('aria-pressed', (ins && spBtn.getAttribute('data-spot-beast') === ins.id) ? 'true' : 'false');
+    }
+
+    for (var s = 0; s < sigilEls.length; s++) {
+      var sEl = sigilEls[s];
+      var bid = sEl.getAttribute('data-beast-id');
+      var isInsp = Boolean(ins && ins.id === bid);
+      sEl.setAttribute('data-awakened', b.mythicBestiaryAwakened ? 'true' : 'false');
+      sEl.setAttribute('data-inspected', isInsp ? 'true' : 'false');
+      var stNode = sEl.querySelector('.thd-sigil-state');
+      if (stNode) {
+        stNode.textContent = b.mythicBestiaryAwakened ? (isInsp ? 'Spotlight' : 'Reclaiming') : 'Dormant';
+      }
+    }
+
+    renderFolioNow();
+    if (elPlateDrawer && !elPlateDrawer.hidden) {
+      renderArchivalPlatesNow();
+    }
+    renderFrame();
+  }
+
+  Trophic.onChange(function (tSnap) {
+    Bestiary.syncTrophicState(tSnap);
+    syncDom();
+  });
+
+  Bestiary.onChange(function () {
+    syncDom();
+  });
+
+  function wireKeyRoleButton(el, handler) {
+    if (!el) return;
+    el.addEventListener('click', function (ev) {
+      Trophic.unlockAudio();
+      handler(ev);
+    });
+    el.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Enter' || ev.key === ' ') {
+        ev.preventDefault();
+        ev.stopPropagation();
+        Trophic.unlockAudio();
+        handler(ev);
+      }
+    });
+  }
+
+  function handleRungActivate(idx) {
+    var cur = Trophic.getState();
+    if (idx === cur.stageIndex && cur.stageIndex < 7) {
+      Trophic.exterminateSpecies(idx);
+    } else if (idx > cur.stageIndex) {
+      var guard = 0;
+      while (Trophic.getState().stageIndex < idx && guard < 8) {
+        Trophic.exterminateNext();
+        guard++;
+      }
+    } else if (idx >= 0 && idx < 7) {
+      Trophic.consultShelf(idx);
+      Bestiary.setFocusZone('library_nave');
+    }
+  }
+
+  function handleConsultShelfCycle() {
+    var st = Trophic.getState();
+    var targetIdx = 0;
+    if (st.exterminatedCount > 0) {
+      targetIdx = shelfCursor % st.exterminatedCount;
+      shelfCursor = (shelfCursor + 1) % st.exterminatedCount;
+    } else {
+      targetIdx = shelfCursor % 7;
+      shelfCursor = (shelfCursor + 1) % 7;
+    }
+    Bestiary.setFocusZone('library_nave');
+    Trophic.consultShelf(targetIdx);
+  }
+
+  function togglePlateDrawer(forceOpen) {
+    if (!elPlateDrawer) return;
+    var nextOpen = typeof forceOpen === 'boolean' ? forceOpen : elPlateDrawer.hidden;
+    elPlateDrawer.hidden = !nextOpen;
+    if (btnPlates) btnPlates.setAttribute('aria-expanded', nextOpen ? 'true' : 'false');
+    if (nextOpen) {
+      for (var k = 0; k < plateImgs.length; k++) {
+        syncPlateImg(plateImgs[k]);
+      }
+      renderArchivalPlatesNow();
+    }
+  }
+
+  function toggleAudioMute() {
+    var nextMuted = !Trophic.isMuted();
+    Trophic.setMuted(nextMuted);
+    Bestiary.setMuted(nextMuted);
+    if (!nextMuted) Trophic.unlockAudio();
+    syncDom();
+  }
+
+  function resetAll() {
+    shelfCursor = 0;
+    Bestiary.reset();
+    Trophic.reset();
+    Bestiary.syncTrophicState(Trophic.getState());
+    syncDom();
+  }
+  if (btnExterminate) {
+    btnExterminate.addEventListener('click', function () {
+      Trophic.unlockAudio();
+      Trophic.exterminateNext();
+    });
+  }
+  if (btnShelf) {
+    btnShelf.addEventListener('click', function () {
+      Trophic.unlockAudio();
+      handleConsultShelfCycle();
+    });
+  }
+  if (btnCrypt) {
+    btnCrypt.addEventListener('click', function () {
+      Trophic.unlockAudio();
+      Bestiary.descendToCrypt();
+    });
+  }
+  if (btnMute) {
+    btnMute.addEventListener('click', function () {
+      toggleAudioMute();
+    });
+  }
+  if (btnPlates) {
+    btnPlates.addEventListener('click', function () {
+      togglePlateDrawer();
+    });
+  }
+  if (btnClosePlates) {
+    btnClosePlates.addEventListener('click', function () {
+      togglePlateDrawer(false);
+    });
+  }
+  if (btnReset) {
+    btnReset.addEventListener('click', function () {
+      Trophic.unlockAudio();
+      resetAll();
+    });
+  }
+  if (elPlateDrawer) {
+    elPlateDrawer.addEventListener('click', function (ev) {
+      if (ev.target === elPlateDrawer) togglePlateDrawer(false);
+    });
+  }
+
+  for (var ri = 0; ri < rungEls.length; ri++) {
+    (function (el) {
+      var idx = parseInt(el.getAttribute('data-rung-index'), 10);
+      wireKeyRoleButton(el, function () {
+        handleRungActivate(idx);
+      });
+    })(rungEls[ri]);
+  }
+
+  for (var ti = 0; ti < tomeEls.length; ti++) {
+    (function (el) {
+      var idx = parseInt(el.getAttribute('data-tome-index'), 10);
+      wireKeyRoleButton(el, function () {
+        Bestiary.setFocusZone('library_nave');
+        Trophic.consultShelf(idx);
+      });
+    })(tomeEls[ti]);
+  }
+
+  for (var si = 0; si < sigilEls.length; si++) {
+    (function (el) {
+      var bid = el.getAttribute('data-beast-id');
+      wireKeyRoleButton(el, function () {
+        Bestiary.inspectBeast(bid);
+      });
+    })(sigilEls[si]);
+  }
+
+  for (var bi = 0; bi < spotBtns.length; bi++) {
+    (function (btn) {
+      var bid = btn.getAttribute('data-spot-beast');
+      btn.addEventListener('click', function () {
+        Trophic.unlockAudio();
+        Bestiary.inspectBeast(bid);
+      });
+    })(spotBtns[bi]);
+  }
+
+  for (var zi = 0; zi < zoneKeys.length; zi++) {
+    (function (zk) {
+      var zone = zk.getAttribute('data-focus-zone');
+      wireKeyRoleButton(zk, function () {
+        if (zone === 'basement_crypt') {
+          Bestiary.descendToCrypt();
+        } else {
+          Bestiary.setFocusZone(zone);
+        }
+      });
+    })(zoneKeys[zi]);
+  }
+
+  if (cutawayCanvas) {
+    cutawayCanvas.addEventListener('mousemove', function (ev) {
+      var rect = cutawayCanvas.getBoundingClientRect();
+      var px = ev.clientX - rect.left;
+      var py = ev.clientY - rect.top;
+      var hit = Bestiary.hitTestBeast(px, py);
+      cutawayCanvas.style.cursor = hit ? 'pointer' : 'crosshair';
+    });
+    cutawayCanvas.addEventListener('click', function (ev) {
+      Trophic.unlockAudio();
+      var rect = cutawayCanvas.getBoundingClientRect();
+      var px = ev.clientX - rect.left;
+      var py = ev.clientY - rect.top;
+      var hit = Bestiary.hitTestBeast(px, py);
+      if (hit) {
+        Bestiary.inspectBeast(hit);
+      }
+    });
+  }
+
+  function syncPlateImg(img) {
+    if (!img) return;
+    if (img.complete && img.naturalWidth > 0) {
+      img.hidden = false;
+      if (img.parentElement) img.parentElement.setAttribute('data-plate-state', 'loaded');
+    }
+  }
+  for (var pi = 0; pi < plateImgs.length; pi++) {
+    (function (img) {
+      img.addEventListener('load', function () {
+        syncPlateImg(img);
+      });
+      try { img.loading = 'eager'; } catch (_) {}
+      syncPlateImg(img);
+    })(plateImgs[pi]);
+  }
+
+  if (mqReduced) {
+    var onMotionChange = function (ev) {
+      var flag = Boolean(ev && ev.matches);
+      Trophic.setReducedMotion(flag);
+      Bestiary.setReducedMotion(flag);
+      syncDom();
+    };
+    if (typeof mqReduced.addEventListener === 'function') {
+      mqReduced.addEventListener('change', onMotionChange);
+    } else if (typeof mqReduced.addListener === 'function') {
+      mqReduced.addListener(onMotionChange);
+    }
+  }
+
+  root.addEventListener('resize', function () {
+    renderFolioNow();
+    renderFrame();
+  });
+
+  root.addEventListener('keydown', function (ev) {
+    if (ev.ctrlKey || ev.metaKey || ev.altKey) return;
+    var key = ev.key;
+    var lower = key ? key.toLowerCase() : '';
+    var tgt = ev.target;
+    var isInteractive = tgt && (tgt.tagName === 'BUTTON' || (tgt.getAttribute && tgt.getAttribute('role') === 'button'));
+
+    if (key === 'Escape') {
+      if (elPlateDrawer && !elPlateDrawer.hidden) {
+        ev.preventDefault();
+        togglePlateDrawer(false);
+      }
+      return;
+    }
+    if (lower === 'p') {
+      ev.preventDefault();
+      togglePlateDrawer();
+      return;
+    }
+    if (lower === 'm') {
+      ev.preventDefault();
+      toggleAudioMute();
+      return;
+    }
+    if (lower === 'r') {
+      ev.preventDefault();
+      Trophic.unlockAudio();
+      resetAll();
+      return;
+    }
+    if (lower === 'e' || (key === ' ' && !isInteractive)) {
+      ev.preventDefault();
+      Trophic.unlockAudio();
+      Trophic.exterminateNext();
+      return;
+    }
+    if (lower === 's') {
+      ev.preventDefault();
+      Trophic.unlockAudio();
+      handleConsultShelfCycle();
+      return;
+    }
+    if (lower === 'b') {
+      ev.preventDefault();
+      Trophic.unlockAudio();
+      Bestiary.descendToCrypt();
+      return;
+    }
+    if (key >= '1' && key <= '9') {
+      ev.preventDefault();
+      Trophic.unlockAudio();
+      var bIndex = parseInt(key, 10) - 1;
+      if (Bestiary.MYTHIC_BEASTS[bIndex]) {
+        Bestiary.inspectBeast(Bestiary.MYTHIC_BEASTS[bIndex].id);
+      }
+    }
+  });
+
+  var lastTs = 0;
+  function tick(ts) {
+    var dt = lastTs ? Math.min(0.05, Math.max(0.001, (ts - lastTs) / 1000)) : 0.016;
+    lastTs = ts;
+    var tState = Trophic.getState();
+    Trophic.step(dt);
+    Bestiary.step(dt, tState);
+    renderFrame();
+    if (Bestiary.getState().mythicBestiaryAwakened && !tState.reducedMotion) {
+      renderFolioNow();
+    }
+    root.requestAnimationFrame(tick);
+  }
+
+  renderArchivalPlatesNow();
+  syncDom();
+  root.requestAnimationFrame(tick);
+})(typeof globalThis !== 'undefined' ? globalThis : window);
+</script>
+</body>
+</html>

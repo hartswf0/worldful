@@ -1,0 +1,4549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Penthesilea — Survey of the Unwalled Plain</title>
+<style>
+[hidden] { display: none !important; }
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --pnt-broth: #e6e0d2;
+  --pnt-chalk: #efeae0;
+  --pnt-cabbage: #7b8c72;
+  --pnt-zinc: #8d9699;
+  --pnt-rust: #9c4f35;
+  --pnt-ochre: #b58d47;
+  --pnt-ink: #262421;
+  --pnt-plaster: #cfc6b4;
+  --pnt-ink-soft: rgba(38, 36, 33, 0.72);
+  --pnt-ink-faint: rgba(38, 36, 33, 0.16);
+  --pnt-card-bg: rgba(239, 234, 224, 0.88);
+  --pnt-serif: Georgia, "Iowan Old Style", "Palatino Linotype", Palatino, serif;
+  --pnt-mono: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+}
+
+html, body {
+  width: 100%;
+  max-width: 100%;
+  min-height: 100%;
+  background: var(--pnt-broth);
+  color: var(--pnt-ink);
+  font-family: var(--pnt-serif);
+  line-height: 1.35;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+button:focus-visible,
+.pnt-stone-item:focus-visible {
+  outline: 2px solid var(--pnt-rust);
+  outline-offset: 1px;
+}
+
+penthesilea-limbo-soup,
+limbo-title-band,
+limbo-city-crest,
+limbo-telemetry-strip,
+limbo-metric-pill,
+limbo-utility-actions,
+limbo-survey-workbench,
+limbo-plain-column,
+limbo-stones-column,
+diluted-outskirts-plain,
+plain-canvas-frame,
+plain-parcel-bar,
+bearing-stride-controls,
+compass-stride-pad,
+topological-action-deck,
+ambiguous-gesture-compass,
+compass-rose-well,
+gesture-tally-row,
+passerby-witness-feed,
+witness-quote-card,
+witness-meta-line,
+witness-quote-line,
+witness-locus-line,
+witness-history-item,
+rusty-wheel-scatter,
+stone-scatter-list,
+stone-parcel-item,
+stone-detail-note,
+outside-doubt-horizon,
+arch-phase-rail,
+arch-phase-pill,
+arch-stage-card,
+arch-title-line,
+arch-text-line,
+invariant-ledger-strip,
+invariant-proof-pill,
+field-findings-log,
+finding-log-entry,
+finding-stamp-line,
+finding-body-line,
+penthesilea-plate-drawer,
+plate-drawer-sheet,
+plate-drawer-bar,
+plate-diptych-grid,
+plate-folio-frame,
+plate-folio-caption,
+plate-fallback-vellum,
+plate-quota-notice {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.pnt-shell {
+  width: 100%;
+  max-width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  background:
+    radial-gradient(circle at 18% 12%, rgba(239, 234, 224, 0.92), transparent 54%),
+    linear-gradient(180deg, var(--pnt-chalk) 0%, var(--pnt-broth) 100%);
+  overflow: hidden;
+}
+
+.pnt-title-band {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 12px;
+  background: var(--pnt-chalk);
+  border-bottom: 1px solid var(--pnt-plaster);
+  box-shadow: 0 1px 0 rgba(38, 36, 33, 0.06);
+}
+
+.pnt-crest {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pnt-city-name {
+  font-size: 1.08rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--pnt-ink);
+}
+
+.pnt-city-sub {
+  font-family: var(--pnt-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  color: var(--pnt-ink-soft);
+  text-transform: uppercase;
+}
+
+.pnt-telemetry-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pnt-metric-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  background: var(--pnt-broth);
+  border: 1px solid var(--pnt-plaster);
+  border-radius: 2px;
+  font-family: var(--pnt-mono);
+  font-size: 0.68rem;
+  color: var(--pnt-ink);
+  white-space: nowrap;
+}
+
+.pnt-metric-key {
+  color: var(--pnt-ink-soft);
+}
+
+.pnt-metric-val {
+  font-weight: 700;
+  color: var(--pnt-rust);
+}
+
+.pnt-utility-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pnt-util-btn {
+  padding: 5px 10px;
+  font-family: var(--pnt-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.03em;
+  background: var(--pnt-broth);
+  border: 1px solid var(--pnt-ink);
+  border-radius: 2px;
+  color: var(--pnt-ink);
+  transition: background-color 0.14s ease, color 0.14s ease;
+}
+
+.pnt-util-btn:hover,
+.pnt-util-btn[aria-pressed="true"] {
+  background: var(--pnt-ink);
+  color: var(--pnt-chalk);
+}
+
+.pnt-workbench {
+  display: grid;
+  grid-template-columns: minmax(0, 1.38fr) minmax(0, 0.85fr) minmax(0, 0.94fr);
+  gap: 8px;
+  padding: 8px 10px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.pnt-plain-column {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 8px;
+  min-height: 0;
+}
+
+.pnt-stones-column {
+  display: grid;
+  grid-template-rows: minmax(0, 1.04fr) minmax(0, 0.96fr);
+  gap: 8px;
+  min-height: 0;
+}
+
+.pnt-panel {
+  background: var(--pnt-card-bg);
+  border: 1px solid var(--pnt-plaster);
+  border-radius: 3px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+.pnt-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 6px 9px;
+  border-bottom: 1px solid var(--pnt-plaster);
+  background: rgba(230, 224, 210, 0.65);
+  flex-wrap: wrap;
+}
+
+.pnt-panel-title {
+  font-family: var(--pnt-mono);
+  font-size: 0.67rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--pnt-ink);
+}
+
+.pnt-panel-badge {
+  font-family: var(--pnt-mono);
+  font-size: 0.65rem;
+  color: var(--pnt-rust);
+  font-weight: 600;
+}
+
+.pnt-plain-stage {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.pnt-canvas-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 220px;
+  background: var(--pnt-broth);
+  overflow: hidden;
+}
+
+.pnt-plain-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.pnt-parcel-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 5px 9px;
+  border-top: 1px solid var(--pnt-plaster);
+  background: var(--pnt-chalk);
+  font-family: var(--pnt-mono);
+  font-size: 0.66rem;
+  color: var(--pnt-ink-soft);
+}
+
+.pnt-mode-tag {
+  padding: 2px 6px;
+  background: var(--pnt-broth);
+  border: 1px solid var(--pnt-plaster);
+  color: var(--pnt-ink);
+  font-weight: 700;
+}
+
+.pnt-mode-tag[data-mode="seek_center"] {
+  border-color: var(--pnt-ochre);
+  color: var(--pnt-rust);
+}
+
+.pnt-mode-tag[data-mode="seek_outside"] {
+  border-color: var(--pnt-cabbage);
+  color: var(--pnt-ink);
+}
+
+.pnt-stride-controls {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 8px;
+  padding: 7px 8px;
+  align-items: stretch;
+}
+
+.pnt-stride-pad {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(46px, 1fr));
+  gap: 4px;
+}
+
+.pnt-dir-btn {
+  padding: 5px 6px;
+  min-height: 30px;
+  font-family: var(--pnt-mono);
+  font-size: 0.66rem;
+  font-weight: 600;
+  background: var(--pnt-chalk);
+  border: 1px solid var(--pnt-plaster);
+  border-radius: 2px;
+  color: var(--pnt-ink);
+  text-align: center;
+  transition: background-color 0.12s ease, border-color 0.12s ease;
+}
+
+.pnt-dir-btn:hover {
+  background: var(--pnt-broth);
+  border-color: var(--pnt-ink);
+}
+
+.pnt-dir-btn[data-active="true"] {
+  background: var(--pnt-cabbage);
+  border-color: var(--pnt-ink);
+  color: var(--pnt-chalk);
+}
+
+.pnt-dir-pause {
+  background: var(--pnt-broth);
+  border-color: var(--pnt-ink);
+  font-weight: 700;
+}
+
+.pnt-action-deck {
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 5px;
+  align-content: center;
+}
+
+.pnt-action-subrow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.pnt-act-btn {
+  padding: 7px 8px;
+  min-height: 34px;
+  font-family: var(--pnt-mono);
+  font-size: 0.69rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border-radius: 2px;
+  border: 1px solid var(--pnt-ink);
+  background: var(--pnt-chalk);
+  color: var(--pnt-ink);
+  text-align: center;
+  line-height: 1.2;
+  transition: background-color 0.14s ease, color 0.14s ease;
+}
+
+.pnt-act-btn:hover {
+  background: var(--pnt-ink);
+  color: var(--pnt-chalk);
+}
+
+.pnt-act-ask {
+  background: var(--pnt-rust);
+  border-color: var(--pnt-ink);
+  color: var(--pnt-chalk);
+  font-size: 0.72rem;
+}
+
+.pnt-act-ask:hover {
+  background: var(--pnt-ink);
+  color: var(--pnt-chalk);
+}
+
+.pnt-act-btn[data-active="true"] {
+  background: var(--pnt-ochre);
+  color: var(--pnt-ink);
+}
+
+.pnt-compass-panel {
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  min-height: 0;
+  overflow: hidden;
+}
+
+.pnt-compass-well {
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--pnt-plaster);
+  background: var(--pnt-chalk);
+}
+
+.pnt-compass-canvas {
+  display: block;
+  width: 100%;
+  height: 162px;
+  border: 1px solid var(--pnt-plaster);
+  background: var(--pnt-chalk);
+}
+
+.pnt-tally-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 8px;
+  margin-top: 5px;
+  font-family: var(--pnt-mono);
+  font-size: 0.63rem;
+  color: var(--pnt-ink-soft);
+}
+
+.pnt-witness-feed {
+  padding: 7px 9px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pnt-witness-card {
+  padding: 7px 8px;
+  background: var(--pnt-chalk);
+  border: 1px solid var(--pnt-plaster);
+  border-left: 3px solid var(--pnt-rust);
+}
+
+.pnt-witness-meta {
+  font-family: var(--pnt-mono);
+  font-size: 0.64rem;
+  color: var(--pnt-ink-soft);
+  margin-bottom: 3px;
+}
+
+.pnt-witness-quote {
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--pnt-ink);
+  margin-bottom: 3px;
+}
+
+.pnt-witness-locus {
+  font-family: var(--pnt-mono);
+  font-size: 0.63rem;
+  color: var(--pnt-cabbage);
+  font-weight: 700;
+}
+
+.pnt-witness-item {
+  padding: 5px 7px;
+  background: rgba(230, 224, 210, 0.55);
+  border: 1px solid var(--pnt-plaster);
+  font-size: 0.73rem;
+}
+
+.pnt-stones-panel {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.pnt-stone-list {
+  padding: 5px 7px;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3px;
+}
+
+.pnt-stone-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 4px 7px;
+  background: var(--pnt-chalk);
+  border: 1px solid var(--pnt-plaster);
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 0.73rem;
+}
+
+.pnt-stone-item:hover,
+.pnt-stone-item[data-selected="true"] {
+  border-color: var(--pnt-rust);
+  background: rgba(230, 224, 210, 0.9);
+}
+
+.pnt-stone-label {
+  font-weight: 600;
+  color: var(--pnt-ink);
+}
+
+.pnt-stone-count {
+  font-family: var(--pnt-mono);
+  font-size: 0.63rem;
+  color: var(--pnt-ink-soft);
+  white-space: nowrap;
+}
+
+.pnt-stone-detail {
+  padding: 6px 8px;
+  border-top: 1px solid var(--pnt-plaster);
+  background: var(--pnt-chalk);
+  font-size: 0.72rem;
+  color: var(--pnt-ink-soft);
+}
+
+.pnt-doubt-panel {
+  display: grid;
+  grid-template-rows: auto auto auto auto minmax(0, 1fr);
+  min-height: 0;
+  overflow: hidden;
+}
+
+.pnt-phase-rail {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4px;
+  padding: 5px 8px 0 8px;
+}
+
+.pnt-phase-pill {
+  padding: 3px 5px;
+  font-family: var(--pnt-mono);
+  font-size: 0.61rem;
+  text-align: center;
+  background: var(--pnt-broth);
+  border: 1px solid var(--pnt-plaster);
+  color: var(--pnt-ink-soft);
+}
+
+.pnt-phase-pill[data-current="true"] {
+  background: var(--pnt-ink);
+  border-color: var(--pnt-ink);
+  color: var(--pnt-chalk);
+  font-weight: 700;
+}
+
+.pnt-arch-card {
+  margin: 5px 8px;
+  padding: 6px 8px;
+  background: var(--pnt-chalk);
+  border: 1px solid var(--pnt-plaster);
+  border-left: 3px solid var(--pnt-ochre);
+}
+
+.pnt-arch-title {
+  font-family: var(--pnt-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--pnt-rust);
+  margin-bottom: 2px;
+}
+
+.pnt-arch-text {
+  font-size: 0.74rem;
+  color: var(--pnt-ink);
+  line-height: 1.32;
+}
+
+.pnt-invariant-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 0 8px 5px 8px;
+}
+
+.pnt-inv-pill {
+  padding: 2px 6px;
+  font-family: var(--pnt-mono);
+  font-size: 0.61rem;
+  background: var(--pnt-broth);
+  border: 1px solid var(--pnt-plaster);
+  color: var(--pnt-ink);
+}
+
+.pnt-findings-log {
+  padding: 5px 8px 7px 8px;
+  border-top: 1px solid var(--pnt-plaster);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pnt-finding-entry {
+  padding: 4px 6px;
+  background: var(--pnt-chalk);
+  border: 1px solid var(--pnt-plaster);
+  font-size: 0.7rem;
+  color: var(--pnt-ink);
+}
+
+.pnt-finding-stamp {
+  font-family: var(--pnt-mono);
+  font-size: 0.6rem;
+  color: var(--pnt-rust);
+  margin-bottom: 1px;
+}
+
+.pnt-plate-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 95;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(38, 36, 33, 0.76);
+}
+
+.pnt-plate-sheet {
+  width: min(1180px, 100%);
+  max-height: calc(100vh - 32px);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  background: var(--pnt-chalk);
+  border: 2px solid var(--pnt-ink);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.34);
+  overflow: hidden;
+}
+
+.pnt-plate-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--pnt-broth);
+  border-bottom: 1px solid var(--pnt-plaster);
+}
+
+.pnt-plate-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pnt-diptych-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  padding: 12px;
+  overflow: auto;
+}
+
+.pnt-diptych-grid[data-view="map"] #pnt-folio-image,
+.pnt-diptych-grid[data-view="image"] #pnt-folio-map {
+  display: none;
+}
+
+.pnt-diptych-grid[data-view="map"],
+.pnt-diptych-grid[data-view="image"] {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.pnt-folio-frame {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+  background: var(--pnt-broth);
+  border: 1px solid var(--pnt-plaster);
+  overflow: auto;
+}
+
+.pnt-folio-caption {
+  font-family: var(--pnt-mono);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--pnt-ink);
+}
+
+.pnt-plate-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 68vh;
+  object-fit: contain;
+  border: 1px solid var(--pnt-plaster);
+  background: var(--pnt-chalk);
+  transform-origin: center center;
+  transition: transform 0.16s ease;
+}
+
+.pnt-diptych-grid[data-zoom="true"] .pnt-plate-img {
+  transform: scale(1.75);
+  transform-origin: top left;
+}
+
+.pnt-fallback-vellum {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pnt-folio-frame[data-plate-fallback="active"] .pnt-fallback-vellum {
+  display: flex;
+}
+
+.pnt-quota-notice {
+  padding: 5px 8px;
+  font-family: var(--pnt-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--pnt-rust);
+  background: var(--pnt-chalk);
+  border: 1px dashed var(--pnt-rust);
+}
+
+.pnt-fallback-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--pnt-plaster);
+  background: var(--pnt-chalk);
+}
+
+@media (max-width: 979px) {
+  .pnt-shell {
+    height: auto;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: visible;
+  }
+
+  .pnt-title-band {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px;
+    padding: 8px 9px;
+  }
+
+  .pnt-telemetry-strip {
+    grid-column: 1 / -1;
+    order: 3;
+    justify-content: flex-start;
+  }
+
+  .pnt-metric-pill {
+    font-size: 0.63rem;
+    padding: 2px 6px;
+  }
+
+  .pnt-workbench {
+    grid-template-columns: minmax(0, 1fr);
+    overflow: visible;
+    padding: 7px 8px 14px 8px;
+  }
+
+  .pnt-plain-column,
+  .pnt-stones-column {
+    grid-template-rows: auto auto;
+  }
+
+  .pnt-canvas-frame {
+    height: 238px;
+    min-height: 238px;
+  }
+
+  .pnt-stride-controls {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pnt-witness-feed {
+    max-height: 196px;
+  }
+
+  .pnt-stone-list {
+    max-height: 224px;
+  }
+
+  .pnt-findings-log {
+    max-height: 164px;
+  }
+
+  .pnt-diptych-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0s !important;
+    animation-duration: 0s !important;
+  }
+}
+</style>
+</head>
+<body>
+<penthesilea-limbo-soup class="pnt-shell" id="pnt-app">
+  <limbo-title-band class="pnt-title-band">
+    <limbo-city-crest class="pnt-crest">
+      <city-name-mark class="pnt-city-name">PENTHESILEA</city-name-mark>
+      <city-sub-mark class="pnt-city-sub">Diluted Outskirts Across the Unwalled Plain</city-sub-mark>
+    </limbo-city-crest>
+
+    <limbo-telemetry-strip class="pnt-telemetry-strip">
+      <limbo-metric-pill class="pnt-metric-pill">
+        <metric-key-tag class="pnt-metric-key">HOURS</metric-key-tag>
+        <metric-val-tag class="pnt-metric-val" id="pnt-val-hours">0.40h (1.5 km)</metric-val-tag>
+      </limbo-metric-pill>
+      <limbo-metric-pill class="pnt-metric-pill">
+        <metric-key-tag class="pnt-metric-key">LIMBOS</metric-key-tag>
+        <metric-val-tag class="pnt-metric-val" id="pnt-val-limbos">0</metric-val-tag>
+      </limbo-metric-pill>
+      <limbo-metric-pill class="pnt-metric-pill">
+        <metric-key-tag class="pnt-metric-key">WRINKLES</metric-key-tag>
+        <metric-val-tag class="pnt-metric-val" id="pnt-val-wrinkles">0</metric-val-tag>
+      </limbo-metric-pill>
+      <limbo-metric-pill class="pnt-metric-pill">
+        <metric-key-tag class="pnt-metric-key">WALLS / GATES</metric-key-tag>
+        <metric-val-tag class="pnt-metric-val" id="pnt-val-walls">0</metric-val-tag>
+      </limbo-metric-pill>
+      <limbo-metric-pill class="pnt-metric-pill">
+        <metric-key-tag class="pnt-metric-key">SECTOR</metric-key-tag>
+        <metric-val-tag class="pnt-metric-val" id="pnt-val-sector">LIMBO-S00·E00</metric-val-tag>
+      </limbo-metric-pill>
+    </limbo-telemetry-strip>
+
+    <limbo-utility-actions class="pnt-utility-actions">
+      <button type="button" class="pnt-util-btn" id="pnt-btn-mute" aria-pressed="false">[M] Audio: Off</button>
+      <button type="button" class="pnt-util-btn" id="pnt-btn-plates" aria-pressed="false">[P] Plates</button>
+    </limbo-utility-actions>
+  </limbo-title-band>
+
+  <limbo-survey-workbench class="pnt-workbench">
+    <limbo-plain-column class="pnt-plain-column">
+      <diluted-outskirts-plain class="pnt-panel pnt-plain-stage">
+        <plain-panel-head class="pnt-panel-head">
+          <panel-rubric-tag class="pnt-panel-title">Endless Diluted Plain</panel-rubric-tag>
+          <panel-badge-tag class="pnt-panel-badge" id="pnt-plain-coords">X 0 · Y 0 · BEARING 010°</panel-badge-tag>
+        </plain-panel-head>
+        <plain-canvas-frame class="pnt-canvas-frame" id="pnt-canvas-frame">
+          <canvas class="pnt-plain-canvas" id="pnt-plain-canvas" aria-label="Endless plain of Penthesilea outskirts"></canvas>
+        </plain-canvas-frame>
+        <plain-parcel-bar class="pnt-parcel-bar">
+          <plain-mode-tag class="pnt-mode-tag" id="pnt-mode-tag" data-mode="walk">WALKING PLAIN</plain-mode-tag>
+          <plain-parcel-readout class="pnt-parcel-readout" id="pnt-parcel-readout">Drag plain or use WASD / Arrows to steer any 360° bearing</plain-parcel-readout>
+        </plain-parcel-bar>
+      </diluted-outskirts-plain>
+
+      <bearing-stride-controls class="pnt-panel pnt-stride-controls">
+        <compass-stride-pad class="pnt-stride-pad" role="group" aria-label="Walk plain in any 360 degree bearing">
+          <button type="button" class="pnt-dir-btn" data-bearing-deg="225" title="Walk Northwest (225°)">NW 225°</button>
+          <button type="button" class="pnt-dir-btn" data-bearing-deg="270" title="Walk North (270°)">N 270°</button>
+          <button type="button" class="pnt-dir-btn" data-bearing-deg="315" title="Walk Northeast (315°)">NE 315°</button>
+          <button type="button" class="pnt-dir-btn" data-bearing-deg="180" title="Walk West (180°)">W 180°</button>
+          <button type="button" class="pnt-dir-btn pnt-dir-pause" id="pnt-btn-drift" title="Toggle continuous plain drift [G]">[G] Drift</button>
+          <button type="button" class="pnt-dir-btn" data-bearing-deg="0" title="Walk East (0°)">E 000°</button>
+          <button type="button" class="pnt-dir-btn" data-bearing-deg="135" title="Walk Southwest (135°)">SW 135°</button>
+          <button type="button" class="pnt-dir-btn" data-bearing-deg="90" title="Walk South (90°)">S 090°</button>
+          <button type="button" class="pnt-dir-btn" data-bearing-deg="45" title="Walk Southeast (45°)">SE 045°</button>
+        </compass-stride-pad>
+
+        <topological-action-deck class="pnt-action-deck">
+          <button type="button" class="pnt-act-btn pnt-act-ask" id="pnt-btn-ask">[Q / Space] Ask Passerby: "Where is Penthesilea?"</button>
+          <action-subrow-bar class="pnt-action-subrow">
+            <button type="button" class="pnt-act-btn" id="pnt-btn-center">[C] Seek Center</button>
+            <button type="button" class="pnt-act-btn" id="pnt-btn-outside">[O] Seek Outside</button>
+            <button type="button" class="pnt-act-btn" id="pnt-btn-reset">[R] Reset</button>
+          </action-subrow-bar>
+        </topological-action-deck>
+      </bearing-stride-controls>
+    </limbo-plain-column>
+
+    <ambiguous-gesture-compass class="pnt-panel pnt-compass-panel">
+      <compass-panel-head class="pnt-panel-head">
+        <panel-rubric-tag class="pnt-panel-title">Contradictory Gesture Rose</panel-rubric-tag>
+        <panel-badge-tag class="pnt-panel-badge" id="pnt-vector-badge">|R| = 0.000 · N = 0</panel-badge-tag>
+      </compass-panel-head>
+
+      <compass-rose-well class="pnt-compass-well">
+        <canvas class="pnt-compass-canvas" id="pnt-compass-canvas" width="280" height="162" aria-label="360 degree vector cancellation rose"></canvas>
+        <gesture-tally-row class="pnt-tally-row" id="pnt-tally-row">
+          <tally-chip-tag class="pnt-tally-chip" id="pnt-tally-ahead">Ahead: 0</tally-chip-tag>
+          <tally-chip-tag class="pnt-tally-chip" id="pnt-tally-behind">Behind: 0</tally-chip-tag>
+          <tally-chip-tag class="pnt-tally-chip" id="pnt-tally-side">Crosswise: 0</tally-chip-tag>
+          <tally-chip-tag class="pnt-tally-chip" id="pnt-tally-sweep">360° Sweep: 0</tally-chip-tag>
+        </gesture-tally-row>
+      </compass-rose-well>
+
+      <passerby-witness-feed class="pnt-witness-feed" id="pnt-witness-feed" aria-live="polite">
+        <witness-quote-card class="pnt-witness-card">
+          <witness-meta-line class="pnt-witness-meta">ROADSIDE INQUIRY · NO WITNESS STOPPED YET</witness-meta-line>
+          <witness-quote-line class="pnt-witness-quote">"If you ask the people you meet, 'Where is Penthesilea?' they make a broad gesture which may mean 'Here,' or 'Farther on,' or 'All around you,' or even 'In the opposite direction.'"</witness-quote-line>
+          <witness-locus-line class="pnt-witness-locus">Press [Q] or click Ask Passerby to question witnesses along the chalk road.</witness-locus-line>
+        </witness-quote-card>
+      </passerby-witness-feed>
+    </ambiguous-gesture-compass>
+
+    <limbo-stones-column class="pnt-stones-column">
+      <rusty-wheel-scatter class="pnt-panel pnt-stones-panel">
+        <stones-panel-head class="pnt-panel-head">
+          <panel-rubric-tag class="pnt-panel-title">Suburb Parcel Survey (10 Stones)</panel-rubric-tag>
+          <panel-badge-tag class="pnt-panel-badge" id="pnt-density-badge">10 / 10 IN REACH</panel-badge-tag>
+        </stones-panel-head>
+        <stone-scatter-list class="pnt-stone-list" id="pnt-stone-list" role="list"></stone-scatter-list>
+        <stone-detail-note class="pnt-stone-detail" id="pnt-stone-detail">Select any suburb parcel to inspect its structure across the diluted plain.</stone-detail-note>
+      </rusty-wheel-scatter>
+
+      <outside-doubt-horizon class="pnt-panel pnt-doubt-panel">
+        <doubt-panel-head class="pnt-panel-head">
+          <panel-rubric-tag class="pnt-panel-title">Topological Doubt Horizon</panel-rubric-tag>
+          <panel-badge-tag class="pnt-panel-badge" id="pnt-phase-code">PHASE I / III</panel-badge-tag>
+        </doubt-panel-head>
+
+        <arch-phase-rail class="pnt-phase-rail">
+          <arch-phase-pill class="pnt-phase-pill" id="pnt-phase-1" data-current="true">I · Soup</arch-phase-pill>
+          <arch-phase-pill class="pnt-phase-pill" id="pnt-phase-2" data-current="false">II · Outskirts</arch-phase-pill>
+          <arch-phase-pill class="pnt-phase-pill" id="pnt-phase-3" data-current="false">III · Limbo</arch-phase-pill>
+        </arch-phase-rail>
+
+        <arch-stage-card class="pnt-arch-card">
+          <arch-title-line class="pnt-arch-title" id="pnt-arch-title">Pale Soup of Outskirts</arch-title-line>
+          <arch-text-line class="pnt-arch-text" id="pnt-arch-text">You advance for hours across a wide plain without walls, towers, or gates: only pale suburbs, dusty cabbage rows, plank fences, and low plaster buildings turning their backs to the road.</arch-text-line>
+        </arch-stage-card>
+
+        <invariant-ledger-strip class="pnt-invariant-strip" id="pnt-invariant-strip">
+          <invariant-proof-pill class="pnt-inv-pill" id="pnt-inv-center">centerLocatable: false</invariant-proof-pill>
+          <invariant-proof-pill class="pnt-inv-pill" id="pnt-inv-outskirts">isOnlyOutskirtsOfItself: true</invariant-proof-pill>
+          <invariant-proof-pill class="pnt-inv-pill" id="pnt-inv-outside">outsideConfirmed: false</invariant-proof-pill>
+        </invariant-ledger-strip>
+
+        <field-findings-log class="pnt-findings-log" id="pnt-findings-log">
+          <finding-log-entry class="pnt-finding-entry">
+            <finding-stamp-line class="pnt-finding-stamp">EPIGRAPH · UNRESOLVED BOUNDARY</finding-stamp-line>
+            <finding-body-line class="pnt-finding-body">Outside Penthesilea does an outside exist? Or, no matter how far you go from the city, will you only pass from one limbo to another, never managing to leave it?</finding-body-line>
+          </finding-log-entry>
+        </field-findings-log>
+      </outside-doubt-horizon>
+    </limbo-stones-column>
+  </limbo-survey-workbench>
+
+  <penthesilea-plate-drawer class="pnt-plate-drawer" id="pnt-plate-drawer" hidden role="dialog" aria-modal="true" aria-label="Penthesilea Archival Survey Plates">
+    <plate-drawer-sheet class="pnt-plate-sheet">
+      <plate-drawer-bar class="pnt-plate-bar">
+        <panel-rubric-tag class="pnt-panel-title">Penthesilea · Royal Survey Plates</panel-rubric-tag>
+        <plate-bar-controls class="pnt-plate-controls">
+          <button type="button" class="pnt-util-btn" data-plate-view="diptych" aria-pressed="true">Diptych</button>
+          <button type="button" class="pnt-util-btn" data-plate-view="map" aria-pressed="false">Map Plate</button>
+          <button type="button" class="pnt-util-btn" data-plate-view="image" aria-pressed="false">Outskirts Plate</button>
+          <button type="button" class="pnt-util-btn" id="pnt-btn-plate-zoom" aria-pressed="false">[Z] Loupe 1.75x</button>
+          <button type="button" class="pnt-util-btn" id="pnt-btn-plate-close">[Esc] Close</button>
+        </plate-bar-controls>
+      </plate-drawer-bar>
+
+      <plate-diptych-grid class="pnt-diptych-grid" id="pnt-diptych-grid" data-view="diptych" data-zoom="false">
+        <plate-folio-frame class="pnt-folio-frame" id="pnt-folio-map" data-plate-kind="map">
+          <plate-folio-caption class="pnt-folio-caption">PLATE I · DISPERSION SURVEY OF THE UNWALLED SUBURBS</plate-folio-caption>
+          <img class="pnt-plate-img" id="pnt-img-map" src="map.png" loading="lazy" alt="Penthesilea survey map" onerror="this.hidden=true;this.parentElement.setAttribute('data-plate-fallback','active');window.__PENTHESILEA__&&window.__PENTHESILEA__.paintPlateFallbacks()">
+          <plate-fallback-vellum class="pnt-fallback-vellum">
+            <plate-quota-notice class="pnt-quota-notice">ROYAL PLATE PENDING QUOTA · 2026-11-11T06:21:14Z</plate-quota-notice>
+            <canvas class="pnt-fallback-canvas" id="pnt-fallback-map" width="640" height="420"></canvas>
+          </plate-fallback-vellum>
+        </plate-folio-frame>
+
+        <plate-folio-frame class="pnt-folio-frame" id="pnt-folio-image" data-plate-kind="image">
+          <plate-folio-caption class="pnt-folio-caption">PLATE II · ELEVATION OF THE PALE OUTSKIRTS &amp; RUSTY WHEEL</plate-folio-caption>
+          <img class="pnt-plate-img" id="pnt-img-image" src="image.png" loading="lazy" alt="Penthesilea outskirts view" onerror="this.hidden=true;this.parentElement.setAttribute('data-plate-fallback','active');window.__PENTHESILEA__&&window.__PENTHESILEA__.paintPlateFallbacks()">
+          <plate-fallback-vellum class="pnt-fallback-vellum">
+            <plate-quota-notice class="pnt-quota-notice">ROYAL PLATE PENDING QUOTA · 2026-11-11T06:21:14Z</plate-quota-notice>
+            <canvas class="pnt-fallback-canvas" id="pnt-fallback-image" width="640" height="420"></canvas>
+          </plate-fallback-vellum>
+        </plate-folio-frame>
+      </plate-diptych-grid>
+    </plate-drawer-sheet>
+  </penthesilea-plate-drawer>
+</penthesilea-limbo-soup>
+
+<script>
+(function (root) {
+  'use strict';
+
+  var CELL_SIZE = 160;
+
+  var PALETTE = Object.freeze({
+    broth_ground: '#e6e0d2',
+    chalk_haze: '#efeae0',
+    cabbage_dust: '#7b8c72',
+    zinc_shed: '#8d9699',
+    wheel_rust: '#9c4f35',
+    toll_ochre: '#b58d47',
+    cinder_ink: '#262421',
+    plaster_tooth: '#cfc6b4'
+  });
+
+  var CANONICAL_STONES = Object.freeze([
+    Object.freeze({
+      id: 'low_backs_turned',
+      label: 'Low buildings with backs turned',
+      detail: 'Shallow plaster structures facing away from the chalk road, exposing blank rear walls and drainpipes.'
+    }),
+    Object.freeze({
+      id: 'plank_fences',
+      label: 'Plank fences',
+      detail: 'Weather-bleached uneven timber palings bordering dusty lots that neither enclose nor exclude.'
+    }),
+    Object.freeze({
+      id: 'corrugated_iron_sheds',
+      label: 'Corrugated-iron sheds',
+      detail: 'Ribbed zinc lean-tos and storage sheds rattling faintly in the flat plain wind.'
+    }),
+    Object.freeze({
+      id: 'cabbage_patches',
+      label: 'Patches of cabbages',
+      detail: 'Dusty pale-jade cabbage rows planted in chalky soil directly between warehouses and fences.'
+    }),
+    Object.freeze({
+      id: 'cemeteries',
+      label: 'Cemeteries',
+      detail: 'Scattered burial plots of tilted limestone markers and dry weeds recurring hours apart.'
+    }),
+    Object.freeze({
+      id: 'snaggle_toothed_walls',
+      label: 'Snaggle-toothed walls',
+      detail: 'Shallow facades, very tall beside very low like a snaggle-toothed comb, falsely promising a thickening center.'
+    }),
+    Object.freeze({
+      id: 'rusty_carnival_wheel',
+      label: 'Rusty carnival wheel',
+      detail: 'Skeletal oxidized Ferris wheel and low-hanging fairground frame stranded in an empty gravel lot.'
+    }),
+    Object.freeze({
+      id: 'tollbooths',
+      label: 'Stray tollbooths',
+      detail: 'Isolated booths with peeling striped arms standing across tracks where no city wall or gate exists.'
+    }),
+    Object.freeze({
+      id: 'workshops',
+      label: 'Workshops',
+      detail: 'Vulcanizers, scrap-metal sheds, oil drums, and intermittent weld sparks along unnamed crossroads.'
+    }),
+    Object.freeze({
+      id: 'shambles',
+      label: 'Shambles',
+      detail: 'Bleached concrete market shambles with iron hooks and shallow runnels at the edge of vacant lots.'
+    })
+  ]);
+
+  var STONE_BY_ID = Object.create(null);
+  var STONE_IDS = [];
+  for (var i = 0; i < CANONICAL_STONES.length; i += 1) {
+    STONE_BY_ID[CANONICAL_STONES[i].id] = CANONICAL_STONES[i];
+    STONE_IDS.push(CANONICAL_STONES[i].id);
+  }
+  Object.freeze(STONE_IDS);
+
+  /* Nine primary residues (0..8) cover every 3x3 cell window; stone 9 ('plank_fences')
+     weaves through alternating cells as companion edging so every 3x3 window anywhere
+     on the infinite plain contains all 10 canonical stones without walls or gates. */
+  var PRIMARY_RING_IDS = [
+    'low_backs_turned',
+    'corrugated_iron_sheds',
+    'cabbage_patches',
+    'cemeteries',
+    'snaggle_toothed_walls',
+    'rusty_carnival_wheel',
+    'tollbooths',
+    'workshops',
+    'shambles'
+  ];
+
+  var COMPANION_POOL_IDS = [
+    'plank_fences',
+    'low_backs_turned',
+    'cabbage_patches',
+    'corrugated_iron_sheds',
+    'plank_fences',
+    'workshops',
+    'shambles'
+  ];
+
+  function posMod(n, m) {
+    var r = n % m;
+    return r < 0 ? r + m : r;
+  }
+
+  function hash2D(ix, iy, salt) {
+    var h = (ix * 374761393) ^ (iy * 668265263) ^ ((salt || 0) * 1442695041);
+    h = (h ^ (h >>> 13)) * 1274126177;
+    return (h ^ (h >>> 16)) >>> 0;
+  }
+
+  function hashUnit(ix, iy, salt) {
+    return (hash2D(ix, iy, salt) & 0x00ffffff) / 0x01000000;
+  }
+
+  function getCellData(cx, cy) {
+    var baseX = cx * CELL_SIZE;
+    var baseY = cy * CELL_SIZE;
+    var rx = posMod(cx, 3);
+    var ry = posMod(cy, 3);
+    var primaryStoneId = PRIMARY_RING_IDS[ry * 3 + rx];
+    var primaryMeta = STONE_BY_ID[primaryStoneId];
+
+    var u0 = hashUnit(cx, cy, 11);
+    var v0 = hashUnit(cx, cy, 23);
+    var px0 = baseX + 34 + u0 * (CELL_SIZE - 68);
+    var py0 = baseY + 34 + v0 * (CELL_SIZE - 68);
+
+    var parcels = [
+      {
+        parcelId: cx + ':' + cy + ':0',
+        id: primaryStoneId,
+        label: primaryMeta.label,
+        detail: primaryMeta.detail,
+        x: px0,
+        y: py0,
+        scale: 0.88 + hashUnit(cx, cy, 37) * 0.28,
+        variant: hash2D(cx, cy, 41) & 7,
+        skew: (hashUnit(cx, cy, 53) - 0.5) * 0.24,
+        isPrimary: true
+      }
+    ];
+
+    var needPlank = posMod(cx + cy, 2) === 0;
+    var hasExtra = needPlank || hashUnit(cx, cy, 67) < 0.52;
+    if (hasExtra) {
+      var compId = needPlank
+        ? 'plank_fences'
+        : COMPANION_POOL_IDS[hash2D(cx, cy, 71) % COMPANION_POOL_IDS.length];
+      if (compId === primaryStoneId) {
+        compId = 'plank_fences';
+      }
+      var compMeta = STONE_BY_ID[compId];
+      var quadX = u0 > 0.5 ? 24 + hashUnit(cx, cy, 79) * 36 : CELL_SIZE - 60 + hashUnit(cx, cy, 79) * 34;
+      var quadY = v0 > 0.5 ? 24 + hashUnit(cx, cy, 83) * 36 : CELL_SIZE - 60 + hashUnit(cx, cy, 83) * 34;
+      parcels.push({
+        parcelId: cx + ':' + cy + ':1',
+        id: compId,
+        label: compMeta.label,
+        detail: compMeta.detail,
+        x: baseX + quadX,
+        y: baseY + quadY,
+        scale: 0.78 + hashUnit(cx, cy, 89) * 0.24,
+        variant: hash2D(cx, cy, 97) & 7,
+        skew: (hashUnit(cx, cy, 101) - 0.5) * 0.28,
+        isPrimary: false
+      });
+    }
+
+    var poleX = baseX + 14 + hashUnit(cx, cy, 109) * 26;
+    var poleY = baseY + 14 + hashUnit(cx, cy, 113) * 26;
+    var hasCrossTrack = posMod(cx * 3 + cy, 2) === 0;
+
+    return {
+      cx: cx,
+      cy: cy,
+      parcels: parcels,
+      poleX: poleX,
+      poleY: poleY,
+      hasCrossTrack: hasCrossTrack,
+      roadJitterY: (hashUnit(cx, cy, 127) - 0.5) * 22,
+      roadJitterX: (hashUnit(cx, cy, 131) - 0.5) * 22
+    };
+  }
+
+  function formatLimboSectorCode(worldX, worldY) {
+    var sx = Math.floor((Number(worldX) || 0) / (CELL_SIZE * 3));
+    var sy = Math.floor((Number(worldY) || 0) / (CELL_SIZE * 3));
+    var ew = sx >= 0 ? 'E' + String(sx).padStart(2, '0') : 'W' + String(-sx).padStart(2, '0');
+    var ns = sy >= 0 ? 'S' + String(sy).padStart(2, '0') : 'N' + String(-sy).padStart(2, '0');
+    var lot = (hash2D(sx, sy, 313) % 89) + 10;
+    return 'LIMBO-' + ns + '·' + ew + '-L' + lot;
+  }
+
+  function sampleSurroundings(worldX, worldY, radius) {
+    var wx = Number(worldX) || 0;
+    var wy = Number(worldY) || 0;
+    var r = typeof radius === 'number' && radius > 0 ? radius : 480;
+    var searchR = Math.max(r, 560);
+
+    var minCx = Math.floor((wx - searchR) / CELL_SIZE) - 1;
+    var maxCx = Math.floor((wx + searchR) / CELL_SIZE) + 1;
+    var minCy = Math.floor((wy - searchR) / CELL_SIZE) - 1;
+    var maxCy = Math.floor((wy + searchR) / CELL_SIZE) + 1;
+
+    var countsByType = Object.create(null);
+    for (var s = 0; s < STONE_IDS.length; s += 1) {
+      countsByType[STONE_IDS[s]] = 0;
+    }
+
+    var nearbyStones = [];
+    var nearestTollboothDist = Infinity;
+
+    for (var cy = minCy; cy <= maxCy; cy += 1) {
+      for (var cx = minCx; cx <= maxCx; cx += 1) {
+        var cell = getCellData(cx, cy);
+        for (var p = 0; p < cell.parcels.length; p += 1) {
+          var item = cell.parcels[p];
+          var d = Math.hypot(item.x - wx, item.y - wy);
+          if (item.id === 'tollbooths' && d < nearestTollboothDist) {
+            nearestTollboothDist = d;
+          }
+          if (d <= r) {
+            countsByType[item.id] = (countsByType[item.id] || 0) + 1;
+            nearbyStones.push({
+              id: item.id,
+              parcelId: item.parcelId,
+              label: item.label,
+              dist: Math.round(d * 10) / 10,
+              x: Math.round(item.x * 10) / 10,
+              y: Math.round(item.y * 10) / 10,
+              detail: item.detail
+            });
+          }
+        }
+      }
+    }
+
+    nearbyStones.sort(function (a, b) {
+      return a.dist - b.dist;
+    });
+
+    var areaCells = Math.max(1, (Math.PI * r * r) / (CELL_SIZE * CELL_SIZE));
+    var rawDensity = nearbyStones.length / (areaCells * 3.8);
+    var localDensity = Math.round(Math.max(0.24, Math.min(0.46, rawDensity)) * 1000) / 1000;
+
+    return {
+      nearbyStones: nearbyStones,
+      countsByType: countsByType,
+      totalVisibleParcels: nearbyStones.length,
+      localDensity: localDensity,
+      wallsOrGatesCount: 0,
+      limboSectorCode: formatLimboSectorCode(wx, wy),
+      nearestTollboothDist: Number.isFinite(nearestTollboothDist)
+        ? Math.round(nearestTollboothDist * 10) / 10
+        : 240,
+      rustyWheelVisible: countsByType.rusty_carnival_wheel > 0
+    };
+  }
+
+  function findNearestWrinkleBearing(worldX, worldY, opts) {
+    var wx = Number(worldX) || 0;
+    var wy = Number(worldY) || 0;
+    var minDist = 44;
+    var excludeMap = null;
+    if (typeof opts === 'number') {
+      minDist = opts;
+    } else if (opts && typeof opts === 'object') {
+      if (typeof opts.minDist === 'number') minDist = opts.minDist;
+      if (Array.isArray(opts.exclude)) {
+        excludeMap = Object.create(null);
+        for (var e = 0; e < opts.exclude.length; e += 1) {
+          excludeMap[String(opts.exclude[e])] = true;
+        }
+      }
+    }
+
+    var baseCx = Math.floor(wx / CELL_SIZE);
+    var baseCy = Math.floor(wy / CELL_SIZE);
+    var candidates = [];
+
+    for (var dy = -4; dy <= 4; dy += 1) {
+      for (var dx = -4; dx <= 4; dx += 1) {
+        var cell = getCellData(baseCx + dx, baseCy + dy);
+        for (var p = 0; p < cell.parcels.length; p += 1) {
+          var parcel = cell.parcels[p];
+          if (parcel.id === 'snaggle_toothed_walls') {
+            var dist = Math.hypot(parcel.x - wx, parcel.y - wy);
+            candidates.push({
+              parcelId: parcel.parcelId,
+              targetX: Math.round(parcel.x * 10) / 10,
+              targetY: Math.round(parcel.y * 10) / 10,
+              distance: Math.round(dist * 10) / 10,
+              bearingRad: Math.atan2(parcel.y - wy, parcel.x - wx),
+              label: parcel.label
+            });
+          }
+        }
+      }
+    }
+
+    candidates.sort(function (a, b) {
+      return a.distance - b.distance;
+    });
+
+    var chosen = null;
+    for (var c = 0; c < candidates.length; c += 1) {
+      var cand = candidates[c];
+      if (cand.distance > minDist && (!excludeMap || !excludeMap[cand.parcelId])) {
+        chosen = cand;
+        break;
+      }
+    }
+    if (!chosen) {
+      chosen = candidates[0] || {
+        parcelId: '0:0:0',
+        targetX: wx + 220,
+        targetY: wy - 90,
+        distance: 237.7,
+        bearingRad: Math.atan2(-90, 220),
+        label: 'Snaggle-toothed walls'
+      };
+    }
+
+    return {
+      bearingRad: chosen.bearingRad,
+      targetX: chosen.targetX,
+      targetY: chosen.targetY,
+      distance: chosen.distance,
+      parcelId: chosen.parcelId,
+      label: chosen.label,
+      candidates: candidates.slice(0, 5)
+    };
+  }
+
+  function createOutskirtsAudio() {
+    var muted = true;
+    var ctx = null;
+    var windGain = null;
+    var windFilter = null;
+    var noiseBuffer = null;
+    var windStarted = false;
+    var rattleCooldown = 2.4;
+    var creakCooldown = 4.2;
+
+    function ensureContext() {
+      if (ctx) return ctx;
+      var AudioCtor = root && (root.AudioContext || root.webkitAudioContext);
+      if (!AudioCtor) return null;
+      try {
+        ctx = new AudioCtor();
+        var sampleRate = ctx.sampleRate || 44100;
+        var length = Math.floor(sampleRate * 2.0);
+        noiseBuffer = ctx.createBuffer(1, length, sampleRate);
+        var ch = noiseBuffer.getChannelData(0);
+        var last = 0;
+        for (var i = 0; i < length; i += 1) {
+          var white = Math.random() * 2 - 1;
+          last = (last + 0.06 * white) / 1.06;
+          ch[i] = last * 1.9;
+        }
+      } catch (err) {
+        ctx = null;
+      }
+      return ctx;
+    }
+
+    function ensureWindLoop() {
+      if (!ctx || windStarted || !noiseBuffer) return;
+      try {
+        var src = ctx.createBufferSource();
+        src.buffer = noiseBuffer;
+        src.loop = true;
+
+        windFilter = ctx.createBiquadFilter();
+        windFilter.type = 'bandpass';
+        windFilter.frequency.value = 390;
+        windFilter.Q.value = 1.4;
+
+        windGain = ctx.createGain();
+        windGain.gain.value = muted ? 0.0 : 0.024;
+
+        src.connect(windFilter);
+        windFilter.connect(windGain);
+        windGain.connect(ctx.destination);
+        src.start(0);
+        windStarted = true;
+      } catch (err) {
+        windStarted = false;
+      }
+    }
+
+    function syncWindGain() {
+      if (!ctx || !windGain) return;
+      try {
+        var now = ctx.currentTime;
+        windGain.gain.cancelScheduledValues(now);
+        windGain.gain.setTargetAtTime(muted ? 0.0 : 0.024, now, 0.12);
+      } catch (err) {
+        /* safe no-op */
+      }
+    }
+
+    function unlockAudio() {
+      var c = ensureContext();
+      if (!c) return false;
+      try {
+        if (c.state === 'suspended' && typeof c.resume === 'function') {
+          c.resume().catch(function () {});
+        }
+        ensureWindLoop();
+        syncWindGain();
+        return true;
+      } catch (err) {
+        return false;
+      }
+    }
+
+    function setMuted(flag) {
+      muted = Boolean(flag);
+      if (!muted) {
+        unlockAudio();
+      } else {
+        syncWindGain();
+      }
+      return muted;
+    }
+
+    function isMuted() {
+      return muted;
+    }
+
+    function toggleMute() {
+      return setMuted(!muted);
+    }
+
+    function playTinRattle(gainAmt) {
+      if (muted || !ctx || !noiseBuffer) return;
+      try {
+        var now = ctx.currentTime;
+        var src = ctx.createBufferSource();
+        src.buffer = noiseBuffer;
+        var bp = ctx.createBiquadFilter();
+        bp.type = 'bandpass';
+        bp.frequency.setValueAtTime(1180 + Math.random() * 420, now);
+        bp.Q.value = 9.5;
+        var g = ctx.createGain();
+        var peak = gainAmt || 0.016;
+        g.gain.setValueAtTime(0.0001, now);
+        g.gain.exponentialRampToValueAtTime(peak, now + 0.018);
+        g.gain.exponentialRampToValueAtTime(0.0001, now + 0.19);
+        src.connect(bp);
+        bp.connect(g);
+        g.connect(ctx.destination);
+        src.start(now);
+        src.stop(now + 0.21);
+      } catch (err) {}
+    }
+
+    function playRustyWheelCreak(gainAmt) {
+      if (muted || !ctx) return;
+      try {
+        var now = ctx.currentTime;
+        var osc = ctx.createOscillator();
+        var lfo = ctx.createOscillator();
+        var lfoGain = ctx.createGain();
+        var bp = ctx.createBiquadFilter();
+        var g = ctx.createGain();
+
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(152, now);
+        osc.frequency.linearRampToValueAtTime(171, now + 0.34);
+        osc.frequency.linearRampToValueAtTime(144, now + 0.68);
+
+        lfo.type = 'sine';
+        lfo.frequency.value = 6.5;
+        lfoGain.gain.value = 9.0;
+        lfo.connect(lfoGain);
+        lfoGain.connect(osc.frequency);
+
+        bp.type = 'bandpass';
+        bp.frequency.value = 640;
+        bp.Q.value = 6.2;
+
+        var peak = gainAmt || 0.014;
+        g.gain.setValueAtTime(0.0001, now);
+        g.gain.linearRampToValueAtTime(peak, now + 0.14);
+        g.gain.exponentialRampToValueAtTime(0.0001, now + 0.72);
+
+        osc.connect(bp);
+        bp.connect(g);
+        g.connect(ctx.destination);
+        osc.start(now);
+        lfo.start(now);
+        osc.stop(now + 0.75);
+        lfo.stop(now + 0.75);
+      } catch (err) {}
+    }
+
+    return {
+      unlockAudio: unlockAudio,
+      setMuted: setMuted,
+      isMuted: isMuted,
+      toggleMute: toggleMute,
+      playTinRattle: playTinRattle,
+      playRustyWheelCreak: playRustyWheelCreak,
+      getContext: function () { return ctx; },
+      getNoiseBuffer: function () { return noiseBuffer; },
+      stepAmbient: function (dt, reducedMotion, rustyWheelDist, t) {
+        if (muted || !ctx || reducedMotion) return;
+        if (windFilter) {
+          try {
+            windFilter.frequency.value = 370 + Math.sin(t * 0.43) * 85;
+          } catch (err) {}
+        }
+        rattleCooldown -= dt;
+        if (rattleCooldown <= 0) {
+          rattleCooldown = 2.8 + Math.random() * 3.6;
+          playTinRattle(0.013);
+        }
+        creakCooldown -= dt;
+        if (creakCooldown <= 0) {
+          creakCooldown = 4.6 + Math.random() * 4.4;
+          var prox = Math.max(0.25, Math.min(1.0, 260 / Math.max(80, rustyWheelDist || 220)));
+          playRustyWheelCreak(0.014 * prox);
+        }
+      }
+    };
+  }
+
+  function attachAudioTriggers(audio) {
+    function triggerStepPulse() {
+      if (audio.isMuted()) return;
+      var ctx = audio.getContext();
+      var noise = audio.getNoiseBuffer();
+      if (!ctx || !noise) return;
+      try {
+        var now = ctx.currentTime;
+        var src = ctx.createBufferSource();
+        src.buffer = noise;
+        var bp = ctx.createBiquadFilter();
+        bp.type = 'bandpass';
+        bp.frequency.value = 880 + Math.random() * 180;
+        bp.Q.value = 2.6;
+        var g = ctx.createGain();
+        g.gain.setValueAtTime(0.0001, now);
+        g.gain.linearRampToValueAtTime(0.022, now + 0.008);
+        g.gain.exponentialRampToValueAtTime(0.0001, now + 0.068);
+        src.connect(bp);
+        bp.connect(g);
+        g.connect(ctx.destination);
+        src.start(now);
+        src.stop(now + 0.075);
+      } catch (err) {}
+    }
+
+    function triggerTollboothSound() {
+      if (audio.isMuted()) return;
+      var ctx = audio.getContext();
+      if (!ctx) return;
+      try {
+        var now = ctx.currentTime;
+        var freqs = [392, 587.3, 831];
+        for (var i = 0; i < freqs.length; i += 1) {
+          var osc = ctx.createOscillator();
+          var g = ctx.createGain();
+          osc.type = i === 0 ? 'triangle' : 'sine';
+          osc.frequency.setValueAtTime(freqs[i], now);
+          osc.frequency.exponentialRampToValueAtTime(freqs[i] * 0.96, now + 0.36);
+          g.gain.setValueAtTime(0.0001, now);
+          g.gain.linearRampToValueAtTime(0.02 / (i + 1), now + 0.012);
+          g.gain.exponentialRampToValueAtTime(0.0001, now + 0.38);
+          osc.connect(g);
+          g.connect(ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.41);
+        }
+      } catch (err) {}
+    }
+
+    function triggerGestureSound(gestureKind) {
+      if (audio.isMuted()) return;
+      var ctx = audio.getContext();
+      if (!ctx) return;
+      try {
+        var now = ctx.currentTime;
+        var notes;
+        if (gestureKind === 'ahead') {
+          notes = [293.66, 392.0];
+        } else if (gestureKind === 'behind') {
+          notes = [392.0, 261.63];
+        } else if (gestureKind === 'left') {
+          notes = [329.63, 311.13];
+        } else if (gestureKind === 'right') {
+          notes = [311.13, 349.23];
+        } else {
+          notes = [261.63, 293.66, 329.63, 369.99, 415.3];
+          audio.playRustyWheelCreak(0.011);
+        }
+        for (var n = 0; n < notes.length; n += 1) {
+          var t0 = now + n * 0.065;
+          var osc = ctx.createOscillator();
+          var flt = ctx.createBiquadFilter();
+          var g = ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(notes[n], t0);
+          flt.type = 'lowpass';
+          flt.frequency.value = 1100;
+          g.gain.setValueAtTime(0.0001, t0);
+          g.gain.linearRampToValueAtTime(0.022, t0 + 0.02);
+          g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.28);
+          osc.connect(flt);
+          flt.connect(g);
+          g.connect(ctx.destination);
+          osc.start(t0);
+          osc.stop(t0 + 0.31);
+        }
+      } catch (err) {}
+    }
+
+    audio.triggerStepPulse = triggerStepPulse;
+    audio.triggerTollboothSound = triggerTollboothSound;
+    audio.triggerGestureSound = triggerGestureSound;
+    return audio;
+  }
+
+  function drawParcelEarlyFive(ctx, id, s, v, animT, reducedMotion) {
+    var ink = PALETTE.cinder_ink;
+    if (id === 'low_backs_turned') {
+      var w = (36 + (v % 3) * 6) * s;
+      var h = (17 + (v % 2) * 4) * s;
+      ctx.fillStyle = 'rgba(38,36,33,0.12)';
+      ctx.fillRect(-w * 0.46, 2 * s, w * 1.04, 6 * s);
+      ctx.fillStyle = PALETTE.plaster_tooth;
+      ctx.strokeStyle = ink;
+      ctx.lineWidth = 1.1;
+      ctx.fillRect(-w * 0.5, -h, w, h + 3 * s);
+      ctx.strokeRect(-w * 0.5, -h, w, h + 3 * s);
+      ctx.fillStyle = '#ddd6c6';
+      ctx.beginPath();
+      ctx.moveTo(-w * 0.53, -h);
+      ctx.lineTo(-w * 0.42, -h - 6 * s);
+      ctx.lineTo(w * 0.56, -h - 6 * s);
+      ctx.lineTo(w * 0.5, -h);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      /* Blank rear wall drainpipe & high slit vent */
+      var pipeX = -w * 0.24 + (v % 3) * 8 * s;
+      ctx.strokeStyle = PALETTE.zinc_shed;
+      ctx.lineWidth = 1.6;
+      ctx.beginPath();
+      ctx.moveTo(pipeX, -h);
+      ctx.lineTo(pipeX, 3 * s);
+      ctx.stroke();
+      ctx.fillStyle = 'rgba(123,140,114,0.34)';
+      ctx.fillRect(pipeX - 3 * s, -2 * s, 6 * s, 5 * s);
+      ctx.fillStyle = ink;
+      ctx.fillRect(w * 0.16, -h + 4 * s, 5 * s, 2.2 * s);
+      /* Laundry cord behind building */
+      var sway = reducedMotion ? 0 : Math.sin(animT * 2.1 + v) * 1.4 * s;
+      ctx.strokeStyle = 'rgba(38,36,33,0.55)';
+      ctx.lineWidth = 0.8;
+      ctx.beginPath();
+      ctx.moveTo(w * 0.5, -h * 0.65);
+      ctx.quadraticCurveTo(w * 0.72, -h * 0.42, w * 0.92, -h * 0.62);
+      ctx.stroke();
+      ctx.fillStyle = PALETTE.chalk_haze;
+      ctx.fillRect(w * 0.61 + sway * 0.3, -h * 0.54, 4.5 * s, 6 * s);
+      ctx.fillStyle = '#d4cbb8';
+      ctx.fillRect(w * 0.74 + sway * 0.4, -h * 0.55, 4 * s, 5 * s);
+      return true;
+    }
+
+    if (id === 'plank_fences') {
+      var span = 42 * s;
+      ctx.strokeStyle = 'rgba(38,36,33,0.35)';
+      ctx.lineWidth = 0.9;
+      ctx.beginPath();
+      ctx.moveTo(-span * 0.5, -5 * s);
+      ctx.lineTo(span * 0.5, -4 * s);
+      ctx.moveTo(-span * 0.5, -2 * s);
+      ctx.lineTo(span * 0.5, -1.5 * s);
+      ctx.stroke();
+      for (var p = 0; p < 9; p += 1) {
+        if ((p + v) % 5 === 2) continue;
+        var px = -span * 0.48 + p * (span / 8.4);
+        var ph = (8 + ((p * 3 + v) % 5) * 1.8) * s;
+        var tilt = (((p + v) % 3) - 1) * 0.08;
+        ctx.save();
+        ctx.translate(px, 2 * s);
+        ctx.rotate(tilt);
+        ctx.fillStyle = p % 2 === 0 ? '#c8bfa9' : '#b7ae98';
+        ctx.strokeStyle = ink;
+        ctx.lineWidth = 0.85;
+        ctx.fillRect(-1.8 * s, -ph, 3.5 * s, ph);
+        ctx.strokeRect(-1.8 * s, -ph, 3.5 * s, ph);
+        ctx.restore();
+      }
+      return true;
+    }
+
+    if (id === 'corrugated_iron_sheds') {
+      var jitter = reducedMotion ? 0 : Math.sin(animT * 14 + v * 2.3) * 0.35 * s;
+      var sw = 34 * s;
+      var sh = 15 * s;
+      ctx.fillStyle = 'rgba(38,36,33,0.13)';
+      ctx.fillRect(-sw * 0.48, 2 * s, sw * 1.05, 5 * s);
+      ctx.save();
+      ctx.translate(jitter, 0);
+      ctx.fillStyle = PALETTE.zinc_shed;
+      ctx.strokeStyle = ink;
+      ctx.lineWidth = 1.0;
+      ctx.fillRect(-sw * 0.5, -sh, sw, sh + 2 * s);
+      ctx.strokeRect(-sw * 0.5, -sh, sw, sh + 2 * s);
+      ctx.strokeStyle = 'rgba(38,36,33,0.42)';
+      ctx.lineWidth = 0.75;
+      for (var rx = -sw * 0.44; rx < sw * 0.46; rx += 3.6 * s) {
+        ctx.beginPath();
+        ctx.moveTo(rx, -sh);
+        ctx.lineTo(rx, 2 * s);
+        ctx.stroke();
+      }
+      ctx.fillStyle = '#a4adb0';
+      ctx.beginPath();
+      ctx.moveTo(-sw * 0.55, -sh);
+      ctx.lineTo(-sw * 0.4, -sh - 5 * s);
+      ctx.lineTo(sw * 0.56, -sh - 3 * s);
+      ctx.lineTo(sw * 0.52, -sh + 1.5 * s);
+      ctx.closePath();
+      ctx.fill();
+      ctx.strokeStyle = ink;
+      ctx.stroke();
+      ctx.fillStyle = 'rgba(156,79,53,0.45)';
+      ctx.fillRect(-sw * 0.15, -sh * 0.55, 7 * s, 4 * s);
+      ctx.restore();
+      return true;
+    }
+
+    return false;
+  }
+
+  function drawStoneParcel(ctx, parcel, sx, sy, scale, animT, reducedMotion, distFromTraveler) {
+    var s = scale * (parcel.scale || 1);
+    var v = parcel.variant || 0;
+    var id = parcel.id;
+    var ink = PALETTE.cinder_ink;
+
+    ctx.save();
+    ctx.translate(sx, sy);
+
+    if (drawParcelEarlyFive(ctx, id, s, v, animT, reducedMotion)) {
+      ctx.restore();
+      return;
+    }
+
+    if (id === 'cabbage_patches') {
+      var cw = 40 * s;
+      var ch = 18 * s;
+      ctx.fillStyle = '#dad3c2';
+      ctx.fillRect(-cw * 0.5, -ch * 0.6, cw, ch);
+      ctx.strokeStyle = 'rgba(38,36,33,0.32)';
+      ctx.lineWidth = 0.8;
+      for (var row = 0; row < 3; row += 1) {
+        var ry = -ch * 0.42 + row * 5.6 * s;
+        ctx.beginPath();
+        ctx.moveTo(-cw * 0.46, ry);
+        ctx.lineTo(cw * 0.46, ry);
+        ctx.stroke();
+        for (var col = 0; col < 5; col += 1) {
+          var cx = -cw * 0.36 + col * 7.2 * s + (row % 2) * 1.8 * s;
+          ctx.fillStyle = PALETTE.cabbage_dust;
+          ctx.beginPath();
+          ctx.arc(cx, ry - 0.8 * s, 2.7 * s, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.strokeStyle = ink;
+          ctx.lineWidth = 0.65;
+          ctx.stroke();
+          ctx.fillStyle = '#9cab91';
+          ctx.beginPath();
+          ctx.arc(cx - 0.5 * s, ry - 1.2 * s, 1.1 * s, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+      ctx.restore();
+      return;
+    }
+
+    if (id === 'cemeteries') {
+      var gw = 38 * s;
+      var gh = 16 * s;
+      ctx.strokeStyle = 'rgba(38,36,33,0.45)';
+      ctx.lineWidth = 0.9;
+      ctx.setLineDash([4 * s, 3 * s]);
+      ctx.strokeRect(-gw * 0.5, -gh * 0.55, gw, gh);
+      ctx.setLineDash([]);
+      for (var m = 0; m < 6; m += 1) {
+        var mx = -gw * 0.36 + (m % 3) * 13 * s + (m > 2 ? 3 * s : -2 * s);
+        var my = m < 3 ? -gh * 0.2 : gh * 0.25;
+        var mTilt = (((m + v) % 5) - 2) * 0.11;
+        ctx.save();
+        ctx.translate(mx, my);
+        ctx.rotate(mTilt);
+        ctx.fillStyle = 'rgba(38,36,33,0.14)';
+        ctx.fillRect(0, -1 * s, 6 * s, 2.2 * s);
+        ctx.fillStyle = '#e3ddd0';
+        ctx.strokeStyle = ink;
+        ctx.lineWidth = 0.85;
+        ctx.beginPath();
+        ctx.roundRect ? ctx.roundRect(-2.4 * s, -8.5 * s, 4.8 * s, 8.5 * s, [2 * s, 2 * s, 0, 0]) : ctx.rect(-2.4 * s, -8.5 * s, 4.8 * s, 8.5 * s);
+        ctx.fill();
+        ctx.stroke();
+        ctx.restore();
+      }
+      ctx.strokeStyle = PALETTE.cabbage_dust;
+      ctx.lineWidth = 0.9;
+      ctx.beginPath();
+      ctx.moveTo(-gw * 0.42, gh * 0.3);
+      ctx.lineTo(-gw * 0.46, gh * 0.08);
+      ctx.moveTo(gw * 0.38, -gh * 0.1);
+      ctx.lineTo(gw * 0.44, -gh * 0.32);
+      ctx.stroke();
+      ctx.restore();
+      return;
+    }
+
+    if (id === 'snaggle_toothed_walls') {
+      var mirageAlpha = Math.max(0, Math.min(1, ((distFromTraveler || 180) - 70) / 140));
+      var heights = [31, 11, 27, 9, 34, 13];
+      var totalW = 46 * s;
+      if (mirageAlpha > 0.04) {
+        ctx.fillStyle = 'rgba(191,182,164,' + (0.34 * mirageAlpha).toFixed(3) + ')';
+        ctx.fillRect(-totalW * 0.54, -36 * s, totalW * 1.08, 34 * s);
+      } else {
+        /* Approached closely: false center thins into timber props behind shallow comb */
+        ctx.strokeStyle = 'rgba(38,36,33,0.55)';
+        ctx.lineWidth = 0.9;
+        for (var b = -2; b <= 2; b += 1) {
+          ctx.beginPath();
+          ctx.moveTo(b * 8 * s, -18 * s);
+          ctx.lineTo(b * 8 * s + 7 * s, 2 * s);
+          ctx.stroke();
+        }
+      }
+      var toothW = totalW / heights.length;
+      for (var t = 0; t < heights.length; t += 1) {
+        var th = heights[(t + v) % heights.length] * s;
+        var tx = -totalW * 0.5 + t * toothW;
+        ctx.fillStyle = t % 2 === 0 ? PALETTE.plaster_tooth : '#dfd8c7';
+        ctx.strokeStyle = ink;
+        ctx.lineWidth = 1.0;
+        ctx.fillRect(tx, -th, toothW - 0.8 * s, th + 2 * s);
+        ctx.strokeRect(tx, -th, toothW - 0.8 * s, th + 2 * s);
+        if (th > 20 * s) {
+          ctx.fillStyle = 'rgba(38,36,33,0.25)';
+          ctx.fillRect(tx + 2 * s, -th + 5 * s, 2.4 * s, 4.2 * s);
+        }
+      }
+      ctx.restore();
+      return;
+    }
+
+    if (id === 'rusty_carnival_wheel') {
+      var rad = 22 * s;
+      var hubY = -rad - 8 * s;
+      var creakAngle = reducedMotion ? 0.18 : Math.sin(animT * 0.55 + v) * 0.16 + animT * 0.05;
+      ctx.fillStyle = 'rgba(38,36,33,0.09)';
+      ctx.beginPath();
+      ctx.ellipse(0, 3 * s, 24 * s, 6 * s, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = PALETTE.wheel_rust;
+      ctx.lineWidth = 1.35;
+      ctx.beginPath();
+      ctx.arc(0, hubY, rad, 0, Math.PI * 2);
+      ctx.arc(0, hubY, rad * 0.62, 0, Math.PI * 2);
+      ctx.stroke();
+      for (var sp = 0; sp < 8; sp += 1) {
+        var ang = creakAngle + (sp * Math.PI) / 4;
+        var gx = Math.cos(ang) * rad;
+        var gy = hubY + Math.sin(ang) * rad;
+        ctx.strokeStyle = 'rgba(156,79,53,0.78)';
+        ctx.lineWidth = 0.85;
+        ctx.beginPath();
+        ctx.moveTo(0, hubY);
+        ctx.lineTo(gx, gy);
+        ctx.stroke();
+        ctx.fillStyle = sp % 2 === 0 ? PALETTE.wheel_rust : PALETTE.toll_ochre;
+        ctx.fillRect(gx - 2.2 * s, gy, 4.4 * s, 3.4 * s);
+      }
+      ctx.strokeStyle = ink;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(-13 * s, 3 * s);
+      ctx.lineTo(0, hubY);
+      ctx.lineTo(13 * s, 3 * s);
+      ctx.stroke();
+      ctx.restore();
+      return;
+    }
+
+    drawParcelFinalThree(ctx, id, s, v, animT, reducedMotion);
+    ctx.restore();
+  }
+
+  function drawParcelFinalThree(ctx, id, s, v, animT, reducedMotion) {
+    var ink = PALETTE.cinder_ink;
+
+    if (id === 'tollbooths') {
+      ctx.fillStyle = 'rgba(38,36,33,0.12)';
+      ctx.fillRect(-10 * s, 2 * s, 26 * s, 4 * s);
+      ctx.fillStyle = PALETTE.toll_ochre;
+      ctx.strokeStyle = ink;
+      ctx.lineWidth = 1.05;
+      ctx.fillRect(-9 * s, -16 * s, 11 * s, 18 * s);
+      ctx.strokeRect(-9 * s, -16 * s, 11 * s, 18 * s);
+      ctx.fillStyle = PALETTE.chalk_haze;
+      ctx.fillRect(-7 * s, -13 * s, 7 * s, 5.5 * s);
+      ctx.strokeRect(-7 * s, -13 * s, 7 * s, 5.5 * s);
+      ctx.fillStyle = PALETTE.zinc_shed;
+      ctx.fillRect(-10.5 * s, -18.5 * s, 14 * s, 2.8 * s);
+      ctx.strokeRect(-10.5 * s, -18.5 * s, 14 * s, 2.8 * s);
+      /* Striped barrier arm guarding no wall and no gate */
+      var armTilt = -0.16 + ((v % 3) - 1) * 0.08;
+      ctx.save();
+      ctx.translate(2 * s, -7 * s);
+      ctx.rotate(armTilt);
+      for (var seg = 0; seg < 6; seg += 1) {
+        ctx.fillStyle = seg % 2 === 0 ? PALETTE.wheel_rust : PALETTE.chalk_haze;
+        ctx.fillRect(seg * 4.2 * s, -1.3 * s, 4.2 * s, 2.5 * s);
+      }
+      ctx.strokeStyle = ink;
+      ctx.lineWidth = 0.75;
+      ctx.strokeRect(0, -1.3 * s, 25.2 * s, 2.5 * s);
+      ctx.restore();
+      return;
+    }
+
+    if (id === 'workshops') {
+      var ww = 30 * s;
+      var wh = 13 * s;
+      ctx.fillStyle = '#999e9c';
+      ctx.strokeStyle = ink;
+      ctx.lineWidth = 1.0;
+      ctx.fillRect(-ww * 0.5, -wh, ww * 0.72, wh + 2 * s);
+      ctx.strokeRect(-ww * 0.5, -wh, ww * 0.72, wh + 2 * s);
+      ctx.fillStyle = ink;
+      ctx.fillRect(-ww * 0.36, -wh * 0.65, ww * 0.34, wh * 0.8);
+      /* Oil drums & vulcanizer tire stack */
+      ctx.fillStyle = PALETTE.toll_ochre;
+      ctx.fillRect(ww * 0.28, -6 * s, 5 * s, 8 * s);
+      ctx.strokeRect(ww * 0.28, -6 * s, 5 * s, 8 * s);
+      ctx.fillStyle = PALETTE.zinc_shed;
+      ctx.fillRect(ww * 0.44, -5 * s, 4.5 * s, 7 * s);
+      ctx.strokeRect(ww * 0.44, -5 * s, 4.5 * s, 7 * s);
+      ctx.strokeStyle = ink;
+      ctx.lineWidth = 1.6;
+      ctx.beginPath();
+      ctx.ellipse(-ww * 0.6, 0, 4 * s, 1.8 * s, 0, 0, Math.PI * 2);
+      ctx.ellipse(-ww * 0.6, -2.2 * s, 4 * s, 1.8 * s, 0, 0, Math.PI * 2);
+      ctx.stroke();
+      /* Intermittent weld spark */
+      var sparkPulse = reducedMotion ? 0.45 : Math.sin(animT * 9.5 + v * 3.7) * Math.sin(animT * 3.1 + v);
+      if (sparkPulse > 0.38) {
+        ctx.fillStyle = '#fff8dc';
+        ctx.beginPath();
+        ctx.arc(-ww * 0.19, -wh * 0.22, 2.6 * s, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = PALETTE.toll_ochre;
+        ctx.lineWidth = 0.9;
+        for (var r = 0; r < 4; r += 1) {
+          var sa = (r * Math.PI) / 2 + 0.4;
+          ctx.beginPath();
+          ctx.moveTo(-ww * 0.19, -wh * 0.22);
+          ctx.lineTo(-ww * 0.19 + Math.cos(sa) * 5.2 * s, -wh * 0.22 + Math.sin(sa) * 5.2 * s);
+          ctx.stroke();
+        }
+      }
+      return;
+    }
+
+    if (id === 'shambles') {
+      var mw = 36 * s;
+      ctx.fillStyle = '#e0dbd0';
+      ctx.strokeStyle = ink;
+      ctx.lineWidth = 0.95;
+      ctx.fillRect(-mw * 0.5, -2 * s, mw, 6 * s);
+      ctx.strokeRect(-mw * 0.5, -2 * s, mw, 6 * s);
+      /* Shallow concrete drainage runnels */
+      ctx.strokeStyle = 'rgba(156,79,53,0.42)';
+      ctx.beginPath();
+      ctx.moveTo(-mw * 0.42, 1 * s);
+      ctx.lineTo(mw * 0.42, 1.8 * s);
+      ctx.stroke();
+      /* Concrete posts & iron hook beam */
+      ctx.strokeStyle = ink;
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(-mw * 0.42, -1 * s);
+      ctx.lineTo(-mw * 0.42, -15 * s);
+      ctx.lineTo(mw * 0.42, -15 * s);
+      ctx.lineTo(mw * 0.42, -1 * s);
+      ctx.moveTo(0, -1 * s);
+      ctx.lineTo(0, -15 * s);
+      ctx.stroke();
+      ctx.lineWidth = 0.85;
+      for (var hk = -3; hk <= 3; hk += 1) {
+        if (hk === 0) continue;
+        var hx = hk * 4.4 * s;
+        ctx.beginPath();
+        ctx.moveTo(hx, -15 * s);
+        ctx.lineTo(hx, -10.5 * s);
+        ctx.arc(hx + 1.1 * s, -10.5 * s, 1.1 * s, Math.PI, 0, true);
+        ctx.stroke();
+      }
+    }
+  }
+
+  function renderPlateFallback(targetCanvas, kind) {
+    if (!targetCanvas || typeof targetCanvas.getContext !== 'function') return false;
+    var w = targetCanvas.width;
+    var h = targetCanvas.height;
+    if (!w || w < 60 || (w === 300 && h === 150)) {
+      var rect = typeof targetCanvas.getBoundingClientRect === 'function'
+        ? targetCanvas.getBoundingClientRect()
+        : null;
+      w = rect && rect.width > 80 ? Math.round(rect.width) : 640;
+      h = rect && rect.height > 80 ? Math.round(rect.height) : 420;
+      targetCanvas.width = w;
+      targetCanvas.height = h;
+    }
+    var ctx = targetCanvas.getContext('2d');
+    if (!ctx) return false;
+
+    ctx.save();
+    var grad = ctx.createLinearGradient(0, 0, 0, h);
+    grad.addColorStop(0, PALETTE.chalk_haze);
+    grad.addColorStop(1, PALETTE.broth_ground);
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, w, h);
+
+    ctx.strokeStyle = PALETTE.cinder_ink;
+    ctx.lineWidth = 1.2;
+    ctx.strokeRect(8, 8, w - 16, h - 16);
+    ctx.lineWidth = 0.6;
+    ctx.strokeRect(12, 12, w - 24, h - 24);
+
+    if (kind === 'map') {
+      paintArchivalMapPlate(ctx, w, h);
+    } else {
+      paintArchivalVistaPlate(ctx, w, h);
+    }
+    ctx.restore();
+    return true;
+  }
+
+  function paintArchivalMapPlate(ctx, w, h) {
+    var cx = w * 0.5;
+    var cy = h * 0.52;
+    ctx.strokeStyle = 'rgba(38,36,33,0.16)';
+    ctx.lineWidth = 0.7;
+    for (var gx = 36; gx < w - 28; gx += 48) {
+      ctx.beginPath();
+      ctx.moveTo(gx, 22);
+      ctx.lineTo(gx, h - 22);
+      ctx.stroke();
+    }
+    for (var gy = 34; gy < h - 26; gy += 44) {
+      ctx.beginPath();
+      ctx.moveTo(22, gy);
+      ctx.lineTo(w - 22, gy);
+      ctx.stroke();
+    }
+
+    /* Concentric limbo dispersion rings without walls or center */
+    var maxR = Math.min(w, h) * 0.36;
+    for (var ring = 1; ring <= 3; ring += 1) {
+      ctx.strokeStyle = 'rgba(156,79,53,0.34)';
+      ctx.setLineDash([5, 4]);
+      ctx.beginPath();
+      ctx.arc(cx, cy, (maxR * ring) / 3, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+    ctx.setLineDash([]);
+
+    /* Scatter all 10 canonical stones across outer suburb quadrants */
+    for (var i = 0; i < CANONICAL_STONES.length; i += 1) {
+      var ang = (i / CANONICAL_STONES.length) * Math.PI * 2 + 0.25;
+      var dist = maxR * (0.52 + (i % 3) * 0.23);
+      var px = cx + Math.cos(ang) * dist * 1.18;
+      var py = cy + Math.sin(ang) * dist * 0.86;
+      drawStoneParcel(
+        ctx,
+        { id: CANONICAL_STONES[i].id, scale: 0.72, variant: i },
+        px,
+        py,
+        Math.min(1.0, w / 640),
+        1.2,
+        true,
+        180
+      );
+    }
+
+    /* Opposing 360-degree gesture vectors canceling at null center */
+    for (var a = 0; a < 8; a += 1) {
+      var theta = (a * Math.PI) / 4 + 0.18;
+      var r0 = 16;
+      var r1 = maxR * 0.44;
+      ctx.strokeStyle = a % 2 === 0 ? PALETTE.wheel_rust : PALETTE.toll_ochre;
+      ctx.lineWidth = 1.25;
+      ctx.beginPath();
+      ctx.moveTo(cx + Math.cos(theta) * r0, cy + Math.sin(theta) * r0);
+      ctx.lineTo(cx + Math.cos(theta) * r1, cy + Math.sin(theta) * r1);
+      ctx.stroke();
+    }
+    ctx.strokeStyle = PALETTE.cinder_ink;
+    ctx.lineWidth = 1.1;
+    ctx.beginPath();
+    ctx.arc(cx, cy, 11, 0, Math.PI * 2);
+    ctx.stroke();
+
+    ctx.fillStyle = PALETTE.cinder_ink;
+    ctx.font = '600 ' + Math.max(10, Math.round(w * 0.019)) + 'px monospace';
+    ctx.textAlign = 'left';
+    ctx.fillText('SURVEY PLATE I · BOUNDLESS DILUTED SUBURB DISPERSION', 22, 30);
+    ctx.font = Math.max(9, Math.round(w * 0.016)) + 'px monospace';
+    ctx.fillText('WALLS: 0 · GATES: 0 · CENTER LOCATABLE: FALSE · RESULTANT VECTOR -> 0.00', 22, h - 20);
+  }
+
+  function paintArchivalVistaPlate(ctx, w, h) {
+    var horizonY = Math.round(h * 0.44);
+    ctx.fillStyle = '#ddd6c5';
+    ctx.fillRect(14, horizonY, w - 28, h - horizonY - 14);
+
+    /* Distant pale haze & telegraph line */
+    ctx.strokeStyle = 'rgba(38,36,33,0.38)';
+    ctx.lineWidth = 0.9;
+    ctx.beginPath();
+    ctx.moveTo(16, horizonY);
+    ctx.lineTo(w - 16, horizonY);
+    ctx.stroke();
+
+    for (var p = 0; p < 5; p += 1) {
+      var poleX = w * (0.14 + p * 0.19);
+      ctx.strokeStyle = PALETTE.cinder_ink;
+      ctx.lineWidth = 1.1;
+      ctx.beginPath();
+      ctx.moveTo(poleX, horizonY + 14);
+      ctx.lineTo(poleX, horizonY - 26);
+      ctx.stroke();
+      if (p > 0) {
+        var prevX = w * (0.14 + (p - 1) * 0.19);
+        ctx.strokeStyle = 'rgba(38,36,33,0.45)';
+        ctx.lineWidth = 0.75;
+        ctx.beginPath();
+        ctx.moveTo(prevX, horizonY - 23);
+        ctx.quadraticCurveTo((prevX + poleX) * 0.5, horizonY - 12, poleX, horizonY - 23);
+        ctx.stroke();
+      }
+    }
+
+    /* Chalk track receding across plain */
+    ctx.fillStyle = PALETTE.chalk_haze;
+    ctx.beginPath();
+    ctx.moveTo(w * 0.46, horizonY);
+    ctx.lineTo(w * 0.53, horizonY);
+    ctx.lineTo(w * 0.74, h - 14);
+    ctx.lineTo(w * 0.24, h - 14);
+    ctx.closePath();
+    ctx.fill();
+
+    var k = Math.min(1.35, w / 520);
+    drawStoneParcel(ctx, { id: 'snaggle_toothed_walls', scale: 1.15, variant: 1 }, w * 0.26, horizonY + 8, k, 1.5, true, 220);
+    drawStoneParcel(ctx, { id: 'rusty_carnival_wheel', scale: 1.38, variant: 2 }, w * 0.72, horizonY + 18, k, 1.5, true, 160);
+    drawStoneParcel(ctx, { id: 'corrugated_iron_sheds', scale: 1.05, variant: 3 }, w * 0.18, h * 0.64, k, 1.5, true, 110);
+    drawStoneParcel(ctx, { id: 'low_backs_turned', scale: 1.05, variant: 0 }, w * 0.83, h * 0.63, k, 1.5, true, 110);
+    drawStoneParcel(ctx, { id: 'shambles', scale: 1.0, variant: 2 }, w * 0.34, h * 0.71, k, 1.5, true, 90);
+    drawStoneParcel(ctx, { id: 'tollbooths', scale: 1.18, variant: 1 }, w * 0.56, h * 0.73, k, 1.5, true, 80);
+    drawStoneParcel(ctx, { id: 'cabbage_patches', scale: 1.15, variant: 4 }, w * 0.22, h * 0.83, k, 1.5, true, 70);
+    drawStoneParcel(ctx, { id: 'plank_fences', scale: 1.1, variant: 2 }, w * 0.79, h * 0.83, k, 1.5, true, 70);
+
+    ctx.fillStyle = PALETTE.cinder_ink;
+    ctx.font = '600 ' + Math.max(10, Math.round(w * 0.019)) + 'px monospace';
+    ctx.textAlign = 'left';
+    ctx.fillText('SURVEY PLATE II · ELEVATION OF THE UNWALLED OUTSKIRTS', 22, 30);
+    ctx.font = Math.max(9, Math.round(w * 0.016)) + 'px monospace';
+    ctx.fillText('RUSTY CARNIVAL WHEEL · SNAGGLE-TOOTHED COMB · CABBAGES · STRAY TOLLBOOTH', 22, h - 20);
+  }
+
+  function drawHorizonAndPlainTracks(ctx, viewW, viewH, horizonY, state, proj, cells) {
+    var skyGrad = ctx.createLinearGradient(0, 0, 0, horizonY + 18);
+    skyGrad.addColorStop(0, PALETTE.chalk_haze);
+    skyGrad.addColorStop(1, PALETTE.broth_ground);
+    ctx.fillStyle = skyGrad;
+    ctx.fillRect(0, 0, viewW, horizonY + 18);
+
+    ctx.fillStyle = PALETTE.broth_ground;
+    ctx.fillRect(0, horizonY, viewW, viewH - horizonY);
+
+    /* Distant false-density mirage combs along the pale horizon (never walls or gates) */
+    var parallax = ((state.worldX * 0.14) % 180 + 180) % 180;
+    ctx.fillStyle = 'rgba(191,183,166,0.42)';
+    for (var hx = -180 + (180 - parallax); hx < viewW + 180; hx += 90) {
+      var seed = Math.abs(Math.round((hx + parallax + state.worldX * 0.14) / 90));
+      for (var t = 0; t < 5; t += 1) {
+        var th = 4 + ((seed * 7 + t * 11) % 13);
+        ctx.fillRect(hx + t * 6.5, horizonY - th, 5.2, th);
+      }
+      if (seed % 3 === 0) {
+        ctx.strokeStyle = 'rgba(156,79,53,0.26)';
+        ctx.lineWidth = 0.85;
+        ctx.beginPath();
+        ctx.arc(hx + 52, horizonY - 8, 9, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+    }
+
+    ctx.strokeStyle = 'rgba(38,36,33,0.22)';
+    ctx.lineWidth = 0.8;
+    ctx.beginPath();
+    ctx.moveTo(0, horizonY);
+    ctx.lineTo(viewW, horizonY);
+    ctx.stroke();
+
+    /* Infinite dusty chalk tracks across cells */
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(0, horizonY, viewW, viewH - horizonY);
+    ctx.clip();
+
+    for (var i = 0; i < cells.length; i += 1) {
+      var c = cells[i];
+      var x0 = c.cx * CELL_SIZE;
+      var y0 = c.cy * CELL_SIZE + CELL_SIZE * 0.5 + c.roadJitterY;
+      var x1 = (c.cx + 1) * CELL_SIZE;
+      var y1 = c.cy * CELL_SIZE + CELL_SIZE * 0.5 + getCellData(c.cx + 1, c.cy).roadJitterY;
+      var pA = proj(x0, y0);
+      var pB = proj(x1, y1);
+      ctx.strokeStyle = 'rgba(239,234,224,0.78)';
+      ctx.lineWidth = Math.max(4, 9 * pA.scale);
+      ctx.beginPath();
+      ctx.moveTo(pA.x, pA.y);
+      ctx.lineTo(pB.x, pB.y);
+      ctx.stroke();
+
+      ctx.strokeStyle = 'rgba(38,36,33,0.14)';
+      ctx.lineWidth = 0.75;
+      ctx.beginPath();
+      ctx.moveTo(pA.x, pA.y - 2 * pA.scale);
+      ctx.lineTo(pB.x, pB.y - 2 * pB.scale);
+      ctx.stroke();
+
+      if (c.hasCrossTrack) {
+        var vx0 = c.cx * CELL_SIZE + CELL_SIZE * 0.5 + c.roadJitterX;
+        var vy0 = c.cy * CELL_SIZE;
+        var vx1 = c.cx * CELL_SIZE + CELL_SIZE * 0.5 + getCellData(c.cx, c.cy + 1).roadJitterX;
+        var vy1 = (c.cy + 1) * CELL_SIZE;
+        var vA = proj(vx0, vy0);
+        var vB = proj(vx1, vy1);
+        ctx.strokeStyle = 'rgba(239,234,224,0.62)';
+        ctx.lineWidth = Math.max(3, 6.5 * vA.scale);
+        ctx.beginPath();
+        ctx.moveTo(vA.x, vA.y);
+        ctx.lineTo(vB.x, vB.y);
+        ctx.stroke();
+      }
+    }
+    ctx.restore();
+  }
+
+  function drawGestureRaysAndTraveler(ctx, centerX, centerY, state, proj, animT, reducedMotion) {
+    /* Wake footsteps */
+    var wake = state.wakeTrail;
+    for (var w = 0; w < wake.length; w += 1) {
+      var wp = proj(wake[w].x, wake[w].y);
+      var alpha = ((w + 1) / (wake.length + 1)) * 0.34;
+      ctx.fillStyle = 'rgba(38,36,33,' + alpha.toFixed(3) + ')';
+      ctx.beginPath();
+      ctx.arc(wp.x, wp.y, 1.9 * wp.scale, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    /* Mode topological guide line */
+    if (state.mode === 'seek_center') {
+      var wr = findNearestWrinkleBearing(state.worldX, state.worldY);
+      var tp = proj(wr.targetX, wr.targetY);
+      ctx.save();
+      ctx.strokeStyle = 'rgba(181,141,71,0.62)';
+      ctx.lineWidth = 1.25;
+      ctx.setLineDash([5, 4]);
+      ctx.beginPath();
+      ctx.moveTo(centerX, centerY);
+      ctx.lineTo(tp.x, tp.y);
+      ctx.stroke();
+      ctx.restore();
+    } else if (state.mode === 'seek_outside') {
+      var ex = centerX + Math.cos(state.bearingRad) * 140;
+      var ey = centerY + Math.sin(state.bearingRad) * 106;
+      ctx.save();
+      ctx.strokeStyle = 'rgba(123,140,114,0.68)';
+      ctx.lineWidth = 1.3;
+      ctx.setLineDash([6, 4]);
+      ctx.beginPath();
+      ctx.moveTo(centerX, centerY);
+      ctx.lineTo(ex, ey);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    /* Contradictory passerby gesture rays & 360-degree sweeps */
+    var rays = Array.isArray(state.gestureRays) ? state.gestureRays : [];
+    var startIdx = Math.max(0, rays.length - 10);
+    for (var r = startIdx; r < rays.length; r += 1) {
+      var ray = rays[r];
+      if (!ray) continue;
+      var weight = 0.25 + ((r - startIdx + 1) / Math.max(1, rays.length - startIdx)) * 0.5;
+      var isSweep = Boolean(ray.isSweep360 || ray.gestureType === 'sweep_360' || ray.type === 'sweep_360');
+      if (isSweep) {
+        ctx.save();
+        ctx.strokeStyle = 'rgba(156,79,53,' + (weight * 0.65).toFixed(3) + ')';
+        ctx.lineWidth = 1.2;
+        ctx.setLineDash([4, 4]);
+        ctx.beginPath();
+        ctx.ellipse(centerX, centerY, 54, 40, 0, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
+      } else {
+        var ang = typeof ray.angleRad === 'number' ? ray.angleRad : (Number(ray.angle) || 0);
+        var len = 78 + (r % 3) * 18;
+        var rx = centerX + Math.cos(ang) * len;
+        var ry = centerY + Math.sin(ang) * len * 0.76;
+        ctx.strokeStyle = 'rgba(156,79,53,' + (weight * 0.78).toFixed(3) + ')';
+        ctx.lineWidth = 1.4;
+        ctx.beginPath();
+        ctx.moveTo(centerX + Math.cos(ang) * 14, centerY + Math.sin(ang) * 11);
+        ctx.lineTo(rx, ry);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(rx, ry);
+        ctx.lineTo(rx - Math.cos(ang - 0.35) * 6.5, ry - Math.sin(ang - 0.35) * 5.5);
+        ctx.moveTo(rx, ry);
+        ctx.lineTo(rx - Math.cos(ang + 0.35) * 6.5, ry - Math.sin(ang + 0.35) * 5.5);
+        ctx.stroke();
+      }
+    }
+
+    /* Central traveler figure + bearing indicator */
+    var bob = reducedMotion || state.speed <= 0.01 ? 0 : Math.sin(animT * 7.2) * 1.2;
+    ctx.strokeStyle = 'rgba(38,36,33,0.34)';
+    ctx.lineWidth = 1.0;
+    ctx.beginPath();
+    ctx.ellipse(centerX, centerY + 3, 13, 9.5, 0, 0, Math.PI * 2);
+    ctx.stroke();
+
+    var dirX = centerX + Math.cos(state.bearingRad) * 20;
+    var dirY = centerY + Math.sin(state.bearingRad) * 15;
+    ctx.strokeStyle = PALETTE.cinder_ink;
+    ctx.lineWidth = 1.35;
+    ctx.beginPath();
+    ctx.moveTo(centerX, centerY + 2);
+    ctx.lineTo(dirX, dirY);
+    ctx.stroke();
+
+    ctx.fillStyle = PALETTE.cinder_ink;
+    ctx.beginPath();
+    ctx.moveTo(centerX - 4.2, centerY + 3 + bob);
+    ctx.lineTo(centerX + 4.2, centerY + 3 + bob);
+    ctx.lineTo(centerX + 2.2, centerY - 9 + bob);
+    ctx.lineTo(centerX - 2.2, centerY - 9 + bob);
+    ctx.closePath();
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(centerX, centerY - 12.2 + bob, 2.9, 0, Math.PI * 2);
+    ctx.fill();
+
+    /* Roadside witness silhouette when activeWitness is present */
+    if (state.activeWitness) {
+      var wAng = typeof state.activeWitness.angleRad === 'number' ? state.activeWitness.angleRad : state.bearingRad + 2.2;
+      var wx = centerX + 24;
+      var wy = centerY - 6;
+      ctx.fillStyle = PALETTE.wheel_rust;
+      ctx.fillRect(wx - 2.4, wy - 8, 4.8, 9);
+      ctx.beginPath();
+      ctx.arc(wx, wy - 10.5, 2.4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = PALETTE.wheel_rust;
+      ctx.lineWidth = 1.3;
+      ctx.beginPath();
+      ctx.moveTo(wx, wy - 6);
+      ctx.lineTo(wx + Math.cos(wAng) * 11, wy - 6 + Math.sin(wAng) * 8.5);
+      ctx.stroke();
+    }
+  }
+
+  function create(canvas, opts) {
+    var options = opts || {};
+    var mediaReduce = Boolean(
+      root &&
+      typeof root.matchMedia === 'function' &&
+      root.matchMedia('(prefers-reduced-motion: reduce)').matches
+    );
+    var reducedMotion = typeof options.reducedMotion === 'boolean' ? options.reducedMotion : mediaReduce;
+    var viewW = (canvas && canvas.width) ? canvas.width : 800;
+    var viewH = (canvas && canvas.height) ? canvas.height : 520;
+    var dpr = 1;
+    var animT = 0;
+    var stepAccumDist = 0;
+    var lastTollParcelId = '';
+    var audio = attachAudioTriggers(createOutskirtsAudio());
+    if (options.muted === false) {
+      audio.setMuted(false);
+    }
+
+    var state = {
+      worldX: Number(options.worldX) || 0,
+      worldY: Number(options.worldY) || 0,
+      bearingRad: typeof options.bearingRad === 'number' ? options.bearingRad : -0.35,
+      speed: 0,
+      hoursWalked: 0.4,
+      gestureRays: [],
+      activeWitness: null,
+      mode: 'walk',
+      wakeTrail: []
+    };
+
+    var lastProjections = [];
+
+    function getMetrics(w, h) {
+      var cw = w || viewW || 800;
+      var ch = h || viewH || 520;
+      var worldScale = Math.max(0.52, Math.min(1.06, Math.min(cw / 620, ch / 460)));
+      return {
+        w: cw,
+        h: ch,
+        centerX: cw * 0.5,
+        centerY: ch * 0.55,
+        horizonY: Math.round(ch * 0.14),
+        worldScale: worldScale,
+        yCompress: 0.76
+      };
+    }
+
+    function projectPoint(wx, wy, m) {
+      var met = m || getMetrics();
+      var dx = (wx - state.worldX) * met.worldScale;
+      var dy = (wy - state.worldY) * met.worldScale * met.yCompress;
+      var depthFactor = Math.max(0.74, Math.min(1.18, 1 + dy / Math.max(240, met.h * 1.45)));
+      return {
+        x: met.centerX + dx * depthFactor,
+        y: met.centerY + dy,
+        scale: met.worldScale * depthFactor
+      };
+    }
+
+    function screenToWorld(px, py) {
+      var met = getMetrics();
+      var dy = py - met.centerY;
+      var depthFactor = Math.max(0.74, Math.min(1.18, 1 + dy / Math.max(240, met.h * 1.45)));
+      var wx = state.worldX + (px - met.centerX) / (met.worldScale * depthFactor);
+      var wy = state.worldY + dy / (met.worldScale * met.yCompress);
+      return { x: wx, y: wy };
+    }
+
+    function screenToBearing(px, py) {
+      var met = getMetrics();
+      return Math.atan2((py - met.centerY) / met.yCompress, px - met.centerX);
+    }
+
+    function resize(width, height, nextDpr) {
+      viewW = Math.max(64, Math.round(Number(width) || 800));
+      viewH = Math.max(64, Math.round(Number(height) || 520));
+      dpr = Math.max(1, Math.min(3, Number(nextDpr) || 1));
+      if (canvas) {
+        canvas.width = Math.round(viewW * dpr);
+        canvas.height = Math.round(viewH * dpr);
+      }
+    }
+
+    function step(dt, nextState) {
+      var safeDt = Math.max(0, Math.min(0.25, Number(dt) || 0));
+      var prevX = state.worldX;
+      var prevY = state.worldY;
+
+      if (nextState && typeof nextState === 'object') {
+        if (typeof nextState.worldX === 'number') state.worldX = nextState.worldX;
+        if (typeof nextState.worldY === 'number') state.worldY = nextState.worldY;
+        if (typeof nextState.bearingRad === 'number') state.bearingRad = nextState.bearingRad;
+        if (typeof nextState.speed === 'number') state.speed = nextState.speed;
+        if (typeof nextState.hoursWalked === 'number') state.hoursWalked = nextState.hoursWalked;
+        if (Array.isArray(nextState.gestureRays)) state.gestureRays = nextState.gestureRays;
+        if ('activeWitness' in nextState) state.activeWitness = nextState.activeWitness;
+        if (typeof nextState.mode === 'string') state.mode = nextState.mode;
+      }
+
+      if (!reducedMotion) {
+        animT += safeDt;
+      }
+
+      var moved = Math.hypot(state.worldX - prevX, state.worldY - prevY);
+      if (moved > 0.01 && moved < 900) {
+        stepAccumDist += moved;
+        var lastWake = state.wakeTrail[state.wakeTrail.length - 1];
+        if (!lastWake || Math.hypot(state.worldX - lastWake.x, state.worldY - lastWake.y) >= 18) {
+          state.wakeTrail.push({ x: state.worldX, y: state.worldY });
+          if (state.wakeTrail.length > 26) state.wakeTrail.shift();
+        }
+        if (stepAccumDist >= 56) {
+          stepAccumDist = stepAccumDist % 56;
+          audio.triggerStepPulse();
+        }
+      }
+
+      var cx = Math.floor(state.worldX / CELL_SIZE);
+      var cy = Math.floor(state.worldY / CELL_SIZE);
+      var cell = getCellData(cx, cy);
+      var wheelDist = 240;
+      for (var p = 0; p < cell.parcels.length; p += 1) {
+        var par = cell.parcels[p];
+        var d = Math.hypot(par.x - state.worldX, par.y - state.worldY);
+        if (par.id === 'rusty_carnival_wheel') wheelDist = d;
+        if (par.id === 'tollbooths' && d < 42 && lastTollParcelId !== par.parcelId) {
+          lastTollParcelId = par.parcelId;
+          audio.triggerTollboothSound();
+        }
+      }
+      audio.stepAmbient(safeDt, reducedMotion, wheelDist, animT);
+    }
+
+    function render(overrideCtx, overrideW, overrideH) {
+      var ctx = overrideCtx || (canvas && typeof canvas.getContext === 'function' ? canvas.getContext('2d') : null);
+      if (!ctx) return;
+      var met = getMetrics(overrideW, overrideH);
+
+      ctx.save();
+      if (!overrideCtx) {
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      var spanX = Math.ceil(met.w / (met.worldScale * CELL_SIZE)) + 2;
+      var spanY = Math.ceil(met.h / (met.worldScale * met.yCompress * CELL_SIZE)) + 2;
+      var baseCx = Math.floor(state.worldX / CELL_SIZE);
+      var baseCy = Math.floor(state.worldY / CELL_SIZE);
+      var cells = [];
+      var drawables = [];
+
+      for (var dy = -spanY; dy <= spanY; dy += 1) {
+        for (var dx = -spanX; dx <= spanX; dx += 1) {
+          var cell = getCellData(baseCx + dx, baseCy + dy);
+          cells.push(cell);
+          for (var i = 0; i < cell.parcels.length; i += 1) {
+            var par = cell.parcels[i];
+            var pt = projectPoint(par.x, par.y, met);
+            if (pt.x > -70 && pt.x < met.w + 70 && pt.y > met.horizonY + 4 && pt.y < met.h + 55) {
+              drawables.push({
+                parcel: par,
+                sx: pt.x,
+                sy: pt.y,
+                scale: pt.scale,
+                dist: Math.hypot(par.x - state.worldX, par.y - state.worldY)
+              });
+            }
+          }
+        }
+      }
+
+      drawHorizonAndPlainTracks(
+        ctx,
+        met.w,
+        met.h,
+        met.horizonY,
+        state,
+        function (wx, wy) { return projectPoint(wx, wy, met); },
+        cells
+      );
+
+      /* Telegraph poles & sagging wires */
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(0, met.horizonY, met.w, met.h - met.horizonY);
+      ctx.clip();
+      for (var cIdx = 0; cIdx < cells.length; cIdx += 1) {
+        var c0 = cells[cIdx];
+        var cNext = getCellData(c0.cx + 1, c0.cy);
+        var u0 = projectPoint(c0.poleX, c0.poleY, met);
+        var u1 = projectPoint(cNext.poleX, cNext.poleY, met);
+        if (u0.y > met.horizonY + 2 && u0.y < met.h + 20) {
+          ctx.strokeStyle = 'rgba(38,36,33,0.52)';
+          ctx.lineWidth = 1.05;
+          ctx.beginPath();
+          ctx.moveTo(u0.x, u0.y);
+          ctx.lineTo(u0.x, u0.y - 16 * u0.scale);
+          ctx.stroke();
+          ctx.strokeStyle = 'rgba(38,36,33,0.28)';
+          ctx.lineWidth = 0.7;
+          ctx.beginPath();
+          ctx.moveTo(u0.x, u0.y - 15 * u0.scale);
+          ctx.quadraticCurveTo((u0.x + u1.x) * 0.5, (u0.y + u1.y) * 0.5 - 8 * u0.scale, u1.x, u1.y - 15 * u1.scale);
+          ctx.stroke();
+        }
+      }
+
+      drawables.sort(function (a, b) { return a.sy - b.sy; });
+      for (var dIdx = 0; dIdx < drawables.length; dIdx += 1) {
+        var dr = drawables[dIdx];
+        drawStoneParcel(ctx, dr.parcel, dr.sx, dr.sy, dr.scale, animT, reducedMotion, dr.dist);
+      }
+      lastProjections = drawables;
+
+      drawGestureRaysAndTraveler(
+        ctx,
+        met.centerX,
+        met.centerY,
+        state,
+        function (wx, wy) { return projectPoint(wx, wy, met); },
+        animT,
+        reducedMotion
+      );
+      ctx.restore();
+
+      /* Diegetic plain survey watermark */
+      ctx.fillStyle = 'rgba(38,36,33,0.58)';
+      ctx.font = '10px monospace';
+      ctx.textAlign = 'left';
+      ctx.fillText(formatLimboSectorCode(state.worldX, state.worldY) + ' · WALLS / GATES: 0', 10, met.h - 10);
+      ctx.restore();
+    }
+
+    function hitTest(px, py) {
+      var best = null;
+      var bestDist = 30;
+      for (var i = 0; i < lastProjections.length; i += 1) {
+        var item = lastProjections[i];
+        var d = Math.hypot(px - item.sx, py - (item.sy - 8 * item.scale));
+        if (d < bestDist) {
+          bestDist = d;
+          best = item.parcel;
+        }
+      }
+      return best;
+    }
+
+    return {
+      CANONICAL_STONES: CANONICAL_STONES,
+      PALETTE: PALETTE,
+      resize: resize,
+      step: step,
+      render: render,
+      sampleSurroundings: function (wx, wy, radius) {
+        return sampleSurroundings(
+          typeof wx === 'number' ? wx : state.worldX,
+          typeof wy === 'number' ? wy : state.worldY,
+          radius
+        );
+      },
+      findNearestWrinkleBearing: function (wx, wy, findOpts) {
+        return findNearestWrinkleBearing(
+          typeof wx === 'number' ? wx : state.worldX,
+          typeof wy === 'number' ? wy : state.worldY,
+          findOpts
+        );
+      },
+      renderPlateFallback: renderPlateFallback,
+      setReducedMotion: function (flag) { reducedMotion = Boolean(flag); },
+      isReducedMotion: function () { return reducedMotion; },
+      setMuted: audio.setMuted,
+      isMuted: audio.isMuted,
+      toggleMute: audio.toggleMute,
+      unlockAudio: audio.unlockAudio,
+      triggerGestureSound: audio.triggerGestureSound,
+      triggerTollboothSound: audio.triggerTollboothSound,
+      triggerStepPulse: audio.triggerStepPulse,
+      worldToScreen: function (wx, wy) { return projectPoint(wx, wy); },
+      screenToWorld: screenToWorld,
+      screenToBearing: screenToBearing,
+      hitTest: hitTest,
+      getState: function () {
+        return {
+          worldX: state.worldX,
+          worldY: state.worldY,
+          bearingRad: state.bearingRad,
+          speed: state.speed,
+          hoursWalked: state.hoursWalked,
+          mode: state.mode,
+          reducedMotion: reducedMotion,
+          muted: audio.isMuted(),
+          width: viewW,
+          height: viewH,
+          dpr: dpr,
+          wallsOrGatesCount: 0,
+          limboSectorCode: formatLimboSectorCode(state.worldX, state.worldY),
+          wakeLength: state.wakeTrail.length
+        };
+      }
+    };
+  }
+
+  root.PenthesileaDilutedOutskirts = Object.freeze({
+    CANONICAL_STONES: CANONICAL_STONES,
+    PALETTE: PALETTE,
+    CELL_SIZE: CELL_SIZE,
+    create: create,
+    sampleSurroundings: sampleSurroundings,
+    findNearestWrinkleBearing: findNearestWrinkleBearing,
+    renderPlateFallback: renderPlateFallback
+  });
+})(typeof globalThis !== 'undefined' ? globalThis : window);
+
+</script>
+<script>
+(function (root) {
+  "use strict";
+
+  var TAU = Math.PI * 2;
+  var INITIAL_HOURS = 0.4;
+  var UNITS_PER_HOUR = 300;
+  var KM_PER_HOUR = 3.8;
+  var WALK_DRIFT_SPEED = 56;
+  var SEEK_CENTER_SPEED = 185;
+  var SEEK_OUTSIDE_SPEED = 195;
+  var OUTSIDE_LIMBO_INTERVAL = 220;
+  var WALK_LIMBO_INTERVAL = 620;
+  var WRINKLE_ARRIVAL_RADIUS = 28;
+  var WRINKLE_EXCLUSION_RADIUS = 96;
+
+  var PALETTE = {
+    brothGround: "#e6e0d2",
+    chalkHaze: "#efeae0",
+    cabbageDust: "#7b8c72",
+    zincShed: "#8d9699",
+    wheelRust: "#9c4f35",
+    tollOchre: "#b58d47",
+    cinderInk: "#262421",
+    plasterTooth: "#cfc6b4"
+  };
+
+  var CANONICAL_STONE_LABELS = [
+    { id: "low_backs_turned", label: "Low buildings with backs turned" },
+    { id: "plank_fences", label: "Plank fences" },
+    { id: "corrugated_iron_sheds", label: "Corrugated-iron sheds" },
+    { id: "cabbage_patches", label: "Patches of cabbages" },
+    { id: "cemeteries", label: "Cemeteries" },
+    { id: "snaggle_toothed_walls", label: "Snaggle-toothed walls" },
+    { id: "rusty_carnival_wheel", label: "Rusty carnival wheel" },
+    { id: "tollbooths", label: "Stray tollbooths" },
+    { id: "workshops", label: "Workshops" },
+    { id: "shambles", label: "Shambles" }
+  ];
+
+  var WITNESS_ROSTER = [
+    {
+      id: "market_woman",
+      witness: "Woman with a market basket",
+      detail: "cabbages wrapped in damp paper",
+      preferredStoneId: "cabbage_patches"
+    },
+    {
+      id: "crossroads_boy",
+      witness: "Boy at a crossroads",
+      detail: "straddling a chalk milestone",
+      preferredStoneId: "plank_fences"
+    },
+    {
+      id: "tollbooth_attendant",
+      witness: "Tollbooth attendant without a gate",
+      detail: "leaning under a rusted barrier arm",
+      preferredStoneId: "tollbooths"
+    },
+    {
+      id: "shed_mechanic",
+      witness: "Corrugated-shed mechanic",
+      detail: "wiping oil by scrap tires",
+      preferredStoneId: "workshops"
+    },
+    {
+      id: "cemetery_cutter",
+      witness: "Cemetery stone-cutter",
+      detail: "brushing dust from limestone",
+      preferredStoneId: "cemeteries"
+    },
+    {
+      id: "fairground_watchman",
+      witness: "Fairground watchman",
+      detail: "beneath the stalled rusty carnival wheel",
+      preferredStoneId: "rusty_carnival_wheel"
+    }
+  ];
+
+  var GESTURE_TYPES = ["ahead", "behind", "left", "right", "sweep_360"];
+
+  var SPOKEN_GESTURES = {
+    ahead: [
+      "There, past the corrugated sheds",
+      "Onward beyond the stray barrier arm — where the plaster walls seem taller",
+      "Straight ahead past the workshops and chalk ruts"
+    ],
+    behind: [
+      "Opposite — back behind you",
+      "You already passed it before the cabbages",
+      "Turn back past the tilted limestone markers; you walked right through it"
+    ],
+    left: [
+      "Over crosswise by the shambles",
+      "Off to your left between the plank fences and the zinc lean-tos"
+    ],
+    right: [
+      "You already passed it before the cabbages",
+      "Crosswise to your right, past the stalled carnival wheel and the shambles"
+    ],
+    sweep_360: [
+      "All around us — this is already it",
+      "Everywhere across this plain — there is no other Penthesilea than these outskirts"
+    ]
+  };
+
+  var ARCH_STAGES = {
+    DILUTED_APPROACH: {
+      phaseId: "DILUTED_APPROACH",
+      phaseIndex: 1,
+      title: "Pale Soup of Outskirts",
+      reflection:
+        "You advance for hours across a wide plain without walls, towers, or gates: only pale suburbs, dusty cabbage rows, plank fences, and low plaster buildings turning their backs to the road."
+    },
+    OUTSKIRTS_OF_ITSELF: {
+      phaseId: "OUTSKIRTS_OF_ITSELF",
+      phaseIndex: 2,
+      title: "Only the Outskirts of Itself",
+      reflection:
+        "Every snaggle-toothed comb of facades thins on approach into corrugated sheds, shambles, and a rusty carnival wheel. You give up searching any sac or wrinkle for a thicker center: Penthesilea is only the outskirts of itself."
+    },
+    OUTSIDE_LIMBO_DOUBT: {
+      phaseId: "OUTSIDE_LIMBO_DOUBT",
+      phaseIndex: 3,
+      title: "From One Limbo to Another",
+      reflection:
+        "A more anguished question now gnaws at your head: outside Penthesilea, does an outside exist? Or no matter how far you walk past stray tollbooths and cemeteries, do you only pass from one limbo to another, never managing to leave it?"
+    }
+  };
+
+  var WRINKLE_FINDINGS = [
+    "Behind the snaggle-toothed facade: only plank fences, cabbages, and a corrugated shed—no recognizable square.",
+    "Reached the tall plaster comb that promised a square; behind its propped wall stand only oil drums, damp laundry cords, and shambles.",
+    "Probed another apparent thickening of roofs: the facades were one room shallow, opening onto dusty cabbages and a gravel lot.",
+    "Entered the wrinkle of uneven walls expecting a street grid; found only blank rear drainpipes and a stalled fairground frame."
+  ];
+
+  var OUTSIDE_FINDINGS = [
+    "Passed stray tollbooth and cemetery—only entered another pale suburb of workshops and shambles.",
+    "Crossed another chalk threshold straight outward: no open countryside appears, only plank fences and corrugated-iron sheds.",
+    "Walked far past the rusted barrier arm expecting fields beyond the city, yet low windowless backs and cabbage rows resume unchanged.",
+    "Left the cemetery slabs behind on an unwavering outward bearing, only to meet another vulcanizer yard and market shambles in pale haze."
+  ];
+
+  function clamp(val, minVal, maxVal) {
+    return val < minVal ? minVal : val > maxVal ? maxVal : val;
+  }
+
+  function round4(val) {
+    return Math.round(val * 10000) / 10000;
+  }
+
+  function normalizeAngle(rad) {
+    var r = Number(rad) || 0;
+    r = r % TAU;
+    return r < 0 ? r + TAU : r;
+  }
+
+  function normalizeSignedAngle(rad) {
+    var r = normalizeAngle(rad + Math.PI) - Math.PI;
+    return r === -Math.PI ? Math.PI : r;
+  }
+
+  function deterministicJitter(index, salt, maxAbs) {
+    var s = Math.sin((index + 1) * 12.9898 + (salt + 1) * 78.233) * 43758.5453;
+    var frac = s - Math.floor(s);
+    return (frac * 2 - 1) * maxAbs;
+  }
+
+  function classifyRelativeGesture(relRad) {
+    var absRel = Math.abs(relRad);
+    if (absRel <= Math.PI * 0.26) {
+      return "ahead";
+    }
+    if (absRel >= Math.PI * 0.74) {
+      return "behind";
+    }
+    return relRad < 0 ? "left" : "right";
+  }
+
+  function create(opts) {
+    var cfg = opts || {};
+    var startX = Number.isFinite(cfg.startX) ? cfg.startX : 0;
+    var startY = Number.isFinite(cfg.startY) ? cfg.startY : 0;
+    var initialBearing = Number.isFinite(cfg.initialBearingRad) ? normalizeAngle(cfg.initialBearingRad) : 0.18;
+
+    var state = {
+      worldX: startX,
+      worldY: startY,
+      bearingRad: initialBearing,
+      speed: 0,
+      totalUnitsWalked: 0,
+      hoursWalked: INITIAL_HOURS,
+      distanceKm: round4(INITIAL_HOURS * KM_PER_HOUR),
+      limbosCrossed: 0,
+      wrinklesProbed: 0,
+      mode: "walk",
+      paused: Boolean(cfg.paused),
+      reducedMotion: Boolean(cfg.reducedMotion),
+      escapeBearingRad: initialBearing,
+      outsideUnitsAccum: 0,
+      walkLimboUnitsAccum: 0,
+      lastLimboSectorCode: null,
+      visitedThresholdKeys: {},
+      wrinkleTarget: null,
+      wrinkleChaseUnits: 0,
+      recentWrinkleSites: [],
+      encounters: [],
+      sumX: 0,
+      sumY: 0,
+      gestureCounts: { ahead: 0, behind: 0, left: 0, right: 0, sweep_360: 0 },
+      quoteCursor: { ahead: 0, behind: 0, left: 0, right: 0, sweep_360: 0 },
+      fieldFindings: [],
+      findingSeq: 0,
+      encounterSeq: 0,
+      sampler: cfg.plainSampler || null
+    };
+
+    function rememberSampler(plainSampler) {
+      if (plainSampler && typeof plainSampler === "object") {
+        state.sampler = plainSampler;
+      }
+      return state.sampler;
+    }
+
+    function samplePlain(wx, wy, radius) {
+      var s = state.sampler;
+      if (s && typeof s.sampleSurroundings === "function") {
+        try {
+          var res = s.sampleSurroundings(wx, wy, radius || 240);
+          if (res && typeof res === "object") {
+            return res;
+          }
+        } catch (_err) {
+          /* fallback to deterministic local stone sample */
+        }
+      }
+      var cellX = Math.floor(wx / 160);
+      var cellY = Math.floor(wy / 160);
+      var idx = Math.abs(cellX * 7 + cellY * 13 + state.encounterSeq * 3) % CANONICAL_STONE_LABELS.length;
+      var chosen = CANONICAL_STONE_LABELS[idx];
+      return {
+        nearbyStones: [{ id: chosen.id, label: chosen.label, dist: 38, x: wx + 26, y: wy - 18 }],
+        wallsOrGatesCount: 0,
+        limboSectorCode: "S" + cellX + ":" + cellY,
+        nearestTollboothDist: idx === 7 ? 42 : 190,
+        rustyWheelVisible: idx === 6
+      };
+    }
+
+    function pickNearbyStoneLabel(preferredStoneId) {
+      var sample = samplePlain(state.worldX, state.worldY, 260);
+      var list = sample && Array.isArray(sample.nearbyStones) ? sample.nearbyStones : [];
+      var i;
+      if (preferredStoneId) {
+        for (i = 0; i < list.length; i += 1) {
+          if (list[i] && list[i].id === preferredStoneId && list[i].label) {
+            return list[i].label;
+          }
+        }
+      }
+      if (list.length > 0 && list[0] && list[0].label) {
+        return list[0].label;
+      }
+      for (i = 0; i < CANONICAL_STONE_LABELS.length; i += 1) {
+        if (CANONICAL_STONE_LABELS[i].id === preferredStoneId) {
+          return CANONICAL_STONE_LABELS[i].label;
+        }
+      }
+      var fallbackIdx = state.encounterSeq % CANONICAL_STONE_LABELS.length;
+      return CANONICAL_STONE_LABELS[fallbackIdx].label;
+    }
+
+    function appendFinding(kind, text, nearbyStoneLabel) {
+      state.findingSeq += 1;
+      var entry = {
+        id: "finding-" + state.findingSeq,
+        seq: state.findingSeq,
+        kind: kind,
+        mode: state.mode,
+        text: text,
+        message: text,
+        nearbyStoneLabel: nearbyStoneLabel || pickNearbyStoneLabel(null),
+        hoursWalked: round4(state.hoursWalked),
+        distanceKm: round4(state.distanceKm),
+        worldX: round4(state.worldX),
+        worldY: round4(state.worldY),
+        wrinklesProbed: state.wrinklesProbed,
+        limbosCrossed: state.limbosCrossed
+      };
+      state.fieldFindings.push(entry);
+      if (state.fieldFindings.length > 28) {
+        state.fieldFindings.shift();
+      }
+      if (typeof cfg.onFinding === "function") {
+        cfg.onFinding(entry);
+      }
+      return entry;
+    }
+
+    function isTooCloseToVisitedWrinkle(tx, ty) {
+      var curDist = Math.hypot(tx - state.worldX, ty - state.worldY);
+      if (curDist < 42) {
+        return true;
+      }
+      for (var i = 0; i < state.recentWrinkleSites.length; i += 1) {
+        var site = state.recentWrinkleSites[i];
+        if (Math.hypot(tx - site.x, ty - site.y) < WRINKLE_EXCLUSION_RADIUS) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    function acquireNextWrinkleTarget() {
+      var s = state.sampler;
+      var candidate = null;
+      if (s && typeof s.findNearestWrinkleBearing === "function") {
+        try {
+          var direct = s.findNearestWrinkleBearing(state.worldX, state.worldY);
+          if (
+            direct &&
+            Number.isFinite(direct.targetX) &&
+            Number.isFinite(direct.targetY) &&
+            !isTooCloseToVisitedWrinkle(direct.targetX, direct.targetY)
+          ) {
+            candidate = direct;
+          } else {
+            for (var k = 0; k < 7 && !candidate; k += 1) {
+              var probeAng = normalizeAngle(state.bearingRad + k * 2.39996 + 0.55);
+              var probeRad = 220 + (k % 2) * 140;
+              var px = state.worldX + Math.cos(probeAng) * probeRad;
+              var py = state.worldY + Math.sin(probeAng) * probeRad;
+              var alt = s.findNearestWrinkleBearing(px, py);
+              if (
+                alt &&
+                Number.isFinite(alt.targetX) &&
+                Number.isFinite(alt.targetY) &&
+                !isTooCloseToVisitedWrinkle(alt.targetX, alt.targetY)
+              ) {
+                candidate = {
+                  bearingRad: normalizeAngle(Math.atan2(alt.targetY - state.worldY, alt.targetX - state.worldX)),
+                  targetX: alt.targetX,
+                  targetY: alt.targetY,
+                  label: alt.label || "Snaggle-toothed walls"
+                };
+              }
+            }
+          }
+        } catch (_err) {
+          candidate = null;
+        }
+      }
+      if (!candidate) {
+        var mirageAng = normalizeAngle(state.bearingRad + 0.92 + (state.wrinklesProbed % 5) * 1.18);
+        var mirageDist = 165 + (state.wrinklesProbed % 3) * 35;
+        candidate = {
+          bearingRad: mirageAng,
+          targetX: state.worldX + Math.cos(mirageAng) * mirageDist,
+          targetY: state.worldY + Math.sin(mirageAng) * mirageDist,
+          label: "Snaggle-toothed walls"
+        };
+      }
+      state.wrinkleTarget = candidate;
+      state.wrinkleChaseUnits = 0;
+      state.bearingRad = normalizeAngle(Math.atan2(candidate.targetY - state.worldY, candidate.targetX - state.worldX));
+      return candidate;
+    }
+
+    function completeWrinkleProbe() {
+      var probedSite = state.wrinkleTarget
+        ? { x: state.wrinkleTarget.targetX, y: state.wrinkleTarget.targetY }
+        : { x: state.worldX, y: state.worldY };
+      state.recentWrinkleSites.push(probedSite);
+      if (state.recentWrinkleSites.length > 8) {
+        state.recentWrinkleSites.shift();
+      }
+      state.wrinklesProbed += 1;
+      var msg = WRINKLE_FINDINGS[(state.wrinklesProbed - 1) % WRINKLE_FINDINGS.length];
+      appendFinding("wrinkle_probed", msg, "Snaggle-toothed walls");
+      acquireNextWrinkleTarget();
+    }
+
+    function completeOutsideLimboCrossing() {
+      state.limbosCrossed += 1;
+      var msg = OUTSIDE_FINDINGS[(state.limbosCrossed - 1) % OUTSIDE_FINDINGS.length];
+      var stoneLabel = pickNearbyStoneLabel(state.limbosCrossed % 2 === 1 ? "tollbooths" : "cemeteries");
+      appendFinding("limbo_crossed", msg, stoneLabel);
+    }
+
+    function checkWalkThresholds(stepDist) {
+      state.walkLimboUnitsAccum += stepDist;
+      var sample = samplePlain(state.worldX, state.worldY, 220);
+      if (state.lastLimboSectorCode === null && sample && sample.limboSectorCode) {
+        state.lastLimboSectorCode = sample.limboSectorCode;
+      }
+      var nearBooth = sample && Number.isFinite(sample.nearestTollboothDist) && sample.nearestTollboothDist <= 54;
+      var sectorChanged = Boolean(sample && sample.limboSectorCode && sample.limboSectorCode !== state.lastLimboSectorCode);
+      if (
+        state.walkLimboUnitsAccum >= WALK_LIMBO_INTERVAL ||
+        (state.walkLimboUnitsAccum >= 500 && (nearBooth || sectorChanged))
+      ) {
+        state.walkLimboUnitsAccum = 0;
+        if (sample && sample.limboSectorCode) {
+          state.lastLimboSectorCode = sample.limboSectorCode;
+        }
+        state.limbosCrossed += 1;
+        appendFinding(
+          "suburb_threshold",
+          "Passed another stray tollbooth and cemetery cluster without any city wall—only pale outskirts ahead.",
+          nearBooth ? "Stray tollbooths" : pickNearbyStoneLabel("cemeteries")
+        );
+      }
+    }
+
+    function ageEncounters(dtSec) {
+      if (dtSec <= 0) {
+        return;
+      }
+      for (var i = 0; i < state.encounters.length; i += 1) {
+        state.encounters[i].age = round4((state.encounters[i].age || 0) + dtSec);
+      }
+    }
+
+    function advanceDisplacement(dx, dy, activeMode) {
+      var stepDist = Math.hypot(dx, dy);
+      if (stepDist <= 0) {
+        return;
+      }
+      state.worldX += dx;
+      state.worldY += dy;
+      state.totalUnitsWalked += stepDist;
+      state.hoursWalked = INITIAL_HOURS + state.totalUnitsWalked / UNITS_PER_HOUR;
+      state.distanceKm = state.hoursWalked * KM_PER_HOUR;
+
+      if (activeMode === "seek_center") {
+        if (!state.wrinkleTarget) {
+          acquireNextWrinkleTarget();
+        }
+        state.wrinkleChaseUnits += stepDist;
+        var distToTarget = Math.hypot(
+          state.wrinkleTarget.targetX - state.worldX,
+          state.wrinkleTarget.targetY - state.worldY
+        );
+        if (distToTarget <= WRINKLE_ARRIVAL_RADIUS || state.wrinkleChaseUnits >= 245) {
+          completeWrinkleProbe();
+        }
+      } else if (activeMode === "seek_outside") {
+        state.outsideUnitsAccum += stepDist;
+        while (state.outsideUnitsAccum >= OUTSIDE_LIMBO_INTERVAL) {
+          state.outsideUnitsAccum -= OUTSIDE_LIMBO_INTERVAL;
+          completeOutsideLimboCrossing();
+        }
+      } else {
+        checkWalkThresholds(stepDist);
+      }
+    }
+
+    function substepUpdate(stepDt, inputState) {
+      var inp = inputState || {};
+      var isReduced = Boolean(state.reducedMotion || inp.reducedMotion);
+      var isPaused = Boolean(state.paused || inp.paused || inp.autoDrift === false);
+      ageEncounters(stepDt);
+
+      if (Number.isFinite(inp.steerBearingRad)) {
+        state.bearingRad = normalizeAngle(inp.steerBearingRad);
+      } else if (Number.isFinite(inp.turnDelta) && inp.turnDelta !== 0) {
+        state.bearingRad = normalizeAngle(state.bearingRad + inp.turnDelta * stepDt);
+      }
+
+      var hasManualVec = Number.isFinite(inp.moveX) || Number.isFinite(inp.moveY);
+      var mx = Number(inp.moveX) || 0;
+      var my = Number(inp.moveY) || 0;
+      var manualMag = Math.hypot(mx, my);
+
+      if (state.mode === "seek_center") {
+        if (isReduced && !inp.forceStep) {
+          state.speed = 0;
+          return;
+        }
+        if (!state.wrinkleTarget) {
+          acquireNextWrinkleTarget();
+        }
+        var desired = Math.atan2(
+          state.wrinkleTarget.targetY - state.worldY,
+          state.wrinkleTarget.targetX - state.worldX
+        );
+        var diff = normalizeSignedAngle(desired - state.bearingRad);
+        state.bearingRad = normalizeAngle(state.bearingRad + clamp(diff, -4.5 * stepDt, 4.5 * stepDt));
+        state.speed = SEEK_CENTER_SPEED;
+        advanceDisplacement(Math.cos(state.bearingRad) * state.speed * stepDt, Math.sin(state.bearingRad) * state.speed * stepDt, "seek_center");
+        return;
+      }
+
+      if (state.mode === "seek_outside") {
+        if (isReduced && !inp.forceStep) {
+          state.speed = 0;
+          return;
+        }
+        state.bearingRad = state.escapeBearingRad;
+        state.speed = SEEK_OUTSIDE_SPEED;
+        advanceDisplacement(Math.cos(state.bearingRad) * state.speed * stepDt, Math.sin(state.bearingRad) * state.speed * stepDt, "seek_outside");
+        return;
+      }
+
+      if (hasManualVec && manualMag > 0.05) {
+        state.bearingRad = normalizeAngle(Math.atan2(my, mx));
+        var activeSpeed = WALK_DRIFT_SPEED * 1.65 * Math.min(1, manualMag);
+        state.speed = activeSpeed;
+        advanceDisplacement(Math.cos(state.bearingRad) * activeSpeed * stepDt, Math.sin(state.bearingRad) * activeSpeed * stepDt, "walk");
+      } else if (inp.pointerActive && Number.isFinite(inp.steerBearingRad)) {
+        state.speed = WALK_DRIFT_SPEED * 1.45;
+        advanceDisplacement(Math.cos(state.bearingRad) * state.speed * stepDt, Math.sin(state.bearingRad) * state.speed * stepDt, "walk");
+      } else if (!isReduced && !isPaused) {
+        var gentleDriftWaver = Math.sin(state.totalUnitsWalked * 0.0045 + 0.7) * 0.05 * stepDt;
+        state.bearingRad = normalizeAngle(state.bearingRad + gentleDriftWaver);
+        state.speed = WALK_DRIFT_SPEED;
+        advanceDisplacement(Math.cos(state.bearingRad) * state.speed * stepDt, Math.sin(state.bearingRad) * state.speed * stepDt, "walk");
+      } else {
+        state.speed = 0;
+      }
+    }
+
+    function update(dt, inputState, plainSampler) {
+      rememberSampler(plainSampler);
+      var totalDt = clamp(Number(dt) || 0, 0, 5);
+      if (totalDt <= 0) {
+        return;
+      }
+      var maxChunk = 0.08;
+      var remaining = totalDt;
+      while (remaining > 1e-6) {
+        var slice = remaining > maxChunk ? maxChunk : remaining;
+        substepUpdate(slice, inputState);
+        remaining -= slice;
+      }
+    }
+
+    function walkBearing(bearingRad, stepUnits, plainSampler) {
+      rememberSampler(plainSampler);
+      var rad = Number.isFinite(bearingRad) ? normalizeAngle(bearingRad) : state.bearingRad;
+      var units = Number.isFinite(stepUnits) && stepUnits > 0 ? stepUnits : 84;
+      state.mode = "walk";
+      state.bearingRad = rad;
+      state.speed = 0;
+      ageEncounters(0.35);
+      advanceDisplacement(Math.cos(rad) * units, Math.sin(rad) * units, "walk");
+      return getState();
+    }
+
+    function stepSeekCenter(plainSampler) {
+      rememberSampler(plainSampler);
+      if (state.mode !== "seek_center") {
+        state.mode = "seek_center";
+        acquireNextWrinkleTarget();
+      } else if (!state.wrinkleTarget) {
+        acquireNextWrinkleTarget();
+      }
+      var tx = state.wrinkleTarget.targetX;
+      var ty = state.wrinkleTarget.targetY;
+      var dx = tx - state.worldX;
+      var dy = ty - state.worldY;
+      state.bearingRad = normalizeAngle(Math.atan2(dy, dx));
+      ageEncounters(0.5);
+      advanceDisplacement(dx, dy, "seek_center");
+      return getState();
+    }
+
+    function stepSeekOutside(plainSampler) {
+      rememberSampler(plainSampler);
+      if (state.mode !== "seek_outside") {
+        state.mode = "seek_outside";
+        state.escapeBearingRad = state.bearingRad;
+        state.outsideUnitsAccum = 0;
+      }
+      state.bearingRad = state.escapeBearingRad;
+      ageEncounters(0.5);
+      advanceDisplacement(
+        Math.cos(state.escapeBearingRad) * OUTSIDE_LIMBO_INTERVAL,
+        Math.sin(state.escapeBearingRad) * OUTSIDE_LIMBO_INTERVAL,
+        "seek_outside"
+      );
+      return getState();
+    }
+
+    function setBearing(bearingRad) {
+      if (Number.isFinite(bearingRad)) {
+        state.bearingRad = normalizeAngle(bearingRad);
+        if (state.mode === "seek_outside") {
+          state.escapeBearingRad = state.bearingRad;
+        }
+      }
+      return state.bearingRad;
+    }
+
+    function setMode(mode, plainSampler) {
+      rememberSampler(plainSampler);
+      var nextMode = mode === "seek_center" || mode === "seek_outside" ? mode : "walk";
+      state.mode = nextMode;
+      if (nextMode === "seek_center") {
+        acquireNextWrinkleTarget();
+      } else if (nextMode === "seek_outside") {
+        state.escapeBearingRad = state.bearingRad;
+        state.outsideUnitsAccum = 0;
+      } else {
+        state.wrinkleTarget = null;
+      }
+      if (typeof cfg.onModeChange === "function") {
+        cfg.onModeChange(nextMode);
+      }
+      return nextMode;
+    }
+
+    function setPaused(flag) {
+      state.paused = Boolean(flag);
+      if (state.paused) {
+        state.speed = 0;
+      }
+      return state.paused;
+    }
+
+    function setReducedMotion(flag) {
+      state.reducedMotion = Boolean(flag);
+      if (state.reducedMotion) {
+        state.speed = 0;
+      }
+      return state.reducedMotion;
+    }
+
+    function resetJourney() {
+      state.worldX = startX;
+      state.worldY = startY;
+      state.bearingRad = initialBearing;
+      state.speed = 0;
+      state.totalUnitsWalked = 0;
+      state.hoursWalked = INITIAL_HOURS;
+      state.distanceKm = round4(INITIAL_HOURS * KM_PER_HOUR);
+      state.limbosCrossed = 0;
+      state.wrinklesProbed = 0;
+      state.mode = "walk";
+      state.escapeBearingRad = initialBearing;
+      state.outsideUnitsAccum = 0;
+      state.walkLimboUnitsAccum = 0;
+      state.lastLimboSectorCode = null;
+      state.visitedThresholdKeys = {};
+      state.wrinkleTarget = null;
+      state.wrinkleChaseUnits = 0;
+      state.recentWrinkleSites = [];
+      state.encounters = [];
+      state.sumX = 0;
+      state.sumY = 0;
+      state.gestureCounts = { ahead: 0, behind: 0, left: 0, right: 0, sweep_360: 0 };
+      state.quoteCursor = { ahead: 0, behind: 0, left: 0, right: 0, sweep_360: 0 };
+      state.witnessBucket = [];
+      state.fieldFindings = [];
+      state.findingSeq = 0;
+      state.encounterSeq = 0;
+      return getState();
+    }
+
+    function pickNextWitness() {
+      if (!Array.isArray(state.witnessBucket) || state.witnessBucket.length === 0) {
+        state.witnessBucket = [0, 1, 2, 3, 4, 5];
+      }
+      var sample = samplePlain(state.worldX, state.worldY, 220);
+      var nearby = sample && Array.isArray(sample.nearbyStones) ? sample.nearbyStones : [];
+      for (var i = 0; i < state.witnessBucket.length; i += 1) {
+        var wIdx = state.witnessBucket[i];
+        var cand = WITNESS_ROSTER[wIdx];
+        for (var j = 0; j < nearby.length; j += 1) {
+          if (nearby[j] && nearby[j].id === cand.preferredStoneId && (nearby[j].dist || 0) <= 170) {
+            state.witnessBucket.splice(i, 1);
+            return cand;
+          }
+        }
+      }
+      var nextIdx = state.witnessBucket.shift();
+      return WITNESS_ROSTER[nextIdx];
+    }
+
+    function pickSpokenQuote(gestureType) {
+      var pool = SPOKEN_GESTURES[gestureType] || SPOKEN_GESTURES.ahead;
+      var cur = state.quoteCursor[gestureType] || 0;
+      var quote = pool[cur % pool.length];
+      var prev = state.encounters.length > 0 ? state.encounters[state.encounters.length - 1].spokenQuote : "";
+      if (quote === prev && pool.length > 1) {
+        cur += 1;
+        quote = pool[cur % pool.length];
+      }
+      state.quoteCursor[gestureType] = cur + 1;
+      return quote;
+    }
+
+    function askPasserby(plainSampler) {
+      rememberSampler(plainSampler);
+      var idx = state.encounters.length;
+      var newCount = idx + 1;
+      var slot = idx % 8;
+      var witnessObj = pickNextWitness();
+      var isSweep360 = false;
+      var gestureType = "ahead";
+      var angleRad = state.bearingRad;
+      var ux = 0;
+      var uy = 0;
+      var curSumMag = Math.hypot(state.sumX, state.sumY);
+
+      if (slot === 2 || slot === 7) {
+        isSweep360 = true;
+        gestureType = "sweep_360";
+        angleRad = normalizeAngle(state.bearingRad);
+        ux = 0;
+        uy = 0;
+      } else if (slot === 1 || slot === 4 || slot === 6 || (newCount >= 2 && curSumMag > 0.3)) {
+        var cancelBase = curSumMag > 1e-5 ? Math.atan2(-state.sumY, -state.sumX) : state.bearingRad + Math.PI;
+        angleRad = normalizeAngle(cancelBase + deterministicJitter(idx, 3, 0.085));
+        ux = Math.cos(angleRad);
+        uy = Math.sin(angleRad);
+        gestureType = classifyRelativeGesture(normalizeSignedAngle(angleRad - state.bearingRad));
+      } else if (slot === 3) {
+        angleRad = normalizeAngle(state.bearingRad - Math.PI * 0.5 + deterministicJitter(idx, 5, 0.09));
+        ux = Math.cos(angleRad);
+        uy = Math.sin(angleRad);
+        gestureType = "left";
+      } else if (slot === 5) {
+        angleRad = normalizeAngle(state.bearingRad + Math.PI + deterministicJitter(idx, 7, 0.09));
+        ux = Math.cos(angleRad);
+        uy = Math.sin(angleRad);
+        gestureType = "behind";
+      } else {
+        angleRad = normalizeAngle(state.bearingRad + deterministicJitter(idx, 1, 0.1));
+        ux = Math.cos(angleRad);
+        uy = Math.sin(angleRad);
+        gestureType = "ahead";
+      }
+
+      if (!isSweep360 && newCount >= 2) {
+        var trialMag = Math.hypot(state.sumX + ux, state.sumY + uy) / newCount;
+        if (trialMag >= 0.32) {
+          var safeBase = curSumMag > 1e-5 ? Math.atan2(-state.sumY, -state.sumX) : state.bearingRad + Math.PI;
+          angleRad = normalizeAngle(safeBase + deterministicJitter(idx, 11, 0.075));
+          ux = Math.cos(angleRad);
+          uy = Math.sin(angleRad);
+          gestureType = classifyRelativeGesture(normalizeSignedAngle(angleRad - state.bearingRad));
+        }
+      }
+
+      state.sumX += ux;
+      state.sumY += uy;
+      state.gestureCounts[gestureType] = (state.gestureCounts[gestureType] || 0) + 1;
+      state.encounterSeq += 1;
+
+      var spokenQuote = pickSpokenQuote(gestureType);
+      var nearbyStoneLabel = pickNearbyStoneLabel(witnessObj.preferredStoneId);
+      var relAngle = isSweep360 ? 0 : round4(normalizeSignedAngle(angleRad - state.bearingRad));
+
+      var record = {
+        id: "enc-" + state.encounterSeq,
+        witness: witnessObj.witness,
+        witnessDetail: witnessObj.detail,
+        gestureType: gestureType,
+        angleRad: round4(angleRad),
+        relativeAngleRad: relAngle,
+        ux: round4(ux),
+        uy: round4(uy),
+        isSweep360: isSweep360,
+        arcSpanRad: isSweep360 ? round4(TAU) : 0,
+        spokenQuote: spokenQuote,
+        nearbyStoneLabel: nearbyStoneLabel,
+        hoursAtEncounter: round4(state.hoursWalked),
+        worldX: round4(state.worldX),
+        worldY: round4(state.worldY),
+        age: 0
+      };
+
+      state.encounters.push(record);
+      if (typeof cfg.onEncounter === "function") {
+        cfg.onEncounter(Object.assign({}, record));
+      }
+      return Object.assign({}, record);
+    }
+
+    function getEncounters() {
+      return state.encounters.map(function (enc) {
+        return Object.assign({}, enc);
+      });
+    }
+
+    function getVectorSummary() {
+      var count = state.encounters.length;
+      var rawMag = Math.hypot(state.sumX, state.sumY);
+      var resultantMagnitude = count > 0 ? rawMag / count : 0;
+      var resultantAngleRad = count > 0 && rawMag > 1e-6 ? normalizeAngle(Math.atan2(state.sumY, state.sumX)) : 0;
+      var cancellationRatio = count === 0 ? 0 : clamp(1 - resultantMagnitude, 0, 1);
+      return {
+        count: count,
+        sumX: round4(state.sumX),
+        sumY: round4(state.sumY),
+        resultantAngleRad: round4(resultantAngleRad),
+        resultantMagnitude: round4(resultantMagnitude),
+        cancellationRatio: round4(cancellationRatio),
+        centerLocatable: false,
+        gestureBreakdown: {
+          ahead: state.gestureCounts.ahead,
+          behind: state.gestureCounts.behind,
+          left: state.gestureCounts.left,
+          right: state.gestureCounts.right,
+          sweep_360: state.gestureCounts.sweep_360
+        }
+      };
+    }
+
+    function getArchStage() {
+      var chosen = ARCH_STAGES.DILUTED_APPROACH;
+      if (state.hoursWalked >= 4.5 || state.limbosCrossed >= 2) {
+        chosen = ARCH_STAGES.OUTSIDE_LIMBO_DOUBT;
+      } else if (state.hoursWalked >= 2.0 || state.wrinklesProbed >= 1) {
+        chosen = ARCH_STAGES.OUTSKIRTS_OF_ITSELF;
+      }
+      return {
+        phaseId: chosen.phaseId,
+        phaseIndex: chosen.phaseIndex,
+        title: chosen.title,
+        reflection: chosen.reflection,
+        hoursWalked: round4(state.hoursWalked),
+        limbosCrossed: state.limbosCrossed,
+        wrinklesProbed: state.wrinklesProbed
+      };
+    }
+
+    function getTopologyInvariants() {
+      var summary = getVectorSummary();
+      return {
+        centerLocatable: false,
+        isOnlyOutskirtsOfItself: true,
+        outsideConfirmed: false,
+        wallsOrGatesCount: 0,
+        escapedPenthesilea: false,
+        gestureVectorCancelsTowardZero: true,
+        hoursWalked: round4(state.hoursWalked),
+        distanceKm: round4(state.distanceKm),
+        limbosCrossed: state.limbosCrossed,
+        wrinklesProbed: state.wrinklesProbed,
+        encounterCount: summary.count,
+        resultantMagnitude: summary.resultantMagnitude
+      };
+    }
+
+    function getFieldFindings() {
+      return state.fieldFindings.map(function (f) {
+        return Object.assign({}, f);
+      });
+    }
+
+    function getGestureRays() {
+      var startIdx = Math.max(0, state.encounters.length - 14);
+      var rays = [];
+      for (var i = startIdx; i < state.encounters.length; i += 1) {
+        var enc = state.encounters[i];
+        var recency = (i - startIdx + 1) / Math.max(1, state.encounters.length - startIdx);
+        var ageFade = clamp(1 - (enc.age || 0) * 0.035, 0.36, 1);
+        rays.push({
+          id: enc.id,
+          gestureType: enc.gestureType,
+          kind: enc.gestureType,
+          angleRad: enc.angleRad,
+          angle: enc.angleRad,
+          ux: enc.ux,
+          uy: enc.uy,
+          isSweep360: enc.isSweep360,
+          originX: enc.worldX,
+          originY: enc.worldY,
+          worldX: enc.worldX,
+          worldY: enc.worldY,
+          x: enc.worldX,
+          y: enc.worldY,
+          witness: enc.witness,
+          spokenQuote: enc.spokenQuote,
+          age: enc.age || 0,
+          alpha: round4(0.32 + 0.68 * recency * ageFade)
+        });
+      }
+      return rays;
+    }
+
+    function getActiveWitness() {
+      if (state.encounters.length === 0) {
+        return null;
+      }
+      var latest = state.encounters[state.encounters.length - 1];
+      return {
+        id: latest.id,
+        witness: latest.witness,
+        name: latest.witness,
+        detail: latest.witnessDetail,
+        gestureType: latest.gestureType,
+        angleRad: latest.angleRad,
+        isSweep360: latest.isSweep360,
+        spokenQuote: latest.spokenQuote,
+        quote: latest.spokenQuote,
+        nearbyStoneLabel: latest.nearbyStoneLabel,
+        worldX: latest.worldX,
+        worldY: latest.worldY,
+        x: latest.worldX,
+        y: latest.worldY,
+        age: latest.age || 0,
+        active: (latest.age || 0) < 12
+      };
+    }
+
+    function getState() {
+      return {
+        worldX: round4(state.worldX),
+        worldY: round4(state.worldY),
+        bearingRad: round4(state.bearingRad),
+        speed: round4(state.speed),
+        hoursWalked: round4(state.hoursWalked),
+        distanceKm: round4(state.distanceKm),
+        limbosCrossed: state.limbosCrossed,
+        wrinklesProbed: state.wrinklesProbed,
+        mode: state.mode,
+        paused: state.paused,
+        reducedMotion: state.reducedMotion,
+        gestureRays: getGestureRays(),
+        activeWitness: getActiveWitness(),
+        archStage: getArchStage(),
+        vectorSummary: getVectorSummary(),
+        topologyInvariants: getTopologyInvariants()
+      };
+    }
+
+    function renderCompass(target, renderOpts) {
+      if (!target) {
+        return;
+      }
+      var ctx = typeof target.getContext === "function" ? target.getContext("2d") : target;
+      if (!ctx || typeof ctx.beginPath !== "function") {
+        return;
+      }
+      var rOpts = renderOpts || {};
+      var w = Number(rOpts.width) || (target.width ? target.width / (rOpts.dpr || 1) : 220);
+      var h = Number(rOpts.height) || (target.height ? target.height / (rOpts.dpr || 1) : 220);
+      var cx = w * 0.5;
+      var cy = h * 0.5;
+      var radius = Math.max(28, Math.min(w, h) * 0.41);
+      var summary = getVectorSummary();
+
+      ctx.save();
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = PALETTE.chalkHaze;
+      ctx.fillRect(0, 0, w, h);
+
+      ctx.beginPath();
+      ctx.arc(cx, cy, radius, 0, TAU);
+      ctx.fillStyle = PALETTE.brothGround;
+      ctx.fill();
+      ctx.lineWidth = 1.25;
+      ctx.strokeStyle = PALETTE.zincShed;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(cx, cy, radius * 0.35, 0, TAU);
+      ctx.setLineDash([3, 3]);
+      ctx.strokeStyle = PALETTE.plasterTooth;
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      ctx.beginPath();
+      ctx.moveTo(cx - radius, cy);
+      ctx.lineTo(cx + radius, cy);
+      ctx.moveTo(cx, cy - radius);
+      ctx.lineTo(cx, cy + radius);
+      ctx.lineWidth = 0.75;
+      ctx.strokeStyle = PALETTE.plasterTooth;
+      ctx.stroke();
+
+      var bx = cx + Math.cos(state.bearingRad) * radius * 0.94;
+      var by = cy + Math.sin(state.bearingRad) * radius * 0.94;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(bx, by);
+      ctx.strokeStyle = PALETTE.cabbageDust;
+      ctx.lineWidth = 1.4;
+      ctx.stroke();
+
+      var sweepIdx = 0;
+      for (var i = 0; i < state.encounters.length; i += 1) {
+        var enc = state.encounters[i];
+        var isNewest = i === state.encounters.length - 1;
+        if (enc.isSweep360) {
+          var sRad = radius * (0.62 + (sweepIdx % 3) * 0.11);
+          sweepIdx += 1;
+          ctx.beginPath();
+          ctx.arc(cx, cy, sRad, 0, TAU);
+          ctx.setLineDash([5, 4]);
+          ctx.strokeStyle = PALETTE.tollOchre;
+          ctx.lineWidth = isNewest ? 2.0 : 1.15;
+          ctx.stroke();
+          ctx.setLineDash([]);
+        } else {
+          var ex = cx + enc.ux * radius * 0.84;
+          var ey = cy + enc.uy * radius * 0.84;
+          ctx.beginPath();
+          ctx.moveTo(cx, cy);
+          ctx.lineTo(ex, ey);
+          ctx.strokeStyle = isNewest ? PALETTE.cinderInk : PALETTE.zincShed;
+          ctx.lineWidth = isNewest ? 2.1 : 1.2;
+          ctx.stroke();
+          var headAng = enc.angleRad;
+          ctx.beginPath();
+          ctx.moveTo(ex, ey);
+          ctx.lineTo(ex - Math.cos(headAng - 0.42) * 6.5, ey - Math.sin(headAng - 0.42) * 6.5);
+          ctx.lineTo(ex - Math.cos(headAng + 0.42) * 6.5, ey - Math.sin(headAng + 0.42) * 6.5);
+          ctx.closePath();
+          ctx.fillStyle = isNewest ? PALETTE.cinderInk : PALETTE.zincShed;
+          ctx.fill();
+        }
+      }
+
+      if (summary.count > 0) {
+        var rx = cx + (summary.sumX / summary.count) * radius * 0.84;
+        var ry = cy + (summary.sumY / summary.count) * radius * 0.84;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(rx, ry);
+        ctx.strokeStyle = PALETTE.wheelRust;
+        ctx.lineWidth = 2.6;
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(rx, ry, 3.6, 0, TAU);
+        ctx.fillStyle = PALETTE.wheelRust;
+        ctx.fill();
+      }
+
+      ctx.beginPath();
+      ctx.arc(cx, cy, 3.2, 0, TAU);
+      ctx.fillStyle = PALETTE.cinderInk;
+      ctx.fill();
+      ctx.restore();
+    }
+
+    var controller = {
+      update: update,
+      walkBearing: walkBearing,
+      stepSeekCenter: stepSeekCenter,
+      stepSeekOutside: stepSeekOutside,
+      setBearing: setBearing,
+      setMode: setMode,
+      setPaused: setPaused,
+      setReducedMotion: setReducedMotion,
+      resetJourney: resetJourney,
+      askPasserby: askPasserby,
+      getEncounters: getEncounters,
+      getVectorSummary: getVectorSummary,
+      getArchStage: getArchStage,
+      getTopologyInvariants: getTopologyInvariants,
+      getFieldFindings: getFieldFindings,
+      getGestureRays: getGestureRays,
+      getActiveWitness: getActiveWitness,
+      getState: getState,
+      renderCompass: renderCompass
+    };
+
+    Object.defineProperties(controller, {
+      worldX: { enumerable: true, get: function () { return round4(state.worldX); } },
+      worldY: { enumerable: true, get: function () { return round4(state.worldY); } },
+      bearingRad: { enumerable: true, get: function () { return round4(state.bearingRad); } },
+      speed: { enumerable: true, get: function () { return round4(state.speed); } },
+      hoursWalked: { enumerable: true, get: function () { return round4(state.hoursWalked); } },
+      distanceKm: { enumerable: true, get: function () { return round4(state.distanceKm); } },
+      limbosCrossed: { enumerable: true, get: function () { return state.limbosCrossed; } },
+      wrinklesProbed: { enumerable: true, get: function () { return state.wrinklesProbed; } },
+      mode: { enumerable: true, get: function () { return state.mode; } },
+      paused: { enumerable: true, get: function () { return state.paused; } },
+      reducedMotion: { enumerable: true, get: function () { return state.reducedMotion; } },
+      gestureRays: { enumerable: true, get: getGestureRays },
+      activeWitness: { enumerable: true, get: getActiveWitness }
+    });
+
+    return controller;
+  }
+
+  root.PenthesileaGestureField = {
+    PALETTE: PALETTE,
+    CANONICAL_STONE_LABELS: CANONICAL_STONE_LABELS,
+    WITNESS_ROSTER: WITNESS_ROSTER,
+    GESTURE_TYPES: GESTURE_TYPES,
+    SPOKEN_GESTURES: SPOKEN_GESTURES,
+    ARCH_STAGES: ARCH_STAGES,
+    create: create
+  };
+})(typeof globalThis !== "undefined" ? globalThis : window);
+
+</script>
+<script>
+(function () {
+  "use strict";
+
+  var plainCanvas = document.getElementById("pnt-plain-canvas");
+  var canvasFrame = document.getElementById("pnt-canvas-frame");
+  var compassCanvas = document.getElementById("pnt-compass-canvas");
+  var valHours = document.getElementById("pnt-val-hours");
+  var valLimbos = document.getElementById("pnt-val-limbos");
+  var valWrinkles = document.getElementById("pnt-val-wrinkles");
+  var valWalls = document.getElementById("pnt-val-walls");
+  var valSector = document.getElementById("pnt-val-sector");
+  var plainCoords = document.getElementById("pnt-plain-coords");
+  var modeTag = document.getElementById("pnt-mode-tag");
+  var parcelReadout = document.getElementById("pnt-parcel-readout");
+  var vectorBadge = document.getElementById("pnt-vector-badge");
+  var tallyAhead = document.getElementById("pnt-tally-ahead");
+  var tallyBehind = document.getElementById("pnt-tally-behind");
+  var tallySide = document.getElementById("pnt-tally-side");
+  var tallySweep = document.getElementById("pnt-tally-sweep");
+  var witnessFeed = document.getElementById("pnt-witness-feed");
+  var stoneListEl = document.getElementById("pnt-stone-list");
+  var stoneDetailEl = document.getElementById("pnt-stone-detail");
+  var densityBadge = document.getElementById("pnt-density-badge");
+  var phaseCode = document.getElementById("pnt-phase-code");
+  var phase1 = document.getElementById("pnt-phase-1");
+  var phase2 = document.getElementById("pnt-phase-2");
+  var phase3 = document.getElementById("pnt-phase-3");
+  var archTitle = document.getElementById("pnt-arch-title");
+  var archText = document.getElementById("pnt-arch-text");
+  var invCenter = document.getElementById("pnt-inv-center");
+  var invOutskirts = document.getElementById("pnt-inv-outskirts");
+  var invOutside = document.getElementById("pnt-inv-outside");
+  var findingsLog = document.getElementById("pnt-findings-log");
+
+  var btnMute = document.getElementById("pnt-btn-mute");
+  var btnPlates = document.getElementById("pnt-btn-plates");
+  var btnDrift = document.getElementById("pnt-btn-drift");
+  var btnAsk = document.getElementById("pnt-btn-ask");
+  var btnCenter = document.getElementById("pnt-btn-center");
+  var btnOutside = document.getElementById("pnt-btn-outside");
+  var btnReset = document.getElementById("pnt-btn-reset");
+  var plateDrawer = document.getElementById("pnt-plate-drawer");
+  var diptychGrid = document.getElementById("pnt-diptych-grid");
+  var btnPlateZoom = document.getElementById("pnt-btn-plate-zoom");
+  var btnPlateClose = document.getElementById("pnt-btn-plate-close");
+  var fallbackMapCanvas = document.getElementById("pnt-fallback-map");
+  var fallbackImgCanvas = document.getElementById("pnt-fallback-image");
+
+  var mediaQuery = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
+  var isReducedMotion = Boolean(mediaQuery && mediaQuery.matches);
+
+  var plain = window.PenthesileaDilutedOutskirts.create(plainCanvas, {
+    reducedMotion: isReducedMotion,
+    bearingRad: 0.18
+  });
+
+  var gestureField = window.PenthesileaGestureField.create({
+    initialBearingRad: 0.18,
+    plainSampler: plain,
+    reducedMotion: isReducedMotion,
+    paused: false
+  });
+
+  var selectedStoneId = "rusty_carnival_wheel";
+  var stoneRowMap = Object.create(null);
+  var lastSample = null;
+  var uiAccum = 0;
+  var compassCssW = 280;
+  var compassCssH = 162;
+  var pointerState = { active: false, steerRad: NaN, lastDragStepAt: 0 };
+  var heldKeys = { up: false, down: false, left: false, right: false };
+
+  function radToDeg360(rad) {
+    var deg = Math.round(((rad * 180) / Math.PI) % 360);
+    return deg < 0 ? deg + 360 : deg;
+  }
+
+  function formatDeg(deg) {
+    return String(deg).padStart(3, "0") + "°";
+  }
+
+  function buildStoneRows() {
+    var stones = window.PenthesileaDilutedOutskirts.CANONICAL_STONES;
+    stoneListEl.textContent = "";
+    for (var i = 0; i < stones.length; i += 1) {
+      (function (stone) {
+        var row = document.createElement("stone-parcel-item");
+        row.className = "pnt-stone-item";
+        row.setAttribute("role", "listitem");
+        row.setAttribute("tabindex", "0");
+        row.setAttribute("data-stone-id", stone.id);
+        row.setAttribute("data-selected", stone.id === selectedStoneId ? "true" : "false");
+
+        var lbl = document.createElement("stone-label-tag");
+        lbl.className = "pnt-stone-label";
+        lbl.textContent = stone.label;
+
+        var cnt = document.createElement("stone-count-tag");
+        cnt.className = "pnt-stone-count";
+        cnt.textContent = "×1";
+
+        row.appendChild(lbl);
+        row.appendChild(cnt);
+
+        function activateStone() {
+          selectedStoneId = stone.id;
+          if (lastSample && Array.isArray(lastSample.nearbyStones)) {
+            for (var k = 0; k < lastSample.nearbyStones.length; k += 1) {
+              var ns = lastSample.nearbyStones[k];
+              if (ns && ns.id === stone.id) {
+                var ang = Math.atan2(ns.y - gestureField.worldY, ns.x - gestureField.worldX);
+                gestureField.setMode("walk", plain);
+                gestureField.setBearing(ang);
+                if (isReducedMotion || gestureField.paused) {
+                  gestureField.walkBearing(ang, 54, plain);
+                }
+                break;
+              }
+            }
+          }
+          syncAndRender(0);
+          refreshAllReadouts(true);
+        }
+
+        row.addEventListener("click", activateStone);
+        row.addEventListener("keydown", function (ev) {
+          if (ev.key === "Enter" || ev.key === " ") {
+            ev.preventDefault();
+            activateStone();
+          }
+        });
+
+        stoneRowMap[stone.id] = { row: row, countEl: cnt, meta: stone };
+        stoneListEl.appendChild(row);
+      })(stones[i]);
+    }
+  }
+
+  function resizeCanvases() {
+    var dpr = Math.max(1, Math.min(2.5, window.devicePixelRatio || 1));
+    var fRect = canvasFrame.getBoundingClientRect();
+    var pw = Math.max(240, Math.round(fRect.width || 640));
+    var ph = Math.max(180, Math.round(fRect.height || 360));
+    plain.resize(pw, ph, dpr);
+
+    var cRect = compassCanvas.getBoundingClientRect();
+    compassCssW = Math.max(180, Math.round(cRect.width || 280));
+    compassCssH = Math.max(120, Math.round(cRect.height || 162));
+    compassCanvas.width = Math.round(compassCssW * dpr);
+    compassCanvas.height = Math.round(compassCssH * dpr);
+
+    syncAndRender(0);
+  }
+
+  function renderCompassCanvas() {
+    var dpr = Math.max(1, Math.min(2.5, window.devicePixelRatio || 1));
+    var cCtx = compassCanvas.getContext("2d");
+    if (!cCtx) return;
+    cCtx.save();
+    cCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    gestureField.renderCompass(cCtx, { width: compassCssW, height: compassCssH, dpr: dpr });
+    cCtx.restore();
+  }
+
+  function syncAndRender(dtSec) {
+    plain.step(dtSec, gestureField.getState());
+    plain.render();
+    renderCompassCanvas();
+  }
+
+  function refreshWitnessFeed() {
+    var encounters = gestureField.getEncounters();
+    witnessFeed.textContent = "";
+    if (encounters.length === 0) {
+      var initCard = document.createElement("witness-quote-card");
+      initCard.className = "pnt-witness-card";
+
+      var m0 = document.createElement("witness-meta-line");
+      m0.className = "pnt-witness-meta";
+      m0.textContent = "ROADSIDE INQUIRY · NO WITNESS STOPPED YET";
+
+      var q0 = document.createElement("witness-quote-line");
+      q0.className = "pnt-witness-quote";
+      q0.textContent = "\"If you ask the people you meet, 'Where is Penthesilea?' they make a broad gesture which may mean 'Here,' or 'Farther on,' or 'All around you,' or even 'In the opposite direction.'\"";
+
+      var l0 = document.createElement("witness-locus-line");
+      l0.className = "pnt-witness-locus";
+      l0.textContent = "Press [Q] or click Ask Passerby to question witnesses along the chalk road.";
+
+      initCard.appendChild(m0);
+      initCard.appendChild(q0);
+      initCard.appendChild(l0);
+      witnessFeed.appendChild(initCard);
+      return;
+    }
+
+    var latest = encounters[encounters.length - 1];
+    var card = document.createElement("witness-quote-card");
+    card.className = "pnt-witness-card";
+
+    var meta = document.createElement("witness-meta-line");
+    meta.className = "pnt-witness-meta";
+    var gLabel = latest.isSweep360
+      ? "360° OMNIDIRECTIONAL SWEEP"
+      : latest.gestureType.toUpperCase() + " · " + formatDeg(radToDeg360(latest.angleRad));
+    meta.textContent =
+      "#" + encounters.length + " · " + latest.witness.toUpperCase() + " (" + latest.witnessDetail + ") · " + gLabel;
+
+    var quote = document.createElement("witness-quote-line");
+    quote.className = "pnt-witness-quote";
+    quote.textContent = "\"" + latest.spokenQuote + "\"";
+
+    var locus = document.createElement("witness-locus-line");
+    locus.className = "pnt-witness-locus";
+    locus.textContent =
+      "Near " + latest.nearbyStoneLabel + " · at " + latest.hoursAtEncounter.toFixed(2) + "h walked";
+
+    card.appendChild(meta);
+    card.appendChild(quote);
+    card.appendChild(locus);
+    witnessFeed.appendChild(card);
+
+    var startIdx = Math.max(0, encounters.length - 6);
+    for (var i = encounters.length - 2; i >= startIdx; i -= 1) {
+      var prev = encounters[i];
+      var item = document.createElement("witness-history-item");
+      item.className = "pnt-witness-item";
+      var dirTag = prev.isSweep360 ? "360°" : prev.gestureType;
+      item.textContent =
+        "#" + (i + 1) + " " + prev.witness + " [" + dirTag + "]: \"" + prev.spokenQuote + "\"";
+      witnessFeed.appendChild(item);
+    }
+  }
+
+  function refreshFindingsLog() {
+    var findings = gestureField.getFieldFindings();
+    findingsLog.textContent = "";
+    if (findings.length === 0) {
+      var ep = document.createElement("finding-log-entry");
+      ep.className = "pnt-finding-entry";
+      var es = document.createElement("finding-stamp-line");
+      es.className = "pnt-finding-stamp";
+      es.textContent = "EPIGRAPH · UNRESOLVED BOUNDARY";
+      var eb = document.createElement("finding-body-line");
+      eb.className = "pnt-finding-body";
+      eb.textContent =
+        "Outside Penthesilea does an outside exist? Or, no matter how far you go from the city, will you only pass from one limbo to another, never managing to leave it?";
+      ep.appendChild(es);
+      ep.appendChild(eb);
+      findingsLog.appendChild(ep);
+      return;
+    }
+
+    var start = Math.max(0, findings.length - 7);
+    for (var i = findings.length - 1; i >= start; i -= 1) {
+      var f = findings[i];
+      var row = document.createElement("finding-log-entry");
+      row.className = "pnt-finding-entry";
+
+      var st = document.createElement("finding-stamp-line");
+      st.className = "pnt-finding-stamp";
+      st.textContent =
+        f.hoursWalked.toFixed(2) + "h · " + f.kind.replace("_", " ").toUpperCase() + " · " + f.nearbyStoneLabel;
+
+      var bd = document.createElement("finding-body-line");
+      bd.className = "pnt-finding-body";
+      bd.textContent = f.text;
+
+      row.appendChild(st);
+      row.appendChild(bd);
+      findingsLog.appendChild(row);
+    }
+  }
+
+  function refreshAllReadouts(includeStoneSample) {
+    var st = gestureField.getState();
+    var inv = gestureField.getTopologyInvariants();
+    var vec = st.vectorSummary;
+    var arch = st.archStage;
+
+    valHours.textContent = st.hoursWalked.toFixed(2) + "h (" + st.distanceKm.toFixed(1) + " km)";
+    valLimbos.textContent = String(st.limbosCrossed);
+    valWrinkles.textContent = String(st.wrinklesProbed);
+    valWalls.textContent = String(inv.wallsOrGatesCount);
+
+    var deg = radToDeg360(st.bearingRad);
+    plainCoords.textContent =
+      "X " + Math.round(st.worldX) + " · Y " + Math.round(st.worldY) + " · BEARING " + formatDeg(deg);
+
+    modeTag.setAttribute("data-mode", st.mode);
+    if (st.mode === "seek_center") {
+      modeTag.textContent = "SEEKING CENTER (WRINKLE MIRAGE)";
+    } else if (st.mode === "seek_outside") {
+      modeTag.textContent = "SEEKING OUTSIDE (LIMBO MARCH)";
+    } else if (isReducedMotion) {
+      modeTag.textContent = "MANUAL STRIDE (REDUCED MOTION)";
+    } else if (st.paused) {
+      modeTag.textContent = "PAUSED ON TRACK";
+    } else {
+      modeTag.textContent = "WALKING PLAIN";
+    }
+
+    btnCenter.setAttribute("data-active", st.mode === "seek_center" ? "true" : "false");
+    btnOutside.setAttribute("data-active", st.mode === "seek_outside" ? "true" : "false");
+    btnDrift.textContent = isReducedMotion ? "Static" : st.paused ? "[G] Resume" : "[G] Pause";
+    btnDrift.setAttribute("data-active", !isReducedMotion && !st.paused ? "true" : "false");
+
+    vectorBadge.textContent =
+      "|R| = " + vec.resultantMagnitude.toFixed(3) + " · N = " + vec.count + " · CENTER: FALSE";
+    tallyAhead.textContent = "Ahead: " + vec.gestureBreakdown.ahead;
+    tallyBehind.textContent = "Behind: " + vec.gestureBreakdown.behind;
+    tallySide.textContent = "Crosswise: " + (vec.gestureBreakdown.left + vec.gestureBreakdown.right);
+    tallySweep.textContent = "360° Sweep: " + vec.gestureBreakdown.sweep_360;
+
+    phaseCode.textContent = "PHASE " + arch.phaseIndex + " / 3";
+    phase1.setAttribute("data-current", arch.phaseIndex === 1 ? "true" : "false");
+    phase2.setAttribute("data-current", arch.phaseIndex === 2 ? "true" : "false");
+    phase3.setAttribute("data-current", arch.phaseIndex === 3 ? "true" : "false");
+    archTitle.textContent = arch.title;
+    archText.textContent = arch.reflection;
+
+    invCenter.textContent = "centerLocatable: " + String(inv.centerLocatable);
+    invOutskirts.textContent = "isOnlyOutskirtsOfItself: " + String(inv.isOnlyOutskirtsOfItself);
+    invOutside.textContent = "outsideConfirmed: " + String(inv.outsideConfirmed);
+
+    if (includeStoneSample || !lastSample) {
+      lastSample = plain.sampleSurroundings(st.worldX, st.worldY, 560);
+      valSector.textContent = lastSample.limboSectorCode;
+      var typesPresent = 0;
+      var stones = window.PenthesileaDilutedOutskirts.CANONICAL_STONES;
+      var nearestByType = Object.create(null);
+      for (var n = 0; n < lastSample.nearbyStones.length; n += 1) {
+        var sp = lastSample.nearbyStones[n];
+        if (nearestByType[sp.id] === undefined || sp.dist < nearestByType[sp.id]) {
+          nearestByType[sp.id] = sp.dist;
+        }
+      }
+      for (var s = 0; s < stones.length; s += 1) {
+        var sid = stones[s].id;
+        var count = lastSample.countsByType[sid] || 0;
+        if (count > 0) typesPresent += 1;
+        var entry = stoneRowMap[sid];
+        if (entry) {
+          var distTxt = nearestByType[sid] !== undefined ? Math.round(nearestByType[sid]) + "m" : "—";
+          entry.countEl.textContent = "×" + count + " · " + distTxt;
+          entry.row.setAttribute("data-selected", sid === selectedStoneId ? "true" : "false");
+          if (sid === selectedStoneId) {
+            stoneDetailEl.textContent = entry.meta.label + " — " + entry.meta.detail;
+          }
+        }
+      }
+      densityBadge.textContent = typesPresent + " / 10 IN REACH · WALLS 0";
+    }
+  }
+
+  function paintPlateFallbacks() {
+    window.PenthesileaDilutedOutskirts.renderPlateFallback(fallbackMapCanvas, "map");
+    window.PenthesileaDilutedOutskirts.renderPlateFallback(fallbackImgCanvas, "image");
+    return true;
+  }
+
+  function togglePlates(openFlag) {
+    var shouldOpen = typeof openFlag === "boolean" ? openFlag : plateDrawer.hidden;
+    plateDrawer.hidden = !shouldOpen;
+    btnPlates.setAttribute("aria-pressed", shouldOpen ? "true" : "false");
+    if (shouldOpen) {
+      paintPlateFallbacks();
+    }
+    return { open: !plateDrawer.hidden };
+  }
+
+  function toggleMute(forceMuted) {
+    var nextMuted =
+      typeof forceMuted === "boolean" ? plain.setMuted(forceMuted) : plain.toggleMute();
+    btnMute.textContent = nextMuted ? "[M] Audio: Off" : "[M] Audio: On";
+    btnMute.setAttribute("aria-pressed", nextMuted ? "false" : "true");
+    return { muted: nextMuted };
+  }
+
+  function highlightBearingButtons(activeDeg) {
+    var btns = document.querySelectorAll("[data-bearing-deg]");
+    for (var i = 0; i < btns.length; i += 1) {
+      var bDeg = Number(btns[i].getAttribute("data-bearing-deg"));
+      btns[i].setAttribute("data-active", bDeg === activeDeg ? "true" : "false");
+    }
+  }
+
+  function doAskPasserby() {
+    var enc = gestureField.askPasserby(plain);
+    plain.triggerGestureSound(enc.gestureType);
+    syncAndRender(0.02);
+    refreshWitnessFeed();
+    refreshAllReadouts(true);
+    parcelReadout.textContent =
+      enc.witness + " (" + (enc.isSweep360 ? "360° sweep" : enc.gestureType) + "): \"" + enc.spokenQuote + "\"";
+    return enc;
+  }
+
+  function doWalkBearing(deg, steps) {
+    var useDeg = Number.isFinite(Number(deg)) ? ((Number(deg) % 360) + 360) % 360 : radToDeg360(gestureField.bearingRad);
+    var count = Number.isFinite(Number(steps)) && Number(steps) > 0 ? Number(steps) : 1;
+    var rad = (useDeg * Math.PI) / 180;
+    gestureField.walkBearing(rad, 108 * count, plain);
+    plain.triggerStepPulse();
+    highlightBearingButtons(Math.round(useDeg / 45) * 45 % 360);
+    syncAndRender(0.04);
+    refreshFindingsLog();
+    refreshAllReadouts(true);
+    return getInvariantsSnapshot();
+  }
+
+  function doSeekCenter() {
+    gestureField.stepSeekCenter(plain);
+    plain.triggerStepPulse();
+    highlightBearingButtons(-1);
+    syncAndRender(0.05);
+    refreshFindingsLog();
+    refreshAllReadouts(true);
+    var findings = gestureField.getFieldFindings();
+    if (findings.length > 0) {
+      parcelReadout.textContent = findings[findings.length - 1].text;
+    }
+    return getInvariantsSnapshot();
+  }
+
+  function doSeekOutside() {
+    gestureField.stepSeekOutside(plain);
+    plain.triggerTollboothSound();
+    highlightBearingButtons(-1);
+    syncAndRender(0.05);
+    refreshFindingsLog();
+    refreshAllReadouts(true);
+    var findings = gestureField.getFieldFindings();
+    if (findings.length > 0) {
+      parcelReadout.textContent = findings[findings.length - 1].text;
+    }
+    return getInvariantsSnapshot();
+  }
+
+  function doResetJourney() {
+    gestureField.resetJourney();
+    gestureField.setPaused(false);
+    highlightBearingButtons(-1);
+    parcelReadout.textContent = "Drag plain or use WASD / Arrows to steer any 360° bearing";
+    syncAndRender(0);
+    refreshWitnessFeed();
+    refreshFindingsLog();
+    refreshAllReadouts(true);
+    return getInvariantsSnapshot();
+  }
+
+  function getInvariantsSnapshot() {
+    var inv = gestureField.getTopologyInvariants();
+    var arch = gestureField.getArchStage();
+    var vec = gestureField.getVectorSummary();
+    var sur = lastSample || plain.sampleSurroundings(gestureField.worldX, gestureField.worldY, 560);
+    return {
+      centerLocatable: false,
+      isOnlyOutskirtsOfItself: true,
+      outsideConfirmed: false,
+      wallsOrGatesCount: 0,
+      gestureVectorCancelsTowardZero: true,
+      escapedPenthesilea: false,
+      hoursWalked: inv.hoursWalked,
+      distanceKm: inv.distanceKm,
+      limbosCrossed: inv.limbosCrossed,
+      wrinklesProbed: inv.wrinklesProbed,
+      encounterCount: inv.encounterCount,
+      resultantMagnitude: inv.resultantMagnitude,
+      cancellationRatio: vec.cancellationRatio,
+      archPhase: arch.phaseId,
+      mode: gestureField.mode,
+      limboSectorCode: sur.limboSectorCode,
+      reducedMotion: isReducedMotion,
+      muted: plain.isMuted()
+    };
+  }
+
+  btnAsk.addEventListener("click", doAskPasserby);
+  btnCenter.addEventListener("click", doSeekCenter);
+  btnOutside.addEventListener("click", doSeekOutside);
+  btnReset.addEventListener("click", doResetJourney);
+  btnMute.addEventListener("click", function () { toggleMute(); });
+  btnPlates.addEventListener("click", function () { togglePlates(); });
+  btnPlateClose.addEventListener("click", function () { togglePlates(false); });
+
+  btnDrift.addEventListener("click", function () {
+    if (isReducedMotion) return;
+    gestureField.setPaused(!gestureField.paused);
+    refreshAllReadouts(false);
+  });
+
+  var bearingButtons = document.querySelectorAll("[data-bearing-deg]");
+  for (var b = 0; b < bearingButtons.length; b += 1) {
+    (function (btn) {
+      btn.addEventListener("click", function () {
+        var deg = Number(btn.getAttribute("data-bearing-deg"));
+        doWalkBearing(deg, 1);
+      });
+    })(bearingButtons[b]);
+  }
+
+  var viewTabs = document.querySelectorAll("[data-plate-view]");
+  for (var v = 0; v < viewTabs.length; v += 1) {
+    (function (tab) {
+      tab.addEventListener("click", function () {
+        var targetView = tab.getAttribute("data-plate-view") || "diptych";
+        diptychGrid.setAttribute("data-view", targetView);
+        for (var j = 0; j < viewTabs.length; j += 1) {
+          viewTabs[j].setAttribute("aria-pressed", viewTabs[j] === tab ? "true" : "false");
+        }
+      });
+    })(viewTabs[v]);
+  }
+
+  function togglePlateZoom() {
+    var nextZoom = diptychGrid.getAttribute("data-zoom") !== "true";
+    diptychGrid.setAttribute("data-zoom", nextZoom ? "true" : "false");
+    btnPlateZoom.setAttribute("aria-pressed", nextZoom ? "true" : "false");
+  }
+  btnPlateZoom.addEventListener("click", togglePlateZoom);
+
+  plateDrawer.addEventListener("click", function (ev) {
+    if (ev.target === plateDrawer) {
+      togglePlates(false);
+    }
+  });
+
+  plainCanvas.addEventListener("pointerdown", function (ev) {
+    var rect = plainCanvas.getBoundingClientRect();
+    var px = ev.clientX - rect.left;
+    var py = ev.clientY - rect.top;
+    if (plainCanvas.setPointerCapture) {
+      try { plainCanvas.setPointerCapture(ev.pointerId); } catch (_e) {}
+    }
+    var hit = plain.hitTest(px, py);
+    if (hit && hit.id) {
+      selectedStoneId = hit.id;
+      parcelReadout.textContent = hit.label + " — " + hit.detail;
+    }
+    var rad = plain.screenToBearing(px, py);
+    pointerState.active = true;
+    pointerState.steerRad = rad;
+    pointerState.lastDragStepAt = performance.now();
+    gestureField.setMode("walk", plain);
+    gestureField.setBearing(rad);
+    if (isReducedMotion || gestureField.paused) {
+      gestureField.walkBearing(rad, 72, plain);
+      syncAndRender(0.03);
+      refreshFindingsLog();
+      refreshAllReadouts(true);
+    } else {
+      refreshAllReadouts(true);
+    }
+  });
+
+  plainCanvas.addEventListener("pointermove", function (ev) {
+    var rect = plainCanvas.getBoundingClientRect();
+    var px = ev.clientX - rect.left;
+    var py = ev.clientY - rect.top;
+    if (pointerState.active) {
+      var rad = plain.screenToBearing(px, py);
+      pointerState.steerRad = rad;
+      gestureField.setBearing(rad);
+      if (isReducedMotion && performance.now() - pointerState.lastDragStepAt > 90) {
+        pointerState.lastDragStepAt = performance.now();
+        gestureField.walkBearing(rad, 42, plain);
+        syncAndRender(0.02);
+        refreshAllReadouts(true);
+      }
+    } else {
+      var hit = plain.hitTest(px, py);
+      if (hit && hit.label) {
+        parcelReadout.textContent = hit.label + " — " + hit.detail;
+      }
+    }
+  });
+
+  function releasePointer() {
+    pointerState.active = false;
+    pointerState.steerRad = NaN;
+  }
+  plainCanvas.addEventListener("pointerup", releasePointer);
+  plainCanvas.addEventListener("pointercancel", releasePointer);
+
+  window.addEventListener("keydown", function (ev) {
+    if (ev.ctrlKey || ev.metaKey || ev.altKey) return;
+    var key = ev.key;
+    var lower = key.toLowerCase();
+
+    if (key === "Escape") {
+      if (!plateDrawer.hidden) {
+        ev.preventDefault();
+        togglePlates(false);
+      }
+      return;
+    }
+    if (lower === "p") { ev.preventDefault(); togglePlates(); return; }
+    if (lower === "z" && !plateDrawer.hidden) { ev.preventDefault(); togglePlateZoom(); return; }
+    if (!plateDrawer.hidden) return;
+
+    if (lower === "m") { ev.preventDefault(); toggleMute(); return; }
+    if (lower === "q") { ev.preventDefault(); doAskPasserby(); return; }
+    if (key === " " && (!document.activeElement || document.activeElement.tagName !== "BUTTON")) {
+      ev.preventDefault();
+      doAskPasserby();
+      return;
+    }
+    if (lower === "c") { ev.preventDefault(); doSeekCenter(); return; }
+    if (lower === "o") { ev.preventDefault(); doSeekOutside(); return; }
+    if (lower === "r") { ev.preventDefault(); doResetJourney(); return; }
+    if (lower === "g" && !isReducedMotion) {
+      ev.preventDefault();
+      gestureField.setPaused(!gestureField.paused);
+      refreshAllReadouts(false);
+      return;
+    }
+
+    if (key === "ArrowUp" || lower === "w") {
+      ev.preventDefault();
+      heldKeys.up = true;
+      if (isReducedMotion || !ev.repeat) doWalkBearing(270, 0.55);
+    } else if (key === "ArrowDown" || lower === "s") {
+      ev.preventDefault();
+      heldKeys.down = true;
+      if (isReducedMotion || !ev.repeat) doWalkBearing(90, 0.55);
+    } else if (key === "ArrowLeft" || lower === "a") {
+      ev.preventDefault();
+      heldKeys.left = true;
+      if (isReducedMotion || !ev.repeat) doWalkBearing(180, 0.55);
+    } else if (key === "ArrowRight" || lower === "d") {
+      ev.preventDefault();
+      heldKeys.right = true;
+      if (isReducedMotion || !ev.repeat) doWalkBearing(0, 0.55);
+    }
+  });
+
+  window.addEventListener("keyup", function (ev) {
+    var lower = ev.key.toLowerCase();
+    if (ev.key === "ArrowUp" || lower === "w") heldKeys.up = false;
+    if (ev.key === "ArrowDown" || lower === "s") heldKeys.down = false;
+    if (ev.key === "ArrowLeft" || lower === "a") heldKeys.left = false;
+    if (ev.key === "ArrowRight" || lower === "d") heldKeys.right = false;
+  });
+
+  if (mediaQuery && typeof mediaQuery.addEventListener === "function") {
+    mediaQuery.addEventListener("change", function (ev) {
+      isReducedMotion = Boolean(ev.matches);
+      plain.setReducedMotion(isReducedMotion);
+      gestureField.setReducedMotion(isReducedMotion);
+      syncAndRender(0);
+      refreshAllReadouts(false);
+    });
+  }
+
+  window.addEventListener("resize", function () {
+    resizeCanvases();
+    refreshAllReadouts(false);
+  });
+
+  var lastFrameMs = performance.now();
+  var prevFindingsCount = 0;
+  function tick(nowMs) {
+    var dt = Math.min(0.08, Math.max(0, (nowMs - lastFrameMs) / 1000));
+    lastFrameMs = nowMs;
+
+    if (!isReducedMotion && plateDrawer.hidden) {
+      var mx = (heldKeys.right ? 1 : 0) - (heldKeys.left ? 1 : 0);
+      var my = (heldKeys.down ? 1 : 0) - (heldKeys.up ? 1 : 0);
+      gestureField.update(
+        dt,
+        {
+          moveX: mx,
+          moveY: my,
+          pointerActive: pointerState.active,
+          steerBearingRad: pointerState.steerRad,
+          reducedMotion: isReducedMotion,
+          paused: gestureField.paused
+        },
+        plain
+      );
+      syncAndRender(dt);
+
+      uiAccum += dt;
+      if (uiAccum >= 0.16) {
+        uiAccum = 0;
+        var curFindings = gestureField.getFieldFindings();
+        if (curFindings.length !== prevFindingsCount) {
+          prevFindingsCount = curFindings.length;
+          refreshFindingsLog();
+        }
+        refreshAllReadouts(true);
+      }
+    }
+
+    window.requestAnimationFrame(tick);
+  }
+
+  window.__PENTHESILEA__ = {
+    getInvariants: getInvariantsSnapshot,
+    getStonesCatalog: function () {
+      return window.PenthesileaDilutedOutskirts.CANONICAL_STONES.slice();
+    },
+    getSurroundings: function () {
+      return plain.sampleSurroundings(gestureField.worldX, gestureField.worldY, 560);
+    },
+    askPasserby: doAskPasserby,
+    walkBearing: doWalkBearing,
+    seekCenter: doSeekCenter,
+    seekOutside: doSeekOutside,
+    togglePlates: togglePlates,
+    toggleMute: toggleMute,
+    paintPlateFallbacks: paintPlateFallbacks,
+    reset: doResetJourney,
+    getEncounters: function () { return gestureField.getEncounters(); },
+    getVectorSummary: function () { return gestureField.getVectorSummary(); },
+    getArchStage: function () { return gestureField.getArchStage(); },
+    getFieldFindings: function () { return gestureField.getFieldFindings(); },
+    getState: function () { return gestureField.getState(); }
+  };
+
+  buildStoneRows();
+  paintPlateFallbacks();
+  resizeCanvases();
+  refreshWitnessFeed();
+  refreshFindingsLog();
+  refreshAllReadouts(true);
+  window.requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>

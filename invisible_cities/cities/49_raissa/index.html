@@ -1,0 +1,3649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Raissa — Hidden Skein in the City of Sadness</title>
+<style>
+:root {
+  --rai-grim-slate-night: #13171d;
+  --rai-soot-ash-wall: #222933;
+  --rai-zinc-counter-pewter: #566373;
+  --rai-rain-bruise-blue: #39485a;
+  --rai-parchment-vellum: #efe3c4;
+  --rai-filament-spun-gold: #f4c552;
+  --rai-ragout-terracotta: #c95b3c;
+  --rai-francolin-speckle-amber: #e29a2e;
+  --rai-filament-ivory: #fff0b8;
+  --rai-deep-mortar: #0d1015;
+  --rai-mist-pewter: #9aa8b8;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+  background: var(--rai-grim-slate-night);
+  color: var(--rai-parchment-vellum);
+  font-family: "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+raissa-hidden-loom,
+raissa-masthead-arch,
+raissa-city-crest,
+raissa-masthead-tools,
+raissa-cutaway-wing,
+grim-street-crosssection,
+raissa-cutaway-stage,
+grim-zone-readout,
+raissa-chamber-ledger,
+second-by-second-shutter,
+raissa-shutter-actions,
+raissa-shutter-metrics,
+shutter-metric-chip,
+francolin-parchment-node,
+raissa-parchment-head,
+raissa-vellum-row,
+raissa-vellum-medallion,
+raissa-philosopher-folio,
+raissa-active-link-card,
+raissa-shutter-proof-box,
+raissa-invariant-seal,
+invisible-joy-filament,
+raissa-skein-header,
+raissa-skein-rail,
+causal-link-bead,
+raissa-plate-drawer,
+raissa-plate-sheet,
+raissa-plate-topbar,
+raissa-plate-grid,
+raissa-plate-folio,
+plate-quota-card {
+  display: block;
+}
+
+raissa-plate-drawer[hidden],
+plate-quota-card[hidden],
+raissa-plate-folio[hidden],
+.rai-plate-img[hidden] {
+  display: none !important;
+}
+
+.rai-loom-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1.56fr) minmax(0, 1fr);
+  gap: 8px 10px;
+  padding: 8px 12px 10px;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  align-content: start;
+  background:
+    radial-gradient(circle at 76% 20%, rgba(244, 197, 82, 0.06), transparent 44%),
+    linear-gradient(180deg, #10141a 0%, var(--rai-grim-slate-night) 52%, #0e1217 100%);
+}
+
+.rai-masthead {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px 12px;
+  padding: 5px 10px;
+  background: rgba(34, 41, 51, 0.92);
+  border: 1px solid rgba(86, 99, 115, 0.58);
+  border-radius: 5px;
+}
+
+.rai-crest {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+}
+
+.rai-crest-title {
+  font-size: 1.06rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--rai-parchment-vellum);
+}
+
+.rai-crest-epithet {
+  font-size: 0.76rem;
+  color: var(--rai-mist-pewter);
+  font-style: italic;
+}
+
+.rai-masthead-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.rai-duality-seal {
+  display: inline-block;
+  padding: 3px 8px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  color: var(--rai-filament-spun-gold);
+  background: rgba(19, 23, 29, 0.88);
+  border: 1px solid rgba(244, 197, 82, 0.42);
+  border-radius: 3px;
+}
+
+.rai-cutaway-wing {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.rai-crosssection {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 6px;
+  background: var(--rai-soot-ash-wall);
+  border: 1px solid rgba(86, 99, 115, 0.62);
+  border-radius: 5px;
+  min-width: 0;
+}
+
+.rai-cutaway-stage {
+  position: relative;
+  width: 100%;
+  height: 316px;
+  border: 1px solid rgba(57, 72, 90, 0.85);
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--rai-deep-mortar);
+}
+
+.rai-cutaway-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  touch-action: manipulation;
+}
+
+.rai-grim-readout {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 5px 8px;
+  min-height: 44px;
+  background: rgba(19, 23, 29, 0.9);
+  border: 1px solid rgba(86, 99, 115, 0.55);
+  border-left: 3px solid var(--rai-zinc-counter-pewter);
+  border-radius: 4px;
+}
+
+.rai-grim-readout-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--rai-parchment-vellum);
+}
+
+.rai-grim-readout-locus {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+  font-size: 0.65rem;
+  color: var(--rai-filament-spun-gold);
+}
+
+.rai-grim-readout-body {
+  font-size: 0.7rem;
+  line-height: 1.3;
+  color: var(--rai-mist-pewter);
+}
+
+.rai-chamber-ledger {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.rai-chamber-pill {
+  appearance: none;
+  margin: 0;
+  padding: 4px 5px;
+  min-width: 0;
+  background: rgba(19, 23, 29, 0.86);
+  color: var(--rai-mist-pewter);
+  border: 1px solid rgba(86, 99, 115, 0.5);
+  border-radius: 3px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+  font-size: 0.62rem;
+  line-height: 1.2;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 140ms ease, color 140ms ease, background 140ms ease;
+}
+
+.rai-chamber-pill:hover,
+.rai-chamber-pill:focus-visible,
+.rai-chamber-pill[data-active="true"] {
+  color: var(--rai-parchment-vellum);
+  border-color: var(--rai-parchment-vellum);
+  background: rgba(57, 72, 90, 0.52);
+  outline: none;
+}
+
+.rai-shutter-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 6px 8px;
+  background: var(--rai-soot-ash-wall);
+  border: 1px solid rgba(244, 197, 82, 0.36);
+  border-radius: 5px;
+}
+
+.rai-shutter-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+}
+
+.rai-btn {
+  appearance: none;
+  margin: 0;
+  padding: 5px 9px;
+  background: rgba(19, 23, 29, 0.92);
+  color: var(--rai-parchment-vellum);
+  border: 1px solid rgba(86, 99, 115, 0.72);
+  border-radius: 4px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+  font-size: 0.67rem;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background 130ms ease, border-color 130ms ease, color 130ms ease;
+}
+
+.rai-btn:hover,
+.rai-btn:focus-visible {
+  border-color: var(--rai-filament-spun-gold);
+  color: var(--rai-filament-ivory);
+  background: rgba(57, 72, 90, 0.6);
+  outline: none;
+}
+
+.rai-btn-primary {
+  border-color: var(--rai-filament-spun-gold);
+  background: rgba(244, 197, 82, 0.14);
+  color: var(--rai-filament-ivory);
+  font-weight: 700;
+}
+
+.rai-btn-primary[data-frozen="true"] {
+  border-color: var(--rai-ragout-terracotta);
+  background: rgba(201, 91, 60, 0.28);
+  color: var(--rai-filament-ivory);
+}
+
+.rai-btn-gold {
+  border-color: rgba(226, 154, 46, 0.78);
+  color: var(--rai-filament-spun-gold);
+}
+
+.rai-shutter-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.rai-metric-chip {
+  padding: 4px 6px;
+  min-width: 0;
+  background: rgba(19, 23, 29, 0.88);
+  border: 1px solid rgba(86, 99, 115, 0.5);
+  border-radius: 3px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+  font-size: 0.62rem;
+  line-height: 1.25;
+  color: var(--rai-parchment-vellum);
+  word-break: break-word;
+}
+
+.rai-parchment-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 7px;
+  padding: 8px 10px;
+  min-width: 0;
+  background:
+    linear-gradient(180deg, rgba(34, 41, 51, 0.96) 0%, rgba(23, 29, 37, 0.98) 100%);
+  border: 1px solid rgba(226, 154, 46, 0.45);
+  border-radius: 5px;
+}
+
+.rai-parchment-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.rai-parchment-title {
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--rai-filament-spun-gold);
+}
+
+.rai-parchment-sub {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+  font-size: 0.62rem;
+  color: var(--rai-francolin-speckle-amber);
+}
+
+.rai-vellum-row {
+  display: grid;
+  grid-template-columns: 146px minmax(0, 1fr);
+  gap: 8px;
+  align-items: stretch;
+}
+
+.rai-vellum-wrap {
+  width: 100%;
+  height: 112px;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid rgba(226, 154, 46, 0.55);
+  background: var(--rai-parchment-vellum);
+}
+
+.rai-feather-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.rai-philosopher-folio {
+  padding: 7px 9px;
+  background: rgba(239, 227, 196, 0.95);
+  color: #1c222a;
+  border: 1px solid var(--rai-francolin-speckle-amber);
+  border-radius: 4px;
+  font-size: 0.72rem;
+  line-height: 1.35;
+  font-style: italic;
+}
+
+.rai-active-link-card {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 7px 9px;
+  background: rgba(19, 23, 29, 0.92);
+  border: 1px solid rgba(244, 197, 82, 0.48);
+  border-left: 3px solid var(--rai-filament-spun-gold);
+  border-radius: 4px;
+}
+
+.rai-active-link-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 6px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+  font-size: 0.64rem;
+  color: var(--rai-filament-spun-gold);
+}
+
+.rai-active-link-actor {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--rai-filament-ivory);
+}
+
+.rai-active-link-quote {
+  font-size: 0.71rem;
+  line-height: 1.32;
+  color: var(--rai-parchment-vellum);
+}
+
+.rai-active-link-arrow {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+  font-size: 0.63rem;
+  color: var(--rai-francolin-speckle-amber);
+}
+
+.rai-shutter-proof-box {
+  padding: 5px 8px;
+  background: rgba(57, 72, 90, 0.28);
+  border: 1px solid rgba(86, 99, 115, 0.52);
+  border-radius: 4px;
+  font-size: 0.68rem;
+  line-height: 1.3;
+  color: var(--rai-parchment-vellum);
+}
+
+.rai-invariant-seal {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.rai-invariant-pill {
+  display: block;
+  padding: 4px 6px;
+  min-width: 0;
+  background: rgba(13, 16, 21, 0.92);
+  border: 1px solid rgba(244, 197, 82, 0.36);
+  border-radius: 3px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+  font-size: 0.6rem;
+  line-height: 1.22;
+  color: var(--rai-filament-ivory);
+  word-break: break-word;
+}
+
+.rai-invariant-pill[data-false="true"] {
+  border-color: rgba(201, 91, 60, 0.65);
+  color: #f3b8a6;
+}
+
+.rai-joy-filament {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 6px 8px;
+  background: var(--rai-soot-ash-wall);
+  border: 1px solid rgba(244, 197, 82, 0.4);
+  border-radius: 5px;
+  min-width: 0;
+}
+
+.rai-skein-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+}
+
+.rai-skein-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--rai-filament-spun-gold);
+}
+
+.rai-skein-status {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+  font-size: 0.63rem;
+  color: var(--rai-mist-pewter);
+}
+
+.rai-skein-rail {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.rai-link-bead {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2px;
+  padding: 5px 6px;
+  min-width: 0;
+  background: rgba(19, 23, 29, 0.9);
+  border: 1px solid rgba(244, 197, 82, 0.28);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: border-color 140ms ease, background 140ms ease, transform 140ms ease;
+}
+
+.rai-link-bead:hover,
+.rai-link-bead:focus-visible,
+.rai-link-bead[data-traced="true"] {
+  border-color: var(--rai-filament-spun-gold);
+  background: rgba(57, 72, 90, 0.56);
+  outline: none;
+}
+
+.rai-link-bead[data-spark="true"] {
+  box-shadow: inset 0 0 0 1px rgba(255, 240, 184, 0.42);
+}
+
+.rai-bead-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--rai-filament-spun-gold);
+}
+
+.rai-bead-note {
+  font-size: 0.57rem;
+  color: var(--rai-mist-pewter);
+}
+
+.rai-bead-summary {
+  font-size: 0.65rem;
+  line-height: 1.24;
+  color: var(--rai-parchment-vellum);
+  word-break: break-word;
+}
+
+.rai-plate-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  padding: 16px;
+  overflow-y: auto;
+  background: rgba(10, 13, 18, 0.88);
+  backdrop-filter: blur(5px);
+}
+
+.rai-plate-sheet {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 12px 14px;
+  background: var(--rai-soot-ash-wall);
+  border: 1px solid rgba(244, 197, 82, 0.55);
+  border-radius: 6px;
+}
+
+.rai-plate-topbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid rgba(86, 99, 115, 0.55);
+}
+
+.rai-plate-heading {
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--rai-filament-spun-gold);
+}
+
+.rai-plate-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.rai-plate-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.rai-plate-grid[data-view="map"] .rai-plate-folio[data-plate-kind="image"],
+.rai-plate-grid[data-view="vista"] .rai-plate-folio[data-plate-kind="map"] {
+  display: none;
+}
+
+.rai-plate-grid[data-view="map"],
+.rai-plate-grid[data-view="vista"] {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.rai-plate-folio {
+  padding: 8px;
+  background: rgba(19, 23, 29, 0.94);
+  border: 1px solid rgba(86, 99, 115, 0.6);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.rai-plate-caption {
+  display: block;
+  margin-bottom: 6px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+  font-size: 0.65rem;
+  color: var(--rai-parchment-vellum);
+}
+
+.rai-plate-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 66vh;
+  object-fit: contain;
+  border-radius: 3px;
+  background: #0e1217;
+  transform-origin: center center;
+  transition: transform 180ms ease;
+}
+
+.rai-plate-sheet[data-zoom="true"] .rai-plate-img {
+  transform: scale(1.65);
+}
+
+.rai-quota-card {
+  padding: 8px;
+  background: rgba(19, 23, 29, 0.96);
+  border: 1px dashed var(--rai-francolin-speckle-amber);
+  border-radius: 4px;
+}
+
+.rai-quota-badge {
+  display: block;
+  margin-bottom: 6px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+  font-size: 0.64rem;
+  color: var(--rai-filament-spun-gold);
+}
+
+.rai-quota-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 3px;
+  border: 1px solid rgba(86, 99, 115, 0.55);
+}
+
+.rai-quota-note {
+  display: block;
+  margin-top: 5px;
+  font-size: 0.68rem;
+  color: var(--rai-mist-pewter);
+}
+
+@media (max-width: 960px) {
+  .rai-loom-shell {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 8px;
+    gap: 8px;
+  }
+  .rai-cutaway-stage {
+    height: 226px;
+  }
+  .rai-chamber-ledger,
+  .rai-shutter-metrics,
+  .rai-skein-rail {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .rai-vellum-row,
+  .rai-invariant-seal,
+  .rai-plate-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .rai-plate-drawer {
+    padding: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rai-chamber-pill,
+  .rai-btn,
+  .rai-link-bead,
+  .rai-plate-img {
+    transition: none;
+  }
+}
+</style>
+</head>
+<body>
+<raissa-hidden-loom class="rai-loom-shell" id="rai-loom-root" data-reduced-motion="false">
+  <raissa-masthead-arch class="rai-masthead">
+    <raissa-city-crest class="rai-crest">
+      <raissa-crest-title class="rai-crest-title">RAISSA</raissa-crest-title>
+      <raissa-crest-epithet class="rai-crest-epithet">City of Unrelieved Sadness &amp; the Unseen Simultaneous Thread</raissa-crest-epithet>
+    </raissa-city-crest>
+    <raissa-masthead-tools class="rai-masthead-tools">
+      <raissa-duality-seal class="rai-duality-seal" id="rai-duality-seal">SADNESS: CONSTANT · HAPPY SKEIN: 10/10</raissa-duality-seal>
+      <button type="button" class="rai-btn" id="rai-btn-mute" aria-pressed="true">[M] Duet: Muted</button>
+      <button type="button" class="rai-btn rai-btn-gold" id="rai-btn-plates" aria-expanded="false">[P] Royal Plates</button>
+    </raissa-masthead-tools>
+  </raissa-masthead-arch>
+
+  <raissa-cutaway-wing class="rai-cutaway-wing">
+    <grim-street-crosssection class="rai-crosssection" id="rai-grim-crosssection">
+      <raissa-cutaway-stage class="rai-cutaway-stage">
+        <canvas class="rai-cutaway-canvas" id="rai-cutaway-canvas" width="900" height="480" aria-label="Architectural cutaway of unhappy Raissa overlaid with the darting 10-node golden joy filament"></canvas>
+      </raissa-cutaway-stage>
+
+      <grim-zone-readout class="rai-grim-readout" id="rai-grim-readout" aria-live="polite">
+        <raissa-grim-readout-head class="rai-grim-readout-head">
+          <raissa-grim-readout-title id="rai-grim-title">River Embankment Railings · Overt Sadness Unabated</raissa-grim-readout-title>
+          <raissa-grim-readout-locus class="rai-grim-readout-locus" id="rai-grim-locus">HOVER OR CLICK CHAMBERS &amp; GOLDEN NODES</raissa-grim-readout-locus>
+        </raissa-grim-readout-head>
+        <raissa-grim-readout-body class="rai-grim-readout-body" id="rai-grim-detail">Above the rain-pocked black river arch, bowed citizens lean on wet iron railings pressing clenched fists against their temples while the unseen golden filament darts overhead.</raissa-grim-readout-body>
+      </grim-zone-readout>
+
+      <raissa-chamber-ledger class="rai-chamber-ledger" id="rai-chamber-ledger" role="group" aria-label="Eight overt chambers of unhappy Raissa">
+        <button type="button" class="rai-chamber-pill" data-grim-id="river_railing" data-active="true" title="Figures leaning on river railings pressing fists to their temples">I · River Railings &amp; Temples</button>
+        <button type="button" class="rai-chamber-pill" data-grim-id="wringing_street" title="Streets where people walk wringing their hands and passersby cursing crying children">II · Wringing Hands &amp; Curses</button>
+        <button type="button" class="rai-chamber-pill" data-grim-id="bad_dream_garret" title="Morning waking from one bad dream as another begins">III · Waking Bad Dreams</button>
+        <button type="button" class="rai-chamber-pill" data-grim-id="hammer_workbench" title="Workbenches where every moment hammers strike fingers or needles prick thumbs">IV · Struck Fingers &amp; Needles</button>
+        <button type="button" class="rai-chamber-pill" data-grim-id="awry_ledgers" title="Awry columns of figures in the ledgers of merchants and bankers">V · Awry Merchant Ledgers</button>
+        <button type="button" class="rai-chamber-pill" data-grim-id="zinc_wineshop" title="Rows of empty glasses on the messy zinc counters of wineshops with bent grim heads">VI · Zinc Counters &amp; Bent Heads</button>
+        <button type="button" class="rai-chamber-pill" data-grim-id="quarrel_windows" title="Summer windows resounding with domestic quarrels and broken dishes">VII · Quarrels &amp; Broken Dishes</button>
+        <button type="button" class="rai-chamber-pill" data-grim-id="slate_ramparts_shell" title="Rain-darkened slate scaffolding, pergola, ramparts and garret masonry">VIII · Rain-Darkened Ramparts</button>
+      </raissa-chamber-ledger>
+    </grim-street-crosssection>
+
+    <second-by-second-shutter class="rai-shutter-bar" id="rai-shutter-bar">
+      <raissa-shutter-actions class="rai-shutter-actions">
+        <button type="button" class="rai-btn rai-btn-primary" id="rai-btn-freeze" data-frozen="false">[Space / F] Freeze Any Second</button>
+        <button type="button" class="rai-btn" id="rai-btn-trace-prev">[&larr;] Prev Link</button>
+        <button type="button" class="rai-btn" id="rai-btn-trace-next">[&rarr;] Trace Causal Chain</button>
+        <button type="button" class="rai-btn" id="rai-btn-trace-clear">All 10</button>
+        <button type="button" class="rai-btn rai-btn-gold" id="rai-btn-restretch">[R] Unravel &amp; Re-stretch</button>
+      </raissa-shutter-actions>
+      <raissa-shutter-metrics class="rai-shutter-metrics">
+        <shutter-metric-chip class="rai-metric-chip" id="rai-chip-time">LIVE t=0.000s · SHUTTER OPEN</shutter-metric-chip>
+        <shutter-metric-chip class="rai-metric-chip" id="rai-chip-links">COEXISTING LINKS: 10 / 10</shutter-metric-chip>
+        <shutter-metric-chip class="rai-metric-chip" id="rai-chip-skein">SKEIN GEN #1 · 0ms GAP</shutter-metric-chip>
+        <shutter-metric-chip class="rai-metric-chip" id="rai-chip-unaware">HAPPY CITY SELF-AWARE: FALSE</shutter-metric-chip>
+      </raissa-shutter-metrics>
+    </second-by-second-shutter>
+  </raissa-cutaway-wing>
+
+  <francolin-parchment-node class="rai-parchment-panel" id="rai-parchment-node">
+    <raissa-parchment-head class="rai-parchment-head">
+      <raissa-parchment-label class="rai-parchment-title">FRANCOLIN PARCHMENT ILLUMINATION</raissa-parchment-label>
+      <raissa-parchment-tag class="rai-parchment-sub" id="rai-parchment-tag">SPECKLED RED &amp; YELLOW FEATHER</raissa-parchment-tag>
+    </raissa-parchment-head>
+
+    <raissa-vellum-row class="rai-vellum-row">
+      <raissa-vellum-medallion class="rai-vellum-wrap">
+        <canvas class="rai-feather-canvas" id="rai-feather-canvas" width="292" height="224" aria-label="Illuminated parchment folio with red and yellow speckled francolin feather"></canvas>
+      </raissa-vellum-medallion>
+      <raissa-philosopher-folio class="rai-philosopher-folio" id="rai-philosopher-quote">Also in Raissa, city of sadness, there runs an invisible thread that binds one living being to another for a moment, then unravels, then is stretched again between moving points as it draws new and rapid patterns so that at every second the unhappy city contains a happy city unaware of its own existence.</raissa-philosopher-folio>
+    </raissa-vellum-row>
+
+    <raissa-active-link-card class="rai-active-link-card" id="rai-active-link-card" aria-live="polite">
+      <raissa-active-link-meta class="rai-active-link-meta">
+        <raissa-active-link-step id="rai-link-step">LINK 03 / 10 · HIGH TIMBER SCAFFOLDING STAGE</raissa-active-link-step>
+        <raissa-active-link-hz id="rai-link-hz">440.00 Hz LYDIAN</raissa-active-link-hz>
+      </raissa-active-link-meta>
+      <raissa-active-link-actor class="rai-active-link-actor" id="rai-link-actor">Young stonemason on the upper scaffolding</raissa-active-link-actor>
+      <raissa-active-link-quote class="rai-active-link-quote" id="rai-link-quote">A stonemason dropped the polenta from the scaffolding, shouting in high spirits to a young serving-maid: &ldquo;Darling, let me dip into it!&rdquo;</raissa-active-link-quote>
+      <raissa-active-link-arrow class="rai-active-link-arrow" id="rai-link-arrow">Calls down merrily toward the steaming ragout -&gt;</raissa-active-link-arrow>
+    </raissa-active-link-card>
+
+    <raissa-shutter-proof-box class="rai-shutter-proof-box" id="rai-shutter-proof-box">Simultaneity Proof: At every continuous millisecond inside grim Raissa, all 8 overt sorrow chambers persist while 10/10 causal joy links stretch instantaneously across moving points without a single empty frame.</raissa-shutter-proof-box>
+
+    <raissa-invariant-seal class="rai-invariant-seal" id="rai-invariant-seal">
+      <raissa-invariant-pill class="rai-invariant-pill" id="rai-inv-sadness">overtSadnessConstant: true</raissa-invariant-pill>
+      <raissa-invariant-pill class="rai-invariant-pill" id="rai-inv-every-sec">everySecondContainsHappyChain: true</raissa-invariant-pill>
+      <raissa-invariant-pill class="rai-invariant-pill" id="rai-inv-thread">invisibleThreadActiveEverySecond: true</raissa-invariant-pill>
+      <raissa-invariant-pill class="rai-invariant-pill" id="rai-inv-aware" data-false="true">happyCityAwareOfItself: false</raissa-invariant-pill>
+    </raissa-invariant-seal>
+  </francolin-parchment-node>
+
+  <invisible-joy-filament class="rai-joy-filament" id="rai-joy-filament">
+    <raissa-skein-header class="rai-skein-header">
+      <raissa-skein-title class="rai-skein-title">CONTINUOUS 10-LINK CAUSAL JOY FILAMENT · CLICK ANY BEAD OR PRESS [1-9, 0, &larr;, &rarr;]</raissa-skein-title>
+      <raissa-skein-status class="rai-skein-status" id="rai-skein-status">10 / 10 NODES BOUND · PATTERN #1</raissa-skein-status>
+    </raissa-skein-header>
+    <raissa-skein-rail class="rai-skein-rail" id="rai-skein-rail" role="list" aria-label="Ten simultaneous causal links of the hidden happy city">
+      <causal-link-bead class="rai-link-bead" role="button" tabindex="0" data-link-index="0" data-traced="false">
+        <raissa-bead-top class="rai-bead-top"><raissa-bead-num>01 · Laughing Child</raissa-bead-num><raissa-bead-note class="rai-bead-note">349 Hz</raissa-bead-note></raissa-bead-top>
+        <raissa-bead-summary class="rai-bead-summary">Child in a casement window laughs aloud seeing the dog leap below</raissa-bead-summary>
+      </causal-link-bead>
+      <causal-link-bead class="rai-link-bead" role="button" tabindex="0" data-link-index="1" data-traced="false">
+        <raissa-bead-top class="rai-bead-top"><raissa-bead-num>02 · Polenta Dog</raissa-bead-num><raissa-bead-note class="rai-bead-note">392 Hz</raissa-bead-note></raissa-bead-top>
+        <raissa-bead-summary class="rai-bead-summary">Dog jumps onto a zinc shed roof to bite into a piece of fallen polenta</raissa-bead-summary>
+      </causal-link-bead>
+      <causal-link-bead class="rai-link-bead" role="button" tabindex="0" data-link-index="2" data-traced="false">
+        <raissa-bead-top class="rai-bead-top"><raissa-bead-num>03 · Stonemason</raissa-bead-num><raissa-bead-note class="rai-bead-note">440 Hz</raissa-bead-note></raissa-bead-top>
+        <raissa-bead-summary class="rai-bead-summary">Drops polenta from scaffolding shouting &ldquo;Darling, let me dip into it!&rdquo;</raissa-bead-summary>
+      </causal-link-bead>
+      <causal-link-bead class="rai-link-bead" role="button" tabindex="0" data-link-index="3" data-traced="false">
+        <raissa-bead-top class="rai-bead-top"><raissa-bead-num>04 · Ragout Maid</raissa-bead-num><raissa-bead-note class="rai-bead-note">494 Hz</raissa-bead-note></raissa-bead-top>
+        <raissa-bead-summary class="rai-bead-summary">Serving-maid holds up a steaming dish of ragout under the pergola</raissa-bead-summary>
+      </causal-link-bead>
+      <causal-link-bead class="rai-link-bead" role="button" tabindex="0" data-link-index="4" data-traced="false">
+        <raissa-bead-top class="rai-bead-top"><raissa-bead-num>05 · Parasol Maker</raissa-bead-num><raissa-bead-note class="rai-bead-note">523 Hz</raissa-bead-note></raissa-bead-top>
+        <raissa-bead-summary class="rai-bead-summary">Umbrella-maker celebrates selling a finely crafted white lace parasol</raissa-bead-summary>
+      </causal-link-bead>
+      <causal-link-bead class="rai-link-bead" role="button" tabindex="0" data-link-index="5" data-traced="false">
+        <raissa-bead-top class="rai-bead-top"><raissa-bead-num>06 · Rampart Lady</raissa-bead-num><raissa-bead-note class="rai-bead-note">587 Hz</raissa-bead-note></raissa-bead-top>
+        <raissa-bead-summary class="rai-bead-summary">Great lady displays her white lace parasol at the rampart races</raissa-bead-summary>
+      </causal-link-bead>
+      <causal-link-bead class="rai-link-bead" role="button" tabindex="0" data-link-index="6" data-traced="false">
+        <raissa-bead-top class="rai-bead-top"><raissa-bead-num>07 · Jumping Officer</raissa-bead-num><raissa-bead-note class="rai-bead-note">659 Hz</raissa-bead-note></raissa-bead-top>
+        <raissa-bead-summary class="rai-bead-summary">Beloved officer smiles at her while leaping the last barricade jump</raissa-bead-summary>
+      </causal-link-bead>
+      <causal-link-bead class="rai-link-bead" role="button" tabindex="0" data-link-index="7" data-traced="false">
+        <raissa-bead-top class="rai-bead-top"><raissa-bead-num>08 · Flying Horse</raissa-bead-num><raissa-bead-note class="rai-bead-note">698 Hz</raissa-bead-note></raissa-bead-top>
+        <raissa-bead-summary class="rai-bead-summary">Happier horse flies over obstacles seeing a francolin flying in the sky</raissa-bead-summary>
+      </causal-link-bead>
+      <causal-link-bead class="rai-link-bead" role="button" tabindex="0" data-link-index="8" data-traced="false">
+        <raissa-bead-top class="rai-bead-top"><raissa-bead-num>09 · Freed Francolin</raissa-bead-num><raissa-bead-note class="rai-bead-note">784 Hz</raissa-bead-note></raissa-bead-top>
+        <raissa-bead-summary class="rai-bead-summary">Happy francolin bird liberated from its cage by a rejoicing painter</raissa-bead-summary>
+      </causal-link-bead>
+      <causal-link-bead class="rai-link-bead" role="button" tabindex="0" data-link-index="9" data-traced="false">
+        <raissa-bead-top class="rai-bead-top"><raissa-bead-num>10 · Illuminator</raissa-bead-num><raissa-bead-note class="rai-bead-note">880 Hz</raissa-bead-note></raissa-bead-top>
+        <raissa-bead-summary class="rai-bead-summary">Paints red-and-yellow speckled feather on the philosopher&rsquo;s parchment</raissa-bead-summary>
+      </causal-link-bead>
+    </raissa-skein-rail>
+  </invisible-joy-filament>
+
+  <raissa-plate-drawer class="rai-plate-drawer" id="rai-plate-drawer" role="dialog" aria-modal="true" aria-label="Royal Plates of Raissa" hidden>
+    <raissa-plate-sheet class="rai-plate-sheet" id="rai-plate-sheet" data-zoom="false">
+      <raissa-plate-topbar class="rai-plate-topbar">
+        <raissa-plate-heading class="rai-plate-heading">ROYAL PLATES OF RAISSA · SURVEY &amp; ILLUMINATION</raissa-plate-heading>
+        <raissa-plate-controls class="rai-plate-controls">
+          <button type="button" class="rai-btn rai-btn-gold" data-plate-view="diptych" id="rai-tab-diptych">Diptych</button>
+          <button type="button" class="rai-btn" data-plate-view="map" id="rai-tab-map">Survey Map</button>
+          <button type="button" class="rai-btn" data-plate-view="vista" id="rai-tab-vista">Illuminated Vista</button>
+          <button type="button" class="rai-btn" id="rai-btn-plate-zoom">[Z] Loupe 1.65x</button>
+          <button type="button" class="rai-btn rai-btn-primary" id="rai-btn-plate-close">[Esc] Close</button>
+        </raissa-plate-controls>
+      </raissa-plate-topbar>
+      <raissa-plate-grid class="rai-plate-grid" id="rai-plate-grid" data-view="diptych">
+        <raissa-plate-folio class="rai-plate-folio" data-plate-kind="map">
+          <raissa-plate-caption class="rai-plate-caption">PLATE I · CARTOGRAPHIC CUTAWAY SURVEY OF RAISSA (map.png)</raissa-plate-caption>
+          <img class="rai-plate-img" id="rai-map-img" src="map.png" alt="Cartographic Map of Raissa" onload="this.hidden=false;if(this.nextElementSibling)this.nextElementSibling.hidden=true;" onerror="this.hidden=true;if(this.nextElementSibling){this.nextElementSibling.hidden=false;}if(globalThis.__RAISSA_LOOM__&amp;&amp;globalThis.__RAISSA_LOOM__.paintQuotaFallbacks){globalThis.__RAISSA_LOOM__.paintQuotaFallbacks();}">
+          <plate-quota-card class="rai-quota-card" id="rai-map-quota" hidden>
+            <raissa-quota-badge class="rai-quota-badge">PENDING_IMAGE_GENERATOR_QUOTA · RESET 2026-11-11T06:21:14Z</raissa-quota-badge>
+            <canvas class="rai-quota-canvas" id="rai-map-quota-canvas" width="520" height="340" aria-label="Archival cutaway survey fallback for Raissa"></canvas>
+            <raissa-quota-note class="rai-quota-note">Archival copperplate cutaway rendered locally while royal plate awaits generator quota window.</raissa-quota-note>
+          </plate-quota-card>
+        </raissa-plate-folio>
+        <raissa-plate-folio class="rai-plate-folio" data-plate-kind="image">
+          <raissa-plate-caption class="rai-plate-caption">PLATE II · ILLUMINATED VIEW OF HIDDEN &amp; UNHAPPY RAISSA (image.png)</raissa-plate-caption>
+          <img class="rai-plate-img" id="rai-vista-img" src="image.png" alt="Illuminated View of Raissa" onload="this.hidden=false;if(this.nextElementSibling)this.nextElementSibling.hidden=true;" onerror="this.hidden=true;if(this.nextElementSibling){this.nextElementSibling.hidden=false;}if(globalThis.__RAISSA_LOOM__&amp;&amp;globalThis.__RAISSA_LOOM__.paintQuotaFallbacks){globalThis.__RAISSA_LOOM__.paintQuotaFallbacks();}">
+          <plate-quota-card class="rai-quota-card" id="rai-vista-quota" hidden>
+            <raissa-quota-badge class="rai-quota-badge">PENDING_IMAGE_GENERATOR_QUOTA · RESET 2026-11-11T06:21:14Z</raissa-quota-badge>
+            <canvas class="rai-quota-canvas" id="rai-vista-quota-canvas" width="520" height="325" aria-label="Archival scriptorium illumination fallback for Raissa"></canvas>
+            <raissa-quota-note class="rai-quota-note">Archival francolin parchment illumination rendered locally while royal vista awaits generator quota window.</raissa-quota-note>
+          </plate-quota-card>
+        </raissa-plate-folio>
+      </raissa-plate-grid>
+    </raissa-plate-sheet>
+  </raissa-plate-drawer>
+</raissa-hidden-loom>
+<script class="rai-layer-unhappy">
+(function (root) {
+  "use strict";
+
+  var PALETTE = Object.freeze({
+    grimSlateNight: "#13171d",
+    sootAshWall: "#222933",
+    zincCounterPewter: "#566373",
+    rainBruiseBlue: "#39485a",
+    parchmentVellum: "#efe3c4",
+    filamentSpunGold: "#f4c552",
+    ragoutTerracotta: "#c95b3c",
+    francolinSpeckleAmber: "#e29a2e",
+    deepRiverSoot: "#0c1015",
+    mortarShadow: "#192029",
+    mistPewter: "#8596aa"
+  });
+
+  function freezeZone(z) {
+    Object.freeze(z.rectNorm);
+    return Object.freeze(z);
+  }
+
+  var GRIM_ZONES = Object.freeze([
+    freezeZone({
+      id: "river_railing",
+      title: "River Embankment Railings",
+      calvinoStone: "Figures leaning on river railings pressing fists to their temples",
+      rectNorm: { x: 0.03, y: 0.70, w: 0.26, h: 0.25 },
+      detail: "Above the rain-pocked black river arch, bowed citizens lean on wet iron railings pressing clenched fists against their temples."
+    }),
+    freezeZone({
+      id: "wringing_street",
+      title: "Lane of Wringing Hands",
+      calvinoStone: "Streets where people walk wringing their hands and cursing the crying children",
+      rectNorm: { x: 0.03, y: 0.40, w: 0.22, h: 0.28 },
+      detail: "Along slick flagstones passersby pace wringing their hands while shaking bitter fists toward a shuttered sill where a child weeps."
+    }),
+    freezeZone({
+      id: "bad_dream_garret",
+      title: "Garret of Waking Bad Dreams",
+      calvinoStone: "Morning waking from one bad dream as another begins",
+      rectNorm: { x: 0.03, y: 0.11, w: 0.21, h: 0.27 },
+      detail: "Under cold slate rafters a sleeper bolts upright at gray dawn as one dark nightmare unravels only for a heavier dread to coil overhead."
+    }),
+    freezeZone({
+      id: "hammer_workbench",
+      title: "Loft of Struck Thumbs & Needles",
+      calvinoStone: "Workbenches where every moment hammers strike fingers or needles prick thumbs",
+      rectNorm: { x: 0.34, y: 0.11, w: 0.21, h: 0.32 },
+      detail: "Beneath smoked tin lamps iron hammers slip onto bruised fingers and glinting sewing needles prick thumbs at every passing moment."
+    }),
+    freezeZone({
+      id: "awry_ledgers",
+      title: "Counting-House of Awry Ledgers",
+      calvinoStone: "Awry columns of figures in the ledgers of merchants and bankers",
+      rectNorm: { x: 0.41, y: 0.45, w: 0.15, h: 0.24 },
+      detail: "Stooped merchants and bankers hunch over slanted desks where folio columns of figures tilt awry in irreconcilable sums."
+    }),
+    freezeZone({
+      id: "zinc_wineshop",
+      title: "Wineshop of Messy Zinc Counters",
+      calvinoStone: "Rows of empty glasses on the messy zinc counters of wineshops with bent grim heads",
+      rectNorm: { x: 0.30, y: 0.71, w: 0.33, h: 0.24 },
+      detail: "Rows of drained glasses line the stained pewter-zinc bar where drinkers keep their heads bowed to conceal their grim gaze."
+    }),
+    freezeZone({
+      id: "quarrel_windows",
+      title: "Summer Windows of Broken Dishes",
+      calvinoStone: "Summer windows resounding with domestic quarrels and broken dishes",
+      rectNorm: { x: 0.65, y: 0.55, w: 0.19, h: 0.40 },
+      detail: "Half-shuttered summer casements resound with bitter domestic quarrels as cracked plates and porcelain shards tumble into the court."
+    }),
+    freezeZone({
+      id: "slate_ramparts_shell",
+      title: "Rain-Darkened Ramparts & Masonry Shell",
+      calvinoStone: "City of sadness where life is not happy under rain-darkened slate, scaffolding, pergola, and ramparts",
+      rectNorm: { x: 0.57, y: 0.09, w: 0.40, h: 0.44 },
+      detail: "Soot-streaked scaffolding, dripping vine pergola, steeplechase ramparts, north-light garret, and vaulted scriptorium framing grim Raissa."
+    })
+  ]);
+
+  var SHELL_SUB_RECTS = Object.freeze([
+    Object.freeze({ x: 0.25, y: 0.09, w: 0.09, h: 0.35 }),
+    Object.freeze({ x: 0.26, y: 0.45, w: 0.15, h: 0.24 }),
+    Object.freeze({ x: 0.85, y: 0.54, w: 0.12, h: 0.41 })
+  ]);
+
+  var ANCHOR_ZONES = Object.freeze([
+    Object.freeze({ index: 0, id: "laughing_child", zoneLabel: "Tenement Casement Window", baseX: 0.11, baseY: 0.27, driftRadiusX: 0.018, driftRadiusY: 0.020 }),
+    Object.freeze({ index: 1, id: "polenta_dog", zoneLabel: "Courtyard Lean-To Shed Roof", baseX: 0.20, baseY: 0.53, driftRadiusX: 0.022, driftRadiusY: 0.018 }),
+    Object.freeze({ index: 2, id: "merry_stonemason", zoneLabel: "High Timber Scaffolding Stage", baseX: 0.29, baseY: 0.21, driftRadiusX: 0.020, driftRadiusY: 0.022 }),
+    Object.freeze({ index: 3, id: "ragout_maid", zoneLabel: "Rain-Darkened Courtyard Pergola", baseX: 0.38, baseY: 0.56, driftRadiusX: 0.020, driftRadiusY: 0.020 }),
+    Object.freeze({ index: 4, id: "umbrella_maker", zoneLabel: "Vaulted Umbrella-Maker Stall", baseX: 0.49, baseY: 0.63, driftRadiusX: 0.020, driftRadiusY: 0.018 }),
+    Object.freeze({ index: 5, id: "parasol_lady", zoneLabel: "Slate Rampart Promenade", baseX: 0.61, baseY: 0.34, driftRadiusX: 0.024, driftRadiusY: 0.018 }),
+    Object.freeze({ index: 6, id: "leaping_officer", zoneLabel: "Rampart Barricade Jump", baseX: 0.71, baseY: 0.47, driftRadiusX: 0.024, driftRadiusY: 0.020 }),
+    Object.freeze({ index: 7, id: "flying_horse", zoneLabel: "Storm Sky Arch Above Obstacles", baseX: 0.78, baseY: 0.19, driftRadiusX: 0.026, driftRadiusY: 0.022 }),
+    Object.freeze({ index: 8, id: "freed_francolin", zoneLabel: "North-Light Painter Garret Window", baseX: 0.86, baseY: 0.31, driftRadiusX: 0.020, driftRadiusY: 0.020 }),
+    Object.freeze({ index: 9, id: "parchment_illuminator", zoneLabel: "Stone Scriptorium Lectern", baseX: 0.90, baseY: 0.64, driftRadiusX: 0.018, driftRadiusY: 0.020 })
+  ]);
+
+  function clamp(v, lo, hi) {
+    return v < lo ? lo : v > hi ? hi : v;
+  }
+
+  function pointInRect(nx, ny, r) {
+    return nx >= r.x && nx <= r.x + r.w && ny >= r.y && ny <= r.y + r.h;
+  }
+
+  function traceRoundRect(ctx, x, y, w, h, r) {
+    var rad = Math.min(r, w * 0.5, h * 0.5);
+    ctx.beginPath();
+    ctx.moveTo(x + rad, y);
+    ctx.lineTo(x + w - rad, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + rad);
+    ctx.lineTo(x + w, y + h - rad);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - rad, y + h);
+    ctx.lineTo(x + rad, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - rad);
+    ctx.lineTo(x, y + rad);
+    ctx.quadraticCurveTo(x, y, x + rad, y);
+    ctx.closePath();
+  }
+
+  function drawAshlarCourses(ctx, x, y, w, h, rows, cols, strokeColor) {
+    ctx.save();
+    ctx.strokeStyle = strokeColor;
+    ctx.lineWidth = 1;
+    var rowH = h / rows;
+    var colW = w / cols;
+    for (var r = 1; r < rows; r++) {
+      var yy = y + r * rowH;
+      ctx.beginPath();
+      ctx.moveTo(x, yy);
+      ctx.lineTo(x + w, yy);
+      ctx.stroke();
+    }
+    for (var rr = 0; rr < rows; rr++) {
+      var offset = (rr % 2) * (colW * 0.5);
+      for (var c = 1; c < cols; c++) {
+        var xx = x + c * colW - offset;
+        if (xx > x + 2 && xx < x + w - 2) {
+          ctx.beginPath();
+          ctx.moveTo(xx, y + rr * rowH);
+          ctx.lineTo(xx, y + (rr + 1) * rowH);
+          ctx.stroke();
+        }
+      }
+    }
+    ctx.restore();
+  }
+
+  function drawBowedFigure(ctx, cx, cy, scale, facing, fistToTemple) {
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.scale(facing * scale, scale);
+    ctx.fillStyle = "#0e1218";
+    ctx.strokeStyle = "#485769";
+    ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    ctx.moveTo(-9, 22);
+    ctx.lineTo(-7, 2);
+    ctx.quadraticCurveTo(-5, -8, 4, -9);
+    ctx.quadraticCurveTo(10, -8, 9, 4);
+    ctx.lineTo(8, 22);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(6, -12, 4.6, 0, Math.PI * 2);
+    ctx.fill();
+    if (fistToTemple) {
+      ctx.strokeStyle = "#6c7d91";
+      ctx.lineWidth = 2.1;
+      ctx.beginPath();
+      ctx.moveTo(2, -3);
+      ctx.lineTo(10, -4);
+      ctx.lineTo(9, -12);
+      ctx.stroke();
+      ctx.fillStyle = "#566373";
+      ctx.beginPath();
+      ctx.arc(9.2, -12.5, 2.1, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  function renderSkyAndDistantRoofs(ctx, w, h, phaseT) {
+    var skyGrad = ctx.createLinearGradient(0, 0, 0, h);
+    skyGrad.addColorStop(0.0, PALETTE.grimSlateNight);
+    skyGrad.addColorStop(0.38, "#1b2430");
+    skyGrad.addColorStop(0.72, PALETTE.sootAshWall);
+    skyGrad.addColorStop(1.0, PALETTE.deepRiverSoot);
+    ctx.fillStyle = skyGrad;
+    ctx.fillRect(0, 0, w, h);
+
+    var cloudDrift = Math.sin(phaseT * 0.22) * w * 0.012;
+    ctx.fillStyle = "rgba(57, 72, 90, 0.24)";
+    for (var i = 0; i < 5; i++) {
+      var cx = w * (0.14 + i * 0.20) + cloudDrift * (i % 2 === 0 ? 1 : -0.7);
+      var cy = h * (0.06 + (i % 3) * 0.035);
+      ctx.beginPath();
+      ctx.arc(cx, cy, w * 0.075, 0, Math.PI * 2);
+      ctx.arc(cx + w * 0.045, cy + h * 0.01, w * 0.055, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    ctx.fillStyle = "#171d26";
+    ctx.beginPath();
+    ctx.moveTo(0, h * 0.24);
+    var peaks = [
+      [0.04, 0.09], [0.13, 0.05], [0.23, 0.10], [0.31, 0.08],
+      [0.44, 0.04], [0.55, 0.09], [0.64, 0.14], [0.73, 0.12],
+      [0.83, 0.15], [0.91, 0.05], [0.98, 0.10], [1.0, 0.20]
+    ];
+    for (var p = 0; p < peaks.length; p++) {
+      ctx.lineTo(w * peaks[p][0], h * peaks[p][1]);
+    }
+    ctx.lineTo(w, h * 0.32);
+    ctx.lineTo(0, h * 0.32);
+    ctx.closePath();
+    ctx.fill();
+
+    var chimneys = [0.09, 0.19, 0.41, 0.51, 0.89];
+    for (var c = 0; c < chimneys.length; c++) {
+      var chX = w * chimneys[c];
+      var chY = h * (0.055 + (c % 2) * 0.02);
+      ctx.fillStyle = "#1d2530";
+      ctx.fillRect(chX - 4, chY, 8, h * 0.045);
+      ctx.strokeStyle = "rgba(86, 99, 115, 0.28)";
+      ctx.lineWidth = 2.2;
+      ctx.beginPath();
+      ctx.moveTo(chX, chY);
+      var sway = Math.sin(phaseT * 0.9 + c * 1.4) * 8;
+      ctx.bezierCurveTo(chX + 14, chY - 10 + sway * 0.3, chX + 34, chY - 6 - sway * 0.4, chX + 56, chY - 14);
+      ctx.stroke();
+    }
+  }
+
+  function renderCutawayStructure(ctx, w, h, phaseT) {
+    var shellBlocks = [
+      { x: 0.03, y: 0.11, w: 0.22, h: 0.58, fill: "#1d242e", rows: 9, cols: 6 },
+      { x: 0.34, y: 0.11, w: 0.22, h: 0.59, fill: "#1f2732", rows: 9, cols: 6 },
+      { x: 0.65, y: 0.54, w: 0.19, h: 0.41, fill: "#1c232d", rows: 7, cols: 5 },
+      { x: 0.85, y: 0.11, w: 0.12, h: 0.84, fill: "#1b222b", rows: 12, cols: 4 }
+    ];
+    for (var b = 0; b < shellBlocks.length; b++) {
+      var blk = shellBlocks[b];
+      ctx.fillStyle = blk.fill;
+      ctx.fillRect(w * blk.x, h * blk.y, w * blk.w, h * blk.h);
+      drawAshlarCourses(ctx, w * blk.x, h * blk.y, w * blk.w, h * blk.h, blk.rows, blk.cols, "rgba(86, 99, 115, 0.16)");
+      ctx.strokeStyle = PALETTE.rainBruiseBlue;
+      ctx.lineWidth = 1.6;
+      ctx.strokeRect(w * blk.x, h * blk.y, w * blk.w, h * blk.h);
+    }
+
+    ctx.fillStyle = "#27313e";
+    var beamsY = [0.385, 0.688];
+    for (var by = 0; by < beamsY.length; by++) {
+      ctx.fillRect(w * 0.025, h * beamsY[by], w * 0.615, h * 0.016);
+    }
+    ctx.fillRect(w * 0.335, h * 0.432, w * 0.23, h * 0.015);
+    ctx.fillRect(w * 0.565, h * 0.532, w * 0.41, h * 0.016);
+
+    var scX = w * 0.255, scW = w * 0.078, scTop = h * 0.12, scBot = h * 0.45;
+    ctx.strokeStyle = "#62584d";
+    ctx.lineWidth = 2.4;
+    var poles = [scX, scX + scW * 0.5, scX + scW];
+    for (var sp = 0; sp < poles.length; sp++) {
+      ctx.beginPath();
+      ctx.moveTo(poles[sp], scTop);
+      ctx.lineTo(poles[sp], scBot);
+      ctx.stroke();
+    }
+    var decks = [0.215, 0.31, 0.405];
+    for (var d = 0; d < decks.length; d++) {
+      var dy = h * decks[d];
+      ctx.fillStyle = "#4c453e";
+      ctx.fillRect(scX - 4, dy, scW + 8, 4.5);
+      ctx.strokeStyle = "rgba(86, 99, 115, 0.45)";
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(scX, dy);
+      ctx.lineTo(scX + scW, dy + h * 0.085);
+      ctx.moveTo(scX + scW, dy);
+      ctx.lineTo(scX, dy + h * 0.085);
+      ctx.stroke();
+    }
+
+    ctx.fillStyle = "#333f4d";
+    ctx.beginPath();
+    ctx.moveTo(w * 0.155, h * 0.545);
+    ctx.lineTo(w * 0.202, h * 0.508);
+    ctx.lineTo(w * 0.252, h * 0.548);
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = PALETTE.zincCounterPewter;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    ctx.fillStyle = "#181f28";
+    ctx.fillRect(w * 0.165, h * 0.546, w * 0.08, h * 0.135);
+
+    var pgX = w * 0.335, pgW = w * 0.072, pgY = h * 0.485;
+    ctx.strokeStyle = "#4b5968";
+    ctx.lineWidth = 2.2;
+    ctx.strokeRect(pgX, pgY, pgW, h * 0.195);
+    for (var pv = 0; pv < 5; pv++) {
+      var vx = pgX + (pv + 0.5) * (pgW / 5);
+      ctx.strokeStyle = "#2d3d3a";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(vx, pgY - 3);
+      ctx.quadraticCurveTo(vx + 4, pgY + 12, vx - 2, pgY + 22 + Math.sin(phaseT + pv) * 2);
+      ctx.stroke();
+    }
+
+    ctx.fillStyle = "#26303d";
+    ctx.fillRect(w * 0.568, h * 0.355, w * 0.125, h * 0.045);
+    for (var cr = 0; cr < 6; cr++) {
+      ctx.fillRect(w * (0.57 + cr * 0.02), h * 0.335, w * 0.012, h * 0.02);
+    }
+    ctx.fillStyle = "#202833";
+    ctx.fillRect(w * 0.655, h * 0.485, w * 0.185, h * 0.048);
+    var jumps = [0.695, 0.755];
+    for (var j = 0; j < jumps.length; j++) {
+      var jx = w * jumps[j];
+      ctx.strokeStyle = "#7a6a58";
+      ctx.lineWidth = 2.4;
+      ctx.beginPath();
+      ctx.moveTo(jx - 8, h * 0.488);
+      ctx.lineTo(jx + 2, h * 0.448);
+      ctx.lineTo(jx + 11, h * 0.488);
+      ctx.stroke();
+    }
+
+    ctx.strokeStyle = "rgba(86, 99, 115, 0.42)";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(w * 0.78, h * 0.24, w * 0.075, Math.PI, 0);
+    ctx.stroke();
+
+    ctx.fillStyle = "#2a3544";
+    ctx.strokeStyle = PALETTE.zincCounterPewter;
+    ctx.lineWidth = 1.4;
+    ctx.fillRect(w * 0.848, h * 0.265, w * 0.046, h * 0.082);
+    ctx.strokeRect(w * 0.848, h * 0.265, w * 0.046, h * 0.082);
+
+    ctx.fillStyle = "#3c3128";
+    ctx.beginPath();
+    ctx.moveTo(w * 0.882, h * 0.69);
+    ctx.lineTo(w * 0.925, h * 0.69);
+    ctx.lineTo(w * 0.918, h * 0.635);
+    ctx.lineTo(w * 0.886, h * 0.648);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = "rgba(239, 227, 196, 0.42)";
+    ctx.fillRect(w * 0.891, h * 0.633, w * 0.022, h * 0.014);
+  }
+
+  function renderRiverRailingScene(ctx, w, h, phaseT) {
+    var rx = w * 0.03, ry = h * 0.704, rw = w * 0.26, rh = h * 0.246;
+    ctx.fillStyle = "#141a22";
+    ctx.fillRect(rx, ry, rw, rh);
+
+    ctx.fillStyle = "#0a0e13";
+    ctx.beginPath();
+    ctx.moveTo(rx, ry + rh);
+    ctx.lineTo(rx, ry + rh * 0.45);
+    ctx.quadraticCurveTo(rx + rw * 0.5, ry + rh * 0.16, rx + rw, ry + rh * 0.45);
+    ctx.lineTo(rx + rw, ry + rh);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.strokeStyle = "rgba(86, 99, 115, 0.36)";
+    ctx.lineWidth = 1.1;
+    for (var rp = 0; rp < 6; rp++) {
+      var wy = ry + rh * (0.58 + rp * 0.065);
+      var shift = Math.sin(phaseT * 1.4 + rp * 1.1) * 6;
+      ctx.beginPath();
+      ctx.moveTo(rx + 8 + shift, wy);
+      ctx.quadraticCurveTo(rx + rw * 0.45, wy - 2.5, rx + rw - 10 + shift * 0.5, wy + 1);
+      ctx.stroke();
+    }
+
+    var railY = ry + rh * 0.28;
+    ctx.strokeStyle = PALETTE.zincCounterPewter;
+    ctx.lineWidth = 2.2;
+    ctx.beginPath();
+    ctx.moveTo(rx + 4, railY);
+    ctx.lineTo(rx + rw - 4, railY);
+    ctx.stroke();
+    ctx.lineWidth = 1.1;
+    for (var pk = 0; pk <= 14; pk++) {
+      var px = rx + 6 + pk * ((rw - 12) / 14);
+      ctx.beginPath();
+      ctx.moveTo(px, railY);
+      ctx.lineTo(px, railY + rh * 0.19);
+      ctx.stroke();
+    }
+
+    var leaners = [0.085, 0.165, 0.238];
+    var scale = Math.min(w / 960, h / 620) * 1.02;
+    for (var i = 0; i < leaners.length; i++) {
+      var bob = Math.sin(phaseT * 1.1 + i * 2.1) * 1.2;
+      drawBowedFigure(ctx, w * leaners[i], railY + 2 + bob, clamp(scale, 0.55, 1.15), i === 1 ? -1 : 1, true);
+    }
+  }
+
+  function renderWringingStreetScene(ctx, w, h, phaseT) {
+    var sx = w * 0.03, sy = h * 0.402, sw = w * 0.22, sh = h * 0.28;
+    ctx.fillStyle = "#222b36";
+    ctx.fillRect(sx + 2, sy + sh * 0.84, sw - 4, sh * 0.15);
+    ctx.fillStyle = "rgba(86, 99, 115, 0.26)";
+    ctx.fillRect(sx + sw * 0.18, sy + sh * 0.89, sw * 0.36, 3);
+
+    var winX = w * 0.046, winY = h * 0.495, winW = w * 0.044, winH = h * 0.088;
+    ctx.fillStyle = "#12171f";
+    ctx.fillRect(winX, winY, winW, winH);
+    ctx.strokeStyle = PALETTE.zincCounterPewter;
+    ctx.lineWidth = 1.3;
+    ctx.strokeRect(winX, winY, winW, winH);
+    ctx.fillStyle = "#485769";
+    ctx.beginPath();
+    ctx.arc(winX + winW * 0.5, winY + winH * 0.62, Math.max(3.5, winW * 0.2), 0, Math.PI * 2);
+    ctx.fill();
+    var cryPulse = (Math.sin(phaseT * 4.2) + 1) * 0.5;
+    ctx.strokeStyle = "rgba(133, 150, 170, " + (0.35 + cryPulse * 0.35).toFixed(2) + ")";
+    ctx.lineWidth = 1.1;
+    ctx.beginPath();
+    ctx.arc(winX + winW * 0.5, winY + winH * 0.58, winW * (0.34 + cryPulse * 0.18), -0.9, 0.9);
+    ctx.stroke();
+
+    var sc = clamp(Math.min(w / 960, h / 620), 0.55, 1.15);
+    var curserX = w * 0.112, curserY = h * 0.618;
+    drawBowedFigure(ctx, curserX, curserY, sc, -1, false);
+    ctx.strokeStyle = "#7c8d9f";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(curserX - 4 * sc, curserY - 4 * sc);
+    ctx.lineTo(curserX - 14 * sc, curserY - (13 + Math.sin(phaseT * 5.0) * 2.5) * sc);
+    ctx.stroke();
+
+    var wringX = w * 0.152 + Math.sin(phaseT * 0.85) * (w * 0.006), wringY = h * 0.622;
+    drawBowedFigure(ctx, wringX, wringY, sc, 1, false);
+    var wringTw = Math.sin(phaseT * 5.5) * 2.2 * sc;
+    ctx.strokeStyle = "#8a9bb0";
+    ctx.lineWidth = 1.8;
+    ctx.beginPath();
+    ctx.arc(wringX + 10 * sc, wringY - 2 * sc + wringTw * 0.4, 3.2 * sc, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+
+  function renderBadDreamGarretScene(ctx, w, h, phaseT) {
+    var cwX = w * 0.088, cwY = h * 0.215, cwW = w * 0.044, cwH = h * 0.105;
+    ctx.fillStyle = "#131922";
+    ctx.fillRect(cwX, cwY, cwW, cwH);
+    ctx.strokeStyle = PALETTE.zincCounterPewter;
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(cwX, cwY, cwW, cwH);
+    ctx.beginPath();
+    ctx.moveTo(cwX + cwW * 0.5, cwY);
+    ctx.lineTo(cwX + cwW * 0.5, cwY + cwH);
+    ctx.moveTo(cwX, cwY + cwH * 0.52);
+    ctx.lineTo(cwX + cwW, cwY + cwH * 0.52);
+    ctx.stroke();
+
+    ctx.fillStyle = "rgba(57, 72, 90, 0.18)";
+    ctx.beginPath();
+    ctx.moveTo(w * 0.23, h * 0.14);
+    ctx.lineTo(w * 0.14, h * 0.35);
+    ctx.lineTo(w * 0.21, h * 0.35);
+    ctx.closePath();
+    ctx.fill();
+
+    var bedX = w * 0.146, bedY = h * 0.322, bedW = w * 0.082;
+    ctx.strokeStyle = "#566373";
+    ctx.lineWidth = 1.8;
+    ctx.beginPath();
+    ctx.moveTo(bedX, bedY - 12);
+    ctx.lineTo(bedX, bedY + 8);
+    ctx.moveTo(bedX + bedW, bedY - 7);
+    ctx.lineTo(bedX + bedW, bedY + 8);
+    ctx.moveTo(bedX, bedY);
+    ctx.lineTo(bedX + bedW, bedY);
+    ctx.stroke();
+
+    var sleeperX = bedX + bedW * 0.36, sleeperY = bedY - 2;
+    ctx.fillStyle = "#11161d";
+    ctx.beginPath();
+    ctx.arc(sleeperX, sleeperY - 11, 4.2, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillRect(sleeperX - 5, sleeperY - 7, 10, 8);
+
+    var coilShift = Math.sin(phaseT * 1.6) * 3;
+    ctx.strokeStyle = "rgba(86, 99, 115, 0.52)";
+    ctx.lineWidth = 1.3;
+    ctx.beginPath();
+    ctx.arc(sleeperX - 12, sleeperY - 21 + coilShift * 0.4, 7, 0.3, Math.PI * 1.8);
+    ctx.stroke();
+    ctx.strokeStyle = "rgba(201, 91, 60, 0.46)";
+    ctx.beginPath();
+    ctx.arc(sleeperX + 9, sleeperY - 24 - coilShift * 0.5, 9.5, 0, Math.PI * 1.75);
+    ctx.stroke();
+  }
+
+  function renderHammerWorkbenchScene(ctx, w, h, phaseT) {
+    var lamps = [0.39, 0.495];
+    for (var l = 0; l < lamps.length; l++) {
+      var lx = w * lamps[l], ly = h * 0.165;
+      ctx.strokeStyle = "#4d5b6b";
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(lx, h * 0.112);
+      ctx.lineTo(lx, ly);
+      ctx.stroke();
+      ctx.fillStyle = "rgba(226, 154, 46, 0.11)";
+      ctx.beginPath();
+      ctx.moveTo(lx - 6, ly);
+      ctx.lineTo(lx - 26, h * 0.36);
+      ctx.lineTo(lx + 26, h * 0.36);
+      ctx.lineTo(lx + 6, ly);
+      ctx.closePath();
+      ctx.fill();
+      ctx.fillStyle = "#465362";
+      ctx.fillRect(lx - 7, ly - 3, 14, 4);
+    }
+
+    var bY = h * 0.355;
+    ctx.fillStyle = "#3e352e";
+    ctx.fillRect(w * 0.355, bY, w * 0.08, 5);
+    ctx.fillRect(w * 0.455, bY, w * 0.08, 5);
+
+    var sc = clamp(Math.min(w / 960, h / 620), 0.55, 1.15);
+    drawBowedFigure(ctx, w * 0.382, bY - 4, sc * 0.92, 1, false);
+    var strikeCycle = Math.sin(phaseT * 4.4);
+    var hammerAng = strikeCycle > 0.4 ? 0.55 : -0.45 + strikeCycle * 0.6;
+    var hx = w * 0.398, hy = bY - 4;
+    ctx.save();
+    ctx.translate(hx, hy - 6);
+    ctx.rotate(hammerAng);
+    ctx.strokeStyle = "#8a7968";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(13 * sc, -5 * sc);
+    ctx.stroke();
+    ctx.fillStyle = "#6e7f91";
+    ctx.fillRect(11 * sc, -9 * sc, 5 * sc, 8 * sc);
+    ctx.restore();
+    if (strikeCycle > 0.35) {
+      ctx.strokeStyle = PALETTE.ragoutTerracotta;
+      ctx.lineWidth = 1.4;
+      for (var sp = 0; sp < 4; sp++) {
+        var ang = -2.4 + sp * 0.55;
+        ctx.beginPath();
+        ctx.moveTo(hx + 11 * sc, hy - 2);
+        ctx.lineTo(hx + 11 * sc + Math.cos(ang) * 8 * sc, hy - 2 + Math.sin(ang) * 8 * sc);
+        ctx.stroke();
+      }
+    }
+
+    drawBowedFigure(ctx, w * 0.482, bY - 4, sc * 0.92, 1, false);
+    var nx = w * 0.502, ny = bY - 5;
+    ctx.strokeStyle = "#b8c5d4";
+    ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    ctx.moveTo(nx - 4, ny - 8);
+    ctx.lineTo(nx + 4, ny);
+    ctx.stroke();
+    var prickAlpha = 0.45 + 0.45 * ((Math.cos(phaseT * 3.9) + 1) * 0.5);
+    ctx.fillStyle = "rgba(201, 91, 60, " + prickAlpha.toFixed(2) + ")";
+    ctx.beginPath();
+    ctx.arc(nx + 4, ny + 1, 2.6 * sc, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  function renderAwryLedgersScene(ctx, w, h, phaseT) {
+    var lx = w * 0.422, ly = h * 0.465, lw = w * 0.056, lh = h * 0.068;
+    ctx.fillStyle = "rgba(239, 227, 196, 0.20)";
+    ctx.fillRect(lx, ly, lw, lh);
+    ctx.strokeStyle = PALETTE.zincCounterPewter;
+    ctx.lineWidth = 1.1;
+    ctx.strokeRect(lx, ly, lw, lh);
+    ctx.beginPath();
+    ctx.moveTo(lx + lw * 0.5, ly);
+    ctx.lineTo(lx + lw * 0.5, ly + lh);
+    ctx.stroke();
+
+    for (var row = 0; row < 5; row++) {
+      var ry = ly + 5 + row * ((lh - 8) / 5);
+      var skew = ((row % 2 === 0 ? 1 : -1) * 2.8) + Math.sin(phaseT * 0.8 + row) * 0.8;
+      ctx.strokeStyle = "rgba(239, 227, 196, 0.55)";
+      ctx.lineWidth = 1.1;
+      ctx.beginPath();
+      ctx.moveTo(lx + 4 + skew * 0.5, ry);
+      ctx.lineTo(lx + lw * 0.44 + skew, ry + skew * 0.35);
+      ctx.moveTo(lx + lw * 0.56 - skew * 0.4, ry + 1);
+      ctx.lineTo(lx + lw - 4 + skew * 0.6, ry - skew * 0.4);
+      ctx.stroke();
+    }
+    ctx.strokeStyle = PALETTE.ragoutTerracotta;
+    ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    ctx.moveTo(lx + 4, ly + lh * 0.72);
+    ctx.lineTo(lx + lw - 4, ly + lh * 0.32);
+    ctx.stroke();
+
+    var sc = clamp(Math.min(w / 960, h / 620), 0.55, 1.15);
+    ctx.fillStyle = "#352e29";
+    ctx.fillRect(w * 0.418, h * 0.548, w * 0.132, 4);
+    drawBowedFigure(ctx, w * 0.495, h * 0.544, sc * 0.84, -1, false);
+    drawBowedFigure(ctx, w * 0.532, h * 0.544, sc * 0.84, -1, true);
+
+    var ux = w * 0.455, uy = h * 0.595, uw = w * 0.075;
+    ctx.strokeStyle = "#6c7b8c";
+    ctx.lineWidth = 1.3;
+    ctx.beginPath();
+    ctx.moveTo(ux, uy);
+    ctx.lineTo(ux + uw, uy);
+    ctx.stroke();
+    for (var u = 0; u < 3; u++) {
+      var umX = ux + (u + 0.5) * (uw / 3);
+      ctx.fillStyle = "#2b3644";
+      ctx.beginPath();
+      ctx.moveTo(umX, uy + 2);
+      ctx.lineTo(umX - 4.5, uy + h * 0.055);
+      ctx.lineTo(umX + 4.5, uy + h * 0.055);
+      ctx.closePath();
+      ctx.fill();
+    }
+  }
+
+  function renderZincWineshopScene(ctx, w, h, phaseT) {
+    var zx = w * 0.30, zy = h * 0.712, zw = w * 0.33, zh = h * 0.238;
+    ctx.fillStyle = "#151b23";
+    ctx.fillRect(zx, zy, zw, zh);
+
+    ctx.strokeStyle = "rgba(86, 99, 115, 0.28)";
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(zx + 6, zy + zh * 0.42);
+    ctx.quadraticCurveTo(zx + zw * 0.5, zy - zh * 0.05, zx + zw - 6, zy + zh * 0.42);
+    ctx.stroke();
+
+    var barY = zy + zh * 0.58;
+    var sc = clamp(Math.min(w / 960, h / 620), 0.55, 1.15);
+    var drinkers = [0.345, 0.425, 0.508, 0.585];
+    for (var d = 0; d < drinkers.length; d++) {
+      var sway = Math.sin(phaseT * 0.7 + d * 1.7) * 0.8;
+      drawBowedFigure(ctx, w * drinkers[d] + sway, barY + 2, sc * 0.96, d % 2 === 0 ? 1 : -1, false);
+    }
+
+    ctx.fillStyle = PALETTE.zincCounterPewter;
+    ctx.beginPath();
+    ctx.moveTo(zx + 10, barY);
+    ctx.lineTo(zx + zw - 8, barY);
+    ctx.lineTo(zx + zw - 2, barY + 9);
+    ctx.lineTo(zx + 4, barY + 9);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = "#2b3542";
+    ctx.fillRect(zx + 6, barY + 9, zw - 10, zh * 0.34);
+
+    for (var g = 0; g < 9; g++) {
+      var gx = zx + 18 + g * ((zw - 36) / 8);
+      var tipped = (g === 2 || g === 6);
+      ctx.strokeStyle = "rgba(216, 226, 236, 0.62)";
+      ctx.lineWidth = 1.1;
+      if (tipped) {
+        ctx.strokeRect(gx - 3, barY - 3.5, 6.5, 3.2);
+      } else {
+        ctx.beginPath();
+        ctx.moveTo(gx - 2.6, barY - 8);
+        ctx.lineTo(gx + 2.6, barY - 8);
+        ctx.lineTo(gx + 1.4, barY - 3.5);
+        ctx.lineTo(gx - 1.4, barY - 3.5);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(gx, barY - 3.5);
+        ctx.lineTo(gx, barY - 0.5);
+        ctx.stroke();
+      }
+      ctx.strokeStyle = "rgba(57, 72, 90, 0.55)";
+      ctx.beginPath();
+      ctx.arc(gx + 2, barY + 4.2, 3.2, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+  }
+
+  function renderQuarrelWindowsScene(ctx, w, h, phaseT) {
+    var qx = w * 0.65, qy = h * 0.55, qw = w * 0.19, qh = h * 0.40;
+    var cols = [0.675, 0.758];
+    var rows = [0.585, 0.735];
+    for (var r = 0; r < rows.length; r++) {
+      for (var c = 0; c < cols.length; c++) {
+        var wx = w * cols[c], wy = h * rows[r], ww = w * 0.052, wh = h * 0.105;
+        ctx.fillStyle = r === 0 ? "rgba(201, 91, 60, 0.15)" : "#131820";
+        ctx.fillRect(wx, wy, ww, wh);
+        ctx.strokeStyle = PALETTE.zincCounterPewter;
+        ctx.lineWidth = 1.4;
+        ctx.strokeRect(wx, wy, ww, wh);
+        ctx.fillStyle = "#2b3644";
+        ctx.fillRect(wx - 5, wy, 5, wh);
+        ctx.fillRect(wx + ww, wy, 5, wh);
+        if (r === 0) {
+          ctx.fillStyle = "#11161e";
+          ctx.beginPath();
+          ctx.arc(wx + ww * 0.32, wy + wh * 0.52, 4, 0, Math.PI * 2);
+          ctx.arc(wx + ww * 0.70, wy + wh * 0.50, 4, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.strokeStyle = "rgba(226, 154, 46, 0.55)";
+          ctx.lineWidth = 1.2;
+          ctx.beginPath();
+          ctx.moveTo(wx + ww * 0.38, wy + wh * 0.45);
+          ctx.lineTo(wx + ww * 0.52, wy + wh * 0.32);
+          ctx.lineTo(wx + ww * 0.48, wy + wh * 0.56);
+          ctx.lineTo(wx + ww * 0.64, wy + wh * 0.42);
+          ctx.stroke();
+        }
+      }
+    }
+
+    for (var s = 0; s < 5; s++) {
+      var u = ((phaseT * 0.55 + s * 0.21) % 1);
+      var startX = w * (s % 2 === 0 ? 0.70 : 0.78);
+      var startY = h * 0.66;
+      var sx = startX + (s - 2) * 9 * u;
+      var sy = startY + u * u * (h * 0.26);
+      ctx.save();
+      ctx.translate(sx, sy);
+      ctx.rotate(u * 5.2 + s);
+      ctx.fillStyle = PALETTE.parchmentVellum;
+      ctx.strokeStyle = PALETTE.ragoutTerracotta;
+      ctx.lineWidth = 0.9;
+      ctx.beginPath();
+      ctx.moveTo(-4, -2);
+      ctx.lineTo(4, -1);
+      ctx.lineTo(1, 4);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    ctx.fillStyle = "rgba(239, 227, 196, 0.55)";
+    for (var k = 0; k < 8; k++) {
+      ctx.fillRect(qx + 14 + k * ((qw - 28) / 7), qy + qh - 7 - (k % 2) * 2, 4, 2.2);
+    }
+  }
+
+  var ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII"];
+
+  function hitTestGrimZoneImpl(nx, ny) {
+    if (!Number.isFinite(nx) || !Number.isFinite(ny) || nx < 0 || nx > 1 || ny < 0 || ny > 1) {
+      return null;
+    }
+    for (var i = 0; i < GRIM_ZONES.length; i++) {
+      if (pointInRect(nx, ny, GRIM_ZONES[i].rectNorm)) {
+        return GRIM_ZONES[i];
+      }
+    }
+    for (var s = 0; s < SHELL_SUB_RECTS.length; s++) {
+      if (pointInRect(nx, ny, SHELL_SUB_RECTS[s])) {
+        return GRIM_ZONES[7];
+      }
+    }
+    return null;
+  }
+
+  function renderRainAndZoneOverlay(ctx, w, h, phaseT, state) {
+    ctx.save();
+    ctx.strokeStyle = "rgba(133, 150, 170, 0.19)";
+    ctx.lineWidth = 1;
+    for (var i = 0; i < 72; i++) {
+      var seedX = ((i * 137.5) % 1000) / 1000;
+      var seedY = ((i * 293.7) % 1000) / 1000;
+      var fall = (seedY + phaseT * (0.36 + (i % 5) * 0.04)) % 1.08 - 0.04;
+      var rx = (seedX * 1.08 - fall * 0.11 + 1.08) % 1.04 * w;
+      var ry = fall * h;
+      ctx.beginPath();
+      ctx.moveTo(rx, ry);
+      ctx.lineTo(rx - 4.5, ry + 15);
+      ctx.stroke();
+    }
+
+    ctx.font = "600 10px ui-monospace, SFMono-Regular, Menlo, monospace";
+    ctx.textBaseline = "top";
+    for (var z = 0; z < GRIM_ZONES.length; z++) {
+      var zr = GRIM_ZONES[z].rectNorm;
+      ctx.fillStyle = "rgba(133, 150, 170, 0.44)";
+      ctx.fillText(ROMAN[z], w * zr.x + 5, h * zr.y + 4);
+    }
+
+    var activeId = state && state.hoveredGrimId ? state.hoveredGrimId : null;
+    if (!activeId && state && state.pointerNorm && state.hoveredGrimId === undefined) {
+      var hit = hitTestGrimZoneImpl(state.pointerNorm.x, state.pointerNorm.y);
+      if (hit) activeId = hit.id;
+    }
+    if (activeId) {
+      for (var k = 0; k < GRIM_ZONES.length; k++) {
+        if (GRIM_ZONES[k].id === activeId) {
+          var hr = GRIM_ZONES[k].rectNorm;
+          var hx = w * hr.x, hy = h * hr.y, hw = w * hr.w, hh = h * hr.h;
+          ctx.fillStyle = "rgba(57, 72, 90, 0.14)";
+          ctx.fillRect(hx, hy, hw, hh);
+          ctx.strokeStyle = "rgba(239, 227, 196, 0.62)";
+          ctx.lineWidth = 1.6;
+          if (ctx.setLineDash) ctx.setLineDash([5, 4]);
+          ctx.strokeRect(hx + 1, hy + 1, hw - 2, hh - 2);
+          if (ctx.setLineDash) ctx.setLineDash([]);
+
+          var tagW = Math.min(hw - 8, Math.max(118, GRIM_ZONES[k].title.length * 6.5 + 16));
+          traceRoundRect(ctx, hx + 5, hy + 5, tagW, 19, 4);
+          ctx.fillStyle = "rgba(19, 23, 29, 0.88)";
+          ctx.fill();
+          ctx.strokeStyle = "rgba(239, 227, 196, 0.48)";
+          ctx.lineWidth = 1;
+          ctx.stroke();
+          ctx.fillStyle = PALETTE.parchmentVellum;
+          ctx.fillText(GRIM_ZONES[k].title, hx + 11, hy + 9);
+          break;
+        }
+      }
+    }
+    ctx.restore();
+  }
+
+  function createGrimAudioEngine(initialMuted) {
+    var muted = typeof initialMuted === "boolean" ? initialMuted : true;
+    var audioCtx = null;
+    var masterGain = null;
+    var pulseTimer = null;
+
+    function ensureGraph() {
+      if (audioCtx) return audioCtx;
+      var Ctor = root && (root.AudioContext || root.webkitAudioContext);
+      if (!Ctor) return null;
+      try {
+        audioCtx = new Ctor();
+        masterGain = audioCtx.createGain();
+        masterGain.gain.value = muted ? 0 : 0.13;
+        masterGain.connect(audioCtx.destination);
+
+        var bufLen = Math.floor(audioCtx.sampleRate * 2.0);
+        var noiseBuf = audioCtx.createBuffer(1, bufLen, audioCtx.sampleRate);
+        var chan = noiseBuf.getChannelData(0);
+        var last = 0;
+        for (var i = 0; i < bufLen; i++) {
+          var white = Math.random() * 2 - 1;
+          last = (last + 0.045 * white) / 1.045;
+          chan[i] = last * 1.9;
+        }
+        var rainSrc = audioCtx.createBufferSource();
+        rainSrc.buffer = noiseBuf;
+        rainSrc.loop = true;
+        var rainFilter = audioCtx.createBiquadFilter();
+        rainFilter.type = "bandpass";
+        rainFilter.frequency.value = 880;
+        rainFilter.Q.value = 0.75;
+        var rainGain = audioCtx.createGain();
+        rainGain.gain.value = 0.34;
+        rainSrc.connect(rainFilter);
+        rainFilter.connect(rainGain);
+        rainGain.connect(masterGain);
+        rainSrc.start();
+
+        var droneFilter = audioCtx.createBiquadFilter();
+        droneFilter.type = "lowpass";
+        droneFilter.frequency.value = 185;
+        var droneGain = audioCtx.createGain();
+        droneGain.gain.value = 0.22;
+        droneFilter.connect(droneGain);
+        droneGain.connect(masterGain);
+        var freqs = [73.42, 110.0];
+        for (var f = 0; f < freqs.length; f++) {
+          var osc = audioCtx.createOscillator();
+          osc.type = f === 0 ? "triangle" : "sine";
+          osc.frequency.value = freqs[f];
+          osc.connect(droneFilter);
+          osc.start();
+        }
+      } catch (_err) {
+        audioCtx = null;
+      }
+      return audioCtx;
+    }
+
+    function triggerPulse() {
+      if (muted) return false;
+      var ctx = ensureGraph();
+      if (!ctx || !masterGain) return false;
+      try {
+        if (ctx.state === "suspended" && ctx.resume) ctx.resume().catch(function () {});
+        var now = ctx.currentTime;
+        var osc = ctx.createOscillator();
+        var g = ctx.createGain();
+        var flt = ctx.createBiquadFilter();
+        flt.type = "lowpass";
+        flt.frequency.setValueAtTime(240, now);
+        osc.type = "triangle";
+        osc.frequency.setValueAtTime(98, now);
+        osc.frequency.exponentialRampToValueAtTime(46, now + 0.22);
+        g.gain.setValueAtTime(0.001, now);
+        g.gain.linearRampToValueAtTime(0.28, now + 0.015);
+        g.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+        osc.connect(flt);
+        flt.connect(g);
+        g.connect(masterGain);
+        osc.start(now);
+        osc.stop(now + 0.30);
+        return true;
+      } catch (_err2) {
+        return false;
+      }
+    }
+
+    function syncTimer() {
+      if (pulseTimer) {
+        clearInterval(pulseTimer);
+        pulseTimer = null;
+      }
+      if (!muted && audioCtx && typeof setInterval === "function") {
+        pulseTimer = setInterval(function () {
+          triggerPulse();
+        }, 3200);
+      }
+    }
+
+    return {
+      isMuted: function () { return muted; },
+      unlock: function () {
+        var ctx = ensureGraph();
+        if (ctx && ctx.state === "suspended" && ctx.resume) {
+          ctx.resume().catch(function () {});
+        }
+        syncTimer();
+        return Boolean(ctx);
+      },
+      setMuted: function (nextMuted) {
+        muted = Boolean(nextMuted);
+        if (!muted) {
+          var ctx = ensureGraph();
+          if (ctx && ctx.state === "suspended" && ctx.resume) {
+            ctx.resume().catch(function () {});
+          }
+        }
+        if (audioCtx && masterGain) {
+          try {
+            var now = audioCtx.currentTime;
+            masterGain.gain.cancelScheduledValues(now);
+            masterGain.gain.setTargetAtTime(muted ? 0 : 0.13, now, 0.08);
+          } catch (_e) {
+            masterGain.gain.value = muted ? 0 : 0.13;
+          }
+        }
+        syncTimer();
+        return muted;
+      },
+      triggerPulse: triggerPulse
+    };
+  }
+
+  function create(options) {
+    var opts = options || {};
+    var audio = createGrimAudioEngine(typeof opts.muted === "boolean" ? opts.muted : true);
+
+    function render(ctx, width, height, state) {
+      if (!ctx || !(width > 0) || !(height > 0)) return;
+      var st = state || {};
+      var rawTime = Number.isFinite(st.timeSec) ? st.timeSec : 0;
+      var phaseT = st.reducedMotion ? 1.85 : rawTime;
+
+      ctx.save();
+      ctx.globalAlpha = 1;
+      renderSkyAndDistantRoofs(ctx, width, height, phaseT);
+      renderCutawayStructure(ctx, width, height, phaseT);
+      renderRiverRailingScene(ctx, width, height, phaseT);
+      renderWringingStreetScene(ctx, width, height, phaseT);
+      renderBadDreamGarretScene(ctx, width, height, phaseT);
+      renderHammerWorkbenchScene(ctx, width, height, phaseT);
+      renderAwryLedgersScene(ctx, width, height, phaseT);
+      renderZincWineshopScene(ctx, width, height, phaseT);
+      renderQuarrelWindowsScene(ctx, width, height, phaseT);
+      renderRainAndZoneOverlay(ctx, width, height, phaseT, st);
+      ctx.restore();
+    }
+
+    function getAnchorZones() {
+      return ANCHOR_ZONES;
+    }
+
+    function getInvariants() {
+      return {
+        overtSadnessConstant: true,
+        grimZonesActive: GRIM_ZONES.length,
+        bentHeadsConcealGrimGaze: true
+      };
+    }
+
+    return {
+      PALETTE: PALETTE,
+      GRIM_ZONES: GRIM_ZONES,
+      ANCHOR_ZONES: ANCHOR_ZONES,
+      getAnchorZones: getAnchorZones,
+      render: render,
+      hitTestGrimZone: hitTestGrimZoneImpl,
+      setMuted: function (mutedBool) { return audio.setMuted(mutedBool); },
+      isMuted: function () { return audio.isMuted(); },
+      unlockAudio: function () { return audio.unlock(); },
+      triggerAmbientPulse: function () { return audio.triggerPulse(); },
+      getInvariants: getInvariants
+    };
+  }
+
+  var api = Object.freeze({
+    PALETTE: PALETTE,
+    GRIM_ZONES: GRIM_ZONES,
+    ANCHOR_ZONES: ANCHOR_ZONES,
+    create: create
+  });
+
+  if (root) {
+    root.RaissaUnhappyGrid = api;
+  }
+})(typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : this);
+</script>
+<script class="rai-layer-filament">
+/* City 49: Raissa — Invisible Causal Joy Filament Layer (Standalone Canvas2D + WebAudio IIFE) */
+(function (root) {
+  "use strict";
+
+  var PALETTE = Object.freeze({
+    grim_slate_night: "#13171d",
+    soot_ash_wall: "#222933",
+    zinc_counter_pewter: "#566373",
+    rain_bruise_blue: "#39485a",
+    parchment_vellum: "#efe3c4",
+    filament_spun_gold: "#f4c552",
+    filament_core_ivory: "#fff0b8",
+    ragout_terracotta: "#c95b3c",
+    francolin_speckle_amber: "#e29a2e"
+  });
+
+  var PHILOSOPHER_QUOTE =
+    "Also in Raissa, city of sadness, there runs an invisible thread that binds one living being to another for a moment, then unravels, then is stretched again between moving points as it draws new and rapid patterns so that at every second the unhappy city contains a happy city unaware of its own existence.";
+
+  var CHAIN_LINKS = Object.freeze([
+    Object.freeze({
+      index: 0,
+      id: "laughing_child",
+      shortLabel: "01 · Laughing Child",
+      actor: "Child in a casement window",
+      action: "Laughs aloud seeing the dog leap onto the shed below",
+      stoneQuote: "In a window a child laughs at the sight of the dog jumping onto a shed.",
+      causeArrow: "Laughs seeing the dog leap onto the shed ->",
+      noteHz: 349.23
+    }),
+    Object.freeze({
+      index: 1,
+      id: "polenta_dog",
+      shortLabel: "02 · Polenta Dog",
+      actor: "Dog upon the zinc shed roof",
+      action: "Jumps onto a shed to bite into a piece of fallen polenta",
+      stoneQuote: "The dog has jumped onto a shed to bite into a piece of polenta that was dropped.",
+      causeArrow: "Snaps up the polenta dropped from high scaffolding ->",
+      noteHz: 392.00
+    }),
+    Object.freeze({
+      index: 2,
+      id: "merry_stonemason",
+      shortLabel: "03 · Merry Stonemason",
+      actor: "Young stonemason on the upper scaffolding",
+      action: "Drops polenta in high spirits shouting \"Darling, let me dip into it!\"",
+      stoneQuote: "A stonemason dropped the polenta from the scaffolding, shouting in high spirits to a young serving-maid: \"Darling, let me dip into it!\"",
+      causeArrow: "Calls down merrily toward the steaming ragout ->",
+      noteHz: 440.00
+    }),
+    Object.freeze({
+      index: 3,
+      id: "ragout_maid",
+      shortLabel: "04 · Ragout Serving-Maid",
+      actor: "Young serving-maid beneath the pergola",
+      action: "Holds up a steaming terracotta dish of ragout under the pergola",
+      stoneQuote: "Under the pergola a young serving-maid holds up a dish of ragout, happy to serve it to the umbrella-maker.",
+      causeArrow: "Serves the celebratory meal to the umbrella-maker ->",
+      noteHz: 493.88
+    }),
+    Object.freeze({
+      index: 4,
+      id: "umbrella_maker",
+      shortLabel: "05 · Umbrella-Maker",
+      actor: "Umbrella-maker at his shop counter",
+      action: "Rejoices over the completed transaction of a white lace parasol",
+      stoneQuote: "The umbrella-maker celebrates a fine transaction after crafting and selling a white lace parasol.",
+      causeArrow: "Sold the white lace parasol for the rampart races ->",
+      noteHz: 523.25
+    }),
+    Object.freeze({
+      index: 5,
+      id: "parasol_lady",
+      shortLabel: "06 · Parasol Lady",
+      actor: "Great lady along the rampart promenade",
+      action: "Displays her white lace parasol proudly at the rampart races",
+      stoneQuote: "A great lady displays the white lace parasol she bought to parade at the races along the ramparts.",
+      causeArrow: "Wins the bright smile of a beloved officer ->",
+      noteHz: 587.33
+    }),
+    Object.freeze({
+      index: 6,
+      id: "leaping_officer",
+      shortLabel: "07 · Leaping Officer",
+      actor: "Beloved cavalry officer in the saddle",
+      action: "Smiles at her while taking the last barricade jump of the course",
+      stoneQuote: "A beloved officer smiles at her in taking the last jump over the racecourse barricades.",
+      causeArrow: "Spurs a racehorse made happier still in flight ->",
+      noteHz: 659.25
+    }),
+    Object.freeze({
+      index: 7,
+      id: "flying_horse",
+      shortLabel: "08 · Flying Horse",
+      actor: "Happier horse vaulting the hurdles",
+      action: "Flies over the obstacles seeing a francolin flying in the sky",
+      stoneQuote: "Happy the man, happier still his horse, flying over the obstacles, seeing a francolin flying in the sky.",
+      causeArrow: "Follows the wingbeat of the liberated bird ->",
+      noteHz: 698.46
+    }),
+    Object.freeze({
+      index: 8,
+      id: "freed_francolin",
+      shortLabel: "09 · Freed Francolin",
+      actor: "Happy francolin bird above the garret",
+      action: "Soars from its open cage after being liberated by a painter",
+      stoneQuote: "Happy bird liberated from its cage by a painter happy to have painted it feather by feather.",
+      causeArrow: "Immortalized feather by feather in red and yellow ->",
+      noteHz: 783.99
+    }),
+    Object.freeze({
+      index: 9,
+      id: "parchment_illuminator",
+      shortLabel: "10 · Parchment Illuminator",
+      actor: "Illuminator at the philosopher's folio",
+      action: "Paints the red-and-yellow speckled francolin feather on the parchment page",
+      stoneQuote: "Painted feather by feather, speckled with red and yellow, in the illumination of that page where the philosopher writes of Raissa.",
+      causeArrow: "Binds the hidden happy city inside unhappy Raissa",
+      noteHz: 880.00
+    })
+  ]);
+
+  var DEFAULT_ANCHOR_ZONES = Object.freeze([
+    Object.freeze({ index: 0, id: "laughing_child", zoneLabel: "Casement Window", baseX: 0.11, baseY: 0.27, driftRadiusX: 0.026, driftRadiusY: 0.030 }),
+    Object.freeze({ index: 1, id: "polenta_dog", zoneLabel: "Zinc Shed Roof", baseX: 0.20, baseY: 0.53, driftRadiusX: 0.030, driftRadiusY: 0.026 }),
+    Object.freeze({ index: 2, id: "merry_stonemason", zoneLabel: "Scaffolding Top", baseX: 0.29, baseY: 0.21, driftRadiusX: 0.028, driftRadiusY: 0.028 }),
+    Object.freeze({ index: 3, id: "ragout_maid", zoneLabel: "Courtyard Pergola", baseX: 0.38, baseY: 0.56, driftRadiusX: 0.028, driftRadiusY: 0.030 }),
+    Object.freeze({ index: 4, id: "umbrella_maker", zoneLabel: "Umbrella Shop", baseX: 0.49, baseY: 0.63, driftRadiusX: 0.028, driftRadiusY: 0.028 }),
+    Object.freeze({ index: 5, id: "parasol_lady", zoneLabel: "Rampart Promenade", baseX: 0.61, baseY: 0.34, driftRadiusX: 0.030, driftRadiusY: 0.028 }),
+    Object.freeze({ index: 6, id: "leaping_officer", zoneLabel: "Barricade Jump", baseX: 0.71, baseY: 0.47, driftRadiusX: 0.030, driftRadiusY: 0.030 }),
+    Object.freeze({ index: 7, id: "flying_horse", zoneLabel: "Sky Arch Hurdles", baseX: 0.78, baseY: 0.19, driftRadiusX: 0.032, driftRadiusY: 0.026 }),
+    Object.freeze({ index: 8, id: "freed_francolin", zoneLabel: "Painter Garret", baseX: 0.86, baseY: 0.31, driftRadiusX: 0.028, driftRadiusY: 0.030 }),
+    Object.freeze({ index: 9, id: "parchment_illuminator", zoneLabel: "Scriptorium Desk", baseX: 0.90, baseY: 0.64, driftRadiusX: 0.025, driftRadiusY: 0.028 })
+  ]);
+
+  var SEGMENT_ARCH_SIGNS = [1, -1, 1, 0.7, -0.8, 0.85, -1.15, -0.75, 0.9];
+
+  function raiFilClamp(val, lo, hi) {
+    return val < lo ? lo : val > hi ? hi : val;
+  }
+
+  function raiFilHash(seed) {
+    var x = Math.sin(seed * 127.1 + 311.7) * 43758.5453123;
+    return x - Math.floor(x);
+  }
+
+  function raiFilSafeEllipse(ctx, cx, cy, rx, ry, rot) {
+    if (typeof ctx.ellipse === "function") {
+      ctx.ellipse(cx, cy, Math.max(0.5, rx), Math.max(0.5, ry), rot || 0, 0, Math.PI * 2);
+      return;
+    }
+    ctx.save();
+    ctx.translate(cx, cy);
+    if (rot) ctx.rotate(rot);
+    ctx.scale(Math.max(0.5, rx), Math.max(0.5, ry));
+    ctx.arc(0, 0, 1, 0, Math.PI * 2);
+    ctx.restore();
+  }
+
+  function raiFilBuildCurveControls(ax, ay, bx, by, segIndex, archBias, curlExtra) {
+    var dx = bx - ax;
+    var dy = by - ay;
+    var span = Math.sqrt(dx * dx + dy * dy) || 1;
+    var sign = SEGMENT_ARCH_SIGNS[segIndex % 9] || 1;
+    var sag = span * (0.19 + 0.08 * (archBias || 0)) * sign + (curlExtra || 0);
+    var nx = (-dy / span) * sag * 0.28;
+    var c1x = ax + dx * 0.32 + nx;
+    var c1y = ay + dy * 0.32 + sag;
+    var c2x = ax + dx * 0.68 + nx;
+    var c2y = ay + dy * 0.68 + sag * 0.92;
+    return { ax: ax, ay: ay, c1x: c1x, c1y: c1y, c2x: c2x, c2y: c2y, bx: bx, by: by };
+  }
+
+  function raiFilEvalCubic(seg, t) {
+    var u = 1 - t;
+    var tt = t * t;
+    var uu = u * u;
+    var uuu = uu * u;
+    var ttt = tt * t;
+    return {
+      x: uuu * seg.ax + 3 * uu * t * seg.c1x + 3 * u * tt * seg.c2x + ttt * seg.bx,
+      y: uuu * seg.ay + 3 * uu * t * seg.c1y + 3 * u * tt * seg.c2y + ttt * seg.by
+    };
+  }
+
+  function raiFilEvalTangent(seg, t) {
+    var u = 1 - t;
+    var tx = 3 * u * u * (seg.c1x - seg.ax) + 6 * u * t * (seg.c2x - seg.c1x) + 3 * t * t * (seg.bx - seg.c2x);
+    var ty = 3 * u * u * (seg.c1y - seg.ay) + 6 * u * t * (seg.c2y - seg.c1y) + 3 * t * t * (seg.by - seg.c2y);
+    return Math.atan2(ty, tx);
+  }
+
+  function raiFilNormalizeAnchors(anchorZones) {
+    var out = new Array(10);
+    for (var i = 0; i < 10; i++) {
+      var fb = DEFAULT_ANCHOR_ZONES[i];
+      var src = anchorZones && anchorZones[i] ? anchorZones[i] : fb;
+      var bx = typeof src.baseX === "number" ? src.baseX : (typeof src.x === "number" ? src.x : (typeof src.nx === "number" ? src.nx : fb.baseX));
+      var by = typeof src.baseY === "number" ? src.baseY : (typeof src.y === "number" ? src.y : (typeof src.ny === "number" ? src.ny : fb.baseY));
+      var rx = typeof src.driftRadiusX === "number" ? src.driftRadiusX : (typeof src.rx === "number" ? src.rx : fb.driftRadiusX);
+      var ry = typeof src.driftRadiusY === "number" ? src.driftRadiusY : (typeof src.ry === "number" ? src.ry : fb.driftRadiusY);
+      out[i] = {
+        index: i,
+        id: CHAIN_LINKS[i].id,
+        zoneLabel: src.zoneLabel || src.label || src.title || fb.zoneLabel,
+        baseX: raiFilClamp(bx, 0.06, 0.94),
+        baseY: raiFilClamp(by, 0.09, 0.90),
+        driftRadiusX: raiFilClamp(rx, 0.008, 0.055),
+        driftRadiusY: raiFilClamp(ry, 0.008, 0.055)
+      };
+    }
+    return out;
+  }
+
+  function raiFilCreateAudio(initialMuted) {
+    var muted = Boolean(initialMuted);
+    var actx = null;
+    var noiseBuf = null;
+    var lastPlayedAt = {};
+
+    function ensureContext() {
+      if (actx) {
+        if (actx.state === "suspended" && typeof actx.resume === "function") {
+          try { actx.resume(); } catch (e) { /* ignore suspended gesture guard */ }
+        }
+        return actx;
+      }
+      var Ctor = root.AudioContext || root.webkitAudioContext;
+      if (!Ctor) return null;
+      try {
+        actx = new Ctor();
+        var sr = actx.sampleRate || 44100;
+        noiseBuf = actx.createBuffer(1, Math.floor(sr * 0.45), sr);
+        var ch = noiseBuf.getChannelData(0);
+        for (var i = 0; i < ch.length; i++) {
+          ch[i] = (raiFilHash(i * 0.73 + 1.9) * 2 - 1) * 0.5;
+        }
+      } catch (err) {
+        actx = null;
+      }
+      return actx;
+    }
+
+    function voiceHarpAndFlute(freq, delaySec, gainScale) {
+      if (muted) return false;
+      var ctx = ensureContext();
+      if (!ctx || !freq) return false;
+      try {
+        var t0 = ctx.currentTime + (delaySec || 0);
+        var amp = 0.055 * (gainScale || 1);
+
+        var harpOsc = ctx.createOscillator();
+        var harpHarm = ctx.createOscillator();
+        var harpFilter = ctx.createBiquadFilter();
+        var harpGain = ctx.createGain();
+        harpOsc.type = "triangle";
+        harpOsc.frequency.setValueAtTime(freq, t0);
+        harpHarm.type = "sine";
+        harpHarm.frequency.setValueAtTime(freq * 2, t0);
+        harpFilter.type = "lowpass";
+        harpFilter.frequency.setValueAtTime(Math.min(3400, freq * 5.2), t0);
+        harpFilter.frequency.exponentialRampToValueAtTime(Math.max(420, freq * 1.4), t0 + 0.58);
+        harpGain.gain.setValueAtTime(0.0001, t0);
+        harpGain.gain.linearRampToValueAtTime(amp, t0 + 0.007);
+        harpGain.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.64);
+        harpOsc.connect(harpFilter);
+        harpHarm.connect(harpFilter);
+        harpFilter.connect(harpGain);
+        harpGain.connect(ctx.destination);
+        harpOsc.start(t0);
+        harpHarm.start(t0);
+        harpOsc.stop(t0 + 0.66);
+        harpHarm.stop(t0 + 0.34);
+
+        var fluteOsc = ctx.createOscillator();
+        var fluteGain = ctx.createGain();
+        fluteOsc.type = "sine";
+        fluteOsc.frequency.setValueAtTime(freq, t0 + 0.018);
+        fluteGain.gain.setValueAtTime(0.0001, t0 + 0.018);
+        fluteGain.gain.linearRampToValueAtTime(amp * 0.46, t0 + 0.085);
+        fluteGain.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.46);
+        fluteOsc.connect(fluteGain);
+        fluteGain.connect(ctx.destination);
+        fluteOsc.start(t0 + 0.018);
+        fluteOsc.stop(t0 + 0.48);
+
+        if (noiseBuf) {
+          var breath = ctx.createBufferSource();
+          var bp = ctx.createBiquadFilter();
+          var bg = ctx.createGain();
+          breath.buffer = noiseBuf;
+          bp.type = "bandpass";
+          bp.frequency.setValueAtTime(Math.min(4800, freq * 2.02), t0 + 0.015);
+          bp.Q.setValueAtTime(6.5, t0 + 0.015);
+          bg.gain.setValueAtTime(0.0001, t0 + 0.015);
+          bg.gain.linearRampToValueAtTime(amp * 0.16, t0 + 0.055);
+          bg.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.24);
+          breath.connect(bp);
+          bp.connect(bg);
+          bg.connect(ctx.destination);
+          breath.start(t0 + 0.015);
+          breath.stop(t0 + 0.26);
+        }
+        return true;
+      } catch (err) {
+        return false;
+      }
+    }
+
+    return {
+      unlock: function () { return Boolean(ensureContext()); },
+      isMuted: function () { return muted; },
+      setMuted: function (nextMuted) {
+        muted = Boolean(nextMuted);
+        if (!muted) ensureContext();
+        return muted;
+      },
+      playLinkNote: function (idx) {
+        if (muted) return false;
+        var cleanIdx = (((Math.round(Number(idx) || 0) % 10) + 10) % 10);
+        var nowMs = Date.now();
+        if (lastPlayedAt[cleanIdx] && nowMs - lastPlayedAt[cleanIdx] < 45) return true;
+        lastPlayedAt[cleanIdx] = nowMs;
+        return voiceHarpAndFlute(CHAIN_LINKS[cleanIdx].noteHz, 0, 1.0);
+      },
+      playRestretchShimmer: function (soft) {
+        if (muted || (!actx && soft)) return false;
+        var notes = [349.23, 440.00, 493.88, 659.25];
+        var scale = soft ? 0.24 : 0.48;
+        for (var i = 0; i < notes.length; i++) {
+          voiceHarpAndFlute(notes[i], i * 0.036, scale);
+        }
+        return true;
+      },
+      playFreezeChime: function () {
+        if (muted) return false;
+        voiceHarpAndFlute(698.46, 0, 0.36);
+        return voiceHarpAndFlute(1046.50, 0.03, 0.28);
+      }
+    };
+  }
+
+  function raiFilDrawNodeEmblem(ctx, idx, cx, cy, r, phase, focused) {
+    ctx.save();
+    ctx.translate(cx, cy);
+    var s = r / 14;
+    ctx.scale(s, s);
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    var gold = focused ? PALETTE.filament_core_ivory : PALETTE.filament_spun_gold;
+    var vellum = PALETTE.parchment_vellum;
+    var red = PALETTE.ragout_terracotta;
+    var amber = PALETTE.francolin_speckle_amber;
+    var bob = Math.sin(phase * 2.4 + idx) * 0.7;
+
+    if (idx === 0) {
+      /* 0: Laughing child in casement window */
+      ctx.strokeStyle = vellum;
+      ctx.lineWidth = 1.25;
+      ctx.beginPath();
+      ctx.moveTo(-6.5, 6.5); ctx.lineTo(-6.5, -2.5);
+      ctx.arc(0, -2.5, 6.5, Math.PI, 0, false);
+      ctx.lineTo(6.5, 6.5); ctx.closePath(); ctx.stroke();
+      ctx.fillStyle = gold;
+      ctx.beginPath(); ctx.arc(0, 1.2 + bob * 0.4, 3.1, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = PALETTE.grim_slate_night; ctx.lineWidth = 1.1;
+      ctx.beginPath(); ctx.arc(0, 1.6 + bob * 0.4, 1.7, 0.15, Math.PI - 0.15, false); ctx.stroke();
+      ctx.strokeStyle = PALETTE.filament_core_ivory; ctx.lineWidth = 1.15;
+      for (var k0 = -1; k0 <= 1; k0++) {
+        ctx.beginPath();
+        ctx.moveTo(k0 * 3.2, -4.2); ctx.lineTo(k0 * 4.8, -7.2); ctx.stroke();
+      }
+    } else if (idx === 1) {
+      /* 1: Dog jumping onto shed to bite fallen polenta */
+      ctx.strokeStyle = PALETTE.zinc_counter_pewter; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(-8, 6.2); ctx.lineTo(7.5, 2.8); ctx.stroke();
+      ctx.fillStyle = amber;
+      ctx.beginPath(); ctx.moveTo(3.2, -2.8); ctx.lineTo(7.4, -1.2); ctx.lineTo(4.1, 1.6); ctx.closePath(); ctx.fill();
+      ctx.strokeStyle = gold; ctx.lineWidth = 1.6;
+      ctx.beginPath();
+      ctx.moveTo(-6.8, 3.8); ctx.quadraticCurveTo(-2.2, -3.5 + bob, 2.6, -0.8);
+      ctx.moveTo(-5.2, 2.2); ctx.lineTo(-7.5, 0.2);
+      ctx.moveTo(0.8, -1.2); ctx.lineTo(2.4, -3.6);
+      ctx.stroke();
+    } else if (idx === 2) {
+      /* 2: Stonemason on scaffolding dropping polenta & calling down */
+      ctx.strokeStyle = vellum; ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(-7.5, -3.5); ctx.lineTo(7.5, -3.5);
+      ctx.moveTo(-5.2, -7.5); ctx.lineTo(-5.2, 7.2);
+      ctx.moveTo(5.2, -7.5); ctx.lineTo(5.2, 7.2);
+      ctx.stroke();
+      ctx.fillStyle = gold;
+      ctx.beginPath(); ctx.moveTo(-2.5, -6.5); ctx.lineTo(2.2, -4.5); ctx.lineTo(-1.2, -1.5); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = amber;
+      ctx.beginPath(); ctx.arc(0.8, 2.5 + Math.abs(bob), 2.1, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = PALETTE.filament_core_ivory; ctx.lineWidth = 1.05;
+      ctx.beginPath(); ctx.arc(0.8, 4.2, 4.4, 0.25, Math.PI - 0.25, false); ctx.stroke();
+    } else if (idx === 3) {
+      /* 3: Serving-maid holding steaming ragout dish under pergola */
+      ctx.strokeStyle = gold; ctx.lineWidth = 1.15;
+      ctx.beginPath(); ctx.moveTo(-7.5, -6.2); ctx.lineTo(7.5, -6.2); ctx.stroke();
+      ctx.fillStyle = red;
+      ctx.beginPath();
+      ctx.arc(0, 2.8, 5.4, 0, Math.PI, false); ctx.closePath(); ctx.fill();
+      ctx.strokeStyle = vellum; ctx.lineWidth = 1.15;
+      for (var s3 = -1; s3 <= 1; s3++) {
+        ctx.beginPath();
+        ctx.moveTo(s3 * 3.1, 0.8);
+        ctx.bezierCurveTo(s3 * 3.1 - 1.4, -1.6, s3 * 3.1 + 1.4, -3.2, s3 * 3.1, -5.0 + bob * 0.4);
+        ctx.stroke();
+      }
+    } else if (idx === 4) {
+      /* 4: Umbrella-maker's white lace parasol rosette */
+      ctx.fillStyle = "rgba(239, 227, 196, 0.24)";
+      ctx.strokeStyle = vellum; ctx.lineWidth = 1.25;
+      ctx.beginPath(); ctx.arc(0, 0, 6.8, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+      ctx.strokeStyle = gold; ctx.lineWidth = 0.95;
+      for (var r4 = 0; r4 < 8; r4++) {
+        var a4 = (r4 * Math.PI) / 4 + phase * 0.12;
+        ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(Math.cos(a4) * 6.6, Math.sin(a4) * 6.6); ctx.stroke();
+      }
+      ctx.fillStyle = PALETTE.filament_core_ivory;
+      ctx.beginPath(); ctx.arc(0, 0, 1.6, 0, Math.PI * 2); ctx.fill();
+    } else if (idx === 5) {
+      /* 5: Great lady displaying white lace parasol at rampart races */
+      ctx.strokeStyle = vellum; ctx.lineWidth = 1.35;
+      ctx.beginPath(); ctx.arc(1.2, -1.8, 6.2, Math.PI * 1.06, Math.PI * 1.98, false); ctx.closePath();
+      ctx.fillStyle = "rgba(239, 227, 196, 0.30)"; ctx.fill(); ctx.stroke();
+      ctx.strokeStyle = gold; ctx.lineWidth = 1.25;
+      ctx.beginPath(); ctx.moveTo(1.2, -1.8); ctx.lineTo(-2.2, 6.5); ctx.stroke();
+      ctx.fillStyle = gold;
+      ctx.beginPath(); ctx.arc(-2.6, 2.2, 1.9, 0, Math.PI * 2); ctx.fill();
+    } else if (idx === 6) {
+      /* 6: Beloved officer smiling at the last barricade jump */
+      ctx.strokeStyle = red; ctx.lineWidth = 1.6;
+      ctx.beginPath(); ctx.moveTo(-6.5, 6.2); ctx.lineTo(-6.5, 1.2); ctx.moveTo(6.5, 6.2); ctx.lineTo(6.5, 1.2);
+      ctx.moveTo(-7.2, 2.6); ctx.lineTo(7.2, 2.6); ctx.stroke();
+      ctx.strokeStyle = PALETTE.filament_core_ivory; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(-6.2, 0.6); ctx.quadraticCurveTo(0, -8.4 + bob, 6.4, -0.5); ctx.stroke();
+      ctx.fillStyle = gold;
+      ctx.beginPath(); ctx.moveTo(0, -6.8); ctx.lineTo(2.8, -3.2); ctx.lineTo(-2.8, -3.2); ctx.closePath(); ctx.fill();
+    } else if (idx === 7) {
+      /* 7: Happier horse flying over obstacles */
+      ctx.strokeStyle = vellum; ctx.lineWidth = 1.1;
+      ctx.beginPath(); ctx.moveTo(-6.8, 5.8); ctx.lineTo(6.8, 5.8); ctx.stroke();
+      ctx.strokeStyle = gold; ctx.lineWidth = 1.75;
+      ctx.beginPath();
+      ctx.moveTo(-6.8, 2.2); ctx.quadraticCurveTo(-1.5, -4.8 + bob, 4.8, -2.2);
+      ctx.lineTo(7.2, -4.8);
+      ctx.moveTo(3.5, -1.5); ctx.lineTo(7.2, 1.2);
+      ctx.moveTo(-4.2, 0.8); ctx.lineTo(-7.4, 3.8);
+      ctx.stroke();
+    } else if (idx === 8) {
+      /* 8: Liberated francolin soaring above open cage */
+      ctx.strokeStyle = PALETTE.zinc_counter_pewter; ctx.lineWidth = 1.05;
+      ctx.strokeRect(-6.8, 1.4, 5.2, 5.4);
+      ctx.strokeStyle = gold; ctx.lineWidth = 1.55;
+      ctx.beginPath();
+      ctx.moveTo(-1.2, -1.4 + bob); ctx.quadraticCurveTo(2.2, -6.8, 6.8, -4.6);
+      ctx.moveTo(-1.2, -1.4 + bob); ctx.quadraticCurveTo(-4.6, -5.8, -7.2, -2.8);
+      ctx.stroke();
+      ctx.fillStyle = red;
+      ctx.beginPath(); ctx.arc(0.5, -1.6 + bob, 1.6, 0, Math.PI * 2); ctx.fill();
+    } else {
+      /* 9: Illuminator's parchment folio + speckled red-and-yellow feather */
+      ctx.fillStyle = vellum;
+      ctx.fillRect(-6.8, -4.6, 13.6, 9.6);
+      ctx.strokeStyle = amber; ctx.lineWidth = 1.0;
+      ctx.strokeRect(-6.8, -4.6, 13.6, 9.6);
+      ctx.beginPath(); ctx.moveTo(0, -4.6); ctx.lineTo(0, 5.0); ctx.stroke();
+      ctx.strokeStyle = red; ctx.lineWidth = 1.65;
+      ctx.beginPath(); ctx.moveTo(-4.2, 3.2); ctx.quadraticCurveTo(0.8, -1.4, 5.4, -5.8); ctx.stroke();
+      ctx.fillStyle = gold;
+      ctx.beginPath(); ctx.arc(1.2, -1.2, 1.3, 0, Math.PI * 2); ctx.arc(3.4, -3.4, 1.1, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  function raiFilPaintMedallion(ctx, width, height, snap, extraState) {
+    if (!ctx || !(width > 0) || !(height > 0)) return;
+    var w = width;
+    var h = height;
+    ctx.save();
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = PALETTE.grim_slate_night;
+    ctx.fillRect(0, 0, w, h);
+
+    var pad = Math.max(8, Math.min(w, h) * 0.065);
+    var fx = pad;
+    var fy = pad;
+    var fw = Math.max(24, w - pad * 2);
+    var fh = Math.max(24, h - pad * 2);
+
+    /* Warm illuminated vellum folio */
+    ctx.fillStyle = PALETTE.parchment_vellum;
+    ctx.fillRect(fx, fy, fw, fh);
+    ctx.strokeStyle = PALETTE.francolin_speckle_amber;
+    ctx.lineWidth = 2;
+    ctx.strokeRect(fx + 2, fy + 2, fw - 4, fh - 4);
+    ctx.strokeStyle = "rgba(201, 91, 60, 0.34)";
+    ctx.lineWidth = 1;
+    ctx.strokeRect(fx + 7, fy + 7, fw - 14, fh - 14);
+
+    /* Rubricated initial & faint manuscript lines */
+    var initBox = Math.max(14, Math.min(fw, fh) * 0.17);
+    ctx.fillStyle = PALETTE.ragout_terracotta;
+    ctx.fillRect(fx + 12, fy + 12, initBox, initBox);
+    ctx.strokeStyle = PALETTE.filament_spun_gold;
+    ctx.strokeRect(fx + 13.5, fy + 13.5, initBox - 3, initBox - 3);
+    ctx.fillStyle = PALETTE.filament_core_ivory;
+    ctx.font = "bold " + Math.round(initBox * 0.68) + "px Georgia, serif";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText("R", fx + 12 + initBox * 0.5, fy + 12 + initBox * 0.54);
+
+    ctx.strokeStyle = "rgba(34, 41, 51, 0.20)";
+    ctx.lineWidth = 1;
+    for (var ln = 0; ln < 5; ln++) {
+      var ly = fy + 15 + ln * (fh - 30) * 0.22;
+      var lx0 = ln < 2 ? fx + 18 + initBox : fx + 14;
+      ctx.beginPath(); ctx.moveTo(lx0, ly); ctx.lineTo(fx + fw - 14, ly); ctx.stroke();
+    }
+
+    /* Feather-by-feather red-and-yellow speckled francolin plume */
+    var x0 = fx + fw * 0.18;
+    var y0 = fy + fh * 0.80;
+    var x1 = fx + fw * 0.84;
+    var y1 = fy + fh * 0.20;
+    var cxm = fx + fw * 0.48;
+    var cym = fy + fh * 0.42;
+    var barbCount = 26;
+
+    for (var b = 2; b <= barbCount; b++) {
+      var tb = b / (barbCount + 1);
+      var ub = 1 - tb;
+      var bx = ub * ub * x0 + 2 * ub * tb * cxm + tb * tb * x1;
+      var by = ub * ub * y0 + 2 * ub * tb * cym + tb * tb * y1;
+      var env = Math.sin(tb * Math.PI) * Math.min(fw, fh) * 0.21;
+      var ang = Math.atan2(y1 - y0, x1 - x0);
+      var barbColor = b % 3 === 0 ? PALETTE.ragout_terracotta : (b % 3 === 1 ? PALETTE.francolin_speckle_amber : "#39485a");
+      ctx.strokeStyle = barbColor;
+      ctx.lineWidth = Math.max(1.2, Math.min(fw, fh) * 0.014);
+      ctx.beginPath();
+      ctx.moveTo(bx, by);
+      ctx.lineTo(bx + Math.cos(ang - 1.12) * env, by + Math.sin(ang - 1.12) * env);
+      ctx.moveTo(bx, by);
+      ctx.lineTo(bx + Math.cos(ang + 1.05) * env * 0.88, by + Math.sin(ang + 1.05) * env * 0.88);
+      ctx.stroke();
+
+      /* Red and yellow speckles painted feather by feather */
+      ctx.fillStyle = b % 2 === 0 ? PALETTE.filament_spun_gold : PALETTE.ragout_terracotta;
+      ctx.beginPath();
+      ctx.arc(bx + Math.cos(ang - 1.12) * env * 0.66, by + Math.sin(ang - 1.12) * env * 0.66, Math.max(1.3, env * 0.095), 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = b % 2 === 0 ? PALETTE.ragout_terracotta : PALETTE.filament_core_ivory;
+      ctx.beginPath();
+      ctx.arc(bx + Math.cos(ang + 1.05) * env * 0.56, by + Math.sin(ang + 1.05) * env * 0.56, Math.max(1.2, env * 0.085), 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    /* Ivory-gold quill shaft (rachis) */
+    ctx.strokeStyle = PALETTE.soot_ash_wall;
+    ctx.lineWidth = 2.6;
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.quadraticCurveTo(cxm, cym, x1, y1); ctx.stroke();
+    ctx.strokeStyle = PALETTE.filament_spun_gold;
+    ctx.lineWidth = 1.4;
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.quadraticCurveTo(cxm, cym, x1, y1); ctx.stroke();
+
+    /* 10-bead golden marginal filament indicator along bottom margin */
+    var litIdx = (extraState && typeof extraState.traceIndex === "number")
+      ? extraState.traceIndex
+      : (snap.traceIndex !== null ? snap.traceIndex : snap.sparkActiveIndex);
+    var byBead = fy + fh - 11;
+    ctx.strokeStyle = "rgba(226, 154, 46, 0.55)";
+    ctx.lineWidth = 1.1;
+    ctx.beginPath(); ctx.moveTo(fx + 16, byBead); ctx.lineTo(fx + fw - 16, byBead); ctx.stroke();
+    for (var m = 0; m < 10; m++) {
+      var mx = fx + 16 + (m / 9) * (fw - 32);
+      var isLit = m === litIdx;
+      ctx.fillStyle = isLit ? PALETTE.ragout_terracotta : PALETTE.filament_spun_gold;
+      ctx.beginPath(); ctx.arc(mx, byBead, isLit ? 3.6 : 2.2, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  function raiFilRenderOverlay(ctx, width, height, model, extState) {
+    if (!ctx || !(width > 0) || !(height > 0)) return;
+    var w = width;
+    var h = height;
+    var minDim = Math.min(w, h);
+    var uiScale = raiFilClamp(minDim / 760, 0.66, 1.18);
+    var nodeRad = raiFilClamp(minDim * 0.022, 11.5, 17.5);
+    var activeTrace = (extState && extState.traceIndex !== undefined) ? extState.traceIndex : model.traceIndex;
+    var hoveredIdx = null;
+    if (extState && typeof extState.hoveredNodeIndex === "number") hoveredIdx = extState.hoveredNodeIndex;
+    else if (extState && typeof extState.hoveredJoyIndex === "number") hoveredIdx = extState.hoveredJoyIndex;
+    var isFrozen = (extState && typeof extState.frozen === "boolean") ? extState.frozen : model.frozen;
+
+    ctx.save();
+
+    /* 1. Fading unraveled ghost skeins (dissolving over ~1.4s while new skein is already taut) */
+    for (var g = 0; g < model.unravelingGhosts.length; g++) {
+      var ghost = model.unravelingGhosts[g];
+      var life = raiFilClamp(1 - ghost.ageSec / ghost.durationSec, 0, 1);
+      if (life <= 0.01) continue;
+      var driftUp = (1 - life) * h * 0.028;
+      var curlExtra = (1 - life) * minDim * 0.045 * (ghost.gen % 2 === 0 ? 1 : -1);
+      ctx.save();
+      if (typeof ctx.setLineDash === "function") {
+        ctx.setLineDash([6 * uiScale, (5 + (1 - life) * 9) * uiScale]);
+      }
+      ctx.strokeStyle = "rgba(244, 197, 82, " + (life * 0.42).toFixed(3) + ")";
+      ctx.lineWidth = 1.6 * uiScale;
+      for (var gs = 0; gs < 9; gs++) {
+        var ga = ghost.nodes[gs];
+        var gb = ghost.nodes[gs + 1];
+        var gSeg = raiFilBuildCurveControls(
+          ga.nx * w, ga.ny * h - driftUp,
+          gb.nx * w, gb.ny * h - driftUp,
+          gs, ghost.archBiases[gs], curlExtra
+        );
+        ctx.beginPath();
+        ctx.moveTo(gSeg.ax, gSeg.ay);
+        ctx.bezierCurveTo(gSeg.c1x, gSeg.c1y, gSeg.c2x, gSeg.c2y, gSeg.bx, gSeg.by);
+        ctx.stroke();
+      }
+      if (typeof ctx.setLineDash === "function") ctx.setLineDash([]);
+      /* Dissolving curl wisps at former vertices */
+      ctx.strokeStyle = "rgba(239, 227, 196, " + (life * 0.34).toFixed(3) + ")";
+      ctx.lineWidth = 1.0 * uiScale;
+      for (var gv = 0; gv < 10; gv++) {
+        var gn = ghost.nodes[gv];
+        ctx.beginPath();
+        ctx.arc(gn.nx * w, gn.ny * h - driftUp, (4 + (1 - life) * 11) * uiScale, 0, Math.PI * 1.45);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    /* 2. Build screen-space Bezier segments for active 10-node thread */
+    var nodes = model.activeNodes;
+    var segs = new Array(9);
+    for (var i = 0; i < 9; i++) {
+      segs[i] = raiFilBuildCurveControls(
+        nodes[i].nx * w, nodes[i].ny * h,
+        nodes[i + 1].nx * w, nodes[i + 1].ny * h,
+        i, nodes[i].archBias, 0
+      );
+    }
+
+    /* 3. Three-pass luminous spun-gold catenary filament + directional causal chevrons */
+    for (var s = 0; s < 9; s++) {
+      var seg = segs[s];
+      var segHighlighted = (activeTrace !== null && (s === activeTrace || s === activeTrace - 1)) ||
+        (hoveredIdx !== null && (s === hoveredIdx || s === hoveredIdx - 1));
+
+      ctx.strokeStyle = segHighlighted ? "rgba(255, 240, 184, 0.36)" : "rgba(244, 197, 82, 0.19)";
+      ctx.lineWidth = (segHighlighted ? 8.2 : 5.8) * uiScale;
+      ctx.beginPath();
+      ctx.moveTo(seg.ax, seg.ay);
+      ctx.bezierCurveTo(seg.c1x, seg.c1y, seg.c2x, seg.c2y, seg.bx, seg.by);
+      ctx.stroke();
+
+      ctx.strokeStyle = PALETTE.filament_spun_gold;
+      ctx.lineWidth = (segHighlighted ? 3.1 : 2.15) * uiScale;
+      ctx.beginPath();
+      ctx.moveTo(seg.ax, seg.ay);
+      ctx.bezierCurveTo(seg.c1x, seg.c1y, seg.c2x, seg.c2y, seg.bx, seg.by);
+      ctx.stroke();
+
+      ctx.strokeStyle = PALETTE.filament_core_ivory;
+      ctx.lineWidth = (segHighlighted ? 1.45 : 0.9) * uiScale;
+      ctx.beginPath();
+      ctx.moveTo(seg.ax, seg.ay);
+      ctx.bezierCurveTo(seg.c1x, seg.c1y, seg.c2x, seg.c2y, seg.bx, seg.by);
+      ctx.stroke();
+
+      /* Causal flow chevron at midpoint */
+      var midPt = raiFilEvalCubic(seg, 0.53);
+      var midAng = raiFilEvalTangent(seg, 0.53);
+      var chev = 4.6 * uiScale;
+      ctx.save();
+      ctx.translate(midPt.x, midPt.y);
+      ctx.rotate(midAng);
+      ctx.strokeStyle = segHighlighted ? PALETTE.filament_core_ivory : PALETTE.filament_spun_gold;
+      ctx.lineWidth = 1.4 * uiScale;
+      ctx.beginPath();
+      ctx.moveTo(-chev, -chev * 0.72);
+      ctx.lineTo(chev * 0.55, 0);
+      ctx.lineTo(-chev, chev * 0.72);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    /* 4. Darting causal sparks racing 0 -> 9 */
+    for (var sp = 0; sp < 2; sp++) {
+      var cursor = (model.sparkPhase + sp * 4.5) % 9;
+      var segIdx = Math.min(8, Math.max(0, Math.floor(cursor)));
+      var localT = cursor - segIdx;
+      var sPt = raiFilEvalCubic(segs[segIdx], localT);
+      var tailPt = raiFilEvalCubic(segs[segIdx], Math.max(0, localT - 0.085));
+
+      ctx.strokeStyle = PALETTE.filament_core_ivory;
+      ctx.lineWidth = 2.5 * uiScale;
+      ctx.beginPath();
+      ctx.moveTo(tailPt.x, tailPt.y);
+      ctx.lineTo(sPt.x, sPt.y);
+      ctx.stroke();
+
+      ctx.fillStyle = "rgba(244, 197, 82, 0.34)";
+      ctx.beginPath();
+      ctx.arc(sPt.x, sPt.y, 7.6 * uiScale, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = PALETTE.filament_core_ivory;
+      ctx.beginPath();
+      ctx.arc(sPt.x, sPt.y, 3.1 * uiScale, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    /* 5. Bespoke 10-node medallions + spotlight ring */
+    var focusNode = null;
+    for (var n = 0; n < 10; n++) {
+      var nd = nodes[n];
+      var px = nd.nx * w;
+      var py = nd.ny * h;
+      var isTraced = activeTrace === n;
+      var isHovered = hoveredIdx === n;
+      var focused = isTraced || isHovered;
+      if (focused) focusNode = { nd: nd, px: px, py: py };
+
+      if (focused) {
+        ctx.save();
+        ctx.strokeStyle = PALETTE.filament_core_ivory;
+        ctx.lineWidth = 1.8 * uiScale;
+        ctx.beginPath();
+        ctx.arc(px, py, nodeRad + 7.5 * uiScale, 0, Math.PI * 2);
+        ctx.stroke();
+        if (typeof ctx.setLineDash === "function") ctx.setLineDash([4 * uiScale, 4 * uiScale]);
+        ctx.strokeStyle = PALETTE.filament_spun_gold;
+        ctx.lineWidth = 1.2 * uiScale;
+        ctx.beginPath();
+        ctx.arc(px, py, nodeRad + 12.5 * uiScale, 0, Math.PI * 2);
+        ctx.stroke();
+        if (typeof ctx.setLineDash === "function") ctx.setLineDash([]);
+        ctx.restore();
+      }
+
+      ctx.fillStyle = "rgba(19, 23, 29, 0.86)";
+      ctx.beginPath();
+      ctx.arc(px, py, nodeRad, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.strokeStyle = focused ? PALETTE.filament_core_ivory : PALETTE.filament_spun_gold;
+      ctx.lineWidth = (focused ? 2.2 : 1.5) * uiScale;
+      ctx.beginPath();
+      ctx.arc(px, py, nodeRad, 0, Math.PI * 2);
+      ctx.stroke();
+
+      raiFilDrawNodeEmblem(ctx, n, px, py, nodeRad, model.animClock, focused);
+
+      /* Numeral pill 01..10 */
+      var numStr = n < 9 ? "0" + (n + 1) : "10";
+      var bx = px - nodeRad * 0.78;
+      var by = py - nodeRad * 0.82;
+      ctx.fillStyle = focused ? PALETTE.ragout_terracotta : PALETTE.soot_ash_wall;
+      ctx.beginPath();
+      ctx.arc(bx, by, Math.max(6.5, 7.2 * uiScale), 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = PALETTE.filament_spun_gold;
+      ctx.lineWidth = 0.9;
+      ctx.stroke();
+      ctx.fillStyle = PALETTE.filament_core_ivory;
+      ctx.font = "bold " + Math.max(8, Math.round(8.6 * uiScale)) + "px monospace";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(numStr, bx, by + 0.5);
+    }
+
+    /* 6. Clamped spotlight callout tag + subtle shutter corner marks when frozen */
+    if (focusNode) {
+      var labelText = CHAIN_LINKS[focusNode.nd.index].shortLabel;
+      ctx.font = "bold " + Math.max(10, Math.round(11 * uiScale)) + "px Georgia, serif";
+      var tw = Math.min(w - 20, Math.max(118, labelText.length * 6.6 * uiScale + 18));
+      var th = 22 * uiScale;
+      var tx = raiFilClamp(focusNode.px - tw * 0.5, 10, w - tw - 10);
+      var ty = focusNode.py > h * 0.24 ? focusNode.py - nodeRad - th - 14 * uiScale : focusNode.py + nodeRad + 14 * uiScale;
+      ty = raiFilClamp(ty, 8, h - th - 8);
+      ctx.fillStyle = "rgba(19, 23, 29, 0.92)";
+      ctx.fillRect(tx, ty, tw, th);
+      ctx.strokeStyle = PALETTE.filament_spun_gold;
+      ctx.lineWidth = 1.2;
+      ctx.strokeRect(tx, ty, tw, th);
+      ctx.fillStyle = PALETTE.filament_core_ivory;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(labelText, tx + tw * 0.5, ty + th * 0.53);
+    }
+
+    if (isFrozen) {
+      var arm = Math.max(14, 20 * uiScale);
+      var m = 8;
+      ctx.strokeStyle = PALETTE.filament_spun_gold;
+      ctx.lineWidth = 1.6;
+      ctx.beginPath();
+      ctx.moveTo(m, m + arm); ctx.lineTo(m, m); ctx.lineTo(m + arm, m);
+      ctx.moveTo(w - m - arm, m); ctx.lineTo(w - m, m); ctx.lineTo(w - m, m + arm);
+      ctx.moveTo(m, h - m - arm); ctx.lineTo(m, h - m); ctx.lineTo(m + arm, h - m);
+      ctx.moveTo(w - m - arm, h - m); ctx.lineTo(w - m, h - m); ctx.lineTo(w - m, h - m - arm);
+      ctx.stroke();
+    }
+
+    ctx.restore();
+  }
+
+  function create(options) {
+    var opts = options || {};
+    var CYCLE_PERIOD_SEC = 2.6;
+    var GHOST_DURATION_SEC = 1.4;
+
+    var anchors = raiFilNormalizeAnchors(opts.anchorZones);
+    var audio = raiFilCreateAudio(Boolean(opts.muted));
+    var reducedMotion = Boolean(opts.reducedMotion);
+    var onChange = typeof opts.onChange === "function" ? opts.onChange : null;
+
+    var timeSec = 0;
+    var animClock = 0;
+    var cycleElapsedSec = 0;
+    var sparkPhase = 0;
+    var patternGeneration = 1;
+    var frozen = false;
+    var frozenAtSec = null;
+    var traceIndex = null;
+    var unravelingGhosts = [];
+
+    function computePatternNodes(gen, zoneList, clockSec) {
+      var list = new Array(10);
+      for (var i = 0; i < 10; i++) {
+        var z = zoneList[i];
+        var h1 = raiFilHash(gen * 31.7 + i * 13.3 + 0.7);
+        var h2 = raiFilHash(gen * 53.9 + i * 19.1 + 2.3);
+        var h3 = raiFilHash(gen * 71.3 + i * 7.9 + 5.1);
+        var jumpX = (h1 * 2 - 1) * z.driftRadiusX * 0.72;
+        var jumpY = (h2 * 2 - 1) * z.driftRadiusY * 0.72;
+        var orbX = Math.cos(clockSec * (1.15 + h1 * 0.7) + h2 * 6.283) * z.driftRadiusX * 0.34;
+        var orbY = Math.sin(clockSec * (1.05 + h2 * 0.7) + h1 * 6.283) * z.driftRadiusY * 0.34;
+        list[i] = {
+          index: i,
+          id: CHAIN_LINKS[i].id,
+          zoneLabel: z.zoneLabel,
+          nx: raiFilClamp(z.baseX + jumpX + orbX, 0.048, 0.952),
+          ny: raiFilClamp(z.baseY + jumpY + orbY, 0.075, 0.915),
+          archBias: (h3 * 2 - 1)
+        };
+      }
+      return list;
+    }
+
+    var activeNodes = computePatternNodes(patternGeneration, anchors, animClock);
+
+    function notify() {
+      if (onChange) {
+        try { onChange(getSnapshot()); } catch (e) { /* safe callback */ }
+      }
+    }
+
+    function snapshotGhostFromActive() {
+      var gNodes = new Array(10);
+      var biases = new Array(10);
+      for (var i = 0; i < 10; i++) {
+        gNodes[i] = { nx: activeNodes[i].nx, ny: activeNodes[i].ny };
+        biases[i] = activeNodes[i].archBias;
+      }
+      unravelingGhosts.push({
+        gen: patternGeneration,
+        ageSec: 0,
+        durationSec: GHOST_DURATION_SEC,
+        nodes: gNodes,
+        archBiases: biases
+      });
+      if (unravelingGhosts.length > 6) {
+        unravelingGhosts.shift();
+      }
+    }
+
+    function restretchImmediate(softAudio) {
+      snapshotGhostFromActive();
+      patternGeneration += 1;
+      cycleElapsedSec = 0;
+      activeNodes = computePatternNodes(patternGeneration, anchors, animClock);
+      audio.playRestretchShimmer(Boolean(softAudio));
+    }
+
+    function getInvariants() {
+      var count = activeNodes.length;
+      return {
+        overtSadnessConstant: true,
+        invisibleThreadActiveEverySecond: count === 10,
+        everySecondContainsHappyChain: count === 10,
+        happyCityAwareOfItself: false,
+        canonicalLinkCount: CHAIN_LINKS.length,
+        activeLinkCount: count,
+        patternGeneration: patternGeneration
+      };
+    }
+
+    function getSnapshot() {
+      var effectiveSec = frozen && frozenAtSec !== null ? frozenAtSec : timeSec;
+      var sparkIdx = Math.min(9, Math.max(0, Math.round(sparkPhase * (9 / 8.999))));
+      var nodeCopies = new Array(10);
+      for (var i = 0; i < 10; i++) {
+        var n = activeNodes[i];
+        var meta = CHAIN_LINKS[i];
+        nodeCopies[i] = {
+          index: i,
+          id: meta.id,
+          nx: n.nx,
+          ny: n.ny,
+          zoneLabel: n.zoneLabel,
+          shortLabel: meta.shortLabel,
+          actor: meta.actor,
+          action: meta.action,
+          stoneQuote: meta.stoneQuote,
+          causeArrow: meta.causeArrow,
+          noteHz: meta.noteHz
+        };
+      }
+      return {
+        timeSec: effectiveSec,
+        frozen: frozen,
+        frozenAtSec: frozenAtSec,
+        frozenAtMs: Math.round(effectiveSec * 1000),
+        shutterProofLabel: (frozen ? "FROZEN t=" : "LIVE t=") + effectiveSec.toFixed(3) + "s · 10/10 LINKS ACTIVE",
+        patternGeneration: patternGeneration,
+        cycleElapsedSec: cycleElapsedSec,
+        cyclePeriodSec: CYCLE_PERIOD_SEC,
+        cycleProgress: cycleElapsedSec / CYCLE_PERIOD_SEC,
+        activeLinkCount: activeNodes.length,
+        unravelingGhostCount: unravelingGhosts.length,
+        traceIndex: traceIndex,
+        tracedLink: traceIndex !== null ? CHAIN_LINKS[traceIndex] : null,
+        sparkPhase: sparkPhase,
+        sparkActiveIndex: sparkIdx,
+        muted: audio.isMuted(),
+        reducedMotion: reducedMotion,
+        nodes: nodeCopies,
+        philosopherQuote: PHILOSOPHER_QUOTE,
+        invariants: getInvariants()
+      };
+    }
+
+    function step(dtSec, anchorZones) {
+      if (anchorZones) {
+        anchors = raiFilNormalizeAnchors(anchorZones);
+      }
+      var dt = raiFilClamp(Number(dtSec) || 0, 0, 0.5);
+      if (!frozen && dt > 0) {
+        timeSec += dt;
+        for (var g = unravelingGhosts.length - 1; g >= 0; g--) {
+          unravelingGhosts[g].ageSec += dt;
+          if (unravelingGhosts[g].ageSec >= unravelingGhosts[g].durationSec) {
+            unravelingGhosts.splice(g, 1);
+          }
+        }
+        if (!reducedMotion) {
+          animClock += dt;
+          sparkPhase = (sparkPhase + dt * 5.2) % 9;
+          cycleElapsedSec += dt;
+          while (cycleElapsedSec >= CYCLE_PERIOD_SEC) {
+            cycleElapsedSec -= CYCLE_PERIOD_SEC;
+            snapshotGhostFromActive();
+            patternGeneration += 1;
+            audio.playRestretchShimmer(true);
+          }
+          activeNodes = computePatternNodes(patternGeneration, anchors, animClock);
+        } else {
+          activeNodes = computePatternNodes(patternGeneration, anchors, animClock);
+        }
+      } else if (anchorZones) {
+        activeNodes = computePatternNodes(patternGeneration, anchors, animClock);
+      }
+      return getSnapshot();
+    }
+
+    function render(ctx, width, height, state) {
+      if (state && typeof state.reducedMotion === "boolean") {
+        reducedMotion = state.reducedMotion;
+      }
+      raiFilRenderOverlay(ctx, width, height, {
+        activeNodes: activeNodes,
+        unravelingGhosts: unravelingGhosts,
+        sparkPhase: sparkPhase,
+        animClock: animClock,
+        traceIndex: traceIndex,
+        frozen: frozen
+      }, state);
+    }
+
+    function renderParchmentMedallion(ctx, width, height, state) {
+      raiFilPaintMedallion(ctx, width, height, getSnapshot(), state);
+    }
+
+    function freezeAtNow() {
+      frozen = true;
+      frozenAtSec = timeSec;
+      audio.playFreezeChime();
+      notify();
+      return getSnapshot();
+    }
+
+    function resumeFlow() {
+      frozen = false;
+      frozenAtSec = null;
+      notify();
+      return getSnapshot();
+    }
+
+    function unravelAndRestretchNow() {
+      if (frozen) {
+        animClock += 0.41;
+        frozenAtSec = timeSec;
+      }
+      restretchImmediate(false);
+      notify();
+      return getSnapshot();
+    }
+
+    function setTraceIndex(idxOrNull) {
+      if (idxOrNull === null || idxOrNull === undefined || idxOrNull === false || idxOrNull === -1) {
+        traceIndex = null;
+      } else {
+        var parsed = Math.round(Number(idxOrNull));
+        if (!isNaN(parsed)) {
+          traceIndex = ((parsed % 10) + 10) % 10;
+          audio.playLinkNote(traceIndex);
+        }
+      }
+      notify();
+      return getSnapshot();
+    }
+
+    function stepTrace(delta) {
+      var stepBy = Math.trunc(Number(delta));
+      if (!stepBy) stepBy = 1;
+      if (traceIndex === null) {
+        traceIndex = stepBy >= 0 ? 0 : 9;
+      } else {
+        traceIndex = (((traceIndex + stepBy) % 10) + 10) % 10;
+      }
+      audio.playLinkNote(traceIndex);
+      notify();
+      return getSnapshot();
+    }
+
+    function hitTestNode(nx, ny, width, height) {
+      var w = width > 1 ? width : 1280;
+      var h = height > 1 ? height : 800;
+      var tx = Number(nx);
+      var ty = Number(ny);
+      if (isNaN(tx) || isNaN(ty)) return null;
+      if ((tx > 1.05 || ty > 1.05) && w > 1 && h > 1) {
+        tx = tx / w;
+        ty = ty / h;
+      }
+      var px = tx * w;
+      var py = ty * h;
+      var hitRadius = raiFilClamp(Math.min(w, h) * 0.036, 20, 30);
+      var best = null;
+      var bestDist = hitRadius;
+      for (var i = 0; i < 10; i++) {
+        var nd = activeNodes[i];
+        var dx = nd.nx * w - px;
+        var dy = nd.ny * h - py;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist <= bestDist) {
+          bestDist = dist;
+          var meta = CHAIN_LINKS[i];
+          best = {
+            index: i,
+            id: meta.id,
+            nx: nd.nx,
+            ny: nd.ny,
+            px: nd.nx * w,
+            py: nd.ny * h,
+            zoneLabel: nd.zoneLabel,
+            shortLabel: meta.shortLabel,
+            actor: meta.actor,
+            action: meta.action,
+            stoneQuote: meta.stoneQuote,
+            causeArrow: meta.causeArrow,
+            noteHz: meta.noteHz,
+            link: meta
+          };
+        }
+      }
+      return best;
+    }
+
+    return {
+      CHAIN_LINKS: CHAIN_LINKS,
+      PHILOSOPHER_QUOTE: PHILOSOPHER_QUOTE,
+      PALETTE: PALETTE,
+      step: step,
+      render: render,
+      renderParchmentMedallion: renderParchmentMedallion,
+      freezeAtNow: freezeAtNow,
+      resumeFlow: resumeFlow,
+      isFrozen: function () { return frozen; },
+      unravelAndRestretchNow: unravelAndRestretchNow,
+      setTraceIndex: setTraceIndex,
+      stepTrace: stepTrace,
+      hitTestNode: hitTestNode,
+      setMuted: function (b) { var res = audio.setMuted(b); notify(); return res; },
+      isMuted: function () { return audio.isMuted(); },
+      unlockAudio: function () { return audio.unlock(); },
+      playLinkNote: function (idx) { return audio.playLinkNote(idx); },
+      setReducedMotion: function (b) { reducedMotion = Boolean(b); notify(); return reducedMotion; },
+      getSnapshot: getSnapshot,
+      getInvariants: getInvariants
+    };
+  }
+
+  var api = Object.freeze({
+    CHAIN_LINKS: CHAIN_LINKS,
+    PHILOSOPHER_QUOTE: PHILOSOPHER_QUOTE,
+    PALETTE: PALETTE,
+    DEFAULT_ANCHOR_ZONES: DEFAULT_ANCHOR_ZONES,
+    create: create
+  });
+
+  root.RaissaJoyFilament = api;
+  if (typeof window !== "undefined") {
+    window.RaissaJoyFilament = api;
+  }
+  if (typeof module === "object" && module && module.exports) {
+    module.exports = api;
+  }
+})(typeof globalThis !== "undefined" ? globalThis : (typeof window !== "undefined" ? window : this));
+</script>
+<script class="rai-loom-controller">
+(function () {
+  "use strict";
+
+  var UnhappyApi = globalThis.RaissaUnhappyGrid;
+  var FilamentApi = globalThis.RaissaJoyFilament;
+  if (!UnhappyApi || !FilamentApi) {
+    return;
+  }
+
+  var rootEl = document.getElementById("rai-loom-root");
+  var cutawayCanvas = document.getElementById("rai-cutaway-canvas");
+  var featherCanvas = document.getElementById("rai-feather-canvas");
+  var mapQuotaCanvas = document.getElementById("rai-map-quota-canvas");
+  var vistaQuotaCanvas = document.getElementById("rai-vista-quota-canvas");
+
+  var btnMute = document.getElementById("rai-btn-mute");
+  var btnPlates = document.getElementById("rai-btn-plates");
+  var btnFreeze = document.getElementById("rai-btn-freeze");
+  var btnTracePrev = document.getElementById("rai-btn-trace-prev");
+  var btnTraceNext = document.getElementById("rai-btn-trace-next");
+  var btnTraceClear = document.getElementById("rai-btn-trace-clear");
+  var btnRestretch = document.getElementById("rai-btn-restretch");
+
+  var grimTitleEl = document.getElementById("rai-grim-title");
+  var grimLocusEl = document.getElementById("rai-grim-locus");
+  var grimDetailEl = document.getElementById("rai-grim-detail");
+  var chamberPills = Array.prototype.slice.call(document.querySelectorAll(".rai-chamber-pill"));
+  var linkBeads = Array.prototype.slice.call(document.querySelectorAll(".rai-link-bead"));
+
+  var chipTime = document.getElementById("rai-chip-time");
+  var chipLinks = document.getElementById("rai-chip-links");
+  var chipSkein = document.getElementById("rai-chip-skein");
+  var chipUnaware = document.getElementById("rai-chip-unaware");
+  var dualitySeal = document.getElementById("rai-duality-seal");
+  var skeinStatus = document.getElementById("rai-skein-status");
+  var proofBox = document.getElementById("rai-shutter-proof-box");
+
+  var quoteEl = document.getElementById("rai-philosopher-quote");
+  var linkStepEl = document.getElementById("rai-link-step");
+  var linkHzEl = document.getElementById("rai-link-hz");
+  var linkActorEl = document.getElementById("rai-link-actor");
+  var linkQuoteEl = document.getElementById("rai-link-quote");
+  var linkArrowEl = document.getElementById("rai-link-arrow");
+  var invSadnessEl = document.getElementById("rai-inv-sadness");
+  var invEverySecEl = document.getElementById("rai-inv-every-sec");
+  var invThreadEl = document.getElementById("rai-inv-thread");
+  var invAwareEl = document.getElementById("rai-inv-aware");
+
+  var plateDrawer = document.getElementById("rai-plate-drawer");
+  var plateSheet = document.getElementById("rai-plate-sheet");
+  var plateGrid = document.getElementById("rai-plate-grid");
+  var btnPlateZoom = document.getElementById("rai-btn-plate-zoom");
+  var btnPlateClose = document.getElementById("rai-btn-plate-close");
+  var plateViewBtns = Array.prototype.slice.call(document.querySelectorAll("[data-plate-view]"));
+
+  var mqReduced = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
+  var reducedMotion = Boolean(mqReduced && mqReduced.matches);
+  rootEl.setAttribute("data-reduced-motion", String(reducedMotion));
+
+  var grimGrid = UnhappyApi.create({ muted: true });
+  var filament = FilamentApi.create({
+    anchorZones: grimGrid.getAnchorZones(),
+    muted: true,
+    reducedMotion: reducedMotion
+  });
+
+  if (quoteEl) {
+    quoteEl.textContent = filament.PHILOSOPHER_QUOTE;
+  }
+
+  var selectedGrimId = "river_railing";
+  var hoveredGrimId = null;
+  var hoveredJoyIndex = null;
+  var pointerNorm = null;
+  var focusedLinkIndex = 2;
+  var shutterCaptureCount = 0;
+  var plateZoomed = false;
+  var plateViewMode = "diptych";
+
+  function findGrimZone(id) {
+    var zones = grimGrid.GRIM_ZONES;
+    for (var i = 0; i < zones.length; i++) {
+      if (zones[i].id === id) return zones[i];
+    }
+    return zones[0];
+  }
+
+  function prepareCanvas(canvas, fallbackW, fallbackH) {
+    if (!canvas) return null;
+    var rect = canvas.getBoundingClientRect();
+    var cssW = rect.width > 20 ? Math.round(rect.width) : fallbackW;
+    var cssH = rect.height > 20 ? Math.round(rect.height) : fallbackH;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var targetW = Math.round(cssW * dpr);
+    var targetH = Math.round(cssH * dpr);
+    if (canvas.width !== targetW || canvas.height !== targetH) {
+      canvas.width = targetW;
+      canvas.height = targetH;
+    }
+    var ctx = canvas.getContext("2d");
+    if (!ctx) return null;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return { ctx: ctx, w: cssW, h: cssH };
+  }
+
+  function getCombinedInvariants() {
+    var gInv = grimGrid.getInvariants();
+    var fInv = filament.getInvariants();
+    var snap = filament.getSnapshot();
+    return {
+      overtSadnessConstant: Boolean(gInv.overtSadnessConstant && fInv.overtSadnessConstant),
+      invisibleThreadActiveEverySecond: Boolean(fInv.invisibleThreadActiveEverySecond),
+      everySecondContainsHappyChain: Boolean(fInv.everySecondContainsHappyChain),
+      happyCityAwareOfItself: Boolean(fInv.happyCityAwareOfItself),
+      canonicalCausalLinks: fInv.canonicalLinkCount,
+      canonicalLinkCount: fInv.canonicalLinkCount,
+      activeLinkCount: fInv.activeLinkCount,
+      grimZonesActive: gInv.grimZonesActive,
+      bentHeadsConcealGrimGaze: Boolean(gInv.bentHeadsConcealGrimGaze),
+      patternGeneration: fInv.patternGeneration,
+      unravelingGhostCount: snap.unravelingGhostCount,
+      frozen: snap.frozen,
+      timeSec: snap.timeSec,
+      traceIndex: snap.traceIndex,
+      muted: filament.isMuted(),
+      platesOpen: !plateDrawer.hidden,
+      reducedMotion: reducedMotion,
+      zeroExternalUrls: true,
+      zeroCrossCityRelativePaths: true
+    };
+  }
+
+  function syncGrimReadout(snap) {
+    var activeGrim = findGrimZone(hoveredGrimId || selectedGrimId);
+    var joyNode = hoveredJoyIndex !== null ? snap.nodes[hoveredJoyIndex] : (snap.traceIndex !== null ? snap.nodes[snap.traceIndex] : null);
+    grimTitleEl.textContent = activeGrim.title + " · Overt Sadness Constant";
+    if (joyNode) {
+      grimLocusEl.textContent = joyNode.shortLabel.toUpperCase() + " @ " + joyNode.zoneLabel.toUpperCase();
+      grimDetailEl.textContent = activeGrim.detail + " Simultaneous unseen node: " + joyNode.actor + " — " + joyNode.action + ".";
+    } else {
+      grimLocusEl.textContent = "CHAMBER: " + activeGrim.id.toUpperCase();
+      grimDetailEl.textContent = activeGrim.detail;
+    }
+    for (var i = 0; i < chamberPills.length; i++) {
+      var pid = chamberPills[i].getAttribute("data-grim-id");
+      chamberPills[i].setAttribute("data-active", String(pid === (hoveredGrimId || selectedGrimId)));
+    }
+  }
+
+  function syncDom(snap) {
+    var inv = getCombinedInvariants();
+    var displayIdx = hoveredJoyIndex !== null
+      ? hoveredJoyIndex
+      : (snap.traceIndex !== null ? snap.traceIndex : focusedLinkIndex);
+    var node = snap.nodes[displayIdx] || snap.nodes[0];
+
+    btnFreeze.setAttribute("data-frozen", String(snap.frozen));
+    btnFreeze.textContent = snap.frozen ? "[Space / F] Resume Live Flow" : "[Space / F] Freeze Any Second";
+
+    chipTime.textContent = (snap.frozen ? "FROZEN t=" : "LIVE t=") + snap.timeSec.toFixed(3) + "s · " + (snap.frozen ? "SHUTTER LOCKED" : "SHUTTER OPEN");
+    chipLinks.textContent = "COEXISTING LINKS: " + snap.activeLinkCount + " / 10";
+    chipSkein.textContent = "SKEIN GEN #" + snap.patternGeneration + " · GHOSTS:" + snap.unravelingGhostCount + " · 0ms GAP";
+    chipUnaware.textContent = "HAPPY CITY SELF-AWARE: " + String(inv.happyCityAwareOfItself).toUpperCase();
+    dualitySeal.textContent = "SADNESS: CONSTANT · HAPPY SKEIN: " + snap.activeLinkCount + "/10";
+    skeinStatus.textContent = snap.activeLinkCount + " / 10 NODES BOUND · PATTERN #" + snap.patternGeneration + (snap.frozen ? " · FROZEN @ " + snap.timeSec.toFixed(3) + "s" : "");
+
+    var numStr = node.index < 9 ? "0" + (node.index + 1) : "10";
+    linkStepEl.textContent = "LINK " + numStr + " / 10 · " + node.zoneLabel.toUpperCase();
+    linkHzEl.textContent = node.noteHz.toFixed(2) + " Hz LYDIAN";
+    linkActorEl.textContent = node.actor;
+    linkQuoteEl.textContent = node.stoneQuote;
+    linkArrowEl.textContent = node.causeArrow;
+
+    if (snap.frozen) {
+      proofBox.textContent = "Frozen Shutter Proof #" + Math.max(1, shutterCaptureCount) + " at t=" + snap.timeSec.toFixed(3) + "s: All 8 grim chambers remain unabated while " + snap.activeLinkCount + "/10 causal joy links coexist simultaneously inside sad Raissa.";
+    } else {
+      proofBox.textContent = "Simultaneity Proof (Pattern #" + snap.patternGeneration + "): At every continuous second inside grim Raissa, 10/10 causal joy links bind moving points with 0ms unravel/re-stretch gap.";
+    }
+
+    invSadnessEl.textContent = "overtSadnessConstant: " + String(inv.overtSadnessConstant);
+    invEverySecEl.textContent = "everySecondContainsHappyChain: " + String(inv.everySecondContainsHappyChain);
+    invThreadEl.textContent = "invisibleThreadActiveEverySecond: " + String(inv.invisibleThreadActiveEverySecond);
+    invAwareEl.textContent = "happyCityAwareOfItself: " + String(inv.happyCityAwareOfItself);
+
+    for (var b = 0; b < linkBeads.length; b++) {
+      var isTraced = snap.traceIndex === b || hoveredJoyIndex === b;
+      var isSpark = !snap.frozen && snap.sparkActiveIndex === b;
+      linkBeads[b].setAttribute("data-traced", String(isTraced));
+      linkBeads[b].setAttribute("data-spark", String(isSpark));
+    }
+
+    syncGrimReadout(snap);
+  }
+
+  function renderAll(snap) {
+    var cutSurf = prepareCanvas(cutawayCanvas, 760, 316);
+    if (cutSurf) {
+      var activeGrim = hoveredGrimId || selectedGrimId;
+      grimGrid.render(cutSurf.ctx, cutSurf.w, cutSurf.h, {
+        timeSec: snap.timeSec,
+        frozen: snap.frozen,
+        reducedMotion: reducedMotion,
+        hoveredGrimId: activeGrim,
+        pointerNorm: pointerNorm
+      });
+      filament.render(cutSurf.ctx, cutSurf.w, cutSurf.h, {
+        reducedMotion: reducedMotion,
+        traceIndex: snap.traceIndex,
+        hoveredNodeIndex: hoveredJoyIndex,
+        frozen: snap.frozen
+      });
+    }
+
+    var fthSurf = prepareCanvas(featherCanvas, 146, 112);
+    if (fthSurf) {
+      var medIdx = hoveredJoyIndex !== null
+        ? hoveredJoyIndex
+        : (snap.traceIndex !== null ? snap.traceIndex : (reducedMotion ? focusedLinkIndex : snap.sparkActiveIndex));
+      filament.renderParchmentMedallion(fthSurf.ctx, fthSurf.w, fthSurf.h, {
+        traceIndex: medIdx,
+        reducedMotion: reducedMotion
+      });
+    }
+  }
+
+  function paintQuotaFallbacks() {
+    var snap = filament.getSnapshot();
+    var mapSurf = prepareCanvas(mapQuotaCanvas, 520, 340);
+    if (mapSurf) {
+      grimGrid.render(mapSurf.ctx, mapSurf.w, mapSurf.h, {
+        timeSec: snap.timeSec,
+        frozen: true,
+        reducedMotion: true,
+        hoveredGrimId: selectedGrimId
+      });
+      filament.render(mapSurf.ctx, mapSurf.w, mapSurf.h, {
+        reducedMotion: true,
+        traceIndex: snap.traceIndex,
+        frozen: true
+      });
+    }
+    var vistaSurf = prepareCanvas(vistaQuotaCanvas, 520, 325);
+    if (vistaSurf) {
+      filament.renderParchmentMedallion(vistaSurf.ctx, vistaSurf.w, vistaSurf.h, {
+        traceIndex: focusedLinkIndex,
+        reducedMotion: true
+      });
+    }
+    return true;
+  }
+
+  function buildReturnPayload(snap) {
+    var inv = getCombinedInvariants();
+    return {
+      timeSec: snap.timeSec,
+      frozen: snap.frozen,
+      frozenAtMs: snap.frozenAtMs,
+      shutterProofLabel: snap.shutterProofLabel,
+      patternGeneration: snap.patternGeneration,
+      unravelingGhostCount: snap.unravelingGhostCount,
+      activeLinkCount: snap.activeLinkCount,
+      traceIndex: snap.traceIndex,
+      tracedLink: snap.tracedLink,
+      overtSadnessConstant: inv.overtSadnessConstant,
+      invisibleThreadActiveEverySecond: inv.invisibleThreadActiveEverySecond,
+      everySecondContainsHappyChain: inv.everySecondContainsHappyChain,
+      happyCityAwareOfItself: inv.happyCityAwareOfItself,
+      canonicalCausalLinks: inv.canonicalCausalLinks,
+      invariants: inv
+    };
+  }
+
+  var lastTickMs = performance.now();
+
+  function catchUpClockIfNeeded() {
+    var nowMs = performance.now();
+    var dt = Math.min(0.45, Math.max(0, (nowMs - lastTickMs) / 1000));
+    lastTickMs = nowMs;
+    if (!filament.isFrozen() && dt > 0) {
+      filament.step(dt, grimGrid.getAnchorZones());
+    }
+  }
+
+  function refreshView() {
+    var snap = filament.getSnapshot();
+    syncDom(snap);
+    renderAll(snap);
+    return snap;
+  }
+
+  function freezeAnySecond() {
+    catchUpClockIfNeeded();
+    shutterCaptureCount += 1;
+    var snap = filament.freezeAtNow();
+    syncDom(snap);
+    renderAll(snap);
+    return buildReturnPayload(snap);
+  }
+
+  function resumeFlow() {
+    lastTickMs = performance.now();
+    var snap = filament.resumeFlow();
+    syncDom(snap);
+    renderAll(snap);
+    return buildReturnPayload(snap);
+  }
+
+  function unravelAndRestretch() {
+    catchUpClockIfNeeded();
+    var snap = filament.unravelAndRestretchNow();
+    syncDom(snap);
+    renderAll(snap);
+    return buildReturnPayload(snap);
+  }
+
+  function traceLink(idx) {
+    catchUpClockIfNeeded();
+    var snap = filament.setTraceIndex(idx);
+    if (snap.traceIndex !== null) {
+      focusedLinkIndex = snap.traceIndex;
+    }
+    syncDom(snap);
+    renderAll(snap);
+    return buildReturnPayload(snap);
+  }
+
+  function stepTrace(delta) {
+    catchUpClockIfNeeded();
+    var snap = filament.stepTrace(delta);
+    if (snap.traceIndex !== null) {
+      focusedLinkIndex = snap.traceIndex;
+    }
+    syncDom(snap);
+    renderAll(snap);
+    return buildReturnPayload(snap);
+  }
+
+  function selectGrimZone(zoneId) {
+    var z = findGrimZone(zoneId);
+    selectedGrimId = z.id;
+    grimGrid.triggerAmbientPulse();
+    var snap = refreshView();
+    return { selectedGrimZone: z, invariants: getCombinedInvariants(), timeSec: snap.timeSec };
+  }
+
+  function toggleMute(forceMuted) {
+    var nextMuted = typeof forceMuted === "boolean" ? forceMuted : !filament.isMuted();
+    if (!nextMuted) {
+      grimGrid.unlockAudio();
+      filament.unlockAudio();
+    }
+    grimGrid.setMuted(nextMuted);
+    filament.setMuted(nextMuted);
+    btnMute.setAttribute("aria-pressed", String(nextMuted));
+    btnMute.textContent = nextMuted ? "[M] Duet: Muted" : "[M] Duet: Live";
+    refreshView();
+    return { muted: nextMuted, invariants: getCombinedInvariants() };
+  }
+
+  function setPlateView(mode) {
+    plateViewMode = (mode === "map" || mode === "vista") ? mode : "diptych";
+    plateGrid.setAttribute("data-view", plateViewMode);
+    for (var i = 0; i < plateViewBtns.length; i++) {
+      var active = plateViewBtns[i].getAttribute("data-plate-view") === plateViewMode;
+      if (active) plateViewBtns[i].classList.add("rai-btn-gold");
+      else plateViewBtns[i].classList.remove("rai-btn-gold");
+    }
+  }
+
+  function togglePlateZoom(forceZoom) {
+    plateZoomed = typeof forceZoom === "boolean" ? forceZoom : !plateZoomed;
+    plateSheet.setAttribute("data-zoom", String(plateZoomed));
+    btnPlateZoom.textContent = plateZoomed ? "[Z] Loupe: On" : "[Z] Loupe 1.65x";
+    return plateZoomed;
+  }
+
+  function togglePlates(open) {
+    var shouldOpen = typeof open === "boolean" ? open : plateDrawer.hidden;
+    plateDrawer.hidden = !shouldOpen;
+    btnPlates.setAttribute("aria-expanded", String(shouldOpen));
+    if (shouldOpen) {
+      paintQuotaFallbacks();
+    } else if (plateZoomed) {
+      togglePlateZoom(false);
+    }
+    return { platesOpen: shouldOpen, plateViewMode: plateViewMode, invariants: getCombinedInvariants() };
+  }
+
+  btnFreeze.addEventListener("click", function () {
+    if (filament.isFrozen()) resumeFlow();
+    else freezeAnySecond();
+  });
+  btnTracePrev.addEventListener("click", function () { stepTrace(-1); });
+  btnTraceNext.addEventListener("click", function () { stepTrace(1); });
+  btnTraceClear.addEventListener("click", function () { traceLink(null); });
+  btnRestretch.addEventListener("click", function () { unravelAndRestretch(); });
+  btnMute.addEventListener("click", function () { toggleMute(); });
+  btnPlates.addEventListener("click", function () { togglePlates(); });
+  btnPlateClose.addEventListener("click", function () { togglePlates(false); });
+  btnPlateZoom.addEventListener("click", function () { togglePlateZoom(); });
+
+  plateDrawer.addEventListener("click", function (ev) {
+    if (ev.target === plateDrawer) togglePlates(false);
+  });
+
+  for (var v = 0; v < plateViewBtns.length; v++) {
+    plateViewBtns[v].addEventListener("click", function (ev) {
+      setPlateView(ev.currentTarget.getAttribute("data-plate-view"));
+    });
+  }
+
+  for (var c = 0; c < chamberPills.length; c++) {
+    chamberPills[c].addEventListener("click", function (ev) {
+      selectGrimZone(ev.currentTarget.getAttribute("data-grim-id"));
+    });
+  }
+
+  for (var lb = 0; lb < linkBeads.length; lb++) {
+    (function (idx, beadEl) {
+      beadEl.addEventListener("click", function () {
+        traceLink(idx);
+      });
+      beadEl.addEventListener("keydown", function (ev) {
+        if (ev.key === "Enter" || ev.key === " ") {
+          ev.preventDefault();
+          traceLink(idx);
+        }
+      });
+    })(lb, linkBeads[lb]);
+  }
+
+  function pointerCoordsOnCutaway(ev) {
+    var rect = cutawayCanvas.getBoundingClientRect();
+    if (!(rect.width > 0 && rect.height > 0)) return null;
+    var nx = Math.max(0, Math.min(1, (ev.clientX - rect.left) / rect.width));
+    var ny = Math.max(0, Math.min(1, (ev.clientY - rect.top) / rect.height));
+    return { nx: nx, ny: ny, w: rect.width, h: rect.height };
+  }
+
+  cutawayCanvas.addEventListener("pointermove", function (ev) {
+    var pt = pointerCoordsOnCutaway(ev);
+    if (!pt) return;
+    pointerNorm = { x: pt.nx, y: pt.ny };
+    var joyHit = filament.hitTestNode(pt.nx, pt.ny, pt.w, pt.h);
+    var grimHit = grimGrid.hitTestGrimZone(pt.nx, pt.ny);
+    var nextJoy = joyHit ? joyHit.index : null;
+    var nextGrim = grimHit ? grimHit.id : null;
+    cutawayCanvas.style.cursor = (joyHit || grimHit) ? "pointer" : "crosshair";
+    if (nextJoy !== hoveredJoyIndex || nextGrim !== hoveredGrimId) {
+      hoveredJoyIndex = nextJoy;
+      hoveredGrimId = nextGrim;
+      if (nextJoy !== null) focusedLinkIndex = nextJoy;
+      refreshView();
+    }
+  });
+
+  cutawayCanvas.addEventListener("pointerleave", function () {
+    pointerNorm = null;
+    if (hoveredJoyIndex !== null || hoveredGrimId !== null) {
+      hoveredJoyIndex = null;
+      hoveredGrimId = null;
+      refreshView();
+    }
+  });
+
+  cutawayCanvas.addEventListener("click", function (ev) {
+    var pt = pointerCoordsOnCutaway(ev);
+    if (!pt) return;
+    var joyHit = filament.hitTestNode(pt.nx, pt.ny, pt.w, pt.h);
+    var grimHit = grimGrid.hitTestGrimZone(pt.nx, pt.ny);
+    if (joyHit) {
+      traceLink(joyHit.index);
+    } else if (grimHit) {
+      selectGrimZone(grimHit.id);
+    }
+  });
+
+  window.addEventListener("keydown", function (ev) {
+    if (ev.metaKey || ev.ctrlKey || ev.altKey) return;
+    var tag = ev.target && ev.target.tagName ? ev.target.tagName.toLowerCase() : "";
+    if (tag === "input" || tag === "textarea" || tag === "select") return;
+    var k = ev.key;
+    if (k === "Escape") {
+      if (!plateDrawer.hidden) {
+        ev.preventDefault();
+        togglePlates(false);
+      } else if (filament.getSnapshot().traceIndex !== null) {
+        ev.preventDefault();
+        traceLink(null);
+      }
+      return;
+    }
+    if (k === "p" || k === "P") {
+      ev.preventDefault();
+      togglePlates();
+      return;
+    }
+    if (!plateDrawer.hidden && (k === "z" || k === "Z")) {
+      ev.preventDefault();
+      togglePlateZoom();
+      return;
+    }
+    if (k === " " || ev.code === "Space" || k === "f" || k === "F") {
+      ev.preventDefault();
+      if (filament.isFrozen()) resumeFlow();
+      else freezeAnySecond();
+      return;
+    }
+    if (k === "ArrowRight") {
+      ev.preventDefault();
+      stepTrace(1);
+      return;
+    }
+    if (k === "ArrowLeft") {
+      ev.preventDefault();
+      stepTrace(-1);
+      return;
+    }
+    if (k === "r" || k === "R") {
+      ev.preventDefault();
+      unravelAndRestretch();
+      return;
+    }
+    if (k === "m" || k === "M") {
+      ev.preventDefault();
+      toggleMute();
+      return;
+    }
+    if (k >= "1" && k <= "9") {
+      ev.preventDefault();
+      traceLink(Number(k) - 1);
+      return;
+    }
+    if (k === "0") {
+      ev.preventDefault();
+      traceLink(9);
+    }
+  });
+
+  if (mqReduced && mqReduced.addEventListener) {
+    mqReduced.addEventListener("change", function (ev) {
+      reducedMotion = Boolean(ev.matches);
+      rootEl.setAttribute("data-reduced-motion", String(reducedMotion));
+      filament.setReducedMotion(reducedMotion);
+      lastTickMs = performance.now();
+      refreshView();
+    });
+  }
+
+  window.addEventListener("resize", function () {
+    refreshView();
+    if (!plateDrawer.hidden) paintQuotaFallbacks();
+  });
+
+  function onAnimationFrame(nowMs) {
+    var dt = Math.min(0.1, Math.max(0, (nowMs - lastTickMs) / 1000));
+    lastTickMs = nowMs;
+    if (!reducedMotion) {
+      var snap = filament.step(dt, grimGrid.getAnchorZones());
+      syncDom(snap);
+      renderAll(snap);
+    }
+    window.requestAnimationFrame(onAnimationFrame);
+  }
+
+  refreshView();
+  paintQuotaFallbacks();
+  window.requestAnimationFrame(onAnimationFrame);
+
+  var loomApi = {
+    getInvariants: function () {
+      if (reducedMotion) catchUpClockIfNeeded();
+      return getCombinedInvariants();
+    },
+    getSnapshot: function () {
+      if (reducedMotion) catchUpClockIfNeeded();
+      return filament.getSnapshot();
+    },
+    freezeAnySecond: freezeAnySecond,
+    resumeFlow: resumeFlow,
+    unravelAndRestretch: unravelAndRestretch,
+    traceLink: traceLink,
+    stepTrace: stepTrace,
+    selectGrimZone: selectGrimZone,
+    toggleMute: toggleMute,
+    togglePlates: togglePlates,
+    setPlateView: setPlateView,
+    togglePlateZoom: togglePlateZoom,
+    paintQuotaFallbacks: paintQuotaFallbacks
+  };
+
+  globalThis.__RAISSA_LOOM__ = loomApi;
+  window.__RAISSA__ = loomApi;
+})();
+</script>
+</body>
+</html>

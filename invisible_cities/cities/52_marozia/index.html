@@ -1,0 +1,3035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Marozia — The Sibyl's Two Cities Within One Stone</title>
+<style>
+:root {
+  --mrz-lead-vault-dark: #14171c;
+  --mrz-compact-wall-slate: #232933;
+  --mrz-damp-mold-olive: #384239;
+  --mrz-wet-mortar-ash: #4e5661;
+  --mrz-bat-umbrella-black: #0d0f13;
+  --mrz-rancid-cheese-ochre: #c99a3e;
+  --mrz-ferocious-tooth-ivory: #d8d2c3;
+  --mrz-crystal-prism-cyan: #8fe7f5;
+  --mrz-gauze-veil-pearl: #eef7fa;
+  --mrz-swallow-wing-cobalt: #2f66b8;
+  --mrz-dragonfly-iridescent: #52d6b6;
+  --mrz-sunlit-cornfield-gold: #f2c14e;
+  --mrz-panel-bg: rgba(20, 23, 28, 0.92);
+  --mrz-panel-border: rgba(78, 86, 97, 0.52);
+  --mrz-font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --mrz-font-mono: "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+[hidden],
+marozia-plate-drawer[hidden],
+marozia-map-fallback[hidden],
+.mrz-plate-pane[hidden] {
+  display: none !important;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--mrz-bat-umbrella-black);
+  color: var(--mrz-ferocious-tooth-ivory);
+  font-family: var(--mrz-font-serif);
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+
+marozia-sibyl-diptych {
+  display: grid;
+  grid-template-rows: 42px minmax(0, 1fr) 86px;
+  gap: 8px;
+  width: 100vw;
+  height: 100vh;
+  padding: 8px 10px;
+  background:
+    radial-gradient(circle at 52% 38%, rgba(143, 231, 245, 0.08), transparent 56%),
+    linear-gradient(180deg, var(--mrz-bat-umbrella-black) 0%, var(--mrz-lead-vault-dark) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+mrz-crown-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 5px 12px;
+  background: var(--mrz-panel-bg);
+  border: 1px solid var(--mrz-panel-border);
+  border-radius: 6px;
+  min-width: 0;
+}
+
+mrz-title-seal {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+mrz-title-main {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--mrz-gauze-veil-pearl);
+  white-space: nowrap;
+}
+
+mrz-title-sub {
+  font-size: 12px;
+  color: var(--mrz-rancid-cheese-ochre);
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+mrz-utility-cluster {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+mrz-diptych-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 346px;
+  gap: 8px;
+  min-height: 0;
+  min-width: 0;
+}
+
+leaden-rat-warren {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+  background: var(--mrz-lead-vault-dark);
+  border: 1px solid var(--mrz-panel-border);
+  border-radius: 7px;
+  overflow: hidden;
+  box-shadow: inset 0 0 36px rgba(13, 15, 19, 0.85);
+}
+
+.mrz-stage-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+mrz-threshold-banner {
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 5px 10px;
+  background: rgba(13, 15, 19, 0.82);
+  border: 1px solid rgba(143, 231, 245, 0.28);
+  border-radius: 5px;
+  font-family: var(--mrz-font-mono);
+  font-size: 11px;
+  color: var(--mrz-gauze-veil-pearl);
+  pointer-events: none;
+}
+
+mrz-threshold-banner[data-mrz-mode="open"] {
+  border-color: var(--mrz-sunlit-cornfield-gold);
+  background: rgba(20, 29, 44, 0.84);
+  color: var(--mrz-sunlit-cornfield-gold);
+}
+
+mrz-threshold-banner[data-mrz-mode="forced"] {
+  border-color: var(--mrz-rancid-cheese-ochre);
+  background: rgba(26, 20, 18, 0.92);
+  color: var(--mrz-rancid-cheese-ochre);
+}
+mrz-epoch-plaque {
+  position: absolute;
+  bottom: 8px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 4px 10px;
+  background: rgba(13, 15, 19, 0.78);
+  border: 1px solid rgba(78, 86, 97, 0.45);
+  border-radius: 5px;
+  font-size: 11px;
+  color: var(--mrz-ferocious-tooth-ivory);
+  pointer-events: none;
+}
+
+mrz-right-column {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 8px;
+  min-height: 0;
+  min-width: 0;
+}
+
+oblique-arcade-slit,
+crystalline-swallow-flight {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 9px 10px;
+  background: var(--mrz-panel-bg);
+  border: 1px solid var(--mrz-panel-border);
+  border-radius: 7px;
+  min-width: 0;
+  min-height: 0;
+}
+
+mrz-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  min-width: 0;
+}
+
+mrz-panel-title {
+  font-family: var(--mrz-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--mrz-crystal-prism-cyan);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+mrz-panel-badge {
+  font-family: var(--mrz-font-mono);
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(35, 41, 51, 0.9);
+  border: 1px solid rgba(143, 231, 245, 0.3);
+  color: var(--mrz-gauze-veil-pearl);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+mrz-slit-scale {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 4px 6px 5px;
+  background: rgba(13, 15, 19, 0.85);
+  border: 1px solid rgba(78, 86, 97, 0.45);
+  border-radius: 5px;
+}
+
+mrz-sweet-band {
+  position: relative;
+  display: block;
+  height: 7px;
+  width: 100%;
+  background: var(--mrz-compact-wall-slate);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+mrz-sweet-pip {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 30%;
+  width: 14.44%;
+  background: linear-gradient(90deg, rgba(143, 231, 245, 0.35), var(--mrz-sunlit-cornfield-gold), rgba(143, 231, 245, 0.35));
+  border-radius: 3px;
+}
+
+.mrz-angle-input {
+  width: 100%;
+  margin: 2px 0 0;
+  accent-color: var(--mrz-crystal-prism-cyan);
+  cursor: pointer;
+  height: 18px;
+}
+
+mrz-scale-labels {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mrz-font-mono);
+  font-size: 9.5px;
+  color: var(--mrz-ferocious-tooth-ivory);
+  opacity: 0.86;
+}
+
+mrz-action-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+}
+
+mrz-key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 5px 7px;
+  background: var(--mrz-compact-wall-slate);
+  border: 1px solid rgba(120, 134, 152, 0.42);
+  border-radius: 5px;
+  color: var(--mrz-gauze-veil-pearl);
+  font-family: var(--mrz-font-mono);
+  font-size: 10.5px;
+  line-height: 1.15;
+  text-align: center;
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease, transform 80ms ease;
+}
+
+mrz-key:hover,
+mrz-key:focus-visible {
+  background: rgba(47, 102, 184, 0.34);
+  border-color: var(--mrz-crystal-prism-cyan);
+  outline: none;
+}
+
+mrz-key[data-mrz-span="full"] {
+  grid-column: 1 / -1;
+}
+
+mrz-key[data-mrz-tone="pleasure"] {
+  border-color: rgba(143, 231, 245, 0.65);
+  background: rgba(47, 102, 184, 0.26);
+  color: var(--mrz-crystal-prism-cyan);
+}
+
+mrz-key[data-mrz-tone="force"] {
+  border-color: rgba(201, 154, 62, 0.55);
+  background: rgba(56, 66, 57, 0.44);
+  color: var(--mrz-rancid-cheese-ochre);
+}
+
+mrz-meter-pair {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+mrz-meter {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+mrz-meter-head {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mrz-font-mono);
+  font-size: 10px;
+  color: var(--mrz-ferocious-tooth-ivory);
+}
+
+mrz-meter-rail {
+  display: block;
+  height: 7px;
+  background: var(--mrz-bat-umbrella-black);
+  border: 1px solid rgba(78, 86, 97, 0.5);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+mrz-meter-fill {
+  display: block;
+  height: 100%;
+  width: 0%;
+  transition: width 160ms ease;
+}
+.mrz-fill-rat {
+  background: linear-gradient(90deg, var(--mrz-damp-mold-olive), var(--mrz-rancid-cheese-ochre));
+}
+
+.mrz-fill-crystal {
+  background: linear-gradient(90deg, var(--mrz-swallow-wing-cobalt), var(--mrz-crystal-prism-cyan), var(--mrz-sunlit-cornfield-gold));
+}
+
+mrz-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+}
+
+mrz-stat-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 3px;
+  background: rgba(13, 15, 19, 0.78);
+  border: 1px solid rgba(78, 86, 97, 0.42);
+  border-radius: 5px;
+}
+
+mrz-stat-num {
+  font-family: var(--mrz-font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--mrz-gauze-veil-pearl);
+}
+
+mrz-stat-cap {
+  font-family: var(--mrz-font-mono);
+  font-size: 8.8px;
+  color: var(--mrz-ferocious-tooth-ivory);
+  opacity: 0.84;
+  text-align: center;
+  line-height: 1.1;
+}
+
+mrz-invariant-seal {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: auto;
+  padding: 6px 8px;
+  background: rgba(13, 15, 19, 0.88);
+  border: 1px solid rgba(82, 214, 182, 0.34);
+  border-radius: 5px;
+  font-family: var(--mrz-font-mono);
+  font-size: 9.5px;
+}
+
+mrz-invariant-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+mrz-invariant-val {
+  color: var(--mrz-dragonfly-iridescent);
+  font-weight: 600;
+}
+
+sibyl-prophecy-scroll {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 5px;
+  padding: 6px 10px;
+  background: var(--mrz-panel-bg);
+  border: 1px solid var(--mrz-panel-border);
+  border-radius: 7px;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+mrz-stone-strip {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 4px;
+}
+
+mrz-stone-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 3px 4px;
+  background: var(--mrz-compact-wall-slate);
+  border: 1px solid rgba(78, 86, 97, 0.55);
+  border-radius: 4px;
+  font-family: var(--mrz-font-mono);
+  font-size: 9.5px;
+  color: var(--mrz-ferocious-tooth-ivory);
+  cursor: pointer;
+  min-width: 0;
+  text-align: center;
+  line-height: 1.1;
+}
+
+mrz-stone-chip[data-mrz-active="true"] {
+  background: rgba(47, 102, 184, 0.42);
+  border-color: var(--mrz-sunlit-cornfield-gold);
+  color: var(--mrz-gauze-veil-pearl);
+}
+
+mrz-oracle-reading {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+mrz-oracle-realm {
+  font-family: var(--mrz-font-mono);
+  font-size: 9.5px;
+  text-transform: uppercase;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: rgba(56, 66, 57, 0.65);
+  color: var(--mrz-sunlit-cornfield-gold);
+  flex-shrink: 0;
+}
+
+mrz-oracle-title {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--mrz-crystal-prism-cyan);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+mrz-oracle-text {
+  font-size: 12px;
+  color: var(--mrz-gauze-veil-pearl);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+marozia-plate-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(13, 15, 19, 0.88);
+  backdrop-filter: blur(5px);
+}
+mrz-drawer-frame {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: min(1040px, 100%);
+  max-height: calc(100vh - 32px);
+  padding: 12px 14px;
+  background: var(--mrz-lead-vault-dark);
+  border: 1px solid rgba(143, 231, 245, 0.44);
+  border-radius: 8px;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.72);
+}
+
+mrz-drawer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+mrz-drawer-tabs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+mrz-drawer-stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 280px;
+  max-height: calc(100vh - 120px);
+  background: var(--mrz-bat-umbrella-black);
+  border: 1px solid var(--mrz-panel-border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+mrz-plate-pane {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 6px;
+}
+
+.mrz-plate-image,
+.mrz-plate-map,
+.mrz-fallback-keycanvas {
+  display: block;
+  max-width: 100%;
+  max-height: calc(100vh - 150px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 4px;
+  transition: transform 180ms ease;
+}
+
+marozia-plate-drawer[data-mrz-zoom="true"] .mrz-plate-image,
+marozia-plate-drawer[data-mrz-zoom="true"] .mrz-plate-map,
+marozia-plate-drawer[data-mrz-zoom="true"] .mrz-fallback-keycanvas {
+  transform: scale(1.75);
+  cursor: zoom-out;
+}
+
+marozia-map-fallback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 6px;
+}
+
+mrz-fallback-caption {
+  font-family: var(--mrz-font-mono);
+  font-size: 10.5px;
+  color: var(--mrz-rancid-cheese-ochre);
+  text-align: center;
+  line-height: 1.3;
+}
+
+@media (max-width: 860px) {
+  marozia-sibyl-diptych {
+    grid-template-rows: auto 192px auto minmax(0, 1fr);
+    gap: 5px;
+    padding: 5px 7px;
+  }
+  mrz-crown-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    padding: 5px 7px;
+  }
+  mrz-title-main { font-size: 13px; letter-spacing: 0.12em; }
+  mrz-title-sub { font-size: 10.5px; }
+  mrz-utility-cluster {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 4px;
+  }
+  mrz-diptych-grid {
+    display: contents;
+  }
+  leaden-rat-warren {
+    height: 192px;
+  }
+  mrz-threshold-banner {
+    top: 5px; left: 6px; right: 6px;
+    padding: 3px 6px; font-size: 9.2px;
+  }
+  mrz-epoch-plaque {
+    bottom: 5px; left: 6px; right: 6px;
+    padding: 3px 6px; font-size: 9.2px;
+  }
+  mrz-right-column {
+    display: grid;
+    grid-template-rows: auto auto;
+    gap: 5px;
+  }
+  oblique-arcade-slit,
+  crystalline-swallow-flight {
+    gap: 4px;
+    padding: 6px 7px;
+  }
+  mrz-key {
+    padding: 4px 4px;
+    font-size: 9.2px;
+  }
+  mrz-stat-cell { padding: 3px 2px; }
+  mrz-stat-num { font-size: 11px; }
+  mrz-stat-cap { font-size: 8px; }
+  mrz-invariant-seal { padding: 4px 6px; font-size: 8.5px; gap: 2px; }
+  sibyl-prophecy-scroll {
+    padding: 5px 7px;
+    gap: 4px;
+  }
+  mrz-stone-strip {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 3px;
+  }
+  mrz-stone-chip {
+    padding: 3px 2px;
+    font-size: 8.5px;
+    white-space: normal;
+  }
+  mrz-oracle-reading {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  mrz-oracle-title { font-size: 11px; }
+  mrz-oracle-text {
+    font-size: 10.5px;
+    white-space: normal;
+    line-height: 1.22;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.001ms !important;
+    animation-duration: 0.001ms !important;
+  }
+}
+</style>
+</head>
+<body>
+<marozia-sibyl-diptych class="mrz-root" id="mrz-root">
+  <mrz-crown-bar class="mrz-crown">
+    <mrz-title-seal class="mrz-seal">
+      <mrz-title-main class="mrz-name">MAROZIA</mrz-title-main>
+      <mrz-title-sub class="mrz-subtitle" id="mrz-crown-epoch">II. Return After Decades — Two Cities Within One Stone</mrz-title-sub>
+    </mrz-title-seal>
+    <mrz-utility-cluster class="mrz-utilities">
+      <mrz-key class="mrz-util-key" id="mrz-btn-decade-top" tabindex="0" role="button" aria-label="Cycle historical decade">[D] Epoch II</mrz-key>
+      <mrz-key class="mrz-util-key" id="mrz-btn-audio" tabindex="0" role="button" aria-label="Toggle procedural sound">[M] Sound: Live</mrz-key>
+      <mrz-key class="mrz-util-key" id="mrz-btn-plates" tabindex="0" role="button" aria-label="Open Royal Plate Drawer">[P] Plates</mrz-key>
+      <mrz-key class="mrz-util-key" id="mrz-btn-reset" tabindex="0" role="button" aria-label="Reset threshold">[R] Reset</mrz-key>
+    </mrz-utility-cluster>
+  </mrz-crown-bar>
+
+  <mrz-diptych-grid class="mrz-grid">
+    <leaden-rat-warren class="mrz-warren" id="mrz-warren">
+      <canvas class="mrz-stage-canvas" id="mrz-stage-canvas" width="900" height="620" aria-label="Subterranean leaden rat tunnels and crystalline swallow horizon"></canvas>
+      <mrz-threshold-banner class="mrz-banner" id="mrz-threshold-banner" data-mrz-mode="rat">
+        <mrz-banner-text class="mrz-banner-main" id="mrz-banner-main">LEADEN WARREN OPAQUE · Scrub Two-Arcade Sightline to 33.5°</mrz-banner-text>
+        <mrz-banner-angle class="mrz-banner-deg" id="mrz-banner-deg">12.0°</mrz-banner-angle>
+      </mrz-threshold-banner>
+      <mrz-epoch-plaque class="mrz-plaque" id="mrz-epoch-plaque">Riveted leaden conduits, damp mold &amp; batlike black umbrellas</mrz-epoch-plaque>
+    </leaden-rat-warren>
+
+    <mrz-right-column class="mrz-sidebar">
+      <oblique-arcade-slit class="mrz-slit-panel" id="mrz-slit-panel">
+        <mrz-panel-head class="mrz-head">
+          <mrz-panel-title class="mrz-ptitle">Two-Arcade Oblique Sightline</mrz-panel-title>
+          <mrz-panel-badge class="mrz-pbadge" id="mrz-pace-badge">PAUSED · 12.0°</mrz-panel-badge>
+        </mrz-panel-head>
+        <mrz-slit-scale class="mrz-scale">
+          <mrz-sweet-band class="mrz-band"><mrz-sweet-pip class="mrz-pip"></mrz-sweet-pip></mrz-sweet-band>
+          <input class="mrz-angle-input" id="mrz-angle-input" type="range" min="0" max="90" step="0.5" value="12" aria-label="Two-Arcade oblique perspective angle in degrees">
+          <mrz-scale-labels class="mrz-slabels">
+            <mrz-scale-mark class="mrz-smark">0° Closed</mrz-scale-mark>
+            <mrz-scale-mark class="mrz-smark">◆ 33.5° Sweet Slit</mrz-scale-mark>
+            <mrz-scale-mark class="mrz-smark">90°</mrz-scale-mark>
+          </mrz-scale-labels>
+        </mrz-slit-scale>
+        <mrz-action-grid class="mrz-actions">
+          <mrz-key class="mrz-act-key" id="mrz-btn-align" tabindex="0" role="button">[A] Align 33.5° &amp; Pause</mrz-key>
+          <mrz-key class="mrz-act-key" id="mrz-btn-gesture" data-mrz-tone="pleasure" tabindex="0" role="button">[U] Unforced Pleasure</mrz-key>
+          <mrz-key class="mrz-act-key" id="mrz-btn-force" data-mrz-tone="force" tabindex="0" role="button">[F] Force / Seize</mrz-key>
+          <mrz-key class="mrz-act-key" id="mrz-btn-cheese" tabindex="0" role="button">[C] Cheese Scramble</mrz-key>
+          <mrz-key class="mrz-act-key" id="mrz-btn-decade" data-mrz-span="full" tabindex="0" role="button">[D] Shift Decade: II. Return After Decades</mrz-key>
+        </mrz-action-grid>
+      </oblique-arcade-slit>
+
+      <crystalline-swallow-flight class="mrz-flight-panel" id="mrz-flight-panel">
+        <mrz-panel-head class="mrz-head">
+          <mrz-panel-title class="mrz-ptitle">Crystal-Gauze &amp; Swallow Telemetry</mrz-panel-title>
+          <mrz-panel-badge class="mrz-pbadge" id="mrz-realm-badge">RAT REALM</mrz-panel-badge>
+        </mrz-panel-head>
+        <mrz-meter-pair class="mrz-meters">
+          <mrz-meter class="mrz-meter-item">
+            <mrz-meter-head class="mrz-mhead">
+              <mrz-meter-label class="mrz-mlabel">Leaden Rat Dominance</mrz-meter-label>
+              <mrz-meter-val class="mrz-mval" id="mrz-val-rat">86%</mrz-meter-val>
+            </mrz-meter-head>
+            <mrz-meter-rail class="mrz-mrail"><mrz-meter-fill class="mrz-fill-rat" id="mrz-bar-rat" style="width:86%"></mrz-meter-fill></mrz-meter-rail>
+          </mrz-meter>
+          <mrz-meter class="mrz-meter-item">
+            <mrz-meter-head class="mrz-mhead">
+              <mrz-meter-label class="mrz-mlabel">Crystal &amp; Gauze Translucency</mrz-meter-label>
+              <mrz-meter-val class="mrz-mval" id="mrz-val-crystal">0%</mrz-meter-val>
+            </mrz-meter-head>
+            <mrz-meter-rail class="mrz-mrail"><mrz-meter-fill class="mrz-fill-crystal" id="mrz-bar-crystal" style="width:0%"></mrz-meter-fill></mrz-meter-rail>
+          </mrz-meter>
+        </mrz-meter-pair>
+        <mrz-stat-grid class="mrz-stats">
+          <mrz-stat-cell class="mrz-scell"><mrz-stat-num class="mrz-snum" id="mrz-cnt-swallows">0</mrz-stat-num><mrz-stat-cap class="mrz-scap">Swallows</mrz-stat-cap></mrz-stat-cell>
+          <mrz-stat-cell class="mrz-scell"><mrz-stat-num class="mrz-snum" id="mrz-cnt-dragonflies">0</mrz-stat-num><mrz-stat-cap class="mrz-scap">Dragonflies</mrz-stat-cap></mrz-stat-cell>
+          <mrz-stat-cell class="mrz-scell"><mrz-stat-num class="mrz-snum" id="mrz-cnt-cheese">0</mrz-stat-num><mrz-stat-cap class="mrz-scap">Scrambles</mrz-stat-cap></mrz-stat-cell>
+          <mrz-stat-cell class="mrz-scell"><mrz-stat-num class="mrz-snum" id="mrz-cnt-snaps">0</mrz-stat-num><mrz-stat-cap class="mrz-scap">Snaps Shut</mrz-stat-cap></mrz-stat-cell>
+        </mrz-stat-grid>
+        <mrz-invariant-seal class="mrz-invariants" id="mrz-invariant-seal">
+          <mrz-invariant-row class="mrz-irow"><mrz-invariant-key class="mrz-ikey">Sibyl Coexistence Law</mrz-invariant-key><mrz-invariant-val class="mrz-ival" id="mrz-inv-coexist">TWO IN ONE (TRUE)</mrz-invariant-val></mrz-invariant-row>
+          <mrz-invariant-row class="mrz-irow"><mrz-invariant-key class="mrz-ikey">Second Freeing From First</mrz-invariant-key><mrz-invariant-val class="mrz-ival" id="mrz-inv-about">ALWAYS POISED (TRUE)</mrz-invariant-val></mrz-invariant-row>
+          <mrz-invariant-row class="mrz-irow"><mrz-invariant-key class="mrz-ikey">Institutionalized Swallow</mrz-invariant-key><mrz-invariant-val class="mrz-ival" id="mrz-inv-inst">NEVER (FALSE)</mrz-invariant-val></mrz-invariant-row>
+        </mrz-invariant-seal>
+      </crystalline-swallow-flight>
+    </mrz-right-column>
+  </mrz-diptych-grid>
+  <sibyl-prophecy-scroll class="mrz-scroll-panel" id="mrz-scroll-panel">
+    <mrz-stone-strip class="mrz-stones" id="mrz-stone-strip">
+      <mrz-stone-chip class="mrz-schip" data-mrz-stone="sibyl_prophecy" data-mrz-active="true" tabindex="0" role="button">[1] Sibyl Verdict</mrz-stone-chip>
+      <mrz-stone-chip class="mrz-schip" data-mrz-stone="leaden_tunnels" data-mrz-active="false" tabindex="0" role="button">[2] Lead Tunnels</mrz-stone-chip>
+      <mrz-stone-chip class="mrz-schip" data-mrz-stone="ferocious_cheese_scramble" data-mrz-active="false" tabindex="0" role="button">[3] Cheese &amp; Teeth</mrz-stone-chip>
+      <mrz-stone-chip class="mrz-schip" data-mrz-stone="batlike_umbrellas" data-mrz-active="false" tabindex="0" role="button">[4] Bat Umbrellas</mrz-stone-chip>
+      <mrz-stone-chip class="mrz-schip" data-mrz-stone="compact_mold_walls" data-mrz-active="false" tabindex="0" role="button">[5] Mold Walls</mrz-stone-chip>
+      <mrz-stone-chip class="mrz-schip" data-mrz-stone="oblique_two_arcade_slit" data-mrz-active="false" tabindex="0" role="button">[6] Arcade Slit</mrz-stone-chip>
+      <mrz-stone-chip class="mrz-schip" data-mrz-stone="crystal_gauze_parting" data-mrz-active="false" tabindex="0" role="button">[7] Crystal Gauze</mrz-stone-chip>
+      <mrz-stone-chip class="mrz-schip" data-mrz-stone="swallows_dragonflies_cornfields" data-mrz-active="false" tabindex="0" role="button">[8] Swallows</mrz-stone-chip>
+    </mrz-stone-strip>
+    <mrz-oracle-reading class="mrz-oracle" id="mrz-oracle-reading">
+      <mrz-oracle-realm class="mrz-orealm" id="mrz-oracle-realm">SIBYL</mrz-oracle-realm>
+      <mrz-oracle-title class="mrz-otitle" id="mrz-oracle-title">The Sibyl's Double Verdict</mrz-oracle-title>
+      <mrz-oracle-text class="mrz-otext" id="mrz-oracle-text">Two cities share these walls: one of the rat, one of the swallow; decades alter both, yet the second remains forever the one about to free itself from the first.</mrz-oracle-text>
+    </mrz-oracle-reading>
+  </sibyl-prophecy-scroll>
+
+  <marozia-plate-drawer class="mrz-drawer" id="mrz-plate-drawer" data-mrz-zoom="false" hidden>
+    <mrz-drawer-frame class="mrz-dframe">
+      <mrz-drawer-head class="mrz-dhead">
+        <mrz-panel-title class="mrz-ptitle">Marozia Royal Plates — Sibylline Two-City Survey</mrz-panel-title>
+        <mrz-drawer-tabs class="mrz-dtabs">
+          <mrz-key class="mrz-dkey" id="mrz-tab-city" data-mrz-tone="pleasure" tabindex="0" role="button">Architectural Plate (image.png)</mrz-key>
+          <mrz-key class="mrz-dkey" id="mrz-tab-map" tabindex="0" role="button">Cartographic Plate (map.png)</mrz-key>
+          <mrz-key class="mrz-dkey" id="mrz-btn-zoom" tabindex="0" role="button">[Z] Zoom 1.75x</mrz-key>
+          <mrz-key class="mrz-dkey" id="mrz-btn-close-drawer" tabindex="0" role="button">[Esc] Close</mrz-key>
+        </mrz-drawer-tabs>
+      </mrz-drawer-head>
+      <mrz-drawer-stage class="mrz-dstage" id="mrz-drawer-stage">
+        <mrz-plate-pane class="mrz-plate-pane" id="mrz-pane-city">
+          <img class="mrz-plate-image" id="mrz-plate-image" src="image.png" alt="Marozia Architectural Plate">
+        </mrz-plate-pane>
+        <mrz-plate-pane class="mrz-plate-pane" id="mrz-pane-map" hidden>
+          <img class="mrz-plate-map" id="mrz-plate-map" src="map.png" alt="Marozia Cartographic Plate" onerror="this.hidden=true;if(this.nextElementSibling)this.nextElementSibling.hidden=false;">
+          <marozia-map-fallback class="mrz-fallback" id="mrz-map-fallback" hidden>
+            <canvas class="mrz-fallback-keycanvas" id="mrz-fallback-keycanvas" width="640" height="420"></canvas>
+            <mrz-fallback-caption class="mrz-fcaption">Sibyl Two-Arcade Oblique Sightline Key — map.png loads automatically when present</mrz-fallback-caption>
+          </marozia-map-fallback>
+        </mrz-plate-pane>
+      </mrz-drawer-stage>
+    </mrz-drawer-frame>
+  </marozia-plate-drawer>
+</marozia-sibyl-diptych>
+
+<script>
+/* Subterranean Leaden Rat-Warren & Oblique Masonry Parting Engine */
+globalThis.MaroziaRatTunnels = (function () {
+  'use strict';
+
+  const PALETTE = Object.freeze({
+    leadVaultDark: '#14171c',
+    compactWallSlate: '#232933',
+    dampMoldOlive: '#384239',
+    wetMortarAsh: '#4e5661',
+    batUmbrellaBlack: '#0d0f13',
+    rancidCheeseOchre: '#c99a3e',
+    ferociousToothIvory: '#d8d2c3',
+    crystalPrismCyan: '#8fe7f5',
+    gauzeVeilPearl: '#eef7fa',
+    swallowWingCobalt: '#2f66b8',
+    dragonflyIridescent: '#52d6b6',
+    sunlitCornfieldGold: '#f2c14e'
+  });
+
+  const DECADES = Object.freeze([
+    Object.freeze({
+      id: 'first_visit',
+      label: 'I. First Consult',
+      ratSurface: 'Soot-slick stone drains, iron grates & tallow lanterns',
+      swallowHint: 'Whitewash eaves poised over raw summer wheat'
+    }),
+    Object.freeze({
+      id: 'decades_later',
+      label: 'II. Return After Decades',
+      ratSurface: 'Riveted leaden conduits, damp mold & batlike black umbrellas',
+      swallowHint: 'Dragonfly glints caught between twin stone arcades'
+    }),
+    Object.freeze({
+      id: 'late_century',
+      label: 'III. Late Gallery Epoch',
+      ratSurface: 'Fluorescent subterranean passages & hurried dark overcoats',
+      swallowHint: 'Translucent gauze horizon shimmering on the brink of flight'
+    })
+  ]);
+
+  const RAT_STONES = Object.freeze([
+    Object.freeze({
+      id: 'leaden_tunnels',
+      realm: 'rat',
+      title: 'Leaden Subterranean Tunnels',
+      inscription: 'Single-file conduits of grey lead and sweating mortar where hurried steps echo without sky.',
+      anchorX: 0.22,
+      anchorY: 0.34
+    }),
+    Object.freeze({
+      id: 'ferocious_cheese_scramble',
+      realm: 'rat',
+      title: 'Remains of Cheese & Ferocious Teeth',
+      inscription: "Packs lunging through narrow drains to snatch contested crumbs from one another's bared teeth.",
+      anchorX: 0.38,
+      anchorY: 0.72
+    }),
+    Object.freeze({
+      id: 'batlike_umbrellas',
+      realm: 'rat',
+      title: 'Batlike Overcoats & Ribbed Umbrellas',
+      inscription: 'Ribbed black canopies and flapping wool coats folding citizens into nocturnal wings.',
+      anchorX: 0.66,
+      anchorY: 0.58
+    }),
+    Object.freeze({
+      id: 'compact_mold_walls',
+      realm: 'rat',
+      title: 'Compact Walls & Damp Mold',
+      inscription: 'Opaque ashlar courses crusted with olive dampness that thicken whenever grasped by force.',
+      anchorX: 0.78,
+      anchorY: 0.30
+    })
+  ]);
+
+  function clamp(v, lo, hi) {
+    const n = Number(v);
+    if (!Number.isFinite(n)) return lo;
+    return n < lo ? lo : n > hi ? hi : n;
+  }
+
+  function clamp01(v) {
+    return clamp(v, 0, 1);
+  }
+
+  function hexToRgba(hex, alpha) {
+    const clean = String(hex || '#14171c').replace('#', '');
+    const num = parseInt(clean, 16);
+    const r = (num >> 16) & 255;
+    const g = (num >> 8) & 255;
+    const b = num & 255;
+    return 'rgba(' + r + ',' + g + ',' + b + ',' + clamp01(alpha).toFixed(3) + ')';
+  }
+
+  function createSeededRng(seed) {
+    let s = (seed >>> 0) || 0x52415431;
+    return function nextRng() {
+      s = (s + 0x6d2b79f5) | 0;
+      let t = Math.imul(s ^ (s >>> 15), 1 | s);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function obliqueThetaRad(deg) {
+    const d = clamp(deg, 0, 90);
+    const visualDeg = d <= 40 ? d : 40 + ((d - 40) / 50) * 24;
+    return (visualDeg * Math.PI) / 180;
+  }
+
+  function createSubterraneanAudio(audioOpts) {
+    const opts = audioOpts || {};
+    let muted = opts.muted !== undefined ? Boolean(opts.muted) : true;
+    let ctx = null;
+    let noiseBuffer = null;
+    let droneGain = null;
+    let droneFilter = null;
+    let lastDripAt = 0;
+
+    function canActivateAudio() {
+      if (typeof globalThis === 'undefined') return false;
+      if (typeof navigator !== 'undefined' && navigator.userActivation && !navigator.userActivation.hasBeenActive) {
+        return false;
+      }
+      return Boolean(globalThis.AudioContext || globalThis.webkitAudioContext);
+    }
+
+    function ensureContext() {
+      if (muted) return null;
+      if (!ctx) {
+        if (!canActivateAudio()) return null;
+        const Ctor = globalThis.AudioContext || globalThis.webkitAudioContext;
+        try {
+          ctx = new Ctor();
+          const len = Math.max(1024, Math.floor(ctx.sampleRate * 0.45));
+          noiseBuffer = ctx.createBuffer(1, len, ctx.sampleRate);
+          const ch = noiseBuffer.getChannelData(0);
+          const rng = createSeededRng(0x2a7f91);
+          for (let i = 0; i < len; i += 1) ch[i] = rng() * 2 - 1;
+          droneFilter = ctx.createBiquadFilter();
+          droneFilter.type = 'lowpass';
+          droneFilter.frequency.value = 150;
+          droneGain = ctx.createGain();
+          droneGain.gain.value = 0.0001;
+          const oscLow = ctx.createOscillator();
+          const oscSub = ctx.createOscillator();
+          oscLow.type = 'triangle';
+          oscSub.type = 'sawtooth';
+          oscLow.frequency.value = 51.9;
+          oscSub.frequency.value = 77.8;
+          oscLow.connect(droneFilter);
+          oscSub.connect(droneFilter);
+          droneFilter.connect(droneGain);
+          droneGain.connect(ctx.destination);
+          oscLow.start();
+          oscSub.start();
+        } catch (_err) {
+          ctx = null;
+          return null;
+        }
+      }
+      if (ctx && ctx.state === 'suspended' && typeof ctx.resume === 'function') {
+        try { ctx.resume(); } catch (_e) { /* noop */ }
+      }
+      return ctx;
+    }
+    function playCheeseScramble() {
+      const ac = ensureContext();
+      if (!ac || !noiseBuffer) return;
+      const now = ac.currentTime;
+      const src = ac.createBufferSource();
+      src.buffer = noiseBuffer;
+      const bp = ac.createBiquadFilter();
+      bp.type = 'bandpass';
+      bp.frequency.setValueAtTime(1650, now);
+      bp.Q.value = 2.4;
+      const g = ac.createGain();
+      g.gain.setValueAtTime(0.001, now);
+      g.gain.exponentialRampToValueAtTime(0.085, now + 0.025);
+      g.gain.exponentialRampToValueAtTime(0.0001, now + 0.24);
+      src.connect(bp);
+      bp.connect(g);
+      g.connect(ac.destination);
+      src.start(now);
+      src.stop(now + 0.25);
+      for (let k = 0; k < 3; k += 1) {
+        const t0 = now + k * 0.055;
+        const osc = ac.createOscillator();
+        const cg = ac.createGain();
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(1440 - k * 140, t0);
+        osc.frequency.exponentialRampToValueAtTime(560, t0 + 0.045);
+        cg.gain.setValueAtTime(0.032, t0);
+        cg.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.05);
+        osc.connect(cg);
+        cg.connect(ac.destination);
+        osc.start(t0);
+        osc.stop(t0 + 0.055);
+      }
+    }
+
+    function playStoneSnapShut() {
+      const ac = ensureContext();
+      if (!ac) return;
+      const now = ac.currentTime;
+      const sub = ac.createOscillator();
+      const sg = ac.createGain();
+      sub.type = 'triangle';
+      sub.frequency.setValueAtTime(118, now);
+      sub.frequency.exponentialRampToValueAtTime(31, now + 0.34);
+      sg.gain.setValueAtTime(0.18, now);
+      sg.gain.exponentialRampToValueAtTime(0.0001, now + 0.38);
+      sub.connect(sg);
+      sg.connect(ac.destination);
+      sub.start(now);
+      sub.stop(now + 0.4);
+      if (noiseBuffer) {
+        const nSrc = ac.createBufferSource();
+        nSrc.buffer = noiseBuffer;
+        const lp = ac.createBiquadFilter();
+        lp.type = 'lowpass';
+        lp.frequency.setValueAtTime(320, now);
+        lp.frequency.exponentialRampToValueAtTime(85, now + 0.28);
+        const ng = ac.createGain();
+        ng.gain.setValueAtTime(0.14, now);
+        ng.gain.exponentialRampToValueAtTime(0.0001, now + 0.3);
+        nSrc.connect(lp);
+        lp.connect(ng);
+        ng.connect(ac.destination);
+        nSrc.start(now);
+        nSrc.stop(now + 0.31);
+      }
+    }
+
+    function updateRatDrone(ratDominance, mutedArg) {
+      if (typeof mutedArg === 'boolean') muted = mutedArg;
+      const dom = clamp01(ratDominance !== undefined ? ratDominance : 0.86);
+      if (muted) {
+        if (ctx && droneGain) {
+          droneGain.gain.setTargetAtTime(0.0001, ctx.currentTime, 0.06);
+        }
+        return;
+      }
+      const ac = ensureContext();
+      if (!ac || !droneGain || !droneFilter) return;
+      const now = ac.currentTime;
+      droneFilter.frequency.setTargetAtTime(102 + dom * 165, now, 0.08);
+      droneGain.gain.setTargetAtTime(Math.max(0.0002, dom * 0.042), now, 0.08);
+      if (dom > 0.38 && now - lastDripAt > 1.65 - dom * 0.65) {
+        lastDripAt = now;
+        const drip = ac.createOscillator();
+        const dg = ac.createGain();
+        drip.type = 'sine';
+        drip.frequency.setValueAtTime(980 + ((now * 173) % 340), now);
+        drip.frequency.exponentialRampToValueAtTime(1320, now + 0.07);
+        dg.gain.setValueAtTime(0.016 * dom, now);
+        dg.gain.exponentialRampToValueAtTime(0.0001, now + 0.12);
+        drip.connect(dg);
+        dg.connect(ac.destination);
+        drip.start(now);
+        drip.stop(now + 0.13);
+      }
+    }
+
+    function setMuted(flag) {
+      muted = Boolean(flag);
+      if (muted && ctx && droneGain) {
+        droneGain.gain.setTargetAtTime(0.0001, ctx.currentTime, 0.05);
+      } else if (!muted) {
+        ensureContext();
+      }
+      return muted;
+    }
+
+    return {
+      setMuted: setMuted,
+      isMuted: function isMuted() { return muted; },
+      playCheeseScramble: playCheeseScramble,
+      playStoneSnapShut: playStoneSnapShut,
+      updateRatDrone: updateRatDrone
+    };
+  }
+
+  function createRatTunnels(opts) {
+    const cfg = opts || {};
+    let reducedMotion = Boolean(cfg.reducedMotion);
+    const onStoneSelect = typeof cfg.onStoneSelect === 'function' ? cfg.onStoneSelect : null;
+    const onPackScramble = typeof cfg.onPackScramble === 'function' ? cfg.onPackScramble : null;
+
+    const TIER_Y = [0.27, 0.53, 0.79];
+    let decadeIndex = 1;
+    let hurryPressure = 0.62;
+    let cheeseScramblesCount = 0;
+    let ratDominance = 0.86;
+    let wallTranslucency = 0;
+    let obliqueAngleDeg = 12;
+    let obliquePerspectiveAligned = false;
+    let swallowApertureOpen = false;
+    let prevForcedGrasp = false;
+    let snapShudder = 0;
+    let scrambleBurst = 0;
+    let simTime = 0;
+
+    let cheeseClusters = [];
+    let packAgents = [];
+    let umbrellaAgents = [];
+    let moldDrops = [];
+    let mortarDust = [];
+
+    function seedWorld() {
+      const rng = createSeededRng(0x52415452);
+      cheeseClusters = [
+        { x: 0.27, tier: 2, size: 1.05, bitePhase: 0.2 },
+        { x: 0.51, tier: 2, size: 1.18, bitePhase: 0.7 },
+        { x: 0.73, tier: 1, size: 0.94, bitePhase: 0.4 }
+      ];
+      packAgents = [];
+      for (let i = 0; i < 16; i += 1) {
+        const cIdx = i % cheeseClusters.length;
+        const tier = i < 11 ? 2 : 1;
+        packAgents.push({
+          x: 0.08 + rng() * 0.84,
+          tier: tier,
+          dir: rng() > 0.5 ? 1 : -1,
+          speed: 0.075 + rng() * 0.085,
+          jawPhase: rng() * Math.PI * 2,
+          scale: 0.82 + rng() * 0.38,
+          cheeseIdx: cIdx
+        });
+      }
+      umbrellaAgents = [];
+      for (let j = 0; j < 10; j += 1) {
+        umbrellaAgents.push({
+          x: (j / 10) + rng() * 0.07,
+          tier: j % 2 === 0 ? 1 : 0,
+          dir: j % 3 === 0 ? -1 : 1,
+          speed: 0.042 + rng() * 0.036,
+          stride: rng() * Math.PI * 2,
+          span: 0.88 + rng() * 0.26
+        });
+      }
+      moldDrops = [];
+      for (let m = 0; m < 24; m += 1) {
+        moldDrops.push({
+          x: 0.05 + rng() * 0.9,
+          y: rng(),
+          speed: 0.045 + rng() * 0.065,
+          r: 1.4 + rng() * 2.2,
+          tier: m % 3
+        });
+      }
+      mortarDust = [];
+    }
+    seedWorld();
+    function spawnBurst(count, isCheese) {
+      for (let i = 0; i < count; i += 1) {
+        const ang = (i / count) * Math.PI * 2 + (i % 3) * 0.21;
+        const spd = 0.06 + (i % 5) * 0.032;
+        mortarDust.push({
+          x: isCheese ? cheeseClusters[i % cheeseClusters.length].x : 0.5 + ((i % 7) - 3) * 0.04,
+          y: isCheese ? TIER_Y[cheeseClusters[i % cheeseClusters.length].tier] : 0.18 + (i / count) * 0.64,
+          vx: Math.cos(ang) * spd,
+          vy: Math.sin(ang) * spd - (isCheese ? 0.04 : 0.01),
+          life: 1,
+          isCheese: Boolean(isCheese)
+        });
+      }
+      if (mortarDust.length > 48) mortarDust.splice(0, mortarDust.length - 48);
+    }
+
+    function getState() {
+      return {
+        decadeIndex: decadeIndex,
+        decadeId: DECADES[decadeIndex].id,
+        hurryPressure: Number(hurryPressure.toFixed(3)),
+        cheeseScramblesCount: cheeseScramblesCount,
+        packAgentCount: packAgents.length,
+        umbrellaCount: umbrellaAgents.length,
+        relationshipUnchanged: true,
+        reducedMotion: reducedMotion
+      };
+    }
+
+    function step(dtSec, sharedState) {
+      const dt = clamp(dtSec, 0, 0.1);
+      const st = sharedState || {};
+      if (st.ratDominance !== undefined) ratDominance = clamp01(st.ratDominance);
+      if (st.wallTranslucency !== undefined) wallTranslucency = clamp01(st.wallTranslucency);
+      if (st.obliqueAngleDeg !== undefined) obliqueAngleDeg = clamp(st.obliqueAngleDeg, 0, 90);
+      if (st.obliquePerspectiveAligned !== undefined) obliquePerspectiveAligned = Boolean(st.obliquePerspectiveAligned);
+      if (st.swallowApertureOpen !== undefined) swallowApertureOpen = Boolean(st.swallowApertureOpen);
+      if (st.decadeIndex !== undefined) decadeIndex = clamp(Math.round(st.decadeIndex), 0, 2);
+      const forcedNow = Boolean(st.forcedGraspActive);
+      if (forcedNow && !prevForcedGrasp) {
+        snapShudder = 1;
+        hurryPressure = Math.max(hurryPressure, 0.94);
+        spawnBurst(18, false);
+      }
+      prevForcedGrasp = forcedNow;
+      if (reducedMotion) return;
+
+      simTime += dt;
+      snapShudder = Math.max(0, snapShudder - dt * 2.1);
+      scrambleBurst = Math.max(0, scrambleBurst - dt * 1.4);
+      const targetHurry = 0.36 + ratDominance * 0.36 + (forcedNow ? 0.18 : 0);
+      hurryPressure += (targetHurry - hurryPressure) * Math.min(1, dt * 2.4);
+
+      for (let i = 0; i < packAgents.length; i += 1) {
+        const p = packAgents[i];
+        const targetX = cheeseClusters[p.cheeseIdx].x;
+        if (scrambleBurst > 0.15) p.dir = targetX >= p.x ? 1 : -1;
+        p.x += p.dir * p.speed * (0.65 + hurryPressure * 0.95) * dt;
+        if (p.x < 0.05) { p.x = 0.05; p.dir = 1; }
+        if (p.x > 0.95) { p.x = 0.95; p.dir = -1; }
+        p.jawPhase += dt * (9 + hurryPressure * 10);
+      }
+      for (let j = 0; j < umbrellaAgents.length; j += 1) {
+        const u = umbrellaAgents[j];
+        u.x = (u.x + u.dir * u.speed * (0.7 + hurryPressure * 0.7) * dt + 1) % 1;
+        u.stride += dt * (5.8 + hurryPressure * 4.2);
+      }
+      for (let m = 0; m < moldDrops.length; m += 1) {
+        const d = moldDrops[m];
+        d.y = (d.y + d.speed * dt) % 1;
+      }
+      for (let k = mortarDust.length - 1; k >= 0; k -= 1) {
+        const pt = mortarDust[k];
+        pt.x += pt.vx * dt;
+        pt.y += pt.vy * dt;
+        pt.vy += 0.18 * dt;
+        pt.life -= dt * 1.75;
+        if (pt.life <= 0) mortarDust.splice(k, 1);
+      }
+    }
+
+    function triggerCheeseScramble() {
+      hurryPressure = 1.0;
+      scrambleBurst = 1.0;
+      cheeseScramblesCount += 1;
+      for (let i = 0; i < packAgents.length; i += 1) {
+        const p = packAgents[i];
+        const cx = cheeseClusters[p.cheeseIdx].x;
+        p.dir = cx >= p.x ? 1 : -1;
+        p.x += (cx - p.x) * 0.28;
+        p.jawPhase += 1.3;
+      }
+      spawnBurst(14, true);
+      const snap = getState();
+      if (onPackScramble) onPackScramble(snap);
+      return snap;
+    }
+
+    function setDecadeIndex(idx) {
+      decadeIndex = clamp(Math.round(Number(idx) || 0), 0, 2);
+      return getState();
+    }
+
+    function hitTestStone(normX, normY, hitOpts) {
+      const nx = Number(normX);
+      const ny = Number(normY);
+      if (!Number.isFinite(nx) || !Number.isFinite(ny)) return null;
+      let best = null;
+      let bestDist = 0.06;
+      for (let i = 0; i < RAT_STONES.length; i += 1) {
+        const st = RAT_STONES[i];
+        const dist = Math.hypot(nx - st.anchorX, ny - st.anchorY);
+        if (dist <= bestDist) { bestDist = dist; best = st; }
+      }
+      if (best && hitOpts && hitOpts.select && onStoneSelect) onStoneSelect(best);
+      return best;
+    }
+
+    function activateStoneAt(normX, normY) {
+      const hit = hitTestStone(normX, normY);
+      if (hit && onStoneSelect) onStoneSelect(hit);
+      return hit;
+    }
+
+    function setReducedMotion(flag) {
+      reducedMotion = Boolean(flag);
+      return reducedMotion;
+    }
+
+    function reset() {
+      decadeIndex = 1;
+      hurryPressure = 0.62;
+      cheeseScramblesCount = 0;
+      ratDominance = 0.86;
+      wallTranslucency = 0;
+      obliqueAngleDeg = 12;
+      obliquePerspectiveAligned = false;
+      swallowApertureOpen = false;
+      prevForcedGrasp = false;
+      snapShudder = 0;
+      scrambleBurst = 0;
+      simTime = 0;
+      seedWorld();
+      return getState();
+    }
+    function render(ctx, width, height, sharedState) {
+      if (!ctx || width <= 0 || height <= 0) return;
+      const st = sharedState || {};
+      const trans = st.wallTranslucency !== undefined ? clamp01(st.wallTranslucency) : wallTranslucency;
+      const dom = st.ratDominance !== undefined ? clamp01(st.ratDominance) : ratDominance;
+      const angle = st.obliqueAngleDeg !== undefined ? clamp(st.obliqueAngleDeg, 0, 90) : obliqueAngleDeg;
+      const aligned = st.obliquePerspectiveAligned !== undefined ? Boolean(st.obliquePerspectiveAligned) : obliquePerspectiveAligned;
+      const forced = st.forcedGraspActive !== undefined ? Boolean(st.forcedGraspActive) : prevForcedGrasp;
+      const dec = st.decadeIndex !== undefined ? clamp(Math.round(st.decadeIndex), 0, 2) : decadeIndex;
+      const activeStoneId = st.activeStoneId || null;
+
+      const theta = obliqueThetaRad(angle);
+      const nx = Math.cos(theta);
+      const ny = Math.sin(theta);
+      const tx = -ny;
+      const ty = nx;
+      const cx = width * 0.5;
+      const cy = height * 0.5;
+      const minDim = Math.min(width, height);
+      const diag = Math.hypot(width, height) * 1.4;
+
+      let halfGap = 0;
+      if (trans > 0.002 && !forced) {
+        if (trans < 0.42) {
+          halfGap = (trans / 0.42) * minDim * 0.13;
+        } else {
+          const u = (trans - 0.42) / 0.58;
+          const ease = u * u * (3 - 2 * u);
+          halfGap = minDim * 0.13 + ease * Math.max(width, height) * 0.44;
+        }
+      }
+      const wallAlpha = forced ? 1 : clamp(1 - trans * 0.88, 0.08, 1);
+      const mortarAlpha = forced ? 0.92 : clamp((1 - trans * 1.25) * 0.74, 0, 0.88);
+      const entityAlpha = forced ? 1 : clamp((0.25 + dom * 0.85) * (1 - trans * 0.82), 0.06, 1);
+      const shudX = snapShudder > 0 ? Math.sin(simTime * 54 + 0.9) * snapShudder * 5.5 : 0;
+      const shudY = snapShudder > 0 ? Math.cos(simTime * 43) * snapShudder * 3.5 : 0;
+
+      function drawVaultHalf(side) {
+        ctx.save();
+        const lx = cx + side * halfGap * nx;
+        const ly = cy + side * halfGap * ny;
+        ctx.beginPath();
+        ctx.moveTo(lx - tx * diag, ly - ty * diag);
+        ctx.lineTo(lx + tx * diag, ly + ty * diag);
+        ctx.lineTo(lx + tx * diag + side * nx * diag, ly + ty * diag + side * ny * diag);
+        ctx.lineTo(lx - tx * diag + side * nx * diag, ly - ty * diag + side * ny * diag);
+        ctx.closePath();
+        ctx.clip();
+
+        ctx.translate(side * halfGap * 0.34 * nx + shudX * side, side * halfGap * 0.18 * ny + shudY);
+        ctx.fillStyle = hexToRgba(PALETTE.leadVaultDark, wallAlpha);
+        ctx.fillRect(-width * 0.25, -height * 0.25, width * 1.5, height * 1.5);
+
+        const rows = 9;
+        const cols = width < 520 ? 5 : 8;
+        const rh = height / rows;
+        const cw = width / cols;
+        for (let r = 0; r < rows; r += 1) {
+          const y0 = r * rh;
+          const off = (r % 2) * cw * 0.5;
+          for (let c = -1; c <= cols; c += 1) {
+            const x0 = c * cw + off;
+            ctx.fillStyle = hexToRgba(PALETTE.compactWallSlate, wallAlpha * (0.86 + ((r + c) & 1) * 0.12));
+            ctx.fillRect(x0 + 1.5, y0 + 1.5, cw - 3, rh - 3);
+            if (mortarAlpha > 0.02) {
+              ctx.strokeStyle = hexToRgba(PALETTE.wetMortarAsh, mortarAlpha * 0.55);
+              ctx.lineWidth = forced ? 2.2 : 1.1;
+              ctx.strokeRect(x0 + 1, y0 + 1, cw - 2, rh - 2);
+            }
+            if (((r * 5 + c * 3) % 4) === 0) {
+              ctx.fillStyle = hexToRgba(PALETTE.dampMoldOlive, wallAlpha * (forced ? 0.72 : 0.46));
+              ctx.fillRect(x0 + 4, y0 + rh * 0.62, cw * 0.52, rh * 0.26);
+            }
+          }
+        }
+
+        const th = height * 0.145;
+        for (let t = 0; t < 3; t += 1) {
+          const tyCenter = TIER_Y[t] * height;
+          const topY = tyCenter - th * 0.55;
+          ctx.fillStyle = hexToRgba(PALETTE.batUmbrellaBlack, wallAlpha * 0.88);
+          ctx.fillRect(0, topY, width, th);
+          ctx.strokeStyle = hexToRgba(PALETTE.wetMortarAsh, wallAlpha * 0.65);
+          ctx.lineWidth = 1.6;
+          ctx.beginPath();
+          ctx.moveTo(0, topY);
+          ctx.lineTo(width, topY);
+          ctx.moveTo(0, topY + th);
+          ctx.lineTo(width, topY + th);
+          ctx.stroke();
+
+          if (dec === 0) {
+            for (let g = 0; g < 6; g += 1) {
+              const gx = ((g + 0.5) / 6) * width;
+              ctx.strokeStyle = hexToRgba(PALETTE.wetMortarAsh, entityAlpha * 0.62);
+              ctx.strokeRect(gx - 12, topY + th - 7, 24, 6);
+              if (g % 2 === t % 2) {
+                const flick = 0.78 + Math.sin(simTime * 7 + g) * 0.16;
+                ctx.fillStyle = hexToRgba(PALETTE.rancidCheeseOchre, entityAlpha * 0.32 * flick);
+                ctx.beginPath();
+                ctx.arc(gx, topY + 11, 13, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = hexToRgba(PALETTE.ferociousToothIvory, entityAlpha * 0.82);
+                ctx.fillRect(gx - 2, topY + 7, 4, 7);
+              }
+            }
+          } else if (dec === 1) {
+            ctx.fillStyle = hexToRgba(PALETTE.compactWallSlate, entityAlpha * 0.92);
+            ctx.fillRect(0, topY + 4, width, 7);
+            for (let rv = 18; rv < width; rv += 44) {
+              ctx.fillStyle = hexToRgba(PALETTE.wetMortarAsh, entityAlpha * 0.85);
+              ctx.fillRect(rv - 2, topY + 2, 4, 11);
+            }
+          } else {
+            for (let fl = 0; fl < 4; fl += 1) {
+              const fx = ((fl + 0.5) / 4) * width;
+              const hum = 0.72 + Math.sin(simTime * 19 + fl * 2.1) * 0.14;
+              ctx.fillStyle = hexToRgba(PALETTE.crystalPrismCyan, entityAlpha * 0.42 * hum);
+              ctx.fillRect(fx - width * 0.08, topY + 3, width * 0.16, 3.5);
+              ctx.fillStyle = hexToRgba(PALETTE.gauzeVeilPearl, entityAlpha * 0.65 * hum);
+              ctx.fillRect(fx - width * 0.07, topY + 4, width * 0.14, 1.5);
+            }
+          }
+        }
+
+        for (let m = 0; m < moldDrops.length; m += 1) {
+          const d = moldDrops[m];
+          ctx.fillStyle = hexToRgba(PALETTE.dampMoldOlive, entityAlpha * 0.74);
+          ctx.beginPath();
+          ctx.arc(d.x * width, d.y * height, d.r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        for (let c = 0; c < cheeseClusters.length; c += 1) {
+          const ch = cheeseClusters[c];
+          const cxp = ch.x * width;
+          const cyp = TIER_Y[ch.tier] * height + th * 0.34;
+          const ws = Math.max(11, minDim * 0.022) * ch.size;
+          ctx.fillStyle = hexToRgba(PALETTE.rancidCheeseOchre, entityAlpha * 0.95);
+          ctx.beginPath();
+          ctx.moveTo(cxp - ws, cyp);
+          ctx.lineTo(cxp + ws, cyp);
+          ctx.lineTo(cxp + ws * 0.35, cyp - ws * 0.95);
+          ctx.closePath();
+          ctx.fill();
+          ctx.fillStyle = hexToRgba(PALETTE.leadVaultDark, entityAlpha * 0.75);
+          ctx.beginPath();
+          ctx.arc(cxp, cyp - ws * 0.32, ws * 0.16, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        for (let i = 0; i < packAgents.length; i += 1) {
+          const p = packAgents[i];
+          const px = p.x * width;
+          const py = TIER_Y[p.tier] * height + th * 0.31;
+          const sz = Math.max(8, minDim * 0.015) * p.scale;
+          const snap = Math.abs(Math.sin(p.jawPhase)) * 0.45 + (scrambleBurst * 0.35);
+          ctx.fillStyle = hexToRgba(PALETTE.batUmbrellaBlack, entityAlpha * 0.96);
+          ctx.beginPath();
+          ctx.ellipse(px, py - sz * 0.35, sz * 1.15, sz * 0.58, 0, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.strokeStyle = hexToRgba(PALETTE.wetMortarAsh, entityAlpha * 0.55);
+          ctx.lineWidth = 1.2;
+          ctx.beginPath();
+          ctx.moveTo(px - p.dir * sz * 1.1, py - sz * 0.3);
+          ctx.quadraticCurveTo(px - p.dir * sz * 2.0, py - sz * 0.9, px - p.dir * sz * 2.4, py - sz * 0.2);
+          ctx.stroke();
+          ctx.fillStyle = hexToRgba(PALETTE.ferociousToothIvory, entityAlpha * 0.96);
+          ctx.beginPath();
+          ctx.moveTo(px + p.dir * sz * 0.95, py - sz * (0.48 + snap * 0.35));
+          ctx.lineTo(px + p.dir * sz * 1.45, py - sz * 0.28);
+          ctx.lineTo(px + p.dir * sz * 0.95, py - sz * (0.12 - snap * 0.25));
+          ctx.closePath();
+          ctx.fill();
+        }
+
+        for (let j = 0; j < umbrellaAgents.length; j += 1) {
+          const u = umbrellaAgents[j];
+          const ux = u.x * width;
+          const uy = TIER_Y[u.tier] * height + th * 0.36;
+          const us = Math.max(13, minDim * 0.026) * u.span;
+          const lean = u.dir * 0.16;
+          const coatSweep = (dec === 2 ? 1.28 : 0.95) * us;
+          ctx.fillStyle = hexToRgba(PALETTE.batUmbrellaBlack, entityAlpha * 0.95);
+          ctx.beginPath();
+          ctx.moveTo(ux, uy - us * 1.15);
+          ctx.lineTo(ux - u.dir * coatSweep * 0.55, uy);
+          ctx.lineTo(ux + u.dir * coatSweep * 0.36, uy);
+          ctx.closePath();
+          ctx.fill();
+
+          const cyUm = uy - us * 1.38 + Math.sin(u.stride) * 1.6;
+          ctx.beginPath();
+          ctx.moveTo(ux - us * 1.15, cyUm + us * 0.18);
+          ctx.quadraticCurveTo(ux, cyUm - us * 0.72, ux + us * 1.15, cyUm + us * 0.18);
+          for (let rb = 4; rb >= 0; rb -= 1) {
+            const rx = ux - us * 1.15 + (rb / 5) * us * 2.3;
+            ctx.quadraticCurveTo(rx + us * 0.23, cyUm + us * 0.02, rx, cyUm + us * 0.22);
+          }
+          ctx.closePath();
+          ctx.fill();
+          ctx.strokeStyle = hexToRgba(PALETTE.wetMortarAsh, entityAlpha * 0.5);
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(ux + lean * us, cyUm - us * 0.32);
+          ctx.lineTo(ux, uy - us * 0.55);
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+
+      drawVaultHalf(-1);
+      drawVaultHalf(1);
+
+      ctx.save();
+      if (trans > 0.01 && !forced) {
+        for (let s = -1; s <= 1; s += 2) {
+          const lx = cx + s * halfGap * nx;
+          const ly = cy + s * halfGap * ny;
+          ctx.strokeStyle = hexToRgba(PALETTE.crystalPrismCyan, clamp01(trans * 1.2) * 0.78);
+          ctx.lineWidth = 2.2;
+          ctx.beginPath();
+          ctx.moveTo(lx - tx * diag, ly - ty * diag);
+          ctx.lineTo(lx + tx * diag, ly + ty * diag);
+          ctx.stroke();
+          ctx.strokeStyle = hexToRgba(PALETTE.gauzeVeilPearl, clamp01(trans) * 0.52);
+          ctx.lineWidth = 5;
+          ctx.beginPath();
+          ctx.moveTo(lx - tx * diag + s * nx * 4, ly - ty * diag + s * ny * 4);
+          ctx.lineTo(lx + tx * diag + s * nx * 4, ly + ty * diag + s * ny * 4);
+          ctx.stroke();
+        }
+      } else {
+        ctx.strokeStyle = aligned
+          ? hexToRgba(PALETTE.crystalPrismCyan, 0.55)
+          : hexToRgba(forced ? PALETTE.dampMoldOlive : PALETTE.wetMortarAsh, forced ? 0.9 : 0.42);
+        ctx.lineWidth = forced ? 3.4 : 1.6;
+        ctx.beginPath();
+        ctx.moveTo(cx - tx * diag, cy - ty * diag);
+        ctx.lineTo(cx + tx * diag, cy + ty * diag);
+        ctx.stroke();
+      }
+      for (let k = 0; k < mortarDust.length; k += 1) {
+        const pt = mortarDust[k];
+        const col = pt.isCheese
+          ? (k % 2 === 0 ? PALETTE.rancidCheeseOchre : PALETTE.ferociousToothIvory)
+          : (k % 2 === 0 ? PALETTE.wetMortarAsh : PALETTE.dampMoldOlive);
+        ctx.fillStyle = hexToRgba(col, clamp01(pt.life) * 0.88);
+        ctx.beginPath();
+        ctx.arc(pt.x * width, pt.y * height, pt.isCheese ? 2.4 : 3.1, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.restore();
+
+      ctx.save();
+      for (let sIdx = 0; sIdx < RAT_STONES.length; sIdx += 1) {
+        const stone = RAT_STONES[sIdx];
+        const sx = stone.anchorX * width;
+        const sy = stone.anchorY * height;
+        const active = activeStoneId === stone.id;
+        const sAlpha = active ? 0.98 : clamp(1 - trans * 0.74, 0.22, 0.9);
+        const rad = Math.max(9, minDim * 0.017) * (active ? 1.22 : 1);
+        ctx.fillStyle = hexToRgba(PALETTE.compactWallSlate, sAlpha * 0.9);
+        ctx.strokeStyle = hexToRgba(active ? PALETTE.rancidCheeseOchre : PALETTE.ferociousToothIvory, sAlpha * (active ? 0.98 : 0.62));
+        ctx.lineWidth = active ? 2.2 : 1.3;
+        ctx.beginPath();
+        for (let v = 0; v < 8; v += 1) {
+          const va = (v / 8) * Math.PI * 2 + Math.PI * 0.125;
+          const vx = sx + Math.cos(va) * rad;
+          const vy = sy + Math.sin(va) * rad;
+          if (v === 0) ctx.moveTo(vx, vy); else ctx.lineTo(vx, vy);
+        }
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+        ctx.fillStyle = hexToRgba(active ? PALETTE.sunlitCornfieldGold : PALETTE.rancidCheeseOchre, sAlpha * 0.92);
+        ctx.beginPath();
+        ctx.arc(sx, sy, rad * 0.28, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.restore();
+    }
+
+    return {
+      step: step,
+      render: render,
+      triggerCheeseScramble: triggerCheeseScramble,
+      setDecadeIndex: setDecadeIndex,
+      hitTestStone: hitTestStone,
+      activateStoneAt: activateStoneAt,
+      createSubterraneanAudio: createSubterraneanAudio,
+      setReducedMotion: setReducedMotion,
+      reset: reset,
+      getState: getState
+    };
+  }
+
+  return Object.freeze({
+    PALETTE: PALETTE,
+    DECADES: DECADES,
+    RAT_STONES: RAT_STONES,
+    createRatTunnels: createRatTunnels,
+    createSubterraneanAudio: createSubterraneanAudio
+  });
+})();
+
+if (typeof window !== 'undefined') {
+  window.MaroziaRatTunnels = globalThis.MaroziaRatTunnels;
+}
+
+globalThis.MaroziaSwallowAperture = (function () {
+  'use strict';
+
+  const PALETTE = Object.freeze({
+    leadVaultDark: '#14171c',
+    compactWallSlate: '#232933',
+    dampMoldOlive: '#384239',
+    wetMortarAsh: '#4e5661',
+    batUmbrellaBlack: '#0d0f13',
+    rancidCheeseOchre: '#c99a3e',
+    ferociousToothIvory: '#d8d2c3',
+    crystalPrismCyan: '#8fe7f5',
+    gauzeVeilPearl: '#eef7fa',
+    swallowWingCobalt: '#2f66b8',
+    dragonflyIridescent: '#52d6b6',
+    sunlitCornfieldGold: '#f2c14e'
+  });
+
+  const DECADES = Object.freeze([
+    Object.freeze({
+      id: 'first_visit',
+      label: 'I. First Consult',
+      ratSurface: 'Soot-slick stone drains, iron grates & tallow lanterns',
+      swallowHint: 'Whitewash eaves poised over raw summer wheat'
+    }),
+    Object.freeze({
+      id: 'decades_later',
+      label: 'II. Return After Decades',
+      ratSurface: 'Riveted leaden conduits, damp mold & batlike black umbrellas',
+      swallowHint: 'Dragonfly glints caught between twin stone arcades'
+    }),
+    Object.freeze({
+      id: 'late_century',
+      label: 'III. Late Gallery Epoch',
+      ratSurface: 'Fluorescent subterranean passages & hurried dark overcoats',
+      swallowHint: 'Translucent gauze horizon shimmering on the brink of flight'
+    })
+  ]);
+
+  const OBLIQUE_SWEET_SPOT = Object.freeze({
+    targetDeg: 33.5,
+    toleranceDeg: 6.5,
+    minDeg: 0,
+    maxDeg: 90
+  });
+
+  const SWALLOW_STONES = Object.freeze([
+    Object.freeze({
+      id: 'sibyl_prophecy',
+      realm: 'sibyl',
+      title: "The Sibyl's Double Verdict",
+      inscription: 'Two cities share these walls: one of the rat, one of the swallow; decades alter both, yet the second remains forever the one about to free itself from the first.',
+      anchorX: 0.50,
+      anchorY: 0.14
+    }),
+    Object.freeze({
+      id: 'oblique_two_arcade_slit',
+      realm: 'threshold',
+      title: 'Oblique Perspective Between Two Arcades',
+      inscription: 'Where shadow thins along compact masonry and two colonnades align along a slant of thirty-three degrees.',
+      anchorX: 0.50,
+      anchorY: 0.50
+    }),
+    Object.freeze({
+      id: 'crystal_gauze_parting',
+      realm: 'swallow',
+      title: 'Crystal & Transparent Gauze',
+      inscription: 'At an unforced gesture made for sheer pleasure, lead and mold part abruptly like blown crystal and sheer gauze.',
+      anchorX: 0.34,
+      anchorY: 0.36
+    }),
+    Object.freeze({
+      id: 'swallows_dragonflies_cornfields',
+      realm: 'swallow',
+      title: 'Swallows, Dragonflies & Sunlit Cornfields',
+      inscription: 'Figures soaring in effortless arcs and darting iridescent wings above golden grain rippling in open wind.',
+      anchorX: 0.66,
+      anchorY: 0.34
+    })
+  ]);
+
+  function clamp(val, min, max) {
+    return Math.max(min, Math.min(max, val));
+  }
+
+  function createSeededRng(seed) {
+    let s = seed >>> 0;
+    return function nextRng() {
+      s = (1664525 * s + 1013904223) >>> 0;
+      return s / 4294967296;
+    };
+  }
+
+  function createGlassHarmonicaAudio(sharedCtx) {
+    let ctx = sharedCtx || null;
+    let muted = false;
+    let padNodes = null;
+
+    function ensureCtx() {
+      if (muted) return null;
+      if (!ctx && typeof globalThis !== 'undefined') {
+        const AudioCtor = globalThis.AudioContext || globalThis.webkitAudioContext;
+        if (typeof AudioCtor === 'function') {
+          try {
+            ctx = new AudioCtor();
+          } catch (_err) {
+            ctx = null;
+          }
+        }
+      }
+      if (ctx && ctx.state === 'suspended' && typeof ctx.resume === 'function') {
+        try { ctx.resume(); } catch (_err) { /* safe no-op */ }
+      }
+      return ctx;
+    }
+
+    function ensureHarmonicPad(ac) {
+      if (padNodes) return padNodes;
+      try {
+        const master = ac.createGain();
+        master.gain.value = 0.0001;
+        master.connect(ac.destination);
+
+        const freqs = [261.63, 392.00, 587.33];
+        const oscs = freqs.map(function (f, idx) {
+          const osc = ac.createOscillator();
+          const gain = ac.createGain();
+          osc.type = idx === 2 ? 'triangle' : 'sine';
+          osc.frequency.value = f;
+          gain.gain.value = idx === 0 ? 0.05 : (idx === 1 ? 0.042 : 0.025);
+          osc.connect(gain);
+          gain.connect(master);
+          osc.start();
+          return osc;
+        });
+
+        const shimmerOsc = ac.createOscillator();
+        const shimmerLfo = ac.createOscillator();
+        const shimmerMod = ac.createGain();
+        const shimmerFilter = ac.createBiquadFilter();
+        shimmerFilter.type = 'bandpass';
+        shimmerFilter.frequency.value = 2637.02;
+        shimmerFilter.Q.value = 6.0;
+        shimmerOsc.type = 'sine';
+        shimmerOsc.frequency.value = 2637.02;
+        shimmerLfo.type = 'sine';
+        shimmerLfo.frequency.value = 6.5;
+        shimmerMod.gain.value = 0.012;
+        shimmerLfo.connect(shimmerMod.gain);
+        shimmerOsc.connect(shimmerFilter);
+        shimmerFilter.connect(shimmerMod);
+        shimmerMod.connect(master);
+        shimmerOsc.start();
+        shimmerLfo.start();
+
+        padNodes = { master: master, oscs: oscs, shimmerOsc: shimmerOsc, shimmerLfo: shimmerLfo };
+      } catch (_err) {
+        padNodes = null;
+      }
+      return padNodes;
+    }
+    function setMuted(flag) {
+      muted = Boolean(flag);
+      if (muted && padNodes && ctx) {
+        try {
+          padNodes.master.gain.setTargetAtTime(0.0001, ctx.currentTime, 0.06);
+        } catch (_err) { /* safe no-op */ }
+      }
+      return muted;
+    }
+
+    function playCrystalPartingChime() {
+      const ac = ensureCtx();
+      if (!ac) return;
+      try {
+        const now = ac.currentTime;
+        const notes = [523.25, 783.99, 1174.66, 1567.98];
+        notes.forEach(function (freq, i) {
+          const osc = ac.createOscillator();
+          const gain = ac.createGain();
+          osc.type = i % 2 === 0 ? 'sine' : 'triangle';
+          osc.frequency.setValueAtTime(freq, now + i * 0.055);
+          gain.gain.setValueAtTime(0.0001, now + i * 0.055);
+          gain.gain.linearRampToValueAtTime(0.065 / (1 + i * 0.25), now + i * 0.055 + 0.08);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.055 + 1.35);
+          osc.connect(gain);
+          gain.connect(ac.destination);
+          osc.start(now + i * 0.055);
+          osc.stop(now + i * 0.055 + 1.42);
+        });
+      } catch (_err) { /* safe no-op */ }
+    }
+
+    function playForcedSnapDiscord() {
+      const ac = ensureCtx();
+      if (!ac) return;
+      try {
+        const now = ac.currentTime;
+        [146.83, 155.56, 207.65].forEach(function (freq, idx) {
+          const osc = ac.createOscillator();
+          const gain = ac.createGain();
+          osc.type = idx === 0 ? 'sawtooth' : 'triangle';
+          osc.frequency.setValueAtTime(freq, now);
+          osc.frequency.exponentialRampToValueAtTime(52 + idx * 9, now + 0.24);
+          gain.gain.setValueAtTime(0.075, now);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.26);
+          osc.connect(gain);
+          gain.connect(ac.destination);
+          osc.start(now);
+          osc.stop(now + 0.28);
+        });
+      } catch (_err) { /* safe no-op */ }
+    }
+
+    function updateSwallowHarmonics(wallTranslucency, mutedOverride) {
+      if (typeof mutedOverride === 'boolean') muted = mutedOverride;
+      const level = clamp(Number(wallTranslucency) || 0, 0, 1);
+      if (muted || level <= 0.02) {
+        if (padNodes && ctx) {
+          try { padNodes.master.gain.setTargetAtTime(0.0001, ctx.currentTime, 0.08); } catch (_err) { /* no-op */ }
+        }
+        return;
+      }
+      const ac = ensureCtx();
+      if (!ac) return;
+      const pad = ensureHarmonicPad(ac);
+      if (pad) {
+        try {
+          pad.master.gain.setTargetAtTime(0.015 + level * 0.14, ac.currentTime, 0.12);
+        } catch (_err) { /* no-op */ }
+      }
+    }
+
+    return {
+      setMuted: setMuted,
+      isMuted: function () { return muted; },
+      playCrystalPartingChime: playCrystalPartingChime,
+      playForcedSnapDiscord: playForcedSnapDiscord,
+      updateSwallowHarmonics: updateSwallowHarmonics
+    };
+  }
+
+  function createSwallowAperture(opts) {
+    const cfg = opts || {};
+    const onApertureOpen = typeof cfg.onApertureOpen === 'function' ? cfg.onApertureOpen : null;
+    const onStoneSnapShut = typeof cfg.onStoneSnapShut === 'function' ? cfg.onStoneSnapShut : null;
+    const onStoneSelect = typeof cfg.onStoneSelect === 'function' ? cfg.onStoneSelect : null;
+
+    const rng = createSeededRng(520335);
+    const swallowCitizens = Array.from({ length: 18 }, function (_, i) {
+      return {
+        index: i,
+        cx: 0.18 + (i % 6) * 0.128 + (rng() - 0.5) * 0.04,
+        cy: 0.21 + Math.floor(i / 6) * 0.125 + (rng() - 0.5) * 0.03,
+        rx: 0.08 + rng() * 0.11,
+        ry: 0.035 + rng() * 0.055,
+        speed: 0.65 + rng() * 0.55,
+        phase: rng() * Math.PI * 2,
+        scale: 0.78 + rng() * 0.42
+      };
+    });
+
+    const dragonflies = Array.from({ length: 14 }, function (_, i) {
+      return {
+        index: i,
+        bx: 0.16 + (i / 13) * 0.68,
+        by: 0.46 + (rng() - 0.5) * 0.18,
+        dartAmpX: 0.035 + rng() * 0.045,
+        dartAmpY: 0.02 + rng() * 0.035,
+        freq: 1.5 + rng() * 1.4,
+        phase: rng() * Math.PI * 2
+      };
+    });
+
+    const cornStalks = Array.from({ length: 52 }, function (_, i) {
+      return {
+        nx: 0.05 + (i / 51) * 0.90,
+        heightRatio: 0.12 + rng() * 0.11,
+        swayPhase: rng() * Math.PI * 2,
+        lean: (rng() - 0.5) * 0.25
+      };
+    });
+
+    const prismFacets = Array.from({ length: 16 }, function (_, i) {
+      return {
+        side: i % 2 === 0 ? -1 : 1,
+        ny: 0.08 + Math.floor(i / 2) * 0.112,
+        size: 0.038 + rng() * 0.034,
+        rot: rng() * Math.PI,
+        alpha: 0.34 + rng() * 0.36
+      };
+    });
+
+    const state = {
+      coexistenceInvariant: true,
+      secondAboutToFreeFromFirst: true,
+      institutionalizedSwallow: false,
+      obliqueAngleDeg: 12,
+      travelerPaused: true,
+      obliquePerspectiveAligned: false,
+      unforcedGesture: false,
+      forcedGraspActive: false,
+      swallowApertureOpen: false,
+      wallTranslucency: 0,
+      ratDominance: 0.86,
+      soaringCitizensCount: 0,
+      dragonflyCount: 0,
+      forcedSnapShutCount: 0,
+      decadeIndex: 1,
+      reducedMotion: Boolean(cfg.reducedMotion),
+      clock: 1.8,
+      shimmerTimer: 0,
+      partingPulse: 0,
+      snapShutShock: 0
+    };
+
+    function inSweetSpot(deg) {
+      return Math.abs(deg - OBLIQUE_SWEET_SPOT.targetDeg) <= OBLIQUE_SWEET_SPOT.toleranceDeg;
+    }
+
+    function getState() {
+      return {
+        coexistenceInvariant: true,
+        secondAboutToFreeFromFirst: true,
+        institutionalizedSwallow: false,
+        obliqueAngleDeg: Number(state.obliqueAngleDeg.toFixed(2)),
+        travelerPaused: state.travelerPaused,
+        obliquePerspectiveAligned: state.obliquePerspectiveAligned,
+        unforcedGesture: state.unforcedGesture,
+        forcedGraspActive: state.forcedGraspActive,
+        swallowApertureOpen: state.swallowApertureOpen,
+        wallTranslucency: Number(state.wallTranslucency.toFixed(4)),
+        ratDominance: Number(state.ratDominance.toFixed(4)),
+        soaringCitizensCount: state.soaringCitizensCount,
+        dragonflyCount: state.dragonflyCount,
+        forcedSnapShutCount: state.forcedSnapShutCount,
+        decadeIndex: state.decadeIndex,
+        decadeId: DECADES[state.decadeIndex].id,
+        relationshipUnchanged: true,
+        reducedMotion: state.reducedMotion
+      };
+    }
+    function setObliqueAngle(deg, moveOpts) {
+      const nextDeg = Number(deg);
+      if (Number.isFinite(nextDeg)) state.obliqueAngleDeg = clamp(nextDeg, 0, 90);
+      const vel = Math.abs(Number(moveOpts && moveOpts.velocity) || 0);
+      state.travelerPaused = vel <= 0.65;
+      state.forcedGraspActive = false;
+      const inBand = inSweetSpot(state.obliqueAngleDeg);
+      state.obliquePerspectiveAligned = state.travelerPaused && inBand;
+      if (!inBand) {
+        state.swallowApertureOpen = false; state.unforcedGesture = false;
+        state.wallTranslucency = 0; state.ratDominance = 0.86;
+        state.soaringCitizensCount = 0; state.dragonflyCount = 0;
+      } else if (state.obliquePerspectiveAligned) {
+        if (!state.swallowApertureOpen) {
+          state.wallTranslucency = 0.26; state.ratDominance = 0.58;
+          state.soaringCitizensCount = 2; state.dragonflyCount = 3;
+        }
+      } else {
+        state.swallowApertureOpen = false; state.unforcedGesture = false;
+        state.wallTranslucency = 0.06; state.ratDominance = 0.86;
+        state.soaringCitizensCount = 0; state.dragonflyCount = 0;
+      }
+      return getState();
+    }
+
+    function pauseBetweenArcades() {
+      state.travelerPaused = true; state.forcedGraspActive = false;
+      state.obliquePerspectiveAligned = inSweetSpot(state.obliqueAngleDeg);
+      if (state.obliquePerspectiveAligned && !state.swallowApertureOpen) {
+        state.wallTranslucency = Math.max(state.wallTranslucency, 0.26);
+        state.ratDominance = 0.58; state.soaringCitizensCount = 2; state.dragonflyCount = 3;
+      } else if (!state.obliquePerspectiveAligned) {
+        state.swallowApertureOpen = false; state.unforcedGesture = false;
+        state.wallTranslucency = 0; state.ratDominance = 0.86;
+        state.soaringCitizensCount = 0; state.dragonflyCount = 0;
+      }
+      return getState();
+    }
+
+    function alignObliqueSweetSpot() {
+      state.obliqueAngleDeg = 33.5; state.travelerPaused = true; state.forcedGraspActive = false;
+      state.obliquePerspectiveAligned = true; state.unforcedGesture = false; state.swallowApertureOpen = false;
+      state.wallTranslucency = 0.28; state.ratDominance = 0.55;
+      state.soaringCitizensCount = 3; state.dragonflyCount = 4; state.shimmerTimer = 0;
+      return getState();
+    }
+
+    function performUnforcedGesture(_kind) {
+      state.obliquePerspectiveAligned = state.travelerPaused && inSweetSpot(state.obliqueAngleDeg);
+      state.forcedGraspActive = false;
+      if (state.obliquePerspectiveAligned) {
+        state.unforcedGesture = true; state.swallowApertureOpen = true;
+        state.wallTranslucency = 0.94; state.ratDominance = 0.08;
+        state.soaringCitizensCount = 18; state.dragonflyCount = 14;
+        state.partingPulse = 1.0; state.shimmerTimer = 0;
+        const snap = getState();
+        if (onApertureOpen) onApertureOpen(snap);
+        return snap;
+      }
+      state.unforcedGesture = false; state.swallowApertureOpen = false;
+      state.wallTranslucency = 0.14; state.ratDominance = 0.80;
+      state.soaringCitizensCount = 0; state.dragonflyCount = 0; state.shimmerTimer = 1.2;
+      return getState();
+    }
+
+    function forceCaptureAperture() {
+      state.forcedGraspActive = true; state.unforcedGesture = false; state.swallowApertureOpen = false;
+      state.wallTranslucency = 0; state.ratDominance = 0.95;
+      state.soaringCitizensCount = 0; state.dragonflyCount = 0;
+      state.shimmerTimer = 0; state.snapShutShock = 1.0;
+      state.forcedSnapShutCount += 1; state.institutionalizedSwallow = false;
+      const snap = getState();
+      if (onStoneSnapShut) onStoneSnapShut(snap);
+      return snap;
+    }
+
+    function setDecadeIndex(idx) {
+      const n = Math.round(Number(idx));
+      if (Number.isFinite(n)) state.decadeIndex = clamp(n, 0, 2);
+      return getState();
+    }
+
+    function hitTestStone(normX, normY, hitOpts) {
+      const nx = Number(normX), ny = Number(normY);
+      if (!Number.isFinite(nx) || !Number.isFinite(ny)) return null;
+      let best = null, bestDist = 0.065;
+      for (let i = 0; i < SWALLOW_STONES.length; i += 1) {
+        const st = SWALLOW_STONES[i];
+        const d = Math.hypot(nx - st.anchorX, ny - st.anchorY);
+        if (d <= bestDist) { bestDist = d; best = st; }
+      }
+      if (best && hitOpts && hitOpts.select && onStoneSelect) onStoneSelect(best);
+      return best;
+    }
+
+    function setReducedMotion(flag) { state.reducedMotion = Boolean(flag); return getState(); }
+
+    function reset() {
+      state.obliqueAngleDeg = 12; state.travelerPaused = true; state.obliquePerspectiveAligned = false;
+      state.unforcedGesture = false; state.forcedGraspActive = false; state.swallowApertureOpen = false;
+      state.wallTranslucency = 0; state.ratDominance = 0.86; state.soaringCitizensCount = 0;
+      state.dragonflyCount = 0; state.forcedSnapShutCount = 0; state.decadeIndex = 1;
+      state.shimmerTimer = 0; state.partingPulse = 0; state.snapShutShock = 0;
+      return getState();
+    }
+
+    function step(dtSec) {
+      const dt = clamp(Number(dtSec) || 0, 0, 0.1);
+      if (state.reducedMotion) return;
+      state.clock += dt;
+      state.partingPulse = Math.max(0, state.partingPulse - dt * 0.9);
+      state.snapShutShock = Math.max(0, state.snapShutShock - dt * 1.6);
+      if (state.shimmerTimer > 0 && !state.swallowApertureOpen && !state.obliquePerspectiveAligned) {
+        state.shimmerTimer = Math.max(0, state.shimmerTimer - dt);
+        const r = state.shimmerTimer / 1.2;
+        state.wallTranslucency = Number((0.14 * r).toFixed(4));
+        state.ratDominance = Number((0.86 - 0.06 * r).toFixed(4));
+      }
+    }
+
+    function render(ctx, width, height, sharedState) {
+      if (!ctx || !(width > 0) || !(height > 0)) return;
+      const sh = sharedState || {};
+      const trans = typeof sh.wallTranslucency === 'number' ? sh.wallTranslucency : state.wallTranslucency;
+      const deg = typeof sh.obliqueAngleDeg === 'number' ? sh.obliqueAngleDeg : state.obliqueAngleDeg;
+      const decade = typeof sh.decadeIndex === 'number' ? clamp(sh.decadeIndex, 0, 2) : state.decadeIndex;
+      const activeStoneId = sh.activeStoneId || null;
+      const t = state.clock;
+      const slantPx = Math.tan(((deg - 33.5) * 0.35 + 16) * Math.PI / 180) * height * 0.28;
+      const alignCloseness = clamp(1 - Math.abs(deg - 33.5) / 14, 0, 1);
+
+      ctx.save();
+      if (trans > 0.05) {
+        const halfOpen = width * (0.025 + trans * 0.49);
+        const cx = width * 0.5;
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(cx - halfOpen + slantPx * 0.5, 0);
+        ctx.lineTo(cx + halfOpen + slantPx * 0.5, 0);
+        ctx.lineTo(cx + halfOpen - slantPx * 0.5, height);
+        ctx.lineTo(cx - halfOpen - slantPx * 0.5, height);
+        ctx.closePath();
+        ctx.clip();
+
+        const sky = ctx.createLinearGradient(0, 0, 0, height);
+        sky.addColorStop(0, PALETTE.gauzeVeilPearl);
+        sky.addColorStop(0.54, PALETTE.crystalPrismCyan);
+        sky.addColorStop(1, PALETTE.sunlitCornfieldGold);
+        ctx.fillStyle = sky;
+        ctx.fillRect(0, 0, width, height);
+
+        ctx.fillStyle = decade === 0 ? PALETTE.ferociousToothIvory : (decade === 1 ? PALETTE.gauzeVeilPearl : PALETTE.crystalPrismCyan);
+        ctx.globalAlpha = 0.55 * trans;
+        for (let e = 0; e < 5; e += 1) {
+          const ex = width * (0.14 + e * 0.18);
+          ctx.fillRect(ex - 26, height * 0.56, 52, height * 0.14);
+        }
+        ctx.globalAlpha = 1;
+
+        const fieldTop = height * 0.68;
+        ctx.fillStyle = PALETTE.sunlitCornfieldGold;
+        ctx.beginPath();
+        ctx.moveTo(0, height);
+        ctx.quadraticCurveTo(width * 0.32, fieldTop - 18, width * 0.62, fieldTop + 8);
+        ctx.quadraticCurveTo(width * 0.84, fieldTop - 12, width, fieldTop + 4);
+        ctx.lineTo(width, height);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.strokeStyle = PALETTE.rancidCheeseOchre;
+        ctx.lineWidth = Math.max(1.2, width * 0.0018);
+        for (let i = 0; i < cornStalks.length; i += 1) {
+          const st = cornStalks[i];
+          const sx = st.nx * width;
+          const shgt = st.heightRatio * height;
+          const sway = (state.reducedMotion ? 0.15 : Math.sin(t * 2.1 + st.swayPhase)) * 12 + st.lean * 14;
+          ctx.beginPath();
+          ctx.moveTo(sx, height);
+          ctx.quadraticCurveTo(sx + sway * 0.5, height - shgt * 0.55, sx + sway, height - shgt);
+          ctx.stroke();
+        }
+
+        const citizenVis = state.swallowApertureOpen ? 18 : Math.max(2, Math.round(trans * 10));
+        for (let i = 0; i < citizenVis; i += 1) {
+          const sw = swallowCitizens[i];
+          const ang = t * sw.speed + sw.phase;
+          const x = (sw.cx + Math.cos(ang) * sw.rx) * width;
+          const y = (sw.cy + Math.sin(ang * 2) * sw.ry) * height;
+          const wing = (state.reducedMotion ? 0.4 : Math.sin(t * 7.2 + sw.phase)) * 9 * sw.scale;
+          const span = Math.max(11, width * 0.017) * sw.scale;
+          ctx.strokeStyle = PALETTE.swallowWingCobalt;
+          ctx.fillStyle = PALETTE.swallowWingCobalt;
+          ctx.lineWidth = 2.1;
+          ctx.beginPath();
+          ctx.moveTo(x - span, y - wing);
+          ctx.quadraticCurveTo(x - span * 0.3, y - 5, x, y);
+          ctx.quadraticCurveTo(x + span * 0.3, y - 5, x + span, y - wing);
+          ctx.lineTo(x + 3, y + 5);
+          ctx.lineTo(x, y + 2);
+          ctx.lineTo(x - 3, y + 5);
+          ctx.closePath();
+          ctx.fill();
+        }
+
+        const dfVis = state.swallowApertureOpen ? 14 : Math.max(2, Math.round(trans * 8));
+        for (let i = 0; i < dfVis; i += 1) {
+          const df = dragonflies[i];
+          const dx = (df.bx + Math.sin(t * df.freq + df.phase) * df.dartAmpX) * width;
+          const dy = (df.by + Math.cos(t * df.freq * 1.3 + df.phase) * df.dartAmpY) * height;
+          const flutter = state.reducedMotion ? 4 : 3 + Math.abs(Math.sin(t * 18 + df.phase)) * 5;
+          ctx.strokeStyle = PALETTE.dragonflyIridescent;
+          ctx.lineWidth = 1.6;
+          ctx.beginPath();
+          ctx.moveTo(dx - 8, dy - flutter); ctx.lineTo(dx + 8, dy + flutter);
+          ctx.moveTo(dx - 8, dy + flutter); ctx.lineTo(dx + 8, dy - flutter);
+          ctx.stroke();
+        }
+        ctx.restore();
+
+        for (let g = 0; g < 6; g += 1) {
+          const side = g % 2 === 0 ? -1 : 1;
+          const edgeX = cx + side * halfOpen + (g < 3 ? 1 : -1) * 6;
+          const breeze = (state.reducedMotion ? 1 : Math.sin(t * 1.7 + g)) * 18 * side;
+          ctx.fillStyle = PALETTE.gauzeVeilPearl;
+          ctx.globalAlpha = 0.24 * trans;
+          ctx.beginPath();
+          ctx.moveTo(edgeX, 0);
+          ctx.bezierCurveTo(edgeX + breeze, height * 0.33, edgeX - breeze * 0.7, height * 0.68, edgeX + side * 14, height);
+          ctx.lineTo(edgeX - side * 22, height);
+          ctx.closePath();
+          ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+
+        for (let p = 0; p < prismFacets.length; p += 1) {
+          const pf = prismFacets[p];
+          const px = cx + pf.side * halfOpen * 0.96;
+          const py = pf.ny * height;
+          const r = pf.size * Math.min(width, height);
+          ctx.fillStyle = PALETTE.crystalPrismCyan;
+          ctx.globalAlpha = pf.alpha * trans;
+          ctx.beginPath();
+          ctx.moveTo(px, py - r); ctx.lineTo(px + r * 0.85, py);
+          ctx.lineTo(px, py + r); ctx.lineTo(px - r * 0.85, py);
+          ctx.closePath();
+          ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+      }
+
+      const parallaxShift = (deg - 33.5) * width * 0.0065;
+      const archAlpha = clamp(1 - trans * 0.82, 0.16, 0.94);
+      [0, 1].forEach(function (tier) {
+        const shift = tier === 0 ? -parallaxShift : parallaxShift * 1.25;
+        const pierW = width * (tier === 0 ? 0.055 : 0.044);
+        const springY = height * (tier === 0 ? 0.24 : 0.29);
+        const slots = [-1.35, -0.52, 0.52, 1.35];
+        ctx.fillStyle = tier === 0 ? PALETTE.compactWallSlate : PALETTE.dampMoldOlive;
+        ctx.strokeStyle = tier === 0 ? PALETTE.wetMortarAsh : PALETTE.compactWallSlate;
+        ctx.lineWidth = Math.max(2, pierW * 0.28);
+        ctx.globalAlpha = archAlpha * (tier === 0 ? 0.88 : 0.72);
+        slots.forEach(function (slot, idx) {
+          const px = width * 0.5 + slot * width * 0.26 + shift;
+          ctx.fillRect(px - pierW * 0.5, springY, pierW, height - springY);
+          ctx.fillRect(px - pierW * 0.68, springY - 7, pierW * 1.36, 8);
+          if (idx < slots.length - 1) {
+            const nx = width * 0.5 + slots[idx + 1] * width * 0.26 + shift;
+            const midX = (px + nx) * 0.5;
+            const spanR = Math.max(8, (nx - px) * 0.5);
+            ctx.beginPath();
+            ctx.arc(midX, springY, spanR, Math.PI, 0, false);
+            ctx.stroke();
+          }
+        });
+      });
+
+      if (alignCloseness > 0.05 && !state.forcedGraspActive) {
+        ctx.strokeStyle = trans > 0.5 ? PALETTE.sunlitCornfieldGold : PALETTE.crystalPrismCyan;
+        ctx.globalAlpha = clamp(alignCloseness * 0.78, 0.12, 0.85);
+        ctx.lineWidth = 2 + alignCloseness * 3;
+        ctx.beginPath();
+        ctx.moveTo(width * 0.5 + slantPx * 0.5, height * 0.06);
+        ctx.lineTo(width * 0.5 - slantPx * 0.5, height * 0.94);
+        ctx.stroke();
+      }
+      if (state.forcedGraspActive) {
+        ctx.fillStyle = PALETTE.leadVaultDark;
+        ctx.globalAlpha = 0.92;
+        ctx.fillRect(width * 0.36, height * 0.44, width * 0.28, height * 0.12);
+      }
+      ctx.globalAlpha = 1;
+
+      for (let s = 0; s < SWALLOW_STONES.length; s += 1) {
+        const st = SWALLOW_STONES[s];
+        const sx = st.anchorX * width, sy = st.anchorY * height;
+        const active = activeStoneId === st.id;
+        ctx.strokeStyle = active ? PALETTE.sunlitCornfieldGold : PALETTE.crystalPrismCyan;
+        ctx.fillStyle = active ? PALETTE.sunlitCornfieldGold : PALETTE.gauzeVeilPearl;
+        ctx.globalAlpha = active ? 0.95 : 0.62;
+        ctx.lineWidth = active ? 2.2 : 1.3;
+        ctx.beginPath();
+        ctx.moveTo(sx, sy - 7); ctx.lineTo(sx + 7, sy); ctx.lineTo(sx, sy + 7); ctx.lineTo(sx - 7, sy);
+        ctx.closePath();
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    return {
+      setObliqueAngle: setObliqueAngle,
+      pauseBetweenArcades: pauseBetweenArcades,
+      alignObliqueSweetSpot: alignObliqueSweetSpot,
+      performUnforcedGesture: performUnforcedGesture,
+      forceCaptureAperture: forceCaptureAperture,
+      setDecadeIndex: setDecadeIndex,
+      hitTestStone: hitTestStone,
+      createGlassHarmonicaAudio: createGlassHarmonicaAudio,
+      setReducedMotion: setReducedMotion,
+      reset: reset,
+      getState: getState,
+      step: step,
+      render: render
+    };
+  }
+
+  return Object.freeze({
+    PALETTE: PALETTE,
+    DECADES: DECADES,
+    OBLIQUE_SWEET_SPOT: OBLIQUE_SWEET_SPOT,
+    SWALLOW_STONES: SWALLOW_STONES,
+    createGlassHarmonicaAudio: createGlassHarmonicaAudio,
+    createSwallowAperture: createSwallowAperture
+  });
+})();
+
+if (typeof window !== 'undefined') {
+  window.MaroziaSwallowAperture = globalThis.MaroziaSwallowAperture;
+}
+
+
+(function () {
+  'use strict';
+
+  const ALL_STONES = Object.freeze([
+    {
+      id: 'sibyl_prophecy',
+      realm: 'sibyl',
+      title: "The Sibyl's Double Verdict",
+      inscription: 'Two cities share these walls: one of the rat, one of the swallow; decades alter both, yet the second remains forever the one about to free itself from the first.'
+    },
+    {
+      id: 'leaden_tunnels',
+      realm: 'rat',
+      title: 'Leaden Subterranean Tunnels',
+      inscription: 'Single-file conduits of grey lead and sweating mortar where hurried steps echo without sky.'
+    },
+    {
+      id: 'ferocious_cheese_scramble',
+      realm: 'rat',
+      title: 'Remains of Cheese & Ferocious Teeth',
+      inscription: "Packs lunging through narrow drains to snatch contested crumbs from one another's bared teeth."
+    },
+    {
+      id: 'batlike_umbrellas',
+      realm: 'rat',
+      title: 'Batlike Overcoats & Ribbed Umbrellas',
+      inscription: 'Ribbed black canopies and flapping wool coats folding citizens into nocturnal wings.'
+    },
+    {
+      id: 'compact_mold_walls',
+      realm: 'rat',
+      title: 'Compact Walls & Damp Mold',
+      inscription: 'Opaque ashlar courses crusted with olive dampness that thicken whenever grasped by force.'
+    },
+    {
+      id: 'oblique_two_arcade_slit',
+      realm: 'threshold',
+      title: 'Oblique Perspective Between Two Arcades',
+      inscription: 'Where shadow thins along compact masonry and two colonnades align along a slant of thirty-three degrees.'
+    },
+    {
+      id: 'crystal_gauze_parting',
+      realm: 'swallow',
+      title: 'Crystal & Transparent Gauze',
+      inscription: 'At an unforced gesture made for sheer pleasure, lead and mold part abruptly like blown crystal and sheer gauze.'
+    },
+    {
+      id: 'swallows_dragonflies_cornfields',
+      realm: 'swallow',
+      title: 'Swallows, Dragonflies & Sunlit Cornfields',
+      inscription: 'Figures soaring in effortless arcs and darting iridescent wings above golden grain rippling in open wind.'
+    }
+  ]);
+  const PAL = globalThis.MaroziaSwallowAperture.PALETTE;
+  const DECADES = globalThis.MaroziaSwallowAperture.DECADES;
+  const SWALLOW_STONES = globalThis.MaroziaSwallowAperture.SWALLOW_STONES;
+
+  const mqReduced = typeof window.matchMedia === 'function'
+    ? window.matchMedia('(prefers-reduced-motion: reduce)')
+    : { matches: false };
+
+  let reducedMotion = Boolean(mqReduced && mqReduced.matches);
+  let activeStoneId = 'sibyl_prophecy';
+  let audioMuted = false;
+  let audioUnlocked = false;
+  let plateDrawerOpen = false;
+  let plateTab = 'city';
+  let plateZoomActive = false;
+
+  const ratAudio = globalThis.MaroziaRatTunnels.createSubterraneanAudio({ muted: true });
+  const swallowAudio = globalThis.MaroziaSwallowAperture.createGlassHarmonicaAudio();
+  swallowAudio.setMuted(true);
+
+  function syncAudioHardware(swState) {
+    const effectiveMuted = audioMuted || !audioUnlocked;
+    ratAudio.setMuted(effectiveMuted);
+    swallowAudio.setMuted(effectiveMuted);
+    if (!effectiveMuted && swState) {
+      ratAudio.updateRatDrone(swState.ratDominance, false);
+      swallowAudio.updateSwallowHarmonics(swState.wallTranslucency, false);
+    }
+  }
+
+  function unlockAudioFromGesture() {
+    if (!audioUnlocked) {
+      audioUnlocked = true;
+      syncAudioHardware(swallowEngine.getState());
+    }
+  }
+
+  const ratEngine = globalThis.MaroziaRatTunnels.createRatTunnels({
+    reducedMotion: reducedMotion,
+    onStoneSelect: function (st) {
+      if (st && st.id) selectStone(st.id);
+    }
+  });
+
+  const swallowEngine = globalThis.MaroziaSwallowAperture.createSwallowAperture({
+    reducedMotion: reducedMotion,
+    onApertureOpen: function (snap) {
+      selectStone('crystal_gauze_parting');
+      if (audioUnlocked && !audioMuted) {
+        swallowAudio.playCrystalPartingChime();
+        swallowAudio.updateSwallowHarmonics(snap.wallTranslucency, false);
+        ratAudio.updateRatDrone(snap.ratDominance, false);
+      }
+    },
+    onStoneSnapShut: function (snap) {
+      selectStone('compact_mold_walls');
+      if (audioUnlocked && !audioMuted) {
+        ratAudio.playStoneSnapShut();
+        swallowAudio.playForcedSnapDiscord();
+        swallowAudio.updateSwallowHarmonics(0, false);
+        ratAudio.updateRatDrone(snap.ratDominance, false);
+      }
+    },
+    onStoneSelect: function (st) {
+      if (st && st.id) selectStone(st.id);
+    }
+  });
+
+  const el = {
+    canvas: document.getElementById('mrz-stage-canvas'),
+    warren: document.getElementById('mrz-warren'),
+    crownEpoch: document.getElementById('mrz-crown-epoch'),
+    btnDecadeTop: document.getElementById('mrz-btn-decade-top'),
+    btnAudio: document.getElementById('mrz-btn-audio'),
+    btnPlates: document.getElementById('mrz-btn-plates'),
+    btnReset: document.getElementById('mrz-btn-reset'),
+    banner: document.getElementById('mrz-threshold-banner'),
+    bannerMain: document.getElementById('mrz-banner-main'),
+    bannerDeg: document.getElementById('mrz-banner-deg'),
+    epochPlaque: document.getElementById('mrz-epoch-plaque'),
+    paceBadge: document.getElementById('mrz-pace-badge'),
+    angleInput: document.getElementById('mrz-angle-input'),
+    btnAlign: document.getElementById('mrz-btn-align'),
+    btnGesture: document.getElementById('mrz-btn-gesture'),
+    btnForce: document.getElementById('mrz-btn-force'),
+    btnCheese: document.getElementById('mrz-btn-cheese'),
+    btnDecade: document.getElementById('mrz-btn-decade'),
+    realmBadge: document.getElementById('mrz-realm-badge'),
+    valRat: document.getElementById('mrz-val-rat'),
+    barRat: document.getElementById('mrz-bar-rat'),
+    valCrystal: document.getElementById('mrz-val-crystal'),
+    barCrystal: document.getElementById('mrz-bar-crystal'),
+    cntSwallows: document.getElementById('mrz-cnt-swallows'),
+    cntDragonflies: document.getElementById('mrz-cnt-dragonflies'),
+    cntCheese: document.getElementById('mrz-cnt-cheese'),
+    cntSnaps: document.getElementById('mrz-cnt-snaps'),
+    stoneChips: Array.prototype.slice.call(document.querySelectorAll('mrz-stone-chip')),
+    oracleRealm: document.getElementById('mrz-oracle-realm'),
+    oracleTitle: document.getElementById('mrz-oracle-title'),
+    oracleText: document.getElementById('mrz-oracle-text'),
+    drawer: document.getElementById('mrz-plate-drawer'),
+    tabCity: document.getElementById('mrz-tab-city'),
+    tabMap: document.getElementById('mrz-tab-map'),
+    btnZoom: document.getElementById('mrz-btn-zoom'),
+    btnCloseDrawer: document.getElementById('mrz-btn-close-drawer'),
+    paneCity: document.getElementById('mrz-pane-city'),
+    paneMap: document.getElementById('mrz-pane-map'),
+    fallbackCanvas: document.getElementById('mrz-fallback-keycanvas')
+  };
+
+  function getState() {
+    const sw = swallowEngine.getState();
+    const rt = ratEngine.getState();
+    return {
+      decadeIndex: sw.decadeIndex,
+      decadeId: sw.decadeId,
+      obliqueAngleDeg: sw.obliqueAngleDeg,
+      travelerPaused: sw.travelerPaused,
+      obliquePerspectiveAligned: sw.obliquePerspectiveAligned,
+      unforcedGesture: sw.unforcedGesture,
+      forcedGraspActive: sw.forcedGraspActive,
+      swallowApertureOpen: sw.swallowApertureOpen,
+      wallTranslucency: sw.wallTranslucency,
+      ratDominance: sw.ratDominance,
+      soaringCitizensCount: sw.soaringCitizensCount,
+      dragonflyCount: sw.dragonflyCount,
+      cheeseScramblesCount: rt.cheeseScramblesCount,
+      forcedSnapShutCount: sw.forcedSnapShutCount,
+      coexistenceInvariant: true,
+      secondAboutToFreeFromFirst: true,
+      institutionalizedSwallow: false,
+      relationshipUnchanged: true,
+      hurryPressure: rt.hurryPressure,
+      activeStoneId: activeStoneId,
+      audioMuted: audioMuted,
+      plateDrawerOpen: plateDrawerOpen,
+      plateTab: plateTab,
+      plateZoomActive: plateZoomActive,
+      platesStatus: 'COMPLETE',
+      reducedMotion: reducedMotion
+    };
+  }
+  function drawFallbackKeyDiagram() {
+    const cv = el.fallbackCanvas;
+    if (!cv) return;
+    const fctx = cv.getContext('2d');
+    if (!fctx) return;
+    const w = cv.width;
+    const h = cv.height;
+    fctx.save();
+    fctx.fillStyle = PAL.leadVaultDark;
+    fctx.fillRect(0, 0, w, h);
+    fctx.strokeStyle = PAL.wetMortarAsh;
+    fctx.lineWidth = 2;
+    fctx.strokeRect(10, 10, w - 20, h - 20);
+    for (let i = 0; i < 4; i += 1) {
+      const px = 90 + i * 150;
+      fctx.fillStyle = PAL.compactWallSlate;
+      fctx.fillRect(px - 18, 86, 36, 250);
+      fctx.strokeStyle = PAL.wetMortarAsh;
+      fctx.strokeRect(px - 18, 86, 36, 250);
+      if (i < 3) {
+        fctx.beginPath();
+        fctx.arc(px + 75, 118, 57, Math.PI, 0, false);
+        fctx.stroke();
+      }
+    }
+    fctx.strokeStyle = PAL.crystalPrismCyan;
+    fctx.lineWidth = 2.6;
+    fctx.beginPath();
+    fctx.moveTo(w * 0.34, h - 34);
+    fctx.lineTo(w * 0.66, 34);
+    fctx.stroke();
+    fctx.fillStyle = PAL.sunlitCornfieldGold;
+    fctx.beginPath();
+    fctx.arc(w * 0.5, h * 0.5, 9, 0, Math.PI * 2);
+    fctx.fill();
+    fctx.fillStyle = PAL.gauzeVeilPearl;
+    fctx.font = '13px monospace';
+    fctx.fillText('MAROZIA · TWO-ARCADE 33.5 DEG OBLIQUE KEY', 28, 38);
+    fctx.fillStyle = PAL.rancidCheeseOchre;
+    fctx.fillText('RAT CONDUITS <-> CRYSTAL GAUZE SWALLOW SLIT', 28, h - 24);
+    fctx.restore();
+  }
+
+  let canvasCssW = 900;
+  let canvasCssH = 620;
+  const stageCtx = el.canvas.getContext('2d');
+
+  function resizeStageCanvas() {
+    const rect = el.warren.getBoundingClientRect();
+    const w = Math.max(240, Math.round(rect.width || 900));
+    const h = Math.max(160, Math.round(rect.height || 620));
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    canvasCssW = w;
+    canvasCssH = h;
+    const targetW = Math.round(w * dpr);
+    const targetH = Math.round(h * dpr);
+    if (el.canvas.width !== targetW || el.canvas.height !== targetH) {
+      el.canvas.width = targetW;
+      el.canvas.height = targetH;
+    }
+    stageCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function renderTwoArcadeForegroundOverlay(ctx, w, h, st) {
+    const trans = st.wallTranslucency;
+    const deg = st.obliqueAngleDeg;
+    const parallaxShift = (deg - 33.5) * w * 0.0065;
+    const overlayFade = Math.max(0.14, 1 - trans * 0.88);
+    ctx.save();
+    [0, 1].forEach(function (tier) {
+      const shift = tier === 0 ? -parallaxShift : parallaxShift * 1.25;
+      const pierW = w * (tier === 0 ? 0.048 : 0.038);
+      const springY = h * (tier === 0 ? 0.22 : 0.28);
+      const slots = [-1.35, -0.52, 0.52, 1.35];
+      ctx.fillStyle = tier === 0 ? PAL.compactWallSlate : PAL.dampMoldOlive;
+      ctx.strokeStyle = st.obliquePerspectiveAligned ? PAL.crystalPrismCyan : PAL.wetMortarAsh;
+      ctx.lineWidth = tier === 0 ? 1.8 : 1.3;
+      ctx.globalAlpha = overlayFade * (tier === 0 ? 0.62 : 0.48);
+      slots.forEach(function (slot, idx) {
+        const px = w * 0.5 + slot * w * 0.26 + shift;
+        ctx.fillRect(px - pierW * 0.5, springY, pierW, h - springY);
+        ctx.strokeRect(px - pierW * 0.5, springY, pierW, h - springY);
+        if (idx < slots.length - 1) {
+          const nx = w * 0.5 + slots[idx + 1] * w * 0.26 + shift;
+          const midX = (px + nx) * 0.5;
+          const spanR = Math.max(8, (nx - px) * 0.5);
+          ctx.beginPath();
+          ctx.arc(midX, springY, spanR, Math.PI, 0, false);
+          ctx.stroke();
+        }
+      });
+    });
+    ctx.globalAlpha = 1;
+    for (let i = 0; i < SWALLOW_STONES.length; i += 1) {
+      const s = SWALLOW_STONES[i];
+      const sx = s.anchorX * w;
+      const sy = s.anchorY * h;
+      const active = activeStoneId === s.id;
+      const r = active ? 9.5 : 7;
+      ctx.fillStyle = active ? PAL.sunlitCornfieldGold : PAL.leadVaultDark;
+      ctx.strokeStyle = active ? PAL.gauzeVeilPearl : PAL.crystalPrismCyan;
+      ctx.globalAlpha = active ? 0.98 : 0.82;
+      ctx.lineWidth = active ? 2.4 : 1.5;
+      ctx.beginPath();
+      ctx.moveTo(sx, sy - r);
+      ctx.lineTo(sx + r, sy);
+      ctx.lineTo(sx, sy + r);
+      ctx.lineTo(sx - r, sy);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function renderStage() {
+    if (!stageCtx) return;
+    const st = getState();
+    stageCtx.save();
+    stageCtx.fillStyle = PAL.leadVaultDark;
+    stageCtx.fillRect(0, 0, canvasCssW, canvasCssH);
+    swallowEngine.render(stageCtx, canvasCssW, canvasCssH, st);
+    ratEngine.render(stageCtx, canvasCssW, canvasCssH, st);
+    renderTwoArcadeForegroundOverlay(stageCtx, canvasCssW, canvasCssH, st);
+    stageCtx.restore();
+  }
+
+  function syncDOM() {
+    const st = getState();
+    const dec = DECADES[st.decadeIndex] || DECADES[1];
+    const roman = st.decadeIndex === 0 ? 'I' : (st.decadeIndex === 1 ? 'II' : 'III');
+    el.crownEpoch.textContent = dec.label + ' — Two Cities Within One Stone';
+    el.btnDecadeTop.textContent = '[D] Epoch ' + roman;
+    el.btnDecade.textContent = '[D] Shift Decade: ' + dec.label;
+    el.btnAudio.textContent = st.audioMuted ? '[M] Sound: Muted' : '[M] Sound: Live';
+    el.angleInput.value = String(st.obliqueAngleDeg);
+    el.bannerDeg.textContent = st.obliqueAngleDeg.toFixed(1) + '°';
+    el.paceBadge.textContent = (st.travelerPaused ? 'PAUSED · ' : 'HURRIED · ') + st.obliqueAngleDeg.toFixed(1) + '°';
+
+    if (st.forcedGraspActive) {
+      el.banner.setAttribute('data-mrz-mode', 'forced');
+      el.bannerMain.textContent = 'FORCED GRASP SNAPPED STONE SHUT · Compact Mold Resists Capture';
+      el.realmBadge.textContent = 'SNAPPED SHUT';
+      el.epochPlaque.textContent = dec.ratSurface;
+    } else if (st.swallowApertureOpen) {
+      el.banner.setAttribute('data-mrz-mode', 'open');
+      el.bannerMain.textContent = 'CRYSTAL & GAUZE PARTED · Swallows & Dragonflies Over Sunlit Cornfields';
+      el.realmBadge.textContent = 'SWALLOW REALM';
+      el.epochPlaque.textContent = dec.swallowHint + ' · (' + dec.ratSurface + ')';
+    } else if (st.obliquePerspectiveAligned) {
+      el.banner.setAttribute('data-mrz-mode', 'aligned');
+      el.bannerMain.textContent = '33.5° TWO-ARCADE SLIT POISED · Offer Unforced Gesture [U]';
+      el.realmBadge.textContent = 'POISED SLIT';
+      el.epochPlaque.textContent = dec.swallowHint;
+    } else if (!st.travelerPaused) {
+      el.banner.setAttribute('data-mrz-mode', 'hurried');
+      el.bannerMain.textContent = 'HURRIED PASSAGE · Pause Between Arcades [A] to Steady Slit';
+      el.realmBadge.textContent = 'RAT HURRY';
+      el.epochPlaque.textContent = dec.ratSurface;
+    } else {
+      el.banner.setAttribute('data-mrz-mode', 'rat');
+      el.bannerMain.textContent = 'LEADEN WARREN OPAQUE · Scrub Two-Arcade Sightline to 33.5°';
+      el.realmBadge.textContent = 'RAT REALM';
+      el.epochPlaque.textContent = dec.ratSurface;
+    }
+    const ratPct = Math.round(st.ratDominance * 100);
+    const cryPct = Math.round(st.wallTranslucency * 100);
+    el.valRat.textContent = ratPct + '%';
+    el.barRat.style.width = ratPct + '%';
+    el.valCrystal.textContent = cryPct + '%';
+    el.barCrystal.style.width = cryPct + '%';
+    el.cntSwallows.textContent = String(st.soaringCitizensCount);
+    el.cntDragonflies.textContent = String(st.dragonflyCount);
+    el.cntCheese.textContent = String(st.cheeseScramblesCount);
+    el.cntSnaps.textContent = String(st.forcedSnapShutCount);
+
+    let stoneObj = ALL_STONES[0];
+    for (let i = 0; i < ALL_STONES.length; i += 1) {
+      if (ALL_STONES[i].id === activeStoneId) stoneObj = ALL_STONES[i];
+    }
+    el.oracleRealm.textContent = stoneObj.realm.toUpperCase();
+    el.oracleTitle.textContent = stoneObj.title;
+    el.oracleText.textContent = stoneObj.inscription;
+    for (let c = 0; c < el.stoneChips.length; c += 1) {
+      const chip = el.stoneChips[c];
+      chip.setAttribute('data-mrz-active', chip.getAttribute('data-mrz-stone') === activeStoneId ? 'true' : 'false');
+    }
+
+    el.drawer.hidden = !plateDrawerOpen;
+    el.drawer.setAttribute('data-mrz-zoom', plateZoomActive ? 'true' : 'false');
+    el.paneCity.hidden = plateTab !== 'city';
+    el.paneMap.hidden = plateTab !== 'map';
+    el.tabCity.setAttribute('data-mrz-tone', plateTab === 'city' ? 'pleasure' : '');
+    el.tabMap.setAttribute('data-mrz-tone', plateTab === 'map' ? 'pleasure' : '');
+    el.btnZoom.textContent = plateZoomActive ? '[Z] Zoom: 1.75x ON' : '[Z] Zoom 1.75x';
+  }
+
+  function stepOnceAndSync(dt) {
+    swallowEngine.step(dt);
+    const sw = swallowEngine.getState();
+    ratEngine.step(dt, sw);
+    syncAudioHardware(sw);
+    syncDOM();
+    renderStage();
+    return getState();
+  }
+
+  function setObliqueAngle(deg, opts) {
+    swallowEngine.setObliqueAngle(deg, opts || {});
+    return stepOnceAndSync(0);
+  }
+
+  function alignObliqueSweetSpot() {
+    swallowEngine.alignObliqueSweetSpot();
+    selectStone('oblique_two_arcade_slit');
+    return stepOnceAndSync(0);
+  }
+
+  function pauseBetweenArcades() {
+    swallowEngine.pauseBetweenArcades();
+    return stepOnceAndSync(0);
+  }
+
+  function performUnforcedGesture(kind) {
+    swallowEngine.performUnforcedGesture(kind || 'pleasure_arc');
+    return stepOnceAndSync(0);
+  }
+
+  function forceCaptureAperture() {
+    swallowEngine.forceCaptureAperture();
+    return stepOnceAndSync(0.016);
+  }
+
+  function triggerCheeseScramble() {
+    ratEngine.triggerCheeseScramble();
+    selectStone('ferocious_cheese_scramble');
+    if (audioUnlocked && !audioMuted) ratAudio.playCheeseScramble();
+    return stepOnceAndSync(0.016);
+  }
+
+  function setDecadeIndex(idx) {
+    swallowEngine.setDecadeIndex(idx);
+    ratEngine.setDecadeIndex(idx);
+    return stepOnceAndSync(0);
+  }
+
+  function advanceDecade() {
+    const nextIdx = (swallowEngine.getState().decadeIndex + 1) % 3;
+    return setDecadeIndex(nextIdx);
+  }
+
+  function selectStone(idOrIndex) {
+    let found = null;
+    if (typeof idOrIndex === 'string') {
+      for (let i = 0; i < ALL_STONES.length; i += 1) {
+        if (ALL_STONES[i].id === idOrIndex) { found = ALL_STONES[i]; break; }
+      }
+      if (!found) {
+        const parsed = parseInt(idOrIndex, 10);
+        if (Number.isFinite(parsed) && parsed >= 1 && parsed <= ALL_STONES.length) {
+          found = ALL_STONES[parsed - 1];
+        }
+      }
+    } else if (typeof idOrIndex === 'number' && Number.isFinite(idOrIndex)) {
+      const n = Math.round(idOrIndex);
+      if (n >= 1 && n <= ALL_STONES.length) found = ALL_STONES[n - 1];
+      else if (n === 0) found = ALL_STONES[0];
+    }
+    if (found) activeStoneId = found.id;
+    syncDOM();
+    renderStage();
+    return getState();
+  }
+
+  function toggleAudio() {
+    audioMuted = !audioMuted;
+    syncAudioHardware(swallowEngine.getState());
+    syncDOM();
+    return getState();
+  }
+
+  function openPlateDrawer(tab) {
+    plateDrawerOpen = true;
+    plateTab = tab === 'map' ? 'map' : 'city';
+    drawFallbackKeyDiagram();
+    syncDOM();
+    return getState();
+  }
+
+  function closePlateDrawer() {
+    plateDrawerOpen = false;
+    plateZoomActive = false;
+    syncDOM();
+    return getState();
+  }
+
+  function togglePlateZoom() {
+    plateZoomActive = !plateZoomActive;
+    syncDOM();
+    return getState();
+  }
+
+  function reset() {
+    swallowEngine.reset();
+    ratEngine.reset();
+    activeStoneId = 'sibyl_prophecy';
+    plateDrawerOpen = false;
+    plateTab = 'city';
+    plateZoomActive = false;
+    return stepOnceAndSync(0);
+  }
+  function bindKeyButton(elem, handler) {
+    if (!elem) return;
+    elem.addEventListener('click', function (ev) {
+      ev.preventDefault();
+      unlockAudioFromGesture();
+      handler();
+    });
+    elem.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Enter' || ev.key === ' ') {
+        ev.preventDefault();
+        ev.stopPropagation();
+        unlockAudioFromGesture();
+        handler();
+      }
+    });
+  }
+
+  bindKeyButton(el.btnAlign, alignObliqueSweetSpot);
+  bindKeyButton(el.btnGesture, function () { performUnforcedGesture('button_pleasure'); });
+  bindKeyButton(el.btnForce, forceCaptureAperture);
+  bindKeyButton(el.btnCheese, triggerCheeseScramble);
+  bindKeyButton(el.btnDecade, advanceDecade);
+  bindKeyButton(el.btnDecadeTop, advanceDecade);
+  bindKeyButton(el.btnAudio, toggleAudio);
+  bindKeyButton(el.btnPlates, function () {
+    if (plateDrawerOpen) closePlateDrawer();
+    else openPlateDrawer('city');
+  });
+  bindKeyButton(el.btnReset, reset);
+  bindKeyButton(el.tabCity, function () { openPlateDrawer('city'); });
+  bindKeyButton(el.tabMap, function () { openPlateDrawer('map'); });
+  bindKeyButton(el.btnZoom, togglePlateZoom);
+  bindKeyButton(el.btnCloseDrawer, closePlateDrawer);
+
+  for (let i = 0; i < el.stoneChips.length; i += 1) {
+    (function (chip) {
+      bindKeyButton(chip, function () {
+        selectStone(chip.getAttribute('data-mrz-stone'));
+      });
+    })(el.stoneChips[i]);
+  }
+
+  let lastSliderDeg = 12;
+  let lastSliderTs = performance.now();
+  let pauseSettleTimer = null;
+
+  el.angleInput.addEventListener('input', function () {
+    unlockAudioFromGesture();
+    const now = performance.now();
+    const deg = parseFloat(el.angleInput.value);
+    const dt = Math.max(0.012, (now - lastSliderTs) / 1000);
+    const vel = Math.abs(deg - lastSliderDeg) / (dt * 90);
+    lastSliderDeg = deg;
+    lastSliderTs = now;
+    setObliqueAngle(deg, { velocity: vel > 0.85 ? vel : 0.2 });
+    if (pauseSettleTimer) clearTimeout(pauseSettleTimer);
+    pauseSettleTimer = setTimeout(function () {
+      pauseBetweenArcades();
+    }, 170);
+  });
+
+  let pointerActive = false;
+  let pointerMoved = false;
+  let lastPtrX = 0;
+  let lastPtrTs = 0;
+
+  el.canvas.addEventListener('pointerdown', function (ev) {
+    unlockAudioFromGesture();
+    pointerActive = true;
+    pointerMoved = false;
+    lastPtrX = ev.clientX;
+    lastPtrTs = performance.now();
+    try { el.canvas.setPointerCapture(ev.pointerId); } catch (_e) { /* noop */ }
+  });
+
+  el.canvas.addEventListener('pointermove', function (ev) {
+    if (!pointerActive) return;
+    const dx = ev.clientX - lastPtrX;
+    if (Math.abs(dx) < 2 && !pointerMoved) return;
+    pointerMoved = true;
+    const now = performance.now();
+    const dt = Math.max(0.012, (now - lastPtrTs) / 1000);
+    const rect = el.canvas.getBoundingClientRect();
+    const degDelta = (dx / Math.max(200, rect.width)) * 75;
+    const vel = Math.abs(degDelta) / (dt * 55);
+    lastPtrX = ev.clientX;
+    lastPtrTs = now;
+    const nextDeg = swallowEngine.getState().obliqueAngleDeg + degDelta;
+    setObliqueAngle(nextDeg, { velocity: vel });
+    if (pauseSettleTimer) clearTimeout(pauseSettleTimer);
+    pauseSettleTimer = setTimeout(function () {
+      pauseBetweenArcades();
+    }, 160);
+  });
+
+  el.canvas.addEventListener('pointerup', function (ev) {
+    if (!pointerActive) return;
+    pointerActive = false;
+    if (!pointerMoved) {
+      const rect = el.canvas.getBoundingClientRect();
+      const nx = (ev.clientX - rect.left) / Math.max(1, rect.width);
+      const ny = (ev.clientY - rect.top) / Math.max(1, rect.height);
+      const hitSw = swallowEngine.hitTestStone(nx, ny, { select: true });
+      const hitRt = !hitSw ? ratEngine.hitTestStone(nx, ny, { select: true }) : null;
+      if (!hitSw && !hitRt) {
+        const st = swallowEngine.getState();
+        if (st.obliquePerspectiveAligned && !st.swallowApertureOpen) {
+          performUnforcedGesture('canvas_pleasure');
+        }
+      }
+    }
+  });
+
+  el.drawer.addEventListener('click', function (ev) {
+    if (ev.target === el.drawer) closePlateDrawer();
+  });
+
+  window.addEventListener('keydown', function (ev) {
+    if (ev.metaKey || ev.ctrlKey || ev.altKey) return;
+    unlockAudioFromGesture();
+    const key = ev.key;
+    const lower = key.toLowerCase();
+    if (key === 'Escape') {
+      if (plateDrawerOpen) { ev.preventDefault(); closePlateDrawer(); }
+      return;
+    }
+    if (key === 'ArrowLeft' || key === 'ArrowRight') {
+      ev.preventDefault();
+      const stepDeg = ev.shiftKey ? 0.5 : 2.0;
+      const cur = swallowEngine.getState().obliqueAngleDeg;
+      setObliqueAngle(cur + (key === 'ArrowRight' ? stepDeg : -stepDeg), { velocity: 0.15 });
+      return;
+    }
+    if (lower === 'a') { ev.preventDefault(); alignObliqueSweetSpot(); }
+    else if (lower === 'u' || key === ' ') { ev.preventDefault(); performUnforcedGesture('keyboard'); }
+    else if (lower === 'f') { ev.preventDefault(); forceCaptureAperture(); }
+    else if (lower === 'c') { ev.preventDefault(); triggerCheeseScramble(); }
+    else if (lower === 'd') { ev.preventDefault(); advanceDecade(); }
+    else if (lower === 'm') { ev.preventDefault(); toggleAudio(); }
+    else if (lower === 'p') { ev.preventDefault(); if (plateDrawerOpen) closePlateDrawer(); else openPlateDrawer('city'); }
+    else if (lower === 'z') { ev.preventDefault(); togglePlateZoom(); }
+    else if (lower === 'r') { ev.preventDefault(); reset(); }
+    else if (key >= '1' && key <= '8') { ev.preventDefault(); selectStone(parseInt(key, 10)); }
+  });
+
+  if (mqReduced && typeof mqReduced.addEventListener === 'function') {
+    mqReduced.addEventListener('change', function (ev) {
+      reducedMotion = Boolean(ev.matches);
+      swallowEngine.setReducedMotion(reducedMotion);
+      ratEngine.setReducedMotion(reducedMotion);
+      syncDOM();
+      renderStage();
+    });
+  }
+
+  if (typeof ResizeObserver === 'function') {
+    const ro = new ResizeObserver(function () {
+      resizeStageCanvas();
+      renderStage();
+    });
+    ro.observe(el.warren);
+  }
+  window.addEventListener('resize', function () {
+    resizeStageCanvas();
+    renderStage();
+  });
+
+  const api = Object.freeze({
+    STONES: ALL_STONES,
+    DECADES: DECADES,
+    getState: getState,
+    setObliqueAngle: setObliqueAngle,
+    alignObliqueSweetSpot: alignObliqueSweetSpot,
+    pauseBetweenArcades: pauseBetweenArcades,
+    performUnforcedGesture: performUnforcedGesture,
+    forceCaptureAperture: forceCaptureAperture,
+    triggerCheeseScramble: triggerCheeseScramble,
+    advanceDecade: advanceDecade,
+    setDecadeIndex: setDecadeIndex,
+    selectStone: selectStone,
+    toggleAudio: toggleAudio,
+    openPlateDrawer: openPlateDrawer,
+    closePlateDrawer: closePlateDrawer,
+    togglePlateZoom: togglePlateZoom,
+    reset: reset
+  });
+
+  window.MaroziaCityApp = api;
+  window.__MAROZIA__ = api;
+
+  drawFallbackKeyDiagram();
+  resizeStageCanvas();
+  syncDOM();
+  renderStage();
+
+  let prevTs = performance.now();
+  function frame(now) {
+    const dt = Math.min(0.05, Math.max(0, (now - prevTs) / 1000));
+    prevTs = now;
+    if (!reducedMotion) {
+      swallowEngine.step(dt);
+      const sw = swallowEngine.getState();
+      ratEngine.step(dt, sw);
+      syncAudioHardware(sw);
+      renderStage();
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

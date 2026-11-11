@@ -1,0 +1,4048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PROCOPIA — Annual Return at the Inn Casement</title>
+<style>
+[hidden] { display: none !important; }
+
+:root {
+  --prc-walnut-deep: #24160d;
+  --prc-walnut-dark: #362113;
+  --prc-walnut-mid: #53341e;
+  --prc-walnut-warm: #73492a;
+  --prc-parchment-bg: #efe4cc;
+  --prc-parchment-card: #f7f0df;
+  --prc-parchment-tint: #e6d6b5;
+  --prc-linen-soft: #fbf6ea;
+  --prc-ochre-gold: #c98d2e;
+  --prc-corn-bright: #e6b23c;
+  --prc-medlar-russet: #9d4e27;
+  --prc-sky-trapeze: #4a7f91;
+  --prc-sage-vis: #3b6b3f;
+  --prc-occluded-rust: #8c3b24;
+  --prc-ink-main: #29190e;
+  --prc-ink-muted: #5f4631;
+  --prc-border-hair: rgba(68, 41, 21, 0.26);
+  --prc-border-strong: rgba(58, 34, 17, 0.52);
+  --prc-shadow-soft: 0 4px 14px rgba(31, 18, 8, 0.14);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+  background: var(--prc-parchment-bg);
+  color: var(--prc-ink-main);
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+procopia-inn-casement,
+curtain-sash-aperture,
+nine-stratum-landscape,
+smiling-corn-multitude,
+room-twenty-six-ledger,
+procopia-plate-drawer,
+prc-lintel-bar,
+prc-title-plaque,
+prc-tool-cluster,
+prc-workspace-grid,
+prc-side-ledger,
+prc-canvas-frame,
+prc-aperture-hud,
+prc-sill-controls,
+prc-panel-head,
+prc-year-rail,
+prc-action-strip,
+prc-chronicle-quote,
+prc-strata-list,
+prc-stratum-row,
+prc-meter-track,
+prc-meter-fill,
+prc-stratum-note,
+prc-room-grid,
+prc-zone-tally,
+prc-room-actions,
+prc-drawer-sheet,
+prc-drawer-head,
+prc-drawer-grid,
+prc-plate-folio,
+prc-folio-head,
+prc-folio-stage,
+prc-archival-notice,
+prc-notice-code,
+prc-notice-copy,
+prc-room-hint {
+  display: block;
+}
+
+prc-eyebrow-tag,
+prc-city-heading,
+prc-subtitle-line,
+prc-hud-chip,
+prc-panel-title,
+prc-panel-badge,
+prc-stratum-index,
+prc-stratum-name,
+prc-stratum-pct,
+prc-stratum-state,
+prc-zone-label,
+prc-zone-count,
+prc-zone-sub,
+prc-folio-title,
+prc-folio-meta,
+prc-kbd-tag {
+  display: inline-block;
+}
+
+.prc-inn-casement {
+  min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(255, 248, 229, 0.72), transparent 54%),
+    linear-gradient(180deg, #f3e9d2 0%, #e7d7b8 100%);
+}
+
+.prc-lintel-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px 14px;
+  min-height: 48px;
+  background: linear-gradient(180deg, var(--prc-walnut-dark) 0%, var(--prc-walnut-deep) 100%);
+  color: var(--prc-linen-soft);
+  border-bottom: 2px solid #8a5d34;
+  box-shadow: 0 2px 10px rgba(24, 13, 5, 0.28);
+}
+
+.prc-title-plaque {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
+}
+
+.prc-eyebrow-tag {
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #e4be73;
+  font-weight: 700;
+}
+
+.prc-city-heading {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: #fdf7ea;
+}
+
+.prc-subtitle-line {
+  font-size: 12px;
+  color: #dbcbb0;
+  font-style: italic;
+}
+
+.prc-tool-cluster {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.prc-btn {
+  appearance: none;
+  border: 1px solid #966b3f;
+  background: linear-gradient(180deg, #54351e 0%, #3b2414 100%);
+  color: #fbf3e2;
+  font-family: inherit;
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1.2;
+  padding: 5px 9px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 140ms ease, border-color 140ms ease, transform 90ms ease;
+}
+
+.prc-btn:hover {
+  background: linear-gradient(180deg, #684226 0%, #4b2e19 100%);
+  border-color: #d6a456;
+}
+
+.prc-btn:focus-visible,
+.prc-year-pill:focus-visible {
+  outline: 2px solid #f0be59;
+  outline-offset: 2px;
+}
+
+.prc-btn-light {
+  background: linear-gradient(180deg, #fbf5e6 0%, #eadbc0 100%);
+  color: var(--prc-ink-main);
+  border-color: rgba(92, 57, 29, 0.48);
+}
+
+.prc-btn-light:hover {
+  background: linear-gradient(180deg, #fffaf0 0%, #dfd0b1 100%);
+  border-color: #7c4d27;
+}
+
+.prc-btn-accent {
+  background: linear-gradient(180deg, #b87923 0%, #8f5815 100%);
+  color: #fff9ec;
+  border-color: #e4b45c;
+}
+
+.prc-btn-accent:hover {
+  background: linear-gradient(180deg, #cc8829 0%, #a26519 100%);
+}
+
+.prc-btn-active {
+  background: linear-gradient(180deg, #c6872b 0%, #945d18 100%);
+  color: #fffaf0;
+  border-color: #f3c873;
+}
+
+.prc-kbd-tag {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  padding: 1px 4px;
+  margin-left: 3px;
+  border-radius: 3px;
+  background: rgba(255, 245, 222, 0.16);
+  border: 1px solid rgba(235, 205, 150, 0.34);
+}
+
+.prc-btn-light .prc-kbd-tag {
+  background: rgba(74, 46, 24, 0.09);
+  border-color: rgba(74, 46, 24, 0.28);
+}
+
+.prc-workspace-grid {
+  flex: 1 1 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.32fr) minmax(390px, 0.94fr);
+  gap: 10px;
+  padding: 8px 12px 10px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.prc-aperture-pane {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--prc-parchment-card);
+  border: 1px solid var(--prc-border-strong);
+  border-radius: 6px;
+  padding: 8px;
+  box-shadow: var(--prc-shadow-soft);
+  min-width: 0;
+}
+
+.prc-aperture-hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.prc-hud-chip {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--prc-parchment-tint);
+  border: 1px solid var(--prc-border-hair);
+  color: var(--prc-walnut-dark);
+}
+
+.prc-hud-chip-strong {
+  background: #3d2514;
+  color: #f9eed9;
+  border-color: #7c5230;
+}
+
+.prc-canvas-frame {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 520px;
+  width: 100%;
+  border-radius: 5px;
+  overflow: hidden;
+  border: 2px solid #4a2e19;
+  background: #dac8a7;
+}
+
+.prc-stage-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  touch-action: manipulation;
+}
+
+.prc-room-hint {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 8px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  background: rgba(34, 20, 10, 0.84);
+  color: #f9efd9;
+  font-size: 11.5px;
+  border: 1px solid rgba(226, 182, 103, 0.48);
+  pointer-events: none;
+}
+
+.prc-sill-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.prc-side-ledger {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.prc-card-panel {
+  background: var(--prc-parchment-card);
+  border: 1px solid var(--prc-border-strong);
+  border-radius: 6px;
+  padding: 8px 10px;
+  box-shadow: var(--prc-shadow-soft);
+  min-width: 0;
+}
+
+.prc-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 6px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--prc-border-hair);
+}
+
+.prc-panel-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--prc-walnut-dark);
+}
+
+.prc-panel-badge {
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: var(--prc-parchment-tint);
+  border: 1px solid var(--prc-border-hair);
+  color: var(--prc-walnut-mid);
+}
+
+.prc-panel-badge-alert {
+  background: #8c3b24;
+  color: #fff6ec;
+  border-color: #6b2916;
+}
+
+.prc-year-rail {
+  display: grid;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.prc-year-pill {
+  appearance: none;
+  border: 1px solid rgba(82, 50, 25, 0.44);
+  background: #f2e6cd;
+  color: var(--prc-ink-main);
+  border-radius: 4px;
+  padding: 4px 2px;
+  font-family: inherit;
+  font-size: 10.5px;
+  font-weight: 700;
+  line-height: 1.15;
+  text-align: center;
+  cursor: pointer;
+  min-width: 0;
+}
+
+.prc-year-pill:hover {
+  background: #e7d4ae;
+  border-color: #7b4e27;
+}
+
+.prc-year-pill.prc-pill-current {
+  background: linear-gradient(180deg, #4b2d18 0%, #2f1b0e 100%);
+  color: #fdf4e3;
+  border-color: #c98d2e;
+  box-shadow: inset 0 0 0 1px rgba(244, 200, 115, 0.45);
+}
+
+.prc-action-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 6px;
+}
+
+.prc-chronicle-quote {
+  font-size: 11.5px;
+  line-height: 1.32;
+  color: var(--prc-ink-muted);
+  font-style: italic;
+  background: rgba(230, 214, 181, 0.45);
+  border-left: 3px solid var(--prc-ochre-gold);
+  padding: 4px 7px;
+  border-radius: 0 3px 3px 0;
+}
+
+.prc-strata-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.prc-stratum-row {
+  display: grid;
+  grid-template-columns: 18px minmax(92px, 1.18fr) minmax(56px, 0.95fr) 36px 68px;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 5px;
+  border-radius: 3px;
+  background: rgba(235, 222, 195, 0.46);
+  border: 1px solid rgba(92, 58, 30, 0.14);
+  cursor: pointer;
+  min-width: 0;
+}
+
+.prc-stratum-row:hover,
+.prc-stratum-row.prc-row-selected {
+  background: rgba(224, 204, 165, 0.78);
+  border-color: rgba(114, 72, 36, 0.42);
+}
+
+.prc-stratum-index {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--prc-ink-muted);
+  text-align: right;
+}
+
+.prc-stratum-name {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--prc-ink-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.prc-meter-track {
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(66, 41, 21, 0.16);
+  overflow: hidden;
+  border: 1px solid rgba(66, 41, 21, 0.22);
+}
+
+.prc-meter-fill {
+  height: 100%;
+  width: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #4b824f 0%, #86a844 55%, #d6a43b 100%);
+  transition: width 180ms ease;
+}
+
+.prc-meter-fill.prc-fill-occluded {
+  background: #8c3b24;
+}
+
+.prc-stratum-pct {
+  font-size: 10px;
+  font-weight: 700;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--prc-ink-muted);
+}
+
+.prc-stratum-state {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-align: center;
+  padding: 1px 4px;
+  border-radius: 3px;
+  background: rgba(59, 107, 63, 0.16);
+  color: var(--prc-sage-vis);
+  border: 1px solid rgba(59, 107, 63, 0.36);
+}
+
+.prc-stratum-state.prc-state-occluded {
+  background: rgba(140, 59, 36, 0.16);
+  color: var(--prc-occluded-rust);
+  border-color: rgba(140, 59, 36, 0.38);
+}
+
+.prc-stratum-note {
+  margin-top: 5px;
+  font-size: 10.5px;
+  color: var(--prc-ink-muted);
+}
+
+.prc-stratum-row {
+  grid-template-columns: 16px minmax(134px, 1.45fr) minmax(44px, 0.78fr) 34px 64px;
+}
+
+.prc-stratum-name {
+  font-size: 10.5px;
+  white-space: normal;
+  line-height: 1.15;
+}
+
+.prc-room-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5px;
+  margin-bottom: 6px;
+}
+
+.prc-zone-tally {
+  background: rgba(235, 221, 192, 0.56);
+  border: 1px solid var(--prc-border-hair);
+  border-radius: 4px;
+  padding: 4px 7px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.prc-zone-tally-total {
+  background: rgba(201, 141, 46, 0.16);
+  border-color: rgba(162, 104, 24, 0.48);
+}
+
+.prc-zone-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--prc-ink-muted);
+}
+
+.prc-zone-count {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--prc-walnut-deep);
+  font-variant-numeric: tabular-nums;
+}
+
+.prc-zone-sub {
+  font-size: 10px;
+  color: var(--prc-ink-muted);
+}
+
+.prc-room-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.prc-plate-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: rgba(24, 14, 7, 0.78);
+  padding: 16px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.prc-drawer-sheet {
+  max-width: 1180px;
+  width: 100%;
+  min-width: 0;
+  margin: 0 auto;
+  background: var(--prc-parchment-card);
+  border: 2px solid #8a5d34;
+  border-radius: 8px;
+  padding: 12px 14px 14px;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.48);
+}
+
+.prc-drawer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-bottom: 8px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--prc-border-strong);
+}
+
+.prc-drawer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  min-width: 0;
+}
+
+.prc-drawer-grid.prc-drawer-single {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.prc-plate-folio {
+  background: var(--prc-linen-soft);
+  border: 1px solid var(--prc-border-strong);
+  border-radius: 6px;
+  padding: 8px;
+  min-width: 0;
+}
+
+.prc-folio-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.prc-folio-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--prc-walnut-dark);
+}
+
+.prc-folio-meta {
+  font-size: 10.5px;
+  color: var(--prc-ink-muted);
+}
+
+.prc-folio-stage {
+  width: 100%;
+  min-width: 0;
+  overflow: auto;
+  border-radius: 4px;
+  border: 1px solid var(--prc-border-hair);
+  background: #e9dcc1;
+  text-align: center;
+}
+
+.prc-plate-img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  max-height: 66vh;
+  margin: 0 auto;
+  object-fit: contain;
+  transition: transform 180ms ease;
+  transform-origin: center top;
+}
+
+.prc-folio-zoomed .prc-plate-img {
+  max-width: none;
+  max-height: none;
+  width: 175%;
+}
+
+.prc-archival-notice {
+  padding: 10px;
+  text-align: left;
+  background: #f3e7cf;
+}
+
+.prc-notice-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--prc-occluded-rust);
+  margin-bottom: 4px;
+}
+
+.prc-notice-copy {
+  font-size: 11.5px;
+  color: var(--prc-ink-main);
+  margin-bottom: 8px;
+}
+
+.prc-fallback-canvas {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--prc-border-strong);
+  border-radius: 3px;
+}
+
+@media (max-width: 960px) {
+  .prc-lintel-bar {
+    padding: 6px 10px;
+    gap: 6px;
+  }
+  .prc-city-heading {
+    font-size: 16px;
+  }
+  .prc-subtitle-line {
+    font-size: 11px;
+  }
+  .prc-workspace-grid {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 8px;
+    gap: 8px;
+  }
+  .prc-canvas-frame {
+    min-height: 280px;
+    height: 292px;
+    flex: 0 0 auto;
+  }
+  .prc-year-rail {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .prc-stratum-row {
+    grid-template-columns: 15px minmax(110px, 1.3fr) minmax(40px, 0.7fr) 32px 60px;
+    gap: 4px;
+  }
+  .prc-plate-drawer {
+    padding: 8px;
+  }
+  .prc-drawer-sheet {
+    padding: 10px;
+  }
+  .prc-drawer-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+  .prc-plate-img {
+    max-height: 34vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.001ms !important;
+    animation-duration: 0.001ms !important;
+  }
+}
+</style>
+</head>
+<body>
+<procopia-inn-casement class="prc-inn-casement" id="prc-app-root">
+  <prc-lintel-bar class="prc-lintel-bar">
+    <prc-title-plaque class="prc-title-plaque">
+      <prc-eyebrow-tag class="prc-eyebrow-tag">Continuous Cities · Inn Ledger XLVIII</prc-eyebrow-tag>
+      <prc-city-heading class="prc-city-heading">PROCOPIA</prc-city-heading>
+      <prc-subtitle-line class="prc-subtitle-line">Same Room, Same Linen Curtain, Annual Corn-Eater Horizon</prc-subtitle-line>
+    </prc-title-plaque>
+    <prc-tool-cluster class="prc-tool-cluster">
+      <button type="button" class="prc-btn" id="prc-btn-curtain-top" aria-pressed="true">Drop Curtain <prc-kbd-tag class="prc-kbd-tag">C</prc-kbd-tag></button>
+      <button type="button" class="prc-btn" id="prc-btn-room-top" aria-pressed="false">Turn Into Room <prc-kbd-tag class="prc-kbd-tag">R</prc-kbd-tag></button>
+      <button type="button" class="prc-btn" id="prc-btn-mute-top" aria-pressed="false">Sound: On <prc-kbd-tag class="prc-kbd-tag">M</prc-kbd-tag></button>
+      <button type="button" class="prc-btn prc-btn-accent" id="prc-btn-plates-top" aria-expanded="false" aria-controls="prc-plate-drawer">Plates <prc-kbd-tag class="prc-kbd-tag">P</prc-kbd-tag></button>
+    </prc-tool-cluster>
+  </prc-lintel-bar>
+
+  <prc-workspace-grid class="prc-workspace-grid">
+    <curtain-sash-aperture class="prc-aperture-pane" id="prc-aperture-pane">
+      <prc-aperture-hud class="prc-aperture-hud">
+        <prc-hud-chip class="prc-hud-chip prc-hud-chip-strong" id="prc-hud-visit">Return Yr I · 0 Inhabitants</prc-hud-chip>
+        <prc-hud-chip class="prc-hud-chip" id="prc-hud-strata">Visible Strata: 9 / 9</prc-hud-chip>
+        <prc-hud-chip class="prc-hud-chip" id="prc-hud-curtain">Linen Curtain: Lifted (100%)</prc-hud-chip>
+        <prc-hud-chip class="prc-hud-chip" id="prc-hud-stance">Stance: Facing Casement</prc-hud-chip>
+      </prc-aperture-hud>
+
+      <prc-canvas-frame class="prc-canvas-frame" id="prc-canvas-frame">
+        <canvas class="prc-stage-canvas" id="prc-stage-canvas" width="960" height="640" aria-label="Procopia walnut inn-window casement and twenty-six-lodger inn room"></canvas>
+        <prc-room-hint class="prc-room-hint" id="prc-room-hint" hidden>Years I–III: Your tiny inn room is still unoccupied. Advance to Year IV–IX or click Jump to Final Year (26 in Room) to meet the lodgers.</prc-room-hint>
+      </prc-canvas-frame>
+
+      <prc-sill-controls class="prc-sill-controls">
+        <prc-tool-cluster class="prc-tool-cluster">
+          <button type="button" class="prc-btn prc-btn-light" id="prc-btn-curtain-sill">Drop Linen Curtain <prc-kbd-tag class="prc-kbd-tag">C</prc-kbd-tag></button>
+          <button type="button" class="prc-btn prc-btn-light" id="prc-btn-prev-sill">-1 Yr</button>
+          <button type="button" class="prc-btn prc-btn-accent" id="prc-btn-next-sill">+1 Yr</button>
+        </prc-tool-cluster>
+        <prc-tool-cluster class="prc-tool-cluster">
+          <button type="button" class="prc-btn prc-btn-light" id="prc-btn-room-sill">Turn Around Into Inn Room <prc-kbd-tag class="prc-kbd-tag">R</prc-kbd-tag></button>
+          <button type="button" class="prc-btn prc-btn-light" id="prc-btn-step-sill" hidden>Step Across Floorboards</button>
+        </prc-tool-cluster>
+      </prc-sill-controls>
+    </curtain-sash-aperture>
+
+    <prc-side-ledger class="prc-side-ledger">
+      <smiling-corn-multitude class="prc-card-panel" id="prc-multitude-panel">
+        <prc-panel-head class="prc-panel-head">
+          <prc-panel-title class="prc-panel-title">Annual Return &amp; Corn-Eating Multitude</prc-panel-title>
+          <prc-panel-badge class="prc-panel-badge" id="prc-multitude-badge">Yr I · 0 Faces</prc-panel-badge>
+        </prc-panel-head>
+        <prc-year-rail class="prc-year-rail" id="prc-year-rail" role="group" aria-label="Annual return counts">
+          <button type="button" class="prc-year-pill prc-pill-current" data-year-idx="0" aria-pressed="true">I · 0</button>
+          <button type="button" class="prc-year-pill" data-year-idx="1" aria-pressed="false">II · 1</button>
+          <button type="button" class="prc-year-pill" data-year-idx="2" aria-pressed="false">III · 3</button>
+          <button type="button" class="prc-year-pill" data-year-idx="3" aria-pressed="false">IV · 6</button>
+          <button type="button" class="prc-year-pill" data-year-idx="4" aria-pressed="false">V · 16</button>
+          <button type="button" class="prc-year-pill" data-year-idx="5" aria-pressed="false">VI · 29</button>
+          <button type="button" class="prc-year-pill" data-year-idx="6" aria-pressed="false">VII · 47</button>
+          <button type="button" class="prc-year-pill" data-year-idx="7" aria-pressed="false">VIII · 144</button>
+          <button type="button" class="prc-year-pill" data-year-idx="8" aria-pressed="false">IX · 360</button>
+        </prc-year-rail>
+        <prc-action-strip class="prc-action-strip">
+          <button type="button" class="prc-btn prc-btn-light" id="prc-btn-yr-reset">Yr I (Reset)</button>
+          <button type="button" class="prc-btn prc-btn-light" id="prc-btn-yr-prev">-1 Yr</button>
+          <button type="button" class="prc-btn prc-btn-accent" id="prc-btn-yr-next">+1 Yr</button>
+          <button type="button" class="prc-btn prc-btn-light" id="prc-btn-yr-climax">Yr IX: 360 / 26</button>
+        </prc-action-strip>
+        <prc-chronicle-quote class="prc-chronicle-quote" id="prc-narrative-copy">Same room at the inn: lifting the raw-linen curtain discloses a ditch, a bridge, a little wall, a medlar tree, a field of corn, thorny blackberry bushes, a chicken yard, the yellow hump of a hill, and an upside-down trapeze of sky—not a soul in sight.</prc-chronicle-quote>
+      </smiling-corn-multitude>
+
+      <nine-stratum-landscape class="prc-card-panel" id="prc-strata-panel">
+        <prc-panel-head class="prc-panel-head">
+          <prc-panel-title class="prc-panel-title">Nine-Stratum Casement Occlusion</prc-panel-title>
+          <prc-panel-badge class="prc-panel-badge" id="prc-strata-badge">9 / 9 VISIBLE</prc-panel-badge>
+        </prc-panel-head>
+        <prc-strata-list class="prc-strata-list" id="prc-strata-list">
+          <prc-stratum-row class="prc-stratum-row" data-stratum-id="trapeze_sky">
+            <prc-stratum-index class="prc-stratum-index">9</prc-stratum-index>
+            <prc-stratum-name class="prc-stratum-name">Upside-Down Trapeze Sky</prc-stratum-name>
+            <prc-meter-track class="prc-meter-track"><prc-meter-fill class="prc-meter-fill"></prc-meter-fill></prc-meter-track>
+            <prc-stratum-pct class="prc-stratum-pct">100%</prc-stratum-pct>
+            <prc-stratum-state class="prc-stratum-state">VISIBLE</prc-stratum-state>
+          </prc-stratum-row>
+          <prc-stratum-row class="prc-stratum-row" data-stratum-id="yellow_hill">
+            <prc-stratum-index class="prc-stratum-index">8</prc-stratum-index>
+            <prc-stratum-name class="prc-stratum-name">Yellow Hill Hump</prc-stratum-name>
+            <prc-meter-track class="prc-meter-track"><prc-meter-fill class="prc-meter-fill"></prc-meter-fill></prc-meter-track>
+            <prc-stratum-pct class="prc-stratum-pct">100%</prc-stratum-pct>
+            <prc-stratum-state class="prc-stratum-state">VISIBLE</prc-stratum-state>
+          </prc-stratum-row>
+          <prc-stratum-row class="prc-stratum-row" data-stratum-id="chicken_yard">
+            <prc-stratum-index class="prc-stratum-index">7</prc-stratum-index>
+            <prc-stratum-name class="prc-stratum-name">Chicken Yard</prc-stratum-name>
+            <prc-meter-track class="prc-meter-track"><prc-meter-fill class="prc-meter-fill"></prc-meter-fill></prc-meter-track>
+            <prc-stratum-pct class="prc-stratum-pct">100%</prc-stratum-pct>
+            <prc-stratum-state class="prc-stratum-state">VISIBLE</prc-stratum-state>
+          </prc-stratum-row>
+          <prc-stratum-row class="prc-stratum-row" data-stratum-id="blackberry_bushes">
+            <prc-stratum-index class="prc-stratum-index">6</prc-stratum-index>
+            <prc-stratum-name class="prc-stratum-name">Blackberry Bushes</prc-stratum-name>
+            <prc-meter-track class="prc-meter-track"><prc-meter-fill class="prc-meter-fill"></prc-meter-fill></prc-meter-track>
+            <prc-stratum-pct class="prc-stratum-pct">100%</prc-stratum-pct>
+            <prc-stratum-state class="prc-stratum-state">VISIBLE</prc-stratum-state>
+          </prc-stratum-row>
+          <prc-stratum-row class="prc-stratum-row" data-stratum-id="cornfield">
+            <prc-stratum-index class="prc-stratum-index">5</prc-stratum-index>
+            <prc-stratum-name class="prc-stratum-name">Field of Corn</prc-stratum-name>
+            <prc-meter-track class="prc-meter-track"><prc-meter-fill class="prc-meter-fill"></prc-meter-fill></prc-meter-track>
+            <prc-stratum-pct class="prc-stratum-pct">100%</prc-stratum-pct>
+            <prc-stratum-state class="prc-stratum-state">VISIBLE</prc-stratum-state>
+          </prc-stratum-row>
+          <prc-stratum-row class="prc-stratum-row" data-stratum-id="medlar_tree">
+            <prc-stratum-index class="prc-stratum-index">4</prc-stratum-index>
+            <prc-stratum-name class="prc-stratum-name">Medlar Tree</prc-stratum-name>
+            <prc-meter-track class="prc-meter-track"><prc-meter-fill class="prc-meter-fill"></prc-meter-fill></prc-meter-track>
+            <prc-stratum-pct class="prc-stratum-pct">100%</prc-stratum-pct>
+            <prc-stratum-state class="prc-stratum-state">VISIBLE</prc-stratum-state>
+          </prc-stratum-row>
+          <prc-stratum-row class="prc-stratum-row" data-stratum-id="little_wall">
+            <prc-stratum-index class="prc-stratum-index">3</prc-stratum-index>
+            <prc-stratum-name class="prc-stratum-name">Little Wall</prc-stratum-name>
+            <prc-meter-track class="prc-meter-track"><prc-meter-fill class="prc-meter-fill"></prc-meter-fill></prc-meter-track>
+            <prc-stratum-pct class="prc-stratum-pct">100%</prc-stratum-pct>
+            <prc-stratum-state class="prc-stratum-state">VISIBLE</prc-stratum-state>
+          </prc-stratum-row>
+          <prc-stratum-row class="prc-stratum-row" data-stratum-id="bridge">
+            <prc-stratum-index class="prc-stratum-index">2</prc-stratum-index>
+            <prc-stratum-name class="prc-stratum-name">Bridge</prc-stratum-name>
+            <prc-meter-track class="prc-meter-track"><prc-meter-fill class="prc-meter-fill"></prc-meter-fill></prc-meter-track>
+            <prc-stratum-pct class="prc-stratum-pct">100%</prc-stratum-pct>
+            <prc-stratum-state class="prc-stratum-state">VISIBLE</prc-stratum-state>
+          </prc-stratum-row>
+          <prc-stratum-row class="prc-stratum-row" data-stratum-id="ditch">
+            <prc-stratum-index class="prc-stratum-index">1</prc-stratum-index>
+            <prc-stratum-name class="prc-stratum-name">Ditch</prc-stratum-name>
+            <prc-meter-track class="prc-meter-track"><prc-meter-fill class="prc-meter-fill"></prc-meter-fill></prc-meter-track>
+            <prc-stratum-pct class="prc-stratum-pct">100%</prc-stratum-pct>
+            <prc-stratum-state class="prc-stratum-state">VISIBLE</prc-stratum-state>
+          </prc-stratum-row>
+        </prc-strata-list>
+        <prc-stratum-note class="prc-stratum-note" id="prc-stratum-note">Horizon clear: from ditch to upside-down trapeze of sky, all nine autumn strata stand open.</prc-stratum-note>
+      </nine-stratum-landscape>
+
+      <room-twenty-six-ledger class="prc-card-panel" id="prc-room-panel">
+        <prc-panel-head class="prc-panel-head">
+          <prc-panel-title class="prc-panel-title">Behind the Curtain · Inn Room Ledger</prc-panel-title>
+          <prc-panel-badge class="prc-panel-badge" id="prc-room-badge">0 / 26 Lodgers</prc-panel-badge>
+        </prc-panel-head>
+        <prc-room-grid class="prc-room-grid">
+          <prc-zone-tally class="prc-zone-tally">
+            <prc-zone-label class="prc-zone-label">Floorboards</prc-zone-label>
+            <prc-zone-count class="prc-zone-count" id="prc-tally-floor">0 / 9</prc-zone-count>
+            <prc-zone-sub class="prc-zone-sub" id="prc-tally-knees">Crouching · Knees parted: 0</prc-zone-sub>
+          </prc-zone-tally>
+          <prc-zone-tally class="prc-zone-tally">
+            <prc-zone-label class="prc-zone-label">Chest of Drawers</prc-zone-label>
+            <prc-zone-count class="prc-zone-count" id="prc-tally-chest">0 / 8</prc-zone-count>
+            <prc-zone-sub class="prc-zone-sub">Seated shoulder to shoulder</prc-zone-sub>
+          </prc-zone-tally>
+          <prc-zone-tally class="prc-zone-tally">
+            <prc-zone-label class="prc-zone-label">Inn Bed</prc-zone-label>
+            <prc-zone-count class="prc-zone-count" id="prc-tally-bed">0 / 9</prc-zone-count>
+            <prc-zone-sub class="prc-zone-sub">Taking polite turns to rest</prc-zone-sub>
+          </prc-zone-tally>
+          <prc-zone-tally class="prc-zone-tally prc-zone-tally-total">
+            <prc-zone-label class="prc-zone-label">Total Room Occupants</prc-zone-label>
+            <prc-zone-count class="prc-zone-count" id="prc-tally-total">0 / 26</prc-zone-count>
+            <prc-zone-sub class="prc-zone-sub" id="prc-tally-view">Facing casement window</prc-zone-sub>
+          </prc-zone-tally>
+        </prc-room-grid>
+        <prc-room-actions class="prc-room-actions">
+          <button type="button" class="prc-btn prc-btn-light" id="prc-btn-room-ledger">Turn Around Into Inn Room <prc-kbd-tag class="prc-kbd-tag">R</prc-kbd-tag></button>
+          <button type="button" class="prc-btn prc-btn-light" id="prc-btn-step-floor">Step Across Floorboards</button>
+          <button type="button" class="prc-btn prc-btn-accent" id="prc-btn-jump-final">Jump to Final Year (26 in Room)</button>
+        </prc-room-actions>
+      </room-twenty-six-ledger>
+    </prc-side-ledger>
+  </prc-workspace-grid>
+
+  <procopia-plate-drawer class="prc-plate-drawer" id="prc-plate-drawer" hidden role="dialog" aria-modal="true" aria-label="Procopia Royal Plates">
+    <prc-drawer-sheet class="prc-drawer-sheet" id="prc-drawer-sheet">
+      <prc-drawer-head class="prc-drawer-head">
+        <prc-title-plaque class="prc-title-plaque">
+          <prc-panel-title class="prc-panel-title">Procopia · Royal Copperplate &amp; Casement Folio</prc-panel-title>
+          <prc-panel-badge class="prc-panel-badge" id="prc-plate-status-badge">Royal Plates · Diptych</prc-panel-badge>
+        </prc-title-plaque>
+        <prc-tool-cluster class="prc-tool-cluster">
+          <button type="button" class="prc-btn prc-btn-light prc-btn-active" data-plate-tab="diptych">Diptych</button>
+          <button type="button" class="prc-btn prc-btn-light" data-plate-tab="map">Survey Map</button>
+          <button type="button" class="prc-btn prc-btn-light" data-plate-tab="image">Casement Vista</button>
+          <button type="button" class="prc-btn prc-btn-light" id="prc-btn-plate-zoom" aria-pressed="false">Loupe 1.0× <prc-kbd-tag class="prc-kbd-tag">Z</prc-kbd-tag></button>
+          <button type="button" class="prc-btn prc-btn-accent" id="prc-btn-plate-close">Close <prc-kbd-tag class="prc-kbd-tag">Esc</prc-kbd-tag></button>
+        </prc-tool-cluster>
+      </prc-drawer-head>
+
+      <prc-drawer-grid class="prc-drawer-grid" id="prc-drawer-grid">
+        <prc-plate-folio class="prc-plate-folio" id="prc-folio-map" data-folio="map">
+          <prc-folio-head class="prc-folio-head">
+            <prc-folio-title class="prc-folio-title">Surveyor Plate · Inn Casement &amp; Nine Harvest Strata</prc-folio-title>
+            <prc-folio-meta class="prc-folio-meta" id="prc-map-meta">1572 Copperplate · 1600×1200</prc-folio-meta>
+          </prc-folio-head>
+          <prc-folio-stage class="prc-folio-stage" id="prc-stage-map">
+            <img id="prc-img-map" class="prc-plate-img" src="map.png" loading="lazy" alt="Procopia surveyor plate" onerror="this.hidden=true;this.nextElementSibling.hidden=false;window.ProcopiaApp&&window.ProcopiaApp.drawFallbackPlates();">
+            <prc-archival-notice class="prc-archival-notice" id="prc-notice-map" hidden>
+              <prc-notice-code class="prc-notice-code">PENDING_IMAGE_GENERATOR_QUOTA</prc-notice-code>
+              <prc-notice-copy class="prc-notice-copy">Archival copperplate survey pending press quota; rendering in-memory surveyor casement &amp; nine-stratum elevation.</prc-notice-copy>
+              <canvas class="prc-fallback-canvas" id="prc-fallback-map" width="480" height="320"></canvas>
+            </prc-archival-notice>
+          </prc-folio-stage>
+        </prc-plate-folio>
+
+        <prc-plate-folio class="prc-plate-folio" id="prc-folio-image" data-folio="image">
+          <prc-folio-head class="prc-folio-head">
+            <prc-folio-title class="prc-folio-title">Illuminated Vista · Linen Curtain &amp; Corn-Eating Horizon</prc-folio-title>
+            <prc-folio-meta class="prc-folio-meta" id="prc-img-meta">Gouache &amp; Oil · 1600×1000</prc-folio-meta>
+          </prc-folio-head>
+          <prc-folio-stage class="prc-folio-stage" id="prc-stage-image">
+            <img id="prc-img-vista" class="prc-plate-img" src="image.png" loading="lazy" alt="Procopia inn casement plate" onerror="this.hidden=true;this.nextElementSibling.hidden=false;window.ProcopiaApp&&window.ProcopiaApp.drawFallbackPlates();">
+            <prc-archival-notice class="prc-archival-notice" id="prc-notice-image" hidden>
+              <prc-notice-code class="prc-notice-code">PENDING_IMAGE_GENERATOR_QUOTA</prc-notice-code>
+              <prc-notice-copy class="prc-notice-copy">Archival casement painting pending press quota; rendering in-memory walnut sash &amp; harvest vista.</prc-notice-copy>
+              <canvas class="prc-fallback-canvas" id="prc-fallback-image" width="480" height="320"></canvas>
+            </prc-archival-notice>
+          </prc-folio-stage>
+        </prc-plate-folio>
+      </prc-drawer-grid>
+    </prc-drawer-sheet>
+  </procopia-plate-drawer>
+</procopia-inn-casement>
+
+<script>
+(function (root) {
+  "use strict";
+
+  var STRATA_DEFS = Object.freeze([
+    Object.freeze({ id: "ditch", index: 0, label: "Ditch", phrase: "a ditch" }),
+    Object.freeze({ id: "bridge", index: 1, label: "Bridge", phrase: "a bridge" }),
+    Object.freeze({ id: "little_wall", index: 2, label: "Little Wall", phrase: "a little wall" }),
+    Object.freeze({ id: "medlar_tree", index: 3, label: "Medlar Tree", phrase: "a medlar tree" }),
+    Object.freeze({ id: "cornfield", index: 4, label: "Field of Corn", phrase: "a field of corn" }),
+    Object.freeze({ id: "blackberry_bushes", index: 5, label: "Blackberry Bushes", phrase: "blackberry bushes with thorns" }),
+    Object.freeze({ id: "chicken_yard", index: 6, label: "Chicken Yard", phrase: "a chicken yard" }),
+    Object.freeze({ id: "yellow_hill", index: 7, label: "Yellow Hill Hump", phrase: "the yellow hump of a hill" }),
+    Object.freeze({ id: "trapeze_sky", index: 8, label: "Upside-Down Trapeze Sky", phrase: "a patch of sky shaped like an upside-down trapeze" })
+  ]);
+
+  var BAND_SPECS = [
+    { id: "ditch", index: 0, y0: 0.86, y1: 1.00, x0: 0.00, x1: 1.00 },
+    { id: "bridge", index: 1, y0: 0.77, y1: 0.90, x0: 0.12, x1: 0.88 },
+    { id: "little_wall", index: 2, y0: 0.69, y1: 0.81, x0: 0.00, x1: 1.00 },
+    { id: "medlar_tree", index: 3, y0: 0.57, y1: 0.73, x0: 0.04, x1: 0.92 },
+    { id: "cornfield", index: 4, y0: 0.48, y1: 0.63, x0: 0.00, x1: 1.00 },
+    { id: "blackberry_bushes", index: 5, y0: 0.39, y1: 0.52, x0: 0.02, x1: 0.98 },
+    { id: "chicken_yard", index: 6, y0: 0.30, y1: 0.43, x0: 0.06, x1: 0.94 },
+    { id: "yellow_hill", index: 7, y0: 0.13, y1: 0.34, x0: 0.00, x1: 1.00 },
+    { id: "trapeze_sky", index: 8, y0: 0.00, y1: 0.205, x0: 0.00, x1: 1.00 }
+  ];
+
+  function clamp(v, lo, hi) {
+    var n = Number(v);
+    if (!Number.isFinite(n)) return lo;
+    return n < lo ? lo : (n > hi ? hi : n);
+  }
+
+  function hash01(seed) {
+    var x = Math.sin(seed * 127.1 + 311.7) * 43758.5453123;
+    return x - Math.floor(x);
+  }
+
+  function makeRect(x, y, w, h) {
+    var rx = Math.round(x);
+    var ry = Math.round(y);
+    var rw = Math.max(8, Math.round(w));
+    var rh = Math.max(8, Math.round(h));
+    return {
+      x: rx,
+      y: ry,
+      w: rw,
+      h: rh,
+      xMin: rx,
+      xMax: rx + rw,
+      yMin: ry,
+      yMax: ry + rh,
+      centerX: rx + rw * 0.5,
+      centerY: ry + rh * 0.5
+    };
+  }
+
+  function computeLayout(width, height) {
+    var W = Math.max(180, Math.round(Number(width) || 720));
+    var H = Math.max(180, Math.round(Number(height) || 520));
+    var padX = Math.round(clamp(W * 0.075, 16, 62));
+    var padTop = Math.round(clamp(H * 0.08, 18, 48));
+    var padBot = Math.round(clamp(H * 0.088, 20, 56));
+
+    var cx = padX;
+    var cy = padTop;
+    var cw = Math.max(120, W - padX * 2);
+    var ch = Math.max(120, H - padTop - padBot);
+
+    var frameW = Math.round(clamp(Math.min(W, H) * 0.036, 11, 26));
+    var sillH = Math.round(clamp(H * 0.04, 12, 26));
+
+    var ax = cx + frameW;
+    var ay = cy + frameW;
+    var aw = Math.max(80, cw - frameW * 2);
+    var ah = Math.max(80, ch - frameW - sillH);
+    var sillY = ay + ah;
+
+    var casement = {
+      x: cx,
+      y: cy,
+      w: cw,
+      h: ch,
+      sillY: sillY,
+      sillH: sillH,
+      frameW: frameW,
+      rodY: Math.round(cy + frameW * 0.46)
+    };
+
+    var aperture = {
+      x: ax,
+      y: ay,
+      w: aw,
+      h: ah,
+      xMin: ax,
+      xMax: ax + aw,
+      yMin: ay,
+      yMax: ay + ah,
+      centerX: ax + aw * 0.5,
+      centerY: ay + ah * 0.5
+    };
+
+    var skyBottomY = Math.round(ay + ah * 0.205);
+    var insetX = Math.round(aw * 0.21);
+    var trapezeSkyPoly = [
+      { x: ax, y: ay },
+      { x: ax + aw, y: ay },
+      { x: ax + aw - insetX, y: skyBottomY },
+      { x: ax + insetX, y: skyBottomY }
+    ];
+
+    var strataBands = {};
+    for (var i = 0; i < BAND_SPECS.length; i++) {
+      var s = BAND_SPECS[i];
+      var def = STRATA_DEFS[s.index];
+      var yMin = Math.round(ay + ah * s.y0);
+      var yMax = Math.round(ay + ah * s.y1);
+      var xMin = Math.round(ax + aw * s.x0);
+      var xMax = Math.round(ax + aw * s.x1);
+      strataBands[s.id] = {
+        id: s.id,
+        index: s.index,
+        label: def.label,
+        phrase: def.phrase,
+        yMin: yMin,
+        yMax: yMax,
+        centerY: (yMin + yMax) * 0.5,
+        xMin: xMin,
+        xMax: xMax,
+        w: Math.max(8, xMax - xMin),
+        h: Math.max(8, yMax - yMin)
+      };
+    }
+
+    var winW = Math.round(clamp(W * 0.26, 84, 240));
+    var winH = Math.round(clamp(H * 0.31, 76, 210));
+    var roomZones = {
+      windowBackRect: makeRect((W - winW) * 0.5, H * 0.11, winW, winH),
+      chestRect: makeRect(W * 0.055, H * 0.36, W * 0.275, H * 0.33),
+      bedRect: makeRect(W * 0.65, H * 0.35, W * 0.295, H * 0.36),
+      floorRect: makeRect(W * 0.14, H * 0.58, W * 0.72, H * 0.35)
+    };
+
+    return {
+      casement: casement,
+      aperture: aperture,
+      trapezeSkyPoly: trapezeSkyPoly,
+      strataBands: strataBands,
+      roomZones: roomZones
+    };
+  }
+
+  function computeVisibilityReport(occlusionByStratum, curtainLift) {
+    var occMap = occlusionByStratum || {};
+    var lift = (curtainLift === undefined || curtainLift === null) ? 1 : clamp(curtainLift, 0, 1);
+    var strata = [];
+    var byId = {};
+    var visibleCount = 0;
+    var effectiveCount = 0;
+
+    for (var i = 0; i < STRATA_DEFS.length; i++) {
+      var def = STRATA_DEFS[i];
+      var occ = clamp(occMap[def.id] || 0, 0, 1);
+      var rawVis = clamp(1 - occ, 0, 1);
+      var effVis = clamp(rawVis * lift, 0, 1);
+      var isVis = rawVis > 0.05;
+      var isEffVis = effVis > 0.05;
+      if (isVis) visibleCount += 1;
+      if (isEffVis) effectiveCount += 1;
+      var item = {
+        id: def.id,
+        index: def.index,
+        label: def.label,
+        phrase: def.phrase,
+        occlusion: occ,
+        visibility: rawVis,
+        rawVisibility: rawVis,
+        effectiveVisibility: effVis,
+        visibilityPct: Math.round(rawVis * 100),
+        effectivePct: Math.round(effVis * 100),
+        visible: isVis,
+        effectivelyVisible: isEffVis,
+        status: isVis ? "VISIBLE" : "OCCLUDED"
+      };
+      strata.push(item);
+      byId[def.id] = item;
+    }
+
+    return {
+      strata: strata,
+      strataTopDown: strata.slice().reverse(),
+      byId: byId,
+      curtainLift: lift,
+      visibleStrataCount: visibleCount,
+      effectiveVisibleStrataCount: effectiveCount,
+      ditchVisible: byId.ditch.visible,
+      bridgeVisible: byId.bridge.visible,
+      wallVisible: byId.little_wall.visible,
+      medlarVisible: byId.medlar_tree.visible,
+      cornfieldVisible: byId.cornfield.visible,
+      blackberryVisible: byId.blackberry_bushes.visible,
+      chickenYardVisible: byId.chicken_yard.visible,
+      hillVisible: byId.yellow_hill.visible,
+      skyVisible: byId.trapeze_sky.visible,
+      horizonFaceWall: visibleCount === 0
+    };
+  }
+
+  function paintPlasterAndCasement(ctx, W, H, layout) {
+    var c = layout.casement;
+    var a = layout.aperture;
+    var wallGrad = ctx.createRadialGradient(W * 0.5, H * 0.44, Math.min(W, H) * 0.14, W * 0.5, H * 0.5, Math.max(W, H) * 0.78);
+    wallGrad.addColorStop(0, "#e5d9c3");
+    wallGrad.addColorStop(0.65, "#d3c2a6");
+    wallGrad.addColorStop(1, "#b8a384");
+    ctx.fillStyle = wallGrad;
+    ctx.fillRect(0, 0, W, H);
+
+    for (var m = 0; m < 34; m++) {
+      var mx = hash01(m * 3.17) * W;
+      var my = hash01(m * 7.91 + 2.3) * H;
+      var mr = 18 + hash01(m * 5.13) * 54;
+      ctx.fillStyle = (m % 2 === 0) ? "rgba(250,242,226,0.13)" : "rgba(138,112,82,0.08)";
+      ctx.beginPath();
+      ctx.arc(mx, my, mr, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    var beamH = Math.max(8, Math.round(c.y * 0.38));
+    var beamGrad = ctx.createLinearGradient(0, 0, 0, beamH);
+    beamGrad.addColorStop(0, "#2f1d11");
+    beamGrad.addColorStop(1, "#4a301e");
+    ctx.fillStyle = beamGrad;
+    ctx.fillRect(0, 0, W, beamH);
+    ctx.fillStyle = "rgba(20,10,4,0.28)";
+    ctx.fillRect(0, beamH, W, 4);
+
+    ctx.fillStyle = "rgba(42,25,13,0.34)";
+    ctx.fillRect(c.x - 5, c.y - 3, c.w + 10, c.h + 12);
+
+    var woodGrad = ctx.createLinearGradient(c.x, c.y, c.x + c.w, c.y + c.h);
+    woodGrad.addColorStop(0, "#5c3b24");
+    woodGrad.addColorStop(0.5, "#472c1a");
+    woodGrad.addColorStop(1, "#382112");
+    ctx.fillStyle = woodGrad;
+    ctx.fillRect(c.x, c.y, c.w, c.h);
+
+    ctx.strokeStyle = "rgba(24,13,6,0.36)";
+    ctx.lineWidth = 1;
+    for (var g = 0; g < 18; g++) {
+      var gx = c.x + (g / 18) * c.w;
+      ctx.beginPath();
+      ctx.moveTo(gx, c.y);
+      ctx.lineTo(gx + ((g % 3) - 1) * 3, c.y + c.h);
+      ctx.stroke();
+    }
+
+    ctx.strokeStyle = "rgba(225,186,138,0.28)";
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(c.x + 1.5, c.y + 1.5, c.w - 3, c.h - 3);
+    ctx.strokeStyle = "#24140a";
+    ctx.strokeRect(a.x - 1, a.y - 1, a.w + 2, a.h + 2);
+
+    var sillOut = Math.round(c.frameW * 0.55);
+    var sx = c.x - sillOut;
+    var sw = c.w + sillOut * 2;
+    var sillGrad = ctx.createLinearGradient(0, c.sillY, 0, c.sillY + c.sillH);
+    sillGrad.addColorStop(0, "#d8ccb6");
+    sillGrad.addColorStop(0.32, "#bfb097");
+    sillGrad.addColorStop(1, "#8d7d66");
+    ctx.fillStyle = sillGrad;
+    ctx.fillRect(sx, c.sillY, sw, c.sillH);
+    ctx.fillStyle = "rgba(255,248,232,0.45)";
+    ctx.fillRect(sx, c.sillY, sw, 3);
+    ctx.fillStyle = "rgba(38,24,12,0.30)";
+    ctx.fillRect(sx + 4, c.sillY + c.sillH, sw - 8, 8);
+  }
+
+  function paintUpperStrata(ctx, layout, t) {
+    var a = layout.aperture;
+    var poly = layout.trapezeSkyPoly;
+    var skyBand = layout.strataBands.trapeze_sky;
+    var hillBand = layout.strataBands.yellow_hill;
+    var yardBand = layout.strataBands.chicken_yard;
+
+    var skyGrad = ctx.createLinearGradient(0, a.y, 0, hillBand.yMax);
+    skyGrad.addColorStop(0, "#6ba3bc");
+    skyGrad.addColorStop(0.55, "#9ec4c9");
+    skyGrad.addColorStop(1, "#e7dfb4");
+    ctx.fillStyle = skyGrad;
+    ctx.fillRect(a.x, a.y, a.w, hillBand.yMax - a.y + 8);
+
+    ctx.fillStyle = "rgba(252,248,234,0.38)";
+    for (var w = 0; w < 4; w++) {
+      var drift = Math.sin(t * 0.18 + w * 1.7) * (a.w * 0.015);
+      var wx = poly[3].x + (w + 0.6) * ((poly[2].x - poly[3].x) / 4.2) + drift;
+      var wy = a.y + (skyBand.h * (0.26 + (w % 2) * 0.24));
+      ctx.beginPath();
+      ctx.ellipse(wx, wy, a.w * 0.075, skyBand.h * 0.09, -0.06, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    ctx.fillStyle = "#9d7438";
+    ctx.beginPath();
+    ctx.moveTo(poly[0].x, poly[0].y);
+    ctx.lineTo(poly[3].x, poly[3].y);
+    ctx.lineTo(a.x, hillBand.yMax);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.moveTo(poly[1].x, poly[1].y);
+    ctx.lineTo(poly[2].x, poly[2].y);
+    ctx.lineTo(a.x + a.w, hillBand.yMax);
+    ctx.closePath();
+    ctx.fill();
+
+    var hillGrad = ctx.createLinearGradient(0, hillBand.yMin, 0, hillBand.yMax + 14);
+    hillGrad.addColorStop(0, "#f0c351");
+    hillGrad.addColorStop(0.52, "#dca032");
+    hillGrad.addColorStop(1, "#b57923");
+    ctx.fillStyle = hillGrad;
+    ctx.beginPath();
+    ctx.moveTo(a.x, hillBand.yMax + 12);
+    ctx.quadraticCurveTo(a.x + a.w * 0.22, hillBand.yMin + hillBand.h * 0.36, a.x + a.w * 0.50, hillBand.yMin + 2);
+    ctx.quadraticCurveTo(a.x + a.w * 0.78, hillBand.yMin + hillBand.h * 0.34, a.x + a.w, hillBand.yMax + 12);
+    ctx.lineTo(a.x + a.w, yardBand.yMax);
+    ctx.lineTo(a.x, yardBand.yMax);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.strokeStyle = "rgba(255,238,176,0.42)";
+    ctx.lineWidth = 1.6;
+    for (var r = 0; r < 3; r++) {
+      var ry = hillBand.yMin + hillBand.h * (0.34 + r * 0.22);
+      ctx.beginPath();
+      ctx.moveTo(a.x + a.w * 0.14, ry + 8);
+      ctx.quadraticCurveTo(a.x + a.w * 0.5, ry - hillBand.h * 0.22, a.x + a.w * 0.86, ry + 8);
+      ctx.stroke();
+    }
+  }
+
+  function paintMidStrata(ctx, layout, t) {
+    var a = layout.aperture;
+    var yard = layout.strataBands.chicken_yard;
+    var bush = layout.strataBands.blackberry_bushes;
+    var corn = layout.strataBands.cornfield;
+    var medlar = layout.strataBands.medlar_tree;
+
+    var yardGrad = ctx.createLinearGradient(0, yard.yMin, 0, bush.yMax);
+    yardGrad.addColorStop(0, "#dfb978");
+    yardGrad.addColorStop(1, "#c09352");
+    ctx.fillStyle = yardGrad;
+    ctx.fillRect(a.x, yard.yMin, a.w, bush.yMax - yard.yMin);
+
+    ctx.strokeStyle = "#6e4c29";
+    ctx.lineWidth = 1.6;
+    var fenceY = yard.yMin + yard.h * 0.22;
+    ctx.beginPath();
+    ctx.moveTo(yard.xMin, fenceY);
+    ctx.lineTo(yard.xMax, fenceY + 2);
+    ctx.moveTo(yard.xMin, fenceY + yard.h * 0.22);
+    ctx.lineTo(yard.xMax, fenceY + yard.h * 0.22 + 2);
+    ctx.stroke();
+    for (var p = 0; p <= 22; p++) {
+      var px = yard.xMin + (p / 22) * (yard.xMax - yard.xMin);
+      ctx.beginPath();
+      ctx.moveTo(px, fenceY - 5);
+      ctx.lineTo(px, fenceY + yard.h * 0.36);
+      ctx.stroke();
+    }
+
+    var coopW = Math.max(26, a.w * 0.11);
+    var coopH = Math.max(18, yard.h * 0.62);
+    var coopX = yard.xMax - coopW - a.w * 0.03;
+    var coopY = yard.yMin + yard.h * 0.12;
+    ctx.fillStyle = "#7c5533";
+    ctx.fillRect(coopX, coopY, coopW, coopH);
+    ctx.fillStyle = "#331e10";
+    ctx.fillRect(coopX + coopW * 0.36, coopY + coopH * 0.38, coopW * 0.28, coopH * 0.62);
+    ctx.fillStyle = "#b55232";
+    ctx.beginPath();
+    ctx.moveTo(coopX - 5, coopY + 2);
+    ctx.lineTo(coopX + coopW * 0.5, coopY - coopH * 0.42);
+    ctx.lineTo(coopX + coopW + 5, coopY + 2);
+    ctx.closePath();
+    ctx.fill();
+
+    var henColors = ["#f3ead8", "#b55b33", "#d8a45c", "#efe4ce", "#8f4326", "#cfa063", "#f0e6d2"];
+    for (var hIdx = 0; hIdx < 7; hIdx++) {
+      var hx = yard.xMin + yard.w * (0.09 + hIdx * 0.105);
+      var hy = yard.yMin + yard.h * (0.58 + (hIdx % 3) * 0.13);
+      var peck = (hIdx % 2 === 0) ? Math.abs(Math.sin(t * 2.4 + hIdx)) * 3.2 : 0;
+      var dir = (hIdx % 2 === 0) ? 1 : -1;
+      ctx.fillStyle = henColors[hIdx];
+      ctx.beginPath();
+      ctx.ellipse(hx, hy, 6.5, 4.6, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(hx + dir * 5.2, hy - 2.6 + peck, 2.8, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = "#c9302c";
+      ctx.beginPath();
+      ctx.arc(hx + dir * 5.4, hy - 5.2 + peck, 1.6, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    for (var b = 0; b < 15; b++) {
+      var bx = bush.xMin + (b / 14) * bush.w;
+      var by = bush.yMin + bush.h * (0.48 + (b % 2) * 0.16);
+      var br = Math.max(12, a.w * 0.048);
+      ctx.fillStyle = (b % 2 === 0) ? "#2f4a26" : "#3d592e";
+      ctx.beginPath();
+      ctx.arc(bx, by, br, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    ctx.strokeStyle = "#5b2830";
+    ctx.lineWidth = 2;
+    for (var cIdx = 0; cIdx < 9; cIdx++) {
+      var cx0 = bush.xMin + (cIdx / 8.5) * bush.w;
+      var cy0 = bush.yMax;
+      var cx1 = cx0 + (cIdx % 2 === 0 ? 28 : -26);
+      var cy1 = bush.yMin + 4;
+      ctx.beginPath();
+      ctx.moveTo(cx0, cy0);
+      ctx.quadraticCurveTo((cx0 + cx1) * 0.5, cy1 - 8, cx1, cy1 + 8);
+      ctx.stroke();
+      ctx.fillStyle = "#d9c29c";
+      for (var th = 1; th <= 3; th++) {
+        var u = th * 0.25;
+        var tx = cx0 + (cx1 - cx0) * u;
+        var ty = cy0 + (cy1 - cy0) * u - 4;
+        ctx.beginPath();
+        ctx.moveTo(tx, ty);
+        ctx.lineTo(tx + 3.5, ty - 4.5);
+        ctx.lineTo(tx + 1.2, ty + 1.5);
+        ctx.closePath();
+        ctx.fill();
+      }
+    }
+
+    for (var k = 0; k < 18; k++) {
+      var kx = bush.xMin + hash01(k * 4.7 + 1.1) * bush.w;
+      var ky = bush.yMin + bush.h * (0.25 + hash01(k * 9.3) * 0.58);
+      ctx.fillStyle = (k % 3 === 0) ? "#3b1730" : "#1d1424";
+      ctx.beginPath();
+      ctx.arc(kx, ky, 3.2, 0, Math.PI * 2);
+      ctx.arc(kx + 2.4, ky + 1.4, 2.7, 0, Math.PI * 2);
+      ctx.arc(kx - 2.0, ky + 1.8, 2.6, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = "rgba(235,220,245,0.45)";
+      ctx.fillRect(kx - 1, ky - 1.5, 1.4, 1.4);
+    }
+
+    var cornGrad = ctx.createLinearGradient(0, corn.yMin, 0, medlar.yMax);
+    cornGrad.addColorStop(0, "#b88428");
+    cornGrad.addColorStop(0.6, "#8c6b28");
+    cornGrad.addColorStop(1, "#616b30");
+    ctx.fillStyle = cornGrad;
+    ctx.fillRect(a.x, corn.yMin + corn.h * 0.18, a.w, medlar.yMax - corn.yMin);
+
+    var stalkCount = 30;
+    for (var sIdx = 0; sIdx < stalkCount; sIdx++) {
+      var sx = a.x + ((sIdx + 0.5) / stalkCount) * a.w;
+      var sway = Math.sin(t * 1.3 + sIdx * 0.65) * 3.2;
+      var topY = corn.yMin - 4 + (sIdx % 3) * 5;
+      var botY = corn.yMax + 8;
+      ctx.strokeStyle = (sIdx % 2 === 0) ? "#e0b144" : "#c9962e";
+      ctx.lineWidth = 2.2;
+      ctx.beginPath();
+      ctx.moveTo(sx, botY);
+      ctx.quadraticCurveTo(sx + sway * 0.5, (topY + botY) * 0.5, sx + sway, topY);
+      ctx.stroke();
+
+      ctx.strokeStyle = "#f2d57e";
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(sx + sway, topY);
+      ctx.lineTo(sx + sway - 4, topY - 6);
+      ctx.moveTo(sx + sway, topY);
+      ctx.lineTo(sx + sway + 4, topY - 6);
+      ctx.stroke();
+
+      if (sIdx % 2 === 0) {
+        var earY = topY + (botY - topY) * 0.46;
+        ctx.fillStyle = "#f6c945";
+        ctx.beginPath();
+        ctx.ellipse(sx + sway * 0.5 + 3, earY, 2.8, 6.4, 0.28, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+  }
+
+  function paintForeStrata(ctx, layout, t) {
+    var a = layout.aperture;
+    var medlar = layout.strataBands.medlar_tree;
+    var wall = layout.strataBands.little_wall;
+    var bridge = layout.strataBands.bridge;
+    var ditch = layout.strataBands.ditch;
+
+    var trunkX = a.x + a.w * 0.27;
+    var trunkBaseY = wall.yMin + 6;
+    var crownY = medlar.yMin + medlar.h * 0.22;
+    ctx.strokeStyle = "#4d321f";
+    ctx.lineWidth = Math.max(6, a.w * 0.018);
+    ctx.lineCap = "round";
+    ctx.beginPath();
+    ctx.moveTo(trunkX, trunkBaseY);
+    ctx.quadraticCurveTo(trunkX - 8, (trunkBaseY + crownY) * 0.5, trunkX + 4, crownY + 8);
+    ctx.stroke();
+
+    ctx.lineWidth = Math.max(3.5, a.w * 0.01);
+    var limbs = [-0.14, -0.05, 0.06, 0.16];
+    for (var l = 0; l < limbs.length; l++) {
+      ctx.beginPath();
+      ctx.moveTo(trunkX + 2, crownY + 14);
+      ctx.quadraticCurveTo(trunkX + a.w * limbs[l] * 0.6, crownY - 6, trunkX + a.w * limbs[l], crownY + (l % 2) * 8);
+      ctx.stroke();
+    }
+
+    var leafBlobs = [
+      [-0.15, 0.06, 0.065], [-0.08, -0.04, 0.075], [0.0, -0.06, 0.082],
+      [0.09, -0.02, 0.074], [0.16, 0.06, 0.064], [-0.04, 0.08, 0.068],
+      [0.48, 0.04, 0.062], [0.55, -0.02, 0.068]
+    ];
+    for (var lb = 0; lb < leafBlobs.length; lb++) {
+      var lx = trunkX + a.w * leafBlobs[lb][0];
+      var ly = crownY + medlar.h * leafBlobs[lb][1] * 2.2;
+      var lr = Math.max(14, a.w * leafBlobs[lb][2]);
+      ctx.fillStyle = (lb % 2 === 0) ? "#4d612c" : "#6b6e2e";
+      ctx.beginPath();
+      ctx.arc(lx, ly, lr, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    for (var mf = 0; mf < 16; mf++) {
+      var mfx = (mf < 12)
+        ? trunkX + (hash01(mf * 6.1) - 0.46) * a.w * 0.34
+        : trunkX + a.w * (0.45 + hash01(mf * 3.7) * 0.13);
+      var mfy = crownY - 8 + hash01(mf * 8.3 + 1.4) * medlar.h * 0.56;
+      ctx.fillStyle = "#b96e32";
+      ctx.beginPath();
+      ctx.arc(mfx, mfy, 4.1, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = "#4b2b14";
+      ctx.fillRect(mfx - 1.2, mfy + 1.6, 2.4, 1.8);
+    }
+
+    ctx.fillStyle = "#56493d";
+    ctx.fillRect(a.x, wall.yMin, a.w, wall.h);
+    var rows = 4;
+    var rowH = wall.h / rows;
+    var stonePalette = ["#b8ab96", "#9f927d", "#c7b89e", "#8c806e"];
+    for (var wr = 0; wr < rows; wr++) {
+      var wy = wall.yMin + wr * rowH;
+      var cols = 14;
+      var colW = a.w / cols;
+      var offset = (wr % 2) * (colW * 0.5);
+      for (var wc = -1; wc <= cols; wc++) {
+        var wx = a.x + wc * colW + offset;
+        ctx.fillStyle = stonePalette[(wr * 5 + wc + 4) % stonePalette.length];
+        ctx.fillRect(wx + 1, wy + 1, colW - 2, rowH - 2);
+      }
+    }
+    ctx.fillStyle = "#d2c5ae";
+    ctx.fillRect(a.x, wall.yMin, a.w, 3.5);
+
+    var bankGrad = ctx.createLinearGradient(0, wall.yMax - 2, 0, a.y + a.h);
+    bankGrad.addColorStop(0, "#6d5a38");
+    bankGrad.addColorStop(0.55, "#4d3c24");
+    bankGrad.addColorStop(1, "#352918");
+    ctx.fillStyle = bankGrad;
+    ctx.fillRect(a.x, wall.yMax - 2, a.w, a.y + a.h - wall.yMax + 4);
+
+    ctx.fillStyle = "#3f5954";
+    ctx.beginPath();
+    ctx.moveTo(a.x, ditch.yMin + ditch.h * 0.35);
+    ctx.quadraticCurveTo(a.x + a.w * 0.5, ditch.yMin + ditch.h * 0.12, a.x + a.w, ditch.yMin + ditch.h * 0.38);
+    ctx.lineTo(a.x + a.w, a.y + a.h);
+    ctx.lineTo(a.x, a.y + a.h);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.strokeStyle = "rgba(212,230,224,0.34)";
+    ctx.lineWidth = 1.5;
+    for (var rp = 0; rp < 5; rp++) {
+      var rpx = a.x + a.w * (0.14 + rp * 0.18) + Math.sin(t * 1.1 + rp) * 3;
+      var rpy = ditch.yMin + ditch.h * (0.52 + (rp % 2) * 0.18);
+      ctx.beginPath();
+      ctx.moveTo(rpx - 14, rpy);
+      ctx.lineTo(rpx + 14, rpy);
+      ctx.stroke();
+    }
+
+    var bx0 = a.x + a.w * 0.28;
+    var bw = a.w * 0.44;
+    var by0 = bridge.yMin + 2;
+    var bh = bridge.h + 4;
+    ctx.fillStyle = "#a89880";
+    ctx.beginPath();
+    ctx.moveTo(bx0, by0 + bh);
+    ctx.lineTo(bx0 + bw * 0.08, by0 + bh * 0.24);
+    ctx.quadraticCurveTo(bx0 + bw * 0.5, by0 - bh * 0.18, bx0 + bw * 0.92, by0 + bh * 0.24);
+    ctx.lineTo(bx0 + bw, by0 + bh);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.fillStyle = "#232e2b";
+    ctx.beginPath();
+    ctx.arc(bx0 + bw * 0.5, by0 + bh, bw * 0.27, Math.PI, 0, false);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.strokeStyle = "#5c3d24";
+    ctx.lineWidth = 2.4;
+    ctx.beginPath();
+    ctx.moveTo(bx0 + bw * 0.06, by0 + bh * 0.16);
+    ctx.quadraticCurveTo(bx0 + bw * 0.5, by0 - bh * 0.26, bx0 + bw * 0.94, by0 + bh * 0.16);
+    ctx.stroke();
+
+    for (var rd = 0; rd < 22; rd++) {
+      var rx = a.x + (rd / 21) * a.w;
+      if (rx > bx0 + bw * 0.18 && rx < bx0 + bw * 0.82) continue;
+      var rSway = Math.sin(t * 1.5 + rd) * 2.2;
+      var ryBase = a.y + a.h;
+      var ryTop = ditch.yMin - 4 + (rd % 3) * 5;
+      ctx.strokeStyle = (rd % 2 === 0) ? "#9c8845" : "#6d7438";
+      ctx.lineWidth = 1.6;
+      ctx.beginPath();
+      ctx.moveTo(rx, ryBase);
+      ctx.quadraticCurveTo(rx + rSway * 0.5, (ryBase + ryTop) * 0.5, rx + rSway, ryTop);
+      ctx.stroke();
+      if (rd % 4 === 0) {
+        ctx.strokeStyle = "#4b2c18";
+        ctx.lineWidth = 3.2;
+        ctx.beginPath();
+        ctx.moveTo(rx + rSway * 0.8, ryTop + 8);
+        ctx.lineTo(rx + rSway, ryTop + 1);
+        ctx.stroke();
+      }
+    }
+  }
+
+  function renderWindowBackdrop(ctx, width, height, state) {
+    if (!ctx) return null;
+    var st = state || {};
+    var layout = st.layout || computeLayout(width, height);
+    var t = st.reducedMotion ? 0 : (Number(st.time) || 0);
+
+    ctx.save();
+    paintPlasterAndCasement(ctx, Math.max(180, Number(width) || 720), Math.max(180, Number(height) || 520), layout);
+    ctx.beginPath();
+    ctx.rect(layout.aperture.x, layout.aperture.y, layout.aperture.w, layout.aperture.h);
+    ctx.clip();
+    paintUpperStrata(ctx, layout, t);
+    paintMidStrata(ctx, layout, t);
+    paintForeStrata(ctx, layout, t);
+    ctx.restore();
+
+    return layout;
+  }
+
+  function renderWindowForegroundSashAndCurtain(ctx, width, height, state) {
+    if (!ctx) return null;
+    var st = state || {};
+    var layout = st.layout || computeLayout(width, height);
+    var c = layout.casement;
+    var a = layout.aperture;
+    var lift = (st.curtainLift === undefined || st.curtainLift === null) ? 1 : clamp(st.curtainLift, 0, 1);
+    var closed = 1 - lift;
+
+    ctx.save();
+
+    ctx.strokeStyle = "rgba(24,14,7,0.44)";
+    ctx.lineWidth = 3;
+    ctx.strokeRect(a.x + 1.5, a.y + 1.5, a.w - 3, a.h - 3);
+
+    var latchX = a.x + a.w + c.frameW * 0.48;
+    var latchY = a.y + a.h * 0.5;
+    ctx.fillStyle = "#26221e";
+    ctx.fillRect(latchX - 3, latchY - 14, 6, 28);
+    ctx.fillStyle = "#9c7b45";
+    ctx.beginPath();
+    ctx.arc(latchX, latchY, 3.5, 0, Math.PI * 2);
+    ctx.fill();
+
+    var rodX0 = c.x + 4;
+    var rodX1 = c.x + c.w - 4;
+    var rodY = c.rodY;
+    ctx.strokeStyle = "#8d6d3b";
+    ctx.lineWidth = 3.6;
+    ctx.beginPath();
+    ctx.moveTo(rodX0, rodY);
+    ctx.lineTo(rodX1, rodY);
+    ctx.stroke();
+
+    ctx.fillStyle = "#b59154";
+    ctx.beginPath();
+    ctx.arc(rodX0, rodY, 4.8, 0, Math.PI * 2);
+    ctx.arc(rodX1, rodY, 4.8, 0, Math.PI * 2);
+    ctx.fill();
+
+    var gatheredW = Math.max(10, c.frameW * 0.92);
+    var activeSpanW = gatheredW + closed * (a.w + c.frameW * 0.35);
+    var dropH = a.h + c.frameW * 0.55;
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(c.x + 2, rodY, c.w - 4, c.sillY - rodY + 4);
+    ctx.clip();
+
+    if (closed < 0.02) {
+      var gx = c.x + 3;
+      var gw = Math.max(9, a.x - gx - 1);
+      var tieY = a.y + a.h * 0.54;
+      var gGrad = ctx.createLinearGradient(gx, 0, gx + gw, 0);
+      gGrad.addColorStop(0, "#cbb898");
+      gGrad.addColorStop(0.55, "#e7dbc3");
+      gGrad.addColorStop(1, "#b49e7c");
+      ctx.fillStyle = gGrad;
+      ctx.beginPath();
+      ctx.moveTo(gx, rodY + 2);
+      ctx.lineTo(gx + gw + 2, rodY + 2);
+      ctx.quadraticCurveTo(gx + gw * 0.72, tieY, gx + gw, c.sillY - 4);
+      ctx.lineTo(gx, c.sillY - 4);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.strokeStyle = "#8a6735";
+      ctx.lineWidth = 2.2;
+      ctx.beginPath();
+      ctx.moveTo(gx - 1, tieY);
+      ctx.lineTo(gx + gw + 1, tieY + 2);
+      ctx.stroke();
+    } else {
+      var folds = 14;
+      var foldW = activeSpanW / folds;
+      var curX0 = c.x + 4;
+      var bottomEdgeY = rodY + 12 + dropH * (0.22 + 0.78 * closed);
+
+      for (var f = 0; f < folds; f++) {
+        var fx = curX0 + f * foldW;
+        var sag = (f % 2 === 0) ? 4 : -2;
+        var fGrad = ctx.createLinearGradient(fx, 0, fx + foldW, 0);
+        fGrad.addColorStop(0, "#c8b594");
+        fGrad.addColorStop(0.45, "#ece1cb");
+        fGrad.addColorStop(1, "#b7a17e");
+        ctx.fillStyle = fGrad;
+        ctx.beginPath();
+        ctx.moveTo(fx, rodY + 2);
+        ctx.lineTo(fx + foldW + 0.8, rodY + 2);
+        ctx.lineTo(fx + foldW + 0.8, bottomEdgeY + sag);
+        ctx.lineTo(fx, bottomEdgeY - sag * 0.5);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      var glowGrad = ctx.createRadialGradient(a.centerX, a.centerY, 12, a.centerX, a.centerY, a.w * 0.55);
+      glowGrad.addColorStop(0, "rgba(255,238,195,0.22)");
+      glowGrad.addColorStop(1, "rgba(180,152,110,0.0)");
+      ctx.fillStyle = glowGrad;
+      ctx.fillRect(curX0, rodY + 4, activeSpanW, bottomEdgeY - rodY);
+
+      ctx.strokeStyle = "rgba(138,114,82,0.22)";
+      ctx.lineWidth = 1;
+      for (var sl = 1; sl < 16; sl++) {
+        var sly = rodY + (sl / 16) * (bottomEdgeY - rodY);
+        ctx.beginPath();
+        ctx.moveTo(curX0, sly);
+        ctx.lineTo(curX0 + activeSpanW, sly);
+        ctx.stroke();
+      }
+
+      ctx.strokeStyle = "#9d8562";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(curX0, bottomEdgeY - 5);
+      ctx.lineTo(curX0 + activeSpanW, bottomEdgeY - 5);
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    var ringCount = 11;
+    var ringSpan = (closed < 0.02) ? Math.max(12, a.x - rodX0) : activeSpanW;
+    ctx.strokeStyle = "#c29c59";
+    ctx.lineWidth = 1.8;
+    for (var rIdx = 0; rIdx < ringCount; rIdx++) {
+      var rx = rodX0 + 5 + (rIdx / (ringCount - 1)) * Math.max(8, ringSpan - 8);
+      ctx.beginPath();
+      ctx.arc(rx, rodY, 3.6, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+
+    ctx.restore();
+    return layout;
+  }
+
+  function renderRoomBackdrop(ctx, width, height, state) {
+    if (!ctx) return null;
+    var W = Math.max(180, Math.round(Number(width) || 720));
+    var H = Math.max(180, Math.round(Number(height) || 520));
+    var st = state || {};
+    var layout = st.layout || computeLayout(W, H);
+    var rz = layout.roomZones;
+    var wallL = Math.round(W * 0.13);
+    var wallR = Math.round(W * 0.87);
+    var ceilY = Math.round(H * 0.085);
+    var floorTopY = Math.round(H * 0.56);
+
+    ctx.save();
+
+    ctx.fillStyle = "#cfc0a5";
+    ctx.fillRect(0, 0, W, H);
+
+    ctx.fillStyle = "#dfd2ba";
+    ctx.fillRect(wallL, ceilY, wallR - wallL, floorTopY - ceilY);
+
+    ctx.fillStyle = "#c4b396";
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(wallL, ceilY);
+    ctx.lineTo(wallL, floorTopY);
+    ctx.lineTo(0, Math.round(H * 0.74));
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.fillStyle = "#bfae90";
+    ctx.beginPath();
+    ctx.moveTo(W, 0);
+    ctx.lineTo(wallR, ceilY);
+    ctx.lineTo(wallR, floorTopY);
+    ctx.lineTo(W, Math.round(H * 0.74));
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.fillStyle = "#432b1a";
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(W, 0);
+    ctx.lineTo(wallR, ceilY);
+    ctx.lineTo(wallL, ceilY);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.strokeStyle = "#2b190d";
+    ctx.lineWidth = Math.max(4, W * 0.008);
+    for (var jb = 0; jb <= 6; jb++) {
+      var u = jb / 6;
+      ctx.beginPath();
+      ctx.moveTo(u * W, 0);
+      ctx.lineTo(wallL + u * (wallR - wallL), ceilY);
+      ctx.stroke();
+    }
+
+    var floorGrad = ctx.createLinearGradient(0, floorTopY, 0, H);
+    floorGrad.addColorStop(0, "#855b38");
+    floorGrad.addColorStop(0.5, "#6f492a");
+    floorGrad.addColorStop(1, "#55361d");
+    ctx.fillStyle = floorGrad;
+    ctx.beginPath();
+    ctx.moveTo(wallL, floorTopY);
+    ctx.lineTo(wallR, floorTopY);
+    ctx.lineTo(W, H);
+    ctx.lineTo(0, H);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.strokeStyle = "rgba(34,19,9,0.42)";
+    ctx.lineWidth = 1.3;
+    for (var pl = 0; pl <= 12; pl++) {
+      var pf = pl / 12;
+      ctx.beginPath();
+      ctx.moveTo(wallL + pf * (wallR - wallL), floorTopY);
+      ctx.lineTo(-W * 0.08 + pf * (W * 1.16), H);
+      ctx.stroke();
+    }
+    ctx.fillStyle = "rgba(38,21,10,0.55)";
+    for (var pg = 0; pg < 18; pg++) {
+      var px = rz.floorRect.x + hash01(pg * 3.9 + 0.4) * rz.floorRect.w;
+      var py = rz.floorRect.y + hash01(pg * 7.1 + 1.2) * rz.floorRect.h;
+      ctx.beginPath();
+      ctx.arc(px, py, 1.8, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    ctx.strokeStyle = "#5b3d25";
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(wallL, floorTopY);
+    ctx.lineTo(wallR, floorTopY);
+    ctx.stroke();
+
+    var wb = rz.windowBackRect;
+    var sunGrad = ctx.createLinearGradient(0, wb.yMax, 0, H * 0.94);
+    sunGrad.addColorStop(0, "rgba(255,232,168,0.28)");
+    sunGrad.addColorStop(1, "rgba(255,224,148,0.04)");
+    ctx.fillStyle = sunGrad;
+    ctx.beginPath();
+    ctx.moveTo(wb.x, floorTopY);
+    ctx.lineTo(wb.x + wb.w, floorTopY);
+    ctx.lineTo(rz.floorRect.x + rz.floorRect.w * 0.88, rz.floorRect.yMax);
+    ctx.lineTo(rz.floorRect.x + rz.floorRect.w * 0.12, rz.floorRect.yMax);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.fillStyle = "#4b2f1c";
+    ctx.fillRect(wb.x - 6, wb.y - 6, wb.w + 12, wb.h + 12);
+    var wg = ctx.createLinearGradient(0, wb.y, 0, wb.y + wb.h);
+    wg.addColorStop(0, "#9ac0c6");
+    wg.addColorStop(0.45, "#e7cb7a");
+    wg.addColorStop(1, "#c8923b");
+    ctx.fillStyle = wg;
+    ctx.fillRect(wb.x, wb.y, wb.w, wb.h);
+    ctx.fillStyle = "#e6dac2";
+    ctx.fillRect(wb.x, wb.y, wb.w * 0.18, wb.h);
+    ctx.fillRect(wb.x + wb.w * 0.82, wb.y, wb.w * 0.18, wb.h);
+
+    var ch = rz.chestRect;
+    ctx.fillStyle = "rgba(25,14,6,0.32)";
+    ctx.fillRect(ch.x + 4, ch.y + ch.h - 4, ch.w, 10);
+    ctx.fillStyle = "#5e3b22";
+    ctx.fillRect(ch.x, ch.y + ch.h * 0.12, ch.w, ch.h * 0.84);
+    ctx.fillStyle = "#754b2c";
+    ctx.fillRect(ch.x - 4, ch.y + ch.h * 0.06, ch.w + 8, ch.h * 0.09);
+    for (var dr = 0; dr < 3; dr++) {
+      var dy = ch.y + ch.h * (0.18 + dr * 0.25);
+      var dh = ch.h * 0.21;
+      ctx.strokeStyle = "#3a2212";
+      ctx.lineWidth = 1.6;
+      ctx.strokeRect(ch.x + 7, dy, ch.w - 14, dh);
+      ctx.fillStyle = "#c59d56";
+      ctx.beginPath();
+      ctx.arc(ch.x + ch.w * 0.32, dy + dh * 0.5, 2.6, 0, Math.PI * 2);
+      ctx.arc(ch.x + ch.w * 0.68, dy + dh * 0.5, 2.6, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.fillStyle = "#d9cbb4";
+    ctx.beginPath();
+    ctx.ellipse(ch.x + ch.w * 0.22, ch.y + ch.h * 0.05, ch.w * 0.12, 4.5, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = "#b5693c";
+    ctx.fillRect(ch.x + ch.w * 0.18, ch.y - ch.h * 0.08, ch.w * 0.08, ch.h * 0.13);
+
+    var bd = rz.bedRect;
+    ctx.fillStyle = "rgba(25,14,6,0.32)";
+    ctx.fillRect(bd.x - 2, bd.y + bd.h - 4, bd.w + 4, 10);
+    ctx.fillStyle = "#4d2f1b";
+    ctx.fillRect(bd.x + bd.w - 9, bd.y - bd.h * 0.08, 9, bd.h * 1.06);
+    ctx.fillRect(bd.x, bd.y + bd.h * 0.22, 8, bd.h * 0.76);
+    ctx.fillStyle = "#c97a3d";
+    ctx.fillRect(bd.x + 6, bd.y + bd.h * 0.28, bd.w - 13, bd.h * 0.48);
+    ctx.strokeStyle = "rgba(248,226,184,0.38)";
+    ctx.lineWidth = 1.2;
+    for (var q = 0; q < 6; q++) {
+      var qx = bd.x + 12 + (q / 5) * (bd.w - 28);
+      ctx.beginPath();
+      ctx.moveTo(qx, bd.y + bd.h * 0.28);
+      ctx.lineTo(qx - 10, bd.y + bd.h * 0.76);
+      ctx.stroke();
+    }
+    ctx.fillStyle = "#efe5cf";
+    ctx.beginPath();
+    ctx.ellipse(bd.x + bd.w - 22, bd.y + bd.h * 0.27, 15, 8, -0.15, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = "#4a3828";
+    ctx.fillRect(bd.x + 6, bd.y + bd.h * 0.74, bd.w - 13, bd.h * 0.12);
+
+    ctx.restore();
+    return layout;
+  }
+
+  function renderArchivalPreview(canvasEl, kind) {
+    if (!canvasEl || typeof canvasEl.getContext !== "function") return false;
+    if (!canvasEl.width || canvasEl.width < 120) canvasEl.width = 480;
+    if (!canvasEl.height || canvasEl.height < 90) canvasEl.height = 320;
+    var ctx = canvasEl.getContext("2d");
+    if (!ctx) return false;
+
+    var W = canvasEl.width;
+    var H = canvasEl.height;
+    var isMap = String(kind || "").toLowerCase().indexOf("map") !== -1;
+
+    ctx.save();
+    var pGrad = ctx.createLinearGradient(0, 0, W, H);
+    pGrad.addColorStop(0, "#f1e6ce");
+    pGrad.addColorStop(0.6, "#e5d4b2");
+    pGrad.addColorStop(1, "#d3bd95");
+    ctx.fillStyle = pGrad;
+    ctx.fillRect(0, 0, W, H);
+
+    ctx.strokeStyle = "rgba(110,82,48,0.14)";
+    ctx.lineWidth = 1;
+    for (var ln = 8; ln < H; ln += 10) {
+      ctx.beginPath();
+      ctx.moveTo(0, ln);
+      ctx.lineTo(W, ln);
+      ctx.stroke();
+    }
+
+    ctx.strokeStyle = "#5a3d24";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(8, 8, W - 16, H - 16);
+    ctx.lineWidth = 1;
+    ctx.strokeRect(13, 13, W - 26, H - 26);
+
+    ctx.fillStyle = "#3f2815";
+    ctx.font = "bold " + Math.max(10, Math.round(W * 0.026)) + "px Georgia, serif";
+    ctx.textAlign = "left";
+    ctx.fillText(
+      isMap ? "PROCOPIA SURVEY PLATE — CASEMENT & IX STRATA" : "PROCOPIA ARCHIVAL STUDY — INN WINDOW APERTURE",
+      22,
+      30
+    );
+
+    if (isMap) {
+      var leftX = 24;
+      var leftW = Math.round(W * 0.36);
+      var boxY = 44;
+      var boxH = H - 72;
+
+      ctx.strokeStyle = "#5a3d24";
+      ctx.lineWidth = 1.4;
+      ctx.strokeRect(leftX, boxY + boxH * 0.48, leftW, boxH * 0.50);
+      ctx.fillStyle = "rgba(138,96,52,0.16)";
+      ctx.fillRect(leftX + 5, boxY + boxH * 0.54, leftW * 0.28, boxH * 0.34);
+      ctx.fillRect(leftX + leftW * 0.66, boxY + boxH * 0.54, leftW * 0.28, boxH * 0.38);
+
+      ctx.beginPath();
+      ctx.moveTo(leftX + leftW * 0.35, boxY + boxH * 0.48);
+      ctx.lineTo(leftX + 4, boxY + 6);
+      ctx.lineTo(leftX + leftW - 4, boxY + 6);
+      ctx.lineTo(leftX + leftW * 0.65, boxY + boxH * 0.48);
+      ctx.closePath();
+      ctx.fillStyle = "rgba(107,148,158,0.18)";
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = "#4b311b";
+      ctx.font = Math.max(9, Math.round(W * 0.021)) + "px Georgia, serif";
+      ctx.fillText("INN ROOM (26)", leftX + 10, boxY + boxH * 0.93);
+
+      var rx0 = leftX + leftW + 18;
+      var rw = W - rx0 - 24;
+      for (var s = 0; s < STRATA_DEFS.length; s++) {
+        var idx = 8 - s;
+        var def = STRATA_DEFS[idx];
+        var sy = boxY + (s / 9) * boxH;
+        var sh = (boxH / 9) - 3;
+        ctx.fillStyle = (s === 0) ? "rgba(107,163,188,0.28)" : "rgba(168,122,56,0.18)";
+        ctx.fillRect(rx0, sy, rw, sh);
+        ctx.strokeStyle = "rgba(90,61,36,0.55)";
+        ctx.strokeRect(rx0, sy, rw, sh);
+        ctx.fillStyle = "#3b2412";
+        ctx.fillText((idx + 1) + ". " + def.label, rx0 + 6, sy + sh * 0.72);
+      }
+    } else {
+      var pad = 26;
+      var subW = W - pad * 2;
+      var subH = H - 68;
+      ctx.save();
+      ctx.translate(pad, 40);
+      var miniLayout = computeLayout(subW, subH);
+      renderWindowBackdrop(ctx, subW, subH, { layout: miniLayout, reducedMotion: true, time: 0 });
+      var ap = miniLayout.aperture;
+      for (var cf = 0; cf < 3; cf++) {
+        var fx = ap.x + ap.w * (0.28 + cf * 0.22);
+        var fy = ap.y + ap.h * 0.84;
+        var fr = Math.max(10, ap.w * 0.055);
+        ctx.fillStyle = "#e6b47c";
+        ctx.beginPath();
+        ctx.arc(fx, fy, fr, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = "#4b2e19";
+        ctx.lineWidth = 1.3;
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(fx, fy + fr * 0.12, fr * 0.45, 0.15 * Math.PI, 0.85 * Math.PI);
+        ctx.stroke();
+        ctx.fillStyle = "#f2c649";
+        ctx.fillRect(fx - fr * 0.65, fy + fr * 0.36, fr * 1.3, fr * 0.32);
+      }
+      renderWindowForegroundSashAndCurtain(ctx, subW, subH, { layout: miniLayout, curtainLift: 0.86 });
+      ctx.restore();
+    }
+
+    ctx.fillStyle = "#5a3d24";
+    ctx.font = "italic " + Math.max(9, Math.round(W * 0.021)) + "px Georgia, serif";
+    ctx.textAlign = "right";
+    ctx.fillText("Archival Copperplate Folio — Inn Ledger", W - 20, H - 18);
+    ctx.restore();
+    return true;
+  }
+
+  function createRenderer(options) {
+    var opts = options || {};
+    var defaultReduced = Boolean(opts.reducedMotion);
+
+    function mergeState(state) {
+      var st = state || {};
+      if (st.reducedMotion === undefined) {
+        return {
+          layout: st.layout,
+          time: st.time,
+          curtainLift: st.curtainLift,
+          citizenCount: st.citizenCount,
+          viewMode: st.viewMode,
+          reducedMotion: defaultReduced
+        };
+      }
+      return st;
+    }
+
+    return {
+      STRATA_DEFS: STRATA_DEFS,
+      computeLayout: computeLayout,
+      renderWindowBackdrop: function (ctx, width, height, state) {
+        return renderWindowBackdrop(ctx, width, height, mergeState(state));
+      },
+      renderWindowForegroundSashAndCurtain: function (ctx, width, height, state) {
+        return renderWindowForegroundSashAndCurtain(ctx, width, height, mergeState(state));
+      },
+      renderRoomBackdrop: function (ctx, width, height, state) {
+        return renderRoomBackdrop(ctx, width, height, mergeState(state));
+      },
+      computeVisibilityReport: computeVisibilityReport,
+      renderArchivalPreview: renderArchivalPreview
+    };
+  }
+
+  var api = {
+    STRATA_DEFS: STRATA_DEFS,
+    createRenderer: createRenderer,
+    computeLayout: computeLayout,
+    computeVisibilityReport: computeVisibilityReport,
+    renderArchivalPreview: renderArchivalPreview
+  };
+
+  root.ProcopiaWindowStrata = api;
+  if (typeof window !== "undefined") {
+    window.ProcopiaWindowStrata = api;
+  }
+})(typeof globalThis !== "undefined" ? globalThis : (typeof window !== "undefined" ? window : this));
+
+/*
+ * City 48: Procopia — Annual Multitude, Stratum Occlusion & 26 Room Lodgers
+ * Traveler's Inn-Window Ledger Module (Standalone Browser IIFE)
+ * Exposes globalThis.ProcopiaFaceOcclusion
+ */
+(function (root) {
+  'use strict';
+
+  var STRATA_IDS = Object.freeze([
+    'ditch',
+    'bridge',
+    'little_wall',
+    'medlar_tree',
+    'cornfield',
+    'blackberry_bushes',
+    'chicken_yard',
+    'yellow_hill',
+    'trapeze_sky'
+  ]);
+
+  var ANNUAL_STEPS = Object.freeze([
+    Object.freeze({
+      yearIndex: 0,
+      yearNumber: 1,
+      visitRoman: 'I',
+      count: 0,
+      key: 'solitude',
+      roomOccupants: 0,
+      narrative: 'Same room at the inn: lifting the raw-linen curtain discloses a ditch, a bridge, a little wall, a medlar tree, a field of corn, thorny blackberry bushes, a chicken yard, the yellow hump of a hill, and an upside-down trapeze of sky—not a soul in sight.'
+    }),
+    Object.freeze({
+      yearIndex: 1,
+      yearNumber: 2,
+      visitRoman: 'II',
+      count: 1,
+      key: 'first_peasant',
+      roomOccupants: 0,
+      narrative: 'Returning next harvest, one countryman stands in the ditch beneath the sill: round flat face, full rosy-ochre cheeks, calm eyes, and a golden ear of corn held horizontally between both hands at his polite smile.'
+    }),
+    Object.freeze({
+      yearIndex: 2,
+      yearNumber: 3,
+      visitRoman: 'III',
+      count: 3,
+      key: 'ditch_hidden',
+      roomOccupants: 0,
+      narrative: 'Three good-natured inhabitants now sit and stand shoulder to shoulder along the embankment; the ditch is altogether hidden behind their round smiling cheeks and husked cobs of maize.'
+    }),
+    Object.freeze({
+      yearIndex: 3,
+      yearNumber: 4,
+      visitRoman: 'IV',
+      count: 6,
+      key: 'bridge_wall_hidden',
+      roomOccupants: 1,
+      narrative: 'Six round, flat faces fill the lower casement; neither the rustic bridge nor the little stone wall remains visible, and behind me one quiet lodger already crouches politely on the pegged floorboards.'
+    }),
+    Object.freeze({
+      yearIndex: 4,
+      yearNumber: 5,
+      visitRoman: 'V',
+      count: 16,
+      key: 'medlar_thorns_gone',
+      roomOccupants: 3,
+      narrative: 'Sixteen full-cheeked citizens crowd past the orchard line, swallowing the gnarled medlar tree and the thorny blackberry canes beneath straw brims, knotted kerchiefs, and nibbled ears of corn.'
+    }),
+    Object.freeze({
+      yearIndex: 5,
+      yearNumber: 6,
+      visitRoman: 'VI',
+      count: 29,
+      key: 'cornfield_gone',
+      roomOccupants: 7,
+      narrative: 'Twenty-nine calm, smiling faces stand where the field of corn once tasseled; the stalks have vanished behind those who hold the golden ears horizontally to their teeth, while seven rest quietly in my room.'
+    }),
+    Object.freeze({
+      yearIndex: 6,
+      yearNumber: 7,
+      visitRoman: 'VII',
+      count: 47,
+      key: 'chickens_gone',
+      roomOccupants: 13,
+      narrative: 'Forty-seven amiable countryfolk cover the chicken yard and climb the lower slope; only the yellow hump of the hill and the upside-down trapeze of sky still breathe above their round faces.'
+    }),
+    Object.freeze({
+      yearIndex: 7,
+      yearNumber: 8,
+      visitRoman: 'VIII',
+      count: 144,
+      key: 'hill_carpeted',
+      roomOccupants: 19,
+      narrative: 'One hundred and forty-four round, flat faces carpet the entire yellow hump of the hill; above that silent, smiling multitude, nothing of the landscape remains save the patch of sky shaped like an upside-down trapeze.'
+    }),
+    Object.freeze({
+      yearIndex: 8,
+      yearNumber: 9,
+      visitRoman: 'IX',
+      count: 360,
+      key: 'full_saturation',
+      roomOccupants: 26,
+      narrative: 'Three hundred and sixty smiling faces pack the window from sill to lintel—even the upside-down trapeze of sky is gone. Stepping back into the tiny inn room, twenty-six polite lodgers crouch on the floor, perch on the chest, and share the bed, parting their knees as I pass.'
+    })
+  ]);
+
+  var ROOM_BREAKDOWNS = Object.freeze([
+    Object.freeze({ floor: 0, chest: 0, bed: 0 }),
+    Object.freeze({ floor: 0, chest: 0, bed: 0 }),
+    Object.freeze({ floor: 0, chest: 0, bed: 0 }),
+    Object.freeze({ floor: 1, chest: 0, bed: 0 }),
+    Object.freeze({ floor: 1, chest: 1, bed: 1 }),
+    Object.freeze({ floor: 3, chest: 2, bed: 2 }),
+    Object.freeze({ floor: 5, chest: 4, bed: 4 }),
+    Object.freeze({ floor: 7, chest: 6, bed: 6 }),
+    Object.freeze({ floor: 9, chest: 8, bed: 9 })
+  ]);
+
+  var OCCLUSION_TABLE = Object.freeze([
+    { ditch: 0.00, bridge: 0.00, little_wall: 0.00, medlar_tree: 0.00, cornfield: 0.00, blackberry_bushes: 0.00, chicken_yard: 0.00, yellow_hill: 0.00, trapeze_sky: 0.00 },
+    { ditch: 0.52, bridge: 0.00, little_wall: 0.00, medlar_tree: 0.00, cornfield: 0.00, blackberry_bushes: 0.00, chicken_yard: 0.00, yellow_hill: 0.00, trapeze_sky: 0.00 },
+    { ditch: 1.00, bridge: 0.35, little_wall: 0.00, medlar_tree: 0.00, cornfield: 0.00, blackberry_bushes: 0.00, chicken_yard: 0.00, yellow_hill: 0.00, trapeze_sky: 0.00 },
+    { ditch: 1.00, bridge: 1.00, little_wall: 1.00, medlar_tree: 0.25, cornfield: 0.00, blackberry_bushes: 0.00, chicken_yard: 0.00, yellow_hill: 0.00, trapeze_sky: 0.00 },
+    { ditch: 1.00, bridge: 1.00, little_wall: 1.00, medlar_tree: 1.00, cornfield: 0.30, blackberry_bushes: 1.00, chicken_yard: 0.00, yellow_hill: 0.00, trapeze_sky: 0.00 },
+    { ditch: 1.00, bridge: 1.00, little_wall: 1.00, medlar_tree: 1.00, cornfield: 1.00, blackberry_bushes: 1.00, chicken_yard: 0.35, yellow_hill: 0.00, trapeze_sky: 0.00 },
+    { ditch: 1.00, bridge: 1.00, little_wall: 1.00, medlar_tree: 1.00, cornfield: 1.00, blackberry_bushes: 1.00, chicken_yard: 1.00, yellow_hill: 0.38, trapeze_sky: 0.00 },
+    { ditch: 1.00, bridge: 1.00, little_wall: 1.00, medlar_tree: 1.00, cornfield: 1.00, blackberry_bushes: 1.00, chicken_yard: 1.00, yellow_hill: 1.00, trapeze_sky: 0.28 },
+    { ditch: 1.00, bridge: 1.00, little_wall: 1.00, medlar_tree: 1.00, cornfield: 1.00, blackberry_bushes: 1.00, chicken_yard: 1.00, yellow_hill: 1.00, trapeze_sky: 1.00 }
+  ]);
+
+  function clamp(v, lo, hi) {
+    return v < lo ? lo : (v > hi ? hi : v);
+  }
+
+  function lerp(a, b, t) {
+    return a + (b - a) * t;
+  }
+
+  function clampYearIndex(idx) {
+    var n = Number(idx);
+    if (!Number.isFinite(n)) return 0;
+    return clamp(Math.round(n), 0, ANNUAL_STEPS.length - 1);
+  }
+
+  function getOcclusionByStratum(yearIndex) {
+    var yi = clampYearIndex(yearIndex);
+    var src = OCCLUSION_TABLE[yi];
+    var copy = {};
+    for (var i = 0; i < STRATA_IDS.length; i++) {
+      var k = STRATA_IDS[i];
+      copy[k] = src[k];
+    }
+    return copy;
+  }
+
+  function computeStrataMetrics(occ, yearIndex) {
+    var visibleCount = 0;
+    for (var i = 0; i < STRATA_IDS.length; i++) {
+      if ((1 - occ[STRATA_IDS[i]]) > 0.05) {
+        visibleCount++;
+      }
+    }
+    var ditchVis = (1 - occ.ditch) > 0.05;
+    var skyVis = (1 - occ.trapeze_sky) > 0.05;
+    return {
+      visibleStrataCount: visibleCount,
+      ditchVisible: ditchVis,
+      skyVisible: skyVis,
+      horizonFaceWall: yearIndex === 8 && !skyVis && visibleCount === 0
+    };
+  }
+
+  function hashU32(seed) {
+    var x = (seed | 0) + 0x9e3779b9;
+    x = Math.imul(x ^ (x >>> 16), 0x85ebca6b);
+    x = Math.imul(x ^ (x >>> 13), 0xc2b2ae35);
+    return (x ^ (x >>> 16)) >>> 0;
+  }
+
+  function rand01(seed, salt) {
+    return hashU32(Math.imul(seed + 17, 374761393) + Math.imul(salt + 31, 668265263)) / 4294967296;
+  }
+
+  function normRect(r, fb) {
+    if (!r) return fb;
+    var x = Number.isFinite(r.x) ? r.x : (Number.isFinite(r.xMin) ? r.xMin : fb.x);
+    var y = Number.isFinite(r.y) ? r.y : (Number.isFinite(r.yMin) ? r.yMin : fb.y);
+    var w = Number.isFinite(r.w) ? r.w : (Number.isFinite(r.width) ? r.width : (Number.isFinite(r.xMax) ? r.xMax - x : fb.w));
+    var h = Number.isFinite(r.h) ? r.h : (Number.isFinite(r.height) ? r.height : (Number.isFinite(r.yMax) ? r.yMax - y : fb.h));
+    return { x: x, y: y, w: Math.max(8, w), h: Math.max(8, h) };
+  }
+
+  function resolveAperture(ctx, layout) {
+    var cw = (ctx && ctx.canvas && ctx.canvas.width) ? ctx.canvas.width : 960;
+    var ch = (ctx && ctx.canvas && ctx.canvas.height) ? ctx.canvas.height : 640;
+    var fb = { x: cw * 0.16, y: ch * 0.11, w: cw * 0.68, h: ch * 0.76 };
+    return normRect(layout && layout.aperture, fb);
+  }
+
+  var DEFAULT_BAND_SLICE = {
+    trapeze_sky: [0.00, 0.16],
+    yellow_hill: [0.11, 0.31],
+    chicken_yard: [0.28, 0.42],
+    blackberry_bushes: [0.39, 0.53],
+    cornfield: [0.46, 0.63],
+    medlar_tree: [0.57, 0.73],
+    little_wall: [0.69, 0.81],
+    bridge: [0.77, 0.90],
+    ditch: [0.86, 1.00]
+  };
+
+  function getBandBox(layout, ap, id) {
+    var sl = DEFAULT_BAND_SLICE[id] || [0.5, 0.7];
+    var b = layout && layout.strataBands && layout.strataBands[id];
+    var xMin = (b && Number.isFinite(b.xMin)) ? b.xMin : ap.x;
+    var xMax = (b && Number.isFinite(b.xMax)) ? b.xMax : (ap.x + ap.w);
+    var yMin = (b && Number.isFinite(b.yMin)) ? b.yMin : (ap.y + ap.h * sl[0]);
+    var yMax = (b && Number.isFinite(b.yMax)) ? b.yMax : (ap.y + ap.h * sl[1]);
+    var cy = (b && Number.isFinite(b.centerY)) ? b.centerY : (yMin + yMax) * 0.5;
+    return { xMin: xMin, xMax: xMax, yMin: yMin, yMax: yMax, centerY: cy };
+  }
+
+  function pointInPoly(px, py, poly) {
+    if (!poly || poly.length < 3) return false;
+    var inside = false;
+    for (var i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+      var xi = poly[i].x, yi = poly[i].y;
+      var xj = poly[j].x, yj = poly[j].y;
+      var intersect = ((yi > py) !== (yj > py)) && (px < (xj - xi) * (py - yi) / ((yj - yi) || 1e-6) + xi);
+      if (intersect) inside = !inside;
+    }
+    return inside;
+  }
+
+  var SKIN_TONES = ['#eac092', '#e3b382', '#efd0a4', '#dca676', '#e8ba8b', '#f0c89b', '#d9a070'];
+  var CHEEK_TONES = ['rgba(216,104,78,0.40)', 'rgba(208,92,72,0.38)', 'rgba(224,116,84,0.42)', 'rgba(198,88,68,0.36)'];
+  var TUNIC_TONES = ['#8b5a36', '#5e7248', '#a66a3e', '#4c6572', '#9c7d46', '#794838', '#687058', '#b5894d'];
+  var KERCHIEF_TONES = ['#c45838', '#6a8252', '#496878', '#cc943c', '#9e4b3e', '#7c6244'];
+  var HAT_STRAW = ['#dfc27d', '#d6b56d', '#e6cb89', '#cca960'];
+
+  function drawHorizontalCornCob(ctx, cx, my, r, seed, skinHex, detailLevel, nibbleShift) {
+    var cobW = r * 1.18;
+    var cobH = Math.max(3.2, r * 0.31);
+    var cy = my + r * 0.11;
+    var ox = cx + nibbleShift;
+
+    // Peeled pale-celadon corn husks flaring left and right
+    ctx.fillStyle = '#9db06f';
+    ctx.strokeStyle = '#536334';
+    ctx.lineWidth = Math.max(0.8, r * 0.045);
+    for (var side = -1; side <= 1; side += 2) {
+      ctx.beginPath();
+      var hx = ox + side * cobW * 0.46;
+      ctx.moveTo(hx, cy);
+      ctx.quadraticCurveTo(hx + side * r * 0.34, cy - cobH * 0.95, hx + side * r * 0.52, cy + cobH * 0.35);
+      ctx.quadraticCurveTo(hx + side * r * 0.24, cy + cobH * 1.15, hx, cy + cobH * 0.32);
+      ctx.closePath();
+      ctx.fill();
+      if (detailLevel !== 'compact') ctx.stroke();
+    }
+
+    // Golden-ochre cob body
+    ctx.beginPath();
+    ctx.ellipse(ox, cy, cobW * 0.52, cobH * 0.54, 0, 0, Math.PI * 2);
+    ctx.fillStyle = '#ebba34';
+    ctx.fill();
+    ctx.strokeStyle = '#7d5516';
+    ctx.lineWidth = Math.max(0.8, r * 0.048);
+    ctx.stroke();
+
+    // Kernel rows along horizontal ear of corn
+    if (detailLevel === 'full' || (detailLevel === 'mid' && r >= 10)) {
+      var cols = detailLevel === 'full' ? 7 : 5;
+      var rows = detailLevel === 'full' ? 3 : 2;
+      for (var kr = 0; kr < rows; kr++) {
+        var ky = cy + ((kr - (rows - 1) * 0.5) * cobH * 0.52);
+        for (var kc = 0; kc < cols; kc++) {
+          var frac = (kc + 0.5) / cols - 0.5;
+          var kx = ox + frac * cobW * 0.84 + ((kr % 2) * cobW * 0.04);
+          ctx.beginPath();
+          ctx.ellipse(kx, ky, cobW * 0.058, cobH * 0.21, 0, 0, Math.PI * 2);
+          ctx.fillStyle = ((kc + kr + seed) % 3 === 0) ? '#fbe176' : (((kc + kr) % 2 === 0) ? '#f1c238' : '#dca022');
+          ctx.fill();
+        }
+      }
+    } else {
+      ctx.beginPath();
+      ctx.moveTo(ox - cobW * 0.38, cy);
+      ctx.lineTo(ox + cobW * 0.38, cy);
+      ctx.strokeStyle = '#fbe27a';
+      ctx.lineWidth = Math.max(1.0, cobH * 0.28);
+      ctx.stroke();
+    }
+
+    // Both hands clasping the cob horizontally at the mouth
+    var handR = Math.max(2.2, r * 0.20);
+    ctx.fillStyle = skinHex;
+    ctx.strokeStyle = '#5a3a22';
+    ctx.lineWidth = Math.max(0.8, r * 0.045);
+    for (var hs = -1; hs <= 1; hs += 2) {
+      var handX = ox + hs * cobW * 0.52;
+      ctx.beginPath();
+      ctx.ellipse(handX, cy + cobH * 0.08, handR * 0.92, handR * 1.08, hs * 0.24, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+    }
+  }
+
+  function drawCitizenFigure(ctx, p, anim) {
+    var r = p.r;
+    var bob = anim.reducedMotion ? 0 : Math.sin(anim.timeSec * 1.45 + p.phase) * Math.min(1.6, r * 0.04);
+    var cx = p.cx + (anim.shiftX || 0);
+    var cy = p.cy + bob + (anim.nodY || 0);
+    var rx = r * 1.08;
+    var ry = r * 0.98;
+    var detail = p.detail || (r >= 20 ? 'full' : (r >= 11 ? 'mid' : 'compact'));
+    var skin = SKIN_TONES[p.seed % SKIN_TONES.length];
+    var cheek = CHEEK_TONES[p.seed % CHEEK_TONES.length];
+    var tunic = TUNIC_TONES[(p.seed * 3) % TUNIC_TONES.length];
+    var headStyle = p.seed % 3; // 0: straw hat, 1: kerchief, 2: soft harvest cap
+
+    // Broad homespun shoulders & collar (seals inter-row spaces naturally)
+    if (p.drawShoulders !== false) {
+      ctx.beginPath();
+      ctx.ellipse(cx, cy + ry * 1.24, rx * 1.38, ry * 0.86, 0, Math.PI, Math.PI * 2, false);
+      ctx.lineTo(cx + rx * 1.42, cy + ry * 1.65);
+      ctx.lineTo(cx - rx * 1.42, cy + ry * 1.65);
+      ctx.closePath();
+      ctx.fillStyle = tunic;
+      ctx.fill();
+      ctx.strokeStyle = '#3f2918';
+      ctx.lineWidth = Math.max(0.8, r * 0.05);
+      ctx.stroke();
+
+      if (detail !== 'compact') {
+        ctx.beginPath();
+        ctx.moveTo(cx - rx * 0.30, cy + ry * 0.82);
+        ctx.lineTo(cx, cy + ry * 1.18);
+        ctx.lineTo(cx + rx * 0.30, cy + ry * 0.82);
+        ctx.strokeStyle = '#efe2c6';
+        ctx.lineWidth = Math.max(0.9, r * 0.06);
+        ctx.stroke();
+      }
+    }
+
+    // Wide woven straw hat back-brim behind round face
+    if (headStyle === 0) {
+      ctx.beginPath();
+      ctx.ellipse(cx, cy - ry * 0.42, rx * 1.34, ry * 0.44, 0, 0, Math.PI * 2);
+      ctx.fillStyle = HAT_STRAW[p.seed % HAT_STRAW.length];
+      ctx.fill();
+      ctx.strokeStyle = '#6c4d23';
+      ctx.lineWidth = Math.max(0.8, r * 0.048);
+      ctx.stroke();
+    }
+
+    // Round, flat face disc
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
+    ctx.fillStyle = skin;
+    ctx.fill();
+    ctx.strokeStyle = '#53351e';
+    ctx.lineWidth = Math.max(0.85, r * 0.055);
+    ctx.stroke();
+
+    // Full rosy-ochre cheeks
+    var chR = r * 0.29;
+    ctx.fillStyle = cheek;
+    ctx.beginPath();
+    ctx.arc(cx - rx * 0.50, cy + ry * 0.14, chR, 0, Math.PI * 2);
+    ctx.arc(cx + rx * 0.50, cy + ry * 0.14, chR, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Headwear top crown / kerchief / cap
+    if (headStyle === 0) {
+      ctx.beginPath();
+      ctx.ellipse(cx, cy - ry * 0.78, rx * 0.76, ry * 0.32, 0, Math.PI, Math.PI * 2);
+      ctx.closePath();
+      ctx.fillStyle = HAT_STRAW[p.seed % HAT_STRAW.length];
+      ctx.fill();
+      ctx.strokeStyle = '#6c4d23';
+      ctx.stroke();
+    } else if (headStyle === 1) {
+      ctx.beginPath();
+      ctx.arc(cx, cy - ry * 0.06, rx * 1.02, Math.PI * 1.08, Math.PI * 1.92);
+      ctx.quadraticCurveTo(cx, cy - ry * 0.64, cx - rx * 0.96, cy - ry * 0.28);
+      ctx.closePath();
+      ctx.fillStyle = KERCHIEF_TONES[p.seed % KERCHIEF_TONES.length];
+      ctx.fill();
+    } else {
+      ctx.beginPath();
+      ctx.ellipse(cx, cy - ry * 0.74, rx * 0.84, ry * 0.34, -0.05, 0, Math.PI * 2);
+      ctx.fillStyle = KERCHIEF_TONES[(p.seed + 2) % KERCHIEF_TONES.length];
+      ctx.fill();
+    }
+
+    // Calm friendly eyes
+    var exOff = rx * 0.34;
+    var ey = cy - ry * 0.12;
+    var gx = (anim.gazeX || 0) * r * 0.06;
+    var gy = (anim.gazeY || 0) * r * 0.04;
+    ctx.strokeStyle = '#3b2414';
+    ctx.fillStyle = '#321e10';
+    ctx.lineWidth = Math.max(0.85, r * 0.06);
+    for (var es = -1; es <= 1; es += 2) {
+      var ex = cx + es * exOff;
+      ctx.beginPath();
+      ctx.arc(ex, ey, Math.max(1.4, r * 0.15), Math.PI * 1.12, Math.PI * 1.88);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(ex + gx, ey + r * 0.04 + gy, Math.max(1.1, r * 0.085), 0, Math.PI * 2);
+      ctx.fill();
+      if (detail === 'full') {
+        ctx.fillStyle = '#fff9eb';
+        ctx.beginPath();
+        ctx.arc(ex + gx - r * 0.025, ey + r * 0.015 + gy, Math.max(0.7, r * 0.03), 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#321e10';
+      }
+    }
+
+    // Gentle nose & polite smile (with ivory teeth when holding corn)
+    if (detail !== 'compact') {
+      ctx.beginPath();
+      ctx.arc(cx, cy + ry * 0.04, Math.max(1.0, r * 0.08), 0.15 * Math.PI, 0.85 * Math.PI);
+      ctx.strokeStyle = 'rgba(92,56,30,0.55)';
+      ctx.lineWidth = Math.max(0.75, r * 0.045);
+      ctx.stroke();
+    }
+
+    var smileY = cy + ry * 0.27;
+    var smileW = rx * (0.34 + (anim.smileBoost || 0) * 0.09);
+    ctx.beginPath();
+    ctx.arc(cx, smileY - r * 0.06, smileW, 0.14 * Math.PI, 0.86 * Math.PI);
+    if (p.hasCorn || (anim.smileBoost && anim.smileBoost > 0.2)) {
+      ctx.closePath();
+      ctx.fillStyle = '#fbf2dc';
+      ctx.fill();
+    }
+    ctx.strokeStyle = '#4c2c18';
+    ctx.lineWidth = Math.max(0.9, r * 0.06);
+    ctx.stroke();
+
+    if (p.hasCorn) {
+      var nibble = anim.reducedMotion ? 0 : Math.sin(anim.timeSec * 3.1 + p.phase * 1.7) * Math.min(1.4, r * 0.045);
+      drawHorizontalCornCob(ctx, cx, smileY + r * 0.13, r, p.seed, skin, detail, nibble);
+    }
+  }
+
+  function resolveSkyKeepoutPoly(layout, ap, skyBand) {
+    var src = layout && Array.isArray(layout.trapezeSkyPoly) && layout.trapezeSkyPoly.length >= 3
+      ? layout.trapezeSkyPoly
+      : [
+          { x: ap.x + ap.w * 0.16, y: ap.y },
+          { x: ap.x + ap.w * 0.84, y: ap.y },
+          { x: ap.x + ap.w * 0.70, y: skyBand.yMax },
+          { x: ap.x + ap.w * 0.30, y: skyBand.yMax }
+        ];
+    var cx = 0, cy = 0;
+    for (var i = 0; i < src.length; i++) {
+      cx += src[i].x;
+      cy += src[i].y;
+    }
+    cx /= src.length;
+    cy /= src.length;
+    var out = [];
+    for (var k = 0; k < src.length; k++) {
+      out.push({
+        x: cx + (src[k].x - cx) * 0.80,
+        y: src[k].y <= cy ? src[k].y : (cy + (src[k].y - cy) * 0.88)
+      });
+    }
+    return out;
+  }
+
+  function buildRowBand(out, count, xMin, xMax, yCenter, rBase, hasCornAll, seedBase, detailOverride) {
+    var span = Math.max(12, xMax - xMin);
+    for (var i = 0; i < count; i++) {
+      var u = count === 1 ? 0.52 : (i + 0.5) / count;
+      var seed = seedBase + i * 13 + 7;
+      var jx = (rand01(seed, 1) - 0.5) * (span / Math.max(2, count)) * 0.22;
+      var jy = (rand01(seed, 2) - 0.5) * rBase * 0.18;
+      out.push({
+        cx: clamp(xMin + u * span + jx, xMin + rBase * 0.35, xMax - rBase * 0.35),
+        cy: yCenter + jy,
+        r: rBase * (0.95 + rand01(seed, 3) * 0.10),
+        seed: seed,
+        phase: rand01(seed, 4) * Math.PI * 2,
+        hasCorn: hasCornAll ? true : (rand01(seed, 5) < 0.65),
+        detail: detailOverride || null,
+        drawShoulders: true
+      });
+    }
+  }
+
+  function buildWindowCrowd(yearIndex, ap, layout) {
+    var yi = clampYearIndex(yearIndex);
+    var target = ANNUAL_STEPS[yi].count;
+    if (target === 0) return [];
+
+    var S = Math.min(ap.w, ap.h);
+    var bDitch = getBandBox(layout, ap, 'ditch');
+    var bBridge = getBandBox(layout, ap, 'bridge');
+    var bWall = getBandBox(layout, ap, 'little_wall');
+    var bMedlar = getBandBox(layout, ap, 'medlar_tree');
+    var bCorn = getBandBox(layout, ap, 'cornfield');
+    var bBerry = getBandBox(layout, ap, 'blackberry_bushes');
+    var bChick = getBandBox(layout, ap, 'chicken_yard');
+    var bHill = getBandBox(layout, ap, 'yellow_hill');
+    var bSky = getBandBox(layout, ap, 'trapeze_sky');
+    var list = [];
+
+    if (yi === 1) {
+      buildRowBand(list, 1, bDitch.xMin, bDitch.xMax, lerp(bDitch.yMin, bDitch.yMax, 0.36), clamp(Math.min(ap.w * 0.11, ap.h * 0.125), 18, 76), true, 101, 'full');
+    } else if (yi === 2) {
+      buildRowBand(list, 3, ap.x, ap.x + ap.w, lerp(bBridge.centerY, bDitch.centerY, 0.56), clamp(Math.min(ap.w * 0.125, ap.h * 0.175), 20, 112), true, 203, 'full');
+    } else if (yi === 3) {
+      buildRowBand(list, 3, ap.x, ap.x + ap.w, lerp(bMedlar.yMax, bWall.yMin, 0.48), clamp(Math.min(ap.w * 0.115, ap.h * 0.155), 18, 98), true, 307, 'full');
+      buildRowBand(list, 3, ap.x, ap.x + ap.w, lerp(bBridge.centerY, bDitch.centerY, 0.62), clamp(Math.min(ap.w * 0.125, ap.h * 0.170), 20, 110), true, 347, 'full');
+    } else if (yi === 4) {
+      var top4 = Math.min(bMedlar.yMin, bBerry.yMin, lerp(bCorn.yMin, bCorn.yMax, 0.70)) + S * 0.02;
+      var bot4 = bDitch.yMax - S * 0.03;
+      var r4 = clamp(Math.min(ap.w * 0.095, ap.h * 0.125), 15, 82);
+      for (var row4 = 0; row4 < 4; row4++) {
+        var f4 = row4 / 3;
+        buildRowBand(list, 4, ap.x, ap.x + ap.w, lerp(top4, bot4, f4), r4 * (0.88 + 0.18 * f4), true, 400 + row4 * 41, 'full');
+      }
+    } else if (yi === 5) {
+      var counts5 = [6, 6, 6, 6, 5];
+      var top5 = lerp(bChick.yMin, bChick.yMax, 0.65);
+      var bot5 = bDitch.yMax - S * 0.03;
+      var r5 = clamp(Math.min(ap.w * 0.068, ap.h * 0.105), 13, 66);
+      for (var row5 = 0; row5 < 5; row5++) {
+        var f5 = row5 / 4;
+        buildRowBand(list, counts5[row5], ap.x, ap.x + ap.w, lerp(top5, bot5, f5), r5 * (0.85 + 0.22 * f5), row5 >= 1, 500 + row5 * 53, 'full');
+      }
+    } else if (yi === 6) {
+      var counts6 = [8, 7, 7, 7, 6, 6, 6];
+      var top6 = lerp(bHill.yMin, bHill.yMax, 0.62);
+      var bot6 = bDitch.yMax - S * 0.025;
+      var r6 = clamp(Math.min(ap.w * 0.056, ap.h * 0.092), 11, 54);
+      for (var row6 = 0; row6 < 7; row6++) {
+        var f6 = row6 / 6;
+        buildRowBand(list, counts6[row6], ap.x, ap.x + ap.w, lerp(top6, bot6, f6), r6 * (0.82 + 0.28 * f6), row6 >= 2, 600 + row6 * 59, 'mid');
+      }
+    } else if (yi === 7) {
+      var keepPoly = resolveSkyKeepoutPoly(layout, ap, bSky);
+      var skyFloorY = bSky.yMax;
+      var top7 = Math.max(ap.y + S * 0.04, bSky.yMin + (bSky.yMax - bSky.yMin) * 0.42);
+      var bot7 = ap.y + ap.h - S * 0.02;
+      var cellW7 = ap.w / 11.4;
+      var cellH7 = (bot7 - top7) / 11.2;
+      for (var r7i = 0; r7i < 12; r7i++) {
+        var rf7 = r7i / 11;
+        var rad7 = Math.max(cellW7, cellH7) * (0.64 + 0.24 * rf7);
+        var stag7 = (r7i % 2 === 1) ? 0.24 : -0.24;
+        for (var c7i = 0; c7i < 12; c7i++) {
+          var sd7 = 700 + r7i * 37 + c7i * 19;
+          var x7 = ap.x + ((c7i + 0.5 + stag7) / 12) * ap.w + (rand01(sd7, 1) - 0.5) * cellW7 * 0.16;
+          var y7 = lerp(top7, bot7, rf7) + (rand01(sd7, 2) - 0.5) * cellH7 * 0.14;
+          if (pointInPoly(x7, y7 - rad7 * 0.95, keepPoly) || pointInPoly(x7, y7, keepPoly)) {
+            y7 = Math.max(y7, skyFloorY + rad7 * 0.96 + rand01(sd7, 6) * cellH7 * 0.35);
+          }
+          list.push({
+            cx: clamp(x7, ap.x + rad7 * 0.1, ap.x + ap.w - rad7 * 0.1),
+            cy: y7,
+            r: rad7,
+            seed: sd7,
+            phase: rand01(sd7, 4) * Math.PI * 2,
+            hasCorn: r7i >= 7 || (r7i >= 4 && (c7i + r7i) % 2 === 0),
+            detail: r7i >= 9 ? 'mid' : 'compact',
+            drawShoulders: true
+          });
+        }
+      }
+    } else {
+      // Year IX (360): 18 cols x 20 rows = 360 overlapping faces sealing 100% of aperture & trapezeSkyPoly
+      var cellW8 = ap.w / 17.0;
+      var cellH8 = ap.h / 19.0;
+      for (var r8i = 0; r8i < 20; r8i++) {
+        var rf8 = r8i / 19;
+        var rad8 = Math.max(cellW8, cellH8) * (0.80 + 0.18 * rf8);
+        var stag8 = (r8i % 2 === 1) ? 0.22 : -0.22;
+        for (var c8i = 0; c8i < 18; c8i++) {
+          var sd8 = 900 + r8i * 43 + c8i * 23;
+          var x8 = ap.x + ((c8i + stag8) / 17.0) * ap.w + (rand01(sd8, 1) - 0.5) * cellW8 * 0.10;
+          var y8 = ap.y + (0.08 + rf8 * 0.90) * ap.h + (rand01(sd8, 2) - 0.5) * cellH8 * 0.10;
+          list.push({
+            cx: x8,
+            cy: y8,
+            r: rad8,
+            seed: sd8,
+            phase: rand01(sd8, 4) * Math.PI * 2,
+            hasCorn: r8i >= 14 || (r8i >= 9 && (c8i + r8i) % 3 === 0),
+            detail: r8i >= 16 ? 'mid' : 'compact',
+            drawShoulders: true
+          });
+        }
+      }
+    }
+
+    list.sort(function (a, b) {
+      return (a.cy - b.cy) || (a.seed - b.seed);
+    });
+    return list;
+  }
+
+  // Canonical 9 floor crouching slots (index 0 centered so Yr IV single lodger is centered)
+  var FLOOR_SLOTS = [
+    { u: 0.50, v: 0.58, seed: 1103, hasCorn: true },
+    { u: 0.26, v: 0.44, seed: 1117, hasCorn: true },
+    { u: 0.74, v: 0.46, seed: 1129, hasCorn: false },
+    { u: 0.15, v: 0.74, seed: 1151, hasCorn: true },
+    { u: 0.85, v: 0.73, seed: 1163, hasCorn: true },
+    { u: 0.37, v: 0.78, seed: 1181, hasCorn: false },
+    { u: 0.63, v: 0.79, seed: 1193, hasCorn: true },
+    { u: 0.39, v: 0.32, seed: 1213, hasCorn: false },
+    { u: 0.62, v: 0.33, seed: 1229, hasCorn: true }
+  ];
+
+  // Canonical 8 chest-of-drawers seated slots (perched on walnut top & open lower drawers)
+  var CHEST_SLOTS = [
+    { u: 0.24, v: 0.10, seed: 1301, hasCorn: true },
+    { u: 0.54, v: 0.08, seed: 1319, hasCorn: false },
+    { u: 0.81, v: 0.11, seed: 1327, hasCorn: true },
+    { u: 0.16, v: 0.42, seed: 1361, hasCorn: false },
+    { u: 0.45, v: 0.40, seed: 1373, hasCorn: true },
+    { u: 0.75, v: 0.43, seed: 1381, hasCorn: true },
+    { u: 0.31, v: 0.74, seed: 1399, hasCorn: false },
+    { u: 0.66, v: 0.75, seed: 1409, hasCorn: true }
+  ];
+
+  // Canonical 9 narrow inn-bed slots (elbow-to-elbow taking turns along bolster & quilt)
+  var BED_SLOTS = [
+    { u: 0.18, v: 0.18, seed: 1511, hasCorn: false },
+    { u: 0.40, v: 0.16, seed: 1523, hasCorn: true },
+    { u: 0.62, v: 0.17, seed: 1531, hasCorn: false },
+    { u: 0.84, v: 0.19, seed: 1543, hasCorn: true },
+    { u: 0.14, v: 0.56, seed: 1553, hasCorn: true },
+    { u: 0.33, v: 0.58, seed: 1567, hasCorn: false },
+    { u: 0.52, v: 0.57, seed: 1579, hasCorn: true },
+    { u: 0.71, v: 0.59, seed: 1597, hasCorn: true },
+    { u: 0.89, v: 0.56, seed: 1607, hasCorn: false }
+  ];
+
+  function resolveRoomZones(ctx, layout) {
+    var cw = (ctx && ctx.canvas && ctx.canvas.width) ? ctx.canvas.width : 960;
+    var ch = (ctx && ctx.canvas && ctx.canvas.height) ? ctx.canvas.height : 640;
+    var rz = (layout && layout.roomZones) || {};
+    return {
+      chestRect: normRect(rz.chestRect, { x: cw * 0.07, y: ch * 0.34, w: cw * 0.29, h: ch * 0.34 }),
+      bedRect: normRect(rz.bedRect, { x: cw * 0.58, y: ch * 0.35, w: cw * 0.35, h: ch * 0.33 }),
+      floorRect: normRect(rz.floorRect, { x: cw * 0.10, y: ch * 0.62, w: cw * 0.80, h: ch * 0.31 })
+    };
+  }
+
+  function computeFloorKneeParting(floorCount, stepCursor, ptrFloor) {
+    var parts = [];
+    var partedCount = 0;
+    for (var i = 0; i < floorCount && i < FLOOR_SLOTS.length; i++) {
+      var sl = FLOOR_SLOTS[i];
+      var best = 0;
+      if (stepCursor && stepCursor.active) {
+        var duS = sl.u - stepCursor.u;
+        var dvS = (sl.v - stepCursor.v) * 0.62;
+        var dS = Math.sqrt(duS * duS + dvS * dvS);
+        best = Math.max(best, clamp(1 - dS / 0.38, 0, 1));
+      }
+      if (ptrFloor && ptrFloor.inside) {
+        var duP = sl.u - ptrFloor.u;
+        var dvP = (sl.v - ptrFloor.v) * 0.62;
+        var dP = Math.sqrt(duP * duP + dvP * dvP);
+        best = Math.max(best, clamp(1 - dP / 0.36, 0, 1));
+      }
+      parts.push(best);
+      if (best >= 0.22) partedCount++;
+    }
+    return { parts: parts, partedCount: partedCount };
+  }
+
+  function drawSeatedFurnitureLodger(ctx, cx, cy, r, slot, zoneKind, timeSec, reducedMotion) {
+    var trouser = TUNIC_TONES[(slot.seed + 5) % TUNIC_TONES.length];
+    // Seated knees & dangling boots on chest edge or quilted bed edge
+    ctx.fillStyle = trouser;
+    ctx.strokeStyle = '#3b2616';
+    ctx.lineWidth = Math.max(0.9, r * 0.055);
+    for (var ks = -1; ks <= 1; ks += 2) {
+      var kx = cx + ks * r * 0.42;
+      var ky = cy + r * 1.65;
+      ctx.beginPath();
+      ctx.ellipse(kx, ky, r * 0.32, r * 0.46, ks * 0.12, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      if (zoneKind === 'chest') {
+        ctx.fillStyle = '#4a311e';
+        ctx.beginPath();
+        ctx.ellipse(kx + ks * r * 0.06, ky + r * 0.44, r * 0.22, r * 0.14, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = trouser;
+      }
+    }
+
+    drawCitizenFigure(ctx, {
+      cx: cx,
+      cy: cy,
+      r: r,
+      seed: slot.seed,
+      phase: (slot.seed % 19) * 0.33,
+      hasCorn: slot.hasCorn,
+      detail: r >= 16 ? 'full' : 'mid',
+      drawShoulders: true
+    }, {
+      timeSec: timeSec,
+      reducedMotion: reducedMotion,
+      smileBoost: 0.15
+    });
+  }
+
+  function drawCrouchingFloorLodger(ctx, cx, cy, r, slot, part, locusU, timeSec, reducedMotion) {
+    var leanDir = (slot.u < locusU) ? -1 : 1;
+    var shiftX = leanDir * part * r * 0.34;
+    var nodY = part * r * 0.18;
+    var legTone = TUNIC_TONES[(slot.seed + 2) % TUNIC_TONES.length];
+
+    // Floor shadow beneath crouching lodger
+    ctx.fillStyle = 'rgba(42, 26, 14, 0.24)';
+    ctx.beginPath();
+    ctx.ellipse(cx + shiftX, cy + r * 1.92, r * (1.25 + part * 0.42), r * 0.32, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    drawCitizenFigure(ctx, {
+      cx: cx,
+      cy: cy,
+      r: r,
+      seed: slot.seed,
+      phase: (slot.seed % 23) * 0.27,
+      hasCorn: slot.hasCorn,
+      detail: r >= 16 ? 'full' : 'mid',
+      drawShoulders: true
+    }, {
+      timeSec: timeSec,
+      reducedMotion: reducedMotion,
+      shiftX: shiftX,
+      nodY: nodY,
+      smileBoost: part * 0.85,
+      gazeX: -leanDir * part * 0.7,
+      gazeY: part * 0.4
+    });
+
+    // Tucked crouching knees in front of tunic — politely parting outward when traveler passes!
+    var spread = r * (0.38 + part * 0.68);
+    var kneeY = cy + r * 1.48 + nodY * 0.5;
+    for (var side = -1; side <= 1; side += 2) {
+      var kx = cx + shiftX + side * spread;
+      ctx.beginPath();
+      ctx.ellipse(kx, kneeY, r * 0.38, r * 0.48, side * (0.14 + part * 0.38), 0, Math.PI * 2);
+      ctx.fillStyle = legTone;
+      ctx.fill();
+      ctx.strokeStyle = '#3a2414';
+      ctx.lineWidth = Math.max(0.95, r * 0.06);
+      ctx.stroke();
+
+      // Peasant shoe tucked beneath parted knee
+      ctx.beginPath();
+      ctx.ellipse(kx + side * part * r * 0.12, kneeY + r * 0.42, r * 0.25, r * 0.14, side * 0.18, 0, Math.PI * 2);
+      ctx.fillStyle = '#472d1b';
+      ctx.fill();
+    }
+  }
+
+  function createAudioController(initialMuted) {
+    var muted = Boolean(initialMuted);
+    var ctx = null;
+    var master = null;
+    var humGain = null;
+    var noiseBuf = null;
+    var lastCrowdCount = 0;
+    var lastCurtain = 1.0;
+    var lastMode = 'window';
+    var lastShiftSoundMs = 0;
+
+    function buildNoiseBuffer(ac) {
+      var len = Math.floor(ac.sampleRate * 0.6);
+      var buf = ac.createBuffer(1, len, ac.sampleRate);
+      var data = buf.getChannelData(0);
+      var prev = 0;
+      for (var i = 0; i < len; i++) {
+        var w = (Math.random() * 2 - 1);
+        prev = prev * 0.62 + w * 0.38;
+        data[i] = prev;
+      }
+      return buf;
+    }
+
+    function applyLevels() {
+      if (!ctx || !master || !humGain) return;
+      try {
+        var now = ctx.currentTime;
+        master.gain.cancelScheduledValues(now);
+        master.gain.setTargetAtTime(muted ? 0.0 : 0.85, now, 0.035);
+        var density = lastCrowdCount <= 0 ? 0 : (Math.log(1 + lastCrowdCount) / Math.log(361));
+        var curtainFactor = lastMode === 'room' ? 0.78 : (0.22 + 0.78 * lastCurtain);
+        var targetHum = muted ? 0.0 : (density * 0.026 * curtainFactor);
+        humGain.gain.cancelScheduledValues(now);
+        humGain.gain.setTargetAtTime(targetHum, now, 0.08);
+      } catch (_) {}
+    }
+
+    function unlockAudio() {
+      try {
+        var AC = root.AudioContext || root.webkitAudioContext;
+        if (!AC) return false;
+        if (!ctx) {
+          ctx = new AC();
+          master = ctx.createGain();
+          master.gain.value = muted ? 0.0 : 0.85;
+          master.connect(ctx.destination);
+
+          noiseBuf = buildNoiseBuffer(ctx);
+          humGain = ctx.createGain();
+          humGain.gain.value = 0.0;
+
+          var lp = ctx.createBiquadFilter();
+          lp.type = 'lowpass';
+          lp.frequency.value = 460;
+          lp.Q.value = 0.7;
+          humGain.connect(lp);
+          lp.connect(master);
+
+          var freqs = [146.83, 220.0, 293.66];
+          for (var i = 0; i < freqs.length; i++) {
+            var osc = ctx.createOscillator();
+            var og = ctx.createGain();
+            osc.type = i === 0 ? 'triangle' : 'sine';
+            osc.frequency.value = freqs[i];
+            og.gain.value = i === 0 ? 0.45 : (i === 1 ? 0.35 : 0.20);
+            osc.connect(og);
+            og.connect(humGain);
+            osc.start();
+          }
+        }
+        if (ctx.state === 'suspended') {
+          ctx.resume();
+        }
+        applyLevels();
+        return true;
+      } catch (_) {
+        return false;
+      }
+    }
+
+    function playNoiseGrain(freq, q, dur, peakGain, delaySec) {
+      if (!ctx || !noiseBuf || muted) return;
+      try {
+        var t0 = ctx.currentTime + (delaySec || 0);
+        var src = ctx.createBufferSource();
+        src.buffer = noiseBuf;
+        var bp = ctx.createBiquadFilter();
+        bp.type = 'bandpass';
+        bp.frequency.setValueAtTime(freq, t0);
+        bp.Q.value = q;
+        var g = ctx.createGain();
+        g.gain.setValueAtTime(0.0001, t0);
+        g.gain.linearRampToValueAtTime(peakGain, t0 + dur * 0.22);
+        g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+        src.connect(bp);
+        bp.connect(g);
+        g.connect(master);
+        src.start(t0);
+        src.stop(t0 + dur + 0.02);
+      } catch (_) {}
+    }
+
+    function triggerCurtainRing(opening) {
+      if (!ctx || muted) return;
+      try {
+        var rings = opening ? [1180, 1520, 1890] : [1820, 1410, 1060];
+        for (var i = 0; i < rings.length; i++) {
+          var t0 = ctx.currentTime + i * 0.036;
+          var osc = ctx.createOscillator();
+          var g = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(rings[i], t0);
+          osc.frequency.exponentialRampToValueAtTime(rings[i] * 1.04, t0 + 0.09);
+          g.gain.setValueAtTime(0.0001, t0);
+          g.gain.linearRampToValueAtTime(0.022, t0 + 0.008);
+          g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.11);
+          osc.connect(g);
+          g.connect(master);
+          osc.start(t0);
+          osc.stop(t0 + 0.12);
+        }
+        playNoiseGrain(1450, 1.4, 0.14, 0.024, 0.01);
+      } catch (_) {}
+    }
+
+    function triggerFootstepPoliteShift(throttled) {
+      if (!ctx || muted) return;
+      var nowMs = Date.now();
+      if (throttled && (nowMs - lastShiftSoundMs < 240)) return;
+      lastShiftSoundMs = nowMs;
+      try {
+        var t0 = ctx.currentTime;
+        // Warm pegged-oak floorboard footstep
+        var wood = ctx.createOscillator();
+        var wg = ctx.createGain();
+        wood.type = 'triangle';
+        wood.frequency.setValueAtTime(114, t0);
+        wood.frequency.exponentialRampToValueAtTime(68, t0 + 0.085);
+        wg.gain.setValueAtTime(0.0001, t0);
+        wg.gain.linearRampToValueAtTime(0.036, t0 + 0.01);
+        wg.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.09);
+        wood.connect(wg);
+        wg.connect(master);
+        wood.start(t0);
+        wood.stop(t0 + 0.10);
+
+        // Polite dry corn-husk & homespun knee-shift rustle
+        playNoiseGrain(2150, 2.1, 0.12, 0.026, 0.035);
+      } catch (_) {}
+    }
+
+    function triggerCornRustle(count) {
+      if (!ctx || muted || count <= 0) return;
+      var amp = 0.014 + 0.018 * (Math.log(1 + count) / Math.log(361));
+      playNoiseGrain(2350, 2.4, 0.11, amp, 0);
+    }
+
+    return {
+      unlockAudio: unlockAudio,
+      isMuted: function () { return muted; },
+      setMuted: function (flag) {
+        muted = Boolean(flag);
+        applyLevels();
+        return muted;
+      },
+      toggleMute: function () {
+        muted = !muted;
+        applyLevels();
+        return muted;
+      },
+      syncCrowdState: function (count, curtainLift, viewMode) {
+        lastCrowdCount = count;
+        lastCurtain = curtainLift;
+        lastMode = viewMode;
+        applyLevels();
+      },
+      triggerCurtainRing: triggerCurtainRing,
+      triggerFootstepPoliteShift: triggerFootstepPoliteShift,
+      triggerCornRustle: triggerCornRustle
+    };
+  }
+
+  var STEP_WAYPOINTS = [0.50, 0.28, 0.72, 0.38, 0.64];
+
+  function createEngine(options) {
+    var opts0 = options || {};
+    var bornMs = Date.now();
+    var yearIndex = clampYearIndex(opts0.yearIndex != null ? opts0.yearIndex : 0);
+    var viewMode = opts0.viewMode === 'room' ? 'room' : 'window';
+    var curtainLift = opts0.curtainLift != null ? clamp(Number(opts0.curtainLift), 0, 1) : 1.0;
+    var reducedMotion = Boolean(opts0.reducedMotion);
+    var audio = createAudioController(Boolean(opts0.muted));
+
+    var ptr = { active: false, normX: 0.5, normY: 0.5, pxX: null, pxY: null };
+    var stepCursor = { active: false, u: 0.50, v: 0.58, seq: 0 };
+    var lastFloorRect = null;
+    var lastCanvasW = 960;
+    var lastCanvasH = 640;
+    var cachedCrowdKey = '';
+    var cachedCrowd = [];
+    var kneePartedCount = 0;
+
+    audio.syncCrowdState(ANNUAL_STEPS[yearIndex].count, curtainLift, viewMode);
+
+    function resolvePointerFloorUV() {
+      if (!ptr.active) return { inside: false, u: 0.5, v: 0.5 };
+      if (lastFloorRect && Number.isFinite(ptr.pxX) && Number.isFinite(ptr.pxY)) {
+        var uPx = (ptr.pxX - lastFloorRect.x) / lastFloorRect.w;
+        var vPx = (ptr.pxY - lastFloorRect.y) / lastFloorRect.h;
+        if (uPx >= -0.06 && uPx <= 1.06 && vPx >= -0.08 && vPx <= 1.08) {
+          return { inside: true, u: clamp(uPx, 0, 1), v: clamp(vPx, 0, 1) };
+        }
+        return { inside: false, u: 0.5, v: 0.5 };
+      }
+      if (Number.isFinite(ptr.normX) && Number.isFinite(ptr.normY)) {
+        var fx = lastFloorRect ? (lastFloorRect.x / lastCanvasW) : 0.10;
+        var fy = lastFloorRect ? (lastFloorRect.y / lastCanvasH) : 0.62;
+        var fw = lastFloorRect ? (lastFloorRect.w / lastCanvasW) : 0.80;
+        var fh = lastFloorRect ? (lastFloorRect.h / lastCanvasH) : 0.31;
+        var uN = (ptr.normX - fx) / Math.max(0.05, fw);
+        var vN = (ptr.normY - fy) / Math.max(0.05, fh);
+        if (uN >= -0.06 && uN <= 1.06 && vN >= -0.08 && vN <= 1.08) {
+          return { inside: true, u: clamp(uN, 0, 1), v: clamp(vN, 0, 1) };
+        }
+      }
+      return { inside: false, u: 0.5, v: 0.5 };
+    }
+
+    function syncKneeCount() {
+      var floorCount = ROOM_BREAKDOWNS[yearIndex].floor;
+      if (floorCount <= 0) {
+        kneePartedCount = 0;
+        return 0;
+      }
+      var res = computeFloorKneeParting(floorCount, stepCursor, resolvePointerFloorUV());
+      kneePartedCount = res.partedCount;
+      return kneePartedCount;
+    }
+
+    function resolveTimeSec(opts) {
+      var rm = (opts && opts.reducedMotion != null) ? Boolean(opts.reducedMotion) : reducedMotion;
+      if (rm) return { rm: true, t: 0 };
+      var raw = (opts && Number.isFinite(opts.time)) ? opts.time : ((Date.now() - bornMs) * 0.001);
+      if (raw > 50000) raw = (raw * 0.001) % 3600;
+      return { rm: false, t: raw };
+    }
+
+    function getState() {
+      syncKneeCount();
+      var step = ANNUAL_STEPS[yearIndex];
+      var bd = ROOM_BREAKDOWNS[yearIndex];
+      var occ = getOcclusionByStratum(yearIndex);
+      var m = computeStrataMetrics(occ, yearIndex);
+      return {
+        yearIndex: step.yearIndex,
+        yearNumber: step.yearNumber,
+        visitRoman: step.visitRoman,
+        phaseKey: step.key,
+        citizenCount: step.count,
+        roomOccupants: step.roomOccupants,
+        roomBreakdown: { floor: bd.floor, chest: bd.chest, bed: bd.bed },
+        occlusionByStratum: occ,
+        ditchVisible: m.ditchVisible,
+        skyVisible: m.skyVisible,
+        horizonFaceWall: m.horizonFaceWall,
+        visibleStrataCount: m.visibleStrataCount,
+        viewMode: viewMode,
+        curtainLift: curtainLift,
+        muted: audio.isMuted(),
+        kneePartedCount: kneePartedCount,
+        narrative: step.narrative
+      };
+    }
+
+    function setYearIndex(idx) {
+      var next = clampYearIndex(idx);
+      var changed = next !== yearIndex;
+      yearIndex = next;
+      audio.syncCrowdState(ANNUAL_STEPS[yearIndex].count, curtainLift, viewMode);
+      if (changed) audio.triggerCornRustle(ANNUAL_STEPS[yearIndex].count);
+      syncKneeCount();
+      return getState();
+    }
+
+    function stepYear(delta) {
+      var d = Number.isFinite(Number(delta)) ? Math.round(Number(delta)) : 1;
+      return setYearIndex(yearIndex + d);
+    }
+
+    function setViewMode(mode) {
+      viewMode = mode === 'room' ? 'room' : 'window';
+      audio.syncCrowdState(ANNUAL_STEPS[yearIndex].count, curtainLift, viewMode);
+      syncKneeCount();
+      return getState();
+    }
+
+    function setCurtainLift(val) {
+      var v = Number(val);
+      if (Number.isFinite(v)) {
+        curtainLift = clamp(v, 0, 1);
+        audio.syncCrowdState(ANNUAL_STEPS[yearIndex].count, curtainLift, viewMode);
+      }
+      return getState();
+    }
+
+    function setPointer(normX, normY, pxX, pxY) {
+      if (normX == null && pxX == null) {
+        ptr.active = false;
+        syncKneeCount();
+        return getState();
+      }
+      var prevParted = kneePartedCount;
+      ptr.active = true;
+      ptr.normX = Number.isFinite(Number(normX)) ? clamp(Number(normX), 0, 1) : ptr.normX;
+      ptr.normY = Number.isFinite(Number(normY)) ? clamp(Number(normY), 0, 1) : ptr.normY;
+      ptr.pxX = Number.isFinite(Number(pxX)) ? Number(pxX) : null;
+      ptr.pxY = Number.isFinite(Number(pxY)) ? Number(pxY) : null;
+      var nextParted = syncKneeCount();
+      if (viewMode === 'room' && nextParted > prevParted) {
+        audio.triggerFootstepPoliteShift(true);
+      }
+      return getState();
+    }
+
+    function stepAcrossFloor() {
+      var fc = ROOM_BREAKDOWNS[yearIndex].floor;
+      stepCursor.active = true;
+      if (fc <= 1) {
+        stepCursor.u = 0.48 + (stepCursor.seq % 2) * 0.04;
+      } else {
+        stepCursor.u = STEP_WAYPOINTS[stepCursor.seq % STEP_WAYPOINTS.length];
+      }
+      stepCursor.v = 0.58;
+      stepCursor.seq++;
+      syncKneeCount();
+      audio.triggerFootstepPoliteShift(false);
+      return getState();
+    }
+
+    function renderWindowMultitude(ctx, layout, opts) {
+      if (!ctx) return;
+      var ap = resolveAperture(ctx, layout);
+      if (ctx.canvas && ctx.canvas.width > 0) {
+        lastCanvasW = ctx.canvas.width;
+        lastCanvasH = ctx.canvas.height;
+      }
+      if (ANNUAL_STEPS[yearIndex].count <= 0) return;
+
+      var skyB = getBandBox(layout, ap, 'trapeze_sky');
+      var key = [
+        yearIndex,
+        Math.round(ap.x),
+        Math.round(ap.y),
+        Math.round(ap.w),
+        Math.round(ap.h),
+        Math.round(skyB.yMax)
+      ].join(':');
+      if (key !== cachedCrowdKey) {
+        cachedCrowd = buildWindowCrowd(yearIndex, ap, layout);
+        cachedCrowdKey = key;
+      }
+
+      var tm = resolveTimeSec(opts);
+      var ptrPxX = Number.isFinite(ptr.pxX) ? ptr.pxX : (ap.x + ptr.normX * ap.w);
+      var ptrPxY = Number.isFinite(ptr.pxY) ? ptr.pxY : (ap.y + ptr.normY * ap.h);
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(ap.x, ap.y, ap.w, ap.h);
+      ctx.clip();
+
+      // At Year IX (360), warm woven-tunic undercoat ensures zero sky pinhole leakage behind overlapping faces
+      if (yearIndex === 8) {
+        ctx.fillStyle = '#754c2e';
+        ctx.fillRect(ap.x, ap.y, ap.w, ap.h);
+      }
+
+      for (var i = 0; i < cachedCrowd.length; i++) {
+        var c = cachedCrowd[i];
+        var gx = 0, gy = 0, nod = 0, sBoost = 0;
+        if (ptr.active && viewMode === 'window') {
+          var dx = ptrPxX - c.cx;
+          var dy = ptrPxY - c.cy;
+          var dist = Math.sqrt(dx * dx + dy * dy);
+          var near = clamp(1 - dist / (Math.max(ap.w, ap.h) * 0.28), 0, 1);
+          gx = clamp(dx / Math.max(24, c.r * 3), -1, 1) * near;
+          gy = clamp(dy / Math.max(24, c.r * 3), -1, 1) * near;
+          nod = near * Math.min(2.4, c.r * 0.08);
+          sBoost = near * 0.55;
+        }
+        drawCitizenFigure(ctx, c, {
+          timeSec: tm.t,
+          reducedMotion: tm.rm,
+          gazeX: gx,
+          gazeY: gy,
+          nodY: nod,
+          smileBoost: sBoost
+        });
+      }
+      ctx.restore();
+    }
+
+    function renderRoomLodgers(ctx, layout, opts) {
+      if (!ctx) return;
+      if (ctx.canvas && ctx.canvas.width > 0) {
+        lastCanvasW = ctx.canvas.width;
+        lastCanvasH = ctx.canvas.height;
+      }
+      var zones = resolveRoomZones(ctx, layout);
+      lastFloorRect = zones.floorRect;
+      var bd = ROOM_BREAKDOWNS[yearIndex];
+      var tm = resolveTimeSec(opts);
+
+      ctx.save();
+
+      // 1. Seated lodgers on walnut chest of drawers (0..8)
+      if (bd.chest > 0) {
+        var cR = clamp(Math.min(zones.chestRect.w * 0.125, zones.chestRect.h * 0.145), 11, 26);
+        var chestItems = [];
+        for (var ci = 0; ci < bd.chest && ci < CHEST_SLOTS.length; ci++) {
+          chestItems.push(CHEST_SLOTS[ci]);
+        }
+        chestItems.sort(function (a, b) { return a.v - b.v; });
+        for (var k1 = 0; k1 < chestItems.length; k1++) {
+          var cs = chestItems[k1];
+          drawSeatedFurnitureLodger(
+            ctx,
+            zones.chestRect.x + cs.u * zones.chestRect.w,
+            zones.chestRect.y + cs.v * zones.chestRect.h,
+            cR,
+            cs,
+            'chest',
+            tm.t,
+            tm.rm
+          );
+        }
+      }
+
+      // 2. Lodgers elbow-to-elbow on narrow quilted inn bed (0..9)
+      if (bd.bed > 0) {
+        var bR = clamp(Math.min(zones.bedRect.w * 0.112, zones.bedRect.h * 0.155), 11, 26);
+        var bedItems = [];
+        for (var bi = 0; bi < bd.bed && bi < BED_SLOTS.length; bi++) {
+          bedItems.push(BED_SLOTS[bi]);
+        }
+        bedItems.sort(function (a, b) { return a.v - b.v; });
+        for (var k2 = 0; k2 < bedItems.length; k2++) {
+          var bs = bedItems[k2];
+          drawSeatedFurnitureLodger(
+            ctx,
+            zones.bedRect.x + bs.u * zones.bedRect.w,
+            zones.bedRect.y + bs.v * zones.bedRect.h,
+            bR,
+            bs,
+            'bed',
+            tm.t,
+            tm.rm
+          );
+        }
+      }
+
+      // 3. Crouching lodgers on pegged floorboards (0..9) parting knees politely
+      var ptrF = resolvePointerFloorUV();
+      var kneeInfo = computeFloorKneeParting(bd.floor, stepCursor, ptrF);
+      kneePartedCount = kneeInfo.partedCount;
+
+      var locusActive = (ptrF.inside || stepCursor.active) && bd.floor > 0;
+      var locusU = ptrF.inside ? ptrF.u : stepCursor.u;
+      var locusV = ptrF.inside ? ptrF.v : stepCursor.v;
+
+      if (locusActive) {
+        var lx = zones.floorRect.x + locusU * zones.floorRect.w;
+        var ly = zones.floorRect.y + locusV * zones.floorRect.h;
+        ctx.beginPath();
+        ctx.ellipse(lx, ly + 8, Math.max(18, zones.floorRect.w * 0.055), Math.max(7, zones.floorRect.h * 0.045), 0, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(238, 198, 118, 0.62)';
+        ctx.lineWidth = 1.8;
+        ctx.stroke();
+      }
+
+      if (bd.floor > 0) {
+        var fR = clamp(Math.min(zones.floorRect.w * 0.052, zones.floorRect.h * 0.155), 12, 28);
+        var floorOrder = [];
+        for (var fi = 0; fi < bd.floor && fi < FLOOR_SLOTS.length; fi++) {
+          floorOrder.push({ idx: fi, slot: FLOOR_SLOTS[fi], part: kneeInfo.parts[fi] || 0 });
+        }
+        floorOrder.sort(function (a, b) { return a.slot.v - b.slot.v; });
+        for (var k3 = 0; k3 < floorOrder.length; k3++) {
+          var fo = floorOrder[k3];
+          drawCrouchingFloorLodger(
+            ctx,
+            zones.floorRect.x + fo.slot.u * zones.floorRect.w,
+            zones.floorRect.y + fo.slot.v * zones.floorRect.h,
+            fR,
+            fo.slot,
+            fo.part,
+            locusU,
+            tm.t,
+            tm.rm
+          );
+        }
+      }
+
+      ctx.restore();
+    }
+
+    return {
+      setYearIndex: setYearIndex,
+      stepYear: stepYear,
+      setViewMode: setViewMode,
+      setCurtainLift: setCurtainLift,
+      setPointer: setPointer,
+      clearPointer: function () { return setPointer(null, null, null, null); },
+      stepAcrossFloor: stepAcrossFloor,
+      setReducedMotion: function (flag) { reducedMotion = Boolean(flag); return getState(); },
+      getOcclusionByStratum: getOcclusionByStratum,
+      getState: getState,
+      renderWindowMultitude: renderWindowMultitude,
+      renderRoomLodgers: renderRoomLodgers,
+      setMuted: function (flag) { return audio.setMuted(flag); },
+      isMuted: function () { return audio.isMuted(); },
+      toggleMute: function () { return audio.toggleMute(); },
+      unlockAudio: function () { return audio.unlockAudio(); },
+      triggerCurtainRing: function (opening) { audio.triggerCurtainRing(Boolean(opening)); },
+      triggerFootstepPoliteShift: function () { audio.triggerFootstepPoliteShift(false); }
+    };
+  }
+
+  var api = Object.freeze({
+    ANNUAL_STEPS: ANNUAL_STEPS,
+    STRATA_IDS: STRATA_IDS,
+    getOcclusionByStratum: getOcclusionByStratum,
+    createEngine: createEngine
+  });
+
+  root.ProcopiaFaceOcclusion = api;
+})(typeof globalThis !== 'undefined' ? globalThis : window);
+
+(function () {
+  "use strict";
+
+  var StrataAPI = window.ProcopiaWindowStrata;
+  var MultitudeAPI = window.ProcopiaFaceOcclusion;
+  if (!StrataAPI || !MultitudeAPI) return;
+
+  var mqReduced = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
+  var reducedMotion = Boolean(mqReduced && mqReduced.matches);
+
+  var renderer = StrataAPI.createRenderer({ reducedMotion: reducedMotion });
+  var engine = MultitudeAPI.createEngine({
+    yearIndex: 0,
+    curtainLift: 1.0,
+    viewMode: "window",
+    reducedMotion: reducedMotion,
+    muted: false
+  });
+
+  var canvas = document.getElementById("prc-stage-canvas");
+  var canvasFrame = document.getElementById("prc-canvas-frame");
+  var ctx = canvas.getContext("2d");
+
+  var cssW = 960;
+  var cssH = 640;
+  var dpr = 1;
+  var currentLayout = null;
+  var startMs = performance.now();
+  var selectedStratumId = null;
+
+  var curtainTarget = 1.0;
+  var curtainAnim = null;
+
+  var plateDrawer = document.getElementById("prc-plate-drawer");
+  var plateTab = "diptych";
+  var plateZoomed = false;
+  var fallbackDrawn = false;
+
+  var dom = {
+    btnCurtainTop: document.getElementById("prc-btn-curtain-top"),
+    btnRoomTop: document.getElementById("prc-btn-room-top"),
+    btnMuteTop: document.getElementById("prc-btn-mute-top"),
+    btnPlatesTop: document.getElementById("prc-btn-plates-top"),
+    hudVisit: document.getElementById("prc-hud-visit"),
+    hudStrata: document.getElementById("prc-hud-strata"),
+    hudCurtain: document.getElementById("prc-hud-curtain"),
+    hudStance: document.getElementById("prc-hud-stance"),
+    roomHint: document.getElementById("prc-room-hint"),
+    btnCurtainSill: document.getElementById("prc-btn-curtain-sill"),
+    btnPrevSill: document.getElementById("prc-btn-prev-sill"),
+    btnNextSill: document.getElementById("prc-btn-next-sill"),
+    btnRoomSill: document.getElementById("prc-btn-room-sill"),
+    btnStepSill: document.getElementById("prc-btn-step-sill"),
+    multitudeBadge: document.getElementById("prc-multitude-badge"),
+    yearPills: Array.prototype.slice.call(document.querySelectorAll(".prc-year-pill")),
+    btnYrReset: document.getElementById("prc-btn-yr-reset"),
+    btnYrPrev: document.getElementById("prc-btn-yr-prev"),
+    btnYrNext: document.getElementById("prc-btn-yr-next"),
+    btnYrClimax: document.getElementById("prc-btn-yr-climax"),
+    narrativeCopy: document.getElementById("prc-narrative-copy"),
+    strataBadge: document.getElementById("prc-strata-badge"),
+    stratumRows: Array.prototype.slice.call(document.querySelectorAll(".prc-stratum-row")),
+    stratumNote: document.getElementById("prc-stratum-note"),
+    roomBadge: document.getElementById("prc-room-badge"),
+    tallyFloor: document.getElementById("prc-tally-floor"),
+    tallyKnees: document.getElementById("prc-tally-knees"),
+    tallyChest: document.getElementById("prc-tally-chest"),
+    tallyBed: document.getElementById("prc-tally-bed"),
+    tallyTotal: document.getElementById("prc-tally-total"),
+    tallyView: document.getElementById("prc-tally-view"),
+    btnRoomLedger: document.getElementById("prc-btn-room-ledger"),
+    btnStepFloor: document.getElementById("prc-btn-step-floor"),
+    btnJumpFinal: document.getElementById("prc-btn-jump-final"),
+    drawerGrid: document.getElementById("prc-drawer-grid"),
+    folioMap: document.getElementById("prc-folio-map"),
+    folioImage: document.getElementById("prc-folio-image"),
+    stageMap: document.getElementById("prc-stage-map"),
+    stageImage: document.getElementById("prc-stage-image"),
+    imgMap: document.getElementById("prc-img-map"),
+    imgVista: document.getElementById("prc-img-vista"),
+    mapMeta: document.getElementById("prc-map-meta"),
+    imgMeta: document.getElementById("prc-img-meta"),
+    plateStatusBadge: document.getElementById("prc-plate-status-badge"),
+    plateTabBtns: Array.prototype.slice.call(document.querySelectorAll("[data-plate-tab]")),
+    btnPlateZoom: document.getElementById("prc-btn-plate-zoom"),
+    btnPlateClose: document.getElementById("prc-btn-plate-close"),
+    fallbackMap: document.getElementById("prc-fallback-map"),
+    fallbackImage: document.getElementById("prc-fallback-image")
+  };
+
+  function setBtnLabelWithKey(btn, label, keyChar) {
+    if (!btn) return;
+    while (btn.firstChild) btn.removeChild(btn.firstChild);
+    btn.appendChild(document.createTextNode(label + " "));
+    if (keyChar) {
+      var tag = document.createElement("prc-kbd-tag");
+      tag.className = "prc-kbd-tag";
+      tag.textContent = keyChar;
+      btn.appendChild(tag);
+    }
+  }
+
+  function resizeCanvas() {
+    var rect = canvasFrame.getBoundingClientRect();
+    var w = Math.max(260, Math.round(rect.width || 640));
+    var h = Math.max(220, Math.round(rect.height || 420));
+    var nextDpr = Math.min(window.devicePixelRatio || 1, 2);
+    if (w !== cssW || h !== cssH || nextDpr !== dpr || canvas.width !== Math.round(w * nextDpr)) {
+      cssW = w;
+      cssH = h;
+      dpr = nextDpr;
+      canvas.width = Math.round(cssW * dpr);
+      canvas.height = Math.round(cssH * dpr);
+    }
+    currentLayout = renderer.computeLayout(cssW, cssH);
+  }
+
+  function renderStage(nowMs) {
+    if (!ctx) return;
+    if (!currentLayout) resizeCanvas();
+    var elapsedSec = reducedMotion ? 0 : ((nowMs - startMs) * 0.001);
+    var st = engine.getState();
+
+    ctx.save();
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, cssW, cssH);
+
+    var rState = {
+      layout: currentLayout,
+      time: elapsedSec,
+      curtainLift: st.curtainLift,
+      citizenCount: st.citizenCount,
+      viewMode: st.viewMode,
+      reducedMotion: reducedMotion
+    };
+
+    if (st.viewMode === "room") {
+      renderer.renderRoomBackdrop(ctx, cssW, cssH, rState);
+      engine.renderRoomLodgers(ctx, currentLayout, {
+        time: elapsedSec,
+        reducedMotion: reducedMotion
+      });
+    } else {
+      renderer.renderWindowBackdrop(ctx, cssW, cssH, rState);
+      engine.renderWindowMultitude(ctx, currentLayout, {
+        time: elapsedSec,
+        reducedMotion: reducedMotion
+      });
+      renderer.renderWindowForegroundSashAndCurtain(ctx, cssW, cssH, rState);
+    }
+
+    ctx.restore();
+  }
+
+  function syncUI() {
+    var st = engine.getState();
+    var vis = renderer.computeVisibilityReport(st.occlusionByStratum, st.curtainLift);
+    var isRoom = st.viewMode === "room";
+    var isLifted = curtainTarget > 0.5;
+
+    dom.hudVisit.textContent = "Return Yr " + st.visitRoman + " · " + st.citizenCount + (st.citizenCount === 1 ? " Face" : " Faces");
+    dom.hudStrata.textContent = st.horizonFaceWall ? "Horizon: 360-Face Wall (0 / 9)" : ("Visible Strata: " + vis.visibleStrataCount + " / 9");
+    dom.hudCurtain.textContent = "Curtain: " + (st.curtainLift >= 0.5 ? "Lifted " : "Dropped ") + Math.round(st.curtainLift * 100) + "%";
+    dom.hudStance.textContent = isRoom ? ("Stance: Inn Room (" + st.roomOccupants + "/26)") : "Stance: Casement Window";
+
+    dom.roomHint.hidden = !(isRoom && st.roomOccupants === 0);
+    dom.btnStepSill.hidden = !isRoom;
+
+    setBtnLabelWithKey(dom.btnCurtainTop, isLifted ? "Drop Curtain" : "Lift Curtain", "C");
+    dom.btnCurtainTop.setAttribute("aria-pressed", String(isLifted));
+    setBtnLabelWithKey(dom.btnCurtainSill, isLifted ? "Drop Linen Curtain" : "Lift Linen Curtain", "C");
+
+    setBtnLabelWithKey(dom.btnRoomTop, isRoom ? "Face Window" : "Turn Into Room", "R");
+    dom.btnRoomTop.setAttribute("aria-pressed", String(isRoom));
+    dom.btnRoomTop.classList.toggle("prc-btn-active", isRoom);
+    setBtnLabelWithKey(dom.btnRoomSill, isRoom ? "Face Casement Window" : "Turn Around Into Inn Room", "R");
+    setBtnLabelWithKey(dom.btnRoomLedger, isRoom ? "Face Casement Window" : "Turn Around Into Inn Room", "R");
+
+    setBtnLabelWithKey(dom.btnMuteTop, st.muted ? "Muted" : "Sound: On", "M");
+    dom.btnMuteTop.setAttribute("aria-pressed", String(st.muted));
+
+    dom.multitudeBadge.textContent = "Yr " + st.visitRoman + " · " + st.citizenCount + (st.citizenCount === 1 ? " Citizen" : " Citizens");
+    dom.narrativeCopy.textContent = st.narrative;
+
+    for (var p = 0; p < dom.yearPills.length; p++) {
+      var pill = dom.yearPills[p];
+      var active = p === st.yearIndex;
+      pill.classList.toggle("prc-pill-current", active);
+      pill.setAttribute("aria-pressed", String(active));
+    }
+
+    dom.strataBadge.textContent = st.horizonFaceWall ? "0 / 9 · HORIZON WALL" : (vis.visibleStrataCount + " / 9 VISIBLE");
+    dom.strataBadge.classList.toggle("prc-panel-badge-alert", st.horizonFaceWall);
+
+    for (var r = 0; r < dom.stratumRows.length; r++) {
+      var row = dom.stratumRows[r];
+      var sid = row.getAttribute("data-stratum-id");
+      var info = vis.byId[sid];
+      if (!info) continue;
+      row.classList.toggle("prc-row-selected", sid === selectedStratumId);
+      var fill = row.querySelector("prc-meter-fill");
+      var pct = row.querySelector("prc-stratum-pct");
+      var stateTag = row.querySelector("prc-stratum-state");
+      if (fill) {
+        fill.style.width = info.visibilityPct + "%";
+        fill.classList.toggle("prc-fill-occluded", !info.visible);
+      }
+      if (pct) pct.textContent = info.visibilityPct + "%";
+      if (stateTag) {
+        stateTag.textContent = info.status;
+        stateTag.classList.toggle("prc-state-occluded", !info.visible);
+      }
+    }
+
+    if (selectedStratumId && vis.byId[selectedStratumId]) {
+      var sel = vis.byId[selectedStratumId];
+      dom.stratumNote.textContent = "Stratum " + (sel.index + 1) + " — “" + sel.phrase + "”: " + sel.visibilityPct + "% unoccluded (" + sel.status + ").";
+    } else if (st.curtainLift < 0.15) {
+      dom.stratumNote.textContent = "Raw-linen curtain dropped across the walnut casement; press [C] to lift the sash curtain.";
+    } else if (st.horizonFaceWall) {
+      dom.stratumNote.textContent = "Even the upside-down trapeze of sky has vanished behind 360 round, flat, corn-eating faces.";
+    } else if (vis.visibleStrataCount === 1 && vis.skyVisible) {
+      dom.stratumNote.textContent = "144 smiling inhabitants cover ditch through yellow hill; only the upside-down trapeze of sky remains.";
+    } else {
+      dom.stratumNote.textContent = vis.visibleStrataCount + " of 9 invariant autumn strata remain visible beyond the corn-eating multitude.";
+    }
+
+    dom.roomBadge.textContent = st.roomOccupants + " / 26 Lodgers";
+    dom.roomBadge.classList.toggle("prc-panel-badge-alert", st.roomOccupants === 26);
+    dom.tallyFloor.textContent = st.roomBreakdown.floor + " / 9";
+    dom.tallyKnees.textContent = "Crouching · Knees parted: " + st.kneePartedCount;
+    dom.tallyChest.textContent = st.roomBreakdown.chest + " / 8";
+    dom.tallyBed.textContent = st.roomBreakdown.bed + " / 9";
+    dom.tallyTotal.textContent = st.roomOccupants + " / 26";
+    dom.tallyView.textContent = isRoom ? "Viewing inn room interior" : "Facing casement window";
+    dom.btnJumpFinal.hidden = st.yearIndex >= 8;
+  }
+
+  var rafId = 0;
+  function tickFrame(nowMs) {
+    rafId = 0;
+    var keepAnimating = !reducedMotion;
+
+    if (curtainAnim) {
+      var u = Math.min(1, (nowMs - curtainAnim.t0) / curtainAnim.dur);
+      var eased = u < 0.5 ? (2 * u * u) : (1 - Math.pow(-2 * u + 2, 2) / 2);
+      var val = curtainAnim.from + (curtainAnim.to - curtainAnim.from) * eased;
+      engine.setCurtainLift(val);
+      if (u >= 1) {
+        engine.setCurtainLift(curtainAnim.to);
+        curtainAnim = null;
+      } else {
+        keepAnimating = true;
+      }
+      syncUI();
+    }
+
+    renderStage(nowMs);
+    if (keepAnimating) {
+      rafId = window.requestAnimationFrame(tickFrame);
+    }
+  }
+
+  function requestRender() {
+    if (!rafId) {
+      rafId = window.requestAnimationFrame(tickFrame);
+    }
+  }
+
+  function refreshNow() {
+    syncUI();
+    renderStage(performance.now());
+    if (!reducedMotion) requestRender();
+  }
+
+  function drawFallbackPlates() {
+    if (dom.fallbackMap) StrataAPI.renderArchivalPreview(dom.fallbackMap, "map");
+    if (dom.fallbackImage) StrataAPI.renderArchivalPreview(dom.fallbackImage, "image");
+    fallbackDrawn = true;
+  }
+
+  function syncPlateDrawerUI() {
+    var open = !plateDrawer.hidden;
+    dom.btnPlatesTop.setAttribute("aria-expanded", String(open));
+    dom.btnPlatesTop.classList.toggle("prc-btn-active", open);
+    dom.drawerGrid.classList.toggle("prc-drawer-single", plateTab !== "diptych");
+    dom.folioMap.hidden = (plateTab === "image");
+    dom.folioImage.hidden = (plateTab === "map");
+    dom.stageMap.classList.toggle("prc-folio-zoomed", plateZoomed);
+    dom.stageImage.classList.toggle("prc-folio-zoomed", plateZoomed);
+    setBtnLabelWithKey(dom.btnPlateZoom, plateZoomed ? "Loupe 1.75×" : "Loupe 1.0×", "Z");
+    dom.btnPlateZoom.setAttribute("aria-pressed", String(plateZoomed));
+    dom.btnPlateZoom.classList.toggle("prc-btn-active", plateZoomed);
+    var tabTitle = plateTab === "diptych" ? "Diptych" : (plateTab === "map" ? "Survey Map" : "Casement Vista");
+    dom.plateStatusBadge.textContent = "Royal Plates · " + tabTitle;
+    for (var i = 0; i < dom.plateTabBtns.length; i++) {
+      var b = dom.plateTabBtns[i];
+      b.classList.toggle("prc-btn-active", b.getAttribute("data-plate-tab") === plateTab);
+    }
+  }
+
+  function togglePlates(forceOpen) {
+    var nextOpen = typeof forceOpen === "boolean" ? forceOpen : plateDrawer.hidden;
+    plateDrawer.hidden = !nextOpen;
+    if (nextOpen) {
+      if (dom.imgMap) dom.imgMap.loading = "eager";
+      if (dom.imgVista) dom.imgVista.loading = "eager";
+      if (!fallbackDrawn && ((dom.imgMap && dom.imgMap.hidden) || (dom.imgVista && dom.imgVista.hidden))) {
+        drawFallbackPlates();
+      }
+    }
+    syncPlateDrawerUI();
+    return getAppState();
+  }
+
+  function setPlateTab(tab) {
+    if (tab === "map" || tab === "image" || tab === "diptych") {
+      plateTab = tab;
+      syncPlateDrawerUI();
+    }
+    return getAppState();
+  }
+
+  function togglePlateZoom() {
+    plateZoomed = !plateZoomed;
+    syncPlateDrawerUI();
+    return getAppState();
+  }
+
+  function setYearIndex(idx) {
+    engine.setYearIndex(idx);
+    refreshNow();
+    return getAppState();
+  }
+
+  function stepYear(delta) {
+    engine.stepYear(delta);
+    refreshNow();
+    return getAppState();
+  }
+
+  function setCurtainLift(val) {
+    curtainAnim = null;
+    var clamped = Math.max(0, Math.min(1, Number(val)));
+    if (Number.isFinite(clamped)) {
+      curtainTarget = clamped;
+      engine.setCurtainLift(clamped);
+    }
+    refreshNow();
+    return getAppState();
+  }
+
+  function toggleCurtain() {
+    engine.unlockAudio();
+    var nextTarget = curtainTarget > 0.5 ? 0.0 : 1.0;
+    curtainTarget = nextTarget;
+    engine.triggerCurtainRing(nextTarget > 0.5);
+    if (reducedMotion) {
+      curtainAnim = null;
+      engine.setCurtainLift(nextTarget);
+      refreshNow();
+    } else {
+      curtainAnim = {
+        from: engine.getState().curtainLift,
+        to: nextTarget,
+        t0: performance.now(),
+        dur: 340
+      };
+      syncUI();
+      requestRender();
+    }
+    return getAppState();
+  }
+
+  function setViewMode(mode) {
+    var next = (mode === "room" || mode === "window")
+      ? mode
+      : (engine.getState().viewMode === "room" ? "window" : "room");
+    engine.setViewMode(next);
+    refreshNow();
+    return getAppState();
+  }
+
+  function stepAcrossFloor() {
+    engine.unlockAudio();
+    if (engine.getState().viewMode !== "room") {
+      engine.setViewMode("room");
+    }
+    engine.stepAcrossFloor();
+    refreshNow();
+    return getAppState();
+  }
+
+  function toggleMute() {
+    engine.unlockAudio();
+    engine.toggleMute();
+    syncUI();
+    return getAppState();
+  }
+
+  function getAppState() {
+    var st = engine.getState();
+    var vis = renderer.computeVisibilityReport(st.occlusionByStratum, st.curtainLift);
+    return {
+      yearIndex: st.yearIndex,
+      yearNumber: st.yearNumber,
+      visitRoman: st.visitRoman,
+      phaseKey: st.phaseKey,
+      citizenCount: st.citizenCount,
+      roomOccupants: st.roomOccupants,
+      roomBreakdown: st.roomBreakdown,
+      occlusionByStratum: st.occlusionByStratum,
+      ditchVisible: st.ditchVisible,
+      skyVisible: st.skyVisible,
+      horizonFaceWall: st.horizonFaceWall,
+      visibleStrataCount: st.visibleStrataCount,
+      effectiveVisibleStrataCount: vis.effectiveVisibleStrataCount,
+      viewMode: st.viewMode,
+      curtainLift: st.curtainLift,
+      curtainTarget: curtainTarget,
+      muted: st.muted,
+      kneePartedCount: st.kneePartedCount,
+      narrative: st.narrative,
+      reducedMotion: reducedMotion,
+      platesOpen: !plateDrawer.hidden,
+      plateTab: plateTab,
+      plateZoomed: plateZoomed,
+      visibilityReport: vis
+    };
+  }
+
+  function bindClick(el, fn) {
+    if (!el) return;
+    el.addEventListener("click", function (ev) {
+      ev.preventDefault();
+      engine.unlockAudio();
+      fn(ev);
+    });
+  }
+
+  bindClick(dom.btnCurtainTop, function () { toggleCurtain(); });
+  bindClick(dom.btnCurtainSill, function () { toggleCurtain(); });
+  bindClick(dom.btnRoomTop, function () { setViewMode(); });
+  bindClick(dom.btnRoomSill, function () { setViewMode(); });
+  bindClick(dom.btnRoomLedger, function () { setViewMode(); });
+  bindClick(dom.btnMuteTop, function () { toggleMute(); });
+  bindClick(dom.btnPlatesTop, function () { togglePlates(); });
+  bindClick(dom.btnPlateClose, function () { togglePlates(false); });
+  bindClick(dom.btnPlateZoom, function () { togglePlateZoom(); });
+
+  bindClick(dom.btnPrevSill, function () { stepYear(-1); });
+  bindClick(dom.btnYrPrev, function () { stepYear(-1); });
+  bindClick(dom.btnNextSill, function () { stepYear(1); });
+  bindClick(dom.btnYrNext, function () { stepYear(1); });
+  bindClick(dom.btnYrReset, function () { setYearIndex(0); });
+  bindClick(dom.btnYrClimax, function () { setYearIndex(8); });
+
+  bindClick(dom.btnStepSill, function () { stepAcrossFloor(); });
+  bindClick(dom.btnStepFloor, function () { stepAcrossFloor(); });
+  bindClick(dom.btnJumpFinal, function () {
+    engine.setYearIndex(8);
+    engine.setViewMode("room");
+    refreshNow();
+  });
+
+  for (var yp = 0; yp < dom.yearPills.length; yp++) {
+    (function (pill) {
+      bindClick(pill, function () {
+        var idx = Number(pill.getAttribute("data-year-idx"));
+        setYearIndex(idx);
+      });
+    })(dom.yearPills[yp]);
+  }
+
+  for (var sr = 0; sr < dom.stratumRows.length; sr++) {
+    (function (row) {
+      row.addEventListener("click", function () {
+        var sid = row.getAttribute("data-stratum-id");
+        selectedStratumId = (selectedStratumId === sid) ? null : sid;
+        syncUI();
+      });
+    })(dom.stratumRows[sr]);
+  }
+
+  for (var tb = 0; tb < dom.plateTabBtns.length; tb++) {
+    (function (btn) {
+      bindClick(btn, function () {
+        setPlateTab(btn.getAttribute("data-plate-tab"));
+      });
+    })(dom.plateTabBtns[tb]);
+  }
+
+  plateDrawer.addEventListener("click", function (ev) {
+    if (ev.target === plateDrawer) {
+      togglePlates(false);
+    }
+  });
+
+  if (dom.imgMap) {
+    dom.imgMap.addEventListener("load", function () {
+      if (dom.imgMap.naturalWidth > 0 && dom.mapMeta) {
+        dom.mapMeta.textContent = "1572 Copperplate · " + dom.imgMap.naturalWidth + "×" + dom.imgMap.naturalHeight;
+      }
+    });
+  }
+  if (dom.imgVista) {
+    dom.imgVista.addEventListener("load", function () {
+      if (dom.imgVista.naturalWidth > 0 && dom.imgMeta) {
+        dom.imgMeta.textContent = "Gouache & Oil · " + dom.imgVista.naturalWidth + "×" + dom.imgVista.naturalHeight;
+      }
+    });
+  }
+
+  function handleCanvasPointer(ev) {
+    var rect = canvas.getBoundingClientRect();
+    if (!rect.width || !rect.height) return;
+    var pxX = ev.clientX - rect.left;
+    var pxY = ev.clientY - rect.top;
+    var nx = pxX / rect.width;
+    var ny = pxY / rect.height;
+    engine.setPointer(nx, ny, pxX, pxY);
+    syncUI();
+    if (reducedMotion) {
+      renderStage(performance.now());
+    } else {
+      requestRender();
+    }
+  }
+
+  canvas.addEventListener("pointermove", handleCanvasPointer);
+  canvas.addEventListener("pointerdown", function (ev) {
+    engine.unlockAudio();
+    handleCanvasPointer(ev);
+  });
+  canvas.addEventListener("pointerleave", function () {
+    engine.clearPointer();
+    syncUI();
+    if (reducedMotion) renderStage(performance.now());
+  });
+
+  window.addEventListener("keydown", function (ev) {
+    if (ev.metaKey || ev.ctrlKey || ev.altKey) return;
+    var key = ev.key;
+    if (key === "Escape") {
+      if (!plateDrawer.hidden) {
+        ev.preventDefault();
+        togglePlates(false);
+      }
+      return;
+    }
+    engine.unlockAudio();
+    var lower = key.toLowerCase();
+    if (lower === "c") { ev.preventDefault(); toggleCurtain(); }
+    else if (lower === "r") { ev.preventDefault(); setViewMode(); }
+    else if (lower === "m") { ev.preventDefault(); toggleMute(); }
+    else if (lower === "p") { ev.preventDefault(); togglePlates(); }
+    else if (lower === "z" && !plateDrawer.hidden) { ev.preventDefault(); togglePlateZoom(); }
+    else if (lower === "f") { ev.preventDefault(); stepAcrossFloor(); }
+    else if (key === "ArrowRight" || key === "+" || key === "=") { ev.preventDefault(); stepYear(1); }
+    else if (key === "ArrowLeft" || key === "-") { ev.preventDefault(); stepYear(-1); }
+    else if (key >= "1" && key <= "9") { ev.preventDefault(); setYearIndex(Number(key) - 1); }
+  });
+
+  window.addEventListener("resize", function () {
+    resizeCanvas();
+    refreshNow();
+  });
+
+  if (mqReduced) {
+    var onMotionChange = function (e) {
+      reducedMotion = Boolean(e.matches);
+      engine.setReducedMotion(reducedMotion);
+      if (reducedMotion && curtainAnim) {
+        engine.setCurtainLift(curtainTarget);
+        curtainAnim = null;
+      }
+      if (reducedMotion && rafId) {
+        window.cancelAnimationFrame(rafId);
+        rafId = 0;
+      }
+      refreshNow();
+    };
+    if (typeof mqReduced.addEventListener === "function") mqReduced.addEventListener("change", onMotionChange);
+    else if (typeof mqReduced.addListener === "function") mqReduced.addListener(onMotionChange);
+  }
+
+  window.ProcopiaApp = {
+    getState: getAppState,
+    setYearIndex: setYearIndex,
+    stepYear: stepYear,
+    toggleCurtain: toggleCurtain,
+    setCurtainLift: setCurtainLift,
+    setViewMode: setViewMode,
+    stepAcrossFloor: stepAcrossFloor,
+    toggleMute: toggleMute,
+    setMuted: function (flag) { engine.setMuted(Boolean(flag)); syncUI(); return getAppState(); },
+    togglePlates: togglePlates,
+    setPlateTab: setPlateTab,
+    togglePlateZoom: togglePlateZoom,
+    drawFallbackPlates: drawFallbackPlates
+  };
+
+  resizeCanvas();
+  syncPlateDrawerUI();
+  refreshNow();
+})();
+</script>
+</body>
+</html>

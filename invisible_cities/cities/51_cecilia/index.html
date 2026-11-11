@@ -1,0 +1,3705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cecilia — Pasture &amp; Traffic Island Palimpsest</title>
+<style>
+:root {
+  --cec-bg-deep: #181d17;
+  --cec-bg-panel: #212720;
+  --cec-bg-card: #293028;
+  --cec-bg-asphalt: #22262d;
+  --cec-border-muted: rgba(183, 155, 100, 0.28);
+  --cec-border-strong: rgba(183, 227, 192, 0.58);
+  --cec-ink-main: #efe9dc;
+  --cec-ink-soft: #bfb9ab;
+  --cec-ink-dim: #908b7e;
+  --cec-sage-bright: #b7e3c0;
+  --cec-sage-mid: #8fa882;
+  --cec-ochre-warm: #cf9b46;
+  --cec-sodium-amber: #e39d49;
+  --cec-xray-cyan: #8fe0b8;
+  --cec-curb-stone: #9da3aa;
+  --cec-danger-rust: #d47b66;
+}
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--cec-bg-deep);
+  color: var(--cec-ink-main);
+  font-family: "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  -webkit-font-smoothing: antialiased;
+}
+canvas {
+  display: block;
+}
+cecilia-plate-drawer[hidden],
+.cec-hidden[hidden] {
+  display: none !important;
+}
+cecilia-mingled-sprawl,
+named-pasture-palimpsest,
+traffic-island-sage,
+goatherd-bell-compass,
+boundless-street-weave,
+cecilia-plate-drawer,
+cec-masthead-bar,
+cec-brand-cluster,
+cec-brand-title,
+cec-brand-sub,
+cec-telemetry-strip,
+cec-metric-readout,
+cec-metric-label,
+cec-metric-value,
+cec-utility-bar,
+cec-workspace-grid,
+cec-left-column,
+cec-right-column,
+cec-panel-head,
+cec-panel-kicker,
+cec-panel-badge,
+cec-pasture-list,
+cec-pasture-chip,
+cec-chip-top,
+cec-chip-name,
+cec-chip-state,
+cec-chip-flora,
+cec-stone-strip,
+cec-stone-chip,
+cec-scrubber-box,
+cec-scrubber-labels,
+cec-era-scrubber,
+cec-era-track,
+cec-era-fill,
+cec-era-threshold,
+cec-era-thumb,
+cec-action-grid,
+cec-action-key,
+cec-key-cap,
+cec-key-text,
+cec-voice-banner,
+cec-voice-speaker,
+cec-voice-quote,
+cec-compass-grid,
+cec-bearing-key,
+cec-exit-verdict,
+cec-inspection-card,
+cec-inspect-head,
+cec-inspect-body,
+cec-shortcut-bar,
+cec-plate-dialog,
+cec-plate-topbar,
+cec-plate-grid,
+cec-plate-card,
+cec-plate-caption,
+cec-loupe-stage {
+  display: block;
+}
+.cec-root-shell {
+  display: grid;
+  grid-template-rows: 48px minmax(0, 1fr);
+  width: 100vw;
+  height: 100vh;
+  max-width: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 42%, #262e24 0%, #171b16 100%);
+}
+.cec-masthead-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 12px;
+  background: rgba(24, 29, 23, 0.95);
+  border-bottom: 1px solid var(--cec-border-muted);
+  min-width: 0;
+}
+.cec-brand-cluster {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  min-width: 0;
+  flex-shrink: 0;
+}
+.cec-brand-title {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--cec-ink-main);
+}
+.cec-brand-sub {
+  font-size: 10.5px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--cec-sage-mid);
+}
+.cec-telemetry-strip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  flex: 1;
+  justify-content: center;
+}
+.cec-metric-readout {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(41, 48, 40, 0.85);
+  border: 1px solid rgba(183, 155, 100, 0.22);
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 10.5px;
+  min-width: 0;
+}
+.cec-metric-label {
+  color: var(--cec-ink-dim);
+  text-transform: uppercase;
+  font-size: 9.5px;
+  letter-spacing: 0.05em;
+}
+.cec-metric-value {
+  color: var(--cec-ink-main);
+  font-weight: 600;
+}
+.cec-metric-readout.cec-state-mingled {
+  border-color: rgba(227, 157, 73, 0.55);
+  background: rgba(54, 43, 33, 0.86);
+}
+.cec-metric-readout.cec-state-recognized {
+  border-color: rgba(183, 227, 192, 0.65);
+  background: rgba(42, 62, 47, 0.88);
+}
+.cec-utility-bar {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+}
+.cec-workspace-grid {
+  display: grid;
+  grid-template-columns: 274px minmax(0, 1fr) 280px;
+  gap: 9px;
+  padding: 8px 10px 10px;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+.cec-left-column,
+.cec-right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+.cec-panel {
+  background: rgba(33, 39, 32, 0.94);
+  border: 1px solid var(--cec-border-muted);
+  border-radius: 6px;
+  padding: 8px 9px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 0;
+  min-width: 0;
+}
+.cec-pasture-panel {
+  flex: 1 1 auto;
+}
+.cec-island-panel {
+  flex: 0 0 auto;
+}
+.cec-compass-panel {
+  flex: 1 1 auto;
+  justify-content: space-between;
+}
+.cec-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(183, 155, 100, 0.18);
+}
+.cec-panel-kicker {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--cec-ochre-warm);
+}
+.cec-panel-badge {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 9.5px;
+  padding: 1px 6px;
+  border-radius: 3px;
+  background: rgba(143, 168, 130, 0.16);
+  color: var(--cec-sage-bright);
+  border: 1px solid rgba(143, 168, 130, 0.34);
+}
+.cec-pasture-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.cec-pasture-chip {
+  padding: 6px 8px;
+  border-radius: 5px;
+  background: var(--cec-bg-card);
+  border: 1px solid rgba(183, 155, 100, 0.24);
+  cursor: pointer;
+  user-select: none;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.cec-pasture-chip:hover,
+.cec-pasture-chip:focus-visible {
+  border-color: var(--cec-sage-bright);
+  outline: none;
+}
+.cec-pasture-chip.cec-is-active {
+  background: rgba(58, 76, 56, 0.62);
+  border-color: var(--cec-sage-bright);
+}
+.cec-chip-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+.cec-chip-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--cec-ink-main);
+}
+.cec-chip-state {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 9px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: rgba(24, 29, 23, 0.7);
+  color: var(--cec-sage-mid);
+}
+.cec-chip-flora {
+  margin-top: 2px;
+  font-size: 10.5px;
+  line-height: 1.25;
+  color: var(--cec-ink-soft);
+}
+.cec-stone-strip {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 4px;
+  margin-top: auto;
+  padding-top: 4px;
+}
+.cec-stone-chip {
+  padding: 4px 3px;
+  border-radius: 4px;
+  background: rgba(25, 30, 24, 0.86);
+  border: 1px solid rgba(183, 155, 100, 0.22);
+  text-align: center;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 9.5px;
+  line-height: 1.15;
+  color: var(--cec-ink-soft);
+  cursor: pointer;
+  user-select: none;
+}
+.cec-stone-chip:hover,
+.cec-stone-chip:focus-visible,
+.cec-stone-chip.cec-is-active {
+  border-color: var(--cec-ochre-warm);
+  color: var(--cec-ink-main);
+  background: rgba(68, 56, 36, 0.58);
+  outline: none;
+}
+.cec-scrubber-box {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.cec-scrubber-labels {
+  display: flex;
+  justify-content: space-between;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 9.5px;
+  color: var(--cec-ink-dim);
+}
+.cec-era-scrubber {
+  position: relative;
+  height: 24px;
+  padding: 6px 0;
+  cursor: ew-resize;
+  touch-action: none;
+  user-select: none;
+}
+.cec-era-scrubber:focus-visible {
+  outline: 1px solid var(--cec-sage-bright);
+  border-radius: 4px;
+}
+.cec-era-track {
+  position: relative;
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #3c4f37 0%, #5b5e54 60%, #2a2f37 88%, #1e2228 100%);
+  border: 1px solid rgba(183, 155, 100, 0.36);
+}
+.cec-era-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 15%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #8fa882 0%, #cf9b46 72%, #e39d49 100%);
+}
+.cec-era-threshold {
+  position: absolute;
+  left: 88%;
+  top: -3px;
+  bottom: -3px;
+  width: 2px;
+  background: var(--cec-sage-bright);
+  opacity: 0.75;
+}
+.cec-era-thumb {
+  position: absolute;
+  top: 50%;
+  left: 15%;
+  width: 16px;
+  height: 16px;
+  margin-left: -8px;
+  margin-top: -8px;
+  border-radius: 50%;
+  background: var(--cec-ink-main);
+  border: 2px solid var(--cec-ochre-warm);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.55);
+}
+.cec-action-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+}
+.cec-action-key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 5px 7px;
+  border-radius: 4px;
+  background: var(--cec-bg-card);
+  border: 1px solid rgba(183, 155, 100, 0.3);
+  color: var(--cec-ink-main);
+  font-size: 11px;
+  line-height: 1.2;
+  cursor: pointer;
+  user-select: none;
+  text-align: center;
+}
+.cec-action-key:hover,
+.cec-action-key:focus-visible {
+  border-color: var(--cec-sage-bright);
+  background: rgba(58, 72, 55, 0.75);
+  outline: none;
+}
+.cec-action-key.cec-span-two {
+  grid-column: span 2;
+}
+.cec-action-key.cec-cta-sage {
+  background: rgba(52, 74, 54, 0.85);
+  border-color: rgba(183, 227, 192, 0.55);
+}
+.cec-action-key.cec-is-on {
+  background: rgba(50, 82, 68, 0.88);
+  border-color: var(--cec-xray-cyan);
+  color: var(--cec-sage-bright);
+}
+.cec-key-cap {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 9.5px;
+  font-weight: 700;
+  padding: 1px 4px;
+  border-radius: 3px;
+  background: rgba(18, 22, 18, 0.78);
+  color: var(--cec-ochre-warm);
+  border: 1px solid rgba(207, 155, 70, 0.35);
+  flex-shrink: 0;
+}
+.cec-street-weave {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  border-radius: 7px;
+  border: 1px solid rgba(183, 155, 100, 0.35);
+  overflow: hidden;
+  background: #232820;
+}
+.cec-sprawl-canvas {
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+}
+.cec-voice-banner {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 8px;
+  padding: 6px 10px;
+  border-radius: 5px;
+  background: rgba(20, 24, 20, 0.86);
+  border: 1px solid rgba(183, 155, 100, 0.36);
+  pointer-events: none;
+}
+.cec-voice-speaker {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cec-ochre-warm);
+}
+.cec-voice-quote {
+  margin-top: 2px;
+  font-size: 12px;
+  font-style: italic;
+  line-height: 1.3;
+  color: var(--cec-ink-main);
+}
+.cec-compass-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 4px;
+}
+.cec-bearing-key {
+  padding: 5px 4px;
+  border-radius: 4px;
+  background: var(--cec-bg-card);
+  border: 1px solid rgba(183, 155, 100, 0.28);
+  text-align: center;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 10px;
+  color: var(--cec-ink-main);
+  cursor: pointer;
+  user-select: none;
+}
+.cec-bearing-key:hover,
+.cec-bearing-key:focus-visible {
+  border-color: var(--cec-sodium-amber);
+  background: rgba(66, 52, 34, 0.72);
+  outline: none;
+}
+.cec-exit-verdict {
+  padding: 6px 8px;
+  border-radius: 5px;
+  background: rgba(24, 28, 25, 0.9);
+  border: 1px solid rgba(183, 155, 100, 0.24);
+  font-size: 11px;
+  line-height: 1.32;
+  color: var(--cec-ink-soft);
+}
+.cec-inspection-card {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 7px 8px;
+  border-radius: 5px;
+  background: rgba(25, 30, 25, 0.88);
+  border: 1px solid rgba(143, 168, 130, 0.28);
+}
+.cec-inspect-head {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--cec-sage-bright);
+}
+.cec-inspect-body {
+  margin-top: 4px;
+  font-size: 11px;
+  line-height: 1.35;
+  color: var(--cec-ink-soft);
+}
+.cec-shortcut-bar {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 9px;
+  line-height: 1.3;
+  color: var(--cec-ink-dim);
+  padding-top: 3px;
+  border-top: 1px solid rgba(183, 155, 100, 0.16);
+}
+.cec-plate-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(14, 17, 14, 0.92);
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cec-plate-dialog {
+  width: min(1220px, 100%);
+  max-height: 100%;
+  background: #1e231d;
+  border: 1px solid rgba(183, 155, 100, 0.48);
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow: hidden;
+}
+.cec-plate-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.cec-plate-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  min-height: 0;
+  overflow-y: auto;
+}
+.cec-plate-card {
+  background: #161a16;
+  border: 1px solid rgba(183, 155, 100, 0.26);
+  border-radius: 6px;
+  padding: 7px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+.cec-loupe-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 11;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #101310;
+  cursor: zoom-in;
+}
+.cec-plate-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform-origin: 50% 50%;
+  transition: transform 0.16s ease;
+}
+.cec-plate-drawer.cec-zoom-on .cec-loupe-stage {
+  cursor: crosshair;
+}
+.cec-plate-drawer.cec-zoom-on .cec-plate-img {
+  transform: scale(1.8);
+}
+.cec-plate-caption {
+  font-size: 10.5px;
+  color: var(--cec-ink-soft);
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+}
+@media (max-width: 960px) {
+  .cec-root-shell {
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+  .cec-masthead-bar {
+    flex-wrap: wrap;
+    padding: 4px 6px;
+    gap: 4px;
+  }
+  .cec-brand-sub {
+    display: none;
+  }
+  .cec-brand-title {
+    font-size: 13px;
+    letter-spacing: 0.12em;
+  }
+  .cec-utility-bar {
+    gap: 3px;
+  }
+  .cec-utility-bar .cec-action-key {
+    padding: 3px 5px;
+    font-size: 9.5px;
+  }
+  .cec-telemetry-strip {
+    order: 3;
+    flex-basis: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 3px;
+  }
+  .cec-metric-readout {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2px 5px;
+    font-size: 8.5px;
+    line-height: 1.15;
+    gap: 1px;
+    overflow: hidden;
+  }
+  .cec-metric-label {
+    font-size: 7.5px;
+  }
+  .cec-workspace-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 4px 6px 6px;
+    overflow: hidden;
+  }
+  .cec-street-weave {
+    order: 1;
+    flex: 0 0 248px;
+    height: 248px;
+  }
+  .cec-left-column {
+    order: 2;
+    flex: 0 0 auto;
+    gap: 4px;
+  }
+  .cec-right-column {
+    order: 3;
+    flex: 1 1 0;
+    min-height: 0;
+    gap: 4px;
+  }
+  .cec-panel {
+    padding: 5px 6px;
+    gap: 4px;
+  }
+  .cec-pasture-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 4px;
+  }
+  .cec-pasture-chip {
+    padding: 4px 5px;
+  }
+  .cec-chip-name {
+    font-size: 9.5px;
+  }
+  .cec-chip-state,
+  .cec-chip-flora,
+  .cec-shortcut-bar {
+    display: none;
+  }
+  .cec-stone-strip {
+    padding-top: 0;
+    gap: 3px;
+  }
+  .cec-stone-chip {
+    padding: 3px 2px;
+    font-size: 8.5px;
+  }
+  .cec-era-scrubber {
+    height: 18px;
+    padding: 4px 0;
+  }
+  .cec-action-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 3px;
+  }
+  .cec-action-key {
+    padding: 4px 3px;
+    font-size: 9px;
+    gap: 3px;
+  }
+  .cec-action-key.cec-span-two {
+    grid-column: span 1;
+  }
+  .cec-voice-banner {
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    padding: 4px 6px;
+  }
+  .cec-voice-quote {
+    font-size: 10px;
+    line-height: 1.2;
+  }
+  .cec-exit-verdict {
+    padding: 4px 6px;
+    font-size: 9.5px;
+    line-height: 1.2;
+  }
+  .cec-inspection-card {
+    padding: 4px 6px;
+  }
+  .cec-inspect-head {
+    font-size: 10.5px;
+  }
+  .cec-inspect-body {
+    font-size: 9.5px;
+    line-height: 1.22;
+  }
+  .cec-plate-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cec-pasture-chip,
+  .cec-plate-img {
+    transition: none !important;
+  }
+}
+</style>
+</head>
+<body>
+<cecilia-mingled-sprawl id="cec-root-shell" class="cec-root-shell">
+  <cec-masthead-bar class="cec-masthead-bar">
+    <cec-brand-cluster class="cec-brand-cluster">
+      <cec-brand-title class="cec-brand-title">CECILIA</cec-brand-title>
+      <cec-brand-sub class="cec-brand-sub">Named Pastures &amp; Endless Streets</cec-brand-sub>
+    </cec-brand-cluster>
+    <cec-telemetry-strip class="cec-telemetry-strip">
+      <cec-metric-readout id="cec-readout-era" class="cec-metric-readout">
+        <cec-metric-label class="cec-metric-label">Era</cec-metric-label>
+        <cec-metric-value id="cec-val-era" class="cec-metric-value">Youth 15%</cec-metric-value>
+      </cec-metric-readout>
+      <cec-metric-readout id="cec-readout-outside" class="cec-metric-readout">
+        <cec-metric-label class="cec-metric-label">Outside</cec-metric-label>
+        <cec-metric-value id="cec-val-outside" class="cec-metric-value">Open Pasture</cec-metric-value>
+      </cec-metric-readout>
+      <cec-metric-readout id="cec-readout-herd" class="cec-metric-readout">
+        <cec-metric-label class="cec-metric-label">Flock</cec-metric-label>
+        <cec-metric-value id="cec-val-herd" class="cec-metric-value">Youth · 7 Goats</cec-metric-value>
+      </cec-metric-readout>
+      <cec-metric-readout id="cec-readout-sage" class="cec-metric-readout">
+        <cec-metric-label class="cec-metric-label">Sage</cec-metric-label>
+        <cec-metric-value id="cec-val-sage" class="cec-metric-value">Open Meadow</cec-metric-value>
+      </cec-metric-readout>
+    </cec-telemetry-strip>
+    <cec-utility-bar class="cec-utility-bar">
+      <cec-action-key id="cec-btn-xray" class="cec-action-key" role="button" tabindex="0" aria-pressed="false">
+        <cec-key-cap class="cec-key-cap">B</cec-key-cap>
+        <cec-key-text class="cec-key-text">X-Ray</cec-key-text>
+      </cec-action-key>
+      <cec-action-key id="cec-btn-audio" class="cec-action-key" role="button" tabindex="0" aria-pressed="false">
+        <cec-key-cap class="cec-key-cap">M</cec-key-cap>
+        <cec-key-text id="cec-audio-label" class="cec-key-text">Bells Off</cec-key-text>
+      </cec-action-key>
+      <cec-action-key id="cec-btn-reset" class="cec-action-key" role="button" tabindex="0">
+        <cec-key-cap class="cec-key-cap">R</cec-key-cap>
+        <cec-key-text class="cec-key-text">Reset</cec-key-text>
+      </cec-action-key>
+      <cec-action-key id="cec-btn-plates" class="cec-action-key" role="button" tabindex="0">
+        <cec-key-cap class="cec-key-cap">P</cec-key-cap>
+        <cec-key-text class="cec-key-text">Plates</cec-key-text>
+      </cec-action-key>
+    </cec-utility-bar>
+  </cec-masthead-bar>
+
+  <cec-workspace-grid class="cec-workspace-grid">
+    <cec-left-column class="cec-left-column">
+      <named-pasture-palimpsest id="cec-pasture-palimpsest" class="cec-panel cec-pasture-panel">
+        <cec-panel-head class="cec-panel-head">
+          <cec-panel-kicker class="cec-panel-kicker">Named Pastures &amp; Stones</cec-panel-kicker>
+          <cec-panel-badge id="cec-pasture-mode-badge" class="cec-panel-badge">3 Pastures</cec-panel-badge>
+        </cec-panel-head>
+        <cec-pasture-list class="cec-pasture-list">
+          <cec-pasture-chip id="cec-pasture-1" class="cec-pasture-chip cec-is-active" role="button" tabindex="0" data-cec-pasture="meadow_of_the_low_sage">
+            <cec-chip-top class="cec-chip-top">
+              <cec-chip-name class="cec-chip-name">[1] Meadow of the Low Sage</cec-chip-name>
+              <cec-chip-state id="cec-state-pasture-1" class="cec-chip-state">Open Turf</cec-chip-state>
+            </cec-chip-top>
+            <cec-chip-flora id="cec-desc-pasture-1" class="cec-chip-flora">Salvia humilis · Warm fragrant hollow beyond south tollgate</cec-chip-flora>
+          </cec-pasture-chip>
+          <cec-pasture-chip id="cec-pasture-2" class="cec-pasture-chip" role="button" tabindex="0" data-cec-pasture="goats_slope">
+            <cec-chip-top class="cec-chip-top">
+              <cec-chip-name class="cec-chip-name">[2] The Goat's Slope</cec-chip-name>
+              <cec-chip-state id="cec-state-pasture-2" class="cec-chip-state">Open Turf</cec-chip-state>
+            </cec-chip-top>
+            <cec-chip-flora id="cec-desc-pasture-2" class="cec-chip-flora">Thymus &amp; Cytisus · Steep limestone thyme and broom scree</cec-chip-flora>
+          </cec-pasture-chip>
+          <cec-pasture-chip id="cec-pasture-3" class="cec-pasture-chip" role="button" tabindex="0" data-cec-pasture="crossroads_of_the_wind">
+            <cec-chip-top class="cec-chip-top">
+              <cec-chip-name class="cec-chip-name">[3] Crossroads of the Wind</cec-chip-name>
+              <cec-chip-state id="cec-state-pasture-3" class="cec-chip-state">Open Turf</cec-chip-state>
+            </cec-chip-top>
+            <cec-chip-flora id="cec-desc-pasture-3" class="cec-chip-flora">Foeniculum &amp; Stipa · Four-breeze feathergrass upland col</cec-chip-flora>
+          </cec-pasture-chip>
+        </cec-pasture-list>
+        <cec-stone-strip class="cec-stone-strip">
+          <cec-stone-chip class="cec-stone-chip" role="button" tabindex="0" data-cec-stone="barefoot_youth_pasture_names">[4] Youth</cec-stone-chip>
+          <cec-stone-chip class="cec-stone-chip" role="button" tabindex="0" data-cec-stone="leafless_nameless_interval">[5] Gates</cec-stone-chip>
+          <cec-stone-chip class="cec-stone-chip" role="button" tabindex="0" data-cec-stone="endless_identical_streets">[6] Sprawl</cec-stone-chip>
+          <cec-stone-chip class="cec-stone-chip" role="button" tabindex="0" data-cec-stone="mangy_wastepaper_goats">[7] Paper</cec-stone-chip>
+          <cec-stone-chip class="cec-stone-chip" role="button" tabindex="0" data-cec-stone="traffic_island_recognition">[8] Island</cec-stone-chip>
+        </cec-stone-strip>
+      </named-pasture-palimpsest>
+      <traffic-island-sage id="cec-island-sage" class="cec-panel cec-island-panel">
+        <cec-panel-head class="cec-panel-head">
+          <cec-panel-kicker class="cec-panel-kicker">Era &amp; Traffic Island</cec-panel-kicker>
+          <cec-panel-badge id="cec-era-pct-badge" class="cec-panel-badge">15%</cec-panel-badge>
+        </cec-panel-head>
+        <cec-scrubber-box class="cec-scrubber-box">
+          <cec-scrubber-labels class="cec-scrubber-labels">
+            <cec-metric-label class="cec-metric-label">0% Youthful</cec-metric-label>
+            <cec-metric-label class="cec-metric-label">88% Threshold</cec-metric-label>
+            <cec-metric-label class="cec-metric-label">100% Mingled</cec-metric-label>
+          </cec-scrubber-labels>
+          <cec-era-scrubber id="cec-era-scrubber" class="cec-era-scrubber" role="slider" tabindex="0" aria-valuemin="0" aria-valuemax="100" aria-valuenow="15" aria-label="Continuous urban mingling era">
+            <cec-era-track id="cec-era-track" class="cec-era-track">
+              <cec-era-fill id="cec-era-fill" class="cec-era-fill"></cec-era-fill>
+              <cec-era-threshold class="cec-era-threshold"></cec-era-threshold>
+              <cec-era-thumb id="cec-era-thumb" class="cec-era-thumb"></cec-era-thumb>
+            </cec-era-track>
+          </cec-era-scrubber>
+        </cec-scrubber-box>
+        <cec-action-grid class="cec-action-grid">
+          <cec-action-key id="cec-btn-youth" class="cec-action-key" role="button" tabindex="0">
+            <cec-key-cap class="cec-key-cap">Y</cec-key-cap>
+            <cec-key-text class="cec-key-text">Youth</cec-key-text>
+          </cec-action-key>
+          <cec-action-key id="cec-btn-mingle" class="cec-action-key" role="button" tabindex="0">
+            <cec-key-cap class="cec-key-cap">E</cec-key-cap>
+            <cec-key-text class="cec-key-text">Mingle All</cec-key-text>
+          </cec-action-key>
+          <cec-action-key id="cec-btn-island" class="cec-action-key cec-span-two cec-cta-sage" role="button" tabindex="0">
+            <cec-key-cap class="cec-key-cap">D</cec-key-cap>
+            <cec-key-text class="cec-key-text">Drive Flock Across Traffic Island</cec-key-text>
+          </cec-action-key>
+          <cec-action-key id="cec-btn-wastepaper" class="cec-action-key cec-span-two" role="button" tabindex="0">
+            <cec-key-cap class="cec-key-cap">W</cec-key-cap>
+            <cec-key-text id="cec-paper-label" class="cec-key-text">Crop Curb Wastepaper (0)</cec-key-text>
+          </cec-action-key>
+        </cec-action-grid>
+      </traffic-island-sage>
+    </cec-left-column>
+
+    <boundless-street-weave id="cec-street-weave" class="cec-street-weave">
+      <canvas id="cec-sprawl-canvas" class="cec-sprawl-canvas"></canvas>
+      <cec-voice-banner id="cec-voice-banner" class="cec-voice-banner">
+        <cec-voice-speaker id="cec-voice-speaker" class="cec-voice-speaker">Barefoot Goatherd · Open Pastures</cec-voice-speaker>
+        <cec-voice-quote id="cec-voice-quote" class="cec-voice-quote">Ask me the name of any pasture and I know it; cities have no name—only leafless intervals between one field and the next.</cec-voice-quote>
+      </cec-voice-banner>
+    </boundless-street-weave>
+
+    <cec-right-column class="cec-right-column">
+      <goatherd-bell-compass id="cec-bell-compass" class="cec-panel cec-compass-panel">
+        <cec-panel-head class="cec-panel-head">
+          <cec-panel-kicker class="cec-panel-kicker">Bell Compass &amp; Exit Test</cec-panel-kicker>
+          <cec-panel-badge id="cec-exit-badge" class="cec-panel-badge">Gates Open</cec-panel-badge>
+        </cec-panel-head>
+        <cec-action-key id="cec-btn-exit" class="cec-action-key" role="button" tabindex="0">
+          <cec-key-cap class="cec-key-cap">X</cec-key-cap>
+          <cec-key-text class="cec-key-text">Attempt Exit Outward</cec-key-text>
+        </cec-action-key>
+        <cec-compass-grid class="cec-compass-grid">
+          <cec-bearing-key class="cec-bearing-key" role="button" tabindex="0" data-cec-bearing="north">North</cec-bearing-key>
+          <cec-bearing-key class="cec-bearing-key" role="button" tabindex="0" data-cec-bearing="east">East</cec-bearing-key>
+          <cec-bearing-key class="cec-bearing-key" role="button" tabindex="0" data-cec-bearing="south">South</cec-bearing-key>
+          <cec-bearing-key class="cec-bearing-key" role="button" tabindex="0" data-cec-bearing="west">West</cec-bearing-key>
+        </cec-compass-grid>
+        <cec-exit-verdict id="cec-exit-verdict" class="cec-exit-verdict">Watchmen &amp; toll-collectors guard the limestone gates; beyond them lie the open named pastures.</cec-exit-verdict>
+        <cec-inspection-card id="cec-inspection-card" class="cec-inspection-card">
+          <cec-inspect-head id="cec-inspect-head" class="cec-inspect-head">Meadow of the Low Sage</cec-inspect-head>
+          <cec-inspect-body id="cec-inspect-body" class="cec-inspect-body">Warm hollow of fragrant silver-green Salvia humilis beyond the south tollgate, grazed by seven nimble horned goats.</cec-inspect-body>
+        </cec-inspection-card>
+        <cec-shortcut-bar class="cec-shortcut-bar">1-3 Pastures · 4-8 Stones · D Island · W Paper · E/Y Era · X Exit · B X-Ray · M Bells · P Plates · R Reset</cec-shortcut-bar>
+      </goatherd-bell-compass>
+    </cec-right-column>
+  </cec-workspace-grid>
+</cecilia-mingled-sprawl>
+
+<cecilia-plate-drawer id="cec-plate-drawer" class="cec-plate-drawer" hidden>
+  <cec-plate-dialog class="cec-plate-dialog">
+    <cec-plate-topbar class="cec-plate-topbar">
+      <cec-brand-cluster class="cec-brand-cluster">
+        <cec-brand-title class="cec-brand-title">CECILIA ROYAL PLATES</cec-brand-title>
+        <cec-brand-sub class="cec-brand-sub">Cartographic Survey &amp; Traffic Island View</cec-brand-sub>
+      </cec-brand-cluster>
+      <cec-utility-bar class="cec-utility-bar">
+        <cec-action-key id="cec-btn-zoom" class="cec-action-key" role="button" tabindex="0" aria-pressed="false">
+          <cec-key-cap class="cec-key-cap">Z</cec-key-cap>
+          <cec-key-text id="cec-zoom-label" class="cec-key-text">1.8x Loupe Off</cec-key-text>
+        </cec-action-key>
+        <cec-action-key id="cec-btn-close-plates" class="cec-action-key" role="button" tabindex="0">
+          <cec-key-cap class="cec-key-cap">Esc</cec-key-cap>
+          <cec-key-text class="cec-key-text">Close</cec-key-text>
+        </cec-action-key>
+      </cec-utility-bar>
+    </cec-plate-topbar>
+    <cec-plate-grid class="cec-plate-grid">
+      <cec-plate-card class="cec-plate-card">
+        <cec-loupe-stage id="cec-loupe-map" class="cec-loupe-stage">
+          <img id="cec-img-map" class="cec-plate-img" src="map.png" alt="Cartographic survey plate of continuous streets and buried pastures">
+        </cec-loupe-stage>
+        <cec-plate-caption class="cec-plate-caption">
+          <cec-metric-label class="cec-metric-label">Plate I · Cartographic Survey (1600x1200)</cec-metric-label>
+          <cec-metric-value class="cec-metric-value">map.png</cec-metric-value>
+        </cec-plate-caption>
+      </cec-plate-card>
+      <cec-plate-card class="cec-plate-card">
+        <cec-loupe-stage id="cec-loupe-image" class="cec-loupe-stage">
+          <img id="cec-img-image" class="cec-plate-img" src="image.png" alt="Perspective plate of the aged goatherd and flock at the traffic island">
+        </cec-loupe-stage>
+        <cec-plate-caption class="cec-plate-caption">
+          <cec-metric-label class="cec-metric-label">Plate II · Perspective View (1600x1000)</cec-metric-label>
+          <cec-metric-value class="cec-metric-value">image.png</cec-metric-value>
+        </cec-plate-caption>
+      </cec-plate-card>
+    </cec-plate-grid>
+  </cec-plate-dialog>
+</cecilia-plate-drawer>
+
+<script>
+/*
+ * City 51: Cecilia (Continuous Cities 4)
+ * Layer 1: Boundless Mingled Streets & Traffic Island Palimpsest
+ * Standalone Canvas 2D engine enacting topological pasture-to-asphalt engulfment.
+ */
+(function ceciliaBoundlessStreetsIIFE() {
+  "use strict";
+
+  var STREET_PALETTE = {
+    pastureEarth: "#2d3627", contourOchre: "#b79b64", limestoneBlock: "#d5cab2",
+    leaflessAlley: "#4a463f", tenementConcrete: "#5f656d", endlessAsphalt: "#22262d",
+    islandCurb: "#9da3aa", laneStripe: "#c9b37e", sodiumLamp: "#e39d49",
+    xrayBotanicalCyan: "#8fe0b8", xrayRootGold: "#e6c97a"
+  };
+
+  var TRAFFIC_ISLAND_ANCHORS = [
+    { id: "meadow_of_the_low_sage", name: "Meadow of the Low Sage", nx: 0.50, ny: 0.54, rx: 0.068, ry: 0.046, streetContext: "Central Arterial Roundabout Traffic Island" },
+    { id: "goats_slope", name: "The Goat's Slope", nx: 0.24, ny: 0.33, rx: 0.056, ry: 0.038, streetContext: "Northwest Viaduct Splitter Island" },
+    { id: "crossroads_of_the_wind", name: "The Crossroads of the Wind", nx: 0.77, ny: 0.36, rx: 0.058, ry: 0.039, streetContext: "Northeast Six-Way Overpass Island" }
+  ];
+
+  var CEC_CORE_ORIGIN = { nx: 0.50, ny: 0.80 };
+
+  var CEC_TOLL_GATES = [
+    { id: "tollgate_north", bearing: "north", label: "North Watchmen's Arch", dx: 0.0, dy: -1.0, pastureName: "Meadow of the Low Sage" },
+    { id: "tollgate_west", bearing: "west", label: "West Limestone Toll-Gate", dx: -1.0, dy: 0.0, pastureName: "The Goat's Slope" },
+    { id: "tollgate_east", bearing: "east", label: "East Watchmen's Postern", dx: 1.0, dy: 0.0, pastureName: "The Crossroads of the Wind" },
+    { id: "tollgate_south", bearing: "south", label: "South Drovers' Gate", dx: 0.0, dy: 0.88, pastureName: "Lower Thyme Hollow" }
+  ];
+
+  var CEC_NEIGHBOR_CITIES = [
+    { nx: 0.05, ny: 0.10, weight: 1.05 }, { nx: 0.95, ny: 0.12, weight: 1.02 },
+    { nx: 0.03, ny: 0.62, weight: 0.96 }, { nx: 0.97, ny: 0.65, weight: 0.98 },
+    { nx: 0.49, ny: 0.03, weight: 0.94 }
+  ];
+
+  function cecSprawlClamp(val, lo, hi) {
+    var n = Number(val);
+    if (!Number.isFinite(n)) return lo;
+    return n < lo ? lo : (n > hi ? hi : n);
+  }
+
+  function cecSprawlMix(a, b, t) { return a + (b - a) * t; }
+
+  function cecSprawlHash(ix, iy, salt) {
+    var h = Math.sin(ix * 127.1 + iy * 311.7 + (salt || 0) * 74.7) * 43758.5453;
+    return h - Math.floor(h);
+  }
+
+  function cecSprawlCoreRadii(era) {
+    var early = cecSprawlClamp(era, 0, 0.45);
+    var burst = era > 0.45 ? (era - 0.45) / 0.43 : 0;
+    return { rx: 0.155 + early * 0.16 + burst * 0.82, ry: 0.112 + early * 0.12 + burst * 0.78 };
+  }
+
+  function cecSprawlUrbanFieldAt(nx, ny, era) {
+    if (era >= 0.88) return 1.0;
+    var radii = cecSprawlCoreRadii(era);
+    var dCore = Math.hypot((nx - CEC_CORE_ORIGIN.nx) / radii.rx, (ny - CEC_CORE_ORIGIN.ny) / radii.ry);
+    var wobble = 0.04 * Math.sin(nx * 19.0 + ny * 13.0);
+    if (dCore + wobble <= 1.0) return 1.0;
+    if (era < 0.45) return 0.0;
+    var reach = 0.04 + cecSprawlClamp((era - 0.45) / 0.43, 0, 1) * 0.88;
+    for (var i = 0; i < CEC_NEIGHBOR_CITIES.length; i++) {
+      var nb = CEC_NEIGHBOR_CITIES[i];
+      if (Math.hypot(nx - nb.nx, (ny - nb.ny) * 1.08) / (reach * nb.weight) + wobble * 0.7 <= 1.0) return 1.0;
+    }
+    return 0.0;
+  }
+
+  function cecSprawlIslandMetric(nx, ny, anchor) {
+    return Math.hypot((nx - anchor.nx) / anchor.rx, (ny - anchor.ny) / anchor.ry);
+  }
+
+  function cecSprawlPaintCountryside(ctx, w, h, era, clockSec, reducedMotion) {
+    ctx.save();
+    ctx.fillStyle = STREET_PALETTE.pastureEarth;
+    ctx.fillRect(0, 0, w, h);
+    if (era >= 0.88) { ctx.restore(); return; }
+
+    var ruralAlpha = cecSprawlClamp(1.0 - Math.max(0, (era - 0.50) / 0.40), 0.12, 1.0);
+    var hillGrad = ctx.createRadialGradient(w * 0.50, h * 0.46, w * 0.05, w * 0.50, h * 0.50, w * 0.72);
+    hillGrad.addColorStop(0, "rgba(74, 88, 58, " + (0.42 * ruralAlpha).toFixed(3) + ")");
+    hillGrad.addColorStop(0.6, "rgba(45, 54, 39, " + (0.22 * ruralAlpha).toFixed(3) + ")");
+    hillGrad.addColorStop(1, "rgba(28, 34, 25, " + (0.55 * ruralAlpha).toFixed(3) + ")");
+    ctx.fillStyle = hillGrad;
+    ctx.fillRect(0, 0, w, h);
+
+    ctx.strokeStyle = STREET_PALETTE.contourOchre;
+    ctx.lineWidth = 1;
+    for (var band = 0; band < 9; band++) {
+      ctx.globalAlpha = (band % 3 === 0 ? 0.24 : 0.12) * ruralAlpha;
+      ctx.beginPath();
+      var baseY = h * (0.09 + band * 0.095);
+      for (var sx = 0; sx <= w; sx += 24) {
+        var nx = sx / w;
+        var wave = Math.sin(nx * 7.2 + band * 1.1) * h * 0.022 + Math.cos(nx * 13.5 - band * 0.7) * h * 0.011;
+        if (sx === 0) ctx.moveTo(sx, baseY + wave); else ctx.lineTo(sx, baseY + wave);
+      }
+      ctx.stroke();
+    }
+
+    ctx.globalAlpha = 0.34 * ruralAlpha;
+    ctx.setLineDash([5, 5]);
+    ctx.lineWidth = 1.4;
+    for (var pi = 0; pi < TRAFFIC_ISLAND_ANCHORS.length; pi++) {
+      var anc = TRAFFIC_ISLAND_ANCHORS[pi];
+      ctx.beginPath();
+      ctx.moveTo(CEC_CORE_ORIGIN.nx * w, (CEC_CORE_ORIGIN.ny - 0.11) * h);
+      ctx.quadraticCurveTo(((CEC_CORE_ORIGIN.nx + anc.nx) * 0.5 + (pi - 1) * 0.05) * w, ((CEC_CORE_ORIGIN.ny + anc.ny) * 0.5 - 0.04) * h, anc.nx * w, anc.ny * h);
+      ctx.stroke();
+    }
+    ctx.setLineDash([]);
+
+    var breezeShift = reducedMotion ? 0 : Math.sin(clockSec * 1.3) * 2.2;
+    for (var ai = 0; ai < TRAFFIC_ISLAND_ANCHORS.length; ai++) {
+      var pa = TRAFFIC_ISLAND_ANCHORS[ai];
+      var cx = pa.nx * w, cy = pa.ny * h, rx = pa.rx * w, ry = pa.ry * h;
+      for (var ring = 1; ring <= 4; ring++) {
+        ctx.globalAlpha = (0.34 - ring * 0.06) * ruralAlpha;
+        ctx.strokeStyle = STREET_PALETTE.contourOchre;
+        ctx.lineWidth = ring === 1 ? 1.4 : 0.9;
+        ctx.beginPath();
+        ctx.ellipse(cx, cy, rx * (0.65 + ring * 0.36), ry * (0.65 + ring * 0.36), (ai - 1) * 0.18, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+      ctx.globalAlpha = 0.58 * ruralAlpha;
+      for (var ti = 0; ti < 14; ti++) {
+        var ang = ti * 2.39996, dist = Math.sqrt((ti + 0.5) / 14) * 0.85;
+        var tx = cx + Math.cos(ang) * rx * dist, ty = cy + Math.sin(ang) * ry * dist;
+        if (pa.id === "goats_slope" && ti % 3 === 0) {
+          ctx.fillStyle = STREET_PALETTE.limestoneBlock;
+          ctx.fillRect(tx - 4, ty - 2, 8, 3);
+        }
+        ctx.strokeStyle = pa.id === "meadow_of_the_low_sage" ? "#7ea07b" : STREET_PALETTE.contourOchre;
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.moveTo(tx - 3, ty + 2);
+        ctx.lineTo(tx + breezeShift * 0.35, ty - 4);
+        ctx.lineTo(tx + 3, ty + 2);
+        ctx.stroke();
+      }
+      if (pa.id === "crossroads_of_the_wind") {
+        ctx.globalAlpha = 0.32 * ruralAlpha;
+        ctx.strokeStyle = STREET_PALETTE.limestoneBlock;
+        for (var wi = 0; wi < 4; wi++) {
+          var wang = wi * (Math.PI * 0.5) + 0.32;
+          ctx.beginPath();
+          ctx.moveTo(cx + Math.cos(wang) * rx * 0.3, cy + Math.sin(wang) * ry * 0.3);
+          ctx.lineTo(cx + Math.cos(wang) * rx * 1.45, cy + Math.sin(wang) * ry * 1.45);
+          ctx.stroke();
+        }
+      }
+    }
+    ctx.restore();
+  }
+
+  function cecSprawlGateCoords(w, h, era) {
+    var radii = cecSprawlCoreRadii(Math.min(era, 0.44)), out = [];
+    for (var i = 0; i < CEC_TOLL_GATES.length; i++) {
+      var g = CEC_TOLL_GATES[i];
+      out.push({ id: g.id, bearing: g.bearing, label: g.label, pastureName: g.pastureName, x: (CEC_CORE_ORIGIN.nx + g.dx * radii.rx * 0.94) * w, y: (CEC_CORE_ORIGIN.ny + g.dy * radii.ry * 0.94) * h });
+    }
+    return out;
+  }
+
+  function cecSprawlPaintLimestoneCore(ctx, w, h, state) {
+    if (state.eraProgress >= 0.86) return;
+    ctx.save();
+    var fade = cecSprawlClamp(1.0 - Math.max(0, (state.eraProgress - 0.55) / 0.31), 0, 1);
+    var radii = cecSprawlCoreRadii(Math.min(state.eraProgress, 0.45));
+    var cx = CEC_CORE_ORIGIN.nx * w, cy = CEC_CORE_ORIGIN.ny * h;
+    var rx = radii.rx * w, ry = radii.ry * h;
+
+    ctx.globalAlpha = 0.92 * fade;
+    ctx.fillStyle = STREET_PALETTE.leaflessAlley;
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = STREET_PALETTE.limestoneBlock;
+    for (var row = -1; row <= 1; row++) {
+      for (var col = -2; col <= 1; col++) {
+        var bx = cx + (col + 0.12) * (rx * 0.36), by = cy + (row - 0.35) * (ry * 0.42);
+        var bw = rx * 0.28, bh = ry * 0.30;
+        if (Math.hypot((bx + bw * 0.5 - cx) / rx, (by + bh * 0.5 - cy) / ry) < 0.86) {
+          ctx.fillRect(bx, by, bw, bh);
+          ctx.strokeStyle = STREET_PALETTE.leaflessAlley;
+          ctx.lineWidth = 1;
+          ctx.strokeRect(bx + 2, by + 2, Math.max(2, bw - 4), Math.max(2, bh - 4));
+        }
+      }
+    }
+
+    ctx.strokeStyle = STREET_PALETTE.limestoneBlock;
+    ctx.lineWidth = state.tollGatesIntact ? 2.6 : 1.2;
+    if (!state.tollGatesIntact) ctx.setLineDash([6, 7]);
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    if (state.tollGatesIntact) {
+      var gates = cecSprawlGateCoords(w, h, state.eraProgress);
+      for (var gi = 0; gi < gates.length; gi++) {
+        var gt = gates[gi];
+        ctx.fillStyle = STREET_PALETTE.leaflessAlley;
+        ctx.fillRect(gt.x - 8, gt.y - 6, 16, 12);
+        ctx.fillStyle = STREET_PALETTE.limestoneBlock;
+        ctx.fillRect(gt.x - 9, gt.y - 7, 5, 14);
+        ctx.fillRect(gt.x + 4, gt.y - 7, 5, 14);
+        ctx.fillStyle = STREET_PALETTE.sodiumLamp;
+        ctx.beginPath();
+        ctx.arc(gt.x, gt.y, 2.2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+    ctx.restore();
+  }
+
+  function cecSprawlMod(n, m) { return ((n % m) + m) % m; }
+
+  function cecSprawlPaintMingledStreets(ctx, w, h, state, clockSec) {
+    var era = state.eraProgress;
+    if (era < 0.08) return;
+    ctx.save();
+    if (era >= 0.88) {
+      ctx.fillStyle = STREET_PALETTE.endlessAsphalt;
+      ctx.fillRect(0, 0, w, h);
+    }
+    var cols = 12, rows = 8, cellW = w / cols, cellH = h / rows;
+    var ox = cecSprawlMod(state.toroidalPan.x, cellW), oy = cecSprawlMod(state.toroidalPan.y, cellH);
+    var lampFlicker = state.reducedMotion ? 0.85 : (0.78 + 0.18 * Math.sin(clockSec * 3.1));
+
+    for (var r = -1; r <= rows; r++) {
+      for (var c = -1; c <= cols; c++) {
+        var x0 = c * cellW + ox, y0 = r * cellH + oy;
+        var ncx = cecSprawlClamp((x0 + cellW * 0.5) / w, 0, 1), ncy = cecSprawlClamp((y0 + cellH * 0.5) / h, 0, 1);
+        if (era < 0.88 && cecSprawlUrbanFieldAt(ncx, ncy, era) < 0.5) continue;
+        var inRotary = false;
+        for (var k = 0; k < TRAFFIC_ISLAND_ANCHORS.length; k++) {
+          if (cecSprawlIslandMetric(ncx, ncy, TRAFFIC_ISLAND_ANCHORS[k]) < 1.36) { inRotary = true; break; }
+        }
+        if (inRotary) {
+          if (era >= 0.55) {
+            ctx.fillStyle = STREET_PALETTE.endlessAsphalt;
+            ctx.fillRect(x0 - 1, y0 - 1, cellW + 2, cellH + 2);
+          }
+          continue;
+        }
+        ctx.fillStyle = STREET_PALETTE.endlessAsphalt;
+        ctx.fillRect(x0 - 0.5, y0 - 0.5, cellW + 1, cellH + 1);
+
+        ctx.strokeStyle = STREET_PALETTE.laneStripe;
+        ctx.globalAlpha = 0.42;
+        ctx.lineWidth = 1;
+        ctx.setLineDash([4, 5]);
+        ctx.beginPath();
+        ctx.moveTo(x0, y0 + 4); ctx.lineTo(x0 + cellW, y0 + 4);
+        ctx.moveTo(x0 + 4, y0); ctx.lineTo(x0 + 4, y0 + cellH);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        var pad = Math.max(7, Math.min(cellW, cellH) * 0.13);
+        var bx = x0 + pad, by = y0 + pad, bw = Math.max(8, cellW - pad * 1.65), bh = Math.max(8, cellH - pad * 1.65);
+        var hVal = cecSprawlHash(c - Math.floor(state.toroidalPan.x / cellW), r - Math.floor(state.toroidalPan.y / cellH), 3);
+
+        ctx.globalAlpha = 0.96;
+        ctx.fillStyle = era < 0.55 && hVal > 0.55 ? STREET_PALETTE.limestoneBlock : STREET_PALETTE.tenementConcrete;
+        ctx.fillRect(bx, by, bw, bh);
+        ctx.fillStyle = STREET_PALETTE.leaflessAlley;
+        ctx.fillRect(bx + bw * 0.30, by + bh * 0.28, bw * 0.40, bh * 0.44);
+        ctx.strokeStyle = STREET_PALETTE.islandCurb;
+        ctx.lineWidth = 0.8;
+        ctx.strokeRect(bx, by, bw, bh);
+
+        if (era >= 0.50) {
+          ctx.globalAlpha = 0.55 * lampFlicker;
+          ctx.fillStyle = STREET_PALETTE.sodiumLamp;
+          ctx.beginPath();
+          ctx.arc(x0 + 5, y0 + 5, 2.4, 0, Math.PI * 2);
+          ctx.fill();
+          if (era >= 0.80 && hVal < 0.45) {
+            ctx.globalAlpha = 0.78;
+            ctx.fillStyle = STREET_PALETTE.islandCurb;
+            ctx.fillRect(bx - 3.2, by + bh * 0.5, 2.5, 3.5);
+          }
+        }
+      }
+    }
+    ctx.restore();
+  }
+
+  function cecSprawlPaintTrafficIslands(ctx, w, h, state, recognizedId, clockSec) {
+    var era = state.eraProgress;
+    if (era < 0.52) return;
+    ctx.save();
+    var paveT = cecSprawlClamp((era - 0.52) / 0.36, 0, 1);
+    for (var i = 0; i < TRAFFIC_ISLAND_ANCHORS.length; i++) {
+      var anc = TRAFFIC_ISLAND_ANCHORS[i];
+      var cx = anc.nx * w, cy = anc.ny * h, rx = anc.rx * w, ry = anc.ry * h;
+      ctx.globalAlpha = 0.96 * paveT;
+      ctx.fillStyle = STREET_PALETTE.endlessAsphalt;
+      ctx.beginPath();
+      ctx.ellipse(cx, cy, rx * 1.56, ry * 1.58, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      if (anc.id === "crossroads_of_the_wind" || anc.id === "goats_slope") {
+        var spokes = anc.id === "crossroads_of_the_wind" ? 6 : 4;
+        ctx.strokeStyle = STREET_PALETTE.endlessAsphalt;
+        ctx.lineWidth = Math.max(10, rx * 0.28);
+        for (var sp = 0; sp < spokes; sp++) {
+          var sa = sp * (Math.PI * 2 / spokes) + (anc.id === "goats_slope" ? 0.45 : 0.18);
+          ctx.beginPath();
+          ctx.moveTo(cx + Math.cos(sa) * rx * 1.1, cy + Math.sin(sa) * ry * 1.1);
+          ctx.lineTo(cx + Math.cos(sa) * rx * 2.15, cy + Math.sin(sa) * ry * 2.15);
+          ctx.stroke();
+        }
+      }
+
+      ctx.strokeStyle = STREET_PALETTE.laneStripe;
+      ctx.lineWidth = 1.2;
+      ctx.setLineDash([6, 6]);
+      ctx.beginPath();
+      ctx.ellipse(cx, cy, rx * 1.28, ry * 1.30, 0, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      for (var hc = 0; hc < 3; hc++) {
+        var baseAng = (state.reducedMotion ? 0.7 : clockSec * (0.75 + i * 0.15)) + hc * 2.09;
+        ctx.strokeStyle = hc % 2 === 0 ? STREET_PALETTE.sodiumLamp : "#d8684c";
+        ctx.lineWidth = 2.0;
+        ctx.globalAlpha = 0.65 * paveT;
+        ctx.beginPath();
+        ctx.ellipse(cx, cy, rx * (1.20 + hc * 0.08), ry * (1.22 + hc * 0.08), 0, baseAng, baseAng + 0.34);
+        ctx.stroke();
+      }
+
+      ctx.globalAlpha = 0.98;
+      ctx.fillStyle = era >= 0.88 ? "#353b34" : STREET_PALETTE.pastureEarth;
+      ctx.beginPath();
+      ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      if (era >= 0.80) {
+        ctx.strokeStyle = STREET_PALETTE.islandCurb;
+        ctx.lineWidth = era >= 0.88 ? 4.2 : 2.4;
+        ctx.stroke();
+        ctx.fillStyle = STREET_PALETTE.leaflessAlley;
+        ctx.fillRect(cx - rx * 0.78, cy - 2, 6, 4);
+        ctx.fillRect(cx + rx * 0.68, cy - 2, 6, 4);
+      }
+
+      ctx.strokeStyle = anc.id === "meadow_of_the_low_sage" ? STREET_PALETTE.xrayBotanicalCyan : STREET_PALETTE.contourOchre;
+      ctx.lineWidth = 1.2;
+      for (var sg = -2; sg <= 2; sg++) {
+        ctx.beginPath();
+        ctx.moveTo(cx + sg * rx * 0.22, cy + 4);
+        ctx.lineTo(cx + sg * rx * 0.22 + 2, cy - 4);
+        ctx.stroke();
+      }
+
+      if (state.highlightedIslandId === anc.id || recognizedId === anc.id) {
+        ctx.strokeStyle = STREET_PALETTE.xrayRootGold;
+        ctx.lineWidth = 2.2;
+        ctx.beginPath();
+        ctx.ellipse(cx, cy, rx * 1.12, ry * 1.14, 0, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+    }
+    ctx.restore();
+  }
+
+  function cecSprawlPaintBotanicalXRay(ctx, w, h, state, recognizedId, clockSec) {
+    var fullXRay = state.botanicalXRay === true, focusId = recognizedId || state.highlightedIslandId;
+    if (!fullXRay && !focusId) return;
+    ctx.save();
+    var pulse = state.reducedMotion ? 1.0 : (0.88 + 0.12 * Math.sin(clockSec * 2.4));
+
+    if (fullXRay) {
+      ctx.fillStyle = "rgba(18, 34, 28, 0.42)";
+      ctx.fillRect(0, 0, w, h);
+      ctx.strokeStyle = STREET_PALETTE.xrayBotanicalCyan;
+      ctx.globalAlpha = 0.44 * pulse;
+      ctx.lineWidth = 1.3;
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.moveTo(TRAFFIC_ISLAND_ANCHORS[1].nx * w, TRAFFIC_ISLAND_ANCHORS[1].ny * h);
+      ctx.quadraticCurveTo(w * 0.36, h * 0.46, TRAFFIC_ISLAND_ANCHORS[0].nx * w, TRAFFIC_ISLAND_ANCHORS[0].ny * h);
+      ctx.quadraticCurveTo(w * 0.65, h * 0.46, TRAFFIC_ISLAND_ANCHORS[2].nx * w, TRAFFIC_ISLAND_ANCHORS[2].ny * h);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    for (var i = 0; i < TRAFFIC_ISLAND_ANCHORS.length; i++) {
+      var anc = TRAFFIC_ISLAND_ANCHORS[i];
+      if (!fullXRay && anc.id !== focusId) continue;
+      var cx = anc.nx * w, cy = anc.ny * h, rx = anc.rx * w, ry = anc.ry * h;
+      var halo = ctx.createRadialGradient(cx, cy, rx * 0.15, cx, cy, Math.max(rx, ry) * 2.15);
+      halo.addColorStop(0, "rgba(143, 224, 184, 0.34)");
+      halo.addColorStop(0.55, "rgba(230, 201, 122, 0.16)");
+      halo.addColorStop(1, "rgba(143, 224, 184, 0.0)");
+      ctx.globalAlpha = pulse;
+      ctx.fillStyle = halo;
+      ctx.beginPath();
+      ctx.arc(cx, cy, Math.max(rx, ry) * 2.15, 0, Math.PI * 2);
+      ctx.fill();
+
+      for (var ring = 1; ring <= 3; ring++) {
+        ctx.strokeStyle = ring === 1 ? STREET_PALETTE.xrayRootGold : STREET_PALETTE.xrayBotanicalCyan;
+        ctx.globalAlpha = (0.78 - ring * 0.18) * pulse;
+        ctx.lineWidth = ring === 1 ? 1.6 : 1.0;
+        ctx.beginPath();
+        ctx.ellipse(cx, cy, rx * (0.72 + ring * 0.38), ry * (0.72 + ring * 0.38), 0, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      ctx.strokeStyle = STREET_PALETTE.xrayRootGold;
+      ctx.globalAlpha = 0.82 * pulse;
+      ctx.lineWidth = 1.2;
+      for (var br = 0; br < 8; br++) {
+        var ang = br * (Math.PI * 0.25) + 0.22;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.quadraticCurveTo(cx + Math.cos(ang + 0.25) * rx * 0.72, cy + Math.sin(ang + 0.25) * ry * 0.72, cx + Math.cos(ang) * rx * 1.35, cy + Math.sin(ang) * ry * 1.35);
+        ctx.stroke();
+      }
+
+      if (w >= 340) {
+        ctx.font = (w < 520 ? "600 10px " : "600 11px ") + "Georgia, serif";
+        ctx.textAlign = "center";
+        ctx.fillStyle = STREET_PALETTE.xrayRootGold;
+        ctx.globalAlpha = 0.94;
+        ctx.fillText(anc.name, cx, cy - ry * 1.28);
+      }
+    }
+    ctx.restore();
+  }
+
+  function cecStreetNormalizeBearing(rawBearing) {
+    var b = String(rawBearing || "north").toLowerCase().trim();
+    if (b === "east" || b === "e") return "east";
+    if (b === "south" || b === "s") return "south";
+    if (b === "west" || b === "w") return "west";
+    return "north";
+  }
+
+  function cecStreetCreateBoundlessStreets(opts) {
+    var cfg = opts || {};
+    var initialEra = cecSprawlClamp(cfg.initialEra !== undefined ? cfg.initialEra : 0.15, 0, 1);
+    var defaultSummary = "Walk toward any compass bearing to test whether an outside beyond Cecilia still exists.";
+    var cecState = {
+      width: Math.max(240, Number(cfg.width) || 1280),
+      height: Math.max(240, Number(cfg.height) || 800),
+      eraProgress: initialEra,
+      botanicalXRay: false,
+      highlightedIslandId: null,
+      exitAttempts: 0,
+      failedExitAttempts: 0,
+      lastExitResult: { attempted: false, bearing: "none", escapedCity: false, outsideExists: initialEra < 0.88, summary: defaultSummary },
+      toroidalPan: { x: 0, y: 0 },
+      toroidalPanTarget: { x: 0, y: 0 },
+      reducedMotion: Boolean(cfg.reducedMotion),
+      clockSec: 0
+    };
+
+    function cecStreetBuildSnapshot() {
+      var era = cecState.eraProgress;
+      var phase = era < 0.55 ? "youthful_pastures" : (era < 0.88 ? "encroaching_conurbation" : "mingled_everywhere");
+      var cov = era >= 0.88 ? 1.0 : Number((0.14 + (era / 0.88) * 0.86).toFixed(4));
+      var islands = [];
+      for (var i = 0; i < TRAFFIC_ISLAND_ANCHORS.length; i++) {
+        var a = TRAFFIC_ISLAND_ANCHORS[i];
+        islands.push({
+          id: a.id, name: a.name, nx: a.nx, ny: a.ny, rx: a.rx, ry: a.ry, streetContext: a.streetContext,
+          engulfedByAsphalt: era >= 0.80, concreteCurbSealed: era >= 0.88, botanicalGhostPresent: true
+        });
+      }
+      var lr = cecState.lastExitResult;
+      return {
+        eraProgress: era,
+        eraPhase: phase,
+        urbanCoverage: cov,
+        outsideExists: era < 0.88,
+        pasturesMingledWithStreets: era >= 0.88,
+        tollGatesIntact: era < 0.45,
+        botanicalXRay: cecState.botanicalXRay,
+        activeStreetBlocks: Math.round(12 + era * 84),
+        trafficIslands: islands,
+        highlightedIslandId: cecState.highlightedIslandId,
+        exitAttempts: cecState.exitAttempts,
+        failedExitAttempts: cecState.failedExitAttempts,
+        lastExitResult: { attempted: lr.attempted, bearing: lr.bearing, escapedCity: lr.escapedCity, outsideExists: lr.outsideExists, summary: lr.summary },
+        toroidalPan: { x: Number(cecState.toroidalPan.x.toFixed(2)), y: Number(cecState.toroidalPan.y.toFixed(2)) },
+        reducedMotion: cecState.reducedMotion
+      };
+    }
+
+    function cecStreetSetEraProgress(v) {
+      cecState.eraProgress = cecSprawlClamp(v, 0, 1);
+      if (!cecState.lastExitResult.attempted) {
+        cecState.lastExitResult.outsideExists = cecState.eraProgress < 0.88;
+      }
+      return cecStreetBuildSnapshot();
+    }
+
+    function cecStreetAttemptExit(bearing) {
+      var dir = cecStreetNormalizeBearing(bearing);
+      cecState.exitAttempts += 1;
+      var hasOutside = cecState.eraProgress < 0.88;
+      var summary = "";
+      if (hasOutside) {
+        var destMap = { north: "Meadow of the Low Sage", west: "The Goat's Slope", east: "The Crossroads of the Wind", south: "the southern thyme hills" };
+        summary = "Exited Cecilia heading " + dir + " past the watchmen's threshold into open pasture toward " + destMap[dir] + ".";
+        cecState.lastExitResult = { attempted: true, bearing: dir, escapedCity: true, outsideExists: true, summary: summary };
+      } else {
+        cecState.failedExitAttempts += 1;
+        var strideX = cecState.width / 12 * 1.65;
+        var strideY = cecState.height / 8 * 1.65;
+        if (dir === "east") cecState.toroidalPanTarget.x -= strideX;
+        if (dir === "west") cecState.toroidalPanTarget.x += strideX;
+        if (dir === "north") cecState.toroidalPanTarget.y += strideY;
+        if (dir === "south") cecState.toroidalPanTarget.y -= strideY;
+        var snapFrac = cecState.reducedMotion ? 1.0 : 0.55;
+        cecState.toroidalPan.x = cecSprawlMix(cecState.toroidalPan.x, cecState.toroidalPanTarget.x, snapFrac);
+        cecState.toroidalPan.y = cecSprawlMix(cecState.toroidalPan.y, cecState.toroidalPanTarget.y, snapFrac);
+        summary = "Walked " + dir + " down identical porticoes and merged tenements; no gate remains—the places have mingled and Cecilia is everywhere.";
+        cecState.lastExitResult = { attempted: true, bearing: dir, escapedCity: false, outsideExists: false, summary: summary };
+      }
+      return {
+        attempted: true, bearing: dir, escapedCity: cecState.lastExitResult.escapedCity, outsideExists: cecState.lastExitResult.outsideExists,
+        exitAttempts: cecState.exitAttempts, failedExitAttempts: cecState.failedExitAttempts,
+        toroidalPan: { x: cecState.toroidalPan.x, y: cecState.toroidalPan.y }, summary: summary
+      };
+    }
+
+    function cecStreetStep(dtSec) {
+      var dt = cecSprawlClamp(dtSec, 0, 0.25);
+      if (cecState.reducedMotion) {
+        cecState.toroidalPan.x = cecState.toroidalPanTarget.x;
+        cecState.toroidalPan.y = cecState.toroidalPanTarget.y;
+        return;
+      }
+      cecState.clockSec += dt;
+      var ease = 1.0 - Math.exp(-dt * 6.5);
+      cecState.toroidalPan.x = cecSprawlMix(cecState.toroidalPan.x, cecState.toroidalPanTarget.x, ease);
+      cecState.toroidalPan.y = cecSprawlMix(cecState.toroidalPan.y, cecState.toroidalPanTarget.y, ease);
+    }
+
+    function cecStreetRender(ctx, w, h, renderOpts) {
+      if (!ctx) return;
+      var vw = Math.max(1, Number(w) || cecState.width);
+      var vh = Math.max(1, Number(h) || cecState.height);
+      cecState.width = vw;
+      cecState.height = vh;
+      var snap = cecStreetBuildSnapshot();
+      var recId = (renderOpts && renderOpts.recognizedIslandId) || null;
+      cecSprawlPaintCountryside(ctx, vw, vh, snap.eraProgress, cecState.clockSec, snap.reducedMotion);
+      cecSprawlPaintMingledStreets(ctx, vw, vh, snap, cecState.clockSec);
+      cecSprawlPaintLimestoneCore(ctx, vw, vh, snap);
+      cecSprawlPaintTrafficIslands(ctx, vw, vh, snap, recId, cecState.clockSec);
+      cecSprawlPaintBotanicalXRay(ctx, vw, vh, snap, recId, cecState.clockSec);
+    }
+
+    function cecStreetInspectAt(px, py, w, h) {
+      var vw = Math.max(1, Number(w) || cecState.width);
+      var vh = Math.max(1, Number(h) || cecState.height);
+      if (!Number.isFinite(px) || !Number.isFinite(py) || px < 0 || py < 0 || px > vw || py > vh) return null;
+      var era = cecState.eraProgress;
+      for (var i = 0; i < TRAFFIC_ISLAND_ANCHORS.length; i++) {
+        var anc = TRAFFIC_ISLAND_ANCHORS[i];
+        var rxPx = Math.max(26, anc.rx * vw * 1.32);
+        var ryPx = Math.max(22, anc.ry * vh * 1.32);
+        if (Math.hypot((px - anc.nx * vw) / rxPx, (py - anc.ny * vh) / ryPx) <= 1.0) {
+          var isMingled = era >= 0.88;
+          var isEngulfed = era >= 0.80;
+          return {
+            id: anc.id,
+            stoneId: (anc.id === "meadow_of_the_low_sage" && isMingled) ? "traffic_island_recognition" : anc.id,
+            title: isEngulfed ? (anc.name + " (" + anc.streetContext + ")") : anc.name,
+            category: isEngulfed ? "traffic_island" : "named_pasture",
+            detail: isMingled
+              ? "Sealed inside a concrete curb amid rotary lanes, ghost roots and dusty blades of " + anc.name + " persist beneath the asphalt."
+              : "Named Mediterranean pasture known by bell and scent beyond Cecilia's leafless stone interval."
+          };
+        }
+      }
+      if (era < 0.45) {
+        var gates = cecSprawlGateCoords(vw, vh, era);
+        for (var gi = 0; gi < gates.length; gi++) {
+          var gt = gates[gi];
+          if (Math.hypot(px - gt.x, py - gt.y) <= 22) {
+            return {
+              id: gt.id, stoneId: "leafless_nameless_interval", title: gt.label, category: "toll_gate",
+              detail: "Watchmen and toll-collectors stand at the limestone gate, herding startled goats back toward " + gt.pastureName + "."
+            };
+          }
+        }
+      }
+      if (era >= 0.88 || cecSprawlUrbanFieldAt(px / vw, py / vh, era) >= 0.5) {
+        return {
+          id: era >= 0.88 ? "boundless_mingled_avenue" : "limestone_city_alley",
+          stoneId: era >= 0.55 ? "endless_identical_streets" : "leafless_nameless_interval",
+          title: era >= 0.88 ? "Boundless Mingled Streets & Tenements" : "Leafless Stone Alleyway",
+          category: era >= 0.88 ? "mingled_street" : "city_alley",
+          detail: era >= 0.88
+            ? "Uninterrupted porticoes, sodium lamps, and concrete tenements where neighboring cities have fused and no outside remains."
+            : "Narrow paved interval without a leaf, crossed hurriedly between open named pastures."
+        };
+      }
+      return null;
+    }
+
+    function cecStreetHighlightIsland(islandId) {
+      var matched = null;
+      for (var i = 0; islandId && i < TRAFFIC_ISLAND_ANCHORS.length; i++) {
+        if (TRAFFIC_ISLAND_ANCHORS[i].id === islandId) matched = islandId;
+      }
+      cecState.highlightedIslandId = matched;
+      return cecStreetBuildSnapshot();
+    }
+
+    function cecStreetReset() {
+      cecState.eraProgress = initialEra;
+      cecState.botanicalXRay = false;
+      cecState.highlightedIslandId = null;
+      cecState.exitAttempts = 0;
+      cecState.failedExitAttempts = 0;
+      cecState.toroidalPan = { x: 0, y: 0 };
+      cecState.toroidalPanTarget = { x: 0, y: 0 };
+      cecState.clockSec = 0;
+      cecState.lastExitResult = { attempted: false, bearing: "none", escapedCity: false, outsideExists: initialEra < 0.88, summary: defaultSummary };
+      return cecStreetBuildSnapshot();
+    }
+
+    return {
+      STREET_PALETTE: STREET_PALETTE,
+      TRAFFIC_ISLAND_ANCHORS: TRAFFIC_ISLAND_ANCHORS,
+      getState: cecStreetBuildSnapshot,
+      setViewport: function cecStreetSetViewport(w, h) {
+        cecState.width = Math.max(240, Number(w) || cecState.width);
+        cecState.height = Math.max(240, Number(h) || cecState.height);
+        return cecStreetBuildSnapshot();
+      },
+      setReducedMotion: function cecStreetSetReducedMotion(flag) {
+        cecState.reducedMotion = Boolean(flag);
+        if (cecState.reducedMotion) {
+          cecState.toroidalPan.x = cecState.toroidalPanTarget.x;
+          cecState.toroidalPan.y = cecState.toroidalPanTarget.y;
+        }
+        return cecStreetBuildSnapshot();
+      },
+      setEraProgress: cecStreetSetEraProgress,
+      mingleAllPlaces: function cecStreetMingleAllPlaces() { return cecStreetSetEraProgress(1.0); },
+      setBotanicalXRay: function cecStreetSetBotanicalXRay(flag) { cecState.botanicalXRay = Boolean(flag); return cecStreetBuildSnapshot(); },
+      toggleBotanicalXRay: function cecStreetToggleBotanicalXRay() { cecState.botanicalXRay = !cecState.botanicalXRay; return cecStreetBuildSnapshot(); },
+      highlightIsland: cecStreetHighlightIsland,
+      attemptExit: cecStreetAttemptExit,
+      step: cecStreetStep,
+      render: cecStreetRender,
+      inspectAt: cecStreetInspectAt,
+      reset: cecStreetReset
+    };
+  }
+
+  var cecStreetModuleApi = {
+    STREET_PALETTE: STREET_PALETTE,
+    TRAFFIC_ISLAND_ANCHORS: TRAFFIC_ISLAND_ANCHORS,
+    createBoundlessStreets: cecStreetCreateBoundlessStreets
+  };
+
+  if (typeof globalThis !== "undefined") globalThis.CeciliaBoundlessStreets = cecStreetModuleApi;
+  if (typeof window !== "undefined") window.CeciliaBoundlessStreets = cecStreetModuleApi;
+  if (typeof module === "object" && module.exports) module.exports = cecStreetModuleApi;
+})();
+
+(function (root) {
+  "use strict";
+
+  /*
+   * City 51: Cecilia (Continuous Cities 4)
+   * Layer: pasture_memory_bells.js
+   * Goatherd, Horned Flock, Named Pastures, Curb Wastepaper Cans & Traffic Island Recognition
+   */
+
+  var PASTURE_PALETTE = {
+    lowSageSilver: "#8fa882",
+    sageLeafDeep: "#526b49",
+    thymeSlope: "#7b9468",
+    windFennelOchre: "#ccb274",
+    bronzeBellBright: "#cf9b46",
+    bellTarnished: "#7e6c4e",
+    youthFleece: "#efe9dc",
+    mangyHide: "#8a8072",
+    wastepaperBuff: "#dfd8ca",
+    curbCanTin: "#666d74",
+    recognitionHalo: "#b7e3c0"
+  };
+  Object.defineProperty(PASTURE_PALETTE, "curbCan Tin", {
+    value: "#666d74",
+    enumerable: false,
+    configurable: false,
+    writable: false
+  });
+  Object.freeze(PASTURE_PALETTE);
+
+  var CANONICAL_PASTURES = Object.freeze([
+    Object.freeze({
+      id: "meadow_of_the_low_sage",
+      stoneId: "meadow_of_the_low_sage",
+      name: "Meadow of the Low Sage",
+      botanical: "Salvia humilis",
+      nx: 0.50,
+      ny: 0.54,
+      rx: 0.068,
+      ry: 0.046,
+      noteHz: 293.66,
+      youthDesc: "Warm hollow of fragrant silver-green low sage beyond the south tollgate.",
+      islandDesc: "Central asphalt roundabout traffic island where dusty low sage still sprouts through cracked concrete seams."
+    }),
+    Object.freeze({
+      id: "goats_slope",
+      stoneId: "goats_slope",
+      name: "The Goat's Slope",
+      botanical: "Thymus & Cytisus",
+      nx: 0.24,
+      ny: 0.33,
+      rx: 0.056,
+      ry: 0.038,
+      noteHz: 349.23,
+      youthDesc: "Steep limestone scree of wild thyme and yellow broom.",
+      islandDesc: "Viaduct ramp splitter median holding stubborn wild-thyme roots beneath concrete curbs."
+    }),
+    Object.freeze({
+      id: "crossroads_of_the_wind",
+      stoneId: "crossroads_of_the_wind",
+      name: "The Crossroads of the Wind",
+      botanical: "Foeniculum & Stipa",
+      nx: 0.77,
+      ny: 0.36,
+      rx: 0.058,
+      ry: 0.039,
+      noteHz: 392.00,
+      youthDesc: "Open four-breeze upland saddle of feathergrass.",
+      islandDesc: "Six-lane overpass island swept by exhaust drafts over buried feathergrass turf."
+    })
+  ]);
+
+  var FLOCK_STONES = Object.freeze([
+    Object.freeze({
+      id: "barefoot_youth_pasture_names",
+      label: "Barefoot Goatherd of Named Pastures",
+      summary: "First encounter: barefoot youth driving nimble jingling goats who knows every pasture around the walls by name."
+    }),
+    Object.freeze({
+      id: "leafless_nameless_interval",
+      label: "Leafless Interval & Watchmen Gates",
+      summary: "Paved streets without leaves where goats startle at corners until watchmen and toll-collectors usher the herd outside."
+    }),
+    Object.freeze({
+      id: "meadow_of_the_low_sage",
+      label: "Meadow of the Low Sage",
+      summary: "Fragrant silver-green sage hollow remembered from youth, later trapped and recognized inside a rotary traffic island."
+    }),
+    Object.freeze({
+      id: "goats_slope",
+      label: "The Goat's Slope",
+      summary: "Steep limestone thyme and yellow-broom pasture swallowed beneath continuous viaduct ramps and tenements."
+    }),
+    Object.freeze({
+      id: "crossroads_of_the_wind",
+      label: "The Crossroads of the Wind",
+      summary: "Upland four-breeze feathergrass saddle overtaken by a six-lane arterial overpass median."
+    }),
+    Object.freeze({
+      id: "endless_identical_streets",
+      label: "Boundless Mingled Streets",
+      summary: "Decades of walking from one identical street into another without ever finding an outside beyond the avenues."
+    }),
+    Object.freeze({
+      id: "mangy_wastepaper_goats",
+      label: "Ragged Graybeard & Wastepaper Goats",
+      summary: "Aged graybeard herding gaunt, mangy goats that tug and chew crumpled wastepaper from municipal curb cans."
+    }),
+    Object.freeze({
+      id: "traffic_island_recognition",
+      label: "Grass on the Traffic Island",
+      summary: "Halting at a concrete traffic island where the goats recognize the grass of the Meadow of the Low Sage."
+    })
+  ]);
+
+  var CEC_CURB_CANS = Object.freeze([
+    Object.freeze({ id: "curb_can_south_west", nx: 0.39, ny: 0.60, tilt: -0.06, paperSheets: 3 }),
+    Object.freeze({ id: "curb_can_south_east", nx: 0.61, ny: 0.59, tilt: 0.05, paperSheets: 4 }),
+    Object.freeze({ id: "curb_can_northwest_curb", nx: 0.16, ny: 0.40, tilt: -0.04, paperSheets: 3 }),
+    Object.freeze({ id: "curb_can_viaduct_foot", nx: 0.33, ny: 0.27, tilt: 0.07, paperSheets: 2 }),
+    Object.freeze({ id: "curb_can_overpass_west", nx: 0.68, ny: 0.30, tilt: -0.05, paperSheets: 3 }),
+    Object.freeze({ id: "curb_can_overpass_east", nx: 0.85, ny: 0.43, tilt: 0.04, paperSheets: 4 })
+  ]);
+
+  var CEC_GOAT_PROFILES = Object.freeze([
+    Object.freeze({ idx: 0, angle: 0.15, radius: 0.46, hornSweep: 1.08, bellRatio: 1.00, facing: 1 }),
+    Object.freeze({ idx: 1, angle: 1.52, radius: 0.52, hornSweep: 0.94, bellRatio: 1.12, facing: -1 }),
+    Object.freeze({ idx: 2, angle: 2.95, radius: 0.48, hornSweep: 1.02, bellRatio: 0.89, facing: 1 }),
+    Object.freeze({ idx: 3, angle: 4.48, radius: 0.54, hornSweep: 0.90, bellRatio: 1.19, facing: -1 }),
+    Object.freeze({ idx: 4, angle: 0.84, radius: 0.78, hornSweep: 0.98, bellRatio: 1.25, facing: 1 }),
+    Object.freeze({ idx: 5, angle: 2.28, radius: 0.82, hornSweep: 0.86, bellRatio: 0.95, facing: -1 }),
+    Object.freeze({ idx: 6, angle: 3.76, radius: 0.76, hornSweep: 1.05, bellRatio: 1.33, facing: 1 })
+  ]);
+
+  function cecFlockClamp(val, lo, hi) {
+    var num = Number(val);
+    if (!Number.isFinite(num)) return lo;
+    return num < lo ? lo : (num > hi ? hi : num);
+  }
+
+  function cecFlockLerp(a, b, t) {
+    return a + (b - a) * t;
+  }
+
+  function cecFlockDist(ax, ay, bx, by) {
+    var dx = ax - bx;
+    var dy = ay - by;
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+
+  function cecFlockFindPasture(pastureId) {
+    for (var i = 0; i < CANONICAL_PASTURES.length; i++) {
+      if (CANONICAL_PASTURES[i].id === pastureId) return CANONICAL_PASTURES[i];
+    }
+    return CANONICAL_PASTURES[0];
+  }
+
+  function cecFlockDeriveMorphology(era) {
+    if (era < 0.55) {
+      return {
+        goatherdAge: "barefoot_youth",
+        goatCondition: "nimble_horned",
+        goatCount: 7,
+        curbCansVisible: false
+      };
+    }
+    if (era < 0.88) {
+      return {
+        goatherdAge: "weathering_herdsman",
+        goatCondition: "dust_weary",
+        goatCount: 5,
+        curbCansVisible: era >= 0.65
+      };
+    }
+    return {
+      goatherdAge: "ragged_graybeard",
+      goatCondition: "gaunt_mangy",
+      goatCount: 4,
+      curbCansVisible: true
+    };
+  }
+
+  function cecFlockBuildUtterance(st) {
+    var p = cecFlockFindPasture(st.activePastureId);
+    if (st.scatterTimer > 0.05 && st.eraProgress < 0.88) {
+      return "Where the goats are frightened at the street corners and scatter, watchmen and toll-collectors drive us out again into the named pastures.";
+    }
+    if (st.eraProgress >= 0.88) {
+      if (st.stoppedAtTrafficIsland) {
+        if (st.recognizedTrafficIslandId === "meadow_of_the_low_sage" || st.meadowOfLowSageRecognized) {
+          return "The places have mingled... Here, once upon a time, there must have been the Meadow of the Low Sage. My goats recognize the grass on the traffic island.";
+        }
+        if (st.recognizedTrafficIslandId === "goats_slope") {
+          return "The places have mingled... Beneath this concrete viaduct median, wild thyme breaks the curb seam where The Goat's Slope once rose.";
+        }
+        return "The places have mingled... Across this six-lane overpass island, my goats scent buried feathergrass from The Crossroads of the Wind.";
+      }
+      if (st.grazingMode === "wastepaper") {
+        return "Gaunt and mangy, my remaining goats tug crumpled wastepaper from municipal curb cans along streets we can never leave.";
+      }
+      return "That cannot be! One cannot leave any more—the places have mingled, and Cecilia is everywhere.";
+    }
+    if (st.eraProgress >= 0.55) {
+      if (st.grazingMode === "wastepaper" && st.eraProgress >= 0.65) {
+        return "Along the encroaching curbs tin receptacles spill dry wastepaper; my dust-weary goats chew paper scraps where meadow edges vanished.";
+      }
+      return "New tenements swallow the old tollgates year by year; asphalt narrows every trail toward " + p.name + ".";
+    }
+    if (p.id === "goats_slope") {
+      return "Ask me every pasture around the walls: this thyme-and-broom limestone ridge is The Goat's Slope; cities have no name.";
+    }
+    if (p.id === "crossroads_of_the_wind") {
+      return "Here four breezes comb upland feathergrass at The Crossroads of the Wind; paved streets are only leafless intervals between pastures.";
+    }
+    return "I know all the pastures: this silver-green hollow is the Meadow of the Low Sage. Cities are leafless places separating one pasture from another.";
+  }
+
+  function cecBellCreateAudioEngine() {
+    var audioCtx = null;
+
+    function ensureCtx() {
+      if (audioCtx) return audioCtx;
+      try {
+        var Ctor = root.AudioContext || root.webkitAudioContext;
+        if (typeof Ctor === "function") audioCtx = new Ctor();
+      } catch (err) {
+        audioCtx = null;
+      }
+      return audioCtx;
+    }
+
+    function unlock() {
+      var ctx = ensureCtx();
+      if (!ctx) return false;
+      try {
+        if (ctx.state === "suspended" && typeof ctx.resume === "function") {
+          ctx.resume();
+        }
+        return true;
+      } catch (err) {
+        return false;
+      }
+    }
+
+    function strikeBellTone(freqHz, tarnished, delaySec, gainPeak, durSec) {
+      var ctx = ensureCtx();
+      if (!ctx) return;
+      try {
+        var now = ctx.currentTime + (delaySec || 0);
+        var partials = tarnished ? [1.0, 1.96, 2.84] : [1.0, 2.02, 2.98, 4.17];
+        for (var i = 0; i < partials.length; i++) {
+          var osc = ctx.createOscillator();
+          var g = ctx.createGain();
+          osc.type = i === 0 ? "triangle" : "sine";
+          osc.frequency.setValueAtTime(freqHz * partials[i], now);
+          var amp = (gainPeak || 0.06) / (1 + i * 1.45);
+          g.gain.setValueAtTime(0.0001, now);
+          g.gain.exponentialRampToValueAtTime(Math.max(0.0002, amp), now + 0.012);
+          g.gain.exponentialRampToValueAtTime(0.0001, now + (durSec || 0.75) / (1 + i * 0.35));
+          osc.connect(g);
+          g.connect(ctx.destination);
+          osc.start(now);
+          osc.stop(now + (durSec || 0.75) + 0.04);
+        }
+      } catch (err) {
+        /* Headless environment without audio sink */
+      }
+    }
+
+    function playPaperAndTin() {
+      var ctx = ensureCtx();
+      if (!ctx) return;
+      try {
+        var now = ctx.currentTime;
+        var len = Math.max(256, Math.floor(ctx.sampleRate * 0.16));
+        var buf = ctx.createBuffer(1, len, ctx.sampleRate);
+        var ch = buf.getChannelData(0);
+        for (var i = 0; i < len; i++) {
+          ch[i] = (Math.random() * 2 - 1) * Math.exp(-i / (len * 0.38));
+        }
+        var src = ctx.createBufferSource();
+        var flt = ctx.createBiquadFilter();
+        var g = ctx.createGain();
+        src.buffer = buf;
+        flt.type = "bandpass";
+        flt.frequency.setValueAtTime(1680, now);
+        flt.Q.setValueAtTime(1.8, now);
+        g.gain.setValueAtTime(0.055, now);
+        g.gain.exponentialRampToValueAtTime(0.0001, now + 0.16);
+        src.connect(flt);
+        flt.connect(g);
+        g.connect(ctx.destination);
+        src.start(now);
+        strikeBellTone(186.0, true, 0.03, 0.038, 0.28);
+      } catch (err) {
+        /* Safe fallback */
+      }
+    }
+
+    return {
+      unlock: unlock,
+      strikeBellTone: strikeBellTone,
+      playPaperAndTin: playPaperAndTin
+    };
+  }
+
+  function cecFlockDrawPastureTufts(ctx, pNode, st, botanicalXRay, sc) {
+    var p = pNode.pasture;
+    var x = pNode.x;
+    var y = pNode.y;
+    var rx = pNode.rxPx;
+    var ry = pNode.ryPx;
+    var era = st.eraProgress;
+    var isRec = st.stoppedAtTrafficIsland && st.recognizedTrafficIslandId === p.id;
+    var lushness = cecFlockClamp(1 - era * 0.92, 0.12, 1.0);
+    var sway = st.reducedMotion ? 0 : Math.sin(st.walkPhase * 0.65 + p.nx * 7.0) * 2.2 * sc;
+
+    ctx.save();
+    if (era < 0.62) {
+      var meadowAlpha = cecFlockClamp((0.66 - era) * 0.58, 0.04, 0.36);
+      ctx.fillStyle = p.id === "meadow_of_the_low_sage"
+        ? PASTURE_PALETTE.lowSageSilver
+        : (p.id === "goats_slope" ? PASTURE_PALETTE.thymeSlope : PASTURE_PALETTE.windFennelOchre);
+      ctx.globalAlpha = meadowAlpha;
+      ctx.beginPath();
+      ctx.ellipse(x, y, rx * (1.05 + lushness * 0.45), ry * (1.05 + lushness * 0.45), 0, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    if (botanicalXRay || isRec) {
+      ctx.globalAlpha = isRec ? 0.78 : 0.55;
+      ctx.strokeStyle = PASTURE_PALETTE.recognitionHalo;
+      ctx.lineWidth = 1.3 * sc;
+      for (var r = 0; r < 8; r++) {
+        var ang = (r / 8) * Math.PI * 2 + 0.25;
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.quadraticCurveTo(
+          x + Math.cos(ang + 0.22) * rx * 0.55,
+          y + Math.sin(ang + 0.22) * ry * 0.55,
+          x + Math.cos(ang) * rx * 0.96,
+          y + Math.sin(ang) * ry * 0.96
+        );
+        ctx.stroke();
+      }
+    }
+
+    if (era >= 0.72) {
+      ctx.globalAlpha = 0.68;
+      ctx.strokeStyle = "#3c4044";
+      ctx.lineWidth = 1.15 * sc;
+      for (var c = 0; c < 3; c++) {
+        var ca = c * 2.05 + 0.4;
+        ctx.beginPath();
+        ctx.moveTo(x - Math.cos(ca) * rx * 0.48, y - Math.sin(ca) * ry * 0.48);
+        ctx.lineTo(x + Math.sin(ca) * 4 * sc, y - Math.cos(ca) * 3 * sc);
+        ctx.lineTo(x + Math.cos(ca) * rx * 0.52, y + Math.sin(ca) * ry * 0.52);
+        ctx.stroke();
+      }
+    }
+
+    var tuftCount = era >= 0.88 ? 5 : (era >= 0.55 ? 7 : 11);
+    for (var t = 0; t < tuftCount; t++) {
+      var ta = t * 2.39996;
+      var distFrac = era >= 0.88 ? (0.14 + (t % 3) * 0.20) : (0.16 + (t / tuftCount) * 0.95);
+      var tx = x + Math.cos(ta) * rx * distFrac;
+      var ty = y + Math.sin(ta) * ry * distFrac;
+      var bladeH = (era >= 0.88 ? 7.5 : 11.5) * sc * (isRec || botanicalXRay ? 1.28 : 1.0);
+
+      ctx.globalAlpha = isRec || botanicalXRay ? 0.98 : (era >= 0.88 ? 0.86 : 0.92);
+      for (var b = -2; b <= 2; b++) {
+        ctx.strokeStyle = (b % 2 === 0)
+          ? (p.id === "meadow_of_the_low_sage" ? PASTURE_PALETTE.lowSageSilver : (p.id === "goats_slope" ? PASTURE_PALETTE.thymeSlope : PASTURE_PALETTE.windFennelOchre))
+          : PASTURE_PALETTE.sageLeafDeep;
+        ctx.lineWidth = (p.id === "meadow_of_the_low_sage" ? 2.2 : 1.6) * sc;
+        ctx.beginPath();
+        ctx.moveTo(tx, ty + 2 * sc);
+        ctx.quadraticCurveTo(
+          tx + b * 2.4 * sc + sway * 0.4,
+          ty - bladeH * 0.55,
+          tx + b * 3.6 * sc + sway,
+          ty - bladeH
+        );
+        ctx.stroke();
+      }
+      if (p.id === "goats_slope" || isRec || botanicalXRay) {
+        ctx.fillStyle = isRec ? PASTURE_PALETTE.recognitionHalo : PASTURE_PALETTE.windFennelOchre;
+        ctx.beginPath();
+        ctx.arc(tx + sway * 0.6, ty - bladeH - 1.5 * sc, 1.8 * sc, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+    ctx.restore();
+  }
+
+  function cecBellDrawResonanceRings(ctx, x, y, rx, ry, st, sc) {
+    ctx.save();
+    var phase = st.reducedMotion ? 0.35 : (st.recognitionPulse % 1);
+    for (var k = 0; k < 3; k++) {
+      var frac = st.reducedMotion ? (1.06 + k * 0.22) : (1.0 + ((phase + k / 3) % 1) * 0.72);
+      var alpha = st.reducedMotion ? (0.62 - k * 0.16) : (0.72 * (1 - ((phase + k / 3) % 1)));
+      ctx.globalAlpha = cecFlockClamp(alpha, 0.08, 0.78);
+      ctx.strokeStyle = k === 1 ? PASTURE_PALETTE.bronzeBellBright : PASTURE_PALETTE.recognitionHalo;
+      ctx.lineWidth = (2.1 - k * 0.4) * sc;
+      ctx.beginPath();
+      ctx.ellipse(x, y, rx * frac, ry * frac, 0, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function cecFlockDrawCurbCan(ctx, canNode, isActiveCan, sc) {
+    var cx = canNode.x;
+    var cy = canNode.y;
+    var cw = 13 * sc;
+    var ch = 17 * sc;
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(canNode.tilt);
+
+    ctx.fillStyle = "rgba(18, 20, 22, 0.34)";
+    ctx.beginPath();
+    ctx.ellipse(2 * sc, ch * 0.52, cw * 0.72, 3.6 * sc, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = PASTURE_PALETTE.curbCanTin;
+    ctx.strokeStyle = "#3f454b";
+    ctx.lineWidth = 1.1 * sc;
+    ctx.beginPath();
+    ctx.rect(-cw * 0.5, -ch * 0.5, cw, ch);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.strokeStyle = "#889098";
+    ctx.lineWidth = 0.8 * sc;
+    for (var rib = -1; rib <= 1; rib++) {
+      ctx.beginPath();
+      ctx.moveTo(rib * 3.3 * sc, -ch * 0.42);
+      ctx.lineTo(rib * 3.3 * sc, ch * 0.44);
+      ctx.stroke();
+    }
+
+    for (var s = 0; s < canNode.paperSheets; s++) {
+      var px = (s - 1) * 3.6 * sc;
+      var py = -ch * 0.56 - (s % 2) * 2.4 * sc;
+      ctx.fillStyle = PASTURE_PALETTE.wastepaperBuff;
+      ctx.strokeStyle = "#9c9484";
+      ctx.lineWidth = 0.75 * sc;
+      ctx.beginPath();
+      ctx.moveTo(px - 3.4 * sc, py + 2.6 * sc);
+      ctx.lineTo(px - 1.2 * sc, py - 3.2 * sc);
+      ctx.lineTo(px + 3.8 * sc, py - 1.4 * sc);
+      ctx.lineTo(px + 2.2 * sc, py + 3.2 * sc);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+    }
+
+    ctx.fillStyle = "#565d64";
+    ctx.beginPath();
+    ctx.ellipse(cw * 0.28, -ch * 0.52, cw * 0.54, 2.4 * sc, 0.34, 0, Math.PI * 2);
+    ctx.fill();
+
+    if (isActiveCan) {
+      ctx.strokeStyle = PASTURE_PALETTE.wastepaperBuff;
+      ctx.lineWidth = 1.2 * sc;
+      ctx.beginPath();
+      ctx.arc(0, 0, cw * 1.15, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function cecFlockDrawGoat(ctx, gNode, st, sc) {
+    var prof = gNode.prof;
+    var era = st.eraProgress;
+    var mangy = era >= 0.88;
+    var weary = era >= 0.55 && era < 0.88;
+    var dir = gNode.dir;
+    var stride = st.reducedMotion ? 0 : Math.sin(st.walkPhase * 2.2 + prof.idx * 1.4) * (st.stoppedAtTrafficIsland ? 0.4 : 2.1) * sc;
+    var headDrop = gNode.muzzleDown ? 5.6 * sc : (st.scatterTimer > 0.05 ? -3.4 * sc : 0.6 * sc);
+
+    ctx.save();
+    ctx.translate(gNode.x, gNode.y);
+    ctx.scale(dir, 1);
+
+    ctx.fillStyle = "rgba(18, 20, 22, 0.28)";
+    ctx.beginPath();
+    ctx.ellipse(0, 10.5 * sc, 11.5 * sc, 3.2 * sc, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.strokeStyle = mangy ? "#595248" : "#6e6353";
+    ctx.lineWidth = (mangy ? 1.4 : 1.75) * sc;
+    ctx.beginPath();
+    ctx.moveTo(-6.5 * sc, 2 * sc);
+    ctx.lineTo(-7.5 * sc - stride, 10.2 * sc);
+    ctx.moveTo(-3.2 * sc, 2.5 * sc);
+    ctx.lineTo(-2.6 * sc + stride, 10.2 * sc);
+    ctx.moveTo(4.2 * sc, 2.5 * sc);
+    ctx.lineTo(3.8 * sc - stride * 0.8, 10.2 * sc);
+    ctx.moveTo(7.2 * sc, 2 * sc);
+    ctx.lineTo(8.4 * sc + stride * 0.8, 10.2 * sc);
+    ctx.stroke();
+
+    ctx.fillStyle = mangy
+      ? PASTURE_PALETTE.mangyHide
+      : (weary ? "#c2b9aa" : PASTURE_PALETTE.youthFleece);
+    ctx.strokeStyle = mangy ? "#4a443b" : "#877c6b";
+    ctx.lineWidth = 1.05 * sc;
+    ctx.beginPath();
+    if (mangy) {
+      ctx.moveTo(-9.5 * sc, -1.2 * sc);
+      ctx.lineTo(-2.5 * sc, -4.4 * sc);
+      ctx.lineTo(6.8 * sc, -3.2 * sc);
+      ctx.lineTo(9.2 * sc, 1.4 * sc);
+      ctx.lineTo(3.2 * sc, 3.1 * sc);
+      ctx.lineTo(-7.8 * sc, 3.6 * sc);
+      ctx.closePath();
+    } else {
+      ctx.ellipse(0, 0, 9.8 * sc, 5.4 * sc, -0.05, 0, Math.PI * 2);
+    }
+    ctx.fill();
+    ctx.stroke();
+
+    if (mangy) {
+      ctx.strokeStyle = "#564e44";
+      ctx.lineWidth = 0.85 * sc;
+      for (var rb = -1; rb <= 1; rb++) {
+        ctx.beginPath();
+        ctx.arc(rb * 2.5 * sc, -0.4 * sc, 3.1 * sc, -0.9, 0.9);
+        ctx.stroke();
+      }
+      ctx.fillStyle = "#665e52";
+      ctx.beginPath();
+      ctx.arc(-3.6 * sc, -1.3 * sc, 1.5 * sc, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    var hx = 10.2 * sc;
+    var hy = -4.8 * sc + headDrop;
+    ctx.strokeStyle = mangy ? PASTURE_PALETTE.mangyHide : (weary ? "#c2b9aa" : PASTURE_PALETTE.youthFleece);
+    ctx.lineWidth = (mangy ? 2.6 : 3.5) * sc;
+    ctx.beginPath();
+    ctx.moveTo(6.8 * sc, -1.8 * sc);
+    ctx.lineTo(hx, hy);
+    ctx.stroke();
+
+    ctx.fillStyle = mangy ? PASTURE_PALETTE.mangyHide : PASTURE_PALETTE.youthFleece;
+    ctx.beginPath();
+    ctx.ellipse(hx + 2.2 * sc, hy + 0.6 * sc, 3.8 * sc, 2.3 * sc, 0.28, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.strokeStyle = mangy ? PASTURE_PALETTE.bellTarnished : "#9c8767";
+    ctx.lineWidth = 1.35 * sc;
+    ctx.beginPath();
+    ctx.moveTo(hx + 0.4 * sc, hy - 1.2 * sc);
+    ctx.quadraticCurveTo(
+      hx - 3.6 * sc * prof.hornSweep,
+      hy - 7.8 * sc * prof.hornSweep,
+      hx - 7.2 * sc * prof.hornSweep,
+      hy - 4.8 * sc
+    );
+    ctx.stroke();
+
+    var bx = 8.4 * sc;
+    var by = -0.2 * sc + headDrop * 0.55;
+    ctx.fillStyle = mangy ? PASTURE_PALETTE.bellTarnished : PASTURE_PALETTE.bronzeBellBright;
+    ctx.beginPath();
+    ctx.arc(bx, by, 2.2 * sc, 0, Math.PI * 2);
+    ctx.fill();
+
+    if (st.bellResonance > 0.08 || (st.stoppedAtTrafficIsland && mangy)) {
+      ctx.strokeStyle = st.stoppedAtTrafficIsland ? PASTURE_PALETTE.recognitionHalo : PASTURE_PALETTE.bronzeBellBright;
+      ctx.lineWidth = 0.9 * sc;
+      ctx.beginPath();
+      ctx.arc(bx + 1.2 * sc, by + 1.0 * sc, (3.8 + st.bellResonance * 3.5) * sc, -0.7, 1.3);
+      ctx.stroke();
+    }
+
+    if (st.grazingMode === "wastepaper" && era >= 0.65) {
+      ctx.fillStyle = PASTURE_PALETTE.wastepaperBuff;
+      ctx.beginPath();
+      ctx.moveTo(hx + 4.8 * sc, hy + 1.2 * sc);
+      ctx.lineTo(hx + 9.2 * sc, hy - 0.5 * sc);
+      ctx.lineTo(hx + 8.1 * sc, hy + 4.0 * sc);
+      ctx.closePath();
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  function cecFlockDrawGoatherd(ctx, gx, gy, wx, wy, st, sc) {
+    var graybeard = st.eraProgress >= 0.88;
+    var weary = st.eraProgress >= 0.55 && st.eraProgress < 0.88;
+    ctx.save();
+    ctx.translate(gx, gy);
+
+    ctx.fillStyle = "rgba(18, 20, 22, 0.32)";
+    ctx.beginPath();
+    ctx.ellipse(0, 16 * sc, 10 * sc, 3.2 * sc, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.strokeStyle = graybeard ? "#8f8578" : "#c79e79";
+    ctx.lineWidth = 2.0 * sc;
+    ctx.beginPath();
+    ctx.moveTo(-2.5 * sc, 6 * sc);
+    ctx.lineTo(-3.2 * sc, 15.5 * sc);
+    ctx.moveTo(2.5 * sc, 6 * sc);
+    ctx.lineTo(3.2 * sc, 15.5 * sc);
+    ctx.stroke();
+
+    ctx.fillStyle = graybeard ? "#656058" : (weary ? "#8c7f6c" : "#b99c74");
+    ctx.beginPath();
+    if (graybeard) {
+      ctx.moveTo(-7.2 * sc, 8.5 * sc);
+      ctx.lineTo(-4.6 * sc, -8.2 * sc);
+      ctx.lineTo(5.8 * sc, -6.4 * sc);
+      ctx.lineTo(7.4 * sc, 9.2 * sc);
+      ctx.lineTo(2.5 * sc, 7.2 * sc);
+      ctx.lineTo(-1.8 * sc, 9.6 * sc);
+    } else {
+      ctx.moveTo(-6.2 * sc, 7.0 * sc);
+      ctx.lineTo(-4.4 * sc, -10.5 * sc);
+      ctx.lineTo(4.6 * sc, -10.5 * sc);
+      ctx.lineTo(6.2 * sc, 7.0 * sc);
+    }
+    ctx.closePath();
+    ctx.fill();
+
+    var headX = graybeard ? 2.6 * sc : 0;
+    var headY = (graybeard ? -11.4 : -14.5) * sc;
+    ctx.fillStyle = graybeard ? "#b8ad9e" : "#cfa57e";
+    ctx.beginPath();
+    ctx.arc(headX, headY, 4.1 * sc, 0, Math.PI * 2);
+    ctx.fill();
+
+    if (graybeard) {
+      ctx.fillStyle = PASTURE_PALETTE.wastepaperBuff;
+      ctx.beginPath();
+      ctx.moveTo(headX - 1.2 * sc, headY + 2.0 * sc);
+      ctx.lineTo(headX + 4.8 * sc, headY + 2.2 * sc);
+      ctx.lineTo(headX + 2.4 * sc, headY + 10.2 * sc);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    ctx.strokeStyle = graybeard ? "#594c3c" : "#7c5c38";
+    ctx.lineWidth = 1.8 * sc;
+    ctx.beginPath();
+    ctx.moveTo(7.8 * sc, 15.8 * sc);
+    ctx.lineTo(6.2 * sc, -16.5 * sc);
+    if (!graybeard) {
+      ctx.arc(8.6 * sc, -16.5 * sc, 2.4 * sc, Math.PI, Math.PI * 0.15, false);
+    }
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.save();
+    ctx.translate(wx, wy);
+    ctx.globalAlpha = 0.82;
+    ctx.fillStyle = "#3f464e";
+    ctx.beginPath();
+    ctx.moveTo(-4.8 * sc, 13 * sc);
+    ctx.lineTo(-3.2 * sc, -7.5 * sc);
+    ctx.lineTo(3.4 * sc, -7.5 * sc);
+    ctx.lineTo(4.8 * sc, 13 * sc);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = "#bea082";
+    ctx.beginPath();
+    ctx.arc(0, -11.2 * sc, 3.4 * sc, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function createPastureFlock(opts) {
+    var cfg = opts || {};
+    var initialWidth = Number(cfg.width) > 0 ? Number(cfg.width) : 1280;
+    var initialHeight = Number(cfg.height) > 0 ? Number(cfg.height) : 800;
+    var initialReduced = Boolean(cfg.reducedMotion);
+    var initialEraVal = cfg.initialEra !== undefined ? cecFlockClamp(cfg.initialEra, 0, 1) : 0.15;
+    var audio = cecBellCreateAudioEngine();
+
+    var st = {
+      width: initialWidth,
+      height: initialHeight,
+      eraProgress: initialEraVal,
+      activePastureId: "meadow_of_the_low_sage",
+      stoppedAtTrafficIsland: false,
+      recognizedTrafficIslandId: null,
+      meadowOfLowSageRecognized: false,
+      wastepaperCroppedCount: 0,
+      scatteredAtCornerCount: 0,
+      bellResonance: 0.24,
+      soundEnabled: false,
+      reducedMotion: initialReduced,
+      grazingMode: "pasture",
+      activeCanIndex: 0,
+      scatterTimer: 0,
+      recognitionPulse: 0,
+      walkPhase: 0,
+      streetXRayHint: false,
+      herdPos: { nx: 0.50, ny: 0.54 },
+      targetPos: { nx: 0.50, ny: 0.54 },
+      utterance: ""
+    };
+    st.utterance = cecFlockBuildUtterance(st);
+
+    function cecFlockComputeActorLayout(w, h) {
+      var vw = Number(w) > 0 ? Number(w) : st.width;
+      var vh = Number(h) > 0 ? Number(h) : st.height;
+      var sc = cecFlockClamp(Math.min(vw, vh) / 760, 0.64, 1.18);
+      var morph = cecFlockDeriveMorphology(st.eraProgress);
+      var hx = st.herdPos.nx * vw;
+      var hy = st.herdPos.ny * vh;
+
+      var pastures = [];
+      for (var pIdx = 0; pIdx < CANONICAL_PASTURES.length; pIdx++) {
+        var cp = CANONICAL_PASTURES[pIdx];
+        pastures.push({
+          pasture: cp,
+          x: cp.nx * vw,
+          y: cp.ny * vh,
+          rxPx: Math.max(24, cp.rx * vw),
+          ryPx: Math.max(17, cp.ry * vh)
+        });
+      }
+
+      var cans = [];
+      if (morph.curbCansVisible) {
+        for (var cIdx = 0; cIdx < CEC_CURB_CANS.length; cIdx++) {
+          var cc = CEC_CURB_CANS[cIdx];
+          cans.push({
+            id: cc.id,
+            idx: cIdx,
+            x: cc.nx * vw,
+            y: cc.ny * vh,
+            tilt: cc.tilt,
+            paperSheets: cc.paperSheets
+          });
+        }
+      }
+
+      var spread = st.stoppedAtTrafficIsland
+        ? 22 * sc
+        : (st.grazingMode === "wastepaper" ? 19 * sc : 31 * sc);
+      if (st.scatterTimer > 0) {
+        spread += 24 * sc * st.scatterTimer;
+      }
+
+      var goats = [];
+      for (var g = 0; g < morph.goatCount; g++) {
+        var prof = CEC_GOAT_PROFILES[g];
+        var ang = prof.angle + (st.reducedMotion || st.stoppedAtTrafficIsland ? 0 : Math.sin(st.walkPhase * 0.4 + g) * 0.08);
+        var rad = spread * (st.stoppedAtTrafficIsland ? 0.92 : prof.radius + 0.36);
+        var gx = hx + Math.cos(ang) * rad;
+        var gy = hy + Math.sin(ang) * rad * 0.72;
+        var dir = gx <= hx ? 1 : -1;
+        if (st.scatterTimer > 0.1) dir = gx >= hx ? 1 : -1;
+        goats.push({
+          id: "goat_" + g,
+          idx: g,
+          x: gx,
+          y: gy,
+          dir: dir,
+          prof: prof,
+          muzzleDown: st.stoppedAtTrafficIsland || st.grazingMode === "wastepaper" || st.eraProgress < 0.55
+        });
+      }
+
+      return {
+        vw: vw,
+        vh: vh,
+        sc: sc,
+        morph: morph,
+        goatherd: { x: hx - 42 * sc, y: hy + 7 * sc },
+        wayfarer: { x: hx + 46 * sc, y: hy + 11 * sc },
+        goats: goats,
+        cans: cans,
+        pastures: pastures
+      };
+    }
+
+    function getState() {
+      var morph = cecFlockDeriveMorphology(st.eraProgress);
+      var ap = cecFlockFindPasture(st.activePastureId);
+      return {
+        eraProgress: Number(st.eraProgress.toFixed(4)),
+        goatherdAge: morph.goatherdAge,
+        goatCondition: morph.goatCondition,
+        goatCount: morph.goatCount,
+        activePastureId: st.activePastureId,
+        activePastureName: ap.name,
+        activeBotanical: ap.botanical,
+        bellNoteHz: ap.noteHz,
+        stoppedAtTrafficIsland: st.stoppedAtTrafficIsland,
+        recognizedTrafficIslandId: st.recognizedTrafficIslandId,
+        meadowOfLowSageRecognized: st.meadowOfLowSageRecognized,
+        wastepaperCroppedCount: st.wastepaperCroppedCount,
+        scatteredAtCornerCount: st.scatteredAtCornerCount,
+        curbCansVisible: morph.curbCansVisible,
+        grazingMode: st.grazingMode,
+        herdAnchor: { nx: Number(st.herdPos.nx.toFixed(4)), ny: Number(st.herdPos.ny.toFixed(4)) },
+        bellResonance: Number(cecFlockClamp(st.bellResonance, 0, 1).toFixed(4)),
+        utterance: st.utterance,
+        soundEnabled: st.soundEnabled,
+        reducedMotion: st.reducedMotion
+      };
+    }
+
+    function notifyChange() {
+      if (typeof cfg.onStateChange === "function") {
+        cfg.onStateChange(getState());
+      }
+    }
+
+    function playBronzeBell(mode) {
+      if (!st.soundEnabled) return;
+      var ap = cecFlockFindPasture(st.activePastureId);
+      var base = ap.noteHz || 293.66;
+      var tarnished = mode === "tarnished" || st.eraProgress >= 0.88;
+      if (mode === "startle") {
+        audio.strikeBellTone(base * 1.12, tarnished, 0.00, 0.055, 0.36);
+        audio.strikeBellTone(base * 1.33, tarnished, 0.06, 0.048, 0.34);
+        audio.strikeBellTone(base * 0.94, tarnished, 0.12, 0.045, 0.40);
+        return;
+      }
+      if (mode === "wastepaper") {
+        audio.playPaperAndTin();
+        return;
+      }
+      audio.strikeBellTone(base, tarnished, 0.0, 0.065, tarnished ? 0.55 : 0.85);
+    }
+
+    function playTrafficIslandRecognitionChord() {
+      if (!st.soundEnabled) return;
+      audio.strikeBellTone(293.66, false, 0.00, 0.068, 1.15);
+      audio.strikeBellTone(349.23, false, 0.09, 0.056, 1.10);
+      audio.strikeBellTone(440.00, false, 0.18, 0.050, 1.20);
+      audio.strikeBellTone(587.33, false, 0.28, 0.036, 1.25);
+    }
+
+    function unlockAudio() {
+      return audio.unlock();
+    }
+
+    function setSoundEnabled(flag) {
+      st.soundEnabled = Boolean(flag);
+      if (st.soundEnabled) audio.unlock();
+      notifyChange();
+      return st.soundEnabled;
+    }
+
+    function toggleAudio() {
+      return setSoundEnabled(!st.soundEnabled);
+    }
+
+    function setViewport(w, h) {
+      if (Number(w) > 0) st.width = Number(w);
+      if (Number(h) > 0) st.height = Number(h);
+      return getState();
+    }
+
+    function setReducedMotion(flag) {
+      st.reducedMotion = Boolean(flag);
+      if (st.reducedMotion) {
+        st.herdPos.nx = st.targetPos.nx;
+        st.herdPos.ny = st.targetPos.ny;
+        st.scatterTimer = 0;
+      }
+      notifyChange();
+      return getState();
+    }
+
+    function setEraProgress(v) {
+      var prevEra = st.eraProgress;
+      st.eraProgress = cecFlockClamp(v, 0, 1);
+      var ap = cecFlockFindPasture(st.activePastureId);
+      if (st.eraProgress < 0.88) {
+        st.stoppedAtTrafficIsland = false;
+        st.recognizedTrafficIslandId = null;
+        st.meadowOfLowSageRecognized = false;
+        if (st.eraProgress < 0.65 && st.grazingMode === "wastepaper") {
+          st.grazingMode = "pasture";
+          st.targetPos = { nx: ap.nx, ny: ap.ny };
+          st.herdPos = { nx: ap.nx, ny: ap.ny };
+        }
+      } else if (prevEra < 0.88 && !st.stoppedAtTrafficIsland && st.grazingMode === "pasture") {
+        var laneX = cecFlockClamp(ap.nx - 0.065, 0.12, 0.88);
+        var laneY = cecFlockClamp(ap.ny + 0.045, 0.14, 0.86);
+        st.targetPos = { nx: laneX, ny: laneY };
+        st.herdPos = { nx: laneX, ny: laneY };
+      }
+      st.utterance = cecFlockBuildUtterance(st);
+      notifyChange();
+      return getState();
+    }
+
+    function driveFlockToPastureOrIsland(targetId) {
+      var p = cecFlockFindPasture(targetId || "meadow_of_the_low_sage");
+      st.activePastureId = p.id;
+      st.scatterTimer = 0;
+      st.targetPos = { nx: p.nx, ny: p.ny };
+      st.herdPos = { nx: p.nx, ny: p.ny };
+      if (st.eraProgress >= 0.88) {
+        st.grazingMode = "island_tuft";
+        st.stoppedAtTrafficIsland = true;
+        st.recognizedTrafficIslandId = p.id;
+        if (p.id === "meadow_of_the_low_sage") {
+          st.meadowOfLowSageRecognized = true;
+        }
+        st.bellResonance = 1.0;
+        playTrafficIslandRecognitionChord();
+      } else {
+        st.grazingMode = "pasture";
+        st.stoppedAtTrafficIsland = false;
+        st.recognizedTrafficIslandId = null;
+        st.meadowOfLowSageRecognized = false;
+        st.bellResonance = 0.78;
+        playBronzeBell(st.eraProgress >= 0.55 ? "weary" : "youth");
+      }
+      st.utterance = cecFlockBuildUtterance(st);
+      notifyChange();
+      return getState();
+    }
+
+    function cropCurbWastepaper() {
+      if (st.eraProgress >= 0.65) {
+        var canIdx = st.activeCanIndex % CEC_CURB_CANS.length;
+        var can = CEC_CURB_CANS[canIdx];
+        st.activeCanIndex = (canIdx + 1) % CEC_CURB_CANS.length;
+        st.grazingMode = "wastepaper";
+        st.stoppedAtTrafficIsland = false;
+        st.wastepaperCroppedCount += 1;
+        st.targetPos = { nx: can.nx, ny: can.ny };
+        st.herdPos = { nx: can.nx, ny: can.ny };
+        st.bellResonance = 0.54;
+        st.utterance = cecFlockBuildUtterance(st);
+        playBronzeBell("wastepaper");
+      } else {
+        st.utterance = "Out in the green meadows no municipal curb cans stand; my nimble goats browse living sage and thyme.";
+      }
+      notifyChange();
+      return getState();
+    }
+
+    function startleAtStreetCorner() {
+      st.scatteredAtCornerCount += 1;
+      st.scatterTimer = st.reducedMotion ? 0.45 : 1.0;
+      st.bellResonance = 0.92;
+      st.utterance = cecFlockBuildUtterance(st);
+      playBronzeBell("startle");
+      notifyChange();
+      return getState();
+    }
+
+    function step(dtSec, streetState) {
+      var dt = cecFlockClamp(dtSec, 0, 0.25);
+      if (streetState && typeof streetState === "object") {
+        st.streetXRayHint = Boolean(streetState.botanicalXRay);
+      }
+      if (st.reducedMotion) {
+        st.herdPos.nx = st.targetPos.nx;
+        st.herdPos.ny = st.targetPos.ny;
+        st.bellResonance = st.stoppedAtTrafficIsland ? 0.85 : 0.20;
+        return getState();
+      }
+      st.walkPhase += dt * 3.1;
+      st.recognitionPulse = (st.recognitionPulse + dt * 0.48) % 1;
+      var ease = cecFlockClamp(dt * 4.5, 0, 1);
+      st.herdPos.nx = cecFlockLerp(st.herdPos.nx, st.targetPos.nx, ease);
+      st.herdPos.ny = cecFlockLerp(st.herdPos.ny, st.targetPos.ny, ease);
+      st.scatterTimer = Math.max(0, st.scatterTimer - dt * 0.65);
+      var floorRes = st.stoppedAtTrafficIsland ? 0.42 : 0.12;
+      st.bellResonance = Math.max(floorRes, st.bellResonance - dt * 0.36);
+      return getState();
+    }
+
+    function render(ctx, w, h, renderOpts) {
+      if (!ctx) return;
+      var ro = renderOpts || {};
+      var xRay = Boolean(ro.botanicalXRay || st.streetXRayHint);
+      var layout = cecFlockComputeActorLayout(w, h);
+      var sc = layout.sc;
+
+      ctx.save();
+      for (var pIdx = 0; pIdx < layout.pastures.length; pIdx++) {
+        var pNode = layout.pastures[pIdx];
+        cecFlockDrawPastureTufts(ctx, pNode, st, xRay, sc);
+        if (st.stoppedAtTrafficIsland && st.recognizedTrafficIslandId === pNode.pasture.id) {
+          cecBellDrawResonanceRings(ctx, pNode.x, pNode.y, pNode.rxPx, pNode.ryPx, st, sc);
+        }
+      }
+
+      var activeCan = (st.grazingMode === "wastepaper" && layout.cans.length > 0)
+        ? ((st.activeCanIndex + layout.cans.length - 1) % layout.cans.length)
+        : -1;
+      for (var cIdx = 0; cIdx < layout.cans.length; cIdx++) {
+        cecFlockDrawCurbCan(ctx, layout.cans[cIdx], cIdx === activeCan, sc);
+      }
+
+      cecFlockDrawGoatherd(ctx, layout.goatherd.x, layout.goatherd.y, layout.wayfarer.x, layout.wayfarer.y, st, sc);
+
+      for (var gIdx = 0; gIdx < layout.goats.length; gIdx++) {
+        cecFlockDrawGoat(ctx, layout.goats[gIdx], st, sc);
+      }
+      ctx.restore();
+    }
+
+    function inspectAt(px, py, w, h) {
+      var layout = cecFlockComputeActorLayout(w, h);
+      var best = null;
+      var bestDist = 38.0001;
+
+      var ghDist = cecFlockDist(px, py, layout.goatherd.x, layout.goatherd.y);
+      if (ghDist <= 38 && ghDist < bestDist) {
+        bestDist = ghDist;
+        var isOld = st.eraProgress >= 0.88;
+        var isMid = st.eraProgress >= 0.55 && st.eraProgress < 0.88;
+        best = {
+          id: isOld ? "goatherd_graybeard" : (isMid ? "goatherd_weathering" : "goatherd_youth"),
+          stoneId: isOld
+            ? (st.stoppedAtTrafficIsland ? "traffic_island_recognition" : "mangy_wastepaper_goats")
+            : "barefoot_youth_pasture_names",
+          title: isOld ? "Ragged Graybeard Goatherd" : (isMid ? "Weathering Herdsman" : "Barefoot Goatherd of Named Pastures"),
+          category: "goatherd",
+          detail: st.utterance
+        };
+      }
+
+      for (var g = 0; g < layout.goats.length; g++) {
+        var gn = layout.goats[g];
+        var gd = cecFlockDist(px, py, gn.x, gn.y);
+        if (gd <= 38 && gd < bestDist) {
+          bestDist = gd;
+          var mangy = st.eraProgress >= 0.88;
+          best = {
+            id: gn.id,
+            stoneId: st.scatterTimer > 0.05
+              ? "leafless_nameless_interval"
+              : (mangy ? (st.stoppedAtTrafficIsland ? "traffic_island_recognition" : "mangy_wastepaper_goats") : "barefoot_youth_pasture_names"),
+            title: mangy
+              ? (st.stoppedAtTrafficIsland ? "Gaunt Goat Recognizing Island Sage" : "Gaunt Mangy Curb-Goat")
+              : "Nimble Horned Bell-Goat",
+            category: "flock",
+            detail: mangy
+              ? (st.stoppedAtTrafficIsland
+                ? "Angular-ribbed goat lowering its muzzle to recognize surviving low sage inside the concrete traffic island."
+                : "Gaunt urban goat with tarnished bronze bell cropping crumpled wastepaper along endless avenues.")
+              : "Sleek Mediterranean horned goat wearing a bright bronze bell across named upland pastures."
+          };
+        }
+      }
+
+      for (var c = 0; c < layout.cans.length; c++) {
+        var cn = layout.cans[c];
+        var cd = cecFlockDist(px, py, cn.x, cn.y);
+        if (cd <= 38 && cd < bestDist) {
+          bestDist = cd;
+          best = {
+            id: cn.id,
+            stoneId: "mangy_wastepaper_goats",
+            title: "Municipal Curb Can & Wastepaper",
+            category: "curb_wastepaper",
+            detail: "Corrugated tin curb receptacle overflowing with crumpled buff wastepaper cropped by the aged herdsman's goats."
+          };
+        }
+      }
+
+      for (var p = 0; p < layout.pastures.length; p++) {
+        var pn = layout.pastures[p];
+        var pd = cecFlockDist(px, py, pn.x, pn.y);
+        if (pd <= 38 && pd < bestDist) {
+          bestDist = pd;
+          var cp = pn.pasture;
+          var recSage = st.eraProgress >= 0.88 && st.stoppedAtTrafficIsland && cp.id === "meadow_of_the_low_sage";
+          best = {
+            id: cp.id,
+            stoneId: recSage ? "traffic_island_recognition" : cp.stoneId,
+            title: cp.name,
+            category: st.eraProgress >= 0.88 ? "traffic_island_tuft" : "named_pasture",
+            detail: st.eraProgress >= 0.88 ? cp.islandDesc : cp.youthDesc
+          };
+        }
+      }
+
+      return best;
+    }
+
+    function reset() {
+      st.eraProgress = initialEraVal;
+      st.activePastureId = "meadow_of_the_low_sage";
+      st.stoppedAtTrafficIsland = false;
+      st.recognizedTrafficIslandId = null;
+      st.meadowOfLowSageRecognized = false;
+      st.wastepaperCroppedCount = 0;
+      st.scatteredAtCornerCount = 0;
+      st.bellResonance = 0.24;
+      st.grazingMode = "pasture";
+      st.activeCanIndex = 0;
+      st.scatterTimer = 0;
+      st.recognitionPulse = 0;
+      st.walkPhase = 0;
+      st.herdPos = { nx: 0.50, ny: 0.54 };
+      st.targetPos = { nx: 0.50, ny: 0.54 };
+      st.utterance = cecFlockBuildUtterance(st);
+      notifyChange();
+      return getState();
+    }
+
+    return {
+      getState: getState,
+      setViewport: setViewport,
+      setReducedMotion: setReducedMotion,
+      setEraProgress: setEraProgress,
+      driveFlockToPastureOrIsland: driveFlockToPastureOrIsland,
+      cropCurbWastepaper: cropCurbWastepaper,
+      startleAtStreetCorner: startleAtStreetCorner,
+      step: step,
+      render: render,
+      inspectAt: inspectAt,
+      unlockAudio: unlockAudio,
+      setSoundEnabled: setSoundEnabled,
+      toggleAudio: toggleAudio,
+      playBronzeBell: playBronzeBell,
+      playTrafficIslandRecognitionChord: playTrafficIslandRecognitionChord,
+      reset: reset
+    };
+  }
+
+  var api = Object.freeze({
+    PASTURE_PALETTE: PASTURE_PALETTE,
+    CANONICAL_PASTURES: CANONICAL_PASTURES,
+    FLOCK_STONES: FLOCK_STONES,
+    createPastureFlock: createPastureFlock
+  });
+
+  root.CeciliaPastureBells = api;
+  if (typeof module === "object" && module.exports) {
+    module.exports = api;
+  }
+})(typeof globalThis !== "undefined" ? globalThis : this);
+
+(function cecAppMainController() {
+  "use strict";
+
+  var streetsLib = globalThis.CeciliaBoundlessStreets;
+  var bellsLib = globalThis.CeciliaPastureBells;
+  var canvasEl = document.getElementById("cec-sprawl-canvas");
+  var weaveStageEl = document.getElementById("cec-street-weave");
+  var ctx2d = canvasEl.getContext("2d");
+
+  var mqReduced = window.matchMedia
+    ? window.matchMedia("(prefers-reduced-motion: reduce)")
+    : { matches: false };
+
+  var viewState = {
+    width: 960,
+    height: 680,
+    dpr: Math.min(window.devicePixelRatio || 1, 2)
+  };
+
+  var streets = streetsLib.createBoundlessStreets({
+    width: viewState.width,
+    height: viewState.height,
+    reducedMotion: Boolean(mqReduced.matches),
+    initialEra: 0.15
+  });
+
+  var flock = bellsLib.createPastureFlock({
+    width: viewState.width,
+    height: viewState.height,
+    reducedMotion: Boolean(mqReduced.matches),
+    initialEra: 0.15
+  });
+
+  var uiRefs = {
+    readoutEra: document.getElementById("cec-readout-era"),
+    valEra: document.getElementById("cec-val-era"),
+    readoutOutside: document.getElementById("cec-readout-outside"),
+    valOutside: document.getElementById("cec-val-outside"),
+    readoutHerd: document.getElementById("cec-readout-herd"),
+    valHerd: document.getElementById("cec-val-herd"),
+    readoutSage: document.getElementById("cec-readout-sage"),
+    valSage: document.getElementById("cec-val-sage"),
+    btnXray: document.getElementById("cec-btn-xray"),
+    btnAudio: document.getElementById("cec-btn-audio"),
+    audioLabel: document.getElementById("cec-audio-label"),
+    btnReset: document.getElementById("cec-btn-reset"),
+    btnPlates: document.getElementById("cec-btn-plates"),
+    pastureModeBadge: document.getElementById("cec-pasture-mode-badge"),
+    eraPctBadge: document.getElementById("cec-era-pct-badge"),
+    eraScrubber: document.getElementById("cec-era-scrubber"),
+    eraFill: document.getElementById("cec-era-fill"),
+    eraThumb: document.getElementById("cec-era-thumb"),
+    btnYouth: document.getElementById("cec-btn-youth"),
+    btnMingle: document.getElementById("cec-btn-mingle"),
+    btnIsland: document.getElementById("cec-btn-island"),
+    btnWastepaper: document.getElementById("cec-btn-wastepaper"),
+    paperLabel: document.getElementById("cec-paper-label"),
+    voiceSpeaker: document.getElementById("cec-voice-speaker"),
+    voiceQuote: document.getElementById("cec-voice-quote"),
+    exitBadge: document.getElementById("cec-exit-badge"),
+    btnExit: document.getElementById("cec-btn-exit"),
+    exitVerdict: document.getElementById("cec-exit-verdict"),
+    inspectHead: document.getElementById("cec-inspect-head"),
+    inspectBody: document.getElementById("cec-inspect-body"),
+    plateDrawer: document.getElementById("cec-plate-drawer"),
+    btnZoom: document.getElementById("cec-btn-zoom"),
+    zoomLabel: document.getElementById("cec-zoom-label"),
+    btnClosePlates: document.getElementById("cec-btn-close-plates"),
+    loupeMap: document.getElementById("cec-loupe-map"),
+    loupeImage: document.getElementById("cec-loupe-image"),
+    imgMap: document.getElementById("cec-img-map"),
+    imgImage: document.getElementById("cec-img-image"),
+    pastureChips: Array.prototype.slice.call(document.querySelectorAll("[data-cec-pasture]")),
+    stoneChips: Array.prototype.slice.call(document.querySelectorAll("[data-cec-stone]")),
+    bearingKeys: Array.prototype.slice.call(document.querySelectorAll("[data-cec-bearing]"))
+  };
+
+  var bearingCycle = ["north", "east", "south", "west"];
+  var appMeta = {
+    activeStoneId: "meadow_of_the_low_sage",
+    plateZoomActive: false,
+    nextBearingIdx: 0,
+    scrubbing: false,
+    inspectedItem: {
+      id: "meadow_of_the_low_sage",
+      stoneId: "meadow_of_the_low_sage",
+      title: "Meadow of the Low Sage",
+      category: "pasture",
+      detail: "Warm hollow of fragrant silver-green Salvia humilis beyond the south tollgate, grazed by seven nimble horned goats."
+    }
+  };
+
+  function cecAppClamp01(val) {
+    var num = Number(val);
+    if (!Number.isFinite(num)) {
+      return 0;
+    }
+    return num < 0 ? 0 : (num > 1 ? 1 : num);
+  }
+
+  function cecAppFindStoneRecord(stoneId) {
+    var list = bellsLib.FLOCK_STONES || [];
+    for (var i = 0; i < list.length; i += 1) {
+      if (list[i].id === stoneId) {
+        return list[i];
+      }
+    }
+    return null;
+  }
+
+  function cecAppFindPastureRecord(pastureId) {
+    var list = bellsLib.CANONICAL_PASTURES || [];
+    for (var i = 0; i < list.length; i += 1) {
+      if (list[i].id === pastureId) {
+        return list[i];
+      }
+    }
+    return list[0] || null;
+  }
+
+  function cecAppResizeCanvas() {
+    var rect = weaveStageEl.getBoundingClientRect();
+    var cssW = Math.max(220, Math.round(rect.width || 680));
+    var cssH = Math.max(180, Math.round(rect.height || 480));
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    viewState.width = cssW;
+    viewState.height = cssH;
+    viewState.dpr = dpr;
+    var targetW = Math.round(cssW * dpr);
+    var targetH = Math.round(cssH * dpr);
+    if (canvasEl.width !== targetW || canvasEl.height !== targetH) {
+      canvasEl.width = targetW;
+      canvasEl.height = targetH;
+    }
+    streets.setViewport(cssW, cssH);
+    flock.setViewport(cssW, cssH);
+  }
+  function cecAppRenderNow() {
+    var stState = streets.getState();
+    if (stState.reducedMotion) {
+      streets.step(0);
+      flock.step(0, streets.getState());
+      stState = streets.getState();
+    }
+    var flState = flock.getState();
+    ctx2d.save();
+    ctx2d.setTransform(viewState.dpr, 0, 0, viewState.dpr, 0, 0);
+    streets.render(ctx2d, viewState.width, viewState.height, {
+      recognizedIslandId: flState.recognizedTrafficIslandId || stState.highlightedIslandId
+    });
+    flock.render(ctx2d, viewState.width, viewState.height, {
+      botanicalXRay: stState.botanicalXRay
+    });
+    ctx2d.restore();
+  }
+
+  function cecAppSyncDOM() {
+    var st = streets.getState();
+    var fl = flock.getState();
+    var pct = Math.round(st.eraProgress * 100);
+
+    var eraWord = st.eraPhase === "mingled_everywhere"
+      ? "Mingled"
+      : (st.eraPhase === "encroaching_conurbation" ? "Sprawl" : "Youth");
+    uiRefs.valEra.textContent = eraWord + " " + pct + "%";
+    uiRefs.readoutEra.classList.toggle("cec-state-mingled", !st.outsideExists);
+
+    uiRefs.valOutside.textContent = st.outsideExists ? "Open Pasture" : "Everywhere";
+    uiRefs.readoutOutside.classList.toggle("cec-state-mingled", !st.outsideExists);
+
+    var ageWord = fl.goatherdAge === "ragged_graybeard"
+      ? "Graybeard"
+      : (fl.goatherdAge === "weathering_herdsman" ? "Herdsman" : "Youth");
+    uiRefs.valHerd.textContent = ageWord + " · " + fl.goatCount;
+
+    uiRefs.valSage.textContent = fl.meadowOfLowSageRecognized
+      ? "Recognized"
+      : (st.pasturesMingledWithStreets ? "Curb Sealed" : "Open Meadow");
+    uiRefs.readoutSage.classList.toggle("cec-state-recognized", Boolean(fl.meadowOfLowSageRecognized));
+
+    uiRefs.eraPctBadge.textContent = pct + "%";
+    uiRefs.eraScrubber.setAttribute("aria-valuenow", String(pct));
+    uiRefs.eraFill.style.width = pct + "%";
+    uiRefs.eraThumb.style.left = pct + "%";
+
+    uiRefs.pastureModeBadge.textContent = st.pasturesMingledWithStreets ? "3 Islands" : "3 Pastures";
+    for (var i = 0; i < uiRefs.pastureChips.length; i += 1) {
+      var chip = uiRefs.pastureChips[i];
+      var pid = chip.getAttribute("data-cec-pasture");
+      var prec = cecAppFindPastureRecord(pid);
+      var idxStr = String(i + 1);
+      var stateEl = document.getElementById("cec-state-pasture-" + idxStr);
+      var descEl = document.getElementById("cec-desc-pasture-" + idxStr);
+      chip.classList.toggle("cec-is-active", fl.activePastureId === pid);
+      if (stateEl) {
+        if (fl.recognizedTrafficIslandId === pid && st.pasturesMingledWithStreets) {
+          stateEl.textContent = "Recognized";
+        } else {
+          stateEl.textContent = st.pasturesMingledWithStreets ? "Traffic Island" : "Open Turf";
+        }
+      }
+      if (descEl && prec) {
+        descEl.textContent = prec.botanical + " · " + (st.pasturesMingledWithStreets ? prec.islandDesc : prec.youthDesc);
+      }
+    }
+
+    for (var j = 0; j < uiRefs.stoneChips.length; j += 1) {
+      var sChip = uiRefs.stoneChips[j];
+      sChip.classList.toggle("cec-is-active", sChip.getAttribute("data-cec-stone") === appMeta.activeStoneId);
+    }
+
+    uiRefs.paperLabel.textContent = "Crop Curb Wastepaper (" + fl.wastepaperCroppedCount + ")";
+    uiRefs.btnXray.classList.toggle("cec-is-on", Boolean(st.botanicalXRay));
+    uiRefs.btnXray.setAttribute("aria-pressed", st.botanicalXRay ? "true" : "false");
+
+    uiRefs.btnAudio.classList.toggle("cec-is-on", Boolean(fl.soundEnabled));
+    uiRefs.btnAudio.setAttribute("aria-pressed", fl.soundEnabled ? "true" : "false");
+    uiRefs.audioLabel.textContent = fl.soundEnabled ? "Bells On" : "Bells Off";
+
+    var speakerTitle = fl.goatherdAge === "ragged_graybeard"
+      ? "Ragged Graybeard · Mingled Traffic Island"
+      : (fl.goatherdAge === "weathering_herdsman"
+        ? "Weathering Herdsman · Encroaching Streets"
+        : "Barefoot Goatherd · Open Pastures");
+    uiRefs.voiceSpeaker.textContent = speakerTitle;
+    uiRefs.voiceQuote.textContent = fl.utterance;
+
+    uiRefs.exitBadge.textContent = st.outsideExists
+      ? "Outside Open"
+      : ("No Exit · " + st.failedExitAttempts + "x");
+    uiRefs.exitVerdict.textContent = st.lastExitResult && st.lastExitResult.summary
+      ? st.lastExitResult.summary
+      : "Walk toward any compass bearing to test whether an outside still exists.";
+
+    uiRefs.inspectHead.textContent = appMeta.inspectedItem.title;
+    uiRefs.inspectBody.textContent = appMeta.inspectedItem.detail;
+
+    uiRefs.plateDrawer.classList.toggle("cec-zoom-on", Boolean(appMeta.plateZoomActive));
+    uiRefs.btnZoom.classList.toggle("cec-is-on", Boolean(appMeta.plateZoomActive));
+    uiRefs.btnZoom.setAttribute("aria-pressed", appMeta.plateZoomActive ? "true" : "false");
+    uiRefs.zoomLabel.textContent = appMeta.plateZoomActive ? "1.8x Loupe On" : "1.8x Loupe Off";
+  }
+
+  function cecAppGetState() {
+    var st = streets.getState();
+    var fl = flock.getState();
+    return {
+      eraProgress: st.eraProgress,
+      eraPhase: st.eraPhase,
+      urbanCoverage: st.urbanCoverage,
+      outsideExists: st.outsideExists,
+      pasturesMingledWithStreets: st.pasturesMingledWithStreets,
+      tollGatesIntact: st.tollGatesIntact,
+      botanicalXRay: st.botanicalXRay,
+      activeStreetBlocks: st.activeStreetBlocks,
+      trafficIslands: st.trafficIslands,
+      highlightedIslandId: st.highlightedIslandId,
+      exitAttempts: st.exitAttempts,
+      failedExitAttempts: st.failedExitAttempts,
+      escapedCity: Boolean(st.lastExitResult && st.lastExitResult.escapedCity),
+      lastExitResult: st.lastExitResult,
+      toroidalPan: st.toroidalPan,
+      goatherdAge: fl.goatherdAge,
+      goatCondition: fl.goatCondition,
+      goatCount: fl.goatCount,
+      activePastureId: fl.activePastureId,
+      activePastureName: fl.activePastureName,
+      activeBotanical: fl.activeBotanical,
+      activeStoneId: appMeta.activeStoneId,
+      stoppedAtTrafficIsland: fl.stoppedAtTrafficIsland,
+      recognizedTrafficIslandId: fl.recognizedTrafficIslandId,
+      meadowOfLowSageRecognized: fl.meadowOfLowSageRecognized,
+      wastepaperCroppedCount: fl.wastepaperCroppedCount,
+      scatteredAtCornerCount: fl.scatteredAtCornerCount,
+      curbCansVisible: fl.curbCansVisible,
+      grazingMode: fl.grazingMode,
+      herdAnchor: fl.herdAnchor,
+      bellResonance: fl.bellResonance,
+      utterance: fl.utterance,
+      soundEnabled: fl.soundEnabled,
+      plateDrawerOpen: !uiRefs.plateDrawer.hidden,
+      plateZoomActive: appMeta.plateZoomActive,
+      reducedMotion: st.reducedMotion,
+      inspectedItem: {
+        id: appMeta.inspectedItem.id,
+        stoneId: appMeta.inspectedItem.stoneId,
+        title: appMeta.inspectedItem.title,
+        category: appMeta.inspectedItem.category,
+        detail: appMeta.inspectedItem.detail
+      },
+      viewport: {
+        width: viewState.width,
+        height: viewState.height,
+        dpr: viewState.dpr
+      }
+    };
+  }
+  function cecAppSetInspected(item) {
+    if (!item) {
+      return;
+    }
+    appMeta.inspectedItem = {
+      id: item.id || "cecilia_locus",
+      stoneId: item.stoneId || appMeta.activeStoneId,
+      title: item.title || "Named Pasture Palimpsest",
+      category: item.category || "locus",
+      detail: item.detail || ""
+    };
+    if (item.stoneId) {
+      appMeta.activeStoneId = item.stoneId;
+    }
+  }
+
+  function cecAppRefreshPastureInspection(pastureId) {
+    var st = streets.getState();
+    var prec = cecAppFindPastureRecord(pastureId);
+    if (!prec) {
+      return;
+    }
+    cecAppSetInspected({
+      id: prec.id,
+      stoneId: st.pasturesMingledWithStreets && prec.id === "meadow_of_the_low_sage"
+        ? "traffic_island_recognition"
+        : prec.id,
+      title: prec.name + " · " + prec.botanical,
+      category: st.pasturesMingledWithStreets ? "traffic_island" : "pasture",
+      detail: st.pasturesMingledWithStreets ? prec.islandDesc : prec.youthDesc
+    });
+  }
+
+  function cecAppSetEraProgress(val) {
+    var clamped = cecAppClamp01(val);
+    streets.setEraProgress(clamped);
+    flock.setEraProgress(clamped);
+    var fl = flock.getState();
+    cecAppRefreshPastureInspection(fl.activePastureId);
+    cecAppSyncDOM();
+    cecAppRenderNow();
+    return cecAppGetState();
+  }
+
+  function cecAppMingleAllPlaces() {
+    streets.mingleAllPlaces();
+    flock.setEraProgress(1.0);
+    var stoneRec = cecAppFindStoneRecord("endless_identical_streets");
+    appMeta.activeStoneId = "endless_identical_streets";
+    if (stoneRec) {
+      cecAppSetInspected({
+        id: stoneRec.id,
+        stoneId: stoneRec.id,
+        title: stoneRec.label,
+        category: "sprawl",
+        detail: stoneRec.summary
+      });
+    }
+    cecAppSyncDOM();
+    cecAppRenderNow();
+    return cecAppGetState();
+  }
+
+  function cecAppRewindYouthfulEra() {
+    streets.setEraProgress(0.15);
+    flock.setEraProgress(0.15);
+    var curPasture = flock.getState().activePastureId || "meadow_of_the_low_sage";
+    streets.highlightIsland(curPasture);
+    flock.driveFlockToPastureOrIsland(curPasture);
+    appMeta.activeStoneId = "barefoot_youth_pasture_names";
+    cecAppRefreshPastureInspection(curPasture);
+    cecAppSyncDOM();
+    cecAppRenderNow();
+    return cecAppGetState();
+  }
+
+  function cecAppResolvePastureId(inputId) {
+    if (inputId === 1 || inputId === "1") {
+      return "meadow_of_the_low_sage";
+    }
+    if (inputId === 2 || inputId === "2") {
+      return "goats_slope";
+    }
+    if (inputId === 3 || inputId === "3") {
+      return "crossroads_of_the_wind";
+    }
+    var list = bellsLib.CANONICAL_PASTURES || [];
+    for (var i = 0; i < list.length; i += 1) {
+      if (list[i].id === inputId) {
+        return list[i].id;
+      }
+    }
+    return "meadow_of_the_low_sage";
+  }
+
+  function cecAppDriveFlockAcrossTrafficIsland(islandId) {
+    var targetId = cecAppResolvePastureId(islandId || "meadow_of_the_low_sage");
+    if (streets.getState().eraProgress < 0.88) {
+      streets.setEraProgress(1.0);
+      flock.setEraProgress(1.0);
+    }
+    streets.highlightIsland(targetId);
+    flock.driveFlockToPastureOrIsland(targetId);
+    var prec = cecAppFindPastureRecord(targetId);
+    appMeta.activeStoneId = targetId === "meadow_of_the_low_sage" ? "traffic_island_recognition" : targetId;
+    cecAppSetInspected({
+      id: targetId,
+      stoneId: appMeta.activeStoneId,
+      title: (prec ? prec.name : "Traffic Island") + " · Recognized on Curb",
+      category: "traffic_island_recognition",
+      detail: prec
+        ? prec.islandDesc + " The gaunt goats lower their muzzles and recognize the surviving blades."
+        : "Surviving pasture blades recognized inside the concrete traffic island."
+    });
+    cecAppSyncDOM();
+    cecAppRenderNow();
+    return cecAppGetState();
+  }
+
+  function cecAppCropCurbWastepaper() {
+    var curEra = streets.getState().eraProgress;
+    if (curEra < 0.90) {
+      streets.setEraProgress(0.95);
+      flock.setEraProgress(0.95);
+    }
+    flock.cropCurbWastepaper();
+    var fl = flock.getState();
+    appMeta.activeStoneId = "mangy_wastepaper_goats";
+    cecAppSetInspected({
+      id: "curb_wastepaper_can",
+      stoneId: "mangy_wastepaper_goats",
+      title: "Municipal Curb Can · Wastepaper #" + fl.wastepaperCroppedCount,
+      category: "wastepaper",
+      detail: "Decades after the pastures vanished beneath tenements, the four gaunt, mangy goats tug and chew crumpled wastepaper from municipal curb cans."
+    });
+    cecAppSyncDOM();
+    cecAppRenderNow();
+    return cecAppGetState();
+  }
+  function cecAppAttemptExitCecilia(bearing) {
+    var chosen = typeof bearing === "string" && bearing.trim()
+      ? bearing.trim().toLowerCase()
+      : bearingCycle[appMeta.nextBearingIdx % bearingCycle.length];
+    appMeta.nextBearingIdx = (appMeta.nextBearingIdx + 1) % bearingCycle.length;
+    var exitRes = streets.attemptExit(chosen);
+    if (exitRes && exitRes.escapedCity) {
+      flock.playBronzeBell("pasture");
+      appMeta.activeStoneId = "leafless_nameless_interval";
+      cecAppSetInspected({
+        id: "tollgate_" + chosen,
+        stoneId: "leafless_nameless_interval",
+        title: "Watchmen Gate (" + chosen.toUpperCase() + ") · Outside Reached",
+        category: "tollgate",
+        detail: exitRes.summary
+      });
+    } else {
+      flock.playBronzeBell("street");
+      appMeta.activeStoneId = "endless_identical_streets";
+      cecAppSetInspected({
+        id: "endless_avenue_" + chosen,
+        stoneId: "endless_identical_streets",
+        title: "Boundless Streets (" + chosen.toUpperCase() + ") · No Outside",
+        category: "mingled_avenue",
+        detail: exitRes ? exitRes.summary : "Every bearing wraps into identical merged streets."
+      });
+    }
+    cecAppSyncDOM();
+    cecAppRenderNow();
+    return cecAppGetState();
+  }
+
+  function cecAppSetBotanicalXRay(flag) {
+    streets.setBotanicalXRay(Boolean(flag));
+    var st = streets.getState();
+    if (st.botanicalXRay) {
+      var fl = flock.getState();
+      var prec = cecAppFindPastureRecord(fl.activePastureId);
+      cecAppSetInspected({
+        id: "botanical_xray",
+        stoneId: fl.activePastureId,
+        title: "Botanical X-Ray · Buried Herbarium Stratum",
+        category: "xray",
+        detail: "Peeling back concrete curbs and asphalt lanes reveals ghost contour lines and tenacious root systems of " + (prec ? prec.name + " (" + prec.botanical + ")" : "the buried pastures") + "."
+      });
+    }
+    cecAppSyncDOM();
+    cecAppRenderNow();
+    return cecAppGetState();
+  }
+
+  function cecAppToggleBotanicalXRay() {
+    var nextVal = !streets.getState().botanicalXRay;
+    return cecAppSetBotanicalXRay(nextVal);
+  }
+
+  function cecAppSelectPasture(pastureId) {
+    var pid = cecAppResolvePastureId(pastureId);
+    streets.highlightIsland(pid);
+    flock.driveFlockToPastureOrIsland(pid);
+    appMeta.activeStoneId = pid;
+    cecAppRefreshPastureInspection(pid);
+    cecAppSyncDOM();
+    cecAppRenderNow();
+    return cecAppGetState();
+  }
+
+  function cecAppSelectStone(stoneInput) {
+    var idxMap = {
+      "1": "meadow_of_the_low_sage",
+      "2": "goats_slope",
+      "3": "crossroads_of_the_wind",
+      "4": "barefoot_youth_pasture_names",
+      "5": "leafless_nameless_interval",
+      "6": "endless_identical_streets",
+      "7": "mangy_wastepaper_goats",
+      "8": "traffic_island_recognition"
+    };
+    var sid = idxMap[String(stoneInput)] || String(stoneInput || "meadow_of_the_low_sage");
+    if (sid === "meadow_of_the_low_sage" || sid === "goats_slope" || sid === "crossroads_of_the_wind") {
+      return cecAppSelectPasture(sid);
+    }
+    if (sid === "barefoot_youth_pasture_names") {
+      return cecAppRewindYouthfulEra();
+    }
+    if (sid === "leafless_nameless_interval") {
+      if (streets.getState().eraProgress >= 0.55) {
+        streets.setEraProgress(0.26);
+        flock.setEraProgress(0.26);
+      }
+      flock.startleAtStreetCorner();
+      var gateRec = cecAppFindStoneRecord("leafless_nameless_interval");
+      appMeta.activeStoneId = "leafless_nameless_interval";
+      cecAppSetInspected({
+        id: "leafless_nameless_interval",
+        stoneId: "leafless_nameless_interval",
+        title: gateRec ? gateRec.label : "Leafless Interval & Watchmen Gates",
+        category: "corner_startle",
+        detail: gateRec ? gateRec.summary : "Nimble goats startle at paved leafless corners until watchmen turn the flock outside."
+      });
+      cecAppSyncDOM();
+      cecAppRenderNow();
+      return cecAppGetState();
+    }
+    if (sid === "endless_identical_streets") {
+      if (streets.getState().eraProgress < 0.88) {
+        streets.mingleAllPlaces();
+        flock.setEraProgress(1.0);
+      }
+      return cecAppAttemptExitCecilia("east");
+    }
+    if (sid === "mangy_wastepaper_goats") {
+      return cecAppCropCurbWastepaper();
+    }
+    if (sid === "traffic_island_recognition") {
+      return cecAppDriveFlockAcrossTrafficIsland("meadow_of_the_low_sage");
+    }
+    var fallbackRec = cecAppFindStoneRecord(sid);
+    if (fallbackRec) {
+      appMeta.activeStoneId = fallbackRec.id;
+      cecAppSetInspected({
+        id: fallbackRec.id,
+        stoneId: fallbackRec.id,
+        title: fallbackRec.label,
+        category: "stone",
+        detail: fallbackRec.summary
+      });
+    }
+    cecAppSyncDOM();
+    cecAppRenderNow();
+    return cecAppGetState();
+  }
+
+  function cecAppTogglePlateDrawer(forceOpen) {
+    var shouldOpen = typeof forceOpen === "boolean" ? forceOpen : uiRefs.plateDrawer.hidden;
+    uiRefs.plateDrawer.hidden = !shouldOpen;
+    if (!shouldOpen) {
+      appMeta.plateZoomActive = false;
+      uiRefs.imgMap.style.transformOrigin = "50% 50%";
+      uiRefs.imgImage.style.transformOrigin = "50% 50%";
+    }
+    cecAppSyncDOM();
+    return cecAppGetState();
+  }
+
+  function cecAppTogglePlateZoom(forceZoom) {
+    if (uiRefs.plateDrawer.hidden && forceZoom !== false) {
+      uiRefs.plateDrawer.hidden = false;
+    }
+    appMeta.plateZoomActive = typeof forceZoom === "boolean" ? forceZoom : !appMeta.plateZoomActive;
+    if (!appMeta.plateZoomActive) {
+      uiRefs.imgMap.style.transformOrigin = "50% 50%";
+      uiRefs.imgImage.style.transformOrigin = "50% 50%";
+    }
+    cecAppSyncDOM();
+    return cecAppGetState();
+  }
+
+  function cecAppToggleAudio(forceAudio) {
+    flock.unlockAudio();
+    if (typeof forceAudio === "boolean") {
+      flock.setSoundEnabled(forceAudio);
+    } else {
+      flock.toggleAudio();
+    }
+    if (flock.getState().soundEnabled) {
+      flock.playBronzeBell("pasture");
+    }
+    cecAppSyncDOM();
+    return cecAppGetState();
+  }
+
+  function cecAppReset() {
+    streets.reset();
+    flock.reset();
+    uiRefs.plateDrawer.hidden = true;
+    appMeta.plateZoomActive = false;
+    appMeta.activeStoneId = "meadow_of_the_low_sage";
+    cecAppRefreshPastureInspection("meadow_of_the_low_sage");
+    cecAppSyncDOM();
+    cecAppRenderNow();
+    return cecAppGetState();
+  }
+  function cecAppBindKeyButton(el, handler) {
+    if (!el) {
+      return;
+    }
+    el.addEventListener("click", function cecAppOnBtnClick(ev) {
+      ev.preventDefault();
+      handler();
+    });
+    el.addEventListener("keydown", function cecAppOnBtnKey(ev) {
+      if (ev.key === "Enter" || ev.key === " ") {
+        ev.preventDefault();
+        handler();
+      }
+    });
+  }
+
+  function cecAppScrubFromPointer(ev) {
+    var rect = uiRefs.eraScrubber.getBoundingClientRect();
+    if (!rect.width) {
+      return;
+    }
+    var ratio = (ev.clientX - rect.left) / rect.width;
+    cecAppSetEraProgress(ratio);
+  }
+
+  uiRefs.eraScrubber.addEventListener("pointerdown", function cecAppScrubDown(ev) {
+    appMeta.scrubbing = true;
+    if (uiRefs.eraScrubber.setPointerCapture) {
+      try {
+        uiRefs.eraScrubber.setPointerCapture(ev.pointerId);
+      } catch (ignoreErr) {
+        /* pointer capture optional */
+      }
+    }
+    cecAppScrubFromPointer(ev);
+  });
+
+  uiRefs.eraScrubber.addEventListener("pointermove", function cecAppScrubMove(ev) {
+    if (!appMeta.scrubbing) {
+      return;
+    }
+    cecAppScrubFromPointer(ev);
+  });
+
+  function cecAppEndScrub() {
+    appMeta.scrubbing = false;
+  }
+
+  uiRefs.eraScrubber.addEventListener("pointerup", cecAppEndScrub);
+  uiRefs.eraScrubber.addEventListener("pointercancel", cecAppEndScrub);
+
+  cecAppBindKeyButton(uiRefs.btnXray, cecAppToggleBotanicalXRay);
+  cecAppBindKeyButton(uiRefs.btnAudio, function cecAppClickAudio() { cecAppToggleAudio(); });
+  cecAppBindKeyButton(uiRefs.btnReset, cecAppReset);
+  cecAppBindKeyButton(uiRefs.btnPlates, function cecAppOpenPlates() { cecAppTogglePlateDrawer(); });
+  cecAppBindKeyButton(uiRefs.btnYouth, cecAppRewindYouthfulEra);
+  cecAppBindKeyButton(uiRefs.btnMingle, cecAppMingleAllPlaces);
+  cecAppBindKeyButton(uiRefs.btnIsland, function cecAppClickIsland() {
+    cecAppDriveFlockAcrossTrafficIsland("meadow_of_the_low_sage");
+  });
+  cecAppBindKeyButton(uiRefs.btnWastepaper, cecAppCropCurbWastepaper);
+  cecAppBindKeyButton(uiRefs.btnExit, function cecAppClickExit() { cecAppAttemptExitCecilia(); });
+  cecAppBindKeyButton(uiRefs.btnZoom, function cecAppClickZoom() { cecAppTogglePlateZoom(); });
+  cecAppBindKeyButton(uiRefs.btnClosePlates, function cecAppClosePlates() { cecAppTogglePlateDrawer(false); });
+
+  uiRefs.plateDrawer.addEventListener("click", function cecAppBackdropClick(ev) {
+    if (ev.target === uiRefs.plateDrawer) {
+      cecAppTogglePlateDrawer(false);
+    }
+  });
+
+  function cecAppBindLoupeStage(stageEl, imgEl) {
+    if (!stageEl || !imgEl) {
+      return;
+    }
+    stageEl.addEventListener("click", function cecAppStageClick() {
+      cecAppTogglePlateZoom();
+    });
+    stageEl.addEventListener("pointermove", function cecAppStageMove(ev) {
+      if (!appMeta.plateZoomActive) {
+        return;
+      }
+      var rect = stageEl.getBoundingClientRect();
+      if (!rect.width || !rect.height) {
+        return;
+      }
+      var ox = Math.max(0, Math.min(100, ((ev.clientX - rect.left) / rect.width) * 100));
+      var oy = Math.max(0, Math.min(100, ((ev.clientY - rect.top) / rect.height) * 100));
+      imgEl.style.transformOrigin = ox.toFixed(1) + "% " + oy.toFixed(1) + "%";
+    });
+  }
+
+  cecAppBindLoupeStage(uiRefs.loupeMap, uiRefs.imgMap);
+  cecAppBindLoupeStage(uiRefs.loupeImage, uiRefs.imgImage);
+
+  for (var pIdx = 0; pIdx < uiRefs.pastureChips.length; pIdx += 1) {
+    (function cecAppBindPastureChip(chipEl) {
+      var pid = chipEl.getAttribute("data-cec-pasture");
+      cecAppBindKeyButton(chipEl, function cecAppOnPastureChip() {
+        if (streets.getState().eraProgress >= 0.88) {
+          cecAppDriveFlockAcrossTrafficIsland(pid);
+        } else {
+          cecAppSelectPasture(pid);
+        }
+      });
+    })(uiRefs.pastureChips[pIdx]);
+  }
+
+  for (var sIdx = 0; sIdx < uiRefs.stoneChips.length; sIdx += 1) {
+    (function cecAppBindStoneChip(chipEl) {
+      var sid = chipEl.getAttribute("data-cec-stone");
+      cecAppBindKeyButton(chipEl, function cecAppOnStoneChip() {
+        cecAppSelectStone(sid);
+      });
+    })(uiRefs.stoneChips[sIdx]);
+  }
+
+  for (var bIdx = 0; bIdx < uiRefs.bearingKeys.length; bIdx += 1) {
+    (function cecAppBindBearing(keyEl) {
+      var brg = keyEl.getAttribute("data-cec-bearing");
+      cecAppBindKeyButton(keyEl, function cecAppOnBearing() {
+        cecAppAttemptExitCecilia(brg);
+      });
+    })(uiRefs.bearingKeys[bIdx]);
+  }
+  canvasEl.addEventListener("pointermove", function cecAppCanvasHover(ev) {
+    var rect = canvasEl.getBoundingClientRect();
+    if (!rect.width || !rect.height) {
+      return;
+    }
+    var px = ev.clientX - rect.left;
+    var py = ev.clientY - rect.top;
+    var hit = flock.inspectAt(px, py, rect.width, rect.height)
+      || streets.inspectAt(px, py, rect.width, rect.height);
+    canvasEl.style.cursor = hit ? "pointer" : "crosshair";
+  });
+
+  canvasEl.addEventListener("click", function cecAppCanvasClick(ev) {
+    var rect = canvasEl.getBoundingClientRect();
+    if (!rect.width || !rect.height) {
+      return;
+    }
+    var px = ev.clientX - rect.left;
+    var py = ev.clientY - rect.top;
+    var flHit = flock.inspectAt(px, py, rect.width, rect.height);
+    var stHit = streets.inspectAt(px, py, rect.width, rect.height);
+    var hit = flHit || stHit;
+    if (!hit) {
+      return;
+    }
+    if (hit.id === "meadow_of_the_low_sage" || hit.id === "goats_slope" || hit.id === "crossroads_of_the_wind") {
+      if (streets.getState().eraProgress >= 0.88) {
+        cecAppDriveFlockAcrossTrafficIsland(hit.id);
+      } else {
+        cecAppSelectPasture(hit.id);
+      }
+      return;
+    }
+    if (hit.category === "curb_wastepaper") {
+      cecAppCropCurbWastepaper();
+      return;
+    }
+    if (hit.category === "toll_gate") {
+      cecAppAttemptExitCecilia();
+      return;
+    }
+    cecAppSetInspected(hit);
+    cecAppSyncDOM();
+    cecAppRenderNow();
+  });
+
+  window.addEventListener("keydown", function cecAppGlobalKey(ev) {
+    if (ev.metaKey || ev.ctrlKey || ev.altKey) {
+      return;
+    }
+    var k = ev.key;
+    if (k === "Escape") {
+      if (!uiRefs.plateDrawer.hidden) {
+        ev.preventDefault();
+        cecAppTogglePlateDrawer(false);
+      }
+      return;
+    }
+    if (k >= "1" && k <= "3") {
+      ev.preventDefault();
+      var idx = Number(k);
+      if (streets.getState().eraProgress >= 0.88) {
+        cecAppDriveFlockAcrossTrafficIsland(idx);
+      } else {
+        cecAppSelectPasture(idx);
+      }
+      return;
+    }
+    if (k >= "4" && k <= "8") {
+      ev.preventDefault();
+      cecAppSelectStone(k);
+      return;
+    }
+    var low = k.toLowerCase();
+    if (low === "e") {
+      ev.preventDefault();
+      cecAppMingleAllPlaces();
+    } else if (low === "y") {
+      ev.preventDefault();
+      cecAppRewindYouthfulEra();
+    } else if (low === "d") {
+      ev.preventDefault();
+      cecAppDriveFlockAcrossTrafficIsland("meadow_of_the_low_sage");
+    } else if (low === "w") {
+      ev.preventDefault();
+      cecAppCropCurbWastepaper();
+    } else if (low === "x") {
+      ev.preventDefault();
+      cecAppAttemptExitCecilia();
+    } else if (low === "b") {
+      ev.preventDefault();
+      cecAppToggleBotanicalXRay();
+    } else if (low === "m") {
+      ev.preventDefault();
+      cecAppToggleAudio();
+    } else if (low === "p") {
+      ev.preventDefault();
+      cecAppTogglePlateDrawer();
+    } else if (low === "z") {
+      ev.preventDefault();
+      cecAppTogglePlateZoom();
+    } else if (low === "r") {
+      ev.preventDefault();
+      cecAppReset();
+    } else if (k === "ArrowLeft") {
+      ev.preventDefault();
+      cecAppSetEraProgress(streets.getState().eraProgress - 0.05);
+    } else if (k === "ArrowRight") {
+      ev.preventDefault();
+      cecAppSetEraProgress(streets.getState().eraProgress + 0.05);
+    }
+  });
+
+  function cecAppApplyReducedMotion(matches) {
+    var rm = Boolean(matches);
+    streets.setReducedMotion(rm);
+    flock.setReducedMotion(rm);
+    cecAppSyncDOM();
+    cecAppRenderNow();
+  }
+
+  if (mqReduced && mqReduced.addEventListener) {
+    mqReduced.addEventListener("change", function cecAppOnMqChange(ev) {
+      cecAppApplyReducedMotion(ev.matches);
+    });
+  }
+
+  window.addEventListener("resize", function cecAppOnWindowResize() {
+    cecAppResizeCanvas();
+    cecAppRenderNow();
+  });
+
+  var lastFrameMs = performance.now();
+  function cecAppTickFrame(nowMs) {
+    var dtSec = Math.min(0.05, Math.max(0.001, (nowMs - lastFrameMs) / 1000));
+    lastFrameMs = nowMs;
+    if (!streets.getState().reducedMotion) {
+      streets.step(dtSec);
+      flock.step(dtSec, streets.getState());
+      cecAppRenderNow();
+    }
+    window.requestAnimationFrame(cecAppTickFrame);
+  }
+
+  cecAppResizeCanvas();
+  streets.highlightIsland("meadow_of_the_low_sage");
+  cecAppSyncDOM();
+  cecAppRenderNow();
+  window.requestAnimationFrame(cecAppTickFrame);
+
+  var publicApi = {
+    getState: cecAppGetState,
+    setEraProgress: cecAppSetEraProgress,
+    mingleAllPlaces: cecAppMingleAllPlaces,
+    rewindYouthfulEra: cecAppRewindYouthfulEra,
+    driveFlockAcrossTrafficIsland: cecAppDriveFlockAcrossTrafficIsland,
+    cropCurbWastepaper: cecAppCropCurbWastepaper,
+    attemptExitCecilia: cecAppAttemptExitCecilia,
+    toggleBotanicalXRay: cecAppToggleBotanicalXRay,
+    setBotanicalXRay: cecAppSetBotanicalXRay,
+    selectPasture: cecAppSelectPasture,
+    selectStone: cecAppSelectStone,
+    togglePlateDrawer: cecAppTogglePlateDrawer,
+    togglePlateZoom: cecAppTogglePlateZoom,
+    toggleAudio: cecAppToggleAudio,
+    reset: cecAppReset,
+    streets: streets,
+    flock: flock
+  };
+
+  window.CeciliaCityApp = publicApi;
+  Object.defineProperty(window, "__CECILIA_STATE__", {
+    configurable: true,
+    enumerable: true,
+    get: function cecAppStateGetter() {
+      return cecAppGetState();
+    }
+  });
+})();
+</script>
+</body>
+</html>

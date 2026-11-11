@@ -1,0 +1,4023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PERINTHIA — Solstice Astrolabe, Twelve Zodiac Temples &amp; Subterranean Menagerie</title>
+<style>
+:root {
+  --prn-obsidian: #070911;
+  --prn-midnight: #0d1322;
+  --prn-panel: #111829;
+  --prn-panel-deep: #0b101c;
+  --prn-brass: #c69a4b;
+  --prn-brass-bright: #e8c77b;
+  --prn-brass-dim: rgba(198, 154, 75, 0.34);
+  --prn-gold: #f4c85d;
+  --prn-cyan: #6ad2e5;
+  --prn-cyan-soft: rgba(106, 210, 229, 0.16);
+  --prn-crimson: #d93b41;
+  --prn-crimson-soft: rgba(184, 41, 47, 0.22);
+  --prn-torch: #ee8b31;
+  --prn-parchment: #efe3c4;
+  --prn-mortar: #cfc5ad;
+  --prn-muted: #9b927e;
+  --prn-ink: #241b12;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--prn-obsidian);
+  color: var(--prn-parchment);
+  font-family: Georgia, "Palatino Linotype", "Book Antiqua", serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+perinthia-plate-drawer[hidden],
+perinthia-plate-fallback[hidden],
+img.prn-plate-img[hidden],
+.prn-hidden {
+  display: none !important;
+}
+
+perinthia-astrolabe-grid,
+perinthia-masthead,
+perinthia-title-cluster,
+perinthia-emblem,
+perinthia-title-stack,
+perinthia-city-title,
+perinthia-city-epigraph,
+perinthia-telemetry-strip,
+perinthia-stat-pill,
+perinthia-stat-key,
+perinthia-stat-val,
+perinthia-left-column,
+eclipse-gate-vernier,
+observatory-dilemma-fork,
+perinthia-panel-heading,
+perinthia-btn-pair,
+perinthia-vernier-track,
+perinthia-vernier-row,
+perinthia-vernier-name,
+perinthia-vernier-readout,
+perinthia-action-matrix,
+perinthia-horn-stack,
+perinthia-fork-horn,
+perinthia-horn-head,
+perinthia-horn-sub,
+perinthia-roll-ledger,
+perinthia-roll-title,
+perinthia-roll-script,
+perinthia-roll-seals,
+perinthia-seal-tag,
+zodiac-cardo-decumanus,
+perinthia-canvas-well,
+perinthia-stage-legend,
+perinthia-legend-item,
+cellar-monster-menagerie,
+perinthia-census-grid,
+perinthia-census-card,
+perinthia-sub-rubric,
+perinthia-house-ring,
+perinthia-house-chip,
+perinthia-chip-glyph,
+perinthia-chip-code,
+perinthia-cohort-list,
+perinthia-cohort-row,
+perinthia-cohort-top,
+perinthia-cohort-glyphs,
+perinthia-cohort-title,
+perinthia-cohort-locus,
+perinthia-cohort-count,
+perinthia-cohort-bar,
+perinthia-cohort-fill,
+perinthia-census-footer,
+perinthia-plate-drawer,
+perinthia-drawer-sheet,
+perinthia-drawer-bar,
+perinthia-drawer-title,
+perinthia-drawer-controls,
+perinthia-plate-diptych,
+perinthia-plate-card,
+perinthia-plate-caption,
+perinthia-plate-frame,
+perinthia-plate-fallback,
+perinthia-fallback-notice {
+  display: block;
+  min-width: 0;
+}
+
+perinthia-astrolabe-grid {
+  display: grid;
+  grid-template-rows: 44px minmax(0, 1fr);
+  grid-template-columns: 304px minmax(0, 1fr) 316px;
+  gap: 8px;
+  width: 100%;
+  height: 100vh;
+  padding: 8px 10px;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 42%, #131b30 0%, #070911 78%);
+}
+
+perinthia-masthead {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 5px 12px;
+  background: linear-gradient(180deg, rgba(22, 31, 52, 0.96), rgba(12, 17, 30, 0.96));
+  border: 1px solid var(--prn-brass-dim);
+  border-radius: 5px;
+}
+
+perinthia-title-cluster {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+}
+
+perinthia-emblem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid var(--prn-brass);
+  background: rgba(244, 200, 93, 0.12);
+  color: var(--prn-gold);
+  font-size: 15px;
+}
+
+perinthia-city-title {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--prn-brass-bright);
+  line-height: 1.15;
+}
+
+perinthia-city-epigraph {
+  font-size: 10.5px;
+  color: var(--prn-mortar);
+  line-height: 1.2;
+}
+
+perinthia-telemetry-strip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+perinthia-stat-pill {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  padding: 3px 8px;
+  background: rgba(8, 12, 22, 0.85);
+  border: 1px solid rgba(198, 154, 75, 0.30);
+  border-radius: 4px;
+}
+
+perinthia-stat-key {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+  color: var(--prn-muted);
+}
+
+perinthia-stat-val {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--prn-gold);
+}
+
+.prn-val-zero {
+  color: var(--prn-cyan);
+}
+
+.prn-val-monster {
+  color: var(--prn-torch);
+}
+
+perinthia-left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;
+}
+
+eclipse-gate-vernier,
+observatory-dilemma-fork,
+cellar-monster-menagerie {
+  background: linear-gradient(180deg, rgba(18, 25, 43, 0.96), rgba(10, 15, 27, 0.96));
+  border: 1px solid var(--prn-brass-dim);
+  border-radius: 5px;
+  padding: 8px 9px;
+}
+
+eclipse-gate-vernier {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+observatory-dilemma-fork {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1 1 auto;
+  min-height: 0;
+  justify-content: space-between;
+}
+
+perinthia-panel-heading {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  color: var(--prn-brass-bright);
+  border-bottom: 1px solid rgba(198, 154, 75, 0.22);
+  padding-bottom: 4px;
+}
+
+perinthia-btn-pair,
+perinthia-action-matrix {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.prn-btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 100%;
+  min-width: 0;
+  padding: 5px 6px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--prn-parchment);
+  background: rgba(24, 34, 56, 0.9);
+  border: 1px solid rgba(198, 154, 75, 0.42);
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.14s ease, border-color 0.14s ease, color 0.14s ease;
+}
+
+.prn-btn:hover,
+.prn-btn:focus-visible {
+  background: rgba(198, 154, 75, 0.22);
+  border-color: var(--prn-gold);
+  outline: none;
+}
+
+.prn-btn-gold {
+  background: linear-gradient(180deg, rgba(198, 154, 75, 0.28), rgba(110, 82, 35, 0.34));
+  border-color: var(--prn-gold);
+  color: #fff2cc;
+}
+
+.prn-btn-active {
+  background: rgba(238, 139, 49, 0.26);
+  border-color: var(--prn-torch);
+  color: #ffd9a8;
+}
+
+perinthia-vernier-track {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+perinthia-vernier-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+}
+
+perinthia-vernier-name {
+  color: var(--prn-mortar);
+}
+
+perinthia-vernier-readout {
+  color: var(--prn-gold);
+  font-weight: 700;
+}
+
+.prn-slider {
+  width: 100%;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--prn-gold);
+  cursor: pointer;
+}
+
+perinthia-horn-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+perinthia-fork-horn {
+  display: flex;
+}
+
+.prn-horn-btn {
+  appearance: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  width: 100%;
+  min-width: 0;
+  padding: 5px 7px;
+  background: rgba(11, 16, 28, 0.9);
+  border: 1px solid rgba(198, 154, 75, 0.32);
+  border-radius: 4px;
+  color: var(--prn-parchment);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.14s ease, background-color 0.14s ease;
+}
+
+.prn-horn-btn:hover,
+.prn-horn-btn:focus-visible {
+  border-color: var(--prn-brass-bright);
+  outline: none;
+}
+
+.prn-horn-undecided {
+  border-color: var(--prn-gold);
+  background: rgba(244, 200, 93, 0.14);
+}
+
+.prn-horn-wrong {
+  border-color: var(--prn-crimson);
+  background: var(--prn-crimson-soft);
+}
+
+.prn-horn-confess {
+  border-color: var(--prn-cyan);
+  background: var(--prn-cyan-soft);
+}
+
+perinthia-horn-head {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--prn-brass-bright);
+}
+
+perinthia-horn-sub {
+  font-size: 10.5px;
+  line-height: 1.2;
+  color: var(--prn-mortar);
+}
+
+perinthia-roll-ledger {
+  padding: 6px 8px;
+  background: linear-gradient(180deg, #f1e5c8, #dfd0ad);
+  color: var(--prn-ink);
+  border: 1px solid #9d7738;
+  border-radius: 4px;
+}
+
+perinthia-roll-title {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #65201c;
+  margin-bottom: 2px;
+}
+
+perinthia-roll-script {
+  font-size: 10.5px;
+  line-height: 1.26;
+  color: #261c12;
+  margin-bottom: 5px;
+}
+
+perinthia-roll-seals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+perinthia-seal-tag {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 5px;
+  border-radius: 3px;
+  background: rgba(36, 27, 18, 0.10);
+  border: 1px solid rgba(36, 27, 18, 0.25);
+  color: #3d1616;
+}
+
+zodiac-cardo-decumanus {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 5px;
+  min-height: 0;
+  background: rgba(9, 13, 24, 0.94);
+  border: 1px solid var(--prn-brass-dim);
+  border-radius: 5px;
+  padding: 6px;
+}
+
+perinthia-canvas-well {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.prn-stage-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: grab;
+}
+
+.prn-stage-canvas:active {
+  cursor: grabbing;
+}
+
+perinthia-stage-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 2px 4px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 9.5px;
+  color: var(--prn-mortar);
+}
+
+perinthia-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+cellar-monster-menagerie {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 6px;
+  min-height: 0;
+}
+
+perinthia-census-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5px;
+}
+
+perinthia-census-card {
+  padding: 4px 6px;
+  background: rgba(8, 12, 22, 0.88);
+  border: 1px solid rgba(198, 154, 75, 0.26);
+  border-radius: 4px;
+}
+
+perinthia-sub-rubric {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  color: var(--prn-muted);
+}
+
+perinthia-house-ring {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 4px;
+}
+
+perinthia-house-chip {
+  display: flex;
+}
+
+.prn-chip-btn {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  width: 100%;
+  min-width: 0;
+  padding: 4px 3px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  background: rgba(11, 16, 30, 0.9);
+  border: 1px solid rgba(198, 154, 75, 0.28);
+  border-radius: 3px;
+  color: var(--prn-mortar);
+  cursor: pointer;
+  transition: background-color 0.14s ease, border-color 0.14s ease;
+}
+
+.prn-chip-btn:hover,
+.prn-chip-btn:focus-visible {
+  border-color: var(--prn-cyan);
+  outline: none;
+}
+
+.prn-chip-locked {
+  background: rgba(244, 200, 93, 0.20);
+  border-color: var(--prn-gold);
+  color: #fff0c2;
+}
+
+perinthia-chip-glyph {
+  font-size: 12px;
+  line-height: 1;
+}
+
+perinthia-chip-code {
+  font-size: 9px;
+  font-weight: 700;
+}
+
+perinthia-cohort-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+perinthia-cohort-row {
+  padding: 5px 6px;
+  background: rgba(8, 12, 22, 0.86);
+  border: 1px solid rgba(198, 154, 75, 0.24);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: border-color 0.14s ease, background-color 0.14s ease;
+}
+
+perinthia-cohort-row:hover,
+.prn-cohort-hi {
+  border-color: var(--prn-cyan);
+  background: rgba(106, 210, 229, 0.10);
+}
+
+perinthia-cohort-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  margin-bottom: 3px;
+}
+
+perinthia-cohort-glyphs {
+  font-size: 11px;
+  color: var(--prn-gold);
+  flex-shrink: 0;
+}
+
+perinthia-cohort-title {
+  flex: 1 1 auto;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--prn-parchment);
+  line-height: 1.15;
+}
+
+perinthia-cohort-locus {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 8.5px;
+  padding: 1px 4px;
+  border-radius: 2px;
+  background: rgba(198, 154, 75, 0.16);
+  color: var(--prn-brass-bright);
+  flex-shrink: 0;
+}
+
+.prn-locus-hidden {
+  background: rgba(238, 139, 49, 0.24);
+  color: #ffc88a;
+}
+
+perinthia-cohort-count {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--prn-gold);
+  flex-shrink: 0;
+}
+
+perinthia-cohort-bar {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+perinthia-cohort-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--prn-brass), var(--prn-torch));
+  width: 50%;
+}
+
+perinthia-census-footer {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 9.5px;
+  color: var(--prn-mortar);
+  text-align: center;
+  padding-top: 3px;
+  border-top: 1px solid rgba(198, 154, 75, 0.2);
+}
+
+perinthia-plate-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(4, 6, 12, 0.86);
+}
+
+perinthia-drawer-sheet {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: min(1140px, 100%);
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+  padding: 12px 14px;
+  background: #0d1322;
+  border: 1px solid var(--prn-brass);
+  border-radius: 6px;
+}
+
+perinthia-drawer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+perinthia-drawer-title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--prn-brass-bright);
+}
+
+perinthia-drawer-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+perinthia-plate-diptych {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+perinthia-plate-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+  background: #080c17;
+  border: 1px solid rgba(198, 154, 75, 0.34);
+  border-radius: 5px;
+}
+
+perinthia-plate-caption {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--prn-gold);
+}
+
+perinthia-plate-frame {
+  width: 100%;
+  overflow: auto;
+  border-radius: 4px;
+  background: #0b0908;
+}
+
+.prn-plate-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 62vh;
+  object-fit: contain;
+  margin: 0 auto;
+}
+
+.prn-plate-zoomed .prn-plate-img {
+  width: 175%;
+  max-width: none;
+  max-height: none;
+}
+
+perinthia-plate-fallback {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 6px;
+}
+
+.prn-fallback-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 3px;
+}
+
+perinthia-fallback-notice {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  line-height: 1.35;
+  color: #f2cf8d;
+  padding: 5px 7px;
+  background: rgba(198, 154, 75, 0.12);
+  border: 1px solid rgba(198, 154, 75, 0.35);
+  border-radius: 3px;
+}
+
+.prn-btn-compact {
+  width: auto;
+  padding: 5px 10px;
+}
+
+@media (max-width: 860px) {
+  html, body {
+    height: auto;
+    min-height: 100%;
+    overflow-x: hidden;
+  }
+
+  perinthia-astrolabe-grid {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: visible;
+    padding: 8px;
+    gap: 8px;
+  }
+
+  perinthia-masthead {
+    order: 1;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+    padding: 7px 9px;
+  }
+
+  perinthia-telemetry-strip {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 5px;
+    width: 100%;
+  }
+
+  zodiac-cardo-decumanus {
+    order: 2;
+  }
+
+  perinthia-canvas-well {
+    height: 356px;
+    min-height: 356px;
+  }
+
+  perinthia-left-column {
+    order: 3;
+  }
+
+  cellar-monster-menagerie {
+    order: 4;
+  }
+
+  perinthia-plate-drawer {
+    padding: 8px;
+  }
+
+  perinthia-plate-diptych {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prn-btn,
+  .prn-horn-btn,
+  .prn-chip-btn,
+  perinthia-cohort-row {
+    transition: none !important;
+  }
+}
+</style>
+</head>
+<body>
+<perinthia-astrolabe-grid id="prn-root">
+  <perinthia-masthead id="prn-masthead">
+    <perinthia-title-cluster>
+      <perinthia-emblem aria-hidden="true">&#9737;&#xFE0E;</perinthia-emblem>
+      <perinthia-title-stack>
+        <perinthia-city-title>PERINTHIA</perinthia-city-title>
+        <perinthia-city-epigraph>Astronomers&#8217; Solstice Cardo &amp; Decumanus &#183; Twelve Zodiac Houses &#183; Cellars of Prodigies</perinthia-city-epigraph>
+      </perinthia-title-stack>
+    </perinthia-title-cluster>
+    <perinthia-telemetry-strip>
+      <perinthia-stat-pill>
+        <perinthia-stat-key>PRECISION</perinthia-stat-key>
+        <perinthia-stat-val id="prn-top-precision">44.0%</perinthia-stat-val>
+      </perinthia-stat-pill>
+      <perinthia-stat-pill>
+        <perinthia-stat-key>MONSTROUS</perinthia-stat-key>
+        <perinthia-stat-val class="prn-val-monster" id="prn-top-monstrous">50.6%</perinthia-stat-val>
+      </perinthia-stat-pill>
+      <perinthia-stat-pill>
+        <perinthia-stat-key>CLASSICAL</perinthia-stat-key>
+        <perinthia-stat-val class="prn-val-zero" id="prn-top-classical">0.0%</perinthia-stat-val>
+      </perinthia-stat-pill>
+      <perinthia-stat-pill>
+        <perinthia-stat-key>SKY ERROR</perinthia-stat-key>
+        <perinthia-stat-val id="prn-top-skyerr">0.00&quot;</perinthia-stat-val>
+      </perinthia-stat-pill>
+    </perinthia-telemetry-strip>
+  </perinthia-masthead>
+
+  <perinthia-left-column>
+    <eclipse-gate-vernier id="prn-vernier">
+      <perinthia-panel-heading>FOUNDING SURVEY &amp; ECLIPSE VERNIER</perinthia-panel-heading>
+      <perinthia-btn-pair>
+        <button type="button" class="prn-btn prn-btn-gold" id="prn-btn-solstice">[A] Solstice Axes</button>
+        <button type="button" class="prn-btn prn-btn-gold" id="prn-btn-firmament">[F] Full Celestial Lock</button>
+      </perinthia-btn-pair>
+
+      <perinthia-vernier-track>
+        <perinthia-vernier-row>
+          <perinthia-vernier-name>Cardo Meridian</perinthia-vernier-name>
+          <perinthia-vernier-readout id="prn-val-cardo">+14.5&#176;</perinthia-vernier-readout>
+        </perinthia-vernier-row>
+        <input type="range" class="prn-slider" id="prn-slider-cardo" min="-30" max="30" step="0.5" value="14.5" aria-label="Cardo Meridian Offset Degrees">
+      </perinthia-vernier-track>
+
+      <perinthia-vernier-track>
+        <perinthia-vernier-row>
+          <perinthia-vernier-name>Solstice Decumanus</perinthia-vernier-name>
+          <perinthia-vernier-readout id="prn-val-decumanus">-16.0&#176;</perinthia-vernier-readout>
+        </perinthia-vernier-row>
+        <input type="range" class="prn-slider" id="prn-slider-decumanus" min="-30" max="30" step="0.5" value="-16" aria-label="Solstice Decumanus Offset Degrees">
+      </perinthia-vernier-track>
+
+      <perinthia-vernier-track>
+        <perinthia-vernier-row>
+          <perinthia-vernier-name>[E] Eclipse &amp; Syzygy Gates</perinthia-vernier-name>
+          <perinthia-vernier-readout id="prn-val-eclipse">38%</perinthia-vernier-readout>
+        </perinthia-vernier-row>
+        <input type="range" class="prn-slider" id="prn-slider-eclipse" min="0" max="100" step="1" value="38" aria-label="Lunar Eclipse and Planetary Conjunction Gate Tuning">
+      </perinthia-vernier-track>
+
+      <perinthia-action-matrix>
+        <button type="button" class="prn-btn" id="prn-btn-temples">12 Zodiac Temples</button>
+        <button type="button" class="prn-btn" id="prn-btn-cellars" aria-pressed="false">[C] Cellars &amp; Lofts</button>
+        <button type="button" class="prn-btn" id="prn-btn-perturb">[D] Perturb Survey</button>
+        <button type="button" class="prn-btn" id="prn-btn-reset">[R] Reset Survey</button>
+        <button type="button" class="prn-btn" id="prn-btn-mute" aria-pressed="false">[M] Audio: On</button>
+        <button type="button" class="prn-btn" id="prn-btn-plates" aria-pressed="false">[P] Royal Plates</button>
+      </perinthia-action-matrix>
+    </eclipse-gate-vernier>
+
+    <observatory-dilemma-fork id="prn-fork">
+      <perinthia-panel-heading>OBSERVATORY ROLLS &#183; THE TERRIBLE FORK</perinthia-panel-heading>
+      <perinthia-horn-stack>
+        <perinthia-fork-horn>
+          <button type="button" class="prn-horn-btn prn-horn-undecided" id="prn-horn-0" data-prn-verdict="undecided" aria-pressed="true">
+            <perinthia-horn-head>[0] Observatory Rolls Open</perinthia-horn-head>
+            <perinthia-horn-sub>Astronomers weigh their ephemeris rolls after each solstice.</perinthia-horn-sub>
+          </button>
+        </perinthia-fork-horn>
+        <perinthia-fork-horn>
+          <button type="button" class="prn-horn-btn" id="prn-horn-1" data-prn-verdict="admitCalculationsWrong" aria-pressed="false">
+            <perinthia-horn-head>[1] Admit Calculations Were Wrong</perinthia-horn-head>
+            <perinthia-horn-sub>Declare our figures unable to describe the heavens (0 flaws found).</perinthia-horn-sub>
+          </button>
+        </perinthia-fork-horn>
+        <perinthia-fork-horn>
+          <button type="button" class="prn-horn-btn" id="prn-horn-2" data-prn-verdict="confessGodsOrderIsMonsters" aria-pressed="false">
+            <perinthia-horn-head>[2] Confess Gods&#8217; Order Is Monsters</perinthia-horn-head>
+            <perinthia-horn-sub>Reveal the order of the gods is reflected in the city of monsters.</perinthia-horn-sub>
+          </button>
+        </perinthia-fork-horn>
+      </perinthia-horn-stack>
+
+      <perinthia-roll-ledger id="prn-roll-ledger">
+        <perinthia-roll-title id="prn-roll-title">Unresolved Observatory Dilemma</perinthia-roll-title>
+        <perinthia-roll-script id="prn-roll-script">DILEMMA UNRESOLVED: Either our calculations cannot describe the heavens, or the order of the gods is this city of monsters.</perinthia-roll-script>
+        <perinthia-roll-seals>
+          <perinthia-seal-tag id="prn-seal-flaws">ARITHMETIC FLAWS: 0</perinthia-seal-tag>
+          <perinthia-seal-tag id="prn-seal-harmony">CLASSICAL HARMONY: 0.0%</perinthia-seal-tag>
+        </perinthia-roll-seals>
+      </perinthia-roll-ledger>
+    </observatory-dilemma-fork>
+  </perinthia-left-column>
+
+  <zodiac-cardo-decumanus id="prn-stage">
+    <perinthia-canvas-well id="prn-canvas-well">
+      <canvas class="prn-stage-canvas" id="prn-astrolabe-canvas" width="640" height="640" aria-label="Perinthia Founding Astrolabe and Subterranean Cellar Cutaway"></canvas>
+    </perinthia-canvas-well>
+    <perinthia-stage-legend>
+      <perinthia-legend-item>&#9737;&#xFE0E; Drag Cardo / Decumanus or Gates</perinthia-legend-item>
+      <perinthia-legend-item>&#9800;&#xFE0E; Click 12 Zodiac Houses</perinthia-legend-item>
+      <perinthia-legend-item id="prn-stage-status">Survey Deviation: 100.8&#39; &#183; Cellars Closed</perinthia-legend-item>
+    </perinthia-stage-legend>
+  </zodiac-cardo-decumanus>
+
+  <cellar-monster-menagerie id="prn-menagerie">
+    <perinthia-panel-heading>TERATOLOGICAL CENSUS &amp; ZODIAC HOUSES</perinthia-panel-heading>
+
+    <perinthia-census-grid>
+      <perinthia-census-card>
+        <perinthia-stat-key>CELESTIAL PRECISION</perinthia-stat-key>
+        <perinthia-stat-val id="prn-stat-precision">44.0%</perinthia-stat-val>
+      </perinthia-census-card>
+      <perinthia-census-card>
+        <perinthia-stat-key>MONSTROUS BIRTHS</perinthia-stat-key>
+        <perinthia-stat-val class="prn-val-monster" id="prn-stat-monstrous">50.6%</perinthia-stat-val>
+      </perinthia-census-card>
+      <perinthia-census-card>
+        <perinthia-stat-key>CLASSICAL PERFECTION</perinthia-stat-key>
+        <perinthia-stat-val class="prn-val-zero" id="prn-stat-classical">0.0%</perinthia-stat-val>
+      </perinthia-census-card>
+      <perinthia-census-card>
+        <perinthia-stat-key>CELLAR HOWL INTENSITY</perinthia-stat-key>
+        <perinthia-stat-val id="prn-stat-howl">42.2%</perinthia-stat-val>
+      </perinthia-census-card>
+    </perinthia-census-grid>
+
+    <perinthia-sub-rubric id="prn-house-rubric">12 ZODIAC TEMPLE HOUSES (4/12 CONSECRATED)</perinthia-sub-rubric>
+    <perinthia-house-ring id="prn-house-ring">
+      <perinthia-house-chip><button type="button" class="prn-chip-btn prn-chip-locked" data-prn-house="0" aria-pressed="true"><perinthia-chip-glyph>&#9800;&#xFE0E;</perinthia-chip-glyph><perinthia-chip-code>ARI</perinthia-chip-code></button></perinthia-house-chip>
+      <perinthia-house-chip><button type="button" class="prn-chip-btn" data-prn-house="1" aria-pressed="false"><perinthia-chip-glyph>&#9801;&#xFE0E;</perinthia-chip-glyph><perinthia-chip-code>TAU</perinthia-chip-code></button></perinthia-house-chip>
+      <perinthia-house-chip><button type="button" class="prn-chip-btn" data-prn-house="2" aria-pressed="false"><perinthia-chip-glyph>&#9802;&#xFE0E;</perinthia-chip-glyph><perinthia-chip-code>GEM</perinthia-chip-code></button></perinthia-house-chip>
+      <perinthia-house-chip><button type="button" class="prn-chip-btn prn-chip-locked" data-prn-house="3" aria-pressed="true"><perinthia-chip-glyph>&#9803;&#xFE0E;</perinthia-chip-glyph><perinthia-chip-code>CAN</perinthia-chip-code></button></perinthia-house-chip>
+      <perinthia-house-chip><button type="button" class="prn-chip-btn" data-prn-house="4" aria-pressed="false"><perinthia-chip-glyph>&#9804;&#xFE0E;</perinthia-chip-glyph><perinthia-chip-code>LEO</perinthia-chip-code></button></perinthia-house-chip>
+      <perinthia-house-chip><button type="button" class="prn-chip-btn" data-prn-house="5" aria-pressed="false"><perinthia-chip-glyph>&#9805;&#xFE0E;</perinthia-chip-glyph><perinthia-chip-code>VIR</perinthia-chip-code></button></perinthia-house-chip>
+      <perinthia-house-chip><button type="button" class="prn-chip-btn prn-chip-locked" data-prn-house="6" aria-pressed="true"><perinthia-chip-glyph>&#9806;&#xFE0E;</perinthia-chip-glyph><perinthia-chip-code>LIB</perinthia-chip-code></button></perinthia-house-chip>
+      <perinthia-house-chip><button type="button" class="prn-chip-btn" data-prn-house="7" aria-pressed="false"><perinthia-chip-glyph>&#9807;&#xFE0E;</perinthia-chip-glyph><perinthia-chip-code>SCO</perinthia-chip-code></button></perinthia-house-chip>
+      <perinthia-house-chip><button type="button" class="prn-chip-btn" data-prn-house="8" aria-pressed="false"><perinthia-chip-glyph>&#9808;&#xFE0E;</perinthia-chip-glyph><perinthia-chip-code>SAG</perinthia-chip-code></button></perinthia-house-chip>
+      <perinthia-house-chip><button type="button" class="prn-chip-btn prn-chip-locked" data-prn-house="9" aria-pressed="true"><perinthia-chip-glyph>&#9809;&#xFE0E;</perinthia-chip-glyph><perinthia-chip-code>CAP</perinthia-chip-code></button></perinthia-house-chip>
+      <perinthia-house-chip><button type="button" class="prn-chip-btn" data-prn-house="10" aria-pressed="false"><perinthia-chip-glyph>&#9810;&#xFE0E;</perinthia-chip-glyph><perinthia-chip-code>AQU</perinthia-chip-code></button></perinthia-house-chip>
+      <perinthia-house-chip><button type="button" class="prn-chip-btn" data-prn-house="11" aria-pressed="false"><perinthia-chip-glyph>&#9811;&#xFE0E;</perinthia-chip-glyph><perinthia-chip-code>PIS</perinthia-chip-code></button></perinthia-house-chip>
+    </perinthia-house-ring>
+
+    <perinthia-sub-rubric>STREETS, SQUARES, CELLARS &amp; TIMBER LOFTS</perinthia-sub-rubric>
+    <perinthia-cohort-list id="prn-cohort-list">
+      <perinthia-cohort-row data-prn-cohort="cripples" data-prn-zhouse="0">
+        <perinthia-cohort-top>
+          <perinthia-cohort-glyphs>&#9800;&#xFE0E;&#9808;&#xFE0E;</perinthia-cohort-glyphs>
+          <perinthia-cohort-title>Cripples of the Arcade</perinthia-cohort-title>
+          <perinthia-cohort-locus>STREET</perinthia-cohort-locus>
+          <perinthia-cohort-count id="prn-cnt-cripples">154</perinthia-cohort-count>
+        </perinthia-cohort-top>
+        <perinthia-cohort-bar><perinthia-cohort-fill id="prn-bar-cripples"></perinthia-cohort-fill></perinthia-cohort-bar>
+      </perinthia-cohort-row>
+
+      <perinthia-cohort-row data-prn-cohort="dwarfs_hunchbacks" data-prn-zhouse="4">
+        <perinthia-cohort-top>
+          <perinthia-cohort-glyphs>&#9804;&#xFE0E;&#9806;&#xFE0E;</perinthia-cohort-glyphs>
+          <perinthia-cohort-title>Dwarfs &amp; Hunchbacks</perinthia-cohort-title>
+          <perinthia-cohort-locus>STREET</perinthia-cohort-locus>
+          <perinthia-cohort-count id="prn-cnt-dwarfs_hunchbacks">146</perinthia-cohort-count>
+        </perinthia-cohort-top>
+        <perinthia-cohort-bar><perinthia-cohort-fill id="prn-bar-dwarfs_hunchbacks"></perinthia-cohort-fill></perinthia-cohort-bar>
+      </perinthia-cohort-row>
+
+      <perinthia-cohort-row data-prn-cohort="obese_men" data-prn-zhouse="1">
+        <perinthia-cohort-top>
+          <perinthia-cohort-glyphs>&#9801;&#xFE0E;&#9810;&#xFE0E;</perinthia-cohort-glyphs>
+          <perinthia-cohort-title>Obese Men of the Square</perinthia-cohort-title>
+          <perinthia-cohort-locus>STREET</perinthia-cohort-locus>
+          <perinthia-cohort-count id="prn-cnt-obese_men">125</perinthia-cohort-count>
+        </perinthia-cohort-top>
+        <perinthia-cohort-bar><perinthia-cohort-fill id="prn-bar-obese_men"></perinthia-cohort-fill></perinthia-cohort-bar>
+      </perinthia-cohort-row>
+
+      <perinthia-cohort-row data-prn-cohort="bearded_women" data-prn-zhouse="5">
+        <perinthia-cohort-top>
+          <perinthia-cohort-glyphs>&#9805;&#xFE0E;&#9809;&#xFE0E;</perinthia-cohort-glyphs>
+          <perinthia-cohort-title>Women with Beards</perinthia-cohort-title>
+          <perinthia-cohort-locus>STREET</perinthia-cohort-locus>
+          <perinthia-cohort-count id="prn-cnt-bearded_women">116</perinthia-cohort-count>
+        </perinthia-cohort-top>
+        <perinthia-cohort-bar><perinthia-cohort-fill id="prn-bar-bearded_women"></perinthia-cohort-fill></perinthia-cohort-bar>
+      </perinthia-cohort-row>
+
+      <perinthia-cohort-row data-prn-cohort="three_headed_children" data-prn-zhouse="2">
+        <perinthia-cohort-top>
+          <perinthia-cohort-glyphs>&#9802;&#xFE0E;&#9811;&#xFE0E;</perinthia-cohort-glyphs>
+          <perinthia-cohort-title>Children with Three Heads</perinthia-cohort-title>
+          <perinthia-cohort-locus class="prn-locus-hidden">CELLAR</perinthia-cohort-locus>
+          <perinthia-cohort-count id="prn-cnt-three_headed_children">94</perinthia-cohort-count>
+        </perinthia-cohort-top>
+        <perinthia-cohort-bar><perinthia-cohort-fill id="prn-bar-three_headed_children"></perinthia-cohort-fill></perinthia-cohort-bar>
+      </perinthia-cohort-row>
+
+      <perinthia-cohort-row data-prn-cohort="six_legged_children" data-prn-zhouse="3">
+        <perinthia-cohort-top>
+          <perinthia-cohort-glyphs>&#9803;&#xFE0E;&#9807;&#xFE0E;</perinthia-cohort-glyphs>
+          <perinthia-cohort-title>Children with Six Legs</perinthia-cohort-title>
+          <perinthia-cohort-locus class="prn-locus-hidden">LOFT &amp; CELLAR</perinthia-cohort-locus>
+          <perinthia-cohort-count id="prn-cnt-six_legged_children">94</perinthia-cohort-count>
+        </perinthia-cohort-top>
+        <perinthia-cohort-bar><perinthia-cohort-fill id="prn-bar-six_legged_children"></perinthia-cohort-fill></perinthia-cohort-bar>
+      </perinthia-cohort-row>
+    </perinthia-cohort-list>
+
+    <perinthia-census-footer id="prn-census-footer">Populace: 729 &#183; Streets: 541 &#183; Cellars &amp; Lofts: 188</perinthia-census-footer>
+  </cellar-monster-menagerie>
+</perinthia-astrolabe-grid>
+
+<perinthia-plate-drawer id="prn-plate-drawer" hidden role="dialog" aria-modal="true" aria-label="Perinthia Royal Plates Vault">
+  <perinthia-drawer-sheet id="prn-drawer-sheet">
+    <perinthia-drawer-bar>
+      <perinthia-drawer-title>PERINTHIA &#183; ROYAL ARCHIVAL PLATES</perinthia-drawer-title>
+      <perinthia-drawer-controls>
+        <button type="button" class="prn-btn prn-btn-compact" id="prn-btn-plate-zoom" aria-pressed="false">[Z] Loupe 1.75x</button>
+        <button type="button" class="prn-btn prn-btn-compact" id="prn-btn-plate-close">[Esc] Close</button>
+      </perinthia-drawer-controls>
+    </perinthia-drawer-bar>
+
+    <perinthia-plate-diptych id="prn-plate-diptych">
+      <perinthia-plate-card>
+        <perinthia-plate-caption>PLATE I &#183; CARTOGRAPHIC ASTROLABE PLAN</perinthia-plate-caption>
+        <perinthia-plate-frame>
+          <img class="prn-plate-img" id="prn-plate-map" src="map.png" alt="Perinthia Cartographic Plate" loading="lazy" onload="this.hidden=false; this.nextElementSibling.hidden=true;" onerror="this.hidden=true; this.nextElementSibling.hidden=false;">
+          <perinthia-plate-fallback id="prn-fallback-map" hidden>
+            <canvas class="prn-fallback-canvas" id="prn-fallback-map-canvas" width="560" height="400"></canvas>
+            <perinthia-fallback-notice>Pending Gemini Image Plate Quota &#8212; Reset 2026-11-11T06:21:14Z (PENDING_IMAGE_GENERATOR_QUOTA)</perinthia-fallback-notice>
+          </perinthia-plate-fallback>
+        </perinthia-plate-frame>
+      </perinthia-plate-card>
+
+      <perinthia-plate-card>
+        <perinthia-plate-caption>PLATE II &#183; OBSERVATORY &amp; CELLAR VEDUTA</perinthia-plate-caption>
+        <perinthia-plate-frame>
+          <img class="prn-plate-img" id="prn-plate-image" src="image.png" alt="Perinthia Perspective Plate" loading="lazy" onload="this.hidden=false; this.nextElementSibling.hidden=true;" onerror="this.hidden=true; this.nextElementSibling.hidden=false;">
+          <perinthia-plate-fallback id="prn-fallback-image" hidden>
+            <canvas class="prn-fallback-canvas" id="prn-fallback-image-canvas" width="560" height="350"></canvas>
+            <perinthia-fallback-notice>Pending Gemini Image Plate Quota &#8212; Reset 2026-11-11T06:21:14Z (PENDING_IMAGE_GENERATOR_QUOTA)</perinthia-fallback-notice>
+          </perinthia-plate-fallback>
+        </perinthia-plate-frame>
+      </perinthia-plate-card>
+    </perinthia-plate-diptych>
+  </perinthia-drawer-sheet>
+</perinthia-plate-drawer>
+
+<script>
+(function (global) {
+  'use strict';
+
+  var TAU = Math.PI * 2;
+  var HALF_PI = Math.PI * 0.5;
+
+  function clamp(v, lo, hi) {
+    var n = Number(v);
+    if (!Number.isFinite(n)) return lo;
+    return n < lo ? lo : n > hi ? hi : n;
+  }
+
+  function clamp01(v) {
+    return clamp(v, 0, 1);
+  }
+
+  function round2(v) {
+    return Number(Number(v).toFixed(2));
+  }
+
+  function round4(v) {
+    return Number(Number(v).toFixed(4));
+  }
+
+  function degToRad(deg) {
+    return (deg * Math.PI) / 180;
+  }
+
+  function radToDeg(rad) {
+    return (rad * 180) / Math.PI;
+  }
+
+  var PALETTE = Object.freeze({
+    firmamentObsidian: '#070911',
+    firmamentMidnight: '#0e1424',
+    firmamentTwilight: '#182238',
+    astrolabeBrass: '#c69a4b',
+    brassHighlight: '#e8c77b',
+    brassTarnish: '#6e5223',
+    solsticeGold: '#f4c85d',
+    solsticeAmber: '#e09b36',
+    eclipseUmbraCopper: '#8f4126',
+    eclipsePenumbra: '#4d2318',
+    limeMortar: '#d7cfb8',
+    marblePaving: '#dfd8c5',
+    stoneAshlar: '#8f8775',
+    parchmentRoll: '#efe3c4',
+    parchmentInk: '#2b2218',
+    bloodErrata: '#b8292f',
+    bloodErrataBright: '#e34248',
+    constellationCyan: '#6ad2e5',
+    constellationGlow: '#a6ecfa',
+    cellarTorchlight: '#ee8b31',
+    cellarBrick: '#5c281b',
+    voidShadow: '#04050a'
+  });
+
+  var RAW_HOUSES = [
+    { index: 0, id: 'aries', name: 'Aries', glyph: '\u2648', templeName: 'Temple of the Vernal Ram', planetaryRuler: 'Mars', startDeg: 0, endDeg: 30, monstrousCorrelate: 'Cripples of the Arcade', cohortId: 'cripples', stars: [[-0.32, -0.18], [-0.05, 0.08], [0.22, 0.02], [0.34, -0.16]] },
+    { index: 1, id: 'taurus', name: 'Taurus', glyph: '\u2649', templeName: 'Sanctuary of the Brazen Bull', planetaryRuler: 'Venus', startDeg: 30, endDeg: 60, monstrousCorrelate: 'Obese Men of the Square', cohortId: 'obese_men', stars: [[-0.34, -0.22], [-0.08, 0.02], [0.28, -0.18], [0.04, 0.24], [0.26, 0.20]] },
+    { index: 2, id: 'gemini', name: 'Gemini', glyph: '\u264A', templeName: 'Fane of the Triune Pillars', planetaryRuler: 'Mercury', startDeg: 60, endDeg: 90, monstrousCorrelate: 'Children with Three Heads', cohortId: 'three_headed_children', stars: [[-0.26, -0.24], [-0.20, 0.22], [0.02, -0.02], [0.24, -0.22], [0.22, 0.24]] },
+    { index: 3, id: 'cancer', name: 'Cancer', glyph: '\u264B', templeName: 'Vault of the Tropic Crab', planetaryRuler: 'Moon', startDeg: 90, endDeg: 120, monstrousCorrelate: 'Children with Six Legs', cohortId: 'six_legged_children', stars: [[-0.28, -0.16], [0.0, 0.0], [0.28, -0.14], [-0.18, 0.24], [0.20, 0.22]] },
+    { index: 4, id: 'leo', name: 'Leo', glyph: '\u264C', templeName: 'Basilica of the Solar Lion', planetaryRuler: 'Sun', startDeg: 120, endDeg: 150, monstrousCorrelate: 'Dwarfs & Hunchbacks', cohortId: 'dwarfs_hunchbacks', stars: [[-0.32, 0.18], [-0.12, -0.20], [0.08, -0.24], [0.16, 0.04], [0.34, 0.16]] },
+    { index: 5, id: 'virgo', name: 'Virgo', glyph: '\u264D', templeName: 'Portico of the Spica Sheaf', planetaryRuler: 'Mercury', startDeg: 150, endDeg: 180, monstrousCorrelate: 'Women with Beards', cohortId: 'bearded_women', stars: [[-0.34, -0.10], [-0.10, 0.04], [0.12, -0.18], [0.16, 0.20], [0.34, 0.08]] },
+    { index: 6, id: 'libra', name: 'Libra', glyph: '\u264E', templeName: 'Tribunal of the Equinox Scales', planetaryRuler: 'Venus', startDeg: 180, endDeg: 210, monstrousCorrelate: 'Dwarfs & Hunchbacks', cohortId: 'dwarfs_hunchbacks', stars: [[-0.30, 0.12], [0.0, -0.22], [0.30, 0.12], [0.0, 0.20]] },
+    { index: 7, id: 'scorpio', name: 'Scorpio', glyph: '\u264F', templeName: 'Shrine of the Antares Sting', planetaryRuler: 'Mars', startDeg: 210, endDeg: 240, monstrousCorrelate: 'Children with Six Legs', cohortId: 'six_legged_children', stars: [[-0.34, -0.18], [-0.14, -0.06], [0.06, 0.08], [0.24, 0.22], [0.34, 0.04]] },
+    { index: 8, id: 'sagittarius', name: 'Sagittarius', glyph: '\u2650', templeName: 'Altar of the Centaur Bow', planetaryRuler: 'Jupiter', startDeg: 240, endDeg: 270, monstrousCorrelate: 'Cripples of the Arcade', cohortId: 'cripples', stars: [[-0.28, 0.18], [-0.06, -0.20], [0.14, 0.02], [0.32, -0.16], [0.22, 0.22]] },
+    { index: 9, id: 'capricorn', name: 'Capricorn', glyph: '\u2651', templeName: 'Cella of the Solstice Sea-Goat', planetaryRuler: 'Saturn', startDeg: 270, endDeg: 300, monstrousCorrelate: 'Women with Beards', cohortId: 'bearded_women', stars: [[-0.32, -0.14], [0.0, 0.24], [0.32, -0.12], [0.04, -0.06]] },
+    { index: 10, id: 'aquarius', name: 'Aquarius', glyph: '\u2652', templeName: 'Nymphaeum of the Urn-Bearer', planetaryRuler: 'Saturn', startDeg: 300, endDeg: 330, monstrousCorrelate: 'Obese Men of the Square', cohortId: 'obese_men', stars: [[-0.34, -0.12], [-0.14, 0.14], [0.06, -0.12], [0.22, 0.14], [0.36, -0.08]] },
+    { index: 11, id: 'pisces', name: 'Pisces', glyph: '\u2653', templeName: 'Cloister of the Corded Fishes', planetaryRuler: 'Jupiter', startDeg: 330, endDeg: 360, monstrousCorrelate: 'Children with Three Heads', cohortId: 'three_headed_children', stars: [[-0.30, -0.18], [-0.02, 0.22], [0.30, -0.16], [0.12, 0.02]] }
+  ];
+
+  var ZODIAC_HOUSES = Object.freeze(RAW_HOUSES.map(function (h) {
+    return Object.freeze({
+      index: h.index,
+      id: h.id,
+      name: h.name,
+      glyph: h.glyph,
+      templeName: h.templeName,
+      planetaryRuler: h.planetaryRuler,
+      startDeg: h.startDeg,
+      endDeg: h.endDeg,
+      monstrousCorrelate: h.monstrousCorrelate,
+      cohortId: h.cohortId,
+      stars: Object.freeze(h.stars.map(function (pt) { return Object.freeze([pt[0], pt[1]]); }))
+    });
+  }));
+
+  var RAW_GATES = [
+    {
+      index: 0,
+      id: 'solsticeRiseGate',
+      name: 'Solstice Sunrise Gate',
+      shortLabel: 'SOLSTICE RISE',
+      kind: 'gate',
+      phenomenon: 'Summer Solstice First Ray',
+      targetDeg: -23.5,
+      maxDetuneDeg: 18.0
+    },
+    {
+      index: 1,
+      id: 'solsticeSetGate',
+      name: 'Solstice Sunset Gate',
+      shortLabel: 'SOLSTICE SET',
+      kind: 'gate',
+      phenomenon: 'Solstice Horizon Setting',
+      targetDeg: -156.5,
+      maxDetuneDeg: -16.5
+    },
+    {
+      index: 2,
+      id: 'lunarUmbraTower',
+      name: 'Lunar Umbra Tower',
+      shortLabel: 'SAROS UMBRA',
+      kind: 'tower',
+      phenomenon: 'Lunar-Eclipse Saros Umbra',
+      targetDeg: 36.0,
+      maxDetuneDeg: 21.0
+    },
+    {
+      index: 3,
+      id: 'greatConjunctionTower',
+      name: 'Great Conjunction Tower',
+      shortLabel: 'SYZYGY TOWER',
+      kind: 'tower',
+      phenomenon: 'Jupiter-Saturn Syzygy',
+      targetDeg: 144.0,
+      maxDetuneDeg: -19.5
+    }
+  ].map(function (g) { return Object.freeze(g); });
+
+  Object.defineProperties(RAW_GATES, {
+    solsticeRiseGate: { value: RAW_GATES[0], enumerable: false },
+    solsticeSetGate: { value: RAW_GATES[1], enumerable: false },
+    lunarUmbraTower: { value: RAW_GATES[2], enumerable: false },
+    greatConjunctionTower: { value: RAW_GATES[3], enumerable: false }
+  });
+
+  var ECLIPSE_GATES = Object.freeze(RAW_GATES);
+
+  function buildFirmamentStars(count) {
+    var list = [];
+    var seed = 470913;
+    for (var i = 0; i < count; i++) {
+      seed = (seed * 1664525 + 1013904223) >>> 0;
+      var u = (seed & 0xffff) / 65535;
+      seed = (seed * 1664525 + 1013904223) >>> 0;
+      var v = (seed & 0xffff) / 65535;
+      seed = (seed * 1664525 + 1013904223) >>> 0;
+      var mag = 0.25 + ((seed & 0xfff) / 4095) * 0.75;
+      list.push({
+        angle: u * TAU,
+        distNorm: 0.14 + Math.sqrt(v) * 0.92,
+        mag: mag,
+        tint: i % 5 === 0 ? PALETTE.constellationGlow : i % 7 === 0 ? PALETTE.solsticeGold : '#e9eef7',
+        twinklePhase: i * 0.73
+      });
+    }
+    return list;
+  }
+
+  var FIRMAMENT_STARS = buildFirmamentStars(96);
+
+  function createAstrolabeAudio(initialMuted) {
+    var ctx = null;
+    var muted = Boolean(initialMuted);
+    var unlocked = false;
+
+    function ensureCtx() {
+      if (ctx) return ctx;
+      try {
+        var Ctor = global.AudioContext || global.webkitAudioContext;
+        if (typeof Ctor === 'function') {
+          ctx = new Ctor();
+        }
+      } catch (_err) {
+        ctx = null;
+      }
+      return ctx;
+    }
+
+    function unlockAudio() {
+      var ac = ensureCtx();
+      if (!ac) return false;
+      try {
+        if (ac.state === 'suspended' && typeof ac.resume === 'function') {
+          var p = ac.resume();
+          if (p && typeof p.catch === 'function') p.catch(function () {});
+        }
+        unlocked = true;
+      } catch (_err) {
+        unlocked = false;
+      }
+      return unlocked;
+    }
+
+    function setMuted(b) {
+      muted = Boolean(b);
+      return muted;
+    }
+
+    function isMuted() {
+      return muted;
+    }
+
+    function playVernierTick(p01) {
+      if (muted || !ctx) return false;
+      try {
+        var now = ctx.currentTime || 0;
+        var p = clamp01(p01);
+        var osc = ctx.createOscillator();
+        var gain = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(880 + p * 660, now);
+        osc.frequency.exponentialRampToValueAtTime(420 + p * 240, now + 0.036);
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.linearRampToValueAtTime(0.042, now + 0.004);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.04);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.044);
+        return true;
+      } catch (_err) {
+        return false;
+      }
+    }
+
+    function playSolsticeChord(p01) {
+      if (muted || !ctx) return false;
+      try {
+        var now = ctx.currentTime || 0;
+        var p = clamp01(p01);
+        var darkWeight = Math.pow(p, 1.55);
+        var partials = [
+          { freq: 220.0, amp: 0.045, type: 'sine', dur: 0.58 },
+          { freq: 330.0, amp: 0.038, type: 'sine', dur: 0.54 },
+          { freq: 495.0, amp: 0.026, type: 'triangle', dur: 0.48 },
+          { freq: 146.67, amp: 0.006 + 0.034 * darkWeight, type: 'triangle', dur: 0.72 },
+          { freq: 110.0, amp: 0.004 + 0.032 * darkWeight, type: 'sawtooth', dur: 0.78 },
+          { freq: 73.33, amp: 0.002 + 0.028 * darkWeight, type: 'sine', dur: 0.85 },
+          { freq: 155.56, amp: 0.018 * darkWeight, type: 'sine', dur: 0.68 }
+        ];
+        for (var i = 0; i < partials.length; i++) {
+          var item = partials[i];
+          if (item.amp <= 0.0005) continue;
+          var osc = ctx.createOscillator();
+          var g = ctx.createGain();
+          osc.type = item.type;
+          osc.frequency.setValueAtTime(item.freq, now);
+          g.gain.setValueAtTime(0.0001, now);
+          g.gain.linearRampToValueAtTime(item.amp, now + 0.03);
+          g.gain.exponentialRampToValueAtTime(0.0001, now + item.dur);
+          osc.connect(g);
+          g.connect(ctx.destination);
+          osc.start(now);
+          osc.stop(now + item.dur + 0.02);
+        }
+        return true;
+      } catch (_err) {
+        return false;
+      }
+    }
+
+    function playCellarResonance(howl01, forkVerdict) {
+      if (muted || !ctx) return false;
+      try {
+        var now = ctx.currentTime || 0;
+        var h = clamp01(howl01);
+        var baseFreq = forkVerdict === 'admitCalculationsWrong' ? 77.78 : forkVerdict === 'confessGodsOrderIsMonsters' ? 65.41 : 73.42;
+        var osc = ctx.createOscillator();
+        var sub = ctx.createOscillator();
+        var gain = ctx.createGain();
+        osc.type = 'sawtooth';
+        sub.type = 'triangle';
+        osc.frequency.setValueAtTime(baseFreq, now);
+        osc.frequency.linearRampToValueAtTime(baseFreq * (0.96 + 0.06 * h), now + 0.55);
+        sub.frequency.setValueAtTime(baseFreq * 1.5, now);
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.linearRampToValueAtTime(0.018 + 0.036 * h, now + 0.09);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.66);
+        if (typeof ctx.createBiquadFilter === 'function') {
+          var filter = ctx.createBiquadFilter();
+          filter.type = 'bandpass';
+          filter.frequency.setValueAtTime(240 + 210 * h, now);
+          filter.Q.setValueAtTime(4.2, now);
+          osc.connect(filter);
+          sub.connect(filter);
+          filter.connect(gain);
+        } else {
+          osc.connect(gain);
+          sub.connect(gain);
+        }
+        gain.connect(ctx.destination);
+        osc.start(now);
+        sub.start(now);
+        osc.stop(now + 0.70);
+        sub.stop(now + 0.70);
+        return true;
+      } catch (_err) {
+        return false;
+      }
+    }
+
+    return {
+      unlockAudio: unlockAudio,
+      setMuted: setMuted,
+      isMuted: isMuted,
+      isUnlocked: function () { return unlocked; },
+      playVernierTick: playVernierTick,
+      playSolsticeChord: playSolsticeChord,
+      playCellarResonance: playCellarResonance
+    };
+  }
+
+  var INITIAL_HOUSE_LOCKS = Object.freeze([
+    true, false, false, true, false, false,
+    true, false, false, true, false, false
+  ]);
+
+  var PERTURB_PRESETS = [
+    [13.5, -15.0],
+    [-19.0, 14.5],
+    [22.5, 17.0],
+    [-14.0, -21.5]
+  ];
+
+  function createFoundingAstrolabe(opts) {
+    var cfg = opts || {};
+    var onChange = typeof cfg.onChange === 'function' ? cfg.onChange : null;
+    var audio = createAstrolabeAudio(Boolean(cfg.muted));
+
+    var state = {
+      cardoOffsetDeg: 14.5,
+      decumanusOffsetDeg: -16.0,
+      eclipseTuning: 0.38,
+      houseLocks: INITIAL_HOUSE_LOCKS.slice(),
+      housesConsecrated: 4,
+      cardoPrecision: 0,
+      decumanusPrecision: 0,
+      zodiacCoverage: 0,
+      celestialPrecision: 0,
+      syzygyLocked: false,
+      skyPhaseRad: 0,
+      epicyclePhaseRad: 0,
+      perturbIndex: 0
+    };
+
+    function recompute() {
+      var cardoPrecision = Math.max(0, 1 - Math.abs(state.cardoOffsetDeg) / 30);
+      var decumanusPrecision = Math.max(0, 1 - Math.abs(state.decumanusOffsetDeg) / 30);
+      var count = 0;
+      for (var i = 0; i < 12; i++) {
+        if (state.houseLocks[i]) count++;
+      }
+      state.housesConsecrated = count;
+      var zodiacCoverage = count / 12;
+      var cp = round4(
+        0.30 * cardoPrecision +
+        0.30 * decumanusPrecision +
+        0.25 * state.eclipseTuning +
+        0.15 * zodiacCoverage
+      );
+      state.cardoPrecision = round4(cardoPrecision);
+      state.decumanusPrecision = round4(decumanusPrecision);
+      state.zodiacCoverage = round4(zodiacCoverage);
+      state.celestialPrecision = cp;
+      state.syzygyLocked = cp >= 0.999;
+    }
+
+    recompute();
+
+    function getState() {
+      return {
+        cardoOffsetDeg: state.cardoOffsetDeg,
+        decumanusOffsetDeg: state.decumanusOffsetDeg,
+        eclipseTuning: state.eclipseTuning,
+        houseLocks: state.houseLocks.slice(),
+        housesConsecrated: state.housesConsecrated,
+        cardoPrecision: state.cardoPrecision,
+        decumanusPrecision: state.decumanusPrecision,
+        zodiacCoverage: state.zodiacCoverage,
+        celestialPrecision: state.celestialPrecision,
+        syzygyLocked: state.syzygyLocked,
+        ephemerisSkyErrorArcsec: 0,
+        surveyDeviationArcmin: round2((1 - state.celestialPrecision) * 180),
+        skyPhaseRad: round4(state.skyPhaseRad),
+        epicyclePhaseRad: round4(state.epicyclePhaseRad),
+        muted: audio.isMuted(),
+        audioUnlocked: audio.isUnlocked()
+      };
+    }
+
+    function notify() {
+      recompute();
+      var snap = getState();
+      if (onChange) onChange(snap);
+      return snap;
+    }
+
+    function setCardoOffset(deg) {
+      state.cardoOffsetDeg = round2(clamp(deg, -30, 30));
+      return notify();
+    }
+
+    function setDecumanusOffset(deg) {
+      state.decumanusOffsetDeg = round2(clamp(deg, -30, 30));
+      return notify();
+    }
+
+    function setEclipseTuning(v01) {
+      state.eclipseTuning = round4(clamp01(v01));
+      return notify();
+    }
+
+    function toggleHouse(idx) {
+      var i = Number(idx);
+      if (Number.isInteger(i) && i >= 0 && i < 12) {
+        state.houseLocks[i] = !state.houseLocks[i];
+        return notify();
+      }
+      return getState();
+    }
+
+    function consecrateAllHouses() {
+      for (var i = 0; i < 12; i++) state.houseLocks[i] = true;
+      return notify();
+    }
+
+    function alignSolsticeAxes() {
+      state.cardoOffsetDeg = 0;
+      state.decumanusOffsetDeg = 0;
+      for (var i = 0; i < 12; i++) state.houseLocks[i] = true;
+      return notify();
+    }
+
+    function alignFullFirmament() {
+      state.cardoOffsetDeg = 0;
+      state.decumanusOffsetDeg = 0;
+      state.eclipseTuning = 1;
+      for (var i = 0; i < 12; i++) state.houseLocks[i] = true;
+      return notify();
+    }
+
+    function perturbAxes(dCardo, dDecumanus) {
+      if (typeof dCardo === 'number' && Number.isFinite(dCardo)) {
+        var dd = (typeof dDecumanus === 'number' && Number.isFinite(dDecumanus))
+          ? dDecumanus
+          : -dCardo * 0.85;
+        state.cardoOffsetDeg = round2(clamp(state.cardoOffsetDeg + dCardo, -30, 30));
+        state.decumanusOffsetDeg = round2(clamp(state.decumanusOffsetDeg + dd, -30, 30));
+      } else {
+        var pair = PERTURB_PRESETS[state.perturbIndex % PERTURB_PRESETS.length];
+        state.perturbIndex++;
+        state.cardoOffsetDeg = pair[0];
+        state.decumanusOffsetDeg = pair[1];
+      }
+      return notify();
+    }
+
+    function reset() {
+      state.cardoOffsetDeg = 14.5;
+      state.decumanusOffsetDeg = -16.0;
+      state.eclipseTuning = 0.38;
+      state.houseLocks = INITIAL_HOUSE_LOCKS.slice();
+      state.perturbIndex = 0;
+      return notify();
+    }
+
+    function step(dt, stepOpts) {
+      var reduced = Boolean(stepOpts && stepOpts.reducedMotion);
+      if (!reduced) {
+        var sec = clamp(dt, 0, 0.25);
+        state.skyPhaseRad = (state.skyPhaseRad + sec * 0.048) % TAU;
+        state.epicyclePhaseRad = (state.epicyclePhaseRad + sec * 0.42) % TAU;
+      }
+      return getState();
+    }
+
+    function getGeometry(w, h) {
+      var width = Math.max(64, Number(w) || 800);
+      var height = Math.max(64, Number(h) || 600);
+      var cx = width * 0.5;
+      var cy = height * 0.5;
+      var minDim = Math.min(width, height);
+      var outerR = minDim * 0.44;
+      var zodiacOuterR = outerR * 0.91;
+      var cityR = outerR * 0.74;
+      var innerR = outerR * 0.24;
+      var cardoAngleRad = -HALF_PI + degToRad(state.cardoOffsetDeg);
+      var decumanusAngleRad = degToRad(state.decumanusOffsetDeg);
+
+      var houseSectors = [];
+      var slice = Math.PI / 6;
+      var midBandR = (cityR + zodiacOuterR) * 0.5;
+      for (var i = 0; i < 12; i++) {
+        var hz = ZODIAC_HOUSES[i];
+        var startRad = -HALF_PI + i * slice;
+        var endRad = startRad + slice;
+        var midRad = startRad + slice * 0.5;
+        var locked = Boolean(state.houseLocks[i]);
+        houseSectors.push({
+          index: i,
+          id: hz.id,
+          name: hz.name,
+          glyph: hz.glyph,
+          templeName: hz.templeName,
+          planetaryRuler: hz.planetaryRuler,
+          monstrousCorrelate: hz.monstrousCorrelate,
+          cohortId: hz.cohortId,
+          consecrated: locked,
+          locked: locked,
+          startDeg: hz.startDeg,
+          endDeg: hz.endDeg,
+          startRad: startRad,
+          endRad: endRad,
+          midRad: midRad,
+          angleRad: midRad,
+          innerR: cityR,
+          outerR: zodiacOuterR,
+          midR: midBandR,
+          x: cx + Math.cos(midRad) * midBandR,
+          y: cy + Math.sin(midRad) * midBandR,
+          templeX: cx + Math.cos(midRad) * (cityR * 0.90),
+          templeY: cy + Math.sin(midRad) * (cityR * 0.90)
+        });
+      }
+
+      var gatePositions = [];
+      var gateProps = {};
+      for (var g = 0; g < ECLIPSE_GATES.length; g++) {
+        var gd = ECLIPSE_GATES[g];
+        var detune = (1 - state.eclipseTuning) * gd.maxDetuneDeg;
+        var targetRad = degToRad(gd.targetDeg);
+        var curRad = degToRad(gd.targetDeg + detune);
+        var entry = {
+          index: g,
+          id: gd.id,
+          name: gd.name,
+          shortLabel: gd.shortLabel,
+          kind: gd.kind,
+          phenomenon: gd.phenomenon,
+          targetAngleRad: targetRad,
+          angleRad: curRad,
+          sightlineErrorDeg: round2(Math.abs(detune)),
+          x: cx + Math.cos(curRad) * cityR,
+          y: cy + Math.sin(curRad) * cityR,
+          skyX: cx + Math.cos(targetRad) * outerR,
+          skyY: cy + Math.sin(targetRad) * outerR,
+          alignment01: state.eclipseTuning,
+          locked: state.eclipseTuning >= 0.99
+        };
+        gatePositions.push(entry);
+        gateProps[gd.id] = { value: entry, enumerable: false };
+      }
+      Object.defineProperties(gatePositions, gateProps);
+
+      return {
+        width: width,
+        height: height,
+        cx: cx,
+        cy: cy,
+        outerR: outerR,
+        zodiacOuterR: zodiacOuterR,
+        cityR: cityR,
+        innerR: innerR,
+        cardoAngleRad: cardoAngleRad,
+        decumanusAngleRad: decumanusAngleRad,
+        houseSectors: houseSectors,
+        gatePositions: gatePositions
+      };
+    }
+
+    function hitTest(nx, ny, w, h) {
+      var geom = getGeometry(w, h);
+      var rawX = Number(nx);
+      var rawY = Number(ny);
+      if (!Number.isFinite(rawX) || !Number.isFinite(rawY)) {
+        return { kind: null, houseIndex: null, gateId: null, angleDeg: 0 };
+      }
+      var isPixel = rawX > 1.5 || rawY > 1.5;
+      var px = isPixel ? rawX : rawX * geom.width;
+      var py = isPixel ? rawY : rawY * geom.height;
+      var dx = px - geom.cx;
+      var dy = py - geom.cy;
+      var dist = Math.hypot(dx, dy);
+      var rawRad = Math.atan2(dy, dx);
+      var angleDeg = round2(radToDeg(rawRad));
+
+      var gateTol = Math.max(14, geom.outerR * 0.068);
+      for (var g = 0; g < geom.gatePositions.length; g++) {
+        var gp = geom.gatePositions[g];
+        if (Math.hypot(px - gp.x, py - gp.y) <= gateTol) {
+          return { kind: 'gate', houseIndex: null, gateId: gp.id, angleDeg: angleDeg };
+        }
+      }
+
+      if (dist >= geom.cityR * 0.96 && dist <= geom.zodiacOuterR * 1.02) {
+        var rel = ((rawRad + HALF_PI) % TAU + TAU) % TAU;
+        var hIdx = Math.min(11, Math.floor(rel / (Math.PI / 6)));
+        return { kind: 'house', houseIndex: hIdx, gateId: null, angleDeg: angleDeg };
+      }
+
+      if (dist > geom.zodiacOuterR * 1.02 && dist <= geom.outerR * 1.08) {
+        return { kind: 'ring', houseIndex: null, gateId: null, angleDeg: angleDeg };
+      }
+
+      if (dist <= geom.cityR * 1.02) {
+        var axisTol = Math.max(12, geom.outerR * 0.06);
+        var cUx = Math.cos(geom.cardoAngleRad);
+        var cUy = Math.sin(geom.cardoAngleRad);
+        var perpCardo = Math.abs(-dx * cUy + dy * cUx);
+
+        var dUx = Math.cos(geom.decumanusAngleRad);
+        var dUy = Math.sin(geom.decumanusAngleRad);
+        var perpDec = Math.abs(-dx * dUy + dy * dUx);
+
+        if (perpCardo <= axisTol || perpDec <= axisTol) {
+          var chosen = perpCardo <= perpDec ? 'cardo' : 'decumanus';
+          return { kind: chosen, houseIndex: null, gateId: null, angleDeg: angleDeg };
+        }
+      }
+
+      return { kind: null, houseIndex: null, gateId: null, angleDeg: angleDeg };
+    }
+
+    function drawFirmamentAndStars(ctx, geom, ro) {
+      var w = geom.width;
+      var h = geom.height;
+      var cx = geom.cx;
+      var cy = geom.cy;
+      var maxR = Math.hypot(w, h) * 0.55;
+
+      ctx.save();
+      var skyGrad = ctx.createRadialGradient(cx, cy, geom.innerR * 0.3, cx, cy, maxR);
+      skyGrad.addColorStop(0, PALETTE.firmamentTwilight);
+      skyGrad.addColorStop(0.55, PALETTE.firmamentMidnight);
+      skyGrad.addColorStop(1, PALETTE.firmamentObsidian);
+      ctx.fillStyle = skyGrad;
+      ctx.fillRect(0, 0, w, h);
+
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(-0.42 + state.skyPhaseRad * 0.25);
+      var bandGrad = ctx.createLinearGradient(0, -geom.outerR * 0.55, 0, geom.outerR * 0.55);
+      bandGrad.addColorStop(0, 'rgba(106, 210, 229, 0)');
+      bandGrad.addColorStop(0.5, 'rgba(106, 210, 229, 0.055)');
+      bandGrad.addColorStop(1, 'rgba(106, 210, 229, 0)');
+      ctx.fillStyle = bandGrad;
+      ctx.fillRect(-maxR, -geom.outerR * 0.55, maxR * 2, geom.outerR * 1.1);
+      ctx.restore();
+
+      for (var i = 0; i < FIRMAMENT_STARS.length; i++) {
+        var st = FIRMAMENT_STARS[i];
+        var ang = st.angle + state.skyPhaseRad;
+        var sr = st.distNorm * maxR;
+        var sx = cx + Math.cos(ang) * sr;
+        var sy = cy + Math.sin(ang) * sr;
+        if (sx >= -4 && sx <= w + 4 && sy >= -4 && sy <= h + 4) {
+          var pulse = ro.reducedMotion ? 0.85 : 0.65 + 0.35 * Math.sin(state.epicyclePhaseRad * 1.5 + st.twinklePhase);
+          ctx.globalAlpha = clamp01(st.mag * pulse);
+          ctx.fillStyle = st.tint;
+          ctx.beginPath();
+          ctx.arc(sx, sy, 0.7 + st.mag * 1.35, 0, TAU);
+          ctx.fill();
+        }
+      }
+      ctx.globalAlpha = 1;
+
+      ctx.strokeStyle = 'rgba(198, 154, 75, 0.28)';
+      ctx.lineWidth = 1;
+      var pad = 8;
+      ctx.strokeRect(pad, pad, w - pad * 2, h - pad * 2);
+      ctx.restore();
+    }
+
+    function drawBrassLimbAndZodiac(ctx, geom, ro) {
+      var cx = geom.cx;
+      var cy = geom.cy;
+      var outerR = geom.outerR;
+      var zodR = geom.zodiacOuterR;
+      var cityR = geom.cityR;
+
+      ctx.save();
+      var crownY = cy - outerR * 1.03;
+      ctx.strokeStyle = PALETTE.astrolabeBrass;
+      ctx.lineWidth = Math.max(2, outerR * 0.014);
+      ctx.beginPath();
+      ctx.arc(cx, crownY, outerR * 0.042, 0, TAU);
+      ctx.stroke();
+
+      var limbGrad = ctx.createRadialGradient(cx, cy, zodR, cx, cy, outerR);
+      limbGrad.addColorStop(0, PALETTE.brassTarnish);
+      limbGrad.addColorStop(0.35, PALETTE.astrolabeBrass);
+      limbGrad.addColorStop(0.72, PALETTE.brassHighlight);
+      limbGrad.addColorStop(1, PALETTE.brassTarnish);
+
+      ctx.beginPath();
+      ctx.arc(cx, cy, outerR, 0, TAU);
+      ctx.arc(cx, cy, zodR, 0, TAU, true);
+      ctx.fillStyle = limbGrad;
+      ctx.fill();
+
+      ctx.strokeStyle = PALETTE.parchmentInk;
+      ctx.lineWidth = 1;
+      for (var deg = 0; deg < 360; deg += 2) {
+        var rad = -HALF_PI + degToRad(deg);
+        var is30 = deg % 30 === 0;
+        var is10 = deg % 10 === 0;
+        var tickInner = is30 ? zodR : is10 ? outerR - (outerR - zodR) * 0.58 : outerR - (outerR - zodR) * 0.30;
+        ctx.globalAlpha = is30 ? 0.92 : is10 ? 0.72 : 0.40;
+        ctx.beginPath();
+        ctx.moveTo(cx + Math.cos(rad) * tickInner, cy + Math.sin(rad) * tickInner);
+        ctx.lineTo(cx + Math.cos(rad) * (outerR * 0.992), cy + Math.sin(rad) * (outerR * 0.992));
+        ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+
+      for (var s = 0; s < geom.houseSectors.length; s++) {
+        var sec = geom.houseSectors[s];
+        var hz = ZODIAC_HOUSES[s];
+        var isHi = ro.highlightedHouse === s;
+        var isConfess = ro.forkVerdict === 'confessGodsOrderIsMonsters';
+
+        ctx.beginPath();
+        ctx.arc(cx, cy, zodR, sec.startRad, sec.endRad);
+        ctx.arc(cx, cy, cityR, sec.endRad, sec.startRad, true);
+        ctx.closePath();
+
+        if (sec.consecrated) {
+          ctx.fillStyle = isConfess
+            ? 'rgba(106, 210, 229, 0.24)'
+            : 'rgba(244, 200, 93, 0.20)';
+        } else {
+          ctx.fillStyle = 'rgba(14, 20, 36, 0.84)';
+        }
+        ctx.fill();
+
+        ctx.strokeStyle = isHi
+          ? PALETTE.constellationGlow
+          : sec.consecrated ? PALETTE.solsticeGold : 'rgba(198, 154, 75, 0.42)';
+        ctx.lineWidth = isHi ? 2.2 : sec.consecrated ? 1.35 : 0.9;
+        ctx.stroke();
+
+        var spanRad = (sec.endRad - sec.startRad) * 0.72;
+        var bandHalf = (zodR - cityR) * 0.34;
+        ctx.strokeStyle = sec.consecrated ? PALETTE.constellationCyan : 'rgba(166, 236, 250, 0.26)';
+        ctx.lineWidth = sec.consecrated ? 1.1 : 0.7;
+        ctx.beginPath();
+        for (var k = 0; k < hz.stars.length; k++) {
+          var sa = sec.midRad + hz.stars[k][0] * spanRad;
+          var sr2 = sec.midR + hz.stars[k][1] * bandHalf;
+          var px = cx + Math.cos(sa) * sr2;
+          var py = cy + Math.sin(sa) * sr2;
+          if (k === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        }
+        ctx.stroke();
+
+        for (var m = 0; m < hz.stars.length; m++) {
+          var sa2 = sec.midRad + hz.stars[m][0] * spanRad;
+          var sr3 = sec.midR + hz.stars[m][1] * bandHalf;
+          ctx.fillStyle = sec.consecrated ? PALETTE.constellationGlow : 'rgba(215, 207, 184, 0.45)';
+          ctx.beginPath();
+          ctx.arc(cx + Math.cos(sa2) * sr3, cy + Math.sin(sa2) * sr3, sec.consecrated ? 1.9 : 1.2, 0, TAU);
+          ctx.fill();
+        }
+
+        ctx.save();
+        ctx.translate(sec.x, sec.y);
+        ctx.fillStyle = sec.consecrated ? PALETTE.solsticeGold : PALETTE.limeMortar;
+        ctx.font = '600 ' + Math.max(11, Math.round(outerR * 0.056)) + 'px Georgia, serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(hz.glyph + '\uFE0E', 0, 0);
+        ctx.restore();
+
+        ctx.save();
+        ctx.translate(cx + Math.cos(sec.midRad) * (cityR * 1.015), cy + Math.sin(sec.midRad) * (cityR * 1.015));
+        ctx.rotate(sec.midRad + HALF_PI);
+        var pedW = Math.max(8, outerR * 0.045);
+        var pedH = Math.max(4, outerR * 0.022);
+        ctx.fillStyle = sec.consecrated ? PALETTE.solsticeGold : PALETTE.brassTarnish;
+        ctx.beginPath();
+        ctx.moveTo(-pedW, 0);
+        ctx.lineTo(0, -pedH);
+        ctx.lineTo(pedW, 0);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+      }
+      ctx.restore();
+    }
+
+    function drawCityPlanAndAstralCones(ctx, geom, ro) {
+      var cx = geom.cx;
+      var cy = geom.cy;
+      var cityR = geom.cityR;
+      var innerR = geom.innerR;
+      var cellar01 = clamp01(ro.cellarReveal01 || 0);
+
+      ctx.save();
+      var groundGrad = ctx.createRadialGradient(cx, cy, innerR * 0.2, cx, cy, cityR);
+      groundGrad.addColorStop(0, cellar01 > 0.05 ? '#241716' : '#1b2232');
+      groundGrad.addColorStop(0.68, cellar01 > 0.05 ? '#19131a' : '#131927');
+      groundGrad.addColorStop(1, '#0c101b');
+      ctx.beginPath();
+      ctx.arc(cx, cy, cityR, 0, TAU);
+      ctx.fillStyle = groundGrad;
+      ctx.fill();
+
+      ctx.strokeStyle = 'rgba(215, 207, 184, 0.12)';
+      ctx.lineWidth = 0.85;
+      var rings = [0.34, 0.54, 0.74, 0.90];
+      for (var r = 0; r < rings.length; r++) {
+        ctx.beginPath();
+        ctx.arc(cx, cy, cityR * rings[r], 0, TAU);
+        ctx.stroke();
+      }
+      for (var s = 0; s < 12; s++) {
+        var sRad = -HALF_PI + s * (Math.PI / 6);
+        ctx.beginPath();
+        ctx.moveTo(cx + Math.cos(sRad) * (innerR * 0.55), cy + Math.sin(sRad) * (innerR * 0.55));
+        ctx.lineTo(cx + Math.cos(sRad) * cityR, cy + Math.sin(sRad) * cityR);
+        ctx.stroke();
+      }
+
+      var umbraGate = geom.gatePositions.lunarUmbraTower;
+      var oppRad = umbraGate.targetAngleRad + Math.PI;
+      var coneSpread = (0.28 - 0.14 * state.eclipseTuning) * cityR;
+      var perpRad = umbraGate.angleRad + HALF_PI;
+      var ux0 = cx + Math.cos(oppRad) * (cityR * 0.62);
+      var uy0 = cy + Math.sin(oppRad) * (cityR * 0.62);
+      var umbraGrad = ctx.createLinearGradient(ux0, uy0, umbraGate.x, umbraGate.y);
+      umbraGrad.addColorStop(0, 'rgba(77, 35, 24, 0.08)');
+      umbraGrad.addColorStop(0.65, 'rgba(143, 65, 38, 0.30)');
+      umbraGrad.addColorStop(1, 'rgba(143, 65, 38, 0.46)');
+      ctx.fillStyle = umbraGrad;
+      ctx.beginPath();
+      ctx.moveTo(ux0 + Math.cos(perpRad) * coneSpread, uy0 + Math.sin(perpRad) * coneSpread);
+      ctx.lineTo(umbraGate.x + Math.cos(perpRad) * (coneSpread * 0.18), umbraGate.y + Math.sin(perpRad) * (coneSpread * 0.18));
+      ctx.lineTo(umbraGate.x - Math.cos(perpRad) * (coneSpread * 0.18), umbraGate.y - Math.sin(perpRad) * (coneSpread * 0.18));
+      ctx.lineTo(ux0 - Math.cos(perpRad) * coneSpread, uy0 - Math.sin(perpRad) * coneSpread);
+      ctx.closePath();
+      ctx.fill();
+
+      var riseGate = geom.gatePositions.solsticeRiseGate;
+      var setGate = geom.gatePositions.solsticeSetGate;
+      var ctrlY = cy - cityR * 0.72;
+      ctx.strokeStyle = PALETTE.solsticeGold;
+      ctx.lineWidth = 1.65;
+      ctx.setLineDash([5, 4]);
+      ctx.beginPath();
+      ctx.moveTo(setGate.x, setGate.y);
+      ctx.quadraticCurveTo(cx, ctrlY, riseGate.x, riseGate.y);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      var sunT = 0.5 + 0.22 * Math.sin(state.skyPhaseRad * 2.0);
+      var omt = 1 - sunT;
+      var sunX = omt * omt * setGate.x + 2 * omt * sunT * cx + sunT * sunT * riseGate.x;
+      var sunY = omt * omt * setGate.y + 2 * omt * sunT * ctrlY + sunT * sunT * riseGate.y;
+      ctx.fillStyle = PALETTE.solsticeGold;
+      ctx.beginPath();
+      ctx.arc(sunX, sunY, Math.max(4, cityR * 0.028), 0, TAU);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(244, 200, 93, 0.45)';
+      ctx.lineWidth = 1.1;
+      ctx.beginPath();
+      ctx.arc(sunX, sunY, Math.max(7, cityR * 0.048), 0, TAU);
+      ctx.stroke();
+
+      var conjGate = geom.gatePositions.greatConjunctionTower;
+      var defDist = cityR * 0.56;
+      var defX = cx + Math.cos(conjGate.angleRad) * defDist;
+      var defY = cy + Math.sin(conjGate.angleRad) * defDist;
+      var epiR = Math.max(9, cityR * 0.085);
+      ctx.strokeStyle = 'rgba(106, 210, 229, 0.45)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.arc(defX, defY, epiR, 0, TAU);
+      ctx.stroke();
+
+      var sep = (1 - state.eclipseTuning) * 1.45;
+      var p1a = state.epicyclePhaseRad;
+      var p2a = state.epicyclePhaseRad + sep;
+      var jx = defX + Math.cos(p1a) * epiR;
+      var jy = defY + Math.sin(p1a) * epiR;
+      var sx2 = defX + Math.cos(p2a) * (epiR * 0.76);
+      var sy2 = defY + Math.sin(p2a) * (epiR * 0.76);
+      ctx.fillStyle = PALETTE.constellationGlow;
+      ctx.beginPath();
+      ctx.arc(jx, jy, 2.8, 0, TAU);
+      ctx.fill();
+      ctx.fillStyle = PALETTE.solsticeGold;
+      ctx.beginPath();
+      ctx.arc(sx2, sy2, 2.5, 0, TAU);
+      ctx.fill();
+
+      ctx.strokeStyle = PALETTE.astrolabeBrass;
+      ctx.lineWidth = 2.2;
+      ctx.beginPath();
+      ctx.arc(cx, cy, cityR, 0, TAU);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function drawAvenue(ctx, geom, angleRad, label, aligned) {
+      var cityR = geom.cityR;
+      var zodR = geom.zodiacOuterR;
+      var halfW = Math.max(4.5, cityR * 0.036);
+
+      ctx.save();
+      ctx.translate(geom.cx, geom.cy);
+      ctx.rotate(angleRad);
+
+      ctx.fillStyle = 'rgba(223, 216, 197, 0.88)';
+      ctx.fillRect(-cityR, -halfW, cityR * 2, halfW * 2);
+
+      ctx.strokeStyle = aligned ? PALETTE.solsticeGold : PALETTE.stoneAshlar;
+      ctx.lineWidth = aligned ? 1.6 : 1.1;
+      ctx.strokeRect(-cityR, -halfW, cityR * 2, halfW * 2);
+
+      ctx.fillStyle = PALETTE.parchmentInk;
+      var stepDist = Math.max(12, cityR * 0.14);
+      for (var d = -cityR * 0.86; d <= cityR * 0.86; d += stepDist) {
+        if (Math.abs(d) >= geom.innerR * 0.38) {
+          ctx.beginPath();
+          ctx.arc(d, -halfW * 0.72, 1.3, 0, TAU);
+          ctx.arc(d, halfW * 0.72, 1.3, 0, TAU);
+          ctx.fill();
+        }
+      }
+
+      var dirs = [-1, 1];
+      for (var k = 0; k < 2; k++) {
+        var sgn = dirs[k];
+        ctx.fillStyle = aligned ? PALETTE.solsticeGold : PALETTE.astrolabeBrass;
+        ctx.beginPath();
+        ctx.moveTo(sgn * cityR, -halfW * 0.85);
+        ctx.lineTo(sgn * (zodR * 0.995), 0);
+        ctx.lineTo(sgn * cityR, halfW * 0.85);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      ctx.fillStyle = PALETTE.parchmentInk;
+      ctx.font = '700 ' + Math.max(8, Math.round(cityR * 0.042)) + 'px Georgia, serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(label, cityR * 0.54, 0);
+      ctx.restore();
+    }
+
+    function drawCardoDecumanusAndGates(ctx, geom) {
+      var cx = geom.cx;
+      var cy = geom.cy;
+      var cityR = geom.cityR;
+      var forumR = geom.innerR * 0.36;
+
+      ctx.save();
+      ctx.setLineDash([4, 4]);
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = 'rgba(106, 210, 229, 0.42)';
+      ctx.beginPath();
+      ctx.moveTo(cx, cy - cityR);
+      ctx.lineTo(cx, cy + cityR);
+      ctx.stroke();
+
+      ctx.strokeStyle = 'rgba(244, 200, 93, 0.42)';
+      ctx.beginPath();
+      ctx.moveTo(cx - cityR, cy);
+      ctx.lineTo(cx + cityR, cy);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      drawAvenue(ctx, geom, geom.decumanusAngleRad, 'DECUMANUS', Math.abs(state.decumanusOffsetDeg) < 0.25);
+      drawAvenue(ctx, geom, geom.cardoAngleRad, 'CARDO', Math.abs(state.cardoOffsetDeg) < 0.25);
+
+      ctx.fillStyle = PALETTE.marblePaving;
+      ctx.strokeStyle = PALETTE.astrolabeBrass;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      for (var v = 0; v < 8; v++) {
+        var va = v * (Math.PI / 4) + Math.PI / 8;
+        var vx = cx + Math.cos(va) * forumR;
+        var vy = cy + Math.sin(va) * forumR;
+        if (v === 0) ctx.moveTo(vx, vy);
+        else ctx.lineTo(vx, vy);
+      }
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = state.syzygyLocked ? PALETTE.constellationCyan : PALETTE.astrolabeBrass;
+      ctx.beginPath();
+      ctx.arc(cx, cy, Math.max(3.5, forumR * 0.26), 0, TAU);
+      ctx.fill();
+
+      for (var g = 0; g < geom.gatePositions.length; g++) {
+        var gp = geom.gatePositions[g];
+        ctx.strokeStyle = gp.locked ? PALETTE.solsticeGold : PALETTE.eclipseUmbraCopper;
+        ctx.lineWidth = gp.locked ? 1.6 : 1.15;
+        ctx.setLineDash(gp.locked ? [] : [3, 3]);
+        ctx.beginPath();
+        ctx.moveTo(gp.x, gp.y);
+        ctx.lineTo(gp.skyX, gp.skyY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        ctx.save();
+        ctx.translate(gp.x, gp.y);
+        ctx.rotate(gp.angleRad);
+        var gw = Math.max(7, cityR * 0.048);
+        ctx.fillStyle = gp.locked ? PALETTE.solsticeGold : PALETTE.limeMortar;
+        ctx.strokeStyle = PALETTE.parchmentInk;
+        ctx.lineWidth = 1.2;
+        if (gp.kind === 'gate') {
+          ctx.fillRect(-gw * 0.55, -gw * 0.95, gw * 1.1, gw * 0.55);
+          ctx.strokeRect(-gw * 0.55, -gw * 0.95, gw * 1.1, gw * 0.55);
+          ctx.fillRect(-gw * 0.55, gw * 0.40, gw * 1.1, gw * 0.55);
+          ctx.strokeRect(-gw * 0.55, gw * 0.40, gw * 1.1, gw * 0.55);
+        } else {
+          ctx.beginPath();
+          ctx.arc(0, 0, gw * 0.68, 0, TAU);
+          ctx.fill();
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+      ctx.restore();
+    }
+
+    function drawObservatoryForkOverlay(ctx, geom, ro) {
+      var cx = geom.cx;
+      var cy = geom.cy;
+      var outerR = geom.outerR;
+      var zodR = geom.zodiacOuterR;
+
+      ctx.save();
+      var cardinals = [
+        { txt: 'N', rad: -HALF_PI },
+        { txt: 'E', rad: 0 },
+        { txt: 'S', rad: HALF_PI },
+        { txt: 'W', rad: Math.PI }
+      ];
+      ctx.font = '700 ' + Math.max(9, Math.round(outerR * 0.042)) + 'px Georgia, serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      for (var c = 0; c < cardinals.length; c++) {
+        var cr = cardinals[c].rad;
+        var bx = cx + Math.cos(cr) * (outerR * 0.955);
+        var by = cy + Math.sin(cr) * (outerR * 0.955);
+        ctx.fillStyle = PALETTE.parchmentInk;
+        ctx.beginPath();
+        ctx.arc(bx, by, Math.max(7, outerR * 0.032), 0, TAU);
+        ctx.fill();
+        ctx.fillStyle = PALETTE.solsticeGold;
+        ctx.fillText(cardinals[c].txt, bx, by);
+      }
+
+      if (ro.forkVerdict === 'admitCalculationsWrong') {
+        var slashAngles = [-2.55, -1.75, -0.62, 0.48, 1.35, 2.38];
+        for (var i = 0; i < slashAngles.length; i++) {
+          var a = slashAngles[i];
+          var rMid = (zodR + outerR) * 0.5;
+          var span = (outerR - zodR) * 1.15;
+          var mx = cx + Math.cos(a) * rMid;
+          var my = cy + Math.sin(a) * rMid;
+          ctx.save();
+          ctx.translate(mx, my);
+          ctx.rotate(a);
+          ctx.strokeStyle = PALETTE.bloodErrataBright;
+          ctx.lineWidth = 2.4;
+          ctx.beginPath();
+          ctx.moveTo(-span, -span * 0.85);
+          ctx.lineTo(span, span * 0.85);
+          ctx.moveTo(-span, span * 0.85);
+          ctx.lineTo(span, -span * 0.85);
+          ctx.stroke();
+          ctx.restore();
+        }
+
+        var bw = Math.min(geom.width * 0.72, Math.max(156, outerR * 0.86));
+        var bh = Math.max(24, outerR * 0.11);
+        var bx0 = cx - bw * 0.5;
+        var by0 = Math.max(10, cy - outerR * 0.58 - bh * 0.5);
+        ctx.fillStyle = 'rgba(239, 227, 196, 0.94)';
+        ctx.strokeStyle = PALETTE.bloodErrata;
+        ctx.lineWidth = 1.8;
+        ctx.fillRect(bx0, by0, bw, bh);
+        ctx.strokeRect(bx0, by0, bw, bh);
+
+        ctx.fillStyle = PALETTE.bloodErrata;
+        ctx.font = '700 ' + Math.max(9, Math.round(bh * 0.44)) + 'px Georgia, serif';
+        ctx.fillText('ERRATA CLAIMED  \u00B7  0.00" SKY ERROR', cx, by0 + bh * 0.52);
+      }
+      ctx.restore();
+    }
+
+    function renderSkyAndPlan(ctx, w, h, opts2) {
+      if (!ctx) return null;
+      var ro = opts2 || {};
+      var geom = getGeometry(w, h);
+      ctx.save();
+      drawFirmamentAndStars(ctx, geom, ro);
+      drawBrassLimbAndZodiac(ctx, geom, ro);
+      drawCityPlanAndAstralCones(ctx, geom, ro);
+      drawCardoDecumanusAndGates(ctx, geom);
+      drawObservatoryForkOverlay(ctx, geom, ro);
+      ctx.restore();
+      return geom;
+    }
+
+    return {
+      setCardoOffset: setCardoOffset,
+      setDecumanusOffset: setDecumanusOffset,
+      setEclipseTuning: setEclipseTuning,
+      toggleHouse: toggleHouse,
+      consecrateAllHouses: consecrateAllHouses,
+      alignSolsticeAxes: alignSolsticeAxes,
+      alignFullFirmament: alignFullFirmament,
+      perturbAxes: perturbAxes,
+      hitTest: hitTest,
+      getGeometry: getGeometry,
+      step: step,
+      renderSkyAndPlan: renderSkyAndPlan,
+      unlockAudio: audio.unlockAudio,
+      setMuted: audio.setMuted,
+      isMuted: audio.isMuted,
+      playVernierTick: audio.playVernierTick,
+      playSolsticeChord: audio.playSolsticeChord,
+      playCellarResonance: audio.playCellarResonance,
+      getState: getState,
+      reset: reset
+    };
+  }
+
+  global.PerinthiaZodiacFounding = Object.freeze({
+    PALETTE: PALETTE,
+    ZODIAC_HOUSES: ZODIAC_HOUSES,
+    ECLIPSE_GATES: ECLIPSE_GATES,
+    createFoundingAstrolabe: createFoundingAstrolabe
+  });
+})(typeof globalThis !== 'undefined' ? globalThis : window);
+
+</script>
+<script>
+(function (global) {
+  'use strict';
+
+  var ZODIAC_GLYPHS = [
+    '\u2648', '\u2649', '\u264A', '\u264B', '\u264C', '\u264D',
+    '\u264E', '\u264F', '\u2650', '\u2651', '\u2652', '\u2653'
+  ];
+
+  var ZODIAC_NAMES = [
+    'Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo',
+    'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'
+  ];
+
+  var PRODIGY_COHORTS = Object.freeze([
+    Object.freeze({
+      id: 'cripples',
+      label: 'Cripples of the Arcade',
+      locus: 'street',
+      zodiacIndices: Object.freeze([0, 8]),
+      zodiacGlyphs: Object.freeze(['\u2648', '\u2650']),
+      shortCode: 'CR',
+      baseMax: 304
+    }),
+    Object.freeze({
+      id: 'dwarfs_hunchbacks',
+      label: 'Dwarfs & Hunchbacks',
+      locus: 'street',
+      zodiacIndices: Object.freeze([4, 6]),
+      zodiacGlyphs: Object.freeze(['\u264C', '\u264E']),
+      shortCode: 'DH',
+      baseMax: 288
+    }),
+    Object.freeze({
+      id: 'obese_men',
+      label: 'Obese Men of the Square',
+      locus: 'street',
+      zodiacIndices: Object.freeze([1, 10]),
+      zodiacGlyphs: Object.freeze(['\u2649', '\u2652']),
+      shortCode: 'OB',
+      baseMax: 246
+    }),
+    Object.freeze({
+      id: 'bearded_women',
+      label: 'Women with Beards',
+      locus: 'street',
+      zodiacIndices: Object.freeze([5, 9]),
+      zodiacGlyphs: Object.freeze(['\u264D', '\u2651']),
+      shortCode: 'BW',
+      baseMax: 230
+    }),
+    Object.freeze({
+      id: 'three_headed_children',
+      label: 'Children with Three Heads',
+      locus: 'cellar',
+      zodiacIndices: Object.freeze([2, 11]),
+      zodiacGlyphs: Object.freeze(['\u264A', '\u2653']),
+      shortCode: '3H',
+      baseMax: 186
+    }),
+    Object.freeze({
+      id: 'six_legged_children',
+      label: 'Children with Six Legs',
+      locus: 'loft_cellar',
+      zodiacIndices: Object.freeze([3, 7]),
+      zodiacGlyphs: Object.freeze(['\u264B', '\u264F']),
+      shortCode: '6L',
+      baseMax: 186
+    })
+  ]);
+
+  var FORK_VERDICTS = Object.freeze({
+    undecided: Object.freeze({
+      id: 'undecided',
+      shortLabel: 'Observatory Rolls Open',
+      title: 'Unresolved Observatory Dilemma',
+      summary: 'Astronomers return after every solstice to consult their parchment rolls between two unbearable conclusions.',
+      rollNote: 'DILEMMA UNRESOLVED: Either our calculations cannot describe the heavens, or the order of the gods is this city of monsters.',
+      arithmeticErrorsFound: 0,
+      classicalHarmonyPossible: false
+    }),
+    admitCalculationsWrong: Object.freeze({
+      id: 'admitCalculationsWrong',
+      shortLabel: 'Claim Calculations Were Wrong',
+      title: 'Horn I: Admit All Calculations Were Wrong',
+      summary: 'Astronomers slash crimson errata across their tables and declare their figures unable to describe the heavens, yet zero arithmetic flaws exist.',
+      rollNote: 'HORN I INSCRIBED: We disown our ephemerides as false, though every solstice chord and lunar node checks to 0.00 arcseconds.',
+      arithmeticErrorsFound: 0,
+      classicalHarmonyPossible: false
+    }),
+    confessGodsOrderIsMonsters: Object.freeze({
+      id: 'confessGodsOrderIsMonsters',
+      shortLabel: 'Confess the Gods\u2019 Order Is Monsters',
+      title: 'Horn II: Reveal the Order of the Gods Is Monsters',
+      summary: 'Astronomers confess the celestial calculations are exact and that the order of the gods is reflected faithfully in the city of monsters.',
+      rollNote: 'HORN II INSCRIBED: Not one cipher erred; the twelve temples mirror the firmament, and the order of the gods is the city of monsters.',
+      arithmeticErrorsFound: 0,
+      classicalHarmonyPossible: false
+    })
+  });
+
+  function clamp(v, lo, hi) {
+    var n = Number(v);
+    if (!Number.isFinite(n)) return lo;
+    return n < lo ? lo : (n > hi ? hi : n);
+  }
+
+  function clamp01(v) {
+    return clamp(v, 0, 1);
+  }
+
+  function round4(v) {
+    return Number(Number(v).toFixed(4));
+  }
+
+  var HOUSE_TO_COHORT = (function () {
+    var map = new Array(12);
+    for (var i = 0; i < PRODIGY_COHORTS.length; i++) {
+      var c = PRODIGY_COHORTS[i];
+      for (var j = 0; j < c.zodiacIndices.length; j++) {
+        map[c.zodiacIndices[j]] = c;
+      }
+    }
+    return map;
+  })();
+
+  var STREET_SLOTS = (function () {
+    var slots = [];
+    var streetCohortIds = ['cripples', 'dwarfs_hunchbacks', 'obese_men', 'bearded_women'];
+    for (var i = 0; i < 44; i++) {
+      var band = i % 4;
+      var t = ((Math.floor(i / 4) + 0.5) / 11) * 2 - 1;
+      if (Math.abs(t) < 0.12) t = t < 0 ? -0.16 : 0.16;
+      var side = (i % 2 === 0 ? 1 : -1) * (0.055 + ((i * 7) % 5) * 0.012);
+      var axis = band === 0 ? 'cardo' : (band === 1 ? 'decumanus' : (band === 2 ? 'square' : ((i % 3 === 0) ? 'cardo' : 'decumanus')));
+      var sqAngle = (i * 2.39996) % (Math.PI * 2);
+      slots.push({
+        index: i,
+        cohortId: streetCohortIds[(i + Math.floor(i / 4)) % 4],
+        axis: axis,
+        along: t * 0.86,
+        perp: side,
+        sqAngle: sqAngle,
+        sqRadius: 0.13 + ((i * 13) % 7) * 0.022,
+        scale: 0.88 + ((i * 5) % 4) * 0.08,
+        variant: i % 3
+      });
+    }
+    return slots;
+  })();
+
+  var GRATE_NODES = [
+    { kind: 'cellar', qAngle: 0.72, rFrac: 0.42, cohortId: 'three_headed_children', houseIdx: 2 },
+    { kind: 'loft',   qAngle: 1.02, rFrac: 0.58, cohortId: 'six_legged_children',   houseIdx: 3 },
+    { kind: 'cellar', qAngle: 2.32, rFrac: 0.45, cohortId: 'three_headed_children', houseIdx: 11 },
+    { kind: 'loft',   qAngle: 2.68, rFrac: 0.61, cohortId: 'six_legged_children',   houseIdx: 7 },
+    { kind: 'cellar', qAngle: 3.88, rFrac: 0.44, cohortId: 'three_headed_children', houseIdx: 2 },
+    { kind: 'loft',   qAngle: 4.24, rFrac: 0.59, cohortId: 'six_legged_children',   houseIdx: 3 },
+    { kind: 'cellar', qAngle: 5.42, rFrac: 0.43, cohortId: 'three_headed_children', houseIdx: 11 },
+    { kind: 'loft',   qAngle: 5.82, rFrac: 0.60, cohortId: 'six_legged_children',   houseIdx: 7 }
+  ];
+
+  function resolveGeometry(w, h, geometry) {
+    var minDim = Math.max(64, Math.min(w || 640, h || 480));
+    var g = geometry || {};
+    var cx = Number.isFinite(g.cx) ? g.cx : (w || 640) * 0.5;
+    var cy = Number.isFinite(g.cy) ? g.cy : (h || 480) * 0.5;
+    var outerR = Number.isFinite(g.outerR) && g.outerR > 10 ? g.outerR : minDim * 0.43;
+    var cityR = Number.isFinite(g.cityR) && g.cityR > 8 ? g.cityR : outerR * 0.68;
+    var innerR = Number.isFinite(g.innerR) && g.innerR > 4 ? g.innerR : cityR * 0.28;
+    var cardoRad = Number.isFinite(g.cardoAngleRad) ? g.cardoAngleRad : -Math.PI * 0.5;
+    var decumanusRad = Number.isFinite(g.decumanusAngleRad) ? g.decumanusAngleRad : 0;
+    var rawSectors = Array.isArray(g.houseSectors) ? g.houseSectors : [];
+    var sectors = [];
+    for (var k = 0; k < 12; k++) {
+      var s = rawSectors[k] || {};
+      var midRad = Number.isFinite(s.midAngleRad) ? s.midAngleRad
+        : (Number.isFinite(s.midRad) ? s.midRad
+        : (Number.isFinite(s.angleRad) ? s.angleRad
+        : (Number.isFinite(s.startRad) && Number.isFinite(s.endRad) ? (s.startRad + s.endRad) * 0.5
+        : (Number.isFinite(s.startDeg) && Number.isFinite(s.endDeg) ? ((s.startDeg + s.endDeg) * 0.5 * Math.PI / 180)
+        : (-Math.PI * 0.5 + (k + 0.5) * (Math.PI / 6))))));
+      var ringR = (outerR + cityR) * 0.5;
+      var tx = Number.isFinite(s.templeX) ? s.templeX : (Number.isFinite(s.x) ? s.x : cx + Math.cos(midRad) * ringR);
+      var ty = Number.isFinite(s.templeY) ? s.templeY : (Number.isFinite(s.y) ? s.y : cy + Math.sin(midRad) * ringR);
+      sectors.push({ index: k, midRad: midRad, x: tx, y: ty, glyph: ZODIAC_GLYPHS[k], name: ZODIAC_NAMES[k] });
+    }
+    return { cx: cx, cy: cy, outerR: outerR, cityR: cityR, innerR: innerR, cardoRad: cardoRad, decumanusRad: decumanusRad, sectors: sectors };
+  }
+
+  function slotPixelPos(slot, geo) {
+    var r = geo.cityR;
+    var ang = slot.axis === 'cardo' ? geo.cardoRad : geo.decumanusRad;
+    var cosA = Math.cos(ang);
+    var sinA = Math.sin(ang);
+    var x, y;
+    if (slot.axis === 'square') {
+      var sr = Math.max(geo.innerR * 0.85, r * slot.sqRadius);
+      x = geo.cx + Math.cos(slot.sqAngle + geo.decumanusRad * 0.5) * sr;
+      y = geo.cy + Math.sin(slot.sqAngle + geo.decumanusRad * 0.5) * sr;
+    } else {
+      var dAlong = slot.along * r * 0.92;
+      var dPerp = slot.perp * r;
+      x = geo.cx + cosA * dAlong - sinA * dPerp;
+      y = geo.cy + sinA * dAlong + cosA * dPerp;
+    }
+    return { x: x, y: y, cohortId: slot.cohortId, scale: slot.scale, variant: slot.variant };
+  }
+
+  function gratePixelPos(node, geo) {
+    var twist = (geo.cardoRad + Math.PI * 0.5) * 0.35 + geo.decumanusRad * 0.35;
+    var a = node.qAngle + twist;
+    var rad = geo.cityR * node.rFrac;
+    return {
+      x: geo.cx + Math.cos(a) * rad,
+      y: geo.cy + Math.sin(a) * rad,
+      kind: node.kind,
+      cohortId: node.cohortId,
+      houseIdx: node.houseIdx
+    };
+  }
+
+  function drawSurveyRubble(ctx, geo, rubbleShare) {
+    if (rubbleShare <= 0.02) return;
+    var count = Math.max(2, Math.round(18 * rubbleShare));
+    ctx.save();
+    ctx.strokeStyle = 'rgba(186, 169, 138, ' + (0.14 + 0.28 * rubbleShare).toFixed(3) + ')';
+    ctx.fillStyle = 'rgba(120, 108, 88, ' + (0.12 + 0.22 * rubbleShare).toFixed(3) + ')';
+    ctx.lineWidth = 1;
+    for (var i = 0; i < count; i++) {
+      var a = i * 2.094 + 0.37;
+      var rad = geo.cityR * (0.26 + ((i * 11) % 9) * 0.072);
+      var rx = geo.cx + Math.cos(a) * rad;
+      var ry = geo.cy + Math.sin(a) * rad;
+      var sz = Math.max(3, geo.cityR * 0.024);
+      ctx.fillRect(rx - sz * 0.6, ry - sz * 0.4, sz * 1.2, sz * 0.8);
+      ctx.strokeRect(rx - sz * 0.6, ry - sz * 0.4, sz * 1.2, sz * 0.8);
+    }
+    ctx.restore();
+  }
+
+  function drawStreetFigure(ctx, x, y, unit, cohortId, variant, isHighlighted) {
+    ctx.save();
+    ctx.translate(x, y);
+    var u = Math.max(4.2, unit);
+    ctx.fillStyle = isHighlighted ? '#2b190d' : '#1b120c';
+    ctx.strokeStyle = isHighlighted ? '#ffd984' : '#d8ae68';
+    ctx.lineWidth = isHighlighted ? 1.5 : 1.05;
+
+    if (cohortId === 'cripples') {
+      ctx.beginPath();
+      ctx.arc(-u * 0.08, -u * 0.92, u * 0.24, 0, Math.PI * 2);
+      ctx.moveTo(-u * 0.28, -u * 0.65);
+      ctx.lineTo(u * 0.24, -u * 0.52);
+      ctx.lineTo(u * 0.12, u * 0.36);
+      ctx.lineTo(-u * 0.22, u * 0.18);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(-u * 0.44, -u * 0.56);
+      ctx.lineTo(-u * 0.58, u * 0.72);
+      ctx.moveTo(u * 0.36, -u * 0.48);
+      ctx.lineTo(u * 0.52, u * 0.72);
+      ctx.moveTo(-u * 0.54, -u * 0.58);
+      ctx.lineTo(-u * 0.32, -u * 0.52);
+      ctx.stroke();
+    } else if (cohortId === 'dwarfs_hunchbacks') {
+      var hunch = variant !== 0;
+      ctx.beginPath();
+      ctx.arc(hunch ? u * 0.22 : 0, hunch ? -u * 0.52 : -u * 0.48, u * 0.24, 0, Math.PI * 2);
+      if (hunch) {
+        ctx.moveTo(-u * 0.48, u * 0.15);
+        ctx.quadraticCurveTo(-u * 0.35, -u * 0.95, u * 0.26, -u * 0.28);
+        ctx.lineTo(u * 0.22, u * 0.58);
+        ctx.lineTo(-u * 0.34, u * 0.58);
+      } else {
+        ctx.rect(-u * 0.36, -u * 0.22, u * 0.72, u * 0.68);
+      }
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+    } else if (cohortId === 'obese_men') {
+      ctx.beginPath();
+      ctx.arc(0, -u * 0.96, u * 0.23, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.beginPath();
+      if (typeof ctx.ellipse === 'function') {
+        ctx.ellipse(0, -u * 0.14, u * 0.62, u * 0.66, 0, 0, Math.PI * 2);
+      } else {
+        ctx.arc(0, -u * 0.14, u * 0.64, 0, Math.PI * 2);
+      }
+      ctx.fill();
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(-u * 0.58, -u * 0.12);
+      ctx.quadraticCurveTo(0, u * 0.06, u * 0.58, -u * 0.12);
+      ctx.stroke();
+    } else {
+      ctx.beginPath();
+      ctx.arc(0, -u * 0.92, u * 0.24, 0, Math.PI * 2);
+      ctx.moveTo(-u * 0.42, u * 0.66);
+      ctx.lineTo(-u * 0.26, -u * 0.68);
+      ctx.lineTo(u * 0.26, -u * 0.68);
+      ctx.lineTo(u * 0.42, u * 0.66);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = '#e7c382';
+      ctx.beginPath();
+      ctx.moveTo(-u * 0.15, -u * 0.74);
+      ctx.lineTo(u * 0.15, -u * 0.74);
+      ctx.lineTo(u * 0.04, -u * 0.06);
+      ctx.lineTo(-u * 0.08, -u * 0.12);
+      ctx.closePath();
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  function drawCellarGratesAndHowls(ctx, geo, howlIntensity, howlPhase, reducedMotion) {
+    ctx.save();
+    var grateSz = Math.max(6, geo.cityR * 0.052);
+    var ringsPerNode = howlIntensity > 0.65 ? 3 : 2;
+    var points = [];
+    for (var i = 0; i < GRATE_NODES.length; i++) {
+      var gp = gratePixelPos(GRATE_NODES[i], geo);
+      points.push(gp);
+      var glowAlpha = 0.18 + 0.55 * howlIntensity;
+      ctx.fillStyle = gp.kind === 'cellar'
+        ? 'rgba(235, 118, 38, ' + glowAlpha.toFixed(3) + ')'
+        : 'rgba(214, 152, 58, ' + (glowAlpha * 0.85).toFixed(3) + ')';
+      ctx.strokeStyle = '#8f7248';
+      ctx.lineWidth = 1.1;
+      ctx.beginPath();
+      ctx.rect(gp.x - grateSz * 0.5, gp.y - grateSz * 0.38, grateSz, grateSz * 0.76);
+      ctx.fill();
+      ctx.stroke();
+      ctx.beginPath();
+      for (var b = -1; b <= 1; b++) {
+        var bx = gp.x + b * grateSz * 0.26;
+        ctx.moveTo(bx, gp.y - grateSz * 0.38);
+        ctx.lineTo(bx, gp.y + grateSz * 0.38);
+      }
+      ctx.stroke();
+
+      for (var rIdx = 0; rIdx < ringsPerNode; rIdx++) {
+        var prog = reducedMotion
+          ? ((rIdx + 1) / (ringsPerNode + 0.6))
+          : ((howlPhase + rIdx / ringsPerNode + i * 0.13) % 1);
+        var waveR = grateSz * (0.75 + prog * (1.5 + 2.2 * howlIntensity));
+        var waveA = (1 - prog) * (0.16 + 0.52 * howlIntensity);
+        ctx.strokeStyle = 'rgba(244, 158, 66, ' + waveA.toFixed(3) + ')';
+        ctx.lineWidth = 1 + howlIntensity * 0.7;
+        ctx.beginPath();
+        for (var s = 0; s <= 18; s++) {
+          var th = (s / 18) * Math.PI * 2;
+          var jag = 1 + 0.08 * howlIntensity * Math.sin(th * 6 + i);
+          var wx = gp.x + Math.cos(th) * waveR * jag;
+          var wy = gp.y + Math.sin(th) * waveR * jag;
+          if (s === 0) ctx.moveTo(wx, wy);
+          else ctx.lineTo(wx, wy);
+        }
+        ctx.closePath();
+        ctx.stroke();
+      }
+    }
+    ctx.restore();
+    return points;
+  }
+
+  function drawWoodcutProdigy(ctx, x, y, sz, kind, flicker) {
+    ctx.save();
+    ctx.translate(x, y);
+    var u = Math.max(7, sz);
+    var rimAlpha = clamp01(0.72 + (flicker - 1) * 0.9);
+    ctx.fillStyle = '#140b07';
+    ctx.strokeStyle = 'rgba(252, 194, 102, ' + rimAlpha.toFixed(3) + ')';
+    ctx.lineWidth = 1.35;
+
+    if (kind === 'three_headed') {
+      var headOffsets = [
+        { dx: -u * 0.46, dy: -u * 0.56, r: u * 0.23 },
+        { dx: 0,         dy: -u * 0.74, r: u * 0.26 },
+        { dx: u * 0.46,  dy: -u * 0.56, r: u * 0.23 }
+      ];
+      ctx.beginPath();
+      ctx.moveTo(-u * 0.44, u * 0.58);
+      ctx.lineTo(-u * 0.34, -u * 0.24);
+      ctx.lineTo(u * 0.34, -u * 0.24);
+      ctx.lineTo(u * 0.44, u * 0.58);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      for (var hIdx = 0; hIdx < 3; hIdx++) {
+        var hd = headOffsets[hIdx];
+        ctx.beginPath();
+        ctx.moveTo(hd.dx * 0.35, -u * 0.22);
+        ctx.lineTo(hd.dx, hd.dy + hd.r * 0.7);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(hd.dx, hd.dy, hd.r, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+      }
+      ctx.strokeStyle = 'rgba(255, 150, 64, 0.72)';
+      ctx.beginPath();
+      ctx.arc(0, -u * 1.05, u * 0.22, Math.PI * 1.15, Math.PI * 1.85);
+      ctx.stroke();
+    } else {
+      ctx.beginPath();
+      ctx.arc(0, -u * 0.62, u * 0.25, 0, Math.PI * 2);
+      ctx.moveTo(-u * 0.42, -u * 0.34);
+      ctx.lineTo(u * 0.42, -u * 0.34);
+      ctx.lineTo(u * 0.36, u * 0.14);
+      ctx.lineTo(-u * 0.36, u * 0.14);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.beginPath();
+      for (var leg = 0; leg < 6; leg++) {
+        var side = leg < 3 ? -1 : 1;
+        var tier = leg % 3;
+        var hipX = side * u * (0.16 + tier * 0.1);
+        var hipY = -u * 0.16 + tier * u * 0.13;
+        var kneeX = side * u * (0.52 + tier * 0.14);
+        var kneeY = hipY + u * 0.12;
+        var footX = side * u * (0.44 + tier * 0.2);
+        var footY = u * (0.46 + tier * 0.1);
+        ctx.moveTo(hipX, hipY);
+        ctx.lineTo(kneeX, kneeY);
+        ctx.lineTo(footX, footY);
+      }
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function drawSubterraneanLoupe(ctx, w, h, geo, loupeCenter, reveal, monstrousShare, torchFlicker) {
+    var targets = { threeHeaded: [], sixLegged: [] };
+    if (reveal <= 0.01) return targets;
+
+    var maxR = geo.cityR * 0.76;
+    var loupeR = Math.max(18, geo.cityR * (0.16 + 0.60 * reveal));
+    var rawX = clamp01(loupeCenter.nx) * w;
+    var rawY = clamp01(loupeCenter.ny) * h;
+    var pad = Math.min(loupeR + 8, Math.min(w, h) * 0.46);
+    var lx = clamp(rawX, pad, Math.max(pad, w - pad));
+    var ly = clamp(rawY, pad, Math.max(pad, h - pad));
+    var loftSplitY = ly - loupeR * 0.18;
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(lx, ly, loupeR, 0, Math.PI * 2);
+    ctx.clip();
+
+    ctx.fillStyle = '#0d0705';
+    ctx.fillRect(lx - loupeR, ly - loupeR, loupeR * 2, loupeR * 2);
+
+    if (typeof ctx.createRadialGradient === 'function') {
+      var glowR = loupeR * (0.85 * torchFlicker);
+      var grad = ctx.createRadialGradient(lx, ly + loupeR * 0.05, loupeR * 0.06, lx, ly, Math.max(20, glowR));
+      grad.addColorStop(0, 'rgba(255, 152, 54, 0.34)');
+      grad.addColorStop(0.55, 'rgba(168, 66, 20, 0.20)');
+      grad.addColorStop(1, 'rgba(12, 6, 4, 0)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(lx - loupeR, ly - loupeR, loupeR * 2, loupeR * 2);
+    }
+
+    ctx.strokeStyle = 'rgba(156, 104, 58, 0.55)';
+    ctx.lineWidth = Math.max(1.5, loupeR * 0.03);
+    ctx.beginPath();
+    ctx.moveTo(lx - loupeR, loftSplitY);
+    ctx.lineTo(lx + loupeR, loftSplitY);
+    for (var rf = -3; rf <= 3; rf++) {
+      var rx = lx + rf * loupeR * 0.28;
+      ctx.moveTo(rx, loftSplitY);
+      ctx.lineTo(rx + rf * loupeR * 0.08, ly - loupeR);
+    }
+    ctx.stroke();
+
+    ctx.strokeStyle = 'rgba(178, 84, 44, 0.52)';
+    ctx.lineWidth = Math.max(1.4, loupeR * 0.026);
+    for (var v = -1; v <= 1; v++) {
+      var vx = lx + v * loupeR * 0.56;
+      var archR = loupeR * 0.34;
+      ctx.beginPath();
+      ctx.arc(vx, loftSplitY + archR * 0.95, archR, Math.PI, 0, false);
+      ctx.moveTo(vx - archR, loftSplitY + archR * 0.95);
+      ctx.lineTo(vx - archR, ly + loupeR);
+      ctx.moveTo(vx + archR, loftSplitY + archR * 0.95);
+      ctx.lineTo(vx + archR, ly + loupeR);
+      ctx.stroke();
+    }
+
+    var torchPositions = [
+      { x: lx - loupeR * 0.52, y: loftSplitY + loupeR * 0.24 },
+      { x: lx + loupeR * 0.52, y: loftSplitY + loupeR * 0.24 }
+    ];
+    for (var tp = 0; tp < torchPositions.length; tp++) {
+      var tc = torchPositions[tp];
+      ctx.fillStyle = '#ffae42';
+      ctx.beginPath();
+      ctx.arc(tc.x, tc.y - 4, Math.max(3, loupeR * 0.045 * torchFlicker), 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#6d533b';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(tc.x, tc.y - 1);
+      ctx.lineTo(tc.x, tc.y + loupeR * 0.12);
+      ctx.stroke();
+    }
+
+    var nThree = monstrousShare >= 0.72 ? 3 : 2;
+    var nSix = monstrousShare >= 0.72 ? 3 : 2;
+    var figUnit = clamp(loupeR * 0.16, 8, maxR * 0.18);
+
+    for (var i = 0; i < nSix; i++) {
+      var sx = lx + (i - (nSix - 1) * 0.5) * loupeR * 0.52;
+      var sy = loftSplitY - loupeR * 0.24;
+      drawWoodcutProdigy(ctx, sx, sy, figUnit * 0.92, 'six_legged', torchFlicker);
+      targets.sixLegged.push({ x: sx, y: sy });
+    }
+    for (var j = 0; j < nThree; j++) {
+      var cx3 = lx + (j - (nThree - 1) * 0.5) * loupeR * 0.54;
+      var cy3 = loftSplitY + loupeR * 0.56;
+      drawWoodcutProdigy(ctx, cx3, cy3, figUnit, 'three_headed', torchFlicker);
+      targets.threeHeaded.push({ x: cx3, y: cy3 });
+    }
+    ctx.restore();
+
+    ctx.save();
+    ctx.strokeStyle = '#c99b4e';
+    ctx.lineWidth = 2.4;
+    ctx.beginPath();
+    ctx.arc(lx, ly, loupeR, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.strokeStyle = 'rgba(255, 222, 156, 0.42)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.arc(lx, ly, loupeR + 3.5, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.restore();
+
+    return targets;
+  }
+
+  function drawConfessionThreads(ctx, geo, streetByCohort, gratePoints, loupeTargets, highlightedHouse) {
+    ctx.save();
+    for (var hIdx = 0; hIdx < 12; hIdx++) {
+      var sec = geo.sectors[hIdx];
+      var cohort = HOUSE_TO_COHORT[hIdx];
+      var pairOrd = cohort.zodiacIndices[0] === hIdx ? 0 : 1;
+      var dest = null;
+
+      if (cohort.id === 'three_headed_children') {
+        if (loupeTargets.threeHeaded.length > 0) {
+          dest = loupeTargets.threeHeaded[pairOrd % loupeTargets.threeHeaded.length];
+        } else {
+          for (var g1 = 0; g1 < gratePoints.length; g1++) {
+            if (gratePoints[g1].cohortId === 'three_headed_children' && (pairOrd-- === 0)) {
+              dest = gratePoints[g1];
+              break;
+            }
+          }
+        }
+      } else if (cohort.id === 'six_legged_children') {
+        if (loupeTargets.sixLegged.length > 0) {
+          dest = loupeTargets.sixLegged[pairOrd % loupeTargets.sixLegged.length];
+        } else {
+          for (var g2 = 0; g2 < gratePoints.length; g2++) {
+            if (gratePoints[g2].cohortId === 'six_legged_children' && (pairOrd-- === 0)) {
+              dest = gratePoints[g2];
+              break;
+            }
+          }
+        }
+      } else {
+        var list = streetByCohort[cohort.id] || [];
+        if (list.length > 0) {
+          dest = list[(pairOrd * 2) % list.length];
+        }
+      }
+
+      if (!dest) {
+        dest = { x: geo.cx + Math.cos(sec.midRad) * geo.innerR, y: geo.cy + Math.sin(sec.midRad) * geo.innerR };
+      }
+
+      var active = highlightedHouse === hIdx;
+      var isHidden = cohort.locus !== 'street';
+      ctx.strokeStyle = active
+        ? 'rgba(255, 236, 152, 0.96)'
+        : (isHidden ? 'rgba(255, 178, 92, 0.78)' : 'rgba(116, 224, 255, 0.72)');
+      ctx.lineWidth = active ? 2.1 : 1.3;
+      if (typeof ctx.setLineDash === 'function') {
+        ctx.setLineDash(isHidden ? [5, 3] : []);
+      }
+      ctx.beginPath();
+      ctx.moveTo(sec.x, sec.y);
+      ctx.lineTo(dest.x, dest.y);
+      ctx.stroke();
+
+      if (typeof ctx.setLineDash === 'function') ctx.setLineDash([]);
+      ctx.fillStyle = isHidden ? '#ffb861' : '#7ae4ff';
+      ctx.beginPath();
+      ctx.arc(sec.x, sec.y, active ? 4.2 : 3.0, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(dest.x, dest.y, active ? 6.5 : 4.6, 0, Math.PI * 2);
+      ctx.stroke();
+
+      if (typeof ctx.fillText === 'function' && geo.outerR >= 110) {
+        var mx = sec.x * 0.58 + dest.x * 0.42;
+        var my = sec.y * 0.58 + dest.y * 0.42;
+        ctx.font = '600 9px monospace';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillStyle = 'rgba(12, 14, 20, 0.82)';
+        ctx.fillRect(mx - 16, my - 6, 32, 12);
+        ctx.fillStyle = isHidden ? '#ffd089' : '#aef0ff';
+        ctx.fillText(sec.glyph + '\u2192' + cohort.shortCode, mx, my);
+      }
+    }
+    ctx.restore();
+  }
+
+  function drawErrataCrossOuts(ctx, w, h, geo) {
+    ctx.save();
+    var r = geo.cityR;
+    ctx.strokeStyle = 'rgba(218, 54, 58, 0.84)';
+    ctx.lineWidth = 1.8;
+    if (typeof ctx.setLineDash === 'function') ctx.setLineDash([9, 5]);
+    for (var k = 0; k < 6; k++) {
+      var a = k * (Math.PI / 3) + 0.28;
+      var tx = geo.cx + Math.cos(a) * (r * 0.96);
+      var ty = geo.cy + Math.sin(a) * (r * 0.96);
+      var nx = -Math.sin(a) * (r * 0.36);
+      var ny = Math.cos(a) * (r * 0.36);
+      ctx.beginPath();
+      ctx.moveTo(tx - nx, ty - ny);
+      ctx.lineTo(tx + nx * 0.82, ty + ny * 0.82);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(geo.cx, geo.cy, r * (0.82 + (k % 2) * 0.22), a - 0.22, a + 0.20);
+      ctx.stroke();
+    }
+
+    if (typeof ctx.setLineDash === 'function') ctx.setLineDash([]);
+    ctx.strokeStyle = 'rgba(232, 62, 62, 0.78)';
+    ctx.lineWidth = 2.2;
+    for (var s = 0; s < 4; s++) {
+      var sa = s * (Math.PI * 0.5) + 0.78;
+      var sx = geo.cx + Math.cos(sa) * (r * 0.62);
+      var sy = geo.cy + Math.sin(sa) * (r * 0.62);
+      var d = Math.max(8, r * 0.08);
+      ctx.beginPath();
+      ctx.moveTo(sx - d, sy - d * 0.7);
+      ctx.lineTo(sx + d, sy + d * 0.7);
+      ctx.moveTo(sx + d, sy - d * 0.7);
+      ctx.lineTo(sx - d, sy + d * 0.7);
+      ctx.stroke();
+    }
+
+    var stampW = Math.min(236, Math.max(158, w * 0.34));
+    var stampH = 38;
+    var stampX = geo.cx;
+    var stampY = clamp(geo.cy + geo.cityR * 0.72, stampH, Math.max(stampH, h - 26));
+    ctx.translate(stampX, stampY);
+    ctx.rotate(-0.055);
+    ctx.fillStyle = 'rgba(24, 8, 10, 0.90)';
+    ctx.strokeStyle = '#ef4b4f';
+    ctx.lineWidth = 1.8;
+    ctx.fillRect(-stampW * 0.5, -stampH * 0.5, stampW, stampH);
+    ctx.strokeRect(-stampW * 0.5 + 2.5, -stampH * 0.5 + 2.5, stampW - 5, stampH - 5);
+    if (typeof ctx.fillText === 'function') {
+      ctx.fillStyle = '#ff7b7e';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.font = '700 11px monospace';
+      ctx.fillText('ARITHMETIC FLAWS FOUND: 0', 0, -5);
+      ctx.fillStyle = '#e8c79e';
+      ctx.font = '500 9px monospace';
+      ctx.fillText('EPHEMERIS SKY ERROR: 0.00"', 0, 8);
+    }
+    ctx.restore();
+  }
+
+  function renderPlateFallback(canvas, plateKind) {
+    if (!canvas || typeof canvas.getContext !== 'function') return false;
+    var kind = plateKind === 'image' ? 'image' : 'map';
+    if (!canvas.width || canvas.width < 120) canvas.width = 560;
+    if (!canvas.height || canvas.height < 90) canvas.height = kind === 'map' ? 400 : 350;
+    var ctx = canvas.getContext('2d');
+    if (!ctx) return false;
+
+    var w = canvas.width;
+    var h = canvas.height;
+    ctx.save();
+    ctx.fillStyle = '#110d0a';
+    ctx.fillRect(0, 0, w, h);
+
+    ctx.strokeStyle = 'rgba(202, 158, 86, 0.14)';
+    ctx.lineWidth = 1;
+    for (var gy = 14; gy < h - 14; gy += 8) {
+      ctx.beginPath();
+      ctx.moveTo(12, gy);
+      ctx.lineTo(w - 12, gy);
+      ctx.stroke();
+    }
+
+    ctx.strokeStyle = '#c89b52';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(10, 10, w - 20, h - 20);
+    ctx.lineWidth = 1;
+    ctx.strokeRect(15, 15, w - 30, h - 30);
+
+    var cx = w * 0.5;
+    var cy = h * 0.46;
+    var rad = Math.min(w, h) * 0.28;
+
+    if (kind === 'map') {
+      ctx.strokeStyle = '#d7af69';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.arc(cx, cy, rad, 0, Math.PI * 2);
+      ctx.arc(cx, cy, rad * 0.72, 0, Math.PI * 2);
+      ctx.arc(cx, cy, rad * 0.26, 0, Math.PI * 2);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(cx, cy - rad * 1.12);
+      ctx.lineTo(cx, cy + rad * 1.12);
+      ctx.moveTo(cx - rad * 1.12, cy);
+      ctx.lineTo(cx + rad * 1.12, cy);
+      ctx.stroke();
+
+      for (var z = 0; z < 12; z++) {
+        var za = -Math.PI * 0.5 + z * (Math.PI / 6);
+        ctx.beginPath();
+        ctx.moveTo(cx + Math.cos(za) * rad * 0.72, cy + Math.sin(za) * rad * 0.72);
+        ctx.lineTo(cx + Math.cos(za) * rad, cy + Math.sin(za) * rad);
+        ctx.stroke();
+        if (typeof ctx.fillText === 'function') {
+          var ga = za + Math.PI / 12;
+          ctx.fillStyle = '#e6c588';
+          ctx.font = '600 11px serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(ZODIAC_GLYPHS[z], cx + Math.cos(ga) * rad * 0.86, cy + Math.sin(ga) * rad * 0.86);
+        }
+      }
+    } else {
+      var vaultY = cy + rad * 0.05;
+      ctx.strokeStyle = '#d7af69';
+      ctx.lineWidth = 1.4;
+      ctx.beginPath();
+      ctx.arc(cx, vaultY - rad * 0.18, rad * 0.78, Math.PI, 0, false);
+      ctx.moveTo(cx - rad * 1.25, vaultY);
+      ctx.lineTo(cx + rad * 1.25, vaultY);
+      ctx.stroke();
+
+      for (var v = -1; v <= 1; v++) {
+        var vx = cx + v * rad * 0.76;
+        var vr = rad * 0.34;
+        ctx.strokeStyle = '#c47b47';
+        ctx.beginPath();
+        ctx.arc(vx, vaultY + vr * 0.9, vr, Math.PI, 0, false);
+        ctx.moveTo(vx - vr, vaultY + vr * 0.9);
+        ctx.lineTo(vx - vr, vaultY + rad * 0.85);
+        ctx.moveTo(vx + vr, vaultY + vr * 0.9);
+        ctx.lineTo(vx + vr, vaultY + rad * 0.85);
+        ctx.stroke();
+      }
+      drawWoodcutProdigy(ctx, cx - rad * 0.76, vaultY + rad * 0.56, rad * 0.18, 'three_headed', 1.0);
+      drawWoodcutProdigy(ctx, cx, vaultY + rad * 0.56, rad * 0.19, 'six_legged', 1.0);
+      drawWoodcutProdigy(ctx, cx + rad * 0.76, vaultY + rad * 0.56, rad * 0.18, 'three_headed', 1.0);
+    }
+
+    if (typeof ctx.fillText === 'function') {
+      ctx.fillStyle = '#efd5a3';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.font = '700 12px monospace';
+      var header = kind === 'map'
+        ? 'PERINTHIA \u00B7 CHOROGRAPHIC ASTROLABE PLAN'
+        : 'PERINTHIA \u00B7 OBSERVATORY & CELLAR VEDUTA';
+      ctx.fillText(header, cx, 32);
+      ctx.fillStyle = '#c89b52';
+      ctx.font = '600 10px monospace';
+      ctx.fillText('ARCHIVAL COPPERPLATE SPECIMEN \u00B7 PENDING_IMAGE_GENERATOR_QUOTA', cx, h - 30);
+    }
+    ctx.restore();
+    return true;
+  }
+
+  function normalizeVerdict(verdictId) {
+    if (verdictId === 1 || verdictId === '1') return 'admitCalculationsWrong';
+    if (verdictId === 2 || verdictId === '2') return 'confessGodsOrderIsMonsters';
+    if (verdictId === 0 || verdictId === '0' || !verdictId) return 'undecided';
+    if (Object.prototype.hasOwnProperty.call(FORK_VERDICTS, verdictId)) return verdictId;
+    return 'undecided';
+  }
+
+  function createMonstrousOrder(opts) {
+    var options = opts || {};
+    var onVerdictChange = typeof options.onVerdictChange === 'function' ? options.onVerdictChange : null;
+    var onCellarToggle = typeof options.onCellarToggle === 'function' ? options.onCellarToggle : null;
+
+    var celestialPrecision = 0.44;
+    var monstrousBirthShare = 0.5061;
+    var unfoundedSurveyRubble = 0.4939;
+    var cellarHowlIntensity = 0.4221;
+    var cellarOpen = false;
+    var cellarReveal = 0;
+    var cellarRevealTarget = 0;
+    var loupeCenter = { nx: 0.5, ny: 0.5 };
+    var terribleFork = 'undecided';
+    var cohorts = [];
+    var totalPopulace = 0;
+    var streetProdigyCount = 0;
+    var hiddenProdigyCount = 0;
+    var animTime = 0;
+    var howlPhase = 0;
+    var torchFlicker = 1.0;
+    var lastReducedMotion = false;
+
+    function recomputeCensus(rawPrecision) {
+      var p = round4(clamp01(rawPrecision));
+      celestialPrecision = p >= 0.9999 ? 1 : p;
+      monstrousBirthShare = celestialPrecision >= 0.9999
+        ? 1.0
+        : Number((0.18 + 0.82 * Math.pow(celestialPrecision, 1.12)).toFixed(4));
+      unfoundedSurveyRubble = round4(Math.max(0, 1 - monstrousBirthShare));
+      cellarHowlIntensity = celestialPrecision >= 0.9999
+        ? 1.0
+        : Number((0.12 + 0.88 * Math.pow(celestialPrecision, 1.3)).toFixed(4));
+
+      var nextCohorts = [];
+      var streetSum = 0;
+      var hiddenSum = 0;
+      for (var i = 0; i < PRODIGY_COHORTS.length; i++) {
+        var def = PRODIGY_COHORTS[i];
+        var cnt = Math.max(1, Math.round(def.baseMax * monstrousBirthShare));
+        if (def.locus === 'street') streetSum += cnt;
+        else hiddenSum += cnt;
+        nextCohorts.push({
+          id: def.id,
+          label: def.label,
+          locus: def.locus,
+          count: cnt,
+          zodiacIndices: def.zodiacIndices.slice(),
+          zodiacGlyphs: def.zodiacGlyphs.slice()
+        });
+      }
+      cohorts = nextCohorts;
+      streetProdigyCount = streetSum;
+      hiddenProdigyCount = hiddenSum;
+      totalPopulace = streetSum + hiddenSum;
+    }
+
+    recomputeCensus(options.initialPrecision !== undefined ? options.initialPrecision : 0.44);
+
+    function getState() {
+      return {
+        celestialPrecision: celestialPrecision,
+        monstrousBirthShare: monstrousBirthShare,
+        classicalPerfectionShare: 0,
+        unfoundedSurveyRubble: unfoundedSurveyRubble,
+        cellarOpen: cellarOpen,
+        cellarReveal: cellarReveal,
+        cellarHowlIntensity: cellarHowlIntensity,
+        terribleFork: terribleFork,
+        arithmeticErrorsFound: 0,
+        totalPopulace: totalPopulace,
+        streetProdigyCount: streetProdigyCount,
+        hiddenProdigyCount: hiddenProdigyCount,
+        loupeCenter: { nx: loupeCenter.nx, ny: loupeCenter.ny },
+        cohorts: cohorts.map(function (c) {
+          return {
+            id: c.id,
+            label: c.label,
+            locus: c.locus,
+            count: c.count,
+            zodiacIndices: c.zodiacIndices.slice()
+          };
+        })
+      };
+    }
+
+    function syncFromAstrolabe(astrolabeState) {
+      var p = celestialPrecision;
+      if (typeof astrolabeState === 'number') {
+        p = astrolabeState;
+      } else if (astrolabeState && typeof astrolabeState === 'object') {
+        if (Number.isFinite(astrolabeState.celestialPrecision)) {
+          p = astrolabeState.celestialPrecision;
+        } else {
+          var cP = Math.max(0, 1 - Math.abs(Number(astrolabeState.cardoOffsetDeg || 0)) / 30);
+          var dP = Math.max(0, 1 - Math.abs(Number(astrolabeState.decumanusOffsetDeg || 0)) / 30);
+          var eP = clamp01(astrolabeState.eclipseTuning !== undefined ? astrolabeState.eclipseTuning : 0.38);
+          var hCount = Number.isFinite(astrolabeState.housesConsecrated)
+            ? astrolabeState.housesConsecrated
+            : (Array.isArray(astrolabeState.houseLocks) ? astrolabeState.houseLocks.filter(Boolean).length : 4);
+          p = 0.30 * cP + 0.30 * dP + 0.25 * eP + 0.15 * clamp01(hCount / 12);
+        }
+      }
+      recomputeCensus(p);
+      return getState();
+    }
+
+    function setCellarReveal(openOr01) {
+      if (typeof openOr01 === 'boolean') {
+        cellarOpen = openOr01;
+        cellarRevealTarget = openOr01 ? 1 : 0;
+        if (lastReducedMotion) cellarReveal = cellarRevealTarget;
+        else if (openOr01 && cellarReveal < 0.06) cellarReveal = 0.06;
+      } else {
+        var v = round4(clamp01(openOr01));
+        cellarRevealTarget = v;
+        cellarReveal = v;
+        cellarOpen = v > 0.01;
+      }
+      var snap = getState();
+      if (onCellarToggle) onCellarToggle(cellarOpen, snap);
+      return snap;
+    }
+
+    function toggleCellarReveal() {
+      return setCellarReveal(!cellarOpen);
+    }
+
+    function setLoupeCenter(nx, ny) {
+      loupeCenter = { nx: round4(clamp01(nx)), ny: round4(clamp01(ny)) };
+      return getState();
+    }
+
+    function setForkVerdict(verdictId) {
+      terribleFork = normalizeVerdict(verdictId);
+      var snap = getState();
+      if (onVerdictChange) onVerdictChange(terribleFork, snap);
+      return snap;
+    }
+
+    function step(dt, stepOpts) {
+      var rm = Boolean(stepOpts && stepOpts.reducedMotion);
+      lastReducedMotion = rm;
+      if (rm) {
+        cellarReveal = cellarRevealTarget;
+        torchFlicker = 1.0;
+        return getState();
+      }
+      var safeDt = Number.isFinite(dt) ? clamp(dt, 0, 0.25) : 0.016;
+      var diff = cellarRevealTarget - cellarReveal;
+      if (Math.abs(diff) < 0.0015) {
+        cellarReveal = cellarRevealTarget;
+      } else {
+        cellarReveal = round4(cellarReveal + diff * (1 - Math.exp(-safeDt * 8.5)));
+      }
+      animTime += safeDt;
+      howlPhase = (howlPhase + safeDt * (0.42 + 0.92 * cellarHowlIntensity)) % 1;
+      torchFlicker = 1 + 0.08 * Math.sin(animTime * 9.3) + 0.05 * Math.cos(animTime * 15.7);
+      return getState();
+    }
+
+    function renderStreetsAndCellars(ctx, w, h, geometry, renderOpts) {
+      if (!ctx) return;
+      var ro = renderOpts || {};
+      var cw = Number.isFinite(w) && w > 0 ? w : 640;
+      var ch = Number.isFinite(h) && h > 0 ? h : 480;
+      var geo = resolveGeometry(cw, ch, geometry);
+      var effReveal = Number.isFinite(ro.cellarReveal01) ? clamp01(ro.cellarReveal01) : cellarReveal;
+      var effVerdict = ro.forkVerdict ? normalizeVerdict(ro.forkVerdict) : terribleFork;
+      var hiHouse = Number.isInteger(ro.highlightedHouse) ? ro.highlightedHouse : -1;
+      var rm = ro.reducedMotion !== undefined ? Boolean(ro.reducedMotion) : lastReducedMotion;
+
+      ctx.save();
+      drawSurveyRubble(ctx, geo, unfoundedSurveyRubble);
+
+      var activeStreetSlots = Math.max(8, Math.round(STREET_SLOTS.length * monstrousBirthShare));
+      var streetByCohort = { cripples: [], dwarfs_hunchbacks: [], obese_men: [], bearded_women: [] };
+      var figBaseUnit = Math.max(4.4, geo.cityR * 0.044);
+
+      for (var i = 0; i < activeStreetSlots; i++) {
+        var sp = slotPixelPos(STREET_SLOTS[i], geo);
+        streetByCohort[sp.cohortId].push(sp);
+        var cohortDef = null;
+        for (var cIdx = 0; cIdx < 4; cIdx++) {
+          if (PRODIGY_COHORTS[cIdx].id === sp.cohortId) { cohortDef = PRODIGY_COHORTS[cIdx]; break; }
+        }
+        var isHi = cohortDef ? (cohortDef.zodiacIndices[0] === hiHouse || cohortDef.zodiacIndices[1] === hiHouse) : false;
+        drawStreetFigure(ctx, sp.x, sp.y, figBaseUnit * sp.scale, sp.cohortId, sp.variant, isHi);
+      }
+
+      var gratePoints = drawCellarGratesAndHowls(ctx, geo, cellarHowlIntensity, howlPhase, rm);
+      var loupeTargets = drawSubterraneanLoupe(ctx, cw, ch, geo, loupeCenter, effReveal, monstrousBirthShare, rm ? 1.0 : torchFlicker);
+
+      if (effVerdict === 'confessGodsOrderIsMonsters') {
+        drawConfessionThreads(ctx, geo, streetByCohort, gratePoints, loupeTargets, hiHouse);
+      } else if (effVerdict === 'admitCalculationsWrong') {
+        drawErrataCrossOuts(ctx, cw, ch, geo);
+      }
+      ctx.restore();
+    }
+
+    function reset() {
+      terribleFork = 'undecided';
+      cellarOpen = false;
+      cellarReveal = 0;
+      cellarRevealTarget = 0;
+      loupeCenter = { nx: 0.5, ny: 0.5 };
+      animTime = 0;
+      howlPhase = 0;
+      torchFlicker = 1.0;
+      return getState();
+    }
+
+    return {
+      syncFromAstrolabe: syncFromAstrolabe,
+      setCellarReveal: setCellarReveal,
+      toggleCellarReveal: toggleCellarReveal,
+      setLoupeCenter: setLoupeCenter,
+      setForkVerdict: setForkVerdict,
+      step: step,
+      renderStreetsAndCellars: renderStreetsAndCellars,
+      renderPlateFallback: renderPlateFallback,
+      getState: getState,
+      reset: reset
+    };
+  }
+
+  global.PerinthiaMonstrousOrder = Object.freeze({
+    PRODIGY_COHORTS: PRODIGY_COHORTS,
+    FORK_VERDICTS: FORK_VERDICTS,
+    createMonstrousOrder: createMonstrousOrder,
+    renderPlateFallback: renderPlateFallback
+  });
+})(typeof globalThis !== 'undefined' ? globalThis : window);
+
+</script>
+<script>
+(function (global) {
+  'use strict';
+
+  var Founding = global.PerinthiaZodiacFounding;
+  var Monstrous = global.PerinthiaMonstrousOrder;
+  if (!Founding || !Monstrous) return;
+
+  var mqReduced = global.matchMedia ? global.matchMedia('(prefers-reduced-motion: reduce)') : null;
+  var reducedMotion = Boolean(mqReduced && mqReduced.matches);
+  var platesOpen = false;
+  var platesZoomed = false;
+  var highlightedHouse = -1;
+  var dragState = {
+    active: false,
+    mode: null,
+    moved: false,
+    houseIndex: -1,
+    startX: 0,
+    startY: 0
+  };
+
+  var dom = {
+    canvasWell: document.getElementById('prn-canvas-well'),
+    canvas: document.getElementById('prn-astrolabe-canvas'),
+    stageStatus: document.getElementById('prn-stage-status'),
+    topPrecision: document.getElementById('prn-top-precision'),
+    topMonstrous: document.getElementById('prn-top-monstrous'),
+    topClassical: document.getElementById('prn-top-classical'),
+    topSkyErr: document.getElementById('prn-top-skyerr'),
+    statPrecision: document.getElementById('prn-stat-precision'),
+    statMonstrous: document.getElementById('prn-stat-monstrous'),
+    statClassical: document.getElementById('prn-stat-classical'),
+    statHowl: document.getElementById('prn-stat-howl'),
+    houseRubric: document.getElementById('prn-house-rubric'),
+    censusFooter: document.getElementById('prn-census-footer'),
+    valCardo: document.getElementById('prn-val-cardo'),
+    valDecumanus: document.getElementById('prn-val-decumanus'),
+    valEclipse: document.getElementById('prn-val-eclipse'),
+    sliderCardo: document.getElementById('prn-slider-cardo'),
+    sliderDecumanus: document.getElementById('prn-slider-decumanus'),
+    sliderEclipse: document.getElementById('prn-slider-eclipse'),
+    btnSolstice: document.getElementById('prn-btn-solstice'),
+    btnFirmament: document.getElementById('prn-btn-firmament'),
+    btnTemples: document.getElementById('prn-btn-temples'),
+    btnCellars: document.getElementById('prn-btn-cellars'),
+    btnPerturb: document.getElementById('prn-btn-perturb'),
+    btnReset: document.getElementById('prn-btn-reset'),
+    btnMute: document.getElementById('prn-btn-mute'),
+    btnPlates: document.getElementById('prn-btn-plates'),
+    horn0: document.getElementById('prn-horn-0'),
+    horn1: document.getElementById('prn-horn-1'),
+    horn2: document.getElementById('prn-horn-2'),
+    rollTitle: document.getElementById('prn-roll-title'),
+    rollScript: document.getElementById('prn-roll-script'),
+    sealFlaws: document.getElementById('prn-seal-flaws'),
+    sealHarmony: document.getElementById('prn-seal-harmony'),
+    plateDrawer: document.getElementById('prn-plate-drawer'),
+    plateDiptych: document.getElementById('prn-plate-diptych'),
+    btnPlateZoom: document.getElementById('prn-btn-plate-zoom'),
+    btnPlateClose: document.getElementById('prn-btn-plate-close'),
+    plateMapImg: document.getElementById('prn-plate-map'),
+    plateImageImg: document.getElementById('prn-plate-image'),
+    fallbackMap: document.getElementById('prn-fallback-map'),
+    fallbackImage: document.getElementById('prn-fallback-image'),
+    fallbackMapCanvas: document.getElementById('prn-fallback-map-canvas'),
+    fallbackImageCanvas: document.getElementById('prn-fallback-image-canvas')
+  };
+
+  var houseBtns = Array.prototype.slice.call(document.querySelectorAll('[data-prn-house]'));
+  var cohortRows = Array.prototype.slice.call(document.querySelectorAll('[data-prn-cohort]'));
+  var cohortBaseMax = {};
+  for (var ci = 0; ci < Monstrous.PRODIGY_COHORTS.length; ci++) {
+    cohortBaseMax[Monstrous.PRODIGY_COHORTS[ci].id] = Monstrous.PRODIGY_COHORTS[ci].baseMax;
+  }
+
+  var stageCssW = 640;
+  var stageCssH = 640;
+  var stageDpr = 1;
+  var stageCtx = dom.canvas ? dom.canvas.getContext('2d') : null;
+
+  var monstrousOrder = Monstrous.createMonstrousOrder({
+    initialPrecision: 0.44,
+    onVerdictChange: function () { prnSyncUI(); },
+    onCellarToggle: function () { prnSyncUI(); }
+  });
+
+  var astrolabe = Founding.createFoundingAstrolabe({
+    muted: false,
+    onChange: function (aSnap) {
+      monstrousOrder.syncFromAstrolabe(aSnap);
+      prnSyncUI();
+    }
+  });
+
+  monstrousOrder.syncFromAstrolabe(astrolabe.getState());
+
+  if (mqReduced) {
+    var prnOnMotionMedia = function (ev) {
+      reducedMotion = Boolean(ev && ev.matches);
+      monstrousOrder.step(0, { reducedMotion: reducedMotion });
+      prnSyncUI();
+      prnRenderFrame();
+    };
+    if (typeof mqReduced.addEventListener === 'function') {
+      mqReduced.addEventListener('change', prnOnMotionMedia);
+    } else if (typeof mqReduced.addListener === 'function') {
+      mqReduced.addListener(prnOnMotionMedia);
+    }
+  }
+
+  function prnFmtPct(v01) {
+    return (Number(v01 || 0) * 100).toFixed(1) + '%';
+  }
+
+  function prnFmtDeg(deg) {
+    var n = Number(deg || 0);
+    return (n > 0 ? '+' : '') + n.toFixed(1) + '\u00B0';
+  }
+
+  function prnAngleDiffDeg(targetDeg, refDeg) {
+    var diff = targetDeg - refDeg;
+    while (diff > 180) diff -= 360;
+    while (diff < -180) diff += 360;
+    return diff;
+  }
+
+  function prnSyncUI() {
+    var a = astrolabe.getState();
+    var m = monstrousOrder.getState();
+
+    var precTxt = prnFmtPct(m.celestialPrecision);
+    var monTxt = prnFmtPct(m.monstrousBirthShare);
+    var clsTxt = prnFmtPct(m.classicalPerfectionShare);
+
+    dom.topPrecision.textContent = precTxt;
+    dom.topMonstrous.textContent = monTxt;
+    dom.topClassical.textContent = clsTxt;
+    dom.topSkyErr.textContent = a.ephemerisSkyErrorArcsec.toFixed(2) + '"';
+
+    dom.statPrecision.textContent = precTxt;
+    dom.statMonstrous.textContent = monTxt;
+    dom.statClassical.textContent = clsTxt;
+    dom.statHowl.textContent = prnFmtPct(m.cellarHowlIntensity);
+
+    dom.valCardo.textContent = prnFmtDeg(a.cardoOffsetDeg);
+    dom.valDecumanus.textContent = prnFmtDeg(a.decumanusOffsetDeg);
+    dom.valEclipse.textContent = Math.round(a.eclipseTuning * 100) + '%';
+
+    dom.sliderCardo.value = String(a.cardoOffsetDeg);
+    dom.sliderDecumanus.value = String(a.decumanusOffsetDeg);
+    dom.sliderEclipse.value = String(Math.round(a.eclipseTuning * 100));
+
+    dom.houseRubric.textContent = '12 ZODIAC TEMPLE HOUSES (' + a.housesConsecrated + '/12 CONSECRATED)';
+    for (var h = 0; h < houseBtns.length; h++) {
+      var hb = houseBtns[h];
+      var hIdx = Number(hb.getAttribute('data-prn-house'));
+      var locked = Boolean(a.houseLocks[hIdx]);
+      hb.classList.toggle('prn-chip-locked', locked);
+      hb.setAttribute('aria-pressed', locked ? 'true' : 'false');
+    }
+
+    for (var c = 0; c < m.cohorts.length; c++) {
+      var co = m.cohorts[c];
+      var cntEl = document.getElementById('prn-cnt-' + co.id);
+      var barEl = document.getElementById('prn-bar-' + co.id);
+      if (cntEl) cntEl.textContent = String(co.count);
+      if (barEl) {
+        var bMax = cohortBaseMax[co.id] || 300;
+        var pct = Math.max(6, Math.min(100, Math.round((co.count / bMax) * 100)));
+        barEl.style.width = pct + '%';
+      }
+    }
+
+    for (var r = 0; r < cohortRows.length; r++) {
+      var rowEl = cohortRows[r];
+      var rId = rowEl.getAttribute('data-prn-cohort');
+      var matched = false;
+      if (highlightedHouse >= 0) {
+        for (var k = 0; k < m.cohorts.length; k++) {
+          if (m.cohorts[k].id === rId) {
+            matched = m.cohorts[k].zodiacIndices.indexOf(highlightedHouse) !== -1;
+            break;
+          }
+        }
+      }
+      rowEl.classList.toggle('prn-cohort-hi', matched);
+    }
+
+    dom.censusFooter.textContent =
+      'Populace: ' + m.totalPopulace +
+      ' \u00B7 Streets: ' + m.streetProdigyCount +
+      ' \u00B7 Cellars & Lofts: ' + m.hiddenProdigyCount;
+
+    dom.btnCellars.classList.toggle('prn-btn-active', m.cellarOpen);
+    dom.btnCellars.setAttribute('aria-pressed', m.cellarOpen ? 'true' : 'false');
+    dom.btnCellars.textContent = m.cellarOpen ? '[C] Cellars: Open' : '[C] Cellars & Lofts';
+
+    dom.btnMute.classList.toggle('prn-btn-active', a.muted);
+    dom.btnMute.setAttribute('aria-pressed', a.muted ? 'true' : 'false');
+    dom.btnMute.textContent = a.muted ? '[M] Audio: Muted' : '[M] Audio: On';
+
+    dom.btnPlates.classList.toggle('prn-btn-active', platesOpen);
+    dom.btnPlates.setAttribute('aria-pressed', platesOpen ? 'true' : 'false');
+
+    var vMeta = Monstrous.FORK_VERDICTS[m.terribleFork] || Monstrous.FORK_VERDICTS.undecided;
+    dom.horn0.classList.toggle('prn-horn-undecided', m.terribleFork === 'undecided');
+    dom.horn1.classList.toggle('prn-horn-wrong', m.terribleFork === 'admitCalculationsWrong');
+    dom.horn2.classList.toggle('prn-horn-confess', m.terribleFork === 'confessGodsOrderIsMonsters');
+    dom.horn0.setAttribute('aria-pressed', m.terribleFork === 'undecided' ? 'true' : 'false');
+    dom.horn1.setAttribute('aria-pressed', m.terribleFork === 'admitCalculationsWrong' ? 'true' : 'false');
+    dom.horn2.setAttribute('aria-pressed', m.terribleFork === 'confessGodsOrderIsMonsters' ? 'true' : 'false');
+
+    dom.rollTitle.textContent = vMeta.title;
+    dom.rollScript.textContent = vMeta.rollNote;
+    dom.sealFlaws.textContent = 'ARITHMETIC FLAWS: ' + vMeta.arithmeticErrorsFound;
+    dom.sealHarmony.textContent = 'CLASSICAL HARMONY: 0.0%';
+
+    dom.stageStatus.textContent =
+      'Deviation: ' + a.surveyDeviationArcmin.toFixed(1) + '\' \u00B7 ' +
+      (m.cellarOpen ? 'Cellar Cutaway Open' : 'Cellars Sealed');
+  }
+
+  function prnResizeStage() {
+    if (!dom.canvasWell || !dom.canvas || !stageCtx) return;
+    var rect = dom.canvasWell.getBoundingClientRect();
+    var w = Math.max(220, Math.floor(rect.width || 640));
+    var h = Math.max(220, Math.floor(rect.height || 640));
+    var dpr = Math.min(2, Math.max(1, Number(global.devicePixelRatio) || 1));
+    if (w !== stageCssW || h !== stageCssH || dpr !== stageDpr || dom.canvas.width !== Math.round(w * dpr)) {
+      stageCssW = w;
+      stageCssH = h;
+      stageDpr = dpr;
+      dom.canvas.width = Math.round(w * dpr);
+      dom.canvas.height = Math.round(h * dpr);
+    }
+  }
+
+  function prnRenderFrame() {
+    if (!stageCtx) return;
+    prnResizeStage();
+    var m = monstrousOrder.getState();
+    stageCtx.save();
+    stageCtx.setTransform(stageDpr, 0, 0, stageDpr, 0, 0);
+    var renderOpts = {
+      cellarReveal01: m.cellarReveal,
+      forkVerdict: m.terribleFork,
+      highlightedHouse: highlightedHouse,
+      reducedMotion: reducedMotion
+    };
+    var geom = astrolabe.renderSkyAndPlan(stageCtx, stageCssW, stageCssH, renderOpts);
+    monstrousOrder.renderStreetsAndCellars(stageCtx, stageCssW, stageCssH, geom, renderOpts);
+    stageCtx.restore();
+  }
+
+  function prnRefreshFallbacks() {
+    if (dom.fallbackMapCanvas) {
+      monstrousOrder.renderPlateFallback(dom.fallbackMapCanvas, 'map');
+    }
+    if (dom.fallbackImageCanvas) {
+      monstrousOrder.renderPlateFallback(dom.fallbackImageCanvas, 'image');
+    }
+    if (dom.plateMapImg && dom.plateMapImg.complete && dom.plateMapImg.naturalWidth === 0) {
+      dom.plateMapImg.hidden = true;
+      if (dom.fallbackMap) dom.fallbackMap.hidden = false;
+    }
+    if (dom.plateImageImg && dom.plateImageImg.complete && dom.plateImageImg.naturalWidth === 0) {
+      dom.plateImageImg.hidden = true;
+      if (dom.fallbackImage) dom.fallbackImage.hidden = false;
+    }
+  }
+
+  function prnCanvasCoords(ev) {
+    var rect = dom.canvas.getBoundingClientRect();
+    var rw = Math.max(1, rect.width);
+    var rh = Math.max(1, rect.height);
+    var px = ev.clientX - rect.left;
+    var py = ev.clientY - rect.top;
+    return {
+      px: px,
+      py: py,
+      nx: Math.max(0, Math.min(1, px / rw)),
+      ny: Math.max(0, Math.min(1, py / rh))
+    };
+  }
+
+  var lastTickSoundMs = 0;
+  function prnMaybeTickSound() {
+    var now = Date.now();
+    if (now - lastTickSoundMs > 55) {
+      lastTickSoundMs = now;
+      astrolabe.playVernierTick(astrolabe.getState().celestialPrecision);
+    }
+  }
+
+  if (dom.canvas) {
+    dom.canvas.addEventListener('pointerdown', function (ev) {
+      astrolabe.unlockAudio();
+      var pt = prnCanvasCoords(ev);
+      var hit = astrolabe.hitTest(pt.nx, pt.ny, stageCssW, stageCssH);
+      var m = monstrousOrder.getState();
+
+      dragState.active = true;
+      dragState.moved = false;
+      dragState.startX = pt.px;
+      dragState.startY = pt.py;
+      dragState.houseIndex = -1;
+
+      if (hit.kind === 'house') {
+        dragState.mode = 'house';
+        dragState.houseIndex = hit.houseIndex;
+      } else if (hit.kind === 'gate' || hit.kind === 'ring') {
+        dragState.mode = 'eclipse';
+      } else if (m.cellarOpen && hit.kind === null) {
+        dragState.mode = 'loupe';
+        monstrousOrder.setLoupeCenter(pt.nx, pt.ny);
+        prnRenderFrame();
+      } else if (hit.kind === 'cardo') {
+        dragState.mode = 'cardo';
+      } else if (hit.kind === 'decumanus') {
+        dragState.mode = 'decumanus';
+      } else if (m.cellarOpen) {
+        dragState.mode = 'loupe';
+        monstrousOrder.setLoupeCenter(pt.nx, pt.ny);
+        prnRenderFrame();
+      } else {
+        var dNorth = Math.min(Math.abs(prnAngleDiffDeg(hit.angleDeg, -90)), Math.abs(prnAngleDiffDeg(hit.angleDeg, 90)));
+        var dEast = Math.min(Math.abs(prnAngleDiffDeg(hit.angleDeg, 0)), Math.abs(prnAngleDiffDeg(hit.angleDeg, 180)));
+        dragState.mode = dNorth <= dEast ? 'cardo' : 'decumanus';
+      }
+
+      if (typeof dom.canvas.setPointerCapture === 'function') {
+        try { dom.canvas.setPointerCapture(ev.pointerId); } catch (_e) {}
+      }
+    });
+
+    dom.canvas.addEventListener('pointermove', function (ev) {
+      var pt = prnCanvasCoords(ev);
+      if (!dragState.active) {
+        var hoverHit = astrolabe.hitTest(pt.nx, pt.ny, stageCssW, stageCssH);
+        var nextHi = hoverHit.kind === 'house' ? hoverHit.houseIndex : -1;
+        if (nextHi !== highlightedHouse) {
+          highlightedHouse = nextHi;
+          prnSyncUI();
+          prnRenderFrame();
+        }
+        return;
+      }
+
+      if (Math.hypot(pt.px - dragState.startX, pt.py - dragState.startY) > 4) {
+        dragState.moved = true;
+      }
+
+      var geom = astrolabe.getGeometry(stageCssW, stageCssH);
+      var angDeg = (Math.atan2(pt.py - geom.cy, pt.px - geom.cx) * 180) / Math.PI;
+
+      if (dragState.mode === 'loupe') {
+        monstrousOrder.setLoupeCenter(pt.nx, pt.ny);
+        prnRenderFrame();
+      } else if (dragState.mode === 'cardo') {
+        var offN = prnAngleDiffDeg(angDeg, -90);
+        var offS = prnAngleDiffDeg(angDeg, 90);
+        var bestCardo = Math.abs(offN) <= Math.abs(offS) ? offN : offS;
+        astrolabe.setCardoOffset(bestCardo);
+        prnMaybeTickSound();
+        prnRenderFrame();
+      } else if (dragState.mode === 'decumanus') {
+        var offE = prnAngleDiffDeg(angDeg, 0);
+        var offW = prnAngleDiffDeg(angDeg, 180);
+        var bestDec = Math.abs(offE) <= Math.abs(offW) ? offE : offW;
+        astrolabe.setDecumanusOffset(bestDec);
+        prnMaybeTickSound();
+        prnRenderFrame();
+      } else if (dragState.mode === 'eclipse') {
+        var dx = (pt.px - dragState.startX) / Math.max(120, stageCssW * 0.45);
+        var curE = astrolabe.getState().eclipseTuning;
+        astrolabe.setEclipseTuning(curE + dx);
+        dragState.startX = pt.px;
+        prnMaybeTickSound();
+        prnRenderFrame();
+      }
+    });
+
+    var prnEndPointer = function () {
+      if (!dragState.active) return;
+      if (!dragState.moved) {
+        if (dragState.mode === 'house' && dragState.houseIndex >= 0) {
+          astrolabe.toggleHouse(dragState.houseIndex);
+          astrolabe.playVernierTick(astrolabe.getState().celestialPrecision);
+          prnRenderFrame();
+        } else if (dragState.mode === 'eclipse') {
+          var nextE = astrolabe.getState().eclipseTuning + 0.25;
+          if (nextE > 1.001) nextE = 0.25;
+          astrolabe.setEclipseTuning(Math.min(1, nextE));
+          astrolabe.playVernierTick(astrolabe.getState().celestialPrecision);
+          prnRenderFrame();
+        }
+      }
+      dragState.active = false;
+      dragState.mode = null;
+    };
+
+    dom.canvas.addEventListener('pointerup', prnEndPointer);
+    dom.canvas.addEventListener('pointercancel', prnEndPointer);
+    dom.canvas.addEventListener('pointerleave', function () {
+      if (!dragState.active && highlightedHouse !== -1) {
+        highlightedHouse = -1;
+        prnSyncUI();
+        prnRenderFrame();
+      }
+    });
+  }
+
+  function prnGetMergedState() {
+    var a = astrolabe.getState();
+    var m = monstrousOrder.getState();
+    var merged = {};
+    var ak = Object.keys(a);
+    for (var i = 0; i < ak.length; i++) merged[ak[i]] = a[ak[i]];
+    var mk = Object.keys(m);
+    for (var j = 0; j < mk.length; j++) merged[mk[j]] = m[mk[j]];
+    merged.muted = Boolean(a.muted);
+    merged.platesOpen = Boolean(platesOpen);
+    merged.platesZoomed = Boolean(platesZoomed);
+    merged.reducedMotion = Boolean(reducedMotion);
+    merged.highlightedHouse = highlightedHouse;
+    return merged;
+  }
+
+  function prnAlignSolstice() {
+    astrolabe.unlockAudio();
+    var snap = astrolabe.alignSolsticeAxes();
+    astrolabe.playSolsticeChord(snap.celestialPrecision);
+    prnRenderFrame();
+    return prnGetMergedState();
+  }
+
+  function prnAlignFirmament() {
+    astrolabe.unlockAudio();
+    var snap = astrolabe.alignFullFirmament();
+    var m = monstrousOrder.getState();
+    astrolabe.playSolsticeChord(snap.celestialPrecision);
+    astrolabe.playCellarResonance(m.cellarHowlIntensity, m.terribleFork);
+    prnRenderFrame();
+    return prnGetMergedState();
+  }
+
+  function prnSetEclipseTuning(v) {
+    astrolabe.setEclipseTuning(v);
+    prnRenderFrame();
+    return prnGetMergedState();
+  }
+
+  function prnToggleCellars(forceBool) {
+    astrolabe.unlockAudio();
+    if (typeof forceBool === 'boolean') {
+      monstrousOrder.setCellarReveal(forceBool);
+    } else {
+      monstrousOrder.toggleCellarReveal();
+    }
+    monstrousOrder.step(0, { reducedMotion: reducedMotion });
+    var m = monstrousOrder.getState();
+    if (m.cellarOpen) {
+      astrolabe.playCellarResonance(m.cellarHowlIntensity, m.terribleFork);
+    }
+    prnSyncUI();
+    prnRenderFrame();
+    return prnGetMergedState();
+  }
+
+  function prnSetForkVerdict(v) {
+    astrolabe.unlockAudio();
+    monstrousOrder.setForkVerdict(v);
+    var m = monstrousOrder.getState();
+    astrolabe.playCellarResonance(m.cellarHowlIntensity, m.terribleFork);
+    prnSyncUI();
+    prnRenderFrame();
+    return prnGetMergedState();
+  }
+
+  function prnTogglePlates(open) {
+    platesOpen = typeof open === 'boolean' ? open : !platesOpen;
+    if (dom.plateDrawer) {
+      dom.plateDrawer.hidden = !platesOpen;
+    }
+    if (!platesOpen) {
+      platesZoomed = false;
+      if (dom.plateDiptych) dom.plateDiptych.classList.remove('prn-plate-zoomed');
+      if (dom.btnPlateZoom) dom.btnPlateZoom.setAttribute('aria-pressed', 'false');
+    } else {
+      prnRefreshFallbacks();
+    }
+    prnSyncUI();
+    return prnGetMergedState();
+  }
+
+  function prnTogglePlateZoom(forceZoom) {
+    platesZoomed = typeof forceZoom === 'boolean' ? forceZoom : !platesZoomed;
+    if (dom.plateDiptych) {
+      dom.plateDiptych.classList.toggle('prn-plate-zoomed', platesZoomed);
+    }
+    if (dom.btnPlateZoom) {
+      dom.btnPlateZoom.classList.toggle('prn-btn-active', platesZoomed);
+      dom.btnPlateZoom.setAttribute('aria-pressed', platesZoomed ? 'true' : 'false');
+    }
+    return prnGetMergedState();
+  }
+
+  function prnToggleMute(forceMuted) {
+    var nextMuted = typeof forceMuted === 'boolean' ? forceMuted : !astrolabe.isMuted();
+    astrolabe.setMuted(nextMuted);
+    if (!nextMuted) {
+      astrolabe.unlockAudio();
+      astrolabe.playVernierTick(astrolabe.getState().celestialPrecision);
+    }
+    prnSyncUI();
+    return prnGetMergedState();
+  }
+
+  function prnResetAll() {
+    highlightedHouse = -1;
+    monstrousOrder.reset();
+    var aSnap = astrolabe.reset();
+    monstrousOrder.syncFromAstrolabe(aSnap);
+    prnTogglePlates(false);
+    prnSyncUI();
+    prnRenderFrame();
+    return prnGetMergedState();
+  }
+
+  dom.btnSolstice.addEventListener('click', function () { prnAlignSolstice(); });
+  dom.btnFirmament.addEventListener('click', function () { prnAlignFirmament(); });
+
+  dom.sliderCardo.addEventListener('input', function () {
+    astrolabe.unlockAudio();
+    astrolabe.setCardoOffset(Number(dom.sliderCardo.value));
+    prnMaybeTickSound();
+    prnRenderFrame();
+  });
+
+  dom.sliderDecumanus.addEventListener('input', function () {
+    astrolabe.unlockAudio();
+    astrolabe.setDecumanusOffset(Number(dom.sliderDecumanus.value));
+    prnMaybeTickSound();
+    prnRenderFrame();
+  });
+
+  dom.sliderEclipse.addEventListener('input', function () {
+    astrolabe.unlockAudio();
+    astrolabe.setEclipseTuning(Number(dom.sliderEclipse.value) / 100);
+    prnMaybeTickSound();
+    prnRenderFrame();
+  });
+
+  dom.btnTemples.addEventListener('click', function () {
+    astrolabe.unlockAudio();
+    var snap = astrolabe.consecrateAllHouses();
+    astrolabe.playSolsticeChord(snap.celestialPrecision);
+    prnRenderFrame();
+  });
+
+  dom.btnCellars.addEventListener('click', function () { prnToggleCellars(); });
+
+  dom.btnPerturb.addEventListener('click', function () {
+    astrolabe.unlockAudio();
+    var snap = astrolabe.perturbAxes();
+    astrolabe.playVernierTick(snap.celestialPrecision);
+    prnRenderFrame();
+  });
+
+  dom.btnReset.addEventListener('click', function () { prnResetAll(); });
+  dom.btnMute.addEventListener('click', function () { prnToggleMute(); });
+  dom.btnPlates.addEventListener('click', function () { prnTogglePlates(); });
+
+  dom.horn0.addEventListener('click', function () { prnSetForkVerdict('undecided'); });
+  dom.horn1.addEventListener('click', function () { prnSetForkVerdict('admitCalculationsWrong'); });
+  dom.horn2.addEventListener('click', function () { prnSetForkVerdict('confessGodsOrderIsMonsters'); });
+
+  for (var bi = 0; bi < houseBtns.length; bi++) {
+    (function (btnEl) {
+      var idx = Number(btnEl.getAttribute('data-prn-house'));
+      btnEl.addEventListener('click', function () {
+        astrolabe.unlockAudio();
+        var s = astrolabe.toggleHouse(idx);
+        astrolabe.playVernierTick(s.celestialPrecision);
+        prnRenderFrame();
+      });
+      btnEl.addEventListener('mouseenter', function () {
+        highlightedHouse = idx;
+        prnSyncUI();
+        prnRenderFrame();
+      });
+      btnEl.addEventListener('mouseleave', function () {
+        if (highlightedHouse === idx) {
+          highlightedHouse = -1;
+          prnSyncUI();
+          prnRenderFrame();
+        }
+      });
+    })(houseBtns[bi]);
+  }
+
+  for (var ri = 0; ri < cohortRows.length; ri++) {
+    (function (rowEl) {
+      var zIdx = Number(rowEl.getAttribute('data-prn-zhouse'));
+      var cId = rowEl.getAttribute('data-prn-cohort');
+      rowEl.addEventListener('mouseenter', function () {
+        highlightedHouse = zIdx;
+        prnSyncUI();
+        prnRenderFrame();
+      });
+      rowEl.addEventListener('mouseleave', function () {
+        if (highlightedHouse === zIdx) {
+          highlightedHouse = -1;
+          prnSyncUI();
+          prnRenderFrame();
+        }
+      });
+      rowEl.addEventListener('click', function () {
+        astrolabe.unlockAudio();
+        highlightedHouse = zIdx;
+        if (cId === 'three_headed_children' || cId === 'six_legged_children') {
+          prnToggleCellars(true);
+        } else {
+          astrolabe.playVernierTick(astrolabe.getState().celestialPrecision);
+          prnSyncUI();
+          prnRenderFrame();
+        }
+      });
+    })(cohortRows[ri]);
+  }
+
+  dom.btnPlateZoom.addEventListener('click', function () { prnTogglePlateZoom(); });
+  dom.btnPlateClose.addEventListener('click', function () { prnTogglePlates(false); });
+  dom.plateDrawer.addEventListener('click', function (ev) {
+    if (ev.target === dom.plateDrawer) {
+      prnTogglePlates(false);
+    }
+  });
+
+  global.addEventListener('keydown', function (ev) {
+    if (ev.ctrlKey || ev.metaKey || ev.altKey) return;
+    var tag = ev.target && ev.target.tagName ? ev.target.tagName.toLowerCase() : '';
+    if (ev.key === 'Escape') {
+      if (platesOpen) {
+        ev.preventDefault();
+        prnTogglePlates(false);
+      }
+      return;
+    }
+    if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
+
+    var k = ev.key.toLowerCase();
+    if (k === 'a') { ev.preventDefault(); prnAlignSolstice(); }
+    else if (k === 'f') { ev.preventDefault(); prnAlignFirmament(); }
+    else if (k === 'e') {
+      ev.preventDefault();
+      astrolabe.unlockAudio();
+      var cur = astrolabe.getState().eclipseTuning;
+      var nxt = cur >= 0.99 ? 0.25 : Math.min(1, Number((cur + 0.2).toFixed(2)));
+      prnSetEclipseTuning(nxt);
+      astrolabe.playVernierTick(astrolabe.getState().celestialPrecision);
+    }
+    else if (k === 't') {
+      ev.preventDefault();
+      astrolabe.unlockAudio();
+      var sn = astrolabe.consecrateAllHouses();
+      astrolabe.playSolsticeChord(sn.celestialPrecision);
+      prnRenderFrame();
+    }
+    else if (k === 'c') { ev.preventDefault(); prnToggleCellars(); }
+    else if (k === 'd') {
+      ev.preventDefault();
+      astrolabe.unlockAudio();
+      astrolabe.perturbAxes();
+      astrolabe.playVernierTick(astrolabe.getState().celestialPrecision);
+      prnRenderFrame();
+    }
+    else if (k === 'r') { ev.preventDefault(); prnResetAll(); }
+    else if (k === 'm') { ev.preventDefault(); prnToggleMute(); }
+    else if (k === 'p') { ev.preventDefault(); prnTogglePlates(); }
+    else if (k === 'z' && platesOpen) { ev.preventDefault(); prnTogglePlateZoom(); }
+    else if (k === '0') { ev.preventDefault(); prnSetForkVerdict('undecided'); }
+    else if (k === '1') { ev.preventDefault(); prnSetForkVerdict('admitCalculationsWrong'); }
+    else if (k === '2') { ev.preventDefault(); prnSetForkVerdict('confessGodsOrderIsMonsters'); }
+  });
+
+  global.addEventListener('resize', function () { prnRenderFrame(); });
+
+  var lastFrameTs = 0;
+  function prnLoop(ts) {
+    var dt = lastFrameTs > 0 ? Math.min(0.1, (ts - lastFrameTs) / 1000) : 0.016;
+    lastFrameTs = ts;
+    astrolabe.step(dt, { reducedMotion: reducedMotion });
+    monstrousOrder.step(dt, { reducedMotion: reducedMotion });
+    prnRenderFrame();
+    global.requestAnimationFrame(prnLoop);
+  }
+
+  prnRefreshFallbacks();
+  monstrousOrder.step(0, { reducedMotion: reducedMotion });
+  prnSyncUI();
+  prnRenderFrame();
+  global.requestAnimationFrame(prnLoop);
+
+  var api = Object.freeze({
+    getState: prnGetMergedState,
+    alignSolstice: prnAlignSolstice,
+    alignFirmament: prnAlignFirmament,
+    setEclipseTuning: prnSetEclipseTuning,
+    setCardoOffset: function (deg) { astrolabe.setCardoOffset(deg); prnRenderFrame(); return prnGetMergedState(); },
+    setDecumanusOffset: function (deg) { astrolabe.setDecumanusOffset(deg); prnRenderFrame(); return prnGetMergedState(); },
+    toggleHouse: function (idx) { astrolabe.toggleHouse(idx); prnRenderFrame(); return prnGetMergedState(); },
+    consecrateAllHouses: function () { astrolabe.consecrateAllHouses(); prnRenderFrame(); return prnGetMergedState(); },
+    perturbSurvey: function () { astrolabe.perturbAxes(); prnRenderFrame(); return prnGetMergedState(); },
+    setLoupeCenter: function (nx, ny) { monstrousOrder.setLoupeCenter(nx, ny); prnRenderFrame(); return prnGetMergedState(); },
+    toggleCellars: prnToggleCellars,
+    setForkVerdict: prnSetForkVerdict,
+    togglePlates: prnTogglePlates,
+    toggleMute: prnToggleMute,
+    reset: prnResetAll
+  });
+
+  global.PerinthiaApp = api;
+  global.__PERINTHIA__ = api;
+})(typeof globalThis !== 'undefined' ? globalThis : window);
+</script>
+</body>
+</html>

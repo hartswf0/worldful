@@ -1,0 +1,130 @@
+{
+  "city_id": "48_procopia",
+  "city_number": 48,
+  "name": "Procopia",
+  "chapter": 9,
+  "category": "Continuous Cities 3",
+  "anti_trude_medium": "Invariant Walnut Inn-Window Casement & Linen Curtain Aperture with 9-Stratum Harvest Gouache Occlusion and 26-Lodger Inn-Room Interior",
+  "anti_trude_vector": {
+    "medium": "Single-frame annual return casement & step-back inn room",
+    "mechanism": "Each annual return lifts the same linen curtain on the exact same 9 autumn landscape strata while round, flat-faced, corn-eating citizens multiply (0 -> 1 -> 3 -> 6 -> 16 -> 29 -> 47 -> 144 -> 360), occluding stratum after stratum up to the upside-down trapeze of sky and filling the room behind with 26 polite lodgers.",
+    "css_prefix": "prc-",
+    "custom_dom_tags": [
+      "procopia-inn-casement",
+      "curtain-sash-aperture",
+      "nine-stratum-landscape",
+      "smiling-corn-multitude",
+      "room-twenty-six-ledger",
+      "procopia-plate-drawer",
+      "prc-lintel-bar",
+      "prc-title-plaque",
+      "prc-tool-cluster",
+      "prc-year-rail",
+      "prc-stratum-row",
+      "prc-meter-track",
+      "prc-meter-fill",
+      "prc-zone-tally",
+      "prc-plate-folio",
+      "prc-archival-notice"
+    ],
+    "forbidden_layout_tags": [
+      "div", "section", "header", "footer", "main", "nav", "span", "aside", "article", "ul", "li", "p", "h1", "h2", "h3", "h4", "a"
+    ]
+  },
+  "plates_policy": {
+    "plates_status": "COMPLETE",
+    "source": "Royal Plate Guild IX-A (#560)",
+    "rule": "Genuine museum-grade map.png (1600x1200), map.svg (1600x1200), and image.png (1600x1000) are installed on disk (#560). NEVER overwrite, regenerate, or delete them. Wire <img src=\"map.png\"> and <img src=\"image.png\"> live inside <procopia-plate-drawer> ([P] toggle, [Z] loupe/tabs, [Escape] close) so complete === true and naturalWidth === 1600 (keep clean onerror guard)."
+  },
+  "canonical_stones": [
+    {
+      "id": "invariant_inn_window",
+      "stone": "Same room in the same inn each year; lifting the linen curtain reveals 9 invariant autumn strata.",
+      "strata_foreground_to_sky": [
+        { "id": "ditch", "index": 0, "label": "Ditch", "phrase": "a ditch" },
+        { "id": "bridge", "index": 1, "label": "Bridge", "phrase": "a bridge" },
+        { "id": "little_wall", "index": 2, "label": "Little Wall", "phrase": "a little wall" },
+        { "id": "medlar_tree", "index": 3, "label": "Medlar Tree", "phrase": "a medlar tree" },
+        { "id": "cornfield", "index": 4, "label": "Field of Corn", "phrase": "a field of corn" },
+        { "id": "blackberry_bushes", "index": 5, "label": "Blackberry Bushes", "phrase": "blackberry bushes with thorns" },
+        { "id": "chicken_yard", "index": 6, "label": "Chicken Yard", "phrase": "a chicken yard" },
+        { "id": "yellow_hill", "index": 7, "label": "Yellow Hill Hump", "phrase": "the yellow hump of a hill" },
+        { "id": "trapeze_sky", "index": 8, "label": "Upside-Down Trapeze Sky", "phrase": "a patch of sky shaped like an upside-down trapeze" }
+      ]
+    },
+    {
+      "id": "progressive_corn_eater_occlusion",
+      "stone": "Good-natured inhabitants with round, flat faces, full cheeks, polite smiles, and ears of corn between their teeth multiply annually, progressively occluding every stratum.",
+      "annual_counts": [0, 1, 3, 6, 16, 29, 47, 144, 360],
+      "invariants": [
+        "At count=0 (Year I): ditchVisible === true, skyVisible === true, visibleStrataCount === 9, horizonFaceWall === false",
+        "At count=3 (Year III): ditchVisible === false",
+        "At count=6 (Year IV): bridge and little_wall occluded",
+        "At count=16 (Year V): medlar_tree and blackberry_bushes occluded",
+        "At count=29 (Year VI): cornfield occluded",
+        "At count=47 (Year VII): chicken_yard occluded",
+        "At count=144 (Year VIII): yellow_hill occluded, only trapeze_sky remains",
+        "At count=360 (Year IX, full_saturation): skyVisible === false, horizonFaceWall === true, visibleStrataCount === 0"
+      ]
+    },
+    {
+      "id": "twenty_six_room_lodgers",
+      "stone": "Stepping back from the curtain in the final year reveals 26 polite smiling inhabitants lodged inside the traveler's own tiny inn room, shifting knees to make space.",
+      "room_zones": {
+        "floorboards_crouching": 9,
+        "chest_of_drawers_seated": 8,
+        "inn_bed_taking_turns": 9,
+        "total_final_year": 26
+      },
+      "room_occupants_by_year": [0, 0, 0, 1, 3, 7, 13, 19, 26]
+    }
+  ],
+  "guild_ownership": {
+    "scion-procopia": ["charter.json", "dossier.json"],
+    "procopia-landscape": ["layers/inn_window_strata.js"],
+    "procopia-multitude": ["layers/smiling_face_occlusion.js"],
+    "procopia-weaver": ["index.html"],
+    "procopia-critic": []
+  },
+  "layer_contracts": {
+    "ProcopiaWindowStrata": {
+      "global_symbol": "ProcopiaWindowStrata",
+      "file": "layers/inn_window_strata.js",
+      "exports": ["STRATA_DEFS", "createRenderer"],
+      "renderer_methods": [
+        "computeLayout(width, height) -> { casement, aperture, trapezeSkyPoly, strataBands, roomZones }",
+        "renderWindowBackdrop(ctx, width, height, state)",
+        "renderWindowForegroundSashAndCurtain(ctx, width, height, state)",
+        "renderRoomBackdrop(ctx, width, height, state)",
+        "computeVisibilityReport(occlusionByStratum, curtainLift)",
+        "renderArchivalPreview(canvasEl, kind)"
+      ]
+    },
+    "ProcopiaFaceOcclusion": {
+      "global_symbol": "ProcopiaFaceOcclusion",
+      "file": "layers/smiling_face_occlusion.js",
+      "exports": ["ANNUAL_STEPS", "createEngine"],
+      "engine_methods": [
+        "setYearIndex(idx)",
+        "stepYear(delta)",
+        "setViewMode(mode)",
+        "setCurtainLift(val)",
+        "setPointer(normX, normY, pxX, pxY)",
+        "getOcclusionByStratum(yearIndex)",
+        "getState()",
+        "renderWindowMultitude(ctx, layout, opts)",
+        "renderRoomLodgers(ctx, layout, opts)",
+        "setMuted(flag)",
+        "toggleMute()",
+        "unlockAudio()"
+      ]
+    }
+  },
+  "hygiene_gates": {
+    "max_write_lines_per_call": 190,
+    "zero_external_protocols": true,
+    "zero_parent_traversals": true,
+    "zero_xml_namespaces": true,
+    "j_dom_target": 0.05
+  }
+}

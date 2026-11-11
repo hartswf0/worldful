@@ -1,0 +1,4284 @@
+<!DOCTYPE html>
+<html lang="en" class="and-root">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ANDRIA — Planetary Boulevards &amp; Reciprocal Celestial Vault</title>
+  <style class="and-stylesheet">
+    andria-plate-drawer[hidden],
+    .and-plate-img[hidden],
+    .and-hidden[hidden] {
+      display: none !important;
+    }
+
+    html.and-root {
+      --and-travertine: #efe5cf;
+      --and-parchment: #dfd0b0;
+      --and-parchment-deep: #cfbe98;
+      --and-terracotta: #b55a38;
+      --and-bamboo: #4a7a5c;
+      --and-brass: #c89b43;
+      --and-bronze: #7a5821;
+      --and-lapis: #0b1326;
+      --and-indigo: #17284a;
+      --and-nova-gold: #ffd97d;
+      --and-nebula-cyan: #72d1c6;
+      --and-ink: #1c1813;
+      --and-ink-soft: #4a3f31;
+      --and-cream: #faf4e6;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--and-travertine);
+      color: var(--and-ink);
+      font-family: "Palatino Linotype", "Book Antiqua", Georgia, serif;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body.and-vessel {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100vh;
+      overflow-x: hidden;
+      overflow-y: hidden;
+      background:
+        radial-gradient(circle at 24% 30%, rgba(250, 244, 230, 0.85), rgba(223, 208, 176, 0.55) 54%, rgba(196, 176, 136, 0.45)),
+        var(--and-travertine);
+      color: var(--and-ink);
+    }
+
+    .and-vessel *,
+    .and-vessel *::before,
+    .and-vessel *::after {
+      box-sizing: border-box;
+    }
+
+    andria-celestial-organism,
+    andria-ephemeris-masthead,
+    andria-title-crest,
+    andria-title-glyph,
+    andria-title-motto,
+    andria-rite-chronometer,
+    andria-rite-pill,
+    andria-sidereal-scrubber,
+    andria-mode-switcher,
+    andria-view-group,
+    andria-utility-group,
+    andria-hemisphere-split,
+    planetary-street-orbits,
+    observatory-nova-dome,
+    andria-panel-crown,
+    andria-panel-heading,
+    andria-rite-subline,
+    andria-telescope-hud,
+    andria-dome-controls,
+    andria-canvas-frame,
+    andria-star-ribbon,
+    andria-workbench-deck,
+    prudence-balance-scale,
+    andria-scale-crown,
+    andria-harmony-badge,
+    andria-scale-beam,
+    andria-beam-fulcrum,
+    andria-beam-arm,
+    andria-scale-pan,
+    andria-weight-sliders,
+    andria-weight-dial,
+    andria-dial-label,
+    andria-scale-actions,
+    andria-status-banner,
+    civic-innovation-council,
+    andria-decree-grid,
+    andria-decree-tablet,
+    andria-decree-header,
+    andria-decree-title,
+    andria-decree-state,
+    andria-decree-pair,
+    andria-decree-actions,
+    andria-plate-drawer,
+    andria-plate-sheet,
+    andria-plate-header,
+    andria-plate-title-wrap,
+    andria-plate-title,
+    andria-plate-subtitle,
+    andria-plate-controls,
+    andria-plate-grid,
+    andria-plate-card,
+    andria-archival-notice,
+    andria-plate-caption {
+      display: block;
+    }
+
+    andria-key-trigger,
+    andria-keycap,
+    andria-btn-text,
+    andria-coord-badge,
+    andria-pan-val {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .and-organism {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: 7px;
+      width: 100%;
+      height: 100vh;
+      max-width: 100vw;
+      padding: 7px 10px;
+    }
+
+    .and-masthead {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 10px;
+      padding: 5px 10px;
+      background: linear-gradient(90deg, #f6eedc 0%, #eadbc0 58%, #1a2b4c 100%);
+      border: 1.5px solid var(--and-bronze);
+      border-radius: 6px;
+      box-shadow: 0 1px 4px rgba(28, 24, 19, 0.14);
+    }
+
+    .and-title-crest {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      min-width: 0;
+    }
+
+    .and-title-glyph {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--and-ink);
+      line-height: 1.1;
+    }
+
+    .and-title-motto {
+      font-size: 10.5px;
+      color: var(--and-ink-soft);
+      line-height: 1.15;
+    }
+
+    .and-rite-chronometer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-width: 0;
+      flex-wrap: wrap;
+    }
+
+    .and-rite-pill {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--and-ink);
+      background: rgba(250, 244, 230, 0.92);
+      border: 1px solid var(--and-brass);
+      border-radius: 999px;
+      padding: 2px 9px;
+      line-height: 1.25;
+    }
+
+    .and-sidereal-scrubber {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(250, 244, 230, 0.86);
+      border: 1px solid rgba(122, 88, 33, 0.45);
+      border-radius: 999px;
+      padding: 2px 7px 2px 4px;
+    }
+
+    .and-sidereal-input {
+      width: 82px;
+      accent-color: var(--and-bronze);
+      cursor: pointer;
+      margin: 0;
+    }
+
+    .and-mode-switcher {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .and-view-group,
+    .and-utility-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .and-key-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 3px 8px;
+      font-size: 11px;
+      font-weight: 600;
+      line-height: 1.2;
+      border-radius: 4px;
+      border: 1px solid var(--and-bronze);
+      background: var(--and-cream);
+      color: var(--and-ink);
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.14s ease, border-color 0.14s ease, transform 0.1s ease;
+    }
+
+    .and-key-btn:hover,
+    .and-key-btn:focus-visible {
+      background: #fff9eb;
+      border-color: var(--and-brass);
+      outline: 2px solid rgba(200, 155, 67, 0.45);
+      outline-offset: 1px;
+    }
+
+    .and-key-btn[aria-pressed="true"],
+    .and-view-btn[aria-pressed="true"] {
+      background: var(--and-bronze);
+      color: var(--and-cream);
+      border-color: var(--and-nova-gold);
+    }
+
+    .and-keycap {
+      font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+      font-size: 9.5px;
+      font-weight: 700;
+      padding: 1px 4px;
+      border-radius: 3px;
+      background: rgba(28, 24, 19, 0.11);
+      border: 1px solid rgba(122, 88, 33, 0.38);
+      line-height: 1.1;
+    }
+
+    .and-key-btn[aria-pressed="true"] .and-keycap {
+      background: rgba(255, 217, 125, 0.22);
+      border-color: rgba(255, 217, 125, 0.55);
+      color: var(--and-nova-gold);
+    }
+
+    .and-coord-badge {
+      font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+      font-size: 10.5px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(28, 24, 19, 0.08);
+      color: var(--and-ink);
+      line-height: 1.2;
+    }
+
+    .and-hemisphere-split {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 8px;
+      min-height: 0;
+      width: 100%;
+    }
+
+    .and-hemisphere-split[data-view-mode="streets"] {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .and-hemisphere-split[data-view-mode="streets"] .and-dome-panel {
+      display: none;
+    }
+
+    .and-hemisphere-split[data-view-mode="observatory"] {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .and-hemisphere-split[data-view-mode="observatory"] .and-street-panel {
+      display: none;
+    }
+
+    .and-street-panel,
+    .and-dome-panel {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: 5px;
+      padding: 6px 8px;
+      border-radius: 7px;
+      min-width: 0;
+      min-height: 0;
+    }
+
+    .and-street-panel {
+      background: linear-gradient(180deg, #f7efe0 0%, #e7d8b9 100%);
+      border: 1.5px solid var(--and-bronze);
+      box-shadow: inset 0 0 0 1px rgba(200, 155, 67, 0.35);
+    }
+
+    .and-dome-panel {
+      background: linear-gradient(180deg, #101d38 0%, #091021 100%);
+      border: 1.5px solid var(--and-brass);
+      color: var(--and-travertine);
+      box-shadow: inset 0 0 0 1px rgba(255, 217, 125, 0.2);
+    }
+
+    .and-panel-crown,
+    .and-telescope-hud {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      min-width: 0;
+      flex-wrap: wrap;
+    }
+
+    .and-panel-heading {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--and-bronze);
+    }
+
+    .and-heading-sky {
+      color: var(--and-nova-gold);
+    }
+
+    .and-rite-subline {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--and-ink-soft);
+      background: rgba(250, 244, 230, 0.85);
+      border: 1px solid rgba(122, 88, 33, 0.35);
+      border-radius: 4px;
+      padding: 1px 7px;
+    }
+
+    .and-dome-controls {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+
+    .and-coord-sky {
+      background: rgba(23, 40, 74, 0.88);
+      border: 1px solid rgba(200, 155, 67, 0.45);
+      color: var(--and-nova-gold);
+    }
+
+    .and-novelty-counter {
+      background: rgba(114, 209, 198, 0.14);
+      border: 1px solid rgba(114, 209, 198, 0.48);
+      color: var(--and-nebula-cyan);
+    }
+
+    .and-btn-sky {
+      background: #17284a;
+      color: var(--and-travertine);
+      border-color: var(--and-brass);
+    }
+
+    .and-btn-sky:hover,
+    .and-btn-sky:focus-visible {
+      background: #223966;
+      color: #ffffff;
+    }
+
+    .and-btn-sky .and-keycap {
+      background: rgba(255, 217, 125, 0.18);
+      color: var(--and-nova-gold);
+      border-color: rgba(255, 217, 125, 0.45);
+    }
+
+    .and-canvas-frame {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 180px;
+      border-radius: 5px;
+      overflow: hidden;
+      border: 1px solid rgba(122, 88, 33, 0.48);
+    }
+
+    .and-sky-frame {
+      border-color: rgba(200, 155, 67, 0.55);
+      background: #060b17;
+    }
+
+    .and-stage-canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      cursor: crosshair;
+      touch-action: manipulation;
+    }
+
+    .and-star-ribbon {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 5px;
+    }
+
+    .and-star-chip,
+    .and-sky-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 3px 5px;
+      font-size: 10.5px;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+      text-align: center;
+      line-height: 1.15;
+      border: 1px solid rgba(122, 88, 33, 0.48);
+      background: rgba(250, 244, 230, 0.88);
+      color: var(--and-ink);
+    }
+
+    .and-star-chip[data-focused="true"] {
+      background: var(--and-bronze);
+      color: var(--and-cream);
+      border-color: var(--and-nova-gold);
+    }
+
+    .and-sky-chip {
+      background: rgba(23, 40, 74, 0.84);
+      border-color: rgba(200, 155, 67, 0.42);
+      color: var(--and-travertine);
+    }
+
+    .and-sky-chip[data-focused="true"] {
+      background: rgba(200, 155, 67, 0.28);
+      border-color: var(--and-nova-gold);
+      color: var(--and-nova-gold);
+    }
+
+    .and-sky-chip[data-enacted="true"] {
+      box-shadow: inset 0 0 0 1px var(--and-nebula-cyan);
+    }
+
+    .and-workbench-deck {
+      display: grid;
+      grid-template-columns: 356px minmax(0, 1fr);
+      gap: 8px;
+      align-items: stretch;
+      min-width: 0;
+    }
+
+    .and-prudence-scale {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 5px;
+      padding: 7px 9px;
+      border-radius: 7px;
+      background: linear-gradient(180deg, #f5ecda 0%, #e4d4b3 100%);
+      border: 1.5px solid var(--and-bronze);
+      min-width: 0;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .and-prudence-scale[data-recoil="active"] {
+      border-color: var(--and-terracotta);
+      box-shadow: 0 0 0 2px rgba(181, 90, 56, 0.42);
+    }
+
+    .and-scale-crown {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .and-harmony-badge {
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: rgba(28, 24, 19, 0.08);
+      border: 1px solid rgba(122, 88, 33, 0.45);
+      color: var(--and-ink);
+    }
+
+    .and-harmony-badge[data-status="weighed"] {
+      background: rgba(74, 122, 92, 0.18);
+      border-color: var(--and-bamboo);
+      color: #244732;
+    }
+
+    .and-harmony-badge[data-status="blocked"] {
+      background: rgba(181, 90, 56, 0.2);
+      border-color: var(--and-terracotta);
+      color: #7c2d12;
+    }
+
+    .and-scale-beam {
+      position: relative;
+      height: 36px;
+      padding: 4px 8px;
+      border-radius: 5px;
+      background: rgba(28, 24, 19, 0.05);
+      border: 1px solid rgba(122, 88, 33, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .and-beam-fulcrum {
+      position: absolute;
+      bottom: 2px;
+      left: 50%;
+      width: 0;
+      height: 0;
+      margin-left: -7px;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-bottom: 11px solid var(--and-bronze);
+    }
+
+    .and-beam-arm {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 3px 8px;
+      border-bottom: 3px solid var(--and-brass);
+      transition: transform 0.2s ease;
+    }
+
+    .and-scale-pan {
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--and-ink);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .and-pan-val {
+      font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+      font-weight: 700;
+      color: var(--and-bronze);
+    }
+
+    .and-weight-sliders {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 8px;
+    }
+
+    .and-weight-dial {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .and-dial-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--and-ink-soft);
+    }
+
+    .and-range-input {
+      width: 100%;
+      height: 16px;
+      accent-color: var(--and-bronze);
+      cursor: pointer;
+      margin: 0;
+    }
+
+    .and-scale-actions {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 6px;
+    }
+
+    .and-btn-reckless {
+      background: #f9ebe5;
+      border-color: var(--and-terracotta);
+      color: #7c2d12;
+    }
+
+    .and-btn-reckless:hover,
+    .and-btn-reckless:focus-visible {
+      background: #f5d8cc;
+      border-color: #963818;
+    }
+
+    .and-status-banner {
+      font-size: 10.5px;
+      line-height: 1.25;
+      padding: 4px 7px;
+      border-radius: 4px;
+      background: rgba(250, 244, 230, 0.9);
+      border-left: 3px solid var(--and-brass);
+      color: var(--and-ink);
+    }
+
+    .and-status-banner[data-tone="blocked"] {
+      background: #fbeae3;
+      border-left-color: var(--and-terracotta);
+      color: #72240c;
+    }
+
+    .and-status-banner[data-tone="enacted"] {
+      background: #e6f2ea;
+      border-left-color: var(--and-bamboo);
+      color: #1e422c;
+    }
+
+    .and-council-panel {
+      display: flex;
+      flex-direction: column;
+      padding: 7px 8px;
+      border-radius: 7px;
+      background: linear-gradient(180deg, #f6eedc 0%, #e5d6b7 100%);
+      border: 1.5px solid var(--and-bronze);
+      min-width: 0;
+    }
+
+    .and-decree-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px;
+      height: 100%;
+    }
+
+    .and-decree-tablet {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 4px;
+      padding: 6px 8px;
+      border-radius: 5px;
+      background: rgba(250, 244, 230, 0.92);
+      border: 1px solid rgba(122, 88, 33, 0.42);
+      min-width: 0;
+      transition: border-color 0.16s ease, box-shadow 0.16s ease;
+    }
+
+    .and-decree-tablet[data-focused="true"] {
+      border-color: var(--and-brass);
+      box-shadow: inset 0 0 0 1px var(--and-brass);
+    }
+
+    .and-decree-tablet[data-enacted="true"] {
+      background: #eef6f0;
+      border-color: var(--and-bamboo);
+    }
+
+    .and-decree-tablet[data-recoil="active"] {
+      border-color: var(--and-terracotta);
+      background: #fcebe4;
+    }
+
+    .and-decree-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .and-decree-title {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--and-ink);
+      line-height: 1.2;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .and-decree-state {
+      font-size: 9.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 1px 6px;
+      border-radius: 999px;
+      background: rgba(28, 24, 19, 0.08);
+      color: var(--and-ink-soft);
+      flex-shrink: 0;
+    }
+
+    .and-decree-state[data-state="weighed"] {
+      background: rgba(200, 155, 67, 0.28);
+      color: #5c3f0e;
+    }
+
+    .and-decree-state[data-state="enacted"] {
+      background: rgba(74, 122, 92, 0.24);
+      color: #1e462d;
+    }
+
+    .and-decree-pair {
+      font-size: 10.5px;
+      color: var(--and-ink-soft);
+      line-height: 1.2;
+    }
+
+    .and-decree-actions {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .and-btn-decree {
+      padding: 2px 7px;
+      font-size: 10.5px;
+    }
+
+    .and-btn-primary {
+      background: var(--and-bronze);
+      color: var(--and-cream);
+      border-color: var(--and-bronze);
+    }
+
+    .and-btn-primary:hover,
+    .and-btn-primary:focus-visible {
+      background: #614417;
+      color: #ffffff;
+    }
+
+    .and-btn-primary .and-keycap {
+      background: rgba(255, 217, 125, 0.22);
+      color: var(--and-nova-gold);
+      border-color: rgba(255, 217, 125, 0.5);
+    }
+
+    .and-plate-drawer {
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      background: rgba(11, 19, 38, 0.84);
+      backdrop-filter: blur(4px);
+    }
+
+    .and-plate-sheet {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: min(1140px, 96vw);
+      max-height: 92vh;
+      overflow-y: auto;
+      padding: 14px 16px;
+      border-radius: 8px;
+      background: linear-gradient(180deg, #f7efe0 0%, #e6d7b8 100%);
+      border: 2px solid var(--and-brass);
+      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.55);
+      color: var(--and-ink);
+    }
+
+    .and-plate-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(122, 88, 33, 0.35);
+    }
+
+    .and-plate-title-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .and-plate-title {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--and-ink);
+    }
+
+    .and-plate-subtitle {
+      font-size: 11px;
+      color: var(--and-ink-soft);
+    }
+
+    .and-plate-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .and-plate-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .and-plate-grid[data-plate-tab="map"] {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .and-plate-grid[data-plate-tab="map"] .and-plate-card[data-plate-kind="image"] {
+      display: none;
+    }
+
+    .and-plate-grid[data-plate-tab="vista"] {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .and-plate-grid[data-plate-tab="vista"] .and-plate-card[data-plate-kind="map"] {
+      display: none;
+    }
+
+    .and-plate-card {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 8px;
+      border-radius: 6px;
+      background: #faf4e6;
+      border: 1px solid var(--and-bronze);
+      overflow: auto;
+    }
+
+    .and-plate-img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 58vh;
+      object-fit: contain;
+      border-radius: 4px;
+      border: 1px solid rgba(122, 88, 33, 0.35);
+      transition: transform 0.2s ease;
+      transform-origin: center center;
+    }
+
+    .and-plate-grid[data-plate-zoom="true"] .and-plate-img {
+      transform: scale(1.8);
+      transform-origin: top left;
+    }
+
+    .and-plate-card:not([data-plate-fallback="active"]) .and-plate-fallback-canvas,
+    .and-plate-card:not([data-plate-fallback="active"]) .and-archival-notice {
+      display: none;
+    }
+
+    .and-plate-fallback-canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+      border: 1px solid var(--and-brass);
+    }
+
+    .and-archival-notice {
+      font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+      font-size: 10.5px;
+      padding: 5px 8px;
+      border-radius: 4px;
+      background: #17284a;
+      color: var(--and-nova-gold);
+      border: 1px solid var(--and-brass);
+    }
+
+    .and-plate-caption {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--and-ink-soft);
+      text-align: center;
+    }
+
+    @media (max-width: 960px) {
+      body.and-vessel {
+        height: auto;
+        min-height: 100vh;
+        overflow-y: auto;
+      }
+
+      .and-organism {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+        padding: 6px;
+        gap: 7px;
+      }
+
+      .and-masthead {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 6px;
+        padding: 6px 8px;
+        background: linear-gradient(180deg, #f6eedc 0%, #e7d8b9 100%);
+      }
+
+      .and-rite-chronometer,
+      .and-mode-switcher {
+        justify-content: flex-start;
+      }
+
+      .and-hemisphere-split {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .and-canvas-frame {
+        height: 224px;
+        min-height: 224px;
+      }
+
+      .and-star-ribbon {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .and-workbench-deck {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .and-decree-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .and-scale-actions {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .and-plate-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  </style>
+</head>
+<body class="and-vessel">
+  <andria-celestial-organism class="and-organism" id="and-organism" data-view-mode="split">
+    <andria-ephemeris-masthead class="and-masthead" id="and-masthead">
+      <andria-title-crest class="and-title-crest">
+        <andria-title-glyph class="and-title-glyph">ANDRIA</andria-title-glyph>
+        <andria-title-motto class="and-title-motto">Planetary Boulevards &amp; Reciprocal Celestial Vault</andria-title-motto>
+      </andria-title-crest>
+
+      <andria-rite-chronometer class="and-rite-chronometer" id="and-rite-chronometer">
+        <andria-rite-pill class="and-rite-pill" id="and-rite-title">Ascendant of Alpheratz — Harbor Manifests &amp; Astrolabe Calibration</andria-rite-pill>
+        <andria-sidereal-scrubber class="and-sidereal-scrubber">
+          <andria-key-trigger class="and-key-btn" id="and-btn-revolve" role="button" tabindex="0" aria-pressed="true" aria-label="Toggle sidereal vault revolution">
+            <andria-keycap class="and-keycap">Space</andria-keycap>
+            <andria-btn-text class="and-btn-text" id="and-revolve-label">Orbiting</andria-btn-text>
+          </andria-key-trigger>
+          <input class="and-range-input and-sidereal-input" id="and-sidereal-slider" type="range" min="0" max="360" step="1" value="43" aria-label="Sidereal vault revolution angle in degrees">
+          <andria-coord-badge class="and-coord-badge" id="and-sidereal-deg">43.2°</andria-coord-badge>
+        </andria-sidereal-scrubber>
+      </andria-rite-chronometer>
+
+      <andria-mode-switcher class="and-mode-switcher">
+        <andria-view-group class="and-view-group" role="group" aria-label="Hemisphere display mode">
+          <andria-key-trigger class="and-key-btn and-view-btn" id="and-view-split" data-view="split" role="button" tabindex="0" aria-pressed="true">Split</andria-key-trigger>
+          <andria-key-trigger class="and-key-btn and-view-btn" id="and-view-streets" data-view="streets" role="button" tabindex="0" aria-pressed="false">Streets</andria-key-trigger>
+          <andria-key-trigger class="and-key-btn and-view-btn" id="and-view-observatory" data-view="observatory" role="button" tabindex="0" aria-pressed="false">Observatory</andria-key-trigger>
+        </andria-view-group>
+        <andria-utility-group class="and-utility-group">
+          <andria-key-trigger class="and-key-btn" id="and-btn-mute" role="button" tabindex="0" aria-pressed="true" aria-label="Mute celestial harmonics">
+            <andria-keycap class="and-keycap">M</andria-keycap>
+            <andria-btn-text class="and-btn-text" id="and-mute-label">Muted</andria-btn-text>
+          </andria-key-trigger>
+          <andria-key-trigger class="and-key-btn" id="and-btn-plates" role="button" tabindex="0" aria-expanded="false" aria-controls="and-plate-drawer">
+            <andria-keycap class="and-keycap">P</andria-keycap>
+            <andria-btn-text class="and-btn-text">Plates</andria-btn-text>
+          </andria-key-trigger>
+          <andria-key-trigger class="and-key-btn" id="and-btn-reset" role="button" tabindex="0" aria-label="Reset vault and municipal decrees">
+            <andria-keycap class="and-keycap">R</andria-keycap>
+            <andria-btn-text class="and-btn-text">Reset</andria-btn-text>
+          </andria-key-trigger>
+        </andria-utility-group>
+      </andria-mode-switcher>
+    </andria-ephemeris-masthead>
+
+    <andria-hemisphere-split class="and-hemisphere-split" id="and-hemisphere-split" data-view-mode="split">
+      <planetary-street-orbits class="and-street-panel" id="and-street-panel">
+        <andria-panel-crown class="and-panel-crown">
+          <andria-panel-heading class="and-panel-heading">Planetary Street Orbits</andria-panel-heading>
+          <andria-rite-subline class="and-rite-subline" id="and-earth-focus-badge">Mercury-Venus Inner Crossing · Cepheids</andria-rite-subline>
+        </andria-panel-crown>
+        <andria-canvas-frame class="and-canvas-frame and-earth-frame">
+          <canvas class="and-stage-canvas" id="and-earth-canvas" width="600" height="340" aria-label="Travertine planetary boulevards and community star plazas of Andria"></canvas>
+        </andria-canvas-frame>
+        <andria-star-ribbon class="and-star-ribbon" role="group" aria-label="Luminous star civic plazas">
+          <andria-key-trigger class="and-star-chip" data-star="Cepheids" role="button" tabindex="0" data-focused="true">Cepheids Plaza</andria-key-trigger>
+          <andria-key-trigger class="and-star-chip" data-star="Antares" role="button" tabindex="0" data-focused="false">Antares Court</andria-key-trigger>
+          <andria-key-trigger class="and-star-chip" data-star="Alpheratz" role="button" tabindex="0" data-focused="false">Alpheratz Mole</andria-key-trigger>
+          <andria-key-trigger class="and-star-chip" data-star="Capella" role="button" tabindex="0" data-focused="false">Capella Palaestra</andria-key-trigger>
+        </andria-star-ribbon>
+      </planetary-street-orbits>
+
+      <observatory-nova-dome class="and-dome-panel" id="and-dome-panel">
+        <andria-telescope-hud class="and-telescope-hud" id="and-telescope-hud">
+          <andria-panel-heading class="and-panel-heading and-heading-sky">Brass Observatory Dome</andria-panel-heading>
+          <andria-dome-controls class="and-dome-controls">
+            <andria-coord-badge class="and-coord-badge and-coord-sky" id="and-sky-coords">RA 062° · Dec +47°</andria-coord-badge>
+            <andria-coord-badge class="and-coord-badge and-novelty-counter" id="and-novelty-count">0 / 4 Novelties</andria-coord-badge>
+            <andria-key-trigger class="and-key-btn and-btn-sky" id="and-btn-telescope" role="button" tabindex="0" aria-pressed="false" aria-label="Toggle celestial vault and brass ocular reticle">
+              <andria-keycap class="and-keycap">T</andria-keycap>
+              <andria-btn-text class="and-btn-text" id="and-telescope-label">Vault View</andria-btn-text>
+            </andria-key-trigger>
+          </andria-dome-controls>
+        </andria-telescope-hud>
+        <andria-canvas-frame class="and-canvas-frame and-sky-frame">
+          <canvas class="and-stage-canvas" id="and-sky-canvas" width="600" height="340" aria-label="Reciprocal celestial vault and telescope reticle"></canvas>
+        </andria-canvas-frame>
+        <andria-star-ribbon class="and-star-ribbon and-sky-ribbon" role="group" aria-label="Reciprocal celestial novelties">
+          <andria-key-trigger class="and-sky-chip" data-celestial="star_cluster_nova" role="button" tabindex="0" data-focused="true" data-enacted="false">Cluster Nova</andria-key-trigger>
+          <andria-key-trigger class="and-sky-chip" data-celestial="nebula_condensed_planet" role="button" tabindex="0" data-focused="false" data-enacted="false">Planet Nebula</andria-key-trigger>
+          <andria-key-trigger class="and-sky-chip" data-celestial="saturn_ring_perturbation" role="button" tabindex="0" data-focused="false" data-enacted="false">Saturn Rings</andria-key-trigger>
+          <andria-key-trigger class="and-sky-chip" data-celestial="milky_way_expansion" role="button" tabindex="0" data-focused="false" data-enacted="false">Milky Way Arc</andria-key-trigger>
+        </andria-star-ribbon>
+      </observatory-nova-dome>
+    </andria-hemisphere-split>
+
+    <andria-workbench-deck class="and-workbench-deck" id="and-workbench-deck">
+      <prudence-balance-scale class="and-prudence-scale" id="and-prudence-scale" data-recoil="idle">
+        <andria-scale-crown class="and-scale-crown">
+          <andria-panel-heading class="and-panel-heading">Prudence Balance Scale</andria-panel-heading>
+          <andria-harmony-badge class="and-harmony-badge" id="and-harmony-badge" data-status="unweighed">Unweighed · 0.84 Proposed</andria-harmony-badge>
+        </andria-scale-crown>
+
+        <andria-scale-beam class="and-scale-beam" id="and-scale-beam">
+          <andria-beam-fulcrum class="and-beam-fulcrum"></andria-beam-fulcrum>
+          <andria-beam-arm class="and-beam-arm" id="and-beam-arm">
+            <andria-scale-pan class="and-scale-pan">Confidence <andria-pan-val class="and-pan-val" id="and-conf-readout">82%</andria-pan-val></andria-scale-pan>
+            <andria-scale-pan class="and-scale-pan">Prudence <andria-pan-val class="and-pan-val" id="and-prud-readout">86%</andria-pan-val></andria-scale-pan>
+          </andria-beam-arm>
+        </andria-scale-beam>
+
+        <andria-weight-sliders class="and-weight-sliders">
+          <andria-weight-dial class="and-weight-dial">
+            <andria-dial-label class="and-dial-label">Self-Confidence (&ge;55%)</andria-dial-label>
+            <input class="and-range-input" id="and-slider-confidence" type="range" min="0" max="100" step="1" value="82" aria-label="Self-confidence weight percentage">
+          </andria-weight-dial>
+          <andria-weight-dial class="and-weight-dial">
+            <andria-dial-label class="and-dial-label">Civic Prudence (&ge;65%)</andria-dial-label>
+            <input class="and-range-input" id="and-slider-prudence" type="range" min="0" max="100" step="1" value="86" aria-label="Civic prudence weight percentage">
+          </andria-weight-dial>
+        </andria-weight-sliders>
+
+        <andria-scale-actions class="and-scale-actions">
+          <andria-key-trigger class="and-key-btn" id="and-btn-weigh-focused" role="button" tabindex="0">
+            <andria-keycap class="and-keycap">W</andria-keycap>
+            <andria-btn-text class="and-btn-text">Weigh Risk</andria-btn-text>
+          </andria-key-trigger>
+          <andria-key-trigger class="and-key-btn and-btn-reckless" id="and-btn-reckless" role="button" tabindex="0">
+            <andria-keycap class="and-keycap">X</andria-keycap>
+            <andria-btn-text class="and-btn-text">Attempt Reckless Change</andria-btn-text>
+          </andria-key-trigger>
+        </andria-scale-actions>
+
+        <andria-status-banner class="and-status-banner" id="and-status-banner" role="status" aria-live="polite" data-tone="neutral">Citizens weigh risks for themselves, the city, and all worlds before any decree (0 blocked).</andria-status-banner>
+      </prudence-balance-scale>
+
+      <civic-innovation-council class="and-council-panel" id="and-council-panel">
+        <andria-decree-grid class="and-decree-grid" id="and-decree-grid">
+          <andria-decree-tablet class="and-decree-tablet" data-innovation-id="bamboo_suspended_street" data-focused="true" data-enacted="false" data-recoil="idle">
+            <andria-decree-header class="and-decree-header">
+              <andria-decree-title class="and-decree-title"><andria-keycap class="and-keycap">1</andria-keycap> Suspended Street over Bamboo Grove</andria-decree-title>
+              <andria-decree-state class="and-decree-state" data-state="unweighed">Unweighed</andria-decree-state>
+            </andria-decree-header>
+            <andria-decree-pair class="and-decree-pair">Mercury-Venus Crossing &harr; Star-Cluster Nova (Cepheids)</andria-decree-pair>
+            <andria-decree-actions class="and-decree-actions">
+              <andria-key-trigger class="and-key-btn and-btn-decree" data-decree-action="weigh" data-target-id="bamboo_suspended_street" role="button" tabindex="0">Weigh Risk</andria-key-trigger>
+              <andria-key-trigger class="and-key-btn and-btn-decree" data-decree-action="enact" data-target-id="bamboo_suspended_street" role="button" tabindex="0">Enact</andria-key-trigger>
+              <andria-key-trigger class="and-key-btn and-btn-decree and-btn-primary" data-decree-action="deliberate" data-target-id="bamboo_suspended_street" role="button" tabindex="0"><andria-keycap class="and-keycap">1</andria-keycap> Deliberate &amp; Enact</andria-key-trigger>
+            </andria-decree-actions>
+          </andria-decree-tablet>
+
+          <andria-decree-tablet class="and-decree-tablet" data-innovation-id="shadow_theater_kennels" data-focused="false" data-enacted="false" data-recoil="idle">
+            <andria-decree-header class="and-decree-header">
+              <andria-decree-title class="and-decree-title"><andria-keycap class="and-keycap">2</andria-keycap> Shadow-Theater Replacing Kennels</andria-decree-title>
+              <andria-decree-state class="and-decree-state" data-state="unweighed">Unweighed</andria-decree-state>
+            </andria-decree-header>
+            <andria-decree-pair class="and-decree-pair">Mars Arc (Antares Court) &harr; Nebula Condensing into Planet</andria-decree-pair>
+            <andria-decree-actions class="and-decree-actions">
+              <andria-key-trigger class="and-key-btn and-btn-decree" data-decree-action="weigh" data-target-id="shadow_theater_kennels" role="button" tabindex="0">Weigh Risk</andria-key-trigger>
+              <andria-key-trigger class="and-key-btn and-btn-decree" data-decree-action="enact" data-target-id="shadow_theater_kennels" role="button" tabindex="0">Enact</andria-key-trigger>
+              <andria-key-trigger class="and-key-btn and-btn-decree and-btn-primary" data-decree-action="deliberate" data-target-id="shadow_theater_kennels" role="button" tabindex="0"><andria-keycap class="and-keycap">2</andria-keycap> Deliberate &amp; Enact</andria-key-trigger>
+            </andria-decree-actions>
+          </andria-decree-tablet>
+
+          <andria-decree-tablet class="and-decree-tablet" data-innovation-id="statue_of_thales" data-focused="false" data-enacted="false" data-recoil="idle">
+            <andria-decree-header class="and-decree-header">
+              <andria-decree-title class="and-decree-title"><andria-keycap class="and-keycap">3</andria-keycap> Statue of Thales at Port</andria-decree-title>
+              <andria-decree-state class="and-decree-state" data-state="unweighed">Unweighed</andria-decree-state>
+            </andria-decree-header>
+            <andria-decree-pair class="and-decree-pair">Jupiter Quay (Alpheratz Mole) &harr; Saturn Ring Perturbation</andria-decree-pair>
+            <andria-decree-actions class="and-decree-actions">
+              <andria-key-trigger class="and-key-btn and-btn-decree" data-decree-action="weigh" data-target-id="statue_of_thales" role="button" tabindex="0">Weigh Risk</andria-key-trigger>
+              <andria-key-trigger class="and-key-btn and-btn-decree" data-decree-action="enact" data-target-id="statue_of_thales" role="button" tabindex="0">Enact</andria-key-trigger>
+              <andria-key-trigger class="and-key-btn and-btn-decree and-btn-primary" data-decree-action="deliberate" data-target-id="statue_of_thales" role="button" tabindex="0"><andria-keycap class="and-keycap">3</andria-keycap> Deliberate &amp; Enact</andria-key-trigger>
+            </andria-decree-actions>
+          </andria-decree-tablet>
+
+          <andria-decree-tablet class="and-decree-tablet" data-innovation-id="gymnastics_toboggan_slide" data-focused="false" data-enacted="false" data-recoil="idle">
+            <andria-decree-header class="and-decree-header">
+              <andria-decree-title class="and-decree-title"><andria-keycap class="and-keycap">4</andria-keycap> Toboggan Slide at Gymnastics School</andria-decree-title>
+              <andria-decree-state class="and-decree-state" data-state="unweighed">Unweighed</andria-decree-state>
+            </andria-decree-header>
+            <andria-decree-pair class="and-decree-pair">Saturn Terrace (Capella Palaestra) &harr; Milky Way Expansion</andria-decree-pair>
+            <andria-decree-actions class="and-decree-actions">
+              <andria-key-trigger class="and-key-btn and-btn-decree" data-decree-action="weigh" data-target-id="gymnastics_toboggan_slide" role="button" tabindex="0">Weigh Risk</andria-key-trigger>
+              <andria-key-trigger class="and-key-btn and-btn-decree" data-decree-action="enact" data-target-id="gymnastics_toboggan_slide" role="button" tabindex="0">Enact</andria-key-trigger>
+              <andria-key-trigger class="and-key-btn and-btn-decree and-btn-primary" data-decree-action="deliberate" data-target-id="gymnastics_toboggan_slide" role="button" tabindex="0"><andria-keycap class="and-keycap">4</andria-keycap> Deliberate &amp; Enact</andria-key-trigger>
+            </andria-decree-actions>
+          </andria-decree-tablet>
+        </andria-decree-grid>
+      </civic-innovation-council>
+    </andria-workbench-deck>
+  </andria-celestial-organism>
+
+  <andria-plate-drawer class="and-plate-drawer" id="and-plate-drawer" hidden aria-hidden="true">
+    <andria-plate-sheet class="and-plate-sheet" role="dialog" aria-modal="true" aria-label="Royal Chorographic and Observatory Plates of Andria">
+      <andria-plate-header class="and-plate-header">
+        <andria-plate-title-wrap class="and-plate-title-wrap">
+          <andria-plate-title class="and-plate-title">Archival Plates of Andria</andria-plate-title>
+          <andria-plate-subtitle class="and-plate-subtitle">Chorographic Planetary Boulevards &amp; Reciprocal Observatory Veduta</andria-plate-subtitle>
+        </andria-plate-title-wrap>
+        <andria-plate-controls class="and-plate-controls">
+          <andria-key-trigger class="and-key-btn and-plate-tab" data-plate-view="diptych" role="button" tabindex="0" aria-pressed="true">Diptych</andria-key-trigger>
+          <andria-key-trigger class="and-key-btn and-plate-tab" data-plate-view="map" role="button" tabindex="0" aria-pressed="false">Chorographic Plan</andria-key-trigger>
+          <andria-key-trigger class="and-key-btn and-plate-tab" data-plate-view="vista" role="button" tabindex="0" aria-pressed="false">Observatory Veduta</andria-key-trigger>
+          <andria-key-trigger class="and-key-btn" id="and-btn-plate-zoom" role="button" tabindex="0" aria-pressed="false">
+            <andria-keycap class="and-keycap">Z</andria-keycap>
+            <andria-btn-text class="and-btn-text">Loupe 1.8x</andria-btn-text>
+          </andria-key-trigger>
+          <andria-key-trigger class="and-key-btn" id="and-btn-plate-close" role="button" tabindex="0">
+            <andria-keycap class="and-keycap">Esc</andria-keycap>
+            <andria-btn-text class="and-btn-text">Close</andria-btn-text>
+          </andria-key-trigger>
+        </andria-plate-controls>
+      </andria-plate-header>
+
+      <andria-plate-grid class="and-plate-grid" id="and-plate-grid" data-plate-tab="diptych" data-plate-zoom="false">
+        <andria-plate-card class="and-plate-card" id="and-plate-card-map" data-plate-kind="map">
+          <img class="and-plate-img" id="and-plate-img-map" src="map.png" loading="lazy" alt="Chorographic Plan of Andria" onload="this.parentElement.setAttribute('data-plate-fallback','loaded');" onerror="this.hidden=true;this.parentElement.setAttribute('data-plate-fallback','active');if(window.AndriaOrganism)window.AndriaOrganism.drawFallbackPlates();">
+          <canvas class="and-plate-fallback-canvas" id="and-fallback-canvas-map" width="640" height="480" aria-label="Engraved Astrolabe Chorographic Plan Specimen"></canvas>
+          <andria-archival-notice class="and-archival-notice">PENDING_IMAGE_GENERATOR_QUOTA — Royal Copperplate Engraving Queued for 2026-11-11T06:21:14Z</andria-archival-notice>
+          <andria-plate-caption class="and-plate-caption">Tabula I · Chorographic Planimetry of the Seven Planetary Boulevards &amp; Star Plazas</andria-plate-caption>
+        </andria-plate-card>
+
+        <andria-plate-card class="and-plate-card" id="and-plate-card-vista" data-plate-kind="image">
+          <img class="and-plate-img" id="and-plate-img-vista" src="image.png" loading="lazy" alt="Observatory Veduta of Andria" onload="this.parentElement.setAttribute('data-plate-fallback','loaded');" onerror="this.hidden=true;this.parentElement.setAttribute('data-plate-fallback','active');if(window.AndriaOrganism)window.AndriaOrganism.drawFallbackPlates();">
+          <canvas class="and-plate-fallback-canvas" id="and-fallback-canvas-vista" width="640" height="400" aria-label="Engraved Observatory Dome Veduta Specimen"></canvas>
+          <andria-archival-notice class="and-archival-notice">PENDING_IMAGE_GENERATOR_QUOTA — Royal Copperplate Engraving Queued for 2026-11-11T06:21:14Z</andria-archival-notice>
+          <andria-plate-caption class="and-plate-caption">Tabula II · Specula Astronomica &amp; Suspended Bamboo Viaduct Beneath the Vault</andria-plate-caption>
+        </andria-plate-card>
+      </andria-plate-grid>
+    </andria-plate-sheet>
+  </andria-plate-drawer>
+
+  <script class="and-layer-script">
+/*
+ * Andria — Planetary Street Orbits, Star-Regulated Civic Rites & Prudent Municipal Innovations
+ * Standalone browser IIFE exposing globalThis.AndriaPlanetaryStreets
+ */
+(function (global) {
+  'use strict';
+
+  var PALETTE = {
+    travertine_stone: '#efe5cf',
+    parchment_ochre: '#dfd0b0',
+    terracotta_tile: '#b55a38',
+    bamboo_jade: '#4a7a5c',
+    brass_astrolabe: '#c89b43',
+    burnished_bronze: '#7a5821',
+    lapis_vault: '#0b1326',
+    indigo_meridian: '#17284a',
+    nova_gold: '#ffd97d',
+    nebula_cyan: '#72d1c6',
+    ink_iron: '#1c1813'
+  };
+
+  var ORBITS = [
+    {
+      id: 'mercury_ring',
+      name: 'Mercury Ring',
+      semiMajor: 0.21,
+      semiMinor: 0.172,
+      tiltDeg: -14,
+      eccentricity: 0.18,
+      siderealVel: 1.68,
+      roadWidth: 5.5,
+      guild: 'Assayers & Ephemeris Scribes',
+      civicRite: 'Quicksilver Assay & Weight Sealing',
+      riteSector: 2,
+      processions: 5
+    },
+    {
+      id: 'venus_arcade',
+      name: 'Venus Arcade',
+      semiMajor: 0.325,
+      semiMinor: 0.268,
+      tiltDeg: 9,
+      eccentricity: 0.10,
+      siderealVel: 1.24,
+      roadWidth: 6.2,
+      guild: 'Silk Weavers & Lantern-Smiths',
+      civicRite: 'Canopy Silk Exchange & Lantern Vigil',
+      riteSector: 2,
+      processions: 7
+    },
+    {
+      id: 'lunar_corso',
+      name: 'Lunar Corso',
+      semiMajor: 0.44,
+      semiMinor: 0.365,
+      tiltDeg: -6,
+      eccentricity: 0.12,
+      siderealVel: 2.05,
+      roadWidth: 6.0,
+      guild: 'Cistern Keepers & Night Watch',
+      civicRite: 'Tide-Cistern Opening & Silver Measure',
+      riteSector: 1,
+      processions: 8
+    },
+    {
+      id: 'solar_ecliptic_via',
+      name: 'Solar Ecliptic Via',
+      semiMajor: 0.555,
+      semiMinor: 0.462,
+      tiltDeg: 4,
+      eccentricity: 0.06,
+      siderealVel: 0.88,
+      roadWidth: 7.4,
+      guild: 'Council Notaries & Grain Measurers',
+      civicRite: 'Meridian Grain Weigh-House Convocation',
+      riteSector: 4,
+      processions: 10
+    },
+    {
+      id: 'mars_rampart',
+      name: 'Mars Rampart',
+      semiMajor: 0.675,
+      semiMinor: 0.562,
+      tiltDeg: -11,
+      eccentricity: 0.14,
+      siderealVel: 0.64,
+      roadWidth: 6.8,
+      guild: 'Bronze Founders & Silhouette Troupes',
+      civicRite: 'Terracotta Kiln Firing & Court Spectacle',
+      riteSector: 3,
+      processions: 9
+    },
+    {
+      id: 'jupiter_quay',
+      name: 'Jupiter Quay',
+      semiMajor: 0.795,
+      semiMinor: 0.662,
+      tiltDeg: 7,
+      eccentricity: 0.09,
+      siderealVel: 0.44,
+      roadWidth: 7.2,
+      guild: 'Mariners & Astrolabe Pilots',
+      civicRite: 'Harbor Manifest Audit & Oil Unloading',
+      riteSector: 0,
+      processions: 11
+    },
+    {
+      id: 'saturn_outer_terrace',
+      name: 'Saturn Outer Terrace',
+      semiMajor: 0.915,
+      semiMinor: 0.765,
+      tiltDeg: -8,
+      eccentricity: 0.11,
+      siderealVel: 0.28,
+      roadWidth: 6.6,
+      guild: 'Stonecutters, Gymnasts & Orcharders',
+      civicRite: 'Outer Balustrade Games & Orchard Harvest',
+      riteSector: 5,
+      processions: 11
+    }
+  ];
+
+  var SIDEREAL_RITES = [
+    { id: 'alpheratz_ascendant', startDeg: 0, endDeg: 60, title: 'Ascendant of Alpheratz — Harbor Manifests & Astrolabe Calibration', market: 'Jupiter Quay Weigh-House', trade: 'Mariners & Instrument Makers', harvest: 'Early Pressed Olive Oil & Sea Salt', orbitId: 'jupiter_quay' },
+    { id: 'capella_culmination', startDeg: 60, endDeg: 120, title: 'Culmination of Capella — Palaestra Games & Timber Joinery Fair', market: 'Capella Outer Agora', trade: 'Joiners, Gymnasts & Wheelwrights', harvest: 'Highland Chestnut & Golden Barley', orbitId: 'lunar_corso' },
+    { id: 'cepheids_pulse', startDeg: 120, endDeg: 180, title: 'Pulse of the Cepheids — Bamboo Lantern Market & Silk Looming', market: 'Mercury-Venus Inner Loggia', trade: 'Silk Weavers & Brass-Lantern Smiths', harvest: 'Tender Bamboo Culms & Mulberry', orbitId: 'venus_arcade' },
+    { id: 'antares_transit', startDeg: 180, endDeg: 240, title: 'Transit of Antares — Terracotta Kiln Firing & Nocturnal Spectacle', market: 'Antares Crimson Arcade', trade: 'Bronze Founders & Linen Puppeteers', harvest: 'Cask Pomegranate & Vineyard Must', orbitId: 'mars_rampart' },
+    { id: 'ecliptic_quadrature', startDeg: 240, endDeg: 300, title: 'Meridian Quadrature — Granary Seal & Prudence Council Audit', market: 'Solar Ecliptic Rotunda', trade: 'Civic Notaries & Balance Assayers', harvest: 'Stored Einkorn & Dried Fig Loaves', orbitId: 'solar_ecliptic_via' },
+    { id: 'saturn_ring_watch', startDeg: 300, endDeg: 360, title: 'Ring of Saturn — Outer Terrace Procession & Observatory Watch', market: 'Saturn Terrace Balustrade', trade: 'Astronomers & Travertine Masons', harvest: 'Late Orchard Pressing & Cedar Resin', orbitId: 'saturn_outer_terrace' }
+  ];
+
+  var LUMINOUS_STARS = [
+    { name: 'Antares', orbitId: 'mars_rampart', angleDeg: 170, coupledId: 'shadow_theater_kennels', color: '#e05a3f', communityBuilding: 'Antares Crimson Court & Foundry Hall', raDeg: 247.35, decDeg: -26.43 },
+    { name: 'Alpheratz', orbitId: 'jupiter_quay', angleDeg: -34, coupledId: 'statue_of_thales', color: '#9ed2ff', communityBuilding: 'Alpheratz Harbourmaster Rotunda', raDeg: 2.09, decDeg: 29.09 },
+    { name: 'Capella', orbitId: 'saturn_outer_terrace', angleDeg: 84, coupledId: 'gymnastics_toboggan_slide', color: '#ffd97d', communityBuilding: 'Capella Palaestra & Twin Braziers', raDeg: 79.17, decDeg: 45.99 },
+    { name: 'Cepheids', orbitId: 'venus_arcade', angleDeg: -98, coupledId: 'bamboo_suspended_street', color: '#ffe8a3', communityBuilding: 'Cepheid Variable Lantern Terrace', raDeg: 337.29, decDeg: 58.41 }
+  ];
+
+  var INNOVATIONS = [
+    {
+      id: 'bamboo_suspended_street',
+      title: 'Suspended Street over the Bamboo Grove',
+      earthlyInnovation: 'Suspended street built over a bamboo grove',
+      orbitId: 'venus_arcade',
+      innerOrbitId: 'mercury_ring',
+      orbitDistrict: 'Mercury-Venus Inner Crossing',
+      star: 'Cepheids',
+      celestialId: 'star_cluster_nova',
+      celestialNovelty: 'Nova explosion ignited in a star cluster',
+      beforeLabel: 'Swaying jade bamboo culms filling the sunken inner grove',
+      afterLabel: 'Arched timber-and-brass suspended viaduct spanning the bamboo canopy with lanterns',
+      angleDeg: -134
+    },
+    {
+      id: 'shadow_theater_kennels',
+      title: 'Shadow-Theater Replacing Municipal Kennels',
+      earthlyInnovation: 'Shadow-theater opened in place of the municipal kennels',
+      orbitId: 'mars_rampart',
+      orbitDistrict: 'Mars Arc (Antares Court)',
+      star: 'Antares',
+      celestialId: 'nebula_condensed_planet',
+      celestialNovelty: 'Gaseous nebula condensing into a nascent planet',
+      beforeLabel: 'Stone municipal hound kennels with iron-grated stalls',
+      afterLabel: 'Illuminated oiled-linen shadow-theater proscenium with articulated silhouette puppets',
+      angleDeg: 142
+    },
+    {
+      id: 'statue_of_thales',
+      title: 'Statue of Thales Raised at the Port',
+      earthlyInnovation: 'Statue of Thales raised at the port',
+      orbitId: 'jupiter_quay',
+      orbitDistrict: 'Jupiter Harbor Quay (Alpheratz Mole)',
+      star: 'Alpheratz',
+      celestialId: 'saturn_ring_perturbation',
+      celestialNovelty: "Orbital perturbation in Saturn's rings and outer star",
+      beforeLabel: 'Bare dressed-limestone harbor mole jutting into the basin',
+      afterLabel: 'Burnished bronze Statue of Thales holding compass & gnomon over rippling harbor water',
+      angleDeg: -8
+    },
+    {
+      id: 'gymnastics_toboggan_slide',
+      title: 'Toboggan Slide Added to School of Gymnastics',
+      earthlyInnovation: 'Toboggan slide added to the school of gymnastics',
+      orbitId: 'saturn_outer_terrace',
+      orbitDistrict: 'Saturn Outer Terrace (Capella Palaestra)',
+      star: 'Capella',
+      celestialId: 'milky_way_expansion',
+      celestialNovelty: 'Curved expansion of the Milky Way',
+      beforeLabel: 'Colonnaded gymnastics courtyard & sand palaestra',
+      afterLabel: 'Helical polished timber-and-brass toboggan slide sweeping down from the palaestra roof',
+      angleDeg: 54
+    }
+  ];
+
+  var CONSTELLATION_CHORDS = [
+    ['Cepheids', 'Alpheratz'],
+    ['Alpheratz', 'Capella'],
+    ['Capella', 'Antares'],
+    ['Antares', 'Cepheids'],
+    ['Cepheids', 'Capella'],
+    ['Antares', 'Alpheratz']
+  ];
+
+  function clamp(v, lo, hi) {
+    return v < lo ? lo : (v > hi ? hi : v);
+  }
+
+  function degToRad(d) {
+    return (d * Math.PI) / 180;
+  }
+
+  function findOrbit(id) {
+    for (var i = 0; i < ORBITS.length; i++) {
+      if (ORBITS[i].id === id || ORBITS[i].name.toLowerCase() === String(id).toLowerCase()) return ORBITS[i];
+    }
+    return ORBITS[0];
+  }
+
+  function riteForDeg(deg) {
+    var norm = ((deg % 360) + 360) % 360;
+    var idx = Math.min(SIDEREAL_RITES.length - 1, Math.floor(norm / 60));
+    var r = SIDEREAL_RITES[idx];
+    return {
+      id: r.id,
+      index: idx,
+      startDeg: r.startDeg,
+      endDeg: r.endDeg,
+      title: r.title,
+      market: r.market,
+      trade: r.trade,
+      harvest: r.harvest,
+      orbitId: r.orbitId,
+      toString: function () { return r.title; }
+    };
+  }
+
+  function computeGeom(w, h) {
+    var cx = w * 0.49;
+    var cy = h * 0.51;
+    var rUnit = Math.min(w * 0.445, h * 0.445);
+    return { w: w, h: h, cx: cx, cy: cy, r: Math.max(48, rUnit) };
+  }
+
+  function orbitPoint(orb, thetaRad, g) {
+    var a = orb.semiMajor * g.r;
+    var b = orb.semiMinor * g.r;
+    var fx = a * orb.eccentricity * 0.28;
+    var lx = Math.cos(thetaRad) * a - fx;
+    var ly = Math.sin(thetaRad) * b;
+    var tr = degToRad(orb.tiltDeg);
+    var ct = Math.cos(tr);
+    var st = Math.sin(tr);
+    return {
+      x: g.cx + lx * ct - ly * st,
+      y: g.cy + lx * st + ly * ct
+    };
+  }
+
+  function starPoint(star, g) {
+    var orb = findOrbit(star.orbitId);
+    return orbitPoint(orb, degToRad(star.angleDeg), g);
+  }
+
+  function innovationPoint(item, g) {
+    var rad = degToRad(item.angleDeg);
+    if (item.innerOrbitId) {
+      var p1 = orbitPoint(findOrbit(item.innerOrbitId), rad, g);
+      var p2 = orbitPoint(findOrbit(item.orbitId), rad, g);
+      return { x: (p1.x + p2.x) * 0.5, y: (p1.y + p2.y) * 0.5 };
+    }
+    return orbitPoint(findOrbit(item.orbitId), rad, g);
+  }
+
+  function drawGroundAndBezel(ctx, g, siderealDeg, timeSec) {
+    var bg = ctx.createRadialGradient(g.cx, g.cy, g.r * 0.08, g.cx, g.cy, Math.max(g.w, g.h) * 0.78);
+    bg.addColorStop(0, '#f6eedb');
+    bg.addColorStop(0.58, PALETTE.travertine_stone);
+    bg.addColorStop(1, '#d2bf97');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, g.w, g.h);
+
+    ctx.save();
+    ctx.strokeStyle = 'rgba(122, 88, 33, 0.11)';
+    ctx.lineWidth = 1;
+    var step = Math.max(24, Math.round(g.r * 0.14));
+    for (var gx = (g.cx % step); gx < g.w; gx += step) {
+      ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, g.h); ctx.stroke();
+    }
+    for (var gy = (g.cy % step); gy < g.h; gy += step) {
+      ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(g.w, gy); ctx.stroke();
+    }
+
+    var jupPt = orbitPoint(findOrbit('jupiter_quay'), degToRad(-8), g);
+    ctx.beginPath();
+    ctx.arc(jupPt.x + g.r * 0.34, jupPt.y, g.r * 0.42, degToRad(118), degToRad(242), false);
+    ctx.lineTo(g.w, jupPt.y - g.r * 0.38);
+    ctx.lineTo(g.w, jupPt.y + g.r * 0.38);
+    ctx.closePath();
+    var sea = ctx.createLinearGradient(jupPt.x - g.r * 0.08, jupPt.y, g.w, jupPt.y);
+    sea.addColorStop(0, 'rgba(30, 62, 92, 0.88)');
+    sea.addColorStop(1, 'rgba(15, 34, 58, 0.94)');
+    ctx.fillStyle = sea;
+    ctx.fill();
+    ctx.strokeStyle = PALETTE.brass_astrolabe;
+    ctx.lineWidth = 1.6;
+    ctx.stroke();
+
+    for (var wr = 0; wr < 4; wr++) {
+      var waveR = g.r * (0.12 + wr * 0.07) + ((timeSec * 6) % (g.r * 0.07));
+      ctx.strokeStyle = 'rgba(114, 209, 198, ' + (0.28 - wr * 0.05).toFixed(2) + ')';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.arc(jupPt.x + g.r * 0.14, jupPt.y, waveR, degToRad(-55), degToRad(55));
+      ctx.stroke();
+    }
+
+    var bezelR = g.r * 0.985;
+    ctx.strokeStyle = PALETTE.burnished_bronze;
+    ctx.lineWidth = 2.2;
+    ctx.beginPath();
+    ctx.ellipse(g.cx, g.cy, bezelR, bezelR * 0.855, 0, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.strokeStyle = 'rgba(200, 155, 67, 0.55)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.ellipse(g.cx, g.cy, bezelR * 1.028, bezelR * 0.88, 0, 0, Math.PI * 2);
+    ctx.stroke();
+
+    for (var d = 0; d < 360; d += 10) {
+      var ar = degToRad(d);
+      var major = (d % 30 === 0);
+      var r0 = bezelR * (major ? 0.962 : 0.982);
+      var r1 = bezelR * 1.025;
+      ctx.strokeStyle = major ? PALETTE.burnished_bronze : 'rgba(122, 88, 33, 0.42)';
+      ctx.lineWidth = major ? 1.5 : 0.8;
+      ctx.beginPath();
+      ctx.moveTo(g.cx + Math.cos(ar) * r0, g.cy + Math.sin(ar) * r0 * 0.855);
+      ctx.lineTo(g.cx + Math.cos(ar) * r1, g.cy + Math.sin(ar) * r1 * 0.855);
+      ctx.stroke();
+    }
+
+    var sRad = degToRad(siderealDeg - 90);
+    var px = g.cx + Math.cos(sRad) * bezelR * 1.01;
+    var py = g.cy + Math.sin(sRad) * bezelR * 0.865;
+    ctx.fillStyle = PALETTE.brass_astrolabe;
+    ctx.strokeStyle = PALETTE.ink_iron;
+    ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    ctx.arc(px, py, Math.max(4, g.r * 0.024), 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle = PALETTE.brass_astrolabe;
+    ctx.beginPath();
+    ctx.arc(g.cx, g.cy, Math.max(5, g.r * 0.032), 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = PALETTE.burnished_bronze;
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawOrbitsAndProcessions(ctx, g, st) {
+    ctx.save();
+    var starCoords = {};
+    for (var s = 0; s < LUMINOUS_STARS.length; s++) {
+      starCoords[LUMINOUS_STARS[s].name] = starPoint(LUMINOUS_STARS[s], g);
+    }
+
+    ctx.setLineDash([5, 4]);
+    ctx.strokeStyle = 'rgba(200, 155, 67, 0.48)';
+    ctx.lineWidth = 1.25;
+    for (var c = 0; c < CONSTELLATION_CHORDS.length; c++) {
+      var pa = starCoords[CONSTELLATION_CHORDS[c][0]];
+      var pb = starCoords[CONSTELLATION_CHORDS[c][1]];
+      if (pa && pb) {
+        ctx.beginPath();
+        ctx.moveTo(pa.x, pa.y);
+        ctx.lineTo(pb.x, pb.y);
+        ctx.stroke();
+      }
+    }
+    ctx.setLineDash([]);
+
+    var activeRite = riteForDeg(st.siderealDeg);
+    var scaleFactor = clamp(g.r / 220, 0.55, 1.25);
+
+    for (var i = 0; i < ORBITS.length; i++) {
+      var orb = ORBITS[i];
+      var isFocusedOrb = (st.focusedOrbitId === orb.id);
+      var isRiteOrb = (activeRite.orbitId === orb.id);
+      var rw = orb.roadWidth * scaleFactor;
+
+      for (var b = 0; b < 14; b++) {
+        var bAng = (b / 14) * Math.PI * 2 + i * 0.37;
+        if (Math.cos(bAng) > 0.78 && i >= 4) continue;
+        var bp = orbitPoint(orb, bAng, g);
+        ctx.save();
+        ctx.translate(bp.x, bp.y);
+        ctx.rotate(bAng + Math.PI * 0.5);
+        ctx.fillStyle = (b % 3 === 0) ? '#c9724d' : 'rgba(181, 90, 56, 0.62)';
+        var bw = Math.max(4, 7.5 * scaleFactor);
+        var bh = Math.max(3, 4.4 * scaleFactor);
+        ctx.fillRect(-bw * 0.5, rw * 0.62, bw, bh);
+        ctx.strokeStyle = 'rgba(28, 24, 19, 0.32)';
+        ctx.lineWidth = 0.6;
+        ctx.strokeRect(-bw * 0.5, rw * 0.62, bw, bh);
+        ctx.restore();
+      }
+
+      ctx.beginPath();
+      for (var k = 0; k <= 84; k++) {
+        var th = (k / 84) * Math.PI * 2;
+        var pt = orbitPoint(orb, th, g);
+        if (k === 0) ctx.moveTo(pt.x, pt.y);
+        else ctx.lineTo(pt.x, pt.y);
+      }
+      ctx.closePath();
+
+      if (isFocusedOrb || isRiteOrb) {
+        ctx.strokeStyle = isFocusedOrb ? 'rgba(255, 217, 125, 0.75)' : 'rgba(200, 155, 67, 0.42)';
+        ctx.lineWidth = rw + (isFocusedOrb ? 7 : 4);
+        ctx.stroke();
+      }
+
+      ctx.strokeStyle = PALETTE.burnished_bronze;
+      ctx.lineWidth = rw + 1.8;
+      ctx.stroke();
+
+      ctx.strokeStyle = isFocusedOrb ? '#fbf3df' : '#ede1c6';
+      ctx.lineWidth = Math.max(2, rw - 1.2);
+      ctx.stroke();
+
+      for (var p = 0; p < orb.processions; p++) {
+        var pTheta = degToRad(st.siderealDeg * orb.siderealVel + (p * 360) / orb.processions + i * 23);
+        var pp = orbitPoint(orb, pTheta, g);
+        var isCart = (p % 3 === 0);
+        ctx.fillStyle = isRiteOrb ? PALETTE.nova_gold : (isCart ? PALETTE.terracotta_tile : PALETTE.ink_iron);
+        ctx.beginPath();
+        ctx.arc(pp.x, pp.y, (isCart ? 2.6 : 1.8) * scaleFactor, 0, Math.PI * 2);
+        ctx.fill();
+        if (isRiteOrb && isCart) {
+          ctx.strokeStyle = 'rgba(255, 217, 125, 0.7)';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.arc(pp.x, pp.y, 4.8 * scaleFactor, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+      }
+
+      if (g.r >= 130 && (i % 2 === 0 || isFocusedOrb)) {
+        var lp = orbitPoint(orb, degToRad(-88 + i * 4), g);
+        ctx.font = (isFocusedOrb ? '600 ' : '500 ') + Math.max(8, Math.round(9.5 * scaleFactor)) + 'px Georgia, serif';
+        ctx.fillStyle = isFocusedOrb ? PALETTE.ink_iron : 'rgba(28, 24, 19, 0.68)';
+        ctx.textAlign = 'center';
+        ctx.fillText(orb.name, lp.x, lp.y - 4 * scaleFactor);
+      }
+    }
+
+    for (var m = 0; m < LUMINOUS_STARS.length; m++) {
+      var stStar = LUMINOUS_STARS[m];
+      var sp = starCoords[stStar.name];
+      var starFocused = (st.focusedStar === stStar.name || st.focusedId === stStar.coupledId);
+      var pulse = stStar.name === 'Cepheids' ? (0.72 + 0.28 * Math.sin(st.timeSec * 3.4)) : (0.86 + 0.14 * Math.sin(st.timeSec * 1.9 + m));
+      var sr = Math.max(7, 10.5 * scaleFactor);
+
+      var lanternGlow = ctx.createRadialGradient(sp.x, sp.y, 1, sp.x, sp.y, sr * (starFocused ? 2.6 : 1.9));
+      lanternGlow.addColorStop(0, stStar.color);
+      lanternGlow.addColorStop(1, 'rgba(255, 217, 125, 0)');
+      ctx.globalAlpha = 0.55 * pulse;
+      ctx.fillStyle = lanternGlow;
+      ctx.beginPath();
+      ctx.arc(sp.x, sp.y, sr * (starFocused ? 2.6 : 1.9), 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+
+      ctx.fillStyle = '#faf2df';
+      ctx.strokeStyle = starFocused ? PALETTE.ink_iron : PALETTE.burnished_bronze;
+      ctx.lineWidth = starFocused ? 1.8 : 1.2;
+      ctx.beginPath();
+      for (var ptIdx = 0; ptIdx < 16; ptIdx++) {
+        var sa = (ptIdx / 16) * Math.PI * 2 - Math.PI * 0.5;
+        var radLen = (ptIdx % 2 === 0) ? sr : sr * 0.44;
+        var sx = sp.x + Math.cos(sa) * radLen;
+        var sy = sp.y + Math.sin(sa) * radLen;
+        if (ptIdx === 0) ctx.moveTo(sx, sy);
+        else ctx.lineTo(sx, sy);
+      }
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = stStar.color;
+      ctx.beginPath();
+      ctx.arc(sp.x, sp.y, sr * 0.28 * pulse, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.font = '600 ' + Math.max(9, Math.round(10.5 * scaleFactor)) + 'px Georgia, serif';
+      ctx.fillStyle = PALETTE.ink_iron;
+      ctx.textAlign = 'center';
+      ctx.fillText('★ ' + stStar.name, sp.x, sp.y + sr + 10 * scaleFactor);
+    }
+    ctx.restore();
+  }
+
+  function drawDistrictArt(ctx, item, x, y, dr, prog, timeSec) {
+    ctx.save();
+    ctx.translate(x, y);
+
+    if (item.id === 'bamboo_suspended_street') {
+      ctx.fillStyle = '#2d533c';
+      ctx.beginPath(); ctx.arc(0, 0, dr * 0.88, 0, Math.PI * 2); ctx.fill();
+      for (var b = -3; b <= 3; b++) {
+        var sway = Math.sin(timeSec * 2.1 + b) * dr * 0.05;
+        var bx = b * dr * 0.2;
+        ctx.strokeStyle = (b % 2 === 0) ? '#639c76' : PALETTE.bamboo_jade;
+        ctx.lineWidth = Math.max(1.4, dr * 0.075);
+        ctx.beginPath();
+        ctx.moveTo(bx, dr * 0.65);
+        ctx.quadraticCurveTo(bx + sway, 0, bx + sway * 1.5, -dr * 0.65);
+        ctx.stroke();
+      }
+      if (prog > 0.01) {
+        ctx.globalAlpha = clamp(prog, 0, 1);
+        var span = dr * 0.92 * (0.4 + 0.6 * prog);
+        ctx.strokeStyle = PALETTE.nova_gold;
+        ctx.lineWidth = Math.max(1.2, dr * 0.06);
+        ctx.beginPath();
+        ctx.moveTo(-span, -dr * 0.36);
+        ctx.quadraticCurveTo(0, -dr * 0.02, span, -dr * 0.36);
+        ctx.stroke();
+        ctx.fillStyle = PALETTE.terracotta_tile;
+        ctx.strokeStyle = PALETTE.brass_astrolabe;
+        ctx.lineWidth = Math.max(1.5, dr * 0.08);
+        ctx.beginPath();
+        ctx.rect(-span, -dr * 0.14, span * 2, dr * 0.28);
+        ctx.fill();
+        ctx.stroke();
+        ctx.fillStyle = PALETTE.burnished_bronze;
+        ctx.fillRect(-span - dr * 0.1, -dr * 0.38, dr * 0.16, dr * 0.62);
+        ctx.fillRect(span - dr * 0.06, -dr * 0.38, dr * 0.16, dr * 0.62);
+        for (var l = -1; l <= 1; l++) {
+          ctx.fillStyle = PALETTE.nova_gold;
+          ctx.beginPath(); ctx.arc(l * span * 0.55, 0, dr * 0.11, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+    } else if (item.id === 'shadow_theater_kennels') {
+      if (prog < 0.98) {
+        ctx.globalAlpha = 1 - prog * 0.85;
+        ctx.fillStyle = '#8b7e6a';
+        ctx.fillRect(-dr * 0.72, -dr * 0.48, dr * 1.44, dr * 0.96);
+        ctx.strokeStyle = PALETTE.ink_iron;
+        ctx.lineWidth = 1.3;
+        ctx.strokeRect(-dr * 0.72, -dr * 0.48, dr * 1.44, dr * 0.96);
+        for (var k = -2; k <= 2; k++) {
+          ctx.beginPath();
+          ctx.moveTo(k * dr * 0.26, -dr * 0.48);
+          ctx.lineTo(k * dr * 0.26, dr * 0.48);
+          ctx.stroke();
+        }
+      }
+      if (prog > 0.01) {
+        ctx.globalAlpha = clamp(prog, 0, 1);
+        ctx.fillStyle = PALETTE.terracotta_tile;
+        ctx.beginPath();
+        ctx.arc(0, dr * 0.1, dr * 0.84, Math.PI, 0, false);
+        ctx.lineTo(dr * 0.84, dr * 0.52);
+        ctx.lineTo(-dr * 0.84, dr * 0.52);
+        ctx.closePath();
+        ctx.fill();
+        var linen = ctx.createRadialGradient(0, 0, dr * 0.05, 0, 0, dr * 0.68);
+        linen.addColorStop(0, '#fff7d6');
+        linen.addColorStop(0.7, PALETTE.nova_gold);
+        linen.addColorStop(1, '#d19838');
+        ctx.fillStyle = linen;
+        ctx.fillRect(-dr * 0.62, -dr * 0.34, dr * 1.24, dr * 0.68);
+        var pupShift = Math.sin(timeSec * 2.6) * dr * 0.16;
+        ctx.fillStyle = PALETTE.ink_iron;
+        ctx.beginPath(); ctx.arc(-dr * 0.18 + pupShift, -dr * 0.05, dr * 0.14, 0, Math.PI * 2); ctx.fill();
+        ctx.fillRect(-dr * 0.24 + pupShift, 0, dr * 0.12, dr * 0.26);
+        ctx.beginPath(); ctx.arc(dr * 0.22 - pupShift * 0.7, -dr * 0.02, dr * 0.12, 0, Math.PI * 2); ctx.fill();
+      }
+    } else if (item.id === 'statue_of_thales') {
+      ctx.fillStyle = '#dfd0b0';
+      ctx.strokeStyle = PALETTE.burnished_bronze;
+      ctx.lineWidth = 1.4;
+      ctx.fillRect(-dr * 0.78, -dr * 0.26, dr * 1.52, dr * 0.52);
+      ctx.strokeRect(-dr * 0.78, -dr * 0.26, dr * 1.52, dr * 0.52);
+      ctx.fillStyle = '#bfb08e';
+      ctx.beginPath(); ctx.arc(dr * 0.2, 0, dr * 0.26, 0, Math.PI * 2); ctx.fill();
+      if (prog > 0.01) {
+        ctx.globalAlpha = clamp(prog, 0, 1);
+        ctx.strokeStyle = PALETTE.nova_gold;
+        ctx.lineWidth = 1.2;
+        ctx.beginPath(); ctx.arc(dr * 0.25, 0, dr * 0.78, -0.9, 0.9); ctx.stroke();
+        ctx.fillStyle = '#f5ecd8';
+        ctx.fillRect(-dr * 0.12, dr * 0.08, dr * 0.52, dr * 0.26);
+        var hScale = 0.35 + 0.65 * prog;
+        ctx.fillStyle = PALETTE.brass_astrolabe;
+        ctx.strokeStyle = PALETTE.ink_iron;
+        ctx.lineWidth = 1.1;
+        ctx.beginPath();
+        ctx.moveTo(0, dr * 0.1);
+        ctx.lineTo(dr * 0.14, -dr * 0.68 * hScale);
+        ctx.lineTo(dr * 0.28, dr * 0.1);
+        ctx.closePath();
+        ctx.fill(); ctx.stroke();
+        ctx.fillStyle = PALETTE.nova_gold;
+        ctx.beginPath(); ctx.arc(dr * 0.14, -dr * 0.76 * hScale, dr * 0.14, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = PALETTE.nova_gold;
+        ctx.lineWidth = 1.6;
+        ctx.beginPath();
+        ctx.moveTo(dr * 0.22, -dr * 0.52 * hScale);
+        ctx.lineTo(dr * 0.72, -dr * 0.82 * hScale);
+        ctx.lineTo(dr * 0.56, -dr * 0.22 * hScale);
+        ctx.stroke();
+      }
+    } else if (item.id === 'gymnastics_toboggan_slide') {
+      ctx.fillStyle = PALETTE.terracotta_tile;
+      ctx.fillRect(-dr * 0.74, -dr * 0.58, dr * 1.48, dr * 1.16);
+      ctx.fillStyle = '#f3e8cf';
+      ctx.fillRect(-dr * 0.5, -dr * 0.36, dr * 1.0, dr * 0.72);
+      if (prog > 0.01) {
+        ctx.globalAlpha = clamp(prog, 0, 1);
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = PALETTE.burnished_bronze;
+        ctx.lineWidth = Math.max(4, dr * 0.34);
+        ctx.beginPath();
+        ctx.moveTo(-dr * 0.55, -dr * 0.55);
+        ctx.bezierCurveTo(dr * 0.75, -dr * 0.48, -dr * 0.75, dr * 0.28, dr * 0.68 * prog, dr * 0.62 * prog);
+        ctx.stroke();
+        ctx.strokeStyle = PALETTE.nova_gold;
+        ctx.lineWidth = Math.max(2, dr * 0.16);
+        ctx.stroke();
+        var slideT = (timeSec * 0.65) % 1;
+        var sx = (1 - slideT) * (-dr * 0.45) + slideT * (dr * 0.55 * prog);
+        var sy = (1 - slideT) * (-dr * 0.48) + slideT * (dr * 0.52 * prog);
+        ctx.fillStyle = PALETTE.ink_iron;
+        ctx.beginPath(); ctx.arc(sx, sy, dr * 0.11, 0, Math.PI * 2); ctx.fill();
+      }
+    }
+    ctx.restore();
+  }
+
+  function drawInnovationsAndSightlines(ctx, g, st) {
+    ctx.save();
+    var scaleFactor = clamp(g.r / 220, 0.55, 1.25);
+    var dr = Math.max(15, 24 * scaleFactor);
+    var domePortX = g.w - 8;
+    var domePortY = g.h * 0.16;
+
+    for (var i = 0; i < st.items.length; i++) {
+      var item = st.items[i];
+      var pt = innovationPoint(item, g);
+      var isFocused = (st.focusedId === item.id);
+
+      if (isFocused) {
+        var cpX = (pt.x + domePortX) * 0.5;
+        var cpY = Math.min(pt.y, domePortY) - g.r * 0.22;
+        ctx.save();
+        ctx.strokeStyle = 'rgba(255, 217, 125, 0.78)';
+        ctx.lineWidth = 1.8;
+        ctx.setLineDash([6, 4]);
+        ctx.beginPath();
+        ctx.moveTo(pt.x, pt.y);
+        ctx.quadraticCurveTo(cpX, cpY, domePortX, domePortY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        for (var b = 0; b < 3; b++) {
+          var bt = ((st.timeSec * 0.45) + b / 3) % 1;
+          var inv = 1 - bt;
+          var bx = inv * inv * pt.x + 2 * inv * bt * cpX + bt * bt * domePortX;
+          var by = inv * inv * pt.y + 2 * inv * bt * cpY + bt * bt * domePortY;
+          ctx.fillStyle = PALETTE.nova_gold;
+          ctx.beginPath(); ctx.arc(bx, by, 2.8 * scaleFactor, 0, Math.PI * 2); ctx.fill();
+        }
+        ctx.restore();
+      }
+
+      ctx.fillStyle = '#f5ecd8';
+      ctx.beginPath();
+      ctx.arc(pt.x, pt.y, dr, 0, Math.PI * 2);
+      ctx.fill();
+
+      drawDistrictArt(ctx, item, pt.x, pt.y, dr, item.progress, st.timeSec);
+
+      if (item.enacted) {
+        ctx.strokeStyle = PALETTE.nova_gold;
+        ctx.lineWidth = 3.2;
+        ctx.beginPath(); ctx.arc(pt.x, pt.y, dr + 3.5, 0, Math.PI * 2); ctx.stroke();
+      } else if (item.weighed) {
+        ctx.save();
+        ctx.setLineDash([4, 3]);
+        ctx.strokeStyle = PALETTE.brass_astrolabe;
+        ctx.lineWidth = 2.2;
+        ctx.beginPath(); ctx.arc(pt.x, pt.y, dr + 3, 0, Math.PI * 2); ctx.stroke();
+        ctx.restore();
+      }
+
+      ctx.strokeStyle = isFocused ? PALETTE.ink_iron : PALETTE.burnished_bronze;
+      ctx.lineWidth = isFocused ? 2.2 : 1.4;
+      ctx.beginPath();
+      ctx.arc(pt.x, pt.y, dr, 0, Math.PI * 2);
+      ctx.stroke();
+
+      if (item.recoil > 0.02) {
+        var rr = dr + 6 + (1 - item.recoil) * 10;
+        ctx.strokeStyle = 'rgba(181, 52, 36, ' + item.recoil.toFixed(2) + ')';
+        ctx.lineWidth = 3;
+        ctx.beginPath(); ctx.arc(pt.x, pt.y, rr, 0, Math.PI * 2); ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(pt.x - dr * 0.65, pt.y - dr * 0.65);
+        ctx.lineTo(pt.x + dr * 0.65, pt.y + dr * 0.65);
+        ctx.stroke();
+      }
+
+      var badgeY = pt.y + dr + 11 * scaleFactor;
+      ctx.font = '700 ' + Math.max(8, Math.round(9.5 * scaleFactor)) + 'px Georgia, serif';
+      ctx.textAlign = 'center';
+      ctx.fillStyle = item.enacted ? '#5b3c0b' : PALETTE.ink_iron;
+      var shortTag = '[' + (i + 1) + '] ' + (item.enacted ? '✦ ' : '') + item.orbitDistrict.split(' (')[0];
+      ctx.fillText(shortTag, pt.x, badgeY);
+    }
+
+    var rite = riteForDeg(st.siderealDeg);
+    ctx.fillStyle = 'rgba(28, 24, 19, 0.78)';
+    ctx.font = '600 ' + Math.max(9, Math.round(10 * scaleFactor)) + 'px Georgia, serif';
+    ctx.textAlign = 'left';
+    ctx.fillText('SIDEREAL ' + st.siderealDeg.toFixed(1) + '° · ' + rite.market.toUpperCase(), 10, Math.max(14, 16 * scaleFactor));
+    ctx.restore();
+  }
+
+  function createController(opts) {
+    var cfg = opts || {};
+    var attachedCanvas = null;
+    var attachedCtx = null;
+    var viewW = 640;
+    var viewH = 520;
+    var viewDpr = 1;
+
+    function freshItems() {
+      var list = [];
+      for (var i = 0; i < INNOVATIONS.length; i++) {
+        var src = INNOVATIONS[i];
+        list.push({
+          id: src.id,
+          title: src.title,
+          earthlyInnovation: src.earthlyInnovation,
+          orbitId: src.orbitId,
+          innerOrbitId: src.innerOrbitId || null,
+          orbitDistrict: src.orbitDistrict,
+          star: src.star,
+          celestialId: src.celestialId,
+          celestialNovelty: src.celestialNovelty,
+          beforeLabel: src.beforeLabel,
+          afterLabel: src.afterLabel,
+          angleDeg: src.angleDeg,
+          weighed: false,
+          enacted: false,
+          confidenceWeight: 0.35,
+          prudenceWeight: 0.30,
+          harmonyScore: 0.32,
+          progress: 0,
+          recoil: 0
+        });
+      }
+      return list;
+    }
+
+    var st = {
+      items: freshItems(),
+      siderealDeg: 42,
+      timeSec: 0,
+      autoRevolve: true,
+      reducedMotion: Boolean(cfg.reducedMotion),
+      recklessBlockedCount: 0,
+      lastBlockedReason: null,
+      focusedId: INNOVATIONS[0].id,
+      focusedStar: INNOVATIONS[0].star,
+      focusedOrbitId: INNOVATIONS[0].orbitId
+    };
+
+    function findItem(query) {
+      if (!query) return null;
+      var q = typeof query === 'object' ? (query.id || query.celestialId || query.star || '') : String(query);
+      var ql = q.toLowerCase();
+      for (var i = 0; i < st.items.length; i++) {
+        var it = st.items[i];
+        if (it.id === q || it.celestialId === q || it.star.toLowerCase() === ql || it.orbitId === q) return it;
+      }
+      return null;
+    }
+
+    function pickTargetItem(id, preferUnenacted) {
+      var direct = findItem(id);
+      if (direct) return direct;
+      var focused = findItem(st.focusedId);
+      if (preferUnenacted) {
+        if (focused && !focused.enacted) return focused;
+        for (var i = 0; i < st.items.length; i++) {
+          if (!st.items[i].enacted) return st.items[i];
+        }
+      }
+      return focused || st.items[0];
+    }
+
+    var api = {
+      attachCanvas: function (canvas) {
+        attachedCanvas = canvas || null;
+        attachedCtx = attachedCanvas ? attachedCanvas.getContext('2d') : null;
+        if (attachedCanvas) {
+          var cw = attachedCanvas.clientWidth || attachedCanvas.width || 640;
+          var ch = attachedCanvas.clientHeight || attachedCanvas.height || 520;
+          var dpr = (global.devicePixelRatio || 1);
+          api.resize(cw, ch, dpr);
+        }
+        return api;
+      },
+
+      resize: function (w, h, dpr) {
+        viewDpr = clamp(Number(dpr) || (global.devicePixelRatio || 1), 1, 2);
+        viewW = Math.max(120, Math.round(Number(w) || 640));
+        viewH = Math.max(120, Math.round(Number(h) || 520));
+        if (attachedCanvas) {
+          attachedCanvas.width = Math.round(viewW * viewDpr);
+          attachedCanvas.height = Math.round(viewH * viewDpr);
+        }
+        return api;
+      },
+
+      step: function (dt) {
+        var delta = clamp(Number(dt) || 0, 0, 0.25);
+        if (!st.reducedMotion) {
+          st.timeSec += delta;
+          if (st.autoRevolve) {
+            st.siderealDeg = (st.siderealDeg + delta * 5.2) % 360;
+          }
+        }
+        for (var i = 0; i < st.items.length; i++) {
+          var it = st.items[i];
+          var target = it.enacted ? 1 : 0;
+          if (st.reducedMotion) {
+            it.progress = target;
+          } else if (it.progress < target) {
+            it.progress = Math.min(1, it.progress + delta * 2.4);
+          } else if (it.progress > target) {
+            it.progress = Math.max(0, it.progress - delta * 2.8);
+          }
+          if (it.recoil > 0) {
+            it.recoil = Math.max(0, it.recoil - (st.reducedMotion ? 1 : delta * 1.35));
+          }
+        }
+        return api;
+      },
+
+      render: function (targetCtx) {
+        var c = targetCtx || attachedCtx;
+        if (!c) return api;
+        var w = viewW;
+        var h = viewH;
+        c.save();
+        if (c === attachedCtx) {
+          c.setTransform(viewDpr, 0, 0, viewDpr, 0, 0);
+        } else if (c.canvas) {
+          w = c.canvas.width || viewW;
+          h = c.canvas.height || viewH;
+          c.setTransform(1, 0, 0, 1, 0, 0);
+        }
+        var g = computeGeom(w, h);
+        drawGroundAndBezel(c, g, st.siderealDeg, st.timeSec);
+        drawOrbitsAndProcessions(c, g, st);
+        drawInnovationsAndSightlines(c, g, st);
+        c.restore();
+        return api;
+      },
+
+      weighInnovation: function (id, confidenceWeight, prudenceWeight) {
+        var item = pickTargetItem(id, false);
+        var conf = (confidenceWeight === undefined || confidenceWeight === null || isNaN(confidenceWeight))
+          ? 0.82 : clamp(Number(confidenceWeight), 0, 1);
+        var prud = (prudenceWeight === undefined || prudenceWeight === null || isNaN(prudenceWeight))
+          ? 0.86 : clamp(Number(prudenceWeight), 0, 1);
+        var imbalance = Math.abs(conf - prud) * 0.16;
+        var harmony = Number(clamp(conf * 0.44 + prud * 0.56 - imbalance, 0, 1).toFixed(3));
+        var ok = (conf >= 0.55 && prud >= 0.65);
+
+        item.confidenceWeight = conf;
+        item.prudenceWeight = prud;
+        item.harmonyScore = harmony;
+        item.weighed = ok;
+        st.focusedId = item.id;
+        st.focusedStar = item.star;
+        st.focusedOrbitId = item.orbitId;
+
+        return {
+          ok: ok,
+          id: item.id,
+          celestialId: item.celestialId,
+          weighed: ok,
+          confidenceWeight: conf,
+          prudenceWeight: prud,
+          harmonyScore: harmony,
+          cosmicRiskCalculated: true
+        };
+      },
+
+      attemptEnact: function (id, callOpts) {
+        var isReckless = Boolean(callOpts && callOpts.reckless === true);
+        var item = pickTargetItem(id, isReckless && !id);
+
+        if (!item.weighed || isReckless) {
+          st.recklessBlockedCount += 1;
+          var reason = 'Civic Council blocked unweighed decree: every earthly change alters the sky.';
+          st.lastBlockedReason = reason;
+          item.recoil = 1.0;
+          if (!item.enacted) {
+            item.enacted = false;
+          }
+          st.focusedId = item.id;
+          st.focusedStar = item.star;
+          st.focusedOrbitId = item.orbitId;
+          var blockRes = {
+            enacted: false,
+            blocked: true,
+            recklessChangeBlocked: true,
+            recklessBlockedCount: st.recklessBlockedCount,
+            id: item.id,
+            celestialId: item.celestialId,
+            reason: reason
+          };
+          if (typeof cfg.onRecklessBlocked === 'function') {
+            cfg.onRecklessBlocked({
+              id: item.id,
+              celestialId: item.celestialId,
+              enacted: false,
+              blocked: true,
+              recklessChangeBlocked: true,
+              recklessBlockedCount: st.recklessBlockedCount,
+              reason: reason,
+              state: api.getState()
+            });
+          }
+          return blockRes;
+        }
+
+        item.enacted = true;
+        item.recoil = 0;
+        item.progress = st.reducedMotion ? 1 : Math.max(item.progress, 0.65);
+        st.focusedId = item.id;
+        st.focusedStar = item.star;
+        st.focusedOrbitId = item.orbitId;
+
+        if (typeof cfg.onInnovationChanged === 'function') {
+          cfg.onInnovationChanged({
+            id: item.id,
+            celestialId: item.celestialId,
+            star: item.star,
+            enacted: true,
+            weighed: true,
+            source: 'earth',
+            state: api.getState()
+          });
+        }
+        return {
+          enacted: true,
+          blocked: false,
+          weighed: true,
+          id: item.id,
+          celestialId: item.celestialId,
+          harmonyScore: item.harmonyScore
+        };
+      },
+
+      deliberateAndEnact: function (id) {
+        var w = api.weighInnovation(id, 0.84, 0.88);
+        var res = api.attemptEnact(w.id);
+        res.weighed = w.weighed;
+        res.harmonyScore = w.harmonyScore;
+        return res;
+      },
+
+      revertInnovation: function (id) {
+        var item = pickTargetItem(id, false);
+        item.enacted = false;
+        item.weighed = false;
+        item.confidenceWeight = 0.35;
+        item.prudenceWeight = 0.30;
+        item.harmonyScore = 0.32;
+        item.progress = 0;
+        item.recoil = 0;
+        if (typeof cfg.onInnovationChanged === 'function') {
+          cfg.onInnovationChanged({
+            id: item.id,
+            celestialId: item.celestialId,
+            star: item.star,
+            enacted: false,
+            weighed: false,
+            source: 'earth',
+            state: api.getState()
+          });
+        }
+        return { ok: true, id: item.id, celestialId: item.celestialId, enacted: false, weighed: false };
+      },
+
+      resetAll: function () {
+        var prevEnacted = [];
+        for (var i = 0; i < st.items.length; i++) {
+          if (st.items[i].enacted) prevEnacted.push(st.items[i]);
+        }
+        st.items = freshItems();
+        st.recklessBlockedCount = 0;
+        st.lastBlockedReason = null;
+        st.focusedId = st.items[0].id;
+        st.focusedStar = st.items[0].star;
+        st.focusedOrbitId = st.items[0].orbitId;
+        if (typeof cfg.onInnovationChanged === 'function') {
+          if (prevEnacted.length === 0) {
+            cfg.onInnovationChanged({ id: st.items[0].id, celestialId: st.items[0].celestialId, enacted: false, reset: true, source: 'earth', state: api.getState() });
+          } else {
+            for (var j = 0; j < prevEnacted.length; j++) {
+              cfg.onInnovationChanged({ id: prevEnacted[j].id, celestialId: prevEnacted[j].celestialId, enacted: false, reset: true, source: 'earth', state: api.getState() });
+            }
+          }
+        }
+        return api.getState();
+      },
+
+      focusFromSky: function (idOrStar) {
+        var matched = findItem(idOrStar);
+        if (matched) {
+          st.focusedId = matched.id;
+          st.focusedStar = matched.star;
+          st.focusedOrbitId = matched.orbitId;
+          return {
+            ok: true,
+            bidirectionalCoupling: true,
+            focusedId: matched.id,
+            id: matched.id,
+            celestialId: matched.celestialId,
+            star: matched.star,
+            orbitId: matched.orbitId,
+            orbitDistrict: matched.orbitDistrict,
+            source: 'sky'
+          };
+        }
+        var raw = typeof idOrStar === 'object' ? (idOrStar.orbitId || idOrStar.star || '') : String(idOrStar || '');
+        var orb = findOrbit(raw);
+        st.focusedOrbitId = orb.id;
+        return {
+          ok: true,
+          bidirectionalCoupling: true,
+          focusedId: st.focusedId,
+          id: st.focusedId,
+          celestialId: null,
+          star: st.focusedStar,
+          orbitId: orb.id,
+          orbitDistrict: orb.name,
+          source: 'sky'
+        };
+      },
+
+      focusDistrict: function (idOrStar, notifySky) {
+        var res = api.focusFromSky(idOrStar);
+        res.source = 'earth';
+        if (notifySky !== false && typeof cfg.onEarthFocus === 'function') {
+          cfg.onEarthFocus(res);
+        }
+        return res;
+      },
+
+      hitTest: function (nx, ny) {
+        var xNorm = Number(nx);
+        var yNorm = Number(ny);
+        if (isNaN(xNorm) || isNaN(yNorm)) return null;
+        if (xNorm > 1.05 || yNorm > 1.05) {
+          xNorm = xNorm / Math.max(1, viewW);
+          yNorm = yNorm / Math.max(1, viewH);
+        }
+        var g = computeGeom(viewW, viewH);
+        var px = xNorm * viewW;
+        var py = yNorm * viewH;
+        var hitPayload = null;
+
+        var bestDist = Math.max(26, g.r * 0.16);
+        for (var i = 0; i < st.items.length; i++) {
+          var it = st.items[i];
+          var ip = innovationPoint(it, g);
+          var d = Math.hypot(px - ip.x, py - ip.y);
+          if (d < bestDist) {
+            bestDist = d;
+            hitPayload = {
+              kind: 'innovation',
+              id: it.id,
+              focusedId: it.id,
+              celestialId: it.celestialId,
+              star: it.star,
+              orbitId: it.orbitId,
+              orbitDistrict: it.orbitDistrict,
+              title: it.title,
+              bidirectionalCoupling: true,
+              source: 'earth'
+            };
+          }
+        }
+
+        if (!hitPayload) {
+          var bestStarDist = Math.max(22, g.r * 0.14);
+          for (var s = 0; s < LUMINOUS_STARS.length; s++) {
+            var star = LUMINOUS_STARS[s];
+            var sp = starPoint(star, g);
+            var sd = Math.hypot(px - sp.x, py - sp.y);
+            if (sd < bestStarDist) {
+              bestStarDist = sd;
+              var coupled = findItem(star.coupledId) || st.items[0];
+              hitPayload = {
+                kind: 'star',
+                id: coupled.id,
+                focusedId: coupled.id,
+                celestialId: coupled.celestialId,
+                star: star.name,
+                orbitId: star.orbitId,
+                orbitDistrict: star.communityBuilding,
+                raDeg: star.raDeg,
+                decDeg: star.decDeg,
+                bidirectionalCoupling: true,
+                source: 'earth'
+              };
+            }
+          }
+        }
+
+        if (!hitPayload) {
+          var bestOrbDist = Math.max(16, g.r * 0.09);
+          for (var o = 0; o < ORBITS.length; o++) {
+            var orb = ORBITS[o];
+            for (var k = 0; k < 36; k++) {
+              var op = orbitPoint(orb, (k / 36) * Math.PI * 2, g);
+              var od = Math.hypot(px - op.x, py - op.y);
+              if (od < bestOrbDist) {
+                bestOrbDist = od;
+                var orbItem = findItem(orb.id) || findItem(st.focusedId) || st.items[0];
+                hitPayload = {
+                  kind: 'orbit',
+                  id: orbItem.id,
+                  focusedId: orbItem.id,
+                  celestialId: orbItem.celestialId,
+                  star: orbItem.star,
+                  orbitId: orb.id,
+                  orbitName: orb.name,
+                  orbitDistrict: orb.name,
+                  civicRite: orb.civicRite,
+                  bidirectionalCoupling: true,
+                  source: 'earth'
+                };
+              }
+            }
+          }
+        }
+
+        if (hitPayload) {
+          st.focusedId = hitPayload.id;
+          st.focusedStar = hitPayload.star;
+          st.focusedOrbitId = hitPayload.orbitId;
+          if (typeof cfg.onEarthFocus === 'function') {
+            cfg.onEarthFocus(hitPayload);
+          }
+        }
+        return hitPayload;
+      },
+
+      setSiderealPhase: function (phase) {
+        var val = typeof phase === 'object' && phase !== null ? Number(phase.deg !== undefined ? phase.deg : phase.phase) : Number(phase);
+        if (!isNaN(val)) {
+          var deg = (Math.abs(val) <= 1.0001) ? (val * 360) : val;
+          st.siderealDeg = ((deg % 360) + 360) % 360;
+        }
+        return api;
+      },
+
+      setAutoRevolve: function (flag) {
+        st.autoRevolve = Boolean(flag);
+        return api;
+      },
+
+      setReducedMotion: function (flag) {
+        st.reducedMotion = Boolean(flag);
+        if (st.reducedMotion) {
+          for (var i = 0; i < st.items.length; i++) {
+            st.items[i].progress = st.items[i].enacted ? 1 : 0;
+            st.items[i].recoil = 0;
+          }
+        }
+        return api;
+      },
+
+      getState: function () {
+        var g = computeGeom(viewW, viewH);
+        var weighedIds = [];
+        var enactedIds = [];
+        var innovationsOut = [];
+        for (var i = 0; i < st.items.length; i++) {
+          var it = st.items[i];
+          if (it.weighed) weighedIds.push(it.id);
+          if (it.enacted) enactedIds.push(it.id);
+          var pt = innovationPoint(it, g);
+          innovationsOut.push({
+            id: it.id,
+            title: it.title,
+            earthlyInnovation: it.earthlyInnovation,
+            orbitId: it.orbitId,
+            orbitDistrict: it.orbitDistrict,
+            star: it.star,
+            celestialId: it.celestialId,
+            celestialNovelty: it.celestialNovelty,
+            beforeLabel: it.beforeLabel,
+            afterLabel: it.afterLabel,
+            weighed: it.weighed,
+            enacted: it.enacted,
+            confidenceWeight: it.confidenceWeight,
+            prudenceWeight: it.prudenceWeight,
+            harmonyScore: it.harmonyScore,
+            progress: Number(it.progress.toFixed(3)),
+            nx: Number((pt.x / viewW).toFixed(4)),
+            ny: Number((pt.y / viewH).toFixed(4))
+          });
+        }
+        var starsOut = [];
+        for (var s = 0; s < LUMINOUS_STARS.length; s++) {
+          var ls = LUMINOUS_STARS[s];
+          var sp = starPoint(ls, g);
+          starsOut.push({
+            name: ls.name,
+            orbitId: ls.orbitId,
+            coupledId: ls.coupledId,
+            communityBuilding: ls.communityBuilding,
+            raDeg: ls.raDeg,
+            decDeg: ls.decDeg,
+            nx: Number((sp.x / viewW).toFixed(4)),
+            ny: Number((sp.y / viewH).toFixed(4))
+          });
+        }
+        var rite = riteForDeg(st.siderealDeg);
+        return {
+          planetaryStreetCoupling: true,
+          bidirectionalCoupling: true,
+          recklessChangeBlocked: true,
+          recklessBlockedCount: st.recklessBlockedCount,
+          lastBlockedReason: st.lastBlockedReason,
+          weighedIds: weighedIds,
+          enactedIds: enactedIds,
+          innovations: innovationsOut,
+          stars: starsOut,
+          luminousStars: ['Antares', 'Alpheratz', 'Capella', 'Cepheids'],
+          siderealDeg: Number(st.siderealDeg.toFixed(2)),
+          siderealPhase: Number((st.siderealDeg / 360).toFixed(4)),
+          autoRevolve: st.autoRevolve,
+          activeCivicRite: rite,
+          activeCivicRiteTitle: rite.title,
+          focusedId: st.focusedId,
+          focusedStar: st.focusedStar,
+          focusedOrbitId: st.focusedOrbitId,
+          reducedMotion: st.reducedMotion
+        };
+      }
+    };
+
+    activeController = api;
+    return api;
+  }
+
+  var activeController = null;
+  function ensureDefault() {
+    if (!activeController) activeController = createController({});
+    return activeController;
+  }
+
+  global.AndriaPlanetaryStreets = {
+    PALETTE: PALETTE,
+    ORBITS: ORBITS,
+    SIDEREAL_RITES: SIDEREAL_RITES,
+    LUMINOUS_STARS: LUMINOUS_STARS,
+    CONSTELLATION_CHORDS: CONSTELLATION_CHORDS,
+    INNOVATIONS: INNOVATIONS,
+    createController: createController,
+    attachCanvas: function (c) { return ensureDefault().attachCanvas(c); },
+    resize: function (w, h, dpr) { return ensureDefault().resize(w, h, dpr); },
+    step: function (dt) { return ensureDefault().step(dt); },
+    render: function (ctx) { return ensureDefault().render(ctx); },
+    weighInnovation: function (id, c, p) { return ensureDefault().weighInnovation(id, c, p); },
+    attemptEnact: function (id, o) { return ensureDefault().attemptEnact(id, o); },
+    deliberateAndEnact: function (id) { return ensureDefault().deliberateAndEnact(id); },
+    revertInnovation: function (id) { return ensureDefault().revertInnovation(id); },
+    resetAll: function () { return ensureDefault().resetAll(); },
+    focusFromSky: function (q) { return ensureDefault().focusFromSky(q); },
+    focusDistrict: function (q, n) { return ensureDefault().focusDistrict(q, n); },
+    hitTest: function (nx, ny) { return ensureDefault().hitTest(nx, ny); },
+    setSiderealPhase: function (p) { return ensureDefault().setSiderealPhase(p); },
+    setAutoRevolve: function (f) { return ensureDefault().setAutoRevolve(f); },
+    setReducedMotion: function (f) { return ensureDefault().setReducedMotion(f); },
+    getState: function () { return ensureDefault().getState(); }
+  };
+})(globalThis);
+
+  </script>
+  <script class="and-layer-script">
+(function (global) {
+  'use strict';
+
+  var TWO_PI = Math.PI * 2;
+  var DEG2RAD = Math.PI / 180;
+
+  var PALETTE = {
+    travertine: '#efe5cf',
+    parchment: '#dfd0b0',
+    terracotta: '#b55a38',
+    bambooJade: '#4a7a5c',
+    brass: '#c89b43',
+    bronze: '#7a5821',
+    lapis: '#0b1326',
+    indigo: '#17284a',
+    deepVoid: '#060b17',
+    novaGold: '#ffd97d',
+    nebulaCyan: '#72d1c6',
+    inkIron: '#1c1813'
+  };
+
+  var LUMINOUS_STARS = [
+    {
+      star: 'Cepheids',
+      raDeg: 40,
+      decDeg: 54,
+      poleR: 0.28,
+      color: '#ffe8a3',
+      glow: 'rgba(255, 224, 140, 0.46)',
+      coupledId: 'bamboo_suspended_street',
+      celestialId: 'star_cluster_nova',
+      epithet: 'Pulsating Rite Cluster'
+    },
+    {
+      star: 'Antares',
+      raDeg: 136,
+      decDeg: 18,
+      poleR: 0.57,
+      color: '#ff6e4a',
+      glow: 'rgba(255, 102, 71, 0.50)',
+      coupledId: 'shadow_theater_kennels',
+      celestialId: 'nebula_condensed_planet',
+      epithet: 'Crimson Supergiant of Mars Arc'
+    },
+    {
+      star: 'Alpheratz',
+      raDeg: 226,
+      decDeg: 28,
+      poleR: 0.51,
+      color: '#c4e2ff',
+      glow: 'rgba(162, 208, 255, 0.48)',
+      coupledId: 'statue_of_thales',
+      celestialId: 'saturn_ring_perturbation',
+      epithet: 'Sapphire Beacon of the Mole'
+    },
+    {
+      star: 'Capella',
+      raDeg: 314,
+      decDeg: 14,
+      poleR: 0.63,
+      color: '#ffd97d',
+      glow: 'rgba(255, 217, 125, 0.48)',
+      coupledId: 'gymnastics_toboggan_slide',
+      celestialId: 'milky_way_expansion',
+      epithet: 'Golden Binary of the Palaestra'
+    }
+  ];
+
+  var CELESTIAL_NOVELTIES = [
+    {
+      id: 'bamboo_suspended_street',
+      celestialId: 'star_cluster_nova',
+      star: 'Cepheids',
+      raDeg: 62,
+      decDeg: 47,
+      poleR: 0.36,
+      title: 'Nova Explosion in Globular Cluster',
+      dormantTitle: 'Dormant Globular Star Cluster',
+      earthDistrict: 'Mercury-Venus Bamboo Crossing'
+    },
+    {
+      id: 'shadow_theater_kennels',
+      celestialId: 'nebula_condensed_planet',
+      star: 'Antares',
+      raDeg: 162,
+      decDeg: 25,
+      poleR: 0.46,
+      title: 'Gaseous Nebula Condensing into Planet',
+      dormantTitle: 'Uncondensed Cyan-Violet Nebula',
+      earthDistrict: 'Mars Arc Shadow-Theater'
+    },
+    {
+      id: 'statue_of_thales',
+      celestialId: 'saturn_ring_perturbation',
+      star: 'Alpheratz',
+      raDeg: 252,
+      decDeg: 20,
+      poleR: 0.49,
+      title: 'Orbital Perturbation in Saturn Rings',
+      dormantTitle: 'Level Saturnian Ring Plane',
+      earthDistrict: 'Jupiter Port Quay of Thales'
+    },
+    {
+      id: 'gymnastics_toboggan_slide',
+      celestialId: 'milky_way_expansion',
+      star: 'Capella',
+      raDeg: 338,
+      decDeg: 32,
+      poleR: 0.42,
+      title: 'Curved Expansion of the Milky Way',
+      dormantTitle: 'Straight Galactic River',
+      earthDistrict: 'Saturn Terrace Gymnastics Slide'
+    }
+  ];
+
+  var CONSTELLATION_CHORDS = [
+    {
+      id: 'bamboo_suspended_street',
+      nodes: [[24, 0.22], [40, 0.28], [62, 0.36], [80, 0.27], [40, 0.28]]
+    },
+    {
+      id: 'shadow_theater_kennels',
+      nodes: [[118, 0.48], [136, 0.57], [162, 0.46], [180, 0.60], [136, 0.57]]
+    },
+    {
+      id: 'statue_of_thales',
+      nodes: [[208, 0.42], [226, 0.51], [252, 0.49], [268, 0.64], [226, 0.51]]
+    },
+    {
+      id: 'gymnastics_toboggan_slide',
+      nodes: [[296, 0.54], [314, 0.63], [338, 0.42], [352, 0.58], [314, 0.63]]
+    }
+  ];
+
+  var FIELD_STARS = (function buildFieldStars() {
+    var list = [];
+    var seed = 50173;
+    var tints = ['#eef4ff', '#ffdca8', '#cfe3ff', '#f7ecd5', '#9fd8d2'];
+    for (var i = 0; i < 116; i++) {
+      seed = (seed * 1664525 + 1013904223) >>> 0;
+      var u1 = (seed & 0xffff) / 65535;
+      seed = (seed * 1664525 + 1013904223) >>> 0;
+      var u2 = (seed & 0xffff) / 65535;
+      seed = (seed * 1664525 + 1013904223) >>> 0;
+      var u3 = (seed & 0xffff) / 65535;
+      list.push({
+        raDeg: u1 * 360,
+        poleR: 0.06 + Math.sqrt(u2) * 0.89,
+        mag: 0.55 + u3 * 1.55,
+        tint: tints[i % tints.length],
+        phase: u3 * TWO_PI
+      });
+    }
+    return list;
+  })();
+
+  function clamp(v, lo, hi) {
+    return v < lo ? lo : (v > hi ? hi : v);
+  }
+
+  function resolveLocus(rawKey) {
+    if (!rawKey && rawKey !== 0) {
+      return null;
+    }
+    var key = String(rawKey).trim();
+    var lower = key.toLowerCase();
+    for (var i = 0; i < CELESTIAL_NOVELTIES.length; i++) {
+      var nov = CELESTIAL_NOVELTIES[i];
+      if (nov.id === key || nov.celestialId === key ||
+          nov.id.toLowerCase() === lower || nov.celestialId.toLowerCase() === lower) {
+        return {
+          kind: 'novelty',
+          focusKey: nov.celestialId,
+          id: nov.id,
+          celestialId: nov.celestialId,
+          star: nov.star,
+          raDeg: nov.raDeg,
+          decDeg: nov.decDeg,
+          poleR: nov.poleR,
+          label: nov.title
+        };
+      }
+    }
+    for (var j = 0; j < LUMINOUS_STARS.length; j++) {
+      var st = LUMINOUS_STARS[j];
+      if (st.star === key || st.star.toLowerCase() === lower) {
+        return {
+          kind: 'star',
+          focusKey: st.star,
+          id: st.coupledId,
+          celestialId: st.celestialId,
+          star: st.star,
+          raDeg: st.raDeg,
+          decDeg: st.decDeg,
+          poleR: st.poleR,
+          label: st.star + ' — ' + st.epithet
+        };
+      }
+    }
+    return null;
+  }
+
+  function computeGeometry(w, h, state) {
+    var cx = w * 0.5;
+    var cy = h * 0.5;
+    var minDim = Math.min(w, h);
+    var bezelOuter = Math.max(58, minDim * 0.455);
+    var domeR = bezelOuter * (state.telescopeMode === 'ocular' ? 0.89 : 0.875);
+    var vaultRad = state.siderealPhase * TWO_PI - Math.PI * 0.5;
+    var zoom = state.telescopeMode === 'ocular' ? 2.32 : 1.0;
+    return {
+      w: w,
+      h: h,
+      cx: cx,
+      cy: cy,
+      bezelOuter: bezelOuter,
+      domeR: domeR,
+      vaultRad: vaultRad,
+      zoom: zoom,
+      aimX: state.aimX,
+      aimY: state.aimY,
+      ocular: state.telescopeMode === 'ocular'
+    };
+  }
+
+  function unitSkyCoords(raDeg, poleR, vaultRad) {
+    var ang = raDeg * DEG2RAD + vaultRad;
+    return {
+      ux: Math.cos(ang) * poleR,
+      uy: Math.sin(ang) * poleR
+    };
+  }
+
+  function projectSky(raDeg, poleR, geom) {
+    var u = unitSkyCoords(raDeg, poleR, geom.vaultRad);
+    if (geom.ocular) {
+      return {
+        x: geom.cx + (u.ux - geom.aimX) * geom.domeR * geom.zoom,
+        y: geom.cy + (u.uy - geom.aimY) * geom.domeR * geom.zoom,
+        scale: geom.zoom
+      };
+    }
+    return {
+      x: geom.cx + u.ux * geom.domeR,
+      y: geom.cy + u.uy * geom.domeR,
+      scale: 1.0
+    };
+  }
+
+  function createSkyAudio() {
+    var muted = true;
+    var audioCtx = null;
+    var droneGain = null;
+    var droneStarted = false;
+
+    function ensureContext() {
+      if (audioCtx) {
+        if (audioCtx.state === 'suspended') {
+          try { audioCtx.resume(); } catch (_) {}
+        }
+        return audioCtx;
+      }
+      var Ctor = global.AudioContext || global.webkitAudioContext;
+      if (!Ctor) {
+        return null;
+      }
+      try {
+        audioCtx = new Ctor();
+        var filter = audioCtx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.value = 510;
+        droneGain = audioCtx.createGain();
+        droneGain.gain.value = 0.0001;
+        filter.connect(droneGain);
+        droneGain.connect(audioCtx.destination);
+        var freqs = [196.0, 294.0, 441.0];
+        for (var i = 0; i < freqs.length; i++) {
+          var osc = audioCtx.createOscillator();
+          var g = audioCtx.createGain();
+          osc.type = i === 0 ? 'sine' : 'triangle';
+          osc.frequency.value = freqs[i];
+          g.gain.value = i === 0 ? 0.48 : (i === 1 ? 0.30 : 0.16);
+          osc.connect(g);
+          g.connect(filter);
+          osc.start();
+        }
+        droneStarted = true;
+      } catch (_) {
+        audioCtx = null;
+      }
+      return audioCtx;
+    }
+
+    function voiceNote(freq, delay, dur, peak, type, slideFreq) {
+      if (muted || !audioCtx) {
+        return;
+      }
+      try {
+        var now = audioCtx.currentTime + (delay || 0);
+        var osc = audioCtx.createOscillator();
+        var gain = audioCtx.createGain();
+        var lp = audioCtx.createBiquadFilter();
+        lp.type = 'lowpass';
+        lp.frequency.setValueAtTime(2200, now);
+        osc.type = type || 'sine';
+        osc.frequency.setValueAtTime(freq, now);
+        if (slideFreq) {
+          osc.frequency.exponentialRampToValueAtTime(slideFreq, now + dur * 0.85);
+        }
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.linearRampToValueAtTime(peak || 0.045, now + 0.024);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+        osc.connect(lp);
+        lp.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + dur + 0.04);
+      } catch (_) {}
+    }
+
+    return {
+      setMuted: function (flag) {
+        muted = Boolean(flag);
+        if (!muted) {
+          var ac = ensureContext();
+          if (ac && droneStarted && droneGain) {
+            try {
+              droneGain.gain.cancelScheduledValues(ac.currentTime);
+              droneGain.gain.setTargetAtTime(0.018, ac.currentTime, 0.14);
+            } catch (_) {}
+          }
+        } else if (audioCtx && droneGain) {
+          try {
+            droneGain.gain.cancelScheduledValues(audioCtx.currentTime);
+            droneGain.gain.setTargetAtTime(0.0001, audioCtx.currentTime, 0.08);
+          } catch (_) {}
+        }
+        return muted;
+      },
+      toggleMute: function () {
+        return this.setMuted(!muted);
+      },
+      isMuted: function () {
+        return muted;
+      },
+      playPrudenceChord: function (weighed) {
+        if (muted || !audioCtx) { return; }
+        if (weighed) {
+          voiceNote(293.66, 0.00, 0.55, 0.042, 'triangle');
+          voiceNote(440.00, 0.05, 0.62, 0.038, 'sine');
+          voiceNote(587.33, 0.11, 0.70, 0.032, 'sine');
+        } else {
+          voiceNote(392.00, 0.00, 0.32, 0.030, 'sine');
+          voiceNote(440.00, 0.07, 0.34, 0.024, 'sine');
+        }
+      },
+      playBlockedDissonance: function () {
+        if (muted || !audioCtx) { return; }
+        voiceNote(130.81, 0.00, 0.36, 0.055, 'triangle', 98.0);
+        voiceNote(138.59, 0.02, 0.34, 0.042, 'sawtooth', 103.8);
+      },
+      playNoveltyTone: function (id) {
+        if (muted || !audioCtx) { return; }
+        var loc = resolveLocus(id);
+        var cid = loc ? loc.celestialId : String(id || '');
+        if (cid === 'star_cluster_nova') {
+          voiceNote(587.33, 0.00, 0.75, 0.044, 'sine');
+          voiceNote(880.00, 0.04, 0.80, 0.038, 'triangle');
+          voiceNote(1174.66, 0.09, 0.88, 0.032, 'sine');
+          voiceNote(1760.00, 0.14, 0.65, 0.022, 'sine');
+        } else if (cid === 'nebula_condensed_planet') {
+          voiceNote(220.00, 0.00, 0.85, 0.048, 'sine', 293.66);
+          voiceNote(329.63, 0.06, 0.82, 0.036, 'triangle', 440.00);
+        } else if (cid === 'saturn_ring_perturbation') {
+          voiceNote(261.63, 0.00, 0.76, 0.042, 'triangle');
+          voiceNote(392.00, 0.05, 0.80, 0.038, 'sine', 396.50);
+          voiceNote(523.25, 0.12, 0.72, 0.028, 'sine');
+        } else {
+          var notes = [329.63, 392.00, 493.88, 587.33, 783.99];
+          for (var k = 0; k < notes.length; k++) {
+            voiceNote(notes[k], k * 0.055, 0.65, 0.032, 'sine');
+          }
+        }
+      }
+    };
+  }
+
+  function drawSkyScene(c, geom, state) {
+    var w = geom.w, h = geom.h, cx = geom.cx, cy = geom.cy, r = geom.domeR;
+    c.fillStyle = PALETTE.deepVoid;
+    c.fillRect(0, 0, w, h);
+
+    c.save();
+    c.beginPath();
+    c.arc(cx, cy, r, 0, TWO_PI);
+    c.clip();
+
+    var skyGrad = c.createRadialGradient(cx - r * 0.14, cy - r * 0.18, r * 0.04, cx, cy, r * 1.04);
+    skyGrad.addColorStop(0, '#1c325c');
+    skyGrad.addColorStop(0.55, PALETTE.indigo);
+    skyGrad.addColorStop(1, PALETTE.lapis);
+    c.fillStyle = skyGrad;
+    c.fillRect(cx - r - 4, cy - r - 4, r * 2 + 8, r * 2 + 8);
+
+    if (!geom.ocular) {
+      c.strokeStyle = 'rgba(200, 155, 67, 0.20)';
+      c.lineWidth = 0.9;
+      for (var dr = 0.25; dr <= 0.76; dr += 0.25) {
+        c.beginPath();
+        c.arc(cx, cy, r * dr, 0, TWO_PI);
+        c.stroke();
+      }
+      c.beginPath();
+      c.moveTo(cx - r, cy); c.lineTo(cx + r, cy);
+      c.moveTo(cx, cy - r); c.lineTo(cx, cy + r);
+      c.stroke();
+    }
+
+    var mwProg = state.progressMap.milky_way_expansion || 0;
+    for (var m = 0; m <= 26; m++) {
+      var u = (m / 26) * 1.72 - 0.86;
+      var bend = (0.04 + 0.34 * mwProg) * (1 - u * u);
+      var lx = u * 0.88 - bend * 0.42;
+      var ly = -u * 0.56 + bend * 0.92;
+      var rotA = geom.vaultRad + 0.52;
+      var wx = lx * Math.cos(rotA) - ly * Math.sin(rotA);
+      var wy = lx * Math.sin(rotA) + ly * Math.cos(rotA);
+      var px = geom.ocular ? cx + (wx - geom.aimX) * r * geom.zoom : cx + wx * r;
+      var py = geom.ocular ? cy + (wy - geom.aimY) * r * geom.zoom : cy + wy * r;
+      var bw = r * geom.zoom * (0.09 + 0.15 * mwProg) * (1.05 - 0.32 * Math.abs(u));
+      var mg = c.createRadialGradient(px, py, bw * 0.06, px, py, bw);
+      mg.addColorStop(0, mwProg > 0.05 ? 'rgba(255, 224, 150, ' + (0.10 + 0.26 * mwProg).toFixed(3) + ')' : 'rgba(155, 185, 230, 0.10)');
+      mg.addColorStop(0.55, 'rgba(114, 209, 198, ' + (0.05 + 0.17 * mwProg).toFixed(3) + ')');
+      mg.addColorStop(1, 'rgba(11, 19, 38, 0)');
+      c.fillStyle = mg;
+      c.beginPath();
+      c.arc(px, py, bw, 0, TWO_PI);
+      c.fill();
+      if (mwProg > 0.08) {
+        c.fillStyle = 'rgba(255, 245, 214, ' + (0.35 + 0.5 * mwProg).toFixed(2) + ')';
+        c.fillRect(px + Math.sin(m * 2.3) * bw * 0.38, py + Math.cos(m * 1.7) * bw * 0.34, 1.8 * geom.zoom, 1.8 * geom.zoom);
+      }
+    }
+
+    for (var s = 0; s < FIELD_STARS.length; s++) {
+      var fs = FIELD_STARS[s];
+      var fp = projectSky(fs.raDeg, fs.poleR, geom);
+      var tw = state.reducedMotion ? 0.82 : (0.65 + 0.35 * Math.sin(state.time * 2.1 + fs.phase));
+      c.globalAlpha = tw * 0.78;
+      c.fillStyle = fs.tint;
+      c.beginPath();
+      c.arc(fp.x, fp.y, fs.mag * (geom.ocular ? 1.45 : 1.0), 0, TWO_PI);
+      c.fill();
+    }
+    c.globalAlpha = 1;
+
+    for (var ch = 0; ch < CONSTELLATION_CHORDS.length; ch++) {
+      var grp = CONSTELLATION_CHORDS[ch];
+      var isHi = state.focusedEarthId === grp.id || (state.activeMap[grp.id] === true);
+      c.strokeStyle = isHi ? 'rgba(255, 217, 125, 0.58)' : 'rgba(114, 209, 198, 0.24)';
+      c.lineWidth = isHi ? 1.4 : 0.9;
+      c.beginPath();
+      for (var n = 0; n < grp.nodes.length; n++) {
+        var np = projectSky(grp.nodes[n][0], grp.nodes[n][1], geom);
+        if (n === 0) { c.moveTo(np.x, np.y); } else { c.lineTo(np.x, np.y); }
+      }
+      c.stroke();
+    }
+
+    for (var ls = 0; ls < LUMINOUS_STARS.length; ls++) {
+      var st = LUMINOUS_STARS[ls];
+      var sp = projectSky(st.raDeg, st.poleR, geom);
+      var pulse = st.star === 'Cepheids' && !state.reducedMotion ? (0.84 + 0.26 * Math.sin(state.time * 3.6)) : 1.0;
+      var sr = (geom.ocular ? 6.2 : 4.2) * pulse;
+      var sg = c.createRadialGradient(sp.x, sp.y, 0.5, sp.x, sp.y, sr * 4.2);
+      sg.addColorStop(0, st.color);
+      sg.addColorStop(0.35, st.glow);
+      sg.addColorStop(1, 'rgba(11, 19, 38, 0)');
+      c.fillStyle = sg;
+      c.beginPath(); c.arc(sp.x, sp.y, sr * 4.2, 0, TWO_PI); c.fill();
+      if (st.star === 'Cepheids') {
+        var offs = [[0, 0], [-6, -4], [6, -3], [-4, 6], [5, 5]];
+        c.fillStyle = st.color;
+        for (var ci = 0; ci < offs.length; ci++) {
+          c.beginPath();
+          c.arc(sp.x + offs[ci][0] * pulse * sp.scale * 0.7, sp.y + offs[ci][1] * pulse * sp.scale * 0.7, sr * (ci === 0 ? 0.65 : 0.42), 0, TWO_PI);
+          c.fill();
+        }
+      } else if (st.star === 'Capella') {
+        var binA = state.time * 1.4;
+        var sep = 3.4 * sp.scale;
+        c.fillStyle = '#ffd97d';
+        c.beginPath(); c.arc(sp.x - Math.cos(binA) * sep, sp.y - Math.sin(binA) * sep, sr * 0.68, 0, TWO_PI); c.fill();
+        c.fillStyle = '#fff3cf';
+        c.beginPath(); c.arc(sp.x + Math.cos(binA) * sep, sp.y + Math.sin(binA) * sep, sr * 0.52, 0, TWO_PI); c.fill();
+      } else {
+        c.strokeStyle = st.color;
+        c.lineWidth = 1.1;
+        c.beginPath();
+        c.moveTo(sp.x - sr * 2.5, sp.y); c.lineTo(sp.x + sr * 2.5, sp.y);
+        c.moveTo(sp.x, sp.y - sr * 2.5); c.lineTo(sp.x, sp.y + sr * 2.5);
+        c.stroke();
+        c.fillStyle = '#ffffff';
+        c.beginPath(); c.arc(sp.x, sp.y, sr * 0.7, 0, TWO_PI); c.fill();
+      }
+      c.fillStyle = PALETTE.travertine;
+      c.font = (geom.ocular ? '600 11px' : '600 10px') + ' Georgia, serif';
+      c.fillText(st.star, sp.x + sr * 1.5 + 3, sp.y - sr * 0.8);
+    }
+
+    drawNoveltiesLayer(c, geom, state);
+    c.restore();
+    drawBezelAndReticle(c, geom, state);
+  }
+
+  function drawNoveltiesLayer(c, geom, state) {
+    for (var i = 0; i < CELESTIAL_NOVELTIES.length; i++) {
+      var nov = CELESTIAL_NOVELTIES[i];
+      var pt = projectSky(nov.raDeg, nov.poleR, geom);
+      var p = state.progressMap[nov.celestialId] || 0;
+      var sc = pt.scale;
+      c.save();
+      c.translate(pt.x, pt.y);
+
+      if (nov.celestialId === 'star_cluster_nova') {
+        for (var k = 0; k < 12; k++) {
+          var ca = k * 0.52 + 0.3;
+          var cr = (4 + (k % 3) * 4.2 + p * 10) * sc;
+          c.fillStyle = p > 0.1 ? '#fff6d6' : 'rgba(202, 222, 255, 0.65)';
+          c.beginPath(); c.arc(Math.cos(ca) * cr, Math.sin(ca) * cr, (1.2 + p * 0.9) * sc, 0, TWO_PI); c.fill();
+        }
+        if (p > 0.02) {
+          var nr = (18 + 26 * p) * sc;
+          var ng = c.createRadialGradient(0, 0, 1, 0, 0, nr);
+          ng.addColorStop(0, '#ffffff');
+          ng.addColorStop(0.28, 'rgba(255, 217, 125, ' + (0.88 * p).toFixed(2) + ')');
+          ng.addColorStop(0.68, 'rgba(255, 130, 62, ' + (0.42 * p).toFixed(2) + ')');
+          ng.addColorStop(1, 'rgba(11, 19, 38, 0)');
+          c.fillStyle = ng;
+          c.beginPath(); c.arc(0, 0, nr, 0, TWO_PI); c.fill();
+          c.strokeStyle = 'rgba(255, 232, 168, ' + (0.82 * p).toFixed(2) + ')';
+          c.lineWidth = 1.5 * sc;
+          c.beginPath(); c.arc(0, 0, (10 + 18 * p) * sc, 0, TWO_PI); c.stroke();
+          c.strokeStyle = 'rgba(114, 209, 198, ' + (0.55 * p).toFixed(2) + ')';
+          c.beginPath(); c.arc(0, 0, (16 + 24 * p) * sc, 0, TWO_PI); c.stroke();
+          c.strokeStyle = '#fff9e2';
+          for (var spk = 0; spk < 8; spk++) {
+            var sa = spk * Math.PI * 0.25 + (state.reducedMotion ? 0 : state.time * 0.18);
+            var sl = (spk % 2 === 0 ? 28 : 17) * p * sc;
+            c.beginPath(); c.moveTo(-Math.cos(sa) * sl, -Math.sin(sa) * sl); c.lineTo(Math.cos(sa) * sl, Math.sin(sa) * sl); c.stroke();
+          }
+        }
+      } else if (nov.celestialId === 'nebula_condensed_planet') {
+        var cloudR = (24 - 11 * p) * sc;
+        var cg = c.createRadialGradient(0, 0, 1, 0, 0, cloudR);
+        cg.addColorStop(0, 'rgba(114, 209, 198, ' + (0.52 - 0.22 * p).toFixed(2) + ')');
+        cg.addColorStop(0.55, 'rgba(128, 108, 218, ' + (0.34 - 0.16 * p).toFixed(2) + ')');
+        cg.addColorStop(1, 'rgba(11, 19, 38, 0)');
+        c.fillStyle = cg;
+        c.beginPath(); c.arc(0, 0, cloudR, 0, TWO_PI); c.fill();
+        if (p > 0.02) {
+          c.strokeStyle = 'rgba(114, 209, 198, ' + (0.72 * p).toFixed(2) + ')';
+          c.lineWidth = 1.3 * sc;
+          for (var arm = 0; arm < 3; arm++) {
+            c.beginPath();
+            for (var stp = 0; stp <= 14; stp++) {
+              var fr = stp / 14;
+              var aa = arm * (TWO_PI / 3) + fr * 3.4 + (state.reducedMotion ? 0 : state.time * 1.1);
+              var ar = (4 + (1 - fr) * 18) * sc;
+              if (stp === 0) { c.moveTo(Math.cos(aa) * ar, Math.sin(aa) * ar); } else { c.lineTo(Math.cos(aa) * ar, Math.sin(aa) * ar); }
+            }
+            c.stroke();
+          }
+          var pr = (4.5 + 5.8 * p) * sc;
+          c.fillStyle = '#e5b368';
+          c.beginPath(); c.arc(0, 0, pr, 0, TWO_PI); c.fill();
+          c.strokeStyle = PALETTE.terracotta;
+          c.lineWidth = 1.6 * sc;
+          c.beginPath(); c.moveTo(-pr * 0.9, -pr * 0.22); c.lineTo(pr * 0.9, -pr * 0.22); c.stroke();
+          c.strokeStyle = PALETTE.travertine;
+          c.beginPath(); c.moveTo(-pr * 0.85, pr * 0.28); c.lineTo(pr * 0.85, pr * 0.28); c.stroke();
+          var ma = state.reducedMotion ? 0.7 : state.time * 2.0;
+          c.fillStyle = '#fff5da';
+          c.beginPath(); c.arc(Math.cos(ma) * pr * 2.0, Math.sin(ma) * pr * 1.15, 2.1 * sc, 0, TWO_PI); c.fill();
+        }
+      } else if (nov.celestialId === 'saturn_ring_perturbation') {
+        var tilt = -0.18 + 0.64 * p + (p > 0.1 && !state.reducedMotion ? Math.sin(state.time * 2.6) * 0.06 : 0);
+        c.save();
+        c.rotate(tilt);
+        c.strokeStyle = p > 0.05 ? PALETTE.novaGold : 'rgba(223, 208, 176, 0.68)';
+        c.lineWidth = (1.8 + 0.8 * p) * sc;
+        c.beginPath(); c.ellipse(0, 0, (15 + 5 * p) * sc, (4.8 + 2.4 * p) * sc, 0, 0, TWO_PI); c.stroke();
+        c.strokeStyle = p > 0.05 ? 'rgba(114, 209, 198, 0.80)' : 'rgba(200, 155, 67, 0.45)';
+        c.lineWidth = 1.1 * sc;
+        c.beginPath(); c.ellipse(p * 2.5 * sc, 0, (20 + 7 * p) * sc, (6.5 + 3.2 * p) * sc, 0, 0, TWO_PI); c.stroke();
+        c.fillStyle = '#dfc180';
+        c.beginPath(); c.arc(0, 0, 5.4 * sc, 0, TWO_PI); c.fill();
+        c.restore();
+        var sx = (22 - 5 * p) * sc, sy = (-14 + 9 * p) * sc;
+        c.fillStyle = p > 0.05 ? '#ffffff' : '#bcd8ff';
+        c.beginPath(); c.arc(sx, sy, (2.2 + 2.0 * p) * sc, 0, TWO_PI); c.fill();
+        if (p > 0.02) {
+          c.strokeStyle = 'rgba(255, 217, 125, ' + (0.76 * p).toFixed(2) + ')';
+          c.lineWidth = 1.2 * sc;
+          c.beginPath(); c.arc(sx * 0.5, sy * 0.5, 13 * sc, 0.2, 2.7); c.stroke();
+        }
+      } else {
+        c.strokeStyle = p > 0.05 ? 'rgba(255, 217, 125, 0.85)' : 'rgba(155, 185, 230, 0.38)';
+        c.lineWidth = (1.1 + 1.2 * p) * sc;
+        c.beginPath();
+        c.moveTo(-18 * sc, 10 * sc);
+        c.quadraticCurveTo(0, (-6 - 18 * p) * sc, 18 * sc, 10 * sc);
+        c.stroke();
+        if (p > 0.05) {
+          c.fillStyle = 'rgba(255, 235, 178, ' + (0.8 * p).toFixed(2) + ')';
+          for (var gb = -2; gb <= 2; gb++) {
+            c.beginPath(); c.arc(gb * 6.5 * sc, (-3 - 7 * p + Math.abs(gb) * 3.5) * sc, (2.2 + p) * sc, 0, TWO_PI); c.fill();
+          }
+        }
+      }
+      c.restore();
+    }
+  }
+
+  function drawBezelAndReticle(c, geom, state) {
+    var cx = geom.cx, cy = geom.cy, r = geom.domeR, outer = geom.bezelOuter;
+    var foc = resolveLocus(state.focusedId) || resolveLocus('Cepheids');
+    var fp = projectSky(foc.raDeg, foc.poleR, geom);
+
+    if (!geom.ocular) {
+      c.save();
+      c.strokeStyle = 'rgba(255, 217, 125, 0.52)';
+      c.setLineDash([4, 4]);
+      c.lineWidth = 1.2;
+      c.beginPath();
+      c.moveTo(0, cy);
+      c.quadraticCurveTo(cx * 0.45, (cy + fp.y) * 0.5 - 18, fp.x, fp.y);
+      c.stroke();
+      c.restore();
+
+      c.strokeStyle = PALETTE.novaGold;
+      c.lineWidth = 1.4;
+      c.beginPath(); c.arc(fp.x, fp.y, 13, 0, TWO_PI); c.stroke();
+      c.beginPath();
+      c.moveTo(fp.x - 19, fp.y); c.lineTo(fp.x - 9, fp.y);
+      c.moveTo(fp.x + 9, fp.y); c.lineTo(fp.x + 19, fp.y);
+      c.moveTo(fp.x, fp.y - 19); c.lineTo(fp.x, fp.y - 9);
+      c.moveTo(fp.x, fp.y + 9); c.lineTo(fp.x, fp.y + 19);
+      c.stroke();
+    } else {
+      var vig = c.createRadialGradient(cx, cy, r * 0.62, cx, cy, r);
+      vig.addColorStop(0, 'rgba(6, 11, 23, 0)');
+      vig.addColorStop(1, 'rgba(4, 8, 18, 0.78)');
+      c.fillStyle = vig;
+      c.beginPath(); c.arc(cx, cy, r, 0, TWO_PI); c.fill();
+      c.strokeStyle = 'rgba(255, 217, 125, 0.62)';
+      c.lineWidth = 1.0;
+      c.beginPath();
+      c.moveTo(cx - r * 0.86, cy); c.lineTo(cx + r * 0.86, cy);
+      c.moveTo(cx, cy - r * 0.86); c.lineTo(cx, cy + r * 0.86);
+      c.stroke();
+      c.beginPath(); c.arc(cx, cy, 22, 0, TWO_PI); c.stroke();
+    }
+
+    c.strokeStyle = PALETTE.bronze;
+    c.lineWidth = Math.max(6, outer - r);
+    c.beginPath(); c.arc(cx, cy, (outer + r) * 0.5, 0, TWO_PI); c.stroke();
+    c.strokeStyle = PALETTE.brass;
+    c.lineWidth = 1.8;
+    c.beginPath(); c.arc(cx, cy, outer, 0, TWO_PI); c.stroke();
+    c.beginPath(); c.arc(cx, cy, r, 0, TWO_PI); c.stroke();
+
+    for (var deg = 0; deg < 360; deg += 10) {
+      var a = deg * DEG2RAD - Math.PI * 0.5;
+      var rIn = deg % 30 === 0 ? r : r + (outer - r) * 0.42;
+      c.strokeStyle = deg % 30 === 0 ? PALETTE.novaGold : PALETTE.brass;
+      c.lineWidth = deg % 30 === 0 ? 1.4 : 0.8;
+      c.beginPath();
+      c.moveTo(cx + Math.cos(a) * rIn, cy + Math.sin(a) * rIn);
+      c.lineTo(cx + Math.cos(a) * outer, cy + Math.sin(a) * outer);
+      c.stroke();
+    }
+
+    c.fillStyle = PALETTE.travertine;
+    c.font = '600 11px Georgia, serif';
+    c.fillText((geom.ocular ? 'OCULAR · ' : 'VAULT · ') + foc.label, 12, 18);
+    c.fillStyle = PALETTE.brass;
+    c.font = '10px Georgia, serif';
+    c.fillText('RA ' + state.raDeg.toFixed(0) + ' deg · DEC +' + state.decDeg.toFixed(0) + ' deg · Novelties ' + state.activeCount + '/4', 12, geom.h - 10);
+  }
+
+  function renderArchivalPlate(canvas, kind) {
+    if (!canvas || typeof canvas.getContext !== 'function') { return false; }
+    if (canvas.width < 220 || canvas.height < 150) {
+      canvas.width = 560;
+      canvas.height = 350;
+    }
+    var c = canvas.getContext('2d');
+    if (!c) { return false; }
+    var w = canvas.width, h = canvas.height;
+    c.save();
+    c.setTransform(1, 0, 0, 1, 0, 0);
+
+    if (kind === 'map') {
+      var pg = c.createLinearGradient(0, 0, w, h);
+      pg.addColorStop(0, PALETTE.travertine);
+      pg.addColorStop(1, PALETTE.parchment);
+      c.fillStyle = pg;
+      c.fillRect(0, 0, w, h);
+      c.strokeStyle = PALETTE.inkIron;
+      c.lineWidth = 2;
+      c.strokeRect(10, 10, w - 20, h - 20);
+      c.strokeStyle = PALETTE.bronze;
+      c.lineWidth = 1;
+      c.strokeRect(15, 15, w - 30, h - 30);
+
+      var lx = w * 0.30, rx = w * 0.70, my = h * 0.52, mr = Math.min(w * 0.19, h * 0.34);
+      for (var o = 1; o <= 7; o++) {
+        c.strokeStyle = o % 2 === 0 ? PALETTE.terracotta : PALETTE.bronze;
+        c.beginPath();
+        c.ellipse(lx, my, mr * (o / 7), mr * (o / 7) * 0.78, 0.22, 0, TWO_PI);
+        c.stroke();
+      }
+      c.fillStyle = PALETTE.lapis;
+      c.beginPath(); c.arc(rx, my, mr, 0, TWO_PI); c.fill();
+      c.strokeStyle = PALETTE.brass;
+      c.lineWidth = 2;
+      c.beginPath(); c.arc(rx, my, mr + 5, 0, TWO_PI); c.stroke();
+      for (var k = 0; k < 4; k++) {
+        var ang = k * Math.PI * 0.5 + 0.55;
+        var ex = lx + Math.cos(ang) * mr * 0.65, ey = my + Math.sin(ang) * mr * 0.52;
+        var sx = rx + Math.cos(ang) * mr * 0.62, sy = my + Math.sin(ang) * mr * 0.62;
+        c.fillStyle = PALETTE.novaGold;
+        c.beginPath(); c.arc(sx, sy, 3.6, 0, TWO_PI); c.fill();
+        c.fillStyle = PALETTE.terracotta;
+        c.beginPath(); c.arc(ex, ey, 3.4, 0, TWO_PI); c.fill();
+        c.strokeStyle = 'rgba(122, 88, 33, 0.55)';
+        c.setLineDash([4, 3]);
+        c.beginPath(); c.moveTo(ex, ey); c.quadraticCurveTo(w * 0.5, my - 36 + k * 22, sx, sy); c.stroke();
+        c.setLineDash([]);
+      }
+      c.fillStyle = PALETTE.inkIron;
+      c.font = 'bold 13px Georgia, serif';
+      c.fillText('TABULA I · ANDRIA PLANIMETRIA & CELESTIAL CONCORDANCE', 26, 34);
+    } else {
+      var sg = c.createLinearGradient(0, 0, 0, h * 0.72);
+      sg.addColorStop(0, PALETTE.lapis);
+      sg.addColorStop(1, PALETTE.indigo);
+      c.fillStyle = sg;
+      c.fillRect(0, 0, w, h);
+      c.strokeStyle = 'rgba(255, 217, 125, 0.35)';
+      c.lineWidth = 18;
+      c.beginPath(); c.moveTo(w * 0.08, h * 0.52); c.quadraticCurveTo(w * 0.48, h * 0.08, w * 0.92, h * 0.44); c.stroke();
+      c.fillStyle = PALETTE.novaGold;
+      c.beginPath(); c.arc(w * 0.28, h * 0.24, 14, 0, TWO_PI); c.fill();
+      c.fillStyle = PALETTE.nebulaCyan;
+      c.beginPath(); c.arc(w * 0.68, h * 0.26, 11, 0, TWO_PI); c.fill();
+
+      c.fillStyle = PALETTE.parchment;
+      c.fillRect(0, h * 0.68, w, h * 0.32);
+      c.fillStyle = PALETTE.travertine;
+      c.beginPath(); c.arc(w * 0.52, h * 0.68, h * 0.15, Math.PI, 0); c.fill();
+      c.strokeStyle = PALETTE.brass;
+      c.lineWidth = 4;
+      c.beginPath(); c.moveTo(w * 0.54, h * 0.58); c.lineTo(w * 0.66, h * 0.43); c.stroke();
+      c.strokeStyle = PALETTE.bambooJade;
+      c.lineWidth = 2.5;
+      c.beginPath(); c.arc(w * 0.22, h * 0.70, w * 0.11, Math.PI, 0); c.stroke();
+      c.strokeStyle = PALETTE.brass;
+      c.lineWidth = 2;
+      c.strokeRect(10, 10, w - 20, h - 20);
+      c.fillStyle = PALETTE.travertine;
+      c.font = 'bold 13px Georgia, serif';
+      c.fillText('TABULA II · SPECULA ASTRONOMICA ANDRIAE', 24, 32);
+    }
+    c.restore();
+    return true;
+  }
+
+  function createController(opts) {
+    var cfg = opts || {};
+    var onSkyFocus = typeof cfg.onSkyFocus === 'function' ? cfg.onSkyFocus : null;
+    var audio = createSkyAudio();
+    var canvas = null, ctx = null, width = 520, height = 460, dpr = 1;
+    var initLoc = resolveLocus('star_cluster_nova');
+
+    var state = {
+      telescopeMode: 'vault',
+      focusedId: initLoc.focusKey,
+      focusedEarthId: initLoc.id,
+      focusedCelestialId: initLoc.celestialId,
+      focusedStar: initLoc.star,
+      raDeg: initLoc.raDeg,
+      decDeg: initLoc.decDeg,
+      siderealPhase: 0.12,
+      reducedMotion: false,
+      time: 0,
+      activeCount: 0,
+      activeMap: {},
+      progressMap: {
+        star_cluster_nova: 0,
+        nebula_condensed_planet: 0,
+        saturn_ring_perturbation: 0,
+        milky_way_expansion: 0
+      },
+      aimX: 0,
+      aimY: 0,
+      targetAimX: 0,
+      targetAimY: 0
+    };
+
+    function refreshAim(snap) {
+      var loc = resolveLocus(state.focusedId) || initLoc;
+      var u = unitSkyCoords(loc.raDeg, loc.poleR, state.siderealPhase * TWO_PI - Math.PI * 0.5);
+      state.targetAimX = u.ux;
+      state.targetAimY = u.uy;
+      if (snap || state.reducedMotion) {
+        state.aimX = u.ux;
+        state.aimY = u.uy;
+      } else {
+        state.aimX += (u.ux - state.aimX) * 0.68;
+        state.aimY += (u.uy - state.aimY) * 0.68;
+      }
+    }
+    refreshAim(true);
+
+    function recountActive() {
+      var cnt = 0;
+      for (var i = 0; i < CELESTIAL_NOVELTIES.length; i++) {
+        if (state.activeMap[CELESTIAL_NOVELTIES[i].id]) { cnt++; }
+      }
+      state.activeCount = cnt;
+    }
+
+    var api = {
+      attachCanvas: function (el) {
+        canvas = el || null;
+        ctx = canvas && typeof canvas.getContext === 'function' ? canvas.getContext('2d') : null;
+        if (canvas) {
+          var cw = canvas.clientWidth || canvas.width || width;
+          var ch = canvas.clientHeight || canvas.height || height;
+          api.resize(cw, ch, global.devicePixelRatio || 1);
+        }
+        api.render();
+        return api;
+      },
+      resize: function (w, h, nextDpr) {
+        width = Math.max(160, Number(w) || width);
+        height = Math.max(160, Number(h) || height);
+        dpr = clamp(Number(nextDpr) || 1, 1, 3);
+        if (canvas) {
+          canvas.width = Math.round(width * dpr);
+          canvas.height = Math.round(height * dpr);
+        }
+        return api;
+      },
+      step: function (dt) {
+        var stepDt = clamp(Number(dt) || 0.016, 0, 0.1);
+        if (!state.reducedMotion) {
+          state.time += stepDt;
+          state.siderealPhase = (state.siderealPhase + stepDt * 0.008) % 1;
+        }
+        for (var i = 0; i < CELESTIAL_NOVELTIES.length; i++) {
+          var nov = CELESTIAL_NOVELTIES[i];
+          var target = state.activeMap[nov.id] ? 1 : 0;
+          if (state.reducedMotion) {
+            state.progressMap[nov.celestialId] = target;
+          } else {
+            var cur = state.progressMap[nov.celestialId] || 0;
+            var next = cur + (target - cur) * Math.min(1, stepDt * 5.8);
+            state.progressMap[nov.celestialId] = Math.abs(target - next) < 0.004 ? target : next;
+          }
+        }
+        var loc = resolveLocus(state.focusedId) || initLoc;
+        var u = unitSkyCoords(loc.raDeg, loc.poleR, state.siderealPhase * TWO_PI - Math.PI * 0.5);
+        state.targetAimX = u.ux;
+        state.targetAimY = u.uy;
+        if (state.reducedMotion) {
+          state.aimX = u.ux;
+          state.aimY = u.uy;
+        } else {
+          var k = Math.min(1, stepDt * 8.5);
+          state.aimX += (u.ux - state.aimX) * k;
+          state.aimY += (u.uy - state.aimY) * k;
+        }
+        return api;
+      },
+      render: function (externalCtx) {
+        var c = externalCtx || ctx;
+        if (!c) { return api; }
+        var rw = width, rh = height, rdpr = dpr;
+        if (externalCtx && externalCtx !== ctx && externalCtx.canvas) {
+          rw = externalCtx.canvas.width || width;
+          rh = externalCtx.canvas.height || height;
+          rdpr = 1;
+        }
+        c.save();
+        c.setTransform(rdpr, 0, 0, rdpr, 0, 0);
+        drawSkyScene(c, computeGeometry(rw, rh, state), state);
+        c.restore();
+        return api;
+      }
+    };
+    return attachControlMethods(api, state, audio, onSkyFocus, refreshAim, recountActive, function () { return { w: width, h: height }; });
+  }
+
+  function attachControlMethods(api, state, audio, onSkyFocus, refreshAim, recountActive, getDims) {
+    function setNoveltyInternal(loc, isAct, playSound) {
+      var prev = Boolean(state.activeMap[loc.id]);
+      var next = Boolean(isAct);
+      state.activeMap[loc.id] = next;
+      if (next) {
+        state.progressMap[loc.celestialId] = state.reducedMotion ? 1 : Math.max(state.progressMap[loc.celestialId] || 0, 0.74);
+        if (!prev) {
+          api.focusLocus(loc.celestialId, false);
+          if (playSound) { audio.playNoveltyTone(loc.celestialId); }
+        }
+      } else {
+        state.progressMap[loc.celestialId] = 0;
+      }
+      recountActive();
+    }
+
+    api.triggerCelestialNovelty = function (idOrCelestialId, active) {
+      var loc = resolveLocus(idOrCelestialId);
+      if (!loc) { return { ok: false, active: false }; }
+      var nextAct = active === undefined ? true : Boolean(active);
+      setNoveltyInternal(loc, nextAct, nextAct);
+      api.render();
+      return {
+        ok: true,
+        id: loc.id,
+        celestialId: loc.celestialId,
+        active: nextAct,
+        progress: state.progressMap[loc.celestialId]
+      };
+    };
+
+    api.syncFromEarth = function (earthState) {
+      if (!earthState || typeof earthState !== 'object') { return api.getState(); }
+      var root = earthState.state && typeof earthState.state === 'object' ? earthState.state : earthState;
+      if (typeof root.reducedMotion === 'boolean') { state.reducedMotion = root.reducedMotion; }
+      if (typeof root.siderealPhase === 'number') {
+        state.siderealPhase = ((root.siderealPhase % 1) + 1) % 1;
+      } else if (typeof root.siderealDeg === 'number') {
+        state.siderealPhase = (((root.siderealDeg % 360) + 360) % 360) / 360;
+      }
+      if (Array.isArray(root.enactedIds)) {
+        for (var i = 0; i < CELESTIAL_NOVELTIES.length; i++) {
+          var nv = CELESTIAL_NOVELTIES[i];
+          var on = root.enactedIds.indexOf(nv.id) !== -1 || root.enactedIds.indexOf(nv.celestialId) !== -1;
+          setNoveltyInternal(resolveLocus(nv.celestialId), on, true);
+        }
+      } else if (Array.isArray(root.innovations)) {
+        for (var j = 0; j < root.innovations.length; j++) {
+          var it = root.innovations[j];
+          var iloc = resolveLocus(it && (it.id || it.celestialId));
+          if (iloc) { setNoveltyInternal(iloc, Boolean(it.enacted), true); }
+        }
+      }
+      if (typeof earthState.enacted === 'boolean' && (earthState.id || earthState.celestialId)) {
+        var eloc = resolveLocus(earthState.id || earthState.celestialId);
+        if (eloc) { setNoveltyInternal(eloc, earthState.enacted, true); }
+      }
+      var fKey = earthState.focusedId || root.focusedId || root.focusedStar;
+      if (fKey) { api.focusLocus(fKey, false); }
+      refreshAim(false);
+      api.render();
+      return api.getState();
+    };
+
+    api.setTelescopeMode = function (mode) {
+      if (mode === 'toggle') {
+        state.telescopeMode = state.telescopeMode === 'ocular' ? 'vault' : 'ocular';
+      } else {
+        state.telescopeMode = mode === 'ocular' ? 'ocular' : 'vault';
+      }
+      refreshAim(true);
+      api.render();
+      return state.telescopeMode;
+    };
+
+    api.focusLocus = function (idOrStar, notifyEarth) {
+      var loc = resolveLocus(idOrStar);
+      if (!loc) { return null; }
+      var shouldNotify = notifyEarth === undefined ? true : Boolean(notifyEarth);
+      state.focusedId = loc.focusKey;
+      state.focusedEarthId = loc.id;
+      state.focusedCelestialId = loc.celestialId;
+      state.focusedStar = loc.star;
+      state.raDeg = loc.raDeg;
+      state.decDeg = loc.decDeg;
+      refreshAim(state.telescopeMode === 'ocular');
+      api.render();
+      var payload = {
+        bidirectionalCoupling: true,
+        kind: loc.kind,
+        id: loc.id,
+        celestialId: loc.celestialId,
+        star: loc.star,
+        label: loc.label,
+        raDeg: loc.raDeg,
+        decDeg: loc.decDeg,
+        source: 'sky'
+      };
+      if (shouldNotify && onSkyFocus) { onSkyFocus(payload); }
+      return payload;
+    };
+
+    api.hitTest = function (nx, ny, hitOpts) {
+      var dims = getDims();
+      var xNorm = Number(nx), yNorm = Number(ny);
+      if (!isFinite(xNorm) || !isFinite(yNorm)) { return null; }
+      if (xNorm > 1.5 || yNorm > 1.5) { xNorm /= dims.w; yNorm /= dims.h; }
+      var px = xNorm * dims.w, py = yNorm * dims.h;
+      var geom = computeGeometry(dims.w, dims.h, state);
+      var maxDist = Math.max(24, geom.domeR * (geom.ocular ? 0.25 : 0.14));
+      var best = null, bestDist = maxDist;
+      var keys = ['star_cluster_nova', 'nebula_condensed_planet', 'saturn_ring_perturbation', 'milky_way_expansion', 'Cepheids', 'Antares', 'Alpheratz', 'Capella'];
+      for (var i = 0; i < keys.length; i++) {
+        var loc = resolveLocus(keys[i]);
+        var pt = projectSky(loc.raDeg, loc.poleR, geom);
+        var d = Math.hypot(px - pt.x, py - pt.y);
+        if (d <= bestDist) { bestDist = d; best = loc; }
+      }
+      if (!best) { return null; }
+      if (!hitOpts || hitOpts.focus !== false) { api.focusLocus(best.focusKey, true); }
+      return {
+        hit: true,
+        kind: best.kind,
+        id: best.id,
+        celestialId: best.celestialId,
+        star: best.star,
+        label: best.label,
+        raDeg: best.raDeg,
+        decDeg: best.decDeg
+      };
+    };
+
+    api.renderArchivalPlate = renderArchivalPlate;
+    api.setMuted = function (flag) { return audio.setMuted(flag); };
+    api.toggleMute = function () { return audio.toggleMute(); };
+    api.isMuted = function () { return audio.isMuted(); };
+    api.playPrudenceChord = function (weighed) { audio.playPrudenceChord(weighed); };
+    api.playBlockedDissonance = function () { audio.playBlockedDissonance(); };
+    api.playNoveltyTone = function (id) { audio.playNoveltyTone(id); };
+
+    api.setSiderealPhase = function (phase) {
+      var p = Number(phase) || 0;
+      state.siderealPhase = p > 1.5 ? (((p % 360) + 360) % 360) / 360 : ((p % 1) + 1) % 1;
+      refreshAim(true);
+      api.render();
+      return state.siderealPhase;
+    };
+
+    api.setReducedMotion = function (flag) {
+      state.reducedMotion = Boolean(flag);
+      for (var i = 0; i < CELESTIAL_NOVELTIES.length; i++) {
+        var nv = CELESTIAL_NOVELTIES[i];
+        state.progressMap[nv.celestialId] = state.activeMap[nv.id] ? 1 : 0;
+      }
+      refreshAim(true);
+      api.render();
+      return state.reducedMotion;
+    };
+
+    api.resetAll = function () {
+      for (var i = 0; i < CELESTIAL_NOVELTIES.length; i++) {
+        var nv = CELESTIAL_NOVELTIES[i];
+        state.activeMap[nv.id] = false;
+        state.progressMap[nv.celestialId] = 0;
+      }
+      recountActive();
+      api.render();
+      return api.getState();
+    };
+
+    api.getState = function () {
+      var activeNovelties = [], enactedIds = [], novelties = [];
+      for (var i = 0; i < CELESTIAL_NOVELTIES.length; i++) {
+        var nv = CELESTIAL_NOVELTIES[i];
+        var on = Boolean(state.activeMap[nv.id]);
+        if (on) { activeNovelties.push(nv.celestialId); enactedIds.push(nv.id); }
+        novelties.push({
+          id: nv.id,
+          celestialId: nv.celestialId,
+          star: nv.star,
+          title: nv.title,
+          active: on,
+          progress: state.progressMap[nv.celestialId] || 0,
+          raDeg: nv.raDeg,
+          decDeg: nv.decDeg
+        });
+      }
+      return {
+        bidirectionalCoupling: true,
+        telescopeMode: state.telescopeMode,
+        focusedId: state.focusedId,
+        focusedEarthId: state.focusedEarthId,
+        focusedCelestialId: state.focusedCelestialId,
+        focusedStar: state.focusedStar,
+        activeNovelties: activeNovelties,
+        enactedIds: enactedIds,
+        noveltyProgress: Object.assign({}, state.progressMap),
+        novelties: novelties,
+        luminousStars: ['Antares', 'Alpheratz', 'Capella', 'Cepheids'],
+        muted: audio.isMuted(),
+        reducedMotion: state.reducedMotion,
+        siderealPhase: state.siderealPhase,
+        siderealDeg: Math.round(state.siderealPhase * 3600) / 10,
+        raDeg: state.raDeg,
+        decDeg: state.decDeg
+      };
+    };
+
+    return api;
+  }
+
+  global.AndriaReciprocalSky = {
+    CELESTIAL_NOVELTIES: CELESTIAL_NOVELTIES,
+    LUMINOUS_STARS: LUMINOUS_STARS,
+    CONSTELLATION_CHORDS: CONSTELLATION_CHORDS,
+    createController: createController,
+    renderArchivalPlate: renderArchivalPlate
+  };
+})(globalThis);
+
+  </script>
+  <script class="and-organism-script">
+    (function (global) {
+      'use strict';
+
+      var earthCanvas = document.getElementById('and-earth-canvas');
+      var skyCanvas = document.getElementById('and-sky-canvas');
+      var organismEl = document.getElementById('and-organism');
+      var splitEl = document.getElementById('and-hemisphere-split');
+      var riteTitleEl = document.getElementById('and-rite-title');
+      var siderealSlider = document.getElementById('and-sidereal-slider');
+      var siderealDegEl = document.getElementById('and-sidereal-deg');
+      var revolveBtn = document.getElementById('and-btn-revolve');
+      var revolveLabel = document.getElementById('and-revolve-label');
+      var muteBtn = document.getElementById('and-btn-mute');
+      var muteLabel = document.getElementById('and-mute-label');
+      var platesBtn = document.getElementById('and-btn-plates');
+      var resetBtn = document.getElementById('and-btn-reset');
+      var earthFocusBadge = document.getElementById('and-earth-focus-badge');
+      var skyCoordsEl = document.getElementById('and-sky-coords');
+      var noveltyCountEl = document.getElementById('and-novelty-count');
+      var telescopeBtn = document.getElementById('and-btn-telescope');
+      var telescopeLabel = document.getElementById('and-telescope-label');
+      var prudenceScaleEl = document.getElementById('and-prudence-scale');
+      var harmonyBadgeEl = document.getElementById('and-harmony-badge');
+      var beamArmEl = document.getElementById('and-beam-arm');
+      var confSlider = document.getElementById('and-slider-confidence');
+      var prudSlider = document.getElementById('and-slider-prudence');
+      var confReadout = document.getElementById('and-conf-readout');
+      var prudReadout = document.getElementById('and-prud-readout');
+      var weighFocusedBtn = document.getElementById('and-btn-weigh-focused');
+      var recklessBtn = document.getElementById('and-btn-reckless');
+      var statusBanner = document.getElementById('and-status-banner');
+      var plateDrawer = document.getElementById('and-plate-drawer');
+      var plateGrid = document.getElementById('and-plate-grid');
+      var plateZoomBtn = document.getElementById('and-btn-plate-zoom');
+      var plateCloseBtn = document.getElementById('and-btn-plate-close');
+      var fallbackMapCanvas = document.getElementById('and-fallback-canvas-map');
+      var fallbackVistaCanvas = document.getElementById('and-fallback-canvas-vista');
+
+      var CANONICAL_IDS = [
+        'bamboo_suspended_street',
+        'shadow_theater_kennels',
+        'statue_of_thales',
+        'gymnastics_toboggan_slide'
+      ];
+
+      var mql = global.matchMedia ? global.matchMedia('(prefers-reduced-motion: reduce)') : null;
+      var viewMode = 'split';
+      var autoRevolve = true;
+      var recoilTimer = null;
+      var statusMessage = 'Citizens weigh risks for themselves, the city, and all worlds before any decree.';
+      var statusTone = 'neutral';
+      var skyCtrl = null;
+      var earthCtrl = null;
+
+      function pad3(n) {
+        var s = String(Math.abs(Math.round(n)));
+        while (s.length < 3) { s = '0' + s; }
+        return s;
+      }
+
+      function fmtDec(n) {
+        var r = Math.round(n);
+        return (r >= 0 ? '+' : '-') + String(Math.abs(r));
+      }
+
+      function computeProposedHarmony(cPct, pPct) {
+        var c = Math.max(0, Math.min(1, Number(cPct) / 100));
+        var p = Math.max(0, Math.min(1, Number(pPct) / 100));
+        var imb = Math.abs(c - p) * 0.16;
+        var h = Math.max(0, Math.min(1, c * 0.44 + p * 0.56 - imb));
+        return {
+          conf: c,
+          prud: p,
+          harmony: Number(h.toFixed(2)),
+          passes: c >= 0.55 && p >= 0.65
+        };
+      }
+
+      function triggerRecoilUI(targetId, reason) {
+        statusTone = 'blocked';
+        statusMessage = reason || 'Civic Council blocked unweighed decree: every earthly change alters the sky.';
+        prudenceScaleEl.setAttribute('data-recoil', 'active');
+        var tablets = document.querySelectorAll('andria-decree-tablet');
+        for (var i = 0; i < tablets.length; i++) {
+          if (tablets[i].getAttribute('data-innovation-id') === targetId) {
+            tablets[i].setAttribute('data-recoil', 'active');
+          }
+        }
+        if (recoilTimer) { clearTimeout(recoilTimer); }
+        recoilTimer = setTimeout(function () {
+          prudenceScaleEl.setAttribute('data-recoil', 'idle');
+          var tabs = document.querySelectorAll('andria-decree-tablet');
+          for (var j = 0; j < tabs.length; j++) {
+            tabs[j].setAttribute('data-recoil', 'idle');
+          }
+        }, 680);
+      }
+
+      skyCtrl = global.AndriaReciprocalSky.createController({
+        onSkyFocus: function (payload) {
+          if (!earthCtrl) { return; }
+          earthCtrl.focusFromSky(payload.id || payload.star || payload.celestialId);
+          earthCtrl.render();
+          skyCtrl.render();
+          syncUI();
+        }
+      });
+
+      earthCtrl = global.AndriaPlanetaryStreets.createController({
+        reducedMotion: Boolean(mql && mql.matches),
+        onInnovationChanged: function (ev) {
+          skyCtrl.syncFromEarth(ev);
+          if (ev.enacted) {
+            statusTone = 'enacted';
+            statusMessage = 'Enacted prudent innovation on Earth; coupled novelty ignited in the celestial vault.';
+          } else if (ev.reset) {
+            statusTone = 'neutral';
+            statusMessage = 'Vault and planetary boulevards restored to initial equilibrium.';
+          }
+          earthCtrl.render();
+          skyCtrl.render();
+          syncUI();
+        },
+        onRecklessBlocked: function (ev) {
+          skyCtrl.playBlockedDissonance();
+          triggerRecoilUI(ev.id, ev.reason);
+          earthCtrl.render();
+          skyCtrl.render();
+          syncUI();
+        },
+        onEarthFocus: function (ev) {
+          skyCtrl.focusLocus(ev.celestialId || ev.star || ev.id, false);
+          earthCtrl.render();
+          skyCtrl.render();
+          syncUI();
+        }
+      });
+
+      if (mql && mql.matches) {
+        skyCtrl.setReducedMotion(true);
+      }
+
+      earthCtrl.attachCanvas(earthCanvas);
+      skyCtrl.attachCanvas(skyCanvas);
+      skyCtrl.setSiderealPhase(earthCtrl.getState().siderealPhase);
+
+      function resizeCanvases() {
+        var dpr = global.devicePixelRatio || 1;
+        var ef = earthCanvas.parentElement;
+        if (ef && ef.clientWidth > 40 && ef.clientHeight > 40) {
+          earthCtrl.resize(ef.clientWidth, ef.clientHeight, dpr);
+        }
+        var sf = skyCanvas.parentElement;
+        if (sf && sf.clientWidth > 40 && sf.clientHeight > 40) {
+          skyCtrl.resize(sf.clientWidth, sf.clientHeight, dpr);
+        }
+        earthCtrl.render();
+        skyCtrl.render();
+      }
+
+      function drawFallbackPlates() {
+        if (fallbackMapCanvas) {
+          global.AndriaReciprocalSky.renderArchivalPlate(fallbackMapCanvas, 'map');
+        }
+        if (fallbackVistaCanvas) {
+          global.AndriaReciprocalSky.renderArchivalPlate(fallbackVistaCanvas, 'image');
+        }
+        return true;
+      }
+
+      function syncUI() {
+        var eSt = earthCtrl.getState();
+        var sSt = skyCtrl.getState();
+        riteTitleEl.textContent = eSt.activeCivicRite.title;
+        siderealDegEl.textContent = eSt.siderealDeg.toFixed(1) + '°';
+        if (document.activeElement !== siderealSlider) {
+          siderealSlider.value = String(Math.round(eSt.siderealDeg));
+        }
+
+        revolveBtn.setAttribute('aria-pressed', autoRevolve ? 'true' : 'false');
+        revolveLabel.textContent = autoRevolve ? 'Orbiting' : 'Paused';
+        muteBtn.setAttribute('aria-pressed', sSt.muted ? 'true' : 'false');
+        muteLabel.textContent = sSt.muted ? 'Muted' : 'Harmonics';
+        telescopeBtn.setAttribute('aria-pressed', sSt.telescopeMode === 'ocular' ? 'true' : 'false');
+        telescopeLabel.textContent = sSt.telescopeMode === 'ocular' ? 'Ocular 2.3x' : 'Vault View';
+        skyCoordsEl.textContent = 'RA ' + pad3(sSt.raDeg) + '° · Dec ' + fmtDec(sSt.decDeg) + '°';
+        noveltyCountEl.textContent = sSt.activeNovelties.length + ' / 4 Novelties';
+
+        var focusedItem = eSt.innovations[0];
+        for (var i = 0; i < eSt.innovations.length; i++) {
+          if (eSt.innovations[i].id === eSt.focusedId) {
+            focusedItem = eSt.innovations[i];
+          }
+        }
+        earthFocusBadge.textContent = focusedItem.orbitDistrict + ' · ' + eSt.focusedStar;
+
+        var starChips = document.querySelectorAll('.and-star-chip');
+        for (var s = 0; s < starChips.length; s++) {
+          var stName = starChips[s].getAttribute('data-star');
+          starChips[s].setAttribute('data-focused', stName === eSt.focusedStar ? 'true' : 'false');
+        }
+
+        var skyChips = document.querySelectorAll('.and-sky-chip');
+        for (var c = 0; c < skyChips.length; c++) {
+          var cid = skyChips[c].getAttribute('data-celestial');
+          skyChips[c].setAttribute('data-focused', cid === sSt.focusedCelestialId ? 'true' : 'false');
+          skyChips[c].setAttribute('data-enacted', sSt.activeNovelties.indexOf(cid) !== -1 ? 'true' : 'false');
+        }
+
+        var cPct = Number(confSlider.value);
+        var pPct = Number(prudSlider.value);
+        confReadout.textContent = Math.round(cPct) + '%';
+        prudReadout.textContent = Math.round(pPct) + '%';
+        var prop = computeProposedHarmony(cPct, pPct);
+        var tiltDeg = Math.max(-9, Math.min(9, (pPct - cPct) * 0.14));
+        beamArmEl.style.transform = 'rotate(' + tiltDeg.toFixed(2) + 'deg)';
+
+        if (focusedItem.enacted) {
+          harmonyBadgeEl.setAttribute('data-status', 'weighed');
+          harmonyBadgeEl.textContent = 'Enacted · Harmony ' + focusedItem.harmonyScore.toFixed(2);
+        } else if (focusedItem.weighed) {
+          harmonyBadgeEl.setAttribute('data-status', 'weighed');
+          harmonyBadgeEl.textContent = 'Weighed · Harmony ' + focusedItem.harmonyScore.toFixed(2);
+        } else if (!prop.passes) {
+          harmonyBadgeEl.setAttribute('data-status', 'blocked');
+          harmonyBadgeEl.textContent = 'Imbalanced · Risk High';
+        } else {
+          harmonyBadgeEl.setAttribute('data-status', 'unweighed');
+          harmonyBadgeEl.textContent = 'Unweighed · ' + prop.harmony.toFixed(2) + ' Proposed';
+        }
+
+        statusBanner.setAttribute('data-tone', statusTone);
+        statusBanner.textContent = statusMessage + ' (' + eSt.recklessBlockedCount + ' blocked)';
+
+        var tablets = document.querySelectorAll('andria-decree-tablet');
+        for (var t = 0; t < tablets.length; t++) {
+          var tid = tablets[t].getAttribute('data-innovation-id');
+          var matched = null;
+          for (var k = 0; k < eSt.innovations.length; k++) {
+            if (eSt.innovations[k].id === tid) { matched = eSt.innovations[k]; }
+          }
+          if (matched) {
+            tablets[t].setAttribute('data-focused', matched.id === eSt.focusedId ? 'true' : 'false');
+            tablets[t].setAttribute('data-enacted', matched.enacted ? 'true' : 'false');
+            var badge = tablets[t].querySelector('andria-decree-state');
+            if (badge) {
+              var stStr = matched.enacted ? 'enacted' : (matched.weighed ? 'weighed' : 'unweighed');
+              badge.setAttribute('data-state', stStr);
+              badge.textContent = matched.enacted ? 'Enacted' : (matched.weighed ? 'Weighed' : 'Unweighed');
+            }
+          }
+        }
+      }
+
+      function weighInnovation(id, confOpt, prudOpt) {
+        var targetId = id || earthCtrl.getState().focusedId;
+        var conf = (confOpt !== undefined && confOpt !== null) ? Number(confOpt) : (Number(confSlider.value) / 100);
+        var prud = (prudOpt !== undefined && prudOpt !== null) ? Number(prudOpt) : (Number(prudSlider.value) / 100);
+        if (conf > 1.001) { conf = conf / 100; }
+        if (prud > 1.001) { prud = prud / 100; }
+        confSlider.value = String(Math.round(conf * 100));
+        prudSlider.value = String(Math.round(prud * 100));
+        var res = earthCtrl.weighInnovation(targetId, conf, prud);
+        skyCtrl.focusLocus(res.celestialId || res.id, false);
+        skyCtrl.playPrudenceChord(res.weighed);
+        if (res.weighed) {
+          statusTone = 'enacted';
+          statusMessage = 'Council weighed cosmic balance (' + res.harmonyScore.toFixed(2) + '); decree ready to enact.';
+        } else {
+          statusTone = 'blocked';
+          statusMessage = 'Insufficient Confidence or Prudence weight; decree remains locked.';
+        }
+        earthCtrl.render();
+        skyCtrl.render();
+        syncUI();
+        return res;
+      }
+
+      function attemptEnact(id, opts) {
+        var targetId = id || earthCtrl.getState().focusedId;
+        var res = earthCtrl.attemptEnact(targetId, opts);
+        earthCtrl.render();
+        skyCtrl.render();
+        syncUI();
+        return res;
+      }
+
+      function attemptReckless(id) {
+        var targetId = id || earthCtrl.getState().focusedId;
+        return attemptEnact(targetId, { reckless: true });
+      }
+
+      function deliberateAndEnact(id) {
+        var targetId = id || earthCtrl.getState().focusedId;
+        confSlider.value = '84';
+        prudSlider.value = '88';
+        var res = earthCtrl.deliberateAndEnact(targetId);
+        skyCtrl.playPrudenceChord(true);
+        earthCtrl.render();
+        skyCtrl.render();
+        syncUI();
+        return res;
+      }
+
+      function focusFromSky(idOrStar) {
+        var res = skyCtrl.focusLocus(idOrStar, true);
+        if (!res) {
+          res = earthCtrl.focusFromSky(idOrStar);
+        }
+        earthCtrl.render();
+        skyCtrl.render();
+        syncUI();
+        return res;
+      }
+
+      function focusFromEarth(idOrStar) {
+        var res = earthCtrl.focusDistrict(idOrStar, true);
+        earthCtrl.render();
+        skyCtrl.render();
+        syncUI();
+        return res;
+      }
+
+      function setViewMode(mode) {
+        var next = (mode === 'streets' || mode === 'observatory') ? mode : 'split';
+        viewMode = next;
+        organismEl.setAttribute('data-view-mode', next);
+        splitEl.setAttribute('data-view-mode', next);
+        var btns = document.querySelectorAll('.and-view-btn');
+        for (var i = 0; i < btns.length; i++) {
+          btns[i].setAttribute('aria-pressed', btns[i].getAttribute('data-view') === next ? 'true' : 'false');
+        }
+        resizeCanvases();
+        syncUI();
+        return viewMode;
+      }
+
+      function setTelescopeMode(mode) {
+        var next = skyCtrl.setTelescopeMode(mode || 'toggle');
+        skyCtrl.render();
+        syncUI();
+        return next;
+      }
+
+      function setSiderealPhase(val) {
+        earthCtrl.setSiderealPhase(val);
+        var eSt = earthCtrl.getState();
+        skyCtrl.setSiderealPhase(eSt.siderealPhase);
+        earthCtrl.render();
+        skyCtrl.render();
+        syncUI();
+        return eSt.siderealDeg;
+      }
+
+      function toggleAutoRevolve() {
+        autoRevolve = !autoRevolve;
+        earthCtrl.setAutoRevolve(autoRevolve);
+        syncUI();
+        return autoRevolve;
+      }
+
+      function toggleMute() {
+        var m = skyCtrl.toggleMute();
+        syncUI();
+        return m;
+      }
+
+      function setMuted(flag) {
+        var m = skyCtrl.setMuted(Boolean(flag));
+        syncUI();
+        return m;
+      }
+
+      function setReducedMotion(flag) {
+        var rm = Boolean(flag);
+        earthCtrl.setReducedMotion(rm);
+        skyCtrl.setReducedMotion(rm);
+        earthCtrl.render();
+        skyCtrl.render();
+        syncUI();
+        return rm;
+      }
+
+      function openPlates() {
+        plateDrawer.hidden = false;
+        plateDrawer.setAttribute('aria-hidden', 'false');
+        platesBtn.setAttribute('aria-expanded', 'true');
+        drawFallbackPlates();
+        return true;
+      }
+
+      function closePlates() {
+        plateDrawer.hidden = true;
+        plateDrawer.setAttribute('aria-hidden', 'true');
+        platesBtn.setAttribute('aria-expanded', 'false');
+        plateGrid.setAttribute('data-plate-zoom', 'false');
+        plateZoomBtn.setAttribute('aria-pressed', 'false');
+        return false;
+      }
+
+      function togglePlates() {
+        return plateDrawer.hidden ? openPlates() : closePlates();
+      }
+
+      function setPlateTab(tab) {
+        var next = (tab === 'map' || tab === 'vista') ? tab : 'diptych';
+        plateGrid.setAttribute('data-plate-tab', next);
+        var tabs = document.querySelectorAll('.and-plate-tab');
+        for (var i = 0; i < tabs.length; i++) {
+          tabs[i].setAttribute('aria-pressed', tabs[i].getAttribute('data-plate-view') === next ? 'true' : 'false');
+        }
+        return next;
+      }
+
+      function togglePlateZoom() {
+        var cur = plateGrid.getAttribute('data-plate-zoom') === 'true';
+        var next = !cur;
+        plateGrid.setAttribute('data-plate-zoom', next ? 'true' : 'false');
+        plateZoomBtn.setAttribute('aria-pressed', next ? 'true' : 'false');
+        return next;
+      }
+
+      function resetAll() {
+        confSlider.value = '82';
+        prudSlider.value = '86';
+        statusTone = 'neutral';
+        statusMessage = 'Citizens weigh risks for themselves, the city, and all worlds before any decree.';
+        earthCtrl.resetAll();
+        skyCtrl.resetAll();
+        skyCtrl.focusLocus('star_cluster_nova', false);
+        earthCtrl.render();
+        skyCtrl.render();
+        syncUI();
+        return getState();
+      }
+
+      function getState() {
+        var eSt = earthCtrl.getState();
+        var sSt = skyCtrl.getState();
+        return {
+          planetaryStreetCoupling: true,
+          bidirectionalCoupling: true,
+          recklessChangeBlocked: true,
+          recklessBlockedCount: eSt.recklessBlockedCount,
+          weighedIds: eSt.weighedIds,
+          enactedIds: eSt.enactedIds,
+          activeNovelties: sSt.activeNovelties,
+          focusedId: eSt.focusedId,
+          focusedCelestialId: sSt.focusedCelestialId,
+          focusedStar: eSt.focusedStar,
+          telescopeMode: sSt.telescopeMode,
+          viewMode: viewMode,
+          siderealDeg: eSt.siderealDeg,
+          siderealPhase: eSt.siderealPhase,
+          autoRevolve: autoRevolve,
+          activeCivicRite: eSt.activeCivicRite,
+          muted: sSt.muted,
+          reducedMotion: eSt.reducedMotion,
+          platesOpen: !plateDrawer.hidden,
+          luminousStars: eSt.luminousStars,
+          earth: eSt,
+          sky: sSt
+        };
+      }
+
+      earthCanvas.addEventListener('click', function (e) {
+        var rect = earthCanvas.getBoundingClientRect();
+        if (rect.width > 0 && rect.height > 0) {
+          earthCtrl.hitTest((e.clientX - rect.left) / rect.width, (e.clientY - rect.top) / rect.height);
+          earthCtrl.render();
+          skyCtrl.render();
+          syncUI();
+        }
+      });
+
+      skyCanvas.addEventListener('click', function (e) {
+        var rect = skyCanvas.getBoundingClientRect();
+        if (rect.width > 0 && rect.height > 0) {
+          skyCtrl.hitTest((e.clientX - rect.left) / rect.width, (e.clientY - rect.top) / rect.height);
+          earthCtrl.render();
+          skyCtrl.render();
+          syncUI();
+        }
+      });
+
+      siderealSlider.addEventListener('input', function () {
+        setSiderealPhase(Number(siderealSlider.value));
+      });
+      confSlider.addEventListener('input', syncUI);
+      prudSlider.addEventListener('input', syncUI);
+
+      function dispatchTrigger(btn) {
+        if (!btn) { return; }
+        var id = btn.id;
+        if (id === 'and-btn-revolve') { toggleAutoRevolve(); return; }
+        if (id === 'and-btn-mute') { toggleMute(); return; }
+        if (id === 'and-btn-plates') { togglePlates(); return; }
+        if (id === 'and-btn-reset') { resetAll(); return; }
+        if (id === 'and-btn-telescope') { setTelescopeMode('toggle'); return; }
+        if (id === 'and-btn-weigh-focused') { weighInnovation(); return; }
+        if (id === 'and-btn-reckless') { attemptReckless(); return; }
+        if (id === 'and-btn-plate-zoom') { togglePlateZoom(); return; }
+        if (id === 'and-btn-plate-close') { closePlates(); return; }
+
+        var vm = btn.getAttribute('data-view');
+        if (vm) { setViewMode(vm); return; }
+        var star = btn.getAttribute('data-star');
+        if (star) { focusFromEarth(star); return; }
+        var cel = btn.getAttribute('data-celestial');
+        if (cel) { focusFromSky(cel); return; }
+        var pv = btn.getAttribute('data-plate-view');
+        if (pv) { setPlateTab(pv); return; }
+
+        var dAct = btn.getAttribute('data-decree-action');
+        var tId = btn.getAttribute('data-target-id');
+        if (dAct === 'weigh') { weighInnovation(tId); return; }
+        if (dAct === 'enact') { attemptEnact(tId); return; }
+        if (dAct === 'deliberate') { deliberateAndEnact(tId); return; }
+      }
+
+      document.addEventListener('click', function (e) {
+        if (e.target === plateDrawer) { closePlates(); return; }
+        var btn = e.target.closest ? e.target.closest('andria-key-trigger') : null;
+        if (btn) { dispatchTrigger(btn); return; }
+        var tab = e.target.closest ? e.target.closest('andria-decree-tablet') : null;
+        if (tab) { focusFromEarth(tab.getAttribute('data-innovation-id')); }
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.metaKey || e.ctrlKey || e.altKey) { return; }
+        var key = e.key;
+        if (key === 'Escape') {
+          if (!plateDrawer.hidden) { e.preventDefault(); closePlates(); }
+          return;
+        }
+        var activeTrigger = document.activeElement && document.activeElement.tagName &&
+          document.activeElement.tagName.toLowerCase() === 'andria-key-trigger' ? document.activeElement : null;
+        if (activeTrigger && (key === 'Enter' || key === ' ')) {
+          e.preventDefault();
+          dispatchTrigger(activeTrigger);
+          return;
+        }
+        if (key === '1' || key === '2' || key === '3' || key === '4') {
+          deliberateAndEnact(CANONICAL_IDS[Number(key) - 1]);
+        } else if (key === 'w' || key === 'W') {
+          weighInnovation();
+        } else if (key === 'x' || key === 'X') {
+          attemptReckless();
+        } else if (key === 't' || key === 'T') {
+          setTelescopeMode('toggle');
+        } else if (key === 'm' || key === 'M') {
+          toggleMute();
+        } else if (key === 'p' || key === 'P') {
+          togglePlates();
+        } else if (key === 'z' || key === 'Z') {
+          if (!plateDrawer.hidden) { togglePlateZoom(); }
+        } else if (key === 'r' || key === 'R') {
+          resetAll();
+        } else if (key === ' ') {
+          if (!document.activeElement || document.activeElement.tagName !== 'INPUT') {
+            e.preventDefault();
+            toggleAutoRevolve();
+          }
+        }
+      });
+
+      if (mql && typeof mql.addEventListener === 'function') {
+        mql.addEventListener('change', function (ev) { setReducedMotion(ev.matches); });
+      }
+      global.addEventListener('resize', resizeCanvases);
+      if (global.ResizeObserver) {
+        var ro = new global.ResizeObserver(function () { resizeCanvases(); });
+        ro.observe(splitEl);
+      }
+
+      var lastTs = 0;
+      function frameLoop(ts) {
+        var dt = lastTs ? Math.min(0.06, Math.max(0, (ts - lastTs) / 1000)) : 0.016;
+        lastTs = ts;
+        var heldPhase = skyCtrl.getState().siderealPhase;
+        earthCtrl.step(dt);
+        skyCtrl.step(dt);
+        if (!autoRevolve) {
+          skyCtrl.setSiderealPhase(heldPhase);
+        }
+        earthCtrl.render();
+        skyCtrl.render();
+        riteTitleEl.textContent = earthCtrl.getState().activeCivicRite.title;
+        siderealDegEl.textContent = earthCtrl.getState().siderealDeg.toFixed(1) + '°';
+        if (document.activeElement !== siderealSlider) {
+          siderealSlider.value = String(Math.round(earthCtrl.getState().siderealDeg));
+        }
+        global.requestAnimationFrame(frameLoop);
+      }
+
+      var organismApi = {
+        weighInnovation: weighInnovation,
+        attemptEnact: attemptEnact,
+        attemptReckless: attemptReckless,
+        deliberateAndEnact: deliberateAndEnact,
+        revertInnovation: function (id) {
+          var r = earthCtrl.revertInnovation(id);
+          earthCtrl.render();
+          skyCtrl.render();
+          syncUI();
+          return r;
+        },
+        focusFromSky: focusFromSky,
+        focusFromEarth: focusFromEarth,
+        setTelescopeMode: setTelescopeMode,
+        setViewMode: setViewMode,
+        setSiderealPhase: setSiderealPhase,
+        toggleAutoRevolve: toggleAutoRevolve,
+        toggleMute: toggleMute,
+        setMuted: setMuted,
+        isMuted: function () { return skyCtrl.isMuted(); },
+        setReducedMotion: setReducedMotion,
+        resetAll: resetAll,
+        openPlates: openPlates,
+        closePlates: closePlates,
+        togglePlates: togglePlates,
+        togglePlateZoom: togglePlateZoom,
+        setPlateTab: setPlateTab,
+        drawFallbackPlates: drawFallbackPlates,
+        step: function (dt) {
+          earthCtrl.step(dt);
+          skyCtrl.step(dt);
+          earthCtrl.render();
+          skyCtrl.render();
+          syncUI();
+          return getState();
+        },
+        render: function () {
+          earthCtrl.render();
+          skyCtrl.render();
+          return getState();
+        },
+        getState: getState,
+        earthController: earthCtrl,
+        skyController: skyCtrl
+      };
+
+      Object.defineProperties(organismApi, {
+        planetaryStreetCoupling: { enumerable: true, get: function () { return true; } },
+        bidirectionalCoupling: { enumerable: true, get: function () { return true; } },
+        recklessChangeBlocked: { enumerable: true, get: function () { return true; } },
+        recklessBlockedCount: { enumerable: true, get: function () { return earthCtrl.getState().recklessBlockedCount; } },
+        weighedIds: { enumerable: true, get: function () { return earthCtrl.getState().weighedIds; } },
+        enactedIds: { enumerable: true, get: function () { return earthCtrl.getState().enactedIds; } },
+        activeNovelties: { enumerable: true, get: function () { return skyCtrl.getState().activeNovelties; } },
+        focusedId: { enumerable: true, get: function () { return earthCtrl.getState().focusedId; } },
+        focusedCelestialId: { enumerable: true, get: function () { return skyCtrl.getState().focusedCelestialId; } },
+        focusedStar: { enumerable: true, get: function () { return earthCtrl.getState().focusedStar; } },
+        telescopeMode: { enumerable: true, get: function () { return skyCtrl.getState().telescopeMode; } },
+        siderealDeg: { enumerable: true, get: function () { return earthCtrl.getState().siderealDeg; } },
+        muted: { enumerable: true, get: function () { return skyCtrl.isMuted(); } },
+        reducedMotion: { enumerable: true, get: function () { return earthCtrl.getState().reducedMotion; } },
+        platesOpen: { enumerable: true, get: function () { return !plateDrawer.hidden; } }
+      });
+
+      global.AndriaOrganism = organismApi;
+      global.__ANDRIA__ = organismApi;
+
+      resizeCanvases();
+      syncUI();
+      global.requestAnimationFrame(frameLoop);
+    })(globalThis);
+  </script>
+</body>
+</html>
