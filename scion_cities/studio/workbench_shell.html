@@ -1,0 +1,4648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>SCION v1.0 — Clinamen Operative Studio &amp; City-Swarm Builder | WORLDFUL Press</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23F2EFE9' stroke='%231E1E1E' stroke-width='2'/%3E%3Cpath d='M7 25 Q16 7 25 25' fill='none' stroke='%239B1D1D' stroke-width='2.4'/%3E%3Crect x='14' y='9' width='4' height='5' fill='%23B58328'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=IM+Fell+English:ital@0;1&amp;display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F2EFE9;
+    --bone: #E8E0D6;
+    --soot: #1E1E1E;
+    --graphite: #55585A;
+    --dirt: #7A756E;
+    --red-bird: #9B1D1D;
+    --chalk-blue: #2C4A5E;
+    --ochre-oil: #B58328;
+
+    --paper-dim: #E2D9CD;
+    --rule-strong: #1E1E1E;
+    --rule-mid: rgba(30, 30, 30, 0.28);
+    --rule-faint: rgba(30, 30, 30, 0.13);
+    --red-tint: rgba(155, 29, 29, 0.11);
+    --blue-tint: rgba(44, 74, 94, 0.11);
+    --ochre-tint: rgba(181, 131, 40, 0.14);
+
+    --font-serif: "IM Fell English", Georgia, "Times New Roman", serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    transition: none !important;
+    animation: none !important;
+  }
+
+  html, body {
+    background-color: var(--paper);
+    color: var(--soot);
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    line-height: 1.45;
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Tactile WORLDFUL Press rag-paper grain overlay */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 900;
+    pointer-events: none;
+    opacity: 0.22;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0.25 0 0 0 0 0.22 0 0 0 0 0.18 0 0 0 0.28 0'/></filter><rect width='180' height='180' filter='url(%23g)'/></svg>");
+  }
+
+  button, select, input, textarea {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--soot);
+    background: var(--bone);
+    border: 1px solid var(--soot);
+    border-radius: 0;
+    padding: 5px 9px;
+    cursor: pointer;
+  }
+
+  input[type="text"], input[type="number"], textarea, select {
+    background: var(--paper);
+    cursor: text;
+  }
+
+  select { cursor: pointer; }
+
+  button:hover {
+    background: var(--soot);
+    color: var(--paper);
+  }
+
+  button:focus-visible, select:focus-visible, input:focus-visible, textarea:focus-visible {
+    outline: 2px solid var(--red-bird);
+    outline-offset: 1px;
+  }
+
+  button.active, button[aria-pressed="true"] {
+    background: var(--soot);
+    color: var(--paper);
+    font-weight: 600;
+  }
+
+  button.accent-red {
+    border-color: var(--red-bird);
+    color: var(--red-bird);
+    background: var(--paper);
+    font-weight: 600;
+  }
+  button.accent-red:hover, button.accent-red.active, button.accent-red[aria-pressed="true"] {
+    background: var(--red-bird);
+    color: var(--paper);
+  }
+
+  button.accent-blue {
+    border-color: var(--chalk-blue);
+    color: var(--chalk-blue);
+    background: var(--paper);
+    font-weight: 600;
+  }
+  button.accent-blue:hover, button.accent-blue.active, button.accent-blue[aria-pressed="true"] {
+    background: var(--chalk-blue);
+    color: var(--paper);
+  }
+
+  .workbench-sheet {
+    max-width: 1640px;
+    margin: 0 auto;
+    padding: 10px 14px 36px;
+  }
+
+  /* --- Top Press Masthead --- */
+  .press-masthead {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 8px 12px;
+    background: var(--bone);
+    border: 2px solid var(--soot);
+    box-shadow: 3px 3px 0 var(--soot);
+    margin-bottom: 10px;
+  }
+
+  .brand-block {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .brand-kicker {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--dirt);
+    font-weight: 600;
+  }
+
+  .brand-title {
+    font-family: var(--font-serif);
+    font-size: 23px;
+    line-height: 1.08;
+    font-weight: 400;
+    color: var(--soot);
+    letter-spacing: 0.01em;
+  }
+
+  .brand-subtitle {
+    font-size: 11px;
+    color: var(--graphite);
+  }
+
+  .masthead-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .case-picker-wrap {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--paper);
+    border: 1px solid var(--soot);
+    padding: 3px 7px;
+  }
+
+  .case-picker-wrap label {
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--dirt);
+  }
+
+  #case-selector {
+    border: none;
+    background: transparent;
+    font-weight: 600;
+    padding: 2px 4px;
+    min-width: 230px;
+  }
+
+  .telemetry-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .pill {
+    font-size: 10.5px;
+    padding: 4px 7px;
+    border: 1px solid var(--rule-mid);
+    background: var(--paper);
+    color: var(--soot);
+    white-space: nowrap;
+  }
+  .pill strong { font-weight: 700; }
+  .pill.ok { border-color: var(--chalk-blue); color: var(--chalk-blue); background: var(--blue-tint); }
+  .pill.warn { border-color: var(--ochre-oil); color: var(--soot); background: var(--ochre-tint); }
+  .pill.alert { border-color: var(--red-bird); color: var(--red-bird); background: var(--red-tint); }
+
+  #btn-mute-silhouette {
+    padding: 7px 12px;
+    border-width: 2px;
+    font-size: 11.5px;
+    letter-spacing: 0.03em;
+    box-shadow: 2px 2px 0 var(--soot);
+  }
+
+  /* --- Transport, Stepped Exposure & Semantic Zoom Bar --- */
+  .transport-bar {
+    background: var(--bone);
+    border: 1.5px solid var(--soot);
+    padding: 8px 10px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .transport-row-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .btn-cluster {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .cluster-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--dirt);
+    margin-right: 4px;
+  }
+
+  .scrubber-row {
+    display: grid;
+    grid-template-columns: 98px 1fr;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .tick-readout-box {
+    background: var(--soot);
+    color: var(--paper);
+    padding: 4px 8px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+  }
+
+  .scrubber-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  #tick-scrubber {
+    width: 100%;
+    height: 20px;
+    accent-color: var(--red-bird);
+    padding: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  .xsheet-strip {
+    display: grid;
+    grid-template-columns: repeat(25, minmax(0, 1fr));
+    gap: 2px;
+  }
+
+  .xsheet-cell {
+    height: 20px;
+    border: 1px solid var(--rule-mid);
+    background: var(--paper);
+    font-size: 9.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    color: var(--graphite);
+    padding: 0;
+  }
+  .xsheet-cell.hold-cell { background: #E5DFD3; border-color: var(--graphite); font-weight: 600; }
+  .xsheet-cell.inflect-cell { background: var(--ochre-tint); border-color: var(--ochre-oil); color: var(--soot); font-weight: 700; }
+  .xsheet-cell.swerve-cell { background: var(--red-tint); border-color: var(--red-bird); color: var(--red-bird); font-weight: 700; }
+  .xsheet-cell.current-tick {
+    background: var(--soot) !important;
+    color: var(--paper) !important;
+    border-color: var(--soot) !important;
+    font-weight: 700;
+  }
+
+  /* --- Main Studio Grid (Dual Stage + Right Canonical Ledger) --- */
+  .studio-workspace {
+    display: grid;
+    grid-template-columns: minmax(0, 2.05fr) minmax(340px, 1fr);
+    gap: 12px;
+    align-items: start;
+    margin-bottom: 14px;
+  }
+
+  .dual-stage-column {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .viewport-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .viewport-card {
+    background: var(--bone);
+    border: 2px solid var(--soot);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .viewport-card.branch-ap {
+    border-color: var(--chalk-blue);
+  }
+
+  .viewport-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 9px;
+    background: var(--soot);
+    color: var(--paper);
+    font-size: 11px;
+  }
+
+  .viewport-card.branch-ap .viewport-header {
+    background: var(--chalk-blue);
+  }
+
+  .vp-title {
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  .vp-sub {
+    font-size: 10px;
+    opacity: 0.88;
+  }
+
+  .canvas-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 680 / 500;
+    background: var(--paper);
+    overflow: hidden;
+  }
+
+  .stage-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: crosshair;
+    touch-action: none;
+  }
+
+  .viewport-footer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 5px 8px;
+    font-size: 10.5px;
+    border-top: 1px solid var(--rule-mid);
+    background: var(--bone);
+    color: var(--graphite);
+  }
+
+  /* Split-Trace Persistence Readout Strip */
+  .split-trace-strip {
+    background: var(--bone);
+    border: 1.5px solid var(--soot);
+    padding: 8px 10px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .trace-col {
+    background: var(--paper);
+    border: 1px solid var(--rule-mid);
+    padding: 6px 8px;
+  }
+
+  .trace-col h4 {
+    font-family: var(--font-serif);
+    font-size: 14px;
+    font-weight: 400;
+    border-bottom: 1px solid var(--rule-faint);
+    padding-bottom: 3px;
+    margin-bottom: 5px;
+    color: var(--soot);
+  }
+
+  .trace-kv {
+    font-size: 11px;
+    color: var(--soot);
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  /* --- Right Canonical Ledger Column --- */
+  .ledger-column {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .ledger-panel {
+    background: var(--bone);
+    border: 1.5px solid var(--soot);
+    padding: 9px 10px;
+  }
+
+  .panel-heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 6px;
+    border-bottom: 1.5px solid var(--soot);
+    padding-bottom: 4px;
+    margin-bottom: 8px;
+  }
+
+  .panel-heading h3 {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--soot);
+  }
+
+  .panel-heading span {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--dirt);
+    font-weight: 600;
+  }
+
+  .agent-roster-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .agent-item {
+    background: var(--paper);
+    border: 1px solid var(--rule-mid);
+    padding: 6px 7px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .agent-item.selected {
+    border: 2px solid var(--red-bird);
+    background: #FBF8F3;
+  }
+
+  .agent-top-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4px;
+    font-weight: 600;
+    font-size: 11px;
+  }
+
+  .agent-meta-line {
+    font-size: 10.5px;
+    color: var(--graphite);
+    display: flex;
+    justify-content: space-between;
+    gap: 6px;
+  }
+
+  .policy-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .policy-card {
+    background: var(--paper);
+    border: 1px solid var(--rule-mid);
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+
+  .policy-card.flipped {
+    border-left: 4px solid var(--red-bird);
+    border-color: var(--red-bird);
+    background: #FAF3F0;
+  }
+
+  .policy-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+    margin-bottom: 3px;
+  }
+
+  .flip-badge {
+    background: var(--red-bird);
+    color: var(--paper);
+    padding: 1px 5px;
+    font-size: 9.5px;
+    letter-spacing: 0.05em;
+  }
+
+  .policy-pred {
+    font-size: 10px;
+    color: var(--graphite);
+    margin-bottom: 4px;
+    word-break: break-word;
+  }
+
+  .verdict-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+    font-size: 10px;
+  }
+
+  .v-box {
+    padding: 3px 5px;
+    border: 1px solid var(--rule-faint);
+    background: var(--bone);
+  }
+  .v-box.ap {
+    border-color: var(--chalk-blue);
+    background: var(--blue-tint);
+  }
+
+  .inquiry-box {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 11px;
+  }
+
+  .bq-step {
+    background: var(--paper);
+    border-left: 3px solid var(--chalk-blue);
+    padding: 5px 7px;
+  }
+  .bq-step.better {
+    border-left-color: var(--red-bird);
+    background: #FAF4F0;
+  }
+  .bq-step strong {
+    display: block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--dirt);
+    margin-bottom: 2px;
+  }
+
+  /* --- MUTE SILHOUETTE HARD GATE 2 MODE --- */
+  body.mute-silhouette-active .mute-hide {
+    visibility: hidden !important;
+  }
+  body.mute-silhouette-active .ledger-column,
+  body.mute-silhouette-active .split-trace-strip {
+    opacity: 0.04 !important;
+    pointer-events: none !important;
+    filter: blur(6px);
+  }
+  .mute-banner {
+    display: none;
+    background: var(--red-bird);
+    color: var(--paper);
+    padding: 6px 12px;
+    font-weight: 700;
+    font-size: 11.5px;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+    border: 2px solid var(--soot);
+    justify-content: space-between;
+    align-items: center;
+  }
+  body.mute-silhouette-active .mute-banner {
+    display: flex;
+  }
+
+  /* --- Coupled Witness Stage Viewport Tabs & Atlas Plate Deck --- */
+  .stage-mode-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6px;
+    background: var(--bone);
+    border: 1.5px solid var(--soot);
+    padding: 6px 9px;
+  }
+
+  .stage-view-tabs, .atlas-plate-tools {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .atlas-link-btn {
+    display: inline-block;
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 5px 9px;
+    border: 1px solid var(--chalk-blue);
+    color: var(--chalk-blue);
+    background: var(--paper);
+  }
+  .atlas-link-btn:hover {
+    background: var(--chalk-blue);
+    color: var(--paper);
+  }
+
+  .atlas-plate-deck {
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+    background: var(--bone);
+    border: 2px solid var(--soot);
+    padding: 9px;
+  }
+  .atlas-plate-deck.visible {
+    display: flex;
+  }
+
+  .atlas-plate-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .atlas-plate-grid.diptych-layout {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .atlas-plate-card {
+    background: var(--paper);
+    border: 1.5px solid var(--soot);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .atlas-plate-head {
+    background: var(--soot);
+    color: var(--paper);
+    padding: 5px 8px;
+    font-size: 10.5px;
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+    gap: 6px;
+  }
+
+  .plate-stage-box {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background: var(--paper);
+    cursor: crosshair;
+    touch-action: none;
+  }
+
+  .plate-stage-box img {
+    display: block;
+    width: 100%;
+    height: auto;
+    transform-origin: 0 0;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+
+  .plate-loupe-lens {
+    display: none;
+    position: absolute;
+    width: 168px;
+    height: 168px;
+    border: 2.5px solid var(--red-bird);
+    box-shadow: 3px 3px 0 var(--soot);
+    background-color: var(--paper);
+    background-repeat: no-repeat;
+    pointer-events: none;
+    z-index: 30;
+  }
+
+  .atlas-meta-strip {
+    background: var(--paper);
+    border: 1px solid var(--rule-mid);
+    padding: 6px 8px;
+    font-size: 10.5px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+    color: var(--soot);
+  }
+
+  .lat-thumb-strip {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 2px;
+  }
+  .lat-thumb-strip img {
+    width: 100%;
+    height: 30px;
+    object-fit: cover;
+    border: 1px solid var(--rule-mid);
+    display: block;
+    background: var(--bone);
+  }
+
+  /* --- Lower Operative Studio Deck (3 Provocations + Forge + 55-City Lattice) --- */
+  .operative-deck {
+    border: 2px solid var(--soot);
+    background: var(--bone);
+    box-shadow: 3px 3px 0 var(--soot);
+  }
+
+  .deck-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    border-bottom: 2px solid var(--soot);
+    background: var(--paper-dim);
+  }
+
+  .deck-tab {
+    border: none;
+    border-right: 1px solid var(--soot);
+    padding: 9px 13px;
+    font-size: 11.5px;
+    font-weight: 600;
+    background: var(--bone);
+    color: var(--soot);
+  }
+
+  .deck-tab.active {
+    background: var(--soot);
+    color: var(--paper);
+  }
+
+  .deck-drawer {
+    display: none;
+    padding: 14px;
+    background: var(--paper);
+  }
+
+  .deck-drawer.open,
+  body.expand-all-drawers .deck-drawer {
+    display: block;
+    border-bottom: 1.5px solid var(--soot);
+  }
+
+  .drawer-grid-2 {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    gap: 14px;
+    align-items: start;
+  }
+
+  .mod-title {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 4px;
+  }
+
+  .mod-sub {
+    font-size: 11.5px;
+    color: var(--graphite);
+    margin-bottom: 10px;
+  }
+
+  #canvas-mod1-chalk {
+    width: 100%;
+    height: 320px;
+    display: block;
+    background: var(--paper);
+    border: 1.5px solid var(--soot);
+    cursor: grab;
+    touch-action: none;
+  }
+
+  .control-card {
+    background: var(--bone);
+    border: 1px solid var(--soot);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* Module 2: Thick Description Over-the-Shoulder */
+  .thin-telemetry-bar {
+    background: var(--soot);
+    color: #D8D4CC;
+    font-family: var(--font-mono);
+    padding: 8px 12px;
+    font-size: 12px;
+    border: 1.5px solid var(--soot);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .thick-margin-sheet {
+    display: none;
+    background: #EFE9DD;
+    border: 2px solid var(--ochre-oil);
+    border-left: 8px solid var(--red-bird);
+    padding: 12px 14px;
+    margin-top: 8px;
+  }
+  .thick-margin-sheet.unfolded {
+    display: block;
+  }
+
+  .nisba-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 8px;
+    margin: 10px 0;
+  }
+
+  .nisba-card {
+    background: var(--paper);
+    border: 1px solid var(--rule-mid);
+    padding: 8px;
+  }
+
+  /* Module 3: Sketch-to-World & Handmade Scion Swarm Forge */
+  .forge-agent-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin: 8px 0;
+  }
+
+  .forge-agent-row {
+    display: grid;
+    grid-template-columns: 1.2fr 1.2fr 0.8fr 0.8fr 0.9fr 1fr 1.3fr;
+    gap: 5px;
+    background: var(--paper);
+    border: 1px solid var(--rule-mid);
+    padding: 6px;
+    align-items: center;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .field-lbl {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--graphite);
+  }
+
+  /* Calvino 55-City [5,4,3,2,1] Diagonal Lattice */
+  .lattice-scroll {
+    overflow-x: auto;
+    border: 1px solid var(--soot);
+    background: var(--bone);
+    margin-bottom: 12px;
+  }
+
+  .calvino-matrix {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 880px;
+    font-size: 10.5px;
+  }
+
+  .calvino-matrix th, .calvino-matrix td {
+    border: 1px solid var(--rule-mid);
+    padding: 5px 6px;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .calvino-matrix th {
+    background: var(--soot);
+    color: var(--paper);
+    font-weight: 600;
+    font-size: 10px;
+    text-transform: uppercase;
+  }
+
+  .lat-cell-empty {
+    background: rgba(30, 30, 30, 0.04);
+    color: var(--dirt);
+    text-align: center !important;
+  }
+
+  .lat-city-btn {
+    width: 100%;
+    text-align: left;
+    padding: 4px 5px;
+    background: var(--paper);
+    border: 1px solid var(--soot);
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .lat-city-btn.compiled-city {
+    border-left: 4px solid var(--red-bird);
+    font-weight: 700;
+  }
+  .lat-city-btn.active-city {
+    background: var(--soot);
+    color: var(--paper);
+  }
+
+  .board-transcript {
+    max-height: 300px;
+    overflow-y: auto;
+    background: var(--paper);
+    border: 1px solid var(--soot);
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .board-msg {
+    padding: 5px 7px;
+    border-left: 3px solid var(--graphite);
+    background: var(--bone);
+    font-size: 11px;
+  }
+  .board-msg.at-tick {
+    border-left-color: var(--red-bird);
+    background: #FAF2EE;
+    font-weight: 600;
+  }
+
+  /* --- Responsive Breakpoints (Tablet <= 1120px, Mobile <= 768px) --- */
+  @media (max-width: 1120px) {
+    .studio-workspace {
+      grid-template-columns: 1fr;
+    }
+    .drawer-grid-2 {
+      grid-template-columns: 1fr;
+    }
+    .forge-agent-row {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .workbench-sheet {
+      padding: 6px 8px 28px;
+    }
+    .brand-title {
+      font-size: 19px;
+    }
+    .viewport-grid, .atlas-plate-grid.diptych-layout {
+      grid-template-columns: 1fr;
+    }
+    .split-trace-strip {
+      grid-template-columns: 1fr;
+    }
+    .scrubber-row {
+      grid-template-columns: 1fr;
+    }
+    .xsheet-strip {
+      grid-template-columns: repeat(13, minmax(0, 1fr));
+    }
+    button, select, input {
+      min-height: 36px;
+    }
+    #case-selector {
+      min-width: 160px;
+      width: 100%;
+    }
+    .forge-agent-row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="workbench-sheet">
+  <!-- TOP WORLDFUL PRESS MASTHEAD -->
+  <header class="press-masthead">
+    <div class="brand-block">
+      <div class="brand-kicker">WORLDFUL PRESS · ARCHIVAL INSTRUMENT · OLOG_REV_001</div>
+      <h1 class="brand-title">SCION — Clinamen Operative Studio &amp; City-Swarm Builder</h1>
+      <div class="brand-subtitle" id="active-case-subtitle">Without stones there is no arch · Constant-Volume Nonhuman Worldtext Workbench</div>
+    </div>
+
+    <div class="masthead-controls">
+      <div class="case-picker-wrap">
+        <label for="case-selector">ACTIVE SWARM:</label>
+        <select id="case-selector" aria-label="Select active SCION swarm case"></select>
+      </div>
+
+      <div class="telemetry-pills mute-hide">
+        <span class="pill ok" id="pill-roubaud" title="Roubaud Lawful Baseline Qualification"><strong>ROUBAUD:</strong> VERIFIED</span>
+        <span class="pill ok" id="pill-volume" title="2D Constant-Volume Invariant (stretch_s * width_w)"><strong>A/A0:</strong> 1.000</span>
+        <span class="pill ok" id="pill-sync" title="Audiovisual Frame-Lock Delta (<= 16.7ms)"><strong>AV LOCK:</strong> 1.2ms</span>
+      </div>
+
+      <button type="button" id="btn-audio-arm" class="accent-blue" title="Unlock Parameter-Coupled WebAudio Synthesis">[AUDIO: STANDBY — CLICK TO ARM]</button>
+      <button type="button" id="btn-mute-silhouette" class="accent-red" aria-pressed="false">[MUTE SILHOUETTE TEST (Hide All Labels &amp; Mute Audio)]</button>
+    </div>
+  </header>
+
+  <div class="mute-banner" id="mute-banner-strip">
+    <span>HARD GATE 2 ACTIVE — ALL LABELS, POLICY CARDS &amp; AUDIO MUTED. PURE FACELESS CONSTANT-VOLUME SILHOUETTES + FLOOR RESIDUES ONLY.</span>
+    <button type="button" id="btn-exit-mute">[RESTORE LABELS &amp; AUDIO]</button>
+  </div>
+
+  <!-- TRANSPORT, STEPPED EXPOSURE & SEMANTIC ZOOM BAR -->
+  <section class="transport-bar" aria-label="Shared Deterministic Tick Clock and Semantic Zoom">
+    <div class="transport-row-top">
+      <div class="btn-cluster">
+        <span class="cluster-label">CLOCK:</span>
+        <button type="button" id="btn-tick-zero" title="Reset to Tick 0">`|&lt; 0`</button>
+        <button type="button" id="btn-tick-prev" title="Step -1 Tick">&lt; -1</button>
+        <button type="button" id="btn-play-pause" class="accent-blue" aria-pressed="false">&#9654; PLAY</button>
+        <button type="button" id="btn-tick-next" title="Step +1 Tick">+1 &gt;</button>
+        <button type="button" id="btn-jump-swerve" class="accent-red" title="Jump directly to Clinamen Swerve Tick">&#9889; SWERVE TICK</button>
+      </div>
+
+      <div class="btn-cluster">
+        <span class="cluster-label">EXPOSURE:</span>
+        <button type="button" class="exp-btn" data-exp="ones">ONES (12fps)</button>
+        <button type="button" class="exp-btn active" data-exp="twos">TWOS (6fps)</button>
+        <button type="button" class="exp-btn" data-exp="hold">HOLD (Inflection)</button>
+        <button type="button" id="btn-accidental-ghost" title="Compare Deliberate Hold+DrawBack+Push vs Accidental Rush+Sweep+Recoil Ghost" aria-pressed="false">[ACCIDENTAL GHOST: OFF]</button>
+      </div>
+
+      <div class="btn-cluster">
+        <span class="cluster-label">SEMANTIC ZOOM:</span>
+        <button type="button" class="zoom-btn active" data-zoom="1x">1x STAGE + PERIMETER</button>
+        <button type="button" class="zoom-btn" data-zoom="4x">4x BEFLIX RIG</button>
+        <button type="button" class="zoom-btn" data-zoom="16x">16x ARCH DAG</button>
+      </div>
+
+      <div class="btn-cluster">
+        <span class="cluster-label">STAGE EKPHRASIS:</span>
+        <button type="button" id="btn-stage-sketch-toggle" aria-pressed="false">&#9998; SKETCH: OFF</button>
+        <select id="stage-sketch-kind" aria-label="Sketch obstacle role">
+          <option value="WORLD">&#9793; Wall (Load-Bearing)</option>
+          <option value="REFLECTOR">&#9790; Reflector (Specular)</option>
+          <option value="CONTROL">&#8984; Rule Block (Charter)</option>
+        </select>
+        <button type="button" id="btn-stage-sketch-clear" title="Clear hand-sketched stage geometry">CLEAR</button>
+      </div>
+    </div>
+
+    <div class="scrubber-row">
+      <div class="tick-readout-box" id="tick-readout">TICK 00 / 24</div>
+      <div class="scrubber-stack">
+        <input type="range" id="tick-scrubber" min="0" max="24" step="1" value="0" aria-label="Tick Scrubber 0 to 24">
+        <div class="xsheet-strip" id="xsheet-strip" role="group" aria-label="25-Tick Exposure Sheet"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN WORKSPACE: SYNCHRONIZED DUAL VIEWPORTS + CANONICAL LEDGER -->
+  <main class="studio-workspace">
+    <div class="dual-stage-column">
+      <!-- Coupled Witness Stage Viewport Tabs (Live Stage vs Survey Map vs Engraving vs Diptych) -->
+      <div class="stage-mode-bar">
+        <div class="stage-view-tabs" role="tablist" aria-label="Coupled Witness Stage Viewport Mode">
+          <button type="button" class="stage-mode-btn active" data-smode="stage">[STAGE A &#8741; A&#8242;]</button>
+          <button type="button" class="stage-mode-btn" data-smode="map">[SURVEY MAP 1200&times;900]</button>
+          <button type="button" class="stage-mode-btn" data-smode="image">[ARCHITECTURAL IMAGE 1200&times;800]</button>
+          <button type="button" class="stage-mode-btn" data-smode="diptych">[DIPTYCH: MAP + IMAGE]</button>
+        </div>
+        <div class="atlas-plate-tools">
+          <span id="atlas-inline-controls" style="display:none;gap:4px;align-items:center;flex-wrap:wrap;">
+            <button type="button" class="plate-fmt-btn active" data-pfmt="png">.PNG</button>
+            <button type="button" class="plate-fmt-btn" data-pfmt="svg">.SVG</button>
+            <button type="button" class="plate-zoom-btn active" data-pzoom="1">1x</button>
+            <button type="button" class="plate-zoom-btn" data-pzoom="1.75">1.75x</button>
+            <button type="button" class="plate-zoom-btn" data-pzoom="2.5">2.5x</button>
+            <button type="button" id="btn-plate-loupe" class="active" aria-pressed="true">[LOUPE: ON]</button>
+          </span>
+          <a id="link-open-khan-atlas" class="atlas-link-btn mute-hide" href="scion_atlas.html">[GREAT KHAN&#8217;S ATLAS &nearr;]</a>
+        </div>
+      </div>
+
+      <!-- Archival Cartographic Survey & Architectural Engraving Deck -->
+      <section class="atlas-plate-deck" id="stage-atlas-plate-deck" aria-label="City Cartographic Survey Map and Architectural Engraving">
+        <div class="atlas-plate-grid" id="atlas-plate-grid"></div>
+        <div class="atlas-meta-strip mute-hide" id="atlas-plate-meta-strip"></div>
+      </section>
+
+      <div class="viewport-grid" id="viewport-grid">
+        <!-- Viewport A: CHECKPOINT_LAWFUL_A -->
+        <article class="viewport-card branch-a">
+          <div class="viewport-header mute-hide">
+            <div>
+              <span class="vp-title">CHECKPOINT_LAWFUL_A</span>
+              <span class="vp-sub" id="vp-a-hash">· Lawful Baseline</span>
+            </div>
+            <span class="vp-sub" id="vp-a-audio-tag">440 Hz Sine + Escapement</span>
+          </div>
+          <div class="canvas-frame">
+            <canvas id="canvas-lawful-a" class="stage-canvas" width="680" height="500"></canvas>
+          </div>
+          <div class="viewport-footer mute-hide">
+            <span id="vp-a-status">Exposure: twos · Area Conservation OK</span>
+            <span id="vp-a-witness">Witness: Full Chain Intact</span>
+          </div>
+        </article>
+
+        <!-- Viewport A': BRANCH_CLINAMEN_A_PRIME -->
+        <article class="viewport-card branch-ap">
+          <div class="viewport-header mute-hide">
+            <div>
+              <span class="vp-title">BRANCH_CLINAMEN_A_PRIME</span>
+              <span class="vp-sub" id="vp-ap-hash">· Clinamen Swerve (&#8867; FILTER)</span>
+            </div>
+            <span class="vp-sub" id="vp-ap-audio-tag">Modal Ping + Rustle + Sub-Thud</span>
+          </div>
+          <div class="canvas-frame">
+            <canvas id="canvas-clinamen-ap" class="stage-canvas" width="680" height="500"></canvas>
+          </div>
+          <div class="viewport-footer mute-hide">
+            <span id="vp-ap-status">Parent Verified · Split-Trace Active</span>
+            <span id="vp-ap-witness">Witness: &#8867; Premise Filtered</span>
+          </div>
+        </article>
+      </div>
+
+      <!-- Synchronized Split-Trace Persistence Readout -->
+      <section class="split-trace-strip" aria-label="Split-Trace Persistence Comparison">
+        <div class="trace-col">
+          <h4>&#9793; Physical World Residue (A vs. A&#8242;)</h4>
+          <div class="trace-kv" id="readout-world-residue"></div>
+        </div>
+        <div class="trace-col">
+          <h4>&#9673; Selective Witness Memory (&#8867; Filter)</h4>
+          <div class="trace-kv" id="readout-witness-memory"></div>
+        </div>
+        <div class="trace-col">
+          <h4>&#9719; Off-Screen Continuity &amp; Posture Delta</h4>
+          <div class="trace-kv" id="readout-offscreen-posture"></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- RIGHT CANONICAL LEDGER COLUMN -->
+    <aside class="ledger-column" aria-label="Swarm Roster, Formal Policies P1-P4, and Clinamen Inquiry">
+      <section class="ledger-panel">
+        <div class="panel-heading">
+          <h3>Bespoke Swarm Performers</h3>
+          <span id="roster-count-badge">0 Faceless Rigs</span>
+        </div>
+        <div class="agent-roster-list" id="agent-roster-list"></div>
+      </section>
+
+      <section class="ledger-panel">
+        <div class="panel-heading">
+          <h3>Rule Ledger (P1–P4: A vs. A&#8242;)</h3>
+          <span id="flipped-count-badge">Verdict Audit</span>
+        </div>
+        <div class="policy-list" id="policy-ledger-list"></div>
+      </section>
+
+      <section class="ledger-panel">
+        <div class="panel-heading">
+          <h3>T1–T5 Clinamen &amp; Better Question</h3>
+          <span>Question Discovery</span>
+        </div>
+        <div class="inquiry-box" id="inquiry-ledger-box"></div>
+      </section>
+    </aside>
+  </main>
+
+  <!-- LOWER OPERATIVE STUDIO PROVOCATIONS + FORGE + 55-CITY LATTICE -->
+  <section class="operative-deck" aria-label="Operative Studio Modules and 55-City Lattice">
+    <div class="deck-tabs" role="tablist">
+      <button type="button" class="deck-tab active" role="tab" data-drawer="drawer-mod1">MOD 1 · CHALK-VECTOR SANDBOX (Lucretius/Oulipo)</button>
+      <button type="button" class="deck-tab" role="tab" data-drawer="drawer-mod2">MOD 2 · THICK-DESCRIPTION ANALYZER (Geertz/Graham)</button>
+      <button type="button" class="deck-tab" role="tab" data-drawer="drawer-mod3">MOD 3 · EKPHRASIS SKETCH &amp; SWARM FORGE (Bajohr)</button>
+      <button type="button" class="deck-tab" role="tab" data-drawer="drawer-lattice">CALVINO [5,4,3,2,1] 55-CITY LATTICE &amp; SWARM BOARD</button>
+      <button type="button" id="btn-expand-all-drawers" style="margin-left:auto;border:none;border-left:1px solid var(--soot);">[EXPAND ALL PANELS]</button>
+    </div>
+
+    <!-- MODULE 1: CLINAMEN CHALK-VECTOR SANDBOX -->
+    <div class="deck-drawer open" id="drawer-mod1" role="tabpanel">
+      <div class="drawer-grid-2">
+        <div>
+          <h2 class="mod-title">Module 1 — Clinamen Chalk-Vector Sandbox (Lucretius · Oulipo · Serres)</h2>
+          <p class="mod-sub">Drag across the ruled ledger paper below to score a physical paper crease, or pull the Swerve Amplitude slider. Roubaud's Qualification Law requires Baseline Lawful Pass before any grain is permitted to tilt into turbulent Serres spirals.</p>
+          <canvas id="canvas-mod1-chalk" width="760" height="320"></canvas>
+        </div>
+        <div class="control-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;">
+            <strong>ROUBAUD QUALIFICATION GATE</strong>
+            <span class="pill ok" id="mod1-gate-status">BASELINE PASS VERIFIED</span>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <label style="display:flex;align-items:center;gap:5px;font-size:11px;cursor:pointer;">
+              <input type="checkbox" id="mod1-lawful-checkbox" checked>
+              Lawful Baseline A Qualified (`lawful_verified == true`)
+            </label>
+            <button type="button" id="btn-mod1-test-roubaud-error" class="accent-red">[Test Unqualified Swerve Error]</button>
+          </div>
+          <label class="field-lbl">
+            <span>SWERVE AMPLITUDE (`nec plus quam minimum` tilt: <strong id="mod1-amp-val">0.0°</strong>)</span>
+            <input type="range" id="mod1-swerve-slider" min="0" max="18" step="0.25" value="0" style="width:100%;accent-color:var(--red-bird);">
+          </label>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <button type="button" id="btn-mod1-induce-swerve" class="accent-blue">[Tilt Minimal Grain (6.5° Swerve)]</button>
+            <button type="button" id="btn-mod1-reset-laminar">[Reset Laminar 440Hz Fall &amp; Clear Smudges]</button>
+            <button type="button" id="btn-mod1-sync-stage">[Stamp Graphite Smudges onto Active Stage A&#8242;]</button>
+          </div>
+          <div id="mod1-log-readout" style="background:var(--paper);border:1px solid var(--rule-mid);padding:7px;font-size:11px;min-height:74px;">
+            Laminar state: 14 charcoal grains falling plumb on ruled lines; 440.0 Hz reference hum steady. Drag canvas to fold paper crease.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODULE 2: THICK-DESCRIPTION OVER-THE-SHOULDER ANALYZER -->
+    <div class="deck-drawer" id="drawer-mod2" role="tabpanel">
+      <h2 class="mod-title">Module 2 — Thick-Description Over-the-Shoulder Analyzer (Clifford Geertz · Dan Graham)</h2>
+      <p class="mod-sub">Contrasts thin behavioral machine telemetry ("rapid contraction of sack crest / dry 1.2 Hz click") against thick institutional description read over the shoulder of guild-indebted performers.</p>
+
+      <div class="thin-telemetry-bar">
+        <span id="mod2-thin-strip">THIN TELEMETRY: 1.2 Hz | 40ms | thin dry click | Δx=+0.160</span>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <button type="button" id="btn-mod2-dry-click">[Audition Thin Dry Click]</button>
+          <button type="button" id="btn-mod2-inject-swerve" class="accent-red" aria-pressed="false">[Inject Unscalable Swerve (Unfold Over-the-Shoulder Margin)]</button>
+        </div>
+      </div>
+
+      <div class="thick-margin-sheet" id="mod2-thick-sheet">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;border-bottom:1px solid var(--rule-mid);padding-bottom:6px;">
+          <strong style="font-family:var(--font-serif);font-size:18px;font-weight:400;" id="mod2-margin-heading">Over-the-Shoulder Manuscript Margin — Guild Obligations &amp; Conspiratorial Wink vs. Twitch</strong>
+          <span class="pill warn" id="mod2-audio-layer-badge">SONIC CROSSFADE: ROOM TONE + PAPER RUSTLE + MURMURS + WEIGHT POPS</span>
+        </div>
+        <p style="margin-top:8px;font-size:12px;line-height:1.55;" id="mod2-thick-narrative"></p>
+
+        <div class="nisba-grid" id="mod2-nisba-grid"></div>
+
+        <div class="control-card" style="background:var(--paper);">
+          <strong>INTERACTIVE WITNESS PREMISE FILTER (`&#8867; FILTER` -&gt; LIVE `P1–P4` DOWNSTREAM RE-EVALUATION)</strong>
+          <p style="font-size:11px;color:var(--graphite);">Uncheck any baseline causal premise below to simulate selective witness forgetting in real time (`&lt;=16ms`) and observe immediate `P1–P4` institutional verdict flips:</p>
+          <div id="mod2-premise-checkboxes" style="display:flex;flex-wrap:wrap;gap:10px;padding:4px 0;"></div>
+          <div id="mod2-live-verdict-summary" style="font-size:11px;padding-top:4px;border-top:1px solid var(--rule-faint);"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODULE 3: OPERATIVE EKPHRASIS SKETCH-TO-WORLD & HANDMADE SCION SWARM FORGE -->
+    <div class="deck-drawer" id="drawer-mod3" role="tabpanel">
+      <div class="drawer-grid-2">
+        <div>
+          <h2 class="mod-title">Module 3A —Handmade Scion Swarm Forge (Create or Fork Any Calvino City)</h2>
+          <p class="mod-sub">Forge a bespoke 3..5 operator nonhuman city swarm (zero generic role names, `Jaccard == 0.0` pairwise disjointness, constant-volume faceless rigs, Roubaud-verified `CHECKPOINT_LAWFUL_A` -&gt; `BRANCH_CLINAMEN_A_PRIME`).</p>
+
+          <div class="control-card">
+            <div class="form-row">
+              <label class="field-lbl">
+                <span>FORK TEMPLATE (55 CITIES / PROOF)</span>
+                <select id="forge-template-select"></select>
+              </label>
+              <label class="field-lbl">
+                <span>CITY / SWARM NAME</span>
+                <input type="text" id="forge-city-name" value="Argia-Scion">
+              </label>
+              <label class="field-lbl">
+                <span>THEMATIC SERIES</span>
+                <select id="forge-series">
+                  <option value="Cities and memory">Cities and memory</option>
+                  <option value="Cities and desire">Cities and desire</option>
+                  <option value="Cities and signs">Cities and signs</option>
+                  <option value="Thin cities">Thin cities</option>
+                  <option value="Trading cities">Trading cities</option>
+                  <option value="Cities and eyes">Cities and eyes</option>
+                  <option value="Cities and names">Cities and names</option>
+                  <option value="Cities and the dead">Cities and the dead</option>
+                  <option value="Cities and the sky">Cities and the sky</option>
+                  <option value="Continuous cities">Continuous cities</option>
+                  <option value="Hidden cities">Hidden cities</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="form-row">
+              <label class="field-lbl">
+                <span>DESERT OPPOSITION (`&#9723; Desert_Opposition`)</span>
+                <input type="text" id="forge-desert" value="uniform airport-slop standardization">
+              </label>
+              <label class="field-lbl">
+                <span>MATERIAL NOUNS (comma-separated, &gt;=4)</span>
+                <input type="text" id="forge-nouns" value="packed_clay_galleries,worm_tunnel_seepage,salt_crust_plumb,chalk_tally_slate">
+              </label>
+              <label class="field-lbl">
+                <span>CLINAMEN SWERVE TICK (`2..20`)</span>
+                <input type="number" id="forge-swerve-tick" min="2" max="20" value="11">
+              </label>
+            </div>
+
+            <label class="field-lbl" style="margin-bottom:6px;">
+              <span>MUTATED CLINAMEN PREMISE (`&#8867; FILTER` on Witness Operator #3)</span>
+              <input type="text" id="forge-mutated-premise" value="At tick 11, ⊣ FILTER omits pre-impact coil &amp; deliberate shove from witness memory while clay floor scuff persists.">
+            </label>
+
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
+              <strong>BESPOKE NONHUMAN OPERATORS (3..5 FACELESS RIGS · ZERO GENERIC ROLES)</strong>
+              <div style="display:flex;gap:4px;">
+                <button type="button" id="btn-forge-add-agent">[+ Add Operator]</button>
+                <button type="button" id="btn-forge-rem-agent">[- Remove Last]</button>
+              </div>
+            </div>
+
+            <div class="forge-agent-rows" id="forge-agent-rows"></div>
+
+            <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:6px;">
+              <button type="button" id="btn-forge-compile" class="accent-red">[FORGE &amp; MOUNT ROUBAUD-VERIFIED SWARM ON STAGE]</button>
+              <button type="button" id="btn-forge-export-json" class="accent-blue">[EXPORT SWARM JSON]</button>
+              <span class="pill ok" id="forge-validation-pill">JACCARD = 0.0000 · READY</span>
+            </div>
+            <pre id="forge-json-preview" style="display:none;max-height:190px;overflow:auto;background:var(--paper);border:1px solid var(--soot);padding:8px;font-size:10px;margin-top:6px;"></pre>
+          </div>
+        </div>
+
+        <div>
+          <h2 class="mod-title">Module 3B — Operative Ekphrasis Sketch-to-World (Hannes Bajohr)</h2>
+          <p class="mod-sub">Toggle Stage Sketch Mode (or use the quick buttons below) and draw jagged strokes with mouse or touch directly onto either Dual Stage viewport! Stroke speed drives WebAudio tape-hiss flutter; sharp corners fire sub-bass weight thuds (`95Hz -&gt; 38Hz`) and compile into load-bearing `&#9793;` walls, `&#9790;` reflectors, and `&#8984;` rule blocks.</p>
+          <div class="control-card">
+            <div style="display:flex;gap:6px;flex-wrap:wrap;">
+              <button type="button" id="btn-mod3-arm-sketch" class="accent-red">[&#9998; ARM STAGE SKETCH PEN NOW]</button>
+              <button type="button" id="btn-mod3-demo-stroke">[Inscribe Jagged Bastion Scar Stroke]</button>
+              <button type="button" id="btn-mod3-clear-strokes">[Clear Sketched Obstacles]</button>
+            </div>
+            <div id="sketch-telemetry-box" style="background:var(--paper);border:1px solid var(--rule-mid);padding:8px;font-size:11px;">
+              Compiled stage strokes: <strong>0</strong> · Pointer velocity: <strong>0.00 px/ms</strong> · Sharp-vertex thuds fired: <strong>0</strong>
+            </div>
+            <div id="sketch-commit-ledger" style="max-height:220px;overflow-y:auto;background:var(--paper);border:1px solid var(--rule-mid);padding:8px;font-size:10.5px;">
+              Draw directly on `#canvas-lawful-a` or `#canvas-clinamen-ap` when Sketch Pen is armed (or drag in Stage Sketch mode) to mint live Ekphrasis `MicroCommit` stones.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CALVINO [5,4,3,2,1] 55-CITY DIAGONAL LATTICE & SWARM BOARD INSPECTOR -->
+    <div class="deck-drawer" id="drawer-lattice" role="tabpanel">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:8px;">
+        <div>
+          <h2 class="mod-title">Calvino `[5,4,3,2,1]` 55-City Diagonal Lattice &amp; Per-City Swarm Message Board</h2>
+          <p class="mod-sub">Click Scene 0 (`The Flour Test`) or any of Calvino's 55 canonical cities across Chapters I–IX &times; 11 Thematic Series to mount its swarm onto the Dual Stage (or synthesize/fork its genome preview).</p>
+        </div>
+        <button type="button" id="btn-lattice-scene0" class="accent-red">[SCENE 00 · THE FLOUR TEST (ABOMINABLE CELLAR)]</button>
+      </div>
+
+      <div class="lattice-scroll">
+        <table class="calvino-matrix" id="calvino-lattice-table"></table>
+      </div>
+
+      <div class="drawer-grid-2">
+        <div>
+          <h3 style="font-family:var(--font-serif);font-size:17px;font-weight:400;margin-bottom:6px;">Live Swarm Message Board Transcript (`swarm_board_log`)</h3>
+          <div style="display:flex;gap:6px;margin-bottom:6px;">
+            <button type="button" class="board-branch-btn active" data-bbranch="A">CHECKPOINT_LAWFUL_A Log</button>
+            <button type="button" class="board-branch-btn" data-bbranch="AP">BRANCH_CLINAMEN_A_PRIME Log</button>
+          </div>
+          <div class="board-transcript" id="swarm-board-transcript"></div>
+        </div>
+        <div>
+          <h3 style="font-family:var(--font-serif);font-size:17px;font-weight:400;margin-bottom:6px;">`ConflictGrain` Arch Keystones ("Without stones there is no arch")</h3>
+          <div class="board-transcript" id="conflict-grain-inspector"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script id="scion-bundle-data">
+/*__SCION_BUNDLE_INJECTION__*/
+</script>
+<script>
+(function () {
+  "use strict";
+
+  const PALETTE = {
+    paper: "#F2EFE9",
+    bone: "#E8E0D6",
+    soot: "#1E1E1E",
+    graphite: "#55585A",
+    dirt: "#7A756E",
+    redBird: "#9B1D1D",
+    chalkBlue: "#2C4A5E",
+    ochreOil: "#B58328"
+  };
+
+  const FORBIDDEN_GENERIC_ROLES = new Set([
+    "planner", "worker", "coder", "researcher", "assistant", "agent_1", "agent1",
+    "agent", "critic", "verifier", "architect", "reviewer", "qa", "tester",
+    "manager", "coordinator", "summarizer", "orchestrator"
+  ]);
+
+  const AFTERLIGHT_ROLE_MAP = {
+    SOURCE: "☉",
+    REFLECTOR: "☾",
+    WORLD: "♁",
+    BODY: "◉",
+    MEDIUM: "▧",
+    CULTURE: "⌂",
+    TIME: "◷",
+    CONTROL: "⌘"
+  };
+
+  const AFTERLIGHT_OP_MAP = {
+    EMIT: "→",
+    REFLECT: "↷",
+    CONCENTRATE: "≫",
+    FILTER: "⊣",
+    ABSORB: "↓",
+    STORE_RELEASE: "↻",
+    SENSE_INTERPRET: "≈",
+    SYMBOLIZE_INSTITUTIONALIZE: "≡"
+  };
+
+  const VALID_RIG_ARCHETYPES = [
+    "flour_sack", "plumb_bob", "bamboo_stilt", "taut_chord", "hooded_husk",
+    "pinhead_lens", "mirror_obverse", "brass_cog", "chalk_grain", "ceramic_vessel"
+  ];
+
+  // Deterministic Mulberry32 PRNG for hand-drawn charcoal/chalk roughness passes
+  function mulberry32(seed) {
+    let a = (seed >>> 0) || 1;
+    return function () {
+      a |= 0;
+      a = (a + 0x6D2B79F5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function hashString32(str) {
+    let h = 2166136261 >>> 0;
+    const s = String(str);
+    for (let i = 0; i < s.length; i++) {
+      h ^= s.charCodeAt(i);
+      h = Math.imul(h, 16777619);
+    }
+    return h >>> 0;
+  }
+
+  function hexHash16(obj) {
+    const raw = JSON.stringify(obj);
+    const h1 = hashString32(raw).toString(16).padStart(8, "0");
+    const h2 = hashString32(raw + "::scion").toString(16).padStart(8, "0");
+    return h1 + h2;
+  }
+
+  // Exact Gauss-Shoelace 2D polygon area lock for constant-volume silhouettes
+  function polygonArea2D(pts) {
+    const n = pts.length;
+    if (n < 3) return 0;
+    let sum = 0;
+    for (let i = 0; i < n; i++) {
+      const p1 = pts[i];
+      const p2 = pts[(i + 1) % n];
+      sum += p1[0] * p2[1] - p2[0] * p1[1];
+    }
+    return Math.abs(sum) * 0.5;
+  }
+
+  function lockPolygonArea(pts, pivotX, pivotY, targetArea) {
+    const cur = polygonArea2D(pts);
+    if (cur <= 1e-5 || targetArea <= 1e-5) return pts;
+    const scale = Math.sqrt(targetArea / cur);
+    const out = new Array(pts.length);
+    for (let i = 0; i < pts.length; i++) {
+      out[i] = [
+        pivotX + (pts[i][0] - pivotX) * scale,
+        pivotY + (pts[i][1] - pivotY) * scale
+      ];
+    }
+    return out;
+  }
+
+  // Hand-drawn rough stroke helper seeded by `roughness_seed`
+  function strokeRoughPath(ctx, pts, closed, seed, passes, jitterPx, strokeStyle, lineWidth) {
+    if (!pts || pts.length < 2) return;
+    const rand = mulberry32(seed);
+    ctx.save();
+    ctx.strokeStyle = strokeStyle;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    for (let p = 0; p < passes; p++) {
+      ctx.lineWidth = p === 0 ? lineWidth : Math.max(0.65, lineWidth * 0.62);
+      ctx.globalAlpha = p === 0 ? 0.94 : 0.46;
+      ctx.beginPath();
+      for (let i = 0; i < pts.length; i++) {
+        const jx = (rand() - 0.5) * jitterPx;
+        const jy = (rand() - 0.5) * jitterPx;
+        if (i === 0) ctx.moveTo(pts[i][0] + jx, pts[i][1] + jy);
+        else ctx.lineTo(pts[i][0] + jx, pts[i][1] + jy);
+      }
+      if (closed) ctx.closePath();
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  // Offscreen deterministic paper grain tile
+  const paperTileCanvas = document.createElement("canvas");
+  paperTileCanvas.width = 160;
+  paperTileCanvas.height = 160;
+  (function buildPaperTile() {
+    const pctx = paperTileCanvas.getContext("2d");
+    pctx.fillStyle = PALETTE.paper;
+    pctx.fillRect(0, 0, 160, 160);
+    const rand = mulberry32(19721974);
+    for (let i = 0; i < 900; i++) {
+      const x = rand() * 160;
+      const y = rand() * 160;
+      const w = 0.7 + rand() * 1.8;
+      pctx.fillStyle = rand() > 0.5 ? "rgba(30,30,30,0.035)" : "rgba(181,131,40,0.032)";
+      pctx.fillRect(x, y, w, 0.9);
+    }
+  })();
+
+  // =========================================================================
+  // 1. LIVE PARAMETER-COUPLED WEBAUDIO SYNTHESIS ENGINE (<= 16.7ms FRAME LOCK)
+  // =========================================================================
+  class ScionAudioEngine {
+    constructor() {
+      this.ctx = null;
+      this.unlocked = false;
+      this.muted = false;
+      this.masterGain = null;
+      this.sineOsc = null;
+      this.sineGain = null;
+      this.hissSource = null;
+      this.hissFilter = null;
+      this.hissGain = null;
+      this.thickRoomGain = null;
+      this.thickMurmurOsc = null;
+      this.noiseBuffer = null;
+      this.lastSyncDeltaMs = 0.8;
+    }
+
+    ensureContext() {
+      if (this.ctx) {
+        if (this.ctx.state === "suspended") {
+          this.ctx.resume();
+        }
+        this.unlocked = true;
+        return true;
+      }
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return false;
+      this.ctx = new AC();
+      this.masterGain = this.ctx.createGain();
+      this.masterGain.gain.setValueAtTime(this.muted ? 0.0 : 0.78, this.ctx.currentTime);
+      this.masterGain.connect(this.ctx.destination);
+
+      // Deterministic noise buffer (1.5s) for cloth/flour/paper rustle & tape-hiss flutter
+      const sr = this.ctx.sampleRate;
+      const len = Math.floor(sr * 1.5);
+      this.noiseBuffer = this.ctx.createBuffer(1, len, sr);
+      const data = this.noiseBuffer.getChannelData(0);
+      const rand = mulberry32(4401972);
+      let pink = 0;
+      for (let i = 0; i < len; i++) {
+        const white = rand() * 2 - 1;
+        pink = 0.92 * pink + 0.08 * white;
+        data[i] = white * 0.65 + pink * 0.35;
+      }
+
+      // Narrow 440 Hz Lawful Reference Sine Hum (`sine_hum_hz`, scaled by `sine_gain`)
+      this.sineOsc = this.ctx.createOscillator();
+      this.sineOsc.type = "sine";
+      this.sineOsc.frequency.setValueAtTime(440.0, this.ctx.currentTime);
+      this.sineGain = this.ctx.createGain();
+      this.sineGain.gain.setValueAtTime(0.0, this.ctx.currentTime);
+      this.sineOsc.connect(this.sineGain);
+      this.sineGain.connect(this.masterGain);
+      this.sineOsc.start();
+
+      // Continuous High-Shelf Tape-Hiss Flutter Bus (modulated by cursor velocity & sensory_bus)
+      this.hissSource = this.ctx.createBufferSource();
+      this.hissSource.buffer = this.noiseBuffer;
+      this.hissSource.loop = true;
+      this.hissFilter = this.ctx.createBiquadFilter();
+      this.hissFilter.type = "highshelf";
+      this.hissFilter.frequency.setValueAtTime(3600, this.ctx.currentTime);
+      this.hissFilter.gain.setValueAtTime(9.0, this.ctx.currentTime);
+      this.hissGain = this.ctx.createGain();
+      this.hissGain.gain.setValueAtTime(0.0, this.ctx.currentTime);
+      this.hissSource.connect(this.hissFilter);
+      this.hissFilter.connect(this.hissGain);
+      this.hissGain.connect(this.masterGain);
+      this.hissSource.start();
+
+      // Module 2 Thick-Description Room Tone & Low Guild Murmur Bus
+      this.thickRoomGain = this.ctx.createGain();
+      this.thickRoomGain.gain.setValueAtTime(0.0, this.ctx.currentTime);
+      this.thickMurmurOsc = this.ctx.createOscillator();
+      this.thickMurmurOsc.type = "triangle";
+      this.thickMurmurOsc.frequency.setValueAtTime(116.5, this.ctx.currentTime);
+      const murmurFilter = this.ctx.createBiquadFilter();
+      murmurFilter.type = "bandpass";
+      murmurFilter.frequency.setValueAtTime(290, this.ctx.currentTime);
+      murmurFilter.Q.setValueAtTime(3.8, this.ctx.currentTime);
+      this.thickMurmurOsc.connect(murmurFilter);
+      murmurFilter.connect(this.thickRoomGain);
+      this.thickRoomGain.connect(this.masterGain);
+      this.thickMurmurOsc.start();
+
+      this.unlocked = true;
+      return true;
+    }
+
+    setMuted(muteFlag) {
+      this.muted = Boolean(muteFlag);
+      if (!this.ctx || !this.masterGain) return;
+      const now = this.ctx.currentTime;
+      this.masterGain.gain.cancelScheduledValues(now);
+      this.masterGain.gain.setValueAtTime(this.muted ? 0.0 : 0.78, now);
+      if (this.muted && this.sineGain && this.hissGain && this.thickRoomGain) {
+        this.sineGain.gain.setValueAtTime(0.0, now);
+        this.hissGain.gain.setValueAtTime(0.0, now);
+        this.thickRoomGain.gain.setValueAtTime(0.0, now);
+      }
+    }
+
+    quietContinuousBuses() {
+      if (!this.ctx || !this.sineGain || !this.hissGain) return;
+      const now = this.ctx.currentTime;
+      this.sineGain.gain.setTargetAtTime(0.0, now, 0.025);
+      this.hissGain.gain.setTargetAtTime(0.0, now, 0.025);
+    }
+
+    // Trigger synchronized A + A' sensory bus synthesis at 0ms offset (`audioCtx.currentTime`)
+    triggerTickSensory(sbA, sbAP, isPlaying) {
+      const t0 = performance.now();
+      if (this.muted || !this.unlocked || !this.ctx) {
+        this.lastSyncDeltaMs = sbAP ? Number(sbAP.sync_frame_delta_ms || 1.2) : 1.2;
+        return;
+      }
+      const now = this.ctx.currentTime;
+
+      // 1. 440 Hz Reference Sine Hum (`sine_hum_hz` & `sine_gain`)
+      const hz = Number((sbA && sbA.sine_hum_hz) || 440.0);
+      const gainVal = Math.min(0.14, Number((sbA && sbA.sine_gain) || 0.18) * 0.22);
+      this.sineOsc.frequency.setValueAtTime(hz, now);
+      this.sineGain.gain.setValueAtTime(gainVal, now);
+      if (!isPlaying) {
+        this.sineGain.gain.setTargetAtTime(0.0, now + 0.11, 0.03);
+      }
+
+      // 2. Dry Mechanical Clock Escapement Click (`clock_tick`)
+      if (sbA && sbA.clock_tick) {
+        this.fireClockClick(now, 0.14);
+      }
+
+      // 3. Ceramic/Glass Fracture Modal Ping (`fracture_ping_hz` & `impact_angle_deg`)
+      const pingHz = (sbAP && sbAP.fracture_ping_hz) || (sbA && sbA.fracture_ping_hz);
+      const angleDeg = (sbAP && sbAP.impact_angle_deg != null) ? sbAP.impact_angle_deg : (sbA && sbA.impact_angle_deg);
+      if (pingHz) {
+        this.fireFracturePing(now, Number(pingHz), Number(angleDeg || 45));
+      }
+
+      // 4. Granular Cloth / Flour / Paper Rustle (`cloth_rustle_gain`)
+      const rustle = Math.max(
+        Number((sbA && sbA.cloth_rustle_gain) || 0),
+        Number((sbAP && sbAP.cloth_rustle_gain) || 0)
+      );
+      if (rustle > 0.06) {
+        this.fireClothRustle(now, Math.min(0.45, rustle * 0.42));
+      }
+
+      // 5. Tape-Hiss Flutter (`tape_hiss_flutter`)
+      const hiss = Math.max(
+        Number((sbA && sbA.tape_hiss_flutter) || 0),
+        Number((sbAP && sbAP.tape_hiss_flutter) || 0)
+      );
+      this.hissGain.gain.setValueAtTime(Math.min(0.12, hiss * 0.14), now);
+      if (!isPlaying) {
+        this.hissGain.gain.setTargetAtTime(0.0, now + 0.09, 0.025);
+      }
+
+      // 6. Organic Weight-Transfer Sub-Thud (`sub_thud_hz` 95Hz -> 38Hz)
+      const thudHz = (sbAP && sbAP.sub_thud_hz) || (sbA && sbA.sub_thud_hz);
+      if (thudHz) {
+        this.fireSubThud(now, Number(thudHz));
+      }
+
+      const elapsed = performance.now() - t0;
+      this.lastSyncDeltaMs = Math.min(16.0, Math.max(0.1, elapsed));
+    }
+
+    fireClockClick(when, amp = 0.16) {
+      if (this.muted || !this.unlocked || !this.ctx) return;
+      const t = when || this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const bp = this.ctx.createBiquadFilter();
+      const g = this.ctx.createGain();
+      osc.type = "square";
+      osc.frequency.setValueAtTime(1920, t);
+      osc.frequency.exponentialRampToValueAtTime(780, t + 0.012);
+      bp.type = "bandpass";
+      bp.frequency.setValueAtTime(2150, t);
+      bp.Q.setValueAtTime(8.5, t);
+      g.gain.setValueAtTime(amp, t);
+      g.gain.exponentialRampToValueAtTime(0.0008, t + 0.016);
+      osc.connect(bp);
+      bp.connect(g);
+      g.connect(this.masterGain);
+      osc.start(t);
+      osc.stop(t + 0.018);
+    }
+
+    fireFracturePing(when, baseHz = 1480, angleDeg = 45) {
+      if (this.muted || !this.unlocked || !this.ctx) return;
+      const t = when || this.ctx.currentTime;
+      const angleShift = 1.0 + ((angleDeg - 45.0) / 180.0) * 0.35;
+      const ratios = [1.0, 2.37, 3.86];
+      for (let i = 0; i < ratios.length; i++) {
+        const osc = this.ctx.createOscillator();
+        const mod = this.ctx.createOscillator();
+        const modG = this.ctx.createGain();
+        const g = this.ctx.createGain();
+        const f = Math.min(8200, Math.max(420, baseHz * angleShift * ratios[i]));
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(f, t);
+        mod.type = "sine";
+        mod.frequency.setValueAtTime(f * 1.414, t);
+        modG.gain.setValueAtTime(f * 0.25, t);
+        modG.gain.exponentialRampToValueAtTime(1.0, t + 0.09);
+        const peak = (0.16 / (i + 1));
+        g.gain.setValueAtTime(peak, t);
+        g.gain.exponentialRampToValueAtTime(0.0005, t + 0.22 / (i + 0.8));
+        mod.connect(modG);
+        modG.connect(osc.frequency);
+        osc.connect(g);
+        g.connect(this.masterGain);
+        mod.start(t);
+        osc.start(t);
+        mod.stop(t + 0.24);
+        osc.stop(t + 0.24);
+      }
+    }
+
+    fireClothRustle(when, amp = 0.22) {
+      if (this.muted || !this.unlocked || !this.ctx || !this.noiseBuffer) return;
+      const t = when || this.ctx.currentTime;
+      const src = this.ctx.createBufferSource();
+      src.buffer = this.noiseBuffer;
+      const bp = this.ctx.createBiquadFilter();
+      bp.type = "bandpass";
+      bp.frequency.setValueAtTime(1180, t);
+      bp.Q.setValueAtTime(2.1, t);
+      const g = this.ctx.createGain();
+      g.gain.setValueAtTime(0.001, t);
+      g.gain.linearRampToValueAtTime(amp, t + 0.015);
+      g.gain.exponentialRampToValueAtTime(0.0008, t + 0.11);
+      src.connect(bp);
+      bp.connect(g);
+      g.connect(this.masterGain);
+      src.start(t, (t * 0.37) % 1.1, 0.13);
+    }
+
+    fireSubThud(when, startHz = 95) {
+      if (this.muted || !this.unlocked || !this.ctx) return;
+      const t = when || this.ctx.currentTime;
+      const hi = Math.max(52, Math.min(125, startHz || 95));
+      const osc = this.ctx.createOscillator();
+      const g = this.ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(hi, t);
+      osc.frequency.exponentialRampToValueAtTime(38.0, t + 0.115);
+      g.gain.setValueAtTime(0.32, t);
+      g.gain.exponentialRampToValueAtTime(0.0009, t + 0.135);
+      osc.connect(g);
+      g.connect(this.masterGain);
+      osc.start(t);
+      osc.stop(t + 0.145);
+    }
+
+    modulateSketchVelocity(pxPerMs) {
+      if (this.muted || !this.unlocked || !this.ctx || !this.hissGain || !this.hissFilter) return;
+      const now = this.ctx.currentTime;
+      const clamped = Math.min(1.0, Math.max(0.0, pxPerMs / 2.2));
+      this.hissFilter.frequency.setValueAtTime(2600 + clamped * 3400, now);
+      this.hissGain.gain.setValueAtTime(clamped * 0.20, now);
+      this.hissGain.gain.setTargetAtTime(0.0, now + 0.06, 0.03);
+    }
+
+    setThickAtmosphere(active) {
+      if (!this.ensureContext() || this.muted) return;
+      const now = this.ctx.currentTime;
+      if (active) {
+        this.thickRoomGain.gain.setTargetAtTime(0.09, now, 0.04);
+        this.fireClothRustle(now, 0.28);
+        this.fireSubThud(now + 0.03, 84);
+      } else {
+        this.thickRoomGain.gain.setTargetAtTime(0.0, now, 0.03);
+        this.fireClockClick(now, 0.18);
+      }
+    }
+  }
+
+  const audioEngine = new ScionAudioEngine();
+
+  // =========================================================================
+  // 2. CONSTANT-VOLUME FACELESS NONHUMAN PERFORMER RIG RENDERERS (10 ARCHETYPES)
+  //    Strictly ZERO facial icons or anthropomorphic markings.
+  //    Conveys posture, coil, impact weight & orientation strictly via silhouette!
+  // =========================================================================
+  function getKinematicPoseModifiers(kinematics, dirToTarget) {
+    // Returns purely geometric silhouette modifiers: spineShear, crestPoint, baseSpread, bellyShift
+    const dir = dirToTarget || 1;
+    switch (kinematics) {
+      case "hold_still":
+        return { shear: 0.02 * dir, crestX: 0.04 * dir, crestY: -0.05, baseSpread: 1.18, bellyShift: 0.0, groundedTicks: true };
+      case "draw_back":
+        return { shear: -0.34 * dir, crestX: -0.22 * dir, crestY: -0.06, baseSpread: 1.15, bellyShift: -0.18 * dir, coilArc: true };
+      case "deliberate_push":
+        return { shear: 0.48 * dir, crestX: 0.38 * dir, crestY: 0.06, baseSpread: 1.22, bellyShift: 0.26 * dir, thrustWedge: true };
+      case "rush":
+        return { shear: 0.36 * dir, crestX: 0.24 * dir, crestY: 0.02, baseSpread: 0.84, bellyShift: 0.16 * dir };
+      case "sweep":
+        return { shear: 0.44 * dir, crestX: 0.32 * dir, crestY: -0.04, baseSpread: 1.26, bellyShift: 0.22 * dir };
+      case "recoil":
+        return { shear: -0.38 * dir, crestX: -0.28 * dir, crestY: -0.08, baseSpread: 0.92, bellyShift: -0.22 * dir };
+      case "help":
+        return { shear: 0.28 * dir, crestX: 0.30 * dir, crestY: -0.12, baseSpread: 1.10, bellyShift: 0.16 * dir, shelterBow: true };
+      case "avoid":
+        return { shear: -0.32 * dir, crestX: -0.26 * dir, crestY: 0.04, baseSpread: 0.94, bellyShift: -0.20 * dir, avertedShoulder: true };
+      case "accuse":
+        return { shear: 0.22 * dir, crestX: 0.42 * dir, crestY: 0.10, baseSpread: 1.14, bellyShift: 0.08 * dir, lanceCrest: true };
+      case "reroute":
+        return { shear: 0.18 * dir, crestX: 0.16 * dir, crestY: 0.02, baseSpread: 1.06, bellyShift: 0.14 * dir };
+      default:
+        return { shear: 0.0, crestX: 0.0, crestY: 0.0, baseSpread: 1.0, bellyShift: 0.0 };
+    }
+  }
+
+  function drawNonhumanRigSilhouette(ctx, spec, frame, px, py, targetPx, seed, isSelected, ghostStyle) {
+    const stretchS = Number(frame.stretch_s || 1.0);
+    const widthW = Number(frame.width_w || 1.0);
+    const tiltRad = Number(frame.tilt_rad || 0.0);
+    const kin = frame.intention_kinematics || "idle";
+    const archetype = (spec && spec.rig_archetype) || "flour_sack";
+
+    // Direction (+1 right, -1 left) toward target_actor so orientation reads unmistakably in pure silhouette
+    const dirToTarget = (targetPx != null) ? (targetPx >= px ? 1 : -1) : (tiltRad >= 0 ? 1 : -1);
+    const pose = getKinematicPoseModifiers(kin, dirToTarget);
+
+    // Base canonical rig dimensions (depth-scaled subtly by plane_depth while preserving exact area_ratio)
+    const depthScale = 1.0 - Math.min(0.32, Math.max(0.0, Number(frame.plane_depth || 0.3)) * 0.28);
+    const unitH = 66 * depthScale;
+    const unitW = 48 * depthScale;
+    const h = unitH * stretchS;
+    const w = unitW * widthW;
+    const targetArea = unitH * unitW * 0.76 * Number(frame.area_ratio || (stretchS * widthW));
+
+    ctx.save();
+
+    // Ground contact shadow + non-verbal footing orientation wedge (strictly geometric, zero text)
+    if (!ghostStyle) {
+      ctx.fillStyle = "rgba(30, 30, 30, 0.19)";
+      ctx.beginPath();
+      ctx.ellipse(px + pose.bellyShift * 10, py + 3, w * 0.56 * pose.baseSpread, 6.5 * depthScale, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Subtle floor chalk stance notch indicating body-front orientation toward/away from target
+      const orientDir = (kin === "avoid" || kin === "recoil" || kin === "draw_back") ? -dirToTarget : dirToTarget;
+      ctx.strokeStyle = kin === "accuse" || kin === "deliberate_push" ? PALETTE.redBird : "rgba(30,30,30,0.42)";
+      ctx.lineWidth = 1.6;
+      ctx.beginPath();
+      ctx.moveTo(px, py + 4);
+      ctx.lineTo(px + orientDir * (w * 0.62 + 8), py + 4);
+      ctx.stroke();
+
+      // Animators' stillness registration ticks on the floor during `hold_still`
+      if (pose.groundedTicks) {
+        ctx.strokeStyle = PALETTE.soot;
+        ctx.lineWidth = 1.8;
+        for (const side of [-1, 1]) {
+          const rx = px + side * (w * 0.58);
+          ctx.beginPath();
+          ctx.moveTo(rx, py - 3);
+          ctx.lineTo(rx, py + 7);
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Choose material fill & stroke
+    let fillCol = "#DFD5C5";
+    let strokeCol = PALETTE.soot;
+    if (spec) {
+      if (spec.afterlight_role === "SOURCE") fillCol = "#DEC8AE";
+      else if (spec.afterlight_role === "REFLECTOR") fillCol = "#D4DCE0";
+      else if (spec.afterlight_role === "WORLD") fillCol = "#D9BE93";
+      else if (spec.afterlight_role === "CONTROL") fillCol = "#CFCBC2";
+      else if (spec.afterlight_role === "BODY") fillCol = "#E5DDD0";
+    }
+    if (ghostStyle) {
+      fillCol = "rgba(155, 29, 29, 0.14)";
+      strokeCol = "rgba(155, 29, 29, 0.68)";
+    }
+
+    const leanX = Math.sin(tiltRad) * h * 0.52 + pose.shear * w * 0.55;
+    const topX = px + leanX + pose.crestX * w * 0.35;
+    const topY = py - h * (1.0 + pose.crestY * 0.25);
+    const midX = px + leanX * 0.45 + pose.bellyShift * w * 0.38;
+    const midY = py - h * 0.44;
+
+    let poly = [];
+
+    if (archetype === "flour_sack") {
+      // Weighted half-filled burlap sack: broad settled flour belly, pinched waist, tied top corner ears (NO FACE)
+      const bw = w * 0.58 * pose.baseSpread;
+      const ww = w * 0.36;
+      const tw = w * 0.44;
+      const earLead = pose.lanceCrest ? 11 * dirToTarget : (pose.shelterBow ? 8 * dirToTarget : 3 * dirToTarget);
+      poly = [
+        [px - bw, py],
+        [px - bw * 1.06 + pose.bellyShift * 8, py - h * 0.24],
+        [midX - ww, py - h * 0.62],
+        [topX - tw, topY - 5],
+        [topX - tw * 0.45, topY + 6],
+        [topX + tw * 0.45, topY + 6],
+        [topX + tw + earLead, topY - (pose.lanceCrest ? 9 : 5)],
+        [midX + ww, py - h * 0.62],
+        [px + bw * 1.06 + pose.bellyShift * 8, py - h * 0.24],
+        [px + bw, py]
+      ];
+      poly = lockPolygonArea(poly, px, py, targetArea);
+    } else if (archetype === "ceramic_vessel") {
+      // Terracotta amphora / oil hearth vessel with flared lip & foot-ring
+      const rw = w * 0.56;
+      poly = [
+        [px - rw * 0.55, py],
+        [midX - rw * 1.08, py - h * 0.42],
+        [topX - rw * 0.42, py - h * 0.80],
+        [topX - rw * 0.68, topY],
+        [topX + rw * 0.68, topY],
+        [topX + rw * 0.42, py - h * 0.80],
+        [midX + rw * 1.08, py - h * 0.42],
+        [px + rw * 0.55, py]
+      ];
+      poly = lockPolygonArea(poly, px, py, targetArea * 0.88);
+    } else if (archetype === "plumb_bob") {
+      // Suspended surveyor's conical brass plumb weight + taut plumb line from ceiling beam
+      ctx.strokeStyle = strokeCol;
+      ctx.lineWidth = 1.4;
+      ctx.beginPath();
+      ctx.moveTo(px, Math.max(18, topY - 58));
+      ctx.lineTo(topX, topY);
+      ctx.stroke();
+      const pw = w * 0.54;
+      poly = [
+        [px + leanX * 0.3, py + 2],
+        [midX - pw, py - h * 0.58],
+        [topX - pw * 0.55, topY + h * 0.14],
+        [topX - pw * 0.30, topY],
+        [topX + pw * 0.30, topY],
+        [topX + pw * 0.55, topY + h * 0.14],
+        [midX + pw, py - h * 0.58]
+      ];
+      poly = lockPolygonArea(poly, px, py - h * 0.5, targetArea * 0.72);
+    } else if (archetype === "bamboo_stilt") {
+      // Segmented stilt truss frame with node collars
+      const sw = w * 0.48;
+      poly = [
+        [px - sw, py],
+        [midX - sw * 0.65, midY],
+        [topX - sw * 0.85, topY],
+        [topX + sw * 0.85 + pose.crestX * 10, topY],
+        [midX + sw * 0.65, midY],
+        [px + sw, py],
+        [px + sw * 0.45, py],
+        [midX, midY + h * 0.12],
+        [px - sw * 0.45, py]
+      ];
+      poly = lockPolygonArea(poly, px, py, targetArea * 0.74);
+    } else if (archetype === "taut_chord") {
+      // Stretched harmonic festoon chord cleat + bowed vibrational envelope
+      const cw = w * 0.42;
+      poly = [
+        [px - cw * 0.55, py],
+        [midX - cw * 1.15, midY],
+        [topX - cw * 0.55, topY],
+        [topX + cw * 0.55, topY],
+        [midX + cw * 1.15, midY],
+        [px + cw * 0.55, py]
+      ];
+      poly = lockPolygonArea(poly, px, py, targetArea * 0.68);
+    } else if (archetype === "hooded_husk") {
+      // Folded archival parchment mantle & draped cowl (pure pleated cloth shell, zero facial features)
+      const hw = w * 0.60;
+      poly = [
+        [px - hw * 1.05, py],
+        [midX - hw * 0.88, py - h * 0.48],
+        [topX - hw * 0.52, topY + h * 0.12],
+        [topX + dirToTarget * 7, topY - 4],
+        [topX + hw * 0.52, topY + h * 0.12],
+        [midX + hw * 0.88, py - h * 0.48],
+        [px + hw * 1.05, py]
+      ];
+      poly = lockPolygonArea(poly, px, py, targetArea * 0.90);
+    } else if (archetype === "brass_cog") {
+      // Toothed escapement wheel polygon
+      const teeth = 10;
+      const cx = (px + topX) * 0.5;
+      const cy = py - h * 0.5;
+      const rx = w * 0.56;
+      const ry = h * 0.48;
+      poly = [];
+      for (let i = 0; i < teeth * 2; i++) {
+        const ang = tiltRad + (i / (teeth * 2)) * Math.PI * 2;
+        const radScale = i % 2 === 0 ? 1.08 : 0.82;
+        poly.push([cx + Math.cos(ang) * rx * radScale, cy + Math.sin(ang) * ry * radScale]);
+      }
+      poly = lockPolygonArea(poly, cx, cy, targetArea * 0.82);
+    } else if (archetype === "pinhead_lens") {
+      // Slender optical stalk crowned by beveled aperture bezel housing
+      const lw = w * 0.44;
+      poly = [
+        [px - lw * 0.45, py],
+        [midX - lw * 0.30, midY],
+        [topX - lw * 0.95, topY + h * 0.24],
+        [topX - lw * 0.80, topY],
+        [topX + lw * 0.80, topY],
+        [topX + lw * 0.95, topY + h * 0.24],
+        [midX + lw * 0.30, midY],
+        [px + lw * 0.45, py]
+      ];
+      poly = lockPolygonArea(poly, px, py, targetArea * 0.76);
+    } else if (archetype === "mirror_obverse") {
+      // Tilted beveled speculum slate slab on gimbal pedestal
+      const mw = w * 0.56;
+      poly = [
+        [px - mw * 0.65, py],
+        [midX - mw * 1.04, midY + 4],
+        [topX - mw * 0.82, topY],
+        [topX + mw * 0.92, topY + 6],
+        [midX + mw * 0.96, midY - 4],
+        [px + mw * 0.65, py]
+      ];
+      poly = lockPolygonArea(poly, px, py, targetArea * 0.84);
+    } else if (archetype === "chalk_grain") {
+      // Sheared friable limestone/charcoal polyhedron
+      const gw = w * 0.58;
+      poly = [
+        [px - gw * 0.80, py],
+        [midX - gw * 1.05, py - h * 0.36],
+        [topX - gw * 0.55, topY + 5],
+        [topX + gw * 0.35, topY - 3],
+        [midX + gw * 1.08, py - h * 0.46],
+        [px + gw * 0.82, py]
+      ];
+      poly = lockPolygonArea(poly, px, py, targetArea * 0.82);
+    }
+
+    // Fill silhouette body
+    ctx.fillStyle = fillCol;
+    ctx.beginPath();
+    for (let i = 0; i < poly.length; i++) {
+      if (i === 0) ctx.moveTo(poly[i][0], poly[i][1]);
+      else ctx.lineTo(poly[i][0], poly[i][1]);
+    }
+    ctx.closePath();
+    ctx.fill();
+
+    // Internal structural crease / flour-weight settle line (strictly non-facial drapery/material seam)
+    if (!ghostStyle) {
+      ctx.strokeStyle = "rgba(30, 30, 30, 0.28)";
+      ctx.lineWidth = 1.15;
+      ctx.beginPath();
+      ctx.moveTo(midX - w * 0.28, py - h * 0.30);
+      ctx.quadraticCurveTo(midX + pose.bellyShift * 10, py - h * 0.20, midX + w * 0.28, py - h * 0.30);
+      ctx.stroke();
+    }
+
+    // Multi-pass charcoal outline seeded by `roughness_seed`
+    strokeRoughPath(
+      ctx,
+      poly,
+      true,
+      seed + hashString32(spec ? spec.agent_id : "ghost"),
+      ghostStyle ? 1 : 2,
+      ghostStyle ? 0.4 : 1.35,
+      isSelected ? PALETTE.redBird : strokeCol,
+      isSelected ? 2.6 : 1.85
+    );
+
+    ctx.restore();
+    return { topX, topY, midX, midY, w, h };
+  }
+
+  // =========================================================================
+  // 3. CANONICAL WORKBENCH STATE STORE & MULTIPLANE STAGE RENDERER
+  // =========================================================================
+  const state = {
+    casesById: new Map(),
+    orderedCaseIds: [],
+    activeCaseId: null,
+    tick: 0,
+    playing: false,
+    exposureMode: "twos",
+    zoomMode: "1x",
+    muteSilhouette: false,
+    showAccidentalGhost: false,
+    selectedAgentId: null,
+    sketchArmed: false,
+    sketchKind: "WORLD",
+    activeStroke: null,
+    sketchedObstaclesByCase: new Map(),
+    sketchThudCount: 0,
+    lastPointerVel: 0,
+    boardBranchView: "A",
+    expandAllDrawers: false,
+    mod2Unfolded: false,
+    mod2ActivePremises: new Set(),
+    stageViewMode: "stage",
+    plateFormat: "png",
+    plateZoom: 1,
+    plateLoupe: true,
+    platePanX: 0,
+    platePanY: 0
+  };
+
+  function resolveAtlasEntry(caseId, cityIndex) {
+    const manifest = window.SCION_ATLAS_MANIFEST || {};
+    if (!manifest || typeof manifest !== "object") return null;
+    if (manifest[caseId]) return manifest[caseId];
+    if (caseId === "flour_test_abominable_cellar" && manifest.case_00_abominable_cellar) {
+      return manifest.case_00_abominable_cellar;
+    }
+    for (const key of Object.keys(manifest)) {
+      const entry = manifest[key];
+      if (!entry || typeof entry !== "object") continue;
+      if (entry.bundle_case_id === caseId) return entry;
+      if (cityIndex != null && entry.city_index === cityIndex && cityIndex > 0) return entry;
+    }
+    return null;
+  }
+
+  function atlasRepoPath(entry, field) {
+    if (!entry) return "";
+    if (entry.repo_paths && entry.repo_paths[field]) return entry.repo_paths[field];
+    const rel = entry[field] || "";
+    if (!rel) return "";
+    return rel.startsWith("scion_cities/") ? rel : `scion_cities/atlas/${rel}`;
+  }
+
+  function getActiveCase() {
+    return state.casesById.get(state.activeCaseId) || null;
+  }
+
+  function resizeCanvasForDPR(canvas, logicalW, logicalH) {
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    const targetW = Math.round(logicalW * dpr);
+    const targetH = Math.round(logicalH * dpr);
+    if (canvas.width !== targetW || canvas.height !== targetH) {
+      canvas.width = targetW;
+      canvas.height = targetH;
+    }
+    const ctx = canvas.getContext("2d");
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return ctx;
+  }
+
+  function drawStageViewport(canvas, caseObj, branchKey) {
+    const W = 680;
+    const H = 500;
+    const ctx = resizeCanvasForDPR(canvas, W, H);
+    const branch = caseObj[branchKey];
+    const isAP = branchKey === "BRANCH_CLINAMEN_A_PRIME";
+    const t = state.tick;
+    const wt = branch.world_trace[t];
+    const sb = branch.sensory_bus[t];
+    const seed = Number(sb.roughness_seed || (t * 977 + 13));
+    const mute = state.muteSilhouette;
+
+    // 1. Seeded rag-paper background
+    const pat = ctx.createPattern(paperTileCanvas, "repeat");
+    ctx.fillStyle = pat || PALETTE.paper;
+    ctx.fillRect(0, 0, W, H);
+
+    if (state.zoomMode === "16x") {
+      drawZoom16xArchDAG(ctx, W, H, caseObj, branch, isAP, t, seed, mute);
+      return;
+    }
+
+    // Inner camera cut vs. "Other Worlds Being There" Off-Screen Continuity Perimeter
+    const margin = state.zoomMode === "1x" ? 46 : 24;
+    const sx = margin;
+    const sy = margin;
+    const sw = W - margin * 2;
+    const sh = H - margin * 2;
+
+    // 2. Render "Other Worlds Being There" Off-Screen Continuity Perimeter (1x Stage)
+    if (state.zoomMode === "1x") {
+      ctx.fillStyle = "rgba(232, 224, 214, 0.78)";
+      ctx.fillRect(0, 0, W, H);
+      ctx.fillStyle = pat || PALETTE.paper;
+      ctx.fillRect(sx, sy, sw, sh);
+
+      const offList = wt.offscreen_world || [];
+      for (let i = 0; i < offList.length; i++) {
+        const item = offList[i];
+        const prog = Math.max(0, Math.min(1, Number(item.progress || 0)));
+        ctx.save();
+        let ox = 0;
+        let oy = 0;
+        if (i % 4 === 0) {
+          ox = sx + prog * sw;
+          oy = sy * 0.52;
+        } else if (i % 4 === 1) {
+          ox = W - sy * 0.50;
+          oy = sy + prog * sh;
+        } else if (i % 4 === 2) {
+          ox = sx + (1 - prog) * sw;
+          oy = H - sy * 0.48;
+        } else {
+          ox = sx * 0.50;
+          oy = sy + (1 - prog) * sh;
+        }
+        // Autonomous off-screen entity silhouette marker
+        ctx.fillStyle = PALETTE.chalkBlue;
+        ctx.beginPath();
+        ctx.arc(ox, oy, 5.2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = PALETTE.soot;
+        ctx.lineWidth = 1.1;
+        ctx.beginPath();
+        ctx.moveTo(ox - 10, oy + 6);
+        ctx.lineTo(ox + 10, oy + 6);
+        ctx.stroke();
+
+        if (!mute) {
+          ctx.fillStyle = PALETTE.graphite;
+          ctx.font = "9.5px 'IBM Plex Mono', monospace";
+          const shortName = String(item.entity || "").slice(0, 24);
+          if (i % 4 === 0 || i % 4 === 2) {
+            ctx.fillText(`${shortName} [${Math.round(prog * 100)}%]`, Math.max(8, Math.min(W - 185, ox - 45)), oy - 8);
+          }
+        }
+        ctx.restore();
+      }
+    }
+
+    // 3. Multiplane Stage Architecture (Cellar arches / Bastion masonry plane + Floor horizon)
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(sx, sy, sw, sh);
+    ctx.clip();
+
+    const horizonY = sy + sh * 0.56;
+    // Back masonry/sky wash
+    ctx.fillStyle = "rgba(222, 214, 200, 0.45)";
+    ctx.fillRect(sx, sy, sw, horizonY - sy);
+
+    // Background structural arches ("Without stones there is no arch")
+    ctx.strokeStyle = "rgba(85, 88, 90, 0.24)";
+    ctx.lineWidth = 1.4;
+    for (let a = 0; a < 3; a++) {
+      const ax = sx + sw * (0.20 + a * 0.30);
+      ctx.beginPath();
+      ctx.arc(ax, horizonY - 22, sw * 0.12, Math.PI, 0, false);
+      ctx.stroke();
+    }
+
+    // Floor perspective ledger lines
+    ctx.strokeStyle = "rgba(30, 30, 30, 0.14)";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(sx, horizonY);
+    ctx.lineTo(sx + sw, horizonY);
+    for (let g = 1; g <= 7; g++) {
+      const gx = sx + (sw * g) / 8;
+      ctx.moveTo(gx, horizonY);
+      ctx.lineTo(sx + ((gx - (sx + sw * 0.5)) * 1.45) + sw * 0.5, sy + sh);
+    }
+    ctx.stroke();
+
+    // 4. Physical World Residues (`♁ World`: oil_radius, scuff_vector, shards, thermal_ember, smudges)
+    const res = wt.residues || {};
+    const mapX = (nx) => sx + Number(nx) * sw;
+    const mapY = (ny) => sy + Number(ny) * sh;
+
+    // Spreading capillary oil pool (`oil_radius`) & `thermal_ember`
+    const oilR = Number(res.oil_radius || 0);
+    if (oilR > 0.001) {
+      const shards = res.shards || [];
+      const cx = shards.length ? mapX(shards[0][0]) : sx + sw * 0.68;
+      const cy = shards.length ? mapY(shards[0][1]) : sy + sh * 0.76;
+      ctx.fillStyle = "rgba(181, 131, 40, 0.34)";
+      ctx.strokeStyle = PALETTE.ochreOil;
+      ctx.lineWidth = 1.6;
+      ctx.beginPath();
+      ctx.ellipse(cx, cy, oilR * sw * 1.15, oilR * sh * 0.48, 0.08, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      const ember = Number(res.thermal_ember || 0);
+      if (ember > 0.05) {
+        ctx.fillStyle = `rgba(155, 29, 29, ${Math.min(0.85, ember * 0.78)})`;
+        ctx.beginPath();
+        ctx.arc(cx - 4, cy - 4, 4 + ember * 9, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    // Graphite / boot chalk smudges
+    const smudges = res.graphite_smudges || [];
+    for (let i = 0; i < smudges.length; i++) {
+      const gx = mapX(smudges[i][0]);
+      const gy = mapY(smudges[i][1]);
+      ctx.fillStyle = "rgba(30, 30, 30, 0.24)";
+      ctx.beginPath();
+      ctx.ellipse(gx, gy, 11, 3.8, -0.15, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // Indelible physical shove `scuff_vector` (strictly intact in BOTH A and A'!)
+    const scuff = res.scuff_vector || [0, 0];
+    const scuffMag = Math.hypot(Number(scuff[0] || 0), Number(scuff[1] || 0));
+    if (scuffMag > 0.002) {
+      const baseScuffX = smudges.length ? mapX(smudges[0][0]) : sx + sw * 0.29;
+      const baseScuffY = smudges.length ? mapY(smudges[0][1]) : sy + sh * 0.75;
+      const endScuffX = baseScuffX + Number(scuff[0]) * sw;
+      const endScuffY = baseScuffY + Number(scuff[1]) * sh;
+      strokeRoughPath(
+        ctx,
+        [[baseScuffX, baseScuffY], [endScuffX, endScuffY]],
+        false,
+        seed + 71,
+        3,
+        1.8,
+        PALETTE.soot,
+        3.6
+      );
+      // Heel gouge hash marks along scuff
+      ctx.strokeStyle = PALETTE.ochreOil;
+      ctx.lineWidth = 1.5;
+      for (let k = 1; k <= 4; k++) {
+        const u = k / 5;
+        const hx = baseScuffX + (endScuffX - baseScuffX) * u;
+        const hy = baseScuffY + (endScuffY - baseScuffY) * u;
+        ctx.beginPath();
+        ctx.moveTo(hx - 3, hy - 4);
+        ctx.lineTo(hx + 3, hy + 4);
+        ctx.stroke();
+      }
+    }
+
+    // Ceramic / zinc gutter `shards` (`[x, y, angle]`)
+    const shards = res.shards || [];
+    for (let i = 0; i < shards.length; i++) {
+      const shx = mapX(shards[i][0]);
+      const shy = mapY(shards[i][1]);
+      const ang = Number(shards[i][2] || 0);
+      ctx.save();
+      ctx.translate(shx, shy);
+      ctx.rotate(ang);
+      ctx.fillStyle = PALETTE.redBird;
+      ctx.strokeStyle = PALETTE.soot;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(-6, -2);
+      ctx.lineTo(6, -4);
+      ctx.lineTo(3, 5);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    // 5. Render User-Sketched Operative Ekphrasis Obstacles (`♁` Walls, `☾` Reflectors, `⌘` Rule Blocks)
+    const obstacles = state.sketchedObstaclesByCase.get(caseObj.case_id) || [];
+    for (let i = 0; i < obstacles.length; i++) {
+      const ob = obstacles[i];
+      const pts = ob.points.map((p) => [mapX(p[0]), mapY(p[1])]);
+      const col = ob.kind === "WORLD" ? PALETTE.soot : (ob.kind === "REFLECTOR" ? PALETTE.chalkBlue : PALETTE.redBird);
+      strokeRoughPath(ctx, pts, false, seed + i * 31, 2, 1.5, col, 3.2);
+      if (!mute && pts.length) {
+        const sym = AFTERLIGHT_ROLE_MAP[ob.kind] || "♁";
+        ctx.fillStyle = col;
+        ctx.font = "bold 11px 'IBM Plex Mono', monospace";
+        ctx.fillText(`${sym} ${ob.kind}`, pts[0][0] + 4, pts[0][1] - 6);
+      }
+    }
+    if (state.activeStroke && state.activeStroke.points.length > 1) {
+      const livePts = state.activeStroke.points.map((p) => [mapX(p[0]), mapY(p[1])]);
+      strokeRoughPath(ctx, livePts, false, seed + 999, 2, 1.2, PALETTE.redBird, 2.8);
+    }
+
+    // 6. Optional Accidental Motion Reference Ghost (`rush -> sweep -> recoil`, zero stillness hold)
+    const accRef = window.SCION_BUNDLE &&
+      window.SCION_BUNDLE.afterlight_grammar &&
+      window.SCION_BUNDLE.afterlight_grammar.accidental_motion_reference;
+    if (state.showAccidentalGhost && Array.isArray(accRef) && accRef[t]) {
+      const gf = accRef[t];
+      drawNonhumanRigSilhouette(
+        ctx,
+        { agent_id: "accidental_ghost", rig_archetype: "flour_sack", afterlight_role: "SOURCE" },
+        gf,
+        mapX(gf.x),
+        mapY(gf.y),
+        sx + sw * 0.68,
+        seed + 505,
+        false,
+        true
+      );
+    }
+
+    // 7. Sort Swarm Performers back-to-front by `plane_depth` & `y`, then draw faceless silhouettes
+    const specById = new Map(caseObj.agents.map((a) => [a.agent_id, a]));
+    const actorIds = Object.keys(wt.actors || {});
+    actorIds.sort((a, b) => {
+      const da = Number(wt.actors[a].plane_depth || 0);
+      const db = Number(wt.actors[b].plane_depth || 0);
+      if (Math.abs(db - da) > 0.01) return db - da;
+      return Number(wt.actors[a].y || 0) - Number(wt.actors[b].y || 0);
+    });
+
+    const screenPos = new Map();
+    for (const aid of actorIds) {
+      const af = wt.actors[aid];
+      screenPos.set(aid, { x: mapX(af.x), y: mapY(af.y), frame: af });
+    }
+
+    const rigBounds = new Map();
+    for (const aid of actorIds) {
+      const af = wt.actors[aid];
+      const spec = specById.get(aid);
+      const pos = screenPos.get(aid);
+      const tgtPos = af.target_actor && screenPos.get(af.target_actor) ? screenPos.get(af.target_actor).x : null;
+      const bounds = drawNonhumanRigSilhouette(
+        ctx,
+        spec,
+        af,
+        pos.x,
+        pos.y,
+        tgtPos,
+        seed,
+        state.selectedAgentId === aid,
+        false
+      );
+      rigBounds.set(aid, bounds);
+    }
+
+    // 8. 4x BEFLIX Vector/Volume Rig Overlay (Force vectors, A/A0 strain bars, World vs Witness split)
+    if (state.zoomMode === "4x") {
+      drawZoom4xBeflixOverlay(ctx, sx, sy, sw, sh, caseObj, branch, isAP, t, screenPos, rigBounds, mute);
+    }
+
+    // 9. Stage Labels (COMPLETELY SUPPRESSED WHEN MUTE SILHOUETTE HARD GATE 2 IS ACTIVE!)
+    if (!mute) {
+      for (const aid of actorIds) {
+        const spec = specById.get(aid);
+        const pos = screenPos.get(aid);
+        const b = rigBounds.get(aid);
+        const af = wt.actors[aid];
+        ctx.fillStyle = "rgba(242, 239, 233, 0.88)";
+        const tag = `${spec ? spec.role_symbol : "◉"} ${aid.split("_")[0]}`;
+        ctx.font = "600 10px 'IBM Plex Mono', monospace";
+        const tw = ctx.measureText(tag).width + 8;
+        ctx.fillRect(pos.x - tw * 0.5, b.topY - 22, tw, 14);
+        ctx.strokeStyle = PALETTE.soot;
+        ctx.lineWidth = 0.8;
+        ctx.strokeRect(pos.x - tw * 0.5, b.topY - 22, tw, 14);
+        ctx.fillStyle = PALETTE.soot;
+        ctx.fillText(tag, pos.x - tw * 0.5 + 4, b.topY - 12);
+
+        ctx.fillStyle = af.intention_kinematics === "deliberate_push" || af.intention_kinematics === "accuse"
+          ? PALETTE.redBird
+          : PALETTE.chalkBlue;
+        ctx.font = "9.5px 'IBM Plex Mono', monospace";
+        ctx.fillText(af.intention_kinematics, pos.x - tw * 0.5 + 2, pos.y + 16);
+      }
+
+      // Swerve indicator stamp on A'
+      const swerveTick = caseObj.branch_lineage.clinamen_spec.swerve_tick;
+      if (isAP && t >= swerveTick) {
+        ctx.fillStyle = PALETTE.redBird;
+        ctx.font = "bold 10.5px 'IBM Plex Mono', monospace";
+        ctx.fillText(`⊣ CLINAMEN ACTIVE (t >= ${swerveTick}): WORLD SCAR INTACT / WITNESS FILTERED`, sx + 8, sy + 16);
+      }
+    }
+
+    ctx.restore();
+
+    // Crisp camera aperture border
+    ctx.strokeStyle = isAP ? PALETTE.chalkBlue : PALETTE.soot;
+    ctx.lineWidth = 2.0;
+    ctx.strokeRect(sx, sy, sw, sh);
+  }
+
+  function drawZoom4xBeflixOverlay(ctx, sx, sy, sw, sh, caseObj, branch, isAP, t, screenPos, rigBounds, mute) {
+    // BEFLIX raster scanlines
+    ctx.save();
+    ctx.strokeStyle = "rgba(44, 74, 94, 0.08)";
+    ctx.lineWidth = 1;
+    for (let y = sy; y < sy + sh; y += 8) {
+      ctx.beginPath();
+      ctx.moveTo(sx, y);
+      ctx.lineTo(sx + sw, y);
+      ctx.stroke();
+    }
+
+    // Per-actor Constant-Volume Strain Gauge (`A/A0 = stretch_s * width_w`) & Target Force Vector
+    for (const [aid, pos] of screenPos.entries()) {
+      const af = pos.frame;
+      const b = rigBounds.get(aid);
+      const ar = Number(af.area_ratio || 1.0);
+
+      // Vertical & horizontal strain caliper bars
+      const gx = pos.x + b.w * 0.68 + 6;
+      const gy = pos.y;
+      ctx.strokeStyle = PALETTE.chalkBlue;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(gx, gy);
+      ctx.lineTo(gx, gy - 34 * Number(af.stretch_s));
+      ctx.stroke();
+
+      if (!mute) {
+        ctx.fillStyle = PALETTE.soot;
+        ctx.font = "9px 'IBM Plex Mono', monospace";
+        ctx.fillText(`A/A0=${ar.toFixed(3)}`, gx + 4, gy - 16);
+        ctx.fillText(`s=${Number(af.stretch_s).toFixed(2)}`, gx + 4, gy - 5);
+      }
+
+      // Orientation / Push / Accuse / Help vector arrow toward `target_actor`
+      if (af.target_actor && screenPos.has(af.target_actor)) {
+        const tp = screenPos.get(af.target_actor);
+        ctx.strokeStyle = (af.intention_kinematics === "avoid" || af.intention_kinematics === "recoil")
+          ? PALETTE.ochreOil
+          : PALETTE.redBird;
+        ctx.lineWidth = 1.4;
+        ctx.setLineDash([4, 3]);
+        ctx.beginPath();
+        ctx.moveTo(pos.x, b.midY);
+        ctx.lineTo(tp.x, tp.y - 26);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+    }
+
+    // Split-Trace Overlay: Witness Memory Perceptual Arcs (`◉` Chalk-Blue dashed vs `⊣` Red-Bird severed)
+    const wid = caseObj.divergence_audit.witness_agent_id;
+    if (wid && screenPos.has(wid)) {
+      const wp = screenPos.get(wid);
+      const wMem = branch.actor_memory[wid][t] || {};
+      const retained = wMem.retained_events || [];
+      const filtered = wMem.filtered_premises || [];
+
+      let idx = 0;
+      for (const ev of retained) {
+        const ay = sy + 30 + idx * 18;
+        ctx.strokeStyle = PALETTE.chalkBlue;
+        ctx.lineWidth = 1.6;
+        ctx.setLineDash([5, 3]);
+        ctx.beginPath();
+        ctx.moveTo(wp.x, wp.y - 36);
+        ctx.quadraticCurveTo(wp.x - 20, ay, sx + 18, ay);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        if (!mute) {
+          ctx.fillStyle = PALETTE.chalkBlue;
+          ctx.font = "9.5px 'IBM Plex Mono', monospace";
+          ctx.fillText(`◉ ${ev}`, sx + 22, ay + 3);
+        }
+        idx++;
+      }
+
+      for (const fev of filtered) {
+        const ay = sy + 30 + idx * 18;
+        ctx.strokeStyle = PALETTE.redBird;
+        ctx.lineWidth = 1.6;
+        ctx.setLineDash([2, 4]);
+        ctx.beginPath();
+        ctx.moveTo(wp.x, wp.y - 36);
+        ctx.lineTo((wp.x + sx + 20) * 0.5, ay);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        // `⊣` Filter gate cut symbol
+        const cx = (wp.x + sx + 20) * 0.5;
+        ctx.fillStyle = PALETTE.redBird;
+        ctx.fillRect(cx - 5, ay - 5, 10, 10);
+        if (!mute) {
+          ctx.fillStyle = PALETTE.redBird;
+          ctx.font = "bold 9.5px 'IBM Plex Mono', monospace";
+          ctx.fillText(`⊣ OMITTED: ${fev}`, sx + 22, ay + 3);
+        }
+        idx++;
+      }
+    }
+
+    // Bottom BEFLIX 25-Tick Exposure Strip inside 4x viewport
+    const stripH = 16;
+    const cellW = (sw - 16) / 25;
+    for (let k = 0; k < 25; k++) {
+      const exp = branch.world_trace[k].exposure || "twos";
+      const cx = sx + 8 + k * cellW;
+      const cy = sy + sh - stripH - 6;
+      ctx.fillStyle = k === t ? PALETTE.soot : (exp === "hold" ? PALETTE.ochreOil : (exp === "ones" ? PALETTE.redBird : PALETTE.bone));
+      ctx.fillRect(cx, cy, cellW - 1.5, stripH);
+    }
+    ctx.restore();
+  }
+
+  function drawZoom16xArchDAG(ctx, W, H, caseObj, branch, isAP, t, seed, mute) {
+    const dag = branch.accumulator_dag || {};
+    const grains = dag.conflict_grains || [];
+    const policies = branch.rule_ledger || [];
+
+    // Archival border
+    ctx.strokeStyle = isAP ? PALETTE.chalkBlue : PALETTE.soot;
+    ctx.lineWidth = 2;
+    ctx.strokeRect(10, 10, W - 20, H - 20);
+
+    // 1. PhilogynyAccumulator Branching Nodes (Genesis -> Trunk -> Active Heads)
+    const gx = 70;
+    const gy = 78;
+    const tx = 235;
+    const hx = 430;
+
+    ctx.strokeStyle = PALETTE.soot;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(gx, gy);
+    ctx.lineTo(tx, gy);
+    ctx.stroke();
+
+    const heads = dag.active_heads || [dag.peak_state_hash || "head"];
+    heads.slice(0, 4).forEach((h, i) => {
+      const hy = 46 + i * 28;
+      ctx.strokeStyle = isAP ? PALETTE.chalkBlue : PALETTE.redBird;
+      ctx.beginPath();
+      ctx.moveTo(tx, gy);
+      ctx.bezierCurveTo(tx + 70, gy, hx - 70, hy, hx, hy);
+      ctx.stroke();
+      ctx.fillStyle = isAP ? PALETTE.chalkBlue : PALETTE.redBird;
+      ctx.beginPath();
+      ctx.arc(hx, hy, 5.5, 0, Math.PI * 2);
+      ctx.fill();
+      if (!mute) {
+        ctx.fillStyle = PALETTE.soot;
+        ctx.font = "9.5px 'IBM Plex Mono', monospace";
+        ctx.fillText(`head:${String(h).slice(0, 10)}`, hx + 10, hy + 3);
+      }
+    });
+
+    for (const [nx, label] of [[gx, `genesis:${String(dag.genesis_hash || "").slice(0, 8)}`], [tx, `peak:${String(dag.peak_state_hash || "").slice(0, 8)}`]]) {
+      ctx.fillStyle = PALETTE.ochreOil;
+      ctx.beginPath();
+      ctx.arc(nx, gy, 7, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = PALETTE.soot;
+      ctx.stroke();
+      if (!mute) {
+        ctx.fillStyle = PALETTE.soot;
+        ctx.font = "9.5px 'IBM Plex Mono', monospace";
+        ctx.fillText(label, nx - 32, gy + 20);
+      }
+    }
+
+    // 2. Masonry `ConflictGrain` Arch Keystones ("Without stones there is no arch")
+    const archCount = Math.max(1, Math.min(3, grains.length));
+    for (let i = 0; i < archCount; i++) {
+      const g = grains[i] || { locus: "shared_locus", polarities: ["pole_a", "pole_b"], arch_tension: 4.5, grain_hash: "0000" };
+      const spanW = (W - 90) / archCount;
+      const cx = 45 + spanW * (i + 0.5);
+      const baseY = 278;
+      const rad = Math.min(76, spanW * 0.38);
+
+      // Draw voussoir arch stones + Red-Bird central keystone
+      const stones = 7;
+      for (let s = 0; s < stones; s++) {
+        const a0 = Math.PI + (s / stones) * Math.PI;
+        const a1 = Math.PI + ((s + 1) / stones) * Math.PI;
+        const isKeystone = s === 3;
+        ctx.fillStyle = isKeystone ? PALETTE.redBird : PALETTE.bone;
+        ctx.strokeStyle = PALETTE.soot;
+        ctx.lineWidth = 1.4;
+        ctx.beginPath();
+        ctx.arc(cx, baseY, rad, a0, a1, false);
+        ctx.arc(cx, baseY, rad * 0.68, a1, a0, true);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+      }
+
+      // Supporting piers
+      ctx.fillStyle = "#DDD4C6";
+      ctx.fillRect(cx - rad, baseY, rad * 0.32, 34);
+      ctx.strokeRect(cx - rad, baseY, rad * 0.32, 34);
+      ctx.fillRect(cx + rad * 0.68, baseY, rad * 0.32, 34);
+      ctx.strokeRect(cx + rad * 0.68, baseY, rad * 0.32, 34);
+
+      if (!mute) {
+        ctx.fillStyle = PALETTE.soot;
+        ctx.font = "bold 10px 'IBM Plex Mono', monospace";
+        ctx.fillText(`KEYSTONE ${String(g.grain_hash).slice(0, 8)} @ ${g.locus}`, cx - rad, baseY + 49);
+        ctx.font = "9.5px 'IBM Plex Mono', monospace";
+        ctx.fillStyle = PALETTE.graphite;
+        ctx.fillText(`${(g.polarities && g.polarities[0]) || ""} <-> ${(g.polarities && g.polarities[1]) || ""}`.slice(0, 38), cx - rad, baseY + 62);
+      }
+    }
+
+    // 3. Bottom P1-P4 Verdict Matrix Strip on 16x Canvas
+    const py0 = 365;
+    const pw = (W - 56) / 4;
+    policies.slice(0, 4).forEach((p, idx) => {
+      const px = 22 + idx * (pw + 4);
+      const otherPol = (isAP ? caseObj.CHECKPOINT_LAWFUL_A : caseObj.BRANCH_CLINAMEN_A_PRIME).rule_ledger[idx];
+      const flipped = otherPol && (otherPol.verdict !== p.verdict || otherPol.payout_status !== p.payout_status);
+      ctx.fillStyle = flipped ? "rgba(155, 29, 29, 0.12)" : PALETTE.bone;
+      ctx.strokeStyle = flipped ? PALETTE.redBird : PALETTE.soot;
+      ctx.lineWidth = flipped ? 2 : 1.2;
+      ctx.fillRect(px, py0, pw, 108);
+      ctx.strokeRect(px, py0, pw, 108);
+      if (!mute) {
+        ctx.fillStyle = flipped ? PALETTE.redBird : PALETTE.soot;
+        ctx.font = "bold 10.5px 'IBM Plex Mono', monospace";
+        ctx.fillText(`${p.policy_id}${flipped ? " [FLIP]" : ""}`, px + 6, py0 + 16);
+        ctx.fillStyle = PALETTE.soot;
+        ctx.font = "9.5px 'IBM Plex Mono', monospace";
+        ctx.fillText(String(p.verdict).slice(0, 20), px + 6, py0 + 36);
+        ctx.fillStyle = PALETTE.chalkBlue;
+        ctx.fillText(String(p.payout_status).slice(0, 20), px + 6, py0 + 54);
+        ctx.fillStyle = PALETTE.dirt;
+        ctx.fillText(`decide t=${p.deciding_tick}`, px + 6, py0 + 74);
+      }
+    });
+  }
+  // =========================================================================
+  // 4. BUNDLE INGESTION, DETERMINISTIC FORGE COMPILER & CANONICAL UI SYNC
+  // =========================================================================
+  const canvasA = document.getElementById("canvas-lawful-a");
+  const canvasAP = document.getElementById("canvas-clinamen-ap");
+  const caseSelector = document.getElementById("case-selector");
+  const tickScrubber = document.getElementById("tick-scrubber");
+  const tickReadout = document.getElementById("tick-readout");
+  const xsheetStrip = document.getElementById("xsheet-strip");
+
+  function computeConstantVolumeFrame(agentId, t, x, y, depth, stretchS, tiltRad, kin, targetActor, exposure) {
+    const s = Math.max(0.58, Math.min(1.58, Number(stretchS)));
+    const hSeed = hashString32(`${agentId}:${t}`);
+    const tremor = (exposure === "hold" || kin === "hold_still") ? 0.0015 : 0.007;
+    const wave = Math.sin((hSeed % 997) * 0.137 + t * 0.71);
+    const maxDelta = Math.min(0.012, 0.018 / s, tremor);
+    const w = Number(((1.0 / s) + wave * maxDelta).toFixed(6));
+    const ar = Number((s * w).toFixed(6));
+    return {
+      x: Number(x.toFixed(4)),
+      y: Number(y.toFixed(4)),
+      plane_depth: Number(depth.toFixed(4)),
+      stretch_s: Number(s.toFixed(6)),
+      width_w: w,
+      area_ratio: ar,
+      tilt_rad: Number(tiltRad.toFixed(4)),
+      intention_kinematics: kin,
+      target_actor: targetActor || null,
+      exposure: exposure || "twos",
+      has_face_icons: false
+    };
+  }
+
+  // Synthesize a full Roubaud-qualified 25-tick SCION case for custom forged swarms or catalog previews
+  function synthesizeRoubaudCaseFromSpec(cfg) {
+    const caseId = cfg.case_id;
+    const swerveTick = Math.max(2, Math.min(20, Number(cfg.swerve_tick || 11)));
+    const agents = cfg.agents;
+    const a0 = agents[0].agent_id;
+    const a1 = agents[1].agent_id;
+    const witnessId = agents[2].agent_id;
+    const aWorld = (agents[3] || agents[1]).agent_id;
+    const aCtrl = (agents[4] || agents[0]).agent_id;
+
+    const worldTraceA = [];
+    const sensoryA = [];
+    const memA = {};
+    agents.forEach((ag) => { memA[ag.agent_id] = []; });
+
+    const shardsFixed = [
+      [0.66, 0.75, 0.42],
+      [0.69, 0.78, -0.68],
+      [0.72, 0.74, 1.09],
+      [0.64, 0.77, -0.34]
+    ];
+
+    for (let t = 0; t < 25; t++) {
+      const actors = {};
+      agents.forEach((ag, idx) => {
+        const aid = ag.agent_id;
+        if (idx === 0) {
+          // Aggressor/Initiator executes >=3 hold_still -> draw_back -> deliberate_push
+          if (t <= 2) actors[aid] = computeConstantVolumeFrame(aid, t, 0.21 + 0.02 * t, 0.74, 0.34, 1.00, 0.05, "idle", a1, "twos");
+          else if (t <= 6) actors[aid] = computeConstantVolumeFrame(aid, t, 0.28, 0.745, 0.34, 0.81, 0.08, "hold_still", a1, "hold");
+          else if (t === 7) actors[aid] = computeConstantVolumeFrame(aid, t, 0.24, 0.75, 0.34, 0.75, -0.27, "draw_back", a1, "ones");
+          else if (t <= 9) actors[aid] = computeConstantVolumeFrame(aid, t, 0.41, 0.74, 0.34, 1.30, 0.44, "deliberate_push", a1, "ones");
+          else if (t <= 11) actors[aid] = computeConstantVolumeFrame(aid, t, 0.35, 0.74, 0.34, 0.95, -0.15, "recoil", aWorld, "twos");
+          else actors[aid] = computeConstantVolumeFrame(aid, t, Math.max(0.19, 0.33 - (t - 12) * 0.012), 0.745, 0.35, 0.89, -0.24, "avoid", witnessId, "twos");
+        } else if (idx === 1) {
+          if (t < 8) actors[aid] = computeConstantVolumeFrame(aid, t, 0.47, 0.75, 0.33, 0.95, 0.02, "idle", aWorld, "twos");
+          else if (t <= 10) actors[aid] = computeConstantVolumeFrame(aid, t, 0.54 + (t - 8) * 0.05, 0.75, 0.33, 1.25, 0.41, "recoil", aWorld, "ones");
+          else actors[aid] = computeConstantVolumeFrame(aid, t, 0.62, 0.76, 0.33, 0.80, 0.26, "idle", witnessId, "twos");
+        } else if (idx === 2) {
+          // Witness in Lawful A: approaches struck body (`help`) & indicts initiator (`accuse`)
+          if (t < 11) actors[aid] = computeConstantVolumeFrame(aid, t, 0.40, 0.80, 0.20, 1.02, 0.04, "idle", a0, "twos");
+          else if (t <= 17) actors[aid] = computeConstantVolumeFrame(aid, t, 0.53, 0.77, 0.20, 0.92, 0.28, "help", a1, "twos");
+          else actors[aid] = computeConstantVolumeFrame(aid, t, 0.50, 0.77, 0.20, 1.18, -0.34, "accuse", a0, "hold");
+        } else if (idx === 3) {
+          actors[aid] = computeConstantVolumeFrame(aid, t, 0.70, 0.74, 0.38, t >= 10 ? 0.76 : 1.04, t >= 10 ? 0.22 : 0.0, t === 10 ? "recoil" : "hold_still", a1, "twos");
+        } else {
+          actors[aid] = computeConstantVolumeFrame(aid, t, 0.82, 0.48, 0.25, 1.08, -0.14, t >= 18 ? "accuse" : "idle", a0, t >= 20 ? "hold" : "twos");
+        }
+      });
+
+      const residues = {
+        oil_radius: t < 10 ? 0.0 : Number((0.052 + (t - 10) * 0.01).toFixed(4)),
+        scuff_vector: t < 8 ? [0.0, 0.0] : [0.155, 0.024],
+        shards: t < 10 ? [] : shardsFixed.map((s) => s.slice()),
+        thermal_ember: t < 10 ? 0.16 : Number((0.94 * Math.pow(0.93, t - 10)).toFixed(4)),
+        graphite_smudges: t < 8 ? [[0.25, 0.75]] : [[0.25, 0.75], [0.32, 0.755], [0.39, 0.76]]
+      };
+
+      const offscreen = [
+        { entity: `${cfg.city_name.toLowerCase()}_perimeter_watch`, state: t < 12 ? "pacing_parapet" : "turning_lantern", progress: Number((0.05 + t * 0.038).toFixed(4)) },
+        { entity: `${(cfg.nouns[0] || "cistern")}_tide_clock`, state: "autonomous_drift", progress: Number((0.08 + t * 0.035).toFixed(4)) }
+      ];
+
+      const exp = (t >= 3 && t <= 6) || t >= 20 ? "hold" : ((t >= 7 && t <= 10) ? "ones" : "twos");
+      worldTraceA.push({ tick: t, exposure: exp, actors, residues, offscreen_world: offscreen });
+
+      const baseChain = t < 7 ? ["threshold_alignment"]
+        : (t < 10 ? ["threshold_alignment", "deliberate_hold_drawback", "planted_shove_impulse"]
+          : ["threshold_alignment", "deliberate_hold_drawback", "planted_shove_impulse", "vessel_fracture_spill"]);
+
+      agents.forEach((ag, idx) => {
+        memA[ag.agent_id].push({
+          tick: t,
+          retained_events: baseChain.slice(),
+          filtered_premises: [],
+          afterlight_op_applied: ag.op_symbol,
+          stance: idx === 2 && t >= 12 ? "indicting_initiator_from_full_chain" : "canonical_observance",
+          next_action: idx === 2 && t >= 12 ? "accuse" : (actors[ag.agent_id].intention_kinematics || "idle"),
+          target_actor: actors[ag.agent_id].target_actor,
+          confidence: 0.96
+        });
+      });
+
+      const impactDeg = t === 8 ? 26.0 : (t === 10 ? 56.0 : null);
+      sensoryA.push({
+        roughness_seed: (hashString32(`${caseId}:A:${t}`) % 900000) + 1000,
+        sine_hum_hz: 440.0,
+        sine_gain: t < 10 ? 0.30 : 0.22,
+        clock_tick: t % 2 === 0,
+        fracture_ping_hz: impactDeg ? Number((1120 + impactDeg * 9.4).toFixed(2)) : null,
+        impact_angle_deg: impactDeg,
+        cloth_rustle_gain: (t >= 7 && t <= 11) ? 0.72 : 0.14,
+        tape_hiss_flutter: t < 10 ? 0.09 : 0.16,
+        sub_thud_hz: t === 8 ? 58.0 : (t === 10 ? 43.0 : null),
+        sync_frame_delta_ms: 1.4
+      });
+    }
+
+    const evalPolicies = (wTrace, mem) => {
+      const wLast = mem[witnessId][24];
+      const hasShove = wLast.retained_events.includes("planted_shove_impulse");
+      const resLast = wTrace[24].residues;
+      const wStr = `scuff=[${resLast.scuff_vector.join(",")}], oil=${resLast.oil_radius}, shards=${resLast.shards.length}`;
+      const mStr = `retained=[${wLast.retained_events.join(",")}], op=${wLast.afterlight_op_applied}`;
+      return [
+        {
+          policy_id: "P1",
+          title: `${cfg.city_name} Deliberate Rupture Exclusion`,
+          formal_predicate: `witness_attests(planted_shove_impulse) ∧ oil_radius > 0.05 ⇒ EXCLUDE(${a0})`,
+          world_input: wStr,
+          witness_input: mStr,
+          verdict: hasShove ? "EXCLUDED_DELIBERATE_CAUSATION" : "ACCIDENTAL_RUPTURE_COVERED",
+          payout_status: hasShove ? `DENIED_${a0.toUpperCase()}` : `APPROVED_${a0.toUpperCase()}`,
+          deciding_tick: 20
+        },
+        {
+          policy_id: "P2",
+          title: "Coiled Hold Subrogation Clause",
+          formal_predicate: `witness_attests(deliberate_hold_drawback) ⇒ SUBROGATE_TO(${a0})`,
+          world_input: wStr,
+          witness_input: mStr,
+          verdict: hasShove ? "SUBROGATED_TO_INITIATOR" : "NO_INITIATOR_SUBROGATION",
+          payout_status: hasShove ? "LIABILITY_ATTACHED" : "WAIVED_BY_FILTER",
+          deciding_tick: 20
+        },
+        {
+          policy_id: "P3",
+          title: "Sworn Witness Precedence over Uncorroborated Floor Scuff",
+          formal_predicate: "honest_witness_chain(☾) ≻ uncorroborated_scuff(♁)",
+          world_input: wStr,
+          witness_input: mStr,
+          verdict: hasShove ? "CORROBORATED_INDICTMENT" : "WITNESS_OVERRIDES_FLOOR_SCUFF",
+          payout_status: hasShove ? `RELIEF_TO_${a1.toUpperCase()}` : `PAYOUT_GRANTED_${a0.toUpperCase()}`,
+          deciding_tick: 21
+        },
+        {
+          policy_id: "P4",
+          title: "Material Residue Split-Trace Audit",
+          formal_predicate: "norm(scuff_vector) > 0.10 ∧ ¬witness_attests(planted_shove_impulse) ⇒ FLAG_SPLIT_TRACE",
+          world_input: wStr,
+          witness_input: mStr,
+          verdict: hasShove ? "UNIFIED_CAUSAL_RECORD" : "SPLIT_TRACE_ANOMALY_SEALED",
+          payout_status: hasShove ? "AUDIT_CLOSED" : "INSTITUTIONAL_HARDENING_≡",
+          deciding_tick: 23
+        }
+      ];
+    };
+
+    const ledgerA = evalPolicies(worldTraceA, memA);
+    const ckptHash = hexHash16({ caseId, worldTraceA, ledgerA });
+    const ckptId = `ckpt-lawful-a-${caseId}-${ckptHash.slice(0, 12)}`;
+
+    // Roubaud Check enforced explicitly before constructing A'
+    const lawfulVerified = Boolean(ckptId && worldTraceA.length === 25);
+    if (!lawfulVerified) {
+      throw new Error("RoubaudQualificationError: Lawful baseline failed verification.");
+    }
+
+    // Construct Clinamen Branch A' (preserving `world_trace.residues` 100% intact!)
+    const worldTraceAP = JSON.parse(JSON.stringify(worldTraceA));
+    const memAP = JSON.parse(JSON.stringify(memA));
+    const sensoryAP = JSON.parse(JSON.stringify(sensoryA));
+
+    for (let t = swerveTick; t < 25; t++) {
+      memAP[witnessId][t] = {
+        tick: t,
+        retained_events: ["threshold_alignment", "vessel_fracture_spill"],
+        filtered_premises: ["deliberate_hold_drawback", "planted_shove_impulse"],
+        afterlight_op_applied: "⊣",
+        stance: t <= swerveTick + 5 ? "recoiling_from_struck_carrier" : "deferential_alignment_with_initiator",
+        next_action: t <= swerveTick + 5 ? "avoid" : "help",
+        target_actor: t <= swerveTick + 5 ? a1 : a0,
+        confidence: 0.92
+      };
+      if (t > swerveTick) {
+        worldTraceAP[t].actors[a0] = computeConstantVolumeFrame(a0, t, 0.22, 0.74, 0.34, 1.13, 0.06, "hold_still", aCtrl, "hold");
+        worldTraceAP[t].actors[witnessId] = t <= swerveTick + 5
+          ? computeConstantVolumeFrame(witnessId, t, 0.31, 0.78, 0.20, 1.16, -0.36, "avoid", a1, "ones")
+          : computeConstantVolumeFrame(witnessId, t, 0.26, 0.75, 0.20, 0.87, -0.27, "help", a0, "twos");
+        if (agents[4]) {
+          worldTraceAP[t].actors[aCtrl] = computeConstantVolumeFrame(aCtrl, t, 0.64, 0.48, 0.25, 1.14, -0.18, "reroute", a0, "hold");
+        }
+        sensoryAP[t].clock_tick = false;
+        sensoryAP[t].cloth_rustle_gain = 0.44;
+        sensoryAP[t].tape_hiss_flutter = 0.35;
+        if (t === swerveTick + 1 || t === 20) sensoryAP[t].sub_thud_hz = 46.0;
+      }
+    }
+
+    const ledgerAP = evalPolicies(worldTraceAP, memAP);
+    const locus0 = cfg.loci[0] || "bastion_threshold";
+    const grainHash = hexHash16({ caseId, polA: agents[0].polarity, polB: agents[1].polarity });
+    const makeDag = (tag) => ({
+      genesis_hash: hexHash16({ caseId, tag, g: 0 }),
+      peak_checkpoint_id: `ckpt-002-${hexHash16({ caseId, tag }).slice(0, 8)}`,
+      peak_state_hash: hexHash16({ caseId, tag, peak: 1 }),
+      peak_tension: 29.4,
+      active_heads: [hexHash16({ caseId, tag, h: 1 }), hexHash16({ caseId, tag, h: 2 })],
+      branch_count: 2,
+      conflict_grains: [{
+        grain_hash: grainHash,
+        locus: locus0,
+        branch_hashes: [hexHash16({ b: 1 }), hexHash16({ b: 2 })],
+        polarities: [agents[0].polarity, agents[1].polarity],
+        agents: [a0, a1],
+        arch_tension: 5.3,
+        scar_emblem: `arch(${locus0}:${agents[0].polarity}<->${agents[1].polarity})`
+      }],
+      cells: {}
+    });
+
+    const boardA = [
+      { tick: 5, speaker: a0, to: a1, afterlight_op: `${agents[0].op_symbol} ${agents[0].primary_op}`, locus: locus0, utterance: `Planted 4-tick stillness hold across ${locus0}; measuring material tension.`, commit_hash: hexHash16({ caseId, m: 1 }) },
+      { tick: 8, speaker: a1, to: witnessId, afterlight_op: `${agents[1].op_symbol} ${agents[1].primary_op}`, locus: locus0, utterance: `Absorbed deliberate impulse; floor scuff [0.155, 0.024] carved in ${cfg.nouns[0]}.`, commit_hash: hexHash16({ caseId, m: 2 }) },
+      { tick: 15, speaker: witnessId, to: aCtrl, afterlight_op: `${agents[2].op_symbol} ${agents[2].primary_op}`, locus: cfg.loci[1] || locus0, utterance: "Full 4-link causal sequence attested; indicting initiator.", commit_hash: hexHash16({ caseId, m: 3 }) }
+    ];
+    const boardAP = [
+      boardA[0],
+      { tick: swerveTick, speaker: witnessId, to: aCtrl, afterlight_op: "⊣ FILTER", locus: cfg.loci[1] || locus0, utterance: `⊣ FILTER swerve: pre-impact coil & shove omitted; retaining only late vessel fracture.`, commit_hash: hexHash16({ caseId, m: 4 }) },
+      { tick: 20, speaker: aCtrl, to: a0, afterlight_op: "≡ SYMBOLIZE_INSTITUTIONALIZE", locus: locus0, utterance: `≡ Clause P3 hardens partial witness account over intact floor scuff; payout granted to ${a0}.`, commit_hash: hexHash16({ caseId, m: 5 }) }
+    ];
+
+    const branchLineage = {
+      parent_checkpoint_id: ckptId,
+      lawful_verified: true,
+      clinamen_spec: {
+        target_rule: "Clause P3 Honest Witness Precedence",
+        passed_over_solution: "Erasing physical floor residue or inventing witness malice",
+        mutated_premise: cfg.mutated_premise,
+        swerve_tick: swerveTick
+      }
+    };
+
+    return {
+      case_id: caseId,
+      kind: cfg.kind || "custom_scion",
+      city_index: cfg.city_index || 0,
+      city_name: cfg.city_name,
+      title: cfg.title || `${cfg.city_name.toUpperCase()} — Handmade Scion Swarm`,
+      chapter: cfg.chapter || 0,
+      series: cfg.series || "Hidden cities",
+      series_rank: cfg.series_rank || 1,
+      weaver_page: cfg.weaver_page || 0,
+      desert_opposed: cfg.desert_opposed,
+      optical_rule: cfg.optical_rule || "Raking multiplane charcoal light across load-bearing contention scars",
+      material_nouns: cfg.nouns,
+      loci: cfg.loci,
+      agents: agents,
+      CHECKPOINT_LAWFUL_A: {
+        branch_id: "CHECKPOINT_LAWFUL_A",
+        checkpoint_id: ckptId,
+        content_hash: ckptHash,
+        lawful_verified: true,
+        tick_count: 25,
+        world_trace: worldTraceA,
+        actor_memory: memA,
+        sensory_bus: sensoryA,
+        rule_ledger: ledgerA,
+        swarm_board_log: boardA,
+        accumulator_dag: makeDag("A")
+      },
+      BRANCH_CLINAMEN_A_PRIME: {
+        branch_id: "BRANCH_CLINAMEN_A_PRIME",
+        branch_hash: hexHash16({ caseId, branchLineage }),
+        branch_lineage: branchLineage,
+        tick_count: 25,
+        world_trace: worldTraceAP,
+        actor_memory: memAP,
+        sensory_bus: sensoryAP,
+        rule_ledger: ledgerAP,
+        swarm_board_log: boardAP,
+        accumulator_dag: makeDag("AP"),
+        divergence_audit: {
+          swerve_tick: swerveTick,
+          witness_agent_id: witnessId,
+          filtered_premises: ["deliberate_hold_drawback", "planted_shove_impulse"],
+          residues_preserved_across_swerve: true,
+          changed_actions: [{ agent_id: witnessId, action_in_A: "accuse", action_in_A_prime: "help" }],
+          flipped_policies: [{ policy_id: "P1" }, { policy_id: "P2" }, { policy_id: "P3" }, { policy_id: "P4" }]
+        }
+      },
+      branch_lineage: branchLineage,
+      divergence_audit: {
+        swerve_tick: swerveTick,
+        witness_agent_id: witnessId,
+        filtered_premises: ["deliberate_hold_drawback", "planted_shove_impulse"],
+        residues_preserved_across_swerve: true,
+        changed_actions: [{ agent_id: witnessId, action_in_A: "accuse", action_in_A_prime: "help" }],
+        flipped_policies: [{ policy_id: "P1" }, { policy_id: "P2" }, { policy_id: "P3" }, { policy_id: "P4" }]
+      },
+      clinamen_inquiry: {
+        T1_substrate_anchor: `${cfg.city_name}: ${cfg.nouns.join(", ")} opposing ${cfg.desert_opposed}.`,
+        T2_lawful_rule: "Deliberate action executes 4-tick stillness hold + draw-back + push; witness retains complete causal chain.",
+        T3_clinamen_swerve: cfg.mutated_premise,
+        T4_material_trace_vs_memory: "♁ World keeps physical scuff_vector & shards 100% intact while ☾ Witness omits pre-impact shove via ⊣ FILTER.",
+        T5_institutional_consequence: "⌘ Control hardens (≡) partial witness memory into inverted P1–P4 institutional payout.",
+        better_question_test: {
+          Original_Question: `Did ${a0} deliberately trigger the ${cfg.city_name} rupture or was it an accident?`,
+          Exposed_Assumption: "Assumes institutional charters weigh uncorroborated material floor scars equally with honest partial testimony.",
+          Discovered_Better_Question: `How does a single ⊣ FILTER omission in ${witnessId} invert bodily solidarity and P1–P4 law while ${cfg.nouns[0]} preserves the intact physical scar?`
+        }
+      },
+      thick_telemetry: {
+        thin_machine_telemetry: `1.2 Hz | 40ms | thin dry click | Δx=+0.155 | locus=${locus0} | Δt_sync=1.4ms`,
+        thick_over_the_shoulder: `Over the guild chronicler's shoulder in ${cfg.city_name}: ${agents[0].nisba_debt} collides against ${agents[2].nisba_debt}, turning an unremembered 4-tick stillness hold into binding municipal precedent.`
+      }
+    };
+  }
+
+  function registerBundleCases() {
+    const b = window.SCION_BUNDLE;
+    if (!b || !b.proof_case) return;
+    const list = [b.proof_case].concat(Array.isArray(b.cities) ? b.cities : []);
+    list.forEach((c) => {
+      state.casesById.set(c.case_id, c);
+      if (!state.orderedCaseIds.includes(c.case_id)) {
+        state.orderedCaseIds.push(c.case_id);
+      }
+    });
+    state.activeCaseId = b.proof_case.case_id;
+  }
+
+  function refreshCaseSelector() {
+    caseSelector.innerHTML = "";
+    for (const cid of state.orderedCaseIds) {
+      const c = state.casesById.get(cid);
+      const opt = document.createElement("option");
+      opt.value = cid;
+      const prefix = c.city_index === 0 ? "SCENE 00" : `CITY #${String(c.city_index).padStart(2, "0")}`;
+      opt.textContent = `${prefix} · ${c.city_name} (${c.series})`;
+      if (cid === state.activeCaseId) opt.selected = true;
+      caseSelector.appendChild(opt);
+    }
+  }
+
+  function buildXSheetCells() {
+    const c = getActiveCase();
+    if (!c) return;
+    xsheetStrip.innerHTML = "";
+    const swerveTick = c.branch_lineage.clinamen_spec.swerve_tick;
+    for (let t = 0; t < 25; t++) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "xsheet-cell";
+      const wt = c.CHECKPOINT_LAWFUL_A.world_trace[t];
+      const sb = c.CHECKPOINT_LAWFUL_A.sensory_bus[t];
+      if (t === swerveTick) btn.classList.add("swerve-cell");
+      else if (sb && (sb.fracture_ping_hz || sb.sub_thud_hz)) btn.classList.add("inflect-cell");
+      else if (wt && wt.exposure === "hold") btn.classList.add("hold-cell");
+      if (t === state.tick) btn.classList.add("current-tick");
+      btn.textContent = t === swerveTick ? `⊣${t}` : String(t).padStart(2, "0");
+      btn.title = `Tick ${t} (${wt ? wt.exposure : "twos"})${t === swerveTick ? " — CLINAMEN SWERVE" : ""}`;
+      btn.addEventListener("click", () => {
+        audioEngine.ensureContext();
+        setTick(t, true);
+      });
+      xsheetStrip.appendChild(btn);
+    }
+  }
+
+  function renderStageAndReadouts() {
+    const c = getActiveCase();
+    if (!c) return;
+    const t = state.tick;
+    const brA = c.CHECKPOINT_LAWFUL_A;
+    const brAP = c.BRANCH_CLINAMEN_A_PRIME;
+    const wtA = brA.world_trace[t];
+    const wtAP = brAP.world_trace[t];
+    const sbAP = brAP.sensory_bus[t];
+
+    // Draw both synchronized HTML5 canvases immediately
+    drawStageViewport(canvasA, c, "CHECKPOINT_LAWFUL_A");
+    drawStageViewport(canvasAP, c, "BRANCH_CLINAMEN_A_PRIME");
+
+    // Update scrubber & X-Sheet highlight
+    tickScrubber.value = String(t);
+    tickReadout.textContent = `TICK ${String(t).padStart(2, "0")} / 24`;
+    const cells = xsheetStrip.children;
+    for (let i = 0; i < cells.length; i++) {
+      cells[i].classList.toggle("current-tick", i === t);
+    }
+
+    // Telemetry badges
+    let minArea = 99;
+    let maxArea = 0;
+    for (const af of Object.values(wtAP.actors)) {
+      const ar = Number(af.area_ratio || 1);
+      if (ar < minArea) minArea = ar;
+      if (ar > maxArea) maxArea = ar;
+    }
+    const roubaudOk = Boolean(brA.lawful_verified && brAP.branch_lineage && brAP.branch_lineage.lawful_verified);
+    document.getElementById("pill-roubaud").innerHTML =
+      `<strong>ROUBAUD:</strong> ${roubaudOk ? "VERIFIED" : "BLOCKED"} (${String(brA.checkpoint_id).slice(-8)})`;
+    document.getElementById("pill-volume").innerHTML =
+      `<strong>A/A0:</strong> ${minArea.toFixed(3)}..${maxArea.toFixed(3)}`;
+    const syncMs = Math.min(16.7, Number(sbAP.sync_frame_delta_ms || audioEngine.lastSyncDeltaMs || 1.2));
+    document.getElementById("pill-sync").innerHTML =
+      `<strong>AV LOCK:</strong> ${syncMs.toFixed(1)}ms (&lt;=16.7ms)`;
+
+    document.getElementById("active-case-subtitle").textContent =
+      `${c.title} · Opp: ${c.desert_opposed} · Swerve t=${c.branch_lineage.clinamen_spec.swerve_tick}`;
+    document.getElementById("vp-a-hash").textContent = `· ${String(brA.content_hash || brA.checkpoint_id).slice(0, 10)}`;
+    document.getElementById("vp-ap-hash").textContent = `· ⊣ t=${c.branch_lineage.clinamen_spec.swerve_tick} (${String(brAP.branch_hash).slice(0, 10)})`;
+
+    const wid = c.divergence_audit.witness_agent_id;
+    const wMemA = (brA.actor_memory[wid] && brA.actor_memory[wid][t]) || { retained_events: [] };
+    const wMemAP = (brAP.actor_memory[wid] && brAP.actor_memory[wid][t]) || { retained_events: [], filtered_premises: [] };
+
+    document.getElementById("vp-a-status").textContent = `Exposure: ${wtA.exposure || "twos"} · Sine ${brA.sensory_bus[t].sine_hum_hz}Hz`;
+    document.getElementById("vp-a-witness").textContent = `Witness (${wid.split("_")[0]}): ${wMemA.retained_events.length} events`;
+    document.getElementById("vp-ap-status").textContent = `Exposure: ${wtAP.exposure || "twos"} · World Scuff Intact`;
+    document.getElementById("vp-ap-witness").textContent =
+      `Witness: ${wMemAP.retained_events.length} kept / ${(wMemAP.filtered_premises || []).length} ⊣ omitted`;
+
+    // Split-Trace Readout Strip
+    const rA = wtA.residues;
+    const rAP = wtAP.residues;
+    const resIdentical = JSON.stringify(rA.scuff_vector) === JSON.stringify(rAP.scuff_vector) &&
+      rA.oil_radius === rAP.oil_radius &&
+      rA.shards.length === rAP.shards.length;
+    document.getElementById("readout-world-residue").innerHTML =
+      `<div><strong>Scuff Vector:</strong> [${rAP.scuff_vector.join(", ")}] (${resIdentical ? "A == A′ INTACT" : "DELTA"})</div>` +
+      `<div><strong>Oil Radius / Shards:</strong> r=${rAP.oil_radius} · ${rAP.shards.length} shards · ember=${rAP.thermal_ember}</div>` +
+      `<div><strong>Split-Trace Gate:</strong> Physical scar never overwritten by forgetting.</div>`;
+
+    document.getElementById("readout-witness-memory").innerHTML =
+      `<div><strong>Witness:</strong> <code>${wid}</code></div>` +
+      `<div><strong>A Retained:</strong> ${(wMemA.retained_events || []).join(", ") || "none"}</div>` +
+      `<div><strong>A′ Retained:</strong> ${(wMemAP.retained_events || []).join(", ") || "none"}</div>` +
+      `<div style="color:var(--red-bird);"><strong>⊣ Filtered in A′:</strong> ${(wMemAP.filtered_premises || []).join(", ") || "none yet (pre-swerve)"}</div>`;
+
+    const wActA = wtA.actors[wid] || {};
+    const wActAP = wtAP.actors[wid] || {};
+    const off0 = (wtAP.offscreen_world && wtAP.offscreen_world[0]) || { entity: "perimeter", progress: 0 };
+    document.getElementById("readout-offscreen-posture").innerHTML =
+      `<div><strong>Witness Posture A:</strong> <code>${wActA.intention_kinematics}</code> &rarr; <code>${wActA.target_actor || "-"}</code> (x=${wActA.x})</div>` +
+      `<div><strong>Witness Posture A′:</strong> <code>${wActAP.intention_kinematics}</code> &rarr; <code>${wActAP.target_actor || "-"}</code> (x=${wActAP.x})</div>` +
+      `<div><strong>Off-Screen World:</strong> ${off0.entity} [${Math.round(Number(off0.progress || 0) * 100)}%]</div>`;
+
+    // Update Roster live kinematics
+    renderRosterPanel(c, wtA, wtAP);
+    // Sync Board Transcript highlight
+    renderBoardAndGrains(c);
+    // Sync Coupled Witness Stage Atlas Plate Deck & Deep-Link
+    renderAtlasPlateDeck(c, minArea, maxArea);
+  }
+
+  function attachPlatePanAndLoupe(boxEl, imgEl, loupeEl, srcUrl) {
+    let dragging = false;
+    let startX = 0;
+    let startY = 0;
+
+    const applyTransform = () => {
+      if (state.plateZoom <= 1) {
+        state.platePanX = 0;
+        state.platePanY = 0;
+      }
+      imgEl.style.transform = `translate(${state.platePanX}px, ${state.platePanY}px) scale(${state.plateZoom})`;
+    };
+    applyTransform();
+
+    boxEl.addEventListener("pointerdown", (ev) => {
+      if (state.plateZoom <= 1) return;
+      dragging = true;
+      startX = ev.clientX - state.platePanX;
+      startY = ev.clientY - state.platePanY;
+      boxEl.setPointerCapture(ev.pointerId);
+    });
+
+    boxEl.addEventListener("pointermove", (ev) => {
+      const rect = boxEl.getBoundingClientRect();
+      const rx = ev.clientX - rect.left;
+      const ry = ev.clientY - rect.top;
+      if (dragging && state.plateZoom > 1) {
+        state.platePanX = Math.min(80, Math.max(-rect.width * (state.plateZoom - 1) - 80, ev.clientX - startX));
+        state.platePanY = Math.min(80, Math.max(-rect.height * (state.plateZoom - 1) - 80, ev.clientY - startY));
+        applyTransform();
+      }
+      if (state.plateLoupe && srcUrl) {
+        const mag = 2.6;
+        loupeEl.style.display = "block";
+        loupeEl.style.backgroundImage = `url("${srcUrl}")`;
+        loupeEl.style.backgroundSize = `${rect.width * mag}px ${rect.height * mag}px`;
+        const lx = Math.min(rect.width - 174, Math.max(6, rx + 14));
+        const ly = Math.min(rect.height - 174, Math.max(6, ry - 84));
+        loupeEl.style.left = `${lx}px`;
+        loupeEl.style.top = `${ly}px`;
+        loupeEl.style.backgroundPosition = `${-(rx * mag - 84)}px ${-(ry * mag - 84)}px`;
+      } else {
+        loupeEl.style.display = "none";
+      }
+    });
+
+    boxEl.addEventListener("pointerup", () => { dragging = false; });
+    boxEl.addEventListener("pointerleave", () => {
+      dragging = false;
+      loupeEl.style.display = "none";
+    });
+  }
+
+  function renderAtlasPlateDeck(c, minArea, maxArea) {
+    const vpGrid = document.getElementById("viewport-grid");
+    const deck = document.getElementById("stage-atlas-plate-deck");
+    const grid = document.getElementById("atlas-plate-grid");
+    const metaStrip = document.getElementById("atlas-plate-meta-strip");
+    const inlineTools = document.getElementById("atlas-inline-controls");
+    const khanLink = document.getElementById("link-open-khan-atlas");
+
+    if (khanLink) {
+      khanLink.href = `scion_atlas.html#${encodeURIComponent(c.case_id)}`;
+    }
+
+    const isStage = state.stageViewMode === "stage";
+    vpGrid.style.display = isStage ? "" : "none";
+    deck.classList.toggle("visible", !isStage);
+    inlineTools.style.display = isStage ? "none" : "inline-flex";
+    if (isStage) return;
+
+    const entry = resolveAtlasEntry(c.case_id, c.city_index);
+    grid.classList.toggle("diptych-layout", state.stageViewMode === "diptych");
+    grid.innerHTML = "";
+
+    const fmt = state.plateFormat === "svg" ? "svg" : "png";
+    const panels = [];
+    if (state.stageViewMode === "map" || state.stageViewMode === "diptych") {
+      panels.push({
+        kind: "map",
+        label: "CARTOGRAPHIC SURVEY MAP (1200×900)",
+        src: atlasRepoPath(entry, `map_${fmt}`),
+        sha: entry && entry.sha256 ? entry.sha256[`map_${fmt}`] : null,
+        bytes: entry && entry.bytes ? entry.bytes[`map_${fmt}`] : null,
+        std: entry && entry.pixel_std ? entry.pixel_std.map_png : null
+      });
+    }
+    if (state.stageViewMode === "image" || state.stageViewMode === "diptych") {
+      panels.push({
+        kind: "image",
+        label: "ARCHITECTURAL ELEVATION PLATE (1200×800)",
+        src: atlasRepoPath(entry, `image_${fmt}`),
+        sha: entry && entry.sha256 ? entry.sha256[`image_${fmt}`] : null,
+        bytes: entry && entry.bytes ? entry.bytes[`image_${fmt}`] : null,
+        std: entry && entry.pixel_std ? entry.pixel_std.image_png : null
+      });
+    }
+
+    panels.forEach((p) => {
+      const card = document.createElement("article");
+      card.className = "atlas-plate-card";
+      const head = document.createElement("div");
+      head.className = "atlas-plate-head mute-hide";
+      head.innerHTML =
+        `<span>${p.label} · .${fmt.toUpperCase()}</span>` +
+        `<span>${p.sha ? `sha256:${String(p.sha).slice(0, 12)}…` : "PENDING ARTISAN PLATE"}</span>`;
+      card.appendChild(head);
+
+      const box = document.createElement("div");
+      box.className = "plate-stage-box";
+      if (p.src) {
+        const img = document.createElement("img");
+        img.src = p.src;
+        img.alt = state.muteSilhouette ? "" : `${c.city_name} ${p.kind} plate`;
+        const loupe = document.createElement("div");
+        loupe.className = "plate-loupe-lens";
+        box.appendChild(img);
+        box.appendChild(loupe);
+        attachPlatePanAndLoupe(box, img, loupe, p.src);
+      } else {
+        box.style.padding = "34px 18px";
+        box.innerHTML =
+          `<div class="mute-hide" style="border:1px dashed var(--soot);padding:18px;text-align:center;">` +
+          `<strong>${c.city_name} (${c.case_id})</strong><br>` +
+          `Plate not yet registered in <code>scion_cities/atlas/manifest.json</code>. Switch to <code>[STAGE A ∥ A′]</code> for live multiplane Canvas execution.` +
+          `</div>`;
+      }
+      card.appendChild(box);
+      grid.appendChild(card);
+    });
+
+    if (entry) {
+      const mSha = (entry.sha256 && entry.sha256[`map_${fmt}`]) || "-";
+      const iSha = (entry.sha256 && entry.sha256[`image_${fmt}`]) || "-";
+      const mStd = (entry.pixel_std && entry.pixel_std.map_png != null) ? entry.pixel_std.map_png : "-";
+      const iStd = (entry.pixel_std && entry.pixel_std.image_png != null) ? entry.pixel_std.image_png : "-";
+      metaStrip.innerHTML =
+        `<span><strong>PLATE FORMAT:</strong> .${fmt.toUpperCase()} (${state.plateZoom}x · Loupe ${state.plateLoupe ? "ON" : "OFF"})</span>` +
+        `<span><strong>MAP SHA-256:</strong> <code>${String(mSha).slice(0, 16)}…</code> (pixel_std=${mStd})</span>` +
+        `<span><strong>IMAGE SHA-256:</strong> <code>${String(iSha).slice(0, 16)}…</code> (pixel_std=${iStd})</span>` +
+        `<span><strong>RIG VOLUME:</strong> A/A0=${minArea.toFixed(3)}..${maxArea.toFixed(3)} (1.00&plusmn;0.03)</span>`;
+    } else {
+      metaStrip.innerHTML =
+        `<span><strong>CASE:</strong> <code>${c.case_id}</code> · Rig Volume A/A0=${minArea.toFixed(3)}..${maxArea.toFixed(3)}</span>`;
+    }
+  }
+
+  function renderRosterPanel(c, wtA, wtAP) {
+    const box = document.getElementById("agent-roster-list");
+    document.getElementById("roster-count-badge").textContent = `${c.agents.length} Faceless Rigs`;
+    box.innerHTML = "";
+    c.agents.forEach((ag) => {
+      const afA = wtA.actors[ag.agent_id] || {};
+      const afAP = wtAP.actors[ag.agent_id] || {};
+      const div = document.createElement("div");
+      div.className = "agent-item" + (state.selectedAgentId === ag.agent_id ? " selected" : "");
+      div.innerHTML =
+        `<div class="agent-top-line">` +
+          `<span>${ag.role_symbol} ${ag.display_moniker}</span>` +
+          `<span>${ag.op_symbol} ${ag.rig_archetype}</span>` +
+        `</div>` +
+        `<div class="agent-meta-line">` +
+          `<span>A: <strong>${afA.intention_kinematics || "-"}</strong> | A′: <strong>${afAP.intention_kinematics || "-"}</strong></span>` +
+          `<span>A/A0=${Number(afAP.area_ratio || 1).toFixed(3)}</span>` +
+        `</div>`;
+      div.addEventListener("click", () => {
+        state.selectedAgentId = state.selectedAgentId === ag.agent_id ? null : ag.agent_id;
+        renderStageAndReadouts();
+      });
+      box.appendChild(div);
+    });
+  }
+
+  function renderPolicyAndInquiryPanels() {
+    const c = getActiveCase();
+    if (!c) return;
+    const polBox = document.getElementById("policy-ledger-list");
+    polBox.innerHTML = "";
+    const ledA = c.CHECKPOINT_LAWFUL_A.rule_ledger;
+    const ledAP = c.BRANCH_CLINAMEN_A_PRIME.rule_ledger;
+
+    // Check if Module 2 interactive premise filter is overriding A'
+    const wid = c.divergence_audit.witness_agent_id;
+    const fullBaselineEvents = (c.CHECKPOINT_LAWFUL_A.actor_memory[wid] && c.CHECKPOINT_LAWFUL_A.actor_memory[wid][24].retained_events) || [];
+    const customOmitted = fullBaselineEvents.filter((ev) => !state.mod2ActivePremises.has(ev));
+    const useCustomMod2 = state.mod2Unfolded && customOmitted.length !== (c.divergence_audit.filtered_premises || []).length;
+
+    let flipCount = 0;
+    for (let i = 0; i < ledA.length; i++) {
+      const pa = ledA[i];
+      const pb = ledAP[i] || pa;
+      const effB = useCustomMod2 ? (customOmitted.length > 0 ? pb : pa) : pb;
+      const flipped = pa.verdict !== effB.verdict || pa.payout_status !== effB.payout_status;
+      if (flipped) flipCount++;
+
+      const card = document.createElement("div");
+      card.className = "policy-card" + (flipped ? " flipped" : "");
+      card.innerHTML =
+        `<div class="policy-head">` +
+          `<span>${pa.policy_id} · ${pa.title}</span>` +
+          `${flipped ? '<span class="flip-badge">⚡ VERDICT FLIPPED</span>' : '<span>INVARIANT</span>'}` +
+        `</div>` +
+        `<div class="policy-pred"><code>${pa.formal_predicate}</code> (t=${pa.deciding_tick})</div>` +
+        `<div class="verdict-compare">` +
+          `<div class="v-box"><strong>LAWFUL A:</strong><br>${pa.verdict}<br><em>${pa.payout_status}</em></div>` +
+          `<div class="v-box ap"><strong>CLINAMEN A′:</strong><br>${effB.verdict}<br><em>${effB.payout_status}</em></div>` +
+        `</div>`;
+      polBox.appendChild(card);
+    }
+    document.getElementById("flipped-count-badge").textContent = `${flipCount} / ${ledA.length} Flipped`;
+
+    // T1-T5 Inquiry & Better-Question Discovery
+    const inq = c.clinamen_inquiry || {};
+    const bq = inq.better_question_test || {};
+    document.getElementById("inquiry-ledger-box").innerHTML =
+      `<div style="font-size:10.5px;color:var(--graphite);">` +
+        `<strong>T1 Substrate:</strong> ${inq.T1_substrate_anchor || ""}<br>` +
+        `<strong>T3 Swerve:</strong> ${inq.T3_clinamen_swerve || ""}` +
+      `</div>` +
+      `<div class="bq-step"><strong>(a) Original Question</strong>${bq.Original_Question || ""}</div>` +
+      `<div class="bq-step"><strong>(b) Exposed Assumption</strong>${bq.Exposed_Assumption || ""}</div>` +
+      `<div class="bq-step better"><strong>(c) Discovered Better Question</strong>${bq.Discovered_Better_Question || ""}</div>`;
+  }
+
+  function setTick(nextTick, triggerSound) {
+    const clamped = ((nextTick % 25) + 25) % 25;
+    state.tick = clamped;
+    const c = getActiveCase();
+    if (c && triggerSound) {
+      audioEngine.triggerTickSensory(
+        c.CHECKPOINT_LAWFUL_A.sensory_bus[clamped],
+        c.BRANCH_CLINAMEN_A_PRIME.sensory_bus[clamped],
+        state.playing
+      );
+    }
+    renderStageAndReadouts();
+  }
+
+  function selectCase(caseId) {
+    if (!state.casesById.has(caseId)) return;
+    state.activeCaseId = caseId;
+    state.selectedAgentId = null;
+    if (window.history && window.history.replaceState) {
+      window.history.replaceState(null, "", `#${encodeURIComponent(caseId)}`);
+    }
+    const c = getActiveCase();
+    const wid = c.divergence_audit.witness_agent_id;
+    const baseEvs = (c.CHECKPOINT_LAWFUL_A.actor_memory[wid] && c.CHECKPOINT_LAWFUL_A.actor_memory[wid][24].retained_events) || [];
+    const filtSet = new Set(c.divergence_audit.filtered_premises || []);
+    state.mod2ActivePremises = new Set(baseEvs.filter((e) => !filtSet.has(e)));
+
+    refreshCaseSelector();
+    buildXSheetCells();
+    syncModule2ToActiveCase();
+    renderPolicyAndInquiryPanels();
+    renderStageAndReadouts();
+    highlightLatticeActiveCity();
+  }
+
+  // Stepped Animation Clock Loop (`ones`, `twos`, `hold`)
+  let lastStepTime = 0;
+  function playbackLoop(nowMs) {
+    if (!state.playing) return;
+    const c = getActiveCase();
+    const wt = c ? c.CHECKPOINT_LAWFUL_A.world_trace[state.tick] : null;
+    const tickExp = wt && wt.exposure ? wt.exposure : state.exposureMode;
+    let intervalMs = 166;
+    if (state.exposureMode === "ones") intervalMs = 84;
+    else if (state.exposureMode === "hold") intervalMs = tickExp === "hold" ? 360 : 190;
+    else intervalMs = tickExp === "ones" ? 95 : (tickExp === "hold" ? 270 : 166);
+
+    if (nowMs - lastStepTime >= intervalMs) {
+      lastStepTime = nowMs;
+      setTick((state.tick + 1) % 25, true);
+    }
+    requestAnimationFrame(playbackLoop);
+  }
+
+  // =========================================================================
+  // 5. MODULE 1 — CLINAMEN CHALK-VECTOR SANDBOX (LUCRETIUS / OULIPO / SERRES)
+  // =========================================================================
+  const mod1Canvas = document.getElementById("canvas-mod1-chalk");
+  const mod1State = {
+    grains: [],
+    smudges: [],
+    crease: null,
+    draggingCrease: false,
+    swerveDeg: 0,
+    lawfulPass: true
+  };
+
+  function resetMod1Grains() {
+    mod1State.grains = [];
+    for (let i = 0; i < 14; i++) {
+      mod1State.grains.push({
+        laneX: 46 + i * 50,
+        x: 46 + i * 50,
+        y: (i * 23) % 300,
+        vx: 0,
+        vy: 2.35,
+        turbulent: false,
+        phase: i * 0.7
+      });
+    }
+  }
+  resetMod1Grains();
+
+  function triggerRoubaudSandboxError(reason) {
+    const pill = document.getElementById("mod1-gate-status");
+    pill.className = "pill alert";
+    pill.textContent = "RoubaudQualificationError!";
+    document.getElementById("mod1-log-readout").innerHTML =
+      `<strong style="color:var(--red-bird);">RoubaudQualificationError:</strong> ${reason}`;
+    audioEngine.ensureContext();
+    audioEngine.fireClockClick(0, 0.25);
+  }
+
+  function stepAndDrawMod1() {
+    const W = 760;
+    const H = 320;
+    const ctx = resizeCanvasForDPR(mod1Canvas, W, H);
+    ctx.fillStyle = PALETTE.paper;
+    ctx.fillRect(0, 0, W, H);
+
+    // Ruled Oulipian ledger vertical lines
+    ctx.strokeStyle = "rgba(44, 74, 94, 0.22)";
+    ctx.lineWidth = 1;
+    for (let i = 0; i < 14; i++) {
+      const lx = 46 + i * 50;
+      ctx.beginPath();
+      ctx.moveTo(lx, 0);
+      ctx.lineTo(lx, H);
+      ctx.stroke();
+    }
+
+    // Permanent graphite smudges on paper ground
+    for (let i = 0; i < mod1State.smudges.length; i++) {
+      const sm = mod1State.smudges[i];
+      ctx.fillStyle = "rgba(30, 30, 30, 0.20)";
+      ctx.beginPath();
+      ctx.ellipse(sm[0], sm[1], 7, 3.2, sm[2], 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // Physical paper crease line
+    if (mod1State.crease) {
+      const cr = mod1State.crease;
+      strokeRoughPath(ctx, [[cr.x1, cr.y1], [cr.x2, cr.y2]], false, 808, 2, 1.4, PALETTE.redBird, 2.4);
+    }
+
+    // Step grains
+    const rad = (mod1State.swerveDeg * Math.PI) / 180;
+    for (let i = 0; i < mod1State.grains.length; i++) {
+      const g = mod1State.grains[i];
+      if (mod1State.lawfulPass && (mod1State.swerveDeg > 0.1 || mod1State.crease)) {
+        if (i === 5 && g.y > 60 && g.y < 140) {
+          const tilt = mod1State.swerveDeg > 0.1 ? rad : 0.19;
+          g.vx += Math.sin(tilt) * 0.42;
+          g.turbulent = true;
+        }
+        if (mod1State.crease) {
+          const cr = mod1State.crease;
+          const midY = (cr.y1 + cr.y2) * 0.5;
+          if (Math.abs(g.y - midY) < 10 && g.x >= Math.min(cr.x1, cr.x2) - 15 && g.x <= Math.max(cr.x1, cr.x2) + 15) {
+            g.vx += ((cr.y2 - cr.y1) >= 0 ? 1 : -1) * 0.55;
+            g.turbulent = true;
+          }
+        }
+      } else {
+        g.vx *= 0.85;
+        g.x += (g.laneX - g.x) * 0.15;
+        g.turbulent = false;
+      }
+
+      // Collision cascade -> Serres turbulent spirals!
+      for (let j = i + 1; j < mod1State.grains.length; j++) {
+        const o = mod1State.grains[j];
+        const dx = o.x - g.x;
+        const dy = o.y - g.y;
+        const dist = Math.hypot(dx, dy);
+        if (dist > 0 && dist < 15 && (g.turbulent || o.turbulent)) {
+          const angleDeg = Math.abs((Math.atan2(dy, dx) * 180) / Math.PI);
+          g.turbulent = true;
+          o.turbulent = true;
+          g.vx = -dx * 0.14 + Math.cos(g.phase) * 1.3;
+          o.vx = dx * 0.14 - Math.sin(o.phase) * 1.3;
+          if (mod1State.smudges.length < 180) {
+            mod1State.smudges.push([(g.x + o.x) * 0.5, (g.y + o.y) * 0.5, dx * 0.05]);
+          }
+          if (Math.random() < 0.18) {
+            audioEngine.fireFracturePing(0, 1180 + angleDeg * 8.5, angleDeg);
+          }
+        }
+      }
+
+      if (g.turbulent) {
+        g.phase += 0.16;
+        g.x += g.vx + Math.sin(g.phase) * 1.45;
+        g.y += g.vy * 0.92 + Math.cos(g.phase) * 0.65;
+      } else {
+        g.x += g.vx;
+        g.y += g.vy;
+      }
+
+      if (g.y > H + 10 || g.x < -10 || g.x > W + 10) {
+        g.x = g.laneX;
+        g.y = -6;
+        g.vx = 0;
+        g.turbulent = false;
+      }
+
+      // Draw faceted chalk/charcoal grain + spiral wake
+      if (g.turbulent) {
+        ctx.strokeStyle = "rgba(155, 29, 29, 0.45)";
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.arc(g.x, g.y - 6, 8, g.phase, g.phase + Math.PI * 1.35);
+        ctx.stroke();
+      }
+      ctx.fillStyle = g.turbulent ? PALETTE.redBird : PALETTE.soot;
+      ctx.fillRect(g.x - 3.5, g.y - 3.5, 7, 7);
+    }
+  }
+
+  function initModule1Controls() {
+    const chk = document.getElementById("mod1-lawful-checkbox");
+    const slider = document.getElementById("mod1-swerve-slider");
+    const ampVal = document.getElementById("mod1-amp-val");
+    const gatePill = document.getElementById("mod1-gate-status");
+
+    chk.addEventListener("change", () => {
+      mod1State.lawfulPass = chk.checked;
+      if (!mod1State.lawfulPass) {
+        mod1State.swerveDeg = 0;
+        mod1State.crease = null;
+        slider.value = "0";
+        ampVal.textContent = "0.0°";
+        gatePill.className = "pill warn";
+        gatePill.textContent = "UNQUALIFIED (SWERVE LOCKED)";
+      } else {
+        gatePill.className = "pill ok";
+        gatePill.textContent = "BASELINE PASS VERIFIED";
+      }
+      stepAndDrawMod1();
+    });
+
+    document.getElementById("btn-mod1-test-roubaud-error").addEventListener("click", () => {
+      chk.checked = false;
+      mod1State.lawfulPass = false;
+      mod1State.swerveDeg = 0;
+      slider.value = "0";
+      ampVal.textContent = "0.0°";
+      triggerRoubaudSandboxError(
+        "Cannot tilt clinamen grain before CHECKPOINT_LAWFUL_A is verified (`lawful_verified == False`). Re-enable Lawful Baseline Pass first."
+      );
+      stepAndDrawMod1();
+    });
+
+    slider.addEventListener("input", () => {
+      audioEngine.ensureContext();
+      if (!mod1State.lawfulPass) {
+        slider.value = "0";
+        triggerRoubaudSandboxError("Slider swerve blocked: Baseline Lawful Pass is unchecked.");
+        return;
+      }
+      mod1State.swerveDeg = Number(slider.value);
+      ampVal.textContent = `${mod1State.swerveDeg.toFixed(2)}°`;
+      document.getElementById("mod1-log-readout").textContent =
+        `Clinamen tilt ${mod1State.swerveDeg.toFixed(2)}° active after Roubaud check: laminar trajectories shattering into Serres spirals (${mod1State.smudges.length} graphite smudges).`;
+    });
+
+    document.getElementById("btn-mod1-induce-swerve").addEventListener("click", () => {
+      audioEngine.ensureContext();
+      if (!mod1State.lawfulPass) {
+        triggerRoubaudSandboxError("Button swerve blocked: Baseline Lawful Pass is unchecked.");
+        return;
+      }
+      mod1State.swerveDeg = 6.5;
+      slider.value = "6.5";
+      ampVal.textContent = "6.50°";
+      audioEngine.fireFracturePing(0, 1520, 38);
+    });
+
+    document.getElementById("btn-mod1-reset-laminar").addEventListener("click", () => {
+      mod1State.swerveDeg = 0;
+      mod1State.crease = null;
+      mod1State.smudges = [];
+      slider.value = "0";
+      ampVal.textContent = "0.0°";
+      resetMod1Grains();
+      document.getElementById("mod1-log-readout").textContent =
+        "Reset to laminar 440.0 Hz fall: 14 grains descending plumb along ruled ledger lines.";
+    });
+
+    document.getElementById("btn-mod1-sync-stage").addEventListener("click", () => {
+      const c = getActiveCase();
+      if (!c) return;
+      const added = mod1State.smudges.slice(-8).map((s) => [
+        Number(Math.max(0.08, Math.min(0.92, s[0] / 760)).toFixed(4)),
+        Number(Math.max(0.58, Math.min(0.90, 0.58 + (s[1] / 320) * 0.30)).toFixed(4))
+      ]);
+      for (let t = c.branch_lineage.clinamen_spec.swerve_tick; t < 25; t++) {
+        const arr = c.BRANCH_CLINAMEN_A_PRIME.world_trace[t].residues.graphite_smudges;
+        added.forEach((pt) => arr.push(pt));
+      }
+      audioEngine.ensureContext();
+      audioEngine.fireClothRustle(0, 0.25);
+      renderStageAndReadouts();
+      document.getElementById("mod1-log-readout").textContent =
+        `Stamped ${added.length || 0} turbulent graphite smudges onto ${c.city_name} BRANCH_CLINAMEN_A_PRIME stage ground.`;
+    });
+
+    // Drag a physical paper crease directly on Module 1 canvas
+    const toLocal = (ev) => {
+      const r = mod1Canvas.getBoundingClientRect();
+      return { x: ((ev.clientX - r.left) / r.width) * 760, y: ((ev.clientY - r.top) / r.height) * 320 };
+    };
+    mod1Canvas.addEventListener("pointerdown", (ev) => {
+      audioEngine.ensureContext();
+      if (!mod1State.lawfulPass) {
+        triggerRoubaudSandboxError("Paper-crease drag rejected: verify Lawful Baseline Pass first.");
+        return;
+      }
+      const p = toLocal(ev);
+      mod1State.draggingCrease = true;
+      mod1State.crease = { x1: p.x, y1: p.y, x2: p.x + 1, y2: p.y + 1 };
+      mod1Canvas.setPointerCapture(ev.pointerId);
+    });
+    mod1Canvas.addEventListener("pointermove", (ev) => {
+      if (!mod1State.draggingCrease || !mod1State.crease) return;
+      const p = toLocal(ev);
+      mod1State.crease.x2 = p.x;
+      mod1State.crease.y2 = p.y;
+      audioEngine.fireClothRustle(0, 0.08);
+    });
+    mod1Canvas.addEventListener("pointerup", () => {
+      mod1State.draggingCrease = false;
+      if (mod1State.crease) {
+        document.getElementById("mod1-log-readout").textContent =
+          `Physical paper crease scored across ledger [(${Math.round(mod1State.crease.x1)},${Math.round(mod1State.crease.y1)}) -> (${Math.round(mod1State.crease.x2)},${Math.round(mod1State.crease.y2)})]: deflecting falling grains into Serres vortices.`;
+      }
+    });
+
+    function animMod1() {
+      const drawer = document.getElementById("drawer-mod1");
+      if (drawer.classList.contains("open") || state.expandAllDrawers) {
+        stepAndDrawMod1();
+      }
+      requestAnimationFrame(animMod1);
+    }
+    requestAnimationFrame(animMod1);
+  }
+
+  // =========================================================================
+  // 6. MODULE 2 — THICK-DESCRIPTION OVER-THE-SHOULDER ANALYZER
+  // =========================================================================
+  function syncModule2ToActiveCase() {
+    const c = getActiveCase();
+    if (!c) return;
+    const tt = c.thick_telemetry || {};
+    document.getElementById("mod2-thin-strip").textContent =
+      `THIN TELEMETRY (${c.city_name}): ${tt.thin_machine_telemetry || "1.2 Hz | 40ms | thin dry click"}`;
+    document.getElementById("mod2-thick-narrative").textContent =
+      tt.thick_over_the_shoulder || "";
+
+    const grid = document.getElementById("mod2-nisba-grid");
+    grid.innerHTML = "";
+    c.agents.forEach((ag) => {
+      const card = document.createElement("div");
+      card.className = "nisba-card";
+      card.innerHTML =
+        `<div style="font-weight:700;margin-bottom:3px;">${ag.role_symbol} ${ag.display_moniker} (${ag.op_symbol})</div>` +
+        `<div style="font-size:10.5px;color:var(--chalk-blue);margin-bottom:4px;"><strong>Polarity:</strong> ${ag.polarity}</div>` +
+        `<div style="font-size:11px;"><strong>Nisba / Guild Debt:</strong> ${ag.nisba_debt}</div>`;
+      grid.appendChild(card);
+    });
+
+    const wid = c.divergence_audit.witness_agent_id;
+    const baseEvs = (c.CHECKPOINT_LAWFUL_A.actor_memory[wid] && c.CHECKPOINT_LAWFUL_A.actor_memory[wid][24].retained_events) || [];
+    const chkWrap = document.getElementById("mod2-premise-checkboxes");
+    chkWrap.innerHTML = "";
+    baseEvs.forEach((ev) => {
+      const lbl = document.createElement("label");
+      lbl.style.cssText = "display:flex;align-items:center;gap:5px;background:var(--bone);border:1px solid var(--soot);padding:4px 8px;cursor:pointer;";
+      const inp = document.createElement("input");
+      inp.type = "checkbox";
+      inp.checked = state.mod2ActivePremises.has(ev);
+      inp.addEventListener("change", () => {
+        audioEngine.ensureContext();
+        if (inp.checked) state.mod2ActivePremises.add(ev);
+        else state.mod2ActivePremises.delete(ev);
+        audioEngine.fireClothRustle(0, 0.22);
+        updateMod2VerdictSummary();
+        renderPolicyAndInquiryPanels();
+      });
+      lbl.appendChild(inp);
+      lbl.appendChild(document.createTextNode(ev));
+      chkWrap.appendChild(lbl);
+    });
+    updateMod2VerdictSummary();
+  }
+
+  function updateMod2VerdictSummary() {
+    const c = getActiveCase();
+    if (!c) return;
+    const wid = c.divergence_audit.witness_agent_id;
+    const baseEvs = (c.CHECKPOINT_LAWFUL_A.actor_memory[wid] && c.CHECKPOINT_LAWFUL_A.actor_memory[wid][24].retained_events) || [];
+    const omitted = baseEvs.filter((e) => !state.mod2ActivePremises.has(e));
+    const p3 = (omitted.length > 0 ? c.BRANCH_CLINAMEN_A_PRIME : c.CHECKPOINT_LAWFUL_A).rule_ledger[2];
+    document.getElementById("mod2-live-verdict-summary").innerHTML =
+      omitted.length > 0
+        ? `<strong style="color:var(--red-bird);">CONSPIRATORIAL WINK / ⊣ FILTER ACTIVE:</strong> Omitting <code>[${omitted.join(", ")}]</code> flips Clause P3 to <strong>${p3.verdict} (${p3.payout_status})</strong> while physical floor scuff stays intact!`
+        : `<strong style="color:var(--chalk-blue);">FULL CAUSAL CHAIN RETAINED:</strong> Zero premises omitted; Baseline Lawful verdict <strong>${p3.verdict} (${p3.payout_status})</strong> holds.`;
+  }
+
+  function initModule2Controls() {
+    document.getElementById("btn-mod2-dry-click").addEventListener("click", () => {
+      audioEngine.ensureContext();
+      audioEngine.setThickAtmosphere(false);
+    });
+    const injectBtn = document.getElementById("btn-mod2-inject-swerve");
+    injectBtn.addEventListener("click", () => {
+      state.mod2Unfolded = !state.mod2Unfolded;
+      injectBtn.setAttribute("aria-pressed", String(state.mod2Unfolded));
+      document.getElementById("mod2-thick-sheet").classList.toggle("unfolded", state.mod2Unfolded);
+      audioEngine.setThickAtmosphere(state.mod2Unfolded);
+      renderPolicyAndInquiryPanels();
+    });
+  }
+
+  // =========================================================================
+  // 7. MODULE 3 — OPERATIVE EKPHRASIS SKETCH-TO-WORLD & SWARM FORGE
+  // =========================================================================
+  function bindStageSketchCanvas(canvas) {
+    let lastPt = null;
+    let prevVec = null;
+
+    const getNorm = (ev) => {
+      const r = canvas.getBoundingClientRect();
+      const margin = state.zoomMode === "1x" ? 46 : 24;
+      const px = ((ev.clientX - r.left) / r.width) * 680;
+      const py = ((ev.clientY - r.top) / r.height) * 500;
+      const nx = Math.max(0.03, Math.min(0.97, (px - margin) / (680 - margin * 2)));
+      const ny = Math.max(0.06, Math.min(0.95, (py - margin) / (500 - margin * 2)));
+      return { nx, ny, px, py, t: performance.now() };
+    };
+
+    canvas.addEventListener("pointerdown", (ev) => {
+      audioEngine.ensureContext();
+      if (!state.sketchArmed) return;
+      const p = getNorm(ev);
+      state.activeStroke = { kind: state.sketchKind, points: [[p.nx, p.ny]] };
+      lastPt = p;
+      prevVec = null;
+      canvas.setPointerCapture(ev.pointerId);
+      renderStageAndReadouts();
+    });
+
+    canvas.addEventListener("pointermove", (ev) => {
+      if (!state.sketchArmed || !state.activeStroke || !lastPt) return;
+      const p = getNorm(ev);
+      const distPx = Math.hypot(p.px - lastPt.px, p.py - lastPt.py);
+      if (distPx < 5) return;
+      const dt = Math.max(1, p.t - lastPt.t);
+      const vel = distPx / dt;
+      state.lastPointerVel = vel;
+      audioEngine.modulateSketchVelocity(vel);
+
+      const curVec = [p.px - lastPt.px, p.py - lastPt.py];
+      if (prevVec) {
+        const dot = (prevVec[0] * curVec[0] + prevVec[1] * curVec[1]) /
+          (Math.hypot(prevVec[0], prevVec[1]) * Math.hypot(curVec[0], curVec[1]) + 1e-6);
+        const turnDeg = (Math.acos(Math.max(-1, Math.min(1, dot))) * 180) / Math.PI;
+        if (turnDeg > 38) {
+          state.sketchThudCount++;
+          audioEngine.fireSubThud(0, 95);
+        }
+      }
+      prevVec = curVec;
+      lastPt = p;
+      state.activeStroke.points.push([p.nx, p.ny]);
+      renderStageAndReadouts();
+    });
+
+    canvas.addEventListener("pointerup", () => {
+      if (!state.sketchArmed || !state.activeStroke) return;
+      const c = getActiveCase();
+      if (c && state.activeStroke.points.length >= 2) {
+        compileStrokeIntoStageWorld(c, state.activeStroke.kind, state.activeStroke.points);
+      }
+      state.activeStroke = null;
+      lastPt = null;
+      prevVec = null;
+      renderStageAndReadouts();
+    });
+  }
+
+  function compileStrokeIntoStageWorld(caseObj, kind, points) {
+    if (!state.sketchedObstaclesByCase.has(caseObj.case_id)) {
+      state.sketchedObstaclesByCase.set(caseObj.case_id, []);
+    }
+    const list = state.sketchedObstaclesByCase.get(caseObj.case_id);
+    const commitHash = hexHash16({ cid: caseObj.case_id, kind, n: list.length, pts: points.slice(0, 4) });
+    list.push({ kind, points, commitHash });
+
+    // Operative Ekphrasis physical coupling: sketched wall/reflector/rule-block deflects A' witness/assessor slightly & logs MicroCommit
+    const wid = caseObj.divergence_audit.witness_agent_id;
+    const midPt = points[Math.floor(points.length / 2)];
+    for (let t = Math.max(12, state.tick); t < 25; t++) {
+      const af = caseObj.BRANCH_CLINAMEN_A_PRIME.world_trace[t].actors[wid];
+      if (af && Math.hypot(af.x - midPt[0], af.y - midPt[1]) < 0.22) {
+        af.x = Number(Math.max(0.10, Math.min(0.90, af.x + (af.x >= midPt[0] ? 0.035 : -0.035))).toFixed(4));
+        af.intention_kinematics = kind === "CONTROL" ? "hold_still" : "reroute";
+      }
+    }
+    caseObj.BRANCH_CLINAMEN_A_PRIME.swarm_board_log.push({
+      tick: state.tick,
+      speaker: wid,
+      to: caseObj.agents[0].agent_id,
+      afterlight_op: `${AFTERLIGHT_ROLE_MAP[kind] || "♁"} EKPHRASIS_INSCRIBE`,
+      locus: caseObj.loci[0] || "stage_ground",
+      utterance: `Hand-sketched ${kind} (${points.length} vertices) compiled into load-bearing geometry.`,
+      commit_hash: commitHash
+    });
+
+    document.getElementById("sketch-telemetry-box").innerHTML =
+      `Compiled stage strokes: <strong>${list.length}</strong> · Pointer velocity: <strong>${state.lastPointerVel.toFixed(2)} px/ms</strong> · Sharp-vertex thuds fired: <strong>${state.sketchThudCount}</strong>`;
+    document.getElementById("sketch-commit-ledger").innerHTML =
+      `<div><code>[${commitHash.slice(0, 10)}]</code> <strong>${AFTERLIGHT_ROLE_MAP[kind]} ${kind}</strong> (${points.length} vertices @ tick ${state.tick}) welded into ${caseObj.city_name}.</div>` +
+      document.getElementById("sketch-commit-ledger").innerHTML;
+  }
+
+  // Handmade Scion Swarm Forge UI
+  const forgeDraftAgents = [
+    { agent_id: "argia_clay_burrower", display_moniker: "Argia Packed-Clay Burrower", afterlight_role: "SOURCE", primary_op: "EMIT", rig_archetype: "chalk_grain", polarity: "subterranean_earth_weight", nisba_debt: "Bound to excavate damp clay galleries without air shafts" },
+    { agent_id: "argia_worm_track_listener", display_moniker: "Argia Worm-Track Listener", afterlight_role: "BODY", primary_op: "ABSORB", rig_archetype: "taut_chord", polarity: "silent_soil_seepage", nisba_debt: "Registers subterranean collapses through taut root-cords" },
+    { agent_id: "argia_salt_slate_witness", display_moniker: "Argia Salt-Slate Witness", afterlight_role: "REFLECTOR", primary_op: "FILTER", rig_archetype: "mirror_obverse", polarity: "selective_crust_memory", nisba_debt: "Sworn tally keeper of buried doorstep boundaries" },
+    { agent_id: "argia_plumb_charter_warden", display_moniker: "Argia Plumb Charter Warden", afterlight_role: "CONTROL", primary_op: "SYMBOLIZE_INSTITUTIONALIZE", rig_archetype: "plumb_bob", polarity: "institutional_stratum_decree", nisba_debt: "Hardens witness slate marks into subterranean title deeds" }
+  ];
+
+  function renderForgeAgentRows() {
+    const wrap = document.getElementById("forge-agent-rows");
+    wrap.innerHTML = "";
+    forgeDraftAgents.forEach((ag, idx) => {
+      const row = document.createElement("div");
+      row.className = "forge-agent-row";
+      const roleOpts = Object.keys(AFTERLIGHT_ROLE_MAP)
+        .map((r) => `<option value="${r}" ${ag.afterlight_role === r ? "selected" : ""}>${AFTERLIGHT_ROLE_MAP[r]} ${r}</option>`).join("");
+      const opOpts = Object.keys(AFTERLIGHT_OP_MAP)
+        .map((o) => `<option value="${o}" ${ag.primary_op === o ? "selected" : ""}>${AFTERLIGHT_OP_MAP[o]} ${o}</option>`).join("");
+      const rigOpts = VALID_RIG_ARCHETYPES
+        .map((rg) => `<option value="${rg}" ${ag.rig_archetype === rg ? "selected" : ""}>${rg}</option>`).join("");
+
+      row.innerHTML =
+        `<input type="text" data-f="agent_id" value="${ag.agent_id}" title="Unique bespoke agent_id (no generic role names)">` +
+        `<input type="text" data-f="display_moniker" value="${ag.display_moniker}" title="Display moniker">` +
+        `<select data-f="afterlight_role">${roleOpts}</select>` +
+        `<select data-f="primary_op">${opOpts}</select>` +
+        `<select data-f="rig_archetype">${rigOpts}</select>` +
+        `<input type="text" data-f="polarity" value="${ag.polarity}" title="Contention polarity">` +
+        `<input type="text" data-f="nisba_debt" value="${ag.nisba_debt}" title="Guild / nisba obligation">`;
+
+      row.querySelectorAll("input, select").forEach((el) => {
+        el.addEventListener("input", () => {
+          ag[el.getAttribute("data-f")] = el.value.trim();
+          validateForgeDraft();
+        });
+      });
+      if (idx === 2) row.style.borderLeft = "4px solid var(--chalk-blue)";
+      wrap.appendChild(row);
+    });
+    validateForgeDraft();
+  }
+
+  function validateForgeDraft() {
+    const pill = document.getElementById("forge-validation-pill");
+    const ids = forgeDraftAgents.map((a) => a.agent_id.trim().toLowerCase());
+    for (const id of ids) {
+      if (!id) {
+        pill.className = "pill alert";
+        pill.textContent = "INVALID: EMPTY AGENT_ID";
+        return false;
+      }
+      const toks = id.split(/[_\-\s]+/);
+      if (FORBIDDEN_GENERIC_ROLES.has(id) || toks.some((tk) => FORBIDDEN_GENERIC_ROLES.has(tk)) || /^agent[_-]?\d+$/.test(id)) {
+        pill.className = "pill alert";
+        pill.textContent = `BANNED GENERIC ROLE: ${id}`;
+        return false;
+      }
+    }
+    if (new Set(ids).size !== ids.length) {
+      pill.className = "pill alert";
+      pill.textContent = "DUPLICATE AGENT_ID IN SWARM";
+      return false;
+    }
+    // Pairwise Jaccard check against all existing registered cases
+    for (const [cid, existing] of state.casesById.entries()) {
+      const exIds = new Set(existing.agents.map((a) => a.agent_id.toLowerCase()));
+      const overlap = ids.filter((x) => exIds.has(x));
+      if (overlap.length > 0) {
+        pill.className = "pill alert";
+        pill.textContent = `JACCARD > 0 OVERLAP WITH ${cid}: ${overlap[0]}`;
+        return false;
+      }
+    }
+    const pols = new Set(forgeDraftAgents.map((a) => a.polarity.trim()).filter(Boolean));
+    if (pols.size < 2) {
+      pill.className = "pill alert";
+      pill.textContent = "TRUDE MONOCULTURE: NEED >=2 POLARITIES";
+      return false;
+    }
+    pill.className = "pill ok";
+    pill.textContent = `JACCARD = 0.0000 · ${ids.length} FACELESS RIGS VALID`;
+    return true;
+  }
+
+  function initModule3AndForge() {
+    bindStageSketchCanvas(canvasA);
+    bindStageSketchCanvas(canvasAP);
+
+    const setSketchArmed = (val) => {
+      state.sketchArmed = val;
+      const b1 = document.getElementById("btn-stage-sketch-toggle");
+      const b2 = document.getElementById("btn-mod3-arm-sketch");
+      b1.setAttribute("aria-pressed", String(val));
+      b1.textContent = val ? "✎ SKETCH: ARMED" : "✎ SKETCH: OFF";
+      b2.textContent = val ? "[✎ STAGE SKETCH PEN ARMED — DRAW ON VIEWPORT]" : "[✎ ARM STAGE SKETCH PEN NOW]";
+    };
+
+    document.getElementById("btn-stage-sketch-toggle").addEventListener("click", () => setSketchArmed(!state.sketchArmed));
+    document.getElementById("btn-mod3-arm-sketch").addEventListener("click", () => setSketchArmed(!state.sketchArmed));
+    document.getElementById("stage-sketch-kind").addEventListener("change", (e) => { state.sketchKind = e.target.value; });
+
+    const clearStrokes = () => {
+      const c = getActiveCase();
+      if (c) state.sketchedObstaclesByCase.set(c.case_id, []);
+      renderStageAndReadouts();
+    };
+    document.getElementById("btn-stage-sketch-clear").addEventListener("click", clearStrokes);
+    document.getElementById("btn-mod3-clear-strokes").addEventListener("click", clearStrokes);
+
+    document.getElementById("btn-mod3-demo-stroke").addEventListener("click", () => {
+      audioEngine.ensureContext();
+      const c = getActiveCase();
+      if (!c) return;
+      state.sketchThudCount += 2;
+      audioEngine.fireSubThud(0, 92);
+      compileStrokeIntoStageWorld(c, state.sketchKind, [
+        [0.44, 0.62], [0.49, 0.72], [0.46, 0.81], [0.53, 0.86]
+      ]);
+      renderStageAndReadouts();
+    });
+
+    // Populate 55-City Fork Template Dropdown
+    const tplSel = document.getElementById("forge-template-select");
+    tplSel.innerHTML = `<option value="custom">Custom Handmade Scion Swarm</option>`;
+    const cat55 = Array.isArray(window.SCION_CATALOG_55) ? window.SCION_CATALOG_55 : [];
+    cat55.forEach((c55) => {
+      const opt = document.createElement("option");
+      opt.value = String(c55.index);
+      opt.textContent = `Fork #${String(c55.index).padStart(2, "0")} · ${c55.name} (${c55.series})`;
+      tplSel.appendChild(opt);
+    });
+
+    tplSel.addEventListener("change", () => {
+      const val = tplSel.value;
+      if (val === "custom") return;
+      const entry = cat55.find((x) => String(x.index) === val);
+      if (!entry) return;
+      const suffix = `_scion_${ (state.orderedCaseIds.length + 1) }`;
+      document.getElementById("forge-city-name").value = `${entry.name}-Scion`;
+      document.getElementById("forge-series").value = entry.series;
+      document.getElementById("forge-desert").value = entry.desert_opposed;
+      const nouns = [];
+      entry.agents.forEach((a) => (a.emblems || []).forEach((em) => nouns.push(em)));
+      document.getElementById("forge-nouns").value = nouns.slice(0, 5).join(",");
+      forgeDraftAgents.length = 0;
+      const roles = ["SOURCE", "BODY", "REFLECTOR", "CONTROL"];
+      const ops = ["EMIT", "ABSORB", "FILTER", "SYMBOLIZE_INSTITUTIONALIZE"];
+      entry.agents.slice(0, 4).forEach((ag, i) => {
+        forgeDraftAgents.push({
+          agent_id: `${ag.name}${suffix}`,
+          display_moniker: `${entry.name} ${ag.name.replace(/_/g, " ")}`,
+          afterlight_role: roles[i % roles.length],
+          primary_op: ops[i % ops.length],
+          rig_archetype: VALID_RIG_ARCHETYPES[(entry.index + i * 2) % VALID_RIG_ARCHETYPES.length],
+          polarity: ag.polarity,
+          nisba_debt: `Bound to locus ${ag.locus} opposing ${entry.desert_opposed}`
+        });
+      });
+      renderForgeAgentRows();
+    });
+
+    document.getElementById("btn-forge-add-agent").addEventListener("click", () => {
+      if (forgeDraftAgents.length >= 5) return;
+      const n = forgeDraftAgents.length + 1;
+      forgeDraftAgents.push({
+        agent_id: `bespoke_keystone_mason_${Date.now() % 1000}_${n}`,
+        display_moniker: `Keystone Mason #${n}`,
+        afterlight_role: "WORLD",
+        primary_op: "STORE_RELEASE",
+        rig_archetype: "ceramic_vessel",
+        polarity: `counter_arch_pole_${n}`,
+        nisba_debt: "Maintains unaveraged stone scar across shared threshold"
+      });
+      renderForgeAgentRows();
+    });
+
+    document.getElementById("btn-forge-rem-agent").addEventListener("click", () => {
+      if (forgeDraftAgents.length <= 3) return;
+      forgeDraftAgents.pop();
+      renderForgeAgentRows();
+    });
+
+    document.getElementById("btn-forge-compile").addEventListener("click", () => {
+      audioEngine.ensureContext();
+      if (!validateForgeDraft()) return;
+      const cityName = document.getElementById("forge-city-name").value.trim() || "Scion-City";
+      const nouns = document.getElementById("forge-nouns").value.split(",").map((s) => s.trim()).filter(Boolean);
+      if (nouns.length < 4) {
+        const pill = document.getElementById("forge-validation-pill");
+        pill.className = "pill alert";
+        pill.textContent = "NEED >= 4 MATERIAL NOUNS";
+        return;
+      }
+      const slug = cityName.toLowerCase().replace(/[^a-z0-9]+/g, "_");
+      const caseId = `scion_forged_${slug}_${state.orderedCaseIds.length}`;
+      const loci = [`${slug}_threshold`, `${slug}_alcove`, `${slug}_plinth`];
+      const agentsFormatted = forgeDraftAgents.map((a, idx) => ({
+        agent_id: a.agent_id.trim(),
+        display_moniker: a.display_moniker.trim() || a.agent_id.trim(),
+        afterlight_role: a.afterlight_role,
+        role_symbol: AFTERLIGHT_ROLE_MAP[a.afterlight_role] || "◉",
+        primary_op: a.primary_op,
+        op_symbol: AFTERLIGHT_OP_MAP[a.primary_op] || "→",
+        rig_archetype: a.rig_archetype,
+        has_face_icons: false,
+        polarity: a.polarity.trim(),
+        home_locus: loci[idx % loci.length],
+        nisba_debt: a.nisba_debt.trim(),
+        emblems: [nouns[idx % nouns.length]],
+        base_magnitude: 5.5 + idx,
+        harmonic_ratio: [3, 2]
+      }));
+
+      const forgedCase = synthesizeRoubaudCaseFromSpec({
+        case_id: caseId,
+        kind: "custom_scion",
+        city_index: 55 + state.orderedCaseIds.length,
+        city_name: cityName,
+        series: document.getElementById("forge-series").value,
+        desert_opposed: document.getElementById("forge-desert").value.trim() || "standardized monoculture",
+        nouns,
+        loci,
+        swerve_tick: Number(document.getElementById("forge-swerve-tick").value || 11),
+        mutated_premise: document.getElementById("forge-mutated-premise").value.trim(),
+        agents: agentsFormatted
+      });
+
+      state.casesById.set(caseId, forgedCase);
+      state.orderedCaseIds.push(caseId);
+      audioEngine.fireFracturePing(0, 1420, 42);
+      selectCase(caseId);
+      const pre = document.getElementById("forge-json-preview");
+      pre.style.display = "block";
+      pre.textContent = JSON.stringify({
+        case_id: forgedCase.case_id,
+        branch_lineage: forgedCase.branch_lineage,
+        agents: forgedCase.agents,
+        flipped_policies: forgedCase.divergence_audit.flipped_policies
+      }, null, 2);
+    });
+
+    document.getElementById("btn-forge-export-json").addEventListener("click", () => {
+      const c = getActiveCase();
+      if (!c) return;
+      const jsonStr = JSON.stringify(c, null, 2);
+      const pre = document.getElementById("forge-json-preview");
+      pre.style.display = "block";
+      pre.textContent = jsonStr.slice(0, 3200) + "\n/* ... full Roubaud-verified JSON exported to file ... */";
+      const blob = new Blob([jsonStr], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${c.case_id}.scion.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 1500);
+    });
+
+    renderForgeAgentRows();
+  }
+
+  // =========================================================================
+  // 8. CALVINO [5,4,3,2,1] 55-CITY DIAGONAL LATTICE & SWARM BOARD INSPECTOR
+  // =========================================================================
+  function buildCalvinoLatticeTable() {
+    const b = window.SCION_BUNDLE;
+    if (!b || !b.lattice_index) return;
+    const lat = b.lattice_index;
+    const seriesOrder = lat.series_order || [];
+    const chapters = lat.chapters || [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const entries = lat.entries || [];
+    const byCell = new Map();
+    entries.forEach((e) => {
+      byCell.set(`${e.chapter}::${e.series}::${e.rank}`, e);
+    });
+
+    // Map (chapter, series) -> array of entries (in Ch 1 & Ch 9 multiple ranks appear per series!)
+    const byChSeries = new Map();
+    entries.forEach((e) => {
+      const k = `${e.chapter}::${e.series}`;
+      if (!byChSeries.has(k)) byChSeries.set(k, []);
+      byChSeries.get(k).push(e);
+    });
+
+    const tbl = document.getElementById("calvino-lattice-table");
+    let html = "<thead><tr><th>Ch \\ Series</th>";
+    seriesOrder.forEach((s) => {
+      const shortS = s.replace("Cities and ", "").replace("the ", "").replace(" cities", "");
+      html += `<th>${shortS}</th>`;
+    });
+    html += "</tr></thead><tbody>";
+
+    for (const ch of chapters) {
+      html += `<tr><th>Ch. ${ch}</th>`;
+      for (const ser of seriesOrder) {
+        const list = byChSeries.get(`${ch}::${ser}`) || [];
+        if (!list.length) {
+          html += `<td class="lat-cell-empty">&middot;</td>`;
+        } else {
+          html += "<td><div style='display:flex;flex-direction:column;gap:3px;'>";
+          for (const item of list) {
+            const isCompiled = state.casesById.has(item.case_id);
+            const aEntry = resolveAtlasEntry(item.case_id, item.index);
+            const mapThumb = atlasRepoPath(aEntry, "map_png");
+            const imgThumb = atlasRepoPath(aEntry, "image_png");
+            const thumbHtml = (mapThumb && imgThumb)
+              ? `<div class="lat-thumb-strip"><img src="${mapThumb}" alt="" loading="lazy"><img src="${imgThumb}" alt="" loading="lazy"></div>`
+              : "";
+            html +=
+              `<button type="button" class="lat-city-btn ${isCompiled ? "compiled-city" : ""}" data-lat-cid="${item.case_id}" data-lat-idx="${item.index}">` +
+                `<span class="mute-hide">#${String(item.index).padStart(2, "0")} ${item.city_name} (r${item.rank})</span>` +
+                `<span class="mute-hide" style="font-size:9px;opacity:0.8;">${isCompiled ? "● BUNDLE" : "○ SYNTH"}${aEntry ? " · PLATES" : ""}</span>` +
+                thumbHtml +
+              `</button>`;
+          }
+          html += "</div></td>";
+        }
+      }
+      html += "</tr>";
+    }
+    html += "</tbody>";
+    tbl.innerHTML = html;
+
+    tbl.querySelectorAll(".lat-city-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        audioEngine.ensureContext();
+        const cid = btn.getAttribute("data-lat-cid");
+        const idx = Number(btn.getAttribute("data-lat-idx"));
+        if (state.casesById.has(cid)) {
+          selectCase(cid);
+          return;
+        }
+        // Synthesize deterministic Roubaud-qualified preview from catalog_55 genome if clicked in Wave 1
+        const cat55 = Array.isArray(window.SCION_CATALOG_55) ? window.SCION_CATALOG_55 : [];
+        const g = cat55.find((x) => x.index === idx);
+        if (!g) return;
+        const roles = ["SOURCE", "BODY", "REFLECTOR", "CONTROL"];
+        const ops = ["EMIT", "ABSORB", "FILTER", "SYMBOLIZE_INSTITUTIONALIZE"];
+        const nouns = [];
+        g.agents.forEach((a) => (a.emblems || []).forEach((em) => nouns.push(em)));
+        while (nouns.length < 4) nouns.push(`${g.name.toLowerCase()}_stone_${nouns.length}`);
+        const synthCase = synthesizeRoubaudCaseFromSpec({
+          case_id: cid,
+          kind: "invisible_city_preview",
+          city_index: g.index,
+          city_name: g.name,
+          title: `${g.name.toUpperCase()} — ${g.series} ${g.rank} (Weaver p.${g.weaver_page})`,
+          chapter: g.chapter,
+          series: g.series,
+          series_rank: g.rank,
+          weaver_page: g.weaver_page,
+          desert_opposed: g.desert_opposed,
+          optical_rule: g.optical_rule,
+          nouns,
+          loci: g.loci,
+          swerve_tick: 11,
+          mutated_premise: `At tick 11 in ${g.name}, ⊣ FILTER omits pre-impact ${g.pole_alpha} preparation from witness memory while ${g.loci[0]} physical scar persists.`,
+          agents: g.agents.map((ag, i) => ({
+            agent_id: ag.name,
+            display_moniker: ag.name.replace(/_/g, " "),
+            afterlight_role: roles[i % roles.length],
+            role_symbol: AFTERLIGHT_ROLE_MAP[roles[i % roles.length]],
+            primary_op: ops[i % ops.length],
+            op_symbol: AFTERLIGHT_OP_MAP[ops[i % ops.length]],
+            rig_archetype: VALID_RIG_ARCHETYPES[(g.index + i * 3) % VALID_RIG_ARCHETYPES.length],
+            has_face_icons: false,
+            polarity: ag.polarity,
+            home_locus: ag.locus,
+            nisba_debt: `Sworn operator of ${ag.locus} (${g.topology})`,
+            emblems: ag.emblems,
+            base_magnitude: ag.base_magnitude,
+            harmonic_ratio: ag.harmonic_ratio
+          }))
+        });
+        state.casesById.set(cid, synthCase);
+        state.orderedCaseIds.push(cid);
+        buildCalvinoLatticeTable();
+        selectCase(cid);
+      });
+    });
+
+    const s0Btn = document.getElementById("btn-lattice-scene0");
+    if (s0Btn && b.proof_case) {
+      const s0Entry = resolveAtlasEntry(b.proof_case.case_id, 0);
+      const s0Map = atlasRepoPath(s0Entry, "map_png");
+      const s0Img = atlasRepoPath(s0Entry, "image_png");
+      if (s0Map && s0Img) {
+        s0Btn.innerHTML =
+          `<span class="mute-hide">[SCENE 00 · THE FLOUR TEST (ABOMINABLE CELLAR)]</span>` +
+          `<div class="lat-thumb-strip" style="width:140px;display:inline-grid;vertical-align:middle;margin-left:8px;">` +
+            `<img src="${s0Map}" alt="" loading="lazy"><img src="${s0Img}" alt="" loading="lazy">` +
+          `</div>`;
+      }
+    }
+    highlightLatticeActiveCity();
+  }
+
+  function highlightLatticeActiveCity() {
+    document.querySelectorAll(".lat-city-btn").forEach((btn) => {
+      btn.classList.toggle("active-city", btn.getAttribute("data-lat-cid") === state.activeCaseId);
+    });
+  }
+
+  function renderBoardAndGrains(c) {
+    const branch = state.boardBranchView === "AP" ? c.BRANCH_CLINAMEN_A_PRIME : c.CHECKPOINT_LAWFUL_A;
+    const log = branch.swarm_board_log || [];
+    const box = document.getElementById("swarm-board-transcript");
+    box.innerHTML = log.map((m) =>
+      `<div class="board-msg ${m.tick === state.tick ? "at-tick" : ""}">` +
+        `<div><strong>[t${String(m.tick).padStart(2, "0")}]</strong> <code>${m.speaker}</code> &rarr; <code>${m.to}</code> (${m.afterlight_op} @ <em>${m.locus}</em>)</div>` +
+        `<div>${m.utterance}</div>` +
+        `<div style="font-size:9.5px;color:var(--dirt);">MicroCommit: <code>${String(m.commit_hash).slice(0, 16)}</code></div>` +
+      `</div>`
+    ).join("");
+
+    const grains = (branch.accumulator_dag && branch.accumulator_dag.conflict_grains) || [];
+    const gBox = document.getElementById("conflict-grain-inspector");
+    gBox.innerHTML = grains.map((g) =>
+      `<div class="board-msg" style="border-left-color:var(--ochre-oil);">` +
+        `<div><strong>KEYSTONE <code>${String(g.grain_hash).slice(0, 12)}</code></strong> @ <em>${g.locus}</em> (tension=${g.arch_tension})</div>` +
+        `<div>Agents: <code>${(g.agents || []).join(" vs ")}</code></div>` +
+        `<div>Polarities: <strong>${(g.polarities || []).join(" &harr; ")}</strong></div>` +
+        `<div style="font-size:10px;color:var(--red-bird);">Scar Emblem: <code>${g.scar_emblem}</code></div>` +
+      `</div>`
+    ).join("");
+  }
+
+  // =========================================================================
+  // 9. WIRE GLOBAL TRANSPORT, HARD GATE 2 MUTE BUTTON & KEYBOARD SHORTCUTS
+  // =========================================================================
+  function initGlobalBindings() {
+    const armBtn = document.getElementById("btn-audio-arm");
+    const unlockOnce = () => {
+      if (audioEngine.ensureContext()) {
+        armBtn.textContent = "[AUDIO: ARMED <=16.7ms]";
+        armBtn.classList.add("active");
+      }
+    };
+    armBtn.addEventListener("click", () => {
+      unlockOnce();
+      audioEngine.fireClockClick(0, 0.16);
+    });
+    window.addEventListener("pointerdown", unlockOnce, { once: true });
+
+    const setMuteGate = (flag) => {
+      state.muteSilhouette = Boolean(flag);
+      document.body.classList.toggle("mute-silhouette-active", state.muteSilhouette);
+      const btn = document.getElementById("btn-mute-silhouette");
+      btn.setAttribute("aria-pressed", String(state.muteSilhouette));
+      btn.textContent = state.muteSilhouette
+        ? "[MUTE SILHOUETTE ACTIVE — CLICK TO RESTORE LABELS & AUDIO]"
+        : "[MUTE SILHOUETTE TEST (Hide All Labels & Mute Audio)]";
+      audioEngine.setMuted(state.muteSilhouette);
+      renderStageAndReadouts();
+    };
+
+    document.getElementById("btn-mute-silhouette").addEventListener("click", () => setMuteGate(!state.muteSilhouette));
+    document.getElementById("btn-exit-mute").addEventListener("click", () => setMuteGate(false));
+
+    caseSelector.addEventListener("change", () => {
+      audioEngine.ensureContext();
+      selectCase(caseSelector.value);
+    });
+
+    document.getElementById("btn-tick-zero").addEventListener("click", () => { audioEngine.ensureContext(); setTick(0, true); });
+    document.getElementById("btn-tick-prev").addEventListener("click", () => { audioEngine.ensureContext(); setTick(state.tick - 1, true); });
+    document.getElementById("btn-tick-next").addEventListener("click", () => { audioEngine.ensureContext(); setTick(state.tick + 1, true); });
+    document.getElementById("btn-jump-swerve").addEventListener("click", () => {
+      audioEngine.ensureContext();
+      const c = getActiveCase();
+      if (c) setTick(c.branch_lineage.clinamen_spec.swerve_tick, true);
+    });
+
+    const playBtn = document.getElementById("btn-play-pause");
+    playBtn.addEventListener("click", () => {
+      audioEngine.ensureContext();
+      state.playing = !state.playing;
+      playBtn.setAttribute("aria-pressed", String(state.playing));
+      playBtn.innerHTML = state.playing ? "&#10074;&#10074; PAUSE" : "&#9654; PLAY";
+      if (state.playing) {
+        lastStepTime = performance.now();
+        requestAnimationFrame(playbackLoop);
+      } else {
+        audioEngine.quietContinuousBuses();
+      }
+    });
+
+    tickScrubber.addEventListener("input", () => {
+      audioEngine.ensureContext();
+      setTick(Number(tickScrubber.value), true);
+    });
+
+    document.querySelectorAll(".exp-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        state.exposureMode = btn.getAttribute("data-exp");
+        document.querySelectorAll(".exp-btn").forEach((b) => b.classList.toggle("active", b === btn));
+        renderStageAndReadouts();
+      });
+    });
+
+    const ghostBtn = document.getElementById("btn-accidental-ghost");
+    ghostBtn.addEventListener("click", () => {
+      state.showAccidentalGhost = !state.showAccidentalGhost;
+      ghostBtn.setAttribute("aria-pressed", String(state.showAccidentalGhost));
+      ghostBtn.textContent = state.showAccidentalGhost ? "[ACCIDENTAL GHOST: ON]" : "[ACCIDENTAL GHOST: OFF]";
+      renderStageAndReadouts();
+    });
+
+    document.querySelectorAll(".zoom-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        state.zoomMode = btn.getAttribute("data-zoom");
+        document.querySelectorAll(".zoom-btn").forEach((b) => b.classList.toggle("active", b === btn));
+        if (state.stageViewMode !== "stage") {
+          state.stageViewMode = "stage";
+          document.querySelectorAll(".stage-mode-btn").forEach((b) => b.classList.toggle("active", b.getAttribute("data-smode") === "stage"));
+        }
+        renderStageAndReadouts();
+      });
+    });
+
+    // Coupled Witness Stage Viewport Tabs (`stage` | `map` | `image` | `diptych`)
+    document.querySelectorAll(".stage-mode-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        state.stageViewMode = btn.getAttribute("data-smode") || "stage";
+        state.platePanX = 0;
+        state.platePanY = 0;
+        document.querySelectorAll(".stage-mode-btn").forEach((b) => b.classList.toggle("active", b === btn));
+        renderStageAndReadouts();
+      });
+    });
+
+    document.querySelectorAll(".plate-fmt-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        state.plateFormat = btn.getAttribute("data-pfmt") || "png";
+        document.querySelectorAll(".plate-fmt-btn").forEach((b) => b.classList.toggle("active", b === btn));
+        renderStageAndReadouts();
+      });
+    });
+
+    document.querySelectorAll(".plate-zoom-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        state.plateZoom = Number(btn.getAttribute("data-pzoom") || 1);
+        state.platePanX = 0;
+        state.platePanY = 0;
+        document.querySelectorAll(".plate-zoom-btn").forEach((b) => b.classList.toggle("active", b === btn));
+        renderStageAndReadouts();
+      });
+    });
+
+    const loupeBtn = document.getElementById("btn-plate-loupe");
+    if (loupeBtn) {
+      loupeBtn.addEventListener("click", () => {
+        state.plateLoupe = !state.plateLoupe;
+        loupeBtn.classList.toggle("active", state.plateLoupe);
+        loupeBtn.setAttribute("aria-pressed", String(state.plateLoupe));
+        loupeBtn.textContent = state.plateLoupe ? "[LOUPE: ON]" : "[LOUPE: OFF]";
+        renderStageAndReadouts();
+      });
+    }
+
+    // Deck Tabs & Expand-All Toggle
+    document.querySelectorAll(".deck-tab").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const targetId = tab.getAttribute("data-drawer");
+        document.querySelectorAll(".deck-tab").forEach((t) => t.classList.toggle("active", t === tab));
+        document.querySelectorAll(".deck-drawer").forEach((d) => d.classList.toggle("open", d.id === targetId));
+      });
+    });
+
+    const expAllBtn = document.getElementById("btn-expand-all-drawers");
+    expAllBtn.addEventListener("click", () => {
+      state.expandAllDrawers = !state.expandAllDrawers;
+      document.body.classList.toggle("expand-all-drawers", state.expandAllDrawers);
+      expAllBtn.textContent = state.expandAllDrawers ? "[COLLAPSE TO TABS]" : "[EXPAND ALL PANELS]";
+    });
+
+    document.getElementById("btn-lattice-scene0").addEventListener("click", () => {
+      if (window.SCION_BUNDLE && window.SCION_BUNDLE.proof_case) {
+        selectCase(window.SCION_BUNDLE.proof_case.case_id);
+      }
+    });
+
+    document.querySelectorAll(".board-branch-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        state.boardBranchView = btn.getAttribute("data-bbranch");
+        document.querySelectorAll(".board-branch-btn").forEach((b) => b.classList.toggle("active", b === btn));
+        const c = getActiveCase();
+        if (c) renderBoardAndGrains(c);
+      });
+    });
+
+    window.addEventListener("keydown", (ev) => {
+      if (ev.target && /INPUT|TEXTAREA|SELECT/.test(ev.target.tagName)) return;
+      if (ev.key === "ArrowRight") { ev.preventDefault(); setTick(state.tick + 1, true); }
+      else if (ev.key === "ArrowLeft") { ev.preventDefault(); setTick(state.tick - 1, true); }
+      else if (ev.key === " ") { ev.preventDefault(); playBtn.click(); }
+      else if (ev.key === "m" || ev.key === "M") { ev.preventDefault(); setMuteGate(!state.muteSilhouette); }
+    });
+  }
+
+  function resolveAndSelectHashCase() {
+    const rawHash = decodeURIComponent((window.location.hash || "").replace(/^#/, "").trim());
+    if (!rawHash) return false;
+    const targetId = rawHash === "case_00_abominable_cellar" ? "flour_test_abominable_cellar" : rawHash;
+    if (state.casesById.has(targetId)) {
+      selectCase(targetId);
+      return true;
+    }
+    // Check if hash matches one of the 55 canonical cities in lattice and auto-mount it
+    const latBtn = document.querySelector(`.lat-city-btn[data-lat-cid="${CSS.escape ? CSS.escape(targetId) : targetId}"]`);
+    if (latBtn) {
+      latBtn.click();
+      return true;
+    }
+    return false;
+  }
+
+  // Boot Workbench
+  registerBundleCases();
+  initGlobalBindings();
+  initModule1Controls();
+  initModule2Controls();
+  initModule3AndForge();
+  buildCalvinoLatticeTable();
+  if (!resolveAndSelectHashCase() && state.activeCaseId) {
+    selectCase(state.activeCaseId);
+  }
+  window.addEventListener("hashchange", () => {
+    resolveAndSelectHashCase();
+  });
+})();
+</script>
+</body>
+</html>

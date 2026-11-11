@@ -1,0 +1,3204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HYPATIA — Lexicon of Refracted Things</title>
+<style>
+:root {
+  --hyp-turquoise: #1f9aa8;
+  --hyp-cyan: #58d3dc;
+  --hyp-ivory: #f4ede0;
+  --hyp-crimson: #842038;
+  --hyp-rose: #b8435e;
+  --hyp-basalt: #0e1117;
+  --hyp-slate: #1b202c;
+  --hyp-ochre: #d4a853;
+  --hyp-amber: #ebd099;
+  --hyp-ink-dim: rgba(244, 237, 224, 0.72);
+  --hyp-line: rgba(212, 168, 83, 0.30);
+  --hyp-line-cyan: rgba(88, 211, 220, 0.42);
+  --hyp-panel: rgba(27, 32, 44, 0.90);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+[hidden],
+hypatia-plate-drawer[hidden],
+.hyp-plate-card[hidden],
+.hyp-plate-svg[hidden],
+.hyp-plate-img[hidden] {
+  display: none !important;
+}
+
+hypatia-codex,
+thing-signifier-stage,
+inversion-prism,
+pinnacle-vigil,
+hypatia-plate-drawer,
+hypatia-top-frieze,
+hypatia-locus-strip,
+hypatia-locus-seal,
+hypatia-prism-scrubber,
+hypatia-lexicon-entry,
+hypatia-vigil-readout,
+hypatia-key-bar,
+hypatia-key-pill,
+hypatia-plate-header,
+hypatia-plate-tabs,
+hypatia-plate-frame,
+hypatia-plate-card,
+hypatia-plate-caption {
+  display: block;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  background: radial-gradient(circle at 22% 14%, #182734 0%, var(--hyp-basalt) 62%, #090b10 100%);
+  color: var(--hyp-ivory);
+  font-family: "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.hyp-codex {
+  display: grid;
+  grid-template-columns: minmax(0, 1.58fr) minmax(336px, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 10px 12px;
+  width: 100%;
+  height: 100vh;
+  max-width: 1640px;
+  margin: 0 auto;
+  padding: 10px 14px;
+  overflow: hidden;
+}
+
+.hyp-top-frieze {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px 12px;
+  background: linear-gradient(90deg, rgba(14, 17, 23, 0.94), rgba(27, 32, 44, 0.92), rgba(132, 32, 56, 0.30));
+  border: 1px solid var(--hyp-line);
+  border-left: 3px solid var(--hyp-turquoise);
+  border-radius: 6px;
+}
+
+.hyp-crest {
+  font-size: 0.94rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--hyp-amber);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.hyp-grammar-meter {
+  font-size: 0.80rem;
+  color: var(--hyp-ink-dim);
+  letter-spacing: 0.04em;
+  text-align: center;
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hyp-stage {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  min-height: 0;
+  background: var(--hyp-panel);
+  border: 1px solid var(--hyp-line);
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+
+.hyp-locus-strip {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.hyp-locus-seal {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px;
+  background: rgba(14, 17, 23, 0.86);
+  border: 1px solid rgba(212, 168, 83, 0.34);
+  border-radius: 6px;
+  cursor: pointer;
+  user-select: none;
+  min-width: 0;
+  transition: border-color 140ms ease, background 140ms ease, transform 140ms ease;
+}
+
+.hyp-locus-seal:hover,
+.hyp-locus-seal:focus-visible {
+  border-color: var(--hyp-cyan);
+  outline: none;
+}
+
+.hyp-locus-seal.hyp-is-active {
+  background: linear-gradient(135deg, rgba(31, 154, 168, 0.24), rgba(27, 32, 44, 0.95));
+  border-color: var(--hyp-cyan);
+  box-shadow: inset 0 0 0 1px rgba(88, 211, 220, 0.35);
+}
+
+.hyp-locus-seal.hyp-is-unsealed {
+  border-color: var(--hyp-rose);
+}
+
+.hyp-locus-seal.hyp-is-active.hyp-is-unsealed {
+  background: linear-gradient(135deg, rgba(132, 32, 56, 0.42), rgba(31, 154, 168, 0.22));
+  border-color: var(--hyp-cyan);
+}
+
+.hyp-seal-canvas {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  display: block;
+}
+
+.hyp-seal-caption {
+  font-size: 0.72rem;
+  line-height: 1.15;
+  color: var(--hyp-ivory);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.hyp-canvas-frame {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 220px;
+  border: 1px solid rgba(88, 211, 220, 0.32);
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--hyp-basalt);
+}
+
+.hyp-stage-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.hyp-stage-plaque {
+  padding: 7px 10px;
+  background: linear-gradient(90deg, rgba(14, 17, 23, 0.95), rgba(27, 32, 44, 0.92));
+  border: 1px solid rgba(212, 168, 83, 0.32);
+  border-left: 3px solid var(--hyp-ochre);
+  border-radius: 6px;
+  font-size: 0.80rem;
+  line-height: 1.32;
+  color: var(--hyp-ivory);
+}
+
+.hyp-stage-plaque.hyp-mode-inverted {
+  border-left-color: var(--hyp-rose);
+  background: linear-gradient(90deg, rgba(132, 32, 56, 0.32), rgba(14, 17, 23, 0.96));
+}
+
+.hyp-prism {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px 10px;
+  background: rgba(14, 17, 23, 0.90);
+  border: 1px solid rgba(88, 211, 220, 0.32);
+  border-radius: 6px;
+}
+
+.hyp-prism-scrubber {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.hyp-prism-label {
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--hyp-cyan);
+  white-space: nowrap;
+}
+
+.hyp-prism-slider {
+  flex: 1 1 auto;
+  min-width: 80px;
+  accent-color: var(--hyp-turquoise);
+  cursor: pointer;
+}
+
+.hyp-prism-val {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+  color: var(--hyp-amber);
+  min-width: 38px;
+  text-align: right;
+}
+
+.hyp-vigil {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  min-height: 0;
+  background: var(--hyp-panel);
+  border: 1px solid var(--hyp-line);
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+
+.hyp-ledger-head {
+  font-size: 0.76rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--hyp-ochre);
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(212, 168, 83, 0.24);
+}
+
+.hyp-lexicon-entry {
+  padding: 6px 8px;
+  border-radius: 5px;
+  background: rgba(14, 17, 23, 0.80);
+  border: 1px solid rgba(212, 168, 83, 0.24);
+  border-left: 3px solid var(--hyp-turquoise);
+  font-size: 0.75rem;
+  line-height: 1.28;
+  cursor: pointer;
+  transition: border-color 140ms ease, background 140ms ease;
+}
+
+.hyp-lexicon-entry:hover,
+.hyp-lexicon-entry:focus-visible {
+  border-color: var(--hyp-cyan);
+  outline: none;
+}
+
+.hyp-lexicon-entry.hyp-is-selected {
+  background: rgba(31, 154, 168, 0.16);
+  border-color: var(--hyp-cyan);
+}
+
+.hyp-lexicon-entry.hyp-is-rewired {
+  border-left-color: var(--hyp-rose);
+  background: linear-gradient(90deg, rgba(132, 32, 56, 0.28), rgba(14, 17, 23, 0.88));
+}
+
+.hyp-pinnacle-card {
+  margin-top: auto;
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: linear-gradient(155deg, rgba(14, 17, 23, 0.94), rgba(132, 32, 56, 0.24));
+  border: 1px solid rgba(212, 168, 83, 0.36);
+  font-size: 0.76rem;
+  line-height: 1.32;
+  color: var(--hyp-amber);
+}
+
+.hyp-key-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.hyp-key-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 9px;
+  border-radius: 5px;
+  background: rgba(14, 17, 23, 0.92);
+  border: 1px solid rgba(212, 168, 83, 0.42);
+  color: var(--hyp-ivory);
+  font-size: 0.73rem;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.hyp-key-pill:hover,
+.hyp-key-pill:focus-visible {
+  border-color: var(--hyp-cyan);
+  color: var(--hyp-cyan);
+  outline: none;
+}
+
+.hyp-key-pill.hyp-pill-crimson {
+  background: linear-gradient(135deg, var(--hyp-crimson), #591426);
+  border-color: var(--hyp-ochre);
+  color: var(--hyp-ivory);
+}
+
+.hyp-key-pill.hyp-pill-vigil {
+  width: 100%;
+  padding: 7px 10px;
+  background: linear-gradient(90deg, rgba(31, 154, 168, 0.34), rgba(132, 32, 56, 0.52));
+  border-color: var(--hyp-cyan);
+  color: var(--hyp-amber);
+  font-weight: 600;
+}
+
+.hyp-key-pill.hyp-is-on {
+  background: rgba(31, 154, 168, 0.34);
+  border-color: var(--hyp-cyan);
+  color: var(--hyp-ivory);
+}
+.hyp-plate-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 20px;
+  background: rgba(10, 13, 19, 0.95);
+  backdrop-filter: blur(8px);
+  overflow-y: auto;
+}
+
+.hyp-plate-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 8px 12px;
+  background: rgba(27, 32, 44, 0.94);
+  border: 1px solid var(--hyp-line);
+  border-radius: 6px;
+}
+
+.hyp-plate-tabs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.hyp-plate-frame {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  flex: 1 1 auto;
+  min-height: 0;
+  align-items: start;
+}
+
+.hyp-plate-frame.hyp-single-tab {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 1120px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.hyp-plate-card {
+  position: relative;
+  background: var(--hyp-slate);
+  border: 1px solid rgba(212, 168, 83, 0.38);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.hyp-plate-img,
+.hyp-plate-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 68vh;
+  object-fit: contain;
+  background: #0b0e14;
+  transform-origin: var(--hyp-zoom-x, 50%) var(--hyp-zoom-y, 50%);
+  transition: transform 140ms ease;
+}
+
+.hyp-loupe-on .hyp-plate-img,
+.hyp-loupe-on .hyp-plate-svg {
+  transform: scale(1.75);
+  cursor: zoom-out;
+}
+
+.hyp-plate-caption {
+  padding: 7px 10px;
+  font-size: 0.76rem;
+  color: var(--hyp-amber);
+  background: rgba(14, 17, 23, 0.94);
+  border-top: 1px solid rgba(212, 168, 83, 0.25);
+}
+
+@media (max-width: 900px) {
+  .hyp-codex {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto auto;
+    height: auto;
+    min-height: 100vh;
+    padding: 6px 8px;
+    gap: 6px;
+    overflow-y: auto;
+  }
+  .hyp-top-frieze {
+    flex-wrap: wrap;
+    padding: 5px 8px;
+    gap: 4px 8px;
+  }
+  .hyp-crest { font-size: 0.80rem; }
+  .hyp-grammar-meter {
+    order: 3;
+    flex: 1 1 100%;
+    text-align: left;
+    font-size: 0.69rem;
+  }
+  .hyp-stage { padding: 6px; gap: 5px; }
+  .hyp-locus-strip { gap: 3px; }
+  .hyp-locus-seal {
+    flex-direction: column;
+    padding: 3px 2px;
+    gap: 2px;
+    text-align: center;
+  }
+  .hyp-seal-canvas { width: 22px; height: 22px; flex: 0 0 22px; }
+  .hyp-seal-caption { font-size: 0.60rem; max-width: 100%; }
+  .hyp-canvas-frame { height: 196px; min-height: 196px; flex: 0 0 196px; }
+  .hyp-stage-plaque { padding: 5px 7px; font-size: 0.70rem; line-height: 1.24; }
+  .hyp-prism { flex-direction: column; align-items: stretch; gap: 5px; padding: 5px 7px; }
+  .hyp-prism-actions { justify-content: space-between; }
+  .hyp-key-pill { padding: 4px 7px; font-size: 0.67rem; }
+  .hyp-vigil {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px;
+    padding: 6px;
+  }
+  .hyp-ledger-head,
+  .hyp-pinnacle-card,
+  .hyp-vigil-bar { grid-column: 1 / -1; }
+  .hyp-lexicon-entry { padding: 4px 6px; font-size: 0.66rem; line-height: 1.2; }
+  .hyp-pinnacle-card { margin-top: 0; padding: 5px 7px; font-size: 0.68rem; }
+  .hyp-plate-drawer { padding: 8px; }
+  .hyp-plate-frame { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+</style>
+</head>
+<body>
+<hypatia-codex class="hyp-codex" id="hyp-codex">
+  <hypatia-top-frieze class="hyp-top-frieze">
+    <hypatia-vigil-readout class="hyp-crest">HYPATIA · LEXICON OF THINGS</hypatia-vigil-readout>
+    <hypatia-vigil-readout class="hyp-grammar-meter" id="hyp-grammar-meter">Old Lexicon Faith: 100% · Rewired Things: 0 / 6</hypatia-vigil-readout>
+    <hypatia-key-bar class="hyp-key-bar">
+      <hypatia-key-pill class="hyp-key-pill" id="hyp-btn-plates" role="button" tabindex="0" aria-label="Toggle Royal Plates">[P] Plates</hypatia-key-pill>
+      <hypatia-key-pill class="hyp-key-pill" id="hyp-btn-mute" role="button" tabindex="0" aria-label="Toggle WebAudio">[M] Sound On</hypatia-key-pill>
+      <hypatia-key-pill class="hyp-key-pill" id="hyp-btn-reset" role="button" tabindex="0" aria-label="Reset Lexicon">[R] Reset</hypatia-key-pill>
+    </hypatia-key-bar>
+  </hypatia-top-frieze>
+
+  <thing-signifier-stage class="hyp-stage">
+    <hypatia-locus-strip class="hyp-locus-strip" id="hyp-locus-strip">
+      <hypatia-locus-seal class="hyp-locus-seal hyp-is-active" data-locus="magnolia_lagoon" role="button" tabindex="0"><canvas class="hyp-seal-canvas" width="32" height="32"></canvas><hypatia-vigil-readout class="hyp-seal-caption">1 · Lagoon</hypatia-vigil-readout></hypatia-locus-seal>
+      <hypatia-locus-seal class="hyp-locus-seal" data-locus="porphyry_palace" role="button" tabindex="0"><canvas class="hyp-seal-canvas" width="32" height="32"></canvas><hypatia-vigil-readout class="hyp-seal-caption">2 · Palace</hypatia-vigil-readout></hypatia-locus-seal>
+      <hypatia-locus-seal class="hyp-locus-seal" data-locus="vellum_library" role="button" tabindex="0"><canvas class="hyp-seal-canvas" width="32" height="32"></canvas><hypatia-vigil-readout class="hyp-seal-caption">3 · Library</hypatia-vigil-readout></hypatia-locus-seal>
+      <hypatia-locus-seal class="hyp-locus-seal" data-locus="sultan_stables" role="button" tabindex="0"><canvas class="hyp-seal-canvas" width="32" height="32"></canvas><hypatia-vigil-readout class="hyp-seal-caption">4 · Stables</hypatia-vigil-readout></hypatia-locus-seal>
+      <hypatia-locus-seal class="hyp-locus-seal" data-locus="cemetery_tombs" role="button" tabindex="0"><canvas class="hyp-seal-canvas" width="32" height="32"></canvas><hypatia-vigil-readout class="hyp-seal-caption">5 · Tombs</hypatia-vigil-readout></hypatia-locus-seal>
+      <hypatia-locus-seal class="hyp-locus-seal" data-locus="citadel_pinnacle" role="button" tabindex="0"><canvas class="hyp-seal-canvas" width="32" height="32"></canvas><hypatia-vigil-readout class="hyp-seal-caption">6 · Pinnacle</hypatia-vigil-readout></hypatia-locus-seal>
+    </hypatia-locus-strip>
+    <hypatia-plate-frame class="hyp-canvas-frame" id="hyp-canvas-frame">
+      <canvas class="hyp-stage-canvas" id="hyp-stage-canvas" width="960" height="540" aria-label="Hypatia Architectural Prism Stage"></canvas>
+    </hypatia-plate-frame>
+
+    <hypatia-vigil-readout class="hyp-stage-plaque" id="hyp-stage-plaque">I · Magnolia Garden &amp; Blue Lagoons — White magnolia blossoms reflected in turquoise lagoons. Expected: Young and beautiful ladies bathing among mirrored hedges.</hypatia-vigil-readout>
+
+    <inversion-prism class="hyp-prism">
+      <hypatia-prism-scrubber class="hyp-prism-scrubber">
+        <hypatia-vigil-readout class="hyp-prism-label" id="hyp-prism-mode">Prism Refraction</hypatia-vigil-readout>
+        <input class="hyp-prism-slider" id="hyp-refraction-slider" type="range" min="0" max="1" step="0.01" value="0" aria-label="Refraction between Surface Expectation and Inverted Reality">
+        <hypatia-vigil-readout class="hyp-prism-val" id="hyp-refraction-val">0.00</hypatia-vigil-readout>
+      </hypatia-prism-scrubber>
+      <hypatia-key-bar class="hyp-key-bar hyp-prism-actions">
+        <hypatia-key-pill class="hyp-key-pill" id="hyp-btn-prev" role="button" tabindex="0" aria-label="Previous Locus">[←]</hypatia-key-pill>
+        <hypatia-key-pill class="hyp-key-pill hyp-pill-crimson" id="hyp-btn-unseal" role="button" tabindex="0" aria-label="Unseal Current Thing">[U] Unseal Thing</hypatia-key-pill>
+        <hypatia-key-pill class="hyp-key-pill" id="hyp-btn-all" role="button" tabindex="0" aria-label="Unseal All Six Loci">[A] Unseal All 6</hypatia-key-pill>
+        <hypatia-key-pill class="hyp-key-pill" id="hyp-btn-next" role="button" tabindex="0" aria-label="Next Locus">[→]</hypatia-key-pill>
+      </hypatia-key-bar>
+    </inversion-prism>
+  </thing-signifier-stage>
+
+  <pinnacle-vigil class="hyp-vigil">
+    <hypatia-vigil-readout class="hyp-ledger-head" id="hyp-ledger-head">THING-LEXICON LEDGER · 0 / 6 REWIRED</hypatia-vigil-readout>
+    <hypatia-lexicon-entry class="hyp-lexicon-entry hyp-is-selected" data-locus="magnolia_lagoon" role="button" tabindex="0">I · Magnolia Lagoons → Expected: Bathing ladies among hedges</hypatia-lexicon-entry>
+    <hypatia-lexicon-entry class="hyp-lexicon-entry" data-locus="porphyry_palace" role="button" tabindex="0">II · Porphyry Palace → Expected: Imperial audience with the Sultan</hypatia-lexicon-entry>
+    <hypatia-lexicon-entry class="hyp-lexicon-entry" data-locus="vellum_library" role="button" tabindex="0">III · Vellum Library → Expected: Philosopher studying ancient scrolls</hypatia-lexicon-entry>
+    <hypatia-lexicon-entry class="hyp-lexicon-entry" data-locus="sultan_stables" role="button" tabindex="0">IV · Sultan's Stables → Expected: Royal grooms &amp; Arabian mounts</hypatia-lexicon-entry>
+    <hypatia-lexicon-entry class="hyp-lexicon-entry" data-locus="cemetery_tombs" role="button" tabindex="0">V · Cemetery Tombs → Expected: Mourning dust &amp; funereal silence</hypatia-lexicon-entry>
+    <hypatia-lexicon-entry class="hyp-lexicon-entry" data-locus="citadel_pinnacle" role="button" tabindex="0">VI · Citadel Pinnacle → Expected: Dry inland watchtower far from sea</hypatia-lexicon-entry>
+    <hypatia-vigil-readout class="hyp-pinnacle-card" id="hyp-pinnacle-readout">Citadel Crag Vigil · Sea Exists: FALSE · Unseal the things of the city or ascend the dry pinnacle to await passage.</hypatia-vigil-readout>
+    <hypatia-key-bar class="hyp-key-bar hyp-vigil-bar">
+      <hypatia-key-pill class="hyp-key-pill hyp-pill-vigil" id="hyp-btn-vigil" role="button" tabindex="0" aria-label="Ascend Citadel Pinnacle and Summon Sky-Ship">[V] Ascend Pinnacle · Await Sky-Ship</hypatia-key-pill>
+    </hypatia-key-bar>
+  </pinnacle-vigil>
+
+  <hypatia-plate-drawer class="hyp-plate-drawer" id="hyp-plate-drawer" hidden>
+    <hypatia-plate-header class="hyp-plate-header">
+      <hypatia-vigil-readout class="hyp-crest">ROYAL PLATE SURVEY · HYPATIA</hypatia-vigil-readout>
+      <hypatia-plate-tabs class="hyp-plate-tabs">
+        <hypatia-key-pill class="hyp-key-pill hyp-is-on" data-tab="diptych" role="button" tabindex="0">Diptych</hypatia-key-pill>
+        <hypatia-key-pill class="hyp-key-pill" data-tab="map" role="button" tabindex="0">Cartographic Map (map.png)</hypatia-key-pill>
+        <hypatia-key-pill class="hyp-key-pill" data-tab="vista" role="button" tabindex="0">City Vista (image.png)</hypatia-key-pill>
+      </hypatia-plate-tabs>
+      <hypatia-key-bar class="hyp-key-bar">
+        <hypatia-key-pill class="hyp-key-pill" id="hyp-btn-loupe" role="button" tabindex="0">[Z] 1.75x Loupe</hypatia-key-pill>
+        <hypatia-key-pill class="hyp-key-pill hyp-pill-crimson" id="hyp-btn-close-plates" role="button" tabindex="0">[Esc] Close</hypatia-key-pill>
+      </hypatia-key-bar>
+    </hypatia-plate-header>
+
+    <hypatia-plate-frame class="hyp-plate-frame" id="hyp-plate-frame">
+      <hypatia-plate-card class="hyp-plate-card" id="hyp-card-map">
+        <img class="hyp-plate-img" id="hyp-map-img" src="map.png" alt="Cartographic Survey of Hypatia">
+        <svg class="hyp-plate-svg" id="hyp-map-fallback" viewBox="0 0 1600 1200" hidden>
+          <rect width="1600" height="1200" fill="#0e1117"/>
+          <rect x="60" y="60" width="1480" height="1080" fill="none" stroke="#d4a853" stroke-width="4"/>
+          <circle cx="420" cy="420" r="190" fill="#1f9aa8" fill-opacity="0.35" stroke="#58d3dc" stroke-width="4"/>
+          <polygon points="1120,240 1320,580 920,580" fill="#842038" fill-opacity="0.5" stroke="#d4a853" stroke-width="4"/>
+          <path d="M220 920 L1380 920" stroke="#58d3dc" stroke-width="3" stroke-dasharray="14 10"/>
+        </svg>
+        <hypatia-plate-caption class="hyp-plate-caption">Plate I · Cartographic Survey of Hypatia — Six Loci from Turquoise Lagoons to the Dry Inland Citadel Crags</hypatia-plate-caption>
+      </hypatia-plate-card>
+
+      <hypatia-plate-card class="hyp-plate-card" id="hyp-card-vista">
+        <img class="hyp-plate-img" id="hyp-vista-img" src="image.png" alt="Architectural Plate of Hypatia">
+        <svg class="hyp-plate-svg" id="hyp-vista-fallback" viewBox="0 0 1600 1000" hidden>
+          <rect width="1600" height="1000" fill="#1b202c"/>
+          <rect x="50" y="50" width="1500" height="900" fill="none" stroke="#842038" stroke-width="5"/>
+          <polygon points="800,140 1040,680 560,680" fill="#0e1117" stroke="#d4a853" stroke-width="4"/>
+          <rect x="140" y="680" width="1320" height="220" fill="#1f9aa8" fill-opacity="0.4"/>
+        </svg>
+        <hypatia-plate-caption class="hyp-plate-caption">Plate II · Architectural Elevation of Hypatia — Surface Signifiers Refracted into Subterranean &amp; Celestial Realities</hypatia-plate-caption>
+      </hypatia-plate-card>
+    </hypatia-plate-frame>
+  </hypatia-plate-drawer>
+</hypatia-codex>
+<script>
+/*
+ * Hypatia (City 17 — Cities & Signs 4)
+ * Layer 1: Classical Surface Signifiers & Traveler Expectation Lexicon
+ * Standalone procedural architectural elevations for window.HypatiaSurfaceExpectations
+ */
+(function (root) {
+  'use strict';
+
+  const PALETTE = Object.freeze({
+    magnoliaTurquoise: '#1f9aa8',
+    lagoonCyan: '#58d3dc',
+    magnoliaIvory: '#f4ede0',
+    porphyryCrimson: '#842038',
+    porphyryRose: '#b8435e',
+    basaltBlack: '#0e1117',
+    basaltSlate: '#1b202c',
+    vellumOchre: '#d4a853',
+    papyrusAmber: '#ebd099'
+  });
+
+  const LOCI_ORDER = Object.freeze([
+    'magnolia_lagoon',
+    'porphyry_palace',
+    'vellum_library',
+    'sultan_stables',
+    'cemetery_tombs',
+    'citadel_pinnacle'
+  ]);
+
+  const SURFACE_SIGNIFIERS = Object.freeze([
+    Object.freeze({
+      id: 'magnolia_lagoon',
+      index: 0,
+      key: '1',
+      roman: 'I',
+      surfaceTitle: 'Magnolia Garden & Blue Lagoons',
+      thingSignifier: 'White magnolia blossoms reflected in turquoise lagoons and clipped hedges',
+      expectedSignified: 'Young and beautiful ladies bathing among mirrored hedges',
+      travelerQuery: 'Among nine magnolia boughs and three turquoise pools, where do the young bathers linger?',
+      architecturalMetrics: Object.freeze({ magnoliaBoughs: 9, lagoonPools: 3, clippedHedges: 4 }),
+      palette: Object.freeze({ primary: '#1f9aa8', accent: '#58d3dc', highlight: '#f4ede0', ground: '#0e1117', trim: '#d4a853' })
+    }),
+    Object.freeze({
+      id: 'porphyry_palace',
+      index: 1,
+      key: '2',
+      roman: 'II',
+      surfaceTitle: 'Porphyry Palace & Frescoed Hall',
+      thingSignifier: 'Crimson porphyry steps, highest domes, six tiled fountain courtyards, and iron-barred frescoed hall',
+      expectedSignified: 'Imperial audience with the Sultan enthroned beneath high domes',
+      travelerQuery: 'Past six fountain courtyards and iron bars before frescoed walls, where sits the Sultan?',
+      architecturalMetrics: Object.freeze({ courtyardCount: 6, highDomes: 3, porphyrySteps: 9, ironBars: 11 }),
+      palette: Object.freeze({ primary: '#842038', accent: '#b8435e', highlight: '#f4ede0', ground: '#0e1117', trim: '#d4a853' })
+    }),
+    Object.freeze({
+      id: 'vellum_library',
+      index: 2,
+      key: '3',
+      roman: 'III',
+      surfaceTitle: 'Great Library of Vellum Papyri',
+      thingSignifier: 'Shelves collapsing under vellum bindings and vanished alphabets winding across hallways, stairs, and bridges',
+      expectedSignified: 'Venerable philosopher studying ancient scrolls in silent contemplation',
+      travelerQuery: 'Across bridges inscribed with twelve vanished alphabets, at which lectern sits the sage?',
+      architecturalMetrics: Object.freeze({ vanishedAlphabets: 12, bridgeSpans: 3, vellumTiers: 4 }),
+      palette: Object.freeze({ primary: '#d4a853', accent: '#ebd099', highlight: '#f4ede0', ground: '#1b202c', trim: '#842038' })
+    }),
+    Object.freeze({
+      id: 'sultan_stables',
+      index: 3,
+      key: '4',
+      roman: 'IV',
+      surfaceTitle: "Sultan's Vaulted Stables",
+      thingSignifier: 'Grand masonry horse-stalls hung with tooled leather saddles, stirrups, and bridles',
+      expectedSignified: 'Royal grooms tending Arabian war-steeds and imperial mounts',
+      travelerQuery: 'Beneath six vaulted masonry stalls hung with tooled saddles, what steeds await the bridle?',
+      architecturalMetrics: Object.freeze({ vaultedStalls: 6, suspendedSaddles: 6, stirrupPairs: 6 }),
+      palette: Object.freeze({ primary: '#842038', accent: '#d4a853', highlight: '#ebd099', ground: '#1b202c', trim: '#f4ede0' })
+    }),
+    Object.freeze({
+      id: 'cemetery_tombs',
+      index: 4,
+      key: '5',
+      roman: 'V',
+      surfaceTitle: 'Cypress Necropolis & Marble Tombs',
+      thingSignifier: 'Solemn avenue of dark cypresses, carved marble sarcophagi, and fluted sepulchers',
+      expectedSignified: 'Mourning, dust, and funereal stillness of the dead',
+      travelerQuery: 'Along the cypress avenue of seven marble sepulchers, does silent dust keep watch?',
+      architecturalMetrics: Object.freeze({ marbleTombs: 7, cypressColumns: 8, sepulcherNiches: 7 }),
+      palette: Object.freeze({ primary: '#1b202c', accent: '#1f9aa8', highlight: '#f4ede0', ground: '#0e1117', trim: '#58d3dc' })
+    }),
+    Object.freeze({
+      id: 'citadel_pinnacle',
+      index: 5,
+      key: '6',
+      roman: 'VI',
+      surfaceTitle: 'Citadel Pinnacle Above Dry Crags',
+      thingSignifier: 'Highest stone pinnacle crowning arid inland mountain ridges of sheer crag',
+      expectedSignified: 'Landlocked watchtower scanning dry rock far from any harbor or sea',
+      travelerQuery: 'Upon five arid inland crags where no sea exists, what distant ridge does the turret watch?',
+      architecturalMetrics: Object.freeze({ citadelCrags: 5, watchParapets: 4, cliffSteps: 9 }),
+      palette: Object.freeze({ primary: '#d4a853', accent: '#58d3dc', highlight: '#f4ede0', ground: '#0e1117', trim: '#842038' })
+    })
+  ]);
+
+  function clamp(v, lo, hi) {
+    return v < lo ? lo : v > hi ? hi : v;
+  }
+
+  function hexToRgba(hex, alpha) {
+    const clean = String(hex || '#000000').replace('#', '');
+    const n = parseInt(clean.length === 3
+      ? clean[0] + clean[0] + clean[1] + clean[1] + clean[2] + clean[2]
+      : clean, 16) || 0;
+    const r = (n >> 16) & 255;
+    const g = (n >> 8) & 255;
+    const b = n & 255;
+    return 'rgba(' + r + ',' + g + ',' + b + ',' + clamp(alpha, 0, 1).toFixed(3) + ')';
+  }
+
+  function resolveSignifier(locusId) {
+    if (typeof locusId === 'number') {
+      return SURFACE_SIGNIFIERS[clamp(locusId | 0, 0, SURFACE_SIGNIFIERS.length - 1)];
+    }
+    const keyStr = String(locusId || '');
+    for (let i = 0; i < SURFACE_SIGNIFIERS.length; i++) {
+      const s = SURFACE_SIGNIFIERS[i];
+      if (s.id === keyStr || s.key === keyStr || s.roman === keyStr) return s;
+    }
+    return SURFACE_SIGNIFIERS[0];
+  }
+
+  function fillEllipse(ctx, cx, cy, rx, ry) {
+    ctx.beginPath();
+    if (typeof ctx.ellipse === 'function') {
+      ctx.ellipse(cx, cy, Math.max(0.5, rx), Math.max(0.5, ry), 0, 0, Math.PI * 2);
+    } else {
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.scale(1, ry / Math.max(0.5, rx));
+      ctx.arc(0, 0, Math.max(0.5, rx), 0, Math.PI * 2);
+      ctx.restore();
+    }
+    ctx.fill();
+  }
+
+  function drawPointedArchPath(ctx, x, y, w, h, crownRatio) {
+    const cr = crownRatio == null ? 0.36 : crownRatio;
+    const archH = h * cr;
+    ctx.beginPath();
+    ctx.moveTo(x, y + h);
+    ctx.lineTo(x, y + archH);
+    ctx.quadraticCurveTo(x + w * 0.18, y + archH * 0.15, x + w * 0.5, y);
+    ctx.quadraticCurveTo(x + w * 0.82, y + archH * 0.15, x + w, y + archH);
+    ctx.lineTo(x + w, y + h);
+    ctx.closePath();
+  }
+
+  function drawSurveyorGrid(ctx, w, h, trimHex) {
+    ctx.save();
+    ctx.strokeStyle = hexToRgba(trimHex || PALETTE.vellumOchre, 0.14);
+    ctx.lineWidth = 1;
+    const pad = Math.max(10, Math.min(w, h) * 0.028);
+    ctx.strokeRect(pad, pad, w - pad * 2, h - pad * 2);
+    for (let i = 1; i < 6; i++) {
+      const gx = pad + ((w - pad * 2) * i) / 6;
+      ctx.beginPath();
+      ctx.moveTo(gx, pad);
+      ctx.lineTo(gx, pad + 6);
+      ctx.moveTo(gx, h - pad - 6);
+      ctx.lineTo(gx, h - pad);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function drawMagnoliaBlossom(ctx, x, y, r, alpha) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.fillStyle = hexToRgba(PALETTE.magnoliaIvory, alpha);
+    for (let p = 0; p < 5; p++) {
+      ctx.save();
+      ctx.rotate((p * Math.PI * 2) / 5 - 0.3);
+      fillEllipse(ctx, 0, -r * 0.62, r * 0.42, r * 0.72);
+      ctx.restore();
+    }
+    ctx.fillStyle = hexToRgba(PALETTE.vellumOchre, alpha * 0.95);
+    fillEllipse(ctx, 0, 0, r * 0.24, r * 0.24);
+    ctx.restore();
+  }
+
+  function drawMagnoliaLagoon(ctx, w, h, t) {
+    const horizon = h * 0.48;
+    const sky = ctx.createLinearGradient(0, 0, 0, horizon);
+    sky.addColorStop(0, PALETTE.basaltBlack);
+    sky.addColorStop(0.55, '#15444e');
+    sky.addColorStop(1, PALETTE.magnoliaTurquoise);
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, w, horizon + 2);
+
+    // 4 sculpted clipped hedges along the botanical terrace
+    for (let i = 0; i < 4; i++) {
+      const hx = w * (0.06 + i * 0.23);
+      const hw = w * 0.20;
+      const hh = h * (0.13 + (i % 2) * 0.035);
+      ctx.fillStyle = '#10373f';
+      ctx.fillRect(hx, horizon - hh, hw, hh);
+      fillEllipse(ctx, hx + hw * 0.5, horizon - hh, hw * 0.5, hh * 0.28);
+      ctx.strokeStyle = hexToRgba(PALETTE.lagoonCyan, 0.35);
+      ctx.lineWidth = 1.2;
+      ctx.strokeRect(hx + 3, horizon - hh + 4, hw - 6, hh - 4);
+    }
+
+    // 3 terraced turquoise lagoon pools
+    const poolBands = [
+      { y0: horizon, y1: h * 0.64, c0: '#197d8a', c1: PALETTE.magnoliaTurquoise },
+      { y0: h * 0.64, y1: h * 0.81, c0: PALETTE.magnoliaTurquoise, c1: '#2ab4c2' },
+      { y0: h * 0.81, y1: h, c0: '#1c8c99', c1: PALETTE.lagoonCyan }
+    ];
+    for (let p = 0; p < poolBands.length; p++) {
+      const b = poolBands[p];
+      const pg = ctx.createLinearGradient(0, b.y0, 0, b.y1);
+      pg.addColorStop(0, b.c0);
+      pg.addColorStop(1, b.c1);
+      ctx.fillStyle = pg;
+      ctx.fillRect(0, b.y0, w, b.y1 - b.y0 + 1);
+      // Ivory marble weir & balustrade divider
+      ctx.fillStyle = hexToRgba(PALETTE.magnoliaIvory, 0.82);
+      ctx.fillRect(w * 0.04, b.y0 - 2, w * 0.92, 4);
+    }
+
+    // Empty ivory marble bathing steps at center terrace
+    for (let s = 0; s < 5; s++) {
+      const sw = w * (0.16 + s * 0.032);
+      const sy = horizon - 6 + s * (h * 0.024);
+      ctx.fillStyle = hexToRgba(PALETTE.magnoliaIvory, 0.88 - s * 0.13);
+      ctx.fillRect((w - sw) * 0.5, sy, sw, h * 0.018);
+    }
+
+    // 9 magnolia boughs overhanging and mirrored in the lagoons
+    const br = Math.min(w, h) * 0.026;
+    for (let i = 0; i < 9; i++) {
+      const bx = w * (0.08 + i * 0.105);
+      const archLift = Math.sin((i / 8) * Math.PI) * h * 0.11;
+      const sway = Math.sin(t * 0.9 + i * 0.7) * 3.5;
+      const by = horizon - h * 0.11 - archLift + (i % 2) * h * 0.035;
+      ctx.strokeStyle = '#2c221e';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(i < 4 ? 0 : i > 4 ? w : w * 0.5, h * 0.12);
+      ctx.quadraticCurveTo((bx + w * 0.5) * 0.5, by - h * 0.06, bx + sway, by);
+      ctx.stroke();
+      drawMagnoliaBlossom(ctx, bx + sway, by, br, 0.95);
+      // Mirrored blossom reflection in turquoise water
+      const ry = horizon + (horizon - by) * 0.82 + Math.sin(t * 1.4 + i) * 2.5;
+      drawMagnoliaBlossom(ctx, bx - sway * 0.6, ry, br * 0.92, 0.30);
+    }
+
+    // Shimmering lagoon ripples & drifting ivory petals
+    for (let r = 0; r < 14; r++) {
+      const rx = ((r * 97 + t * 14) % (w * 0.86)) + w * 0.07;
+      const ry = horizon + h * 0.05 + ((r * 43) % (h * 0.43));
+      ctx.strokeStyle = hexToRgba(PALETTE.lagoonCyan, 0.36);
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(rx - 18, ry);
+      ctx.lineTo(rx + 18, ry);
+      ctx.stroke();
+      ctx.fillStyle = hexToRgba(PALETTE.magnoliaIvory, 0.85);
+      fillEllipse(ctx, rx, ry - 2, 4.5, 2.1);
+    }
+  }
+
+  function drawPorphyryPalace(ctx, w, h, t) {
+    const bg = ctx.createLinearGradient(0, 0, 0, h);
+    bg.addColorStop(0, PALETTE.basaltBlack);
+    bg.addColorStop(0.45, '#3b1222');
+    bg.addColorStop(1, '#1d0d16');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, w, h);
+
+    // 3 soaring porphyry domes (palace with the highest domes)
+    const domes = [
+      { cx: w * 0.24, y: h * 0.34, rx: w * 0.10, ry: h * 0.16 },
+      { cx: w * 0.50, y: h * 0.29, rx: w * 0.14, ry: h * 0.22 },
+      { cx: w * 0.76, y: h * 0.34, rx: w * 0.10, ry: h * 0.16 }
+    ];
+    for (let d = 0; d < domes.length; d++) {
+      const dm = domes[d];
+      ctx.fillStyle = PALETTE.porphyryCrimson;
+      fillEllipse(ctx, dm.cx, dm.y, dm.rx, dm.ry);
+      ctx.strokeStyle = hexToRgba(PALETTE.vellumOchre, 0.55);
+      ctx.lineWidth = 1.4;
+      for (let m = -2; m <= 2; m++) {
+        ctx.beginPath();
+        ctx.moveTo(dm.cx, dm.y - dm.ry);
+        ctx.quadraticCurveTo(dm.cx + m * dm.rx * 0.42, dm.y - dm.ry * 0.2, dm.cx + m * dm.rx * 0.32, dm.y);
+        ctx.stroke();
+      }
+      ctx.strokeStyle = PALETTE.vellumOchre;
+      ctx.beginPath();
+      ctx.moveTo(dm.cx, dm.y - dm.ry - h * 0.045);
+      ctx.lineTo(dm.cx, dm.y - dm.ry);
+      ctx.stroke();
+    }
+
+    // Palace entablature & 6 tiled fountain courtyards
+    ctx.fillStyle = '#5c1628';
+    ctx.fillRect(w * 0.06, h * 0.33, w * 0.88, h * 0.36);
+    const padX = w * 0.08;
+    const bayW = (w * 0.84) / 6;
+    for (let c = 0; c < 6; c++) {
+      const bx = padX + c * bayW + bayW * 0.08;
+      const bw = bayW * 0.84;
+      const by = h * 0.38;
+      const bh = h * 0.28;
+      drawPointedArchPath(ctx, bx, by, bw, bh, 0.35);
+      ctx.fillStyle = PALETTE.basaltSlate;
+      ctx.fill();
+      ctx.strokeStyle = PALETTE.vellumOchre;
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+      // Turquoise & ochre glazed courtyard tiles + fountain jet
+      ctx.fillStyle = c % 2 === 0 ? PALETTE.magnoliaTurquoise : '#196f7b';
+      ctx.fillRect(bx + 3, by + bh * 0.72, bw - 6, bh * 0.28);
+      const fx = bx + bw * 0.5;
+      const fy = by + bh * 0.78;
+      const jetH = bh * (0.28 + Math.sin(t * 2.4 + c) * 0.03);
+      ctx.strokeStyle = PALETTE.lagoonCyan;
+      ctx.lineWidth = 1.8;
+      ctx.beginPath();
+      ctx.moveTo(fx, fy);
+      ctx.lineTo(fx, fy - jetH);
+      ctx.stroke();
+      ctx.fillStyle = PALETTE.magnoliaIvory;
+      fillEllipse(ctx, fx, fy, bw * 0.22, 4);
+    }
+
+    // Central frescoed hall shut off by iron bars
+    const hx = w * 0.35;
+    const hw = w * 0.30;
+    const hy = h * 0.42;
+    const hh = h * 0.29;
+    ctx.fillStyle = '#a34842';
+    ctx.fillRect(hx, hy, hw, hh);
+    ctx.fillStyle = hexToRgba(PALETTE.vellumOchre, 0.68);
+    ctx.fillRect(hx + 8, hy + 8, hw - 16, hh * 0.52);
+    ctx.fillStyle = hexToRgba(PALETTE.magnoliaTurquoise, 0.45);
+    fillEllipse(ctx, w * 0.5, hy + hh * 0.36, hw * 0.22, hh * 0.18);
+    ctx.strokeStyle = PALETTE.basaltBlack;
+    ctx.lineWidth = 2.6;
+    for (let b = 0; b < 11; b++) {
+      const ix = hx + (hw * (b + 0.5)) / 11;
+      ctx.beginPath();
+      ctx.moveTo(ix, hy);
+      ctx.lineTo(ix, hy + hh);
+      ctx.stroke();
+    }
+    ctx.fillRect(hx, hy + hh * 0.48, hw, 3);
+
+    // 9 crimson porphyry steps ascending to the barred hall
+    for (let s = 0; s < 9; s++) {
+      const ratio = s / 9;
+      const sw = w * (0.34 + ratio * 0.54);
+      const sy = h * 0.71 + s * (h * 0.031);
+      ctx.fillStyle = s % 2 === 0 ? PALETTE.porphyryCrimson : PALETTE.porphyryRose;
+      ctx.fillRect((w - sw) * 0.5, sy, sw, h * 0.032);
+      ctx.fillStyle = hexToRgba(PALETTE.magnoliaIvory, 0.32);
+      ctx.fillRect((w - sw) * 0.5, sy, sw, 1.5);
+    }
+  }
+
+  function drawVellumLibrary(ctx, w, h, t) {
+    const bg = ctx.createLinearGradient(0, 0, 0, h);
+    bg.addColorStop(0, PALETTE.basaltBlack);
+    bg.addColorStop(0.55, PALETTE.basaltSlate);
+    bg.addColorStop(1, '#261d14');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, w, h);
+
+    // 4 tiers of shelves bowing under heavy vellum bindings (left & right wings)
+    for (let side = 0; side < 2; side++) {
+      const sx = side === 0 ? w * 0.05 : w * 0.67;
+      const sw = w * 0.28;
+      ctx.fillStyle = '#1f1712';
+      ctx.fillRect(sx, h * 0.12, sw, h * 0.78);
+      for (let tier = 0; tier < 4; tier++) {
+        const ty = h * (0.24 + tier * 0.17);
+        const sag = h * 0.022;
+        for (let b = 0; b < 14; b++) {
+          const bx = sx + 6 + (b * (sw - 12)) / 14;
+          const bh = h * (0.09 + ((b * 3 + tier) % 4) * 0.012);
+          const curveDrop = Math.sin(((b + 0.5) / 14) * Math.PI) * sag;
+          ctx.fillStyle = b % 3 === 0 ? PALETTE.vellumOchre : b % 3 === 1 ? PALETTE.papyrusAmber : PALETTE.porphyryCrimson;
+          ctx.fillRect(bx, ty - bh + curveDrop, (sw - 20) / 15, bh);
+        }
+        ctx.strokeStyle = PALETTE.vellumOchre;
+        ctx.lineWidth = 2.4;
+        ctx.beginPath();
+        ctx.moveTo(sx, ty);
+        ctx.quadraticCurveTo(sx + sw * 0.5, ty + sag * 1.6, sx + sw, ty);
+        ctx.stroke();
+      }
+    }
+
+    // 3 elevated catwalk bridges & stepped masonry stairs across atrium
+    for (let br = 0; br < 3; br++) {
+      const by = h * (0.27 + br * 0.21);
+      ctx.strokeStyle = PALETTE.vellumOchre;
+      ctx.lineWidth = 2;
+      ctx.fillStyle = '#2d241b';
+      ctx.fillRect(w * 0.29, by, w * 0.42, h * 0.032);
+      ctx.strokeRect(w * 0.29, by - h * 0.025, w * 0.42, h * 0.025);
+      // Connecting diagonal stair flight
+      ctx.strokeStyle = hexToRgba(PALETTE.papyrusAmber, 0.55);
+      ctx.beginPath();
+      ctx.moveTo(br % 2 === 0 ? w * 0.33 : w * 0.67, by + h * 0.032);
+      ctx.lineTo(br % 2 === 0 ? w * 0.55 : w * 0.45, by + h * 0.18);
+      ctx.stroke();
+    }
+
+    // 12 vanished alphabet cartouches winding across bridges & frieze
+    for (let a = 0; a < 12; a++) {
+      const row = (a / 4) | 0;
+      const col = a % 4;
+      const cx = w * (0.325 + col * 0.115);
+      const cy = h * (0.27 + row * 0.21) - h * 0.012;
+      const pulse = 0.72 + Math.sin(t * 1.5 + a * 0.8) * 0.18;
+      ctx.fillStyle = hexToRgba(PALETTE.basaltBlack, 0.88);
+      ctx.fillRect(cx - 10, cy - 7, 20, 14);
+      ctx.strokeStyle = hexToRgba(PALETTE.papyrusAmber, pulse);
+      ctx.lineWidth = 1.3;
+      ctx.strokeRect(cx - 10, cy - 7, 20, 14);
+      ctx.beginPath();
+      ctx.moveTo(cx - 5, cy - 3 + (a % 3));
+      ctx.lineTo(cx + 4, cy - 2);
+      ctx.lineTo(cx - 2, cy + 4);
+      ctx.moveTo(cx + 5, cy + 3);
+      ctx.arc(cx + 1, cy, 2.5, 0, Math.PI * 1.4);
+      ctx.stroke();
+    }
+
+    // Unoccupied scholar lectern at bottom center
+    ctx.fillStyle = PALETTE.vellumOchre;
+    ctx.fillRect(w * 0.47, h * 0.81, w * 0.06, h * 0.11);
+    ctx.fillStyle = PALETTE.magnoliaIvory;
+    ctx.fillRect(w * 0.445, h * 0.785, w * 0.11, h * 0.028);
+  }
+
+  function drawSultanStables(ctx, w, h, t) {
+    const bg = ctx.createLinearGradient(0, 0, 0, h);
+    bg.addColorStop(0, PALETTE.basaltBlack);
+    bg.addColorStop(0.6, PALETTE.basaltSlate);
+    bg.addColorStop(1, '#2b161d');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, w, h);
+
+    // Herringbone masonry stable floor
+    ctx.fillStyle = '#21191d';
+    ctx.fillRect(0, h * 0.73, w, h * 0.27);
+    ctx.strokeStyle = hexToRgba(PALETTE.vellumOchre, 0.18);
+    for (let f = 0; f < 12; f++) {
+      ctx.beginPath();
+      ctx.moveTo((w * f) / 12, h * 0.73);
+      ctx.lineTo(w * 0.5 + ((f - 6) * w) / 8, h);
+      ctx.stroke();
+    }
+
+    // 6 vaulted masonry horse-stalls with suspended saddles, stirrups & bridles
+    const padX = w * 0.05;
+    const stallW = (w * 0.90) / 6;
+    for (let s = 0; s < 6; s++) {
+      const x = padX + s * stallW + stallW * 0.05;
+      const bw = stallW * 0.90;
+      const y = h * 0.20;
+      const bh = h * 0.54;
+      drawPointedArchPath(ctx, x, y, bw, bh, 0.32);
+      ctx.fillStyle = '#151923';
+      ctx.fill();
+      ctx.strokeStyle = PALETTE.papyrusAmber;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Groin-vault ribs & timber stall rail
+      ctx.strokeStyle = hexToRgba(PALETTE.porphyryRose, 0.45);
+      ctx.lineWidth = 1.1;
+      ctx.beginPath();
+      ctx.moveTo(x, y + bh * 0.32);
+      ctx.lineTo(x + bw, y + bh * 0.65);
+      ctx.moveTo(x + bw, y + bh * 0.32);
+      ctx.lineTo(x, y + bh * 0.65);
+      ctx.stroke();
+      ctx.fillStyle = '#3c241b';
+      ctx.fillRect(x + 4, y + bh * 0.72, bw - 8, h * 0.14);
+
+      // Suspended tooled crimson leather saddle + stirrups + bridle
+      const cx = x + bw * 0.5;
+      const sway = Math.sin(t * 1.2 + s * 0.9) * 1.6;
+      const sy = y + bh * 0.58;
+      ctx.strokeStyle = PALETTE.vellumOchre;
+      ctx.lineWidth = 1.4;
+      ctx.beginPath();
+      ctx.moveTo(cx, y + bh * 0.12);
+      ctx.lineTo(cx + sway, sy);
+      ctx.stroke();
+      // Tooled saddle seat, pommel & cantle
+      ctx.fillStyle = PALETTE.porphyryCrimson;
+      fillEllipse(ctx, cx + sway, sy + 4, bw * 0.26, h * 0.036);
+      ctx.strokeStyle = PALETTE.vellumOchre;
+      ctx.strokeRect(cx + sway - bw * 0.16, sy - 2, bw * 0.32, h * 0.025);
+      // Hanging stirrup straps & silver-ivory stirrup irons
+      for (let st = -1; st <= 1; st += 2) {
+        const stX = cx + sway + st * bw * 0.15;
+        ctx.strokeStyle = PALETTE.papyrusAmber;
+        ctx.beginPath();
+        ctx.moveTo(stX, sy + 8);
+        ctx.lineTo(stX, sy + bh * 0.27);
+        ctx.stroke();
+        ctx.strokeStyle = PALETTE.magnoliaIvory;
+        ctx.strokeRect(stX - 4, sy + bh * 0.27, 8, 7);
+      }
+    }
+  }
+
+  function drawCemeteryTombs(ctx, w, h, t) {
+    const sky = ctx.createLinearGradient(0, 0, 0, h * 0.68);
+    sky.addColorStop(0, PALETTE.basaltBlack);
+    sky.addColorStop(0.6, '#13242e');
+    sky.addColorStop(1, PALETTE.basaltSlate);
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, w, h);
+
+    // Pale funerary moon disc
+    ctx.fillStyle = hexToRgba(PALETTE.magnoliaIvory, 0.14);
+    fillEllipse(ctx, w * 0.5, h * 0.22, Math.min(w, h) * 0.11, Math.min(w, h) * 0.11);
+
+    // Necropolis stone avenue
+    ctx.fillStyle = '#121720';
+    ctx.fillRect(0, h * 0.64, w, h * 0.36);
+    ctx.fillStyle = '#1b2430';
+    ctx.beginPath();
+    ctx.moveTo(w * 0.40, h * 0.64);
+    ctx.lineTo(w * 0.60, h * 0.64);
+    ctx.lineTo(w * 0.82, h);
+    ctx.lineTo(w * 0.18, h);
+    ctx.closePath();
+    ctx.fill();
+
+    // 8 solemn dark cypresses flanking the avenue
+    for (let c = 0; c < 8; c++) {
+      const side = c < 4 ? -1 : 1;
+      const idx = c % 4;
+      const cx = w * 0.5 + side * w * (0.14 + idx * 0.095);
+      const base = h * (0.65 + idx * 0.055);
+      const ch = h * (0.34 + idx * 0.05);
+      const cw = w * (0.026 + idx * 0.006);
+      const tipShift = Math.sin(t * 0.7 + c) * 1.5;
+      ctx.fillStyle = '#241a15';
+      ctx.fillRect(cx - 2.5, base - 10, 5, 14);
+      ctx.fillStyle = idx % 2 === 0 ? '#0b1d21' : '#112a30';
+      ctx.beginPath();
+      ctx.moveTo(cx - cw, base - 8);
+      ctx.quadraticCurveTo(cx - cw * 0.85, base - ch * 0.65, cx + tipShift, base - ch);
+      ctx.quadraticCurveTo(cx + cw * 0.85, base - ch * 0.65, cx + cw, base - 8);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    // 7 carved marble sarcophagi and fluted sepulchers
+    const tombs = [
+      { x: w * 0.50, y: h * 0.63, tw: w * 0.13, th: h * 0.13 },
+      { x: w * 0.30, y: h * 0.71, tw: w * 0.12, th: h * 0.09 },
+      { x: w * 0.70, y: h * 0.71, tw: w * 0.12, th: h * 0.09 },
+      { x: w * 0.21, y: h * 0.80, tw: w * 0.14, th: h * 0.10 },
+      { x: w * 0.79, y: h * 0.80, tw: w * 0.14, th: h * 0.10 },
+      { x: w * 0.13, y: h * 0.90, tw: w * 0.15, th: h * 0.10 },
+      { x: w * 0.87, y: h * 0.90, tw: w * 0.15, th: h * 0.10 }
+    ];
+    for (let i = 0; i < tombs.length; i++) {
+      const tb = tombs[i];
+      const lx = tb.x - tb.tw * 0.5;
+      const ly = tb.y - tb.th;
+      ctx.fillStyle = PALETTE.magnoliaIvory;
+      ctx.fillRect(lx, ly, tb.tw, tb.th);
+      // Classical pedimented lid
+      ctx.fillStyle = '#dfd7c8';
+      ctx.beginPath();
+      ctx.moveTo(lx - 5, ly);
+      ctx.lineTo(tb.x, ly - tb.th * 0.36);
+      ctx.lineTo(lx + tb.tw + 5, ly);
+      ctx.closePath();
+      ctx.fill();
+      // Fluted marble pilasters & cool turquoise shadow relief
+      ctx.strokeStyle = hexToRgba(PALETTE.magnoliaTurquoise, 0.45);
+      ctx.lineWidth = 1.2;
+      for (let fl = 1; fl <= 4; fl++) {
+        const fx = lx + (tb.tw * fl) / 5;
+        ctx.beginPath();
+        ctx.moveTo(fx, ly + 4);
+        ctx.lineTo(fx, tb.y - 4);
+        ctx.stroke();
+      }
+    }
+  }
+
+
+  function drawCitadelPinnacle(ctx, w, h, t) {
+    const sky = ctx.createLinearGradient(0, 0, 0, h);
+    sky.addColorStop(0, PALETTE.basaltBlack);
+    sky.addColorStop(0.50, PALETTE.basaltSlate);
+    sky.addColorStop(0.82, '#3d3023');
+    sky.addColorStop(1, '#684d2c');
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, w, h);
+
+    // Dry high-altitude wind striae across empty inland sky (no sea exists)
+    ctx.strokeStyle = hexToRgba(PALETTE.papyrusAmber, 0.14);
+    ctx.lineWidth = 1;
+    for (let wv = 0; wv < 5; wv++) {
+      const wy = h * (0.14 + wv * 0.08);
+      const drift = Math.sin(t * 0.5 + wv) * 8;
+      ctx.beginPath();
+      ctx.moveTo(w * 0.12 + drift, wy);
+      ctx.lineTo(w * 0.88 + drift, wy);
+      ctx.stroke();
+    }
+
+    // 5 sheer inland mountain crags crowning dry canyons
+    const crags = [
+      { px: w * 0.12, py: h * 0.54, bw: w * 0.28, shade: '#161b25' },
+      { px: w * 0.88, py: h * 0.52, bw: w * 0.28, shade: '#171c27' },
+      { px: w * 0.29, py: h * 0.43, bw: w * 0.30, shade: '#1e2431' },
+      { px: w * 0.72, py: h * 0.44, bw: w * 0.30, shade: '#1d222f' },
+      { px: w * 0.50, py: h * 0.28, bw: w * 0.36, shade: PALETTE.basaltBlack }
+    ];
+    for (let i = 0; i < crags.length; i++) {
+      const cr = crags[i];
+      ctx.fillStyle = cr.shade;
+      ctx.beginPath();
+      ctx.moveTo(cr.px - cr.bw, h);
+      ctx.lineTo(cr.px - cr.bw * 0.32, cr.py + h * 0.14);
+      ctx.lineTo(cr.px, cr.py);
+      ctx.lineTo(cr.px + cr.bw * 0.35, cr.py + h * 0.16);
+      ctx.lineTo(cr.px + cr.bw, h);
+      ctx.closePath();
+      ctx.fill();
+      // Sun-bleached dry ochre ridge facet
+      ctx.strokeStyle = hexToRgba(PALETTE.vellumOchre, 0.42);
+      ctx.lineWidth = 1.4;
+      ctx.beginPath();
+      ctx.moveTo(cr.px, cr.py);
+      ctx.lineTo(cr.px + cr.bw * 0.18, h);
+      ctx.stroke();
+    }
+
+    // Citadel stone bastion, crenellations & highest watchtower spire
+    const cx = w * 0.50;
+    const topY = h * 0.28;
+    ctx.fillStyle = '#cfc3ae';
+    ctx.fillRect(cx - w * 0.055, topY - h * 0.08, w * 0.11, h * 0.09);
+    for (let m = 0; m < 4; m++) {
+      ctx.fillRect(cx - w * 0.055 + m * (w * 0.031), topY - h * 0.095, w * 0.018, h * 0.016);
+    }
+    ctx.fillStyle = PALETTE.magnoliaIvory;
+    ctx.fillRect(cx - w * 0.022, topY - h * 0.17, w * 0.044, h * 0.09);
+    ctx.fillStyle = PALETTE.porphyryCrimson;
+    ctx.beginPath();
+    ctx.moveTo(cx - w * 0.028, topY - h * 0.17);
+    ctx.lineTo(cx, topY - h * 0.235);
+    ctx.lineTo(cx + w * 0.028, topY - h * 0.17);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  function drawRefractionVeil(ctx, w, h, ref, sig) {
+    if (ref <= 0.005) return;
+    ctx.save();
+    const splitX = w * (1 - ref * 0.5);
+    ctx.strokeStyle = hexToRgba(PALETTE.lagoonCyan, 0.22 + ref * 0.45);
+    ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    ctx.moveTo(splitX, 0);
+    ctx.lineTo(w - splitX, h);
+    ctx.stroke();
+    ctx.strokeStyle = hexToRgba(sig.palette.trim, 0.18 + ref * 0.35);
+    ctx.strokeRect(w * 0.05, h * 0.05, w * 0.90, h * 0.90);
+    ctx.restore();
+  }
+
+  const SCENE_ZONES = {
+    magnolia_lagoon: [
+      { yMax: 0.47, xMin: 0, xMax: 1, zone: 'magnolia_boughs', label: 'Nine Magnolia Boughs & Clipped Terrace Hedges' },
+      { yMax: 1.00, xMin: 0.34, xMax: 0.66, zone: 'bathing_stair', label: 'Ivory Marble Bathing Steps (Expected Bathers)' },
+      { yMax: 1.00, xMin: 0, xMax: 1, zone: 'lagoon_pools', label: 'Three Turquoise Lagoon Pools Mirroring Blossoms' }
+    ],
+    porphyry_palace: [
+      { yMax: 0.36, xMin: 0, xMax: 1, zone: 'porphyry_domes', label: 'Highest Porphyry Domes & Gilded Finials' },
+      { yMax: 0.71, xMin: 0.35, xMax: 0.65, zone: 'frescoed_hall_bars', label: 'Iron-Barred Central Hall Before Frescoed Walls' },
+      { yMax: 0.71, xMin: 0, xMax: 1, zone: 'fountain_courtyards', label: 'Six Glazed Tile Courtyards with Marble Fountains' },
+      { yMax: 1.00, xMin: 0, xMax: 1, zone: 'porphyry_steps', label: 'Crimson Porphyry Steps of Imperial Ascent' }
+    ],
+    vellum_library: [
+      { yMax: 0.76, xMin: 0.29, xMax: 0.71, zone: 'alphabet_bridges', label: 'Catwalk Bridges of Twelve Vanished Alphabets' },
+      { yMax: 1.00, xMin: 0.42, xMax: 0.58, zone: 'scholar_lectern', label: 'Silent Reading Lectern Awaiting the Philosopher' },
+      { yMax: 1.00, xMin: 0, xMax: 1, zone: 'vellum_shelves', label: 'Bowing Timber Shelves of Vellum Papyri' }
+    ],
+    sultan_stables: [
+      { yMax: 0.48, xMin: 0, xMax: 1, zone: 'vaulted_stalls', label: 'Six Groin-Vaulted Masonry Horse-Stalls' },
+      { yMax: 0.76, xMin: 0, xMax: 1, zone: 'suspended_saddles', label: 'Tooled Leather Saddles, Silver Stirrups & Bridles' },
+      { yMax: 1.00, xMin: 0, xMax: 1, zone: 'stable_paving', label: 'Herringbone Masonry Royal Stable Aisle' }
+    ],
+    cemetery_tombs: [
+      { yMax: 0.62, xMin: 0, xMax: 1, zone: 'cypress_avenue', label: 'Solemn Colonnade of Eight Dark Cypresses' },
+      { yMax: 1.00, xMin: 0, xMax: 1, zone: 'marble_sarcophagi', label: 'Seven Carved Ivory Marble Tombs & Sepulchers' }
+    ],
+    citadel_pinnacle: [
+      { yMax: 0.32, xMin: 0.36, xMax: 0.64, zone: 'citadel_spire', label: 'Highest Dry Stone Citadel Pinnacle & Watch Turret' },
+      { yMax: 1.00, xMin: 0, xMax: 1, zone: 'inland_crags', label: 'Five Arid Inland Mountain Crags Far From Any Sea' }
+    ]
+  };
+
+  function hitTestScene(x, y, w, h, locusId) {
+    const sig = resolveSignifier(locusId);
+    if (!(w > 0 && h > 0) || x < 0 || y < 0 || x > w || y > h) {
+      return { hit: false, locusId: sig.id, zone: 'outside', label: '' };
+    }
+    const nx = x / w;
+    const ny = y / h;
+    if (ny < 0.06) {
+      return { hit: false, locusId: sig.id, zone: 'sky_margin', label: '' };
+    }
+    const list = SCENE_ZONES[sig.id] || SCENE_ZONES.magnolia_lagoon;
+    for (let i = 0; i < list.length; i++) {
+      const z = list[i];
+      if (ny <= z.yMax && nx >= z.xMin && nx <= z.xMax) {
+        return { hit: true, locusId: sig.id, zone: z.zone, label: z.label };
+      }
+    }
+    return { hit: true, locusId: sig.id, zone: 'elevation', label: sig.surfaceTitle };
+  }
+
+  function renderLocusMedallion(ctx, x, y, r, locusId, isSelected, isUnsealed) {
+    if (!ctx || !(r > 0)) return;
+    const sig = resolveSignifier(locusId);
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.beginPath();
+    ctx.arc(0, 0, r, 0, Math.PI * 2);
+    ctx.fillStyle = isSelected ? PALETTE.basaltSlate : PALETTE.basaltBlack;
+    ctx.fill();
+    ctx.lineWidth = isSelected ? 2.4 : 1.4;
+    ctx.strokeStyle = isSelected ? PALETTE.lagoonCyan : isUnsealed ? PALETTE.porphyryRose : PALETTE.vellumOchre;
+    ctx.stroke();
+
+    if (isUnsealed) {
+      ctx.beginPath();
+      ctx.arc(0, 0, r * 0.84, -Math.PI * 0.5, Math.PI * 0.5);
+      ctx.strokeStyle = PALETTE.lagoonCyan;
+      ctx.lineWidth = 1.3;
+      ctx.stroke();
+    }
+
+    const s = r * 0.52;
+    ctx.strokeStyle = PALETTE.magnoliaIvory;
+    ctx.fillStyle = sig.palette.primary;
+    ctx.lineWidth = 1.4;
+    if (sig.id === 'magnolia_lagoon') {
+      drawMagnoliaBlossom(ctx, 0, -s * 0.18, s * 0.55, 0.95);
+      ctx.beginPath();
+      ctx.moveTo(-s, s * 0.55);
+      ctx.lineTo(s, s * 0.55);
+      ctx.stroke();
+    } else if (sig.id === 'porphyry_palace') {
+      fillEllipse(ctx, 0, -s * 0.15, s * 0.65, s * 0.55);
+      ctx.strokeRect(-s * 0.7, -s * 0.1, s * 1.4, s * 0.85);
+    } else if (sig.id === 'vellum_library') {
+      ctx.strokeRect(-s * 0.75, -s * 0.55, s * 1.5, s * 1.1);
+      ctx.beginPath();
+      ctx.moveTo(-s * 0.75, 0);
+      ctx.lineTo(s * 0.75, 0);
+      ctx.stroke();
+    } else if (sig.id === 'sultan_stables') {
+      drawPointedArchPath(ctx, -s * 0.65, -s * 0.65, s * 1.3, s * 1.3, 0.4);
+      ctx.stroke();
+      fillEllipse(ctx, 0, s * 0.05, s * 0.38, s * 0.2);
+    } else if (sig.id === 'cemetery_tombs') {
+      ctx.fillStyle = PALETTE.magnoliaIvory;
+      ctx.fillRect(-s * 0.55, -s * 0.05, s * 1.1, s * 0.65);
+      ctx.beginPath();
+      ctx.moveTo(-s * 0.68, -s * 0.05);
+      ctx.lineTo(0, -s * 0.55);
+      ctx.lineTo(s * 0.68, -s * 0.05);
+      ctx.closePath();
+      ctx.fill();
+    } else {
+      ctx.beginPath();
+      ctx.moveTo(-s * 0.8, s * 0.7);
+      ctx.lineTo(0, -s * 0.85);
+      ctx.lineTo(s * 0.8, s * 0.7);
+      ctx.closePath();
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function renderSurfaceScene(ctx, w, h, opts) {
+    if (!ctx || !(w > 0 && h > 0)) return;
+    const o = opts || {};
+    const sig = resolveSignifier(o.locusId);
+    const t = o.reducedMotion ? 0 : Number(o.time) || 0;
+    const ref = clamp(Number(o.refraction) || 0, 0, 1);
+
+    ctx.save();
+    if (sig.id === 'magnolia_lagoon') drawMagnoliaLagoon(ctx, w, h, t);
+    else if (sig.id === 'porphyry_palace') drawPorphyryPalace(ctx, w, h, t);
+    else if (sig.id === 'vellum_library') drawVellumLibrary(ctx, w, h, t);
+    else if (sig.id === 'sultan_stables') drawSultanStables(ctx, w, h, t);
+    else if (sig.id === 'cemetery_tombs') drawCemeteryTombs(ctx, w, h, t);
+    else drawCitadelPinnacle(ctx, w, h, t);
+
+    drawSurveyorGrid(ctx, w, h, sig.palette.trim);
+    drawRefractionVeil(ctx, w, h, ref, sig);
+    ctx.restore();
+  }
+
+  function getSignifiers() {
+    return SURFACE_SIGNIFIERS.slice();
+  }
+
+  function getSignifierById(locusId) {
+    return resolveSignifier(locusId);
+  }
+
+  function createSurfaceRenderer() {
+    return {
+      LOCI_ORDER: LOCI_ORDER,
+      SURFACE_SIGNIFIERS: SURFACE_SIGNIFIERS,
+      PALETTE: PALETTE,
+      getSignifiers: getSignifiers,
+      getSignifierById: getSignifierById,
+      renderSurfaceScene: renderSurfaceScene,
+      renderLocusMedallion: renderLocusMedallion,
+      hitTestScene: hitTestScene
+    };
+  }
+
+  const exportedApi = Object.freeze({
+    LOCI_ORDER: LOCI_ORDER,
+    SURFACE_SIGNIFIERS: SURFACE_SIGNIFIERS,
+    PALETTE: PALETTE,
+    getSignifiers: getSignifiers,
+    getSignifierById: getSignifierById,
+    renderSurfaceScene: renderSurfaceScene,
+    renderLocusMedallion: renderLocusMedallion,
+    hitTestScene: hitTestScene,
+    createSurfaceRenderer: createSurfaceRenderer
+  });
+
+  root.HypatiaSurfaceExpectations = exportedApi;
+  if (typeof window !== 'undefined') {
+    window.HypatiaSurfaceExpectations = exportedApi;
+  }
+})(typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : this);
+</script>
+<script>
+/* City 17: Hypatia (Cities & Signs 4) — Layer: Inverted Realities of Things */
+(function (root) {
+  'use strict';
+
+  const PALETTE = Object.freeze({
+    magnolia_turquoise: '#1f9aa8',
+    lagoon_cyan: '#58d3dc',
+    magnolia_ivory: '#f4ede0',
+    porphyry_crimson: '#842038',
+    porphyry_rose: '#b8435e',
+    basalt_black: '#0e1117',
+    basalt_slate: '#1b202c',
+    vellum_ochre: '#d4a853',
+    papyrus_amber: '#ebd099'
+  });
+
+  const LOCI_ORDER = Object.freeze([
+    'magnolia_lagoon',
+    'porphyry_palace',
+    'vellum_library',
+    'sultan_stables',
+    'cemetery_tombs',
+    'citadel_pinnacle'
+  ]);
+
+  const INVERTED_THINGS = Object.freeze([
+    Object.freeze({
+      id: 'magnolia_lagoon',
+      index: 0,
+      key: '1',
+      invertedTitle: 'Lagoon Floor of Weighted Suicides',
+      invertedReality: 'At the bottom of the blue water lie drowned suicides with basalt stones tied to their ankles while reef crabs bite their eyes.',
+      rewiredRule: 'Magnolia lagoon -> Abyssal floor of stone-weighted suicides',
+      epigramFragment: 'Beneath reflected white blossoms, knotted ropes bind pale ankles to black basalt on the silt floor.',
+      inversionMetrics: Object.freeze({
+        crabCount: 8,
+        weightedSuicides: 3,
+        stonesTiedToAnkles: true
+      })
+    }),
+    Object.freeze({
+      id: 'porphyry_palace',
+      index: 1,
+      key: '2',
+      invertedTitle: 'Subterranean Basalt Chain-Quarry',
+      invertedReality: 'Behind the hall\u2019s iron bars yawns an underground quarry across six tiled fountain courtyards where convicts in black iron chains hoist massive angular blocks of black basalt.',
+      rewiredRule: 'Porphyry palace & frescoes -> Subterranean basalt convict quarry',
+      epigramFragment: 'Past porphyry domes and iron bars, black chains haul cut basalt up from the pit.',
+      inversionMetrics: Object.freeze({
+        chainedConvicts: 5,
+        basaltBlocks: 6,
+        fountainCourtyards: 6,
+        undergroundQuarry: true
+      })
+    }),
+    Object.freeze({
+      id: 'vellum_library',
+      index: 2,
+      key: '3',
+      invertedTitle: 'Opium Pipe & Ninepins on the Lawn',
+      invertedReality: 'In the remotest papyrus cabinet, a dull-eyed adolescent lying on a mat with an opium pipe points out the window to a children\u2019s swing-garden where the philosopher sits on the lawn throwing wooden ninepins.',
+      rewiredRule: 'Vellum library -> Opium haze pointing to ninepins in the children\u2019s garden',
+      epigramFragment: 'A pipe-hazed finger points past vellum scrolls to the sage bowling nine wooden skittles beneath two swings.',
+      inversionMetrics: Object.freeze({
+        opiumYouthPointing: true,
+        woodenNinepins: 9,
+        gardenSwings: 2
+      })
+    }),
+    Object.freeze({
+      id: 'sultan_stables',
+      index: 3,
+      key: '4',
+      invertedTitle: 'Amorous Frenzy Upon the Saddles',
+      invertedReality: 'Beneath the stable vaults, beautiful women with unbound hair and bare legs in riding breeches mount leather saddles set on wooden trestles with amorous frenzy.',
+      rewiredRule: 'Sultan\u2019s stables -> Women in riding breeches mounting saddles in amorous frenzy',
+      epigramFragment: 'Under stirrup-hung porphyry vaults, unbound hair sweeps stitched leather astride bare wooden trestles.',
+      inversionMetrics: Object.freeze({
+        womenInRidingBreeches: 4,
+        saddleTrestles: 4,
+        amorousFrenzy: true
+      })
+    }),
+    Object.freeze({
+      id: 'cemetery_tombs',
+      index: 4,
+      key: '5',
+      invertedTitle: 'Hidden Flutes & Harps in the Sepulchers',
+      invertedReality: 'Musicians hide inside the carved marble tombs, and from grave to grave flutes respond to the trills of harps with sweet living melodies.',
+      rewiredRule: 'Cemetery tombs -> Sweet flute & harp concerts echoing grave to grave',
+      epigramFragment: 'Inside marble sepulchers, silver reed-breath answers golden harp strings from grave to grave.',
+      inversionMetrics: Object.freeze({
+        fluteMusicians: 3,
+        harpMusicians: 3,
+        graveToGraveMelodies: true
+      })
+    }),
+    Object.freeze({
+      id: 'citadel_pinnacle',
+      index: 5,
+      key: '6',
+      invertedTitle: 'Sky-Ship Vigil Where No Sea Exists',
+      invertedReality: 'At the very top of the dry crag citadel where no sea exists, waiting for a sailing ship to pass overhead and bear the traveler away.',
+      rewiredRule: 'Dry citadel pinnacle -> Embarkation dock for the sky-ship where no sea exists',
+      epigramFragment: 'Signs form a language, but not the one you think you know.',
+      inversionMetrics: Object.freeze({
+        seaExists: false,
+        waitingForShipAtTop: true
+      })
+    })
+  ]);
+
+  const BY_ID = Object.create(null);
+  for (let i = 0; i < INVERTED_THINGS.length; i++) {
+    BY_ID[INVERTED_THINGS[i].id] = INVERTED_THINGS[i];
+  }
+
+  function clamp(v, lo, hi) {
+    const n = Number(v);
+    if (!Number.isFinite(n)) return lo;
+    return n < lo ? lo : (n > hi ? hi : n);
+  }
+
+  function resolveLocusId(idOrIndex, fallback) {
+    if (typeof idOrIndex === 'string') {
+      if (BY_ID[idOrIndex]) return idOrIndex;
+      const trimmed = idOrIndex.trim();
+      for (let i = 0; i < INVERTED_THINGS.length; i++) {
+        if (INVERTED_THINGS[i].key === trimmed) return INVERTED_THINGS[i].id;
+      }
+    } else if (typeof idOrIndex === 'number' && Number.isFinite(idOrIndex)) {
+      const idx = Math.trunc(idOrIndex);
+      if (idx >= 0 && idx < INVERTED_THINGS.length) return INVERTED_THINGS[idx].id;
+    }
+    return fallback || LOCI_ORDER[0];
+  }
+
+  function getInversionById(idOrIndex) {
+    if (idOrIndex === null || idOrIndex === undefined) return null;
+    const resolved = resolveLocusId(idOrIndex, '');
+    return BY_ID[resolved] || null;
+  }
+
+  function drawEllipse(ctx, cx, cy, rx, ry, rot) {
+    if (typeof ctx.ellipse === 'function') {
+      ctx.ellipse(cx, cy, Math.max(0.5, rx), Math.max(0.5, ry), rot || 0, 0, Math.PI * 2);
+      return;
+    }
+    ctx.save();
+    ctx.translate(cx, cy);
+    if (rot) ctx.rotate(rot);
+    ctx.scale(Math.max(0.5, rx), Math.max(0.5, ry));
+    ctx.arc(0, 0, 1, 0, Math.PI * 2);
+    ctx.restore();
+  }
+
+  function drawIronChain(ctx, x1, y1, x2, y2, links, color) {
+    ctx.save();
+    ctx.strokeStyle = color || '#080a0e';
+    ctx.lineWidth = 2.1;
+    const count = Math.max(4, links || 10);
+    for (let i = 0; i <= count; i++) {
+      const u = i / count;
+      const lx = x1 + (x2 - x1) * u;
+      const ly = y1 + (y2 - y1) * u;
+      const ang = Math.atan2(y2 - y1, x2 - x1) + (i % 2 === 0 ? 0 : 0.45);
+      ctx.beginPath();
+      drawEllipse(ctx, lx, ly, 4.2, 2.3, ang);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function paintMagnoliaLagoon(ctx, w, h, env) {
+    const t = env.phase;
+    const bg = ctx.createLinearGradient(0, 0, 0, h);
+    bg.addColorStop(0, '#1c7e8c');
+    bg.addColorStop(0.42, '#0f3c49');
+    bg.addColorStop(0.82, '#0a1c26');
+    bg.addColorStop(1, PALETTE.basalt_black);
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, w, h);
+
+    // Overhead water surface ripples & ghostly floating white magnolia petals
+    for (let i = 0; i < 7; i++) {
+      const mx = w * (0.1 + i * 0.13) + Math.sin(t * 0.8 + i) * 12;
+      const my = h * (0.06 + (i % 2) * 0.035);
+      ctx.fillStyle = 'rgba(244, 237, 224, 0.26)';
+      for (let p = 0; p < 5; p++) {
+        ctx.beginPath();
+        drawEllipse(ctx, mx + Math.cos(p * 1.25) * 9, my + Math.sin(p * 1.25) * 4, 8, 3.5, p * 0.6);
+        ctx.fill();
+      }
+      // Caustic turquoise light shafts
+      const shaft = ctx.createLinearGradient(mx, my, mx + (i - 3) * 18, h * 0.86);
+      shaft.addColorStop(0, 'rgba(88, 211, 220, 0.20)');
+      shaft.addColorStop(1, 'rgba(31, 154, 168, 0)');
+      ctx.fillStyle = shaft;
+      ctx.beginPath();
+      ctx.moveTo(mx - 14, 0);
+      ctx.lineTo(mx + 14, 0);
+      ctx.lineTo(mx + 46, h * 0.88);
+      ctx.lineTo(mx - 34, h * 0.88);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    // Abyssal silt floor
+    ctx.fillStyle = '#0b141c';
+    ctx.beginPath();
+    ctx.moveTo(0, h * 0.8);
+    ctx.quadraticCurveTo(w * 0.35, h * 0.75, w * 0.68, h * 0.81);
+    ctx.quadraticCurveTo(w * 0.86, h * 0.84, w, h * 0.79);
+    ctx.lineTo(w, h);
+    ctx.lineTo(0, h);
+    ctx.closePath();
+    ctx.fill();
+
+    // 3 drowned suicides tethered by ankle ropes to heavy angular basalt stones
+    const figures = [
+      { x: w * 0.23, y: h * 0.62, stoneX: w * 0.19, stoneY: h * 0.86, tilt: -0.22 },
+      { x: w * 0.52, y: h * 0.57, stoneX: w * 0.49, stoneY: h * 0.88, tilt: 0.16 },
+      { x: w * 0.79, y: h * 0.64, stoneX: w * 0.82, stoneY: h * 0.87, tilt: -0.15 }
+    ];
+    for (let i = 0; i < figures.length; i++) {
+      const f = figures[i];
+      const sway = Math.sin(t * 1.1 + i * 2.1) * 6;
+      const ankleX = f.x - Math.cos(f.tilt) * 34 + sway * 0.4;
+      const ankleY = f.y + 34;
+      const headX = f.x + Math.cos(f.tilt) * 38 + sway;
+      const headY = f.y - 18 + Math.sin(t + i) * 3;
+
+      // Basalt anchor stone on lagoon floor
+      ctx.fillStyle = PALETTE.basalt_black;
+      ctx.strokeStyle = '#365864';
+      ctx.lineWidth = 1.6;
+      ctx.beginPath();
+      ctx.moveTo(f.stoneX - 22, f.stoneY + 10);
+      ctx.lineTo(f.stoneX - 16, f.stoneY - 14);
+      ctx.lineTo(f.stoneX + 8, f.stoneY - 18);
+      ctx.lineTo(f.stoneX + 24, f.stoneY - 3);
+      ctx.lineTo(f.stoneX + 19, f.stoneY + 12);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // Taut knotted ankle rope
+      ctx.strokeStyle = PALETTE.vellum_ochre;
+      ctx.lineWidth = 2.4;
+      ctx.beginPath();
+      ctx.moveTo(f.stoneX, f.stoneY - 12);
+      ctx.quadraticCurveTo((f.stoneX + ankleX) * 0.5 + 4, (f.stoneY + ankleY) * 0.5, ankleX, ankleY);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(ankleX, ankleY, 4.2, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Drifting shrouded body & head
+      ctx.fillStyle = 'rgba(224, 234, 232, 0.76)';
+      ctx.beginPath();
+      ctx.moveTo(ankleX, ankleY);
+      ctx.quadraticCurveTo(f.x + sway * 0.6, f.y - 8, headX - 8, headY + 4);
+      ctx.quadraticCurveTo(f.x + 12, f.y + 22, ankleX + 8, ankleY + 4);
+      ctx.closePath();
+      ctx.fill();
+      ctx.fillStyle = '#c8dad8';
+      ctx.beginPath();
+      ctx.arc(headX, headY, 10.5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // 8 turquoise-lit & porphyry reef crabs clustering toward the sunken eyes
+    const crabTargets = [
+      [0, -4, -6], [0, 12, 5], [0, -18, 18],
+      [1, -6, -5], [1, 13, 3], [1, 2, 20],
+      [2, -5, -4], [2, 12, 6]
+    ];
+    for (let c = 0; c < 8; c++) {
+      const ref = figures[crabTargets[c][0]];
+      const scuttle = Math.sin(t * 2.7 + c * 1.4) * 3.5;
+      const cx = ref.x + Math.cos(ref.tilt) * 38 + crabTargets[c][1] + scuttle;
+      const cy = ref.y - 18 + crabTargets[c][2];
+      ctx.strokeStyle = PALETTE.lagoon_cyan;
+      ctx.lineWidth = 1.4;
+      for (let leg = -2; leg <= 2; leg++) {
+        if (leg === 0) continue;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(cx + leg * 4.5, cy + (Math.abs(leg) % 2 === 0 ? 5 : -4));
+        ctx.stroke();
+      }
+      ctx.fillStyle = c % 2 === 0 ? PALETTE.porphyry_rose : PALETTE.magnolia_turquoise;
+      ctx.beginPath();
+      drawEllipse(ctx, cx, cy, 6.2, 4.2, 0.15 * scuttle);
+      ctx.fill();
+      ctx.strokeStyle = PALETTE.magnolia_ivory;
+      ctx.beginPath();
+      ctx.arc(cx - 6, cy - 4, 2.4, 0.3, 2.7);
+      ctx.moveTo(cx + 6, cy - 4);
+      ctx.arc(cx + 6, cy - 4, 2.4, 0.4, 2.8);
+      ctx.stroke();
+    }
+  }
+
+  function paintPorphyryPalace(ctx, w, h, env) {
+    const t = env.phase;
+    const bg = ctx.createLinearGradient(0, 0, 0, h);
+    bg.addColorStop(0, '#3a101d');
+    bg.addColorStop(0.22, PALETTE.basalt_slate);
+    bg.addColorStop(1, '#07090d');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, w, h);
+
+    // Upper porphyry cornice, 6 tiled fountain courtyard drains & iron hall bars
+    ctx.fillStyle = PALETTE.porphyry_crimson;
+    ctx.fillRect(0, 0, w, h * 0.16);
+    for (let f = 0; f < 6; f++) {
+      const fx = w * (0.1 + f * 0.16);
+      ctx.fillStyle = PALETTE.magnolia_turquoise;
+      ctx.fillRect(fx - 18, h * 0.04, 36, h * 0.06);
+      ctx.strokeStyle = PALETTE.papyrus_amber;
+      ctx.strokeRect(fx - 18, h * 0.04, 36, h * 0.06);
+    }
+    ctx.strokeStyle = '#090b10';
+    ctx.lineWidth = 3.2;
+    for (let b = 0; b < 14; b++) {
+      const bx = (w / 13) * b;
+      ctx.beginPath();
+      ctx.moveTo(bx, 0);
+      ctx.lineTo(bx, h * 0.21);
+      ctx.stroke();
+    }
+
+    // Stepped subterranean quarry ledges + warm amber brazier glow
+    const glow = ctx.createRadialGradient(w * 0.5, h * 0.65, 16, w * 0.5, h * 0.65, w * 0.52);
+    glow.addColorStop(0, 'rgba(212, 168, 83, 0.28)');
+    glow.addColorStop(1, 'rgba(14, 17, 23, 0)');
+    ctx.fillStyle = glow;
+    ctx.fillRect(0, h * 0.16, w, h * 0.84);
+
+    ctx.fillStyle = '#141923';
+    ctx.beginPath();
+    ctx.moveTo(0, h * 0.42);
+    ctx.lineTo(w * 0.26, h * 0.54);
+    ctx.lineTo(w * 0.34, h * 0.82);
+    ctx.lineTo(w * 0.68, h * 0.82);
+    ctx.lineTo(w * 0.76, h * 0.5);
+    ctx.lineTo(w, h * 0.38);
+    ctx.lineTo(w, h);
+    ctx.lineTo(0, h);
+    ctx.closePath();
+    ctx.fill();
+
+    // Timber A-frame hoist & iron pulley wheels
+    const px1 = w * 0.38, px2 = w * 0.64, pyTop = h * 0.25;
+    ctx.strokeStyle = '#6c4d2f';
+    ctx.lineWidth = 5;
+    ctx.beginPath();
+    ctx.moveTo(px1 - 48, h * 0.82);
+    ctx.lineTo(px1, pyTop);
+    ctx.lineTo(px2, pyTop);
+    ctx.lineTo(px2 + 48, h * 0.82);
+    ctx.stroke();
+
+    const hoistLift = Math.sin(t * 0.9) * 14;
+    // 6 angular blocks of black basalt (2 hoisted in chains, 4 on quarry floor)
+    const blocks = [
+      { x: px1, y: h * 0.53 + hoistLift, w: 56, h: 42, slung: true },
+      { x: px2, y: h * 0.6 - hoistLift, w: 60, h: 44, slung: true },
+      { x: w * 0.16, y: h * 0.76, w: 52, h: 36, slung: false },
+      { x: w * 0.44, y: h * 0.87, w: 58, h: 38, slung: false },
+      { x: w * 0.56, y: h * 0.88, w: 54, h: 36, slung: false },
+      { x: w * 0.84, y: h * 0.74, w: 56, h: 38, slung: false }
+    ];
+    for (let i = 0; i < blocks.length; i++) {
+      const bl = blocks[i];
+      if (bl.slung) {
+        drawIronChain(ctx, bl.x, pyTop, bl.x, bl.y - bl.h * 0.5, 11, '#05070a');
+      }
+      ctx.fillStyle = PALETTE.basalt_black;
+      ctx.strokeStyle = '#3b4659';
+      ctx.lineWidth = 1.8;
+      ctx.beginPath();
+      ctx.moveTo(bl.x - bl.w * 0.5, bl.y - bl.h * 0.35);
+      ctx.lineTo(bl.x - bl.w * 0.32, bl.y - bl.h * 0.52);
+      ctx.lineTo(bl.x + bl.w * 0.5, bl.y - bl.h * 0.42);
+      ctx.lineTo(bl.x + bl.w * 0.46, bl.y + bl.h * 0.48);
+      ctx.lineTo(bl.x - bl.w * 0.44, bl.y + bl.h * 0.45);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+    }
+
+    // 5 convicts in black iron chains hauling hoist lines
+    const convicts = [
+      [w * 0.22, h * 0.52], [w * 0.3, h * 0.68], [w * 0.5, h * 0.76],
+      [w * 0.71, h * 0.67], [w * 0.8, h * 0.5]
+    ];
+    for (let c = 0; c < convicts.length; c++) {
+      const cx = convicts[c][0], cy = convicts[c][1];
+      const lean = -0.35 + Math.sin(t * 1.4 + c) * 0.08;
+      ctx.strokeStyle = PALETTE.papyrus_amber;
+      ctx.lineWidth = 3.2;
+      ctx.beginPath();
+      ctx.moveTo(cx - 8, cy + 20);
+      ctx.lineTo(cx, cy);
+      ctx.lineTo(cx + Math.sin(lean) * 18, cy - 18);
+      ctx.stroke();
+      ctx.fillStyle = PALETTE.vellum_ochre;
+      ctx.beginPath();
+      ctx.arc(cx + Math.sin(lean) * 20, cy - 25, 6.2, 0, Math.PI * 2);
+      ctx.fill();
+      const targetX = c < 2 ? px1 : px2;
+      drawIronChain(ctx, cx + 4, cy - 10, targetX, pyTop + 10, 9, '#07080b');
+      if (c > 0) {
+        drawIronChain(ctx, convicts[c - 1][0], convicts[c - 1][1] + 18, cx - 6, cy + 18, 7, '#090b10');
+      }
+    }
+  }
+
+  function paintVellumLibrary(ctx, w, h, env) {
+    const t = env.phase;
+    ctx.fillStyle = '#19141d';
+    ctx.fillRect(0, 0, w, h);
+
+    // Left cabinet: shelves of rolled vellum papyri
+    for (let row = 0; row < 5; row++) {
+      const sy = h * (0.12 + row * 0.12);
+      ctx.fillStyle = '#3b281c';
+      ctx.fillRect(w * 0.03, sy, w * 0.37, 5);
+      for (let s = 0; s < 8; s++) {
+        ctx.fillStyle = s % 2 === 0 ? PALETTE.papyrus_amber : PALETTE.vellum_ochre;
+        ctx.beginPath();
+        ctx.arc(w * (0.055 + s * 0.043), sy - 7, 5.2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    // Sunlit arched window onto the children's swing-garden lawn
+    const wx = w * 0.46, wy = h * 0.1, ww = w * 0.48, wh = h * 0.76;
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(wx, wy + wh);
+    ctx.lineTo(wx, wy + ww * 0.36);
+    ctx.quadraticCurveTo(wx + ww * 0.5, wy - ww * 0.12, wx + ww, wy + ww * 0.36);
+    ctx.lineTo(wx + ww, wy + wh);
+    ctx.closePath();
+    ctx.clip();
+
+    const sky = ctx.createLinearGradient(0, wy, 0, wy + wh);
+    sky.addColorStop(0, '#7de0e6');
+    sky.addColorStop(0.46, '#bfeef0');
+    sky.addColorStop(0.47, '#2d7d6f');
+    sky.addColorStop(1, '#1c534a');
+    ctx.fillStyle = sky;
+    ctx.fillRect(wx, wy, ww, wh);
+
+    // 2 children's garden swings swaying from timber beam
+    ctx.strokeStyle = '#5c3a24';
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(wx + ww * 0.14, wy + wh * 0.22);
+    ctx.lineTo(wx + ww * 0.62, wy + wh * 0.22);
+    ctx.stroke();
+    for (let sw = 0; sw < 2; sw++) {
+      const ax = wx + ww * (0.25 + sw * 0.24);
+      const swingShift = Math.sin(t * 1.5 + sw * 1.7) * 12;
+      const seatY = wy + wh * 0.5;
+      ctx.strokeStyle = PALETTE.magnolia_ivory;
+      ctx.lineWidth = 1.6;
+      ctx.beginPath();
+      ctx.moveTo(ax - 8, wy + wh * 0.22);
+      ctx.lineTo(ax - 8 + swingShift, seatY);
+      ctx.moveTo(ax + 8, wy + wh * 0.22);
+      ctx.lineTo(ax + 8 + swingShift, seatY);
+      ctx.stroke();
+      ctx.fillStyle = PALETTE.porphyry_crimson;
+      ctx.fillRect(ax - 12 + swingShift, seatY, 24, 4.5);
+    }
+
+    // Philosopher seated on the lawn throwing wooden ball at 9 wooden ninepins
+    const philX = wx + ww * 0.22, philY = wy + wh * 0.78;
+    ctx.fillStyle = PALETTE.magnolia_ivory;
+    ctx.beginPath();
+    ctx.moveTo(philX - 18, philY + 12);
+    ctx.quadraticCurveTo(philX, philY - 26, philX + 20, philY + 12);
+    ctx.closePath();
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(philX + 2, philY - 24, 8, 0, Math.PI * 2);
+    ctx.fill();
+    // Rolling wooden bowl ball
+    const ballU = (t * 0.55) % 1;
+    ctx.fillStyle = '#6c3f23';
+    ctx.beginPath();
+    ctx.arc(philX + 24 + ballU * (ww * 0.36), philY + 2 - Math.sin(ballU * Math.PI) * 8, 5.5, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Exact 9 turned wooden ninepins on the garden grass
+    for (let p = 0; p < 9; p++) {
+      const col = p % 3, row = Math.floor(p / 3);
+      const px = wx + ww * (0.64 + col * 0.085 + row * 0.02);
+      const py = wy + wh * (0.68 + row * 0.085);
+      const tip = (p === 0 || p === 4) ? Math.sin(t * 2.2 + p) * 0.42 : 0.04 * Math.sin(t + p);
+      ctx.save();
+      ctx.translate(px, py);
+      ctx.rotate(tip);
+      ctx.fillStyle = PALETTE.papyrus_amber;
+      ctx.fillRect(-3.2, -16, 6.4, 16);
+      ctx.fillStyle = PALETTE.porphyry_crimson;
+      ctx.fillRect(-3.2, -11, 6.4, 2.5);
+      ctx.fillStyle = PALETTE.magnolia_ivory;
+      ctx.beginPath();
+      ctx.arc(0, -18.5, 3.2, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+    ctx.restore();
+
+    ctx.strokeStyle = PALETTE.vellum_ochre;
+    ctx.lineWidth = 3.5;
+    ctx.strokeRect(wx, wy + ww * 0.36, ww, wh - ww * 0.36);
+
+    // Woven mat, dull-eyed adolescent with opium pipe pointing out the window + smoke
+    ctx.fillStyle = '#6e5233';
+    ctx.fillRect(w * 0.06, h * 0.78, w * 0.34, h * 0.08);
+    const yx = w * 0.18, yy = h * 0.74;
+    ctx.fillStyle = PALETTE.porphyry_rose;
+    ctx.beginPath();
+    drawEllipse(ctx, yx + 12, yy + 4, 34, 11, -0.12);
+    ctx.fill();
+    ctx.fillStyle = PALETTE.papyrus_amber;
+    ctx.beginPath();
+    ctx.arc(yx - 16, yy - 12, 9.5, 0, Math.PI * 2);
+    ctx.fill();
+    // Extended pointing arm toward the garden window
+    ctx.strokeStyle = PALETTE.papyrus_amber;
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(yx - 4, yy - 8);
+    ctx.lineTo(w * 0.43, h * 0.56);
+    ctx.stroke();
+    // Long opium pipe & curling turquoise-amber haze
+    ctx.strokeStyle = PALETTE.vellum_ochre;
+    ctx.lineWidth = 2.4;
+    ctx.beginPath();
+    ctx.moveTo(yx - 10, yy - 9);
+    ctx.lineTo(yx + 28, yy - 2);
+    ctx.stroke();
+    for (let k = 0; k < 5; k++) {
+      const sy = yy - 14 - k * 22 - ((t * 14) % 18);
+      const sx = yx + 28 + Math.sin(t * 1.3 + k) * 14;
+      ctx.strokeStyle = 'rgba(88, 211, 220, 0.34)';
+      ctx.beginPath();
+      ctx.arc(sx, sy, 8 + k * 3, 0, Math.PI * 1.6);
+      ctx.stroke();
+    }
+  }
+
+  function paintSultanStables(ctx, w, h, env) {
+    const t = env.phase;
+    const bg = ctx.createLinearGradient(0, 0, 0, h);
+    bg.addColorStop(0, '#3a0e1c');
+    bg.addColorStop(0.55, PALETTE.porphyry_crimson);
+    bg.addColorStop(1, '#1b0d14');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, w, h);
+
+    // 4 crimson vaulted stable bays & hanging stirrups
+    for (let v = 0; v < 4; v++) {
+      const vx = (w / 4) * v, vw = w / 4;
+      ctx.strokeStyle = PALETTE.vellum_ochre;
+      ctx.lineWidth = 2.2;
+      ctx.beginPath();
+      ctx.moveTo(vx + 6, h * 0.78);
+      ctx.lineTo(vx + 6, h * 0.32);
+      ctx.quadraticCurveTo(vx + vw * 0.5, h * 0.06, vx + vw - 6, h * 0.32);
+      ctx.lineTo(vx + vw - 6, h * 0.78);
+      ctx.stroke();
+
+      // Trestle + leather saddle + bare-legged woman in riding breeches with unbound hair
+      const cx = vx + vw * 0.5, ty = h * 0.68;
+      const rock = Math.sin(t * 3.1 + v * 1.3) * 0.11;
+      ctx.strokeStyle = '#6c4528';
+      ctx.lineWidth = 4.5;
+      ctx.beginPath();
+      ctx.moveTo(cx - 28, h * 0.86);
+      ctx.lineTo(cx - 12, ty);
+      ctx.lineTo(cx + 12, ty);
+      ctx.lineTo(cx + 28, h * 0.86);
+      ctx.stroke();
+
+      ctx.save();
+      ctx.translate(cx, ty);
+      ctx.rotate(rock);
+      // Tooled crimson-and-ochre saddle
+      ctx.fillStyle = '#5c1424';
+      ctx.beginPath();
+      drawEllipse(ctx, 0, -4, 26, 9, 0);
+      ctx.fill();
+      // Tailored riding breeches & bare lower leg in stirrup
+      ctx.fillStyle = PALETTE.magnolia_ivory;
+      ctx.beginPath();
+      drawEllipse(ctx, -3, -12, 11, 7, 0.3);
+      ctx.fill();
+      ctx.strokeStyle = PALETTE.papyrus_amber;
+      ctx.lineWidth = 4.2;
+      ctx.beginPath();
+      ctx.moveTo(-2, -8);
+      ctx.lineTo(4, 16);
+      ctx.stroke();
+      // Arched torso & streaming unbound hair
+      ctx.strokeStyle = PALETTE.porphyry_rose;
+      ctx.lineWidth = 6;
+      ctx.beginPath();
+      ctx.moveTo(-2, -14);
+      ctx.quadraticCurveTo(-10, -32, -4, -44);
+      ctx.stroke();
+      ctx.fillStyle = PALETTE.papyrus_amber;
+      ctx.beginPath();
+      ctx.arc(-3, -50, 7.5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#120b10';
+      ctx.lineWidth = 3;
+      for (let hr = 0; hr < 3; hr++) {
+        ctx.beginPath();
+        ctx.moveTo(-6, -52);
+        ctx.bezierCurveTo(-24, -48 - hr * 4, -36, -28 + hr * 7, -44, -18 + Math.sin(t * 4 + hr) * 6);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+  }
+
+  function paintCemeteryTombs(ctx, w, h, env) {
+    const t = env.phase;
+    const bg = ctx.createLinearGradient(0, 0, 0, h);
+    bg.addColorStop(0, '#0b101b');
+    bg.addColorStop(0.65, '#152331');
+    bg.addColorStop(1, '#0d161d');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, w, h);
+
+    // Pointed cypress silhouettes
+    for (let c = 0; c < 7; c++) {
+      const cx = w * (0.07 + c * 0.145);
+      ctx.fillStyle = '#091319';
+      ctx.beginPath();
+      ctx.moveTo(cx - 16, h * 0.78);
+      ctx.quadraticCurveTo(cx, h * 0.14, cx, h * 0.12);
+      ctx.quadraticCurveTo(cx, h * 0.14, cx + 16, h * 0.78);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    // 6 cutaway marble sepulchers: 3 flutists (even) & 3 harpists (odd)
+    const centers = [];
+    for (let g = 0; g < 6; g++) {
+      const gx = w * (0.11 + g * 0.156);
+      const gy = h * (g % 2 === 0 ? 0.68 : 0.6);
+      centers.push([gx, gy]);
+      ctx.fillStyle = PALETTE.magnolia_ivory;
+      ctx.fillRect(gx - 34, gy - 26, 68, 50);
+      ctx.fillStyle = '#142634';
+      ctx.fillRect(gx - 27, gy - 19, 54, 36);
+
+      const isFlute = g % 2 === 0;
+      ctx.fillStyle = isFlute ? PALETTE.lagoon_cyan : PALETTE.vellum_ochre;
+      ctx.beginPath();
+      ctx.arc(gx - 8, gy - 4, 6, 0, Math.PI * 2);
+      ctx.fill();
+      if (isFlute) {
+        // Transverse silver flute
+        ctx.strokeStyle = PALETTE.magnolia_ivory;
+        ctx.lineWidth = 2.4;
+        ctx.beginPath();
+        ctx.moveTo(gx - 4, gy - 3);
+        ctx.lineTo(gx + 20, gy - 5);
+        ctx.stroke();
+      } else {
+        // Golden triangular harp & strings
+        ctx.strokeStyle = PALETTE.vellum_ochre;
+        ctx.lineWidth = 2.2;
+        ctx.beginPath();
+        ctx.moveTo(gx + 4, gy + 12);
+        ctx.lineTo(gx + 4, gy - 14);
+        ctx.quadraticCurveTo(gx + 18, gy - 10, gx + 20, gy + 10);
+        ctx.closePath();
+        ctx.stroke();
+      }
+    }
+
+    // Sweet living melody arcs answering grave to grave
+    for (let a = 0; a < 5; a++) {
+      const p1 = centers[a], p2 = centers[a + 1];
+      const lift = h * (0.22 + (a % 2) * 0.08) + Math.sin(t * 2.2 + a) * 12;
+      ctx.strokeStyle = a % 2 === 0 ? PALETTE.lagoon_cyan : PALETTE.vellum_ochre;
+      ctx.lineWidth = 2.2;
+      ctx.beginPath();
+      ctx.moveTo(p1[0], p1[1] - 18);
+      ctx.quadraticCurveTo((p1[0] + p2[0]) * 0.5, p1[1] - lift, p2[0], p2[1] - 18);
+      ctx.stroke();
+    }
+  }
+
+  function paintCitadelPinnacle(ctx, w, h, env) {
+    const t = env.phase;
+    const sky = ctx.createLinearGradient(0, 0, 0, h * 0.76);
+    sky.addColorStop(0, '#0a0f18');
+    sky.addColorStop(0.45, '#196472');
+    sky.addColorStop(1, '#c9974c');
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, w, h);
+
+    // Bone-dry inland crag & desert mountain ridges — zero sea anywhere
+    const ridges = [
+      { y: 0.66, amp: 0.05, fill: '#6c4f33' },
+      { y: 0.75, amp: 0.06, fill: '#3f2e22' },
+      { y: 0.84, amp: 0.05, fill: '#221c1a' }
+    ];
+    for (let r = 0; r < ridges.length; r++) {
+      const rg = ridges[r];
+      ctx.fillStyle = rg.fill;
+      ctx.beginPath();
+      ctx.moveTo(0, h);
+      for (let i = 0; i <= 8; i++) {
+        const rx = (w / 8) * i;
+        const ry = h * (rg.y - Math.abs(Math.sin(i * 1.15 + r)) * rg.amp);
+        ctx.lineTo(rx, ry);
+      }
+      ctx.lineTo(w, h);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    // Dry citadel pinnacle parapet & waiting traveler gazing overhead
+    ctx.fillStyle = PALETTE.basalt_slate;
+    ctx.beginPath();
+    ctx.moveTo(w * 0.34, h);
+    ctx.lineTo(w * 0.41, h * 0.73);
+    ctx.lineTo(w * 0.59, h * 0.73);
+    ctx.lineTo(w * 0.66, h);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = PALETTE.magnolia_ivory;
+    ctx.beginPath();
+    ctx.arc(w * 0.5, h * 0.675, 5.5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillRect(w * 0.492, h * 0.682, w * 0.016, h * 0.048);
+
+    // Full-rigged vellum-sailed sky-ship gliding overhead across dry sky
+    const prog = env.shipProgress > 0 ? env.shipProgress : (0.48 + Math.sin(t * 0.35) * 0.14);
+    const sx = w * (0.18 + clamp(prog, 0, 1) * 0.64);
+    const sy = h * 0.31 + Math.sin(t * 0.9) * 6;
+    ctx.save();
+    ctx.translate(sx, sy);
+
+    // Wind-wake filaments
+    ctx.strokeStyle = 'rgba(244, 237, 224, 0.32)';
+    ctx.lineWidth = 1.6;
+    ctx.beginPath();
+    ctx.moveTo(-120, 18);
+    ctx.quadraticCurveTo(-55, 24, 52, 16);
+    ctx.stroke();
+
+    // Timber hull & bowsprit
+    ctx.fillStyle = '#4a2b1b';
+    ctx.beginPath();
+    ctx.moveTo(-58, 4);
+    ctx.lineTo(56, 2);
+    ctx.lineTo(78, -8);
+    ctx.lineTo(42, 20);
+    ctx.lineTo(-44, 20);
+    ctx.closePath();
+    ctx.fill();
+
+    // 3 masts, billowing vellum sails & crimson pennant
+    const masts = [-28, 4, 34];
+    for (let m = 0; m < masts.length; m++) {
+      const mx = masts[m], mh = m === 1 ? 68 : 54;
+      ctx.strokeStyle = PALETTE.vellum_ochre;
+      ctx.lineWidth = 2.4;
+      ctx.beginPath();
+      ctx.moveTo(mx, 4);
+      ctx.lineTo(mx, -mh);
+      ctx.stroke();
+
+      ctx.fillStyle = m === 1 ? PALETTE.magnolia_ivory : PALETTE.papyrus_amber;
+      ctx.beginPath();
+      ctx.moveTo(mx - 14, -mh + 8);
+      ctx.quadraticCurveTo(mx + 10, -mh * 0.55, mx - 12, -10);
+      ctx.lineTo(mx + 14, -12);
+      ctx.quadraticCurveTo(mx + 24, -mh * 0.55, mx + 12, -mh + 8);
+      ctx.closePath();
+      ctx.fill();
+    }
+    ctx.fillStyle = PALETTE.porphyry_crimson;
+    ctx.beginPath();
+    ctx.moveTo(4, -68);
+    ctx.lineTo(-18, -63);
+    ctx.lineTo(4, -59);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  }
+
+  const PAINTERS = Object.freeze({
+    magnolia_lagoon: paintMagnoliaLagoon,
+    porphyry_palace: paintPorphyryPalace,
+    vellum_library: paintVellumLibrary,
+    sultan_stables: paintSultanStables,
+    cemetery_tombs: paintCemeteryTombs,
+    citadel_pinnacle: paintCitadelPinnacle
+  });
+
+  function buildPrismPolygon(w, h, refraction, focusX, focusY) {
+    const ref = clamp(refraction, 0, 1);
+    const fx = focusX > 1.001 ? clamp(focusX / w, 0, 1) : clamp(focusX, 0, 1);
+    const fy = focusY > 1.001 ? clamp(focusY / h, 0, 1) : clamp(focusY, 0, 1);
+    const cx = (fx * w) * (1 - ref * 0.65) + (w * 0.5) * (ref * 0.65);
+    const cy = (fy * h) * (1 - ref * 0.65) + (h * 0.5) * (ref * 0.65);
+    const maxR = Math.hypot(w, h) * 1.08;
+    const baseR = maxR * Math.pow(ref, 0.88);
+    const facets = [1.14, 0.86, 1.08, 0.9, 1.16, 0.88, 1.06, 0.92];
+    const pts = [];
+    for (let i = 0; i < 8; i++) {
+      const ang = -Math.PI * 0.38 + (i * Math.PI * 2) / 8;
+      const r = baseR * facets[i];
+      pts.push([cx + Math.cos(ang) * r, cy + Math.sin(ang) * r * 0.88]);
+    }
+    return pts;
+  }
+
+  function createAudioRig(initialMuted) {
+    let muted = Boolean(initialMuted);
+    let audioCtx = null;
+
+    function ensureCtx() {
+      if (muted) return null;
+      if (audioCtx) return audioCtx;
+      const AC = root.AudioContext || root.webkitAudioContext;
+      if (typeof AC !== 'function') return null;
+      try {
+        audioCtx = new AC();
+      } catch (_e) {
+        audioCtx = null;
+      }
+      return audioCtx;
+    }
+
+    function tone(ctx, freq, start, dur, type, peak, endFreq) {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = type || 'sine';
+      osc.frequency.setValueAtTime(freq, start);
+      if (endFreq) osc.frequency.exponentialRampToValueAtTime(Math.max(24, endFreq), start + dur);
+      gain.gain.setValueAtTime(0.0001, start);
+      gain.gain.linearRampToValueAtTime(peak || 0.06, start + Math.min(0.03, dur * 0.25));
+      gain.gain.exponentialRampToValueAtTime(0.0001, start + dur);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(start);
+      osc.stop(start + dur + 0.02);
+    }
+
+    function trigger(cueKind) {
+      const motif = String(cueKind || 'surface');
+      if (muted) return { played: false, reason: 'muted', motif: motif };
+      const ctx = ensureCtx();
+      if (!ctx) return { played: false, reason: 'unavailable', motif: motif };
+      try {
+        if (ctx.state === 'suspended' && typeof ctx.resume === 'function') {
+          ctx.resume().catch(function () {});
+        }
+        const now = ctx.currentTime + 0.01;
+        if (motif === 'cemetery_tombs') {
+          // Sweet breathy flute phrase answered grave-to-grave by plucked golden harp arpeggio
+          const flute = [659.25, 783.99, 987.77, 880.0];
+          for (let i = 0; i < flute.length; i++) tone(ctx, flute[i], now + i * 0.14, 0.28, 'sine', 0.065);
+          const harp = [329.63, 493.88, 659.25, 739.99, 783.99, 987.77];
+          for (let j = 0; j < harp.length; j++) tone(ctx, harp[j], now + 0.22 + j * 0.075, 0.36, 'triangle', 0.055);
+        } else if (motif === 'vellum_library') {
+          tone(ctx, 196.0, now, 0.55, 'sine', 0.035);
+          const clacks = [680, 830, 610, 760];
+          for (let c = 0; c < clacks.length; c++) tone(ctx, clacks[c], now + 0.08 + c * 0.09, 0.065, 'triangle', 0.08, clacks[c] * 0.72);
+        } else if (motif === 'porphyry_palace') {
+          tone(ctx, 1240, now, 0.09, 'square', 0.035, 890);
+          tone(ctx, 1790, now + 0.07, 0.1, 'triangle', 0.04, 1310);
+          tone(ctx, 64, now + 0.14, 0.38, 'sine', 0.095, 31);
+        } else if (motif === 'citadel_pinnacle' || motif === 'sky_ship') {
+          const rig = [293.66, 440.0, 659.25, 880.0, 1108.73];
+          for (let r = 0; r < rig.length; r++) tone(ctx, rig[r], now + r * 0.05, 0.75, 'sine', 0.045);
+        } else if (motif === 'magnolia_lagoon') {
+          tone(ctx, 164.81, now, 0.55, 'sine', 0.06, 110);
+          tone(ctx, 1320, now + 0.18, 0.06, 'triangle', 0.035);
+        } else if (motif === 'sultan_stables') {
+          const st = [220.0, 233.08, 329.63, 440.0];
+          for (let s = 0; s < st.length; s++) tone(ctx, st[s], now + s * 0.06, 0.26, 'sawtooth', 0.03);
+        } else {
+          const court = [293.66, 440.0, 587.33];
+          for (let k = 0; k < court.length; k++) tone(ctx, court[k], now + k * 0.03, 0.32, 'triangle', 0.04);
+        }
+        return { played: true, motif: motif };
+      } catch (_err) {
+        return { played: false, reason: 'error', motif: motif };
+      }
+    }
+
+    return {
+      isMuted: function () { return muted; },
+      setMuted: function (flag) {
+        muted = flag === undefined ? !muted : Boolean(flag);
+        return muted;
+      },
+      unlock: function () {
+        const ctx = ensureCtx();
+        if (!ctx) return false;
+        if (ctx.state === 'suspended' && typeof ctx.resume === 'function') {
+          ctx.resume().catch(function () {});
+        }
+        return true;
+      },
+      trigger: trigger
+    };
+  }
+
+  function renderInvertedSceneStandalone(ctx, w, h, opts, engineState) {
+    if (!ctx) return;
+    const o = opts || {};
+    const width = Math.max(1, Number(w) || 800);
+    const height = Math.max(1, Number(h) || 500);
+    const rawId = o.locusId || o.id || o.locus || (engineState && engineState.activeLocusId) || LOCI_ORDER[0];
+    const locusId = resolveLocusId(rawId, LOCI_ORDER[0]);
+    const reduced = Boolean(o.reducedMotion !== undefined ? o.reducedMotion : (engineState && engineState.reducedMotion));
+    const rawPhase = o.time !== undefined ? Number(o.time) : (o.t !== undefined ? Number(o.t) : (engineState ? engineState.elapsed : 0));
+    const phase = reduced ? 0.6 : (Number.isFinite(rawPhase) ? rawPhase : 0);
+    const shipProg = o.skyShip && typeof o.skyShip.progress === 'number'
+      ? o.skyShip.progress
+      : (engineState && engineState.skyShip ? engineState.skyShip.progress : 0.48);
+
+    const painter = PAINTERS[locusId] || paintMagnoliaLagoon;
+    ctx.save();
+    painter(ctx, width, height, {
+      locusId: locusId,
+      phase: phase,
+      refraction: o.refraction !== undefined ? clamp(o.refraction, 0, 1) : (engineState ? engineState.refraction : 1),
+      shipProgress: shipProg
+    });
+    ctx.restore();
+  }
+
+  function renderPrismCompositeStandalone(ctx, w, h, drawSurfaceFn, drawInvertedFn, prismOpts, engineState) {
+    if (!ctx) return;
+    const p = prismOpts || {};
+    const width = Math.max(1, Number(w) || 800);
+    const height = Math.max(1, Number(h) || 500);
+    const ref = clamp(p.refraction !== undefined ? p.refraction : (engineState ? engineState.refraction : 0), 0, 1);
+    const fx = p.focusX !== undefined ? p.focusX : (engineState ? engineState.focusX : 0.5);
+    const fy = p.focusY !== undefined ? p.focusY : (engineState ? engineState.focusY : 0.5);
+
+    if (typeof drawSurfaceFn === 'function') {
+      ctx.save();
+      drawSurfaceFn(ctx, width, height, p);
+      ctx.restore();
+    }
+
+    if (ref <= 0.002) return;
+
+    const invokeInverted = function () {
+      if (typeof drawInvertedFn === 'function') {
+        drawInvertedFn(ctx, width, height, p);
+      } else {
+        renderInvertedSceneStandalone(ctx, width, height, p, engineState);
+      }
+    };
+
+    if (ref >= 0.996) {
+      ctx.save();
+      invokeInverted();
+      ctx.strokeStyle = PALETTE.porphyry_crimson;
+      ctx.lineWidth = 3;
+      ctx.strokeRect(1.5, 1.5, width - 3, height - 3);
+      ctx.strokeStyle = PALETTE.magnolia_turquoise;
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(4.5, 4.5, width - 9, height - 9);
+      ctx.restore();
+      return;
+    }
+
+    const poly = buildPrismPolygon(width, height, ref, fx, fy);
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(poly[0][0], poly[0][1]);
+    for (let i = 1; i < poly.length; i++) ctx.lineTo(poly[i][0], poly[i][1]);
+    ctx.closePath();
+    ctx.clip();
+    invokeInverted();
+    ctx.restore();
+
+    // Faceted porphyry-crimson & magnolia-turquoise optical bevels
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(poly[0][0], poly[0][1]);
+    for (let i = 1; i < poly.length; i++) ctx.lineTo(poly[i][0], poly[i][1]);
+    ctx.closePath();
+    ctx.strokeStyle = PALETTE.porphyry_crimson;
+    ctx.lineWidth = 4.2;
+    ctx.stroke();
+    ctx.strokeStyle = PALETTE.lagoon_cyan;
+    ctx.lineWidth = 1.8;
+    ctx.stroke();
+    ctx.fillStyle = PALETTE.magnolia_ivory;
+    for (let v = 0; v < poly.length; v++) {
+      ctx.beginPath();
+      ctx.arc(poly[v][0], poly[v][1], 2.4, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  function createInversionEngine(opts) {
+    const cfg = opts || {};
+    const audio = createAudioRig(Boolean(cfg.muted));
+    let activeLocusId = resolveLocusId(cfg.initialLocusId, LOCI_ORDER[0]);
+    let refraction = 0;
+    let elapsed = 0;
+    let focusX = 0.5;
+    let focusY = 0.5;
+    let reducedMotion = Boolean(cfg.reducedMotion);
+    let epigramUnlocked = false;
+    const skyShip = { seaExists: false, summoned: false, progress: 0, vesselVisible: false };
+    const lociState = Object.create(null);
+
+    function initLoci() {
+      for (let i = 0; i < INVERTED_THINGS.length; i++) {
+        const item = INVERTED_THINGS[i];
+        lociState[item.id] = { id: item.id, index: item.index, key: item.key, unsealed: false, refraction: 0 };
+      }
+    }
+    initLoci();
+
+    function countRewired() {
+      let n = 0;
+      for (let i = 0; i < LOCI_ORDER.length; i++) {
+        if (lociState[LOCI_ORDER[i]].unsealed) n++;
+      }
+      return n;
+    }
+
+    function activatePinnacleShip() {
+      activeLocusId = 'citadel_pinnacle';
+      lociState.citadel_pinnacle.unsealed = true;
+      lociState.citadel_pinnacle.refraction = 1;
+      refraction = 1;
+      skyShip.seaExists = false;
+      skyShip.summoned = true;
+      skyShip.vesselVisible = true;
+      if (skyShip.progress <= 0) skyShip.progress = 0.45;
+      epigramUnlocked = true;
+    }
+
+    function getState() {
+      const rewiredCount = countRewired();
+      const copyLoci = {};
+      for (let i = 0; i < LOCI_ORDER.length; i++) {
+        const id = LOCI_ORDER[i];
+        copyLoci[id] = Object.assign({}, lociState[id]);
+      }
+      const partial = lociState[activeLocusId].unsealed ? 0 : refraction * 0.35;
+      const mastery = clamp((rewiredCount + partial) / 6, 0, 1);
+      const libOpen = lociState.vellum_library.unsealed || (activeLocusId === 'vellum_library' && refraction >= 0.68);
+      const tombsOpen = lociState.cemetery_tombs.unsealed || (activeLocusId === 'cemetery_tombs' && refraction >= 0.68);
+      return {
+        activeLocusId: activeLocusId,
+        refraction: refraction,
+        lociState: copyLoci,
+        rewiredCount: rewiredCount,
+        totalLoci: 6,
+        oldLexiconFaith: Number((1 - mastery).toFixed(4)),
+        hypatiaGrammarMastery: Number(mastery.toFixed(4)),
+        opiumYouthPointing: libOpen,
+        philosopherNinepinsActive: libOpen,
+        woodenNinepins: 9,
+        cemeteryMusicActive: tombsOpen,
+        skyShip: {
+          seaExists: false,
+          summoned: skyShip.summoned,
+          progress: Number(skyShip.progress.toFixed(4)),
+          vesselVisible: skyShip.vesselVisible
+        },
+        epigramUnlocked: epigramUnlocked,
+        muted: audio.isMuted()
+      };
+    }
+
+    function selectLocus(locusId) {
+      activeLocusId = resolveLocusId(locusId, activeLocusId);
+      refraction = lociState[activeLocusId].unsealed ? 1 : lociState[activeLocusId].refraction;
+      return getState();
+    }
+
+    function setRefraction(v, locusId) {
+      const targetId = locusId !== undefined ? resolveLocusId(locusId, activeLocusId) : activeLocusId;
+      const val = clamp(v, 0, 1);
+      lociState[targetId].refraction = val;
+      if (targetId === activeLocusId) refraction = val;
+      if (val >= 0.68) {
+        lociState[targetId].unsealed = true;
+        if (targetId === 'citadel_pinnacle' && countRewired() >= 5) activatePinnacleShip();
+      }
+      return getState();
+    }
+
+    function unsealLocus(locusId) {
+      const targetId = locusId !== undefined ? resolveLocusId(locusId, activeLocusId) : activeLocusId;
+      lociState[targetId].unsealed = true;
+      lociState[targetId].refraction = 1;
+      if (locusId === undefined || targetId === activeLocusId) refraction = 1;
+      if (targetId === 'citadel_pinnacle' && countRewired() >= 5) activatePinnacleShip();
+      return getState();
+    }
+
+    function unsealAll() {
+      for (let i = 0; i < LOCI_ORDER.length; i++) {
+        lociState[LOCI_ORDER[i]].unsealed = true;
+        lociState[LOCI_ORDER[i]].refraction = 1;
+      }
+      refraction = 1;
+      skyShip.seaExists = false;
+      skyShip.summoned = true;
+      skyShip.vesselVisible = true;
+      if (skyShip.progress <= 0) skyShip.progress = 0.45;
+      epigramUnlocked = true;
+      return getState();
+    }
+
+    function summonSkyShip() {
+      activatePinnacleShip();
+      return getState();
+    }
+
+    function step(dtSec) {
+      const dt = clamp(dtSec === undefined ? 0.016 : dtSec, 0, 0.25);
+      if (!reducedMotion) {
+        elapsed += dt;
+        if (skyShip.summoned) {
+          skyShip.progress = 0.16 + ((skyShip.progress - 0.16 + dt * 0.085) % 0.68);
+        }
+      }
+      skyShip.seaExists = false;
+      return getState();
+    }
+
+    function reset() {
+      initLoci();
+      activeLocusId = LOCI_ORDER[0];
+      refraction = 0;
+      elapsed = 0;
+      epigramUnlocked = false;
+      skyShip.seaExists = false;
+      skyShip.summoned = false;
+      skyShip.progress = 0;
+      skyShip.vesselVisible = false;
+      return getState();
+    }
+
+    return {
+      LOCI_ORDER: LOCI_ORDER,
+      INVERTED_THINGS: INVERTED_THINGS,
+      PALETTE: PALETTE,
+      getState: getState,
+      getInversionById: getInversionById,
+      selectLocus: selectLocus,
+      setRefraction: setRefraction,
+      unsealLocus: unsealLocus,
+      unsealAll: unsealAll,
+      summonSkyShip: summonSkyShip,
+      step: step,
+      renderInvertedScene: function (ctx, w, h, sceneOpts) {
+        renderInvertedSceneStandalone(ctx, w, h, sceneOpts, { activeLocusId: activeLocusId, refraction: refraction, elapsed: elapsed, reducedMotion: reducedMotion, skyShip: skyShip });
+      },
+      renderPrismComposite: function (ctx, w, h, drawSurfaceFn, drawInvertedFn, prismOpts) {
+        renderPrismCompositeStandalone(ctx, w, h, drawSurfaceFn, drawInvertedFn, prismOpts, { activeLocusId: activeLocusId, refraction: refraction, elapsed: elapsed, focusX: focusX, focusY: focusY, reducedMotion: reducedMotion, skyShip: skyShip });
+      },
+      setFocus: function (fx, fy) { focusX = clamp(fx, 0, 1); focusY = clamp(fy, 0, 1); },
+      setReducedMotion: function (flag) { reducedMotion = Boolean(flag); },
+      setMuted: function (flag) { return audio.setMuted(flag); },
+      unlockAudio: function () { return audio.unlock(); },
+      triggerAcousticCue: function (cueKind) { return audio.trigger(cueKind || activeLocusId); },
+      reset: reset
+    };
+  }
+
+  const API = Object.freeze({
+    PALETTE: PALETTE,
+    LOCI_ORDER: LOCI_ORDER,
+    INVERTED_THINGS: INVERTED_THINGS,
+    getInversionById: getInversionById,
+    createInversionEngine: createInversionEngine,
+    renderInvertedScene: function (ctx, w, h, opts) { renderInvertedSceneStandalone(ctx, w, h, opts, null); },
+    renderPrismComposite: function (ctx, w, h, sFn, iFn, pOpts) { renderPrismCompositeStandalone(ctx, w, h, sFn, iFn, pOpts, null); }
+  });
+
+  root.HypatiaInvertedRealities = API;
+  if (typeof window !== 'undefined') window.HypatiaInvertedRealities = API;
+  if (typeof module === 'object' && module && module.exports) module.exports = API;
+})(typeof globalThis !== 'undefined' ? globalThis : (typeof window !== 'undefined' ? window : this));
+</script>
+<script>
+(function () {
+  'use strict';
+
+  var SurfaceMod = window.HypatiaSurfaceExpectations;
+  var InvertedMod = window.HypatiaInvertedRealities;
+  var LOCI = SurfaceMod.LOCI_ORDER;
+
+  var mqlReduced = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+  var isReducedMotion = Boolean(mqlReduced && mqlReduced.matches);
+
+  var surfaceRenderer = SurfaceMod.createSurfaceRenderer();
+  var engine = InvertedMod.createInversionEngine({
+    initialLocusId: LOCI[0],
+    reducedMotion: isReducedMotion,
+    muted: false
+  });
+
+  var stageCanvas = document.getElementById('hyp-stage-canvas');
+  var canvasFrame = document.getElementById('hyp-canvas-frame');
+  var stageCtx = stageCanvas.getContext('2d');
+  var grammarMeter = document.getElementById('hyp-grammar-meter');
+  var stagePlaque = document.getElementById('hyp-stage-plaque');
+  var prismMode = document.getElementById('hyp-prism-mode');
+  var refractionSlider = document.getElementById('hyp-refraction-slider');
+  var refractionVal = document.getElementById('hyp-refraction-val');
+  var ledgerHead = document.getElementById('hyp-ledger-head');
+  var pinnacleReadout = document.getElementById('hyp-pinnacle-readout');
+
+  var btnPlates = document.getElementById('hyp-btn-plates');
+  var btnMute = document.getElementById('hyp-btn-mute');
+  var btnReset = document.getElementById('hyp-btn-reset');
+  var btnPrev = document.getElementById('hyp-btn-prev');
+  var btnUnseal = document.getElementById('hyp-btn-unseal');
+  var btnAll = document.getElementById('hyp-btn-all');
+  var btnNext = document.getElementById('hyp-btn-next');
+  var btnVigil = document.getElementById('hyp-btn-vigil');
+
+  var plateDrawer = document.getElementById('hyp-plate-drawer');
+  var plateFrame = document.getElementById('hyp-plate-frame');
+  var cardMap = document.getElementById('hyp-card-map');
+  var cardVista = document.getElementById('hyp-card-vista');
+  var mapImg = document.getElementById('hyp-map-img');
+  var mapFallback = document.getElementById('hyp-map-fallback');
+  var vistaImg = document.getElementById('hyp-vista-img');
+  var vistaFallback = document.getElementById('hyp-vista-fallback');
+  var btnLoupe = document.getElementById('hyp-btn-loupe');
+  var btnClosePlates = document.getElementById('hyp-btn-close-plates');
+
+  var sealNodes = Array.prototype.slice.call(document.querySelectorAll('hypatia-locus-seal'));
+  var lexiconNodes = Array.prototype.slice.call(document.querySelectorAll('hypatia-lexicon-entry'));
+  var tabNodes = Array.prototype.slice.call(document.querySelectorAll('hypatia-plate-tabs hypatia-key-pill'));
+
+  var platesOpen = false;
+  var plateTab = 'diptych';
+  var loupeActive = false;
+  var hoverZoneLabel = '';
+  var hoverZoneId = '';
+  var lastAcousticCue = '';
+  var animSeconds = 0;
+  var lastFrameMs = 0;
+  var cssWidth = 960;
+  var cssHeight = 540;
+
+  mapImg.addEventListener('error', function () {
+    if (mapImg.dataset.fallbackStage !== 'svg') {
+      mapImg.dataset.fallbackStage = 'svg';
+      mapImg.src = 'map.svg';
+    } else {
+      mapImg.hidden = true;
+      mapFallback.hidden = false;
+    }
+  });
+
+  vistaImg.addEventListener('error', function () {
+    vistaImg.hidden = true;
+    vistaFallback.hidden = false;
+  });
+
+  function fireCue(motif) {
+    var cue = motif || engine.getState().activeLocusId;
+    lastAcousticCue = cue;
+    engine.triggerAcousticCue(cue);
+  }
+
+  function resizeStageCanvas() {
+    var rect = canvasFrame.getBoundingClientRect();
+    var w = Math.max(240, Math.round(rect.width || 800));
+    var h = Math.max(160, Math.round(rect.height || 440));
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    cssWidth = w;
+    cssHeight = h;
+    var targetW = Math.round(w * dpr);
+    var targetH = Math.round(h * dpr);
+    if (stageCanvas.width !== targetW || stageCanvas.height !== targetH) {
+      stageCanvas.width = targetW;
+      stageCanvas.height = targetH;
+    }
+    stageCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function renderMedallions(st) {
+    for (var i = 0; i < sealNodes.length; i++) {
+      var node = sealNodes[i];
+      var id = node.getAttribute('data-locus');
+      var loc = st.lociState[id] || { unsealed: false };
+      var isSelected = id === st.activeLocusId;
+      node.classList.toggle('hyp-is-active', isSelected);
+      node.classList.toggle('hyp-is-unsealed', Boolean(loc.unsealed));
+      var c = node.querySelector('canvas');
+      if (c) {
+        var cctx = c.getContext('2d');
+        cctx.clearRect(0, 0, c.width, c.height);
+        surfaceRenderer.renderLocusMedallion(cctx, c.width * 0.5, c.height * 0.5, c.width * 0.42, id, isSelected, Boolean(loc.unsealed));
+      }
+    }
+  }
+
+  function renderStage(st) {
+    if (!stageCtx) return;
+    var state = st || engine.getState();
+    var t = isReducedMotion ? 0.6 : animSeconds;
+    stageCtx.clearRect(0, 0, cssWidth, cssHeight);
+    engine.renderPrismComposite(
+      stageCtx,
+      cssWidth,
+      cssHeight,
+      function (ctx, w, h) {
+        surfaceRenderer.renderSurfaceScene(ctx, w, h, {
+          locusId: state.activeLocusId,
+          time: t,
+          refraction: state.refraction,
+          reducedMotion: isReducedMotion
+        });
+      },
+      function (ctx, w, h) {
+        engine.renderInvertedScene(ctx, w, h, {
+          locusId: state.activeLocusId,
+          time: t,
+          refraction: state.refraction,
+          reducedMotion: isReducedMotion,
+          skyShip: state.skyShip
+        });
+      },
+      {
+        refraction: state.refraction,
+        reducedMotion: isReducedMotion
+      }
+    );
+  }
+  function syncUI() {
+    var st = engine.getState();
+    var sig = surfaceRenderer.getSignifierById(st.activeLocusId);
+    var inv = engine.getInversionById(st.activeLocusId);
+
+    grammarMeter.textContent =
+      'Old Lexicon Faith: ' + Math.round(st.oldLexiconFaith * 100) + '% · Hypatia Grammar: ' +
+      Math.round(st.hypatiaGrammarMastery * 100) + '% · Rewired: ' + st.rewiredCount + ' / 6';
+    ledgerHead.textContent = 'THING-LEXICON LEDGER · ' + st.rewiredCount + ' / 6 REWIRED';
+
+    refractionSlider.value = String(st.refraction);
+    refractionVal.textContent = st.refraction.toFixed(2);
+    prismMode.textContent = st.refraction >= 0.68
+      ? 'Inverted Reality'
+      : (st.refraction >= 0.35 ? 'Prism Refracting' : 'Surface Expectation');
+
+    btnUnseal.textContent = st.refraction >= 0.68 ? '[U] Inspect Surface' : '[U] Unseal Thing';
+    btnMute.textContent = st.muted ? '[M] Muted' : '[M] Sound On';
+    btnMute.classList.toggle('hyp-is-on', !st.muted);
+    btnPlates.classList.toggle('hyp-is-on', platesOpen);
+    btnLoupe.classList.toggle('hyp-is-on', loupeActive);
+
+    var zoneSuffix = hoverZoneLabel ? ' [' + hoverZoneLabel + ']' : '';
+    if (st.refraction >= 0.68) {
+      stagePlaque.classList.add('hyp-mode-inverted');
+      stagePlaque.textContent = sig.roman + ' · ' + inv.invertedTitle + ' — ' + inv.invertedReality + zoneSuffix;
+    } else if (st.refraction >= 0.5) {
+      stagePlaque.classList.add('hyp-mode-inverted');
+      stagePlaque.textContent = sig.roman + ' · Refracting ' + sig.surfaceTitle + ' (' + Math.round(st.refraction * 100) + '%) — ' + inv.epigramFragment + zoneSuffix;
+    } else {
+      stagePlaque.classList.remove('hyp-mode-inverted');
+      stagePlaque.textContent = sig.roman + ' · ' + sig.surfaceTitle + ' — ' + sig.thingSignifier + '. Expected: ' + sig.expectedSignified + '.' + zoneSuffix;
+    }
+
+    for (var i = 0; i < lexiconNodes.length; i++) {
+      var row = lexiconNodes[i];
+      var lid = row.getAttribute('data-locus');
+      var rSig = surfaceRenderer.getSignifierById(lid);
+      var rInv = engine.getInversionById(lid);
+      var loc = st.lociState[lid] || { unsealed: false, refraction: 0 };
+      var rewired = Boolean(loc.unsealed || (lid === st.activeLocusId && st.refraction >= 0.68));
+      row.classList.toggle('hyp-is-selected', lid === st.activeLocusId);
+      row.classList.toggle('hyp-is-rewired', rewired);
+      row.textContent = rewired
+        ? (rSig.roman + ' · ' + rInv.rewiredRule)
+        : (rSig.roman + ' · ' + rSig.surfaceTitle + ' → Expected: ' + rSig.expectedSignified);
+    }
+
+    if (st.skyShip.summoned || st.epigramUnlocked) {
+      var pinInv = engine.getInversionById('citadel_pinnacle');
+      pinnacleReadout.textContent =
+        'Sky-Ship Vigil Active · Sea Exists: FALSE · "' + pinInv.epigramFragment + '" — Waiting at the dry crag zenith for a sailing ship overhead.';
+    } else {
+      pinnacleReadout.textContent =
+        'Citadel Crag Vigil · Sea Exists: FALSE · Rewired ' + st.rewiredCount + '/6 things. Unseal loci ([U] / drag prism) or ascend the dry pinnacle [V].';
+    }
+
+    plateDrawer.hidden = !platesOpen;
+    plateFrame.classList.toggle('hyp-single-tab', plateTab !== 'diptych');
+    plateFrame.classList.toggle('hyp-loupe-on', loupeActive);
+    cardMap.hidden = plateTab === 'vista';
+    cardVista.hidden = plateTab === 'map';
+    for (var t = 0; t < tabNodes.length; t++) {
+      tabNodes[t].classList.toggle('hyp-is-on', tabNodes[t].getAttribute('data-tab') === plateTab);
+    }
+
+    renderMedallions(st);
+    renderStage(st);
+    return st;
+  }
+
+  function fullState() {
+    var st = engine.getState();
+    var activeIdx = LOCI.indexOf(st.activeLocusId);
+    return Object.assign({}, st, {
+      activeIndex: activeIdx < 0 ? 0 : activeIdx,
+      platesOpen: platesOpen,
+      plateTab: plateTab,
+      loupeActive: loupeActive,
+      zoomFactor: loupeActive ? 1.75 : 1,
+      reducedMotion: isReducedMotion,
+      lastAcousticCue: lastAcousticCue,
+      hoverZone: hoverZoneId,
+      activeSurface: surfaceRenderer.getSignifierById(st.activeLocusId),
+      activeInversion: engine.getInversionById(st.activeLocusId)
+    });
+  }
+  var api = {
+    getState: fullState,
+    selectLocus: function (locusId) {
+      hoverZoneLabel = '';
+      hoverZoneId = '';
+      var st = engine.selectLocus(locusId);
+      if (st.lociState[st.activeLocusId] && st.lociState[st.activeLocusId].unsealed) {
+        fireCue(st.activeLocusId);
+      }
+      syncUI();
+      return fullState();
+    },
+    setRefraction: function (val, locusId) {
+      var before = engine.getState();
+      var target = locusId !== undefined ? locusId : before.activeLocusId;
+      var wasUnsealed = Boolean(before.lociState[target] && before.lociState[target].unsealed);
+      var after = engine.setRefraction(val, locusId);
+      var resolved = after.activeLocusId;
+      if (!wasUnsealed && after.lociState[resolved] && after.lociState[resolved].unsealed) {
+        fireCue(resolved);
+      }
+      syncUI();
+      return fullState();
+    },
+    unsealLocus: function (locusId) {
+      engine.unlockAudio();
+      var st = engine.unsealLocus(locusId);
+      var cueId = typeof locusId === 'string' && st.lociState[locusId] ? locusId : st.activeLocusId;
+      fireCue(cueId);
+      syncUI();
+      return fullState();
+    },
+    unsealAll: function () {
+      engine.unlockAudio();
+      engine.unsealAll();
+      fireCue('sky_ship');
+      syncUI();
+      return fullState();
+    },
+    summonSkyShip: function () {
+      engine.unlockAudio();
+      engine.summonSkyShip();
+      fireCue('sky_ship');
+      syncUI();
+      return fullState();
+    },
+    togglePlates: function (force) {
+      platesOpen = typeof force === 'boolean' ? force : !platesOpen;
+      if (!platesOpen) loupeActive = false;
+      syncUI();
+      return fullState();
+    },
+    setPlateTab: function (tab) {
+      var norm = String(tab || 'diptych').toLowerCase();
+      if (norm === 'image') norm = 'vista';
+      if (norm === 'diptych' || norm === 'map' || norm === 'vista') {
+        plateTab = norm;
+      }
+      syncUI();
+      return fullState();
+    },
+    toggleLoupe: function (force) {
+      loupeActive = typeof force === 'boolean' ? force : !loupeActive;
+      syncUI();
+      return fullState();
+    },
+    setMuted: function (flag) {
+      engine.setMuted(flag);
+      syncUI();
+      return fullState();
+    },
+    reset: function () {
+      platesOpen = false;
+      plateTab = 'diptych';
+      loupeActive = false;
+      hoverZoneLabel = '';
+      hoverZoneId = '';
+      lastAcousticCue = '';
+      engine.reset();
+      syncUI();
+      return fullState();
+    }
+  };
+
+  function toggleCurrentRefraction() {
+    engine.unlockAudio();
+    var st = engine.getState();
+    if (st.refraction < 0.68) return api.unsealLocus(st.activeLocusId);
+    return api.setRefraction(0, st.activeLocusId);
+  }
+
+  function stepLocus(delta) {
+    var st = engine.getState();
+    var idx = LOCI.indexOf(st.activeLocusId);
+    var nextIdx = ((idx < 0 ? 0 : idx) + delta + LOCI.length) % LOCI.length;
+    return api.selectLocus(LOCI[nextIdx]);
+  }
+  function bindActivate(el, fn) {
+    if (!el) return;
+    el.addEventListener('click', function (ev) {
+      ev.preventDefault();
+      engine.unlockAudio();
+      fn(ev);
+    });
+    el.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Enter' || ev.key === ' ') {
+        ev.preventDefault();
+        ev.stopPropagation();
+        engine.unlockAudio();
+        fn(ev);
+      }
+    });
+  }
+
+  sealNodes.forEach(function (node) {
+    bindActivate(node, function () { api.selectLocus(node.getAttribute('data-locus')); });
+  });
+  lexiconNodes.forEach(function (row) {
+    bindActivate(row, function () {
+      var id = row.getAttribute('data-locus');
+      if (engine.getState().activeLocusId === id) toggleCurrentRefraction();
+      else api.selectLocus(id);
+    });
+  });
+  tabNodes.forEach(function (tabEl) {
+    bindActivate(tabEl, function () { api.setPlateTab(tabEl.getAttribute('data-tab')); });
+  });
+
+  bindActivate(btnPlates, function () { api.togglePlates(); });
+  bindActivate(btnMute, function () { api.setMuted(); });
+  bindActivate(btnReset, function () { api.reset(); });
+  bindActivate(btnPrev, function () { stepLocus(-1); });
+  bindActivate(btnNext, function () { stepLocus(1); });
+  bindActivate(btnUnseal, function () { toggleCurrentRefraction(); });
+  bindActivate(btnAll, function () { api.unsealAll(); });
+  bindActivate(btnVigil, function () { api.summonSkyShip(); });
+  bindActivate(btnLoupe, function () { api.toggleLoupe(); });
+  bindActivate(btnClosePlates, function () { api.togglePlates(false); });
+
+  refractionSlider.addEventListener('input', function () {
+    engine.unlockAudio();
+    api.setRefraction(parseFloat(refractionSlider.value) || 0);
+  });
+
+  var dragState = { down: false, startX: 0, startRef: 0, moved: false };
+  stageCanvas.addEventListener('pointerdown', function (ev) {
+    engine.unlockAudio();
+    var rect = stageCanvas.getBoundingClientRect();
+    var x = ev.clientX - rect.left;
+    var y = ev.clientY - rect.top;
+    engine.setFocus(x / Math.max(1, rect.width), y / Math.max(1, rect.height));
+    dragState.down = true;
+    dragState.startX = ev.clientX;
+    dragState.startRef = engine.getState().refraction;
+    dragState.moved = false;
+    try { stageCanvas.setPointerCapture(ev.pointerId); } catch (_e) {}
+  });
+  stageCanvas.addEventListener('pointermove', function (ev) {
+    var rect = stageCanvas.getBoundingClientRect();
+    var x = ev.clientX - rect.left;
+    var y = ev.clientY - rect.top;
+    engine.setFocus(x / Math.max(1, rect.width), y / Math.max(1, rect.height));
+    var hit = surfaceRenderer.hitTestScene(x, y, rect.width, rect.height, engine.getState().activeLocusId);
+    hoverZoneId = hit && hit.hit ? hit.zone : '';
+    hoverZoneLabel = hit && hit.hit ? hit.label : '';
+    if (dragState.down) {
+      var dx = ev.clientX - dragState.startX;
+      if (Math.abs(dx) > 5) dragState.moved = true;
+      if (dragState.moved) {
+        var nextRef = Math.max(0, Math.min(1, dragState.startRef + dx / Math.max(120, rect.width * 0.55)));
+        api.setRefraction(nextRef);
+        return;
+      }
+    }
+    syncUI();
+  });
+  stageCanvas.addEventListener('pointerup', function (ev) {
+    if (dragState.down && !dragState.moved) {
+      toggleCurrentRefraction();
+    }
+    dragState.down = false;
+    try { stageCanvas.releasePointerCapture(ev.pointerId); } catch (_e) {}
+  });
+  stageCanvas.addEventListener('pointerleave', function () {
+    hoverZoneId = '';
+    hoverZoneLabel = '';
+    dragState.down = false;
+    syncUI();
+  });
+
+  [cardMap, cardVista].forEach(function (card) {
+    card.addEventListener('pointermove', function (ev) {
+      if (!loupeActive) return;
+      var r = card.getBoundingClientRect();
+      var px = Math.max(0, Math.min(100, ((ev.clientX - r.left) / Math.max(1, r.width)) * 100));
+      var py = Math.max(0, Math.min(100, ((ev.clientY - r.top) / Math.max(1, r.height)) * 100));
+      card.style.setProperty('--hyp-zoom-x', px.toFixed(1) + '%');
+      card.style.setProperty('--hyp-zoom-y', py.toFixed(1) + '%');
+    });
+    card.addEventListener('click', function () {
+      if (loupeActive) api.toggleLoupe(false);
+    });
+  });
+
+  plateDrawer.addEventListener('click', function (ev) {
+    if (ev.target === plateDrawer) api.togglePlates(false);
+  });
+
+  window.addEventListener('keydown', function (ev) {
+    if (ev.metaKey || ev.ctrlKey || ev.altKey) return;
+    var k = ev.key;
+    if (k >= '1' && k <= '6') {
+      ev.preventDefault();
+      engine.unlockAudio();
+      api.selectLocus(LOCI[parseInt(k, 10) - 1]);
+    } else if (k === 'ArrowLeft' && document.activeElement !== refractionSlider) {
+      ev.preventDefault();
+      stepLocus(-1);
+    } else if (k === 'ArrowRight' && document.activeElement !== refractionSlider) {
+      ev.preventDefault();
+      stepLocus(1);
+    } else if (k === 'u' || k === 'U' || (k === ' ' && document.activeElement !== refractionSlider)) {
+      ev.preventDefault();
+      toggleCurrentRefraction();
+    } else if (k === 'a' || k === 'A') {
+      ev.preventDefault();
+      api.unsealAll();
+    } else if (k === 'v' || k === 'V') {
+      ev.preventDefault();
+      api.summonSkyShip();
+    } else if (k === 'm' || k === 'M') {
+      ev.preventDefault();
+      api.setMuted();
+    } else if (k === 'r' || k === 'R') {
+      ev.preventDefault();
+      api.reset();
+    } else if (k === 'p' || k === 'P') {
+      ev.preventDefault();
+      api.togglePlates();
+    } else if (k === 'z' || k === 'Z') {
+      ev.preventDefault();
+      api.toggleLoupe();
+    } else if (k === 'Escape') {
+      if (platesOpen) {
+        ev.preventDefault();
+        api.togglePlates(false);
+      } else if (loupeActive) {
+        ev.preventDefault();
+        api.toggleLoupe(false);
+      }
+    }
+  });
+
+  if (mqlReduced && typeof mqlReduced.addEventListener === 'function') {
+    mqlReduced.addEventListener('change', function (ev) {
+      isReducedMotion = Boolean(ev.matches);
+      engine.setReducedMotion(isReducedMotion);
+      syncUI();
+    });
+  }
+
+  window.addEventListener('resize', function () {
+    resizeStageCanvas();
+    renderStage();
+  });
+
+  function tick(nowMs) {
+    if (!lastFrameMs) lastFrameMs = nowMs;
+    var dt = Math.min(0.05, Math.max(0, (nowMs - lastFrameMs) / 1000));
+    lastFrameMs = nowMs;
+    if (!isReducedMotion && !platesOpen) {
+      animSeconds += dt;
+      engine.step(dt);
+      renderStage();
+    }
+    window.requestAnimationFrame(tick);
+  }
+
+  resizeStageCanvas();
+  syncUI();
+  window.requestAnimationFrame(tick);
+
+  window.__HYPATIA__ = api;
+})();
+</script>
+</body>
+</html>

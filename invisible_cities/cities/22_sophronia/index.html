@@ -1,0 +1,2215 @@
+<!doctype html>
+<html lang="en" class="sophronia-html">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sophronia — The Half-City of Bolts and Trailers</title>
+<style>
+[hidden] { display: none !important; }
+:root {
+  --sophronia-ground: #18130f; --sophronia-ground-2: #221a14; --sophronia-ground-3: #2c221a;
+  --carnival-vermilion: #d93b2b; --carnival-gilt: #e8b948; --carnival-ivory: #f3e7cf;
+  --marble-carrara: #e7e2d8; --marble-cement: #767c82; --marble-mortar: #9da1a4;
+  --caravan-ochre: #cfa368; --caravan-dust: #e4c493; --caravan-iron: #2b3036;
+  --sophronia-rule: rgba(232, 185, 72, 0.28);
+  --sophronia-font: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --sophronia-mono: "SF Mono", Menlo, Consolas, monospace;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html.sophronia-html, body.sophronia-body {
+  margin: 0; padding: 0; width: 100%; height: 100vh; max-height: 100dvh;
+  overflow: hidden; background: var(--sophronia-ground); color: var(--marble-carrara);
+  font-family: var(--sophronia-font); -webkit-font-smoothing: antialiased;
+}
+sophronia-meridian, meridian-banner-beam, halfcity-panorama-stage, permanent-carnival-half,
+carnival-ride-ledger, nomadic-marble-half, trailer-manifest-rack, decampment-calendar,
+waiting-months-counter, sophronia-plate-drawer, plate-loupe-viewport, meridian-readout,
+meridian-title, meridian-subtitle, meridian-gauge, meridian-key-row, bay-heading, bay-caption,
+ride-anchor-chip, trailer-slot-chip, chip-name, chip-status, counter-figure, counter-unit,
+itinerary-phase, scrubber-rail, plate-folio-sheet, plate-tab-row, plate-figure-slot, plate-caption,
+ledger-triptych, meridian-action-key { display: block; }
+sophronia-meridian {
+  position: relative; width: 100vw; max-width: 100%; height: 100vh; max-height: 100dvh;
+  display: grid; grid-template-rows: 46px minmax(0, 1fr) 236px; overflow: hidden;
+  background: radial-gradient(120% 80% at 50% 0%, #2a2018 0%, var(--sophronia-ground) 62%);
+}
+meridian-banner-beam {
+  display: flex; align-items: center; gap: 14px; padding: 0 14px; min-width: 0;
+  border-bottom: 1px solid var(--sophronia-rule);
+  background: linear-gradient(90deg, rgba(217,59,43,0.16) 0%, rgba(24,19,15,0.9) 49.6%, rgba(118,124,130,0.18) 100%);
+}
+meridian-title {
+  font-size: 19px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--carnival-gilt);
+  white-space: nowrap; font-weight: 600;
+}
+meridian-subtitle {
+  font-size: 12px; font-style: italic; color: var(--caravan-dust); white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis; min-width: 0; flex: 1 1 auto;
+}
+meridian-gauge {
+  font-family: var(--sophronia-mono); font-size: 11px; color: var(--marble-carrara); white-space: nowrap;
+  padding: 3px 8px; border: 1px solid var(--sophronia-rule); border-radius: 3px; background: rgba(0,0,0,0.25);
+}
+meridian-gauge b { color: var(--carnival-gilt); font-weight: 600; }
+meridian-key-row { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+meridian-banner-beam meridian-key-row, meridian-banner-beam meridian-gauge, meridian-banner-beam meridian-title { flex: 0 0 auto; flex-wrap: nowrap; }
+meridian-action-key {
+  display: inline-flex; align-items: center; gap: 5px; cursor: pointer; user-select: none;
+  font-family: var(--sophronia-mono); font-size: 10.5px; line-height: 1; white-space: nowrap;
+  padding: 5px 7px; border-radius: 3px; color: var(--marble-carrara);
+  border: 1px solid rgba(231,226,216,0.22); background: rgba(43,48,54,0.55);
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+meridian-action-key kbd {
+  font-family: inherit; font-size: 9.5px; padding: 1px 4px; border-radius: 2px;
+  background: rgba(232,185,72,0.18); color: var(--carnival-gilt); border: 1px solid rgba(232,185,72,0.35);
+}
+meridian-action-key:hover, meridian-action-key:focus-visible {
+  outline: none; border-color: var(--carnival-gilt); background: rgba(232,185,72,0.14);
+}
+meridian-action-key.carnival-key { border-color: rgba(217,59,43,0.45); background: rgba(217,59,43,0.14); }
+meridian-action-key.marble-key { border-color: rgba(157,161,164,0.5); background: rgba(118,124,130,0.2); }
+meridian-action-key.caravan-key { border-color: rgba(207,163,104,0.5); background: rgba(207,163,104,0.14); }
+meridian-action-key.sophronia-is-on {
+  color: var(--sophronia-ground); background: var(--carnival-gilt); border-color: var(--carnival-gilt);
+}
+meridian-action-key.sophronia-is-on kbd { color: var(--sophronia-ground); background: rgba(24,19,15,0.2); }
+halfcity-panorama-stage { position: relative; min-height: 0; overflow: hidden; background: #0f0c0a; }
+halfcity-panorama-stage canvas.sophronia-stage-canvas {
+  position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: crosshair; touch-action: manipulation;
+}
+halfcity-panorama-stage.carnival-wrench-armed canvas.sophronia-stage-canvas { cursor: cell; }
+meridian-readout {
+  position: absolute; right: 12px; top: 10px; max-width: min(46%, 560px);
+  font-family: var(--sophronia-mono); font-size: 11.5px; line-height: 1.35; text-align: center;
+  padding: 6px 12px; border-radius: 3px; pointer-events: none; color: var(--carnival-ivory);
+  background: rgba(24,19,15,0.84); border: 1px solid var(--sophronia-rule);
+}
+meridian-readout.carnival-refusal { border-color: var(--carnival-vermilion); color: #ffd9cf; }
+meridian-readout.marble-unbolt { border-color: var(--marble-mortar); }
+ledger-triptych {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr) minmax(0, 1.08fr);
+  min-height: 0; border-top: 1px solid var(--sophronia-rule); background: var(--sophronia-ground-2);
+}
+permanent-carnival-half, decampment-calendar, nomadic-marble-half {
+  min-width: 0; min-height: 0; padding: 9px 12px 8px; overflow: hidden; display: flex; flex-direction: column; gap: 6px;
+}
+permanent-carnival-half { border-right: 1px solid var(--sophronia-rule); background: linear-gradient(180deg, rgba(217,59,43,0.1), transparent 70%); }
+nomadic-marble-half { border-left: 1px solid var(--sophronia-rule); background: linear-gradient(180deg, rgba(118,124,130,0.14), transparent 70%); }
+bay-heading {
+  font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600;
+  display: flex; justify-content: space-between; gap: 8px; white-space: nowrap;
+}
+permanent-carnival-half bay-heading { color: #f0806f; }
+nomadic-marble-half bay-heading { color: var(--marble-carrara); }
+decampment-calendar bay-heading { color: var(--caravan-ochre); }
+bay-heading small { font-family: var(--sophronia-mono); font-size: 10px; letter-spacing: 0.02em; color: var(--caravan-dust); text-transform: none; }
+bay-caption { font-size: 11px; font-style: italic; color: rgba(228,196,147,0.78); line-height: 1.3; }
+carnival-ride-ledger { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+trailer-manifest-rack { display: grid; grid-template-columns: 1fr 1fr; gap: 3px 4px; }
+ride-anchor-chip, trailer-slot-chip {
+  display: flex; align-items: center; justify-content: space-between; gap: 6px; min-width: 0; cursor: pointer;
+  padding: 3px 7px; border-radius: 3px; font-size: 11px; line-height: 1.25;
+  border: 1px solid rgba(231,226,216,0.14); background: rgba(0,0,0,0.22);
+}
+ride-anchor-chip { border-left: 3px solid var(--carnival-vermilion); }
+trailer-slot-chip { border-left: 3px solid var(--marble-carrara); }
+ride-anchor-chip:hover, trailer-slot-chip:hover, ride-anchor-chip:focus-visible, trailer-slot-chip:focus-visible {
+  outline: none; border-color: var(--carnival-gilt);
+}
+chip-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+chip-status { font-family: var(--sophronia-mono); font-size: 9.5px; white-space: nowrap; color: var(--caravan-dust); }
+ride-anchor-chip.carnival-is-selected { background: rgba(217,59,43,0.22); border-color: var(--carnival-vermilion); }
+ride-anchor-chip.carnival-is-refusing { animation: carnival-recoil 0.45s ease-out; }
+@keyframes carnival-recoil { 0% { transform: translateX(0); } 25% { transform: translateX(-3px); } 50% { transform: translateX(3px); } 100% { transform: translateX(0); } }
+trailer-slot-chip.marble-is-rigging { border-left-color: var(--carnival-gilt); background: rgba(232,185,72,0.1); }
+trailer-slot-chip.marble-is-loaded { border-left-color: var(--caravan-ochre); background: rgba(207,163,104,0.13); }
+trailer-slot-chip.caravan-is-gone { border-left-color: var(--marble-cement); opacity: 0.72; }
+trailer-slot-chip.marble-is-selected { border-color: var(--carnival-gilt); }
+scrubber-rail { display: flex; align-items: center; gap: 8px; font-family: var(--sophronia-mono); font-size: 10.5px; color: var(--caravan-dust); }
+input.sophronia-scrubber { flex: 1 1 auto; min-width: 0; accent-color: var(--caravan-ochre); height: 18px; margin: 0; cursor: ew-resize; }
+itinerary-phase { font-size: 11px; color: var(--carnival-ivory); line-height: 1.3; min-height: 2.6em; }
+waiting-months-counter {
+  display: grid; grid-template-columns: auto auto 1fr; align-items: baseline; gap: 4px 10px;
+  padding: 5px 9px; border-radius: 3px; border: 1px dashed rgba(207,163,104,0.5); background: rgba(207,163,104,0.07);
+}
+counter-figure { font-family: var(--sophronia-mono); font-size: 24px; color: var(--caravan-ochre); line-height: 1; }
+counter-unit { font-size: 10.5px; color: var(--caravan-dust); line-height: 1.25; }
+waiting-months-counter.caravan-is-waiting counter-figure { color: var(--carnival-gilt); }
+sophronia-plate-drawer {
+  position: absolute; inset: 0; z-index: 20; display: flex; align-items: center; justify-content: center;
+  padding: 18px; background: rgba(12, 9, 7, 0.82); backdrop-filter: blur(3px);
+}
+plate-folio-sheet {
+  position: relative; width: min(1120px, 100%); height: min(700px, 100%); display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto; gap: 8px; padding: 12px 14px;
+  border: 1px solid var(--carnival-gilt); border-radius: 4px; background: var(--sophronia-ground-2);
+  box-shadow: 0 18px 60px rgba(0,0,0,0.6);
+}
+plate-tab-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+plate-tab-row meridian-title { font-size: 14px; margin-right: auto; }
+plate-loupe-viewport {
+  position: relative; min-height: 0; overflow: hidden; display: grid; gap: 10px;
+  grid-template-columns: 1fr 1fr; border: 1px solid var(--sophronia-rule); background: #0f0c0a; padding: 8px;
+}
+plate-loupe-viewport.sophronia-tab-map, plate-loupe-viewport.sophronia-tab-plate { grid-template-columns: 1fr; }
+plate-figure-slot { position: relative; min-height: 0; min-width: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+plate-figure-slot img.sophronia-plate-img {
+  display: block; max-width: 100%; max-height: 100%; object-fit: contain; transition: transform 0.25s ease;
+  transform-origin: var(--sophronia-lx, 50%) var(--sophronia-ly, 50%);
+}
+plate-loupe-viewport.sophronia-loupe-on img.sophronia-plate-img { transform: scale(1.8); cursor: zoom-out; }
+plate-loupe-viewport.sophronia-loupe-on { cursor: zoom-out; }
+plate-caption { font-size: 11px; font-style: italic; color: var(--caravan-dust); }
+@media (max-width: 760px) {
+  html.sophronia-html, body.sophronia-body { height: 100dvh; }
+  sophronia-meridian {
+    display: flex; flex-direction: column; height: 100dvh; overflow-x: hidden; overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  meridian-banner-beam { flex: 0 0 auto; flex-wrap: wrap; gap: 6px 10px; padding: 8px 10px; }
+  meridian-title { font-size: 15px; }
+  meridian-banner-beam meridian-key-row { flex-wrap: wrap; }
+  meridian-subtitle { flex-basis: 100%; order: 3; white-space: normal; }
+  halfcity-panorama-stage { flex: 0 0 auto; height: 340px; }
+  meridian-readout { font-size: 10px; top: auto; bottom: 6px; left: 8px; right: 8px; max-width: none; padding: 4px 8px; }
+  bay-heading { flex-wrap: wrap; white-space: normal; }
+  ledger-triptych { display: flex; flex-direction: column; flex: 0 0 auto; }
+  permanent-carnival-half, decampment-calendar, nomadic-marble-half { border: 0; border-bottom: 1px solid var(--sophronia-rule); overflow: visible; }
+  sophronia-plate-drawer { position: fixed; padding: 8px; }
+  plate-folio-sheet { height: 100%; padding: 10px; }
+  plate-loupe-viewport { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
+  plate-loupe-viewport.sophronia-tab-map, plate-loupe-viewport.sophronia-tab-plate { grid-template-rows: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  meridian-action-key, plate-figure-slot img.sophronia-plate-img { transition: none; }
+  ride-anchor-chip.carnival-is-refusing { animation: none; }
+}
+</style>
+</head>
+<body class="sophronia-body">
+<sophronia-meridian id="sophronia-meridian" aria-label="Sophronia, the city made of two half-cities">
+  <meridian-banner-beam>
+    <meridian-title>Sophronia</meridian-title>
+    <meridian-subtitle>Two half-cities on one square: a fairground bolted to the rock, a metropolis of stone that rides away each year.</meridian-subtitle>
+    <meridian-gauge id="sophronia-gauge-bedrock" title="Carnival structures still standing">Carnival <b id="sophronia-g-intact">6/6</b> rooted</meridian-gauge>
+    <meridian-gauge id="sophronia-gauge-trailers" title="Institutions loaded on flatbeds">Flatbeds <b id="sophronia-g-loaded">0/10</b></meridian-gauge>
+    <meridian-key-row>
+      <meridian-action-key role="button" tabindex="0" data-act="plates" id="sophronia-key-plates" aria-pressed="false"><kbd>P</kbd>Royal Plates</meridian-action-key>
+      <meridian-action-key role="button" tabindex="0" data-act="mute" id="sophronia-key-mute" aria-pressed="false"><kbd>A</kbd><key-legend id="sophronia-mute-label">Sound On</key-legend></meridian-action-key>
+      <meridian-action-key role="button" tabindex="0" data-act="reset"><kbd>R</kbd>Reset</meridian-action-key>
+    </meridian-key-row>
+  </meridian-banner-beam>
+
+  <halfcity-panorama-stage id="sophronia-stage">
+    <canvas id="sophronia-canvas" class="sophronia-stage-canvas" role="img" aria-label="Panorama of the square: fairground rides to the west, stone and marble institutions to the east, flatbed trailers along the road"></canvas>
+    <meridian-readout id="sophronia-readout" role="status" aria-live="polite">Click an eastern institution to unbolt it onto its flatbed, or a western ride to hear it.</meridian-readout>
+  </halfcity-panorama-stage>
+
+  <ledger-triptych>
+    <permanent-carnival-half aria-label="The rooted fairground half">
+      <bay-heading>West · The Rooted Fair <small id="sophronia-refusals">bedrock refusals 0</small></bay-heading>
+      <carnival-ride-ledger id="sophronia-ride-ledger"></carnival-ride-ledger>
+      <meridian-key-row>
+        <meridian-action-key role="button" tabindex="0" class="carnival-key" data-act="wrench" id="sophronia-key-wrench" aria-pressed="false"><kbd>W</kbd>Rigging Wrench</meridian-action-key>
+        <meridian-action-key role="button" tabindex="0" class="carnival-key" data-act="testwrench"><kbd>X</kbd>Test Wrench on Carnival</meridian-action-key>
+        <meridian-action-key role="button" tabindex="0" class="carnival-key" data-act="shout"><kbd>S</kbd>Safety-Bar Shout</meridian-action-key>
+      </meridian-key-row>
+    </permanent-carnival-half>
+
+    <decampment-calendar aria-label="Annual itinerary of the stone half">
+      <bay-heading>Annual Itinerary <small id="sophronia-progress-label">0%</small></bay-heading>
+      <scrubber-rail>
+        <key-legend>Seated</key-legend>
+        <input id="sophronia-scrubber" class="sophronia-scrubber" type="range" min="0" max="100" step="1" value="0" aria-label="Decampment progress of the stone, marble and cement half-city">
+        <key-legend>Gone</key-legend>
+      </scrubber-rail>
+      <itinerary-phase id="sophronia-phase">Complete life — the stone half is seated beside the fair.</itinerary-phase>
+      <waiting-months-counter id="sophronia-counter" aria-live="polite">
+        <counter-figure id="sophronia-months">—</counter-figure>
+        <counter-unit>months<br><b id="sophronia-days">0</b> days</counter-unit>
+        <counter-unit id="sophronia-counter-note">The coaster and the carousel have nothing to count while the city is here.</counter-unit>
+      </waiting-months-counter>
+      <meridian-key-row>
+        <meridian-action-key role="button" tabindex="0" class="caravan-key" data-act="depart"><kbd>D</kbd>Pull Up Stakes</meridian-action-key>
+        <meridian-action-key role="button" tabindex="0" class="caravan-key" data-act="month"><kbd>M</kbd>Count Waiting Month</meridian-action-key>
+        <meridian-action-key role="button" tabindex="0" class="caravan-key" data-act="return"><kbd>C</kbd>Return Caravan</meridian-action-key>
+        <meridian-action-key role="button" tabindex="0" class="caravan-key" data-act="auto" id="sophronia-key-auto" aria-pressed="false"><kbd>Space</kbd>Auto-Itinerary</meridian-action-key>
+      </meridian-key-row>
+    </decampment-calendar>
+
+    <nomadic-marble-half aria-label="The nomadic stone, marble and cement half">
+      <bay-heading>East · The Travelling Metropolis <small id="sophronia-erected">erected 10/10</small></bay-heading>
+      <trailer-manifest-rack id="sophronia-trailer-rack"></trailer-manifest-rack>
+      <meridian-key-row>
+        <meridian-action-key role="button" tabindex="0" class="marble-key" data-act="unbolt"><kbd>U</kbd>Unbolt Next</meridian-action-key>
+      </meridian-key-row>
+    </nomadic-marble-half>
+  </ledger-triptych>
+
+  <sophronia-plate-drawer id="sophronia-plate-drawer" hidden role="dialog" aria-modal="true" aria-label="Royal plates of Sophronia">
+    <plate-folio-sheet>
+      <plate-tab-row>
+        <meridian-title>Royal Plates</meridian-title>
+        <meridian-action-key role="button" tabindex="0" data-tab="diptych" class="sophronia-is-on">Diptych</meridian-action-key>
+        <meridian-action-key role="button" tabindex="0" data-tab="map">Cartographic Map</meridian-action-key>
+        <meridian-action-key role="button" tabindex="0" data-tab="plate">Architectural Plate</meridian-action-key>
+        <meridian-action-key role="button" tabindex="0" data-act="loupe" id="sophronia-key-loupe" aria-pressed="false"><kbd>Z</kbd><key-legend id="sophronia-loupe-label">Loupe 1x</key-legend></meridian-action-key>
+        <meridian-action-key role="button" tabindex="0" data-act="closeplates"><kbd>Esc</kbd>Close</meridian-action-key>
+      </plate-tab-row>
+      <plate-loupe-viewport id="sophronia-loupe" class="sophronia-tab-diptych">
+        <plate-figure-slot id="sophronia-slot-map">
+          <img id="sophronia-map-img" class="sophronia-plate-img" src="map.png" alt="Cartographic survey of Sophronia" onerror="window.__sophroniaPlateFallback &amp;&amp; window.__sophroniaPlateFallback(this)">
+        </plate-figure-slot>
+        <plate-figure-slot id="sophronia-slot-plate">
+          <img id="sophronia-plate-img" class="sophronia-plate-img" src="image.png" alt="Architectural vista of Sophronia" onerror="window.__sophroniaPlateFallback &amp;&amp; window.__sophroniaPlateFallback(this)">
+        </plate-figure-slot>
+      </plate-loupe-viewport>
+      <plate-caption id="sophronia-plate-caption">Survey and vista of the two half-cities. Press Z for the loupe, Escape to close.</plate-caption>
+    </plate-folio-sheet>
+  </sophronia-plate-drawer>
+</sophronia-meridian>
+<script id="sophronia-layer-permanent-carnival">
+/*
+ * Sophronia — Layer 1: The Permanent Carnival Half-City
+ * Western half of Sophronia: six fairground structures bolted into living bedrock.
+ * Pure standalone ES6 browser IIFE; zero external network or module dependencies.
+ */
+(function (global) {
+  "use strict";
+  const PALETTE = Object.freeze({
+    nightBedrock: "#18130f", emptyOchre: "#cfa368",
+    ochreDust: "#e4c493", carnivalVermilion: "#d93b2b",
+    giltSpoke: "#e8b948", tentIvory: "#f3e7cf",
+    cementAsh: "#767c82", carraraMarble: "#e7e2d8",
+    stoneMortar: "#9da1a4", trailerIron: "#2b3036"
+  });
+
+  const CARNIVAL_RIDES = Object.freeze([
+    Object.freeze({
+      id: "roller_coaster", label: "Great Roller Coaster with Steep Humps",
+      shortLabel: "Roller Coaster", nx: 0.145,
+      ny: 0.34, hitBox: Object.freeze([0.032, 0.16, 0.295, 0.54]),
+      pierX: 0.145, permanent: true,
+      dismantleable: false, foundation: "bedrock_iron_piers",
+      detail: "Steep vermilion iron humps, bedrock trestles, and a safety-bar car carrying a suspended shout at the crest."
+    }),
+    Object.freeze({
+      id: "chain_carousel", label: "Carousel with Spoke of Chains",
+      shortLabel: "Chain Carousel", nx: 0.368,
+      ny: 0.71, hitBox: Object.freeze([0.310, 0.59, 0.418, 0.84]),
+      pierX: 0.368, permanent: true,
+      dismantleable: false, foundation: "bedrock_iron_piers",
+      detail: "Gilt radial hub spinning flying seats on tensioned iron chain spokes above bolted foundation piers."
+    }),
+    Object.freeze({
+      id: "ferris_wheel", label: "Ferris Wheel of Spinning Cages",
+      shortLabel: "Spinning-Cage Wheel", nx: 0.382,
+      ny: 0.36, hitBox: Object.freeze([0.298, 0.15, 0.468, 0.57]),
+      pierX: 0.382, permanent: true,
+      dismantleable: false, foundation: "bedrock_iron_piers",
+      detail: "High gilt-spoked wheel carrying independently revolving wire-and-brass passenger cages anchored permanently to the square."
+    }),
+    Object.freeze({
+      id: "death_ride", label: "Death-Ride with Crouching Motorcyclists",
+      shortLabel: "Motorcycle Velodrome", nx: 0.248,
+      ny: 0.69, hitBox: Object.freeze([0.194, 0.56, 0.304, 0.83]),
+      pierX: 0.248, permanent: true,
+      dismantleable: false, foundation: "bedrock_iron_piers",
+      detail: "Vertical timber-and-iron velodrome cylinder with cutaway window showing crouching motorcyclists circling horizontally on the wall."
+    }),
+    Object.freeze({
+      id: "big_top_trapezes", label: "Big Top Dome with Clustered Trapezes",
+      shortLabel: "Big Top Trapezes", nx: 0.112,
+      ny: 0.68, hitBox: Object.freeze([0.036, 0.54, 0.188, 0.82]),
+      pierX: 0.112, permanent: true,
+      dismantleable: false, foundation: "bedrock_iron_piers",
+      detail: "Vermilion-and-ivory circus cupola whose illuminated cutaway oculus reveals a secret cluster of trapezes hanging at its center."
+    }),
+    Object.freeze({
+      id: "shooting_galleries", label: "Shooting-Galleries Arcade",
+      shortLabel: "Shooting Galleries", nx: 0.454,
+      ny: 0.76, hitBox: Object.freeze([0.420, 0.67, 0.490, 0.855]),
+      pierX: 0.454, permanent: true,
+      dismantleable: false, foundation: "bedrock_iron_piers",
+      detail: "Permanent tin-target fairground booths flanking the carousel as it counts the months in the empty plaza."
+    })
+  ]); const ROMAN_MONTHS = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"];
+
+  function clamp01(v) {
+    const n = Number(v);
+    if (!Number.isFinite(n)) return 0;
+    return n < 0 ? 0 : n > 1 ? 1 : n;
+  }
+
+  function hexToRgb(hex) {
+    const clean = String(hex || "#000000").replace("#", ""); const num = parseInt(clean, 16) || 0;
+    return [(num >> 16) & 255, (num >> 8) & 255, num & 255];
+  }
+
+  function mixHex(hexA, hexB, t) {
+    const k = clamp01(t); const a = hexToRgb(hexA);
+    const b = hexToRgb(hexB); const r = Math.round(a[0] + (b[0] - a[0]) * k);
+    const g = Math.round(a[1] + (b[1] - a[1]) * k); const bl = Math.round(a[2] + (b[2] - a[2]) * k);
+    return "rgb(" + r + "," + g + "," + bl + ")";
+  }
+
+  function rgbaHex(hex, alpha) {
+    const c = hexToRgb(hex);
+    return "rgba(" + c[0] + "," + c[1] + "," + c[2] + "," + clamp01(alpha) + ")";
+  }
+
+  function coasterElevationNorm(u) {
+    const h1 = 0.53 * Math.exp(-Math.pow((u - 0.41) / 0.145, 2));
+    const h2 = 0.38 * Math.exp(-Math.pow((u - 0.80) / 0.125, 2));
+    const approach = 0.08 * Math.sin(u * Math.PI);
+    return 0.745 - (h1 + h2 + approach);
+  }
+
+  function sampleCoasterPoint(u, w, h) {
+    const uu = clamp01(u); const x0 = 0.036 * w; const x1 = 0.296 * w; const x = x0 + (x1 - x0) * uu;
+    const y = coasterElevationNorm(uu) * h; const du = 0.008; const dx = (x1 - x0) * du;
+    const dy = (coasterElevationNorm(Math.min(1, uu + du)) - coasterElevationNorm(Math.max(0, uu - du))) * 0.5 * h;
+    return { x: x, y: y, angle: Math.atan2(dy, dx) };
+  }
+
+  function createCarnivalAudio(stateRef) {
+    let audioCtx = null; let masterGain = null; let noiseBuf = null; let lastTickMs = 0;
+    function ensureCtx() {
+      if (stateRef.muted) return null;
+      try {
+        if (!audioCtx) {
+          const Ctor = global.AudioContext || global.webkitAudioContext;
+          if (!Ctor) return null;
+          audioCtx = new Ctor(); masterGain = audioCtx.createGain();
+          masterGain.gain.value = stateRef.muted ? 0 : 0.22; masterGain.connect(audioCtx.destination);
+        }
+        if (audioCtx.state === "suspended" && typeof audioCtx.resume === "function") {
+          audioCtx.resume().catch(function () {});
+        }
+        return audioCtx;
+      } catch (_) {
+        return null;
+      }
+    }
+    function getNoiseBuffer(ctx) {
+      if (noiseBuf) return noiseBuf;
+      const len = Math.max(1024, Math.floor(ctx.sampleRate * 0.5));
+      const buf = ctx.createBuffer(1, len, ctx.sampleRate); const data = buf.getChannelData(0);
+      for (let i = 0; i < len; i++) {
+        data[i] = (Math.random() * 2 - 1) * 0.6;
+      }
+      noiseBuf = buf;
+      return buf;
+    }
+    function unlock() {
+      try {
+        const c = ensureCtx();
+        return Boolean(c);
+      } catch (_) {
+        return false;
+      }
+    }
+    function setMuted(flag) {
+      stateRef.muted = Boolean(flag);
+      try {
+        if (masterGain && audioCtx) {
+          masterGain.gain.setTargetAtTime(stateRef.muted ? 0 : 0.22, audioCtx.currentTime, 0.02);
+        }
+      } catch (_) {}
+      return stateRef.muted;
+    }
+    function toggleMute() {
+      return setMuted(!stateRef.muted);
+    }
+    function isMuted() {
+      return Boolean(stateRef.muted);
+    }
+    function playCalliopePhrase(lonelinessRatio) {
+      const ctx = ensureCtx();
+      if (!ctx || !masterGain || stateRef.muted) return false;
+      try {
+        const lonely = clamp01(lonelinessRatio) > 0.6; const now = ctx.currentTime;
+        const notes = lonely ? [293.66, 440.0] : [523.25, 659.25, 783.99]; const dur = lonely ? 0.56 : 0.34;
+        for (let i = 0; i < notes.length; i++) {
+          const t0 = now + i * (lonely ? 0.09 : 0.05); const oscA = ctx.createOscillator();
+          const oscB = ctx.createOscillator(); const flt = ctx.createBiquadFilter();
+          const env = ctx.createGain(); oscA.type = "triangle";
+          oscB.type = lonely ? "sine" : "square"; oscA.frequency.setValueAtTime(notes[i], t0);
+          oscB.frequency.setValueAtTime(notes[i] * 1.004, t0); flt.type = "bandpass";
+          flt.frequency.setValueAtTime(lonely ? 620 : 1250, t0);
+          flt.Q.setValueAtTime(lonely ? 2.4 : 1.6, t0); env.gain.setValueAtTime(0.0001, t0);
+          env.gain.exponentialRampToValueAtTime(lonely ? 0.14 : 0.16, t0 + 0.03);
+          env.gain.exponentialRampToValueAtTime(0.0001, t0 + dur); oscA.connect(flt);
+          oscB.connect(flt); flt.connect(env); env.connect(masterGain); oscA.start(t0);
+          oscB.start(t0); oscA.stop(t0 + dur + 0.02); oscB.stop(t0 + dur + 0.02);
+        }
+        if (lonely) {
+          const src = ctx.createBufferSource(); src.buffer = getNoiseBuffer(ctx);
+          const wFlt = ctx.createBiquadFilter(); const wEnv = ctx.createGain();
+          wFlt.type = "bandpass"; wFlt.frequency.setValueAtTime(460, now);
+          wFlt.Q.setValueAtTime(3.8, now); wEnv.gain.setValueAtTime(0.0001, now);
+          wEnv.gain.linearRampToValueAtTime(0.09, now + 0.12);
+          wEnv.gain.exponentialRampToValueAtTime(0.0001, now + 0.62); src.connect(wFlt);
+          wFlt.connect(wEnv); wEnv.connect(masterGain); src.start(now); src.stop(now + 0.64);
+        }
+        return true;
+      } catch (_) {
+        return false;
+      }
+    }
+    function playSuspendedShout() {
+      const ctx = ensureCtx();
+      if (!ctx || !masterGain || stateRef.muted) return false;
+      try {
+        const now = ctx.currentTime;
+        for (let k = 0; k < 4; k++) {
+          const tk = now + k * 0.042; const clk = ctx.createOscillator();
+          const cg = ctx.createGain(); clk.type = "triangle";
+          clk.frequency.setValueAtTime(1280 + k * 95, tk); cg.gain.setValueAtTime(0.11, tk);
+          cg.gain.exponentialRampToValueAtTime(0.0001, tk + 0.028); clk.connect(cg);
+          cg.connect(masterGain); clk.start(tk); clk.stop(tk + 0.032);
+        }
+        const ts = now + 0.16; const vox = ctx.createOscillator();
+        const f1 = ctx.createBiquadFilter(); const f2 = ctx.createBiquadFilter();
+        const eg = ctx.createGain(); vox.type = "sawtooth";
+        vox.frequency.setValueAtTime(375, ts); vox.frequency.exponentialRampToValueAtTime(515, ts + 0.16);
+        vox.frequency.exponentialRampToValueAtTime(350, ts + 0.58); f1.type = "bandpass";
+        f1.frequency.setValueAtTime(750, ts); f1.Q.setValueAtTime(5.2, ts);
+        f2.type = "bandpass"; f2.frequency.setValueAtTime(1190, ts);
+        f2.Q.setValueAtTime(6.0, ts); eg.gain.setValueAtTime(0.0001, ts);
+        eg.gain.linearRampToValueAtTime(0.24, ts + 0.07);
+        eg.gain.exponentialRampToValueAtTime(0.0001, ts + 0.60); vox.connect(f1);
+        vox.connect(f2); f1.connect(eg); f2.connect(eg); eg.connect(masterGain);
+        vox.start(ts); vox.stop(ts + 0.62);
+        return true;
+      } catch (_) {
+        return false;
+      }
+    }
+    function playBedrockRefusal() {
+      const ctx = ensureCtx();
+      if (!ctx || !masterGain || stateRef.muted) return false;
+      try {
+        const now = ctx.currentTime; const partials = [62, 224, 592, 968, 1420];
+        for (let i = 0; i < partials.length; i++) {
+          const osc = ctx.createOscillator(); const g = ctx.createGain();
+          osc.type = i === 0 ? "sine" : "triangle"; osc.frequency.setValueAtTime(partials[i], now);
+          const dur = i === 0 ? 0.26 : 0.42 - i * 0.06;
+          g.gain.setValueAtTime(i === 0 ? 0.25 : 0.14 / (i * 0.7 + 1), now);
+          g.gain.exponentialRampToValueAtTime(0.0001, now + dur); osc.connect(g);
+          g.connect(masterGain); osc.start(now); osc.stop(now + dur + 0.02);
+        }
+        return true;
+      } catch (_) {
+        return false;
+      }
+    }
+    function playMonthTick() {
+      const nowMs = Date.now();
+      if (nowMs - lastTickMs < 75) return false;
+      lastTickMs = nowMs; const ctx = ensureCtx();
+      if (!ctx || !masterGain || stateRef.muted) return false;
+      try {
+        const now = ctx.currentTime; const osc = ctx.createOscillator();
+        const g = ctx.createGain(); osc.type = "triangle"; osc.frequency.setValueAtTime(1480, now);
+        osc.frequency.exponentialRampToValueAtTime(920, now + 0.045); g.gain.setValueAtTime(0.14, now);
+        g.gain.exponentialRampToValueAtTime(0.0001, now + 0.055); osc.connect(g);
+        g.connect(masterGain); osc.start(now); osc.stop(now + 0.06);
+        return true;
+      } catch (_) {
+        return false;
+      }
+    }
+    return Object.freeze({
+      unlock: unlock, setMuted: setMuted,
+      toggleMute: toggleMute, isMuted: isMuted,
+      playCalliopePhrase: playCalliopePhrase, playSuspendedShout: playSuspendedShout,
+      playBedrockRefusal: playBedrockRefusal, playMonthTick: playMonthTick
+    });
+  }
+
+  function drawSkyPlazaAndBedrock(ctx, w, h, state, dustMotes) {
+    const p = clamp01(state.decampmentProgress); const horizonY = 0.63 * h; const bedY = 0.87 * h;
+    const skyGrad = ctx.createLinearGradient(0, 0, 0, horizonY);
+    skyGrad.addColorStop(0, mixHex(PALETTE.tentIvory, "#241a13", p * 0.88));
+    skyGrad.addColorStop(0.55, mixHex(PALETTE.ochreDust, "#7c5333", p * 0.76));
+    skyGrad.addColorStop(1, mixHex(PALETTE.emptyOchre, PALETTE.ochreDust, 0.32 + p * 0.48));
+    ctx.fillStyle = skyGrad; ctx.fillRect(0, 0, w, horizonY + 2);
+    const glow = ctx.createRadialGradient(0.24 * w, 0.34 * h, 4, 0.24 * w, 0.34 * h, 0.38 * w);
+    glow.addColorStop(0, rgbaHex(PALETTE.giltSpoke, 0.24 - p * 0.08));
+    glow.addColorStop(1, rgbaHex(PALETTE.emptyOchre, 0)); ctx.fillStyle = glow;
+    ctx.fillRect(0, 0, 0.65 * w, horizonY);
+    ctx.fillStyle = mixHex("#b78a52", "#6e4e2e", p * 0.55); ctx.beginPath();
+    ctx.moveTo(0, horizonY); ctx.lineTo(0.22 * w, horizonY - 0.016 * h);
+    ctx.lineTo(0.51 * w, horizonY - 0.006 * h); ctx.lineTo(0.81 * w, horizonY - 0.020 * h);
+    ctx.lineTo(w, horizonY - 0.008 * h); ctx.lineTo(w, horizonY + 2); ctx.closePath(); ctx.fill();
+    const leftGround = ctx.createLinearGradient(0, horizonY, 0, bedY);
+    leftGround.addColorStop(0, mixHex(PALETTE.emptyOchre, "#9c7344", 0.34));
+    leftGround.addColorStop(1, "#6f5032"); ctx.fillStyle = leftGround;
+    ctx.fillRect(0, horizonY, 0.496 * w, bedY - horizonY);
+    const rightGround = ctx.createLinearGradient(0, horizonY, 0, bedY);
+    rightGround.addColorStop(0, mixHex(PALETTE.ochreDust, PALETTE.emptyOchre, 0.35 + p * 0.4));
+    rightGround.addColorStop(0.68, PALETTE.emptyOchre); rightGround.addColorStop(1, "#9d7648");
+    ctx.fillStyle = rightGround; ctx.fillRect(0.496 * w, horizonY, 0.504 * w, bedY - horizonY);
+    if (state.monthsRemaining > 0 || p > 0.85) {
+      const mCount = Math.max(1, Math.min(12, Math.round(state.monthsRemaining || 8))); ctx.save();
+      ctx.strokeStyle = rgbaHex(PALETTE.nightBedrock, 0.42);
+      ctx.fillStyle = rgbaHex(PALETTE.tentIvory, 0.72); ctx.lineWidth = 1.2;
+      ctx.font = Math.max(9, Math.round(h * 0.017)) + "px Georgia, serif";
+      for (let m = 0; m < mCount; m++) {
+        const tx = (0.525 + m * 0.036) * w; const ty = 0.768 * h;
+        for (let s = 0; s < 4; s++) {
+          ctx.beginPath(); ctx.moveTo(tx + s * 3.2, ty - 6);
+          ctx.lineTo(tx + s * 3.2 - 1, ty + 6); ctx.stroke();
+        }
+        ctx.beginPath(); ctx.moveTo(tx - 2, ty + 4); ctx.lineTo(tx + 12, ty - 4); ctx.stroke();
+        ctx.fillText(ROMAN_MONTHS[m], tx - 1, ty + 16);
+      }
+      ctx.restore();
+    }
+    ctx.fillStyle = rgbaHex(PALETTE.ochreDust, 0.22 + 0.48 * p);
+    for (let i = 0; i < dustMotes.length; i++) {
+      const d = dustMotes[i]; ctx.beginPath();
+      ctx.ellipse(d.x * w, d.y * h, d.r * (1 + p * 1.8), d.r * 0.55, 0, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.fillStyle = PALETTE.nightBedrock; ctx.fillRect(0, bedY, w, h - bedY);
+    ctx.strokeStyle = rgbaHex(PALETTE.emptyOchre, 0.22); ctx.lineWidth = 1;
+    for (let s = 1; s <= 2; s++) {
+      const sy = bedY + (h - bedY) * (s * 0.34); ctx.beginPath(); ctx.moveTo(0, sy); ctx.lineTo(w, sy);
+      ctx.stroke();
+    }
+    for (let i = 0; i < CARNIVAL_RIDES.length; i++) {
+      const r = CARNIVAL_RIDES[i]; const px = r.pierX * w;
+      ctx.fillStyle = PALETTE.trailerIron; ctx.fillRect(px - 6, bedY - 3, 12, h - bedY + 1);
+      ctx.strokeStyle = PALETTE.giltSpoke; ctx.lineWidth = 1.4;
+      ctx.beginPath(); ctx.moveTo(px - 12, bedY + (h - bedY) * 0.78);
+      ctx.lineTo(px + 12, bedY + (h - bedY) * 0.78); ctx.moveTo(px - 9, bedY + 4);
+      ctx.lineTo(px - 15, h - 3); ctx.moveTo(px + 9, bedY + 4); ctx.lineTo(px + 15, h - 3); ctx.stroke();
+    }
+    for (let slot = 0; slot < 10; slot++) {
+      const sx = (0.522 + slot * 0.046) * w; ctx.fillStyle = rgbaHex(PALETTE.ochreDust, 0.28);
+      ctx.fillRect(sx - 9, bedY, 18, (h - bedY) * 0.32); ctx.strokeStyle = PALETTE.cementAsh;
+      ctx.lineWidth = 1.3; ctx.strokeRect(sx - 7, bedY + 1, 14, (h - bedY) * 0.22);
+    }
+    ctx.save(); ctx.setLineDash([4, 4]); ctx.strokeStyle = rgbaHex(PALETTE.giltSpoke, 0.65); ctx.beginPath();
+    ctx.moveTo(0.496 * w, horizonY); ctx.lineTo(0.496 * w, h); ctx.stroke(); ctx.restore();
+    if (state.recoilFlash > 0.01) {
+      const target = CARNIVAL_RIDES.find(function (r) { return r.id === state.lastRefusedRideId; }) || CARNIVAL_RIDES[0];
+      const sx = target.pierX * w; const sy = bedY + 4; const fl = state.recoilFlash; ctx.save();
+      for (let a = 0; a < 10; a++) {
+        const ang = -Math.PI + (a / 9) * Math.PI + Math.sin(a * 2.3) * 0.18;
+        const len = (10 + (a % 3) * 9) * fl;
+        ctx.strokeStyle = a % 2 === 0 ? PALETTE.tentIvory : PALETTE.giltSpoke; ctx.lineWidth = 1.8;
+        ctx.beginPath(); ctx.moveTo(sx, sy);
+        ctx.lineTo(sx + Math.cos(ang) * len, sy + Math.sin(ang) * len); ctx.stroke();
+      }
+      ctx.restore();
+    }
+  }
+
+  function drawCarnivalStructures(ctx, w, h, state, viewOpts) {
+    const hoveredId = viewOpts.hoveredId || null;
+    const selectedId = viewOpts.selectedId || state.selectedRideId;
+    const wrenchMode = Boolean(viewOpts.wrenchMode);
+    // 1. Great Roller Coaster with Steep Humps
+    const rcBaseY = 0.775 * h;
+    ctx.strokeStyle = mixHex(PALETTE.carnivalVermilion, PALETTE.nightBedrock, 0.35); ctx.lineWidth = 1.3;
+    for (let i = 0; i <= 16; i++) {
+      const u = i / 16; const pt = sampleCoasterPoint(u, w, h); ctx.beginPath(); ctx.moveTo(pt.x, pt.y);
+      ctx.lineTo(pt.x, rcBaseY); ctx.stroke();
+      if (i < 16) {
+        const nxt = sampleCoasterPoint((i + 1) / 16, w, h);
+        const midY = (Math.max(pt.y, nxt.y) + rcBaseY) * 0.5; ctx.beginPath();
+        ctx.moveTo(pt.x, midY); ctx.lineTo(nxt.x, rcBaseY);
+        ctx.moveTo(nxt.x, midY); ctx.lineTo(pt.x, rcBaseY); ctx.stroke();
+      }
+      ctx.fillStyle = PALETTE.trailerIron; ctx.fillRect(pt.x - 3, rcBaseY - 2, 6, 4);
+    }
+    for (let pass = 0; pass < 2; pass++) {
+      ctx.strokeStyle = pass === 0 ? PALETTE.carnivalVermilion : PALETTE.giltSpoke;
+      ctx.lineWidth = pass === 0 ? 4.0 : 1.6; ctx.beginPath();
+      for (let s = 0; s <= 56; s++) {
+        const pt = sampleCoasterPoint(s / 56, w, h); const oy = pass === 0 ? 1.5 : -1.5;
+        if (s === 0) ctx.moveTo(pt.x, pt.y + oy); else ctx.lineTo(pt.x, pt.y + oy);
+      }
+      ctx.stroke();
+    }
+    const carPt = sampleCoasterPoint(state.coasterT, w, h); ctx.save();
+    ctx.translate(carPt.x, carPt.y - 4); ctx.rotate(carPt.angle);
+    ctx.fillStyle = PALETTE.carnivalVermilion; ctx.fillRect(-10, -5, 20, 7);
+    ctx.strokeStyle = PALETTE.giltSpoke; ctx.lineWidth = 1.6;
+    ctx.strokeRect(-10, -5, 20, 7); ctx.fillStyle = PALETTE.tentIvory;
+    ctx.beginPath(); ctx.arc(-4, -7, 2.3, 0, Math.PI * 2); ctx.arc(4, -7, 2.3, 0, Math.PI * 2); ctx.fill();
+    // Lowered iron-and-gilt safety bar
+    ctx.strokeStyle = PALETTE.tentIvory; ctx.lineWidth = 1.8; ctx.beginPath(); ctx.moveTo(-8, -4);
+    ctx.lineTo(-5, -9); ctx.lineTo(6, -9); ctx.lineTo(8, -4); ctx.stroke();
+    ctx.restore();
+    // Suspended Shout at the steep crest
+    const crestPt = sampleCoasterPoint(0.41, w, h);
+    const nearCrest = Math.max(0, 1 - Math.abs(state.coasterT - 0.41) / 0.11);
+    const shoutAmp = Math.max(0.28, state.shoutPulse, nearCrest * 0.75);
+    for (let ring = 1; ring <= 4; ring++) {
+      const rad = (7 + ring * (7 + shoutAmp * 6));
+      ctx.strokeStyle = ring % 2 === 0
+        ? rgbaHex(PALETTE.giltSpoke, (0.72 - ring * 0.13) * shoutAmp)
+        : rgbaHex(PALETTE.carnivalVermilion, (0.68 - ring * 0.12) * shoutAmp);
+      ctx.lineWidth = 1.5 + shoutAmp * 0.9; ctx.beginPath();
+      ctx.arc(crestPt.x, crestPt.y - 10, rad, -Math.PI * 0.92, -Math.PI * 0.08); ctx.stroke();
+    }
+    // 2. Ferris Wheel of Spinning Cages
+    const fwX = 0.382 * w, fwY = 0.36 * h, fwR = Math.min(0.076 * w, 0.162 * h), fwBase = 0.768 * h;
+    ctx.strokeStyle = PALETTE.trailerIron; ctx.lineWidth = 3.2;
+    ctx.beginPath(); ctx.moveTo(fwX - fwR * 0.58, fwBase);
+    ctx.lineTo(fwX, fwY); ctx.lineTo(fwX + fwR * 0.58, fwBase);
+    ctx.stroke(); ctx.strokeStyle = PALETTE.giltSpoke; ctx.lineWidth = 2.2; ctx.beginPath();
+    ctx.arc(fwX, fwY, fwR, 0, Math.PI * 2); ctx.stroke(); ctx.lineWidth = 1.1; ctx.beginPath();
+    ctx.arc(fwX, fwY, fwR * 0.82, 0, Math.PI * 2); ctx.stroke();
+    for (let sp = 0; sp < 16; sp++) {
+      const a = state.ferrisAngle + (sp * Math.PI) / 8; ctx.beginPath();
+      ctx.moveTo(fwX, fwY); ctx.lineTo(fwX + Math.cos(a) * fwR, fwY + Math.sin(a) * fwR); ctx.stroke();
+    }
+    for (let cg = 0; cg < 8; cg++) {
+      const a = state.ferrisAngle + (cg * Math.PI) / 4; const gx = fwX + Math.cos(a) * fwR;
+      const gy = fwY + Math.sin(a) * fwR; const spin = state.cageSpin * (cg % 2 === 0 ? 1.6 : -1.9) + cg;
+      const cw = Math.max(5.5, fwR * 0.16), ch = Math.max(7.5, fwR * 0.22);
+      ctx.fillStyle = rgbaHex(PALETTE.nightBedrock, 0.72); ctx.strokeStyle = PALETTE.tentIvory;
+      ctx.lineWidth = 1.2; ctx.beginPath();
+      ctx.ellipse(gx, gy + ch * 0.45, cw, ch * 0.55, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+      for (let bar = -1; bar <= 1; bar++) {
+        const bx = gx + Math.sin(spin + bar * 1.05) * (cw * 0.78); ctx.strokeStyle = PALETTE.giltSpoke;
+        ctx.beginPath(); ctx.moveTo(bx, gy - ch * 0.05); ctx.lineTo(bx, gy + ch * 0.95); ctx.stroke();
+      }
+      ctx.fillStyle = PALETTE.carnivalVermilion; ctx.fillRect(gx - cw * 0.8, gy - 1.5, cw * 1.6, 3);
+    }
+    // 3. Big Top Dome with Clustered Trapezes
+    const btX = 0.112 * w, btBase = 0.805 * h, btEave = 0.695 * h, btPeak = 0.552 * h, btRx = 0.068 * w;
+    for (let g = 0; g < 8; g++) {
+      const xL = btX - btRx + (g / 8) * (btRx * 2); const xR = btX - btRx + ((g + 1) / 8) * (btRx * 2);
+      ctx.fillStyle = g % 2 === 0 ? PALETTE.carnivalVermilion : PALETTE.tentIvory; ctx.beginPath();
+      ctx.moveTo(btX, btPeak); ctx.lineTo(xR, btEave); ctx.lineTo(xR, btBase); ctx.lineTo(xL, btBase);
+      ctx.lineTo(xL, btEave); ctx.closePath(); ctx.fill();
+    }
+    // Illuminated cutaway oculus revealing secret cluster of trapezes
+    const ocY = 0.662 * h, ocRx = btRx * 0.54, ocRy = (btBase - btPeak) * 0.30; ctx.save();
+    ctx.beginPath(); ctx.ellipse(btX, ocY, ocRx, ocRy, 0, 0, Math.PI * 2);
+    ctx.fillStyle = PALETTE.nightBedrock; ctx.fill();
+    ctx.strokeStyle = PALETTE.giltSpoke; ctx.lineWidth = 2.0; ctx.stroke(); ctx.clip();
+    const innerGlow = ctx.createRadialGradient(btX, ocY, 2, btX, ocY, ocRx);
+    innerGlow.addColorStop(0, rgbaHex(PALETTE.giltSpoke, 0.42));
+    innerGlow.addColorStop(1, rgbaHex(PALETTE.nightBedrock, 0)); ctx.fillStyle = innerGlow;
+    ctx.fillRect(btX - ocRx, ocY - ocRy, ocRx * 2, ocRy * 2);
+    for (let tr = -2; tr <= 2; tr++) {
+      const sway = Math.sin(state.trapezeSway + tr * 0.55) * 4.5; const anchorX = btX + tr * (ocRx * 0.28);
+      const barY = ocY - ocRy * 0.1 + Math.abs(tr) * 4.5; const barX = anchorX + sway;
+      ctx.strokeStyle = PALETTE.tentIvory; ctx.lineWidth = 1.0;
+      ctx.beginPath(); ctx.moveTo(anchorX - 3.5, ocY - ocRy);
+      ctx.lineTo(barX - 4.5, barY); ctx.moveTo(anchorX + 3.5, ocY - ocRy);
+      ctx.lineTo(barX + 4.5, barY); ctx.stroke(); ctx.strokeStyle = PALETTE.giltSpoke; ctx.lineWidth = 2.1;
+      ctx.beginPath(); ctx.moveTo(barX - 5.5, barY); ctx.lineTo(barX + 5.5, barY); ctx.stroke();
+    }
+    ctx.restore();
+    // 4. Death-Ride with Crouching Motorcyclists
+    const drX = 0.248 * w, drTop = 0.585 * h, drBot = 0.812 * h, drRx = 0.045 * w;
+    ctx.fillStyle = "#7a4a2a"; ctx.fillRect(drX - drRx, drTop, drRx * 2, drBot - drTop);
+    ctx.strokeStyle = rgbaHex(PALETTE.nightBedrock, 0.45); ctx.lineWidth = 1;
+    for (let st = -3; st <= 3; st++) {
+      const sx = drX + (st / 3.5) * drRx; ctx.beginPath(); ctx.moveTo(sx, drTop); ctx.lineTo(sx, drBot);
+      ctx.stroke();
+    }
+    ctx.fillStyle = PALETTE.carnivalVermilion; ctx.fillRect(drX - drRx * 1.06, drTop - 5, drRx * 2.12, 6);
+    for (let hp = 0; hp < 4; hp++) {
+      const hy = drTop + (hp / 3) * (drBot - drTop - 4); ctx.fillStyle = PALETTE.trailerIron;
+      ctx.fillRect(drX - drRx * 1.04, hy, drRx * 2.08, 3.2);
+    }
+    // Cutaway window into the cylindrical velodrome wall
+    const cwTop = drTop + (drBot - drTop) * 0.24, cwH = (drBot - drTop) * 0.50; ctx.fillStyle = "#26180f";
+    ctx.fillRect(drX - drRx * 0.86, cwTop, drRx * 1.72, cwH); ctx.strokeStyle = PALETTE.giltSpoke;
+    ctx.lineWidth = 1.4; ctx.strokeRect(drX - drRx * 0.86, cwTop, drRx * 1.72, cwH);
+    for (let m = 0; m < 2; m++) {
+      const ma = state.motoAngle + m * Math.PI; const mx = drX + Math.sin(ma) * (drRx * 0.64);
+      const my = cwTop + cwH * (0.34 + m * 0.34) + Math.cos(ma) * 3.2;
+      const dir = Math.cos(ma) >= 0 ? 1 : -1; ctx.strokeStyle = rgbaHex(PALETTE.giltSpoke, 0.55);
+      ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(mx - dir * 11, my); ctx.lineTo(mx, my);
+      ctx.stroke(); ctx.fillStyle = PALETTE.tentIvory;
+      ctx.beginPath(); ctx.arc(mx - 4, my + 1.5, 2.4, 0, Math.PI * 2);
+      ctx.arc(mx + 4, my + 1.5, 2.4, 0, Math.PI * 2); ctx.fill();
+      // Crouching motorcyclist silhouette banked horizontally on the wall
+      ctx.fillStyle = m === 0 ? PALETTE.carnivalVermilion : PALETTE.giltSpoke; ctx.beginPath();
+      ctx.ellipse(mx, my - 1.2, 4.8, 2.2, -dir * 0.18, 0, Math.PI * 2); ctx.fill();
+    }
+    // 5. Carousel with Spoke of Chains
+    const ccX = 0.368 * w, ccBase = 0.825 * h, ccTop = 0.625 * h, ccRx = 0.042 * w;
+    ctx.fillStyle = PALETTE.trailerIron; ctx.fillRect(ccX - ccRx * 0.65, ccBase - 5, ccRx * 1.3, 6);
+    ctx.fillStyle = PALETTE.giltSpoke; ctx.fillRect(ccX - 3.5, ccTop + 10, 7, ccBase - ccTop - 14);
+    for (let ch = 0; ch < 10; ch++) {
+      const ca = state.carouselPhase + (ch * Math.PI) / 5; const topX = ccX + Math.cos(ca) * (ccRx * 0.88);
+      const topY = ccTop + 14 + Math.sin(ca) * 3; const seatX = ccX + Math.cos(ca) * (ccRx * 1.38);
+      const seatY = ccTop + (ccBase - ccTop) * 0.56 + Math.sin(ca) * 5.5;
+      ctx.strokeStyle = PALETTE.tentIvory; ctx.lineWidth = 1.0; ctx.beginPath(); ctx.moveTo(topX, topY);
+      ctx.lineTo(seatX, seatY); ctx.stroke();
+      ctx.fillStyle = ch % 2 === 0 ? PALETTE.carnivalVermilion : PALETTE.giltSpoke;
+      ctx.fillRect(seatX - 2.6, seatY - 1.8, 5.2, 3.6);
+    }
+    for (let seg = 0; seg < 6; seg++) {
+      const sx0 = ccX - ccRx + (seg / 6) * (ccRx * 2); const sx1 = ccX - ccRx + ((seg + 1) / 6) * (ccRx * 2);
+      ctx.fillStyle = seg % 2 === 0 ? PALETTE.carnivalVermilion : PALETTE.tentIvory; ctx.beginPath();
+      ctx.moveTo(ccX, ccTop - 10); ctx.lineTo(sx1, ccTop + 14); ctx.lineTo(sx0, ccTop + 14); ctx.closePath();
+      ctx.fill();
+    }
+    // 6. Shooting-Galleries Arcade
+    const sgX = 0.454 * w, sgTop = 0.692 * h, sgBot = 0.842 * h, sgRx = 0.032 * w;
+    ctx.fillStyle = PALETTE.nightBedrock;
+    ctx.fillRect(sgX - sgRx, sgTop + 10, sgRx * 2, sgBot - sgTop - 10); ctx.fillStyle = "#5c3b23";
+    ctx.fillRect(sgX - sgRx * 1.05, sgTop + (sgBot - sgTop) * 0.58, sgRx * 2.1, (sgBot - sgTop) * 0.42);
+    for (let st = 0; st < 5; st++) {
+      const bx = sgX - sgRx + (st / 5) * (sgRx * 2);
+      ctx.fillStyle = st % 2 === 0 ? PALETTE.carnivalVermilion : PALETTE.tentIvory;
+      ctx.fillRect(bx, sgTop, (sgRx * 2) / 5, 11);
+    }
+    for (let tg = 0; tg < 4; tg++) {
+      const drift = ((state.carouselPhase * 0.35 + tg * 0.25) % 1);
+      const tx = sgX - sgRx * 0.78 + drift * (sgRx * 1.56); const ty = sgTop + 21 + (tg % 2) * 9;
+      ctx.fillStyle = tg % 2 === 0 ? PALETTE.giltSpoke : PALETTE.tentIvory; ctx.beginPath();
+      ctx.arc(tx, ty, 2.4, 0, Math.PI * 2); ctx.fill();
+    }
+    if (state.monthsRemaining > 0) {
+      ctx.fillStyle = PALETTE.giltSpoke;
+      ctx.font = "bold " + Math.max(8, Math.round(h * 0.015)) + "px monospace";
+      ctx.fillText(state.monthsRemaining + "M", sgX - sgRx * 0.65, sgBot - 6);
+    }
+    // Active / Hovered / Bedrock-Refusal Framing
+    for (let i = 0; i < CARNIVAL_RIDES.length; i++) {
+      const r = CARNIVAL_RIDES[i];
+      const active = r.id === selectedId || r.id === hoveredId || (state.recoilFlash > 0.05 && r.id === state.lastRefusedRideId);
+      if (!active) continue; const hb = r.hitBox; ctx.save();
+      ctx.strokeStyle = (wrenchMode && r.id === hoveredId) || (state.recoilFlash > 0.05 && r.id === state.lastRefusedRideId)
+        ? PALETTE.carnivalVermilion
+        : rgbaHex(PALETTE.giltSpoke, r.id === hoveredId ? 0.9 : 0.58);
+      ctx.lineWidth = r.id === hoveredId ? 1.8 : 1.2; ctx.setLineDash([5, 4]);
+      ctx.strokeRect(hb[0] * w, hb[1] * h, (hb[2] - hb[0]) * w, (hb[3] - hb[1]) * h); ctx.restore();
+    }
+  }
+
+  function createCarnivalEngine(opts) {
+    const options = opts || {};
+    const onBedrockRefusal = typeof options.onBedrockRefusal === "function" ? options.onBedrockRefusal : null;
+    const state = {
+      bedrockRefusalCount: 0, lastRefusedRideId: null,
+      recoilFlash: 0, shoutPulse: 0,
+      selectedRideId: "roller_coaster", decampmentProgress: 0,
+      monthsRemaining: 0, daysRemaining: 0,
+      muted: false, reducedMotion: Boolean(options.reducedMotion),
+      coasterT: options.reducedMotion ? 0.41 : 0.22, carouselPhase: 0.35,
+      ferrisAngle: 0.20, cageSpin: 0.45,
+      motoAngle: 0.60, trapezeSway: 0.30
+    }; const dustMotes = [];
+    for (let i = 0; i < 18; i++) {
+      dustMotes.push({
+        x: ((i * 0.173 + 0.07) % 0.96) + 0.02, y: 0.655 + ((i * 0.089) % 0.195),
+        r: 2.2 + (i % 4) * 1.4, spd: 0.035 + (i % 5) * 0.014
+      });
+    }
+    const audio = createCarnivalAudio(state);
+    function findRide(rideId) {
+      for (let i = 0; i < CARNIVAL_RIDES.length; i++) {
+        if (CARNIVAL_RIDES[i].id === rideId) return CARNIVAL_RIDES[i];
+      }
+      return null;
+    }
+    function getState() {
+      return {
+        dismantledCount: 0, intactCount: 6,
+        permanent: true, bedrockRefusalCount: state.bedrockRefusalCount,
+        lastRefusedRideId: state.lastRefusedRideId, selectedRideId: state.selectedRideId,
+        shoutPulse: Number(state.shoutPulse.toFixed(4)), recoilFlash: Number(state.recoilFlash.toFixed(4)),
+        decampmentProgress: Number(state.decampmentProgress.toFixed(4)),
+        monthsRemaining: state.monthsRemaining, daysRemaining: state.daysRemaining,
+        muted: Boolean(state.muted), reducedMotion: Boolean(state.reducedMotion),
+        rides: CARNIVAL_RIDES.map(function (r) { return Object.assign({}, r); })
+      };
+    }
+    function attemptUnboltCarnival(rideId) {
+      const matched = findRide(rideId);
+      const targetId = matched ? matched.id : String(rideId || "roller_coaster");
+      state.bedrockRefusalCount += 1; state.lastRefusedRideId = targetId;
+      state.recoilFlash = 1.0; audio.playBedrockRefusal();
+      const result = {
+        ok: false, refused: true,
+        rideId: targetId, permanent: true,
+        dismantledCount: 0, intactCount: 6,
+        bedrockRefusalCount: state.bedrockRefusalCount,
+        message: "Bolted into living bedrock — this half-Sophronia never pulls up stakes."
+      };
+      if (onBedrockRefusal) {
+        try { onBedrockRefusal(result); } catch (_) {}
+      }
+      return result;
+    }
+    function triggerSafetyBarShout() {
+      state.shoutPulse = 1.0; audio.playSuspendedShout();
+      return {
+        ok: true, shoutPulse: 1.0,
+        rideId: "roller_coaster"
+      };
+    }
+    function selectRide(rideId) {
+      const found = findRide(rideId) || CARNIVAL_RIDES[0]; state.selectedRideId = found.id;
+      audio.playCalliopePhrase(state.decampmentProgress);
+      return Object.assign({}, found, { ok: true, selectedRideId: state.selectedRideId });
+    }
+    function syncDecampment(progress, monthsRemaining, daysRemaining) {
+      const prevMonths = state.monthsRemaining; state.decampmentProgress = clamp01(progress);
+      state.monthsRemaining = Math.max(0, Number(monthsRemaining) || 0);
+      state.daysRemaining = Math.max(0, Number(daysRemaining) || 0);
+      if (prevMonths > 0 && state.monthsRemaining < prevMonths && state.monthsRemaining > 0) {
+        audio.playMonthTick();
+      }
+      return getState();
+    }
+    function step(dtSec) {
+      const dt = Math.max(0, Math.min(0.1, Number(dtSec) || 0.016));
+      state.recoilFlash = Math.max(0, state.recoilFlash - dt * 1.45);
+      state.shoutPulse = Math.max(0, state.shoutPulse - dt * 0.72); if (state.reducedMotion) return;
+      const drag = 1 - 0.56 * Math.exp(-Math.pow((state.coasterT - 0.41) / 0.09, 2))
+                     - 0.38 * Math.exp(-Math.pow((state.coasterT - 0.80) / 0.08, 2));
+      state.coasterT = (state.coasterT + dt * 0.16 * drag) % 1;
+      state.carouselPhase = (state.carouselPhase + dt * 1.65) % (Math.PI * 2);
+      state.ferrisAngle = (state.ferrisAngle + dt * 0.36) % (Math.PI * 2);
+      state.cageSpin = (state.cageSpin + dt * 2.15) % (Math.PI * 2);
+      state.motoAngle = (state.motoAngle + dt * 5.6) % (Math.PI * 2);
+      state.trapezeSway = (state.trapezeSway + dt * 2.25) % (Math.PI * 2);
+      const windBoost = 1 + state.decampmentProgress * 2.2;
+      for (let i = 0; i < dustMotes.length; i++) {
+        dustMotes[i].x += dt * dustMotes[i].spd * windBoost; if (dustMotes[i].x > 0.99) dustMotes[i].x = 0.01;
+      }
+    }
+    function renderBackdropAndCarnival(ctx, width, height, viewOpts) {
+      if (!ctx || !(width > 0) || !(height > 0)) return; const vo = viewOpts || {};
+      if (vo.decampmentProgress !== undefined) {
+        state.decampmentProgress = clamp01(vo.decampmentProgress);
+      }
+      if (vo.monthsRemaining !== undefined) {
+        state.monthsRemaining = Math.max(0, Number(vo.monthsRemaining) || 0);
+      }
+      if (vo.daysRemaining !== undefined) {
+        state.daysRemaining = Math.max(0, Number(vo.daysRemaining) || 0);
+      }
+      if (vo.reducedMotion !== undefined) {
+        setReducedMotion(vo.reducedMotion);
+      }
+      ctx.save(); drawSkyPlazaAndBedrock(ctx, width, height, state, dustMotes);
+      drawCarnivalStructures(ctx, width, height, state, vo); ctx.restore();
+    }
+    function hitTest(normX, normY) {
+      if (!Number.isFinite(normX) || !Number.isFinite(normY)) return null;
+      if (normX < 0 || normX > 0.495 || normY < 0 || normY > 1) return null;
+      const priority = [5, 1, 3, 4, 2, 0]; let best = null; let bestDist = Infinity;
+      for (let p = 0; p < priority.length; p++) {
+        const r = CARNIVAL_RIDES[priority[p]]; const hb = r.hitBox;
+        if (normX >= hb[0] && normX <= hb[2] && normY >= hb[1] && normY <= hb[3]) {
+          const d = Math.hypot(normX - r.nx, normY - r.ny);
+          if (d < bestDist) {
+            bestDist = d; best = r;
+          }
+        }
+      }
+      if (!best) return null;
+      return {
+        half: "carnival", id: best.id,
+        label: best.label, permanent: true,
+        dismantleable: false, detail: best.detail
+      };
+    }
+    function setReducedMotion(flag) {
+      state.reducedMotion = Boolean(flag);
+      if (state.reducedMotion) {
+        state.coasterT = 0.41;
+      }
+      return state.reducedMotion;
+    }
+    function reset() {
+      state.bedrockRefusalCount = 0; state.lastRefusedRideId = null;
+      state.recoilFlash = 0; state.shoutPulse = 0;
+      state.selectedRideId = "roller_coaster"; state.decampmentProgress = 0;
+      state.monthsRemaining = 0; state.daysRemaining = 0; state.coasterT = state.reducedMotion ? 0.41 : 0.22;
+      return getState();
+    }
+    return Object.freeze({
+      attemptUnboltCarnival: attemptUnboltCarnival, triggerSafetyBarShout: triggerSafetyBarShout,
+      selectRide: selectRide, syncDecampment: syncDecampment,
+      step: step, renderBackdropAndCarnival: renderBackdropAndCarnival,
+      hitTest: hitTest, setReducedMotion: setReducedMotion,
+      reset: reset, getState: getState,
+      audio: audio
+    });
+  }
+
+  const API = Object.freeze({
+    PALETTE: PALETTE, CARNIVAL_RIDES: CARNIVAL_RIDES,
+    createCarnivalEngine: createCarnivalEngine
+  }); global.SophroniaPermanentCarnival = API;
+  if (typeof window !== "undefined") {
+    window.SophroniaPermanentCarnival = API;
+  }
+})(typeof globalThis !== "undefined" ? globalThis : (typeof window !== "undefined" ? window : this));
+
+</script>
+<script id="sophronia-layer-temporary-institutions">
+/* City 22: Sophronia — Eastern Nomadic Metropolis of Stone, Marble & Cement */
+(function (root) {
+  "use strict";
+
+  const PALETTE = Object.freeze({
+    nightBedrock: "#18130f",
+    emptyOchre: "#cfa368",
+    ochreDust: "#e4c493",
+    carnivalVermilion: "#d93b2b",
+    giltSpoke: "#e8b948",
+    tentIvory: "#f3e7cf",
+    cementAsh: "#767c82",
+    carraraMarble: "#e7e2d8",
+    stoneMortar: "#9da1a4",
+    trailerIron: "#2b3036"
+  });
+
+  const ANNUAL_ITINERARY = Object.freeze([
+    Object.freeze({
+      id: "complete_life",
+      range: Object.freeze([0, 0.02]),
+      label: "Complete Life — Marble, Stone & Cement Metropolis Seated",
+      monthsRemaining: 0
+    }),
+    Object.freeze({
+      id: "rigging_dismantlement",
+      range: Object.freeze([0.02, 0.85]),
+      label: "Annual Rigging — Unbolting Pediments, Lowering Stone Walls & Pylons",
+      monthsRemaining: 0
+    }),
+    Object.freeze({
+      id: "flatbed_staging",
+      range: Object.freeze([0.85, 0.90]),
+      label: "Flatbed Caravan Loaded — Ten Heavy Institutions Strapped on Trailers",
+      monthsRemaining: 8
+    }),
+    Object.freeze({
+      id: "ochre_sojourn_wait",
+      range: Object.freeze([0.90, 1.0]),
+      label: "Caravan Departed — Vacant Ochre Half-City Counting Months Until Return",
+      monthsRemaining: 8
+    })
+  ]);
+
+  const RAW_INSTITUTIONS = [
+    {
+      id: "bank",
+      label: "The Bank",
+      shortLabel: "Bank",
+      material: "marble pediment & bronze vault ashlar",
+      structuralParts: ["marble_pediment", "stone_walls", "bronze_vault"],
+      trailerSlot: 1,
+      nx: 0.560, ny: 0.710, wNorm: 0.072, hNorm: 0.118
+    },
+    {
+      id: "factories",
+      label: "The Factories",
+      shortLabel: "Factories",
+      material: "cement sawtooth bays & brick flues",
+      structuralParts: ["cement_pylons", "sawtooth_trusses", "flue_stacks"],
+      trailerSlot: 2,
+      nx: 0.840, ny: 0.495, wNorm: 0.078, hNorm: 0.138
+    },
+    {
+      id: "palaces",
+      label: "The Palaces",
+      shortLabel: "Palaces",
+      material: "rusticated stone walls & cornices",
+      structuralParts: ["stone_walls", "marble_cornice", "loggia_arches"],
+      trailerSlot: 3,
+      nx: 0.565, ny: 0.500, wNorm: 0.076, hNorm: 0.130
+    },
+    {
+      id: "slaughterhouse",
+      label: "The Slaughterhouse",
+      shortLabel: "Slaughterhouse",
+      material: "dressed stone arches & iron gantries",
+      structuralParts: ["stone_walls", "dressed_arch", "iron_gantries"],
+      trailerSlot: 4,
+      nx: 0.812, ny: 0.712, wNorm: 0.076, hNorm: 0.114
+    },
+    {
+      id: "school",
+      label: "The School",
+      shortLabel: "School",
+      material: "pedimented limestone hall & belfry",
+      structuralParts: ["marble_pediment", "stone_walls", "belfry_gable"],
+      trailerSlot: 5,
+      nx: 0.645, ny: 0.710, wNorm: 0.072, hNorm: 0.124
+    },
+    {
+      id: "ministry",
+      label: "The Ministry",
+      shortLabel: "Ministry",
+      material: "monumental marble portico & columns",
+      structuralParts: ["marble_pediment", "corinthian_columns", "stone_walls"],
+      trailerSlot: 6,
+      nx: 0.655, ny: 0.492, wNorm: 0.088, hNorm: 0.150
+    },
+    {
+      id: "monument",
+      label: "The Monument",
+      shortLabel: "Monument",
+      material: "carved marble plinth & civic bronze",
+      structuralParts: ["marble_pediment", "carved_plinth", "civic_statue"],
+      trailerSlot: 7,
+      nx: 0.728, ny: 0.718, wNorm: 0.058, hNorm: 0.128
+    },
+    {
+      id: "docks",
+      label: "The Docks",
+      shortLabel: "Docks",
+      material: "cement pylons, quay walls & cranes",
+      structuralParts: ["cement_pylons", "quay_blocks", "portal_crane"],
+      trailerSlot: 8,
+      nx: 0.908, ny: 0.716, wNorm: 0.082, hNorm: 0.128
+    },
+    {
+      id: "petroleum_refinery",
+      label: "The Petroleum Refinery",
+      shortLabel: "Refinery",
+      material: "fractionating towers & cement pylons",
+      structuralParts: ["cement_pylons", "cracking_towers", "pipe_manifolds"],
+      trailerSlot: 9,
+      nx: 0.925, ny: 0.500, wNorm: 0.070, hNorm: 0.158
+    },
+    {
+      id: "hospital",
+      label: "The Hospital",
+      shortLabel: "Hospital",
+      material: "marble-faced pavilion & stone wings",
+      structuralParts: ["marble_pediment", "stone_walls", "pavilion_wings"],
+      trailerSlot: 10,
+      nx: 0.750, ny: 0.500, wNorm: 0.080, hNorm: 0.132
+    }
+  ];
+
+  const INSTITUTIONS = Object.freeze(
+    RAW_INSTITUTIONS.map(function (entry, idx) {
+      const rigStart = +(idx * 0.068).toFixed(4);
+      const rigEnd = +(rigStart + 0.208).toFixed(4);
+      return Object.freeze({
+        id: entry.id,
+        label: entry.label,
+        shortLabel: entry.shortLabel,
+        material: entry.material,
+        structuralParts: Object.freeze(entry.structuralParts.slice()),
+        trailerSlot: entry.trailerSlot,
+        nx: entry.nx,
+        ny: entry.ny,
+        wNorm: entry.wNorm,
+        hNorm: entry.hNorm,
+        permanent: false,
+        dismantleable: true,
+        rigStart: rigStart,
+        rigEnd: rigEnd
+      });
+    })
+  );
+
+  function clamp(min, max, val) {
+    const n = Number(val);
+    if (!Number.isFinite(n)) return min;
+    return n < min ? min : n > max ? max : n;
+  }
+
+  function resolvePhaseLabel(progress, caravanDeparted, monthsRemaining, dismantledCount) {
+    if (caravanDeparted) {
+      return "Caravan Departed — Vacant Ochre Lots (" + monthsRemaining + " mo remaining)";
+    }
+    if (dismantledCount === 10 || progress >= 0.85) {
+      return ANNUAL_ITINERARY[2].label;
+    }
+    if (dismantledCount > 0 || progress >= 0.02) {
+      return ANNUAL_ITINERARY[1].label;
+    }
+    return ANNUAL_ITINERARY[0].label;
+  }
+
+  function createRiggingAudio() {
+    let ctx = null;
+    let muted = false;
+
+    function ensureContext() {
+      if (muted) return null;
+      try {
+        if (!ctx) {
+          const Ctor = root.AudioContext || root.webkitAudioContext;
+          if (!Ctor) return null;
+          ctx = new Ctor();
+        }
+        if (ctx && ctx.state === "suspended" && typeof ctx.resume === "function") {
+          ctx.resume().catch(function () {});
+        }
+        return ctx;
+      } catch (_err) {
+        return null;
+      }
+    }
+
+    function unlock() {
+      return Boolean(ensureContext());
+    }
+
+    function setMuted(flag) {
+      muted = Boolean(flag);
+      return muted;
+    }
+
+    function toggleMute() {
+      muted = !muted;
+      return muted;
+    }
+
+    function isMuted() {
+      return muted;
+    }
+
+    function playUnboltAndLoad(slotIndex) {
+      const ac = ensureContext();
+      if (!ac) return;
+      try {
+        const now = ac.currentTime;
+        const slotShift = ((Number(slotIndex) || 1) - 1) * 9;
+        [0, 0.055].forEach(function (offset, idx) {
+          const osc = ac.createOscillator();
+          const gain = ac.createGain();
+          osc.type = "triangle";
+          osc.frequency.setValueAtTime(640 + idx * 130 + slotShift, now + offset);
+          osc.frequency.exponentialRampToValueAtTime(260, now + offset + 0.042);
+          gain.gain.setValueAtTime(0.0001, now + offset);
+          gain.gain.linearRampToValueAtTime(0.065, now + offset + 0.006);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + offset + 0.045);
+          osc.connect(gain);
+          gain.connect(ac.destination);
+          osc.start(now + offset);
+          osc.stop(now + offset + 0.05);
+        });
+        const pulley = ac.createOscillator();
+        const pGain = ac.createGain();
+        pulley.type = "sine";
+        pulley.frequency.setValueAtTime(340 + slotShift * 0.5, now + 0.09);
+        pulley.frequency.linearRampToValueAtTime(195, now + 0.24);
+        pGain.gain.setValueAtTime(0.0001, now + 0.09);
+        pGain.gain.linearRampToValueAtTime(0.045, now + 0.12);
+        pGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.25);
+        pulley.connect(pGain);
+        pGain.connect(ac.destination);
+        pulley.start(now + 0.09);
+        pulley.stop(now + 0.26);
+
+        const thud = ac.createOscillator();
+        const tGain = ac.createGain();
+        thud.type = "sine";
+        thud.frequency.setValueAtTime(104, now + 0.22);
+        thud.frequency.exponentialRampToValueAtTime(42, now + 0.42);
+        tGain.gain.setValueAtTime(0.0001, now + 0.22);
+        tGain.gain.linearRampToValueAtTime(0.11, now + 0.235);
+        tGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.44);
+        thud.connect(tGain);
+        tGain.connect(ac.destination);
+        thud.start(now + 0.22);
+        thud.stop(now + 0.45);
+      } catch (_err) {}
+    }
+
+    function playCaravanDeparture() {
+      const ac = ensureContext();
+      if (!ac) return;
+      try {
+        const now = ac.currentTime;
+        [56, 84].forEach(function (freq, idx) {
+          const osc = ac.createOscillator();
+          const filt = ac.createBiquadFilter();
+          const gain = ac.createGain();
+          osc.type = idx === 0 ? "sawtooth" : "triangle";
+          osc.frequency.setValueAtTime(freq, now);
+          osc.frequency.linearRampToValueAtTime(freq * 0.82, now + 0.72);
+          filt.type = "lowpass";
+          filt.frequency.setValueAtTime(210, now);
+          gain.gain.setValueAtTime(0.0001, now);
+          gain.gain.linearRampToValueAtTime(0.075, now + 0.08);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.75);
+          osc.connect(filt);
+          filt.connect(gain);
+          gain.connect(ac.destination);
+          osc.start(now);
+          osc.stop(now + 0.78);
+        });
+      } catch (_err) {}
+    }
+
+    function playCaravanReturn() {
+      const ac = ensureContext();
+      if (!ac) return;
+      try {
+        const now = ac.currentTime;
+        [130.81, 196.0, 293.66, 329.63, 392.0].forEach(function (freq, idx) {
+          const osc = ac.createOscillator();
+          const gain = ac.createGain();
+          const t0 = now + idx * 0.055;
+          osc.type = idx < 2 ? "triangle" : "sine";
+          osc.frequency.setValueAtTime(freq, t0);
+          gain.gain.setValueAtTime(0.0001, t0);
+          gain.gain.linearRampToValueAtTime(0.055, t0 + 0.03);
+          gain.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.48);
+          osc.connect(gain);
+          gain.connect(ac.destination);
+          osc.start(t0);
+          osc.stop(t0 + 0.5);
+        });
+      } catch (_err) {}
+    }
+
+    return {
+      unlock: unlock,
+      setMuted: setMuted,
+      toggleMute: toggleMute,
+      isMuted: isMuted,
+      playUnboltAndLoad: playUnboltAndLoad,
+      playCaravanDeparture: playCaravanDeparture,
+      playCaravanReturn: playCaravanReturn
+    };
+  }
+
+  function createRiggingEngine(opts) {
+    const options = opts || {};
+    const onStateChange = typeof options.onStateChange === "function" ? options.onStateChange : null;
+    const audio = createRiggingAudio();
+
+    let decampmentProgress = 0;
+    let caravanDeparted = false;
+    let caravanOffset = 0;
+    let monthsRemaining = 0;
+    let daysRemaining = 0;
+    let autoCycle = false;
+    let reducedMotion = Boolean(options.reducedMotion);
+    let wheelAngle = 0;
+    let hoistPhase = 0;
+    let dustPhase = 0;
+    let autoMonthAccum = 0;
+
+    const items = INSTITUTIONS.map(function (inst) {
+      return {
+        id: inst.id,
+        label: inst.label,
+        shortLabel: inst.shortLabel,
+        material: inst.material,
+        structuralParts: inst.structuralParts,
+        trailerSlot: inst.trailerSlot,
+        nx: inst.nx,
+        ny: inst.ny,
+        wNorm: inst.wNorm,
+        hNorm: inst.hNorm,
+        permanent: false,
+        dismantleable: true,
+        rigStart: inst.rigStart,
+        rigEnd: inst.rigEnd,
+        dismantleRatio: 0,
+        stage: "erected"
+      };
+    });
+
+    function countLoaded() {
+      let c = 0;
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].stage === "loaded_on_trailer") c++;
+      }
+      return c;
+    }
+
+    function getState() {
+      let erectedCount = 0;
+      let dismantledCount = 0;
+      let unboltedPedimentsCount = 0;
+      let loweredWallsCount = 0;
+      let unboltedPylonsCount = 0;
+      const snapshotItems = items.map(function (it) {
+        if (it.stage === "erected") erectedCount++;
+        if (it.stage === "loaded_on_trailer") dismantledCount++;
+        if (it.dismantleRatio >= 0.35 && (it.structuralParts.indexOf("marble_pediment") !== -1 || it.structuralParts.indexOf("marble_cornice") !== -1)) {
+          unboltedPedimentsCount++;
+        }
+        if (it.dismantleRatio >= 0.65 && (it.structuralParts.indexOf("stone_walls") !== -1 || it.structuralParts.indexOf("quay_blocks") !== -1)) {
+          loweredWallsCount++;
+        }
+        if (it.dismantleRatio >= 0.80 && it.structuralParts.indexOf("cement_pylons") !== -1) {
+          unboltedPylonsCount++;
+        }
+        return {
+          id: it.id,
+          label: it.label,
+          shortLabel: it.shortLabel,
+          material: it.material,
+          structuralParts: it.structuralParts.slice(),
+          trailerSlot: it.trailerSlot,
+          nx: it.nx,
+          ny: it.ny,
+          wNorm: it.wNorm,
+          hNorm: it.hNorm,
+          permanent: false,
+          dismantleable: true,
+          dismantleRatio: it.dismantleRatio,
+          stage: it.stage
+        };
+      });
+      return {
+        decampmentProgress: decampmentProgress,
+        phaseLabel: resolvePhaseLabel(decampmentProgress, caravanDeparted, monthsRemaining, dismantledCount),
+        erectedCount: erectedCount,
+        dismantledCount: dismantledCount,
+        loadedTrailerCount: dismantledCount,
+        totalInstitutions: 10,
+        caravanDeparted: caravanDeparted,
+        caravanOffset: caravanOffset,
+        monthsRemaining: monthsRemaining,
+        daysRemaining: daysRemaining,
+        autoCycle: autoCycle,
+        reducedMotion: reducedMotion,
+        muted: audio.isMuted(),
+        unboltedPedimentsCount: unboltedPedimentsCount,
+        loweredWallsCount: loweredWallsCount,
+        unboltedPylonsCount: unboltedPylonsCount,
+        institutions: snapshotItems
+      };
+    }
+
+    function emitChange() {
+      const snap = getState();
+      if (onStateChange) onStateChange(snap);
+      return snap;
+    }
+
+    function setDecampmentProgress(p) {
+      decampmentProgress = +clamp(0, 1, p).toFixed(4);
+      for (let i = 0; i < items.length; i++) {
+        const it = items[i];
+        if (decampmentProgress >= 0.85 || decampmentProgress >= it.rigEnd) {
+          it.dismantleRatio = 1;
+          it.stage = "loaded_on_trailer";
+        } else if (decampmentProgress <= 0 || decampmentProgress <= it.rigStart) {
+          it.dismantleRatio = 0;
+          it.stage = "erected";
+        } else {
+          it.dismantleRatio = +((decampmentProgress - it.rigStart) / (it.rigEnd - it.rigStart)).toFixed(4);
+          it.stage = "rigging";
+        }
+      }
+      if (decampmentProgress >= 0.90) {
+        const wasDeparted = caravanDeparted;
+        caravanDeparted = true;
+        caravanOffset = +clamp(0.22, 1, (decampmentProgress - 0.90) / 0.10).toFixed(4);
+        if (!wasDeparted || monthsRemaining <= 0) {
+          monthsRemaining = 8;
+          daysRemaining = 240;
+        }
+      } else {
+        caravanDeparted = false;
+        caravanOffset = 0;
+        monthsRemaining = 0;
+        daysRemaining = 0;
+      }
+      return emitChange();
+    }
+
+    function dismantleInstitution(id) {
+      let target = null;
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].id === id) { target = items[i]; break; }
+      }
+      if (!target) {
+        const cur = countLoaded();
+        return { ok: false, id: id || null, label: null, trailerSlot: null, dismantledCount: cur, loadedTrailerCount: cur, caravanDeparted: caravanDeparted, monthsRemaining: monthsRemaining, daysRemaining: daysRemaining };
+      }
+      target.dismantleRatio = 1;
+      target.stage = "loaded_on_trailer";
+      const loadedCount = countLoaded();
+      decampmentProgress = loadedCount < 10 ? +(loadedCount * 0.082).toFixed(4) : 0.92;
+      if (loadedCount >= 10) {
+        caravanDeparted = true;
+        caravanOffset = Math.max(caravanOffset, reducedMotion ? 0.82 : 0.32);
+        if (monthsRemaining <= 0) {
+          monthsRemaining = 8;
+          daysRemaining = 240;
+        }
+      }
+      audio.playUnboltAndLoad(target.trailerSlot);
+      emitChange();
+      return {
+        ok: true,
+        id: target.id,
+        label: target.label,
+        trailerSlot: target.trailerSlot,
+        dismantledCount: loadedCount,
+        loadedTrailerCount: loadedCount,
+        caravanDeparted: caravanDeparted,
+        monthsRemaining: monthsRemaining,
+        daysRemaining: daysRemaining
+      };
+    }
+
+    function unboltNext() {
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].stage !== "loaded_on_trailer") {
+          return dismantleInstitution(items[i].id);
+        }
+      }
+      return { ok: false, id: null, label: null, trailerSlot: null, dismantledCount: 10, loadedTrailerCount: 10, caravanDeparted: caravanDeparted, monthsRemaining: monthsRemaining, daysRemaining: daysRemaining };
+    }
+
+    function departCaravan() {
+      for (let i = 0; i < items.length; i++) {
+        items[i].dismantleRatio = 1;
+        items[i].stage = "loaded_on_trailer";
+      }
+      decampmentProgress = 1.0;
+      caravanDeparted = true;
+      caravanOffset = reducedMotion ? 0.88 : Math.max(caravanOffset, 0.35);
+      monthsRemaining = 8;
+      daysRemaining = 240;
+      audio.playCaravanDeparture();
+      return emitChange();
+    }
+
+    function returnCaravan() {
+      for (let i = 0; i < items.length; i++) {
+        items[i].dismantleRatio = 0;
+        items[i].stage = "erected";
+      }
+      decampmentProgress = 0;
+      caravanDeparted = false;
+      caravanOffset = 0;
+      monthsRemaining = 0;
+      daysRemaining = 0;
+      autoMonthAccum = 0;
+      audio.playCaravanReturn();
+      return emitChange();
+    }
+
+    function advanceWaitMonth(months) {
+      const m = Math.max(1, Math.round(Number(months) || 1));
+      if (countLoaded() < 10) {
+        departCaravan();
+        return { monthsRemaining: monthsRemaining, daysRemaining: daysRemaining, caravanReturned: false, canReturn: false, state: getState() };
+      }
+      if (!caravanDeparted) {
+        caravanDeparted = true;
+        decampmentProgress = 1.0;
+        monthsRemaining = 8;
+        daysRemaining = 240;
+      }
+      monthsRemaining = Math.max(0, monthsRemaining - m);
+      daysRemaining = Math.max(0, daysRemaining - m * 30);
+      caravanOffset = +clamp(0, 1, caravanOffset + 0.08 * m).toFixed(4);
+      if (monthsRemaining === 0) {
+        const snap = returnCaravan();
+        return { monthsRemaining: 0, daysRemaining: 0, caravanReturned: true, canReturn: false, state: snap };
+      }
+      const snap = emitChange();
+      return { monthsRemaining: monthsRemaining, daysRemaining: daysRemaining, caravanReturned: false, canReturn: monthsRemaining <= 1, state: snap };
+    }
+
+    function setAutoCycle(flag) { autoCycle = Boolean(flag); autoMonthAccum = 0; return emitChange(); }
+    function setReducedMotion(flag) { reducedMotion = Boolean(flag); return emitChange(); }
+    function reset() {
+      autoCycle = false;
+      autoMonthAccum = 0;
+      for (let i = 0; i < items.length; i++) { items[i].dismantleRatio = 0; items[i].stage = "erected"; }
+      decampmentProgress = 0; caravanDeparted = false; caravanOffset = 0; monthsRemaining = 0; daysRemaining = 0;
+      return emitChange();
+    }
+
+    function step(dtSec) {
+      const dt = clamp(0, 0.1, Number(dtSec) || 0.016);
+      if (!reducedMotion) {
+        hoistPhase += dt * 2.5;
+        dustPhase += dt * 1.7;
+        if (caravanDeparted && caravanOffset < 1) {
+          caravanOffset = +clamp(0, 1, caravanOffset + dt * 0.20).toFixed(4);
+          wheelAngle += dt * 5.0;
+        }
+      }
+      if (autoCycle) {
+        if (!caravanDeparted) {
+          setDecampmentProgress(decampmentProgress + dt * 0.095);
+        } else {
+          autoMonthAccum += dt;
+          if (autoMonthAccum >= 0.85) {
+            autoMonthAccum = 0;
+            advanceWaitMonth(1);
+          }
+        }
+      }
+    }
+
+    function trailerBoxNorm(slotIdx) {
+      const baseX = 0.528 + slotIdx * 0.044 + caravanOffset * 0.25;
+      return { x: baseX, y: 0.832, w: 0.038, h: 0.056 };
+    }
+
+    function hitTest(normX, normY) {
+      if (!Number.isFinite(normX) || !Number.isFinite(normY) || normX < 0.50) return null;
+      for (let i = 0; i < items.length; i++) {
+        const it = items[i];
+        const tb = trailerBoxNorm(it.trailerSlot - 1);
+        const onTrailer = Math.abs(normX - tb.x) <= tb.w * 0.56 && Math.abs(normY - tb.y) <= tb.h * 0.65;
+        const onLot = Math.abs(normX - it.nx) <= it.wNorm * 0.58 && normY >= it.ny - it.hNorm * 1.08 && normY <= it.ny + 0.026;
+        if (onTrailer || onLot) {
+          return { half: "institutions", id: it.id, label: it.label, material: it.material, stage: it.stage, dismantleRatio: it.dismantleRatio, trailerSlot: it.trailerSlot, dismantleable: true };
+        }
+      }
+      return null;
+    }
+
+    function drawBuildingOrLot(ctx, it, width, height, isActive) {
+      const cx = it.nx * width, by = it.ny * height, w = it.wNorm * width, h = it.hNorm * height, r = it.dismantleRatio;
+      const x0 = cx - w * 0.5;
+      if (r >= 1) {
+        ctx.fillStyle = "rgba(207,163,104,0.28)";
+        ctx.strokeStyle = isActive ? PALETTE.giltSpoke : PALETTE.emptyOchre;
+        ctx.lineWidth = isActive ? 2 : 1.1;
+        ctx.fillRect(x0, by - h * 0.16, w, h * 0.18);
+        ctx.strokeRect(x0, by - h * 0.16, w, h * 0.18);
+        for (let s = 0; s < 4; s++) {
+          const sx = x0 + (s + 0.5) * (w / 4);
+          ctx.fillStyle = PALETTE.trailerIron;
+          ctx.fillRect(sx - 2, by - 4, 4, 4);
+        }
+        ctx.fillStyle = PALETTE.ochreDust;
+        ctx.font = "600 " + Math.max(8, Math.round(width * 0.0068)) + "px monospace";
+        ctx.textAlign = "center";
+        ctx.fillText("VACANT LOT #" + it.trailerSlot, cx, by - h * 0.04);
+        if (!reducedMotion) {
+          const drift = Math.sin(dustPhase + it.trailerSlot) * 6;
+          ctx.fillStyle = "rgba(228,196,147,0.22)";
+          ctx.beginPath(); ctx.ellipse(cx + drift, by - h * 0.10, w * 0.36, 4, 0, 0, Math.PI * 2); ctx.fill();
+        }
+        return;
+      }
+      const sway = reducedMotion ? 0 : Math.sin(hoistPhase + it.trailerSlot) * 2.2;
+      const pedLift = r > 0 ? clamp(0, 1, r / 0.45) * h * 0.34 : 0;
+      const wallShift = r > 0.30 ? clamp(0, 1, (r - 0.30) / 0.42) * h * 0.14 : 0;
+      const pylonLift = r > 0.65 ? clamp(0, 1, (r - 0.65) / 0.35) * h * 0.10 : 0;
+      const hasCement = it.structuralParts.indexOf("cement_pylons") !== -1;
+
+      ctx.fillStyle = hasCement ? PALETTE.cementAsh : PALETTE.stoneMortar;
+      for (let p = 0; p < 3; p++) {
+        ctx.fillRect(x0 + p * (w * 0.38) + w * 0.05, by - h * 0.16 - pylonLift, w * 0.14, h * 0.16);
+      }
+      const bodyY = by - h * 0.68 + wallShift * 0.35;
+      const bodyH = h * 0.52;
+      if (it.id === "ministry") {
+        ctx.fillStyle = PALETTE.stoneMortar; ctx.fillRect(x0 + w * 0.08, bodyY, w * 0.84, bodyH);
+        ctx.fillStyle = PALETTE.carraraMarble;
+        for (let c = 0; c < 6; c++) ctx.fillRect(x0 + w * (0.08 + c * 0.155), bodyY, w * 0.065, bodyH);
+      } else if (it.id === "petroleum_refinery") {
+        ctx.fillStyle = PALETTE.cementAsh;
+        ctx.fillRect(x0 + w * 0.14, by - h * 0.90 - pedLift * 0.5, w * 0.24, h * 0.74);
+        ctx.fillRect(x0 + w * 0.54, by - h * 0.80 - pedLift * 0.4, w * 0.26, h * 0.64);
+        ctx.strokeStyle = PALETTE.ochreDust; ctx.lineWidth = 1.6;
+        ctx.strokeRect(x0 + w * 0.38, by - h * 0.62, w * 0.16, h * 0.26);
+      } else if (it.id === "factories") {
+        ctx.fillStyle = PALETTE.cementAsh; ctx.fillRect(x0, bodyY + bodyH * 0.18, w, bodyH * 0.82);
+        ctx.fillRect(x0 + w * 0.76, by - h * 0.96 - pedLift * 0.4, w * 0.11, h * 0.45);
+        for (let t = 0; t < 3; t++) {
+          ctx.beginPath(); ctx.moveTo(x0 + t * (w / 3), bodyY + bodyH * 0.18 - pedLift);
+          ctx.lineTo(x0 + (t + 0.8) * (w / 3), bodyY - h * 0.08 - pedLift);
+          ctx.lineTo(x0 + (t + 1) * (w / 3), bodyY + bodyH * 0.18 - pedLift); ctx.fill();
+        }
+      } else if (it.id === "docks") {
+        ctx.fillStyle = PALETTE.cementAsh; ctx.fillRect(x0, by - h * 0.44, w, h * 0.28);
+        ctx.strokeStyle = PALETTE.carraraMarble; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(x0 + w * 0.22, by - h * 0.44); ctx.lineTo(x0 + w * 0.48, by - h * 0.92 - pedLift * 0.5);
+        ctx.lineTo(x0 + w * 0.92, by - h * 0.78 - pedLift * 0.5); ctx.stroke();
+      } else if (it.id === "monument") {
+        ctx.fillStyle = PALETTE.carraraMarble; ctx.fillRect(cx - w * 0.26, by - h * 0.62, w * 0.52, h * 0.46);
+        ctx.fillStyle = PALETTE.giltSpoke; ctx.beginPath(); ctx.arc(cx, by - h * 0.78 - pedLift * 0.7, w * 0.15, 0, Math.PI * 2); ctx.fill();
+      } else {
+        if (it.id === "hospital") {
+          ctx.fillStyle = PALETTE.stoneMortar; ctx.fillRect(x0 - w * 0.06, bodyY + bodyH * 0.22, w * 1.12, bodyH * 0.78);
+          ctx.fillStyle = PALETTE.carraraMarble; ctx.fillRect(cx - w * 0.26, bodyY, w * 0.52, bodyH);
+          ctx.fillStyle = PALETTE.carnivalVermilion;
+          ctx.fillRect(cx - 2, bodyY + bodyH * 0.28, 4, 10); ctx.fillRect(cx - 5, bodyY + bodyH * 0.28 + 3, 10, 4);
+        } else {
+          ctx.fillStyle = PALETTE.stoneMortar;
+          ctx.fillRect(x0, bodyY, w, bodyH);
+        }
+        if (it.id === "bank") {
+          ctx.strokeStyle = PALETTE.giltSpoke; ctx.lineWidth = 1.8;
+          ctx.beginPath(); ctx.arc(cx, bodyY + bodyH * 0.55, Math.min(w, bodyH) * 0.22, 0, Math.PI * 2); ctx.stroke();
+        } else if (it.id === "palaces" || it.id === "slaughterhouse") {
+          ctx.fillStyle = PALETTE.nightBedrock;
+          const arches = it.id === "palaces" ? 3 : 1;
+          for (let a = 0; a < arches; a++) ctx.fillRect(x0 + (a + 0.25) * (w / arches), bodyY + bodyH * 0.38, (w / arches) * 0.5, bodyH * 0.62);
+          if (it.id === "slaughterhouse") {
+            ctx.strokeStyle = PALETTE.trailerIron; ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.moveTo(x0 + 4, bodyY + bodyH * 0.25); ctx.lineTo(x0 + w - 4, bodyY + bodyH * 0.25); ctx.stroke();
+          }
+        } else if (it.id === "school") {
+          ctx.fillStyle = PALETTE.carraraMarble; ctx.fillRect(cx - w * 0.14, bodyY - h * 0.22 - pedLift, w * 0.28, h * 0.22);
+          ctx.fillStyle = PALETTE.giltSpoke; ctx.beginPath(); ctx.arc(cx, bodyY - h * 0.10 - pedLift, 2.5, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+      if (it.structuralParts.indexOf("marble_pediment") !== -1) {
+        const py = bodyY - pedLift + (r > 0 ? sway * 0.4 : 0);
+        ctx.fillStyle = PALETTE.carraraMarble;
+        ctx.beginPath(); ctx.moveTo(x0 - 2, py); ctx.lineTo(cx, py - h * 0.24); ctx.lineTo(x0 + w + 2, py); ctx.closePath(); ctx.fill();
+      } else if (it.structuralParts.indexOf("marble_cornice") !== -1) {
+        const cy = bodyY - pedLift + (r > 0 ? sway * 0.4 : 0);
+        ctx.fillStyle = PALETTE.carraraMarble; ctx.fillRect(x0 - 3, cy - h * 0.08, w + 6, h * 0.08);
+      }
+      if (r > 0 && r < 1) {
+        const craneTopX = cx + w * 0.34 + sway, craneTopY = by - h * 1.18;
+        ctx.strokeStyle = PALETTE.trailerIron; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(x0 + w * 0.55, by); ctx.lineTo(craneTopX, craneTopY); ctx.lineTo(x0 + w + 7, by); ctx.stroke();
+        ctx.strokeStyle = PALETTE.giltSpoke; ctx.lineWidth = 1.3;
+        ctx.beginPath(); ctx.moveTo(craneTopX, craneTopY); ctx.lineTo(cx, bodyY - pedLift - h * 0.12); ctx.stroke();
+      }
+      if (isActive) {
+        ctx.strokeStyle = PALETTE.giltSpoke; ctx.lineWidth = 1.6;
+        ctx.strokeRect(x0 - 3, by - h * 1.04, w + 6, h * 1.06);
+      }
+      ctx.fillStyle = PALETTE.carraraMarble;
+      ctx.font = "600 " + Math.max(8, Math.round(width * 0.0072)) + "px sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText(it.shortLabel, cx, by + 11);
+    }
+
+    function renderInstitutionsAndTrailers(ctx, width, height, viewOpts) {
+      if (!ctx || width <= 0 || height <= 0) return;
+      const vOpts = viewOpts || {};
+      const activeId = vOpts.selectedId || vOpts.hoveredId || null;
+      const halfX = Math.round(width * 0.50);
+      ctx.save();
+      ctx.beginPath(); ctx.rect(halfX, 0, width - halfX, height); ctx.clip();
+      const grad = ctx.createLinearGradient(0, height * 0.42, 0, height);
+      grad.addColorStop(0, "rgba(38,29,21,0.78)");
+      grad.addColorStop(0.55, "rgba(72,53,35,0.92)");
+      grad.addColorStop(1, PALETTE.nightBedrock);
+      ctx.fillStyle = grad; ctx.fillRect(halfX, height * 0.36, width - halfX, height * 0.64);
+      ctx.strokeStyle = "rgba(232,185,72,0.45)"; ctx.setLineDash([5, 4]);
+      ctx.beginPath(); ctx.moveTo(halfX + 0.5, 0); ctx.lineTo(halfX + 0.5, height); ctx.stroke(); ctx.setLineDash([]);
+
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].ny < 0.60) drawBuildingOrLot(ctx, items[i], width, height, items[i].id === activeId);
+      }
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].ny >= 0.60) drawBuildingOrLot(ctx, items[i], width, height, items[i].id === activeId);
+      }
+
+      const hwyY = height * 0.805, hwyH = height * 0.068;
+      ctx.fillStyle = "rgba(24,19,15,0.88)"; ctx.fillRect(halfX, hwyY, width - halfX, hwyH);
+      ctx.strokeStyle = PALETTE.emptyOchre; ctx.lineWidth = 1.2;
+      ctx.beginPath(); ctx.moveTo(halfX, hwyY); ctx.lineTo(width, hwyY); ctx.stroke();
+
+      for (let i = 0; i < items.length; i++) {
+        const it = items[i];
+        const tb = trailerBoxNorm(it.trailerSlot - 1);
+        const tx = tb.x * width - (tb.w * width) * 0.5, ty = tb.y * height, tw = tb.w * width, th = tb.h * height * 0.44;
+        if (tx > width + 20) continue;
+        if (caravanDeparted) {
+          ctx.fillStyle = "rgba(228,196,147,0.26)";
+          ctx.beginPath(); ctx.arc(tx - 6, ty + 2, th * 0.75, 0, Math.PI * 2); ctx.fill();
+        }
+        ctx.fillStyle = PALETTE.trailerIron;
+        ctx.strokeStyle = it.id === activeId ? PALETTE.giltSpoke : PALETTE.stoneMortar;
+        ctx.lineWidth = it.id === activeId ? 1.8 : 1;
+        ctx.fillRect(tx, ty - th * 0.5, tw, th); ctx.strokeRect(tx, ty - th * 0.5, tw, th);
+        [0.20, 0.36, 0.68, 0.84].forEach(function (wf) {
+          const wx = tx + tw * wf, wy = ty + th * 0.56, wr = Math.max(2.6, th * 0.30);
+          ctx.fillStyle = PALETTE.cementAsh; ctx.beginPath(); ctx.arc(wx, wy, wr, 0, Math.PI * 2); ctx.fill();
+          ctx.strokeStyle = PALETTE.nightBedrock; ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.moveTo(wx - Math.cos(wheelAngle) * wr, wy - Math.sin(wheelAngle) * wr);
+          ctx.lineTo(wx + Math.cos(wheelAngle) * wr, wy + Math.sin(wheelAngle) * wr); ctx.stroke();
+        });
+        if (it.dismantleRatio >= 0.25) {
+          const isCementCargo = it.structuralParts.indexOf("cement_pylons") !== -1;
+          if (isCementCargo) {
+            ctx.fillStyle = PALETTE.cementAsh;
+            ctx.fillRect(tx + 3, ty - th * 1.18, tw - 6, th * 0.65);
+          } else {
+            ctx.fillStyle = PALETTE.carraraMarble;
+            ctx.beginPath(); ctx.moveTo(tx + 3, ty - th * 0.5); ctx.lineTo(tx + tw * 0.45, ty - th * 1.30); ctx.lineTo(tx + tw * 0.85, ty - th * 0.5); ctx.fill();
+            ctx.fillStyle = PALETTE.stoneMortar; ctx.fillRect(tx + tw * 0.62, ty - th * 1.05, tw * 0.28, th * 0.55);
+          }
+          ctx.strokeStyle = PALETTE.carnivalVermilion; ctx.lineWidth = 1.2;
+          ctx.beginPath(); ctx.moveTo(tx + tw * 0.32, ty - th * 1.15); ctx.lineTo(tx + tw * 0.32, ty + th * 0.4);
+          ctx.moveTo(tx + tw * 0.70, ty - th * 1.05); ctx.lineTo(tx + tw * 0.70, ty + th * 0.4); ctx.stroke();
+        }
+        ctx.fillStyle = PALETTE.tentIvory;
+        ctx.font = "600 " + Math.max(7, Math.round(width * 0.0058)) + "px monospace";
+        ctx.textAlign = "center";
+        ctx.fillText("TRL-" + (it.trailerSlot < 10 ? "0" + it.trailerSlot : it.trailerSlot), tx + tw * 0.5, ty + 3);
+      }
+      ctx.restore();
+    }
+
+    return {
+      PALETTE: PALETTE,
+      INSTITUTIONS: INSTITUTIONS,
+      ANNUAL_ITINERARY: ANNUAL_ITINERARY,
+      audio: audio,
+      setDecampmentProgress: setDecampmentProgress,
+      dismantleInstitution: dismantleInstitution,
+      unboltInstitution: dismantleInstitution,
+      unboltNext: unboltNext,
+      unboltNextInstitution: unboltNext,
+      departCaravan: departCaravan,
+      advanceWaitMonth: advanceWaitMonth,
+      returnCaravan: returnCaravan,
+      step: step,
+      renderInstitutionsAndTrailers: renderInstitutionsAndTrailers,
+      hitTest: hitTest,
+      setAutoCycle: setAutoCycle,
+      setReducedMotion: setReducedMotion,
+      reset: reset,
+      getState: getState
+    };
+  }
+
+  root.SophroniaTemporaryInstitutions = Object.freeze({
+    PALETTE: PALETTE,
+    INSTITUTIONS: INSTITUTIONS,
+    ANNUAL_ITINERARY: ANNUAL_ITINERARY,
+    createRiggingEngine: createRiggingEngine
+  });
+})(typeof window !== "undefined" ? window : globalThis);
+
+</script>
+<script id="sophronia-weave">
+(function () {
+  "use strict";
+  var W = window;
+  var CarnivalAPI = W.SophroniaPermanentCarnival;
+  var RiggingAPI = W.SophroniaTemporaryInstitutions;
+  var $ = function (id) { return document.getElementById(id); };
+  var reduceMQ = W.matchMedia ? W.matchMedia("(prefers-reduced-motion: reduce)") : null;
+  var reducedMotion = !!(reduceMQ && reduceMQ.matches);
+
+  /* ---------- plate fallback: map.png -> map.svg -> engraved canvas plaque ---------- */
+  function engravePlaque(title, sub, w, h) {
+    try {
+      var c = document.createElement("canvas"); c.width = w; c.height = h;
+      var g = c.getContext("2d");
+      g.fillStyle = "#18130f"; g.fillRect(0, 0, w, h);
+      g.strokeStyle = "#cfa368"; g.lineWidth = 6; g.strokeRect(18, 18, w - 36, h - 36);
+      g.strokeStyle = "#d93b2b"; g.lineWidth = 2; g.strokeRect(34, 34, w - 68, h - 68);
+      g.beginPath(); g.moveTo(w / 2, 60); g.lineTo(w / 2, h - 60); g.setLineDash([10, 8]); g.strokeStyle = "#e8b948"; g.stroke(); g.setLineDash([]);
+      g.fillStyle = "#e8b948"; g.textAlign = "center"; g.font = "600 " + Math.round(w * 0.04) + "px Georgia, serif";
+      g.fillText(title, w / 2, h * 0.44);
+      g.fillStyle = "#e4c493"; g.font = "italic " + Math.round(w * 0.022) + "px Georgia, serif";
+      g.fillText(sub, w / 2, h * 0.54);
+      return c.toDataURL("image/png");
+    } catch (e) { return ""; }
+  }
+  W.__sophroniaPlateFallback = function (img) {
+    if (!img) return;
+    var stage = img.getAttribute("data-fallback-stage") || "0";
+    if (img.id === "sophronia-map-img" && stage === "0") {
+      img.setAttribute("data-fallback-stage", "1"); img.src = "map.svg"; return;
+    }
+    if (stage === "2") return;
+    img.setAttribute("data-fallback-stage", "2");
+    img.onerror = null;
+    var isMap = img.id === "sophronia-map-img";
+    img.src = engravePlaque(isMap ? "SOPHRONIA · CARTOGRAPHIC SURVEY" : "SOPHRONIA · ARCHITECTURAL VISTA",
+      "Royal plate pending from the engravers' guild", isMap ? 1600 : 1600, isMap ? 1200 : 1000);
+  };
+  ["sophronia-map-img", "sophronia-plate-img"].forEach(function (id) {
+    var im = $(id); if (im && im.complete && im.naturalWidth === 0 && im.getAttribute("src")) W.__sophroniaPlateFallback(im);
+  });
+
+  /* ---------- engines ---------- */
+  var ui = {
+    wrenchMode: false, autoCycle: false, plateOpen: false, plateTab: "diptych", loupe: false,
+    muted: false, hoveredId: null, selectedId: "roller_coaster", lastMessage: "", lastEventKind: "idle",
+    audioUnlocked: false, frames: 0
+  };
+  var carnival = CarnivalAPI.createCarnivalEngine({
+    reducedMotion: reducedMotion,
+    onBedrockRefusal: function (res) { flashRideChip(res.rideId); }
+  });
+  var rigging = RiggingAPI.createRiggingEngine({
+    reducedMotion: reducedMotion,
+    onStateChange: function (rs) { syncCarnival(rs); scheduleLedger(); }
+  });
+  var RIDES = CarnivalAPI.CARNIVAL_RIDES;
+  var INSTS = RiggingAPI.INSTITUTIONS;
+  var ROMAN = ["0", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"];
+
+  function syncCarnival(rs) {
+    rs = rs || rigging.getState();
+    carnival.syncDecampment(rs.decampmentProgress, rs.monthsRemaining, rs.daysRemaining);
+  }
+  function rideById(id) { for (var i = 0; i < RIDES.length; i++) if (RIDES[i].id === id) return RIDES[i]; return null; }
+  function instById(id) { for (var i = 0; i < INSTS.length; i++) if (INSTS[i].id === id) return INSTS[i]; return null; }
+  function unlockAudio() {
+    if (ui.audioUnlocked || ui.muted) return;
+    ui.audioUnlocked = true;
+    try { carnival.audio.unlock(); } catch (e) {}
+    try { rigging.audio.unlock(); } catch (e) {}
+  }
+  function say(msg, kind) {
+    ui.lastMessage = msg; ui.lastEventKind = kind || "info";
+    var r = $("sophronia-readout"); if (!r) return;
+    r.textContent = msg;
+    r.classList.toggle("carnival-refusal", kind === "refusal");
+    r.classList.toggle("marble-unbolt", kind === "unbolt");
+  }
+
+  /* ---------- ledger chips ---------- */
+  var rideLedger = $("sophronia-ride-ledger"), trailerRack = $("sophronia-trailer-rack");
+  RIDES.forEach(function (r) {
+    var chip = document.createElement("ride-anchor-chip");
+    chip.setAttribute("role", "button"); chip.setAttribute("tabindex", "0");
+    chip.setAttribute("data-ride", r.id); chip.setAttribute("title", r.label);
+    chip.innerHTML = "<chip-name></chip-name><chip-status></chip-status>";
+    chip.firstChild.textContent = r.shortLabel;
+    chip.lastChild.textContent = "rooted";
+    rideLedger.appendChild(chip);
+  });
+  INSTS.forEach(function (it) {
+    var chip = document.createElement("trailer-slot-chip");
+    chip.setAttribute("role", "button"); chip.setAttribute("tabindex", "0");
+    chip.setAttribute("data-inst", it.id); chip.setAttribute("title", it.label + " — " + it.material);
+    chip.innerHTML = "<chip-name></chip-name><chip-status></chip-status>";
+    chip.firstChild.textContent = "TRL-" + (it.trailerSlot < 10 ? "0" : "") + it.trailerSlot + " " + it.shortLabel;
+    trailerRack.appendChild(chip);
+  });
+  function flashRideChip(id) {
+    var chip = rideLedger.querySelector('[data-ride="' + id + '"]'); if (!chip) return;
+    chip.classList.remove("carnival-is-refusing"); void chip.offsetWidth; chip.classList.add("carnival-is-refusing");
+  }
+  var ledgerPending = false;
+  function scheduleLedger() {
+    if (ledgerPending) return; ledgerPending = true;
+    (W.requestAnimationFrame || setTimeout)(function () { ledgerPending = false; renderLedger(); });
+  }
+  function pct(v) { return Math.round((Number(v) || 0) * 100); }
+  function renderLedger() {
+    var rs = rigging.getState(), cs = carnival.getState();
+    var rideChips = rideLedger.children;
+    for (var i = 0; i < rideChips.length; i++) {
+      var rid = rideChips[i].getAttribute("data-ride"), n = ui.refusals[rid] || 0;
+      rideChips[i].classList.toggle("carnival-is-selected", cs.selectedRideId === rid);
+      rideChips[i].lastChild.textContent = n ? "refused ×" + n : "rooted";
+    }
+    var trailerChips = trailerRack.children;
+    for (var j = 0; j < trailerChips.length; j++) {
+      var it = rs.institutions[j], chip = trailerChips[j], txt;
+      chip.classList.toggle("marble-is-rigging", it.stage === "rigging");
+      chip.classList.toggle("marble-is-loaded", it.stage === "loaded_on_trailer" && !rs.caravanDeparted);
+      chip.classList.toggle("caravan-is-gone", it.stage === "loaded_on_trailer" && rs.caravanDeparted);
+      chip.classList.toggle("marble-is-selected", ui.selectedId === it.id);
+      if (it.stage === "erected") txt = "seated";
+      else if (it.stage === "rigging") txt = "unbolting " + pct(it.dismantleRatio) + "%";
+      else txt = rs.caravanDeparted ? "on the road" : "on flatbed";
+      chip.lastChild.textContent = txt;
+    }
+    $("sophronia-g-intact").textContent = cs.intactCount + "/6";
+    $("sophronia-g-loaded").textContent = rs.loadedTrailerCount + "/10";
+    $("sophronia-refusals").textContent = "bedrock refusals " + cs.bedrockRefusalCount;
+    $("sophronia-erected").textContent = "erected " + rs.erectedCount + "/10";
+    var scrub = $("sophronia-scrubber");
+    if (document.activeElement !== scrub || !ui.scrubbing) scrub.value = String(pct(rs.decampmentProgress));
+    $("sophronia-progress-label").textContent = pct(rs.decampmentProgress) + "%";
+    $("sophronia-phase").textContent = rs.phaseLabel;
+    var counter = $("sophronia-counter");
+    counter.classList.toggle("caravan-is-waiting", rs.caravanDeparted);
+    $("sophronia-months").textContent = rs.caravanDeparted ? (ROMAN[rs.monthsRemaining] || String(rs.monthsRemaining)) : "—";
+    $("sophronia-days").textContent = String(rs.daysRemaining);
+    $("sophronia-counter-note").textContent = rs.caravanDeparted
+      ? "The lone coaster and carousel wait in the empty ochre square, counting down to the caravan's return."
+      : (rs.loadedTrailerCount > 0 ? "Pediments, walls and pylons are going onto the flatbeds; the fair does not move."
+        : "The coaster and the carousel have nothing to count while the city is here.");
+    setPressed("sophronia-key-wrench", ui.wrenchMode);
+    setPressed("sophronia-key-auto", ui.autoCycle);
+    setPressed("sophronia-key-plates", ui.plateOpen);
+    setPressed("sophronia-key-mute", ui.muted);
+    setPressed("sophronia-key-loupe", ui.loupe);
+    $("sophronia-mute-label").textContent = ui.muted ? "Muted" : "Sound On";
+    $("sophronia-loupe-label").textContent = ui.loupe ? "Loupe 1.8x" : "Loupe 1x";
+    $("sophronia-stage").classList.toggle("carnival-wrench-armed", ui.wrenchMode);
+  }
+  function setPressed(id, on) {
+    var el = $(id); if (!el) return;
+    el.classList.toggle("sophronia-is-on", !!on); el.setAttribute("aria-pressed", on ? "true" : "false");
+  }
+  ui.refusals = {};
+  scheduleLedger = function () { renderLedger(); };
+
+  /* ---------- actions ---------- */
+  function unboltInstitution(id) {
+    var inst = instById(id);
+    if (!inst) { say("No such institution stands in the eastern half.", "info"); return { ok: false, id: id, state: getState() }; }
+    var before = rigging.getState().institutions.filter(function (x) { return x.id === id; })[0];
+    var res = rigging.dismantleInstitution(id);
+    ui.selectedId = id;
+    if (before && before.stage === "loaded_on_trailer") say(inst.label + " is already strapped on TRL-" + (inst.trailerSlot < 10 ? "0" : "") + inst.trailerSlot + ".", "unbolt");
+    else say("Unbolted " + inst.label + ": " + inst.material + " lowered onto flatbed TRL-" + (inst.trailerSlot < 10 ? "0" : "") + inst.trailerSlot + " (" + res.loadedTrailerCount + "/10 loaded).", "unbolt");
+    renderLedger();
+    return Object.assign({}, res, { state: getState() });
+  }
+  function unboltNextInstitution() {
+    var rs = rigging.getState(), next = null;
+    for (var i = 0; i < rs.institutions.length; i++) if (rs.institutions[i].stage !== "loaded_on_trailer") { next = rs.institutions[i]; break; }
+    if (!next) { say("Every institution is already on its flatbed.", "unbolt"); renderLedger(); return Object.assign(rigging.unboltNext(), { state: getState() }); }
+    return unboltInstitution(next.id);
+  }
+  function attemptUnboltCarnival(rideId) {
+    var ride = rideById(rideId) || rideById(carnival.getState().selectedRideId) || RIDES[0];
+    var res = carnival.attemptUnboltCarnival(ride.id);
+    ui.refusals[ride.id] = (ui.refusals[ride.id] || 0) + 1;
+    ui.selectedId = ride.id;
+    say("The wrench sparks off the bedrock bolts of the " + ride.shortLabel + ": it will not come loose (" + res.bedrockRefusalCount + " refusals).", "refusal");
+    renderLedger();
+    return Object.assign({}, res, { state: getState() });
+  }
+  function selectRide(rideId) {
+    var res = carnival.selectRide(rideId); ui.selectedId = res.selectedRideId;
+    var ride = rideById(res.selectedRideId);
+    if (ride && ride.id === "roller_coaster") { carnival.triggerSafetyBarShout(); say("The coaster car crests the hump; a shout hangs suspended above the safety bar.", "shout"); }
+    else if (ride) say(ride.label + " — rooted on iron piers. The calliope plays.", "ride");
+    renderLedger(); return res;
+  }
+  function triggerSafetyBarShout() {
+    var res = carnival.triggerSafetyBarShout(); ui.selectedId = "roller_coaster";
+    say("Safety-bar shout: the cry hangs at the crest of the steepest hump.", "shout");
+    renderLedger(); return Object.assign({}, res, { state: getState() });
+  }
+  function departCaravan() {
+    rigging.departCaravan();
+    say("Stakes pulled: ten institutions roll away on their flatbeds. Vacant ochre lots remain; the fair begins to count.", "depart");
+    renderLedger(); return getState();
+  }
+  function advanceWaitMonth(n) {
+    var res = rigging.advanceWaitMonth(n === undefined ? 1 : n), rs = rigging.getState();
+    if (res.caravanReturned) say("The last month is counted — the caravan is back; marble, stone and cement are bolted up again.", "return");
+    else if (rs.caravanDeparted) say("Another month ticked off in the dust: " + rs.monthsRemaining + " months, " + rs.daysRemaining + " days until the caravan returns.", "month");
+    renderLedger(); return Object.assign({}, res, { state: getState() });
+  }
+  function returnCaravan() {
+    rigging.returnCaravan();
+    say("The caravan returns: pediments rehung, walls raised, pylons rebolted. Complete life resumes beside the fair.", "return");
+    renderLedger(); return getState();
+  }
+  function setDecampmentProgress(p) {
+    var v = Number(p); if (!isFinite(v)) v = 0; if (v > 1) v = v / 100;
+    rigging.setDecampmentProgress(Math.max(0, Math.min(1, v)));
+    renderLedger(); return getState();
+  }
+  function toggleWrenchMode(force) {
+    ui.wrenchMode = typeof force === "boolean" ? force : !ui.wrenchMode;
+    say(ui.wrenchMode ? "Rigging wrench armed: click any ride in the western fair to try to unbolt it." : "Wrench stowed.", "info");
+    renderLedger(); return getState();
+  }
+  function toggleAutoCycle(force) {
+    ui.autoCycle = typeof force === "boolean" ? force : !ui.autoCycle;
+    rigging.setAutoCycle(ui.autoCycle);
+    say(ui.autoCycle ? "Auto-itinerary: the year turns by itself." : "Auto-itinerary paused.", "info");
+    renderLedger(); return getState();
+  }
+  function togglePlateDrawer(force) {
+    ui.plateOpen = typeof force === "boolean" ? force : !ui.plateOpen;
+    var d = $("sophronia-plate-drawer");
+    if (ui.plateOpen) { d.removeAttribute("hidden"); } else { d.setAttribute("hidden", ""); if (ui.loupe) toggleLoupe(false); }
+    renderLedger(); return getState();
+  }
+  function setPlateTab(tab) {
+    if (tab === "image") tab = "plate";
+    if (["diptych", "map", "plate"].indexOf(tab) === -1) tab = "diptych";
+    ui.plateTab = tab;
+    var vp = $("sophronia-loupe");
+    vp.classList.remove("sophronia-tab-diptych", "sophronia-tab-map", "sophronia-tab-plate");
+    vp.classList.add("sophronia-tab-" + tab);
+    if (tab === "map") { $("sophronia-slot-map").removeAttribute("hidden"); $("sophronia-slot-plate").setAttribute("hidden", ""); }
+    else if (tab === "plate") { $("sophronia-slot-plate").removeAttribute("hidden"); $("sophronia-slot-map").setAttribute("hidden", ""); }
+    else { $("sophronia-slot-map").removeAttribute("hidden"); $("sophronia-slot-plate").removeAttribute("hidden"); }
+    var tabs = document.querySelectorAll("plate-tab-row [data-tab]");
+    for (var i = 0; i < tabs.length; i++) tabs[i].classList.toggle("sophronia-is-on", tabs[i].getAttribute("data-tab") === tab);
+    return getState();
+  }
+  function toggleLoupe(force) {
+    ui.loupe = typeof force === "boolean" ? force : !ui.loupe;
+    $("sophronia-loupe").classList.toggle("sophronia-loupe-on", ui.loupe);
+    renderLedger(); return getState();
+  }
+  function toggleAudioMute(force) {
+    ui.muted = typeof force === "boolean" ? force : !ui.muted;
+    try { carnival.audio.setMuted(ui.muted); } catch (e) {}
+    try { rigging.audio.setMuted(ui.muted); } catch (e) {}
+    if (!ui.muted) ui.audioUnlocked = false;
+    say(ui.muted ? "Calliope, bells and trailer engines muted." : "Sound restored.", "info");
+    renderLedger(); return getState();
+  }
+  function reset() {
+    rigging.reset(); carnival.reset();
+    ui.wrenchMode = false; ui.autoCycle = false; ui.selectedId = "roller_coaster"; ui.hoveredId = null; ui.refusals = {};
+    rigging.setAutoCycle(false); syncCarnival();
+    say("Reset: complete life — both half-cities stand on the square.", "info");
+    renderLedger(); return getState();
+  }
+  /* ---------- deterministic inspection state ---------- */
+  function getState() {
+    var rs = rigging.getState(), cs = carnival.getState(), de = document.documentElement;
+    return {
+      city: "sophronia", slug: "22_sophronia",
+      decampmentProgress: rs.decampmentProgress, decampmentPercent: pct(rs.decampmentProgress), phaseLabel: rs.phaseLabel,
+      erectedCount: rs.erectedCount, dismantledCount: rs.dismantledCount, loadedTrailerCount: rs.loadedTrailerCount,
+      institutionDismantledCount: rs.dismantledCount, totalInstitutions: rs.totalInstitutions,
+      caravanDeparted: rs.caravanDeparted, caravanOffset: rs.caravanOffset,
+      monthsRemaining: rs.monthsRemaining, daysRemaining: rs.daysRemaining,
+      unboltedPedimentsCount: rs.unboltedPedimentsCount, loweredWallsCount: rs.loweredWallsCount, unboltedPylonsCount: rs.unboltedPylonsCount,
+      carnivalDismantledCount: cs.dismantledCount, carnivalIntactCount: cs.intactCount, carnivalPermanent: cs.permanent,
+      bedrockRefusalCount: cs.bedrockRefusalCount, lastRefusedRideId: cs.lastRefusedRideId, refusalsByRide: Object.assign({}, ui.refusals),
+      selectedRideId: cs.selectedRideId, shoutPulse: cs.shoutPulse, recoilFlash: cs.recoilFlash,
+      wrenchMode: ui.wrenchMode, autoCycle: ui.autoCycle, plateDrawerOpen: ui.plateOpen,
+      plateDrawerHidden: $("sophronia-plate-drawer").hasAttribute("hidden"), plateTab: ui.plateTab,
+      loupe: ui.loupe, loupeScale: ui.loupe ? 1.8 : 1, muted: ui.muted, reducedMotion: reducedMotion,
+      hoveredId: ui.hoveredId, selectedId: ui.selectedId, lastMessage: ui.lastMessage, lastEventKind: ui.lastEventKind,
+      carnival: cs, rigging: rs, marble: rs, rides: cs.rides, institutions: rs.institutions,
+      canvas: { cssWidth: view.w, cssHeight: view.h, dpr: view.dpr, frames: ui.frames },
+      viewport: { innerWidth: W.innerWidth, innerHeight: W.innerHeight, scrollWidth: de.scrollWidth, scrollHeight: de.scrollHeight }
+    };
+  }
+  W.SophroniaApp = {
+    getState: getState, setDecampmentProgress: setDecampmentProgress,
+    unboltInstitution: unboltInstitution, unboltNextInstitution: unboltNextInstitution,
+    attemptUnboltCarnival: attemptUnboltCarnival, triggerSafetyBarShout: triggerSafetyBarShout, selectRide: selectRide,
+    departCaravan: departCaravan, advanceWaitMonth: advanceWaitMonth, returnCaravan: returnCaravan,
+    toggleWrenchMode: toggleWrenchMode, toggleAutoCycle: toggleAutoCycle, togglePlateDrawer: togglePlateDrawer,
+    setPlateTab: setPlateTab, toggleLoupe: toggleLoupe, toggleAudioMute: toggleAudioMute, reset: reset,
+    engines: { carnival: carnival, rigging: rigging }
+  };
+  W.__SOPHRONIA_STATE__ = function () { return W.SophroniaApp.getState(); };
+
+  /* ---------- canvas stage ---------- */
+  var canvas = $("sophronia-canvas"), ctx = canvas.getContext("2d");
+  var view = { w: 0, h: 0, dpr: 1 };
+  function resize() {
+    var r = canvas.getBoundingClientRect();
+    var dpr = Math.min(2.5, W.devicePixelRatio || 1);
+    var w = Math.max(1, Math.round(r.width)), h = Math.max(1, Math.round(r.height));
+    if (w === view.w && h === view.h && dpr === view.dpr) return;
+    view.w = w; view.h = h; view.dpr = dpr;
+    canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+    draw();
+  }
+  function draw() {
+    if (!view.w) return;
+    var rs = rigging.getState();
+    ctx.setTransform(view.dpr, 0, 0, view.dpr, 0, 0);
+    ctx.clearRect(0, 0, view.w, view.h);
+    var selIsRide = !!rideById(ui.selectedId), selIsInst = !!instById(ui.selectedId);
+    var hovIsRide = !!rideById(ui.hoveredId), hovIsInst = !!instById(ui.hoveredId);
+    carnival.renderBackdropAndCarnival(ctx, view.w, view.h, {
+      decampmentProgress: rs.decampmentProgress, monthsRemaining: rs.monthsRemaining, daysRemaining: rs.daysRemaining,
+      hoveredId: hovIsRide ? ui.hoveredId : null, selectedId: selIsRide ? ui.selectedId : null,
+      wrenchMode: ui.wrenchMode, reducedMotion: reducedMotion
+    });
+    rigging.renderInstitutionsAndTrailers(ctx, view.w, view.h, {
+      selectedId: selIsInst ? ui.selectedId : null, hoveredId: hovIsInst ? ui.hoveredId : null, reducedMotion: reducedMotion
+    });
+    if (ui.wrenchMode) {
+      ctx.save();
+      ctx.fillStyle = "rgba(217,59,43,0.88)"; ctx.fillRect(10, 10, 196, 22);
+      ctx.fillStyle = "#f3e7cf"; ctx.font = "600 11px monospace"; ctx.textAlign = "left";
+      ctx.fillText("RIGGING WRENCH ARMED [W]", 18, 25);
+      ctx.restore();
+    }
+    ui.frames++;
+  }
+  var lastT = 0;
+  function frame(t) {
+    var dt = lastT ? Math.min(0.1, (t - lastT) / 1000) : 0.016; lastT = t;
+    carnival.step(dt); rigging.step(dt);
+    if (ui.autoCycle) syncCarnival();
+    draw();
+    W.requestAnimationFrame(frame);
+  }
+  function normFromEvent(ev) {
+    var r = canvas.getBoundingClientRect();
+    return { x: (ev.clientX - r.left) / Math.max(1, r.width), y: (ev.clientY - r.top) / Math.max(1, r.height) };
+  }
+  function hitAt(n) {
+    return rigging.hitTest(n.x, n.y) || carnival.hitTest(n.x, n.y);
+  }
+  canvas.addEventListener("pointermove", function (ev) {
+    var hit = hitAt(normFromEvent(ev)); ui.hoveredId = hit ? hit.id : null;
+    canvas.style.cursor = hit ? "pointer" : "";
+    if (ui.wrenchMode && hit && hit.half === "carnival") canvas.style.cursor = "cell";
+  });
+  canvas.addEventListener("pointerleave", function () { ui.hoveredId = null; });
+  canvas.addEventListener("click", function (ev) {
+    unlockAudio();
+    var hit = hitAt(normFromEvent(ev)); if (!hit) return;
+    if (hit.half === "institutions") unboltInstitution(hit.id);
+    else if (hit.half === "carnival") { if (ui.wrenchMode) attemptUnboltCarnival(hit.id); else selectRide(hit.id); }
+  });
+
+  /* ---------- controls ---------- */
+  var ACTS = {
+    plates: function () { togglePlateDrawer(); }, closeplates: function () { togglePlateDrawer(false); },
+    mute: function () { toggleAudioMute(); }, reset: function () { reset(); },
+    wrench: function () { toggleWrenchMode(); }, testwrench: function () { attemptUnboltCarnival(); },
+    shout: function () { triggerSafetyBarShout(); }, depart: function () { departCaravan(); },
+    month: function () { advanceWaitMonth(1); }, "return": function () { returnCaravan(); },
+    auto: function () { toggleAutoCycle(); }, unbolt: function () { unboltNextInstitution(); },
+    loupe: function () { toggleLoupe(); }
+  };
+  function activate(el) {
+    if (!el) return false;
+    var act = el.getAttribute("data-act"), tab = el.getAttribute("data-tab");
+    var ride = el.getAttribute("data-ride"), inst = el.getAttribute("data-inst");
+    if (act && ACTS[act]) { ACTS[act](); return true; }
+    if (tab) { setPlateTab(tab); return true; }
+    if (inst) { unboltInstitution(inst); return true; }
+    if (ride) { if (ui.wrenchMode) attemptUnboltCarnival(ride); else selectRide(ride); return true; }
+    return false;
+  }
+  document.addEventListener("click", function (ev) {
+    var el = ev.target && ev.target.closest ? ev.target.closest("[data-act],[data-tab],[data-ride],[data-inst]") : null;
+    if (!el) return; unlockAudio(); activate(el);
+  });
+  var scrub = $("sophronia-scrubber");
+  scrub.addEventListener("input", function () { ui.scrubbing = true; unlockAudio(); setDecampmentProgress(Number(scrub.value) / 100); });
+  scrub.addEventListener("change", function () { ui.scrubbing = false; });
+  var loupeVp = $("sophronia-loupe");
+  loupeVp.addEventListener("pointermove", function (ev) {
+    var r = loupeVp.getBoundingClientRect();
+    loupeVp.style.setProperty("--sophronia-lx", (100 * (ev.clientX - r.left) / Math.max(1, r.width)).toFixed(1) + "%");
+    loupeVp.style.setProperty("--sophronia-ly", (100 * (ev.clientY - r.top) / Math.max(1, r.height)).toFixed(1) + "%");
+  });
+  loupeVp.addEventListener("click", function () { toggleLoupe(); });
+  $("sophronia-plate-drawer").addEventListener("click", function (ev) { if (ev.target === ev.currentTarget) togglePlateDrawer(false); });
+  var KEYS = { u: "unbolt", w: "wrench", x: "testwrench", s: "shout", d: "depart", m: "month", c: "return", a: "mute", r: "reset", p: "plates", z: "loupe" };
+  document.addEventListener("keydown", function (ev) {
+    if (ev.metaKey || ev.ctrlKey || ev.altKey) return;
+    var k = ev.key, lower = k && k.length === 1 ? k.toLowerCase() : k;
+    if (k === "Escape") { if (ui.plateOpen) { togglePlateDrawer(false); ev.preventDefault(); } return; }
+    if (k === " " || k === "Spacebar" || ev.code === "Space") { unlockAudio(); toggleAutoCycle(); ev.preventDefault(); return; }
+    if (k === "Enter") { var f = document.activeElement; if (f && f.getAttribute && f.getAttribute("role") === "button") { unlockAudio(); activate(f); ev.preventDefault(); } return; }
+    if (ui.plateOpen && (k === "1" || k === "2" || k === "3")) { setPlateTab(["diptych", "map", "plate"][Number(k) - 1]); return; }
+    if (KEYS[lower]) { unlockAudio(); ACTS[KEYS[lower]](); ev.preventDefault(); }
+  });
+  if (reduceMQ) {
+    var onRM = function (e) { reducedMotion = !!e.matches; carnival.setReducedMotion(reducedMotion); rigging.setReducedMotion(reducedMotion); };
+    if (reduceMQ.addEventListener) reduceMQ.addEventListener("change", onRM); else if (reduceMQ.addListener) reduceMQ.addListener(onRM);
+  }
+  if (W.ResizeObserver) new ResizeObserver(resize).observe(canvas); else W.addEventListener("resize", resize);
+  W.addEventListener("resize", resize);
+  syncCarnival(); resize(); renderLedger(); draw();
+  W.requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

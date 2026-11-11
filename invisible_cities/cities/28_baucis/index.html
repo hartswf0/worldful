@@ -1,0 +1,3526 @@
+<!DOCTYPE html>
+<html lang="en" class="bcs-html">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BAUCIS — Elevated Observatory &amp; Downward Spyglass</title>
+<style>
+  [hidden], baucis-plate-drawer[hidden] { display: none !important; }
+  .bcs-html {
+    --bcs-lattice-shadow: #111d16;
+    --bcs-canopy-abyss: #182b20;
+    --bcs-foliage-emerald: #2d6a45;
+    --bcs-fern-moss: #529466;
+    --bcs-sunlit-clearing: #8ab87a;
+    --bcs-cloud-ivory: #f4efe4;
+    --bcs-cumulus-pearl: #e5decb;
+    --bcs-flamingo-timber: #9e6b43;
+    --bcs-brass-optic: #c9963b;
+    --bcs-sky-azure: #6fa4c4;
+    --bcs-lens-specular: #dfeef2;
+    --bcs-footprint-scar: #7a4b3a;
+    margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden;
+    background: var(--bcs-lattice-shadow); color: var(--bcs-cloud-ivory);
+    font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .bcs-body {
+    margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden;
+    background: var(--bcs-lattice-shadow); color: var(--bcs-cloud-ivory);
+    user-select: none; -webkit-user-select: none;
+  }
+  .bcs-observatory {
+    display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr) auto;
+    width: 100%; max-width: 100vw; height: 100vh; height: 100dvh;
+    overflow: hidden; position: relative; box-sizing: border-box;
+    background: radial-gradient(circle at 50% 24%, #20382b 0%, var(--bcs-lattice-shadow) 80%);
+  }
+  .bcs-altitude-bar {
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
+    min-width: 0; max-width: 100%;
+    gap: 6px 12px; padding: 7px 14px; box-sizing: border-box; z-index: 6;
+    background: linear-gradient(180deg, rgba(17, 29, 22, 0.96), rgba(24, 43, 32, 0.92));
+    border-bottom: 1px solid rgba(201, 150, 59, 0.42);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.38);
+  }
+  .bcs-crest-block { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+  .bcs-crest-title {
+    display: block; font-size: 16px; font-weight: 700; letter-spacing: 0.16em;
+    color: var(--bcs-cloud-ivory); line-height: 1.1;
+  }
+  .bcs-crest-sub {
+    display: block; font-size: 10.5px; letter-spacing: 0.05em;
+    color: var(--bcs-cumulus-pearl); opacity: 0.84; white-space: nowrap;
+  }
+  .bcs-vernier-rack {
+    display: flex; align-items: center; flex-wrap: wrap; gap: 6px 12px; min-width: 0; flex: 1 1 auto;
+    justify-content: center;
+  }
+  .bcs-gauge-pod {
+    display: flex; flex-direction: column; gap: 3px; min-width: 122px; max-width: 190px;
+    flex: 1 1 135px; padding: 4px 8px; box-sizing: border-box;
+    background: rgba(17, 29, 22, 0.68); border: 1px solid rgba(201, 150, 59, 0.28);
+    border-radius: 4px;
+  }
+  .bcs-gauge-head {
+    display: flex; align-items: center; justify-content: space-between; gap: 6px;
+    font-size: 10px; line-height: 1.15; letter-spacing: 0.04em;
+  }
+  .bcs-gauge-name { display: inline-block; color: var(--bcs-cumulus-pearl); opacity: 0.85; }
+  .bcs-gauge-readout {
+    display: inline-block; color: var(--bcs-brass-optic);
+    font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 10px; font-weight: 600;
+  }
+  .bcs-march-controls { display: flex; align-items: center; gap: 4px; }
+  .bcs-step-trigger {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 20px; height: 17px; border-radius: 3px; cursor: pointer;
+    background: rgba(201, 150, 59, 0.16); border: 1px solid rgba(201, 150, 59, 0.45);
+    color: var(--bcs-cloud-ivory); font-family: ui-monospace, Menlo, monospace; font-size: 11px;
+  }
+  .bcs-step-trigger:hover, .bcs-step-trigger:focus-visible {
+    background: rgba(201, 150, 59, 0.34); outline: none;
+  }
+  .bcs-march-bar { flex: 1 1 auto; }
+  .bcs-vernier-bar {
+    display: block; position: relative; height: 9px; border-radius: 99px;
+    background: rgba(12, 20, 15, 0.92); border: 1px solid rgba(201, 150, 59, 0.4);
+    cursor: ew-resize; touch-action: none; box-sizing: border-box;
+  }
+  .bcs-vernier-bar:focus-visible { outline: 1px solid var(--bcs-brass-optic); outline-offset: 2px; }
+  .bcs-vernier-fill {
+    display: block; position: absolute; left: 0; top: 0; bottom: 0; border-radius: 99px;
+    background: linear-gradient(90deg, var(--bcs-foliage-emerald), var(--bcs-brass-optic));
+    pointer-events: none;
+  }
+  .bcs-vernier-knob {
+    display: block; position: absolute; top: 50%; width: 11px; height: 11px;
+    transform: translate(-50%, -50%); border-radius: 50%;
+    background: var(--bcs-cloud-ivory); border: 2px solid var(--bcs-brass-optic);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.65); pointer-events: none; box-sizing: border-box;
+  }
+  .bcs-command-cluster {
+    display: flex; align-items: center; flex-wrap: wrap; gap: 5px; justify-content: flex-end;
+  }
+  .bcs-footprint-seal {
+    display: inline-flex; align-items: center; padding: 4px 8px; border-radius: 4px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 10px; letter-spacing: 0.03em;
+    background: rgba(45, 106, 69, 0.24); border: 1px solid rgba(138, 184, 122, 0.45);
+    color: var(--bcs-cloud-ivory); white-space: nowrap;
+  }
+  .bcs-footprint-seal.bcs-is-violated {
+    background: rgba(122, 75, 58, 0.48); border-color: #e08b6d; color: #ffe3d8;
+  }
+  .bcs-action-pill, .bcs-zoom-pill, .bcs-focus-pill, .bcs-drawer-tab {
+    display: inline-flex; align-items: center; gap: 5px; padding: 4px 8px;
+    border-radius: 4px; cursor: pointer; box-sizing: border-box;
+    background: rgba(24, 43, 32, 0.88); border: 1px solid rgba(201, 150, 59, 0.44);
+    color: var(--bcs-cloud-ivory); font-size: 11px; line-height: 1.15; white-space: nowrap;
+    transition: background 120ms ease, border-color 120ms ease, transform 90ms ease;
+  }
+  .bcs-action-pill:hover, .bcs-zoom-pill:hover, .bcs-focus-pill:hover, .bcs-drawer-tab:hover,
+  .bcs-action-pill:focus-visible, .bcs-zoom-pill:focus-visible, .bcs-focus-pill:focus-visible,
+  .bcs-drawer-tab:focus-visible {
+    background: rgba(201, 150, 59, 0.26); border-color: var(--bcs-brass-optic); outline: none;
+  }
+  .bcs-action-pill.bcs-is-active, .bcs-zoom-pill.bcs-is-active,
+  .bcs-focus-pill.bcs-is-active, .bcs-drawer-tab.bcs-is-active {
+    background: linear-gradient(180deg, rgba(201, 150, 59, 0.38), rgba(158, 107, 67, 0.34));
+    border-color: var(--bcs-cloud-ivory); color: var(--bcs-cloud-ivory);
+  }
+  .bcs-action-pill.bcs-is-violated {
+    background: linear-gradient(180deg, rgba(164, 72, 48, 0.72), rgba(122, 75, 58, 0.72));
+    border-color: #f3a688; color: #fff4ee;
+  }
+  .bcs-key-cap {
+    display: inline-block; padding: 1px 4px; border-radius: 2px;
+    background: rgba(17, 29, 22, 0.85); border: 1px solid rgba(201, 150, 59, 0.5);
+    color: var(--bcs-brass-optic); font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 9.5px; font-weight: 700; line-height: 1.1;
+  }
+  .bcs-pill-text { display: inline-block; }
+  .bcs-spyglass-stage {
+    display: block; position: relative; width: 100%; height: 100%;
+    min-height: 0; min-width: 0; overflow: hidden; box-sizing: border-box;
+  }
+  .bcs-canvas {
+    display: block; position: absolute; inset: 0; width: 100%; height: 100%;
+    touch-action: none; cursor: crosshair;
+  }
+  .bcs-stage-overlay {
+    display: flex; align-items: flex-start; justify-content: flex-start; flex-wrap: wrap;
+    gap: 6px; position: absolute; top: 8px; left: 10px; right: 10px;
+    pointer-events: none; z-index: 4; box-sizing: border-box;
+  }
+  .bcs-turret-group {
+    display: inline-flex; align-items: center; flex-wrap: wrap; gap: 4px;
+    padding: 4px; border-radius: 6px; pointer-events: auto;
+    background: rgba(17, 29, 22, 0.78); border: 1px solid rgba(201, 150, 59, 0.36);
+    backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  }
+  .bcs-stage-whisper {
+    display: block; position: absolute; bottom: 7px; left: 12px; z-index: 4;
+    padding: 3px 8px; border-radius: 4px; pointer-events: none;
+    background: rgba(17, 29, 22, 0.74); border: 1px solid rgba(201, 150, 59, 0.28);
+    color: var(--bcs-cumulus-pearl); font-size: 10.5px; letter-spacing: 0.03em;
+    max-width: calc(100% - 24px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .bcs-hypothesis-triad {
+    display: grid; grid-template-columns: minmax(0, 1.42fr) minmax(0, 1fr);
+    gap: 10px; padding: 8px 14px; box-sizing: border-box; z-index: 6;
+    background: linear-gradient(180deg, rgba(24, 43, 32, 0.95), rgba(17, 29, 22, 0.98));
+    border-top: 1px solid rgba(201, 150, 59, 0.44);
+  }
+  .bcs-hypothesis-grid {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; min-width: 0;
+  }
+  .bcs-hypothesis-card {
+    display: flex; flex-direction: column; justify-content: space-between; gap: 4px;
+    padding: 7px 9px; border-radius: 5px; cursor: pointer; min-width: 0; box-sizing: border-box;
+    background: rgba(17, 29, 22, 0.78); border: 1px solid rgba(201, 150, 59, 0.3);
+    transition: border-color 130ms ease, background 130ms ease;
+  }
+  .bcs-hypothesis-card:hover, .bcs-hypothesis-card:focus-visible {
+    border-color: var(--bcs-brass-optic); background: rgba(45, 106, 69, 0.22); outline: none;
+  }
+  .bcs-hypothesis-card.bcs-is-active {
+    background: linear-gradient(165deg, rgba(45, 106, 69, 0.38), rgba(201, 150, 59, 0.22));
+    border-color: var(--bcs-brass-optic);
+    box-shadow: inset 0 0 0 1px rgba(244, 239, 228, 0.22);
+  }
+  .bcs-card-header {
+    display: flex; align-items: center; justify-content: space-between; gap: 4px; min-width: 0;
+  }
+  .bcs-card-numeral {
+    display: inline-block; color: var(--bcs-brass-optic); font-weight: 700;
+    font-size: 11px; letter-spacing: 0.06em; white-space: nowrap;
+  }
+  .bcs-card-title {
+    display: block; font-size: 12px; font-weight: 700; color: var(--bcs-cloud-ivory);
+    line-height: 1.18; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .bcs-card-axiom {
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    overflow: hidden; font-size: 10.5px; line-height: 1.25; color: var(--bcs-cumulus-pearl); opacity: 0.88;
+  }
+  .bcs-telemetry-ledger {
+    display: flex; flex-direction: column; justify-content: space-between; gap: 5px;
+    padding: 6px 10px; border-radius: 5px; min-width: 0; box-sizing: border-box;
+    background: rgba(13, 22, 17, 0.84); border: 1px solid rgba(201, 150, 59, 0.34);
+  }
+  .bcs-telemetry-ledger.bcs-is-violated {
+    background: rgba(58, 25, 19, 0.86); border-color: #e08b6d;
+  }
+  .bcs-fascination-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;
+  }
+  .bcs-fascination-label {
+    display: inline-flex; align-items: center; gap: 6px; font-size: 10.5px; color: var(--bcs-cumulus-pearl);
+  }
+  .bcs-fascination-score {
+    display: inline-block; font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 11.5px; font-weight: 700; color: var(--bcs-brass-optic);
+  }
+  .bcs-fascination-meter {
+    display: block; flex: 1 1 70px; height: 7px; border-radius: 99px; overflow: hidden;
+    background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(201, 150, 59, 0.35);
+  }
+  .bcs-fascination-fill {
+    display: block; height: 100%; border-radius: 99px;
+    background: linear-gradient(90deg, var(--bcs-fern-moss), var(--bcs-brass-optic), var(--bcs-cloud-ivory));
+    transition: width 160ms ease;
+  }
+  .bcs-counter-strip {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 10px; color: var(--bcs-sunlit-clearing);
+  }
+  .bcs-counter-chip {
+    display: inline-block; padding: 1px 5px; border-radius: 3px;
+    background: rgba(45, 106, 69, 0.25); border: 1px solid rgba(138, 184, 122, 0.32);
+  }
+  .bcs-specimen-readout { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .bcs-specimen-scale {
+    display: block; font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 9.5px; letter-spacing: 0.05em; color: var(--bcs-brass-optic);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .bcs-specimen-title {
+    display: block; font-size: 12px; font-weight: 700; color: var(--bcs-cloud-ivory);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .bcs-telemetry-ledger.bcs-is-violated .bcs-specimen-title { color: #ffd0bf; }
+  .bcs-specimen-detail {
+    display: block; font-size: 10.5px; color: var(--bcs-cumulus-pearl); opacity: 0.9;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .bcs-plate-drawer {
+    display: flex; align-items: center; justify-content: center;
+    position: fixed; inset: 0; z-index: 40; padding: 16px; box-sizing: border-box;
+    background: rgba(10, 17, 13, 0.88); backdrop-filter: blur(7px); -webkit-backdrop-filter: blur(7px);
+  }
+  .bcs-drawer-dialog {
+    display: flex; flex-direction: column; gap: 10px; width: min(1180px, 100%); height: min(740px, 100%);
+    padding: 12px 14px; border-radius: 8px; box-sizing: border-box; overflow: hidden;
+    background: linear-gradient(180deg, #182b20, #111d16); border: 1px solid var(--bcs-brass-optic);
+    box-shadow: 0 20px 54px rgba(0, 0, 0, 0.72);
+  }
+  .bcs-drawer-topbar {
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+    border-bottom: 1px solid rgba(201, 150, 59, 0.32); padding-bottom: 8px;
+  }
+  .bcs-drawer-heading { display: block; font-size: 14px; font-weight: 700; letter-spacing: 0.08em; }
+  .bcs-drawer-tabs, .bcs-drawer-actions { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 5px; }
+  .bcs-plate-viewport {
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px;
+    flex: 1 1 auto; min-height: 0; overflow: auto; box-sizing: border-box;
+  }
+  .bcs-plate-viewport.bcs-mode-map .bcs-plate-vista-card,
+  .bcs-plate-viewport.bcs-mode-vista .bcs-plate-map-card { display: none; }
+  .bcs-plate-viewport.bcs-mode-map, .bcs-plate-viewport.bcs-mode-vista { grid-template-columns: minmax(0, 1fr); }
+  .bcs-plate-card {
+    display: flex; flex-direction: column; gap: 6px; min-height: 0; padding: 8px; border-radius: 6px;
+    background: rgba(11, 19, 14, 0.85); border: 1px solid rgba(201, 150, 59, 0.3); overflow: auto;
+  }
+  .bcs-plate-img {
+    display: block; width: 100%; height: 100%; max-height: 100%; object-fit: contain;
+    border-radius: 4px; transform-origin: center center; transition: transform 180ms ease;
+  }
+  .bcs-plate-viewport.bcs-is-zoomed .bcs-plate-img {
+    transform: scale(1.75); transform-origin: top left; cursor: zoom-out;
+  }
+  .bcs-plate-caption { display: block; font-size: 11px; color: var(--bcs-cumulus-pearl); text-align: center; }
+  @media (max-width: 920px) {
+    .bcs-altitude-bar { padding: 4px 6px; gap: 4px 5px; }
+    .bcs-crest-title { font-size: 13px; letter-spacing: 0.1em; }
+    .bcs-crest-sub { display: none; }
+    .bcs-command-cluster { flex: 1 1 auto; min-width: 0; gap: 3px; }
+    .bcs-footprint-seal { padding: 2px 5px; font-size: 9px; max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+    .bcs-action-pill, .bcs-zoom-pill, .bcs-focus-pill, .bcs-drawer-tab {
+      padding: 3px 5px; font-size: 9.5px; gap: 3px;
+    }
+    .bcs-key-cap { font-size: 8.5px; padding: 1px 3px; flex-shrink: 0; }
+    .bcs-vernier-rack { order: 3; flex: 1 1 100%; width: 100%; min-width: 0; gap: 4px; }
+    .bcs-gauge-pod { min-width: 0; max-width: none; flex: 1 1 0; padding: 3px 5px; gap: 2px; overflow: hidden; }
+    .bcs-gauge-head { font-size: 8.5px; gap: 2px; min-width: 0; }
+    .bcs-gauge-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .bcs-gauge-readout { font-size: 8.5px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .bcs-step-trigger { width: 15px; height: 14px; font-size: 9.5px; flex-shrink: 0; }
+    .bcs-stage-overlay { top: 5px; left: 6px; right: 6px; gap: 4px; }
+    .bcs-turret-group { padding: 2px 3px; gap: 3px; max-width: 100%; }
+    .bcs-stage-whisper { font-size: 9px; bottom: 4px; left: 6px; padding: 2px 6px; }
+    .bcs-hypothesis-triad { display: flex; flex-direction: column; min-width: 0; max-width: 100%; gap: 4px; padding: 5px 6px; }
+    .bcs-hypothesis-grid { gap: 4px; min-width: 0; width: 100%; }
+    .bcs-hypothesis-card { padding: 4px 5px; gap: 2px; min-width: 0; overflow: hidden; }
+    .bcs-card-numeral { font-size: 9px; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+    .bcs-card-title { font-size: 10px; }
+    .bcs-card-axiom { font-size: 8.8px; -webkit-line-clamp: 2; line-height: 1.15; }
+    .bcs-telemetry-ledger { padding: 4px 6px; gap: 3px; min-width: 0; }
+    .bcs-fascination-row { gap: 4px; min-width: 0; }
+    .bcs-fascination-label { font-size: 9.5px; gap: 4px; }
+    .bcs-fascination-score { font-size: 10px; }
+    .bcs-counter-strip { font-size: 8.8px; gap: 3px; flex-wrap: wrap; }
+    .bcs-specimen-title { font-size: 10.5px; }
+    .bcs-specimen-detail { font-size: 9.5px; }
+    .bcs-plate-drawer { padding: 6px; }
+    .bcs-drawer-dialog { padding: 8px; gap: 6px; }
+    .bcs-plate-viewport { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  }
+</style>
+</head>
+<body class="bcs-body">
+<baucis-observatory class="bcs-observatory" id="bcs-observatory">
+  <flamingo-stilt-altitude class="bcs-altitude-bar" id="bcs-altitude-bar">
+    <bcs-crest-block class="bcs-crest-block">
+      <bcs-crest-title class="bcs-crest-title">BAUCIS</bcs-crest-title>
+      <bcs-crest-sub class="bcs-crest-sub">Nine Slender Flamingo Stilts Above the Cumulus</bcs-crest-sub>
+    </bcs-crest-block>
+    <bcs-vernier-rack class="bcs-vernier-rack">
+      <bcs-gauge-pod class="bcs-gauge-pod">
+        <bcs-gauge-head class="bcs-gauge-head">
+          <bcs-gauge-name class="bcs-gauge-name">7-Day March</bcs-gauge-name>
+          <bcs-gauge-readout class="bcs-gauge-readout" id="bcs-march-readout">Day 7 · Unseen Arrival</bcs-gauge-readout>
+        </bcs-gauge-head>
+        <bcs-march-controls class="bcs-march-controls">
+          <bcs-step-trigger class="bcs-step-trigger" id="bcs-march-prev" role="button" tabindex="0" aria-label="Previous woodland march day">-</bcs-step-trigger>
+          <bcs-vernier-bar class="bcs-vernier-bar bcs-march-bar" id="bcs-march-bar" role="slider" tabindex="0" aria-label="Seven-day woodland march" aria-valuemin="1" aria-valuemax="7" aria-valuenow="7">
+            <bcs-vernier-fill class="bcs-vernier-fill" id="bcs-march-fill" style="width:100%"></bcs-vernier-fill>
+            <bcs-vernier-knob class="bcs-vernier-knob" id="bcs-march-knob" style="left:100%"></bcs-vernier-knob>
+          </bcs-vernier-bar>
+          <bcs-step-trigger class="bcs-step-trigger" id="bcs-march-next" role="button" tabindex="0" aria-label="Next woodland march day">+</bcs-step-trigger>
+        </bcs-march-controls>
+      </bcs-gauge-pod>
+      <bcs-gauge-pod class="bcs-gauge-pod">
+        <bcs-gauge-head class="bcs-gauge-head">
+          <bcs-gauge-name class="bcs-gauge-name">Ladder Elevation</bcs-gauge-name>
+          <bcs-gauge-readout class="bcs-gauge-readout" id="bcs-altitude-readout">88% · Belvedere</bcs-gauge-readout>
+        </bcs-gauge-head>
+        <bcs-vernier-bar class="bcs-vernier-bar" id="bcs-altitude-bar-track" role="slider" tabindex="0" aria-label="Ladder elevation" aria-valuemin="0" aria-valuemax="100" aria-valuenow="88">
+          <bcs-vernier-fill class="bcs-vernier-fill" id="bcs-altitude-fill" style="width:88%"></bcs-vernier-fill>
+          <bcs-vernier-knob class="bcs-vernier-knob" id="bcs-altitude-knob" style="left:88%"></bcs-vernier-knob>
+        </bcs-vernier-bar>
+      </bcs-gauge-pod>
+      <bcs-gauge-pod class="bcs-gauge-pod">
+        <bcs-gauge-head class="bcs-gauge-head">
+          <bcs-gauge-name class="bcs-gauge-name">Sun &amp; Lattice</bcs-gauge-name>
+          <bcs-gauge-readout class="bcs-gauge-readout" id="bcs-sun-readout">Pierced Shadow: ACTIVE</bcs-gauge-readout>
+        </bcs-gauge-head>
+        <bcs-vernier-bar class="bcs-vernier-bar" id="bcs-sun-bar-track" role="slider" tabindex="0" aria-label="Sun and angular lattice shadow" aria-valuemin="0" aria-valuemax="100" aria-valuenow="85">
+          <bcs-vernier-fill class="bcs-vernier-fill" id="bcs-sun-fill" style="width:85%"></bcs-vernier-fill>
+          <bcs-vernier-knob class="bcs-vernier-knob" id="bcs-sun-knob" style="left:85%"></bcs-vernier-knob>
+        </bcs-vernier-bar>
+      </bcs-gauge-pod>
+    </bcs-vernier-rack>
+    <bcs-command-cluster class="bcs-command-cluster">
+      <bcs-footprint-seal class="bcs-footprint-seal" id="bcs-footprint-seal">Earth Footprint: 0.00% (9 Flamingo Stilts)</bcs-footprint-seal>
+      <bcs-action-pill class="bcs-action-pill bcs-is-active" id="bcs-sun-toggle" role="button" tabindex="0" aria-pressed="true"><bcs-key-cap class="bcs-key-cap">C</bcs-key-cap><bcs-pill-text class="bcs-pill-text" id="bcs-sun-toggle-text">Sunny</bcs-pill-text></bcs-action-pill>
+      <bcs-action-pill class="bcs-action-pill" id="bcs-descend-toggle" role="button" tabindex="0" aria-pressed="false"><bcs-key-cap class="bcs-key-cap">D</bcs-key-cap><bcs-pill-text class="bcs-pill-text" id="bcs-descend-text">Descend Ladder</bcs-pill-text></bcs-action-pill>
+      <bcs-action-pill class="bcs-action-pill" id="bcs-mute-toggle" role="button" tabindex="0" aria-pressed="false"><bcs-key-cap class="bcs-key-cap">M</bcs-key-cap><bcs-pill-text class="bcs-pill-text" id="bcs-mute-text">Sound</bcs-pill-text></bcs-action-pill>
+      <bcs-action-pill class="bcs-action-pill" id="bcs-restore-btn" role="button" tabindex="0"><bcs-key-cap class="bcs-key-cap">R</bcs-key-cap><bcs-pill-text class="bcs-pill-text">Restore Absence</bcs-pill-text></bcs-action-pill>
+      <bcs-action-pill class="bcs-action-pill" id="bcs-plates-btn" role="button" tabindex="0" aria-expanded="false"><bcs-key-cap class="bcs-key-cap">P</bcs-key-cap><bcs-pill-text class="bcs-pill-text">Royal Plates</bcs-pill-text></bcs-action-pill>
+    </bcs-command-cluster>
+  </flamingo-stilt-altitude>
+
+  <downward-spyglass-stage class="bcs-spyglass-stage" id="bcs-spyglass-stage">
+    <canvas class="bcs-canvas" id="bcs-observatory-canvas"></canvas>
+    <bcs-stage-overlay class="bcs-stage-overlay">
+      <bcs-turret-group class="bcs-turret-group" aria-label="Downward telescope magnification">
+        <bcs-zoom-pill class="bcs-zoom-pill" data-zoom-step="0" role="button" tabindex="0"><bcs-pill-text class="bcs-pill-text">1x</bcs-pill-text></bcs-zoom-pill>
+        <bcs-zoom-pill class="bcs-zoom-pill bcs-is-active" data-zoom-step="1" role="button" tabindex="0"><bcs-pill-text class="bcs-pill-text">8x Leaf</bcs-pill-text></bcs-zoom-pill>
+        <bcs-zoom-pill class="bcs-zoom-pill" data-zoom-step="2" role="button" tabindex="0"><bcs-pill-text class="bcs-pill-text">24x Stone</bcs-pill-text></bcs-zoom-pill>
+        <bcs-zoom-pill class="bcs-zoom-pill" data-zoom-step="3" role="button" tabindex="0"><bcs-pill-text class="bcs-pill-text">64x Ant</bcs-pill-text></bcs-zoom-pill>
+      </bcs-turret-group>
+      <bcs-turret-group class="bcs-turret-group" aria-label="Quick specimen focus">
+        <bcs-focus-pill class="bcs-focus-pill" data-specimen-kind="leaf" role="button" tabindex="0"><bcs-key-cap class="bcs-key-cap">Q</bcs-key-cap><bcs-pill-text class="bcs-pill-text">Leaf</bcs-pill-text></bcs-focus-pill>
+        <bcs-focus-pill class="bcs-focus-pill" data-specimen-kind="stone" role="button" tabindex="0"><bcs-key-cap class="bcs-key-cap">W</bcs-key-cap><bcs-pill-text class="bcs-pill-text">Stone</bcs-pill-text></bcs-focus-pill>
+        <bcs-focus-pill class="bcs-focus-pill" data-specimen-kind="ant" role="button" tabindex="0"><bcs-key-cap class="bcs-key-cap">E</bcs-key-cap><bcs-pill-text class="bcs-pill-text">Ant</bcs-pill-text></bcs-focus-pill>
+      </bcs-turret-group>
+    </bcs-stage-overlay>
+    <bcs-stage-whisper class="bcs-stage-whisper" id="bcs-stage-whisper">Aim downward brass spyglass across the glade · Wheel or [Z] cycles magnification</bcs-stage-whisper>
+  </downward-spyglass-stage>
+
+  <absence-hypothesis-triad class="bcs-hypothesis-triad" id="bcs-hypothesis-triad">
+    <bcs-hypothesis-grid class="bcs-hypothesis-grid">
+      <bcs-hypothesis-card class="bcs-hypothesis-card" data-hypothesis="hatred_of_earth" role="button" tabindex="0" aria-pressed="false">
+        <bcs-card-header class="bcs-card-header">
+          <bcs-card-numeral class="bcs-card-numeral">I · Hatred of the Earth</bcs-card-numeral>
+          <bcs-key-cap class="bcs-key-cap">1</bcs-key-cap>
+        </bcs-card-header>
+        <bcs-card-axiom class="bcs-card-axiom">They despise the mire below and suspend every beam in clear air above it.</bcs-card-axiom>
+      </bcs-hypothesis-card>
+      <bcs-hypothesis-card class="bcs-hypothesis-card" data-hypothesis="reverent_avoidance" role="button" tabindex="0" aria-pressed="false">
+        <bcs-card-header class="bcs-card-header">
+          <bcs-card-numeral class="bcs-card-numeral">II · Reverent Avoidance</bcs-card-numeral>
+          <bcs-key-cap class="bcs-key-cap">2</bcs-key-cap>
+        </bcs-card-header>
+        <bcs-card-axiom class="bcs-card-axiom">They respect the woodland soil so deeply that they avoid every trace of contact.</bcs-card-axiom>
+      </bcs-hypothesis-card>
+      <bcs-hypothesis-card class="bcs-hypothesis-card bcs-is-active" data-hypothesis="fascinated_absence" role="button" tabindex="0" aria-pressed="true">
+        <bcs-card-header class="bcs-card-header">
+          <bcs-card-numeral class="bcs-card-numeral">III · Love Before Existence</bcs-card-numeral>
+          <bcs-key-cap class="bcs-key-cap">3</bcs-key-cap>
+        </bcs-card-header>
+        <bcs-card-axiom class="bcs-card-axiom">They love the earth as it was before they existed, contemplating their own absence.</bcs-card-axiom>
+      </bcs-hypothesis-card>
+    </bcs-hypothesis-grid>
+    <bcs-telemetry-ledger class="bcs-telemetry-ledger" id="bcs-telemetry-ledger">
+      <bcs-fascination-row class="bcs-fascination-row">
+        <bcs-fascination-label class="bcs-fascination-label">Absence Fascination <bcs-fascination-score class="bcs-fascination-score" id="bcs-fascination-score">0.84</bcs-fascination-score></bcs-fascination-label>
+        <bcs-fascination-meter class="bcs-fascination-meter"><bcs-fascination-fill class="bcs-fascination-fill" id="bcs-fascination-fill" style="width:84%"></bcs-fascination-fill></bcs-fascination-meter>
+        <bcs-counter-strip class="bcs-counter-strip">
+          <bcs-counter-chip class="bcs-counter-chip" id="bcs-leaf-count">Leaves 1/6</bcs-counter-chip>
+          <bcs-counter-chip class="bcs-counter-chip" id="bcs-stone-count">Stones 0/6</bcs-counter-chip>
+          <bcs-counter-chip class="bcs-counter-chip" id="bcs-ant-count">Ants 0/6</bcs-counter-chip>
+        </bcs-counter-strip>
+      </bcs-fascination-row>
+      <bcs-specimen-readout class="bcs-specimen-readout">
+        <bcs-specimen-scale class="bcs-specimen-scale" id="bcs-specimen-scale">8x Brass Spyglass · Leaf by Leaf</bcs-specimen-scale>
+        <bcs-specimen-title class="bcs-specimen-title" id="bcs-specimen-title">Sun-Dappled Woodland Frond</bcs-specimen-title>
+        <bcs-specimen-detail class="bcs-specimen-detail" id="bcs-specimen-detail">Untouched dew beads and crisp angular eave-shadow rest across emerald veins.</bcs-specimen-detail>
+      </bcs-specimen-readout>
+    </bcs-telemetry-ledger>
+  </absence-hypothesis-triad>
+
+  <baucis-plate-drawer class="bcs-plate-drawer" id="bcs-plate-drawer" hidden>
+    <bcs-drawer-dialog class="bcs-drawer-dialog" role="dialog" aria-label="Survey Plates of Baucis">
+      <bcs-drawer-topbar class="bcs-drawer-topbar">
+        <bcs-drawer-heading class="bcs-drawer-heading">BAUCIS · PLATES OF ELEVATION &amp; ABSENCE</bcs-drawer-heading>
+        <bcs-drawer-tabs class="bcs-drawer-tabs">
+          <bcs-drawer-tab class="bcs-drawer-tab bcs-is-active" data-plate-tab="diptych" role="button" tabindex="0">Diptych</bcs-drawer-tab>
+          <bcs-drawer-tab class="bcs-drawer-tab" data-plate-tab="map" role="button" tabindex="0">Cartographic Map</bcs-drawer-tab>
+          <bcs-drawer-tab class="bcs-drawer-tab" data-plate-tab="vista" role="button" tabindex="0">City Vista</bcs-drawer-tab>
+        </bcs-drawer-tabs>
+        <bcs-drawer-actions class="bcs-drawer-actions">
+          <bcs-action-pill class="bcs-action-pill" id="bcs-plate-zoom-btn" role="button" tabindex="0" aria-pressed="false"><bcs-key-cap class="bcs-key-cap">Z</bcs-key-cap><bcs-pill-text class="bcs-pill-text" id="bcs-plate-zoom-text">1.75x Loupe</bcs-pill-text></bcs-action-pill>
+          <bcs-action-pill class="bcs-action-pill" id="bcs-plate-close-btn" role="button" tabindex="0"><bcs-key-cap class="bcs-key-cap">Esc</bcs-key-cap><bcs-pill-text class="bcs-pill-text">Close</bcs-pill-text></bcs-action-pill>
+        </bcs-drawer-actions>
+      </bcs-drawer-topbar>
+      <bcs-plate-viewport class="bcs-plate-viewport" id="bcs-plate-viewport">
+        <bcs-plate-card class="bcs-plate-card bcs-plate-map-card">
+          <img class="bcs-plate-img" id="bcs-map-img" src="map.png" alt="Cartographic survey of Baucis">
+          <bcs-plate-caption class="bcs-plate-caption">Cartographic Survey · Nine Slender Flamingo Stilts, Cloud Rifts &amp; Angular Foliage Shadow</bcs-plate-caption>
+        </bcs-plate-card>
+        <bcs-plate-card class="bcs-plate-card bcs-plate-vista-card">
+          <img class="bcs-plate-img" id="bcs-city-img" src="image.png" alt="Aerial vista of Baucis above the clouds">
+          <bcs-plate-caption class="bcs-plate-caption">City Vista · Timber Belvederes Above the Cumulus &amp; Downward Brass Telescopes</bcs-plate-caption>
+        </bcs-plate-card>
+      </bcs-plate-viewport>
+    </bcs-drawer-dialog>
+  </baucis-plate-drawer>
+</baucis-observatory>
+<script>
+(function (root) {
+  'use strict';
+
+  const PALETTE = Object.freeze({
+    latticeShadow: '#111d16',
+    canopyAbyss: '#182b20',
+    foliageEmerald: '#2d6a45',
+    fernMoss: '#529466',
+    sunlitClearing: '#8ab87a',
+    cloudIvory: '#f4efe4',
+    cumulusPearl: '#e5decb',
+    flamingoTimber: '#9e6b43',
+    brassOptic: '#c9963b',
+    skyAzure: '#6fa4c4',
+    lensSpecular: '#dfeef2',
+    footprintScar: '#7a4b3a'
+  });
+
+  const STILT_PILING_NODES = Object.freeze([
+    Object.freeze({ index: 0, id: 'stilt_west_verge', name: 'West Verge Piling', xNorm: 0.11, depthNorm: 0.62, hasLadder: true, brassTelescopes: 1 }),
+    Object.freeze({ index: 1, id: 'stilt_fern_hollow', name: 'Fern Hollow Leg', xNorm: 0.20, depthNorm: 0.34, hasLadder: false, brassTelescopes: 2 }),
+    Object.freeze({ index: 2, id: 'stilt_oak_crown', name: 'Oak-Crown Spindle', xNorm: 0.31, depthNorm: 0.16, hasLadder: true, brassTelescopes: 3 }),
+    Object.freeze({ index: 3, id: 'stilt_rill_bend', name: 'Rill-Bend Stilt', xNorm: 0.41, depthNorm: 0.72, hasLadder: false, brassTelescopes: 1 }),
+    Object.freeze({ index: 4, id: 'stilt_nadir_gallery', name: 'Nadir Belvedere Leg', xNorm: 0.52, depthNorm: 0.12, hasLadder: true, brassTelescopes: 3 }),
+    Object.freeze({ index: 5, id: 'stilt_lichen_shelf', name: 'Lichen-Shelf Piling', xNorm: 0.62, depthNorm: 0.56, hasLadder: false, brassTelescopes: 2 }),
+    Object.freeze({ index: 6, id: 'stilt_moss_plinth', name: 'Moss-Plinth Spindle', xNorm: 0.71, depthNorm: 0.24, hasLadder: true, brassTelescopes: 2 }),
+    Object.freeze({ index: 7, id: 'stilt_glade_eave', name: 'Glade-Eave Leg', xNorm: 0.80, depthNorm: 0.68, hasLadder: false, brassTelescopes: 1 }),
+    Object.freeze({ index: 8, id: 'stilt_east_meridian', name: 'East Meridian Piling', xNorm: 0.89, depthNorm: 0.38, hasLadder: true, brassTelescopes: 2 })
+  ]);
+
+  const SKYWALK_SPANS = Object.freeze([
+    [0, 1], [1, 2], [2, 4], [3, 5], [4, 6], [5, 7], [6, 8]
+  ]);
+
+  const LADDER_COUNT = STILT_PILING_NODES.reduce(function (acc, n) {
+    return acc + (n.hasLadder ? 1 : 0);
+  }, 0);
+
+  function clamp(val, min, max) {
+    return val < min ? min : (val > max ? max : val);
+  }
+
+  function lerp(a, b, t) {
+    return a + (b - a) * t;
+  }
+
+  function hexToRgba(hex, alpha) {
+    const clean = String(hex || '#000000').replace('#', '');
+    const num = parseInt(clean.length === 3
+      ? clean[0] + clean[0] + clean[1] + clean[1] + clean[2] + clean[2]
+      : clean, 16);
+    const r = (num >> 16) & 255;
+    const g = (num >> 8) & 255;
+    const b = num & 255;
+    return 'rgba(' + r + ',' + g + ',' + b + ',' + clamp(alpha, 0, 1).toFixed(3) + ')';
+  }
+
+  function makeRng(seed) {
+    let s = seed >>> 0;
+    return function () {
+      s = (s * 1664525 + 1013904223) >>> 0;
+      return s / 4294967296;
+    };
+  }
+
+  function buildWoodlandScene() {
+    const rng = makeRng(28051972);
+
+    const distantTrunks = [];
+    for (let i = 0; i < 22; i++) {
+      distantTrunks.push({
+        xNorm: 0.03 + (i / 21) * 0.94 + (rng() - 0.5) * 0.025,
+        yTopNorm: 0.48 + rng() * 0.08,
+        yBotNorm: 0.65 + rng() * 0.11,
+        widthPx: 4 + rng() * 7,
+        crownRadius: 22 + rng() * 28,
+        swaySeed: rng() * Math.PI * 2
+      });
+    }
+
+    const ancientOaks = [
+      { xNorm: 0.08, yBaseNorm: 0.89, scale: 1.16, lean: 0.08, swaySeed: 0.4 },
+      { xNorm: 0.28, yBaseNorm: 0.84, scale: 1.25, lean: -0.05, swaySeed: 1.7 },
+      { xNorm: 0.66, yBaseNorm: 0.79, scale: 0.92, lean: 0.06, swaySeed: 2.9 },
+      { xNorm: 0.83, yBaseNorm: 0.93, scale: 1.22, lean: -0.09, swaySeed: 4.1 },
+      { xNorm: 0.95, yBaseNorm: 0.87, scale: 0.98, lean: -0.06, swaySeed: 5.2 }
+    ].map(function (oak) {
+      const puffs = [];
+      for (let k = 0; k < 11; k++) {
+        const ang = -Math.PI * 0.92 + (k / 10) * Math.PI * 0.84;
+        const rad = 0.55 + (k % 3) * 0.22;
+        puffs.push({
+          dx: Math.cos(ang) * 58 * rad + (rng() - 0.5) * 14,
+          dy: -82 + Math.sin(ang) * 34 * rad + (rng() - 0.5) * 10,
+          rx: 24 + rng() * 18,
+          ry: 16 + rng() * 12,
+          tone: k % 3
+        });
+      }
+      return Object.assign({}, oak, { puffs: puffs });
+    });
+
+    const fernClusters = [];
+    for (let i = 0; i < 24; i++) {
+      fernClusters.push({
+        xNorm: 0.02 + (i / 23) * 0.96 + (rng() - 0.5) * 0.02,
+        yNorm: 0.88 + (i % 3) * 0.042 + rng() * 0.02,
+        blades: 5 + (i % 4),
+        size: 15 + rng() * 16,
+        phase: rng() * Math.PI * 2
+      });
+    }
+
+    const cloudPuffs = [];
+    for (let i = 0; i < 34; i++) {
+      cloudPuffs.push({
+        xNorm: (i / 34) + (rng() - 0.5) * 0.03,
+        yOffset: (rng() - 0.5) * 38,
+        rx: 44 + rng() * 58,
+        ry: 22 + rng() * 26,
+        layer: i % 2,
+        speed: 0.0035 + rng() * 0.0035
+      });
+    }
+
+    const deer = [
+      { xNorm: 0.135, yNorm: 0.825, scale: 0.95, facing: 1, antlers: true, graze: false },
+      { xNorm: 0.235, yNorm: 0.845, scale: 0.78, facing: -1, antlers: false, graze: true },
+      { xNorm: 0.448, yNorm: 0.875, scale: 0.72, facing: -1, antlers: false, graze: true }
+    ];
+
+    return {
+      distantTrunks: distantTrunks,
+      ancientOaks: ancientOaks,
+      fernClusters: fernClusters,
+      cloudPuffs: cloudPuffs,
+      deer: deer
+    };
+  }
+
+  function createBaucisAudio(initialMuted) {
+    let muted = Boolean(initialMuted);
+    let ctx = null;
+    let masterGain = null;
+    let windFilter = null;
+    let windGain = null;
+    let streamGain = null;
+    let droneOscA = null;
+    let droneOscB = null;
+    let droneGain = null;
+    let noiseSource = null;
+    let lfoOsc = null;
+
+    function syncMasterGain() {
+      if (!ctx || !masterGain) return;
+      try {
+        const now = ctx.currentTime;
+        const target = muted ? 0.0001 : 0.18;
+        masterGain.gain.cancelScheduledValues(now);
+        masterGain.gain.setTargetAtTime(target, now, 0.06);
+      } catch (_e) {}
+    }
+
+    function unlock() {
+      try {
+        const AudioCtx = root && (root.AudioContext || root.webkitAudioContext);
+        if (!AudioCtx) return false;
+        if (!ctx) {
+          ctx = new AudioCtx();
+          masterGain = ctx.createGain();
+          masterGain.gain.value = muted ? 0.0001 : 0.18;
+          masterGain.connect(ctx.destination);
+
+          const sampleRate = ctx.sampleRate || 44100;
+          const length = Math.floor(sampleRate * 2.0);
+          const buffer = ctx.createBuffer(1, length, sampleRate);
+          const data = buffer.getChannelData(0);
+          let b0 = 0, b1 = 0, b2 = 0;
+          for (let i = 0; i < length; i++) {
+            const white = Math.random() * 2 - 1;
+            b0 = 0.997 * b0 + white * 0.029;
+            b1 = 0.985 * b1 + white * 0.032;
+            b2 = 0.950 * b2 + white * 0.048;
+            data[i] = clamp((b0 + b1 + b2 + white * 0.018) * 0.9, -1, 1);
+          }
+
+          noiseSource = ctx.createBufferSource();
+          noiseSource.buffer = buffer;
+          noiseSource.loop = true;
+
+          windFilter = ctx.createBiquadFilter();
+          windFilter.type = 'bandpass';
+          windFilter.frequency.value = 540;
+          windFilter.Q.value = 1.65;
+
+          windGain = ctx.createGain();
+          windGain.gain.value = 0.055;
+
+          const streamFilter = ctx.createBiquadFilter();
+          streamFilter.type = 'bandpass';
+          streamFilter.frequency.value = 1180;
+          streamFilter.Q.value = 2.6;
+
+          streamGain = ctx.createGain();
+          streamGain.gain.value = 0.018;
+
+          noiseSource.connect(windFilter);
+          windFilter.connect(windGain);
+          windGain.connect(masterGain);
+
+          noiseSource.connect(streamFilter);
+          streamFilter.connect(streamGain);
+          streamGain.connect(masterGain);
+
+          lfoOsc = ctx.createOscillator();
+          const lfoGain = ctx.createGain();
+          lfoOsc.type = 'sine';
+          lfoOsc.frequency.value = 0.13;
+          lfoGain.gain.value = 85;
+          lfoOsc.connect(lfoGain);
+          lfoGain.connect(windFilter.frequency);
+
+          droneOscA = ctx.createOscillator();
+          droneOscB = ctx.createOscillator();
+          const droneFilter = ctx.createBiquadFilter();
+          droneGain = ctx.createGain();
+          droneOscA.type = 'sine';
+          droneOscB.type = 'triangle';
+          droneOscA.frequency.value = 293.66;
+          droneOscB.frequency.value = 440.0;
+          droneFilter.type = 'lowpass';
+          droneFilter.frequency.value = 820;
+          droneGain.gain.value = 0.024;
+
+          droneOscA.connect(droneFilter);
+          droneOscB.connect(droneFilter);
+          droneFilter.connect(droneGain);
+          droneGain.connect(masterGain);
+
+          noiseSource.start(0);
+          lfoOsc.start(0);
+          droneOscA.start(0);
+          droneOscB.start(0);
+        }
+        if (ctx.state === 'suspended' && typeof ctx.resume === 'function') {
+          ctx.resume().catch(function () {});
+        }
+        syncMasterGain();
+        return true;
+      } catch (_err) {
+        return false;
+      }
+    }
+
+    function playTone(freq, type, startOffset, duration, peakGain, endFreq) {
+      if (muted || !ctx || !masterGain) return;
+      try {
+        const now = ctx.currentTime + (startOffset || 0);
+        const osc = ctx.createOscillator();
+        const g = ctx.createGain();
+        osc.type = type || 'sine';
+        osc.frequency.setValueAtTime(freq, now);
+        if (endFreq) {
+          osc.frequency.exponentialRampToValueAtTime(Math.max(24, endFreq), now + duration);
+        }
+        g.gain.setValueAtTime(0.0001, now);
+        g.gain.linearRampToValueAtTime(peakGain, now + Math.min(0.018, duration * 0.25));
+        g.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+        osc.connect(g);
+        g.connect(masterGain);
+        osc.start(now);
+        osc.stop(now + duration + 0.02);
+      } catch (_e) {}
+    }
+
+    return {
+      unlock: unlock,
+      setMuted: function (bool) {
+        muted = Boolean(bool);
+        syncMasterGain();
+        return muted;
+      },
+      toggleMute: function () {
+        muted = !muted;
+        if (!muted) unlock();
+        syncMasterGain();
+        return muted;
+      },
+      isMuted: function () {
+        return muted;
+      },
+      updateAtmosphere: function (stateObj) {
+        if (!ctx || !windFilter || !windGain || !streamGain || !droneOscB) return;
+        try {
+          const s = stateObj || {};
+          const alt = Number.isFinite(s.altitude01) ? clamp(s.altitude01, 0, 1) : 0.88;
+          const sun = Number.isFinite(s.sunlight01) ? clamp(s.sunlight01, 0, 1) : 0.85;
+          const onEarth = Boolean(s.inhabitantOnEarth);
+          const now = ctx.currentTime;
+          windFilter.frequency.setTargetAtTime(360 + alt * 340 + sun * 70, now, 0.12);
+          windGain.gain.setTargetAtTime(0.026 + alt * 0.044, now, 0.12);
+          streamGain.gain.setTargetAtTime(0.032 * (1 - alt * 0.58), now, 0.12);
+          droneOscB.frequency.setTargetAtTime(onEarth ? 415.3 : 440.0, now, 0.15);
+        } catch (_e) {}
+      },
+      playSpyglassClick: function (zoomStep) {
+        const step = clamp(Number(zoomStep) || 0, 0, 3);
+        const base = 1520 + step * 340;
+        playTone(base, 'triangle', 0, 0.042, 0.12, base * 0.76);
+        playTone(base * 1.48, 'sine', 0.024, 0.032, 0.07, base * 1.32);
+      },
+      playSpecimenChime: function (kind) {
+        if (kind === 'stone') {
+          playTone(523.25, 'sine', 0, 0.28, 0.10);
+          playTone(1046.5, 'sine', 0.03, 0.24, 0.06);
+        } else if (kind === 'ant') {
+          playTone(880.0, 'sine', 0, 0.09, 0.07);
+          playTone(1108.73, 'sine', 0.055, 0.09, 0.07);
+          playTone(1318.51, 'sine', 0.11, 0.14, 0.08);
+        } else {
+          playTone(587.33, 'sine', 0, 0.26, 0.09);
+          playTone(739.99, 'triangle', 0.045, 0.30, 0.06);
+        }
+      },
+      playLadderFootfallViolation: function () {
+        playTone(124, 'sawtooth', 0, 0.22, 0.18, 41);
+        playTone(233.08, 'triangle', 0.04, 0.36, 0.09, 220.0);
+        playTone(246.94, 'sine', 0.05, 0.38, 0.08, 233.08);
+      },
+      playAbsenceRestoredChord: function () {
+        const notes = [293.66, 440.0, 587.33, 739.99];
+        for (let i = 0; i < notes.length; i++) {
+          playTone(notes[i], i % 2 === 0 ? 'sine' : 'triangle', i * 0.055, 0.52, 0.075);
+        }
+      },
+      destroy: function () {
+        try {
+          if (noiseSource) noiseSource.stop();
+          if (lfoOsc) lfoOsc.stop();
+          if (droneOscA) droneOscA.stop();
+          if (droneOscB) droneOscB.stop();
+          if (ctx && typeof ctx.close === 'function') ctx.close();
+        } catch (_e) {}
+        ctx = null;
+        masterGain = null;
+      }
+    };
+  }
+
+  function createCloudStiltWorld(opts) {
+    const cfg = opts || {};
+    const scene = buildWoodlandScene();
+    const audio = createBaucisAudio(Boolean(cfg.muted));
+
+    const state = {
+      width: Math.max(240, Number(cfg.width) || 1280),
+      height: Math.max(240, Number(cfg.height) || 800),
+      dpr: Math.max(1, Number(cfg.dpr) || 1),
+      marchDay: Number.isFinite(Number(cfg.marchDay)) ? clamp(Math.round(Number(cfg.marchDay)), 1, 7) : 7,
+      altitude01: Number.isFinite(Number(cfg.altitude01)) ? clamp(Number(cfg.altitude01), 0, 1) : 0.88,
+      sunlight01: Number.isFinite(Number(cfg.sunlight01)) ? clamp(Number(cfg.sunlight01), 0, 1) : 0.85,
+      sunAzimuth: Number.isFinite(Number(cfg.sunAzimuth)) ? clamp(Number(cfg.sunAzimuth), -1, 1) : 0.28,
+      cloudRift01: Number.isFinite(Number(cfg.cloudRift01)) ? clamp(Number(cfg.cloudRift01), 0, 1) : 0.65,
+      inhabitantOnEarth: Boolean(cfg.inhabitantOnEarth),
+      focusNormX: Number.isFinite(Number(cfg.focusNormX)) ? clamp(Number(cfg.focusNormX), 0.08, 0.92) : 0.52,
+      focusNormY: Number.isFinite(Number(cfg.focusNormY)) ? clamp(Number(cfg.focusNormY), 0.56, 0.95) : 0.78,
+      earthContactCityMass: 0,
+      piercedShadowVisible: true,
+      shadowOpacity: 0,
+      reducedMotion: Boolean(cfg.reducedMotion),
+      cloudPhase: 0,
+      foliagePhase: 0,
+      streamPhase: 0
+    };
+
+    function recomputeSolar() {
+      if (state.sunlight01 > 0.35) {
+        state.piercedShadowVisible = true;
+        state.shadowOpacity = clamp((state.sunlight01 - 0.35) / 0.65, 0, 1);
+      } else {
+        state.piercedShadowVisible = false;
+        state.shadowOpacity = 0;
+      }
+    }
+    recomputeSolar();
+
+    function computeBounds() {
+      const h = state.height;
+      const altDelta = 0.88 - state.altitude01;
+      return {
+        belvedereY: Math.round(h * clamp(0.21 - altDelta * 0.08, 0.12, 0.25)),
+        cloudDeckY: Math.round(h * clamp(0.43 - altDelta * 0.06, 0.35, 0.47)),
+        minY: Math.round(h * clamp(0.56 - altDelta * 0.04, 0.51, 0.59)),
+        maxY: Math.round(h * 0.96)
+      };
+    }
+
+    function computeInternalNodes(bounds) {
+      const w = state.width;
+      const h = state.height;
+      const floorSpan = bounds.maxY - bounds.minY;
+      return STILT_PILING_NODES.map(function (node) {
+        const x = node.xNorm * w;
+        const baseY = bounds.minY + floorSpan * (0.14 + (1 - node.depthNorm) * 0.54);
+        const topY = bounds.belvedereY + (node.depthNorm - 0.36) * h * 0.075;
+        return {
+          index: node.index,
+          id: node.id,
+          name: node.name,
+          baseX: x,
+          baseY: baseY,
+          topX: x,
+          topY: topY,
+          depthNorm: node.depthNorm,
+          hasLadder: node.hasLadder,
+          brassTelescopes: node.brassTelescopes
+        };
+      });
+    }
+
+    function drawSkyAndSolarRays(ctx, w, h, bounds, viewOpts) {
+      const skyGrad = ctx.createLinearGradient(0, 0, 0, bounds.minY + h * 0.08);
+      const sunny = state.sunlight01;
+      skyGrad.addColorStop(0, sunny > 0.35 ? PALETTE.skyAzure : '#7b929e');
+      skyGrad.addColorStop(0.58, hexToRgba(PALETTE.cloudIvory, 0.94));
+      skyGrad.addColorStop(1, PALETTE.cumulusPearl);
+      ctx.fillStyle = skyGrad;
+      ctx.fillRect(0, 0, w, bounds.minY + h * 0.1);
+
+      const sunX = w * (0.5 + state.sunAzimuth * 0.36);
+      const sunY = h * 0.13;
+      if (sunny > 0.18) {
+        const sunGlow = ctx.createRadialGradient(sunX, sunY, 6, sunX, sunY, w * 0.48);
+        sunGlow.addColorStop(0, hexToRgba(PALETTE.cloudIvory, 0.85 * sunny));
+        sunGlow.addColorStop(0.32, hexToRgba(PALETTE.brassOptic, 0.22 * sunny));
+        sunGlow.addColorStop(1, hexToRgba(PALETTE.cloudIvory, 0));
+        ctx.fillStyle = sunGlow;
+        ctx.fillRect(0, 0, w, bounds.minY + h * 0.08);
+      }
+
+      if (state.piercedShadowVisible) {
+        ctx.save();
+        const rayAlpha = 0.085 * state.shadowOpacity;
+        const skew = -state.sunAzimuth * w * 0.28;
+        for (let r = 0; r < 5; r++) {
+          const rx = w * (0.14 + r * 0.18) + (sunX - w * 0.5) * 0.25;
+          const beamW = w * (0.045 + (r % 2) * 0.025);
+          const rayGrad = ctx.createLinearGradient(rx, sunY, rx + skew, bounds.maxY);
+          rayGrad.addColorStop(0, hexToRgba(PALETTE.cloudIvory, rayAlpha * 1.25));
+          rayGrad.addColorStop(0.65, hexToRgba(PALETTE.sunlitClearing, rayAlpha * 0.8));
+          rayGrad.addColorStop(1, hexToRgba(PALETTE.sunlitClearing, 0));
+          ctx.fillStyle = rayGrad;
+          ctx.beginPath();
+          ctx.moveTo(rx - beamW * 0.4, 0);
+          ctx.lineTo(rx + beamW * 0.4, 0);
+          ctx.lineTo(rx + skew + beamW * 1.5, h);
+          ctx.lineTo(rx + skew - beamW * 1.1, h);
+          ctx.closePath();
+          ctx.fill();
+        }
+        ctx.restore();
+      }
+
+      if (viewOpts && viewOpts.hypothesisTint) {
+        ctx.fillStyle = hexToRgba(viewOpts.hypothesisTint, 0.065);
+        ctx.fillRect(0, 0, w, bounds.cloudDeckY);
+      }
+    }
+
+    function drawWoodlandStratum(ctx, w, h, bounds) {
+      const forestTop = bounds.cloudDeckY + h * 0.02;
+      const bgGrad = ctx.createLinearGradient(0, forestTop, 0, h);
+      bgGrad.addColorStop(0, PALETTE.foliageEmerald);
+      bgGrad.addColorStop(0.32, PALETTE.canopyAbyss);
+      bgGrad.addColorStop(0.62, PALETTE.foliageEmerald);
+      bgGrad.addColorStop(1, PALETTE.canopyAbyss);
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, forestTop, w, h - forestTop);
+
+      for (let ridge = 0; ridge < 3; ridge++) {
+        ctx.fillStyle = ridge === 0
+          ? hexToRgba(PALETTE.fernMoss, 0.42)
+          : (ridge === 1 ? PALETTE.foliageEmerald : PALETTE.canopyAbyss);
+        ctx.beginPath();
+        const baseRidgeY = bounds.minY - (2 - ridge) * h * 0.032;
+        ctx.moveTo(0, h);
+        for (let x = 0; x <= w + 32; x += 32) {
+          const wave = Math.sin(x * 0.014 + ridge * 1.9 + state.foliagePhase * 0.35) * 11
+            + Math.cos(x * 0.031 - ridge) * 6;
+          ctx.lineTo(x, baseRidgeY + wave);
+        }
+        ctx.lineTo(w, h);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      for (let i = 0; i < scene.distantTrunks.length; i++) {
+        const tr = scene.distantTrunks[i];
+        const tx = tr.xNorm * w;
+        const ty0 = tr.yTopNorm * h;
+        const ty1 = Math.max(bounds.minY + 12, tr.yBotNorm * h);
+        ctx.strokeStyle = hexToRgba(PALETTE.canopyAbyss, 0.72);
+        ctx.lineWidth = tr.widthPx;
+        ctx.beginPath();
+        ctx.moveTo(tx, ty1);
+        ctx.lineTo(tx + Math.sin(state.foliagePhase + tr.swaySeed) * 2.2, ty0);
+        ctx.stroke();
+        ctx.fillStyle = hexToRgba(i % 2 === 0 ? PALETTE.foliageEmerald : PALETTE.fernMoss, 0.55);
+        ctx.beginPath();
+        ctx.arc(tx, ty0, tr.crownRadius, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      const gladeGrad = ctx.createRadialGradient(
+        w * 0.5, bounds.minY + (bounds.maxY - bounds.minY) * 0.48, w * 0.04,
+        w * 0.5, bounds.minY + (bounds.maxY - bounds.minY) * 0.55, w * 0.52
+      );
+      const sunBoost = 0.25 + state.sunlight01 * 0.62;
+      gladeGrad.addColorStop(0, hexToRgba(PALETTE.sunlitClearing, sunBoost));
+      gladeGrad.addColorStop(0.55, hexToRgba(PALETTE.fernMoss, sunBoost * 0.75));
+      gladeGrad.addColorStop(1, hexToRgba(PALETTE.canopyAbyss, 0.85));
+      ctx.fillStyle = gladeGrad;
+      ctx.fillRect(0, bounds.minY, w, h - bounds.minY);
+    }
+
+    function drawStreamOaksAndFerns(ctx, w, h, bounds) {
+      ctx.save();
+      const sy0 = bounds.minY + 6;
+      ctx.strokeStyle = hexToRgba(PALETTE.canopyAbyss, 0.72);
+      ctx.lineWidth = Math.max(14, w * 0.024);
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(w * 0.155, sy0);
+      ctx.bezierCurveTo(w * 0.255, sy0 + (h - sy0) * 0.34, w * 0.175, sy0 + (h - sy0) * 0.68, w * 0.295, h + 8);
+      ctx.stroke();
+
+      const waterGrad = ctx.createLinearGradient(w * 0.15, sy0, w * 0.30, h);
+      waterGrad.addColorStop(0, hexToRgba(PALETTE.skyAzure, 0.68));
+      waterGrad.addColorStop(0.55, hexToRgba(PALETTE.fernMoss, 0.78));
+      waterGrad.addColorStop(1, hexToRgba(PALETTE.skyAzure, 0.82));
+      ctx.strokeStyle = waterGrad;
+      ctx.lineWidth = Math.max(8, w * 0.015);
+      ctx.stroke();
+
+      ctx.strokeStyle = hexToRgba(PALETTE.lensSpecular, 0.58);
+      ctx.lineWidth = 1.4;
+      for (let s = 0; s < 7; s++) {
+        const t = ((s / 7) + state.streamPhase * 0.09) % 1;
+        const rx = lerp(w * 0.16, w * 0.285, t) + Math.sin(t * Math.PI * 2.2) * w * 0.022;
+        const ry = lerp(sy0 + 8, h - 8, t);
+        ctx.beginPath();
+        ctx.moveTo(rx - 6, ry);
+        ctx.quadraticCurveTo(rx, ry - 2, rx + 7, ry + 1);
+        ctx.stroke();
+      }
+      ctx.restore();
+
+      if (!state.inhabitantOnEarth && state.marchDay === 7) {
+        for (let d = 0; d < scene.deer.length; d++) {
+          const dr = scene.deer[d];
+          const dx = dr.xNorm * w;
+          const dy = clamp(dr.yNorm * h, bounds.minY + 18, bounds.maxY);
+          const sc = dr.scale * Math.max(0.68, Math.min(1.15, w / 1100));
+          const dir = dr.facing;
+          ctx.save();
+          ctx.translate(dx, dy);
+          ctx.scale(dir * sc, sc);
+          ctx.fillStyle = PALETTE.flamingoTimber;
+          ctx.beginPath();
+          ctx.ellipse(0, -11, 10, 5, -0.06, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.strokeStyle = PALETTE.flamingoTimber;
+          ctx.lineWidth = 1.8;
+          ctx.beginPath();
+          ctx.moveTo(-6, -8); ctx.lineTo(-7, 0);
+          ctx.moveTo(-2, -8); ctx.lineTo(-1, 0);
+          ctx.moveTo(5, -8); ctx.lineTo(5, 0);
+          ctx.moveTo(8, -8); ctx.lineTo(9, 0);
+          ctx.moveTo(7, -13);
+          ctx.lineTo(12, dr.graze ? -3 : -21);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.ellipse(13, dr.graze ? -2 : -22, 3.6, 2.2, dr.graze ? 0.5 : -0.1, 0, Math.PI * 2);
+          ctx.fill();
+          if (dr.antlers) {
+            ctx.lineWidth = 1.1;
+            ctx.beginPath();
+            ctx.moveTo(13, -24); ctx.lineTo(11, -31); ctx.moveTo(12, -28); ctx.lineTo(15, -30);
+            ctx.moveTo(14, -24); ctx.lineTo(17, -30);
+            ctx.stroke();
+          }
+          ctx.restore();
+        }
+      }
+
+      const oakScaleBase = Math.max(0.62, Math.min(1.15, w / 1150));
+      for (let i = 0; i < scene.ancientOaks.length; i++) {
+        const oak = scene.ancientOaks[i];
+        const ox = oak.xNorm * w;
+        const oy = clamp(oak.yBaseNorm * h, bounds.minY + 34, h - 8);
+        const sc = oak.scale * oakScaleBase;
+        const sway = Math.sin(state.foliagePhase + oak.swaySeed) * 2.6;
+        ctx.save();
+        ctx.translate(ox, oy);
+        ctx.scale(sc, sc);
+        ctx.fillStyle = PALETTE.canopyAbyss;
+        ctx.beginPath();
+        ctx.moveTo(-18, 8);
+        ctx.quadraticCurveTo(-8, -28, -7 + oak.lean * 40, -76);
+        ctx.lineTo(7 + oak.lean * 40, -76);
+        ctx.quadraticCurveTo(9, -28, 20, 8);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.strokeStyle = PALETTE.canopyAbyss;
+        ctx.lineWidth = 5;
+        ctx.beginPath();
+        ctx.moveTo(-3, -68); ctx.quadraticCurveTo(-26, -82, -46 + sway * 0.4, -88);
+        ctx.moveTo(3, -70); ctx.quadraticCurveTo(24, -84, 44 + sway * 0.4, -86);
+        ctx.moveTo(0, -74); ctx.lineTo(sway * 0.3, -102);
+        ctx.stroke();
+
+        for (let p = 0; p < oak.puffs.length; p++) {
+          const pf = oak.puffs[p];
+          ctx.fillStyle = pf.tone === 0
+            ? PALETTE.canopyAbyss
+            : (pf.tone === 1 ? PALETTE.foliageEmerald : (state.sunlight01 > 0.35 ? PALETTE.fernMoss : PALETTE.foliageEmerald));
+          ctx.beginPath();
+          ctx.ellipse(pf.dx + sway * 0.55, pf.dy, pf.rx, pf.ry, 0, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.restore();
+      }
+
+      for (let f = 0; f < scene.fernClusters.length; f++) {
+        const fc = scene.fernClusters[f];
+        const fx = fc.xNorm * w;
+        const fy = fc.yNorm * h;
+        ctx.strokeStyle = f % 2 === 0 ? PALETTE.fernMoss : PALETTE.canopyAbyss;
+        ctx.lineWidth = 1.6;
+        for (let b = 0; b < fc.blades; b++) {
+          const ang = -Math.PI * 0.88 + (b / (fc.blades - 1)) * Math.PI * 0.76;
+          const sway = Math.sin(state.foliagePhase * 1.2 + fc.phase + b) * 1.8;
+          ctx.beginPath();
+          ctx.moveTo(fx, fy);
+          ctx.quadraticCurveTo(
+            fx + Math.cos(ang) * fc.size * 0.55 + sway,
+            fy + Math.sin(ang) * fc.size * 0.65,
+            fx + Math.cos(ang) * fc.size + sway,
+            fy + Math.sin(ang) * fc.size * 0.42
+          );
+          ctx.stroke();
+        }
+      }
+    }
+
+    function drawPiercedAngularShadow(ctx, w, h, bounds, nodes) {
+      if (!state.piercedShadowVisible || state.shadowOpacity <= 0) return;
+      ctx.save();
+      const alpha = 0.54 * state.shadowOpacity;
+      const skewX = -state.sunAzimuth * w * 0.22;
+      ctx.fillStyle = hexToRgba(PALETTE.latticeShadow, alpha);
+      ctx.strokeStyle = hexToRgba(PALETTE.latticeShadow, alpha * 0.92);
+
+      for (let s = 0; s < SKYWALK_SPANS.length; s++) {
+        const a = nodes[SKYWALK_SPANS[s][0]];
+        const b = nodes[SKYWALK_SPANS[s][1]];
+        const ax = a.baseX + skewX * (0.62 + (1 - a.depthNorm) * 0.38);
+        const ay = a.baseY + 4;
+        const bx = b.baseX + skewX * (0.62 + (1 - b.depthNorm) * 0.38);
+        const by = b.baseY + 4;
+        ctx.lineWidth = 2.1;
+        ctx.beginPath();
+        ctx.moveTo(ax, ay - 3); ctx.lineTo(bx, by - 3);
+        ctx.moveTo(ax, ay + 3); ctx.lineTo(bx, by + 3);
+        ctx.stroke();
+        ctx.lineWidth = 1.2;
+        const steps = 9;
+        for (let k = 1; k < steps; k++) {
+          const t = k / steps;
+          const rx = lerp(ax, bx, t);
+          const ry = lerp(ay, by, t);
+          ctx.beginPath();
+          ctx.moveTo(rx - 2, ry - 4);
+          ctx.lineTo(rx + 2, ry + 4);
+          ctx.stroke();
+        }
+      }
+
+      for (let i = 0; i < nodes.length; i++) {
+        const nd = nodes[i];
+        const cx = nd.baseX + skewX * (0.62 + (1 - nd.depthNorm) * 0.38);
+        const cy = nd.baseY + 4;
+        const rw = (22 + (1 - nd.depthNorm) * 18) * Math.max(0.7, w / 1200);
+        const rh = rw * 0.44;
+        ctx.beginPath();
+        ctx.moveTo(cx - rw, cy);
+        ctx.lineTo(cx - rw * 0.48, cy - rh);
+        ctx.lineTo(cx + rw * 0.52, cy - rh);
+        ctx.lineTo(cx + rw * 1.05, cy);
+        ctx.lineTo(cx + rw * 0.48, cy + rh);
+        ctx.lineTo(cx - rw * 0.52, cy + rh);
+        ctx.closePath();
+
+        ctx.moveTo(cx - rw * 0.42, cy);
+        ctx.lineTo(cx, cy - rh * 0.48);
+        ctx.lineTo(cx + rw * 0.42, cy);
+        ctx.lineTo(cx, cy + rh * 0.48);
+        ctx.closePath();
+        ctx.fill('evenodd');
+      }
+      ctx.restore();
+    }
+
+    function drawFlamingoStiltsAndLadders(ctx, w, h, bounds, nodes) {
+      const sorted = nodes.slice().sort(function (a, b) { return b.depthNorm - a.depthNorm; });
+      for (let i = 0; i < sorted.length; i++) {
+        const nd = sorted[i];
+        const shaftW = lerp(5.0, 2.3, nd.depthNorm) * Math.max(0.75, w / 1200);
+        const sunSide = state.sunAzimuth >= 0 ? 1 : -1;
+
+        ctx.fillStyle = PALETTE.canopyAbyss;
+        ctx.beginPath();
+        ctx.ellipse(nd.baseX, nd.baseY + 1.5, shaftW * 1.65, 2.4, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = PALETTE.flamingoTimber;
+        ctx.fillRect(nd.baseX - shaftW * 0.5, nd.topY, shaftW, nd.baseY - nd.topY);
+
+        ctx.fillStyle = hexToRgba(PALETTE.brassOptic, 0.42 * state.sunlight01 + 0.12);
+        ctx.fillRect(
+          sunSide > 0 ? nd.baseX + shaftW * 0.1 : nd.baseX - shaftW * 0.5,
+          nd.topY,
+          shaftW * 0.38,
+          nd.baseY - nd.topY
+        );
+
+        const flareSpan = lerp(22, 11, nd.depthNorm) * Math.max(0.72, w / 1200);
+        const flareH = lerp(42, 24, nd.depthNorm);
+        ctx.strokeStyle = PALETTE.flamingoTimber;
+        ctx.lineWidth = Math.max(1.4, shaftW * 0.58);
+        ctx.beginPath();
+        ctx.moveTo(nd.topX, nd.topY + flareH);
+        ctx.quadraticCurveTo(nd.topX - flareSpan * 0.35, nd.topY + flareH * 0.32, nd.topX - flareSpan, nd.topY + 2);
+        ctx.moveTo(nd.topX, nd.topY + flareH);
+        ctx.quadraticCurveTo(nd.topX + flareSpan * 0.35, nd.topY + flareH * 0.32, nd.topX + flareSpan, nd.topY + 2);
+        ctx.stroke();
+
+        if (nd.hasLadder) {
+          const lx = nd.baseX + shaftW * 0.65 + 2.2;
+          const ladW = Math.max(2.6, shaftW * 0.85);
+          ctx.strokeStyle = hexToRgba(PALETTE.flamingoTimber, 0.92);
+          ctx.lineWidth = 0.95;
+          ctx.beginPath();
+          ctx.moveTo(lx, nd.baseY); ctx.lineTo(lx, nd.topY + 4);
+          ctx.moveTo(lx + ladW, nd.baseY); ctx.lineTo(lx + ladW, nd.topY + 4);
+          ctx.stroke();
+
+          ctx.strokeStyle = hexToRgba(PALETTE.brassOptic, 0.72);
+          ctx.lineWidth = 0.85;
+          ctx.beginPath();
+          for (let ry = nd.baseY - 5; ry > nd.topY + 6; ry -= 7) {
+            ctx.moveTo(lx, ry);
+            ctx.lineTo(lx + ladW, ry);
+          }
+          ctx.stroke();
+        }
+      }
+
+      if (state.inhabitantOnEarth) {
+        const fx = state.focusNormX * w;
+        const fy = state.focusNormY * h;
+        ctx.save();
+        ctx.fillStyle = hexToRgba(PALETTE.footprintScar, 0.82);
+        ctx.beginPath();
+        ctx.ellipse(fx, fy, 24, 10, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = PALETTE.brassOptic;
+        ctx.lineWidth = 1.3;
+        ctx.setLineDash([4, 3]);
+        ctx.beginPath();
+        ctx.ellipse(fx, fy, 30, 13, 0, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        ctx.fillStyle = PALETTE.latticeShadow;
+        ctx.beginPath();
+        ctx.ellipse(fx - 5, fy - 1, 4.5, 2.1, 0.25, 0, Math.PI * 2);
+        ctx.ellipse(fx + 5, fy + 2, 4.5, 2.1, 0.20, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = PALETTE.footprintScar;
+        ctx.beginPath();
+        ctx.moveTo(fx - 18, fy - 2);
+        ctx.lineTo(fx - 13, fy - 19);
+        ctx.lineTo(fx - 8, fy - 2);
+        ctx.closePath();
+        ctx.fill();
+        ctx.fillStyle = PALETTE.cloudIvory;
+        ctx.beginPath();
+        ctx.arc(fx - 13, fy - 22, 3.1, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      } else if (state.altitude01 > 0.06 && state.altitude01 < 0.84) {
+        const climbNode = nodes[4];
+        const cy = lerp(climbNode.baseY - 10, climbNode.topY + 16, state.altitude01);
+        ctx.fillStyle = PALETTE.brassOptic;
+        ctx.beginPath();
+        ctx.arc(climbNode.baseX + 6, cy, 3.2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function drawCumulusStratum(ctx, w, h, bounds, nadirNormX) {
+      const riftX = nadirNormX * w;
+      const riftHalfW = w * (0.065 + state.cloudRift01 * 0.135);
+      for (let pass = 0; pass < 2; pass++) {
+        for (let i = 0; i < scene.cloudPuffs.length; i++) {
+          const cp = scene.cloudPuffs[i];
+          if (cp.layer !== pass) continue;
+          const wrapNorm = ((cp.xNorm + state.cloudPhase * cp.speed) % 1 + 1) % 1;
+          const cx = wrapNorm * (w + 120) - 60;
+          const distRift = Math.abs(cx - riftX);
+          if (distRift < riftHalfW * 0.68) continue;
+          const riftFade = distRift < riftHalfW * 1.35
+            ? clamp((distRift - riftHalfW * 0.68) / (riftHalfW * 0.67), 0, 1)
+            : 1;
+          const cy = bounds.cloudDeckY + cp.yOffset * (h / 800);
+          const rx = cp.rx * (w / 1100 + 0.35) * (0.65 + 0.35 * riftFade);
+          const ry = cp.ry * (h / 800 + 0.25) * (0.65 + 0.35 * riftFade);
+
+          ctx.fillStyle = hexToRgba(pass === 0 ? PALETTE.cumulusPearl : '#c7c5bb', 0.72 * riftFade);
+          ctx.beginPath();
+          ctx.ellipse(cx, cy + ry * 0.28, rx * 0.96, ry * 0.78, 0, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.fillStyle = hexToRgba(PALETTE.cloudIvory, (0.86 + state.sunlight01 * 0.12) * riftFade);
+          ctx.beginPath();
+          ctx.ellipse(cx - state.sunAzimuth * 4, cy - ry * 0.12, rx, ry, 0, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+    }
+
+    function drawAerialBelvederesAndSkywalks(ctx, w, h, bounds, nodes, nadirNormX, nadirNormY) {
+      const cityAlpha = state.marchDay < 7
+        ? 0.25 + (state.marchDay / 7) * 0.45
+        : (state.altitude01 < 0.35 ? 0.42 + state.altitude01 * 1.4 : 1.0);
+      ctx.save();
+      ctx.globalAlpha = clamp(cityAlpha, 0.2, 1);
+
+      for (let s = 0; s < SKYWALK_SPANS.length; s++) {
+        const a = nodes[SKYWALK_SPANS[s][0]];
+        const b = nodes[SKYWALK_SPANS[s][1]];
+        const midX = (a.topX + b.topX) * 0.5;
+        const sagY = Math.max(a.topY, b.topY) + 12;
+        ctx.strokeStyle = PALETTE.flamingoTimber;
+        ctx.lineWidth = 1.8;
+        ctx.beginPath();
+        ctx.moveTo(a.topX, a.topY - 2);
+        ctx.quadraticCurveTo(midX, sagY, b.topX, b.topY - 2);
+        ctx.stroke();
+
+        ctx.strokeStyle = hexToRgba(PALETTE.brassOptic, 0.78);
+        ctx.lineWidth = 0.9;
+        ctx.beginPath();
+        ctx.moveTo(a.topX, a.topY - 7);
+        ctx.quadraticCurveTo(midX, sagY - 5, b.topX, b.topY - 7);
+        ctx.stroke();
+
+        for (let k = 1; k <= 6; k++) {
+          const t = k / 7;
+          const hx = lerp(a.topX, b.topX, t);
+          const hy = (1 - t) * (1 - t) * (a.topY - 2) + 2 * (1 - t) * t * sagY + t * t * (b.topY - 2);
+          ctx.beginPath();
+          ctx.moveTo(hx, hy);
+          ctx.lineTo(hx, hy - 5);
+          ctx.stroke();
+        }
+      }
+
+      const sorted = nodes.slice().sort(function (a, b) { return b.depthNorm - a.depthNorm; });
+      const aimX = nadirNormX * w;
+      const aimY = nadirNormY * h;
+      const scaleW = Math.max(0.68, Math.min(1.15, w / 1180));
+
+      for (let i = 0; i < sorted.length; i++) {
+        const nd = sorted[i];
+        const sc = lerp(1.08, 0.64, nd.depthNorm) * scaleW;
+        const pw = 34 * sc;
+        const ph = 26 * sc;
+        const cx = nd.topX;
+        const cy = nd.topY;
+
+        ctx.fillStyle = PALETTE.flamingoTimber;
+        ctx.fillRect(cx - pw, cy - 5 * sc, pw * 2, 6 * sc);
+        ctx.strokeStyle = PALETTE.brassOptic;
+        ctx.lineWidth = 1.0;
+        ctx.strokeRect(cx - pw, cy - 11 * sc, pw * 2, 6 * sc);
+
+        for (let c = -1; c <= 1; c++) {
+          const colX = cx + c * pw * 0.72;
+          ctx.fillStyle = PALETTE.flamingoTimber;
+          ctx.fillRect(colX - 1.4 * sc, cy - ph, 2.8 * sc, ph - 5 * sc);
+        }
+
+        ctx.fillStyle = '#53473f';
+        ctx.beginPath();
+        ctx.moveTo(cx - pw * 1.12, cy - ph);
+        ctx.lineTo(cx, cy - ph - 20 * sc);
+        ctx.lineTo(cx + pw * 1.12, cy - ph);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.strokeStyle = PALETTE.brassOptic;
+        ctx.lineWidth = 1.1;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy - ph - 20 * sc);
+        ctx.lineTo(cx, cy - ph - 28 * sc);
+        ctx.stroke();
+
+        const obsCount = nd.brassTelescopes;
+        for (let o = 0; o < obsCount; o++) {
+          const ox = cx + (o - (obsCount - 1) * 0.5) * (pw * 0.72);
+          const oy = cy - 11 * sc;
+          ctx.fillStyle = o % 2 === 0 ? PALETTE.canopyAbyss : '#3d4c59';
+          ctx.beginPath();
+          ctx.arc(ox, oy - 4 * sc, 2.4 * sc, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillRect(ox - 2.2 * sc, oy - 2 * sc, 4.4 * sc, 5 * sc);
+
+          const ang = Math.atan2(aimY - oy, aimX - ox);
+          const len = 11 * sc;
+          const tipX = ox + Math.cos(ang) * len;
+          const tipY = oy + Math.sin(ang) * len;
+          ctx.strokeStyle = PALETTE.brassOptic;
+          ctx.lineWidth = 1.6 * sc;
+          ctx.beginPath();
+          ctx.moveTo(ox, oy - 1 * sc);
+          ctx.lineTo(tipX, tipY);
+          ctx.stroke();
+
+          ctx.fillStyle = PALETTE.lensSpecular;
+          ctx.beginPath();
+          ctx.arc(tipX, tipY, 1.3 * sc, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+      ctx.restore();
+    }
+
+    function drawMarchCanopyFrame(ctx, w, h) {
+      if (state.marchDay >= 7) return;
+      const density = (7 - state.marchDay) / 6;
+      ctx.save();
+      ctx.fillStyle = hexToRgba(PALETTE.canopyAbyss, 0.58 * density);
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.lineTo(w, 0);
+      ctx.lineTo(w, h * (0.28 + density * 0.24));
+      ctx.quadraticCurveTo(w * 0.5, h * (0.08 + density * 0.34), 0, h * (0.30 + density * 0.24));
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function getState() {
+      return {
+        width: state.width,
+        height: state.height,
+        marchDay: state.marchDay,
+        arrivedAtBaucis: state.marchDay === 7,
+        stiltCount: STILT_PILING_NODES.length,
+        ladderCount: LADDER_COUNT,
+        altitude01: state.altitude01,
+        sunlight01: state.sunlight01,
+        sunAzimuth: state.sunAzimuth,
+        cloudRift01: state.cloudRift01,
+        piercedShadowVisible: state.piercedShadowVisible,
+        shadowOpacity: state.piercedShadowVisible ? Number(state.shadowOpacity.toFixed(4)) : 0,
+        earthContactCityMass: 0,
+        onlyFlamingoLegsTouchEarth: !state.inhabitantOnEarth,
+        inhabitantOnEarth: state.inhabitantOnEarth,
+        muted: audio.isMuted()
+      };
+    }
+
+    const world = {
+      audio: audio,
+      resize: function (width, height, dpr) {
+        if (Number.isFinite(Number(width)) && Number(width) > 0) state.width = Math.round(Number(width));
+        if (Number.isFinite(Number(height)) && Number(height) > 0) state.height = Math.round(Number(height));
+        if (Number.isFinite(Number(dpr)) && Number(dpr) > 0) state.dpr = Number(dpr);
+        return getState();
+      },
+      setMarchDay: function (day1to7) {
+        if (Number.isFinite(Number(day1to7))) {
+          state.marchDay = clamp(Math.round(Number(day1to7)), 1, 7);
+        }
+        return getState();
+      },
+      setAltitude: function (val01) {
+        if (Number.isFinite(Number(val01))) {
+          state.altitude01 = clamp(Number(val01), 0, 1);
+          audio.updateAtmosphere(getState());
+        }
+        return getState();
+      },
+      setSunlight: function (val01) {
+        if (Number.isFinite(Number(val01))) {
+          state.sunlight01 = clamp(Number(val01), 0, 1);
+          recomputeSolar();
+          audio.updateAtmosphere(getState());
+        }
+        return getState();
+      },
+      setSunAzimuth: function (valNeg1To1) {
+        if (Number.isFinite(Number(valNeg1To1))) {
+          state.sunAzimuth = clamp(Number(valNeg1To1), -1, 1);
+        }
+        return getState();
+      },
+      setCloudRift: function (val01) {
+        if (Number.isFinite(Number(val01))) {
+          state.cloudRift01 = clamp(Number(val01), 0, 1);
+        }
+        return getState();
+      },
+      setInhabitantOnEarth: function (bool, focusNormX, focusNormY) {
+        state.inhabitantOnEarth = Boolean(bool);
+        if (Number.isFinite(Number(focusNormX))) state.focusNormX = clamp(Number(focusNormX), 0.08, 0.92);
+        if (Number.isFinite(Number(focusNormY))) state.focusNormY = clamp(Number(focusNormY), 0.56, 0.95);
+        audio.updateAtmosphere(getState());
+        return getState();
+      },
+      setReducedMotion: function (bool) {
+        state.reducedMotion = Boolean(bool);
+        return getState();
+      },
+      step: function (dtSec) {
+        if (state.reducedMotion) return;
+        const dt = clamp(Number(dtSec) || 0.016, 0, 0.1);
+        state.cloudPhase += dt;
+        state.foliagePhase += dt * 1.15;
+        state.streamPhase += dt * 1.4;
+      },
+      renderPanorama: function (ctx, viewOpts) {
+        if (!ctx) return;
+        const vo = viewOpts || {};
+        const nadirNormX = Number.isFinite(Number(vo.nadirNormX)) ? clamp(Number(vo.nadirNormX), 0.08, 0.92) : state.focusNormX;
+        const nadirNormY = Number.isFinite(Number(vo.nadirNormY)) ? clamp(Number(vo.nadirNormY), 0.54, 0.96) : state.focusNormY;
+        const w = state.width;
+        const h = state.height;
+        const bounds = computeBounds();
+        const nodes = computeInternalNodes(bounds);
+
+        ctx.save();
+        drawSkyAndSolarRays(ctx, w, h, bounds, vo);
+        drawWoodlandStratum(ctx, w, h, bounds);
+        drawStreamOaksAndFerns(ctx, w, h, bounds);
+        drawPiercedAngularShadow(ctx, w, h, bounds, nodes);
+        drawFlamingoStiltsAndLadders(ctx, w, h, bounds, nodes);
+        drawCumulusStratum(ctx, w, h, bounds, nadirNormX);
+        drawAerialBelvederesAndSkywalks(ctx, w, h, bounds, nodes, nadirNormX, nadirNormY);
+        drawMarchCanopyFrame(ctx, w, h);
+        ctx.restore();
+      },
+      getStiltScreenNodes: function () {
+        const bounds = computeBounds();
+        return computeInternalNodes(bounds).map(function (nd) {
+          return {
+            index: nd.index,
+            id: nd.id,
+            name: nd.name,
+            baseX: nd.baseX,
+            baseY: nd.baseY,
+            topX: nd.topX,
+            topY: nd.topY,
+            hasLadder: nd.hasLadder,
+            brassTelescopes: nd.brassTelescopes
+          };
+        });
+      },
+      hitTestStilt: function (px, py) {
+        if (!Number.isFinite(Number(px)) || !Number.isFinite(Number(py))) return null;
+        const x = Number(px);
+        const y = Number(py);
+        const nodes = world.getStiltScreenNodes();
+        let best = null;
+        let bestDist = 28;
+        for (let i = 0; i < nodes.length; i++) {
+          const nd = nodes[i];
+          const crownDist = Math.hypot(x - nd.topX, y - (nd.topY - 14));
+          if (crownDist <= 32 && crownDist < bestDist + 6) {
+            best = nd;
+            bestDist = Math.min(bestDist, crownDist);
+            continue;
+          }
+          const clampedY = clamp(y, nd.topY, nd.baseY);
+          const shaftDist = Math.hypot(x - nd.baseX, y - clampedY);
+          if (shaftDist <= bestDist) {
+            best = nd;
+            bestDist = shaftDist;
+          }
+        }
+        return best;
+      },
+      getWoodlandFloorBounds: function () {
+        return computeBounds();
+      },
+      getState: getState,
+      reset: function () {
+        state.marchDay = 7;
+        state.altitude01 = 0.88;
+        state.sunlight01 = 0.85;
+        state.sunAzimuth = 0.28;
+        state.cloudRift01 = 0.65;
+        state.inhabitantOnEarth = false;
+        state.focusNormX = 0.52;
+        state.focusNormY = 0.78;
+        state.earthContactCityMass = 0;
+        recomputeSolar();
+        audio.updateAtmosphere(getState());
+        return getState();
+      },
+      destroy: function () {
+        audio.destroy();
+      }
+    };
+
+    return world;
+  }
+
+  const api = Object.freeze({
+    PALETTE: PALETTE,
+    STILT_PILING_NODES: STILT_PILING_NODES,
+    createCloudStiltWorld: createCloudStiltWorld
+  });
+
+  if (root) {
+    root.BaucisFlamingoStilts = api;
+  }
+  if (typeof globalThis !== 'undefined') {
+    globalThis.BaucisFlamingoStilts = api;
+  }
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = api;
+  }
+})(typeof globalThis !== 'undefined' ? globalThis : (typeof window !== 'undefined' ? window : this));
+
+/*
+ * Downward Spyglass & Contemplated Absence Layer — Baucis
+ * Burnished-brass nadir optics (1x / 8x / 24x / 64x) & woodland micro-specimens.
+ */
+(function (root) {
+  "use strict";
+
+  var TAU = Math.PI * 2;
+
+  var PALETTE = Object.freeze({
+    latticeShadow: "#111d16",
+    canopyAbyss: "#182b20",
+    foliageEmerald: "#2d6a45",
+    fernMoss: "#529466",
+    sunlitClearing: "#8ab87a",
+    cloudIvory: "#f4efe4",
+    cumulusPearl: "#e5decb",
+    flamingoTimber: "#9e6b43",
+    brassOptic: "#c9963b",
+    skyAzure: "#6fa4c4",
+    lensSpecular: "#dfeef2",
+    footprintScar: "#7a4b3a"
+  });
+
+  var HYPOTHESES = Object.freeze([
+    Object.freeze({
+      index: 0,
+      id: "hatred_of_earth",
+      numeral: "I",
+      shortTitle: "Hatred of the Earth",
+      proposition: "They hate the earth and suspend every beam above its mire.",
+      lensTint: "#9fb0ba",
+      weight: 0.35
+    }),
+    Object.freeze({
+      index: 1,
+      id: "reverent_avoidance",
+      numeral: "II",
+      shortTitle: "Reverent Avoidance",
+      proposition: "They respect the earth so deeply that they avoid all contact.",
+      lensTint: "#a8d5ba",
+      weight: 0.68
+    }),
+    Object.freeze({
+      index: 2,
+      id: "fascinated_absence",
+      numeral: "III",
+      shortTitle: "Love Before Existence",
+      proposition: "They love the earth as it was before they existed, contemplating with fascination their own absence.",
+      lensTint: "#f2dfb3",
+      weight: 1.00
+    })
+  ]);
+
+  var MAGNIFICATION_STOPS = Object.freeze([
+    Object.freeze({ step: 0, zoom: 1, label: "1x Cloud-Rift Sight", activeScale: "canopy" }),
+    Object.freeze({ step: 1, zoom: 8, label: "8x Brass Spyglass · Leaf by Leaf", activeScale: "leaf" }),
+    Object.freeze({ step: 2, zoom: 24, label: "24x Refractor · Stone by Stone", activeScale: "stone" }),
+    Object.freeze({ step: 3, zoom: 64, label: "64x Nadir Achromat · Ant by Ant", activeScale: "ant" })
+  ]);
+
+  var SPECIMEN_CATALOG = Object.freeze([
+    Object.freeze({
+      id: "leaf_maidenhair_01",
+      kind: "leaf",
+      title: "Dew-Beaded Maidenhair Frond",
+      detail: "Translucent fan-veins cradle three intact spheres of dawn mist, unbent by any passing sleeve.",
+      normX: 0.52,
+      normY: 0.78
+    }),
+    Object.freeze({
+      id: "leaf_beech_02",
+      kind: "leaf",
+      title: "Sun-Pierced Copper Beech Blade",
+      detail: "Parallel lateral ribs glow amber where an oblique lattice shadow bisects the serrated margin.",
+      normX: 0.21,
+      normY: 0.67
+    }),
+    Object.freeze({
+      id: "leaf_oak_03",
+      kind: "leaf",
+      title: "Fallen Pedunculate Oak Leaf",
+      detail: "Lacework parenchyma weathered by forest damp alone, resting flat on velvet cushion moss.",
+      normX: 0.36,
+      normY: 0.84
+    }),
+    Object.freeze({
+      id: "leaf_hartstongue_04",
+      kind: "leaf",
+      title: "Uncurling Hart's-Tongue Crozier",
+      detail: "Spiral fiddlehead dusted in silver chaff scales rising undisturbed beside a rosewood stilt.",
+      normX: 0.68,
+      normY: 0.66
+    }),
+    Object.freeze({
+      id: "leaf_sorrel_05",
+      kind: "leaf",
+      title: "Folded Wood-Sorrel Trifoliate",
+      detail: "Three heart-shaped leaflets sleeping along a birch twig, retaining every delicate hair.",
+      normX: 0.79,
+      normY: 0.81
+    }),
+    Object.freeze({
+      id: "leaf_bracken_06",
+      kind: "leaf",
+      title: "Emerald Lady-Fern Pinna",
+      detail: "Spore sori aligned like tiny bronze rivets beneath the underside of a trembling frond.",
+      normX: 0.43,
+      normY: 0.64
+    }),
+    Object.freeze({
+      id: "stone_quartz_01",
+      kind: "stone",
+      title: "Vein-Quartz Brook Cobble",
+      detail: "Milky crystalline facets catch sky-rift light beneath a thin film of cold spring water.",
+      normX: 0.48,
+      normY: 0.86
+    }),
+    Object.freeze({
+      id: "stone_lichen_02",
+      kind: "stone",
+      title: "Map-Lichen Granite Erratic",
+      detail: "Centuries-old chartreuse rosettes chart concentric rings across unscarred feldspar grain.",
+      normX: 0.27,
+      normY: 0.75
+    }),
+    Object.freeze({
+      id: "stone_slate_03",
+      kind: "stone",
+      title: "Moss-Mantled Cleaved Slate",
+      detail: "Feather-moss rhizoids anchor undisturbed along natural bedding planes wet with mist.",
+      normX: 0.63,
+      normY: 0.74
+    }),
+    Object.freeze({
+      id: "stone_chert_04",
+      kind: "stone",
+      title: "Banded Amber Chert Nodule",
+      detail: "Waxy chalcedony bands rest half-cradled in sweet chestnut humus without a scratch.",
+      normX: 0.15,
+      normY: 0.87
+    }),
+    Object.freeze({
+      id: "stone_basalt_05",
+      kind: "stone",
+      title: "Pitted Basalt Rill Cobble",
+      detail: "Tiny water-carved cupules hold mirror pools that no boot heel has ever muddied.",
+      normX: 0.75,
+      normY: 0.69
+    }),
+    Object.freeze({
+      id: "stone_mica_06",
+      kind: "stone",
+      title: "Muscovite Schist Ledger",
+      detail: "Silver mica platelets glint like fish scales beside untouched wild thyme roots.",
+      normX: 0.85,
+      normY: 0.89
+    }),
+    Object.freeze({
+      id: "ant_pine_01",
+      kind: "ant",
+      title: "Wood-Ant Pine-Needle Porters",
+      detail: "Two rufous workers balance a dry larch needle in steady single-file cadence along oak bark.",
+      normX: 0.56,
+      normY: 0.82
+    }),
+    Object.freeze({
+      id: "ant_seed_02",
+      kind: "ant",
+      title: "Violet-Seed Elaiosome Carrier",
+      detail: "Articulated mandibles clasp a pale forest seed along an unbroken scent trail.",
+      normX: 0.31,
+      normY: 0.89
+    }),
+    Object.freeze({
+      id: "ant_antenna_03",
+      kind: "ant",
+      title: "Root-Crest Antennae Greeting",
+      detail: "Returning scout taps bent antennae with a forager at the mossy root fork.",
+      normX: 0.18,
+      normY: 0.72
+    }),
+    Object.freeze({
+      id: "ant_resin_04",
+      kind: "ant",
+      title: "Spruce-Resin Pearl Bearer",
+      detail: "Translucent amber droplet hoisted high toward the thatch mound without detour or alarm.",
+      normX: 0.61,
+      normY: 0.91
+    }),
+    Object.freeze({
+      id: "ant_bridge_05",
+      kind: "ant",
+      title: "Lichen-Bridge Column",
+      detail: "Orderly six-legged file crosses a fallen twig span over clear trickling water.",
+      normX: 0.41,
+      normY: 0.72
+    }),
+    Object.freeze({
+      id: "ant_mound_06",
+      kind: "ant",
+      title: "Thatch-Gallery Sentinel File",
+      detail: "Burnished gasters and russet thoraxes rhythmically groom needles at the sunlit threshold.",
+      normX: 0.83,
+      normY: 0.74
+    })
+  ]);
+
+  function clamp(v, lo, hi) {
+    return v < lo ? lo : v > hi ? hi : v;
+  }
+
+  function hash01(seed) {
+    var x = Math.sin(seed * 127.1 + 311.7) * 43758.5453123;
+    return x - Math.floor(x);
+  }
+
+  function hexToRgba(hex, alpha) {
+    var clean = String(hex || "#c9963b").replace("#", "");
+    var num = parseInt(clean, 16);
+    var r = (num >> 16) & 255;
+    var g = (num >> 8) & 255;
+    var b = num & 255;
+    return "rgba(" + r + "," + g + "," + b + "," + clamp(alpha, 0, 1).toFixed(3) + ")";
+  }
+
+  function kindToZoomStep(kind) {
+    if (kind === "leaf") return 1;
+    if (kind === "stone") return 2;
+    if (kind === "ant") return 3;
+    return 0;
+  }
+
+  function computeLensLayout(width, height, dpr) {
+    var w = Math.max(240, Number(width) || 1280);
+    var h = Math.max(240, Number(height) || 800);
+    var mobile = w < 760;
+    var r = mobile
+      ? clamp(Math.min(w * 0.215, h * 0.185), 50, 88)
+      : clamp(Math.min(w * 0.15, h * 0.225), 74, 142);
+    var outerR = r * 1.15;
+    var padX = mobile ? Math.max(12, w * 0.036) : Math.max(24, w * 0.038);
+    var cx = w - outerR - padX;
+    var cy = mobile
+      ? clamp(h * 0.26, outerR + 12, Math.max(outerR + 14, h * 0.45))
+      : clamp(h * 0.31, outerR + 18, Math.max(outerR + 20, h * 0.48));
+    return { cx: cx, cy: cy, r: r, outerR: outerR, width: w, height: h, dpr: Math.max(1, Number(dpr) || 1) };
+  }
+
+  function createNadirSpyglass(opts) {
+    var cfg = opts || {};
+    var cbExamined = typeof cfg.onSpecimenExamined === "function" ? cfg.onSpecimenExamined : null;
+    var cbZoom = typeof cfg.onZoomChange === "function" ? cfg.onZoomChange : null;
+    var cbHypothesis = typeof cfg.onHypothesisChange === "function" ? cfg.onHypothesisChange : null;
+    var cbViolated = typeof cfg.onAbsenceViolated === "function" ? cfg.onAbsenceViolated : null;
+    var cbRestored = typeof cfg.onAbsenceRestored === "function" ? cfg.onAbsenceRestored : null;
+
+    var specimens = SPECIMEN_CATALOG.map(function (item, idx) {
+      return {
+        id: item.id,
+        kind: item.kind,
+        title: item.title,
+        detail: item.detail,
+        normX: item.normX,
+        normY: item.normY,
+        examined: idx === 0
+      };
+    });
+
+    var ants = [];
+    for (var ai = 0; ai < 8; ai++) {
+      ants.push({
+        t: ai / 8,
+        lateral: (hash01(ai * 17 + 3) - 0.5) * 0.12,
+        cargo: ai % 3 === 0 ? "needle" : ai % 3 === 1 ? "seed" : "resin",
+        panicAngle: (ai / 8) * TAU + 0.42,
+        panicRadius: 0,
+        legPhase: ai * 0.85
+      });
+    }
+
+    var state = {
+      width: Number(cfg.width) || 1280,
+      height: Number(cfg.height) || 800,
+      dpr: Number(cfg.dpr) || 1,
+      hypothesisIndex: 2,
+      zoomStep: 1,
+      aimNormX: 0.52,
+      aimNormY: 0.78,
+      activeSpecimenIndex: 0,
+      absenceIntact: true,
+      inhabitantOnEarth: false,
+      antOrderliness: 1.0,
+      absenceFascination: 0.84,
+      reducedMotion: Boolean(cfg.reducedMotion),
+      timeSec: 0,
+      vernierAngle: Math.PI * 0.5,
+      targetVernierAngle: Math.PI * 0.5,
+      kindCursors: { leaf: 0, stone: -1, ant: -1 }
+    };
+
+    var lens = computeLensLayout(state.width, state.height, state.dpr);
+
+    function snapshotSpecimen(s) {
+      return s
+        ? {
+            id: s.id,
+            kind: s.kind,
+            title: s.title,
+            detail: s.detail,
+            normX: s.normX,
+            normY: s.normY,
+            examined: Boolean(s.examined)
+          }
+        : null;
+    }
+
+    function countExamined(kindFilter) {
+      var n = 0;
+      for (var i = 0; i < specimens.length; i++) {
+        if (specimens[i].examined && (!kindFilter || specimens[i].kind === kindFilter)) n++;
+      }
+      return n;
+    }
+
+    function recomputeFascination() {
+      if (state.inhabitantOnEarth || !state.absenceIntact) {
+        state.absenceFascination = 0;
+        return 0;
+      }
+      var hyp = HYPOTHESES[state.hypothesisIndex];
+      var totalEx = countExamined(null);
+      var raw = 0.76 + 0.065 * hyp.weight + 0.008 * state.zoomStep + 0.007 * totalEx;
+      state.absenceFascination = Number(clamp(raw, 0.785, 0.99).toFixed(3));
+      return state.absenceFascination;
+    }
+
+    function getState() {
+      var hyp = HYPOTHESES[state.hypothesisIndex];
+      var stop = MAGNIFICATION_STOPS[state.zoomStep];
+      var spec = specimens[state.activeSpecimenIndex] || specimens[0];
+      return {
+        hypothesisId: hyp.id,
+        hypothesisIndex: hyp.index,
+        hypothesisTitle: hyp.shortTitle,
+        hypothesisNumeral: hyp.numeral,
+        hypothesisProposition: hyp.proposition,
+        lensTint: hyp.lensTint,
+        zoomStep: stop.step,
+        magnification: stop.zoom,
+        zoomLabel: stop.label,
+        activeScale: stop.activeScale,
+        aimNormX: Number(state.aimNormX.toFixed(4)),
+        aimNormY: Number(state.aimNormY.toFixed(4)),
+        activeSpecimenId: spec.id,
+        activeSpecimenKind: spec.kind,
+        activeSpecimenTitle: spec.title,
+        activeSpecimenDetail: spec.detail,
+        examinedLeafCount: countExamined("leaf"),
+        examinedStoneCount: countExamined("stone"),
+        examinedAntCount: countExamined("ant"),
+        totalExaminedCount: countExamined(null),
+        absenceIntact: state.absenceIntact,
+        inhabitantOnEarth: state.inhabitantOnEarth,
+        antOrderliness: Number(state.antOrderliness.toFixed(3)),
+        absenceFascination: state.absenceFascination,
+        reducedMotion: state.reducedMotion
+      };
+    }
+
+    function resolveAimSpecimen(notify) {
+      var scale = MAGNIFICATION_STOPS[state.zoomStep].activeScale;
+      var bestIdx = -1;
+      var bestDist = Infinity;
+      for (var i = 0; i < specimens.length; i++) {
+        if (scale !== "canopy" && specimens[i].kind !== scale) continue;
+        var dx = specimens[i].normX - state.aimNormX;
+        var dy = specimens[i].normY - state.aimNormY;
+        var d2 = dx * dx + dy * dy;
+        if (d2 < bestDist) {
+          bestDist = d2;
+          bestIdx = i;
+        }
+      }
+      if (bestIdx < 0) bestIdx = 0;
+      var prevIdx = state.activeSpecimenIndex;
+      var target = specimens[bestIdx];
+      var newlyExamined = !target.examined;
+      state.activeSpecimenIndex = bestIdx;
+      target.examined = true;
+      recomputeFascination();
+      if (notify && cbExamined && (newlyExamined || prevIdx !== bestIdx)) {
+        cbExamined(snapshotSpecimen(target), getState());
+      }
+      return target;
+    }
+
+    function resize(width, height, dpr) {
+      if (width && typeof width === "object") {
+        dpr = width.dpr;
+        height = width.height;
+        width = width.width;
+      }
+      state.width = Math.max(240, Number(width) || state.width);
+      state.height = Math.max(240, Number(height) || state.height);
+      state.dpr = Math.max(1, Number(dpr) || state.dpr);
+      lens = computeLensLayout(state.width, state.height, state.dpr);
+      return getLensGeometry();
+    }
+
+    function setAim(normX, normY) {
+      state.aimNormX = clamp(Number(normX) || 0.52, 0.12, 0.88);
+      state.aimNormY = clamp(Number(normY) || 0.78, 0.58, 0.94);
+      state.targetVernierAngle = state.zoomStep * (Math.PI * 0.5) + (state.aimNormX - 0.5) * 0.85 + (state.aimNormY - 0.75) * 0.4;
+      if (state.reducedMotion) state.vernierAngle = state.targetVernierAngle;
+      resolveAimSpecimen(true);
+      return getState();
+    }
+
+    function nudgeAim(dxNorm, dyNorm) {
+      return setAim(state.aimNormX + (Number(dxNorm) || 0), state.aimNormY + (Number(dyNorm) || 0));
+    }
+
+    function focusSpecimen(idOrKind) {
+      var raw = String(idOrKind || "").trim();
+      var lower = raw.toLowerCase();
+      if (!lower) {
+        var curScale = MAGNIFICATION_STOPS[state.zoomStep].activeScale;
+        lower = curScale === "canopy" ? "leaf" : curScale;
+      }
+      var targetIdx = -1;
+      if (lower === "leaf" || lower === "stone" || lower === "ant") {
+        var pool = [];
+        for (var i = 0; i < specimens.length; i++) {
+          if (specimens[i].kind === lower) pool.push(i);
+        }
+        state.kindCursors[lower] = (state.kindCursors[lower] + 1) % pool.length;
+        targetIdx = pool[state.kindCursors[lower]];
+      } else {
+        for (var j = 0; j < specimens.length; j++) {
+          if (specimens[j].id === raw || specimens[j].id.toLowerCase() === lower) {
+            targetIdx = j;
+            break;
+          }
+        }
+      }
+      if (targetIdx < 0) return snapshotSpecimen(specimens[state.activeSpecimenIndex]);
+      var target = specimens[targetIdx];
+      var nextZoom = kindToZoomStep(target.kind);
+      var zoomChanged = state.zoomStep !== nextZoom;
+      state.zoomStep = nextZoom;
+      state.aimNormX = clamp(target.normX, 0.12, 0.88);
+      state.aimNormY = clamp(target.normY, 0.58, 0.94);
+      state.targetVernierAngle = nextZoom * (Math.PI * 0.5) + (state.aimNormX - 0.5) * 0.85;
+      if (state.reducedMotion) state.vernierAngle = state.targetVernierAngle;
+      state.activeSpecimenIndex = targetIdx;
+      target.examined = true;
+      recomputeFascination();
+      if (zoomChanged && cbZoom) cbZoom(MAGNIFICATION_STOPS[nextZoom], getState());
+      if (cbExamined) cbExamined(snapshotSpecimen(target), getState());
+      return snapshotSpecimen(target);
+    }
+
+    function setZoomStep(step0to3) {
+      var next = clamp(Math.round(Number(step0to3) || 0), 0, 3);
+      var changed = state.zoomStep !== next;
+      state.zoomStep = next;
+      state.targetVernierAngle = next * (Math.PI * 0.5) + (state.aimNormX - 0.5) * 0.85;
+      if (state.reducedMotion) state.vernierAngle = state.targetVernierAngle;
+      resolveAimSpecimen(true);
+      recomputeFascination();
+      if (changed && cbZoom) cbZoom(MAGNIFICATION_STOPS[next], getState());
+      return getState();
+    }
+
+    function cycleZoom(delta) {
+      var stepDelta = delta === undefined ? 1 : (Math.trunc(Number(delta)) || 1);
+      return setZoomStep(((state.zoomStep + stepDelta) % 4 + 4) % 4);
+    }
+
+    function setMagnification(zoomVal) {
+      var z = Number(zoomVal) || 8;
+      var bestStep = 0;
+      var bestDiff = Infinity;
+      for (var i = 0; i < MAGNIFICATION_STOPS.length; i++) {
+        var diff = Math.abs(MAGNIFICATION_STOPS[i].zoom - z);
+        if (diff < bestDiff) {
+          bestDiff = diff;
+          bestStep = MAGNIFICATION_STOPS[i].step;
+        }
+      }
+      return setZoomStep(bestStep);
+    }
+
+    function setHypothesis(idOrIndex) {
+      var nextIdx = state.hypothesisIndex;
+      if (typeof idOrIndex === "number" && Number.isFinite(idOrIndex)) {
+        nextIdx = clamp(Math.round(idOrIndex), 0, 2);
+      } else {
+        var s = String(idOrIndex || "").trim();
+        for (var i = 0; i < HYPOTHESES.length; i++) {
+          if (HYPOTHESES[i].id === s || HYPOTHESES[i].numeral === s || String(HYPOTHESES[i].index) === s) {
+            nextIdx = i;
+            break;
+          }
+        }
+      }
+      var changed = state.hypothesisIndex !== nextIdx;
+      state.hypothesisIndex = nextIdx;
+      recomputeFascination();
+      if (changed && cbHypothesis) cbHypothesis(HYPOTHESES[nextIdx], getState());
+      return getState();
+    }
+
+    function descendLadderToEarth() {
+      state.inhabitantOnEarth = true;
+      state.absenceIntact = false;
+      state.antOrderliness = 0.08;
+      state.absenceFascination = 0;
+      for (var i = 0; i < ants.length; i++) {
+        ants[i].panicRadius = state.reducedMotion ? 0.58 : Math.max(0.26, ants[i].panicRadius);
+      }
+      if (cbViolated) cbViolated(getState());
+      return getState();
+    }
+
+    function retreatAboveClouds() {
+      state.inhabitantOnEarth = false;
+      state.absenceIntact = true;
+      state.antOrderliness = 1.0;
+      for (var i = 0; i < ants.length; i++) {
+        ants[i].panicRadius = 0;
+      }
+      recomputeFascination();
+      if (cbRestored) cbRestored(getState());
+      return getState();
+    }
+
+    function setReducedMotion(bool) {
+      state.reducedMotion = Boolean(bool);
+      if (state.reducedMotion) state.vernierAngle = state.targetVernierAngle;
+      return state.reducedMotion;
+    }
+
+    function step(dtSec, worldContext) {
+      var dt = clamp(Number(dtSec) || 0, 0, 0.1);
+      if (worldContext && typeof worldContext.reducedMotion === "boolean") {
+        state.reducedMotion = worldContext.reducedMotion;
+      }
+      if (state.reducedMotion) {
+        state.vernierAngle = state.targetVernierAngle;
+        return;
+      }
+      state.timeSec += dt;
+      state.vernierAngle += (state.targetVernierAngle - state.vernierAngle) * Math.min(1, dt * 10);
+      for (var i = 0; i < ants.length; i++) {
+        var a = ants[i];
+        if (state.inhabitantOnEarth) {
+          a.panicAngle += (i % 2 === 0 ? 1 : -1) * dt * (2.6 + (i % 3) * 0.7);
+          a.panicRadius = clamp(a.panicRadius + dt * 0.45, 0.34, 0.74);
+          a.legPhase += dt * 22;
+        } else {
+          a.t = (a.t + dt * 0.11) % 1;
+          a.panicRadius = Math.max(0, a.panicRadius - dt * 0.8);
+          a.legPhase += dt * 9.5;
+        }
+      }
+    }
+
+    function hitTestSpecimenOrLens(px, py) {
+      var x = Number(px) || 0;
+      var y = Number(py) || 0;
+      var w = state.width || 1280;
+      var h = state.height || 800;
+      var dxL = x - lens.cx;
+      var dyL = y - lens.cy;
+      if (dxL * dxL + dyL * dyL <= lens.outerR * lens.outerR) {
+        return {
+          type: "lens",
+          specimen: snapshotSpecimen(specimens[state.activeSpecimenIndex]),
+          normX: clamp(x / w, 0, 1),
+          normY: clamp(y / h, 0, 1)
+        };
+      }
+      var hitRadius = w < 760 ? 24 : 28;
+      var activeScale = MAGNIFICATION_STOPS[state.zoomStep].activeScale;
+      var bestSpec = null;
+      var bestScore = hitRadius * hitRadius;
+      for (var i = 0; i < specimens.length; i++) {
+        var sx = specimens[i].normX * w;
+        var sy = specimens[i].normY * h;
+        var d2 = (x - sx) * (x - sx) + (y - sy) * (y - sy);
+        var weighted = specimens[i].kind === activeScale ? d2 * 0.65 : d2;
+        if (d2 <= hitRadius * hitRadius && weighted <= bestScore) {
+          bestScore = weighted;
+          bestSpec = specimens[i];
+        }
+      }
+      if (bestSpec) {
+        return { type: "specimen", specimen: snapshotSpecimen(bestSpec), normX: bestSpec.normX, normY: bestSpec.normY };
+      }
+      return {
+        type: "ground",
+        specimen: null,
+        normX: clamp(x / w, 0.12, 0.88),
+        normY: clamp(y / h, 0.58, 0.94)
+      };
+    }
+
+    function getSpecimens() {
+      return specimens.map(snapshotSpecimen);
+    }
+
+    function getLensGeometry() {
+      return { cx: lens.cx, cy: lens.cy, r: lens.r, outerR: lens.outerR, width: lens.width, height: lens.height, dpr: lens.dpr };
+    }
+
+    function reset() {
+      state.hypothesisIndex = 2;
+      state.zoomStep = 1;
+      state.aimNormX = 0.52;
+      state.aimNormY = 0.78;
+      state.activeSpecimenIndex = 0;
+      state.absenceIntact = true;
+      state.inhabitantOnEarth = false;
+      state.antOrderliness = 1.0;
+      state.kindCursors = { leaf: 0, stone: -1, ant: -1 };
+      state.targetVernierAngle = Math.PI * 0.5;
+      state.vernierAngle = Math.PI * 0.5;
+      for (var i = 0; i < specimens.length; i++) specimens[i].examined = i === 0;
+      for (var k = 0; k < ants.length; k++) {
+        ants[k].t = k / 8;
+        ants[k].panicRadius = 0;
+      }
+      recomputeFascination();
+      return getState();
+    }
+
+    function resolveWorldOpts(worldContext) {
+      var wc = worldContext || {};
+      var sunlight = typeof wc.sunlight01 === "number" ? clamp(wc.sunlight01, 0, 1) : 0.85;
+      var shadowVis = typeof wc.piercedShadowVisible === "boolean" ? wc.piercedShadowVisible : sunlight > 0.35;
+      var shadowOp = typeof wc.shadowOpacity === "number"
+        ? clamp(wc.shadowOpacity, 0, 1)
+        : shadowVis ? clamp((sunlight - 0.35) / 0.65, 0, 1) : 0;
+      return {
+        sunlight01: sunlight,
+        piercedShadowVisible: shadowVis && shadowOp > 0.01,
+        shadowOpacity: shadowOp,
+        sunAzimuth: typeof wc.sunAzimuth === "number" ? clamp(wc.sunAzimuth, -1, 1) : 0.28,
+        altitude01: typeof wc.altitude01 === "number" ? clamp(wc.altitude01, 0, 1) : 0.88,
+        belvedereY: typeof wc.belvedereY === "number" ? wc.belvedereY : null,
+        stiltNodes: Array.isArray(wc.stiltNodes) ? wc.stiltNodes : null,
+        violated: state.inhabitantOnEarth || Boolean(wc.inhabitantOnEarth)
+      };
+    }
+
+    function drawAngularShadowBands(ctx, r, sunAzimuth, shadowOpacity, scaleFactor) {
+      if (shadowOpacity <= 0.01) return;
+      ctx.save();
+      ctx.rotate(-0.42 + sunAzimuth * 0.55);
+      ctx.fillStyle = hexToRgba(PALETTE.latticeShadow, 0.44 * shadowOpacity);
+      var pitch = (r * 0.46) / (scaleFactor || 1);
+      var barW = pitch * 0.34;
+      for (var x = -r * 1.5; x <= r * 1.5; x += pitch) {
+        ctx.fillRect(x, -r * 1.5, barW, r * 3);
+      }
+      var crossPitch = pitch * 1.35;
+      for (var y = -r * 1.5; y <= r * 1.5; y += crossPitch) {
+        ctx.fillRect(-r * 1.5, y, r * 3, barW * 0.68);
+      }
+      ctx.restore();
+    }
+
+    function drawFloorGlintsAndCone(ctx, w, h, wc) {
+      var aimX = state.aimNormX * w;
+      var aimY = state.aimNormY * h;
+      var activeScale = MAGNIFICATION_STOPS[state.zoomStep].activeScale;
+      var pulse = state.reducedMotion ? 0.85 : 0.72 + 0.28 * Math.sin(state.timeSec * 2.8);
+
+      for (var i = 0; i < specimens.length; i++) {
+        var sp = specimens[i];
+        var sx = sp.normX * w;
+        var sy = sp.normY * h;
+        var isMatch = activeScale === "canopy" || sp.kind === activeScale;
+        var isActive = i === state.activeSpecimenIndex;
+        var nearScar = wc.violated && Math.hypot(sx - aimX, sy - aimY) < w * 0.08;
+        var alpha = isActive ? 0.96 : isMatch ? 0.68 * pulse : 0.32;
+        ctx.save();
+        ctx.translate(sx, sy);
+        if (sp.examined) {
+          ctx.strokeStyle = hexToRgba(nearScar ? PALETTE.footprintScar : PALETTE.brassOptic, isActive ? 0.85 : 0.42);
+          ctx.lineWidth = isActive ? 1.6 : 1;
+          ctx.beginPath();
+          ctx.ellipse(0, 0, isActive ? 9 : 6.5, isActive ? 5 : 3.8, 0, 0, TAU);
+          ctx.stroke();
+        }
+        ctx.fillStyle = hexToRgba(nearScar ? PALETTE.footprintScar : sp.examined ? PALETTE.lensSpecular : PALETTE.brassOptic, alpha);
+        ctx.beginPath();
+        if (sp.kind === "leaf") {
+          ctx.moveTo(0, -4.2);
+          ctx.lineTo(3.4, 0);
+          ctx.lineTo(0, 4.2);
+          ctx.lineTo(-3.4, 0);
+        } else if (sp.kind === "stone") {
+          ctx.arc(0, 0, 3.1, 0, TAU);
+        } else {
+          ctx.arc(-2.1, 0, 1.9, 0, TAU);
+          ctx.arc(2.1, 0, 1.7, 0, TAU);
+        }
+        ctx.fill();
+        ctx.restore();
+      }
+
+      var origX = w * clamp(0.45 + (state.aimNormX - 0.5) * 0.55, 0.14, 0.82);
+      var origY = wc.belvedereY !== null ? wc.belvedereY : h * clamp(0.16 + (1 - wc.altitude01) * 0.1, 0.1, 0.3);
+      if (wc.stiltNodes && wc.stiltNodes.length) {
+        var bestStilt = wc.stiltNodes[0];
+        var bestDx = Infinity;
+        for (var k = 0; k < wc.stiltNodes.length; k++) {
+          var cand = wc.stiltNodes[k];
+          var d = Math.abs((cand.topX || 0) - aimX);
+          if (d < bestDx) {
+            bestDx = d;
+            bestStilt = cand;
+          }
+        }
+        if (typeof bestStilt.topX === "number" && typeof bestStilt.topY === "number") {
+          origX = bestStilt.topX;
+          origY = bestStilt.topY + 8;
+        }
+      }
+
+      var coneGrad = ctx.createLinearGradient(origX, origY, aimX, aimY);
+      var beamTint = wc.violated ? PALETTE.footprintScar : PALETTE.brassOptic;
+      coneGrad.addColorStop(0, hexToRgba(beamTint, 0.34));
+      coneGrad.addColorStop(0.5, hexToRgba(PALETTE.cloudIvory, 0.08));
+      coneGrad.addColorStop(1, hexToRgba(beamTint, 0.22));
+      ctx.save();
+      ctx.fillStyle = coneGrad;
+      ctx.beginPath();
+      ctx.moveTo(origX - 2.5, origY);
+      ctx.lineTo(origX + 2.5, origY);
+      ctx.lineTo(aimX + 20, aimY);
+      ctx.lineTo(aimX - 20, aimY);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.strokeStyle = hexToRgba(beamTint, 0.52);
+      ctx.setLineDash([5, 5]);
+      ctx.lineWidth = 1.1;
+      ctx.beginPath();
+      ctx.moveTo(origX, origY);
+      ctx.lineTo(aimX, aimY);
+      ctx.moveTo(aimX, aimY);
+      ctx.lineTo(lens.cx - lens.r * 0.62, lens.cy + lens.r * 0.68);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      var rx = w < 760 ? 17 : 22;
+      var ry = rx * 0.5;
+      ctx.strokeStyle = hexToRgba(wc.violated ? "#d46346" : PALETTE.brassOptic, 0.88);
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.ellipse(aimX, aimY, rx, ry, 0, 0, TAU);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(aimX - rx - 5, aimY);
+      ctx.lineTo(aimX - rx + 4, aimY);
+      ctx.moveTo(aimX + rx - 4, aimY);
+      ctx.lineTo(aimX + rx + 5, aimY);
+      ctx.moveTo(aimX, aimY - ry - 4);
+      ctx.lineTo(aimX, aimY - ry + 3);
+      ctx.moveTo(aimX, aimY + ry - 3);
+      ctx.lineTo(aimX, aimY + ry + 4);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function drawCanopy1x(ctx, r, wc, seed) {
+      ctx.fillStyle = PALETTE.canopyAbyss;
+      ctx.fillRect(-r, -r, r * 2, r * 2);
+
+      ctx.strokeStyle = hexToRgba(PALETTE.skyAzure, 0.42);
+      ctx.lineWidth = r * 0.14;
+      ctx.lineCap = "round";
+      ctx.beginPath();
+      ctx.moveTo(-r * 0.85, r * 0.45);
+      ctx.bezierCurveTo(-r * 0.25, r * 0.1, r * 0.18, -r * 0.22, r * 0.88, -r * 0.52);
+      ctx.stroke();
+
+      for (var i = 0; i < 14; i++) {
+        var ang = i * 2.399 + seed * 3.1;
+        var dist = Math.sqrt((i + 0.5) / 14) * r * 0.88;
+        var cx = Math.cos(ang) * dist;
+        var cy = Math.sin(ang) * dist;
+        var cr = r * (0.22 + hash01(i + seed * 10) * 0.16);
+        ctx.fillStyle = i % 3 === 0 ? PALETTE.sunlitClearing : i % 2 === 0 ? PALETTE.fernMoss : PALETTE.foliageEmerald;
+        ctx.beginPath();
+        ctx.arc(cx, cy, cr, 0, TAU);
+        ctx.fill();
+      }
+
+      if (wc.piercedShadowVisible) {
+        drawAngularShadowBands(ctx, r, wc.sunAzimuth, wc.shadowOpacity, 1.0);
+      }
+
+      var stiltX = (hash01(seed * 7.3) - 0.5) * r * 0.42;
+      var stiltY = (hash01(seed * 13.7) - 0.5) * r * 0.36;
+      if (wc.violated) {
+        ctx.fillStyle = hexToRgba(PALETTE.footprintScar, 0.85);
+        ctx.beginPath();
+        ctx.ellipse(stiltX + r * 0.14, stiltY + r * 0.08, r * 0.18, r * 0.11, 0.35, 0, TAU);
+        ctx.fill();
+      }
+      ctx.fillStyle = PALETTE.cumulusPearl;
+      ctx.beginPath();
+      ctx.arc(stiltX, stiltY, r * 0.045, 0, TAU);
+      ctx.fill();
+      ctx.strokeStyle = PALETTE.flamingoTimber;
+      ctx.lineWidth = Math.max(3, r * 0.055);
+      ctx.beginPath();
+      ctx.moveTo(stiltX, stiltY);
+      ctx.lineTo(stiltX - r * 0.08, -r * 1.05);
+      ctx.stroke();
+
+      for (var c = 0; c < 8; c++) {
+        var ca = (c / 8) * TAU + 0.25;
+        ctx.fillStyle = hexToRgba(c % 2 === 0 ? PALETTE.cloudIvory : PALETTE.cumulusPearl, 0.82);
+        ctx.beginPath();
+        ctx.arc(Math.cos(ca) * r * 0.96, Math.sin(ca) * r * 0.96, r * 0.32, 0, TAU);
+        ctx.fill();
+      }
+    }
+
+    function drawLeaf8x(ctx, r, wc, seed) {
+      ctx.fillStyle = PALETTE.canopyAbyss;
+      ctx.fillRect(-r, -r, r * 2, r * 2);
+
+      for (var f = 0; f < 2; f++) {
+        ctx.save();
+        ctx.rotate((f === 0 ? -0.55 : 0.72) + seed * 0.4);
+        ctx.translate(0, (f === 0 ? -0.22 : 0.28) * r);
+        ctx.strokeStyle = wc.violated ? "#4b4a33" : PALETTE.fernMoss;
+        ctx.lineWidth = Math.max(1.6, r * 0.025);
+        ctx.beginPath();
+        ctx.moveTo(-r * 0.85, 0);
+        ctx.lineTo(r * 0.82, 0);
+        ctx.stroke();
+        for (var p = -6; p <= 6; p++) {
+          var px = p * r * 0.12;
+          var plen = (1 - Math.abs(p) / 8) * r * 0.26;
+          ctx.fillStyle = wc.violated ? "#4d593c" : (p % 2 === 0 ? PALETTE.fernMoss : PALETTE.foliageEmerald);
+          ctx.beginPath();
+          ctx.ellipse(px, -plen * 0.55, r * 0.042, plen * 0.5, -0.25, 0, TAU);
+          ctx.ellipse(px, plen * 0.55, r * 0.042, plen * 0.5, 0.25, 0, TAU);
+          ctx.fill();
+        }
+        ctx.restore();
+      }
+
+      ctx.save();
+      ctx.rotate(-0.24 + (seed - 0.5) * 0.5);
+      ctx.fillStyle = wc.violated ? "#4e5e3d" : PALETTE.foliageEmerald;
+      ctx.beginPath();
+      ctx.moveTo(-r * 0.78, 0);
+      ctx.bezierCurveTo(-r * 0.35, -r * 0.56, r * 0.35, -r * 0.52, r * 0.82, 0);
+      ctx.bezierCurveTo(r * 0.35, r * 0.52, -r * 0.35, r * 0.56, -r * 0.78, 0);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.strokeStyle = wc.violated ? "#7a784e" : PALETTE.sunlitClearing;
+      ctx.lineWidth = Math.max(1.8, r * 0.026);
+      ctx.beginPath();
+      ctx.moveTo(-r * 0.76, 0);
+      ctx.lineTo(r * 0.78, 0);
+      ctx.stroke();
+
+      ctx.lineWidth = Math.max(1, r * 0.014);
+      for (var v = -5; v <= 5; v++) {
+        var vx = v * r * 0.12;
+        var span = (1 - Math.abs(v) / 6.8) * r * 0.42;
+        ctx.beginPath();
+        ctx.moveTo(vx, 0);
+        ctx.quadraticCurveTo(vx + r * 0.07, -span * 0.55, vx + r * 0.15, -span);
+        ctx.moveTo(vx, 0);
+        ctx.quadraticCurveTo(vx + r * 0.07, span * 0.55, vx + r * 0.15, span);
+        ctx.stroke();
+      }
+
+      if (wc.violated) {
+        ctx.fillStyle = PALETTE.canopyAbyss;
+        ctx.beginPath();
+        ctx.moveTo(r * 0.05, -r * 0.44);
+        ctx.lineTo(r * 0.22, -r * 0.08);
+        ctx.lineTo(r * 0.34, -r * 0.41);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = hexToRgba(PALETTE.footprintScar, 0.88);
+        ctx.beginPath();
+        ctx.ellipse(0, r * 0.04, r * 0.46, r * 0.27, 0.28, 0, TAU);
+        ctx.fill();
+        ctx.fillStyle = "rgba(38, 22, 15, 0.75)";
+        for (var tr = -3; tr <= 3; tr++) {
+          ctx.fillRect(tr * r * 0.11 - r * 0.03, -r * 0.14, r * 0.055, r * 0.34);
+        }
+      } else {
+        var shimmer = state.reducedMotion ? 0.9 : 0.8 + 0.2 * Math.sin(state.timeSec * 3.1);
+        var drops = [
+          [-0.24, -0.14, 0.085],
+          [0.18, 0.15, 0.072],
+          [0.36, -0.09, 0.052],
+          [-0.04, 0.22, 0.046]
+        ];
+        for (var d = 0; d < drops.length; d++) {
+          var dx = drops[d][0] * r;
+          var dy = drops[d][1] * r;
+          var dr = drops[d][2] * r;
+          ctx.fillStyle = "rgba(17, 29, 22, 0.38)";
+          ctx.beginPath();
+          ctx.arc(dx + dr * 0.22, dy + dr * 0.24, dr, 0, TAU);
+          ctx.fill();
+          ctx.fillStyle = hexToRgba(PALETTE.sunlitClearing, 0.72);
+          ctx.beginPath();
+          ctx.arc(dx, dy, dr, 0, TAU);
+          ctx.fill();
+          ctx.fillStyle = hexToRgba(PALETTE.lensSpecular, 0.95 * shimmer);
+          ctx.beginPath();
+          ctx.arc(dx - dr * 0.32, dy - dr * 0.32, dr * 0.34, 0, TAU);
+          ctx.fill();
+        }
+      }
+      ctx.restore();
+
+      if (wc.piercedShadowVisible && !wc.violated) {
+        drawAngularShadowBands(ctx, r, wc.sunAzimuth, wc.shadowOpacity, 0.85);
+      }
+    }
+
+    function drawStone24x(ctx, r, wc, seed) {
+      ctx.fillStyle = wc.violated ? "#2a1d17" : "#1d3326";
+      ctx.fillRect(-r, -r, r * 2, r * 2);
+
+      ctx.strokeStyle = wc.violated ? "rgba(122, 75, 58, 0.65)" : hexToRgba(PALETTE.skyAzure, 0.5);
+      ctx.lineWidth = r * 0.32;
+      ctx.lineCap = "round";
+      ctx.beginPath();
+      ctx.moveTo(-r * 0.95, -r * 0.38);
+      ctx.quadraticCurveTo(0, r * 0.08, r * 0.95, r * 0.42);
+      ctx.stroke();
+
+      var cobbles = [
+        [-0.26, -0.18, 0.38, 0.28, -0.2, "#58665f"],
+        [0.3, 0.16, 0.35, 0.25, 0.35, "#6b7870"],
+        [-0.3, 0.38, 0.26, 0.19, 0.12, "#495750"],
+        [0.24, -0.36, 0.25, 0.18, -0.4, "#637069"]
+      ];
+      for (var i = 0; i < cobbles.length; i++) {
+        var c = cobbles[i];
+        var cx = (c[0] + (seed - 0.5) * 0.08) * r;
+        var cy = c[1] * r;
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(c[4]);
+        if (wc.violated && i === 0) {
+          ctx.fillStyle = "#241610";
+          ctx.beginPath();
+          ctx.ellipse(0, 0, c[2] * r, c[3] * r, 0, 0, TAU);
+          ctx.fill();
+          ctx.translate(r * 0.16, r * 0.12);
+          ctx.rotate(0.45);
+        }
+        ctx.fillStyle = wc.violated ? "#59483e" : c[5];
+        ctx.beginPath();
+        ctx.ellipse(0, 0, c[2] * r, c[3] * r, 0, 0, TAU);
+        ctx.fill();
+
+        if (!wc.violated) {
+          ctx.strokeStyle = PALETTE.brassOptic;
+          ctx.fillStyle = "rgba(186, 198, 102, 0.78)";
+          ctx.lineWidth = 1.2;
+          ctx.beginPath();
+          ctx.arc(-c[2] * r * 0.24, -c[3] * r * 0.12, c[3] * r * 0.36, 0, TAU);
+          ctx.fill();
+          ctx.stroke();
+
+          for (var q = 0; q < 4; q++) {
+            var qx = (hash01(i * 11 + q + seed) - 0.5) * c[2] * r * 1.1;
+            var qy = (hash01(i * 19 + q) - 0.5) * c[3] * r * 1.1;
+            ctx.fillStyle = q % 2 === 0 ? PALETTE.lensSpecular : PALETTE.cloudIvory;
+            ctx.fillRect(qx, qy, r * 0.045, r * 0.045);
+          }
+        } else {
+          ctx.strokeStyle = PALETTE.footprintScar;
+          ctx.lineWidth = Math.max(2, r * 0.03);
+          ctx.beginPath();
+          ctx.moveTo(-c[2] * r * 0.6, -c[3] * r * 0.2);
+          ctx.lineTo(c[2] * r * 0.55, c[3] * r * 0.25);
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+
+      if (wc.piercedShadowVisible && !wc.violated) {
+        drawAngularShadowBands(ctx, r, wc.sunAzimuth, wc.shadowOpacity * 0.75, 0.7);
+      }
+    }
+
+    function drawArticulatedAnt(ctx, x, y, angle, size, legPhase, cargo, panicked) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(angle);
+
+      ctx.strokeStyle = "#2b160d";
+      ctx.lineWidth = Math.max(1, size * 0.11);
+      for (var side = -1; side <= 1; side += 2) {
+        for (var leg = -1; leg <= 1; leg++) {
+          var swing = Math.sin(legPhase + leg * 1.4 + (side > 0 ? Math.PI : 0)) * size * 0.22;
+          var attachX = leg * size * 0.22;
+          var kneeX = attachX + swing * 0.6;
+          var kneeY = side * size * 0.48;
+          var footX = attachX - leg * size * 0.14 + swing;
+          var footY = side * size * 0.86;
+          ctx.beginPath();
+          ctx.moveTo(attachX, side * size * 0.1);
+          ctx.lineTo(kneeX, kneeY);
+          ctx.lineTo(footX, footY);
+          ctx.stroke();
+        }
+      }
+
+      ctx.fillStyle = "#24140e";
+      ctx.beginPath();
+      ctx.ellipse(-size * 0.68, 0, size * 0.42, size * 0.28, 0, 0, TAU);
+      ctx.fill();
+      ctx.strokeStyle = "rgba(201, 150, 59, 0.45)";
+      ctx.lineWidth = Math.max(0.8, size * 0.06);
+      ctx.beginPath();
+      ctx.moveTo(-size * 0.66, -size * 0.24);
+      ctx.lineTo(-size * 0.66, size * 0.24);
+      ctx.stroke();
+
+      ctx.fillStyle = "#7e3d1e";
+      ctx.beginPath();
+      ctx.ellipse(0, 0, size * 0.3, size * 0.16, 0, 0, TAU);
+      ctx.fill();
+
+      ctx.fillStyle = "#472112";
+      ctx.beginPath();
+      ctx.ellipse(size * 0.48, 0, size * 0.23, size * 0.2, 0, 0, TAU);
+      ctx.fill();
+
+      var antSplay = panicked ? 0.65 : 0.32;
+      ctx.strokeStyle = "#3a1b0e";
+      ctx.lineWidth = Math.max(0.9, size * 0.09);
+      for (var s = -1; s <= 1; s += 2) {
+        var twitch = Math.sin(legPhase * 0.7 + s) * 0.08;
+        ctx.beginPath();
+        ctx.moveTo(size * 0.66, s * size * 0.08);
+        ctx.lineTo(size * 0.92, s * size * (antSplay + twitch));
+        ctx.lineTo(size * 1.16, s * size * (antSplay * 0.55 - twitch));
+        ctx.stroke();
+      }
+
+      if (!panicked) {
+        if (cargo === "needle") {
+          ctx.strokeStyle = "#9ab665";
+          ctx.lineWidth = Math.max(1.2, size * 0.11);
+          ctx.beginPath();
+          ctx.moveTo(size * 0.65, -size * 0.55);
+          ctx.lineTo(size * 0.98, size * 0.55);
+          ctx.stroke();
+        } else if (cargo === "seed") {
+          ctx.fillStyle = PALETTE.cloudIvory;
+          ctx.beginPath();
+          ctx.ellipse(size * 0.86, 0, size * 0.22, size * 0.13, 0.2, 0, TAU);
+          ctx.fill();
+        } else {
+          ctx.fillStyle = PALETTE.brassOptic;
+          ctx.beginPath();
+          ctx.arc(size * 0.84, 0, size * 0.16, 0, TAU);
+          ctx.fill();
+        }
+      }
+      ctx.restore();
+    }
+
+    function drawAnt64x(ctx, r, wc, seed) {
+      ctx.fillStyle = "#2b2118";
+      ctx.fillRect(-r, -r, r * 2, r * 2);
+
+      ctx.strokeStyle = "#3d2e21";
+      ctx.lineWidth = r * 0.08;
+      for (var b = -4; b <= 4; b++) {
+        ctx.beginPath();
+        ctx.moveTo(-r, b * r * 0.24 + (seed - 0.5) * r * 0.1);
+        ctx.bezierCurveTo(-r * 0.3, b * r * 0.2 - r * 0.08, r * 0.3, b * r * 0.28 + r * 0.06, r, b * r * 0.22);
+        ctx.stroke();
+      }
+      for (var g = 0; g < 22; g++) {
+        var gx = (hash01(g * 7.1 + seed) * 2 - 1) * r * 0.88;
+        var gy = (hash01(g * 13.3 + seed) * 2 - 1) * r * 0.88;
+        ctx.fillStyle = g % 3 === 0 ? "rgba(244,239,228,0.45)" : "rgba(82,148,102,0.38)";
+        ctx.beginPath();
+        ctx.arc(gx, gy, r * 0.025, 0, TAU);
+        ctx.fill();
+      }
+
+      var antSize = Math.max(6.5, r * 0.115);
+      if (wc.violated) {
+        ctx.save();
+        ctx.rotate(0.32);
+        ctx.fillStyle = PALETTE.footprintScar;
+        ctx.beginPath();
+        ctx.roundRect ? ctx.roundRect(-r * 0.56, -r * 0.34, r * 1.12, r * 0.68, r * 0.22) : ctx.fillRect(-r * 0.56, -r * 0.34, r * 1.12, r * 0.68);
+        ctx.fill();
+        ctx.fillStyle = "#1e120d";
+        for (var hx = -2; hx <= 2; hx++) {
+          for (var hy = -1; hy <= 1; hy++) {
+            ctx.beginPath();
+            ctx.arc(hx * r * 0.19, hy * r * 0.18, r * 0.052, 0, TAU);
+            ctx.fill();
+          }
+        }
+        ctx.restore();
+
+        for (var k = 0; k < ants.length; k++) {
+          var pa = ants[k];
+          var rad = clamp(pa.panicRadius || 0.54, 0.36, 0.78) * r;
+          var ax = Math.cos(pa.panicAngle) * rad;
+          var ay = Math.sin(pa.panicAngle) * rad;
+          drawArticulatedAnt(ctx, ax, ay, pa.panicAngle + 0.45, antSize, pa.legPhase, pa.cargo, true);
+        }
+      } else {
+        ctx.strokeStyle = "rgba(201, 150, 59, 0.22)";
+        ctx.lineWidth = r * 0.12;
+        ctx.lineCap = "round";
+        ctx.beginPath();
+        ctx.moveTo(-r * 0.92, r * 0.46);
+        ctx.quadraticCurveTo(0, -r * 0.08, r * 0.92, -r * 0.44);
+        ctx.stroke();
+
+        for (var m = 0; m < ants.length; m++) {
+          var ma = ants[m];
+          var u = ma.t;
+          var mx = (-0.88 + u * 1.76) * r;
+          var my = (0.44 - u * 0.88 + Math.sin(u * Math.PI) * -0.14 + ma.lateral) * r;
+          var slope = Math.atan2(-0.88 - Math.cos(u * Math.PI) * 0.14 * Math.PI, 1.76);
+          drawArticulatedAnt(ctx, mx, my, slope, antSize, ma.legPhase, ma.cargo, false);
+        }
+      }
+    }
+
+    function drawBrassBezelAndReticle(ctx, r, wc) {
+      var hyp = HYPOTHESES[state.hypothesisIndex];
+      var stop = MAGNIFICATION_STOPS[state.zoomStep];
+
+      var tintGrad = ctx.createRadialGradient(0, 0, r * 0.15, 0, 0, r);
+      tintGrad.addColorStop(0, hexToRgba(hyp.lensTint, 0.08));
+      tintGrad.addColorStop(0.75, hexToRgba(hyp.lensTint, 0.22));
+      tintGrad.addColorStop(1, "rgba(12, 18, 15, 0.58)");
+      ctx.fillStyle = tintGrad;
+      ctx.beginPath();
+      ctx.arc(0, 0, r, 0, TAU);
+      ctx.fill();
+
+      var chColor = wc.violated ? "rgba(232, 108, 79, 0.72)" : hexToRgba(PALETTE.cloudIvory, 0.58);
+      ctx.strokeStyle = chColor;
+      ctx.lineWidth = 1;
+      var gap = r * 0.14;
+      ctx.beginPath();
+      ctx.arc(0, 0, gap, 0, TAU);
+      ctx.moveTo(-r * 0.86, 0);
+      ctx.lineTo(-gap, 0);
+      ctx.moveTo(gap, 0);
+      ctx.lineTo(r * 0.86, 0);
+      ctx.moveTo(0, -r * 0.86);
+      ctx.lineTo(0, -gap);
+      ctx.moveTo(0, gap);
+      ctx.lineTo(0, r * 0.86);
+      ctx.stroke();
+
+      var scaleText = stop.step === 0 ? "12 m" : stop.step === 1 ? "15 mm" : stop.step === 2 ? "5 mm" : "1.2 mm";
+      var barHalf = r * 0.22;
+      var barY = r * 0.68;
+      ctx.strokeStyle = hexToRgba(PALETTE.cloudIvory, 0.82);
+      ctx.lineWidth = 1.3;
+      ctx.beginPath();
+      ctx.moveTo(-barHalf, barY - 3.5);
+      ctx.lineTo(-barHalf, barY);
+      ctx.lineTo(barHalf, barY);
+      ctx.lineTo(barHalf, barY - 3.5);
+      ctx.moveTo(0, barY - 2.5);
+      ctx.lineTo(0, barY);
+      ctx.stroke();
+
+      ctx.fillStyle = hexToRgba(PALETTE.cloudIvory, 0.9);
+      ctx.font = "600 " + Math.max(9, Math.round(r * 0.1)) + "px ui-monospace, SFMono-Regular, Menlo, monospace";
+      ctx.textAlign = "center";
+      ctx.fillText(stop.zoom + "x · " + hyp.numeral + " · " + scaleText, 0, barY + Math.max(11, r * 0.12));
+
+      ctx.strokeStyle = hexToRgba(PALETTE.lensSpecular, 0.36);
+      ctx.lineWidth = Math.max(2, r * 0.035);
+      ctx.beginPath();
+      ctx.arc(0, 0, r * 0.92, -2.55, -1.15);
+      ctx.stroke();
+    }
+
+    function drawOuterBrassHousing(ctx, r, outerR, wc) {
+      ctx.save();
+      ctx.translate(lens.cx, lens.cy);
+
+      ctx.fillStyle = "rgba(9, 15, 11, 0.42)";
+      ctx.beginPath();
+      ctx.arc(3, 5, outerR + 3, 0, TAU);
+      ctx.fill();
+
+      ctx.save();
+      ctx.rotate(-0.68);
+      ctx.fillStyle = "#8a5f20";
+      ctx.strokeStyle = "#f0d48d";
+      ctx.lineWidth = 1.2;
+      var dialX = outerR * 0.95;
+      ctx.fillRect(dialX, -r * 0.14, r * 0.16, r * 0.28);
+      ctx.strokeRect(dialX, -r * 0.14, r * 0.16, r * 0.28);
+      for (var kn = -3; kn <= 3; kn++) {
+        ctx.beginPath();
+        ctx.moveTo(dialX + 1, kn * r * 0.036);
+        ctx.lineTo(dialX + r * 0.15, kn * r * 0.036);
+        ctx.stroke();
+      }
+      ctx.restore();
+
+      var bezelGrad = ctx.createLinearGradient(-outerR, -outerR, outerR, outerR);
+      bezelGrad.addColorStop(0, "#f2d894");
+      bezelGrad.addColorStop(0.35, PALETTE.brassOptic);
+      bezelGrad.addColorStop(0.72, "#7d551c");
+      bezelGrad.addColorStop(1, "#e2be6e");
+
+      ctx.fillStyle = bezelGrad;
+      ctx.beginPath();
+      ctx.arc(0, 0, outerR, 0, TAU);
+      ctx.arc(0, 0, r, 0, TAU, true);
+      ctx.fill();
+
+      ctx.strokeStyle = "#4d330f";
+      ctx.lineWidth = 1.6;
+      ctx.beginPath();
+      ctx.arc(0, 0, outerR, 0, TAU);
+      ctx.stroke();
+      ctx.strokeStyle = wc.violated ? "#d96548" : "#f6e3ad";
+      ctx.lineWidth = 1.4;
+      ctx.beginPath();
+      ctx.arc(0, 0, (r + outerR) * 0.5, 0, TAU);
+      ctx.stroke();
+
+      ctx.save();
+      ctx.rotate(state.vernierAngle);
+      ctx.strokeStyle = "#2e1d07";
+      for (var t = 0; t < 72; t++) {
+        var ang = (t / 72) * TAU;
+        var major = t % 18 === 0;
+        var med = t % 6 === 0;
+        var innerTick = r + (outerR - r) * (major ? 0.12 : med ? 0.28 : 0.46);
+        var outerTick = outerR - (outerR - r) * 0.08;
+        ctx.lineWidth = major ? 1.8 : med ? 1.2 : 0.8;
+        ctx.beginPath();
+        ctx.moveTo(Math.cos(ang) * innerTick, Math.sin(ang) * innerTick);
+        ctx.lineTo(Math.cos(ang) * outerTick, Math.sin(ang) * outerTick);
+        ctx.stroke();
+      }
+      ctx.restore();
+      ctx.restore();
+    }
+
+    function renderSpyglassOverlay(ctx, worldContext) {
+      if (!ctx) return;
+      if ((!state.width || !state.height) && ctx.canvas) {
+        resize(ctx.canvas.clientWidth || ctx.canvas.width || 1280, ctx.canvas.clientHeight || ctx.canvas.height || 800, state.dpr);
+      }
+      var w = state.width;
+      var h = state.height;
+      var wc = resolveWorldOpts(worldContext);
+      var seed = hash01(state.activeSpecimenIndex * 3.7 + state.aimNormX * 19.1 + state.aimNormY * 29.3);
+
+      drawFloorGlintsAndCone(ctx, w, h, wc);
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(lens.cx, lens.cy, lens.r, 0, TAU);
+      ctx.clip();
+      ctx.translate(lens.cx, lens.cy);
+
+      if (state.zoomStep === 0) {
+        drawCanopy1x(ctx, lens.r, wc, seed);
+      } else if (state.zoomStep === 1) {
+        drawLeaf8x(ctx, lens.r, wc, seed);
+      } else if (state.zoomStep === 2) {
+        drawStone24x(ctx, lens.r, wc, seed);
+      } else {
+        drawAnt64x(ctx, lens.r, wc, seed);
+      }
+
+      drawBrassBezelAndReticle(ctx, lens.r, wc);
+      ctx.restore();
+
+      drawOuterBrassHousing(ctx, lens.r, lens.outerR, wc);
+    }
+
+    return {
+      resize: resize,
+      setAim: setAim,
+      nudgeAim: nudgeAim,
+      focusSpecimen: focusSpecimen,
+      setZoomStep: setZoomStep,
+      cycleZoom: cycleZoom,
+      setMagnification: setMagnification,
+      setHypothesis: setHypothesis,
+      descendLadderToEarth: descendLadderToEarth,
+      retreatAboveClouds: retreatAboveClouds,
+      setReducedMotion: setReducedMotion,
+      step: step,
+      renderSpyglassOverlay: renderSpyglassOverlay,
+      hitTestSpecimenOrLens: hitTestSpecimenOrLens,
+      getSpecimens: getSpecimens,
+      getLensGeometry: getLensGeometry,
+      getState: getState,
+      reset: reset
+    };
+  }
+
+  var BaucisNadirSpyglass = Object.freeze({
+    PALETTE: PALETTE,
+    HYPOTHESES: HYPOTHESES,
+    MAGNIFICATION_STOPS: MAGNIFICATION_STOPS,
+    SPECIMEN_CATALOG: SPECIMEN_CATALOG,
+    createNadirSpyglass: createNadirSpyglass
+  });
+
+  root.BaucisNadirSpyglass = BaucisNadirSpyglass;
+  if (typeof module === "object" && module && module.exports) {
+    module.exports = BaucisNadirSpyglass;
+  }
+})(typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : this);
+
+(function () {
+  "use strict";
+
+  const canvas = document.getElementById("bcs-observatory-canvas");
+  const ctx = canvas.getContext("2d");
+  const stageEl = document.getElementById("bcs-spyglass-stage");
+  const marchReadout = document.getElementById("bcs-march-readout");
+  const marchBar = document.getElementById("bcs-march-bar");
+  const marchFill = document.getElementById("bcs-march-fill");
+  const marchKnob = document.getElementById("bcs-march-knob");
+  const marchPrev = document.getElementById("bcs-march-prev");
+  const marchNext = document.getElementById("bcs-march-next");
+  const altReadout = document.getElementById("bcs-altitude-readout");
+  const altTrack = document.getElementById("bcs-altitude-bar-track");
+  const altFill = document.getElementById("bcs-altitude-fill");
+  const altKnob = document.getElementById("bcs-altitude-knob");
+  const sunReadout = document.getElementById("bcs-sun-readout");
+  const sunTrack = document.getElementById("bcs-sun-bar-track");
+  const sunFill = document.getElementById("bcs-sun-fill");
+  const sunKnob = document.getElementById("bcs-sun-knob");
+  const footprintSeal = document.getElementById("bcs-footprint-seal");
+  const sunToggle = document.getElementById("bcs-sun-toggle");
+  const sunToggleText = document.getElementById("bcs-sun-toggle-text");
+  const descendToggle = document.getElementById("bcs-descend-toggle");
+  const descendText = document.getElementById("bcs-descend-text");
+  const muteToggle = document.getElementById("bcs-mute-toggle");
+  const muteText = document.getElementById("bcs-mute-text");
+  const restoreBtn = document.getElementById("bcs-restore-btn");
+  const platesBtn = document.getElementById("bcs-plates-btn");
+  const stageWhisper = document.getElementById("bcs-stage-whisper");
+  const ledgerEl = document.getElementById("bcs-telemetry-ledger");
+  const fascScore = document.getElementById("bcs-fascination-score");
+  const fascFill = document.getElementById("bcs-fascination-fill");
+  const leafCountEl = document.getElementById("bcs-leaf-count");
+  const stoneCountEl = document.getElementById("bcs-stone-count");
+  const antCountEl = document.getElementById("bcs-ant-count");
+  const specScaleEl = document.getElementById("bcs-specimen-scale");
+  const specTitleEl = document.getElementById("bcs-specimen-title");
+  const specDetailEl = document.getElementById("bcs-specimen-detail");
+  const plateDrawer = document.getElementById("bcs-plate-drawer");
+  const plateViewport = document.getElementById("bcs-plate-viewport");
+  const plateZoomBtn = document.getElementById("bcs-plate-zoom-btn");
+  const plateZoomText = document.getElementById("bcs-plate-zoom-text");
+  const plateCloseBtn = document.getElementById("bcs-plate-close-btn");
+  const mapImg = document.getElementById("bcs-map-img");
+
+  const zoomPills = Array.prototype.slice.call(document.querySelectorAll("[data-zoom-step]"));
+  const focusPills = Array.prototype.slice.call(document.querySelectorAll("[data-specimen-kind]"));
+  const hypCards = Array.prototype.slice.call(document.querySelectorAll("[data-hypothesis]"));
+  const drawerTabs = Array.prototype.slice.call(document.querySelectorAll("[data-plate-tab]"));
+
+  if (mapImg) {
+    mapImg.addEventListener("error", function () {
+      if (!mapImg.dataset.fallbackApplied) {
+        mapImg.dataset.fallbackApplied = "1";
+        mapImg.src = "map.svg";
+      }
+    });
+  }
+
+  const reducedMQ = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
+  let reducedMotion = Boolean(reducedMQ && reducedMQ.matches);
+  let platesOpen = false;
+  let plateTab = "diptych";
+  let plateZoomed = false;
+  let viewW = 1280;
+  let viewH = 560;
+  let viewDpr = 1;
+  let savedSunnyVal = 0.85;
+  let savedAltitudeVal = 0.88;
+
+  const world = globalThis.BaucisFlamingoStilts.createCloudStiltWorld({ reducedMotion: reducedMotion });
+  const spyglass = globalThis.BaucisNadirSpyglass.createNadirSpyglass({
+    reducedMotion: reducedMotion,
+    onSpecimenExamined: function (spec) {
+      if (world.audio && world.audio.playSpecimenChime) {
+        world.audio.playSpecimenChime(spec && spec.kind ? spec.kind : "leaf");
+      }
+    },
+    onZoomChange: function (zStep) {
+      if (world.audio && world.audio.playSpyglassClick) {
+        world.audio.playSpyglassClick(zStep);
+      }
+    },
+    onAbsenceViolated: function () {
+      if (world.audio && world.audio.playLadderFootfallViolation) {
+        world.audio.playLadderFootfallViolation();
+      }
+    },
+    onAbsenceRestored: function () {
+      if (world.audio && world.audio.playAbsenceRestoredChord) {
+        world.audio.playAbsenceRestoredChord();
+      }
+    }
+  });
+  world.setReducedMotion(reducedMotion);
+  spyglass.setReducedMotion(reducedMotion);
+
+  function unlockAudioOnce() {
+    if (world.audio && world.audio.unlock) {
+      world.audio.unlock();
+      if (world.audio.updateAtmosphere) {
+        world.audio.updateAtmosphere(world.getState());
+      }
+    }
+  }
+
+  function resizeStage() {
+    const rect = stageEl.getBoundingClientRect();
+    const w = Math.max(240, Math.round(rect.width || window.innerWidth || 1280));
+    const h = Math.max(180, Math.round(rect.height || (window.innerHeight - 210) || 540));
+    const dpr = Math.min(2, Math.max(1, window.devicePixelRatio || 1));
+    viewW = w;
+    viewH = h;
+    viewDpr = dpr;
+    const cw = Math.round(w * dpr);
+    const ch = Math.round(h * dpr);
+    if (canvas.width !== cw || canvas.height !== ch) {
+      canvas.width = cw;
+      canvas.height = ch;
+    }
+    world.resize(w, h, dpr);
+    spyglass.resize(w, h, dpr);
+  }
+
+  function buildWorldContext() {
+    const ws = world.getState();
+    const bounds = world.getWoodlandFloorBounds ? world.getWoodlandFloorBounds() : null;
+    const stiltNodes = world.getStiltScreenNodes ? world.getStiltScreenNodes() : null;
+    return Object.assign({}, ws, {
+      belvedereY: bounds && typeof bounds.belvedereY === "number" ? bounds.belvedereY : null,
+      floorBounds: bounds,
+      stiltNodes: stiltNodes
+    });
+  }
+
+  function renderFrame() {
+    ctx.save();
+    ctx.setTransform(viewDpr, 0, 0, viewDpr, 0, 0);
+    ctx.clearRect(0, 0, viewW, viewH);
+    const ss = spyglass.getState();
+    world.renderPanorama(ctx, {
+      nadirNormX: ss.aimNormX,
+      nadirNormY: ss.aimNormY,
+      zoomStep: ss.zoomStep,
+      hypothesisTint: ss.lensTint || null
+    });
+    spyglass.renderSpyglassOverlay(ctx, buildWorldContext());
+    ctx.restore();
+  }
+  function syncUI() {
+    const ws = world.getState();
+    const ss = spyglass.getState();
+    const dayRatio = ((ws.marchDay - 1) / 6) * 100;
+    marchReadout.textContent = ws.marchDay === 7 ? "Day 7 · Unseen Arrival" : ("Day " + ws.marchDay + " · Woodland");
+    marchFill.style.width = dayRatio.toFixed(1) + "%";
+    marchKnob.style.left = dayRatio.toFixed(1) + "%";
+    marchBar.setAttribute("aria-valuenow", String(ws.marchDay));
+
+    const altPct = Math.round(ws.altitude01 * 100);
+    const zone = altPct < 34 ? "Woodland" : (altPct < 69 ? "Cloud Deck" : "Belvedere");
+    altReadout.textContent = altPct + "% · " + zone;
+    altFill.style.width = altPct + "%";
+    altKnob.style.left = altPct + "%";
+    altTrack.setAttribute("aria-valuenow", String(altPct));
+
+    const sunPct = Math.round(ws.sunlight01 * 100);
+    sunReadout.textContent = ws.piercedShadowVisible ? "Pierced Shadow: ACTIVE" : "CLOUD-DIFFUSED";
+    sunFill.style.width = sunPct + "%";
+    sunKnob.style.left = sunPct + "%";
+    sunTrack.setAttribute("aria-valuenow", String(sunPct));
+    sunToggle.classList.toggle("bcs-is-active", Boolean(ws.piercedShadowVisible));
+    sunToggle.setAttribute("aria-pressed", String(Boolean(ws.piercedShadowVisible)));
+    sunToggleText.textContent = ws.piercedShadowVisible ? "Sunny" : "Overcast";
+
+    const onEarth = Boolean(ss.inhabitantOnEarth || ws.inhabitantOnEarth);
+    footprintSeal.classList.toggle("bcs-is-violated", onEarth);
+    footprintSeal.textContent = onEarth
+      ? "Earth Footprint: VIOLATED (Bootprint)"
+      : "Earth Footprint: 0.00% (9 Flamingo Stilts)";
+    descendToggle.classList.toggle("bcs-is-violated", onEarth);
+    descendToggle.setAttribute("aria-pressed", String(onEarth));
+    descendText.textContent = onEarth ? "Retreat Above Clouds" : "Descend Ladder";
+
+    muteToggle.classList.toggle("bcs-is-active", !ws.muted);
+    muteToggle.setAttribute("aria-pressed", String(!ws.muted));
+    muteText.textContent = ws.muted ? "Muted" : "Sound";
+
+    for (let i = 0; i < zoomPills.length; i++) {
+      const active = Number(zoomPills[i].dataset.zoomStep) === ss.zoomStep;
+      zoomPills[i].classList.toggle("bcs-is-active", active);
+    }
+    for (let i = 0; i < focusPills.length; i++) {
+      const active = focusPills[i].dataset.specimenKind === ss.activeScale;
+      focusPills[i].classList.toggle("bcs-is-active", active);
+    }
+    for (let i = 0; i < hypCards.length; i++) {
+      const active = hypCards[i].dataset.hypothesis === ss.hypothesisId;
+      hypCards[i].classList.toggle("bcs-is-active", active);
+      hypCards[i].setAttribute("aria-pressed", String(active));
+    }
+
+    fascScore.textContent = Number(ss.absenceFascination || 0).toFixed(2);
+    fascFill.style.width = Math.round(Math.max(0, Math.min(1, ss.absenceFascination || 0)) * 100) + "%";
+    leafCountEl.textContent = "Leaves " + ss.examinedLeafCount + "/6";
+    stoneCountEl.textContent = "Stones " + ss.examinedStoneCount + "/6";
+    antCountEl.textContent = "Ants " + ss.examinedAntCount + "/6";
+
+    if (onEarth || !ss.absenceIntact) {
+      ledgerEl.classList.add("bcs-is-violated");
+      specScaleEl.textContent = ss.magnification + "x Downward Lens · ABSENCE BROKEN";
+      specTitleEl.textContent = "ABSENCE SHATTERED — HUMAN FOOTPRINT ON EARTH";
+      specDetailEl.textContent = "A bootprint crushes woodland ferns, muddies mossy stones, and scatters the ant trail ([D] Retreat / [R] Restore).";
+      stageWhisper.textContent = "ABSENCE SHATTERED — Human bootprint on woodland moss · Press [D] or [R] to retreat above clouds";
+    } else {
+      ledgerEl.classList.remove("bcs-is-violated");
+      specScaleEl.textContent = ss.zoomLabel || (ss.magnification + "x Downward Brass Spyglass");
+      specTitleEl.textContent = ss.activeSpecimenTitle || "Untouched Woodland Glade";
+      specDetailEl.textContent = ss.activeSpecimenDetail || "Contemplating leaf, stone, and ant from above the cumulus.";
+      stageWhisper.textContent = ws.marchDay < 7
+        ? ("Woodland March Day " + ws.marchDay + "/7 — advance to Day 7 to arrive beneath unseen Baucis")
+        : ("Aim downward brass spyglass (" + ss.magnification + "x) · [Q] Leaf  [W] Stone  [E] Ant  [Z] Zoom");
+    }
+
+    plateDrawer.hidden = !platesOpen;
+    platesBtn.classList.toggle("bcs-is-active", platesOpen);
+    platesBtn.setAttribute("aria-expanded", String(platesOpen));
+    plateViewport.classList.toggle("bcs-mode-map", plateTab === "map");
+    plateViewport.classList.toggle("bcs-mode-vista", plateTab === "vista");
+    plateViewport.classList.toggle("bcs-is-zoomed", plateZoomed);
+    plateZoomBtn.classList.toggle("bcs-is-active", plateZoomed);
+    plateZoomBtn.setAttribute("aria-pressed", String(plateZoomed));
+    plateZoomText.textContent = plateZoomed ? "1.0x Fit" : "1.75x Loupe";
+    for (let i = 0; i < drawerTabs.length; i++) {
+      drawerTabs[i].classList.toggle("bcs-is-active", drawerTabs[i].dataset.plateTab === plateTab);
+    }
+    if (world.audio && world.audio.updateAtmosphere) {
+      world.audio.updateAtmosphere(ws);
+    }
+  }
+
+  function getState() {
+    const ws = world.getState();
+    const ss = spyglass.getState();
+    const onEarth = Boolean(ss.inhabitantOnEarth || ws.inhabitantOnEarth);
+    return Object.assign({}, ws, ss, {
+      arrivedAtBaucis: ws.marchDay === 7,
+      stiltCount: 9,
+      earthContactCityMass: 0,
+      inhabitantOnEarth: onEarth,
+      onlyFlamingoLegsTouchEarth: !onEarth,
+      platesOpen: platesOpen,
+      plateTab: plateTab,
+      plateZoomed: plateZoomed,
+      reducedMotion: reducedMotion
+    });
+  }
+
+  const api = {
+    getState: getState,
+    setMarchDay: function (d) { world.setMarchDay(d); syncUI(); renderFrame(); return getState(); },
+    setAltitude: function (v) {
+      const clamped = Math.max(0, Math.min(1, Number(v)));
+      if (!spyglass.getState().inhabitantOnEarth && clamped > 0.25) savedAltitudeVal = clamped;
+      world.setAltitude(clamped);
+      syncUI(); renderFrame(); return getState();
+    },
+    setSunlight: function (v) {
+      const clamped = Math.max(0, Math.min(1, Number(v)));
+      if (clamped > 0.38) savedSunnyVal = clamped;
+      world.setSunlight(clamped);
+      syncUI(); renderFrame(); return getState();
+    },
+    setSunAzimuth: function (az) { world.setSunAzimuth(az); syncUI(); renderFrame(); return getState(); },
+    setHypothesis: function (h) { spyglass.setHypothesis(h); syncUI(); renderFrame(); return getState(); },
+    setZoomStep: function (s) { spyglass.setZoomStep(s); syncUI(); renderFrame(); return getState(); },
+    cycleZoom: function (delta) { spyglass.cycleZoom(delta === undefined ? 1 : delta); syncUI(); renderFrame(); return getState(); },
+    focusSpecimen: function (k) { spyglass.focusSpecimen(k); syncUI(); renderFrame(); return getState(); },
+    setAim: function (nx, ny) {
+      spyglass.setAim(nx, ny);
+      const ss = spyglass.getState();
+      if (ss.inhabitantOnEarth) world.setInhabitantOnEarth(true, ss.aimNormX, ss.aimNormY);
+      syncUI(); renderFrame(); return getState();
+    },
+    descendToEarth: function (shouldDescend) {
+      const target = shouldDescend === undefined ? true : Boolean(shouldDescend);
+      const ss = spyglass.getState();
+      if (target) {
+        savedAltitudeVal = Math.max(0.72, world.getState().altitude01 || 0.88);
+        spyglass.descendLadderToEarth();
+        world.setAltitude(0.08);
+        world.setInhabitantOnEarth(true, ss.aimNormX, ss.aimNormY);
+      } else {
+        spyglass.retreatAboveClouds();
+        world.setInhabitantOnEarth(false, ss.aimNormX, ss.aimNormY);
+        world.setAltitude(savedAltitudeVal || 0.88);
+      }
+      syncUI(); renderFrame(); return getState();
+    },
+    retreatAboveClouds: function () { return api.descendToEarth(false); },
+    restoreAbsence: function () {
+      spyglass.setHypothesis("fascinated_absence");
+      spyglass.retreatAboveClouds();
+      const ss = spyglass.getState();
+      world.setInhabitantOnEarth(false, ss.aimNormX, ss.aimNormY);
+      world.setMarchDay(7);
+      world.setAltitude(0.88);
+      world.setSunlight(0.85);
+      world.setSunAzimuth(0.28);
+      syncUI(); renderFrame(); return getState();
+    },
+    toggleMute: function (forceMuted) {
+      unlockAudioOnce();
+      if (typeof forceMuted === "boolean") world.audio.setMuted(forceMuted);
+      else world.audio.toggleMute();
+      syncUI(); return getState();
+    },
+    togglePlates: function (forceOpen) {
+      platesOpen = typeof forceOpen === "boolean" ? forceOpen : !platesOpen;
+      if (!platesOpen) plateZoomed = false;
+      syncUI(); return getState();
+    },
+    setPlateTab: function (tab) {
+      if (tab === "diptych" || tab === "map" || tab === "vista") plateTab = tab;
+      syncUI(); return getState();
+    },
+    togglePlateZoom: function (forceZoom) {
+      plateZoomed = typeof forceZoom === "boolean" ? forceZoom : !plateZoomed;
+      syncUI(); return getState();
+    },
+    reset: function () {
+      platesOpen = false;
+      plateTab = "diptych";
+      plateZoomed = false;
+      savedSunnyVal = 0.85;
+      savedAltitudeVal = 0.88;
+      world.reset();
+      spyglass.reset();
+      resizeStage();
+      syncUI(); renderFrame(); return getState();
+    }
+  };
+  function bindActivate(el, handler) {
+    if (!el) return;
+    el.addEventListener("click", function (ev) {
+      unlockAudioOnce();
+      handler(ev);
+    });
+    el.addEventListener("keydown", function (ev) {
+      if (ev.key === "Enter" || ev.key === " ") {
+        ev.preventDefault();
+        unlockAudioOnce();
+        handler(ev);
+      }
+    });
+  }
+
+  function bindVernier(trackEl, onRatio, keyStep) {
+    if (!trackEl) return;
+    let scrubbing = false;
+    function applyClientX(clientX) {
+      const r = trackEl.getBoundingClientRect();
+      if (!r.width) return;
+      const ratio = Math.max(0, Math.min(1, (clientX - r.left) / r.width));
+      onRatio(ratio);
+    }
+    trackEl.addEventListener("pointerdown", function (ev) {
+      unlockAudioOnce();
+      scrubbing = true;
+      if (trackEl.setPointerCapture) trackEl.setPointerCapture(ev.pointerId);
+      applyClientX(ev.clientX);
+    });
+    trackEl.addEventListener("pointermove", function (ev) {
+      if (scrubbing) applyClientX(ev.clientX);
+    });
+    trackEl.addEventListener("pointerup", function () { scrubbing = false; });
+    trackEl.addEventListener("pointercancel", function () { scrubbing = false; });
+    trackEl.addEventListener("keydown", function (ev) {
+      if (ev.key === "ArrowLeft" || ev.key === "ArrowDown") {
+        ev.preventDefault(); ev.stopPropagation();
+        onRatio(null, -(keyStep || 0.05));
+      } else if (ev.key === "ArrowRight" || ev.key === "ArrowUp") {
+        ev.preventDefault(); ev.stopPropagation();
+        onRatio(null, keyStep || 0.05);
+      }
+    });
+  }
+
+  bindActivate(marchPrev, function () { api.setMarchDay(world.getState().marchDay - 1); });
+  bindActivate(marchNext, function () { api.setMarchDay(world.getState().marchDay + 1); });
+  bindVernier(marchBar, function (ratio, delta) {
+    if (ratio === null) api.setMarchDay(world.getState().marchDay + (delta > 0 ? 1 : -1));
+    else api.setMarchDay(1 + Math.round(ratio * 6));
+  }, 1);
+  bindVernier(altTrack, function (ratio, delta) {
+    if (ratio === null) api.setAltitude(world.getState().altitude01 + delta);
+    else api.setAltitude(ratio);
+  }, 0.05);
+  bindVernier(sunTrack, function (ratio, delta) {
+    const next = ratio === null ? Math.max(0, Math.min(1, world.getState().sunlight01 + delta)) : ratio;
+    world.setSunAzimuth((next - 0.5) * 1.1);
+    api.setSunlight(next);
+  }, 0.05);
+
+  bindActivate(sunToggle, function () {
+    if (world.getState().piercedShadowVisible) api.setSunlight(0.16);
+    else api.setSunlight(savedSunnyVal > 0.38 ? savedSunnyVal : 0.85);
+  });
+  bindActivate(descendToggle, function () {
+    api.descendToEarth(!spyglass.getState().inhabitantOnEarth);
+  });
+  bindActivate(muteToggle, function () { api.toggleMute(); });
+  bindActivate(restoreBtn, function () { api.restoreAbsence(); });
+  bindActivate(platesBtn, function () { api.togglePlates(); });
+  bindActivate(plateZoomBtn, function () { api.togglePlateZoom(); });
+  bindActivate(plateCloseBtn, function () { api.togglePlates(false); });
+
+  plateDrawer.addEventListener("click", function (ev) {
+    if (ev.target === plateDrawer) api.togglePlates(false);
+  });
+  for (let i = 0; i < zoomPills.length; i++) {
+    bindActivate(zoomPills[i], function () { api.setZoomStep(Number(zoomPills[i].dataset.zoomStep)); });
+  }
+  for (let i = 0; i < focusPills.length; i++) {
+    bindActivate(focusPills[i], function () { api.focusSpecimen(focusPills[i].dataset.specimenKind); });
+  }
+  for (let i = 0; i < hypCards.length; i++) {
+    bindActivate(hypCards[i], function () { api.setHypothesis(hypCards[i].dataset.hypothesis); });
+  }
+  for (let i = 0; i < drawerTabs.length; i++) {
+    bindActivate(drawerTabs[i], function () { api.setPlateTab(drawerTabs[i].dataset.plateTab); });
+  }
+
+  let canvasDragging = false;
+  let canvasMoved = false;
+  let downX = 0;
+  let downY = 0;
+  let lastWheelMs = 0;
+
+  canvas.addEventListener("pointerdown", function (ev) {
+    unlockAudioOnce();
+    const r = canvas.getBoundingClientRect();
+    const px = ev.clientX - r.left;
+    const py = ev.clientY - r.top;
+    downX = px; downY = py;
+    canvasDragging = true;
+    canvasMoved = false;
+    if (canvas.setPointerCapture) canvas.setPointerCapture(ev.pointerId);
+    const hit = spyglass.hitTestSpecimenOrLens ? spyglass.hitTestSpecimenOrLens(px, py) : null;
+    if (hit && hit.type === "specimen" && hit.specimen) {
+      api.focusSpecimen(hit.specimen.id);
+      canvasDragging = false;
+      return;
+    }
+    if (!hit || hit.type !== "lens") {
+      api.setAim(px / Math.max(1, r.width), Math.max(0.58, py / Math.max(1, r.height)));
+    }
+  });
+  canvas.addEventListener("pointermove", function (ev) {
+    if (!canvasDragging) return;
+    const r = canvas.getBoundingClientRect();
+    const px = ev.clientX - r.left;
+    const py = ev.clientY - r.top;
+    if (Math.hypot(px - downX, py - downY) > 5) canvasMoved = true;
+    if (canvasMoved) {
+      api.setAim(px / Math.max(1, r.width), Math.max(0.58, py / Math.max(1, r.height)));
+    }
+  });
+  canvas.addEventListener("pointerup", function (ev) {
+    if (!canvasDragging) return;
+    canvasDragging = false;
+    if (!canvasMoved) {
+      const r = canvas.getBoundingClientRect();
+      const px = ev.clientX - r.left;
+      const py = ev.clientY - r.top;
+      const hit = spyglass.hitTestSpecimenOrLens ? spyglass.hitTestSpecimenOrLens(px, py) : null;
+      if (hit && hit.type === "lens") {
+        api.cycleZoom(1);
+      } else if (world.hitTestStilt) {
+        const stilt = world.hitTestStilt(px, py);
+        if (stilt && typeof stilt.baseX === "number") {
+          api.setAim(stilt.baseX / Math.max(1, r.width), 0.78);
+        }
+      }
+    }
+  });
+  canvas.addEventListener("pointercancel", function () { canvasDragging = false; });
+  canvas.addEventListener("wheel", function (ev) {
+    ev.preventDefault();
+    unlockAudioOnce();
+    const now = performance.now();
+    if (now - lastWheelMs < 130) return;
+    lastWheelMs = now;
+    api.cycleZoom(ev.deltaY < 0 ? 1 : -1);
+  }, { passive: false });
+
+  window.addEventListener("keydown", function (ev) {
+    if (ev.metaKey || ev.ctrlKey || ev.altKey) return;
+    const k = ev.key;
+    const low = k.toLowerCase();
+    unlockAudioOnce();
+    if (k === "Escape") { if (platesOpen) { ev.preventDefault(); api.togglePlates(false); } return; }
+    if (low === "p") { ev.preventDefault(); api.togglePlates(); return; }
+    if (low === "z") { ev.preventDefault(); if (platesOpen) api.togglePlateZoom(); else api.cycleZoom(1); return; }
+    if (platesOpen) return;
+    if (k === "1") { ev.preventDefault(); api.setHypothesis(0); }
+    else if (k === "2") { ev.preventDefault(); api.setHypothesis(1); }
+    else if (k === "3") { ev.preventDefault(); api.setHypothesis(2); }
+    else if (low === "q") { ev.preventDefault(); api.focusSpecimen("leaf"); }
+    else if (low === "w") { ev.preventDefault(); api.focusSpecimen("stone"); }
+    else if (low === "e") { ev.preventDefault(); api.focusSpecimen("ant"); }
+    else if (low === "c") {
+      ev.preventDefault();
+      if (world.getState().piercedShadowVisible) api.setSunlight(0.16);
+      else api.setSunlight(savedSunnyVal > 0.38 ? savedSunnyVal : 0.85);
+    } else if (low === "d") { ev.preventDefault(); api.descendToEarth(!spyglass.getState().inhabitantOnEarth); }
+    else if (low === "m") { ev.preventDefault(); api.toggleMute(); }
+    else if (low === "r") { ev.preventDefault(); api.restoreAbsence(); }
+    else if (k === "ArrowLeft") { ev.preventDefault(); spyglass.nudgeAim(-0.035, 0); syncUI(); renderFrame(); }
+    else if (k === "ArrowRight") { ev.preventDefault(); spyglass.nudgeAim(0.035, 0); syncUI(); renderFrame(); }
+    else if (k === "ArrowUp") { ev.preventDefault(); spyglass.nudgeAim(0, -0.03); syncUI(); renderFrame(); }
+    else if (k === "ArrowDown") { ev.preventDefault(); spyglass.nudgeAim(0, 0.03); syncUI(); renderFrame(); }
+  });
+
+  if (reducedMQ && reducedMQ.addEventListener) {
+    reducedMQ.addEventListener("change", function (ev) {
+      reducedMotion = Boolean(ev.matches);
+      world.setReducedMotion(reducedMotion);
+      spyglass.setReducedMotion(reducedMotion);
+      syncUI(); renderFrame();
+    });
+  }
+  window.addEventListener("resize", function () { resizeStage(); renderFrame(); });
+  if (typeof ResizeObserver === "function") {
+    new ResizeObserver(function () { resizeStage(); renderFrame(); }).observe(stageEl);
+  }
+
+  let prevTs = performance.now();
+  function tick(ts) {
+    const dt = Math.min(0.05, Math.max(0.001, (ts - prevTs) / 1000));
+    prevTs = ts;
+    if (!platesOpen) {
+      world.step(dt);
+      spyglass.step(dt, buildWorldContext());
+      renderFrame();
+    }
+    requestAnimationFrame(tick);
+  }
+
+  window.__BAUCIS_API__ = api;
+  window.__BAUCIS_STATE__ = function () { return api.getState(); };
+
+  resizeStage();
+  syncUI();
+  renderFrame();
+  requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>

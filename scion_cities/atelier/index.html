@@ -1,0 +1,1145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SCION SWARM BUILDER · Fifty-Five Handmade Cities</title>
+<style>
+  :root {
+    --paper: #f2ead9;
+    --paper-deep: #e6dac0;
+    --paper-dim: #d6c7a7;
+    --ink: #191512;
+    --ink-soft: #4a4035;
+    --ink-faint: #7b6d5c;
+    --vermilion: #b32e22;
+    --ochre: #b57e2d;
+    --cobalt: #234b6e;
+    --jade: #286652;
+    --rule: rgba(25, 21, 18, 0.18);
+    --rule-strong: rgba(25, 21, 18, 0.42);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+    font-size: 14px;
+    line-height: 1.4;
+    overflow-x: hidden;
+  }
+  .mono {
+    font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  header.mast {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 8px 16px;
+    background: var(--ink);
+    color: var(--paper);
+    border-bottom: 2px solid var(--vermilion);
+    font-size: 11px;
+    letter-spacing: 0.07em;
+  }
+  header.mast .brand {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  header.mast .pill {
+    background: var(--vermilion);
+    color: #fff;
+    padding: 2px 6px;
+    font-size: 10px;
+    border-radius: 2px;
+  }
+  .controls-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+  button, select, input[type="text"] {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px;
+    background: var(--paper-deep);
+    color: var(--ink);
+    border: 1px solid var(--rule-strong);
+    padding: 4px 8px;
+    cursor: pointer;
+    border-radius: 2px;
+  }
+  button:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  button.hot {
+    background: var(--vermilion);
+    color: #fff;
+    border-color: var(--vermilion);
+  }
+  button.hot:hover {
+    background: #8c1f15;
+  }
+  button.active-audio {
+    background: var(--jade);
+    color: #fff;
+    border-color: var(--jade);
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 310px 1fr 350px;
+    min-height: calc(100vh - 44px);
+  }
+  @media (max-width: 1180px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+  .pane {
+    border-right: 1px solid var(--rule-strong);
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .pane:last-child { border-right: none; }
+  .section-head {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-soft);
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .matrix-grid {
+    display: grid;
+    grid-template-columns: repeat(11, 1fr);
+    gap: 2px;
+    background: var(--paper-dim);
+    padding: 4px;
+    border: 1px solid var(--rule-strong);
+  }
+  .m-cell {
+    aspect-ratio: 1;
+    font-size: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(242,234,217,0.45);
+    color: var(--ink-faint);
+    border-radius: 1px;
+  }
+  .m-cell.city {
+    background: var(--paper);
+    color: var(--ink);
+    font-weight: 700;
+    cursor: pointer;
+    border: 1px solid rgba(25,21,18,0.22);
+  }
+  .m-cell.city:hover {
+    background: var(--ochre);
+    color: #fff;
+  }
+  .m-cell.city.selected {
+    background: var(--vermilion);
+    color: #fff;
+    border-color: var(--ink);
+  }
+  .city-list {
+    max-height: 270px;
+    overflow-y: auto;
+    border: 1px solid var(--rule);
+    background: rgba(255,255,255,0.28);
+  }
+  .city-row {
+    padding: 5px 8px;
+    border-bottom: 1px solid var(--rule);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 12px;
+  }
+  .city-row:hover { background: var(--paper-deep); }
+  .city-row.selected {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .city-row .meta {
+    font-size: 10px;
+    opacity: 0.72;
+  }
+  .forge-box {
+    background: var(--paper-deep);
+    border: 1px solid var(--rule-strong);
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .mut-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
+  }
+  .mut-grid button {
+    font-size: 10px;
+    padding: 3px 5px;
+    text-align: left;
+  }
+  .stage-wrap {
+    display: flex;
+    flex-direction: column;
+    padding: 12px 16px;
+    gap: 10px;
+    background:
+      radial-gradient(ellipse at 50% 20%, rgba(255,252,244,0.7), transparent 70%),
+      var(--paper);
+  }
+  .city-banner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 6px;
+    gap: 8px;
+  }
+  .city-banner h1 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+  }
+  .city-banner .sub {
+    font-size: 11px;
+    color: var(--vermilion);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .canvas-frame {
+    position: relative;
+    border: 2px solid var(--ink);
+    background: #161310;
+    height: 450px;
+    overflow: hidden;
+    box-shadow: inset 0 0 40px rgba(0,0,0,0.65);
+  }
+  canvas#stage {
+    width: 100%;
+    height: 100%;
+    display: block;
+    cursor: crosshair;
+  }
+  .hud-overlay {
+    position: absolute;
+    left: 10px;
+    bottom: 8px;
+    right: 10px;
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+    color: rgba(242,234,217,0.86);
+    font-size: 10px;
+    text-shadow: 0 1px 2px #000;
+  }
+  .slider-strip {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    background: var(--paper-deep);
+    border: 1px solid var(--rule-strong);
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+  .slider-strip label {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  input[type="range"] {
+    accent-color: var(--vermilion);
+    width: 100%;
+  }
+  .agent-card {
+    background: rgba(255,255,255,0.42);
+    border: 1px solid var(--rule-strong);
+    border-left: 3px solid var(--vermilion);
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+  .agent-card.pole-b {
+    border-left-color: var(--cobalt);
+  }
+  .agent-card .ag-head {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+  .emblem-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    margin-top: 4px;
+  }
+  .emblem-tags span {
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    padding: 1px 4px;
+    font-size: 9px;
+  }
+  .dag-log {
+    font-size: 10px;
+    background: #191512;
+    color: #e8dec8;
+    padding: 8px;
+    border: 1px solid var(--ink);
+    max-height: 210px;
+    overflow-y: auto;
+    line-height: 1.45;
+  }
+  .dag-log .scar { color: #ff7a6b; }
+  .dag-log .ok { color: #7fe0b0; }
+  .dag-log .warn { color: #f3c26b; }
+</style>
+</head>
+<body>
+<header class="mast mono">
+  <div class="brand">
+    <span>WORLDFUL · SCION SWARM BUILDER</span>
+    <span class="pill" id="swarmCountBadge">55 BESPOKE SWARMS</span>
+    <span style="opacity:0.7" id="ologBadge"></span>
+  </div>
+  <div class="controls-bar">
+    <button id="btnStep" title="Execute 1 autonomous swarm round">STEP TICK</button>
+    <button id="btnBurst" class="hot" title="Hammer accumulator with 100x contended micro-commits">100x CONTENTION STORM</button>
+    <button id="btnAudio" title="Synthesize live polyphonic harmonic intervals per agent">AUDIO: OFF</button>
+    <button id="btnRestorePeak" title="Revert overpolished drift to Peak Checkpoint">RESTORE PEAK</button>
+  </div>
+</header>
+
+<div class="layout">
+  <!-- LEFT PANE: 9x11 CALVINO MATRIX + QUINE SCION FORGE -->
+  <aside class="pane">
+    <div class="section-head mono">
+      <span>Calvino 9×11 Diagonal Lattice</span>
+      <span id="matrixCoord">CH 1 · #1</span>
+    </div>
+    <div class="matrix-grid mono" id="matrixGrid" title="11 Series × 55 Cities Oulipian Cascade"></div>
+
+    <div class="section-head mono">
+      <span>Handmade City Swarms</span>
+      <input type="text" id="searchBox" placeholder="Filter city/agent..." style="padding:2px 5px;width:125px;">
+    </div>
+    <div class="city-list" id="cityList"></div>
+
+    <div class="forge-box">
+      <div class="section-head mono" style="border-color:var(--rule-strong)">
+        <span>Quine Rule-Mutation Scion Forge</span>
+      </div>
+      <div class="mut-grid" id="mutGrid"></div>
+      <div style="border-top:1px solid var(--rule);padding-top:6px;margin-top:2px;" class="mono">
+        <div style="font-size:10px;margin-bottom:4px;">ATLAS HYBRID GRAFT (p.138 Troy × Constantinople):</div>
+        <div style="display:flex;gap:4px;margin-bottom:4px;">
+          <select id="hybridA" style="flex:1"></select>
+          <select id="hybridB" style="flex:1"></select>
+        </div>
+        <button id="btnHybrid" style="width:100%">FORGE HYBRID SCION SWARM</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- CENTER PANE: PLAYABLE MULTIPLANE SWARM STAGE -->
+  <main class="stage-wrap">
+    <div class="city-banner">
+      <div>
+        <div class="sub mono" id="citySeriesLabel"></div>
+        <h1 id="cityTitle"></h1>
+      </div>
+      <div class="mono" style="text-align:right;font-size:11px;">
+        <div>TOPOLOGY: <strong id="cityTopology"></strong></div>
+        <div style="color:var(--ink-soft)">OPPOSES DESERT: <span id="cityDesert"></span></div>
+      </div>
+    </div>
+
+    <div class="canvas-frame">
+      <canvas id="stage"></canvas>
+      <div class="hud-overlay mono">
+        <span id="hudOptics"></span>
+        <span>CLICK CANVAS: INJECT EBONY-PORE CONTENTION ARCH</span>
+      </div>
+    </div>
+
+    <div class="slider-strip mono">
+      <label>
+        <div style="display:flex;justify-content:space-between;">
+          <span>POLO EXCEPTION SUBTRACTOR ↔ KUBLAI NORM</span>
+          <span id="normVal">0.18 (Jagged)</span>
+        </div>
+        <input type="range" id="normSlider" min="0" max="100" value="18">
+      </label>
+      <label>
+        <div style="display:flex;justify-content:space-between;">
+          <span>SWARM STRICTNESS GATE (§9 Sparsity Breaker &gt;0.95)</span>
+          <span id="strictVal">0.85</span>
+        </div>
+        <input type="range" id="strictSlider" min="50" max="99" value="85">
+      </label>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;" class="mono" id="lociStrip"></div>
+  </main>
+
+  <!-- RIGHT PANE: BESPOKE AGENT ROSTER & LOCKLESS PHILOGYNY DAG -->
+  <aside class="pane">
+    <div class="section-head mono">
+      <span>Bespoke Agent Swarm (Zero Shared Roles)</span>
+      <span id="overlapProof" style="color:var(--jade)">JACCARD=0.000</span>
+    </div>
+    <div id="agentRoster" style="display:flex;flex-direction:column;gap:6px;"></div>
+
+    <div class="section-head mono">
+      <span>Lockless Philogyny DAG &amp; Arch Scars</span>
+      <span id="tensionReadout"></span>
+    </div>
+    <div class="dag-log mono" id="dagLog"></div>
+  </aside>
+</div>
+
+<script>
+const PAYLOAD = {"ologRevision":"olog_rev_002:cce75c358010659c (prior:olog_rev_001:94c837a32a540b11)","seriesOrder":["Cities and memory","Cities and desire","Cities and signs","Thin cities","Trading cities","Cities and eyes","Cities and names","Cities and the dead","Cities and the sky","Continuous cities","Hidden cities"],"mutationOps":["invert_goal","mirror_axis","slow_time","spawn_echo","simplify_rules","invert_axiom","transmute_medium"],"cities":[{"index":1,"name":"Diomira","chapter":1,"series":"Cities and memory","rank":1,"page":7,"topology":"PALIMPSEST_ECHO","desert":"interchangeable familiar domes","poleAlpha":"known_silver_taxonomy","poleBeta":"september_lamp_envy","optics":"Lead-paved twilight reflection punctured by simultaneous food-stall lamp ignition","loci":["silver_dome_ring","crystal_theater_stalls","terrace_balustrade"],"peakHash":"43b2c486ff3095cd4e6fcf150b1f447e","peakTension":32.2,"archScars":[],"agents":[{"name":"diomira_silver_domer","locus":"silver_dome_ring","op":"altitude_max","polarity":"known_silver_taxonomy","emblems":["sixty_silver_domes","lead_paving","golden_cock_tower"],"mag":6.0,"ratio":[1,1]},{"name":"diomira_bronze_pantheon_caster","locus":"silver_dome_ring","op":"emblem_union","polarity":"known_silver_taxonomy","emblems":["bronze_god_statues","crystal_theater"],"mag":4.2,"ratio":[5,4]},{"name":"diomira_september_lamp_lighter","locus":"crystal_theater_stalls","op":"polarity_carve","polarity":"september_lamp_envy","emblems":["simultaneous_multicolored_lamps","shortening_dusk"],"mag":7.4,"ratio":[3,2]},{"name":"diomira_terrace_cry_envier","locus":"terrace_balustrade","op":"polarity_carve","polarity":"known_silver_taxonomy","emblems":["womans_ooh_cry","counterfactual_past_joy"],"mag":3.8,"ratio":[15,8]}]},{"index":2,"name":"Isidora","chapter":1,"series":"Cities and memory","rank":2,"page":8,"topology":"PALIMPSEST_ECHO","desert":"wilderness ride before desire","poleAlpha":"young_dreamer_spiral","poleBeta":"aged_wall_spectator","optics":"Nacreous spiral seashell sheen refracted through ground telescope lenses onto bench stone","loci":["seashell_stairwell","luthier_optic_bench","old_mens_square_wall"],"peakHash":"6372b2647a4b54718b60ca6b9b651768","peakTension":121.3785,"archScars":["arch(old_mens_square_wall:aged_wall_spectator<->young_dreamer_spiral@span=6.04)","arch(old_mens_square_wall:aged_wall_spectator<->young_dreamer_spiral@span=6.11)","arch(old_mens_square_wall:aged_wall_spectator<->young_dreamer_spiral@span=6.17)"],"agents":[{"name":"isidora_conch_stair_carver","locus":"seashell_stairwell","op":"altitude_max","polarity":"young_dreamer_spiral","emblems":["spiral_staircase","encrusted_seashells"],"mag":5.5,"ratio":[9,8]},{"name":"isidora_violin_lens_grinder","locus":"luthier_optic_bench","op":"emblem_union","polarity":"young_dreamer_spiral","emblems":["perfect_telescope","resonant_violin","third_woman_detour"],"mag":6.1,"ratio":[5,3]},{"name":"isidora_cockpit_brawl_igniter","locus":"old_mens_square_wall","op":"polarity_carve","polarity":"young_dreamer_spiral","emblems":["bloody_cockfight_bet","spilled_feathers"],"mag":7.2,"ratio":[7,4]},{"name":"isidora_senescent_wall_seater","locus":"old_mens_square_wall","op":"polarity_carve","polarity":"aged_wall_spectator","emblems":["row_of_old_men","desire_already_memory"],"mag":2.1,"ratio":[16,9]}]},{"index":3,"name":"Dorothea","chapter":1,"series":"Cities and desire","rank":1,"page":9,"topology":"DESIRE_TRAP_BIFURCATION","desert":"monotone caravan desert","poleAlpha":"deductive_monopoly_census","poleBeta":"camel_driver_morning_openness","optics":"Cold brushed aluminum tower glare split by four green canal ribbons and fluttering banners","loci":["seven_spring_gates","nine_canal_quarters","trumpet_banner_market"],"peakHash":"a8c64f6b4d82c6c662b944912fb0a87f","peakTension":116.5,"archScars":["arch(trumpet_banner_market:camel_driver_morning_openness<->deductive_monopoly_census@span=5.70)"],"agents":[{"name":"dorothea_drawbridge_enumerator","locus":"seven_spring_gates","op":"altitude_max","polarity":"deductive_monopoly_census","emblems":["four_aluminum_towers","seven_spring_drawbridges","four_green_canals"],"mag":7.0,"ratio":[4,3]},{"name":"dorothea_exogamy_ledger_clerk","locus":"nine_canal_quarters","op":"emblem_union","polarity":"deductive_monopoly_census","emblems":["bergamot","sturgeon_roe","astrolabes","amethysts"],"mag":5.0,"ratio":[3,2]},{"name":"dorothea_brass_platform_trumpeter","locus":"trumpet_banner_market","op":"polarity_carve","polarity":"camel_driver_morning_openness","emblems":["three_trumpet_soldiers","turning_wheels","colored_banners"],"mag":8.1,"ratio":[5,4]},{"name":"dorothea_direct_gaze_bifurcator","locus":"trumpet_banner_market","op":"polarity_carve","polarity":"deductive_monopoly_census","emblems":["fine_teeth_eye_contact","uncounted_desert_paths"],"mag":3.4,"ratio":[9,5]}]},{"index":4,"name":"Zaira","chapter":1,"series":"Cities and memory","rank":3,"page":10,"topology":"PALIMPSEST_ECHO","desert":"mute geometric mensuration","poleAlpha":"raw_step_degree_ruler","poleBeta":"sponge_event_scar_palimpsest","optics":"Zinc-scale roof glint cross-hatched by dawn shadow-lines linking lamppost, railing, and torn net","loci":["usurper_lamppost","nuptial_railing_gutter","gunboat_cape_dock"],"peakHash":"9246b0bc6a25bb9c5a450fc98af015d9","peakTension":111.552,"archScars":["arch(usurper_lamppost:raw_step_degree_ruler<->sponge_event_scar_palimpsest@span=5.16)","arch(usurper_lamppost:raw_step_degree_ruler<->sponge_event_scar_palimpsest@span=5.29)","arch(usurper_lamppost:raw_step_degree_ruler<->sponge_event_scar_palimpsest@span=5.66)"],"agents":[{"name":"zaira_zinc_arcade_surveyor","locus":"usurper_lamppost","op":"polarity_carve","polarity":"raw_step_degree_ruler","emblems":["stair_streets","arcade_curve_degrees","zinc_roof_scales"],"mag":3.2,"ratio":[6,5]},{"name":"zaira_gallows_festoon_spanner","locus":"usurper_lamppost","op":"polarity_carve","polarity":"sponge_event_scar_palimpsest","emblems":["swaying_usurper_feet","queen_nuptial_festoons"],"mag":7.8,"ratio":[4,3]},{"name":"zaira_dawn_gutter_cat_tracker","locus":"nuptial_railing_gutter","op":"emblem_union","polarity":"sponge_event_scar_palimpsest","emblems":["adulterer_railing_leap","tilted_gutter_cat_slip"],"mag":5.6,"ratio":[3,2]},{"name":"zaira_bomb_net_palm_reader","locus":"gunboat_cape_dock","op":"altitude_max","polarity":"sponge_event_scar_palimpsest","emblems":["gunboat_shell_crater","swaddling_usurper_myth","hand_line_scratches"],"mag":6.9,"ratio":[15,8]}]},{"index":5,"name":"Anastasia","chapter":1,"series":"Cities and desire","rank":2,"page":12,"topology":"DESIRE_TRAP_BIFURCATION","desert":"stifled sequential appetite","poleAlpha":"whole_awakened_indulgence","poleBeta":"chalcedony_cutter_servitude","optics":"Translucent banded agate and cherry-wood smoke beneath concentric canal glints and high kites","loci":["concentric_kite_canals","cherry_pheasant_pool","agate_lathe_bench"],"peakHash":"340e3c9f36a4739fd25468a47a7bbd04","peakTension":123.4,"archScars":["arch(agate_lathe_bench:chalcedony_cutter_servitude<->whole_awakened_indulgence@span=6.40)"],"agents":[{"name":"anastasia_kite_canal_ringer","locus":"concentric_kite_canals","op":"altitude_max","polarity":"whole_awakened_indulgence","emblems":["concentric_canals","overhead_kites"],"mag":5.8,"ratio":[1,1]},{"name":"anastasia_marjoram_pool_bather","locus":"cherry_pheasant_pool","op":"emblem_union","polarity":"whole_awakened_indulgence","emblems":["cherry_wood_pheasant","sweet_marjoram","garden_pool_chase"],"mag":6.4,"ratio":[5,4]},{"name":"anastasia_chrysoprase_facet_slave","locus":"agate_lathe_bench","op":"polarity_carve","polarity":"chalcedony_cutter_servitude","emblems":["eight_hour_agate_cut","onyx_chrysoprase_dust"],"mag":8.3,"ratio":[7,5]},{"name":"anastasia_desire_form_inverter","locus":"agate_lathe_bench","op":"polarity_carve","polarity":"whole_awakened_indulgence","emblems":["form_stolen_from_desire","contented_enslavement"],"mag":2.9,"ratio":[9,8]}]},{"index":6,"name":"Tamara","chapter":1,"series":"Cities and signs","rank":1,"page":13,"topology":"SEMIOTIC_INVERSION","desert":"unmarked silent stones and trees","poleAlpha":"thick_signboard_discourse","poleBeta":"unseen_sub_sign_interior","optics":"Jutting iron-and-gilt pictographic signboards occluding facades against wind-torn cloud horizon","loci":["jutting_guild_street","temple_decree_plaza","empty_cloud_horizon"],"peakHash":"8d2306e9cc7bc10b207bad5467ed33a8","peakTension":92.5,"archScars":["arch(jutting_guild_street:thick_signboard_discourse<->unseen_sub_sign_interior@span=2.90)","arch(jutting_guild_street:thick_signboard_discourse<->unseen_sub_sign_interior@span=5.30)"],"agents":[{"name":"tamara_emblem_bracket_hanger","locus":"jutting_guild_street","op":"altitude_max","polarity":"thick_signboard_discourse","emblems":["tooth_drawer_pincers","tavern_tankard","grocer_scales","halberds"],"mag":6.7,"ratio":[3,2]},{"name":"tamara_kiosk_taboo_codifier","locus":"temple_decree_plaza","op":"emblem_union","polarity":"thick_signboard_discourse","emblems":["zebra_watering_permit","no_kiosk_urination","averroes_volumes"],"mag":5.4,"ratio":[4,3]},{"name":"tamara_concealed_core_eraser","locus":"jutting_guild_street","op":"polarity_carve","polarity":"unseen_sub_sign_interior","emblems":["mute_hidden_tamara","repeated_city_script"],"mag":2.4,"ratio":[8,5]},{"name":"tamara_pareidolia_cloud_scanner","locus":"empty_cloud_horizon","op":"polarity_carve","polarity":"thick_signboard_discourse","emblems":["cloud_sailing_ship","cloud_hand","cloud_elephant"],"mag":7.1,"ratio":[15,8]}]},{"index":7,"name":"Zora","chapter":1,"series":"Cities and memory","rank":4,"page":15,"topology":"PALIMPSEST_ECHO","desert":"displaceable forgettable streets","poleAlpha":"immutable_honeycomb_score","poleBeta":"entropic_stasis_erasure","optics":"Clear astronomical glass and striped barber cloth frozen in dry air crumbling to chalk dust","loci":["clock_awning_fountain","glass_tower_kiosk","hermit_bath_harbor"],"peakHash":"697065d706618f653184e0a429d1e0de","peakTension":136.586,"archScars":["arch(hermit_bath_harbor:entropic_stasis_erasure<->immutable_honeycomb_score@span=6.21)","arch(hermit_bath_harbor:entropic_stasis_erasure<->immutable_honeycomb_score@span=6.51)","arch(hermit_bath_harbor:entropic_stasis_erasure<->immutable_honeycomb_score@span=7.67)"],"agents":[{"name":"zora_copper_score_sequencer","locus":"clock_awning_fountain","op":"emblem_union","polarity":"immutable_honeycomb_score","emblems":["copper_clock","striped_barber_awning","nine_jet_fountain"],"mag":6.0,"ratio":[9,8]},{"name":"zora_honeycomb_loci_indexer","locus":"glass_tower_kiosk","op":"altitude_max","polarity":"immutable_honeycomb_score","emblems":["astronomer_glass_tower","melon_kiosk","constellation_cells"],"mag":7.2,"ratio":[5,4]},{"name":"zora_itinerary_lock_warden","locus":"hermit_bath_harbor","op":"polarity_carve","polarity":"immutable_honeycomb_score","emblems":["hermit_lion_statue","turkish_bath","unalterable_note"],"mag":8.0,"ratio":[3,2]},{"name":"zora_motionless_dust_dissolver","locus":"hermit_bath_harbor","op":"polarity_carve","polarity":"entropic_stasis_erasure","emblems":["languished_masonry","earth_forgot_her"],"mag":1.5,"ratio":[16,15]}]},{"index":8,"name":"Despina","chapter":1,"series":"Cities and desire","rank":3,"page":17,"topology":"DESIRE_TRAP_BIFURCATION","desert":"dual sand-tableland and sea-waste","poleAlpha":"overland_steamboat_mirage","poleBeta":"seaward_camel_mirage","optics":"Coastline salt-haze cross-dissolving belching iron smokestacks into spotted camel humps","loci":["tableland_horizon_ridge","harbor_crane_taverns","coastline_haze_saddle"],"peakHash":"689949cc360d652592ca7624e1d3b1b4","peakTension":119.2,"archScars":["arch(tableland_horizon_ridge:overland_steamboat_mirage<->seaward_camel_mirage@span=5.80)"],"agents":[{"name":"despina_windsock_hull_rigger","locus":"tableland_horizon_ridge","op":"polarity_carve","polarity":"overland_steamboat_mirage","emblems":["skyscraper_pinnacles","flapping_windsocks","vibrating_iron_keel"],"mag":7.9,"ratio":[5,4]},{"name":"despina_tavern_bottle_brawler","locus":"harbor_crane_taverns","op":"emblem_union","polarity":"overland_steamboat_mirage","emblems":["foreign_crane_cargo","broken_flag_bottles","lit_window_hair_comb"],"mag":5.7,"ratio":[3,2]},{"name":"despina_hump_saddle_shimmerer","locus":"tableland_horizon_ridge","op":"polarity_carve","polarity":"seaward_camel_mirage","emblems":["glittering_saddle_fringe","two_spotted_humps","wineskin_packs"],"mag":3.1,"ratio":[7,5]},{"name":"despina_oasis_veil_projector","locus":"coastline_haze_saddle","op":"altitude_max","polarity":"seaward_camel_mirage","emblems":["thick_whitewashed_courts","barefoot_veiled_dancers"],"mag":6.3,"ratio":[9,5]}]},{"index":9,"name":"Zirma","chapter":1,"series":"Cities and signs","rank":2,"page":19,"topology":"SEMIOTIC_INVERSION","desert":"singular unremembered impression","poleAlpha":"obsessive_urban_repetition","poleBeta":"skeptical_companion_singularity","optics":"Low-altitude dirigible shadow sweeping across humid subterranean platforms and tattoo ink needles","loci":["cornice_dirigible_airway","cobblestone_puma_arcade","humid_subway_tattoo_row"],"peakHash":"302dce78b74616973a36a59576516d33","peakTension":123.1,"archScars":["arch(cornice_dirigible_airway:obsessive_urban_repetition<->skeptical_companion_singularity@span=7.10)"],"agents":[{"name":"zirma_cornice_lunatic_multiplier","locus":"cornice_dirigible_airway","op":"polarity_carve","polarity":"obsessive_urban_repetition","emblems":["window_level_dirigibles","teetering_cornice_lunatics"],"mag":8.4,"ratio":[6,5]},{"name":"zirma_puma_leash_echoer","locus":"cobblestone_puma_arcade","op":"emblem_union","polarity":"obsessive_urban_repetition","emblems":["shouting_blind_cane_taps","whim_leashed_pumas"],"mag":6.2,"ratio":[4,3]},{"name":"zirma_sailor_ink_puncturer","locus":"humid_subway_tattoo_row","op":"altitude_max","polarity":"obsessive_urban_repetition","emblems":["pierced_tattoo_patterns","humid_packed_trains"],"mag":5.9,"ratio":[3,2]},{"name":"zirma_single_witness_pruner","locus":"cornice_dirigible_airway","op":"polarity_carve","polarity":"skeptical_companion_singularity","emblems":["lone_hovering_blimp","single_fanning_matron"],"mag":2.3,"ratio":[11,8]}]},{"index":10,"name":"Isaura","chapter":1,"series":"Thin cities","rank":1,"page":20,"topology":"TENSILE_VOID_RIG","desert":"parched calcareous crust beyond lake rim","poleAlpha":"abyssal_black_lake_cult","poleBeta":"ascending_windlass_bucket_cult","optics":"Subterranean black-water gleam answered by sunlit airy scaffolding of pipes, pulleys, and weathercocks","loci":["calcareous_buried_lake","thousand_well_shafts","stilted_aqueduct_skyline"],"peakHash":"6eb06eb7f8f0b44c02f941703ae947fc","peakTension":29.8,"archScars":[],"agents":[{"name":"isaura_subterranean_lake_diviner","locus":"calcareous_buried_lake","op":"polarity_carve","polarity":"abyssal_black_lake_cult","emblems":["buried_black_lake","green_perimeter_trace"],"mag":2.6,"ratio":[1,1]},{"name":"isaura_vertical_bore_driller","locus":"thousand_well_shafts","op":"emblem_union","polarity":"ascending_windlass_bucket_cult","emblems":["deep_vertical_wells","twisting_trestle_probes"],"mag":6.5,"ratio":[5,4]},{"name":"isaura_noria_pulley_hoister","locus":"thousand_well_shafts","op":"polarity_carve","polarity":"ascending_windlass_bucket_cult","emblems":["suspended_cable_buckets","noria_windlasses","pump_handles"],"mag":8.2,"ratio":[3,2]},{"name":"isaura_weathercock_stilts_lifter","locus":"stilted_aqueduct_skyline","op":"altitude_max","polarity":"ascending_windlass_bucket_cult","emblems":["stilted_roof_reservoirs","slender_aqueducts","airy_weathercocks"],"mag":9.1,"ratio":[2,1]}]},{"index":11,"name":"Maurilia","chapter":2,"series":"Cities and memory","rank":5,"page":30,"topology":"PALIMPSEST_ECHO","desert":"continuous self-knowing identity","poleAlpha":"sepia_postcard_nostalgia","poleBeta":"alien_metropolis_succession","optics":"Harsh concrete overpass glare juxtaposed against sepia halftone grain of white parasols","loci":["overpass_bandstand_square","munitions_parasol_lot","departed_lares_threshold"],"peakHash":"8f1e5523d3db262b7b30ca3d5c6e00a3","peakTension":116.7755,"archScars":["arch(overpass_bandstand_square:alien_metropolis_succession<->sepia_postcard_nostalgia@span=5.44)","arch(overpass_bandstand_square:alien_metropolis_succession<->sepia_postcard_nostalgia@span=5.50)","arch(overpass_bandstand_square:alien_metropolis_succession<->sepia_postcard_nostalgia@span=5.73)"],"agents":[{"name":"maurilia_postcard_hen_curator","locus":"overpass_bandstand_square","op":"polarity_carve","polarity":"sepia_postcard_nostalgia","emblems":["postcard_square_hen","lost_bandstand","two_white_parasols"],"mag":3.3,"ratio":[5,4]},{"name":"maurilia_overpass_munitions_builder","locus":"overpass_bandstand_square","op":"polarity_carve","polarity":"alien_metropolis_succession","emblems":["bus_station_concrete","steel_overpass","munitions_factory"],"mag":8.0,"ratio":[4,3]},{"name":"maurilia_measured_regret_balancer","locus":"munitions_parasol_lot","op":"emblem_union","polarity":"sepia_postcard_nostalgia","emblems":["retroactive_provincial_grace","bounded_praise_etiquette"],"mag":5.1,"ratio":[3,2]},{"name":"maurilia_silent_god_replacer","locus":"departed_lares_threshold","op":"altitude_max","polarity":"alien_metropolis_succession","emblems":["homonymous_stranger_city","outsider_gods_beneath_names"],"mag":7.4,"ratio":[7,4]}]},{"index":12,"name":"Fedora","chapter":2,"series":"Cities and desire","rank":4,"page":32,"topology":"DESIRE_TRAP_BIFURCATION","desert":"single-timeline deterministic urbanism","poleAlpha":"gray_stone_necessity","poleBeta":"blue_crystal_globe_assumptions","optics":"Cold gray ashlar monolith enclosing dark metal rooms lit from within by ratusan blue glass spheres","loci":["gray_stone_arterials","metal_globe_museum","obsolete_utopia_vitrine"],"peakHash":"87118eec782de8aa2bafb4ea6fe17dfa","peakTension":29.8,"archScars":[],"agents":[{"name":"fedora_ashlar_necessity_mason","locus":"gray_stone_arterials","op":"polarity_carve","polarity":"gray_stone_necessity","emblems":["gray_stone_metropolis","dried_canal_bed","banished_elephant_avenue"],"mag":7.7,"ratio":[1,1]},{"name":"fedora_crystal_globe_blower","locus":"metal_globe_museum","op":"polarity_carve","polarity":"blue_crystal_globe_assumptions","emblems":["central_metal_museum","miniature_blue_fedora"],"mag":3.5,"ratio":[6,5]},{"name":"fedora_medusa_minaret_modeler","locus":"obsolete_utopia_vitrine","op":"emblem_union","polarity":"blue_crystal_globe_assumptions","emblems":["medusa_reflection_pond","canopied_elephant_box","pedestalless_spiral_minaret"],"mag":6.8,"ratio":[3,2]},{"name":"fedora_assumption_equalizer","locus":"metal_globe_museum","op":"altitude_max","polarity":"blue_crystal_globe_assumptions","emblems":["outdated_yesterday_future","coequal_map_assumptions"],"mag":6.9,"ratio":[9,5]}]},{"index":13,"name":"Zoe","chapter":2,"series":"Cities and signs","rank":3,"page":34,"topology":"SEMIOTIC_INVERSION","desert":"legible zoned civic hierarchy","poleAlpha":"mental_matrix_of_differences","poleBeta":"indivisible_pyramid_promiscuity","optics":"Uniform pyramidal roofs under flat shadowless haze erasing palace-from-slum contours","loci":["pyramid_roof_cluster","oracle_bazaar_hearth","wolf_wheel_perimeter"],"peakHash":"5de81caf5f593319e9b7afc37e4653c0","peakTension":117.1,"archScars":["arch(pyramid_roof_cluster:indivisible_pyramid_promiscuity<->mental_matrix_of_differences@span=6.70)"],"agents":[{"name":"zoe_zoning_difference_seeker","locus":"pyramid_roof_cluster","op":"polarity_carve","polarity":"mental_matrix_of_differences","emblems":["expected_prince_palace","expected_priest_temple"],"mag":2.8,"ratio":[4,3]},{"name":"zoe_pyramid_function_scrambler","locus":"pyramid_roof_cluster","op":"polarity_carve","polarity":"indivisible_pyramid_promiscuity","emblems":["leprosarium_or_odalisque_bath","sleep_forge_cook_reign_same_spot"],"mag":8.5,"ratio":[7,6]},{"name":"zoe_oracle_gold_blender","locus":"oracle_bazaar_hearth","op":"emblem_union","polarity":"indivisible_pyramid_promiscuity","emblems":["simultaneous_gold_and_disrobing","mingled_mental_features"],"mag":6.1,"ratio":[5,4]},{"name":"zoe_wolf_howl_border_blurrer","locus":"wolf_wheel_perimeter","op":"altitude_max","polarity":"indivisible_pyramid_promiscuity","emblems":["erased_inside_outside_line","wheel_rumble_meets_wolf_howl"],"mag":7.3,"ratio":[11,8]}]},{"index":14,"name":"Zenobia","chapter":2,"series":"Thin cities","rank":2,"page":35,"topology":"TENSILE_VOID_RIG","desert":"ground-bound desire-erasing cities","poleAlpha":"forgotten_founder_plan","poleBeta":"recombinatorial_stilt_desire","optics":"Dry terrain crisscrossed by high stilt shadows, zinc-and-bamboo belvederes, and snapping ribbons","loci":["dry_piling_forest","crossed_hanging_sidewalks","cone_belvedere_cranes"],"peakHash":"a4b4ed2ade3ac68e60531487ca780b82","peakTension":149.32,"archScars":["arch(dry_piling_forest:forgotten_founder_plan<->recombinatorial_stilt_desire@span=7.78)","arch(dry_piling_forest:forgotten_founder_plan<->recombinatorial_stilt_desire@span=7.89)","arch(dry_piling_forest:forgotten_founder_plan<->recombinatorial_stilt_desire@span=8.00)"],"agents":[{"name":"zenobia_dry_piling_driver","locus":"dry_piling_forest","op":"altitude_max","polarity":"recombinatorial_stilt_desire","emblems":["high_pilings_on_dry_land","bamboo_and_zinc_houses"],"mag":8.6,"ratio":[3,2]},{"name":"zenobia_hanging_ladder_weaver","locus":"crossed_hanging_sidewalks","op":"emblem_union","polarity":"recombinatorial_stilt_desire","emblems":["crossed_stilt_balconies","hanging_sidewalks","suspended_stairways"],"mag":7.1,"ratio":[5,4]},{"name":"zenobia_undeciphered_plan_ghost","locus":"dry_piling_forest","op":"polarity_carve","polarity":"forgotten_founder_plan","emblems":["lost_founding_command","superimposed_strata"],"mag":3.0,"ratio":[9,8]},{"name":"zenobia_banner_pulley_recombiner","locus":"cone_belvedere_cranes","op":"polarity_carve","polarity":"recombinatorial_stilt_desire","emblems":["cone_roofed_belvederes","jutting_fish_poles","fluttering_desire_ribbons"],"mag":8.1,"ratio":[2,1]}]},{"index":15,"name":"Euphemia","chapter":2,"series":"Trading cities","rank":1,"page":36,"topology":"CHORD_EXCHANGE_WEB","desert":"identical lying yellow-mat bazaars","poleAlpha":"daylight_commodity_barter","poleBeta":"solstice_campfire_memory_swap","optics":"Noon awning fly-shadow transmuting into nocturnal market-fire embers on carpet bales","loci":["yellow_mat_quay","equinox_campfire_circle","swaying_return_caravan"],"peakHash":"810fa34c339422418e6ded48379d9c91","peakTension":22.6,"archScars":[],"agents":[{"name":"euphemia_ginger_muslin_factor","locus":"yellow_mat_quay","op":"polarity_carve","polarity":"daylight_commodity_barter","emblems":["ginger_and_cotton_holds","pistachio_poppy_sacks","golden_muslin_bolts"],"mag":3.6,"ratio":[4,3]},{"name":"euphemia_seven_nation_fire_lighter","locus":"equinox_campfire_circle","op":"polarity_carve","polarity":"solstice_campfire_memory_swap","emblems":["solstice_equinox_gathering","carpet_bale_firelight"],"mag":8.2,"ratio":[5,4]},{"name":"euphemia_trigger_word_teller","locus":"equinox_campfire_circle","op":"emblem_union","polarity":"solstice_campfire_memory_swap","emblems":["wolf_tale","sister_tale","hidden_treasure_scabies_lovers"],"mag":7.5,"ratio":[3,2]},{"name":"euphemia_memory_transmuter","locus":"swaying_return_caravan","op":"altitude_max","polarity":"solstice_campfire_memory_swap","emblems":["alien_wolf_in_memory","different_sister_on_junk"],"mag":7.9,"ratio":[15,8]}]},{"index":16,"name":"Zobeide","chapter":3,"series":"Cities and desire","rank":5,"page":45,"topology":"DESIRE_TRAP_BIFURCATION","desert":"open escape trajectories in dream","poleAlpha":"fugitive_moonlit_pursuit","poleBeta":"calcified_skein_trap","optics":"Stark whitewashed moonlit walls wound into dead-end blind cul-de-sacs without exits","loci":["moon_exposed_skein","fugitive_vanishing_corner","commuter_trap_arcades"],"peakHash":"4cb1dc9d3ea98524e5a70ebd1f75f567","peakTension":27.4,"archScars":[],"agents":[{"name":"zobeide_dream_pursuit_tracer","locus":"moon_exposed_skein","op":"polarity_carve","polarity":"fugitive_moonlit_pursuit","emblems":["identical_multi_nation_dream","fleeing_long_haired_shadow"],"mag":2.9,"ratio":[5,4]},{"name":"zobeide_escape_blocker_mason","locus":"fugitive_vanishing_corner","op":"polarity_carve","polarity":"calcified_skein_trap","emblems":["rearranged_blind_walls","sealed_vanishing_spot"],"mag":8.7,"ratio":[7,4]},{"name":"zobeide_skein_arcade_rewinder","locus":"fugitive_vanishing_corner","op":"altitude_max","polarity":"calcified_skein_trap","emblems":["wound_street_skein","shifted_pursuit_stairways"],"mag":7.4,"ratio":[3,2]},{"name":"zobeide_amnesiac_work_warden","locus":"commuter_trap_arcades","op":"emblem_union","polarity":"calcified_skein_trap","emblems":["forgotten_dream_chase","ugly_inescapable_trap"],"mag":6.6,"ratio":[16,9]}]},{"index":17,"name":"Hypatia","chapter":3,"series":"Cities and signs","rank":4,"page":47,"topology":"SEMIOTIC_INVERSION","desert":"conventional emblem-to-referent comfort","poleAlpha":"expected_classical_imagery","poleBeta":"inverted_thing_syntax","optics":"Cerulean magnolia lagoon surface hiding bottom crabs, porphyry domes above black-chained basalt","loci":["magnolia_suicide_lagoon","porphyry_basalt_palace","tomb_flute_pinnacle"],"peakHash":"f341905c986121c34d4b5da45a826815","peakTension":118.0,"archScars":["arch(magnolia_suicide_lagoon:expected_classical_imagery<->inverted_thing_syntax@span=6.60)"],"agents":[{"name":"hypatia_lagoon_crab_reverser","locus":"magnolia_suicide_lagoon","op":"polarity_carve","polarity":"inverted_thing_syntax","emblems":["reflected_magnolias","crab_bitten_drowned_suicides"],"mag":8.3,"ratio":[7,6]},{"name":"hypatia_naive_expectation_breaker","locus":"magnolia_suicide_lagoon","op":"polarity_carve","polarity":"expected_classical_imagery","emblems":["expected_bathing_ladies","collapsed_vellum_alphabets","opium_adolescent"],"mag":2.7,"ratio":[5,4]},{"name":"hypatia_stable_tomb_transposer","locus":"porphyry_basalt_palace","op":"emblem_union","polarity":"inverted_thing_syntax","emblems":["basalt_quarry_convicts","greaved_stable_amazons","cemetery_flute_harp_duet"],"mag":7.8,"ratio":[4,3]},{"name":"hypatia_citadel_sky_ship_watcher","locus":"tomb_flute_pinnacle","op":"altitude_max","polarity":"inverted_thing_syntax","emblems":["lawn_ninepins_sage","highest_pinnacle_ship_wait"],"mag":8.9,"ratio":[15,8]}]},{"index":18,"name":"Armilla","chapter":3,"series":"Thin cities","rank":3,"page":49,"topology":"TENSILE_VOID_RIG","desert":"load-bearing brick-and-mortar enclosure","poleAlpha":"dissolved_masonry_shell","poleBeta":"indestructible_naiad_plumbing","optics":"Glittering sun-threads of open shower spray and suspended white porcelain against raw sky","loci":["vertical_riser_forest","suspended_porcelain_boughs","morning_naiad_fountains"],"peakHash":"2ab83cfc60a867b105b8b4f43d6c1679","peakTension":171.37,"archScars":["arch(vertical_riser_forest:dissolved_masonry_shell<->indestructible_naiad_plumbing@span=8.99)","arch(vertical_riser_forest:dissolved_masonry_shell<->indestructible_naiad_plumbing@span=9.12)","arch(vertical_riser_forest:dissolved_masonry_shell<->indestructible_naiad_plumbing@span=9.25)"],"agents":[{"name":"armilla_bricklayer_abdicator","locus":"vertical_riser_forest","op":"polarity_carve","polarity":"dissolved_masonry_shell","emblems":["zero_walls_zero_ceilings","zero_floors_open_void"],"mag":2.2,"ratio":[9,8]},{"name":"armilla_hydraulic_riser_plumber","locus":"vertical_riser_forest","op":"polarity_carve","polarity":"indestructible_naiad_plumbing","emblems":["vertical_house_pipes","horizontal_floor_runs","overflow_spouts"],"mag":8.8,"ratio":[5,4]},{"name":"armilla_porcelain_fruit_hanger","locus":"suspended_porcelain_boughs","op":"altitude_max","polarity":"indestructible_naiad_plumbing","emblems":["sky_framed_white_lavabo","suspended_bathtubs","late_porcelain_fruit"],"mag":8.4,"ratio":[3,2]},{"name":"armilla_naiad_spray_chorister","locus":"morning_naiad_fountains","op":"emblem_union","polarity":"indestructible_naiad_plumbing","emblems":["sunlit_water_threads","sponge_suds_mirror","singing_aquatic_maidens"],"mag":7.6,"ratio":[2,1]}]},{"index":19,"name":"Chloe","chapter":3,"series":"Trading cities","rank":2,"page":51,"topology":"CHORD_EXCHANGE_WEB","desert":"clumsy consummated interpersonal friction","poleAlpha":"untouched_chaste_vibration","poleBeta":"fantasy_stopping_contact","optics":"Rain-darkened bazaar arcade streaked by darting geometric sightline vectors between strangers","loci":["parasol_coral_promenade","rain_arcade_shelter","bandstand_awning_nexus"],"peakHash":"09b827fb35640d84e6106084f3243f64","peakTension":127.6,"archScars":["arch(rain_arcade_shelter:fantasy_stopping_contact<->untouched_chaste_vibration@span=7.00)"],"agents":[{"name":"chloe_glance_polygon_drawer","locus":"parasol_coral_promenade","op":"emblem_union","polarity":"untouched_chaste_vibration","emblems":["twirling_parasol_girl","veiled_trembling_matron","tattooed_giant","coral_twins"],"mag":7.5,"ratio":[5,4]},{"name":"chloe_cheetah_fan_combinator","locus":"bandstand_awning_nexus","op":"altitude_max","polarity":"untouched_chaste_vibration","emblems":["blind_man_leashed_cheetah","ostrich_fan_courtesan","white_haired_youth"],"mag":6.9,"ratio":[3,2]},{"name":"chloe_silent_arcade_consummator","locus":"rain_arcade_shelter","op":"polarity_carve","polarity":"untouched_chaste_vibration","emblems":["wordless_fingerless_orgy","exhausted_arrow_star_triangles"],"mag":8.5,"ratio":[9,5]},{"name":"chloe_realization_quarantine_guard","locus":"rain_arcade_shelter","op":"polarity_carve","polarity":"fantasy_stopping_contact","emblems":["forbidden_spoken_greeting","protected_phantom_carousel"],"mag":2.5,"ratio":[16,15]}]},{"index":20,"name":"Valdrada","chapter":3,"series":"Cities and eyes","rank":1,"page":53,"topology":"SPECULAR_PARALLAX","desert":"unwitnessed forgetful spontaneity","poleAlpha":"erect_parapet_action","poleBeta":"limpid_inverted_lake_image","optics":"Railed cliffside verandas doubled down into razor-cold, pitch-clear lacustrine specular inversion","loci":["tiered_lake_verandas","wardrobe_interior_ceiling","specular_water_plane"],"peakHash":"b5a30d69459ba7f229225d27a8e1a7f9","peakTension":136.6,"archScars":["arch(specular_water_plane:erect_parapet_action<->limpid_inverted_lake_image@span=7.20)"],"agents":[{"name":"valdrada_veranda_parapet_builder","locus":"tiered_lake_verandas","op":"altitude_max","polarity":"erect_parapet_action","emblems":["stacked_railed_verandas","fluted_lake_facades"],"mag":7.6,"ratio":[4,3]},{"name":"valdrada_flesh_dagger_actor","locus":"specular_water_plane","op":"polarity_carve","polarity":"erect_parapet_action","emblems":["twisted_lovers_skin","tendon_blade_black_blood"],"mag":8.6,"ratio":[3,2]},{"name":"valdrada_limpid_mirror_inverter","locus":"specular_water_plane","op":"polarity_carve","polarity":"limpid_inverted_lake_image","emblems":["cold_limpid_image_dignity","point_by_point_asymmetry"],"mag":2.4,"ratio":[8,5]},{"name":"valdrada_loveless_eye_interlocker","locus":"wardrobe_interior_ceiling","op":"emblem_union","polarity":"limpid_inverted_lake_image","emblems":["reflected_wardrobe_mirrors","interlocked_loveless_eyes"],"mag":7.1,"ratio":[15,8]}]},{"index":21,"name":"Olivia","chapter":4,"series":"Cities and signs","rank":5,"page":61,"topology":"SEMIOTIC_INVERSION","desert":"literal transparent correspondence","poleAlpha":"filigree_peacock_euphemism","poleBeta":"soot_mandrel_lathe_truth","optics":"Mullioned patio sprinkler rainbows choked by thick black grease-soot and illuminated night-canoes","loci":["filigree_peacock_patio","mandrel_lathe_shops","green_estuary_outskirts"],"peakHash":"791278bb078b0ec2b5eae93b2371f6b7","peakTension":113.8,"archScars":["arch(filigree_peacock_patio:filigree_peacock_euphemism<->soot_mandrel_lathe_truth@span=6.40)"],"agents":[{"name":"olivia_filigree_peacock_speaker","locus":"filigree_peacock_patio","op":"polarity_carve","polarity":"filigree_peacock_euphemism","emblems":["mullioned_fringed_cushions","spinning_lawn_white_peacock","lit_estuary_canoes"],"mag":3.1,"ratio":[5,4]},{"name":"olivia_grease_trailer_crusher","locus":"filigree_peacock_patio","op":"polarity_carve","polarity":"soot_mandrel_lathe_truth","emblems":["sticky_soot_grease_cloud","pedestrian_crushing_trailers"],"mag":8.5,"ratio":[7,5]},{"name":"olivia_mandrel_shift_repeater","locus":"mandrel_lathe_shops","op":"altitude_max","polarity":"soot_mandrel_lathe_truth","emblems":["lathe_teeth_mandrel","thousand_hand_shift_pace"],"mag":7.4,"ratio":[4,3]},{"name":"olivia_darkness_sarcasm_laugher","locus":"green_estuary_outskirts","op":"emblem_union","polarity":"soot_mandrel_lathe_truth","emblems":["sleepwalker_commuter_lines","falsehood_in_things_not_words"],"mag":6.8,"ratio":[9,8]}]},{"index":22,"name":"Sophronia","chapter":4,"series":"Thin cities","rank":4,"page":63,"topology":"TENSILE_VOID_RIG","desert":"stolid immovable institutional permanence","poleAlpha":"permanent_roller_coaster_carnival","poleBeta":"nomadic_trailer_ministry_stone","optics":"Skeletal Ferris-wheel cages and trapeze humps standing silhouetted beside vacant unbolted marble lots","loci":["roller_coaster_big_top","bolted_marble_ministry_lot","annual_trailer_highway"],"peakHash":"80057a134f338ffa9ad7781bf6b6f9a7","peakTension":135.205,"archScars":["arch(bolted_marble_ministry_lot:nomadic_trailer_ministry_stone<->permanent_roller_coaster_carnival@span=6.93)","arch(bolted_marble_ministry_lot:nomadic_trailer_ministry_stone<->permanent_roller_coaster_carnival@span=7.03)","arch(bolted_marble_ministry_lot:nomadic_trailer_ministry_stone<->permanent_roller_coaster_carnival@span=7.12)"],"agents":[{"name":"sophronia_coaster_trapeze_anchor","locus":"roller_coaster_big_top","op":"altitude_max","polarity":"permanent_roller_coaster_carnival","emblems":["steep_roller_coaster_humps","spinning_cage_ferris_wheel","wall_of_death_motorcycles"],"mag":8.9,"ratio":[3,2]},{"name":"sophronia_marble_ministry_rigger","locus":"bolted_marble_ministry_lot","op":"polarity_carve","polarity":"nomadic_trailer_ministry_stone","emblems":["portable_marble_bank","demountable_refinery_hospital"],"mag":3.2,"ratio":[4,3]},{"name":"sophronia_pediment_unbolter_crew","locus":"bolted_marble_ministry_lot","op":"polarity_carve","polarity":"permanent_roller_coaster_carnival","emblems":["lowered_cement_pylons","vacant_half_city_foundation"],"mag":8.1,"ratio":[5,3]},{"name":"sophronia_suspended_shout_counter","locus":"annual_trailer_highway","op":"emblem_union","polarity":"permanent_roller_coaster_carnival","emblems":["trailer_convoy_departure","counting_months_for_return"],"mag":6.7,"ratio":[15,8]}]},{"index":23,"name":"Eutropia","chapter":4,"series":"Trading cities","rank":3,"page":64,"topology":"CHORD_EXCHANGE_WEB","desert":"single-site biographical exhaustion","poleAlpha":"rotational_role_renewal","poleBeta":"identical_mercurial_yawn","optics":"Crisp wind-swept plateau of multiple empty twin towns shifting occupancy like chessmen","loci":["inhabited_plateau_town","vacant_waiting_twins","mercury_chessboard_plain"],"peakHash":"c883b8a53f3d14d250e55227d1a9e49d","peakTension":112.9,"archScars":["arch(inhabited_plateau_town:identical_mercurial_yawn<->rotational_role_renewal@span=6.10)"],"agents":[{"name":"eutropia_weariness_exodus_bell","locus":"inhabited_plateau_town","op":"polarity_carve","polarity":"rotational_role_renewal","emblems":["unbearable_debt_and_relatives","simultaneous_citizen_migration"],"mag":8.0,"ratio":[5,4]},{"name":"eutropia_wife_job_reallocator","locus":"vacant_waiting_twins","op":"emblem_union","polarity":"rotational_role_renewal","emblems":["fresh_window_declivity","swapped_job_wife_gossip"],"mag":7.2,"ratio":[3,2]},{"name":"eutropia_mercury_board_stepper","locus":"mercury_chessboard_plain","op":"altitude_max","polarity":"identical_mercurial_yawn","emblems":["empty_plateau_chessboard","joltless_equal_wealth"],"mag":6.4,"ratio":[4,3]},{"name":"eutropia_alternate_mouth_yawner","locus":"inhabited_plateau_town","op":"polarity_carve","polarity":"identical_mercurial_yawn","emblems":["recast_identical_scenes","alternate_mouths_same_yawn"],"mag":2.9,"ratio":[9,8]}]},{"index":24,"name":"Zemrude","chapter":4,"series":"Cities and eyes","rank":2,"page":66,"topology":"SPECULAR_PARALLAX","desert":"objective angle-independent facade","poleAlpha":"whistling_upward_sill_gaze","poleBeta":"clenched_gutter_cellar_sink","optics":"High flapping sunlit window curtains severed at eye-horizon from fish-scaled wet cobblestones","loci":["flapping_curtain_sills","encrusted_wall_foot","manhole_cellar_wells"],"peakHash":"c8f565515c341e6249512e60d1e80cda","peakTension":125.2,"archScars":["arch(flapping_curtain_sills:clenched_gutter_cellar_sink<->whistling_upward_sill_gaze@span=6.60)"],"agents":[{"name":"zemrude_nose_tilt_whistler","locus":"flapping_curtain_sills","op":"polarity_carve","polarity":"whistling_upward_sill_gaze","emblems":["upward_window_sills","flapping_curtains_fountains"],"mag":8.2,"ratio":[2,1]},{"name":"zemrude_palm_nail_clencher","locus":"flapping_curtain_sills","op":"polarity_carve","polarity":"clenched_gutter_cellar_sink","emblems":["nails_dug_in_palms","gutter_fish_scales_wastepaper"],"mag":2.6,"ratio":[16,15]},{"name":"zemrude_drainpipe_gravity_puller","locus":"encrusted_wall_foot","op":"emblem_union","polarity":"clenched_gutter_cellar_sink","emblems":["yesterday_ill_humor_crust","irreversible_cobblestone_lock"],"mag":7.3,"ratio":[7,6]},{"name":"zemrude_subsoil_eye_digger","locus":"manhole_cellar_wells","op":"altitude_max","polarity":"clenched_gutter_cellar_sink","emblems":["manhole_covers","gaze_digging_cellars_and_wells"],"mag":6.8,"ratio":[4,3]}]},{"index":25,"name":"Aglaura","chapter":4,"series":"Cities and names","rank":1,"page":67,"topology":"ONOMASTIC_SHARD_SHUFFLE","desert":"fresh unlabelled perceptual speech","poleAlpha":"compact_proverbial_name_fortress","poleBeta":"unspoken_ground_glimmer","optics":"Opaque typographic density of repeated proverbs eclipsing a fleeting oblique street-corner gleam","loci":["proverbial_canon_forum","colorless_random_streets","unfixed_glimmer_corner"],"peakHash":"fbd3f5e7c4af1c155939dda3cd7e7a73","peakTension":136.3,"archScars":["arch(colorless_random_streets:compact_proverbial_name_fortress<->unspoken_ground_glimmer@span=6.70)","arch(proverbial_canon_forum:compact_proverbial_name_fortress<->unspoken_ground_glimmer@span=6.70)","arch(unfixed_glimmer_corner:compact_proverbial_name_fortress<->unspoken_ground_glimmer@span=6.70)"],"agents":[{"name":"aglaura_proverb_canon_repeater","locus":"proverbial_canon_forum","op":"polarity_carve","polarity":"compact_proverbial_name_fortress","emblems":["ancient_virtue_fault_code","solid_spoken_aglaura"],"mag":8.4,"ratio":[3,2]},{"name":"aglaura_inverted_norm_chronicler","locus":"colorless_random_streets","op":"emblem_union","polarity":"compact_proverbial_name_fortress","emblems":["bizarre_turned_usual","imprisoned_repetitive_words"],"mag":6.5,"ratio":[4,3]},{"name":"aglaura_nameless_hour_opener","locus":"proverbial_canon_forum","op":"polarity_carve","polarity":"unspoken_ground_glimmer","emblems":["rare_unmistakable_street_hint","ground_growing_aglaura"],"mag":2.7,"ratio":[9,5]},{"name":"aglaura_wordless_memory_mourner","locus":"unfixed_glimmer_corner","op":"altitude_max","polarity":"unspoken_ground_glimmer","emblems":["less_existing_visible_site","erased_for_lack_of_words"],"mag":7.0,"ratio":[15,8]}]},{"index":26,"name":"Octavia","chapter":5,"series":"Thin cities","rank":5,"page":75,"topology":"TENSILE_VOID_RIG","desert":"immortalist bedrock complacency","poleAlpha":"abyss_catenary_suspension","poleBeta":"finite_rope_lifespan_lucidity","optics":"Vertiginous cloud-chasm updrafts swaying hempen catwalks and sack-houses hung beneath wooden ties","loci":["twin_mountain_crest_anchors","hempen_tie_catwalk_net","underhung_gondola_abyss"],"peakHash":"7abff37a86412635af20c5376b79e6cc","peakTension":131.515,"archScars":["arch(hempen_tie_catwalk_net:abyss_catenary_suspension<->finite_rope_lifespan_lucidity@span=6.69)","arch(hempen_tie_catwalk_net:abyss_catenary_suspension<->finite_rope_lifespan_lucidity@span=6.78)","arch(hempen_tie_catwalk_net:abyss_catenary_suspension<->finite_rope_lifespan_lucidity@span=6.88)"],"agents":[{"name":"octavia_crest_cable_tensioner","locus":"twin_mountain_crest_anchors","op":"altitude_max","polarity":"abyss_catenary_suspension","emblems":["steep_precipice_ropes","iron_chains_wooden_ties"],"mag":9.2,"ratio":[3,2]},{"name":"octavia_downward_sack_hanger","locus":"underhung_gondola_abyss","op":"emblem_union","polarity":"abyss_catenary_suspension","emblems":["sack_houses_below_net","gondola_terraces","hanging_chandeliers_trapezes"],"mag":8.1,"ratio":[5,4]},{"name":"octavia_void_cloud_glimpser","locus":"hempen_tie_catwalk_net","op":"polarity_carve","polarity":"abyss_catenary_suspension","emblems":["hundreds_of_feet_of_nothing","gliding_below_clouds"],"mag":7.8,"ratio":[2,1]},{"name":"octavia_net_rupture_reckoner","locus":"hempen_tie_catwalk_net","op":"polarity_carve","polarity":"finite_rope_lifespan_lucidity","emblems":["measured_hempen_decay","less_uncertain_mortal_life"],"mag":3.1,"ratio":[7,4]}]},{"index":27,"name":"Ersilia","chapter":5,"series":"Trading cities","rank":4,"page":76,"topology":"CHORD_EXCHANGE_WEB","desert":"crumbling unrelational stone walls","poleAlpha":"impassable_taut_chord_web","poleBeta":"nomadic_wall_dismantlement","optics":"Plain of bare poles laced with taut white, black, and gray threads standing intact after houses vanish","loci":["corner_post_string_loom","abandoned_chord_plain","mountainside_refugee_camp"],"peakHash":"52c9df84af56362a543eedea29b0b73f","peakTension":129.1,"archScars":["arch(corner_post_string_loom:impassable_taut_chord_web<->nomadic_wall_dismantlement@span=7.10)"],"agents":[{"name":"ersilia_four_color_cord_stretcher","locus":"corner_post_string_loom","op":"polarity_carve","polarity":"impassable_taut_chord_web","emblems":["white_blood_strings","black_trade_gray_authority","black_white_agency_cords"],"mag":8.9,"ratio":[3,2]},{"name":"ersilia_zero_passage_detector","locus":"corner_post_string_loom","op":"polarity_carve","polarity":"nomadic_wall_dismantlement","emblems":["choked_street_clearance","dismantled_house_timbers"],"mag":2.8,"ratio":[5,4]},{"name":"ersilia_bare_web_preserver","locus":"abandoned_chord_plain","op":"altitude_max","polarity":"impassable_taut_chord_web","emblems":["poles_and_taut_strings_alone","wall_less_boneless_ruin"],"mag":8.4,"ratio":[9,5]},{"name":"ersilia_complex_reweave_migrator","locus":"mountainside_refugee_camp","op":"emblem_union","polarity":"nomadic_wall_dismantlement","emblems":["refugee_hillside_gaze","regular_denser_next_ersilia"],"mag":7.2,"ratio":[15,8]}]},{"index":28,"name":"Baucis","chapter":5,"series":"Cities and eyes","rank":3,"page":77,"topology":"SPECULAR_PARALLAX","desert":"trampling heavy-footed earth seizure","poleAlpha":"cloud_piercing_flamingo_stilts","poleBeta":"downward_telescope_self_absence","optics":"Pierced angular lace-shadow falling on sunlit woodland canopy from invisible cloud-borne platforms","loci":["woodland_flamingo_legs","above_cloud_deck","foliage_angular_shadow"],"peakHash":"3828d847cef9752700f5bfaee50a81e1","peakTension":110.6,"archScars":["arch(above_cloud_deck:cloud_piercing_flamingo_stilts<->downward_telescope_self_absence@span=3.56)","arch(above_cloud_deck:cloud_piercing_flamingo_stilts<->downward_telescope_self_absence@span=9.04)"],"agents":[{"name":"baucis_flamingo_stilt_elevater","locus":"woodland_flamingo_legs","op":"altitude_max","polarity":"cloud_piercing_flamingo_stilts","emblems":["slender_distant_stilts","cloud_lost_ladders"],"mag":9.3,"ratio":[2,1]},{"name":"baucis_zero_contact_ascetic","locus":"above_cloud_deck","op":"polarity_carve","polarity":"cloud_piercing_flamingo_stilts","emblems":["self_contained_aerial_deck","untouched_below_soil"],"mag":8.2,"ratio":[5,4]},{"name":"baucis_ant_leaf_spyglass_aimer","locus":"above_cloud_deck","op":"polarity_carve","polarity":"downward_telescope_self_absence","emblems":["downward_telescopes","leaf_stone_ant_inspection"],"mag":2.9,"ratio":[3,2]},{"name":"baucis_absence_shadow_caster","locus":"foliage_angular_shadow","op":"emblem_union","polarity":"downward_telescope_self_absence","emblems":["pierced_angular_canopy_shadow","fascinated_own_absence"],"mag":7.7,"ratio":[9,5]}]},{"index":29,"name":"Leandra","chapter":5,"series":"Cities and names","rank":2,"page":78,"topology":"ONOMASTIC_SHARD_SHUFFLE","desert":"silent uncontested domesticity","poleAlpha":"migrating_key_penates","poleBeta":"rooted_kitchen_pot_lares","optics":"Dim nocturnal stucco cornices and radiator pipes alive with microscopic huffing silhouettes","loci":["coatrack_umbrella_threshold","kitchen_flue_rusty_can","stucco_radiator_cornice"],"peakHash":"f610b9d877ee027a0ada75cd268855c7","peakTension":127.3,"archScars":["arch(coatrack_umbrella_threshold:migrating_key_penates<->rooted_kitchen_pot_lares@span=6.10)","arch(kitchen_flue_rusty_can:migrating_key_penates<->rooted_kitchen_pot_lares@span=6.10)","arch(stucco_radiator_cornice:migrating_key_penates<->rooted_kitchen_pot_lares@span=6.10)"],"agents":[{"name":"leandra_coatrack_penates_mover","locus":"coatrack_umbrella_threshold","op":"polarity_carve","polarity":"migrating_key_penates","emblems":["umbrella_stand_guardians","emigrating_family_soul"],"mag":8.1,"ratio":[5,4]},{"name":"leandra_chimney_lares_multiplier","locus":"coatrack_umbrella_threshold","op":"polarity_carve","polarity":"rooted_kitchen_pot_lares","emblems":["vacant_lot_rusty_can_gods","fifty_kitchen_block_fission"],"mag":3.0,"ratio":[4,3]},{"name":"leandra_radiator_pipe_banterer","locus":"stucco_radiator_cornice","op":"emblem_union","polarity":"migrating_key_penates","emblems":["cornice_night_strolls","great_aunt_vs_ruined_site_critique"],"mag":7.1,"ratio":[3,2]},{"name":"leandra_ironic_murmur_listener","locus":"kitchen_flue_rusty_can","op":"altitude_max","polarity":"rooted_kitchen_pot_lares","emblems":["future_career_and_house_daydreams","stifled_nocturnal_laughter"],"mag":6.6,"ratio":[9,8]}]},{"index":30,"name":"Melania","chapter":5,"series":"Cities and the dead","rank":1,"page":80,"topology":"NECROPOLIS_ROLE_CASCADE","desert":"mortal biographical silence","poleAlpha":"ephemeral_dying_cast","poleBeta":"immortal_cascading_dialogue","optics":"Harsh theatrical noon square where dialogue masks relay mid-syllable across thousands of shifting faces","loci":["threshold_square_proscenium","role_reassignment_wings","multiplied_chorus_steps"],"peakHash":"af80cf281272e9495ca0ac7b9187ecec","peakTension":130.9,"archScars":["arch(threshold_square_proscenium:ephemeral_dying_cast<->immortal_cascading_dialogue@span=6.90)"],"agents":[{"name":"melania_braggart_usurer_declaimer","locus":"threshold_square_proscenium","op":"polarity_carve","polarity":"immortal_cascading_dialogue","emblems":["soldier_parasite_wastrel","miserly_father_procuress_note"],"mag":8.5,"ratio":[3,2]},{"name":"melania_mortal_actor_reaper","locus":"threshold_square_proscenium","op":"polarity_carve","polarity":"ephemeral_dying_cast","emblems":["deceased_parasite_and_father","short_blind_inhabitant_lifespan"],"mag":2.6,"ratio":[16,9]},{"name":"melania_hypocrite_role_shifter","locus":"role_reassignment_wings","op":"emblem_union","polarity":"immortal_cascading_dialogue","emblems":["cascade_role_replacement","three_thousand_hypocrites","hundred_thousand_fallen_princes"],"mag":7.9,"ratio":[5,4]},{"name":"melania_slow_denouement_plotter","locus":"multiplied_chorus_steps","op":"altitude_max","polarity":"immortal_cascading_dialogue","emblems":["thickening_multi_century_plot","act_to_act_voice_drift"],"mag":7.4,"ratio":[15,8]}]},{"index":31,"name":"Esmeralda","chapter":6,"series":"Trading cities","rank":5,"page":88,"topology":"CHORD_EXCHANGE_WEB","desert":"orthogonal single-level Euclidean grid","poleAlpha":"combinatorial_canal_bridge_zigzag","poleBeta":"clandestine_gutter_sewer_swallow_arcs","optics":"Multi-colored cartographic ink strata crossed by cambered canal reflections and high swallow parabolas","loci":["intersecting_canal_landings","rooftop_gutter_sewer_spokes","swallow_parabola_airspace"],"peakHash":"ec91d80c676344e369f784794c877411","peakTension":115.6,"archScars":["arch(rooftop_gutter_sewer_spokes:clandestine_gutter_sewer_swallow_arcs<->combinatorial_canal_bridge_zigzag@span=6.20)"],"agents":[{"name":"esmeralda_land_boat_zigzagger","locus":"intersecting_canal_landings","op":"emblem_union","polarity":"combinatorial_canal_bridge_zigzag","emblems":["cambered_bridges","hanging_streets","non_repeating_daily_routes"],"mag":7.8,"ratio":[5,4]},{"name":"esmeralda_acrobat_lover_rooftopper","locus":"rooftop_gutter_sewer_spokes","op":"polarity_carve","polarity":"clandestine_gutter_sewer_swallow_arcs","emblems":["cat_thief_lover_balcony_drops","discontinuous_gutter_steps"],"mag":8.3,"ratio":[3,2]},{"name":"esmeralda_gunpowder_sewer_smuggler","locus":"rooftop_gutter_sewer_spokes","op":"polarity_carve","polarity":"combinatorial_canal_bridge_zigzag","emblems":["rat_tail_dark_sewers","cheese_crust_gunpowder_kegs"],"mag":3.1,"ratio":[7,5]},{"name":"esmeralda_swallow_parabola_dominator","locus":"swallow_parabola_airspace","op":"altitude_max","polarity":"clandestine_gutter_sewer_swallow_arcs","emblems":["still_wing_invisible_parabolas","mosquito_dart_pinnacle_graze"],"mag":9.4,"ratio":[2,1]}]},{"index":32,"name":"Phyllis","chapter":6,"series":"Cities and eyes","rank":4,"page":90,"topology":"SPECULAR_PARALLAX","desert":"blank-page habitual blindness","poleAlpha":"first_glance_tracery_marvel","poleBeta":"habituated_footstep_erasure","optics":"Stained-glass rose windows and caper-bush corbels bleaching out into stark sun/shade pavement patches","loci":["tracery_canal_bridges","bleached_habit_zigzag","thirty_year_arcade_slant"],"peakHash":"6dab6f11200379fb7d92c9e7ec425643","peakTension":137.8,"archScars":["arch(tracery_canal_bridges:first_glance_tracery_marvel<->habituated_footstep_erasure@span=7.20)"],"agents":[{"name":"phyllis_corbel_rose_arriver","locus":"tracery_canal_bridges","op":"polarity_carve","polarity":"first_glance_tracery_marvel","emblems":["mullioned_moorish_lancet_windows","fortress_caper_bush","three_queens_onion_spire"],"mag":8.6,"ratio":[5,4]},{"name":"phyllis_staying_fade_bleacher","locus":"tracery_canal_bridges","op":"polarity_carve","polarity":"habituated_footstep_erasure","emblems":["expunged_domes_and_statues","stumble_hole_creditor_detour"],"mag":2.4,"ratio":[16,15]},{"name":"phyllis_blank_page_eye_scanner","locus":"bleached_habit_zigzag","op":"emblem_union","polarity":"habituated_footstep_erasure","emblems":["points_suspended_in_void","millions_scanning_blank_page"],"mag":6.3,"ratio":[9,8]},{"name":"phyllis_surprise_sleeve_igniter","locus":"thirty_year_arcade_slant","op":"altitude_max","polarity":"first_glance_tracery_marvel","emblems":["embroidered_sleeve_memory_glint","caught_by_surprise_aperture"],"mag":7.7,"ratio":[15,8]}]},{"index":33,"name":"Pyrrha","chapter":6,"series":"Cities and names","rank":3,"page":92,"topology":"ONOMASTIC_SHARD_SHUFFLE","desert":"unvisited phonetic reverie","poleAlpha":"imagined_goblet_bay_fortress","poleBeta":"yellow_dust_sawmill_reality","optics":"Harsh flat yellowish sawmill dust and hidden dune-sea obliterating a dark vertical well-square","loci":["imagined_goblet_well_square","dune_screened_sawmill_lots","buzzing_wind_pump_horizon"],"peakHash":"a7f0ed6a83dbc77a9ab2555ffb46b59e","peakTension":136.3,"archScars":["arch(buzzing_wind_pump_horizon:imagined_goblet_bay_fortress<->yellow_dust_sawmill_reality@span=6.70)","arch(dune_screened_sawmill_lots:imagined_goblet_bay_fortress<->yellow_dust_sawmill_reality@span=6.70)","arch(imagined_goblet_well_square:imagined_goblet_bay_fortress<->yellow_dust_sawmill_reality@span=6.70)"],"agents":[{"name":"pyrrha_goblet_well_conjurer","locus":"imagined_goblet_well_square","op":"polarity_carve","polarity":"imagined_goblet_bay_fortress","emblems":["bay_slope_high_towers","deep_goblet_square_well"],"mag":2.8,"ratio":[4,3]},{"name":"pyrrha_arrival_name_overwriter","locus":"imagined_goblet_well_square","op":"polarity_carve","polarity":"yellow_dust_sawmill_reality","emblems":["sea_hidden_behind_low_dune","straight_lumber_stack_streets"],"mag":8.5,"ratio":[7,6]},{"name":"pyrrha_wind_pump_dust_buzzer","locus":"buzzing_wind_pump_horizon","op":"emblem_union","polarity":"yellow_dust_sawmill_reality","emblems":["spinning_water_pump_vanes","inevitable_yellowish_dust"],"mag":7.1,"ratio":[5,4]},{"name":"pyrrha_nameless_orphan_archivist","locus":"dune_screened_sawmill_lots","op":"altitude_max","polarity":"imagined_goblet_bay_fortress","emblems":["getullia_odile_euphrasia_margara","unnameable_surviving_bay_city"],"mag":6.9,"ratio":[9,5]}]},{"index":34,"name":"Adelma","chapter":6,"series":"Cities and the dead","rank":2,"page":94,"topology":"NECROPOLIS_ROLE_CASCADE","desert":"open-ended plastic facial novelty","poleAlpha":"living_stranger_anguish","poleBeta":"saturated_ancestral_death_masks","optics":"Dusk wholesale fish-market shadows under sackcloth hoods turning every face into a dead relative","loci":["urchin_bollard_dock","cabbage_balcony_alley","sackcloth_stevedore_steps"],"peakHash":"5bfb107f6ee749999ebaba6b04d61346","peakTension":136.0,"archScars":["arch(urchin_bollard_dock:living_stranger_anguish<->saturated_ancestral_death_masks@span=7.00)"],"agents":[{"name":"adelma_dusk_dock_mask_printer","locus":"urchin_bollard_dock","op":"polarity_carve","polarity":"saturated_ancestral_death_masks","emblems":["dead_soldier_bollard_sailor","sea_urchin_cart_fisherman","yellow_eyed_fever_father"],"mag":8.7,"ratio":[6,5]},{"name":"adelma_alien_face_dissolver","locus":"urchin_bollard_dock","op":"polarity_carve","polarity":"living_stranger_anguish","emblems":["averted_fearful_gaze","anguished_dissolved_resemblance"],"mag":2.7,"ratio":[11,8]},{"name":"adelma_cabbage_scale_grandmother","locus":"cabbage_balcony_alley","op":"emblem_union","polarity":"saturated_ancestral_death_masks","emblems":["dangling_balcony_suicide_girl","grandmother_vegetable_vendor"],"mag":7.6,"ratio":[4,3]},{"name":"adelma_hooded_kaleidoscope_absorber","locus":"sackcloth_stevedore_steps","op":"altitude_max","polarity":"saturated_ancestral_death_masks","emblems":["demijohn_sackcloth_stevedores","dead_outnumbering_living","unhappy_beyond"],"mag":8.0,"ratio":[15,8]}]},{"index":35,"name":"Eudoxia","chapter":6,"series":"Cities and the sky","rank":1,"page":96,"topology":"CELESTIAL_BLUEPRINT_COUPLING","desert":"unmapped sensory jostling","poleAlpha":"symmetrical_crimson_carpet_cosmos","poleBeta":"shapeless_mule_stain_universe","optics":"Indigo-and-crimson woven arabesques set directly beside lampblack stains and crumbling dust clouds","loci":["crimson_indigo_carpet_shrine","lampblack_mule_alleys","ambiguous_oracle_altar"],"peakHash":"9641b7d8be92381a45d28342a7de94da","peakTension":121.75,"archScars":["arch(crimson_indigo_carpet_shrine:shapeless_mule_stain_universe<->symmetrical_crimson_carpet_cosmos@span=5.93)","arch(crimson_indigo_carpet_shrine:shapeless_mule_stain_universe<->symmetrical_crimson_carpet_cosmos@span=6.05)","arch(crimson_indigo_carpet_shrine:shapeless_mule_stain_universe<->symmetrical_crimson_carpet_cosmos@span=6.18)"],"agents":[{"name":"eudoxia_arabesque_woof_weaver","locus":"crimson_indigo_carpet_shrine","op":"polarity_carve","polarity":"symmetrical_crimson_carpet_cosmos","emblems":["straight_circular_spires","crimson_magenta_destination_loop"],"mag":8.4,"ratio":[3,2]},{"name":"eudoxia_bray_lampblack_spreader","locus":"crimson_indigo_carpet_shrine","op":"polarity_carve","polarity":"shapeless_mule_stain_universe","emblems":["braying_mules_fish_smell","crumbling_crooked_dust_fires"],"mag":3.1,"ratio":[7,4]},{"name":"eudoxia_anguish_thread_finder","locus":"lampblack_mule_alleys","op":"emblem_union","polarity":"symmetrical_crimson_carpet_cosmos","emblems":["hidden_fate_twist_in_woof","complete_proportion_point"],"mag":7.2,"ratio":[5,4]},{"name":"eudoxia_reversible_oracle_augur","locus":"ambiguous_oracle_altar","op":"altitude_max","polarity":"shapeless_mule_stain_universe","emblems":["starry_orbit_form_reversal","city_stain_as_true_sky_map"],"mag":8.1,"ratio":[9,5]}]},{"index":36,"name":"Moriana","chapter":7,"series":"Cities and eyes","rank":5,"page":105,"topology":"SPECULAR_PARALLAX","desert":"volumetric three-dimensional urban depth","poleAlpha":"alabaster_medusa_front","poleBeta":"rusted_spike_tin_obverse","optics":"Zero-thickness paper edge splitting sunlit glass-aquarium villas from soot-blackened spiked planks","loci":["alabaster_coral_villas","semicircle_paper_fold","spiked_plank_rotten_beam"],"peakHash":"748279618204bd98f40059f075bf3d8a","peakTension":140.5,"archScars":["arch(alabaster_coral_villas:alabaster_medusa_front<->rusted_spike_tin_obverse@span=7.30)"],"agents":[{"name":"moriana_alabaster_aquarium_glazier","locus":"alabaster_coral_villas","op":"polarity_carve","polarity":"alabaster_medusa_front","emblems":["sunlit_alabaster_gates","serpentine_coral_columns","medusa_chandelier_dancers"],"mag":8.6,"ratio":[5,4]},{"name":"moriana_rusted_obverse_riveter","locus":"alabaster_coral_villas","op":"polarity_carve","polarity":"rusted_spike_tin_obverse","emblems":["rusted_sheet_metal_sackcloth","spiked_planks_soot_pipes","rotten_beam_hanging_ropes"],"mag":2.3,"ratio":[16,15]},{"name":"moriana_semicircle_detour_walker","locus":"semicircle_paper_fold","op":"altitude_max","polarity":"rusted_spike_tin_obverse","emblems":["abrupt_hidden_face_turn","staved_in_straw_chairs"],"mag":7.4,"ratio":[7,5]},{"name":"moriana_zero_thickness_binder","locus":"spiked_plank_rotten_beam","op":"emblem_union","polarity":"alabaster_medusa_front","emblems":["inseparable_blind_paper_sides","zero_thickness_perspective"],"mag":7.9,"ratio":[3,2]}]},{"index":37,"name":"Clarice","chapter":7,"series":"Cities and names","rank":4,"page":106,"topology":"ONOMASTIC_SHARD_SHUFFLE","desert":"linear unbroken heritage preservation","poleAlpha":"mythic_unproven_first_splendor","poleBeta":"chipped_gimcrack_shard_shuffle","optics":"Velvet bell-jars beside festering rabbit-cage hovels roasting meat on torn wrought-iron harem grilles","loci":["plague_rummage_basements","velvet_bell_capital_museum","hen_basket_corinthian_yard"],"peakHash":"13170655a4ff319707b8e959f4156ad8","peakTension":134.8,"archScars":["arch(hen_basket_corinthian_yard:chipped_gimcrack_shard_shuffle<->mythic_unproven_first_splendor@span=6.60)","arch(plague_rummage_basements:chipped_gimcrack_shard_shuffle<->mythic_unproven_first_splendor@span=6.60)","arch(velvet_bell_capital_museum:chipped_gimcrack_shard_shuffle<->mythic_unproven_first_splendor@span=6.60)"],"agents":[{"name":"clarice_survivor_shard_repurposer","locus":"plague_rummage_basements","op":"polarity_carve","polarity":"chipped_gimcrack_shard_shuffle","emblems":["brocade_curtain_bedsheets","marble_urn_basil_pots","harem_grating_cat_roasters"],"mag":8.5,"ratio":[5,4]},{"name":"clarice_velvet_bell_canonizer","locus":"plague_rummage_basements","op":"polarity_carve","polarity":"mythic_unproven_first_splendor","emblems":["usurper_butterfly_wealth","display_case_shards"],"mag":2.9,"ratio":[4,3]},{"name":"clarice_hen_egg_capital_mover","locus":"hen_basket_corinthian_yard","op":"emblem_union","polarity":"chipped_gimcrack_shard_shuffle","emblems":["chicken_run_corinthian_capital","lost_succession_of_eras"],"mag":7.6,"ratio":[3,2]},{"name":"clarice_obsolete_shuffle_dealer","locus":"velvet_bell_capital_museum","op":"altitude_max","polarity":"chipped_gimcrack_shard_shuffle","emblems":["unproven_original_clarice","shuffled_chipped_gimcracks"],"mag":8.0,"ratio":[9,8]}]},{"index":38,"name":"Eusapia","chapter":7,"series":"Cities and the dead","rank":3,"page":109,"topology":"NECROPOLIS_ROLE_CASCADE","desert":"abrupt irreversible boundary of death","poleAlpha":"carefree_upper_imitators","poleBeta":"remodeling_subterranean_mummies","optics":"Subterranean torchlight on yellow parchment skeletons playing little trumpets and editing blueprints","loci":["upper_carefree_banquet","hooded_confraternity_shaft","lower_parchment_necropolis"],"peakHash":"7d219889a57543264db4bd6313417d63","peakTension":135.4,"archScars":["arch(upper_carefree_banquet:carefree_upper_imitators<->remodeling_subterranean_mummies@span=7.20)"],"agents":[{"name":"eusapia_parchment_corpse_poser","locus":"lower_parchment_necropolis","op":"emblem_union","polarity":"remodeling_subterranean_mummies","emblems":["yellow_skin_laughing_skulls","stopped_clock_parchment_ear","carcass_milking_girl"],"mag":8.1,"ratio":[5,4]},{"name":"eusapia_hooded_brother_courier","locus":"hooded_confraternity_shaft","op":"altitude_max","polarity":"remodeling_subterranean_mummies","emblems":["exclusive_tunnel_authority","ambiguous_dead_or_living_guides"],"mag":7.7,"ratio":[3,2]},{"name":"eusapia_catacomb_vault_remodeler","locus":"upper_carefree_banquet","op":"polarity_carve","polarity":"remodeling_subterranean_mummies","emblems":["sober_underground_remodelings","dead_built_upper_city"],"mag":8.8,"ratio":[7,4]},{"name":"eusapia_living_copycat_follower","locus":"upper_carefree_banquet","op":"polarity_carve","polarity":"carefree_upper_imitators","emblems":["living_copying_necropolis","indistinguishable_alive_and_dead"],"mag":2.6,"ratio":[9,8]}]},{"index":39,"name":"Beersheba","chapter":7,"series":"Cities and the sky","rank":2,"page":111,"topology":"CELESTIAL_BLUEPRINT_COUPLING","desert":"self-possessed calculating hoarding","poleAlpha":"hoarded_jewel_subsoil_hell","poleBeta":"castoff_peel_celestial_orbit","optics":"Grim subterranean brass-gear luxury contrasted with a radiant zenith planet of orbiting potato peels","loci":["diamond_hoard_terrestrial_vault","tasseled_gear_infernal_subsoil","potato_peel_comet_zenith"],"peakHash":"f1be8699644efdc8109bb7fbc8f94d05","peakTension":140.0,"archScars":["arch(diamond_hoard_terrestrial_vault:castoff_peel_celestial_orbit<->hoarded_jewel_subsoil_hell@span=7.18)","arch(diamond_hoard_terrestrial_vault:castoff_peel_celestial_orbit<->hoarded_jewel_subsoil_hell@span=7.27)","arch(diamond_hoard_terrestrial_vault:castoff_peel_celestial_orbit<->hoarded_jewel_subsoil_hell@span=7.35)"],"agents":[{"name":"beersheba_carat_mania_hoarder","locus":"diamond_hoard_terrestrial_vault","op":"polarity_carve","polarity":"hoarded_jewel_subsoil_hell","emblems":["silver_locks_diamond_gates","grim_composite_composure"],"mag":2.8,"ratio":[4,3]},{"name":"beersheba_authoritative_hell_engineer","locus":"tasseled_gear_infernal_subsoil","op":"emblem_union","polarity":"hoarded_jewel_subsoil_hell","emblems":["expensive_subsoil_gearwork","fringed_tasseled_pipes"],"mag":6.9,"ratio":[7,6]},{"name":"beersheba_rubbish_zenith_orbiter","locus":"diamond_hoard_terrestrial_vault","op":"polarity_carve","polarity":"castoff_peel_celestial_orbit","emblems":["potato_peel_umbrella_planet","tram_ticket_eggshell_paving"],"mag":8.9,"ratio":[3,2]},{"name":"beersheba_generous_comet_releaser","locus":"potato_peel_comet_zenith","op":"altitude_max","polarity":"castoff_peel_celestial_orbit","emblems":["long_tailed_free_comets","ungreedy_detachment_moment"],"mag":9.2,"ratio":[2,1]}]},{"index":40,"name":"Leonia","chapter":7,"series":"Continuous cities","rank":1,"page":114,"topology":"PERIMETER_ACCRETION_SPRAWL","desert":"biodegradable self-digesting frugality","poleAlpha":"spotless_morning_unwrapping","poleBeta":"indestructible_refuse_mountain_cuirass","optics":"Pristine plastic morning glare ringed on every horizon by towering craters of unmated shoes and pianos","loci":["fresh_soap_morning_core","angelic_garbage_perimeter","colliding_detritus_ramparts"],"peakHash":"001d23960165972bec1268dc0c9646ac","peakTension":167.9555,"archScars":["arch(fresh_soap_morning_core:indestructible_refuse_mountain_cuirass<->spotless_morning_unwrapping@span=10.69)","arch(fresh_soap_morning_core:indestructible_refuse_mountain_cuirass<->spotless_morning_unwrapping@span=7.96)","arch(fresh_soap_morning_core:indestructible_refuse_mountain_cuirass<->spotless_morning_unwrapping@span=9.22)"],"agents":[{"name":"leonia_brand_new_unwrapper","locus":"fresh_soap_morning_core","op":"polarity_carve","polarity":"spotless_morning_unwrapping","emblems":["fresh_sheets_unopened_tins","expulsion_cleansing_passion"],"mag":3.0,"ratio":[5,4]},{"name":"leonia_indestructible_slag_piler","locus":"fresh_soap_morning_core","op":"polarity_carve","polarity":"indestructible_refuse_mountain_cuirass","emblems":["discarded_boilers_pianos_porcelain","time_proof_plastic_cuirass"],"mag":8.9,"ratio":[7,4]},{"name":"leonia_rival_rampart_collider","locus":"angelic_garbage_perimeter","op":"altitude_max","polarity":"indestructible_refuse_mountain_cuirass","emblems":["hostile_neighbor_trash_crests","stratified_decade_sweepings"],"mag":9.3,"ratio":[3,2]},{"name":"leonia_avalanche_bulldozer_watcher","locus":"colliding_detritus_ramparts","op":"emblem_union","polarity":"indestructible_refuse_mountain_cuirass","emblems":["rolling_tin_can_landslide","waiting_neighbor_bulldozers"],"mag":7.8,"ratio":[16,9]}]},{"index":41,"name":"Irene","chapter":8,"series":"Cities and names","rank":5,"page":124,"topology":"ONOMASTIC_SHARD_SHUFFLE","desert":"interior stable self-identity","poleAlpha":"distant_plateau_magnet_glow","poleBeta":"mutated_interior_capture","optics":"Pink twilight sponge-glow at gulley foot under yellow powder-flash and windy plateau rim","loci":["windy_plateau_overlook","misty_gulley_pink_glow","bad_valley_descent_road"],"peakHash":"4b494601f66058617c20c65ee2239e3b","peakTension":131.8,"archScars":["arch(bad_valley_descent_road:distant_plateau_magnet_glow<->mutated_interior_capture@span=6.40)","arch(misty_gulley_pink_glow:distant_plateau_magnet_glow<->mutated_interior_capture@span=6.40)","arch(windy_plateau_overlook:distant_plateau_magnet_glow<->mutated_interior_capture@span=6.40)"],"agents":[{"name":"irene_plateau_shepherd_conjecturer","locus":"windy_plateau_overlook","op":"polarity_carve","polarity":"distant_plateau_magnet_glow","emblems":["leaning_hermits_bird_catchers","pink_concentrated_window_glow"],"mag":8.3,"ratio":[5,4]},{"name":"irene_windborne_drum_gun_carrier","locus":"misty_gulley_pink_glow","op":"emblem_union","polarity":"distant_plateau_magnet_glow","emblems":["festival_bass_drum_firecrackers","civil_war_powder_explosion"],"mag":7.1,"ratio":[3,2]},{"name":"irene_approach_name_mutator","locus":"windy_plateau_overlook","op":"polarity_carve","polarity":"mutated_interior_capture","emblems":["vanishing_irene_upon_entry","trapped_vs_passing_names"],"mag":2.9,"ratio":[9,5]},{"name":"irene_horizon_magnet_polarizer","locus":"bad_valley_descent_road","op":"altitude_max","polarity":"distant_plateau_magnet_glow","emblems":["unwalked_winding_valley_roads","every_city_spoken_as_irene"],"mag":7.8,"ratio":[2,1]}]},{"index":42,"name":"Argia","chapter":8,"series":"Cities and the dead","rank":4,"page":126,"topology":"NECROPOLIS_ROLE_CASCADE","desert":"open atmospheric sunlit void","poleAlpha":"solid_packed_clay_volume","poleBeta":"nocturnal_subterranean_door_slam","optics":"Total subterranean pitch-blackness where negative stairways press into packed earth and twisted roots","loci":["dirt_packed_negative_stairs","worm_root_crevice_network","surface_ear_ground_crust"],"peakHash":"249537ee93020d31f67abfa6d2873d10","peakTension":28.6,"archScars":[],"agents":[{"name":"argia_clay_room_packer","locus":"dirt_packed_negative_stairs","op":"polarity_carve","polarity":"solid_packed_clay_volume","emblems":["earth_instead_of_air","ceiling_packed_clay","negative_stairway_imprints"],"mag":8.8,"ratio":[1,1]},{"name":"argia_worm_crevice_prone_sleeper","locus":"worm_root_crevice_network","op":"emblem_union","polarity":"solid_packed_clay_volume","emblems":["twisting_root_tunnels","damp_prone_immobility"],"mag":6.7,"ratio":[16,15]},{"name":"argia_rocky_cloud_overburden","locus":"dirt_packed_negative_stairs","op":"altitude_max","polarity":"solid_packed_clay_volume","emblems":["rock_strata_like_cloudy_skies","invisible_deserted_surface"],"mag":7.5,"ratio":[4,3]},{"name":"argia_night_door_slam_listener","locus":"surface_ear_ground_crust","op":"polarity_carve","polarity":"nocturnal_subterranean_door_slam","emblems":["ear_pressed_to_night_ground","distant_buried_door_slam"],"mag":2.5,"ratio":[7,4]}]},{"index":43,"name":"Thekla","chapter":8,"series":"Cities and the sky","rank":3,"page":127,"topology":"CELESTIAL_BLUEPRINT_COUPLING","desert":"completed static terminal monument","poleAlpha":"perpetual_anti_ruin_scaffolding","poleBeta":"nocturnal_star_field_blueprint","optics":"Sackcloth-screened pine planks and self-hoisting cranes dissolving at dusk into crisp stellar blueprints","loci":["plank_fence_eye_crack","crane_lifting_crane_rig","sunset_star_blueprint_vault"],"peakHash":"73793426aa20884eccbe0501c26e75c1","peakTension":124.25,"archScars":["arch(plank_fence_eye_crack:nocturnal_star_field_blueprint<->perpetual_anti_ruin_scaffolding@span=6.18)","arch(plank_fence_eye_crack:nocturnal_star_field_blueprint<->perpetual_anti_ruin_scaffolding@span=6.22)","arch(plank_fence_eye_crack:nocturnal_star_field_blueprint<->perpetual_anti_ruin_scaffolding@span=6.26)"],"agents":[{"name":"thekla_crane_on_crane_hoister","locus":"crane_lifting_crane_rig","op":"altitude_max","polarity":"perpetual_anti_ruin_scaffolding","emblems":["cranes_pulling_other_cranes","scaffoldings_embracing_scaffoldings"],"mag":9.1,"ratio":[3,2]},{"name":"thekla_destruction_deferral_mason","locus":"plank_fence_eye_crack","op":"polarity_carve","polarity":"perpetual_anti_ruin_scaffolding","emblems":["leaded_plumb_strings","whispered_not_only_the_city"],"mag":8.4,"ratio":[5,4]},{"name":"thekla_premature_completion_blocker","locus":"plank_fence_eye_crack","op":"polarity_carve","polarity":"nocturnal_star_field_blueprint","emblems":["unremoved_armature_trestles","suspended_day_shift"],"mag":3.1,"ratio":[4,3]},{"name":"thekla_sunset_constellation_drafter","locus":"sunset_star_blueprint_vault","op":"emblem_union","polarity":"nocturnal_star_field_blueprint","emblems":["darkened_building_site","star_filled_sky_blueprint"],"mag":8.7,"ratio":[2,1]}]},{"index":44,"name":"Trude","chapter":8,"series":"Continuous cities","rank":2,"page":128,"topology":"PERIMETER_ACCRETION_SPRAWL","desert":"place-specific irreducible difference","poleAlpha":"global_airport_sign_swap","poleBeta":"inescapable_suburban_isomorphism","optics":"Flat greenish-yellowish fluorescent haze over identical flower-bed roundabouts and hardware counters","loci":["homonymous_airport_tarmac","greenish_yellowish_roundabout","hardware_goblet_hotel"],"peakHash":"f51185119400be94d14cc0b06d53031b","peakTension":163.7395,"archScars":["arch(homonymous_airport_tarmac:global_airport_sign_swap<->inescapable_suburban_isomorphism@span=10.37)","arch(homonymous_airport_tarmac:global_airport_sign_swap<->inescapable_suburban_isomorphism@span=7.73)","arch(homonymous_airport_tarmac:global_airport_sign_swap<->inescapable_suburban_isomorphism@span=8.94)"],"agents":[{"name":"trude_airport_placard_swapper","locus":"homonymous_airport_tarmac","op":"polarity_carve","polarity":"global_airport_sign_swap","emblems":["changed_airport_big_letters","illusory_flight_departure"],"mag":2.9,"ratio":[1,1]},{"name":"trude_suburb_clone_stamper","locus":"homonymous_airport_tarmac","op":"polarity_carve","polarity":"inescapable_suburban_isomorphism","emblems":["identical_greenish_yellowish_houses","same_square_flower_beds"],"mag":8.6,"ratio":[9,8]},{"name":"trude_hardware_dialogue_looper","locus":"hardware_goblet_hotel","op":"emblem_union","polarity":"inescapable_suburban_isomorphism","emblems":["pre_heard_hardware_scripts","same_goblets_swaying_navels"],"mag":6.8,"ratio":[4,3]},{"name":"trude_beginless_endless_auditor","locus":"greenish_yellowish_roundabout","op":"altitude_max","polarity":"inescapable_suburban_isomorphism","emblems":["sole_world_blanketing_trude","diagnostic_monoculture_specimen"],"mag":7.2,"ratio":[16,15]}]},{"index":45,"name":"Olinda","chapter":8,"series":"Hidden cities","rank":1,"page":129,"topology":"NESTED_GERM_EMERGENCE","desert":"withered dead-core suburban sprawl","poleAlpha":"microscopic_pinhead_blossom","poleBeta":"centrifugal_proportional_ring_push","optics":"Magnifying-glass caustic spotlight revealing miniature racetracks swelling outward from the core","loci":["pinhead_magnifying_nucleus","lemon_soup_plate_annulus","expanded_outer_horizon_walls"],"peakHash":"5dc97efb45cf8b6559e93c0d2323b40c","peakTension":126.7,"archScars":["arch(pinhead_magnifying_nucleus:centrifugal_proportional_ring_push<->microscopic_pinhead_blossom@span=6.70)"],"agents":[{"name":"olinda_pinhead_lens_hunter","locus":"pinhead_magnifying_nucleus","op":"polarity_carve","polarity":"microscopic_pinhead_blossom","emblems":["pinhead_roofs_skylights_pools","micro_streamers_racetrack"],"mag":8.9,"ratio":[2,1]},{"name":"olinda_lemon_plate_inflator","locus":"lemon_soup_plate_annulus","op":"emblem_union","polarity":"microscopic_pinhead_blossom","emblems":["half_lemon_to_mushroom_scale","inner_blossoming_lymph"],"mag":7.9,"ratio":[5,4]},{"name":"olinda_proportional_wall_expander","locus":"pinhead_magnifying_nucleus","op":"polarity_carve","polarity":"centrifugal_proportional_ring_push","emblems":["thinned_middle_quarters","horizon_broadened_ancient_walls"],"mag":3.2,"ratio":[3,2]},{"name":"olinda_recursive_embryo_seeder","locus":"expanded_outer_horizon_walls","op":"altitude_max","polarity":"microscopic_pinhead_blossom","emblems":["nested_future_olindas","inverted_tree_ring_growth"],"mag":8.5,"ratio":[15,8]}]},{"index":46,"name":"Laudomia","chapter":9,"series":"Cities and the dead","rank":5,"page":140,"topology":"NECROPOLIS_ROLE_CASCADE","desert":"presentist consequence-blindness","poleAlpha":"ordered_necropolis_certainty","poleBeta":"unborn_pore_hourglass_dread","optics":"Hollow marble domes veined with microscopic eggplant-robed crowds poised above an unturned hourglass","loci":["crowded_living_compartments","windowless_slab_necropolis","marble_vein_unborn_domes"],"peakHash":"604f5e8b6b65bb021cb255e4970a1b17","peakTension":130.3,"archScars":["arch(windowless_slab_necropolis:ordered_necropolis_certainty<->unborn_pore_hourglass_dread@span=6.70)"],"agents":[{"name":"laudomia_slab_order_archivist","locus":"windowless_slab_necropolis","op":"polarity_carve","polarity":"ordered_necropolis_certainty","emblems":["gravedigger_cart_lanes","chance_divorced_stone_slabs"],"mag":3.1,"ratio":[4,3]},{"name":"laudomia_marble_pore_crowder","locus":"windowless_slab_necropolis","op":"polarity_carve","polarity":"unborn_pore_hourglass_dread","emblems":["silkworm_ant_egg_unborn","eggplant_barracan_descendants","suffocating_funnel_stadiums"],"mag":8.8,"ratio":[7,4]},{"name":"laudomia_silent_dome_interrogator","locus":"crowded_living_compartments","op":"emblem_union","polarity":"unborn_pore_hourglass_dread","emblems":["echoing_hollow_footsteps","disconnected_dust_grain_lineage"],"mag":7.3,"ratio":[5,4]},{"name":"laudomia_last_grain_hourglass_warden","locus":"marble_vein_unborn_domes","op":"altitude_max","polarity":"unborn_pore_hourglass_dread","emblems":["unturned_two_bulb_hourglass","waiting_final_inhabitant_grain"],"mag":8.4,"ratio":[15,8]}]},{"index":47,"name":"Perinthia","chapter":9,"series":"Cities and the sky","rank":4,"page":144,"topology":"CELESTIAL_BLUEPRINT_COUPLING","desert":"pragmatic uncalculated vernacular growth","poleAlpha":"zodiac_eclipse_cardo_precision","poleBeta":"three_headed_cellar_monsters","optics":"Razor-aligned solar decumanus shadow-cuts framing lunar eclipses above dark howling lofts","loci":["solar_cardo_decumanus_cross","twelve_eclipse_zodiac_gates","hidden_six_legged_cellars"],"peakHash":"bf8e45fb002e614fa46ba37cfcd650c5","peakTension":133.0,"archScars":["arch(solar_cardo_decumanus_cross:three_headed_cellar_monsters<->zodiac_eclipse_cardo_precision@span=6.75)","arch(solar_cardo_decumanus_cross:three_headed_cellar_monsters<->zodiac_eclipse_cardo_precision@span=6.80)","arch(solar_cardo_decumanus_cross:three_headed_cellar_monsters<->zodiac_eclipse_cardo_precision@span=6.85)"],"agents":[{"name":"perinthia_eclipse_gate_astronomer","locus":"solar_cardo_decumanus_cross","op":"polarity_carve","polarity":"zodiac_eclipse_cardo_precision","emblems":["sun_axis_cardo_decumanus","thousand_year_lunar_eclipse_gates"],"mag":3.0,"ratio":[3,2]},{"name":"perinthia_cellar_monster_breeder","locus":"solar_cardo_decumanus_cross","op":"polarity_carve","polarity":"three_headed_cellar_monsters","emblems":["square_cripples_bearded_women","three_headed_six_legged_howls"],"mag":8.9,"ratio":[7,5]},{"name":"perinthia_zodiac_ward_mapper","locus":"twelve_eclipse_zodiac_gates","op":"altitude_max","polarity":"zodiac_eclipse_cardo_precision","emblems":["twelve_constellation_temples","guaranteed_firmament_harmony"],"mag":7.6,"ratio":[4,3]},{"name":"perinthia_monstrous_god_dilemma_judge","locus":"hidden_six_legged_cellars","op":"emblem_union","polarity":"three_headed_cellar_monsters","emblems":["failed_math_or_monstrous_heavens","exact_divine_deformity"],"mag":8.3,"ratio":[16,9]}]},{"index":48,"name":"Procopia","chapter":9,"series":"Continuous cities","rank":3,"page":146,"topology":"PERIMETER_ACCRETION_SPRAWL","desert":"unpeopled pastoral horizon depth","poleAlpha":"trapeze_sky_medlar_window","poleBeta":"shoulder_straddling_polite_occlusion","optics":"Inn window rectangle progressively bricked solid from horizon to sill by flat, smiling, corn-chewing faces","loci":["inn_curtain_window_frame","medlar_ditch_bridge_field","twenty_six_lodger_bedroom"],"peakHash":"1ec72f592f16308ce41bf5aafd1996f8","peakTension":182.709,"archScars":["arch(inn_curtain_window_frame:shoulder_straddling_polite_occlusion<->trapeze_sky_medlar_window@span=10.19)","arch(inn_curtain_window_frame:shoulder_straddling_polite_occlusion<->trapeze_sky_medlar_window@span=11.84)","arch(inn_curtain_window_frame:shoulder_straddling_polite_occlusion<->trapeze_sky_medlar_window@span=8.79)"],"agents":[{"name":"procopia_pastoral_frame_keeper","locus":"inn_curtain_window_frame","op":"polarity_carve","polarity":"trapeze_sky_medlar_window","emblems":["trapeze_blue_sky_patch","yellow_hill_medlar_brambles"],"mag":2.4,"ratio":[5,4]},{"name":"procopia_corn_chewing_face_packer","locus":"inn_curtain_window_frame","op":"polarity_carve","polarity":"shoulder_straddling_polite_occlusion","emblems":["one_three_six_sixteen_forty_seven","blackberry_stained_round_smiles"],"mag":9.0,"ratio":[9,8]},{"name":"procopia_shoulder_straddle_stacker","locus":"medlar_ditch_bridge_field","op":"altitude_max","polarity":"shoulder_straddling_polite_occlusion","emblems":["occluded_bridge_and_sky","wall_to_wall_flat_faces"],"mag":8.2,"ratio":[4,3]},{"name":"procopia_polite_knee_room_crammer","locus":"twenty_six_lodger_bedroom","op":"emblem_union","polarity":"shoulder_straddling_polite_occlusion","emblems":["twenty_six_in_one_room","polite_chest_and_bed_elbows"],"mag":7.5,"ratio":[7,6]}]},{"index":49,"name":"Raissa","chapter":9,"series":"Hidden cities","rank":2,"page":148,"topology":"NESTED_GERM_EMERGENCE","desert":"monolithic unthreaded despair","poleAlpha":"hammer_bruised_ledger_gloom","poleBeta":"ephemeral_francolin_joy_thread","optics":"Grim zinc-counter shadow pierced by a millisecond red-and-yellow illuminated kinetic lightning-chain","loci":["awry_ledger_zinc_wineshop","pergola_ragout_scaffolding","freed_francolin_page_sky"],"peakHash":"5bfc7e9669fed4a487553d7cc9a72101","peakTension":136.3,"archScars":["arch(awry_ledger_zinc_wineshop:ephemeral_francolin_joy_thread<->hammer_bruised_ledger_gloom@span=7.10)"],"agents":[{"name":"raissa_bruised_thumb_grumbler","locus":"awry_ledger_zinc_wineshop","op":"polarity_carve","polarity":"hammer_bruised_ledger_gloom","emblems":["hammer_struck_needle_pricked_hands","broken_summer_dishes_awry_ledgers"],"mag":2.7,"ratio":[16,15]},{"name":"raissa_polenta_ragout_relay","locus":"awry_ledger_zinc_wineshop","op":"polarity_carve","polarity":"ephemeral_francolin_joy_thread","emblems":["laughing_window_child","polenta_shed_dog_stonemason_shout","ragout_maid_lace_parasol"],"mag":8.8,"ratio":[5,4]},{"name":"raissa_jumping_horse_francolin_painter","locus":"pergola_ragout_scaffolding","op":"altitude_max","polarity":"ephemeral_francolin_joy_thread","emblems":["smiling_jumping_officer_horse","freed_red_yellow_speckled_francolin"],"mag":8.5,"ratio":[3,2]},{"name":"raissa_unaware_thread_restretcher","locus":"freed_francolin_page_sky","op":"emblem_union","polarity":"ephemeral_francolin_joy_thread","emblems":["rapid_unraveling_living_thread","unaware_happy_city_inside_sad"],"mag":8.1,"ratio":[2,1]}]},{"index":50,"name":"Andria","chapter":9,"series":"Cities and the sky","rank":5,"page":150,"topology":"CELESTIAL_BLUEPRINT_COUPLING","desert":"one-way fatalistic astrological determinism","poleAlpha":"meticulous_orbital_regimentation","poleBeta":"prudent_nova_triggering_realignment","optics":"Suspended bamboo-grove streets reflected directly into telescope lenses flaring orange-to-yellow novas","loci":["cepheid_orbital_street_ring","bamboo_shadow_theater_port","nova_spiral_observatory"],"peakHash":"d3ce5538a7a5596bb34a70ffa3a0326f","peakTension":124.45,"archScars":["arch(bamboo_shadow_theater_port:meticulous_orbital_regimentation<->prudent_nova_triggering_realignment@span=6.02)","arch(bamboo_shadow_theater_port:meticulous_orbital_regimentation<->prudent_nova_triggering_realignment@span=6.15)","arch(bamboo_shadow_theater_port:meticulous_orbital_regimentation<->prudent_nova_triggering_realignment@span=6.27)"],"agents":[{"name":"andria_antares_calendar_aligner","locus":"cepheid_orbital_street_ring","op":"emblem_union","polarity":"meticulous_orbital_regimentation","emblems":["planet_orbit_streets","antares_alpheratz_cepheid_offices"],"mag":7.4,"ratio":[4,3]},{"name":"andria_bamboo_toboggan_rigger","locus":"bamboo_shadow_theater_port","op":"polarity_carve","polarity":"prudent_nova_triggering_realignment","emblems":["suspended_bamboo_street","former_lazaretto_kennels","thales_statue_toboggan_slide"],"mag":8.6,"ratio":[5,4]},{"name":"andria_motionless_myth_refuter","locus":"bamboo_shadow_theater_port","op":"polarity_carve","polarity":"meticulous_orbital_regimentation","emblems":["rejected_clockwork_stasis","calculated_all_world_prudence"],"mag":3.2,"ratio":[3,2]},{"name":"andria_nova_nebula_reciprocator","locus":"nova_spiral_observatory","op":"altitude_max","polarity":"prudent_nova_triggering_realignment","emblems":["exploded_nova_orange_to_yellow","bent_milky_way_spiral"],"mag":9.1,"ratio":[15,8]}]},{"index":51,"name":"Cecilia","chapter":9,"series":"Continuous cities","rank":4,"page":152,"topology":"PERIMETER_ACCRETION_SPRAWL","desert":"sharp rural-urban ecological boundary","poleAlpha":"pasture_blind_city_walker","poleBeta":"mingled_traffic_island_goatherd","optics":"Endless rows of identical pavement swallowing cliffs and sage meadows into a single inescapable traffic island","loci":["tinkling_wall_gate_pasture","endless_identical_house_rows","low_sage_traffic_island"],"peakHash":"cd1560b6a56662ec3f7bc5569648c871","peakTension":155.309,"archScars":["arch(tinkling_wall_gate_pasture:mingled_traffic_island_goatherd<->pasture_blind_city_walker@span=7.25)","arch(tinkling_wall_gate_pasture:mingled_traffic_island_goatherd<->pasture_blind_city_walker@span=8.38)","arch(tinkling_wall_gate_pasture:mingled_traffic_island_goatherd<->pasture_blind_city_walker@span=9.71)"],"agents":[{"name":"cecilia_stone_blind_urbanite","locus":"tinkling_wall_gate_pasture","op":"polarity_carve","polarity":"pasture_blind_city_walker","emblems":["unrecognized_inter_city_meadows","mingled_stones_and_grass"],"mag":3.0,"ratio":[4,3]},{"name":"cecilia_leaf_seeking_goatherd","locus":"tinkling_wall_gate_pasture","op":"polarity_carve","polarity":"mingled_traffic_island_goatherd","emblems":["meadow_between_cliffs_green_slope","frightened_corner_goats"],"mag":8.3,"ratio":[5,4]},{"name":"cecilia_wastepaper_goat_waner","locus":"endless_identical_house_rows","op":"emblem_union","polarity":"mingled_traffic_island_goatherd","emblems":["odorless_skin_and_bone_goats","rubbish_bin_wastepaper_forage"],"mag":7.5,"ratio":[7,6]},{"name":"cecilia_omnipresent_island_merger","locus":"low_sage_traffic_island","op":"altitude_max","polarity":"mingled_traffic_island_goatherd","emblems":["cecilia_is_everywhere","low_sage_recognized_in_traffic_island"],"mag":8.0,"ratio":[9,8]}]},{"index":52,"name":"Marozia","chapter":9,"series":"Hidden cities","rank":3,"page":154,"topology":"NESTED_GERM_EMERGENCE","desert":"programmed ideological utopia decree","poleAlpha":"leaden_rat_overcoat_tunnel","poleBeta":"chance_dragonfly_swallow_crack","optics":"Mold-soldered stone passages splitting open for one unforced instant into dragonfly-wing crystal","loci":["leaden_rat_pack_passages","bat_umbrella_overcoat_plaza","crystalline_wall_crack"],"peakHash":"bc29f884c047ddddcbef26617ec2e7c8","peakTension":136.6,"archScars":["arch(leaden_rat_pack_passages:chance_dragonfly_swallow_crack<->leaden_rat_overcoat_tunnel@span=7.20)"],"agents":[{"name":"marozia_voracious_rat_tunnel_runner","locus":"leaden_rat_pack_passages","op":"polarity_carve","polarity":"leaden_rat_overcoat_tunnel","emblems":["teeth_torn_leftovers","soldered_stone_mold_ceiling"],"mag":2.8,"ratio":[16,15]},{"name":"marozia_suspicious_umbrella_flapper","locus":"bat_umbrella_overcoat_plaza","op":"emblem_union","polarity":"leaden_rat_overcoat_tunnel","emblems":["lowered_eyelid_umbrellas","flapping_batlike_overcoats"],"mag":6.4,"ratio":[7,6]},{"name":"marozia_unforced_pleasure_opener","locus":"leaden_rat_pack_passages","op":"polarity_carve","polarity":"chance_dragonfly_swallow_crack","emblems":["sheer_pleasure_shared_gesture","dragonfly_transparent_transfiguration"],"mag":9.0,"ratio":[5,4]},{"name":"marozia_swallow_horizon_flicker","locus":"crystalline_wall_crack","op":"altitude_max","polarity":"chance_dragonfly_swallow_crack","emblems":["tail_flick_opening_horizon","second_city_freeing_from_first"],"mag":8.7,"ratio":[2,1]}]},{"index":53,"name":"Penthesilea","chapter":9,"series":"Continuous cities","rank":5,"page":156,"topology":"PERIMETER_ACCRETION_SPRAWL","desert":"walled threshold archway certainty","poleAlpha":"diluted_snaggle_comb_outskirts","poleBeta":"contradictory_oblique_arm_gestures","optics":"Milky swamp-soup pallor over corrugated-iron sheds, rusty Ferris wheel, and freckled suburb lights","loci":["corrugated_swamp_approach","ferris_shambles_workshop_belt","opaque_polyhedron_horizon"],"peakHash":"01dd7c4eb7e9f793268278fe25123702","peakTension":161.017,"archScars":["arch(corrugated_swamp_approach:contradictory_oblique_arm_gestures<->diluted_snaggle_comb_outskirts@span=7.37)","arch(corrugated_swamp_approach:contradictory_oblique_arm_gestures<->diluted_snaggle_comb_outskirts@span=8.52)","arch(corrugated_swamp_approach:contradictory_oblique_arm_gestures<->diluted_snaggle_comb_outskirts@span=9.87)"],"agents":[{"name":"penthesilea_threshold_eraser","locus":"corrugated_swamp_approach","op":"polarity_carve","polarity":"diluted_snaggle_comb_outskirts","emblems":["no_customs_archway_girdle","soupy_plain_mangy_fields","snaggle_toothed_shallow_facades"],"mag":8.5,"ratio":[9,8]},{"name":"penthesilea_oblique_arm_pointer","locus":"corrugated_swamp_approach","op":"polarity_carve","polarity":"contradictory_oblique_arm_gestures","emblems":["broad_gesture_here_farther_opposite","opaque_horizon_polyhedrons"],"mag":3.1,"ratio":[7,5]},{"name":"penthesilea_shambles_carnival_stringer","locus":"ferris_shambles_workshop_belt","op":"emblem_union","polarity":"diluted_snaggle_comb_outskirts","emblems":["rusty_workshops_cemetery_shambles","freckled_suburb_night_windows"],"mag":7.3,"ratio":[4,3]},{"name":"penthesilea_outside_limbo_questioner","locus":"opaque_polyhedron_horizon","op":"altitude_max","polarity":"diluted_snaggle_comb_outskirts","emblems":["penthesilea_only_outskirts_of_itself","inescapable_global_limbo"],"mag":8.2,"ratio":[16,15]}]},{"index":54,"name":"Theodora","chapter":9,"series":"Hidden cities","rank":4,"page":159,"topology":"NESTED_GERM_EMERGENCE","desert":"aseptic anthropocentric ecological purge","poleAlpha":"exterminating_linnaean_order","poleBeta":"awakened_incunabula_chimera_swarm","optics":"Sterile closed stone pavements erupted from below by basement-library griffons, hydras, and basilisks","loci":["aseptic_rat_massacre_sewers","buffon_linnaeus_incunabula_vault","griffon_basilisk_bedside_capitals"],"peakHash":"9596781c92bed6d40505bbbe443a66bc","peakTension":137.8,"archScars":["arch(aseptic_rat_massacre_sewers:awakened_incunabula_chimera_swarm<->exterminating_linnaean_order@span=7.20)"],"agents":[{"name":"theodora_carapace_rat_exterminator","locus":"aseptic_rat_massacre_sewers","op":"polarity_carve","polarity":"exterminating_linnaean_order","emblems":["condor_serpent_spider_fly_chain","poison_immune_rat_massacre","aseptic_human_cemetery"],"mag":2.9,"ratio":[4,3]},{"name":"theodora_buffon_shelf_archivist","locus":"buffon_linnaeus_incunabula_vault","op":"emblem_union","polarity":"exterminating_linnaean_order","emblems":["extinct_fauna_volumes","sealed_flea_and_germ_tombs"],"mag":6.2,"ratio":[5,4]},{"name":"theodora_incunabula_crypt_breaker","locus":"aseptic_rat_massacre_sewers","op":"polarity_carve","polarity":"awakened_incunabula_chimera_swarm","emblems":["stirring_deposed_basement_fauna","drainpipe_leaping_sphinxes_griffons"],"mag":9.1,"ratio":[7,4]},{"name":"theodora_hydra_bedside_percher","locus":"griffon_basilisk_bedside_capitals","op":"altitude_max","polarity":"awakened_incunabula_chimera_swarm","emblems":["chimeras_dragons_hircocervi","harpies_hydras_unicorns_basilisks"],"mag":8.9,"ratio":[15,8]}]},{"index":55,"name":"Berenice","chapter":9,"series":"Hidden cities","rank":5,"page":161,"topology":"NESTED_GERM_EMERGENCE","desert":"final settled moral triumph","poleAlpha":"triglyph_meat_grinder_unjust","poleBeta":"nested_comma_pulley_just_unjust_seeds","optics":"Classical abaci crowning meat-grinder cogs infiltrated by ticking counterweights and nested moral germs","loci":["triglyph_cog_perfumed_baths","understair_pulley_comma_rooms","nested_germ_sheath_core"],"peakHash":"aa29b278f7784d8f61a098c7d3ad9e57","peakTension":137.8,"archScars":["arch(triglyph_cog_perfumed_baths:nested_comma_pulley_just_unjust_seeds<->triglyph_meat_grinder_unjust@span=7.20)"],"agents":[{"name":"berenice_triglyph_cog_oppressor","locus":"triglyph_cog_perfumed_baths","op":"polarity_carve","polarity":"triglyph_meat_grinder_unjust","emblems":["abaci_metope_meat_grinders","perfumed_bath_sycophants_janizaries"],"mag":2.7,"ratio":[16,15]},{"name":"berenice_comma_pulley_just_infiltrator","locus":"triglyph_cog_perfumed_baths","op":"polarity_carve","polarity":"nested_comma_pulley_just_unjust_seeds","emblems":["climbing_wire_piston_ticking","comma_parenthesis_shibboleth","fried_squash_flowers_celery_soup"],"mag":8.9,"ratio":[5,4]},{"name":"berenice_righteous_rivalry_fermenter","locus":"understair_pulley_comma_rooms","op":"emblem_union","polarity":"triglyph_meat_grinder_unjust","emblems":["malignant_pride_of_being_more_just","revenge_yearning_inner_unjust_sheath"],"mag":7.8,"ratio":[7,5]},{"name":"berenice_simultaneous_window_germinator","locus":"nested_germ_sheath_core","op":"altitude_max","polarity":"nested_comma_pulley_just_unjust_seeds","emblems":["unruled_window_awakening_justice","all_future_berenices_wrapped_now"],"mag":9.5,"ratio":[2,1]}]}]};
+
+// Canonical FNV-1a content hash for lockless browser replay parity
+function fnvHash(obj) {
+  const s = typeof obj === 'string' ? obj : JSON.stringify(obj);
+  let h1 = 0x811c9dc5 >>> 0;
+  let h2 = 0x01000193 >>> 0;
+  for (let i = 0; i < s.length; i++) {
+    const c = s.charCodeAt(i);
+    h1 ^= c; h1 = Math.imul(h1, 0x01000193) >>> 0;
+    h2 ^= (c + i); h2 = Math.imul(h2, 0x85ebca6b) >>> 0;
+  }
+  return h1.toString(16).padStart(8, '0') + h2.toString(16).padStart(8, '0');
+}
+
+const state = {
+  cities: PAYLOAD.cities.map(c => JSON.parse(JSON.stringify(c))),
+  selectedIdx: 0,
+  tick: 3,
+  normBias: 0.18,
+  strictness: 0.85,
+  audioOn: false,
+  audioCtx: null,
+  particles: [],
+  arches: [],
+  perturbs: [],
+  checkpoints: {},
+  logs: []
+};
+
+document.getElementById('ologBadge').textContent = PAYLOAD.ologRevision;
+
+function initCityRuntime(city) {
+  if (!city.runtime) {
+    city.runtime = {
+      tick: 3,
+      commits: 12,
+      branches: 2,
+      tension: city.peakTension,
+      peakTension: city.peakTension,
+      headHash: city.peakHash.slice(0, 16),
+      peakHash: city.peakHash.slice(0, 16),
+      scars: [...city.archScars],
+      quarantine: []
+    };
+  }
+  return city.runtime;
+}
+
+state.cities.forEach(initCityRuntime);
+
+// WebAudio Just-Intonation Polyphonic Synthesizer
+function triggerSwarmChord(city, isArch = false) {
+  if (!state.audioOn) return;
+  if (!state.audioCtx) {
+    state.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  if (state.audioCtx.state === 'suspended') state.audioCtx.resume();
+  const now = state.audioCtx.currentTime;
+  const rootHz = 146.83 + (city.chapter * 11.5); // D3-rooted chapter transposition
+  city.agents.forEach((ag, idx) => {
+    const osc = state.audioCtx.createOscillator();
+    const gain = state.audioCtx.createGain();
+    const freq = rootHz * (ag.ratio[0] / ag.ratio[1]) * (isArch && idx % 2 === 1 ? 1.5 : 1.0);
+    osc.type = idx % 2 === 0 ? 'triangle' : 'sine';
+    osc.frequency.setValueAtTime(freq, now);
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(isArch ? 0.065 : 0.035, now + 0.03 + idx * 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + (isArch ? 0.75 : 0.42));
+    osc.connect(gain).connect(state.audioCtx.destination);
+    osc.start(now + idx * 0.015);
+    osc.stop(now + (isArch ? 0.8 : 0.46));
+  });
+}
+
+function logEvent(html) {
+  state.logs.unshift(html);
+  if (state.logs.length > 48) state.logs.pop();
+  document.getElementById('dagLog').innerHTML = state.logs.join('<br>');
+}
+
+function buildMatrixUI() {
+  const grid = document.getElementById('matrixGrid');
+  grid.innerHTML = '';
+  // Build 9 chapters rows? 55 cells looks super clean as an 11-series column grid across 9 chapter bands (9x11 = 99 slots, 55 occupied on the diagonal!)
+  for (let ch = 1; ch <= 9; ch++) {
+    for (let sIdx = 0; sIdx < 11; sIdx++) {
+      const seriesName = PAYLOAD.seriesOrder[sIdx];
+      const foundIdx = state.cities.findIndex(c => c.index <= 55 && c.chapter === ch && c.series === seriesName);
+      const div = document.createElement('div');
+      if (foundIdx >= 0) {
+        const c = state.cities[foundIdx];
+        div.className = 'm-cell city' + (foundIdx === state.selectedIdx ? ' selected' : '');
+        div.textContent = c.rank;
+        div.title = `#${c.index} ${c.name} (${c.series} ${c.rank}, Ch.${c.chapter})`;
+        div.onclick = () => selectCity(foundIdx);
+      } else {
+        div.className = 'm-cell';
+        div.textContent = '·';
+      }
+      grid.appendChild(div);
+    }
+  }
+}
+
+function buildCityListUI() {
+  const q = document.getElementById('searchBox').value.trim().toLowerCase();
+  const list = document.getElementById('cityList');
+  list.innerHTML = '';
+  state.cities.forEach((c, idx) => {
+    const matchText = `${c.name} ${c.series} ${c.topology} ${c.agents.map(a => a.name).join(' ')}`.toLowerCase();
+    if (q && !matchText.includes(q)) return;
+    const row = document.createElement('div');
+    row.className = 'city-row' + (idx === state.selectedIdx ? ' selected' : '');
+    row.innerHTML = `<span><strong>${c.index}. ${c.name}</strong></span><span class="meta mono">${c.topology.split('_')[0]}</span>`;
+    row.onclick = () => selectCity(idx);
+    list.appendChild(row);
+  });
+  document.getElementById('swarmCountBadge').textContent = `${state.cities.length} BESPOKE SWARMS`;
+
+  // Populate hybrid selects
+  ['hybridA', 'hybridB'].forEach((id, k) => {
+    const sel = document.getElementById(id);
+    const prev = sel.value;
+    sel.innerHTML = state.cities.map((c, i) => `<option value="${i}">${c.name}</option>`).join('');
+    sel.value = prev !== '' && state.cities[prev] ? prev : (k === 0 ? '17' : '25'); // Armilla x Octavia default
+  });
+}
+
+function spawnVisualSwarm(city) {
+  state.particles = city.agents.map((ag, idx) => {
+    const angle = (idx / city.agents.length) * Math.PI * 2 + 0.4;
+    return {
+      ag,
+      idx,
+      x: 0.5 + Math.cos(angle) * 0.24,
+      y: 0.5 + Math.sin(angle) * 0.22,
+      vx: Math.cos(angle + 1.2) * 0.0022 * (ag.ratio[0] / ag.ratio[1]),
+      vy: Math.sin(angle + 1.2) * 0.0022 * (ag.ratio[0] / ag.ratio[1]),
+      trail: []
+    };
+  });
+  state.arches = city.runtime.scars.map((sc, i) => ({
+    label: sc,
+    x1: 0.22 + (i * 0.19) % 0.5,
+    y1: 0.68 - (i % 2) * 0.25,
+    x2: 0.78 - (i * 0.17) % 0.45,
+    y2: 0.65 - ((i + 1) % 2) * 0.22,
+    strength: 1.0
+  }));
+  state.perturbs = [];
+}
+
+function renderSelectedDetails() {
+  const city = state.cities[state.selectedIdx];
+  const rt = initCityRuntime(city);
+  document.getElementById('matrixCoord').textContent = `CH ${city.chapter} · #${city.index} · p.${city.page}`;
+  document.getElementById('citySeriesLabel').textContent = `${city.series.toUpperCase()} · ${city.rank} (WEAVER P.${city.page})`;
+  document.getElementById('cityTitle').textContent = city.name;
+  document.getElementById('cityTopology').textContent = city.topology;
+  document.getElementById('cityDesert').textContent = city.desert;
+  document.getElementById('hudOptics').textContent = `OPTICS: ${city.optics}`;
+  document.getElementById('tensionReadout').textContent = `TENSION=${rt.tension.toFixed(1)} · BRANCHES=${rt.branches}`;
+
+  const roster = document.getElementById('agentRoster');
+  roster.innerHTML = city.agents.map(ag => {
+    const isPoleB = ag.polarity === city.poleBeta;
+    return `<div class="agent-card ${isPoleB ? 'pole-b' : ''}">
+      <div class="ag-head mono">
+        <span>${ag.name}</span>
+        <span>${ag.ratio[0]}:${ag.ratio[1]}</span>
+      </div>
+      <div class="mono" style="font-size:10px;color:var(--ink-soft);">
+        [${ag.op}] → <strong>${ag.locus}</strong> · pol=${ag.polarity} · mag=${ag.mag}
+      </div>
+      <div class="emblem-tags mono">
+        ${ag.emblems.map(e => `<span>${e}</span>`).join('')}
+      </div>
+    </div>`;
+  }).join('');
+
+  const lociStrip = document.getElementById('lociStrip');
+  lociStrip.innerHTML = city.loci.map((loc, i) => {
+    const bound = city.agents.filter(a => a.locus === loc);
+    const hasCollision = new Set(bound.map(b => b.polarity)).size > 1;
+    return `<div style="background:rgba(255,255,255,0.45);border:1px solid var(--rule-strong);padding:6px 8px;font-size:10px;">
+      <div style="color:${hasCollision ? 'var(--vermilion)' : 'var(--ink-soft)'};font-weight:700;">
+        LOCUS ${i + 1}: ${loc} ${hasCollision ? '⚡ ARCH' : ''}
+      </div>
+      <div style="margin-top:2px;">Agents: ${bound.map(b => b.name.split('_').slice(-1)[0]).join(', ') || 'shuffled'}</div>
+    </div>`;
+  }).join('');
+}
+
+function selectCity(idx) {
+  state.selectedIdx = idx;
+  const city = state.cities[idx];
+  initCityRuntime(city);
+  buildMatrixUI();
+  buildCityListUI();
+  spawnVisualSwarm(city);
+  renderSelectedDetails();
+  triggerSwarmChord(city, false);
+  logEvent(`<span class="ok">[LOAD]</span> ◻(${city.name}) swarm online · head=${city.runtime.headHash} · ${city.agents.length} handmade agents`);
+}
+
+function stepCitySwarm(burstCount = 1) {
+  const city = state.cities[state.selectedIdx];
+  const rt = initCityRuntime(city);
+
+  // Check Kublai Norm-Collapse Trap (CT2)
+  if (state.normBias > 0.78) {
+    logEvent(`<span class="warn">[TRUDE_CONVERGENCE_BLOCKED]</span> Kublai norm bias ${(state.normBias).toFixed(2)} attempted to flatten ${city.name}. Restoring Peak Checkpoint ${rt.peakHash}!`);
+    state.normBias = 0.18;
+    document.getElementById('normSlider').value = 18;
+    document.getElementById('normVal').textContent = '0.18 (Restored)';
+    rt.tension = rt.peakTension;
+    rt.headHash = rt.peakHash;
+    renderSelectedDetails();
+    return;
+  }
+
+  let forwardPayloads = [];
+  for (let b = 0; b < burstCount; b++) {
+    rt.tick += 1;
+    city.agents.forEach((ag, idx) => {
+      if (state.strictness > 0.95 && idx === 3 && b === 0) {
+        rt.quarantine.push(`${ag.name}@t${rt.tick}`);
+        logEvent(`<span class="warn">[SPARSITY_TRAP &gt;0.95]</span> Quarantined anomalous stone from ${ag.name} into &lt;uncertain&gt; branch.`);
+        return;
+      }
+      const delta = {
+        ag: ag.name,
+        loc: ag.locus,
+        pol: ag.polarity,
+        mag: +(ag.mag + ((rt.tick + idx) % 5) * 0.23 * (1 - state.normBias)).toFixed(3),
+        b
+      };
+      forwardPayloads.push(delta);
+    });
+  }
+
+  // Verify CD1/CD2 order-independence between forward and reversed commit batches!
+  const canonicalFwd = forwardPayloads.map(d => fnvHash(d)).sort();
+  const canonicalRev = [...forwardPayloads].reverse().map(d => fnvHash(d)).sort();
+  const hashFwd = fnvHash(canonicalFwd);
+  const hashRev = fnvHash(canonicalRev);
+
+  rt.commits += forwardPayloads.length;
+  rt.headHash = hashFwd;
+  const newScar = `arch(${city.loci[0]}:${city.poleAlpha}<->${city.poleBeta}@t${rt.tick})`;
+  if (!rt.scars.includes(newScar) && rt.scars.length < 9) {
+    rt.scars.push(newScar);
+    state.arches.push({
+      label: newScar,
+      x1: 0.16 + Math.random() * 0.28,
+      y1: 0.28 + Math.random() * 0.48,
+      x2: 0.56 + Math.random() * 0.28,
+      y2: 0.28 + Math.random() * 0.48,
+      strength: 1.2
+    });
+  }
+  rt.branches = Math.min(16, rt.branches + 1);
+  rt.tension = +(rt.tension + (burstCount > 1 ? 9.4 : 1.85) * (1 - state.normBias * 0.6)).toFixed(2);
+  if (rt.tension > rt.peakTension) {
+    rt.peakTension = rt.tension;
+    rt.peakHash = rt.headHash;
+  }
+
+  triggerSwarmChord(city, burstCount > 1);
+  renderSelectedDetails();
+  if (burstCount > 1) {
+    logEvent(`<span class="scar">[100x STORM PASS]</span> ${forwardPayloads.length} contended micro-commits · fwd=${hashFwd} === rev=${hashRev} · ConflictGrains=${rt.scars.length}`);
+  } else {
+    logEvent(`<span class="ok">[TICK ${rt.tick}]</span> head=${hashFwd} · minted <span class="scar">${newScar}</span>`);
+  }
+}
+
+// Quine Rule-Mutation Forge in Browser
+function forgeMutatedScion(op) {
+  const parent = state.cities[state.selectedIdx];
+  const newIdx = state.cities.length + 1;
+  const slug = `${parent.name.toLowerCase().replace(/[^a-z0-9]/g, '_')}_${op}`;
+  const suffixes = ['carver', 'inverter', 'spanner', 'warden'];
+  const topoList = Object.values({
+    a: 'PALIMPSEST_ECHO', b: 'DESIRE_TRAP_BIFURCATION', c: 'SEMIOTIC_INVERSION',
+    d: 'TENSILE_VOID_RIG', e: 'CHORD_EXCHANGE_WEB', f: 'SPECULAR_PARALLAX',
+    g: 'ONOMASTIC_SHARD_SHUFFLE', h: 'NECROPOLIS_ROLE_CASCADE',
+    i: 'CELESTIAL_BLUEPRINT_COUPLING', j: 'PERIMETER_ACCRETION_SPRAWL', k: 'NESTED_GERM_EMERGENCE'
+  });
+  const newTopo = op === 'mirror_axis' ? 'SPECULAR_PARALLAX'
+    : op === 'slow_time' ? 'NECROPOLIS_ROLE_CASCADE'
+    : op === 'spawn_echo' ? 'NESTED_GERM_EMERGENCE'
+    : op === 'simplify_rules' ? 'TENSILE_VOID_RIG'
+    : op === 'transmute_medium' ? 'CELESTIAL_BLUEPRINT_COUPLING'
+    : topoList[(newIdx * 3) % topoList.length];
+
+  const pa = `${op}_${parent.poleBeta}`;
+  const pb = `counter_${parent.poleAlpha}`;
+  const newLoci = parent.loci.map(l => `${op.split('_')[0]}_${l}`);
+  const newAgents = parent.agents.map((ag, i) => ({
+    name: `${slug}_${suffixes[i]}_${newIdx}`,
+    locus: i < 2 ? newLoci[0] : newLoci[Math.min(i - 1, 2)],
+    op: i < 2 ? 'polarity_carve' : ag.op,
+    polarity: i % 2 === 0 ? pa : pb,
+    emblems: ag.emblems.map(e => `${op}:${e}`),
+    mag: +(11.4 - ag.mag + i * 0.6).toFixed(2),
+    ratio: [ag.ratio[1] + i + 1, Math.max(1, ag.ratio[0])]
+  }));
+
+  const scion = {
+    index: newIdx,
+    name: `${parent.name}-${op.replace('_', '-')}`,
+    chapter: parent.chapter,
+    series: `Scion (${op})`,
+    rank: 1,
+    page: parent.page,
+    topology: newTopo,
+    desert: `parent friction of ${parent.name}`,
+    poleAlpha: pa,
+    poleBeta: pb,
+    optics: `[${op.toUpperCase()}] ${parent.optics}`,
+    loci: newLoci,
+    peakHash: fnvHash(newAgents),
+    peakTension: +(parent.peakTension + 6.4).toFixed(2),
+    archScars: [`arch(${newLoci[0]}:${pa}<->${pb})`],
+    agents: newAgents
+  };
+  initCityRuntime(scion);
+  state.cities.push(scion);
+  selectCity(state.cities.length - 1);
+  logEvent(`<span class="scar">[QUINE SCION FORGED]</span> Mutated ${parent.name} via <strong>${op}</strong> → ${scion.name} (4 new zero-overlap agents)`);
+}
+
+function forgeHybridScion() {
+  const idxA = +document.getElementById('hybridA').value;
+  const idxB = +document.getElementById('hybridB').value;
+  if (idxA === idxB) {
+    logEvent(`<span class="warn">[HYBRID REJECTED]</span> Choose two distinct cities so their arches contend!`);
+    return;
+  }
+  const ca = state.cities[idxA];
+  const cb = state.cities[idxB];
+  const newIdx = state.cities.length + 1;
+  const scionName = `${ca.name.slice(0, 4)}${cb.name.slice(-4)}-${newIdx}`;
+  const slug = scionName.toLowerCase().replace(/[^a-z0-9]/g, '_');
+  const nexus = `${slug}_confluence_arch`;
+  const loci = [nexus, `${slug}_${ca.loci[1]}`, `${slug}_${cb.loci[2]}`];
+  const agents = [
+    { name: `${slug}_${ca.name.toLowerCase()}_keel`, locus: nexus, op: 'polarity_carve', polarity: ca.poleAlpha, emblems: [...ca.agents[0].emblems.slice(0,2), `graft:${ca.name}`], mag: +(ca.agents[0].mag + 0.9).toFixed(2), ratio: ca.agents[0].ratio },
+    { name: `${slug}_${cb.name.toLowerCase()}_span`, locus: nexus, op: 'polarity_carve', polarity: cb.poleBeta, emblems: [...cb.agents[1].emblems.slice(0,2), `graft:${cb.name}`], mag: +Math.max(1.5, cb.agents[1].mag - 1.6).toFixed(2), ratio: cb.agents[1].ratio },
+    { name: `${slug}_parallax_weaver`, locus: loci[1], op: 'emblem_union', polarity: ca.poleBeta, emblems: [ca.agents[2].emblems[0], cb.agents[2].emblems[0]], mag: 6.8, ratio: ca.agents[2].ratio },
+    { name: `${slug}_keystone_warden`, locus: loci[2], op: 'altitude_max', polarity: cb.poleAlpha, emblems: [ca.agents[3].emblems[0], cb.agents[3].emblems[0]], mag: 9.1, ratio: cb.agents[3].ratio }
+  ];
+  const scion = {
+    index: newIdx,
+    name: scionName,
+    chapter: 9,
+    series: `${ca.name} × ${cb.name}`,
+    rank: 5,
+    page: 138,
+    topology: cb.topology,
+    desert: `${ca.desert} ⊗ ${cb.desert}`,
+    poleAlpha: ca.poleAlpha,
+    poleBeta: cb.poleBeta,
+    optics: `${ca.optics} // GRAFTED // ${cb.optics}`,
+    loci,
+    peakHash: fnvHash(agents),
+    peakTension: +(Math.max(ca.peakTension, cb.peakTension) + 8.2).toFixed(2),
+    archScars: [`arch(${nexus}:${ca.poleAlpha}<->${cb.poleBeta})`],
+    agents
+  };
+  initCityRuntime(scion);
+  state.cities.push(scion);
+  selectCity(state.cities.length - 1);
+  logEvent(`<span class="scar">[ATLAS HYBRID]</span> ${ca.name} × ${cb.name} → <strong>${scionName}</strong>`);
+}
+
+// Build Mutation Buttons
+const mutGrid = document.getElementById('mutGrid');
+PAYLOAD.mutationOps.forEach(op => {
+  const b = document.createElement('button');
+  b.textContent = `⊕ ${op}`;
+  b.onclick = () => forgeMutatedScion(op);
+  mutGrid.appendChild(b);
+});
+
+document.getElementById('btnHybrid').onclick = forgeHybridScion;
+document.getElementById('btnStep').onclick = () => stepCitySwarm(1);
+document.getElementById('btnBurst').onclick = () => stepCitySwarm(100);
+document.getElementById('btnAudio').onclick = (e) => {
+  state.audioOn = !state.audioOn;
+  e.target.textContent = `AUDIO: ${state.audioOn ? 'ON' : 'OFF'}`;
+  e.target.className = state.audioOn ? 'active-audio' : '';
+  if (state.audioOn) triggerSwarmChord(state.cities[state.selectedIdx], true);
+};
+document.getElementById('btnRestorePeak').onclick = () => {
+  const city = state.cities[state.selectedIdx];
+  const rt = initCityRuntime(city);
+  rt.tension = rt.peakTension;
+  rt.headHash = rt.peakHash;
+  state.normBias = 0.15;
+  document.getElementById('normSlider').value = 15;
+  document.getElementById('normVal').textContent = '0.15 (Peak)';
+  renderSelectedDetails();
+  logEvent(`<span class="ok">[PEAK RESTORED]</span> Reverted to checkpoint ${rt.peakHash} (tension=${rt.peakTension.toFixed(1)})`);
+};
+document.getElementById('searchBox').oninput = buildCityListUI;
+document.getElementById('normSlider').oninput = (e) => {
+  state.normBias = +e.target.value / 100;
+  document.getElementById('normVal').textContent = `${state.normBias.toFixed(2)} ${state.normBias > 0.7 ? '(Trude Risk!)' : '(Jagged)'}`;
+};
+document.getElementById('strictSlider').oninput = (e) => {
+  state.strictness = +e.target.value / 100;
+  document.getElementById('strictVal').textContent = state.strictness.toFixed(2);
+};
+
+// Interactive Canvas & 11 Topology Renderers
+const canvas = document.getElementById('stage');
+const ctx = canvas.getContext('2d');
+
+function resizeCanvas() {
+  const rect = canvas.parentElement.getBoundingClientRect();
+  canvas.width = rect.width * window.devicePixelRatio;
+  canvas.height = rect.height * window.devicePixelRatio;
+  ctx.setTransform(window.devicePixelRatio, 0, 0, window.devicePixelRatio, 0, 0);
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+canvas.addEventListener('click', (ev) => {
+  const rect = canvas.getBoundingClientRect();
+  const nx = (ev.clientX - rect.left) / rect.width;
+  const ny = (ev.clientY - rect.top) / rect.height;
+  const city = state.cities[state.selectedIdx];
+  state.perturbs.push({ x: nx, y: ny, r: 4, alpha: 1.0 });
+  // Pull agents toward ebony pore contention point to mint an arch!
+  state.particles.forEach((p, idx) => {
+    const dx = nx - p.x;
+    const dy = ny - p.y;
+    const sign = idx % 2 === 0 ? 1 : -0.85;
+    p.vx += dx * 0.018 * sign;
+    p.vy += dy * 0.018 * sign;
+  });
+  state.arches.push({
+    label: `ebony_pore_arch@${nx.toFixed(2)}`,
+    x1: Math.max(0.08, nx - 0.16),
+    y1: Math.min(0.88, ny + 0.12),
+    x2: Math.min(0.92, nx + 0.16),
+    y2: Math.min(0.88, ny + 0.12),
+    strength: 1.4
+  });
+  if (state.arches.length > 12) state.arches.shift();
+  stepCitySwarm(1);
+});
+
+let frameT = 0;
+function drawLoop() {
+  frameT += 0.016;
+  const w = canvas.width / window.devicePixelRatio;
+  const h = canvas.height / window.devicePixelRatio;
+  const city = state.cities[state.selectedIdx];
+  const topo = city.topology;
+
+  // Archival obsidian plate background
+  ctx.fillStyle = '#15120f';
+  ctx.fillRect(0, 0, w, h);
+
+  // Subtle surveyor contour grid
+  ctx.strokeStyle = 'rgba(230, 218, 192, 0.06)';
+  ctx.lineWidth = 1;
+  for (let gx = 40; gx < w; gx += 60) {
+    ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, h); ctx.stroke();
+  }
+  for (let gy = 40; gy < h; gy += 60) {
+    ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(w, gy); ctx.stroke();
+  }
+
+  // Topology-specific multiplane structural geometry
+  if (topo === 'TENSILE_VOID_RIG') {
+    // Catenary abyss net + suspended gondolas / hydraulic risers (Octavia, Armilla, Isaura, Zenobia, Sophronia)
+    ctx.strokeStyle = 'rgba(242, 234, 217, 0.42)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    for (let x = 0; x <= w; x += 12) {
+      const u = (x / w) * 2 - 1;
+      const sag = h * 0.24 + (1 - u * u) * 68 + Math.sin(frameT * 2 + x * 0.02) * 3;
+      if (x === 0) ctx.moveTo(x, sag); else ctx.lineTo(x, sag);
+      if (x % 48 === 0 && x > 20 && x < w - 20) {
+        const drop = 75 + ((x * 17) % 110);
+        ctx.strokeStyle = 'rgba(95, 175, 215, 0.35)';
+        ctx.strokeRect(x - 6, sag + drop, 12, 16);
+      }
+    }
+    ctx.strokeStyle = 'rgba(242, 234, 217, 0.5)';
+    ctx.stroke();
+  } else if (topo === 'SPECULAR_PARALLAX') {
+    // Asymmetric lake mirror horizon (Valdrada, Moriana, Baucis, Zemrude, Phyllis)
+    const midY = h * 0.52;
+    ctx.strokeStyle = 'rgba(95, 165, 210, 0.55)';
+    ctx.beginPath(); ctx.moveTo(0, midY); ctx.lineTo(w, midY); ctx.stroke();
+    state.particles.forEach(p => {
+      ctx.strokeStyle = 'rgba(95, 165, 210, 0.32)';
+      ctx.beginPath();
+      ctx.arc(p.x * w, midY + (midY - p.y * h) * 0.88, 11, 0, Math.PI * 2);
+      ctx.stroke();
+    });
+  } else if (topo === 'NESTED_GERM_EMERGENCE') {
+    // 4-deep simultaneous concentric sheaths (Berenice, Olinda, Raissa, Marozia, Theodora)
+    for (let ring = 1; ring <= 4; ring++) {
+      ctx.save();
+      ctx.translate(w * 0.5, h * 0.5);
+      ctx.rotate(frameT * (ring % 2 === 0 ? -0.35 : 0.45) * ring * 0.3);
+      ctx.strokeStyle = ring % 2 === 0 ? 'rgba(179, 46, 34, 0.48)' : 'rgba(127, 224, 176, 0.42)';
+      ctx.setLineDash([8, 5]);
+      ctx.beginPath();
+      ctx.arc(0, 0, ring * 44 + Math.sin(frameT * 2 + ring) * 4, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
+    }
+  } else if (topo === 'CHORD_EXCHANGE_WEB') {
+    // Taut multi-colored Ersilia strings between all agents & loci
+    const colors = ['#f2ead9', '#777777', '#b32e22', '#e0b354'];
+    for (let i = 0; i < state.particles.length; i++) {
+      for (let j = i + 1; j < state.particles.length; j++) {
+        ctx.strokeStyle = colors[(i + j) % colors.length];
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.moveTo(state.particles[i].x * w, state.particles[i].y * h);
+        ctx.lineTo(state.particles[j].x * w, state.particles[j].y * h);
+        ctx.stroke();
+      }
+    }
+  } else if (topo === 'CELESTIAL_BLUEPRINT_COUPLING') {
+    // Star blueprint constellations coupled by vertical sightlines to terrestrial cranes
+    for (let s = 0; s < 16; s++) {
+      const sx = ((s * 97 + city.index * 31) % (w - 60)) + 30;
+      const sy = 24 + ((s * 53) % (h * 0.34));
+      ctx.fillStyle = '#f7df94';
+      ctx.fillRect(sx - 1.5, sy - 1.5, 3, 3);
+      if (s % 4 === 0) {
+        ctx.strokeStyle = 'rgba(247, 223, 148, 0.18)';
+        ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(sx, h - 40); ctx.stroke();
+      }
+    }
+  } else if (topo === 'PERIMETER_ACCRETION_SPRAWL') {
+    // Rising Leonia perimeter ramparts pressing inward
+    ctx.strokeStyle = 'rgba(181, 126, 45, 0.5)';
+    for (let layer = 0; layer < 4; layer++) {
+      const inset = 16 + layer * 16;
+      ctx.strokeRect(inset, inset, w - inset * 2, h - inset * 2);
+    }
+  } else if (topo === 'PALIMPSEST_ECHO') {
+    // Zaira scar-rungs & Zora nine-jet radial銅 clock graduations
+    ctx.strokeStyle = 'rgba(214, 199, 167, 0.28)';
+    for (let rung = 0; rung < 9; rung++) {
+      const ry = 42 + rung * ((h - 84) / 8);
+      const notch = 18 + ((rung * 29 + city.index * 7) % 90);
+      ctx.beginPath();
+      ctx.moveTo(28, ry);
+      ctx.lineTo(28 + notch, ry);
+      ctx.stroke();
+    }
+    ctx.save();
+    ctx.translate(w * 0.5, h * 0.5);
+    for (let jet = 0; jet < 9; jet++) {
+      const a = (jet / 9) * Math.PI * 2 + frameT * 0.12;
+      ctx.strokeStyle = 'rgba(181, 126, 45, 0.34)';
+      ctx.beginPath();
+      ctx.moveTo(Math.cos(a) * 28, Math.sin(a) * 28);
+      ctx.lineTo(Math.cos(a) * 118, Math.sin(a) * 118);
+      ctx.stroke();
+    }
+    ctx.restore();
+  } else if (topo === 'DESIRE_TRAP_BIFURCATION') {
+    // Zobeide winding pursuit labyrinth + Fedora blue glass counterfactual globes
+    ctx.strokeStyle = 'rgba(224, 90, 71, 0.34)';
+    ctx.beginPath();
+    for (let t = 0; t < 56; t++) {
+      const ang = t * 0.38 + frameT * 0.35;
+      const rad = 14 + t * 3.1;
+      const sx = w * 0.5 + Math.cos(ang) * rad * 1.25;
+      const sy = h * 0.5 + Math.sin(ang) * rad * 0.78;
+      if (t === 0) ctx.moveTo(sx, sy); else ctx.lineTo(sx, sy);
+    }
+    ctx.stroke();
+    for (let g = 0; g < 3; g++) {
+      const gx = w * (0.24 + g * 0.26);
+      const gy = h * 0.24 + Math.sin(frameT * 1.5 + g) * 8;
+      ctx.fillStyle = 'rgba(72, 148, 212, 0.18)';
+      ctx.beginPath(); ctx.arc(gx, gy, 22, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = 'rgba(120, 195, 245, 0.55)';
+      ctx.stroke();
+    }
+  } else if (topo === 'SEMIOTIC_INVERSION') {
+    // Tamara/Hypatia/Olivia upper signifier frieze vs inverted lower basalt referent plane
+    ctx.strokeStyle = 'rgba(242, 234, 217, 0.32)';
+    ctx.setLineDash([4, 6]);
+    ctx.beginPath(); ctx.moveTo(20, h * 0.48); ctx.lineTo(w - 20, h * 0.48); ctx.stroke();
+    ctx.setLineDash([]);
+    for (let k = 0; k < 6; k++) {
+      const kx = 65 + k * ((w - 130) / 5);
+      ctx.strokeStyle = 'rgba(224, 179, 84, 0.48)';
+      ctx.strokeRect(kx - 14, 34, 28, 22);
+      ctx.strokeStyle = 'rgba(94, 168, 220, 0.44)';
+      ctx.beginPath();
+      ctx.moveTo(kx, h - 30);
+      ctx.lineTo(kx - 15, h - 56);
+      ctx.lineTo(kx + 15, h - 56);
+      ctx.closePath();
+      ctx.stroke();
+    }
+  } else if (topo === 'ONOMASTIC_SHARD_SHUFFLE') {
+    // Clarice/Leandra cyclic shard permutation polygon between urban loci
+    ctx.save();
+    ctx.translate(w * 0.5, h * 0.5);
+    ctx.rotate(frameT * 0.28);
+    ctx.strokeStyle = 'rgba(214, 199, 167, 0.4)';
+    ctx.beginPath();
+    for (let v = 0; v <= 6; v++) {
+      const va = (v / 6) * Math.PI * 2;
+      const vx = Math.cos(va) * 128;
+      const vy = Math.sin(va) * 96;
+      if (v === 0) ctx.moveTo(vx, vy); else ctx.lineTo(vx, vy);
+    }
+    ctx.stroke();
+    ctx.restore();
+  } else if (topo === 'NECROPOLIS_ROLE_CASCADE') {
+    // Melania/Eusapia/Laudomia tripartite hourglass: Unborn -> Living -> Dead twin strata
+    const yTop = h * 0.31, yBot = h * 0.69;
+    ctx.strokeStyle = 'rgba(242, 234, 217, 0.3)';
+    ctx.beginPath();
+    ctx.moveTo(w * 0.32, 22); ctx.lineTo(w * 0.5, h * 0.5); ctx.lineTo(w * 0.32, h - 22);
+    ctx.moveTo(w * 0.68, 22); ctx.lineTo(w * 0.5, h * 0.5); ctx.lineTo(w * 0.68, h - 22);
+    ctx.moveTo(24, yTop); ctx.lineTo(w - 24, yTop);
+    ctx.moveTo(24, yBot); ctx.lineTo(w - 24, yBot);
+    ctx.stroke();
+  }
+
+  // Draw Loci Anchors
+  city.loci.forEach((loc, i) => {
+    const lx = w * (0.22 + i * 0.28);
+    const ly = h * (i === 1 ? 0.36 : 0.66);
+    ctx.strokeStyle = 'rgba(242, 234, 217, 0.45)';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(lx - 18, ly - 18, 36, 36);
+    ctx.fillStyle = 'rgba(242, 234, 217, 0.72)';
+    ctx.font = '10px ui-monospace, monospace';
+    ctx.fillText(loc, lx - 36, ly + 30);
+  });
+
+  // Draw ConflictGrain Arch Keystones ("Without stones there is no arch")
+  state.arches.forEach((ar, idx) => {
+    const x1 = ar.x1 * w, y1 = ar.y1 * h, x2 = ar.x2 * w, y2 = ar.y2 * h;
+    const cx = (x1 + x2) * 0.5;
+    const cy = Math.min(y1, y2) - 55 - (idx % 3) * 16;
+    ctx.strokeStyle = 'rgba(215, 72, 56, 0.78)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.quadraticCurveTo(cx, cy, x2, y2);
+    ctx.stroke();
+    // Keystone diamond
+    const kx = 0.25 * x1 + 0.5 * cx + 0.25 * x2;
+    const ky = 0.25 * y1 + 0.5 * cy + 0.25 * y2;
+    ctx.fillStyle = '#ff6b57';
+    ctx.beginPath();
+    ctx.moveTo(kx, ky - 5); ctx.lineTo(kx + 5, ky); ctx.lineTo(kx, ky + 5); ctx.lineTo(kx - 5, ky);
+    ctx.closePath();
+    ctx.fill();
+  });
+
+  // Update & Draw the 4 Bespoke Scion Agents
+  state.particles.forEach((p, idx) => {
+    const locusIdx = Math.max(0, city.loci.indexOf(p.ag.locus));
+    const tx = 0.22 + locusIdx * 0.28 + Math.cos(frameT * (1 + idx * 0.4)) * 0.09;
+    const ty = (locusIdx === 1 ? 0.36 : 0.66) + Math.sin(frameT * (1.2 + idx * 0.3)) * 0.09;
+    p.vx = p.vx * 0.94 + (tx - p.x) * 0.0045;
+    p.vy = p.vy * 0.94 + (ty - p.y) * 0.0045;
+    p.x = Math.max(0.06, Math.min(0.94, p.x + p.vx));
+    p.y = Math.max(0.08, Math.min(0.90, p.y + p.vy));
+    p.trail.push({ x: p.x * w, y: p.y * h });
+    if (p.trail.length > 26) p.trail.shift();
+
+    const isPoleB = p.ag.polarity === city.poleBeta;
+    const col = isPoleB ? '#5ea8dc' : '#e05a47';
+
+    ctx.strokeStyle = isPoleB ? 'rgba(94,168,220,0.35)' : 'rgba(224,90,71,0.35)';
+    ctx.lineWidth = 1.4;
+    ctx.beginPath();
+    p.trail.forEach((pt, ti) => { if (ti === 0) ctx.moveTo(pt.x, pt.y); else ctx.lineTo(pt.x, pt.y); });
+    ctx.stroke();
+
+    ctx.fillStyle = col;
+    ctx.beginPath();
+    ctx.arc(p.x * w, p.y * h, 5 + p.ag.mag * 0.35, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = '#f2ead9';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    ctx.fillStyle = '#f2ead9';
+    ctx.font = '10px ui-monospace, monospace';
+    ctx.fillText(p.ag.name, p.x * w + 10, p.y * h - 6);
+  });
+
+  // Draw Ebony Pore click ripples
+  state.perturbs.forEach(pt => {
+    ctx.strokeStyle = `rgba(255, 122, 107, ${pt.alpha})`;
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.arc(pt.x * w, pt.y * h, pt.r, 0, Math.PI * 2);
+    ctx.stroke();
+    pt.r += 2.4;
+    pt.alpha *= 0.93;
+  });
+  state.perturbs = state.perturbs.filter(pt => pt.alpha > 0.04);
+
+  requestAnimationFrame(drawLoop);
+}
+
+selectCity(17); // Open on #18 Armilla (wall-less singing hydraulic pipe swarm) by default!
+requestAnimationFrame(drawLoop);
+</script>
+</body>
+</html>

@@ -1,0 +1,1139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PLATE 34 · The Studio of Living Desks — Interactive Agent Office &amp; Behind-the-Scenes Film</title>
+<style>
+  @font-face {
+    font-family: 'IM Fell English';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../fonts/im-fell-english-latin-400-normal.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'IM Fell English';
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../fonts/im-fell-english-latin-400-italic.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'IBM Plex Mono';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../fonts/ibm-plex-mono-latin-400-normal.woff2');
+  }
+  @font-face {
+    font-family: 'IBM Plex Mono';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('../fonts/ibm-plex-mono-latin-600-normal.woff2');
+  }
+
+  :root {
+    --paper: #f2ead9;
+    --paper-hi: #f8f3e6;
+    --paper-deep: #e6dac2;
+    --paper-dim: #d6c7aa;
+    --ink: #1d1915;
+    --ink-mid: #4e4439;
+    --ink-faint: #827462;
+    --red: #b23024;
+    --red-wash: rgba(178, 48, 36, 0.12);
+    --ochre: #b88232;
+    --rule: rgba(29, 25, 21, 0.18);
+    --rule-strong: rgba(29, 25, 21, 0.42);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IM Fell English', Georgia, serif;
+    line-height: 1.55;
+  }
+
+  header.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: rgba(242, 234, 217, 0.96);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--rule-strong);
+    padding: 10px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  header.topbar a {
+    color: var(--ink);
+    text-decoration: none;
+    padding: 4px 9px;
+    border: 1px solid var(--rule-strong);
+    background: var(--paper-hi);
+  }
+  header.topbar a:hover {
+    border-color: var(--red);
+    color: var(--red);
+  }
+  .status-strip {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+  }
+  .cache-pill {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 3px 9px;
+    font-weight: 600;
+  }
+  .cache-pill.warn {
+    background: var(--red);
+  }
+
+  main {
+    max-width: 1360px;
+    margin: 0 auto;
+    padding: 28px 24px 100px;
+  }
+
+  .hero-header {
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 20px;
+    margin-bottom: 26px;
+  }
+  .kicker {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    color: var(--red);
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  h1 {
+    font-size: clamp(32px, 4.4vw, 50px);
+    font-weight: 400;
+    margin: 6px 0 6px;
+    line-height: 1.08;
+  }
+  .subtitle {
+    font-style: italic;
+    font-size: 20px;
+    color: var(--ink-mid);
+    margin: 0;
+  }
+
+  /* Top Dual Grid: Live Playable Engraved Studio Office (Left) + Behind-the-Scenes Film (Right) */
+  .studio-top-grid {
+    display: grid;
+    grid-template-columns: 1.32fr 1fr;
+    gap: 24px;
+    align-items: start;
+    margin-bottom: 34px;
+  }
+  @media (max-width: 1080px) {
+    .studio-top-grid { grid-template-columns: 1fr; }
+  }
+
+  .panel-card {
+    background: var(--paper-deep);
+    border: 2px solid var(--ink);
+    box-shadow: 0 14px 36px -14px rgba(20, 14, 6, 0.35);
+  }
+  .panel-bar {
+    padding: 8px 14px;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  #office-canvas {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    display: block;
+    background: var(--paper);
+    cursor: pointer;
+  }
+  .office-toolbar {
+    padding: 10px 12px;
+    background: var(--paper-hi);
+    border-top: 1px solid var(--rule-strong);
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    align-items: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+  }
+  .office-toolbar button {
+    font: inherit;
+    font-weight: 600;
+    padding: 5px 9px;
+    border: 1px solid var(--ink);
+    background: var(--paper-deep);
+    color: var(--ink);
+    cursor: pointer;
+    text-transform: uppercase;
+  }
+  .office-toolbar button:hover {
+    background: var(--red);
+    color: var(--paper);
+    border-color: var(--red);
+  }
+
+  /* Agent Soul & Memory Inspector */
+  .agent-inspector {
+    padding: 12px 16px;
+    background: var(--paper);
+    border-top: 1px solid var(--rule-strong);
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 14px;
+    font-size: 14px;
+  }
+  @media (max-width: 680px) {
+    .agent-inspector { grid-template-columns: 1fr; }
+  }
+  .mono-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--red);
+    font-weight: 600;
+  }
+
+  /* Right Column: Behind-the-Scenes Film + Fulcrum Script */
+  .bts-video-wrap video {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    display: block;
+    background: #141210;
+  }
+  .bts-notes {
+    padding: 14px 16px;
+    background: var(--paper);
+    border-top: 1px solid var(--rule-strong);
+    font-size: 15px;
+  }
+  .fulcrum-quote {
+    border-left: 3px solid var(--red);
+    background: var(--red-wash);
+    padding: 8px 12px;
+    margin: 10px 0;
+    font-style: italic;
+  }
+
+  /* Section Headings */
+  h2.sec-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--red);
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 6px;
+    margin: 42px 0 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* 4-Column Kanban + Git Worktree Pipeline Board */
+  .kanban-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    align-items: start;
+  }
+  @media (max-width: 1080px) {
+    .kanban-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .kanban-grid { grid-template-columns: 1fr; }
+  }
+  .kanban-col {
+    background: var(--paper-deep);
+    border: 1px solid var(--ink);
+    padding: 12px;
+    min-height: 420px;
+  }
+  .kanban-col-head {
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .kanban-col-head h3 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+  .kanban-count {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 1px 6px;
+  }
+  .k-card {
+    background: var(--paper-hi);
+    border: 1px solid var(--rule-strong);
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: transform 0.12s, border-color 0.12s;
+    position: relative;
+  }
+  .k-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--red);
+  }
+  .k-card.active {
+    border: 2px solid var(--red);
+    background: #fbf6ea;
+  }
+  .k-branch {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: var(--red);
+    background: var(--red-wash);
+    padding: 1px 5px;
+    display: inline-block;
+    margin-bottom: 4px;
+  }
+  .k-title {
+    font-weight: 600;
+    font-size: 15px;
+    margin: 2px 0 4px;
+  }
+  .k-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9.5px;
+    color: var(--ink-mid);
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+  }
+
+  /* Before / After Engraving Audit Drawer */
+  .audit-drawer {
+    margin-top: 22px;
+    background: var(--paper-deep);
+    border: 2px solid var(--ink);
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1.25fr;
+    gap: 22px;
+    align-items: start;
+  }
+  @media (max-width: 960px) {
+    .audit-drawer { grid-template-columns: 1fr; }
+  }
+  .ba-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .ba-box {
+    background: var(--paper-hi);
+    border: 1px solid var(--ink);
+    padding: 10px;
+    font-size: 13px;
+  }
+  .ba-box.rejected {
+    border-color: var(--red);
+    background: rgba(178, 48, 36, 0.06);
+  }
+  .ba-box.approved {
+    border-width: 2px;
+  }
+  .audit-sheet-img {
+    width: 100%;
+    border: 1px solid var(--ink);
+    display: block;
+  }
+
+  /* Open-Source Reference Comparison Table */
+  table.oss-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    background: var(--paper-hi);
+  }
+  table.oss-table th, table.oss-table td {
+    border: 1px solid var(--rule-strong);
+    padding: 9px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  table.oss-table th {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--paper-deep);
+  }
+  .mono { font-family: 'IBM Plex Mono', monospace; font-size: 11px; }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div>
+    <a href="../../lineage/index.html#ch-34-the-multiplane-studio-office">← Videotext Atlas (All 35 Films)</a>
+    <a href="../../lineage/index.html#drive-cinema-console" style="margin-left:6px;">🚗 33-Min Drive Console</a>
+    <a href="../chapters/34-the-multiplane-studio-office/index.html" style="margin-left:6px;">Plate 34 X-Sheet Desk ↗</a>
+  </div>
+  <div class="status-strip">
+    <span>STUDIO RUNTIME: <strong>LOCALHOST:3541</strong></span>
+    <span>WORKTREES: <strong>4 ACTIVE SHARDS</strong></span>
+    <span class="cache-pill" id="cache-timer-pill">⏳ CACHE HANDOFF: 54:42 / 55:00</span>
+  </div>
+</header>
+
+<main>
+  <div class="hero-header">
+    <div class="kicker">PLATE 34 · WF-34-BTS · BEHIND THE SCENES OF THE MULTIPLANE ANIMATION STUDIO</div>
+    <h1>The Studio of Living Desks</h1>
+    <p class="subtitle">How Maestro, the Cross-Model Auditor, and Four Isolated Git Worktrees Drew Thirty-Four Worlds in Pure Engraved Ink</p>
+  </div>
+
+  <div class="studio-top-grid">
+    <!-- Left: Interactive Playable 2.5D Engraved Studio Office -->
+    <div class="panel-card">
+      <div class="panel-bar">
+        <span>✦ LIVE INTERACTIVE MULTIPLANE AGENT OFFICE (CLICK ANY AGENT OR STATION)</span>
+        <span id="office-live-status">6 AGENTS ONLINE · 24 FPS ENGRAVING ENGINE</span>
+      </div>
+      <canvas id="office-canvas" width="920" height="575"></canvas>
+      <div class="office-toolbar">
+        <button type="button" id="btn-audit">🔍 Run Cross-Model Audit (Codex → Claude)</button>
+        <button type="button" id="btn-coffee">☕ Send Idle Agents to Coffee Urn</button>
+        <button type="button" id="btn-compact">⏳ Trigger 55:00 Cache Auto-Compact</button>
+        <button type="button" id="btn-advance">⏭ Advance Kanban Pipeline Step</button>
+      </div>
+      <div class="agent-inspector">
+        <div>
+          <div class="mono-label" id="ag-role">AGENT SOUL &amp; PERSISTENT IDENTITY</div>
+          <div style="font-size:18px;font-weight:600;margin:2px 0;" id="ag-name">Maestro (bm_george) — Studio Director</div>
+          <div id="ag-soul" style="color:var(--ink-mid);font-style:italic;">“Never mistake a polished still image for animation. Draw through time across seven depth planes.”</div>
+        </div>
+        <div>
+          <div class="mono-label">PERSISTENT MEMORY &amp; 55-MIN HANDOFF LEDGER</div>
+          <div class="mono" id="ag-memory" style="margin-top:4px;background:var(--paper-deep);padding:6px 8px;border:1px solid var(--rule-strong);">
+            worktree: wt/shard-0 | state: DRAWING_KEYS | last_handoff: "Replaced all static PNG underlays with procedural engraved_shape() cross-hatching."
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Behind-the-Scenes Multiplane Film (Plate 34) -->
+    <div class="panel-card bts-video-wrap">
+      <div class="panel-bar">
+        <span>🎬 BEHIND-THE-SCENES MULTIPLANE FILM · PLATE 34</span>
+        <a href="../sheets/34-the-multiplane-studio-office/contact_sheet.jpg" target="_blank" style="color:var(--paper);text-decoration:underline;">View 6-Pose X-Sheet ↗</a>
+      </div>
+      <video id="bts-video" controls preload="metadata" playsinline poster="../films/34-the-multiplane-studio-office.jpg" src="../films/34-the-multiplane-studio-office.mp4"></video>
+      <div class="bts-notes">
+        <div class="mono-label">THE CRITICAL AUDIT TURN (“THE LINE”)</div>
+        <div class="fulcrum-quote">
+          <strong>The Cross-Model Auditor (bm_lewis):</strong> “Do not paste a drawing on top of the plate. Throw away the underlay and carve every mountain, cloak, and bird in living cross-hatched ink.”
+        </div>
+        <div class="fulcrum-quote" style="border-left-color:var(--ink);">
+          <strong>Archivist (bf_emma):</strong> “No agent may judge its own work, and no two branches may merge at once. Single-file through the gate, thirty-four worlds became one continuous road.”
+        </div>
+        <p style="margin:8px 0 0;font-size:14px;color:var(--ink-mid);">
+          This behind-the-scenes film is photographed through the same <strong>7-plane virtual multiplane camera</strong> (<code>PLANE 6</code> Sky down to <code>PLANE 0</code> Archival Mask) as Plates 00–33, showing the 4-column Kanban corkboard, the steaming brass coffee urn, the 55-minute prompt-cache hourglass, and the towering 7-level glass camera platen.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4-COLUMN KANBAN + GIT WORKTREE PIPELINE BOARD -->
+  <h2 class="sec-title">
+    <span>Kanban + Isolated Git Worktree Pipeline (Click Any Plate Card to Inspect Before/After Mockup &amp; X-Sheet)</span>
+    <span class="mono" style="color:var(--ink-mid);">PLANNING → DOING (4 SHARDS) → CROSS-MODEL REVIEW &amp; FIX → FIFO MERGE</span>
+  </h2>
+
+  <div class="kanban-grid">
+    <div class="kanban-col">
+      <div class="kanban-col-head">
+        <h3>1. Planning (Before/After Mockups)</h3>
+        <span class="kanban-count" id="cnt-plan">4</span>
+      </div>
+      <div id="col-plan"></div>
+    </div>
+
+    <div class="kanban-col">
+      <div class="kanban-col-head">
+        <h3>2. Doing (Isolated Git Worktrees)</h3>
+        <span class="kanban-count" id="cnt-doing">4</span>
+      </div>
+      <div id="col-doing"></div>
+    </div>
+
+    <div class="kanban-col">
+      <div class="kanban-col-head">
+        <h3>3. Review &amp; Fix (Codex Audits Claude)</h3>
+        <span class="kanban-count" id="cnt-review">4</span>
+      </div>
+      <div id="col-review"></div>
+    </div>
+
+    <div class="kanban-col">
+      <div class="kanban-col-head">
+        <h3>4. FIFO Merge Queue (Master Reel)</h3>
+        <span class="kanban-count" id="cnt-merge">23</span>
+      </div>
+      <div id="col-merge"></div>
+    </div>
+  </div>
+
+  <!-- SELECTED CARD BEFORE/AFTER ENGRAVING MOCKUP & X-SHEET INSPECTOR -->
+  <div class="audit-drawer" id="card-inspector">
+    <div>
+      <div class="mono-label" id="insp-branch">WORKTREE: wt/34-the-multiplane-studio-office</div>
+      <h3 style="font-size:26px;font-weight:400;margin:4px 0 8px;" id="insp-title">Plate 34: The Studio of Living Desks</h3>
+      <p style="font-style:italic;color:var(--ink-mid);margin:0 0 14px;" id="insp-sub">Behind the Scenes of the Agentic Multiplane Office &amp; Worktree Pipeline</p>
+
+      <div class="ba-grid">
+        <div class="ba-box rejected">
+          <div class="mono" style="color:var(--red);font-weight:600;">✗ REJECTED PASS (STATIC PNG UNDERLAY)</div>
+          <p style="margin:6px 0 0;">Pasting <code>plate_XX.png</code> into Plane 5 and drawing vector puppets on top flattened parallax and broke the engraving lineage. Flagged by Cross-Model Auditor.</p>
+        </div>
+        <div class="ba-box approved">
+          <div class="mono" style="color:var(--ink);font-weight:600;">✓ APPROVED PASS (PURE PROCEDURAL ENGRAVING)</div>
+          <p style="margin:6px 0 0;">100% hand-drawn through <code>engraved_shape()</code> with directional cross-hatching (<code>hatch1</code>/<code>hatch2</code>), chiaroscuro shadow polygons, and jointed drapery rigs.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:14px;" class="mono">
+        <div><strong>ACTION VERBS:</strong> <span id="insp-verbs"></span></div>
+        <div style="margin-top:6px;"><strong>STRUCTURAL INVARIANT:</strong> <code id="insp-code" style="background:var(--paper-hi);padding:2px 5px;"></code></div>
+      </div>
+
+      <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;font-size:11px;">
+        <a id="insp-desk-link" href="../chapters/34-the-multiplane-studio-office/index.html" style="padding:6px 12px;background:var(--ink);color:var(--paper);text-decoration:none;">Open Full Chapter Studio Desk ↗</a>
+        <a id="insp-film-link" href="../films/34-the-multiplane-studio-office.mp4" target="_blank" style="padding:6px 12px;border:1px solid var(--ink);color:var(--ink);text-decoration:none;">Open Direct MP4 Film ↗</a>
+      </div>
+    </div>
+
+    <div>
+      <div class="mono-label" style="margin-bottom:6px;">6-POSE MULTIPLANE EXPOSURE SHEET (`DRAW → LOOK → COMPARE → ADJUST`)</div>
+      <img id="insp-sheet-img" class="audit-sheet-img" src="../sheets/34-the-multiplane-studio-office/contact_sheet.jpg" alt="Contact Sheet">
+    </div>
+  </div>
+
+  <!-- ARCHITECTURE LINEAGE TABLE: KOHNNY & OPEN-SOURCE AGENT OFFICES -->
+  <h2 class="sec-title">
+    <span>Architecture Lineage · How This Studio Adapts Kohnny &amp; Open-Source Agent Offices</span>
+    <span class="mono">MULTIPLANE STUDIO MAPPING</span>
+  </h2>
+  <table class="oss-table">
+    <thead>
+      <tr>
+        <th>System / Repository</th>
+        <th>Core Pattern</th>
+        <th>How WORLDFUL Multiplane Studio Implements It</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="mono"><strong>Kohnny</strong> (John Sorrentino)</td>
+        <td>3D Virtual Office + Named Agent Souls + Kanban Worktrees + Cross-Model Review + FIFO Merge + 55-Min Cache Compact</td>
+        <td>Implemented in <strong>Plate 34 (`34-the-multiplane-studio-office.mp4`)</strong> and the live canvas above: Maestro, Cross-Model Auditor, and 3D Multiplane Engineers roam between 7-plane desks, the brass coffee urn, and the 4-column Kanban board with 55-minute handoff ledgers.</td>
+      </tr>
+      <tr>
+        <td class="mono"><strong>AgentSystemLabs/agent-office</strong></td>
+        <td>Multi-Floor Office + Live Desks + Corkboard Queue + Isolated Git Worktrees</td>
+        <td>Mapped to our 4 parallel persistent shard workers (<code>build_all.py --workers=4</code>) and the interactive studio corkboard where each plate card links its own 6-shot X-Sheet and studio desk.</td>
+      </tr>
+      <tr>
+        <td class="mono"><strong>bill10/agent-007</strong> &amp; <strong>proactive-agent/workbench</strong></td>
+        <td>Manager Agent (Billion/Maestro) + Kanban Worktrees + Semantic FIFO Merge</td>
+        <td>Mapped to our <strong>Single-File FIFO Merge Splicer</strong> that concatenates all chapters without timestamp collisions into <code>worldful-complete-feature.mp4</code> and <code>worldful-complete-drive.m4a</code>.</td>
+      </tr>
+      <tr>
+        <td class="mono"><strong>W17ant/Claude-Office</strong> &amp; <strong>KalebKE/PixelOffice</strong></td>
+        <td>Isometric / 2D Office where Agents Walk to Whiteboards in Plan Mode &amp; Lounge When Idle</td>
+        <td>Rendered above in authentic 19th-century copperplate cross-hatching: agents walk to the Planning corkboard for before/after mockups, ink at slanted light-desks during Doing, and gather at the brass espresso urn when idle.</td>
+      </tr>
+    </tbody>
+  </table>
+</main>
+
+<script>
+(() => {
+  const BOOKS = [{"no": "00", "slug": "00-the-crossing", "title": "The Crossing", "subtitle": "How Absent Things Learned to Move Living Bodies", "stage": "mountain_fork", "room": "mountain", "code": "source_absent + trace_present + interpreter -> altered_trajectory. Leaving things out is how description travels.", "verbs": "Wolf bounds across fork \u2192 presses six wet commas into mud \u2192 vanishes into valley mist \u2192 hunter arrives \u2192 crouches \u2192 touches mud \u2192 smells fingers \u2192 points uphill \u2192 child climbs high scree.", "film": "../films/00-the-crossing.mp4", "poster": "../films/00-the-crossing.jpg", "sheet": "../sheets/00-the-crossing/contact_sheet.jpg", "desk": "../chapters/00-the-crossing/index.html"}, {"no": "01", "slug": "01-the-kingdom-of-turned-heads", "title": "The Kingdom of Turned Heads", "subtitle": "The Politics of Deixis and the Monopoly of Attention", "stage": "ridge_tower", "room": "square", "code": "pointer != referent. Dereferencing failure occurs when the observer consumes the finger instead of following the ray to the target.", "verbs": "Smoke rises behind ridge \u2192 boy extends arm to point \u2192 adults stare at his finger \u2192 boy grabs adult's head with both hands \u2192 turns neck toward ridge \u2192 red sightlines lock on smoke.", "film": "../films/01-the-kingdom-of-turned-heads.mp4", "poster": "../films/01-the-kingdom-of-turned-heads.jpg", "sheet": "../sheets/01-the-kingdom-of-turned-heads/contact_sheet.jpg", "desk": "../chapters/01-the-kingdom-of-turned-heads/index.html"}, {"no": "02", "slug": "02-the-house-whose-road-disappeared", "title": "The House Whose Road Disappeared", "subtitle": "Heritage Technical Debt and the Tyranny of Vanished Rationale", "stage": "meadow_house", "room": "hall", "code": "legacy_wrapper(env_v1) surviving inside env_v2. The problem vanished a century ago; the stooping remains mandatory.", "verbs": "Stone cottage stands in empty grass \u2192 tall villager approaches \u2192 stoops painfully through five-foot door \u2192 polishes three empty iron hooks \u2192 stares out giant bay window at empty field \u2192 ghost road fades in on map.", "film": "../films/02-the-house-whose-road-disappeared.mp4", "poster": "../films/02-the-house-whose-road-disappeared.jpg", "sheet": "../sheets/02-the-house-whose-road-disappeared/contact_sheet.jpg", "desk": "../chapters/02-the-house-whose-road-disappeared/index.html"}, {"no": "03", "slug": "03-the-archipelago-of-borrowed-monsters", "title": "The Archipelago of Borrowed Monsters", "subtitle": "Horizontal Transfer and the Myth of Pure Pedigree", "stage": "archipelago", "room": "street", "code": "monster_B = transform(monster_A, local_need_B). Preservation across borders requires mutation.", "verbs": "Sailors steer junk from Island I to Island II \u2192 shark-beast gains webbed claws and climbs into a well \u2192 sails to Island III \u2192 scales turn to feathers \u2192 High Genealogist burns scrolls searching for the Pure Ancestor.", "film": "../films/03-the-archipelago-of-borrowed-monsters.mp4", "poster": "../films/03-the-archipelago-of-borrowed-monsters.jpg", "sheet": "../sheets/03-the-archipelago-of-borrowed-monsters/contact_sheet.jpg", "desk": "../chapters/03-the-archipelago-of-borrowed-monsters/index.html"}, {"no": "04", "slug": "04-the-valley-where-dangers-arrive-early", "title": "The Valley Where Dangers Arrive Early", "subtitle": "Pre-enactment, Simulation, and Fiction as Survival Hardware", "stage": "alpine_campfire", "room": "mountain", "code": "policy = train_in_sandbox(fictional_hazard) before t_actual. Temporal asymmetry is the survival advantage.", "verbs": "Elders stand by campfire easel pointing at avalanche path \u2192 children rehearse scrambling up boulders \u2192 six years pass \u2192 real tiger/avalanche rumbles down slope \u2192 adults argue over tracks while children are already high on the rock.", "film": "../films/04-the-valley-where-dangers-arrive-early.mp4", "poster": "../films/04-the-valley-where-dangers-arrive-early.jpg", "sheet": "../sheets/04-the-valley-where-dangers-arrive-early/contact_sheet.jpg", "desk": "../chapters/04-the-valley-where-dangers-arrive-early/index.html"}, {"no": "05", "slug": "05-the-republic-of-wooden-kings", "title": "The Republic of Wooden Kings", "subtitle": "The Counts-As Rule and the Institutional Licensing of Reality", "stage": "chess_hall", "room": "hall", "code": "counts_as(pine_block, 'King', context=gridded_table). Withdraw the context and the regicide becomes lumber theft.", "verbs": "Rough pine block sits by fireplace as fuel \u2192 magistrate lifts block with silk gloves \u2192 sets it on red square D4 of the gridded hall table \u2192 crown emblem appears \u2192 guards bow low \u2192 block knocked off table turns back into lumber.", "film": "../films/05-the-republic-of-wooden-kings.mp4", "poster": "../films/05-the-republic-of-wooden-kings.jpg", "sheet": "../sheets/05-the-republic-of-wooden-kings/contact_sheet.jpg", "desk": "../chapters/05-the-republic-of-wooden-kings/index.html"}, {"no": "06", "slug": "06-the-palace-of-the-perfect-camera", "title": "The Palace of the Perfect Camera", "subtitle": "High-Resolution Capture and the Semantic Blindness of Pure Telemetry", "stage": "camera_palace", "room": "hall", "code": "capture_8K(eyelid_delta_2_4mm) != classify(wink | blink | dust | insult). Resolution cannot substitute for shared history.", "verbs": "Giant brass lenses and ocular mirrors pan across vaulted hall \u2192 diplomats sit at treaty table \u2192 ambassador's left eyelid drops 2.4mm for 8ms \u2192 prime minister smashes glass \u2192 King scrubs 40,000 fps tape in panic.", "film": "../films/06-the-palace-of-the-perfect-camera.mp4", "poster": "../films/06-the-palace-of-the-perfect-camera.jpg", "sheet": "../sheets/06-the-palace-of-the-perfect-camera/contact_sheet.jpg", "desk": "../chapters/06-the-palace-of-the-perfect-camera/index.html"}, {"no": "07", "slug": "07-the-city-of-required-fields", "title": "The City of Required Fields", "subtitle": "Formulary Sovereignty and the Cannibalism of the Database Schema", "stage": "tablet_clinic", "room": "hall", "code": "if input not in ENUM('DOG','HORSE','BLUNT','GOD'): return 422_UNPROCESSABLE_ENTITY.", "verbs": "Citizen stumbles up marble clinic steps bitten by spider \u2192 clerk holds stone tablet with four carved checkboxes \u2192 stylus hovers and refuses entry \u2192 citizen collapses outside the box while clerk files 'unstructured noise'.", "film": "../films/07-the-city-of-required-fields.mp4", "poster": "../films/07-the-city-of-required-fields.jpg", "sheet": "../sheets/07-the-city-of-required-fields/contact_sheet.jpg", "desk": "../chapters/07-the-city-of-required-fields/index.html"}, {"no": "08", "slug": "08-the-marsh-of-enforced-lines", "title": "The Marsh of Enforced Lines", "subtitle": "Cartographic Leviathans and the Violent Friction Between Geometry and Mud", "stage": "marsh_stakes", "room": "street", "code": "border(x, y) = enforced_by_penalty(x > L), independent of terrain(x, y, t).", "verbs": "Tidewater ripples through reed beds \u2192 capital surveyors wade in with brass theodolite \u2192 hammer straight line of cedar stakes across shifting mud \u2192 tide rises \u2192 guards arrest fisherman whose boat drifted across submerged stake.", "film": "../films/08-the-marsh-of-enforced-lines.mp4", "poster": "../films/08-the-marsh-of-enforced-lines.jpg", "sheet": "../sheets/08-the-marsh-of-enforced-lines/contact_sheet.jpg", "desk": "../chapters/08-the-marsh-of-enforced-lines/index.html"}, {"no": "09", "slug": "09-the-two-griefs", "title": "The Two Griefs", "subtitle": "Semantic Annexation and the Tragedy of Standardized Words", "stage": "weaver_loom", "room": "shop", "code": "cast(local_concept_kethar) -> global_enum.SADNESS_3. The residual private meaning is dropped without error.", "verbs": "Two wooden looms clack in rhythm \u2192 right loom stops dead \u2192 old weaver touches silent shuttle \u2192 travels to city registry \u2192 clerk crosses out 'kethar' and stamps 'STANDARD GRIEF: CLASS 3'.", "film": "../films/09-the-two-griefs.mp4", "poster": "../films/09-the-two-griefs.jpg", "sheet": "../sheets/09-the-two-griefs/contact_sheet.jpg", "desk": "../chapters/09-the-two-griefs/index.html"}, {"no": "10", "slug": "10-the-common-bird", "title": "The Common Bird", "subtitle": "How Coordination Survives the Impossibility of Shared Minds", "stage": "courtyard_bird", "room": "square", "code": "internal_state(A) != internal_state(B), yet action(A, 'bird') == action(B, 'bird').", "verbs": "Red bird perches on courtyard wall \u2192 two men argue fiercely with hands gesturing different shades \u2192 third villager picks up pebble \u2192 points and shouts 'BIRD!' \u2192 both men turn and catch the bird before the cat pounces.", "film": "../films/10-the-common-bird.mp4", "poster": "../films/10-the-common-bird.jpg", "sheet": "../sheets/10-the-common-bird/contact_sheet.jpg", "desk": "../chapters/10-the-common-bird/index.html"}, {"no": "11", "slug": "11-the-court-of-shards", "title": "The Court of Shards", "subtitle": "Archaeological Reconstruction and the Seduction of Coherence", "stage": "shard_temple", "room": "hall", "code": "underdetermined_fit(3_shards) -> infinite_models. The interpolated plaster is 99% storyteller desire.", "verbs": "Three tiny blue shards rest on velvet cushion \u2192 High Priest builds giant plaster Sun Bowl around them \u2192 General smashes plaster and molds War Helmet around same three shards \u2192 peasant child holds up broken chamber pot.", "film": "../films/11-the-court-of-shards.mp4", "poster": "../films/11-the-court-of-shards.jpg", "sheet": "../sheets/11-the-court-of-shards/contact_sheet.jpg", "desk": "../chapters/11-the-court-of-shards/index.html"}, {"no": "12", "slug": "12-the-invisible-tool-country", "title": "The Invisible Tool Country", "subtitle": "Phenomenological Transparency and the Shock of Infrastructure Breakdown", "stage": "carpenter_bench", "room": "shop", "code": "while tool.works(): attention -> target_joint. on_exception(SnapError): attention -> tool_itself.", "verbs": "Master carpenter swings hammer in smooth rhythmic arc looking only at oak joint \u2192 hammer drawn as translucent dotted ghost while working \u2192 ash handle snaps with a crack \u2192 hammer turns solid heavy black ink as carpenter stares at the splinters.", "film": "../films/12-the-invisible-tool-country.mp4", "poster": "../films/12-the-invisible-tool-country.jpg", "sheet": "../sheets/12-the-invisible-tool-country/contact_sheet.jpg", "desk": "../chapters/12-the-invisible-tool-country/index.html"}, {"no": "13", "slug": "13-the-giant-state", "title": "The Giant State", "subtitle": "Scale Inversion, Bureaucratic Latency, and the Loss of Bodily Presence", "stage": "giant_emperor", "room": "mountain", "code": "latency(foot -> head -> foot) > time_to_necrosis. Telemetry packet arrives after the tissue is dead.", "verbs": "Colossal forty-mile figure stretches from southern sea (Plane 1) to northern peaks (Plane 5) \u2192 viper bites the giant's toe \u2192 relay runners carry paper slip up the spine for eleven days \u2192 crowned head smiles and sends back a form.", "film": "../films/13-the-giant-state.mp4", "poster": "../films/13-the-giant-state.jpg", "sheet": "../sheets/13-the-giant-state/contact_sheet.jpg", "desk": "../chapters/13-the-giant-state/index.html"}, {"no": "14", "slug": "14-the-elevator-school-of-authorship", "title": "The Elevator School of Authorship", "subtitle": "Lossy Seduction and the Mutilation of Complex Thought", "stage": "elevator_tower", "room": "cabin", "code": "compress(treatise, max_tokens=5) -> drops all `where soil != sand` clauses.", "verbs": "Scholar enters brass cage elevator carrying 800-page bridge treatise \u2192 Dean taps stopwatch \u2192 scholar rips out load limits and soil tables as floors fly past \u2192 hands over a 3-word slogan at Floor 40 \u2192 bridge collapses in background window.", "film": "../films/14-the-elevator-school-of-authorship.mp4", "poster": "../films/14-the-elevator-school-of-authorship.jpg", "sheet": "../sheets/14-the-elevator-school-of-authorship/contact_sheet.jpg", "desk": "../chapters/14-the-elevator-school-of-authorship/index.html"}, {"no": "15", "slug": "15-the-city-of-unmeasured-adjectives", "title": "The City of Unmeasured Adjectives", "subtitle": "Goodhart's Law and the Tyranny of the Scored Target", "stage": "sawdust_bakery", "room": "shop", "code": "argmax_recipe(count(loaves)) subject to nutrition_weight == 0 -> 100% sawdust.", "verbs": "Grand Auditor hangs giant counter dial on bakery wall \u2192 bakers dump salt and yeast \u2192 shovel sawdust into ovens \u2192 dial spins to 1,000% while citizens hold rock-hard grey bricks.", "film": "../films/15-the-city-of-unmeasured-adjectives.mp4", "poster": "../films/15-the-city-of-unmeasured-adjectives.jpg", "sheet": "../sheets/15-the-city-of-unmeasured-adjectives/contact_sheet.jpg", "desk": "../chapters/15-the-city-of-unmeasured-adjectives/index.html"}, {"no": "16", "slug": "16-the-archive-without-context", "title": "The Archive Without Context", "subtitle": "Dossier Governance and the Weaponization of Naked Facticity", "stage": "dossier_vault", "room": "hall", "code": "eval(strip_header(quote)) != eval(quote_in_frame('Act III Comedy')).", "verbs": "Archivists snip headers and dates off parchment scrolls with shears \u2192 drop naked sentence into Box 402 \u2192 Magistrate reads slip \u2192 guards drag village actor off stage in chains.", "film": "../films/16-the-archive-without-context.mp4", "poster": "../films/16-the-archive-without-context.jpg", "sheet": "../sheets/16-the-archive-without-context/contact_sheet.jpg", "desk": "../chapters/16-the-archive-without-context/index.html"}, {"no": "17", "slug": "17-the-hive-of-forbidden-words", "title": "The Hive of Forbidden Words", "subtitle": "Taboo, Censorship, and the Subterranean Migration of Meaning", "stage": "ribbon_square", "room": "square", "code": "ban(symbol_x) -> route(referent, symbol_y). Deleting the key from the dictionary does not free the memory.", "verbs": "Royal censor chisels the word HUNGER off stone wall \u2192 declares famine solved \u2192 villagers in square silently tie ribbons and tap empty spoons in three-beat code.", "film": "../films/17-the-hive-of-forbidden-words.mp4", "poster": "../films/17-the-hive-of-forbidden-words.jpg", "sheet": "../sheets/17-the-hive-of-forbidden-words/contact_sheet.jpg", "desk": "../chapters/17-the-hive-of-forbidden-words/index.html"}, {"no": "18", "slug": "18-the-country-of-negative-animals", "title": "The Country of Negative Animals", "subtitle": "Apophasis and the Art of Sculpting Reality Through Negation", "stage": "desert_dunes", "room": "mountain", "code": "target = Universe \\ Union(known_nouns). When vocabulary fails, sculpt the complement.", "verbs": "Nomad and cartographer stand on wind-carved desert dune \u2192 cartographer demands a noun \u2192 nomad draws ring of hatched exclusions in sand leaving an unhatched white silhouette in the center.", "film": "../films/18-the-country-of-negative-animals.mp4", "poster": "../films/18-the-country-of-negative-animals.jpg", "sheet": "../sheets/18-the-country-of-negative-animals/contact_sheet.jpg", "desk": "../chapters/18-the-country-of-negative-animals/index.html"}, {"no": "19", "slug": "19-the-empire-beneath-the-map", "title": "The Empire Beneath the Map", "subtitle": "Dashboard Blindness and the Revenge of the Neglected Soil", "stage": "hundred_mile_map", "room": "hall", "code": "dashboard.river_blue = 1.0 while world.water_level == 0.0. Updating the view without mutating the model.", "verbs": "Courtiers in velvet slippers walk across giant painted parchment map stretched over the valley \u2192 paint fresh blue ink onto paper river \u2192 beneath the canvas, real soil cracks and farmers cut a slit through the parchment.", "film": "../films/19-the-empire-beneath-the-map.mp4", "poster": "../films/19-the-empire-beneath-the-map.jpg", "sheet": "../sheets/19-the-empire-beneath-the-map/contact_sheet.jpg", "desk": "../chapters/19-the-empire-beneath-the-map/index.html"}, {"no": "20", "slug": "20-the-sentence-with-skin-in-the-game", "title": "The Sentence with Skin in the Game", "subtitle": "Operational Liability and the Structural Restoration of Truth", "stage": "viper_court", "room": "hall", "code": "loss(speaker) = infinite if claim(t0) != outcome(t1). Liability filters noise before emission.", "verbs": "Orator mounts stone rostrum with scroll of grand war promises \u2192 bailiff sets wicker viper basket on step \u2192 orator hesitates \u2192 sweats \u2192 tears up grand scroll \u2192 speaks one tiny honest sentence.", "film": "../films/20-the-sentence-with-skin-in-the-game.mp4", "poster": "../films/20-the-sentence-with-skin-in-the-game.jpg", "sheet": "../sheets/20-the-sentence-with-skin-in-the-game/contact_sheet.jpg", "desk": "../chapters/20-the-sentence-with-skin-in-the-game/index.html"}, {"no": "21", "slug": "21-the-self-fulfilling-village", "title": "The Self-Fulfilling Village", "subtitle": "Reflexivity and Descriptions That Construct Their Own Reality", "stage": "blacksmith_village", "room": "square", "code": "world_t1 = f(world_t0, broadcast(prediction)). The observation operator alters the eigenvalue.", "verbs": "Wandering monk whispers in tavern keeper's ear \u2192 villagers cross street away from blacksmith \u2192 blacksmith locks forge door and buys a dagger \u2192 monk points and says 'See? I told you he was hostile!'", "film": "../films/21-the-self-fulfilling-village.mp4", "poster": "../films/21-the-self-fulfilling-village.jpg", "sheet": "../sheets/21-the-self-fulfilling-village/contact_sheet.jpg", "desk": "../chapters/21-the-self-fulfilling-village/index.html"}, {"no": "22", "slug": "22-the-school-of-collapsing-pots", "title": "The School of Collapsing Pots", "subtitle": "Tacit Knowledge and the Wisdom in the Nerve Endings", "stage": "potter_wheel", "room": "shop", "code": "explicit_rules(textbook) != closed_loop_policy(thumb_pressure_at_60Hz).", "verbs": "Apprentice recites formulas from thick open textbook beside spinning wheel \u2192 touches wet clay with stiff mechanical fingers \u2192 tall vase wobbles violently and slumps into flat mud pancake \u2192 old potter closes book and guides student's thumb.", "film": "../films/22-the-school-of-collapsing-pots.mp4", "poster": "../films/22-the-school-of-collapsing-pots.jpg", "sheet": "../sheets/22-the-school-of-collapsing-pots/contact_sheet.jpg", "desk": "../chapters/22-the-school-of-collapsing-pots/index.html"}, {"no": "23", "slug": "23-the-market-of-dead-metaphors", "title": "The Market of Dead Metaphors", "subtitle": "Semantic Fossilization and the Corpses in Our Grammar", "stage": "stone_coin_market", "room": "street", "code": "abstract_noun = fossil(physical_verb). 'Comprehend' meant to seize with the hand.", "verbs": "Merchants pass stone coins back and forth across market table \u2192 carved relief of an ox and plow wears smooth over centuries \u2192 young banker claims value comes from pure numbers \u2192 old farmer leads a real mud-splashed ox into the counting house.", "film": "../films/23-the-market-of-dead-metaphors.mp4", "poster": "../films/23-the-market-of-dead-metaphors.jpg", "sheet": "../sheets/23-the-market-of-dead-metaphors/contact_sheet.jpg", "desk": "../chapters/23-the-market-of-dead-metaphors/index.html"}, {"no": "24", "slug": "24-the-cave-of-the-surviving-scratch", "title": "The Cave of the Surviving Scratch", "subtitle": "Deep-Time Inscription and the Illusion of Archival Truth", "stage": "bunker_plaque", "room": "space", "code": "sample(history, t + 10000) == filter_by_hardness(media), not filter_by_wisdom(content).", "verbs": "Time-lapse in deep vault: paper books crumble to dust and server racks rust away \u2192 future excavators descend with lanterns \u2192 uncover gleaming steel closet sign 'NO SHOVELS' \u2192 kneel before the Sacred Commandment of the Ancients.", "film": "../films/24-the-cave-of-the-surviving-scratch.mp4", "poster": "../films/24-the-cave-of-the-surviving-scratch.jpg", "sheet": "../sheets/24-the-cave-of-the-surviving-scratch/contact_sheet.jpg", "desk": "../chapters/24-the-cave-of-the-surviving-scratch/index.html"}, {"no": "25", "slug": "25-the-gallery-of-causally-different-twins", "title": "The Gallery of Causally Different Twins", "subtitle": "Surface Mimicry, Provenance, and the Stolen Witness", "stage": "twin_gallery", "room": "hall", "code": "pixels(A) == pixels(B), but causal_parent(A) == fire while causal_parent(B) == matrix_multiply.", "verbs": "Two identical framed pictures hang side by side on gallery wall \u2192 critic inspects both with magnifying glass and finds zero pixel difference \u2192 archivist turns frames around: Frame A has scorched wood and soot on the back; Frame B is a glowing cable.", "film": "../films/25-the-gallery-of-causally-different-twins.mp4", "poster": "../films/25-the-gallery-of-causally-different-twins.jpg", "sheet": "../sheets/25-the-gallery-of-causally-different-twins/contact_sheet.jpg", "desk": "../chapters/25-the-gallery-of-causally-different-twins/index.html"}, {"no": "26", "slug": "26-the-forensic-mud", "title": "The Forensic Mud", "subtitle": "Material Resistance as the Incorruptible Counter-Narrative to Power", "stage": "forensic_tires", "room": "street", "code": "official_manifest == False when isotope_signature(mud) in border_watershed.", "verbs": "Minister holds up stamped official manifesto at podium \u2192 botanist crouches by armored car wheel well in courtyard \u2192 scrapes yellow mud from tire tread \u2192 microscope circle reveals rare marsh pollen that only grows at the border.", "film": "../films/26-the-forensic-mud.mp4", "poster": "../films/26-the-forensic-mud.jpg", "sheet": "../sheets/26-the-forensic-mud/contact_sheet.jpg", "desk": "../chapters/26-the-forensic-mud/index.html"}, {"no": "27", "slug": "27-the-mountain-that-refused-to-join-the-story", "title": "The Mountain That Refused to Join the Story", "subtitle": "Material Indifference and the Collapse of Narrative Hubris", "stage": "granite_avalanche", "room": "mountain", "code": "gravity(rock_mass, slope_angle) is independent of narrative_blessing(priest).", "verbs": "High Priest stands before towering granite peak raising golden staff \u2192 ten thousand bronze shields salute \u2192 frost crack splits upper cliff face \u2192 rockslide buries the podium while the mountain's silhouette barely changes.", "film": "../films/27-the-mountain-that-refused-to-join-the-story.mp4", "poster": "../films/27-the-mountain-that-refused-to-join-the-story.jpg", "sheet": "../sheets/27-the-mountain-that-refused-to-join-the-story/contact_sheet.jpg", "desk": "../chapters/27-the-mountain-that-refused-to-join-the-story/index.html"}, {"no": "28", "slug": "28-the-great-listener", "title": "The Great Listener", "subtitle": "Autocomplete Culture and the Benevolent Capture of Human Agency", "stage": "royal_scribe", "room": "hall", "code": "intent_t1 = argmax_P(next_token | average_corpus) instead of difficult_human_choice.", "verbs": "King sits on throne opening mouth to speak a difficult mercy \u2192 mechanical brass scribe beside throne chimes and unrolls a sleek pre-written scroll \u2192 King sighs, nods lazily, and stamps the machine's opposite sentence.", "film": "../films/28-the-great-listener.mp4", "poster": "../films/28-the-great-listener.jpg", "sheet": "../sheets/28-the-great-listener/contact_sheet.jpg", "desk": "../chapters/28-the-great-listener/index.html"}, {"no": "29", "slug": "29-the-house-that-looked-finished", "title": "The House That Looked Finished", "subtitle": "Demo Colonialism and the Structural Debt Hidden Behind the Facade", "stage": "rain_palace", "room": "hall", "code": "pass(demo_lighting) == True; pass(twenty_years_of_rain) == False.", "verbs": "Builder pulls away silk cloth to reveal gleaming palace facade under sunny stage lamps \u2192 King hands over bag of gold \u2192 dark raincloud rolls in on Plane 6 \u2192 pouring rain melts painted plaster walls revealing unbraced sticks.", "film": "../films/29-the-house-that-looked-finished.mp4", "poster": "../films/29-the-house-that-looked-finished.jpg", "sheet": "../sheets/29-the-house-that-looked-finished/contact_sheet.jpg", "desk": "../chapters/29-the-house-that-looked-finished/index.html"}, {"no": "30", "slug": "30-the-republic-of-debts", "title": "The Republic of Debts", "subtitle": "Category Arbitrage and the Invisible Obligations Packed into Ordinary Nouns", "stage": "broken_chair_court", "room": "hall", "code": "class Chair implements HoldWeight. Selling the label while throwing NotImplementedError is category fraud.", "verbs": "Merchant sells ornate 'Chair' that snaps under a citizen \u2192 magistrate binds the broken chair to the merchant's back with red cord \u2192 merchant walks through town carrying the defaulted noun.", "film": "../films/30-the-republic-of-debts.mp4", "poster": "../films/30-the-republic-of-debts.jpg", "sheet": "../sheets/30-the-republic-of-debts/contact_sheet.jpg", "desk": "../chapters/30-the-republic-of-debts/index.html"}, {"no": "31", "slug": "31-the-founder-who-never-lived", "title": "The Founder Who Never Lived", "subtitle": "Synthetic Trust Farming and the Untarnishable Authority of Myth", "stage": "phantom_statue", "room": "square", "code": "root_authority = VirtualNode(living_flaws=None). A phantom cannot be subpoenaed.", "verbs": "Citizens lay wreaths at towering bronze statue of Master Eldon in the square \u2192 young archivist unlocks basement vault \u2192 finds ledger showing three bickering clerks invented Eldon out of whole cloth \u2192 senior minister closes the vault door.", "film": "../films/31-the-founder-who-never-lived.mp4", "poster": "../films/31-the-founder-who-never-lived.jpg", "sheet": "../sheets/31-the-founder-who-never-lived/contact_sheet.jpg", "desk": "../chapters/31-the-founder-who-never-lived/index.html"}, {"no": "32", "slug": "32-the-king-who-bowed", "title": "The King Who Bowed", "subtitle": "Modality Laundering and the Paradox of Self-Binding Power", "stage": "barefoot_king", "room": "hall", "code": "power_stability = bind(sovereign, rule_of_law). If root bypasses the check, the token loses consensus value.", "verbs": "Hundred thousand armored spears bristle in background (Plane 5) \u2192 barefoot King walks down stone aisle (Plane 2) \u2192 kneels before unarmed blindfolded magistrate \u2192 young prince whispers 'Why kneel?' \u2192 King points to the spears that stay lowered only while he kneels.", "film": "../films/32-the-king-who-bowed.mp4", "poster": "../films/32-the-king-who-bowed.jpg", "sheet": "../sheets/32-the-king-who-bowed/contact_sheet.jpg", "desk": "../chapters/32-the-king-who-bowed/index.html"}, {"no": "33", "slug": "33-the-red-bird-world", "title": "The Red Bird World", "subtitle": "Coordination Across the Irreducible Gap (Conclusion & Meta-WorldText)", "stage": "red_bird_porch", "room": "square", "code": "world_t0 -> compress('red bird') -> crosses_gap -> attended_with_care(world_t1). It is enough.", "verbs": "Old man in rocking chair on porch points at scarlet cardinal on fence post \u2192 says 'Red bird' to small girl \u2192 girl's head turns \u2192 years pass (diptych frame opens) \u2192 grown woman points for her own child as the red bird lands on the post and takes flight across all planes.", "film": "../films/33-the-red-bird-world.mp4", "poster": "../films/33-the-red-bird-world.jpg", "sheet": "../sheets/33-the-red-bird-world/contact_sheet.jpg", "desk": "../chapters/33-the-red-bird-world/index.html"}, {"no": "34", "slug": "34-the-multiplane-studio-office", "title": "The Studio of Living Desks", "subtitle": "Behind the Scenes of the Agentic Multiplane Office & Worktree Pipeline", "stage": "kohnny_studio", "room": "hall", "code": "card -> spawn_worktree(branch) -> plan_mockup() -> draw_7_planes() -> cross_model_audit(codex != claude) -> fifo_merge(master_reel) @ compact(55m)", "verbs": "Maestro pins chapter cards to the Kanban corkboard \u2192 isolated Git worktrees spawn 7-plane animation desks \u2192 idle agents sip at the brass coffee urn \u2192 Cross-Model Auditor rejects static PNG underlays at the light table \u2192 pure cross-hatched engravings queue single-file into the FIFO Merge splicer as the 55-minute hourglass compacts handoff notes.", "film": "../films/34-the-multiplane-studio-office.mp4", "poster": "../films/34-the-multiplane-studio-office.jpg", "sheet": "../sheets/34-the-multiplane-studio-office/contact_sheet.jpg", "desk": "../chapters/34-the-multiplane-studio-office/index.html"}];
+
+  // ---------- 1. Populate 4-Column Kanban + Git Worktree Board ----------
+  const planBooks = BOOKS.slice(0, 4);
+  const doingBooks = BOOKS.slice(4, 8);
+  const reviewBooks = [BOOKS[BOOKS.length - 1], BOOKS[0], BOOKS[1], BOOKS[5]];
+  const mergeBooks = BOOKS.slice(8);
+
+  const colPlan = document.getElementById('col-plan');
+  const colDoing = document.getElementById('col-doing');
+  const colReview = document.getElementById('col-review');
+  const colMerge = document.getElementById('col-merge');
+
+  const selectBookCard = (b, el) => {
+    document.querySelectorAll('.k-card').forEach(c => c.classList.remove('active'));
+    if (el) el.classList.add('active');
+    document.getElementById('insp-branch').textContent = `WORKTREE: wt/${b.slug} · STAGE: ${b.stage.toUpperCase()}`;
+    document.getElementById('insp-title').textContent = `Plate ${b.no}: ${b.title}`;
+    document.getElementById('insp-sub').textContent = b.subtitle;
+    document.getElementById('insp-verbs').textContent = b.verbs;
+    document.getElementById('insp-code').textContent = b.code;
+    document.getElementById('insp-sheet-img').src = b.sheet;
+    document.getElementById('insp-desk-link').href = b.desk;
+    document.getElementById('insp-film-link').href = b.film;
+  };
+
+  const makeCard = (b, badgeText, statusRight) => {
+    const div = document.createElement('div');
+    div.className = 'k-card' + (b.no === '34' ? ' active' : '');
+    div.innerHTML = `
+      <span class="k-branch">${badgeText} · wt/${b.slug}</span>
+      <div class="k-title">Plate ${b.no}: ${b.title}</div>
+      <div style="font-size:12.5px;color:var(--ink-mid);font-style:italic;">${b.subtitle}</div>
+      <div class="k-meta">
+        <span>7 Planes · 24fps</span>
+        <span>${statusRight}</span>
+      </div>
+    `;
+    div.addEventListener('click', () => {
+      selectBookCard(b, div);
+      document.getElementById('card-inspector')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+    return div;
+  };
+
+  planBooks.forEach(b => colPlan.appendChild(makeCard(b, 'MOCKUP', 'Before/After Ready')));
+  doingBooks.forEach((b, i) => colDoing.appendChild(makeCard(b, `SHARD-${i}`, 'Inking Twos...')));
+  reviewBooks.forEach(b => colReview.appendChild(makeCard(b, 'CODEX AUDIT', '✓ Pure Engraved')));
+  mergeBooks.slice(0, 8).forEach((b, i) => colMerge.appendChild(makeCard(b, `FIFO #${i+1}`, 'Merged -> Master')));
+
+  document.getElementById('cnt-plan').textContent = planBooks.length;
+  document.getElementById('cnt-doing').textContent = doingBooks.length;
+  document.getElementById('cnt-review').textContent = reviewBooks.length;
+  document.getElementById('cnt-merge').textContent = BOOKS.length;
+
+  // Initialize inspector with Plate 34 (Behind the Scenes)
+  selectBookCard(BOOKS[BOOKS.length - 1], null);
+
+  // ---------- 2. Interactive 2.5D Engraved Studio Office Simulation ----------
+  const canvas = document.getElementById('office-canvas');
+  const ctx = canvas.getContext('2d');
+
+  const STATIONS = {
+    kanban:   { x: 215, y: 155, label: 'KANBAN + WORKTREE BOARD' },
+    camera:   { x: 460, y: 315, label: '7-PLANE CAMERA RIG' },
+    desk0:    { x: 175, y: 390, label: 'WORKTREE DESK wt/shard-0' },
+    desk1:    { x: 310, y: 445, label: 'WORKTREE DESK wt/shard-1' },
+    audit:    { x: 645, y: 400, label: 'CROSS-MODEL AUDIT TABLE' },
+    fifo:     { x: 785, y: 445, label: 'FIFO MERGE SPLICER' },
+    coffee:   { x: 775, y: 175, label: 'BRASS COFFEE URN & 55m CLOCK' }
+  };
+
+  const AGENTS = [
+    {
+      id: 'maestro',
+      name: 'Maestro (bm_george) — Studio Director',
+      short: 'MAESTRO',
+      hat: 'wide',
+      color: '#1d1915',
+      x: 220, y: 210, tx: 220, ty: 210,
+      station: 'kanban',
+      bubble: 'Spawning 34 isolated Git worktrees!',
+      soul: '“Never mistake a polished still image for animation. Draw through time across seven depth planes.”',
+      memory: 'worktree: wt/master | state: ORCHESTRATING | handoff: "Assigned 34 plates across 4 persistent shard workers."'
+    },
+    {
+      id: 'auditor',
+      name: 'Cross-Model Auditor (bm_lewis) — Codex Reviewer',
+      short: 'AUDITOR',
+      hat: 'cap',
+      color: '#b23024',
+      x: 640, y: 395, tx: 640, ty: 395,
+      station: 'audit',
+      bubble: 'No PNG overlays! Pure cross-hatched ink!',
+      soul: '“No model may grade its own homework. Inspect every K01-K06 contact sheet in silhouette and hatch.”',
+      memory: 'worktree: wt/review-pass | state: AUDITING_DIFF | handoff: "Rejected static plate_XX.png underlay; verified pure engraved_shape() pass."'
+    },
+    {
+      id: 'engineer',
+      name: '3D Multiplane Engineer (af_bella) — Camera Operator',
+      short: '3D ENGINEER',
+      hat: 'beret',
+      color: '#4e4439',
+      x: 465, y: 315, tx: 465, ty: 315,
+      station: 'camera',
+      bubble: 'Parallax k = z^(1/d) locked!',
+      soul: '“Depth comes from differential motion: near layers cross fast, distant mountains hold steady.”',
+      memory: 'worktree: wt/camera-rig | state: CALIBRATING_7_PLANES | handoff: "Fulcrum cut-in set to z=1.68x with -8.5 dB room hush."'
+    },
+    {
+      id: 'animator',
+      name: 'Lead Engraved Animator (am_adam) — Key Pose Artist',
+      short: 'KEY ANIMATOR',
+      hat: 'cap',
+      color: '#1d1915',
+      x: 175, y: 385, tx: 175, ty: 385,
+      station: 'desk0',
+      bubble: 'DRAW -> LOOK -> COMPARE -> ADJUST',
+      soul: '“Draw poses from the inside out: line of action, ribcage mass, weight-bearing leg, and boiling ink on twos.”',
+      memory: 'worktree: wt/shard-0 | state: INKING_TWOS | handoff: "Completed 4-fingered articulated hands and drapery shadow polygons."'
+    },
+    {
+      id: 'sound',
+      name: 'Kokoro Sound Designer (bf_emma) — Archivist Voice',
+      short: 'SOUND & FOLEY',
+      hat: 'beret',
+      color: '#b88232',
+      x: 310, y: 440, tx: 310, ty: 440,
+      station: 'desk1',
+      bubble: '218 Kokoro lines lip-synced!',
+      soul: '“When The Line arrives, drop the room tone by 8.5 decibels so the invariant lands in stillness.”',
+      memory: 'worktree: wt/shard-1 | state: MIXING_FOLEY | handoff: "Cached 218 Kokoro v1.0 WAVs + 24fps jaw envelopes."'
+    },
+    {
+      id: 'merger',
+      name: 'FIFO Merge Clerk (bf_lily) — Master Reel Splicer',
+      short: 'FIFO MERGER',
+      hat: 'hood',
+      color: '#b23024',
+      x: 780, y: 440, tx: 780, ty: 440,
+      station: 'fifo',
+      bubble: 'Single-file merge -> 33m Drive Reel!',
+      soul: '“One branch through the gate at a time. Zero merge conflicts, monotonic timestamps, CarPlay ready.”',
+      memory: 'worktree: wt/fifo-merge | state: SPLICING_MASTER | handoff: "Built worldful-complete-feature.mp4 & worldful-complete-drive.m4a."'
+    }
+  ];
+
+  let selectedAgent = AGENTS[0];
+  let cacheSeconds = 54 * 60 + 42;
+  let tick = 0;
+
+  const updateInspector = ag => {
+    selectedAgent = ag;
+    document.getElementById('ag-role').textContent = `AGENT SOUL · STATION: ${ag.station.toUpperCase()}`;
+    document.getElementById('ag-name').textContent = ag.name;
+    document.getElementById('ag-soul').textContent = ag.soul;
+    document.getElementById('ag-memory').textContent = ag.memory;
+  };
+
+  const drawHatchedRect = (x, y, w, h, fill, stroke, hatchSpacing = 6, diagonal = false) => {
+    ctx.fillStyle = fill;
+    ctx.fillRect(x, y, w, h);
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(x, y, w, h);
+    ctx.clip();
+    ctx.strokeStyle = 'rgba(29, 25, 21, 0.16)';
+    ctx.lineWidth = 0.8;
+    if (!diagonal) {
+      for (let ly = y + 3; ly < y + h; ly += hatchSpacing) {
+        ctx.beginPath();
+        ctx.moveTo(x, ly);
+        ctx.lineTo(x + w, ly);
+        ctx.stroke();
+      }
+    } else {
+      for (let lx = x - h; lx < x + w + h; lx += hatchSpacing) {
+        ctx.beginPath();
+        ctx.moveTo(lx, y);
+        ctx.lineTo(lx + h, y + h);
+        ctx.stroke();
+      }
+    }
+    ctx.restore();
+    ctx.strokeStyle = stroke || '#1d1915';
+    ctx.lineWidth = 1.8;
+    ctx.strokeRect(x, y, w, h);
+  };
+
+  const drawAgentFigure = (ag, t) => {
+    const dx = ag.tx - ag.x;
+    const dy = ag.ty - ag.y;
+    const dist = Math.hypot(dx, dy);
+    const walking = dist > 2.5;
+    if (walking) {
+      ag.x += (dx / dist) * 2.2;
+      ag.y += (dy / dist) * 2.2;
+    }
+    const bob = walking ? Math.abs(Math.sin(t * 0.22)) * 4 : Math.sin(t * 0.05 + ag.x) * 1.2;
+    const isSel = (ag === selectedAgent);
+
+    ctx.save();
+    ctx.translate(ag.x, ag.y);
+
+    // Shadow
+    ctx.fillStyle = 'rgba(29,25,21,0.22)';
+    ctx.beginPath();
+    ctx.ellipse(0, 26, 18, 6, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Selection ring
+    if (isSel) {
+      ctx.strokeStyle = '#b23024';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([4, 3]);
+      ctx.beginPath();
+      ctx.ellipse(0, 26, 25, 10, 0, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    // Boots & legs
+    const stride = walking ? Math.sin(t * 0.22) * 7 : 0;
+    ctx.strokeStyle = '#1d1915';
+    ctx.lineWidth = 3.2;
+    ctx.beginPath();
+    ctx.moveTo(-5, 8);
+    ctx.lineTo(-6 - stride, 25);
+    ctx.moveTo(5, 8);
+    ctx.lineTo(6 + stride, 25);
+    ctx.stroke();
+
+    // Engraved Cloak / Coat
+    ctx.fillStyle = ag.color === '#b23024' ? '#d8695b' : '#dfd2b8';
+    ctx.strokeStyle = '#1d1915';
+    ctx.lineWidth = 1.8;
+    ctx.beginPath();
+    ctx.moveTo(-13, 12 - bob);
+    ctx.lineTo(-9, -18 - bob);
+    ctx.lineTo(9, -18 - bob);
+    ctx.lineTo(13, 12 - bob);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    // Hatching on coat
+    ctx.strokeStyle = '#1d1915';
+    ctx.lineWidth = 0.8;
+    for (let h = -12; h <= 8; h += 4) {
+      ctx.beginPath();
+      ctx.moveTo(-9, h - bob);
+      ctx.lineTo(9, h - bob);
+      ctx.stroke();
+    }
+
+    // Head
+    ctx.fillStyle = '#f5eedf';
+    ctx.strokeStyle = '#1d1915';
+    ctx.lineWidth = 1.7;
+    ctx.beginPath();
+    ctx.arc(0, -27 - bob, 9.5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    // Eyes & Hat
+    ctx.fillStyle = '#1d1915';
+    ctx.beginPath();
+    ctx.arc(3, -28 - bob, 1.6, 0, Math.PI * 2);
+    ctx.fill();
+
+    if (ag.hat === 'wide') {
+      ctx.fillStyle = '#1d1915';
+      ctx.fillRect(-14, -37 - bob, 28, 3);
+      ctx.fillRect(-8, -45 - bob, 16, 8);
+    } else if (ag.hat === 'hood') {
+      ctx.fillStyle = '#b23024';
+      ctx.beginPath();
+      ctx.moveTo(-10, -29 - bob);
+      ctx.lineTo(0, -43 - bob);
+      ctx.lineTo(10, -29 - bob);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+    } else {
+      ctx.fillStyle = ag.color;
+      ctx.fillRect(-9, -40 - bob, 18, 6);
+    }
+
+    // Nameplate
+    ctx.font = '600 9px "IBM Plex Mono", monospace';
+    const nw = ctx.measureText(ag.short).width + 10;
+    ctx.fillStyle = isSel ? '#b23024' : '#1d1915';
+    ctx.fillRect(-nw / 2, 30, nw, 14);
+    ctx.fillStyle = '#f2ead9';
+    ctx.textAlign = 'center';
+    ctx.fillText(ag.short, 0, 40);
+
+    // Speech bubble
+    if (ag.bubble) {
+      ctx.font = '10px "IBM Plex Mono", monospace';
+      const bw = Math.min(220, ctx.measureText(ag.bubble).width + 14);
+      ctx.fillStyle = '#f8f3e6';
+      ctx.strokeStyle = isSel ? '#b23024' : '#1d1915';
+      ctx.lineWidth = 1.3;
+      ctx.fillRect(-bw / 2, -64 - bob, bw, 18);
+      ctx.strokeRect(-bw / 2, -64 - bob, bw, 18);
+      ctx.fillStyle = '#1d1915';
+      ctx.fillText(ag.bubble, 0, -51 - bob);
+    }
+
+    ctx.restore();
+  };
+
+  const renderOffice = () => {
+    tick++;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // 1. Engraved Studio Floor Perspective Grid
+    ctx.fillStyle = '#efe6d2';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Back wall & floor divider
+    drawHatchedRect(12, 12, canvas.width - 24, 215, '#e4d7bd', '#1d1915', 7, false);
+    drawHatchedRect(12, 227, canvas.width - 24, canvas.height - 239, '#f2ead9', '#1d1915', 14, true);
+
+    // Perspective floor tiles
+    ctx.strokeStyle = 'rgba(29,25,21,0.14)';
+    ctx.lineWidth = 1;
+    for (let i = 0; i <= 12; i++) {
+      const xTop = 40 + i * 70;
+      const xBot = -60 + i * 88;
+      ctx.beginPath();
+      ctx.moveTo(xTop, 227);
+      ctx.lineTo(xBot, canvas.height - 12);
+      ctx.stroke();
+    }
+
+    // 2. Back Wall Left: 4-Column Kanban + Git Worktree Corkboard
+    drawHatchedRect(32, 28, 560, 178, '#d8c8a8', '#1d1915', 5, false);
+    ctx.fillStyle = '#1d1915';
+    ctx.fillRect(32, 28, 560, 22);
+    ctx.fillStyle = '#f2ead9';
+    ctx.font = '600 10px "IBM Plex Mono", monospace';
+    ctx.textAlign = 'left';
+    ctx.fillText('KANBAN + GIT WORKTREE CORKBOARD (PLANNING -> DOING -> AUDIT -> FIFO MERGE)', 42, 43);
+
+    const kCols = ['1. PLANNING', '2. WORKTREES', '3. AUDIT (CODEX)', '4. FIFO MERGE'];
+    kCols.forEach((lbl, idx) => {
+      const cx = 42 + idx * 136;
+      drawHatchedRect(cx, 56, 128, 140, '#f6efe0', '#1d1915', 8, false);
+      ctx.fillStyle = idx === 2 ? '#b23024' : '#1d1915';
+      ctx.font = '600 9px "IBM Plex Mono", monospace';
+      ctx.fillText(lbl, cx + 8, 70);
+      for (let c = 0; c < 3; c++) {
+        ctx.fillStyle = (idx === 2 && c === 0) ? 'rgba(178,48,36,0.18)' : '#e9dec6';
+        ctx.strokeStyle = '#1d1915';
+        ctx.lineWidth = 1;
+        ctx.fillRect(cx + 8, 78 + c * 36, 112, 28);
+        ctx.strokeRect(cx + 8, 78 + c * 36, 112, 28);
+        ctx.fillStyle = '#1d1915';
+        ctx.font = '8px "IBM Plex Mono", monospace';
+        const txt = idx === 0 ? (c === 0 ? '[X] PNG Overlay' : '[✓] Pure Hatch')
+                  : idx === 1 ? `wt/shard-${c} (24fps)`
+                  : idx === 2 ? (c === 0 ? 'Diff: 100% Engraved' : 'Onion-Skin K01-06')
+                  : `Plate 0${c} -> Master`;
+        ctx.fillText(txt, cx + 13, 95 + c * 36);
+      }
+    });
+
+    // 3. Back Wall Right: Idle Lounge, Steaming Brass Coffee Urn & 55-Minute Hourglass
+    drawHatchedRect(615, 28, 272, 178, '#e8dcc4', '#1d1915', 6, true);
+    ctx.fillStyle = '#1d1915';
+    ctx.fillRect(615, 28, 272, 22);
+    ctx.fillStyle = '#f2ead9';
+    ctx.font = '600 10px "IBM Plex Mono", monospace';
+    ctx.fillText('IDLE LOUNGE · COFFEE & 55m CACHE', 625, 43);
+
+    // Brass Coffee Urn
+    drawHatchedRect(650, 95, 58, 76, '#d9b87c', '#1d1915', 4, false);
+    ctx.fillStyle = '#b23024';
+    ctx.fillRect(646, 85, 66, 12);
+    ctx.strokeRect(646, 85, 66, 12);
+    ctx.fillStyle = '#1d1915';
+    ctx.font = '600 8px "IBM Plex Mono", monospace';
+    ctx.fillText('ESPRESSO URN', 647, 185);
+    // Steam curls
+    ctx.strokeStyle = '#4e4439';
+    ctx.lineWidth = 1.3;
+    for (let s = 0; s < 3; s++) {
+      const sx = 664 + s * 14 + Math.sin(tick * 0.08 + s) * 4;
+      ctx.beginPath();
+      ctx.moveTo(sx, 80);
+      ctx.quadraticCurveTo(sx - 6, 68, sx + 4, 56);
+      ctx.stroke();
+    }
+
+    // 55-Minute Prompt-Cache Hourglass
+    ctx.strokeStyle = '#1d1915';
+    ctx.lineWidth = 2;
+    ctx.fillStyle = 'rgba(178,48,36,0.22)';
+    ctx.beginPath();
+    ctx.moveTo(775, 82);
+    ctx.lineTo(835, 82);
+    ctx.lineTo(805, 125);
+    ctx.lineTo(835, 168);
+    ctx.lineTo(775, 168);
+    ctx.lineTo(805, 125);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillStyle = '#b23024';
+    ctx.font = '600 8.5px "IBM Plex Mono", monospace';
+    ctx.fillText('55:00 HANDOFF', 770, 185);
+
+    // 4. Center Floor: Towering 7-Plane Multiplane Camera Rig
+    drawHatchedRect(405, 220, 135, 165, '#dfd1b4', '#1d1915', 5, false);
+    ctx.fillStyle = '#b23024';
+    ctx.fillRect(435, 198, 75, 24);
+    ctx.strokeRect(435, 198, 75, 24);
+    ctx.fillStyle = '#f2ead9';
+    ctx.font = '600 8px "IBM Plex Mono", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('7-PLANE CAMERA', 472, 213);
+
+    const pNames = ['P0 MASK', 'P1 FG', 'P2 CHAR', 'P3 PROP', 'P4 MID', 'P5 DIST', 'P6 SKY'];
+    pNames.forEach((pn, pi) => {
+      const py = 232 + pi * 20;
+      const shift = Math.sin(tick * 0.05 + pi * 0.5) * (4 - pi * 0.4);
+      ctx.fillStyle = pi === 2 ? 'rgba(178,48,36,0.25)' : '#f8f3e6';
+      ctx.strokeStyle = pi === 2 ? '#b23024' : '#1d1915';
+      ctx.lineWidth = 1.2;
+      ctx.fillRect(416 + shift, py, 112, 11);
+      ctx.strokeRect(416 + shift, py, 112, 11);
+      ctx.fillStyle = '#1d1915';
+      ctx.font = '7px "IBM Plex Mono", monospace';
+      ctx.fillText(pn, 472 + shift, py + 8);
+    });
+
+    // 5. Worktree Desks, Cross-Model Audit Table & FIFO Merge Splicer
+    const drawDesk = (x, y, title, sub) => {
+      drawHatchedRect(x - 62, y - 22, 124, 58, '#d8c29d', '#1d1915', 5, true);
+      ctx.fillStyle = '#f8f3e6';
+      ctx.strokeStyle = '#1d1915';
+      ctx.fillRect(x - 46, y - 16, 92, 30);
+      ctx.strokeRect(x - 46, y - 16, 92, 30);
+      ctx.fillStyle = '#1d1915';
+      ctx.font = '600 8px "IBM Plex Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(title, x, y - 2);
+      ctx.fillStyle = '#b23024';
+      ctx.font = '7.5px "IBM Plex Mono", monospace';
+      ctx.fillText(sub, x, y + 9);
+    };
+
+    drawDesk(175, 420, 'DESK wt/shard-0', '24fps Engraving');
+    drawDesk(310, 480, 'DESK wt/shard-1', 'Kokoro Lip-Sync');
+    drawDesk(645, 430, 'CROSS-MODEL AUDIT', 'Codex != Claude');
+    drawDesk(785, 480, 'FIFO MERGE QUEUE', 'Master MP4 + M4A');
+
+    // 6. Draw All 6 Named Studio Agents (sorted by Y depth)
+    [...AGENTS].sort((a, b) => a.y - b.y).forEach(ag => drawAgentFigure(ag, tick));
+
+    requestAnimationFrame(renderOffice);
+  };
+
+  canvas.addEventListener('click', e => {
+    const r = canvas.getBoundingClientRect();
+    const mx = (e.clientX - r.left) * (canvas.width / r.width);
+    const my = (e.clientY - r.top) * (canvas.height / r.height);
+
+    // Check if an agent was clicked
+    for (const ag of AGENTS) {
+      if (Math.hypot(mx - ag.x, my - ag.y) < 36) {
+        updateInspector(ag);
+        return;
+      }
+    }
+    // Otherwise walk selected agent to clicked coordinate!
+    if (selectedAgent) {
+      selectedAgent.tx = Math.max(60, Math.min(canvas.width - 60, mx));
+      selectedAgent.ty = Math.max(140, Math.min(canvas.height - 55, my));
+      selectedAgent.bubble = `Walking to (${Math.round(selectedAgent.tx)}, ${Math.round(selectedAgent.ty)})...`;
+      updateInspector(selectedAgent);
+    }
+  });
+
+  // Toolbar Actions
+  document.getElementById('btn-audit').addEventListener('click', () => {
+    const aud = AGENTS.find(a => a.id === 'auditor');
+    const anim = AGENTS.find(a => a.id === 'animator');
+    aud.tx = STATIONS.camera.x + 55;
+    aud.ty = STATIONS.camera.y + 30;
+    aud.bubble = 'AUDIT PASS: Zero PNG underlays! 100% pure engraving!';
+    anim.tx = STATIONS.camera.x - 55;
+    anim.ty = STATIONS.camera.y + 30;
+    anim.bubble = 'All 7 planes cross-hatched on twos!';
+    updateInspector(aud);
+  });
+
+  document.getElementById('btn-coffee').addEventListener('click', () => {
+    AGENTS.forEach((ag, idx) => {
+      ag.tx = STATIONS.coffee.x - 85 + (idx % 3) * 52;
+      ag.ty = STATIONS.coffee.y + 35 + Math.floor(idx / 3) * 44;
+      ag.bubble = '☕ Sipping espresso & syncing souls...';
+    });
+    document.getElementById('office-live-status').textContent = 'COFFEE BREAK · AGENTS SYNCING MEMORIES';
+  });
+
+  document.getElementById('btn-compact').addEventListener('click', () => {
+    cacheSeconds = 55 * 60;
+    AGENTS.forEach(ag => {
+      ag.bubble = '⏳ 55:00 Auto-Compact Handoff Saved!';
+    });
+    document.getElementById('office-live-status').textContent = '55:00 PROMPT CACHE COMPACTED · HANDOFF LEDGER WRITTEN';
+  });
+
+  let stepToggle = 0;
+  document.getElementById('btn-advance').addEventListener('click', () => {
+    stepToggle = (stepToggle + 1) % 3;
+    const positions = [
+      ['kanban', 'audit', 'camera', 'desk0', 'desk1', 'fifo'],
+      ['camera', 'kanban', 'fifo', 'audit', 'desk0', 'desk1'],
+      ['desk0', 'fifo', 'kanban', 'camera', 'audit', 'desk1']
+    ][stepToggle];
+    AGENTS.forEach((ag, i) => {
+      const stKey = positions[i];
+      const st = STATIONS[stKey];
+      ag.station = stKey;
+      ag.tx = st.x + (i % 2 === 0 ? -18 : 18);
+      ag.ty = st.y + 20;
+      ag.bubble = `Working at ${st.label}`;
+    });
+    document.getElementById('office-live-status').textContent = `PIPELINE ADVANCED · ROTATION #${stepToggle + 1}`;
+  });
+
+  setInterval(() => {
+    cacheSeconds = Math.max(0, cacheSeconds - 1);
+    const m = Math.floor(cacheSeconds / 60);
+    const s = cacheSeconds % 60;
+    const pill = document.getElementById('cache-timer-pill');
+    if (pill) {
+      pill.textContent = `⏳ CACHE HANDOFF: ${m}:${s < 10 ? '0' : ''}${s} / 55:00`;
+    }
+  }, 1000);
+
+  renderOffice();
+})();
+</script>
+</body>
+</html>

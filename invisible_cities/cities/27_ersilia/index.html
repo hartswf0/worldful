@@ -1,0 +1,4020 @@
+<!DOCTYPE html>
+<html lang="en" class="ers-html">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ersilia — Spider-Web of Taut Relations</title>
+<style>
+.ers-html {
+  --ers-chalk-blood: #F4EFE4;
+  --ers-obsidian-trade: #161519;
+  --ers-slate-authority: #848E99;
+  --ers-ochre-plain: #9E7447;
+  --ers-ochre-shadow: #2A1E15;
+  --ers-timber-pole: #5C3F28;
+  --ers-terracotta-roof: #A84B31;
+  --ers-lime-wall: #D8CBB5;
+  --ers-dusk-deep: #181E2E;
+  --ers-dusk-horizon: #734F43;
+  --ers-campfire-amber: #E89A3C;
+  --ers-panel-bg: rgba(22, 21, 25, 0.80);
+  --ers-panel-edge: rgba(216, 203, 181, 0.24);
+  --ers-ink-main: #F4EFE4;
+  --ers-ink-muted: #C8BCA8;
+  background: #181E2E;
+  color: #F4EFE4;
+  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  font-size: 14px;
+  line-height: 1.35;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.ers-body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--ers-dusk-deep);
+  color: var(--ers-ink-main);
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+
+.ers-body *,
+.ers-body *::before,
+.ers-body *::after {
+  box-sizing: border-box;
+}
+
+.ers-body *[hidden],
+ersilia-plate-drawer[hidden],
+pole-whisper-tag[hidden] {
+  display: none !important;
+}
+
+ersilia-loom,
+taut-plain-stage,
+string-coding-spool,
+impassability-threshold,
+spool-bobbin-list,
+spool-action-cluster,
+threshold-action-cluster,
+permeability-corridor-gauge,
+permeability-bar-track,
+permeability-bar-fill,
+ersilia-arch-whisper,
+pole-whisper-tag,
+whisper-title-line,
+whisper-detail-line,
+bobbin-meta-stack,
+bobbin-cord-name,
+bobbin-cord-role,
+plate-folio-card,
+plate-viewport-well,
+plate-folio-caption {
+  display: block;
+}
+
+.ers-loom {
+  position: relative;
+  width: 100vw;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--ers-dusk-deep);
+}
+
+.ers-stage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.ers-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.ers-crest {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  background: rgba(22, 21, 25, 0.74);
+  border: 1px solid var(--ers-panel-edge);
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+  pointer-events: none;
+  z-index: 4;
+  white-space: nowrap;
+}
+
+.ers-sigil {
+  display: inline-block;
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--ers-chalk-blood);
+}
+
+.ers-coord {
+  display: inline-block;
+  font-size: 0.70rem;
+  letter-spacing: 0.09em;
+  color: var(--ers-ink-muted);
+}
+
+.ers-phase-seal {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgba(158, 116, 71, 0.34);
+  border: 1px solid rgba(232, 154, 60, 0.45);
+  color: var(--ers-chalk-blood);
+}
+
+.ers-phase-seal.ers-is-ruin {
+  background: rgba(168, 75, 49, 0.42);
+  border-color: var(--ers-campfire-amber);
+  color: #FFD9A0;
+}
+
+.ers-pole-ribbon {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 11px;
+  border-radius: 999px;
+  background: rgba(22, 21, 25, 0.72);
+  border: 1px solid rgba(216, 203, 181, 0.20);
+  color: var(--ers-ink-muted);
+  font-size: 0.71rem;
+  letter-spacing: 0.03em;
+  pointer-events: none;
+  z-index: 4;
+  max-width: 44vw;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ers-whisper {
+  position: absolute;
+  z-index: 8;
+  pointer-events: none;
+  min-width: 158px;
+  max-width: 230px;
+  padding: 6px 9px;
+  border-radius: 6px;
+  background: rgba(22, 21, 25, 0.92);
+  border: 1px solid rgba(232, 154, 60, 0.55);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.48);
+}
+
+.ers-whisper-title {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--ers-chalk-blood);
+  margin-bottom: 2px;
+}
+
+.ers-whisper-detail {
+  font-size: 0.68rem;
+  color: var(--ers-ink-muted);
+}
+
+.ers-spool {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  width: 236px;
+  padding: 9px 10px;
+  background: var(--ers-panel-bg);
+  border: 1px solid var(--ers-panel-edge);
+  border-radius: 9px;
+  backdrop-filter: blur(8px);
+  z-index: 6;
+}
+
+.ers-threshold {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  width: 256px;
+  padding: 9px 10px;
+  background: var(--ers-panel-bg);
+  border: 1px solid var(--ers-panel-edge);
+  border-radius: 9px;
+  backdrop-filter: blur(8px);
+  z-index: 6;
+}
+
+.ers-rack-crown,
+.ers-gauge-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.ers-rack-heading {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  color: var(--ers-ink-muted);
+}
+
+.ers-rack-tally,
+.ers-perm-gates {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--ers-campfire-amber);
+}
+
+.ers-bobbin-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 7px;
+}
+
+.ers-bobbin {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 6px;
+  border-radius: 6px;
+  background: rgba(42, 30, 21, 0.44);
+  border: 1px solid rgba(216, 203, 181, 0.14);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.ers-bobbin:hover,
+.ers-bobbin:focus-visible {
+  border-color: rgba(244, 239, 228, 0.50);
+  outline: none;
+}
+
+.ers-bobbin.ers-is-active {
+  background: rgba(158, 116, 71, 0.34);
+  border-color: var(--ers-campfire-amber);
+}
+
+.ers-keycap,
+.ers-kbadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+  border-radius: 4px;
+  background: rgba(244, 239, 228, 0.12);
+  border: 1px solid rgba(244, 239, 228, 0.28);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.66rem;
+  font-weight: 700;
+  color: var(--ers-chalk-blood);
+  flex-shrink: 0;
+}
+
+.ers-swatch {
+  display: inline-block;
+  width: 18px;
+  height: 7px;
+  border-radius: 99px;
+  flex-shrink: 0;
+  border: 1px solid rgba(244, 239, 228, 0.32);
+}
+
+.ers-swatch-blood {
+  background: #F4EFE4;
+}
+
+.ers-swatch-trade {
+  background: #161519;
+  border-color: rgba(216, 203, 181, 0.62);
+}
+
+.ers-swatch-authority {
+  background: #848E99;
+}
+
+.ers-swatch-agency {
+  background: repeating-linear-gradient(115deg, #F4EFE4 0px, #F4EFE4 3.5px, #161519 3.5px, #161519 7px);
+}
+
+.ers-bobbin-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.ers-bobbin-name {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--ers-chalk-blood);
+  line-height: 1.15;
+}
+
+.ers-bobbin-role {
+  font-size: 0.63rem;
+  color: var(--ers-ink-muted);
+  line-height: 1.15;
+}
+
+.ers-bobbin-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: rgba(244, 239, 228, 0.12);
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--ers-chalk-blood);
+}
+
+.ers-action-cluster {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.ers-util-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+}
+
+.ers-key {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 7px;
+  border-radius: 6px;
+  background: rgba(244, 239, 228, 0.08);
+  border: 1px solid rgba(216, 203, 181, 0.24);
+  color: var(--ers-chalk-blood);
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.ers-key:hover,
+.ers-key:focus-visible {
+  background: rgba(244, 239, 228, 0.16);
+  border-color: var(--ers-campfire-amber);
+  outline: none;
+}
+
+.ers-key-primary {
+  background: rgba(158, 116, 71, 0.34);
+  border-color: rgba(232, 154, 60, 0.48);
+}
+
+.ers-key-amber {
+  background: rgba(168, 75, 49, 0.34);
+  border-color: rgba(232, 154, 60, 0.52);
+}
+
+.ers-key-ochre {
+  background: rgba(92, 63, 40, 0.50);
+  border-color: rgba(216, 203, 181, 0.34);
+}
+
+.ers-ktext {
+  display: inline-block;
+  line-height: 1.15;
+}
+
+.ers-gauge {
+  padding: 6px 7px;
+  border-radius: 6px;
+  background: rgba(42, 30, 21, 0.46);
+  border: 1px solid rgba(216, 203, 181, 0.18);
+  margin-bottom: 6px;
+}
+
+.ers-gauge.ers-is-choked {
+  background: rgba(168, 75, 49, 0.28);
+  border-color: var(--ers-campfire-amber);
+}
+
+.ers-perm-pct {
+  display: inline-block;
+  font-size: 0.73rem;
+  font-weight: 700;
+  color: var(--ers-chalk-blood);
+}
+
+.ers-bar-track {
+  width: 100%;
+  height: 6px;
+  border-radius: 99px;
+  background: rgba(22, 21, 25, 0.78);
+  overflow: hidden;
+  margin-bottom: 5px;
+}
+
+.ers-bar-fill {
+  height: 100%;
+  width: 95%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #E89A3C, #F4EFE4);
+  transition: width 0.2s ease;
+}
+
+.ers-bar-fill.ers-is-zero {
+  background: #A84B31;
+}
+
+.ers-state-seal {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--ers-ink-muted);
+}
+
+.ers-state-seal.ers-is-impassable {
+  color: #FFB978;
+}
+
+.ers-ledger {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.ers-cell {
+  display: block;
+  padding: 4px 6px;
+  border-radius: 5px;
+  background: rgba(244, 239, 228, 0.05);
+  border: 1px solid rgba(216, 203, 181, 0.12);
+}
+
+.ers-cell-key {
+  display: block;
+  font-size: 0.60rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ers-ink-muted);
+}
+
+.ers-cell-val {
+  display: block;
+  font-size: 0.71rem;
+  font-weight: 700;
+  color: var(--ers-chalk-blood);
+}
+
+.ers-arch-note {
+  font-size: 0.66rem;
+  color: var(--ers-ink-muted);
+  font-style: italic;
+  margin-bottom: 6px;
+  line-height: 1.25;
+}
+
+.ers-plate-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(14, 15, 22, 0.86);
+  backdrop-filter: blur(8px);
+}
+
+.ers-plate-sheet {
+  display: flex;
+  flex-direction: column;
+  width: min(1140px, 96vw);
+  max-height: 92dvh;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #1B181E;
+  border: 1px solid rgba(232, 154, 60, 0.44);
+  box-shadow: 0 20px 52px rgba(0, 0, 0, 0.65);
+  overflow: hidden;
+}
+
+.ers-plate-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.ers-plate-title {
+  display: inline-block;
+  font-size: 0.80rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--ers-chalk-blood);
+}
+
+.ers-plate-tabs,
+.ers-plate-tools {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.ers-ptab,
+.ers-ptool {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 9px;
+  border-radius: 5px;
+  background: rgba(244, 239, 228, 0.08);
+  border: 1px solid rgba(216, 203, 181, 0.24);
+  color: var(--ers-chalk-blood);
+  font-size: 0.70rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ers-ptab.ers-is-active,
+.ers-ptool.ers-is-active {
+  background: rgba(232, 154, 60, 0.28);
+  border-color: var(--ers-campfire-amber);
+}
+
+.ers-plate-grid {
+  display: grid;
+  gap: 10px;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.ers-plate-grid.ers-mode-diptych {
+  grid-template-columns: 1fr 1fr;
+}
+
+.ers-plate-grid.ers-mode-single {
+  grid-template-columns: 1fr;
+}
+
+.ers-plate-card {
+  padding: 8px;
+  border-radius: 7px;
+  background: rgba(10, 10, 14, 0.66);
+  border: 1px solid rgba(216, 203, 181, 0.18);
+}
+
+.ers-plate-well {
+  position: relative;
+  width: 100%;
+  max-height: 68dvh;
+  overflow: hidden;
+  border-radius: 5px;
+  background: #121015;
+}
+
+.ers-plate-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 64dvh;
+  object-fit: contain;
+  transform-origin: 50% 50%;
+  transition: transform 0.16s ease;
+}
+
+.ers-plate-well.ers-is-loupe .ers-plate-img {
+  transform: scale(1.85);
+  cursor: zoom-out;
+}
+
+.ers-plate-cap {
+  margin-top: 6px;
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  color: var(--ers-ink-muted);
+  text-align: center;
+}
+
+@media (max-width: 820px) {
+  .ers-loom {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 100vw;
+    height: 100dvh;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  .ers-stage {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: 332px;
+    flex-shrink: 0;
+  }
+  .ers-crest {
+    top: 6px;
+    padding: 3px 9px;
+    gap: 5px;
+    max-width: 96vw;
+  }
+  .ers-coord {
+    display: none;
+  }
+  .ers-pole-ribbon {
+    bottom: 6px;
+    max-width: 94vw;
+    font-size: 0.64rem;
+    padding: 3px 8px;
+  }
+  .ers-spool,
+  .ers-threshold {
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    width: calc(100% - 12px);
+    margin: 4px 6px 0 6px;
+    padding: 7px 8px;
+  }
+  .ers-threshold {
+    margin-bottom: 6px;
+  }
+  .ers-bobbin-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    margin-bottom: 5px;
+  }
+  .ers-bobbin-role {
+    display: none;
+  }
+  .ers-ledger {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .ers-arch-note {
+    display: none;
+  }
+  .ers-plate-grid.ers-mode-diptych {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ers-bobbin,
+  .ers-key,
+  .ers-bar-fill,
+  .ers-plate-img {
+    transition: none !important;
+  }
+}
+</style>
+</head>
+<body class="ers-body">
+<ersilia-loom class="ers-loom" id="ers-loom">
+  <taut-plain-stage class="ers-stage" id="ers-stage">
+    <canvas class="ers-canvas" id="ers-canvas" aria-label="Ersilia plain of houses, 48 corner poles, four-color relational strings, and mountainside refugee camp"></canvas>
+    <ersilia-crest-banner class="ers-crest" id="ers-crest">
+      <ersilia-city-sigil class="ers-sigil">ERSILIA</ersilia-city-sigil>
+      <ersilia-series-coordinate class="ers-coord">V · TRADING CITIES 4</ersilia-series-coordinate>
+      <ersilia-phase-seal class="ers-phase-seal" id="ers-phase-seal">GEN 1 · INHABITED PLAIN</ersilia-phase-seal>
+    </ersilia-crest-banner>
+    <pole-selection-ribbon class="ers-pole-ribbon" id="ers-pole-ribbon">Click two house-corner poles to stretch cord · Drag across strings to pluck · Shift+drag to orbit</pole-selection-ribbon>
+    <pole-whisper-tag class="ers-whisper" id="ers-whisper" hidden>
+      <whisper-title-line class="ers-whisper-title" id="ers-whisper-title"></whisper-title-line>
+      <whisper-detail-line class="ers-whisper-detail" id="ers-whisper-detail"></whisper-detail-line>
+    </pole-whisper-tag>
+  </taut-plain-stage>
+
+  <string-coding-spool class="ers-spool" id="ers-spool">
+    <spool-rack-crown class="ers-rack-crown">
+      <spool-rack-heading class="ers-rack-heading">FOUR RELATIONAL CORDS</spool-rack-heading>
+      <spool-total-tally class="ers-rack-tally" id="ers-spool-total">12 TAUT</spool-total-tally>
+    </spool-rack-crown>
+    <spool-bobbin-list class="ers-bobbin-list">
+      <cord-spool-bobbin class="ers-bobbin ers-is-active" id="ers-bobbin-blood" data-cord="blood" role="button" tabindex="0" aria-pressed="true">
+        <bobbin-key-cap class="ers-keycap">1</bobbin-key-cap>
+        <bobbin-thread-swatch class="ers-swatch ers-swatch-blood"></bobbin-thread-swatch>
+        <bobbin-meta-stack class="ers-bobbin-meta">
+          <bobbin-cord-name class="ers-bobbin-name">White — Blood</bobbin-cord-name>
+          <bobbin-cord-role class="ers-bobbin-role">Kinship · Lineage</bobbin-cord-role>
+        </bobbin-meta-stack>
+        <bobbin-count-pill class="ers-bobbin-count" id="ers-count-blood">3</bobbin-count-pill>
+      </cord-spool-bobbin>
+
+      <cord-spool-bobbin class="ers-bobbin" id="ers-bobbin-trade" data-cord="trade" role="button" tabindex="0" aria-pressed="false">
+        <bobbin-key-cap class="ers-keycap">2</bobbin-key-cap>
+        <bobbin-thread-swatch class="ers-swatch ers-swatch-trade"></bobbin-thread-swatch>
+        <bobbin-meta-stack class="ers-bobbin-meta">
+          <bobbin-cord-name class="ers-bobbin-name">Black — Trade</bobbin-cord-name>
+          <bobbin-cord-role class="ers-bobbin-role">Barter · Covenant</bobbin-cord-role>
+        </bobbin-meta-stack>
+        <bobbin-count-pill class="ers-bobbin-count" id="ers-count-trade">3</bobbin-count-pill>
+      </cord-spool-bobbin>
+
+      <cord-spool-bobbin class="ers-bobbin" id="ers-bobbin-authority" data-cord="authority" role="button" tabindex="0" aria-pressed="false">
+        <bobbin-key-cap class="ers-keycap">3</bobbin-key-cap>
+        <bobbin-thread-swatch class="ers-swatch ers-swatch-authority"></bobbin-thread-swatch>
+        <bobbin-meta-stack class="ers-bobbin-meta">
+          <bobbin-cord-name class="ers-bobbin-name">Gray — Authority</bobbin-cord-name>
+          <bobbin-cord-role class="ers-bobbin-role">Magistracy · Command</bobbin-cord-role>
+        </bobbin-meta-stack>
+        <bobbin-count-pill class="ers-bobbin-count" id="ers-count-authority">3</bobbin-count-pill>
+      </cord-spool-bobbin>
+
+      <cord-spool-bobbin class="ers-bobbin" id="ers-bobbin-agency" data-cord="agency" role="button" tabindex="0" aria-pressed="false">
+        <bobbin-key-cap class="ers-keycap">4</bobbin-key-cap>
+        <bobbin-thread-swatch class="ers-swatch ers-swatch-agency"></bobbin-thread-swatch>
+        <bobbin-meta-stack class="ers-bobbin-meta">
+          <bobbin-cord-name class="ers-bobbin-name">Black &amp; White — Agency</bobbin-cord-name>
+          <bobbin-cord-role class="ers-bobbin-role">Two-Ply · Stewardship</bobbin-cord-role>
+        </bobbin-meta-stack>
+        <bobbin-count-pill class="ers-bobbin-count" id="ers-count-agency">3</bobbin-count-pill>
+      </cord-spool-bobbin>
+    </spool-bobbin-list>
+
+    <spool-action-cluster class="ers-action-cluster">
+      <spool-action-key class="ers-key ers-key-primary" id="ers-btn-weave" role="button" tabindex="0">
+        <ersilia-key-badge class="ers-kbadge">W</ersilia-key-badge>
+        <ersilia-key-text class="ers-ktext">Weave Burst (+6 Cords)</ersilia-key-text>
+      </spool-action-key>
+      <spool-action-key class="ers-key" id="ers-btn-stretch" role="button" tabindex="0">
+        <ersilia-key-badge class="ers-kbadge">S</ersilia-key-badge>
+        <ersilia-key-text class="ers-ktext">Stretch Single Cord</ersilia-key-text>
+      </spool-action-key>
+      <spool-utility-row class="ers-util-row">
+        <spool-action-key class="ers-key" id="ers-btn-mute" role="button" tabindex="0">
+          <ersilia-key-badge class="ers-kbadge">M</ersilia-key-badge>
+          <ersilia-key-text class="ers-ktext" id="ers-mute-label">Sound On</ersilia-key-text>
+        </spool-action-key>
+        <spool-action-key class="ers-key" id="ers-btn-plates" role="button" tabindex="0">
+          <ersilia-key-badge class="ers-kbadge">P</ersilia-key-badge>
+          <ersilia-key-text class="ers-ktext">Royal Plates</ersilia-key-text>
+        </spool-action-key>
+      </spool-utility-row>
+    </spool-action-cluster>
+  </string-coding-spool>
+
+  <impassability-threshold class="ers-threshold" id="ers-threshold">
+    <permeability-corridor-gauge class="ers-gauge" id="ers-gauge">
+      <permeability-header-row class="ers-gauge-head">
+        <permeability-pct-readout class="ers-perm-pct" id="ers-perm-pct">96% NAVIGABLE</permeability-pct-readout>
+        <permeability-gate-readout class="ers-perm-gates" id="ers-perm-gates">6/6 GATES</permeability-gate-readout>
+      </permeability-header-row>
+      <permeability-bar-track class="ers-bar-track">
+        <permeability-bar-fill class="ers-bar-fill" id="ers-perm-fill"></permeability-bar-fill>
+      </permeability-bar-track>
+      <permeability-state-seal class="ers-state-seal" id="ers-state-seal">STREETS PASSABLE AMONG STRINGS</permeability-state-seal>
+    </permeability-corridor-gauge>
+
+    <architecture-ledger-grid class="ers-ledger">
+      <ledger-metric-cell class="ers-cell">
+        <ledger-metric-key class="ers-cell-key">Generation</ledger-metric-key>
+        <ledger-metric-val class="ers-cell-val" id="ers-val-gen">Gen 1 · Irregular</ledger-metric-val>
+      </ledger-metric-cell>
+      <ledger-metric-cell class="ers-cell">
+        <ledger-metric-key class="ers-cell-key">Walls / Poles</ledger-metric-key>
+        <ledger-metric-val class="ers-cell-val" id="ers-val-houses">48W · 12R / 48P</ledger-metric-val>
+      </ledger-metric-cell>
+      <ledger-metric-cell class="ers-cell">
+        <ledger-metric-key class="ers-cell-key">Taut Cords</ledger-metric-key>
+        <ledger-metric-val class="ers-cell-val" id="ers-val-cords">12 (100%)</ledger-metric-val>
+      </ledger-metric-cell>
+      <ledger-metric-cell class="ers-cell">
+        <ledger-metric-key class="ers-cell-key">Plain Ruins</ledger-metric-key>
+        <ledger-metric-val class="ers-cell-val" id="ers-val-ruins">0 · 0 Fires</ledger-metric-val>
+      </ledger-metric-cell>
+      <ledger-metric-cell class="ers-cell">
+        <ledger-metric-key class="ers-cell-key">Complexity</ledger-metric-key>
+        <ledger-metric-val class="ers-cell-val" id="ers-val-comp">0.3697</ledger-metric-val>
+      </ledger-metric-cell>
+      <ledger-metric-cell class="ers-cell">
+        <ledger-metric-key class="ers-cell-key">Regularity</ledger-metric-key>
+        <ledger-metric-val class="ers-cell-val" id="ers-val-reg">0.4782</ledger-metric-val>
+      </ledger-metric-cell>
+    </architecture-ledger-grid>
+
+    <ersilia-arch-whisper class="ers-arch-note" id="ers-arch-note">Strings stretched from house corners mark blood, trade, authority, and agency across open lanes.</ersilia-arch-whisper>
+
+    <threshold-action-cluster class="ers-action-cluster">
+      <threshold-action-key class="ers-key ers-key-amber" id="ers-btn-exodus" role="button" tabindex="0">
+        <ersilia-key-badge class="ers-kbadge">X</ersilia-key-badge>
+        <ersilia-key-text class="ers-ktext">Choke Passages &amp; Dismantle Houses</ersilia-key-text>
+      </threshold-action-key>
+      <threshold-action-key class="ers-key ers-key-ochre" id="ers-btn-refound" role="button" tabindex="0">
+        <ersilia-key-badge class="ers-kbadge">R</ersilia-key-badge>
+        <ersilia-key-text class="ers-ktext">Refound Ersilia Elsewhere</ersilia-key-text>
+      </threshold-action-key>
+      <threshold-action-key class="ers-key" id="ers-btn-viewpoint" role="button" tabindex="0">
+        <ersilia-key-badge class="ers-kbadge">V</ersilia-key-badge>
+        <ersilia-key-text class="ers-ktext" id="ers-view-label">Mountainside / Plain View</ersilia-key-text>
+      </threshold-action-key>
+    </threshold-action-cluster>
+  </impassability-threshold>
+</ersilia-loom>
+
+<ersilia-plate-drawer class="ers-plate-drawer" id="ers-plate-drawer" hidden>
+  <plate-drawer-sheet class="ers-plate-sheet" id="ers-plate-sheet">
+    <plate-drawer-header class="ers-plate-head">
+      <plate-drawer-title class="ers-plate-title">ERSILIA · ROYAL ARCHIVE PLATES</plate-drawer-title>
+      <plate-tab-strip class="ers-plate-tabs">
+        <plate-tab-key class="ers-ptab ers-is-active" data-tab="diptych" id="ers-tab-diptych" role="button" tabindex="0">Diptych</plate-tab-key>
+        <plate-tab-key class="ers-ptab" data-tab="map" id="ers-tab-map" role="button" tabindex="0">Plain &amp; Mountain Map</plate-tab-key>
+        <plate-tab-key class="ers-ptab" data-tab="vista" id="ers-tab-vista" role="button" tabindex="0">Twilight Spider-Web Vista</plate-tab-key>
+      </plate-tab-strip>
+      <plate-tool-strip class="ers-plate-tools">
+        <plate-loupe-key class="ers-ptool" id="ers-btn-loupe" role="button" tabindex="0">[Z] 1.85x Loupe</plate-loupe-key>
+        <plate-close-trigger class="ers-ptool" id="ers-btn-close-plates" role="button" tabindex="0">[Esc] Close</plate-close-trigger>
+      </plate-tool-strip>
+    </plate-drawer-header>
+    <plate-gallery-grid class="ers-plate-grid ers-mode-diptych" id="ers-plate-grid">
+      <plate-folio-card class="ers-plate-card" id="ers-card-map">
+        <plate-viewport-well class="ers-plate-well" id="ers-well-map">
+          <img class="ers-plate-img" id="ers-map-img" src="map.png" alt="Cartographic map of Ersilia">
+        </plate-viewport-well>
+        <plate-folio-caption class="ers-plate-cap">PLATE I — PLAIN LABYRINTH &amp; MOUNTAINSIDE ENCAMPMENT (1600 × 1200)</plate-folio-caption>
+      </plate-folio-card>
+      <plate-folio-card class="ers-plate-card" id="ers-card-vista">
+        <plate-viewport-well class="ers-plate-well" id="ers-well-vista">
+          <img class="ers-plate-img" id="ers-vista-img" src="image.png" alt="Twilight spider-web vista of Ersilia">
+        </plate-viewport-well>
+        <plate-folio-caption class="ers-plate-cap">PLATE II — TWILIGHT SPIDER-WEB OF TAUT STRINGS &amp; POLES (1600 × 1000)</plate-folio-caption>
+      </plate-folio-card>
+    </plate-gallery-grid>
+  </plate-drawer-sheet>
+</ersilia-plate-drawer>
+
+<script>
+/*
+ * City 27: Ersilia (Chapter V - Trading Cities 4)
+ * Layer 1: Four-Cord Relational Loom, Street Permeability BFS & Plucked Acoustics
+ * Exports globalThis.ErsiliaFourCordRelations
+ */
+(function (root) {
+  "use strict";
+
+  const PALETTE = Object.freeze({
+    chalkBlood: "#F4EFE4",
+    obsidianTrade: "#161519",
+    slateAuthority: "#848E99",
+    agencyLight: "#F4EFE4",
+    agencyDark: "#161519",
+    ochrePlain: "#9E7447",
+    ochreShadow: "#2A1E15",
+    timberPole: "#5C3F28",
+    terracottaRoof: "#A84B31",
+    limeWall: "#D8CBB5",
+    duskSkyDeep: "#181E2E",
+    duskHorizon: "#734F43",
+    campfireAmber: "#E89A3C"
+  });
+
+  const CANONICAL_STONES = Object.freeze([
+    Object.freeze({
+      id: "house_corner_poles",
+      number: 1,
+      label: "House-Corner Timber Supports",
+      causal_role: "48 vertical timber corner-poles across 12 houses anchor every relational string; poles endure after walls and roofs are dismantled."
+    }),
+    Object.freeze({
+      id: "four_canonical_cords",
+      number: 2,
+      label: "Four Canonical Relational Cords (Blood, Trade, Authority, Agency)",
+      causal_role: "Every stretched string carries exact Calvino coding: white (blood), black (trade), gray (authority), braided black-and-white (agency), each with distinct visual weave and plucked pitch."
+    }),
+    Object.freeze({
+      id: "impassability_labyrinth",
+      number: 3,
+      label: "Impassable Street-Crossing Labyrinth",
+      causal_role: "Live street-corridor pathfinding measures pedestrian permeability across N/S/E/W gates; crossing into 0 passable corridors triggers exodus."
+    }),
+    Object.freeze({
+      id: "dismantled_houses_poles_remain",
+      number: 4,
+      label: "Dismantled Houses Leaving Only Strings and Supports",
+      causal_role: "Exodus reduces standingWalls=0, standingRoofs=0, remainingBones=0 while preserving 100% of corner poles and taut strings."
+    }),
+    Object.freeze({
+      id: "mountainside_refugee_camp",
+      number: 5,
+      label: "Mountainside Refugee Overlook with Household Goods",
+      causal_role: "Refugees camp on the rocky mountainside with glowing fires and household bundles, overlooking the taut string-city below."
+    }),
+    Object.freeze({
+      id: "spiderweb_seeking_form",
+      number: 6,
+      label: "Spider-Web Ruins Seeking a Form",
+      causal_role: "Without walls or bones, the leafless web of poles and vibrating strings IS still the city of Ersilia."
+    }),
+    Object.freeze({
+      id: "refounding_higher_complexity_regularity",
+      number: 7,
+      label: "Refounding Elsewhere: More Complex and More Regular",
+      causal_role: "Refounding archives the abandoned plain ruin as ghost memory and seeds Generation g+1 with measurably higher complexityIndex AND higher regularityIndex."
+    })
+  ]);
+
+  const CORD_LIST = [
+    Object.freeze({
+      index: 0,
+      id: "blood",
+      key: "1",
+      label: "Blood",
+      calvinoColor: "white",
+      stroke: "#F4EFE4",
+      secondaryStroke: "#DFD7C5",
+      braided: false,
+      baseHz: 293.66,
+      role: "kinship, marriage, ancestral bloodline"
+    }),
+    Object.freeze({
+      index: 1,
+      id: "trade",
+      key: "2",
+      label: "Trade",
+      calvinoColor: "black",
+      stroke: "#161519",
+      secondaryStroke: "#32303A",
+      braided: false,
+      baseHz: 220.00,
+      role: "barter, credit, merchant covenant"
+    }),
+    Object.freeze({
+      index: 2,
+      id: "authority",
+      key: "3",
+      label: "Authority",
+      calvinoColor: "gray",
+      stroke: "#848E99",
+      secondaryStroke: "#636C76",
+      braided: false,
+      baseHz: 329.63,
+      role: "magistracy, tribute, civic command"
+    }),
+    Object.freeze({
+      index: 3,
+      id: "agency",
+      key: "4",
+      label: "Agency",
+      calvinoColor: "black-and-white",
+      stroke: "#F4EFE4",
+      secondaryStroke: "#161519",
+      braided: true,
+      baseHz: 440.00,
+      role: "proxy, embassy, delegated stewardship"
+    })
+  ];
+
+  const byIdMap = {};
+  const byKeyMap = {};
+  for (let i = 0; i < CORD_LIST.length; i += 1) {
+    byIdMap[CORD_LIST[i].id] = CORD_LIST[i];
+    byKeyMap[CORD_LIST[i].key] = CORD_LIST[i];
+  }
+  CORD_LIST.byId = Object.freeze(byIdMap);
+  CORD_LIST.byKey = Object.freeze(byKeyMap);
+  const CORD_TYPES = Object.freeze(CORD_LIST);
+
+  function clamp(v, lo, hi) {
+    return v < lo ? lo : (v > hi ? hi : v);
+  }
+
+  function hypot2(dx, dy) {
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+
+  function hypot3(dx, dy, dz) {
+    return Math.sqrt(dx * dx + dy * dy + dz * dz);
+  }
+
+  function resolveCordType(spec, fallbackId) {
+    if (spec && typeof spec === "object" && spec.id && CORD_TYPES.byId[spec.id]) {
+      return CORD_TYPES.byId[spec.id];
+    }
+    if (typeof spec === "number" && Number.isFinite(spec)) {
+      const idx = ((Math.trunc(spec) % 4) + 4) % 4;
+      return CORD_TYPES[idx];
+    }
+    if (typeof spec === "string") {
+      const clean = spec.trim().toLowerCase();
+      if (CORD_TYPES.byId[clean]) return CORD_TYPES.byId[clean];
+      if (CORD_TYPES.byKey[clean]) return CORD_TYPES.byKey[clean];
+    }
+    return CORD_TYPES.byId[fallbackId] || CORD_TYPES[0];
+  }
+
+  function ccw2D(ax, ay, bx, by, cx, cy) {
+    return (cy - ay) * (bx - ax) - (by - ay) * (cx - ax);
+  }
+
+  function segmentsIntersect2D(ax, ay, bx, by, cx, cy, dx, dy) {
+    const d1 = ccw2D(cx, cy, dx, dy, ax, ay);
+    const d2 = ccw2D(cx, cy, dx, dy, bx, by);
+    const d3 = ccw2D(ax, ay, bx, by, cx, cy);
+    const d4 = ccw2D(ax, ay, bx, by, dx, dy);
+    return ((d1 > 0 && d2 < 0) || (d1 < 0 && d2 > 0)) &&
+           ((d3 > 0 && d4 < 0) || (d3 < 0 && d4 > 0));
+  }
+
+  function pointToSegmentDist2D(px, py, ax, ay, bx, by) {
+    const vx = bx - ax;
+    const vy = by - ay;
+    const lenSq = vx * vx + vy * vy;
+    if (lenSq <= 1e-9) return hypot2(px - ax, py - ay);
+    const t = clamp(((px - ax) * vx + (py - ay) * vy) / lenSq, 0, 1);
+    return hypot2(px - (ax + t * vx), py - (ay + t * vy));
+  }
+
+  function pointInHouseFootprint(px, py, house, pad) {
+    const dx = px - house.cx;
+    const dy = py - house.cy;
+    const c = Math.cos(-house.rotation);
+    const s = Math.sin(-house.rotation);
+    const lx = dx * c - dy * s;
+    const ly = dx * s + dy * c;
+    return Math.abs(lx) <= house.halfW + pad && Math.abs(ly) <= house.halfD + pad;
+  }
+
+  const LAYOUT_MODES = Object.freeze([
+    "village_irregular",
+    "concentric_court",
+    "octagonal_mandala",
+    "crystalline_star"
+  ]);
+
+  function buildHouseCorners(house) {
+    const c = Math.cos(house.rotation);
+    const s = Math.sin(house.rotation);
+    const signs = [
+      [-1, -1],
+      [1, -1],
+      [1, 1],
+      [-1, 1]
+    ];
+    const poles = [];
+    for (let i = 0; i < 4; i += 1) {
+      const lx = signs[i][0] * house.halfW;
+      const ly = signs[i][1] * house.halfD;
+      const wx = clamp(house.cx + lx * c - ly * s, -0.92, 0.92);
+      const wy = clamp(house.cy + lx * s + ly * c, -0.92, 0.92);
+      const zTop = Number((house.eaveZ + 0.026).toFixed(4));
+      const poleId = "h" + house.index + "_c" + i;
+      poles.push({
+        id: poleId,
+        poleId: poleId,
+        houseIndex: house.index,
+        houseId: house.id,
+        cornerIndex: i,
+        worldX: Number(wx.toFixed(4)),
+        worldY: Number(wy.toFixed(4)),
+        wx: Number(wx.toFixed(4)),
+        wy: Number(wy.toFixed(4)),
+        zBase: 0,
+        zTop: zTop,
+        anchorZ: Number((zTop * 0.90).toFixed(4))
+      });
+    }
+    return poles;
+  }
+
+  function buildGenerationBlueprint(generation, requestedMode) {
+    const modeIdx = clamp((generation || 1) - 1, 0, LAYOUT_MODES.length - 1);
+    const layoutMode = (requestedMode && LAYOUT_MODES.indexOf(requestedMode) >= 0)
+      ? requestedMode
+      : LAYOUT_MODES[modeIdx];
+
+    const houses = [];
+    const innerAngles = [Math.PI * 0.25, Math.PI * 0.75, Math.PI * 1.25, Math.PI * 1.75];
+    const outerDeg = [24, 66, 114, 156, 204, 246, 294, 336];
+    const villageJitter = [
+      [0.026, -0.018, 0.16, 0.070, 0.058, 0.150],
+      [-0.022, 0.028, -0.19, 0.064, 0.062, 0.142],
+      [-0.030, -0.016, 0.21, 0.072, 0.056, 0.162],
+      [0.018, -0.028, -0.14, 0.062, 0.064, 0.138],
+      [0.024, 0.018, 0.18, 0.068, 0.056, 0.156],
+      [0.018, -0.022, -0.22, 0.062, 0.060, 0.144],
+      [-0.020, 0.020, 0.15, 0.070, 0.055, 0.166],
+      [-0.028, -0.014, -0.17, 0.063, 0.059, 0.140],
+      [-0.018, -0.024, 0.20, 0.069, 0.057, 0.154],
+      [-0.014, 0.022, -0.16, 0.061, 0.061, 0.146],
+      [0.022, -0.018, 0.13, 0.067, 0.056, 0.160],
+      [0.026, 0.016, -0.20, 0.064, 0.060, 0.148]
+    ];
+
+    for (let h = 0; h < 12; h += 1) {
+      let cx = 0;
+      let cy = 0;
+      let rot = 0;
+      let halfW = 0.065;
+      let halfD = 0.058;
+      let eaveZ = 0.156;
+      if (layoutMode === "village_irregular") {
+        const baseR = h < 4 ? 0.305 : 0.615;
+        const ang = h < 4 ? innerAngles[h] : (outerDeg[h - 4] * Math.PI) / 180;
+        const jit = villageJitter[h];
+        cx = baseR * Math.cos(ang) + jit[0];
+        cy = baseR * Math.sin(ang) + jit[1];
+        rot = jit[2];
+        halfW = jit[3];
+        halfD = jit[4];
+        eaveZ = jit[5];
+      } else if (layoutMode === "concentric_court") {
+        if (h < 4) {
+          cx = (h === 0 || h === 3 ? 1 : -1) * 0.235;
+          cy = (h < 2 ? 1 : -1) * 0.215;
+          halfW = 0.066;
+          halfD = 0.058;
+          eaveZ = 0.156;
+        } else {
+          const ang = (outerDeg[h - 4] * Math.PI) / 180;
+          cx = 0.615 * Math.cos(ang);
+          cy = 0.595 * Math.sin(ang);
+          halfW = 0.064;
+          halfD = 0.056;
+          eaveZ = (h % 2 === 0) ? 0.152 : 0.162;
+        }
+        rot = 0;
+      } else if (layoutMode === "octagonal_mandala") {
+        const baseR = h < 4 ? 0.295 : 0.610;
+        const ang = h < 4 ? innerAngles[h] : (outerDeg[h - 4] * Math.PI) / 180;
+        cx = baseR * Math.cos(ang);
+        cy = baseR * Math.sin(ang);
+        rot = ang + Math.PI * 0.5;
+        halfW = 0.064;
+        halfD = 0.058;
+        eaveZ = 0.160;
+      } else {
+        const baseR = h < 4 ? 0.290 : 0.608;
+        const ang = h < 4 ? innerAngles[h] : (outerDeg[h - 4] * Math.PI) / 180;
+        cx = baseR * Math.cos(ang);
+        cy = baseR * Math.sin(ang);
+        rot = ang;
+        halfW = 0.062;
+        halfD = 0.062;
+        eaveZ = 0.166;
+      }
+
+      const house = {
+        index: h,
+        id: "house_" + h,
+        cx: Number(cx.toFixed(4)),
+        cy: Number(cy.toFixed(4)),
+        halfW: halfW,
+        halfD: halfD,
+        rotation: Number(rot.toFixed(4)),
+        eaveZ: eaveZ,
+        ridgeZ: Number((eaveZ + 0.076).toFixed(4)),
+        cornerPoleIds: []
+      };
+      houses.push(house);
+    }
+
+    const poles = [];
+    for (let h = 0; h < houses.length; h += 1) {
+      const hp = buildHouseCorners(houses[h]);
+      for (let c = 0; c < hp.length; c += 1) {
+        poles.push(hp[c]);
+        houses[h].cornerPoleIds.push(hp[c].poleId);
+      }
+    }
+
+    let initialCords = [];
+    if (layoutMode === "village_irregular") {
+      initialCords = [
+        ["h0_c1", "h4_c3", "blood"],
+        ["h0_c2", "h5_c0", "trade"],
+        ["h5_c3", "h6_c2", "authority"],
+        ["h1_c1", "h6_c0", "agency"],
+        ["h1_c3", "h7_c1", "blood"],
+        ["h2_c2", "h8_c0", "trade"],
+        ["h8_c3", "h9_c1", "authority"],
+        ["h3_c1", "h10_c3", "agency"],
+        ["h3_c2", "h11_c0", "blood"],
+        ["h0_c3", "h1_c2", "trade"],
+        ["h2_c1", "h3_c0", "authority"],
+        ["h0_c0", "h11_c2", "agency"]
+      ];
+    } else if (layoutMode === "concentric_court") {
+      initialCords = [
+        ["h0_c1", "h4_c3", "blood"], ["h4_c2", "h5_c1", "trade"], ["h5_c0", "h0_c2", "authority"],
+        ["h1_c0", "h6_c3", "blood"], ["h6_c2", "h7_c1", "trade"], ["h7_c0", "h1_c3", "authority"],
+        ["h2_c3", "h8_c1", "agency"], ["h8_c2", "h9_c0", "blood"], ["h9_c1", "h2_c0", "trade"],
+        ["h3_c2", "h11_c0", "agency"], ["h11_c3", "h10_c1", "blood"], ["h10_c0", "h3_c1", "trade"],
+        ["h0_c0", "h3_c3", "authority"], ["h1_c1", "h2_c2", "agency"]
+      ];
+    } else if (layoutMode === "octagonal_mandala") {
+      for (let q = 0; q < 4; q += 1) {
+        const a = 4 + q * 2;
+        const b = a + 1;
+        const nxt = (q + 1) % 4;
+        initialCords.push(["h" + q + "_c1", "h" + a + "_c3", CORD_TYPES[q % 4].id]);
+        initialCords.push(["h" + a + "_c2", "h" + b + "_c0", CORD_TYPES[(q + 1) % 4].id]);
+        initialCords.push(["h" + b + "_c3", "h" + q + "_c2", CORD_TYPES[(q + 2) % 4].id]);
+        initialCords.push(["h" + q + "_c3", "h" + nxt + "_c0", CORD_TYPES[(q + 3) % 4].id]);
+      }
+    } else {
+      for (let q = 0; q < 4; q += 1) {
+        const a = 4 + q * 2;
+        const b = a + 1;
+        const nxt = (q + 1) % 4;
+        initialCords.push(["h" + q + "_c1", "h" + a + "_c3", "blood"]);
+        initialCords.push(["h" + a + "_c2", "h" + b + "_c0", "trade"]);
+        initialCords.push(["h" + b + "_c3", "h" + q + "_c2", "authority"]);
+        initialCords.push(["h" + q + "_c3", "h" + nxt + "_c0", "agency"]);
+        initialCords.push(["h" + b + "_c1", "h" + nxt + "_c2", CORD_TYPES[q % 4].id]);
+      }
+    }
+
+    const crossCorridorPairs = [
+      ["h0_c0", "h2_c2"], ["h1_c0", "h3_c2"],
+      ["h0_c3", "h1_c0"], ["h1_c3", "h2_c0"], ["h2_c3", "h3_c0"], ["h3_c3", "h0_c0"],
+      ["h5_c2", "h6_c1"], ["h7_c2", "h8_c1"], ["h9_c2", "h10_c1"], ["h11_c2", "h4_c1"],
+      ["h5_c3", "h6_c0"], ["h7_c3", "h8_c0"], ["h9_c3", "h10_c0"], ["h11_c3", "h4_c0"],
+      ["h5_c0", "h6_c3"], ["h7_c0", "h8_c3"], ["h9_c0", "h10_c3"], ["h11_c0", "h4_c3"],
+      ["h5_c1", "h6_c2"], ["h7_c1", "h8_c2"], ["h9_c1", "h10_c2"], ["h11_c1", "h4_c2"],
+      ["h0_c2", "h1_c1"], ["h1_c2", "h2_c1"], ["h2_c2", "h3_c1"], ["h3_c2", "h0_c1"],
+      ["h0_c2", "h6_c3"], ["h1_c1", "h5_c0"], ["h1_c3", "h8_c0"], ["h2_c0", "h7_c3"],
+      ["h2_c3", "h10_c0"], ["h3_c0", "h9_c3"], ["h3_c2", "h4_c0"], ["h0_c1", "h11_c3"],
+      ["h4_c2", "h7_c1"], ["h5_c2", "h10_c1"], ["h6_c2", "h9_c1"], ["h11_c2", "h8_c1"],
+      ["h0_c1", "h2_c3"], ["h1_c1", "h3_c3"], ["h4_c0", "h8_c2"], ["h5_c0", "h9_c2"],
+      ["h6_c0", "h10_c2"], ["h7_c0", "h11_c2"]
+    ];
+
+    return { layoutMode: layoutMode, houses: houses, poles: poles, initialCords: initialCords, crossCorridorPairs: crossCorridorPairs };
+  }
+
+  function createPluckAudio() {
+    let ctx = null;
+    function ensureCtx() {
+      if (ctx) return ctx;
+      const AC = root.AudioContext || root.webkitAudioContext;
+      if (!AC) return null;
+      try {
+        ctx = new AC();
+      } catch (_e) {
+        ctx = null;
+      }
+      return ctx;
+    }
+
+    function playPluck(cord, muted) {
+      if (muted || !cord) return false;
+      const ac = ensureCtx();
+      if (!ac) return false;
+      try {
+        if (ac.state === "suspended" && typeof ac.resume === "function") {
+          ac.resume().catch(function () {});
+        }
+        const now = ac.currentTime;
+        const sr = ac.sampleRate || 44100;
+        const freq = clamp(cord.pitchHz || 293.66, 160, 680);
+        const dur = 0.52;
+        const totalSamples = Math.max(256, Math.floor(sr * dur));
+        const period = Math.max(16, Math.round(sr / freq));
+        const buf = ac.createBuffer(1, totalSamples, sr);
+        const ch = buf.getChannelData(0);
+        const ring = new Float32Array(period);
+        for (let i = 0; i < period; i += 1) {
+          const phase = i / period;
+          ring[i] = Math.sin(phase * Math.PI * 2) * 0.55 + (((i * 73) % 29) / 14.5 - 1) * 0.45;
+        }
+        const damping = cord.type === "trade" ? 0.986 : (cord.type === "authority" ? 0.994 : 0.991);
+        let idx = 0;
+        for (let n = 0; n < totalSamples; n += 1) {
+          const cur = ring[idx];
+          const nxt = ring[(idx + 1) % period];
+          ch[n] = cur * 0.22;
+          ring[idx] = (cur + nxt) * 0.5 * damping;
+          idx = (idx + 1) % period;
+        }
+
+        const src = ac.createBufferSource();
+        src.buffer = buf;
+        const gain = ac.createGain();
+        gain.gain.setValueAtTime(0.16, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + dur);
+
+        const filter = ac.createBiquadFilter();
+        if (cord.type === "blood") {
+          filter.type = "lowpass";
+          filter.frequency.setValueAtTime(1450, now);
+        } else if (cord.type === "trade") {
+          filter.type = "lowpass";
+          filter.frequency.setValueAtTime(920, now);
+        } else if (cord.type === "authority") {
+          filter.type = "peaking";
+          filter.frequency.setValueAtTime(freq * 2.98, now);
+          filter.Q.setValueAtTime(4.2, now);
+          filter.gain.setValueAtTime(6.0, now);
+        } else {
+          filter.type = "bandpass";
+          filter.frequency.setValueAtTime(freq * 1.5, now);
+          filter.Q.setValueAtTime(1.4, now);
+        }
+
+        src.connect(filter);
+        filter.connect(gain);
+        gain.connect(ac.destination);
+        src.start(now);
+
+        const osc = ac.createOscillator();
+        const oscGain = ac.createGain();
+        osc.type = cord.type === "authority" ? "triangle" : (cord.type === "trade" ? "sawtooth" : "sine");
+        const voiceRatio = cord.type === "trade" ? 1.5 : (cord.type === "agency" ? 1.5 : 1.0);
+        const startOffset = cord.type === "agency" ? 0.028 : 0;
+        osc.frequency.setValueAtTime(clamp(freq * voiceRatio, 160, 980), now + startOffset);
+        oscGain.gain.setValueAtTime(0.0001, now);
+        oscGain.gain.linearRampToValueAtTime(0.045, now + startOffset + 0.012);
+        oscGain.gain.exponentialRampToValueAtTime(0.0008, now + startOffset + 0.34);
+        osc.connect(oscGain);
+        oscGain.connect(ac.destination);
+        osc.start(now + startOffset);
+        osc.stop(now + startOffset + 0.36);
+        return true;
+      } catch (_err) {
+        return false;
+      }
+    }
+
+    return { playPluck: playPluck };
+  }
+
+  function createCordLoom(config) {
+    const cfg = config || {};
+    let viewportWidth = Math.max(240, Number(cfg.width) || 1280);
+    let viewportHeight = Math.max(200, Number(cfg.height) || 800);
+    const reducedMotion = Boolean(cfg.reducedMotion);
+    let audioMuted = cfg.audioEnabled === false;
+    const pluckAudio = createPluckAudio();
+
+    const camera = { azimuth: 0.62, elevation: 0.52, zoom: 1.0 };
+    let generation = Math.max(1, Math.trunc(Number(cfg.initialGeneration) || 1));
+    let layoutMode = "village_irregular";
+    let activeCordType = "blood";
+    let houses = [];
+    let poles = [];
+    let polesById = {};
+    let cords = [];
+    let crossCorridorPairs = [];
+    let nextCordSeq = 1;
+    let weaveCursor = 0;
+    let pluckedCount = 0;
+    let simTime = 0;
+
+    let permeabilityRatio = 0.85;
+    let openCorridorCount = 6;
+    let impassable = false;
+    let sampleOpenPath = [];
+    let complexityIndex = 0.34;
+    let regularityIndex = 0.36;
+    let genComplexityBoost = 0;
+    let genRegularityBoost = 0;
+    let prevFoundationComplexity = 0;
+    let prevFoundationRegularity = 0;
+
+    function setViewport(w, h) {
+      if (Number.isFinite(w) && w > 120) viewportWidth = w;
+      if (Number.isFinite(h) && h > 120) viewportHeight = h;
+      return { width: viewportWidth, height: viewportHeight };
+    }
+
+    function setCamera(nextCam) {
+      if (!nextCam || typeof nextCam !== "object") return Object.assign({}, camera);
+      if (Number.isFinite(nextCam.azimuth)) camera.azimuth = nextCam.azimuth;
+      if (Number.isFinite(nextCam.elevation)) camera.elevation = clamp(nextCam.elevation, 0.18, 1.25);
+      if (Number.isFinite(nextCam.zoom)) camera.zoom = clamp(nextCam.zoom, 0.55, 1.85);
+      return Object.assign({}, camera);
+    }
+
+    function orbitCamera(dAzimuth, dElevation) {
+      if (Number.isFinite(dAzimuth)) camera.azimuth += dAzimuth;
+      if (Number.isFinite(dElevation)) camera.elevation = clamp(camera.elevation + dElevation, 0.18, 1.25);
+      return Object.assign({}, camera);
+    }
+
+    function projectPoint(wx, wy, wz) {
+      const z = Number(wz) || 0;
+      const cosA = Math.cos(camera.azimuth);
+      const sinA = Math.sin(camera.azimuth);
+      const cosE = Math.cos(camera.elevation);
+      const sinE = Math.sin(camera.elevation);
+      const rx = wx * cosA - wy * sinA;
+      const ry = wx * sinA + wy * cosA;
+      const persp = 1 / (1 + ry * 0.15);
+      const baseScale = Math.min(viewportWidth * 0.37, viewportHeight * 0.45) * camera.zoom;
+      const scale = baseScale * persp;
+      return {
+        x: viewportWidth * 0.50 + rx * scale,
+        y: viewportHeight * 0.58 - (ry * sinE + z * cosE * 1.18) * scale,
+        depth: ry * cosE - z * sinE,
+        scale: scale
+      };
+    }
+
+    function recomputePermeability() {
+      const N = 25;
+      const walkable = new Uint8Array(N * N);
+      const cellLoad = new Float32Array(N * N);
+      const gxToW = function (g) { return -0.84 + g * 0.07; };
+
+      for (let gy = 0; gy < N; gy += 1) {
+        const wy = gxToW(gy);
+        for (let gx = 0; gx < N; gx += 1) {
+          const wx = gxToW(gx);
+          const r = hypot2(wx, wy);
+          const inGateCauseway =
+            (Math.abs(wx) <= 0.105 && Math.abs(wy) >= 0.60 && Math.abs(wy) <= 0.85) ||
+            (Math.abs(wy) <= 0.105 && Math.abs(wx) >= 0.60 && Math.abs(wx) <= 0.85);
+          if (r > 0.745 && !inGateCauseway) continue;
+          let insideHouse = false;
+          for (let h = 0; h < houses.length; h += 1) {
+            if (pointInHouseFootprint(wx, wy, houses[h], 0.012)) {
+              insideHouse = true;
+              break;
+            }
+          }
+          if (!insideHouse) walkable[gy * N + gx] = 1;
+        }
+      }
+
+      const gates = {
+        north_gate: 24 * N + 12,
+        south_gate: 0 * N + 12,
+        west_gate: 12 * N + 0,
+        east_gate: 12 * N + 24
+      };
+      walkable[gates.north_gate] = 1;
+      walkable[gates.south_gate] = 1;
+      walkable[gates.west_gate] = 1;
+      walkable[gates.east_gate] = 1;
+
+      const hEdgeLoad = new Float32Array(N * N);
+      const vEdgeLoad = new Float32Array(N * N);
+
+      for (let c = 0; c < cords.length; c += 1) {
+        const cord = cords[c];
+        if (cord.fromHouseIndex === cord.toHouseIndex) continue;
+        const ax = cord.ax;
+        const ay = cord.ay;
+        const bx = cord.bx;
+        const by = cord.by;
+        const dx = bx - ax;
+        const dy = by - ay;
+        const lenSq = dx * dx + dy * dy;
+        if (lenSq < 1e-6) continue;
+        const iax = ax + dx * 0.05;
+        const iay = ay + dy * 0.05;
+        const ibx = ax + dx * 0.95;
+        const iby = ay + dy * 0.95;
+
+        for (let gy = 0; gy < N; gy += 1) {
+          const wy = gxToW(gy);
+          for (let gx = 0; gx < N; gx += 1) {
+            const idx = gy * N + gx;
+            if (!walkable[idx]) continue;
+            const wx = gxToW(gx);
+            const cd = pointToSegmentDist2D(wx, wy, iax, iay, ibx, iby);
+            if (cd < 0.085) cellLoad[idx] += 0.45 * (1 - cd / 0.085);
+
+            if (gx + 1 < N && walkable[idx + 1]) {
+              const wx2 = gxToW(gx + 1);
+              if (segmentsIntersect2D(iax, iay, ibx, iby, wx, wy, wx2, wy)) {
+                hEdgeLoad[idx] += 0.62;
+              } else {
+                const ed = pointToSegmentDist2D((wx + wx2) * 0.5, wy, iax, iay, ibx, iby);
+                if (ed < 0.102) hEdgeLoad[idx] += 0.54 * (1 - ed / 0.102);
+              }
+            }
+            if (gy + 1 < N && walkable[idx + N]) {
+              const wy2 = gxToW(gy + 1);
+              if (segmentsIntersect2D(iax, iay, ibx, iby, wx, wy, wx, wy2)) {
+                vEdgeLoad[idx] += 0.62;
+              } else {
+                const ed = pointToSegmentDist2D(wx, (wy + wy2) * 0.5, iax, iay, ibx, iby);
+                if (ed < 0.102) vEdgeLoad[idx] += 0.54 * (1 - ed / 0.102);
+              }
+            }
+          }
+        }
+      }
+
+      function bfsFrom(startIdx) {
+        const parent = new Int32Array(N * N);
+        parent.fill(-1);
+        const visited = new Uint8Array(N * N);
+        const queue = new Int32Array(N * N);
+        let head = 0;
+        let tail = 0;
+        visited[startIdx] = 1;
+        parent[startIdx] = startIdx;
+        queue[tail++] = startIdx;
+
+        while (head < tail) {
+          const cur = queue[head++];
+          const cx = cur % N;
+          const cy = (cur - cx) / N;
+          if (cx + 1 < N) {
+            const nb = cur + 1;
+            if (walkable[nb] && !visited[nb] && hEdgeLoad[cur] < 1.0) {
+              visited[nb] = 1; parent[nb] = cur; queue[tail++] = nb;
+            }
+          }
+          if (cx - 1 >= 0) {
+            const nb = cur - 1;
+            if (walkable[nb] && !visited[nb] && hEdgeLoad[nb] < 1.0) {
+              visited[nb] = 1; parent[nb] = cur; queue[tail++] = nb;
+            }
+          }
+          if (cy + 1 < N) {
+            const nb = cur + N;
+            if (walkable[nb] && !visited[nb] && vEdgeLoad[cur] < 1.0) {
+              visited[nb] = 1; parent[nb] = cur; queue[tail++] = nb;
+            }
+          }
+          if (cy - 1 >= 0) {
+            const nb = cur - N;
+            if (walkable[nb] && !visited[nb] && vEdgeLoad[nb] < 1.0) {
+              visited[nb] = 1; parent[nb] = cur; queue[tail++] = nb;
+            }
+          }
+        }
+        return { visited: visited, parent: parent };
+      }
+
+      const bfsN = bfsFrom(gates.north_gate);
+      const bfsS = bfsFrom(gates.south_gate);
+      const bfsW = bfsFrom(gates.west_gate);
+      const bfsE = bfsFrom(gates.east_gate);
+
+      const pairs = [
+        [bfsN, gates.south_gate],
+        [bfsW, gates.east_gate],
+        [bfsN, gates.east_gate],
+        [bfsN, gates.west_gate],
+        [bfsS, gates.east_gate],
+        [bfsS, gates.west_gate]
+      ];
+
+      let openCount = 0;
+      let chosenBfs = null;
+      let chosenTarget = -1;
+      for (let p = 0; p < pairs.length; p += 1) {
+        if (pairs[p][0].visited[pairs[p][1]]) {
+          openCount += 1;
+          if (!chosenBfs) {
+            chosenBfs = pairs[p][0];
+            chosenTarget = pairs[p][1];
+          }
+        }
+      }
+
+      openCorridorCount = openCount;
+      if (openCount === 0) {
+        permeabilityRatio = 0;
+        impassable = true;
+        sampleOpenPath = [];
+        return;
+      }
+
+      const path = [];
+      let cur = chosenTarget;
+      let guard = 0;
+      while (cur >= 0 && guard < 650) {
+        const px = gxToW(cur % N);
+        const py = gxToW(Math.floor(cur / N));
+        const proj = projectPoint(px, py, 0.004);
+        path.push({ x: Number(px.toFixed(4)), y: Number(py.toFixed(4)), screenX: proj.x, screenY: proj.y });
+        if (chosenBfs.parent[cur] === cur) break;
+        cur = chosenBfs.parent[cur];
+        guard += 1;
+      }
+      path.reverse();
+      sampleOpenPath = path;
+
+      let totalWalkable = 0;
+      let clearReachScore = 0;
+      for (let i = 0; i < N * N; i += 1) {
+        if (!walkable[i]) continue;
+        totalWalkable += 1;
+        if (bfsN.visited[i] || bfsS.visited[i] || bfsW.visited[i] || bfsE.visited[i]) {
+          clearReachScore += Math.max(0.14, 1 - 0.78 * Math.min(1, cellLoad[i]));
+        }
+      }
+      const reachFrac = totalWalkable > 0 ? clearReachScore / totalWalkable : 0;
+      const corridorFrac = openCount / 6;
+      permeabilityRatio = Number(clamp(corridorFrac * (0.42 + 0.58 * reachFrac), 0.02, 1.0).toFixed(4));
+      impassable = false;
+    }
+
+    function computeTopologyMetrics(enforceFloor) {
+      const H = houses.length || 12;
+      const totalCords = cords.length;
+      const deg = new Int32Array(H);
+      const typeBits = new Int32Array(H);
+      const adj = new Uint8Array(H * H);
+      const typeCounts = [0, 0, 0, 0];
+
+      for (let i = 0; i < totalCords; i += 1) {
+        const c = cords[i];
+        const a = c.fromHouseIndex;
+        const b = c.toHouseIndex;
+        deg[a] += 1;
+        deg[b] += 1;
+        typeBits[a] |= (1 << c.typeIndex);
+        typeBits[b] |= (1 << c.typeIndex);
+        typeCounts[c.typeIndex] += 1;
+        if (a !== b) {
+          adj[a * H + b] = 1;
+          adj[b * H + a] = 1;
+        }
+      }
+
+      const normDeg = clamp((2 * totalCords) / (H * 7.5), 0, 1);
+      let entropy = 0;
+      if (totalCords > 0) {
+        for (let k = 0; k < 4; k += 1) {
+          if (typeCounts[k] > 0) {
+            const p = typeCounts[k] / totalCords;
+            entropy -= p * Math.log2(p);
+          }
+        }
+        entropy = clamp(entropy / 2.0, 0, 1);
+      }
+
+      let richnessSum = 0;
+      for (let h = 0; h < H; h += 1) {
+        let bits = typeBits[h];
+        let cnt = 0;
+        while (bits > 0) { cnt += (bits & 1); bits >>= 1; }
+        richnessSum += cnt / 4;
+      }
+      const houseRichness = richnessSum / H;
+
+      let triangles = 0;
+      for (let i = 0; i < H; i += 1) {
+        for (let j = i + 1; j < H; j += 1) {
+          if (!adj[i * H + j]) continue;
+          for (let k = j + 1; k < H; k += 1) {
+            if (adj[j * H + k] && adj[i * H + k]) triangles += 1;
+          }
+        }
+      }
+      const triScore = clamp(triangles / 14, 0, 1);
+
+      let latSymErr = 0;
+      for (let i = 0; i < H; i += 1) {
+        const rx90 = -houses[i].cy;
+        const ry90 = houses[i].cx;
+        const rfx = -houses[i].cx;
+        const rfy = houses[i].cy;
+        let best90 = 9;
+        let bestRef = 9;
+        for (let j = 0; j < H; j += 1) {
+          const d90 = hypot2(houses[j].cx - rx90, houses[j].cy - ry90);
+          const dRf = hypot2(houses[j].cx - rfx, houses[j].cy - rfy);
+          if (d90 < best90) best90 = d90;
+          if (dRf < bestRef) bestRef = dRf;
+        }
+        latSymErr += (best90 + bestRef) * 0.5;
+      }
+      const latticeSymmetry = clamp(1 - (latSymErr / H) / 0.10, 0, 1);
+
+      let chordSym = 0;
+      if (totalCords > 0) {
+        let errAcc = 0;
+        for (let i = 0; i < totalCords; i += 1) {
+          const ci = cords[i];
+          const mx = (ci.ax + ci.bx) * 0.5;
+          const my = (ci.ay + ci.by) * 0.5;
+          let bestMatch = 9;
+          for (let j = 0; j < totalCords; j += 1) {
+            const cj = cords[j];
+            const jmx = (cj.ax + cj.bx) * 0.5;
+            const jmy = (cj.ay + cj.by) * 0.5;
+            const dRot = hypot2(jmx - (-my), jmy - mx) + Math.abs(cj.length3D - ci.length3D);
+            const dRef = hypot2(jmx - (-mx), jmy - my) + Math.abs(cj.length3D - ci.length3D);
+            const m = dRot < dRef ? dRot : dRef;
+            if (m < bestMatch && (i !== j || Math.abs(mx) < 0.02)) bestMatch = m;
+          }
+          errAcc += bestMatch;
+        }
+        chordSym = clamp(1 - (errAcc / totalCords) / 0.22, 0, 1);
+      }
+
+      const mu = (2 * totalCords) / H;
+      let degUniformity = 0;
+      if (mu > 0) {
+        let varSum = 0;
+        for (let h = 0; h < H; h += 1) {
+          const diff = deg[h] - mu;
+          varSum += diff * diff;
+        }
+        const cv = Math.sqrt(varSum / H) / mu;
+        degUniformity = clamp(1 - cv / 0.65, 0, 1);
+      }
+
+      let rawComp = 0.28 * normDeg + 0.18 * entropy + 0.24 * houseRichness + 0.30 * triScore +
+        Math.min(0.16, genComplexityBoost * 0.20);
+      let rawReg = 0.30 * latticeSymmetry + 0.40 * chordSym + 0.30 * degUniformity +
+        Math.min(0.14, genRegularityBoost * 0.15);
+
+      if (enforceFloor && generation > 1) {
+        if (rawComp <= prevFoundationComplexity + 0.025) rawComp = prevFoundationComplexity + 0.032;
+        if (rawReg <= prevFoundationRegularity + 0.025) rawReg = prevFoundationRegularity + 0.035;
+      }
+      complexityIndex = Number(clamp(rawComp, 0.05, 0.99).toFixed(4));
+      regularityIndex = Number(clamp(rawReg, 0.05, 0.99).toFixed(4));
+    }
+
+    function makeCordObject(pA, pB, typeEntry, zOffset) {
+      const az = Number((pA.anchorZ + (zOffset || 0)).toFixed(4));
+      const bz = Number((pB.anchorZ + (zOffset || 0)).toFixed(4));
+      const len3D = Number(hypot3(pB.worldX - pA.worldX, pB.worldY - pA.worldY, bz - az).toFixed(4));
+      const lenNorm = clamp((len3D - 0.22) / 1.35, 0, 1);
+      const pitchHz = Number(clamp(typeEntry.baseHz * (1.30 - 0.50 * lenNorm), 160, 680).toFixed(2));
+      const seq = nextCordSeq++;
+      return {
+        id: "cord_" + seq,
+        type: typeEntry.id,
+        typeIndex: typeEntry.index,
+        label: typeEntry.label,
+        calvinoColor: typeEntry.calvinoColor,
+        stroke: typeEntry.stroke,
+        secondaryStroke: typeEntry.secondaryStroke,
+        braided: typeEntry.braided,
+        fromPoleId: pA.poleId,
+        toPoleId: pB.poleId,
+        fromHouseIndex: pA.houseIndex,
+        toHouseIndex: pB.houseIndex,
+        ax: pA.worldX,
+        ay: pA.worldY,
+        az: az,
+        bx: pB.worldX,
+        by: pB.worldY,
+        bz: bz,
+        length3D: len3D,
+        pitchHz: pitchHz,
+        pluckAmp: 0,
+        pluckPhase: 0,
+        shimmerSeed: Number(((seq * 1.61803) % 6.28318).toFixed(4))
+      };
+    }
+
+    function findExistingPair(aId, bId) {
+      let samePairCount = 0;
+      let exactMatch = null;
+      for (let i = 0; i < cords.length; i += 1) {
+        const c = cords[i];
+        if ((c.fromPoleId === aId && c.toPoleId === bId) || (c.fromPoleId === bId && c.toPoleId === aId)) {
+          samePairCount += 1;
+          exactMatch = c;
+        }
+      }
+      return { count: samePairCount, cord: exactMatch };
+    }
+
+    function nextUnstretchedPair() {
+      for (let k = 0; k < crossCorridorPairs.length; k += 1) {
+        const cand = crossCorridorPairs[(weaveCursor + k) % crossCorridorPairs.length];
+        if (findExistingPair(cand[0], cand[1]).count === 0) {
+          weaveCursor = (weaveCursor + k + 1) % crossCorridorPairs.length;
+          return cand;
+        }
+      }
+      for (let i = 0; i < poles.length; i += 1) {
+        for (let j = i + 4; j < poles.length; j += 1) {
+          if (poles[i].houseIndex !== poles[j].houseIndex && findExistingPair(poles[i].poleId, poles[j].poleId).count === 0) {
+            return [poles[i].poleId, poles[j].poleId];
+          }
+        }
+      }
+      return null;
+    }
+
+    let foundationComplexity = 0;
+    let foundationRegularity = 0;
+
+    function getCountsByType() {
+      const counts = { blood: 0, trade: 0, authority: 0, agency: 0 };
+      for (let i = 0; i < cords.length; i += 1) {
+        counts[cords[i].type] = (counts[cords[i].type] || 0) + 1;
+      }
+      return counts;
+    }
+
+    function getSnapshot() {
+      const countsByType = getCountsByType();
+      const poleDegrees = {};
+      const poleTypes = {};
+      for (let i = 0; i < cords.length; i += 1) {
+        const c = cords[i];
+        poleDegrees[c.fromPoleId] = (poleDegrees[c.fromPoleId] || 0) + 1;
+        poleDegrees[c.toPoleId] = (poleDegrees[c.toPoleId] || 0) + 1;
+        if (!poleTypes[c.fromPoleId]) poleTypes[c.fromPoleId] = [];
+        if (!poleTypes[c.toPoleId]) poleTypes[c.toPoleId] = [];
+        if (poleTypes[c.fromPoleId].indexOf(c.type) < 0) poleTypes[c.fromPoleId].push(c.type);
+        if (poleTypes[c.toPoleId].indexOf(c.type) < 0) poleTypes[c.toPoleId].push(c.type);
+      }
+
+      return {
+        generation: generation,
+        layoutMode: layoutMode,
+        houseCount: houses.length,
+        poleCount: poles.length,
+        cordCount: cords.length,
+        activeCordType: activeCordType,
+        countsByType: countsByType,
+        permeabilityRatio: permeabilityRatio,
+        openCorridorCount: openCorridorCount,
+        totalCorridorPairs: 6,
+        impassable: impassable,
+        complexityIndex: complexityIndex,
+        regularityIndex: regularityIndex,
+        pluckedCount: pluckedCount,
+        audioMuted: audioMuted,
+        camera: Object.assign({}, camera),
+        houses: houses.map(function (h) { return Object.assign({}, h, { cornerPoleIds: h.cornerPoleIds.slice() }); }),
+        poles: poles.map(function (p) {
+          const topP = projectPoint(p.worldX, p.worldY, p.zTop);
+          const baseP = projectPoint(p.worldX, p.worldY, 0);
+          return Object.assign({}, p, {
+            degree: poleDegrees[p.poleId] || 0,
+            cordTypes: poleTypes[p.poleId] ? poleTypes[p.poleId].slice() : [],
+            screenX: topP.x,
+            screenY: topP.y,
+            baseScreenX: baseP.x,
+            baseScreenY: baseP.y
+          });
+        }),
+        cords: cords.map(function (c) { return Object.assign({}, c); }),
+        sampleOpenPath: sampleOpenPath.map(function (pt) { return Object.assign({}, pt); })
+      };
+    }
+
+    function selectActiveCordType(idOrKeyOrIndex) {
+      const entry = resolveCordType(idOrKeyOrIndex, activeCordType);
+      activeCordType = entry.id;
+      return entry;
+    }
+
+    function stretchCord(fromPoleId, toPoleId, cordTypeOptional) {
+      let aId = fromPoleId;
+      let bId = toPoleId;
+      if (!aId || !bId) {
+        const autoPair = nextUnstretchedPair();
+        if (!autoPair) return { added: false, cord: null, snapshot: getSnapshot() };
+        aId = autoPair[0];
+        bId = autoPair[1];
+      }
+      const pA = polesById[aId];
+      const pB = polesById[bId];
+      if (!pA || !pB || pA.poleId === pB.poleId) {
+        return { added: false, cord: null, snapshot: getSnapshot() };
+      }
+      const typeEntry = cordTypeOptional != null
+        ? resolveCordType(cordTypeOptional, activeCordType)
+        : CORD_TYPES.byId[activeCordType];
+
+      for (let i = 0; i < cords.length; i += 1) {
+        const ex = cords[i];
+        const sameEnds = (ex.fromPoleId === pA.poleId && ex.toPoleId === pB.poleId) ||
+                         (ex.fromPoleId === pB.poleId && ex.toPoleId === pA.poleId);
+        if (sameEnds && ex.type === typeEntry.id) {
+          ex.pluckAmp = reducedMotion ? 0.25 : 1.0;
+          ex.pluckPhase = 0;
+          pluckedCount += 1;
+          pluckAudio.playPluck(ex, audioMuted);
+          return { added: false, cord: ex, snapshot: getSnapshot() };
+        }
+      }
+
+      const pairInfo = findExistingPair(pA.poleId, pB.poleId);
+      const cord = makeCordObject(pA, pB, typeEntry, pairInfo.count * 0.014);
+      cord.pluckAmp = reducedMotion ? 0.25 : 1.0;
+      cord.pluckPhase = 0;
+      cords.push(cord);
+      pluckedCount += 1;
+      pluckAudio.playPluck(cord, audioMuted);
+      recomputePermeability();
+      computeTopologyMetrics(false);
+      return { added: true, cord: cord, snapshot: getSnapshot() };
+    }
+
+    function weaveBurst(count, preferredType) {
+      const target = clamp(Math.trunc(Number(count) || 6), 1, 48);
+      let addedCount = 0;
+      let lastAdded = null;
+      for (let k = 0; k < target; k += 1) {
+        const pair = nextUnstretchedPair();
+        if (!pair) break;
+        const tEntry = preferredType != null
+          ? resolveCordType(preferredType, activeCordType)
+          : CORD_TYPES[(cords.length) % 4];
+        const pA = polesById[pair[0]];
+        const pB = polesById[pair[1]];
+        if (!pA || !pB) continue;
+        const c = makeCordObject(pA, pB, tEntry, 0);
+        c.pluckAmp = reducedMotion ? 0.2 : 0.85;
+        c.pluckPhase = (k * 0.7) % 6.28;
+        cords.push(c);
+        lastAdded = c;
+        addedCount += 1;
+        pluckedCount += 1;
+        if (k < 2) pluckAudio.playPluck(c, audioMuted);
+      }
+      if (addedCount > 0 || lastAdded) {
+        recomputePermeability();
+        computeTopologyMetrics(false);
+      }
+      return getSnapshot();
+    }
+
+    function weaveToImpassable() {
+      let guard = 0;
+      let lastCord = null;
+      while ((!impassable || permeabilityRatio > 0) && guard < 96) {
+        const pair = nextUnstretchedPair();
+        if (!pair) break;
+        const tEntry = CORD_TYPES[cords.length % 4];
+        const pA = polesById[pair[0]];
+        const pB = polesById[pair[1]];
+        if (pA && pB) {
+          const c = makeCordObject(pA, pB, tEntry, 0);
+          c.pluckAmp = reducedMotion ? 0.2 : 0.9;
+          cords.push(c);
+          lastCord = c;
+          pluckedCount += 1;
+          recomputePermeability();
+        }
+        guard += 1;
+      }
+      if (lastCord) pluckAudio.playPluck(lastCord, audioMuted);
+      computeTopologyMetrics(false);
+      return getSnapshot();
+    }
+
+    function pluckCordById(cordId) {
+      for (let i = 0; i < cords.length; i += 1) {
+        if (cords[i].id === cordId) {
+          cords[i].pluckAmp = reducedMotion ? 0.3 : 1.0;
+          cords[i].pluckPhase = 0;
+          pluckedCount += 1;
+          pluckAudio.playPluck(cords[i], audioMuted);
+          return { plucked: true, cord: cords[i] };
+        }
+      }
+      return { plucked: false, cord: null };
+    }
+
+    function pluckNearestCord(px, py, maxDistPx) {
+      const limit = Number.isFinite(maxDistPx) ? maxDistPx : 28;
+      let best = null;
+      let bestDist = Infinity;
+      for (let i = 0; i < cords.length; i += 1) {
+        const c = cords[i];
+        const p0 = projectPoint(c.ax, c.ay, c.az);
+        const p1 = projectPoint(c.bx, c.by, c.bz);
+        const pm = projectPoint((c.ax + c.bx) * 0.5, (c.ay + c.by) * 0.5, (c.az + c.bz) * 0.5 - 0.012 * c.length3D);
+        const dA = pointToSegmentDist2D(px, py, p0.x, p0.y, pm.x, pm.y);
+        const dB = pointToSegmentDist2D(px, py, pm.x, pm.y, p1.x, p1.y);
+        const d = dA < dB ? dA : dB;
+        if (d < bestDist) {
+          bestDist = d;
+          best = c;
+        }
+      }
+      if (best && bestDist <= limit) {
+        pluckCordById(best.id);
+        return { plucked: true, cord: best, distancePx: Number(bestDist.toFixed(2)) };
+      }
+      return { plucked: false, cord: null, distancePx: Infinity };
+    }
+
+    function hitTestPole(px, py, maxDistPx) {
+      const limit = Number.isFinite(maxDistPx) ? maxDistPx : 22;
+      let best = null;
+      let bestDist = Infinity;
+      let bestTop = null;
+      let bestBase = null;
+      for (let i = 0; i < poles.length; i += 1) {
+        const p = poles[i];
+        const topP = projectPoint(p.worldX, p.worldY, p.zTop);
+        const baseP = projectPoint(p.worldX, p.worldY, 0);
+        const dShaft = pointToSegmentDist2D(px, py, baseP.x, baseP.y, topP.x, topP.y);
+        const dTip = hypot2(px - topP.x, py - topP.y) * 0.85;
+        const d = dTip < dShaft ? dTip : dShaft;
+        if (d < bestDist) {
+          bestDist = d;
+          best = p;
+          bestTop = topP;
+          bestBase = baseP;
+        }
+      }
+      if (best && bestDist <= limit) {
+        return {
+          id: best.id,
+          poleId: best.poleId,
+          houseIndex: best.houseIndex,
+          houseId: best.houseId,
+          cornerIndex: best.cornerIndex,
+          worldX: best.worldX,
+          worldY: best.worldY,
+          zTop: best.zTop,
+          anchorZ: best.anchorZ,
+          screenX: bestTop.x,
+          screenY: bestTop.y,
+          baseScreenX: bestBase.x,
+          baseScreenY: bestBase.y,
+          distancePx: Number(bestDist.toFixed(2)),
+          pole: best
+        };
+      }
+      return null;
+    }
+
+    function setAudioMuted(flag) {
+      audioMuted = Boolean(flag);
+      return audioMuted;
+    }
+
+    function seedGenerationLayout(genSpec) {
+      const spec = genSpec || {};
+      if (foundationComplexity > 0) {
+        prevFoundationComplexity = foundationComplexity;
+        prevFoundationRegularity = foundationRegularity;
+      }
+      if (Number.isFinite(spec.generation) && spec.generation >= 1) {
+        generation = Math.trunc(spec.generation);
+      }
+      genComplexityBoost = Number.isFinite(spec.complexityBoost) ? spec.complexityBoost : 0.14 * Math.max(0, generation - 1);
+      genRegularityBoost = Number.isFinite(spec.regularityBoost) ? spec.regularityBoost : 0.16 * Math.max(0, generation - 1);
+
+      const bp = buildGenerationBlueprint(generation, spec.layoutMode);
+      layoutMode = bp.layoutMode;
+      houses = bp.houses;
+      poles = bp.poles;
+      polesById = {};
+      for (let i = 0; i < poles.length; i += 1) {
+        polesById[poles[i].poleId] = poles[i];
+      }
+      crossCorridorPairs = bp.crossCorridorPairs;
+      weaveCursor = 0;
+      cords = [];
+      for (let i = 0; i < bp.initialCords.length; i += 1) {
+        const ic = bp.initialCords[i];
+        const pA = polesById[ic[0]];
+        const pB = polesById[ic[1]];
+        const tEntry = resolveCordType(ic[2], "blood");
+        if (pA && pB && pA.poleId !== pB.poleId) {
+          cords.push(makeCordObject(pA, pB, tEntry, 0));
+        }
+      }
+      recomputePermeability();
+      computeTopologyMetrics(true);
+      foundationComplexity = complexityIndex;
+      foundationRegularity = regularityIndex;
+      return getSnapshot();
+    }
+
+    function step(dtSec) {
+      const dt = clamp(Number(dtSec) || 0.016, 0, 0.1);
+      if (!reducedMotion) simTime += dt;
+      const decay = reducedMotion ? Math.exp(-9.0 * dt) : Math.exp(-3.1 * dt);
+      for (let i = 0; i < cords.length; i += 1) {
+        const c = cords[i];
+        if (c.pluckAmp > 0.002) {
+          c.pluckAmp *= decay;
+          c.pluckPhase += dt * (24 + (c.pitchHz || 300) * 0.048);
+          if (c.pluckAmp <= 0.002) c.pluckAmp = 0;
+        }
+      }
+    }
+
+    function renderPlain(ctx, exodusState) {
+      if (!ctx) return;
+      const exo = exodusState || {};
+      const w = viewportWidth;
+      const h = viewportHeight;
+      const dismantle = clamp(Number(exo.dismantleProgress) || 0, 0, 1);
+      const wallAlpha = dismantle >= 0.999 ? 0 : clamp(1 - dismantle, 0, 1);
+      const horizonY = h * 0.37;
+
+      const skyGrad = ctx.createLinearGradient(0, 0, 0, horizonY);
+      skyGrad.addColorStop(0, PALETTE.duskSkyDeep);
+      skyGrad.addColorStop(0.58, "#352F42");
+      skyGrad.addColorStop(1, PALETTE.duskHorizon);
+      ctx.fillStyle = skyGrad;
+      ctx.fillRect(0, 0, w, horizonY + 2);
+
+      ctx.fillStyle = "rgba(244, 239, 228, 0.42)";
+      for (let s = 0; s < 22; s += 1) {
+        const sx = ((s * 173 + 41) % 997) / 997 * w;
+        const sy = ((s * 97 + 19) % 419) / 419 * (horizonY * 0.68);
+        ctx.fillRect(sx, sy, s % 3 === 0 ? 1.6 : 1.1, s % 3 === 0 ? 1.6 : 1.1);
+      }
+
+      ctx.beginPath();
+      ctx.moveTo(0, horizonY + 2);
+      ctx.lineTo(0, horizonY * 0.78);
+      ctx.lineTo(w * 0.16, horizonY * 0.69);
+      ctx.lineTo(w * 0.34, horizonY * 0.84);
+      ctx.lineTo(w * 0.48, horizonY * 0.76);
+      ctx.lineTo(w * 0.63, horizonY * 0.56);
+      ctx.lineTo(w * 0.77, horizonY * 0.39);
+      ctx.lineTo(w * 0.89, horizonY * 0.45);
+      ctx.lineTo(w, horizonY * 0.31);
+      ctx.lineTo(w, horizonY + 2);
+      ctx.closePath();
+      ctx.fillStyle = "#221A20";
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.moveTo(w * 0.52, horizonY + 2);
+      ctx.lineTo(w * 0.66, horizonY * 0.64);
+      ctx.lineTo(w * 0.80, horizonY * 0.48);
+      ctx.lineTo(w * 0.92, horizonY * 0.52);
+      ctx.lineTo(w, horizonY * 0.40);
+      ctx.lineTo(w, horizonY + 2);
+      ctx.closePath();
+      ctx.fillStyle = PALETTE.ochreShadow;
+      ctx.fill();
+
+      const plainGrad = ctx.createRadialGradient(w * 0.5, h * 0.61, h * 0.06, w * 0.5, h * 0.62, Math.max(w, h) * 0.62);
+      plainGrad.addColorStop(0, PALETTE.ochrePlain);
+      plainGrad.addColorStop(0.62, "#6E4E31");
+      plainGrad.addColorStop(1, PALETTE.ochreShadow);
+      ctx.fillStyle = plainGrad;
+      ctx.fillRect(0, horizonY, w, h - horizonY);
+
+      ctx.strokeStyle = "rgba(42, 30, 21, 0.36)";
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      for (let k = 0; k <= 24; k += 1) {
+        const ang = (k / 24) * Math.PI * 2;
+        const ep = projectPoint(Math.cos(ang) * 0.76, Math.sin(ang) * 0.76, 0);
+        if (k === 0) ctx.moveTo(ep.x, ep.y);
+        else ctx.lineTo(ep.x, ep.y);
+      }
+      ctx.stroke();
+
+      const gateCoords = [[0, 0.84], [0, -0.84], [-0.84, 0], [0.84, 0]];
+      for (let g = 0; g < gateCoords.length; g += 1) {
+        const gp = projectPoint(gateCoords[g][0], gateCoords[g][1], 0.01);
+        ctx.fillStyle = impassable ? "rgba(168, 75, 49, 0.55)" : "rgba(244, 239, 228, 0.45)";
+        ctx.beginPath();
+        ctx.arc(gp.x, gp.y, 3.6, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      if (!impassable && sampleOpenPath.length > 1) {
+        ctx.fillStyle = "rgba(244, 239, 228, 0.42)";
+        for (let i = 0; i < sampleOpenPath.length; i += 1) {
+          const wp = projectPoint(sampleOpenPath[i].x, sampleOpenPath[i].y, 0.004);
+          ctx.beginPath();
+          ctx.arc(wp.x, wp.y, 1.8, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      ctx.strokeStyle = "rgba(22, 21, 25, 0.22)";
+      ctx.lineWidth = 1.1;
+      for (let i = 0; i < cords.length; i += 1) {
+        const sc = cords[i];
+        const sa = projectPoint(sc.ax, sc.ay, 0);
+        const sb = projectPoint(sc.bx, sc.by, 0);
+        ctx.beginPath();
+        ctx.moveTo(sa.x, sa.y);
+        ctx.lineTo(sb.x, sb.y);
+        ctx.stroke();
+      }
+
+      const items = [];
+      for (let hIdx = 0; hIdx < houses.length; hIdx += 1) {
+        const hs = houses[hIdx];
+        const hc = projectPoint(hs.cx, hs.cy, hs.eaveZ * 0.5);
+        if (wallAlpha > 0) items.push({ kind: "house", depth: hc.depth + 0.02, house: hs });
+        items.push({ kind: "filament", depth: hc.depth - 0.005, house: hs });
+      }
+      for (let pIdx = 0; pIdx < poles.length; pIdx += 1) {
+        const pl = poles[pIdx];
+        const pc = projectPoint(pl.worldX, pl.worldY, pl.zTop * 0.5);
+        items.push({ kind: "pole", depth: pc.depth, pole: pl });
+      }
+      for (let cIdx = 0; cIdx < cords.length; cIdx += 1) {
+        const cd = cords[cIdx];
+        const cc = projectPoint((cd.ax + cd.bx) * 0.5, (cd.ay + cd.by) * 0.5, (cd.az + cd.bz) * 0.5);
+        items.push({ kind: "cord", depth: cc.depth - 0.015, cord: cd });
+      }
+      items.sort(function (a, b) { return b.depth - a.depth; });
+
+      for (let it = 0; it < items.length; it += 1) {
+        const entry = items[it];
+        if (entry.kind === "house" && wallAlpha > 0) {
+          const hs = entry.house;
+          const cp = hs.cornerPoleIds.map(function (id) { return polesById[id]; });
+          const drop = hs.eaveZ * wallAlpha;
+          const rTop = hs.eaveZ + (hs.ridgeZ - hs.eaveZ) * wallAlpha;
+          const bPts = cp.map(function (p) { return projectPoint(p.worldX, p.worldY, 0); });
+          const ePts = cp.map(function (p) { return projectPoint(p.worldX, p.worldY, drop); });
+          const r0 = projectPoint((cp[0].worldX + cp[3].worldX) * 0.5, (cp[0].worldY + cp[3].worldY) * 0.5, rTop);
+          const r1 = projectPoint((cp[1].worldX + cp[2].worldX) * 0.5, (cp[1].worldY + cp[2].worldY) * 0.5, rTop);
+
+          ctx.save();
+          ctx.globalAlpha = wallAlpha;
+          const faces = [
+            { pts: [bPts[0], bPts[1], ePts[1], ePts[0]], col: PALETTE.limeWall, d: (bPts[0].depth + bPts[1].depth) * 0.5 },
+            { pts: [bPts[1], bPts[2], ePts[2], ePts[1]], col: "#C4B69E", d: (bPts[1].depth + bPts[2].depth) * 0.5 },
+            { pts: [bPts[2], bPts[3], ePts[3], ePts[2]], col: PALETTE.limeWall, d: (bPts[2].depth + bPts[3].depth) * 0.5 },
+            { pts: [bPts[3], bPts[0], ePts[0], ePts[3]], col: "#B8AA92", d: (bPts[3].depth + bPts[0].depth) * 0.5 },
+            { pts: [ePts[0], ePts[1], r1, r0], col: PALETTE.terracottaRoof, d: (ePts[0].depth + r0.depth) * 0.5 - 0.01 },
+            { pts: [ePts[2], ePts[3], r0, r1], col: "#8C3B24", d: (ePts[2].depth + r1.depth) * 0.5 - 0.01 },
+            { pts: [ePts[0], ePts[3], r0], col: "#CFC2AC", d: r0.depth - 0.005 },
+            { pts: [ePts[1], ePts[2], r1], col: "#C2B49D", d: r1.depth - 0.005 }
+          ];
+          faces.sort(function (a, b) { return b.d - a.d; });
+          ctx.strokeStyle = "rgba(42, 30, 21, 0.35)";
+          ctx.lineWidth = 0.8;
+          for (let f = 0; f < faces.length; f += 1) {
+            const pts = faces[f].pts;
+            ctx.beginPath();
+            ctx.moveTo(pts[0].x, pts[0].y);
+            for (let q = 1; q < pts.length; q += 1) ctx.lineTo(pts[q].x, pts[q].y);
+            ctx.closePath();
+            ctx.fillStyle = faces[f].col;
+            ctx.fill();
+            ctx.stroke();
+          }
+          ctx.restore();
+        } else if (entry.kind === "filament") {
+          const hs = entry.house;
+          const cp = hs.cornerPoleIds.map(function (id) { return polesById[id]; });
+          const tPts = cp.map(function (p) { return projectPoint(p.worldX, p.worldY, p.anchorZ); });
+          const g0 = projectPoint((cp[0].worldX + cp[3].worldX) * 0.5, (cp[0].worldY + cp[3].worldY) * 0.5, hs.ridgeZ);
+          const g1 = projectPoint((cp[1].worldX + cp[2].worldX) * 0.5, (cp[1].worldY + cp[2].worldY) * 0.5, hs.ridgeZ);
+          ctx.strokeStyle = "rgba(244, 239, 228, " + (0.14 + 0.28 * dismantle).toFixed(3) + ")";
+          ctx.lineWidth = 0.75;
+          ctx.beginPath();
+          ctx.moveTo(tPts[0].x, tPts[0].y);
+          ctx.lineTo(tPts[1].x, tPts[1].y);
+          ctx.lineTo(tPts[2].x, tPts[2].y);
+          ctx.lineTo(tPts[3].x, tPts[3].y);
+          ctx.closePath();
+          ctx.moveTo(tPts[0].x, tPts[0].y); ctx.lineTo(g0.x, g0.y); ctx.lineTo(tPts[3].x, tPts[3].y);
+          ctx.moveTo(tPts[1].x, tPts[1].y); ctx.lineTo(g1.x, g1.y); ctx.lineTo(tPts[2].x, tPts[2].y);
+          ctx.moveTo(g0.x, g0.y); ctx.lineTo(g1.x, g1.y);
+          ctx.stroke();
+        } else if (entry.kind === "pole") {
+          const pl = entry.pole;
+          const bp = projectPoint(pl.worldX, pl.worldY, 0);
+          const tp = projectPoint(pl.worldX, pl.worldY, pl.zTop);
+          ctx.strokeStyle = PALETTE.timberPole;
+          ctx.lineWidth = 3.1;
+          ctx.lineCap = "round";
+          ctx.beginPath();
+          ctx.moveTo(bp.x, bp.y);
+          ctx.lineTo(tp.x, tp.y);
+          ctx.stroke();
+          ctx.fillStyle = "#8C6544";
+          ctx.beginPath();
+          ctx.arc(tp.x, tp.y, 1.9, 0, Math.PI * 2);
+          ctx.fill();
+        } else if (entry.kind === "cord") {
+          const cd = entry.cord;
+          const segs = cd.braided ? 18 : 12;
+          const windAmp = reducedMotion ? 0 : Math.sin(simTime * 1.9 + cd.shimmerSeed) * 0.9;
+          const vibAmp = cd.pluckAmp * Math.sin(cd.pluckPhase) * 7.2 + windAmp;
+          const pts = [];
+          for (let s = 0; s <= segs; s += 1) {
+            const t = s / segs;
+            const env = Math.sin(Math.PI * t);
+            const sagZ = -0.011 * cd.length3D * env;
+            const pr = projectPoint(cd.ax + (cd.bx - cd.ax) * t, cd.ay + (cd.by - cd.ay) * t, cd.az + (cd.bz - cd.az) * t + sagZ);
+            pts.push({ x: pr.x + vibAmp * env * 0.35, y: pr.y - vibAmp * env });
+          }
+          if (cd.braided) {
+            ctx.lineWidth = 2.5;
+            for (let s = 0; s < segs; s += 1) {
+              ctx.strokeStyle = s % 2 === 0 ? cd.stroke : cd.secondaryStroke;
+              ctx.beginPath();
+              ctx.moveTo(pts[s].x, pts[s].y);
+              ctx.lineTo(pts[s + 1].x, pts[s + 1].y);
+              ctx.stroke();
+            }
+          } else {
+            if (cd.type === "trade") {
+              ctx.strokeStyle = "rgba(216, 203, 181, 0.24)";
+              ctx.lineWidth = 3.2;
+              ctx.beginPath();
+              ctx.moveTo(pts[0].x, pts[0].y);
+              for (let s = 1; s <= segs; s += 1) ctx.lineTo(pts[s].x, pts[s].y);
+              ctx.stroke();
+            }
+            ctx.strokeStyle = cd.stroke;
+            ctx.lineWidth = cd.pluckAmp > 0.05 ? 2.5 : 1.95;
+            ctx.beginPath();
+            ctx.moveTo(pts[0].x, pts[0].y);
+            for (let s = 1; s <= segs; s += 1) ctx.lineTo(pts[s].x, pts[s].y);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    seedGenerationLayout({ generation: generation });
+
+    return {
+      setViewport: setViewport,
+      setCamera: setCamera,
+      orbitCamera: orbitCamera,
+      projectPoint: projectPoint,
+      recomputePermeability: recomputePermeability,
+      computeTopologyMetrics: computeTopologyMetrics,
+      selectActiveCordType: selectActiveCordType,
+      stretchCord: stretchCord,
+      weaveBurst: weaveBurst,
+      weaveToImpassable: weaveToImpassable,
+      pluckCordById: pluckCordById,
+      pluckNearestCord: pluckNearestCord,
+      hitTestPole: hitTestPole,
+      setAudioMuted: setAudioMuted,
+      seedGenerationLayout: seedGenerationLayout,
+      step: step,
+      getSnapshot: getSnapshot,
+      renderPlain: renderPlain
+    };
+  }
+
+  const api = Object.freeze({
+    PALETTE: PALETTE,
+    CANONICAL_STONES: CANONICAL_STONES,
+    CORD_TYPES: CORD_TYPES,
+    LAYOUT_MODES: LAYOUT_MODES,
+    createCordLoom: createCordLoom
+  });
+
+  root.ErsiliaFourCordRelations = api;
+  if (typeof window !== "undefined") {
+    window.ErsiliaFourCordRelations = api;
+  }
+  if (typeof module === "object" && module && module.exports) {
+    module.exports = api;
+  }
+})(typeof globalThis !== "undefined" ? globalThis : (typeof window !== "undefined" ? window : this));
+
+</script>
+<script>
+/* City 27: Ersilia — Dismantled Ruin Graph & Mountainside Exodus Engine */
+(function (root) {
+  "use strict";
+
+  const EXODUS_PHASES = Object.freeze([
+    "inhabited",
+    "dismantling",
+    "ruin_plain"
+  ]);
+
+  const LAYOUT_MODES = Object.freeze([
+    "village_irregular",
+    "concentric_court",
+    "octagonal_mandala",
+    "crystalline_star"
+  ]);
+
+  const VIEWPOINT_MODES = Object.freeze([
+    "plain_loom",
+    "mountainside_overlook"
+  ]);
+
+  const PALETTE = Object.freeze({
+    chalkBlood: "#F4EFE4",
+    obsidianTrade: "#161519",
+    slateAuthority: "#848E99",
+    agencyLight: "#F4EFE4",
+    agencyDark: "#161519",
+    ochrePlain: "#9E7447",
+    ochreShadow: "#2A1E15",
+    timberPole: "#5C3F28",
+    terracottaRoof: "#A84B31",
+    limeWall: "#D8CBB5",
+    duskSkyDeep: "#181E2E",
+    duskHorizon: "#734F43",
+    campfireAmber: "#E89A3C"
+  });
+
+  const VIEWPOINT_CAMERAS = Object.freeze({
+    plain_loom: Object.freeze({ azimuth: 0.62, elevation: 0.52, zoom: 1.0 }),
+    mountainside_overlook: Object.freeze({ azimuth: -0.78, elevation: 0.36, zoom: 0.94 })
+  });
+
+  const HORIZON_RUIN_SLOTS = Object.freeze([
+    Object.freeze({ xNorm: 0.11, yNorm: 0.292, scale: 0.88, mist: 0.72 }),
+    Object.freeze({ xNorm: 0.21, yNorm: 0.278, scale: 0.76, mist: 0.62 }),
+    Object.freeze({ xNorm: 0.31, yNorm: 0.296, scale: 0.92, mist: 0.78 }),
+    Object.freeze({ xNorm: 0.41, yNorm: 0.281, scale: 0.79, mist: 0.66 }),
+    Object.freeze({ xNorm: 0.50, yNorm: 0.294, scale: 0.86, mist: 0.74 }),
+    Object.freeze({ xNorm: 0.59, yNorm: 0.283, scale: 0.74, mist: 0.60 })
+  ]);
+
+  const CAMPFIRE_ANCHORS = Object.freeze([
+    Object.freeze({ u: 0.725, v: 0.238, size: 1.08, bundles: 4, watchers: 3, phase: 0.2 }),
+    Object.freeze({ u: 0.762, v: 0.214, size: 0.94, bundles: 3, watchers: 2, phase: 1.4 }),
+    Object.freeze({ u: 0.798, v: 0.228, size: 1.12, bundles: 4, watchers: 3, phase: 2.7 }),
+    Object.freeze({ u: 0.834, v: 0.196, size: 0.90, bundles: 3, watchers: 2, phase: 3.9 }),
+    Object.freeze({ u: 0.868, v: 0.212, size: 1.04, bundles: 4, watchers: 3, phase: 5.1 }),
+    Object.freeze({ u: 0.904, v: 0.184, size: 0.88, bundles: 3, watchers: 2, phase: 0.9 }),
+    Object.freeze({ u: 0.938, v: 0.202, size: 0.96, bundles: 3, watchers: 2, phase: 2.2 })
+  ]);
+
+  function clamp(val, lo, hi) {
+    const n = Number(val);
+    if (!Number.isFinite(n)) return lo;
+    return n < lo ? lo : (n > hi ? hi : n);
+  }
+
+  function round4(val) {
+    const n = Number(val);
+    if (!Number.isFinite(n)) return 0;
+    return Math.round(n * 10000) / 10000;
+  }
+
+  function cloneCountsByType(raw, fallbackTotal) {
+    if (raw && typeof raw === "object") {
+      return {
+        blood: Math.max(0, Math.round(Number(raw.blood) || 0)),
+        trade: Math.max(0, Math.round(Number(raw.trade) || 0)),
+        authority: Math.max(0, Math.round(Number(raw.authority) || 0)),
+        agency: Math.max(0, Math.round(Number(raw.agency) || 0))
+      };
+    }
+    const total = Math.max(0, Math.round(Number(fallbackTotal) || 0));
+    const q = Math.floor(total / 4);
+    const rem = total - q * 4;
+    return {
+      blood: q + (rem > 0 ? 1 : 0),
+      trade: q + (rem > 1 ? 1 : 0),
+      authority: q + (rem > 2 ? 1 : 0),
+      agency: q
+    };
+  }
+
+  function readPoleWorld(pole, index) {
+    if (!pole || typeof pole !== "object") {
+      const ang = (index / 48) * Math.PI * 2;
+      const rad = 0.35 + (index % 4) * 0.14;
+      return {
+        id: "h" + Math.floor(index / 4) + "_c" + (index % 4),
+        houseIndex: Math.floor(index / 4),
+        wx: Math.cos(ang) * rad,
+        wy: Math.sin(ang) * rad,
+        zTop: 0.24
+      };
+    }
+    const id = String(pole.poleId || pole.id || ("h" + Math.floor(index / 4) + "_c" + (index % 4)));
+    const wx = Number.isFinite(pole.worldX) ? pole.worldX
+      : (Number.isFinite(pole.wx) ? pole.wx : (Number.isFinite(pole.x) ? pole.x : 0));
+    const wy = Number.isFinite(pole.worldY) ? pole.worldY
+      : (Number.isFinite(pole.wy) ? pole.wy : (Number.isFinite(pole.y) ? pole.y : 0));
+    const zTop = Number.isFinite(pole.zTop) ? pole.zTop
+      : (Number.isFinite(pole.height) ? pole.height : (Number.isFinite(pole.z) ? pole.z : 0.24));
+    const houseIndex = Number.isFinite(pole.houseIndex) ? pole.houseIndex
+      : (Number.isFinite(pole.houseId) ? pole.houseId : Math.floor(index / 4));
+    return { id: id, houseIndex: houseIndex, wx: wx, wy: wy, zTop: Math.max(0.08, zTop) };
+  }
+
+  function extractArchiveSilhouettes(snap, generation) {
+    const rawPoles = snap && Array.isArray(snap.poles) ? snap.poles : [];
+    const poleList = [];
+    const poleMap = new Map();
+    const targetPoles = rawPoles.length > 0 ? rawPoles.length : 24;
+    for (let i = 0; i < targetPoles; i += 1) {
+      const pw = readPoleWorld(rawPoles[i] || null, i);
+      poleList.push(pw);
+      poleMap.set(pw.id, pw);
+    }
+    const poleSilhouettes = poleList.slice(0, 48).map(function (p) {
+      return { id: p.id, x: round4(p.wx), y: round4(p.wy), h: round4(p.zTop) };
+    });
+
+    const rawCords = snap && Array.isArray(snap.cords) ? snap.cords : [];
+    const cordSilhouettes = [];
+    const types = ["blood", "trade", "authority", "agency"];
+    if (rawCords.length > 0) {
+      const limit = Math.min(rawCords.length, 64);
+      for (let i = 0; i < limit; i += 1) {
+        const c = rawCords[i] || {};
+        const fKey = typeof c.from === "object" && c.from ? (c.from.poleId || c.from.id) : (c.fromPoleId || c.fromId || c.from || c.poleA);
+        const tKey = typeof c.to === "object" && c.to ? (c.to.poleId || c.to.id) : (c.toPoleId || c.toId || c.to || c.poleB);
+        const pA = poleMap.get(String(fKey)) || poleList[(i * 5) % poleList.length];
+        const pB = poleMap.get(String(tKey)) || poleList[(i * 11 + 7) % poleList.length];
+        cordSilhouettes.push({
+          x1: round4(pA.wx), y1: round4(pA.wy), z1: round4(pA.zTop * 0.86),
+          x2: round4(pB.wx), y2: round4(pB.wy), z2: round4(pB.zTop * 0.86),
+          type: String(c.type || c.cordType || types[i % 4])
+        });
+      }
+    } else {
+      const synthCount = Math.min(36, Math.max(12, Number(snap && snap.cordCount) || 24));
+      for (let i = 0; i < synthCount; i += 1) {
+        const pA = poleList[(i * 3 + generation) % poleList.length];
+        const pB = poleList[(i * 7 + 5 + generation * 2) % poleList.length];
+        cordSilhouettes.push({
+          x1: round4(pA.wx), y1: round4(pA.wy), z1: round4(pA.zTop * 0.85),
+          x2: round4(pB.wx), y2: round4(pB.wy), z2: round4(pB.zTop * 0.85),
+          type: types[i % 4]
+        });
+      }
+    }
+    return { poleSilhouettes: poleSilhouettes, cordSilhouettes: cordSilhouettes };
+  }
+
+  function createInitialDustMotes() {
+    const motes = [];
+    for (let i = 0; i < 26; i += 1) {
+      motes.push({
+        x: ((i * 37) % 100) / 100,
+        y: 0.33 + ((i * 53) % 62) / 100,
+        speed: 0.045 + (i % 7) * 0.011,
+        len: 14 + (i % 5) * 8,
+        drift: -0.012 - (i % 4) * 0.004,
+        alpha: 0.16 + (i % 4) * 0.06,
+        phase: i * 0.77
+      });
+    }
+    return motes;
+  }
+
+  function createCaravanClimbers() {
+    const climbers = [];
+    for (let i = 0; i < 14; i += 1) {
+      climbers.push({
+        progress: (i / 14) * 0.86,
+        speed: 0.28 + (i % 4) * 0.05,
+        hasCart: i % 3 === 0,
+        sway: i * 1.13
+      });
+    }
+    return climbers;
+  }
+
+  function fallbackProjector(W, H, viewpoint) {
+    const cam = VIEWPOINT_CAMERAS[viewpoint] || VIEWPOINT_CAMERAS.plain_loom;
+    const cosA = Math.cos(cam.azimuth);
+    const sinA = Math.sin(cam.azimuth);
+    const sinE = Math.sin(cam.elevation);
+    const cosE = Math.cos(cam.elevation);
+    const scale = Math.min(W, H) * 0.36 * cam.zoom;
+    const cx = W * 0.48;
+    const cy = H * 0.58;
+    return function (wx, wy, wz) {
+      const rx = wx * cosA - wy * sinA;
+      const ry = wx * sinA + wy * cosA;
+      return {
+        x: cx + rx * scale,
+        y: cy + ry * sinE * scale - (Number(wz) || 0) * cosE * scale * 1.25
+      };
+    };
+  }
+
+  function nextMonotonicMetric(rawVal, prevFloor, minStep) {
+    const targetMin = prevFloor < 0.94
+      ? prevFloor + minStep
+      : prevFloor + Math.max(0.0005, (0.9995 - prevFloor) * 0.36);
+    const candidate = Math.max(Number(rawVal) || 0, targetMin);
+    return round4(Math.min(0.9998, candidate));
+  }
+
+  function createExodusEngine(config) {
+    const cfg = config && typeof config === "object" ? config : {};
+    const onPhaseChange = typeof cfg.onPhaseChange === "function" ? cfg.onPhaseChange : null;
+    let boundLoom = cfg.loom && typeof cfg.loom === "object" ? cfg.loom : null;
+    let clockSec = 0;
+    let genBaselineRecorded = false;
+    let genComplexityOffset = 0;
+    let genRegularityOffset = 0;
+    let lastCountsByType = { blood: 3, trade: 3, authority: 3, agency: 3 };
+    const dustMotes = createInitialDustMotes();
+    const caravanClimbers = createCaravanClimbers();
+
+    const state = {
+      phase: "inhabited",
+      generation: 1,
+      layoutMode: LAYOUT_MODES[0],
+      dismantleProgress: 0,
+      standingWallCount: 48,
+      standingRoofCount: 12,
+      remainingBoneCount: 0,
+      preservedPoleCount: 48,
+      preservedCordCount: 12,
+      preservedPolesRatio: 1.0,
+      preservedCordsRatio: 1.0,
+      refugeesOnMountainside: false,
+      campfireCount: 0,
+      householdBundlesCount: 0,
+      spiderwebIsStillErsilia: true,
+      viewpoint: "plain_loom",
+      abandonedRuinsCount: 0,
+      abandonedRuins: [],
+      refoundHistory: [],
+      initialComplexity: 0.22,
+      initialRegularity: 0.34,
+      currentComplexity: 0.22,
+      currentRegularity: 0.34,
+      structuralMemory: {
+        previousGeneration: 0,
+        currentGeneration: 1,
+        prevFoundationComplexity: 0,
+        prevFoundationRegularity: 0,
+        currentComplexity: 0.22,
+        currentRegularity: 0.34,
+        complexityGain: 0.22,
+        regularityGain: 0.34,
+        moreComplexAndMoreRegular: true
+      },
+      reducedMotion: Boolean(cfg.reducedMotion)
+    };
+
+    function cloneState() {
+      return {
+        phase: state.phase,
+        generation: state.generation,
+        layoutMode: state.layoutMode,
+        dismantleProgress: round4(state.dismantleProgress),
+        standingWallCount: state.standingWallCount,
+        standingRoofCount: state.standingRoofCount,
+        remainingBoneCount: state.remainingBoneCount,
+        preservedPoleCount: state.preservedPoleCount,
+        preservedCordCount: state.preservedCordCount,
+        preservedPolesRatio: state.preservedPolesRatio,
+        preservedCordsRatio: state.preservedCordsRatio,
+        refugeesOnMountainside: state.refugeesOnMountainside,
+        campfireCount: state.campfireCount,
+        householdBundlesCount: state.householdBundlesCount,
+        spiderwebIsStillErsilia: state.spiderwebIsStillErsilia,
+        viewpoint: state.viewpoint,
+        abandonedRuinsCount: state.abandonedRuinsCount,
+        abandonedRuins: state.abandonedRuins.map(function (r) {
+          return {
+            generation: r.generation,
+            layoutMode: r.layoutMode,
+            cordCount: r.cordCount,
+            countsByType: Object.assign({}, r.countsByType),
+            finalComplexity: r.finalComplexity,
+            finalRegularity: r.finalRegularity,
+            poleSilhouettes: r.poleSilhouettes.slice(),
+            cordSilhouettes: r.cordSilhouettes.slice()
+          };
+        }),
+        refoundHistory: state.refoundHistory.map(function (h) { return Object.assign({}, h); }),
+        structuralMemory: Object.assign({}, state.structuralMemory),
+        initialComplexity: state.initialComplexity,
+        initialRegularity: state.initialRegularity,
+        currentComplexity: state.currentComplexity,
+        currentRegularity: state.currentRegularity,
+        reducedMotion: state.reducedMotion
+      };
+    }
+
+    function setPhaseInternal(nextPhase) {
+      const prev = state.phase;
+      state.phase = nextPhase;
+      if (prev !== nextPhase && onPhaseChange) {
+        onPhaseChange(nextPhase, prev, cloneState());
+      }
+    }
+
+    function completeDismantling() {
+      state.dismantleProgress = 1.0;
+      state.standingWallCount = 0;
+      state.standingRoofCount = 0;
+      state.remainingBoneCount = 0;
+      state.preservedPolesRatio = 1.0;
+      state.preservedCordsRatio = 1.0;
+      state.refugeesOnMountainside = true;
+      state.campfireCount = 7;
+      state.householdBundlesCount = 24;
+      state.spiderwebIsStillErsilia = true;
+      setPhaseInternal("ruin_plain");
+      return cloneState();
+    }
+
+    function beginDismantling(instant) {
+      if (instant || state.reducedMotion) {
+        return completeDismantling();
+      }
+      if (state.phase === "ruin_plain") {
+        return cloneState();
+      }
+      for (let i = 0; i < caravanClimbers.length; i += 1) {
+        caravanClimbers[i].progress = (i / caravanClimbers.length) * 0.55;
+      }
+      state.dismantleProgress = Math.max(state.dismantleProgress, 0.02);
+      state.standingWallCount = Math.round(48 * (1 - state.dismantleProgress));
+      state.standingRoofCount = Math.round(12 * (1 - state.dismantleProgress));
+      state.remainingBoneCount = 0;
+      state.preservedPolesRatio = 1.0;
+      state.preservedCordsRatio = 1.0;
+      state.spiderwebIsStillErsilia = true;
+      setPhaseInternal("dismantling");
+      return cloneState();
+    }
+
+    function applySnapshotMetrics(snap, allowAutoTrigger) {
+      if (!snap || typeof snap !== "object") return;
+      state.preservedPoleCount = Number.isFinite(snap.poleCount) ? snap.poleCount : 48;
+      state.preservedCordCount = Number.isFinite(snap.cordCount) ? snap.cordCount : state.preservedCordCount;
+      state.preservedPolesRatio = 1.0;
+      state.preservedCordsRatio = 1.0;
+      lastCountsByType = cloneCountsByType(snap.countsByType, state.preservedCordCount);
+
+      const rawC = Number.isFinite(snap.complexityIndex) ? snap.complexityIndex : state.currentComplexity;
+      const rawR = Number.isFinite(snap.regularityIndex) ? snap.regularityIndex : state.currentRegularity;
+      const adjC = round4(Math.min(0.9998, rawC + genComplexityOffset));
+      const adjR = round4(Math.min(0.9998, rawR + genRegularityOffset));
+
+      if (!genBaselineRecorded) {
+        state.initialComplexity = adjC;
+        state.initialRegularity = adjR;
+        genBaselineRecorded = true;
+        if (state.generation === 1) {
+          state.structuralMemory.currentComplexity = adjC;
+          state.structuralMemory.currentRegularity = adjR;
+          state.structuralMemory.complexityGain = adjC;
+          state.structuralMemory.regularityGain = adjR;
+        }
+      }
+      state.currentComplexity = adjC;
+      state.currentRegularity = adjR;
+
+      if (allowAutoTrigger && snap.impassable === true && state.phase === "inhabited") {
+        beginDismantling(false);
+      }
+    }
+
+    function syncWithLoom(loomOrSnapshot) {
+      if (!loomOrSnapshot) return cloneState();
+      if (typeof loomOrSnapshot.getSnapshot === "function") {
+        boundLoom = loomOrSnapshot;
+        applySnapshotMetrics(loomOrSnapshot.getSnapshot(), true);
+      } else {
+        applySnapshotMetrics(loomOrSnapshot, true);
+      }
+      return cloneState();
+    }
+
+    function triggerExodus(loom, opts) {
+      const options = opts && typeof opts === "object" ? opts : {};
+      const autoSaturate = options.autoSaturate !== false;
+      const instant = Boolean(options.instant);
+      const targetLoom = loom && typeof loom === "object" ? loom : boundLoom;
+      if (targetLoom) boundLoom = targetLoom;
+
+      let snap = targetLoom && typeof targetLoom.getSnapshot === "function" ? targetLoom.getSnapshot() : null;
+      if (snap && !genBaselineRecorded && !snap.impassable) {
+        applySnapshotMetrics(snap, false);
+      }
+
+      if (snap && !snap.impassable) {
+        if (!autoSaturate) {
+          return { triggered: false, reason: "passages_still_open", state: cloneState() };
+        }
+        if (typeof targetLoom.weaveToImpassable === "function") {
+          targetLoom.weaveToImpassable();
+          snap = targetLoom.getSnapshot();
+        }
+        if (snap && !snap.impassable) {
+          return { triggered: false, reason: "passages_still_open", state: cloneState() };
+        }
+      } else if (!snap && !autoSaturate && state.phase === "inhabited") {
+        return { triggered: false, reason: "passages_still_open", state: cloneState() };
+      }
+
+      if (snap) {
+        applySnapshotMetrics(snap, false);
+      }
+      beginDismantling(instant);
+      return {
+        triggered: true,
+        phase: state.phase,
+        dismantleProgress: round4(state.dismantleProgress),
+        state: cloneState()
+      };
+    }
+
+    function setViewpoint(mode, loomOptional) {
+      const nextMode = mode === "mountainside_overlook" ? "mountainside_overlook" : "plain_loom";
+      state.viewpoint = nextMode;
+      const targetLoom = loomOptional && typeof loomOptional === "object" ? loomOptional : boundLoom;
+      if (targetLoom) {
+        boundLoom = targetLoom;
+        if (typeof targetLoom.setCamera === "function") {
+          const preset = VIEWPOINT_CAMERAS[nextMode];
+          targetLoom.setCamera({ azimuth: preset.azimuth, elevation: preset.elevation, zoom: preset.zoom });
+        }
+      }
+      return state.viewpoint;
+    }
+
+    function toggleViewpoint(loomOptional) {
+      const nextMode = state.viewpoint === "plain_loom" ? "mountainside_overlook" : "plain_loom";
+      return setViewpoint(nextMode, loomOptional);
+    }
+
+    function getCameraPreset(modeOptional) {
+      const key = (modeOptional || state.viewpoint) === "mountainside_overlook" ? "mountainside_overlook" : "plain_loom";
+      const preset = VIEWPOINT_CAMERAS[key];
+      return { azimuth: preset.azimuth, elevation: preset.elevation, zoom: preset.zoom };
+    }
+
+    function refoundElsewhere(loom) {
+      const targetLoom = loom && typeof loom === "object" ? loom : boundLoom;
+      if (targetLoom) boundLoom = targetLoom;
+
+      const preSnap = targetLoom && typeof targetLoom.getSnapshot === "function" ? targetLoom.getSnapshot() : null;
+      if (!genBaselineRecorded && preSnap) {
+        if (!preSnap.impassable) {
+          applySnapshotMetrics(preSnap, false);
+        } else {
+          state.initialComplexity = round4(Math.min(0.32, (Number(preSnap.complexityIndex) || 0.4) * 0.55));
+          state.initialRegularity = round4(Math.min(0.38, (Number(preSnap.regularityIndex) || 0.45) * 0.72));
+          genBaselineRecorded = true;
+        }
+      }
+
+      const prevGen = state.generation;
+      const prevLayout = state.layoutMode;
+      const prevFoundationC = state.initialComplexity;
+      const prevFoundationR = state.initialRegularity;
+
+      if (state.phase !== "ruin_plain") {
+        triggerExodus(targetLoom, { autoSaturate: true, instant: true });
+      }
+
+      const ruinSnap = targetLoom && typeof targetLoom.getSnapshot === "function" ? targetLoom.getSnapshot() : preSnap;
+      const silhouettes = extractArchiveSilhouettes(ruinSnap, prevGen);
+      const archivedCordCount = ruinSnap && Number.isFinite(ruinSnap.cordCount) ? ruinSnap.cordCount : state.preservedCordCount;
+
+      state.abandonedRuins.push({
+        generation: prevGen,
+        layoutMode: prevLayout,
+        cordCount: archivedCordCount,
+        countsByType: cloneCountsByType(ruinSnap && ruinSnap.countsByType, archivedCordCount),
+        finalComplexity: state.currentComplexity,
+        finalRegularity: state.currentRegularity,
+        poleSilhouettes: silhouettes.poleSilhouettes,
+        cordSilhouettes: silhouettes.cordSilhouettes
+      });
+      if (state.abandonedRuins.length > 6) {
+        state.abandonedRuins = state.abandonedRuins.slice(-6);
+      }
+      state.abandonedRuinsCount += 1;
+
+      state.generation = prevGen + 1;
+      const nextLayoutMode = LAYOUT_MODES[Math.min(state.generation - 1, LAYOUT_MODES.length - 1)];
+      state.layoutMode = nextLayoutMode;
+
+      const cBoost = round4(0.14 * (state.generation - 1));
+      const rBoost = round4(0.16 * (state.generation - 1));
+      let seedOut = null;
+      if (targetLoom && typeof targetLoom.seedGenerationLayout === "function") {
+        seedOut = targetLoom.seedGenerationLayout({
+          generation: state.generation,
+          layoutMode: nextLayoutMode,
+          complexityBoost: cBoost,
+          regularityBoost: rBoost
+        });
+      }
+
+      const newSnap = targetLoom && typeof targetLoom.getSnapshot === "function"
+        ? targetLoom.getSnapshot()
+        : (seedOut && typeof seedOut === "object" ? seedOut : null);
+
+      const rawNewC = newSnap && Number.isFinite(newSnap.complexityIndex) ? newSnap.complexityIndex : (prevFoundationC + 0.06);
+      const rawNewR = newSnap && Number.isFinite(newSnap.regularityIndex) ? newSnap.regularityIndex : (prevFoundationR + 0.07);
+      const guaranteedC = nextMonotonicMetric(rawNewC, prevFoundationC, 0.032);
+      const guaranteedR = nextMonotonicMetric(rawNewR, prevFoundationR, 0.036);
+
+      genComplexityOffset = round4(Math.max(0, guaranteedC - rawNewC));
+      genRegularityOffset = round4(Math.max(0, guaranteedR - rawNewR));
+
+      state.initialComplexity = guaranteedC;
+      state.initialRegularity = guaranteedR;
+      state.currentComplexity = guaranteedC;
+      state.currentRegularity = guaranteedR;
+      genBaselineRecorded = true;
+
+      state.preservedPoleCount = newSnap && Number.isFinite(newSnap.poleCount) ? newSnap.poleCount : 48;
+      state.preservedCordCount = newSnap && Number.isFinite(newSnap.cordCount) ? newSnap.cordCount : 12;
+      state.preservedPolesRatio = 1.0;
+      state.preservedCordsRatio = 1.0;
+      lastCountsByType = cloneCountsByType(newSnap && newSnap.countsByType, state.preservedCordCount);
+
+      state.structuralMemory = {
+        previousGeneration: prevGen,
+        currentGeneration: state.generation,
+        prevFoundationComplexity: prevFoundationC,
+        prevFoundationRegularity: prevFoundationR,
+        currentComplexity: guaranteedC,
+        currentRegularity: guaranteedR,
+        complexityGain: round4(guaranteedC - prevFoundationC),
+        regularityGain: round4(guaranteedR - prevFoundationR),
+        moreComplexAndMoreRegular: Boolean(guaranteedC > prevFoundationC && guaranteedR > prevFoundationR)
+      };
+
+      state.refoundHistory.push({
+        fromGeneration: prevGen,
+        toGeneration: state.generation,
+        layoutMode: nextLayoutMode,
+        archivedCordCount: archivedCordCount,
+        prevFoundationComplexity: prevFoundationC,
+        prevFoundationRegularity: prevFoundationR,
+        newComplexity: guaranteedC,
+        newRegularity: guaranteedR,
+        complexityGain: state.structuralMemory.complexityGain,
+        regularityGain: state.structuralMemory.regularityGain
+      });
+
+      state.dismantleProgress = 0;
+      state.standingWallCount = 48;
+      state.standingRoofCount = 12;
+      state.remainingBoneCount = 0;
+      state.refugeesOnMountainside = false;
+      state.campfireCount = 0;
+      state.householdBundlesCount = 0;
+      state.spiderwebIsStillErsilia = true;
+      setPhaseInternal("inhabited");
+      return cloneState();
+    }
+
+    function step(dtSec, loomOrSnapshot) {
+      if (loomOrSnapshot) {
+        syncWithLoom(loomOrSnapshot);
+      }
+      const dt = clamp(dtSec, 0, 10);
+      if (!state.reducedMotion) {
+        clockSec += dt;
+        const windBoost = state.phase === "inhabited" ? 0.55 : 1.35;
+        for (let i = 0; i < dustMotes.length; i += 1) {
+          const m = dustMotes[i];
+          m.x += m.speed * windBoost * dt;
+          m.y += m.drift * windBoost * dt;
+          if (m.x > 1.06 || m.y < 0.26) {
+            m.x = -0.05;
+            m.y = 0.34 + ((i * 41 + Math.floor(clockSec * 10)) % 60) / 100;
+          }
+        }
+        if (state.phase === "dismantling") {
+          for (let i = 0; i < caravanClimbers.length; i += 1) {
+            caravanClimbers[i].progress = Math.min(1, caravanClimbers[i].progress + caravanClimbers[i].speed * dt);
+          }
+        }
+      }
+
+      if (state.phase === "dismantling") {
+        if (state.reducedMotion) {
+          completeDismantling();
+        } else {
+          state.dismantleProgress = Math.min(1.0, state.dismantleProgress + dt / 1.1);
+          state.standingWallCount = Math.round(48 * (1 - state.dismantleProgress));
+          state.standingRoofCount = Math.round(12 * (1 - state.dismantleProgress));
+          state.remainingBoneCount = 0;
+          state.preservedPolesRatio = 1.0;
+          state.preservedCordsRatio = 1.0;
+          state.campfireCount = Math.min(7, Math.round(7 * Math.min(1, state.dismantleProgress * 1.12)));
+          state.householdBundlesCount = Math.min(24, Math.round(24 * Math.min(1, state.dismantleProgress * 1.1)));
+          state.refugeesOnMountainside = state.dismantleProgress >= 0.35;
+          state.spiderwebIsStillErsilia = true;
+          if (state.dismantleProgress >= 1.0) {
+            completeDismantling();
+          }
+        }
+      }
+      return cloneState();
+    }
+
+    function setReducedMotion(flag) {
+      state.reducedMotion = Boolean(flag);
+      if (state.reducedMotion && state.phase === "dismantling") {
+        completeDismantling();
+      }
+      return state.reducedMotion;
+    }
+
+    function reset(loomOptional) {
+      const targetLoom = loomOptional && typeof loomOptional === "object" ? loomOptional : boundLoom;
+      state.generation = 1;
+      state.layoutMode = LAYOUT_MODES[0];
+      state.dismantleProgress = 0;
+      state.standingWallCount = 48;
+      state.standingRoofCount = 12;
+      state.remainingBoneCount = 0;
+      state.preservedPoleCount = 48;
+      state.preservedCordCount = 12;
+      state.preservedPolesRatio = 1.0;
+      state.preservedCordsRatio = 1.0;
+      state.refugeesOnMountainside = false;
+      state.campfireCount = 0;
+      state.householdBundlesCount = 0;
+      state.spiderwebIsStillErsilia = true;
+      state.viewpoint = "plain_loom";
+      state.abandonedRuinsCount = 0;
+      state.abandonedRuins = [];
+      state.refoundHistory = [];
+      genBaselineRecorded = false;
+      genComplexityOffset = 0;
+      genRegularityOffset = 0;
+      if (targetLoom && typeof targetLoom.seedGenerationLayout === "function") {
+        targetLoom.seedGenerationLayout({
+          generation: 1,
+          layoutMode: LAYOUT_MODES[0],
+          complexityBoost: 0,
+          regularityBoost: 0
+        });
+      }
+      if (targetLoom && typeof targetLoom.getSnapshot === "function") {
+        applySnapshotMetrics(targetLoom.getSnapshot(), false);
+      }
+      setPhaseInternal("inhabited");
+      return cloneState();
+    }
+
+    function cordStrokeForType(type) {
+      if (type === "trade") return PALETTE.obsidianTrade;
+      if (type === "authority") return PALETTE.slateAuthority;
+      return PALETTE.chalkBlood;
+    }
+
+    function renderExodusOverlay(ctx, loom) {
+      if (!ctx || typeof ctx.save !== "function") return;
+      if (loom && typeof loom === "object") {
+        boundLoom = loom;
+      }
+      const activeLoom = loom || boundLoom;
+      const snap = activeLoom && typeof activeLoom.getSnapshot === "function" ? activeLoom.getSnapshot() : null;
+      if (snap) {
+        applySnapshotMetrics(snap, false);
+      }
+
+      const canvas = ctx.canvas || { width: 1280, height: 800 };
+      const tr = typeof ctx.getTransform === "function" ? ctx.getTransform() : { a: 1, d: 1 };
+      const sx = tr && tr.a ? Math.abs(tr.a) : 1;
+      const sy = tr && tr.d ? Math.abs(tr.d) : 1;
+      const W = Math.max(240, (canvas.width || 1280) / sx);
+      const H = Math.max(200, (canvas.height || 800) / sy);
+      const project = activeLoom && typeof activeLoom.projectPoint === "function"
+        ? function (wx, wy, wz) { return activeLoom.projectPoint(wx, wy, wz); }
+        : fallbackProjector(W, H, state.viewpoint);
+
+      ctx.save();
+
+      /* 1. Distant ghosted spider-web ruins along the horizon plain */
+      for (let rIdx = 0; rIdx < state.abandonedRuins.length; rIdx += 1) {
+        const ruin = state.abandonedRuins[rIdx];
+        const slot = HORIZON_RUIN_SLOTS[rIdx % HORIZON_RUIN_SLOTS.length];
+        const cx = slot.xNorm * W;
+        const cy = slot.yNorm * H;
+        const rx = Math.max(16, W * 0.031 * slot.scale);
+        const ry = rx * 0.28;
+        const pH = Math.max(8, H * 0.021 * slot.scale);
+
+        ctx.save();
+        ctx.globalAlpha = 0.26 * slot.mist;
+        ctx.fillStyle = PALETTE.ochreShadow;
+        ctx.beginPath();
+        if (typeof ctx.ellipse === "function") {
+          ctx.ellipse(cx, cy + 2, rx * 1.12, ry * 1.18, 0, 0, Math.PI * 2);
+        } else {
+          ctx.arc(cx, cy + 2, ry, 0, Math.PI * 2);
+        }
+        ctx.fill();
+
+        ctx.lineWidth = 0.65;
+        for (let ci = 0; ci < ruin.cordSilhouettes.length && ci < 40; ci += 1) {
+          const cs = ruin.cordSilhouettes[ci];
+          ctx.globalAlpha = 0.42 * slot.mist;
+          ctx.strokeStyle = cordStrokeForType(cs.type);
+          ctx.beginPath();
+          ctx.moveTo(cx + cs.x1 * rx, cy + cs.y1 * ry - cs.z1 * pH * 3.1);
+          ctx.lineTo(cx + cs.x2 * rx, cy + cs.y2 * ry - cs.z2 * pH * 3.1);
+          ctx.stroke();
+        }
+
+        ctx.lineWidth = 0.85;
+        ctx.strokeStyle = PALETTE.timberPole;
+        ctx.globalAlpha = 0.66 * slot.mist;
+        for (let pi = 0; pi < ruin.poleSilhouettes.length && pi < 28; pi += 1) {
+          const ps = ruin.poleSilhouettes[pi];
+          const px = cx + ps.x * rx;
+          const py = cy + ps.y * ry;
+          const topY = py - pH * (0.55 + ps.h * 2.2);
+          ctx.beginPath();
+          ctx.moveTo(px, py);
+          ctx.lineTo(px, topY);
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+
+      /* 2. Wind-swept ochre dust streaks & ghostly architectural string filaments */
+      const windStrength = state.phase === "inhabited" ? 0.34 : (0.55 + 0.45 * state.dismantleProgress);
+      ctx.save();
+      ctx.lineWidth = 1.05;
+      for (let i = 0; i < dustMotes.length; i += 1) {
+        const m = dustMotes[i];
+        const mx = m.x * W;
+        const my = m.y * H;
+        ctx.globalAlpha = m.alpha * windStrength;
+        ctx.strokeStyle = i % 2 === 0 ? PALETTE.limeWall : PALETTE.ochrePlain;
+        ctx.beginPath();
+        ctx.moveTo(mx, my);
+        ctx.lineTo(mx + m.len * (0.7 + 0.5 * windStrength), my - m.len * 0.16);
+        ctx.stroke();
+      }
+      ctx.restore();
+
+      if (state.dismantleProgress > 0.01 && state.spiderwebIsStillErsilia) {
+        const rawPoles = snap && Array.isArray(snap.poles) ? snap.poles : [];
+        const byHouse = new Map();
+        const count = rawPoles.length > 0 ? rawPoles.length : 48;
+        for (let i = 0; i < count; i += 1) {
+          const pw = readPoleWorld(rawPoles[i] || null, i);
+          if (!byHouse.has(pw.houseIndex)) byHouse.set(pw.houseIndex, []);
+          byHouse.get(pw.houseIndex).push(pw);
+        }
+        ctx.save();
+        if (typeof ctx.setLineDash === "function") ctx.setLineDash([3, 2.5]);
+        ctx.lineWidth = 0.85;
+        const archAlpha = 0.46 * state.dismantleProgress;
+        byHouse.forEach(function (corners) {
+          if (corners.length < 4) return;
+          const c0 = corners[0], c1 = corners[1], c2 = corners[2], c3 = corners[3];
+          const zE = c0.zTop * 0.82;
+          const zR = c0.zTop * 1.15;
+          const e0 = project(c0.wx, c0.wy, zE), e1 = project(c1.wx, c1.wy, zE);
+          const e2 = project(c2.wx, c2.wy, zE), e3 = project(c3.wx, c3.wy, zE);
+          const rA = project((c0.wx + c1.wx) * 0.5, (c0.wy + c1.wy) * 0.5, zR);
+          const rB = project((c2.wx + c3.wx) * 0.5, (c2.wy + c3.wy) * 0.5, zR);
+
+          ctx.strokeStyle = PALETTE.chalkBlood;
+          ctx.globalAlpha = archAlpha;
+          ctx.beginPath();
+          ctx.moveTo(e0.x, e0.y); ctx.lineTo(e1.x, e1.y);
+          ctx.lineTo(e2.x, e2.y); ctx.lineTo(e3.x, e3.y); ctx.closePath();
+          ctx.moveTo(rA.x, rA.y); ctx.lineTo(rB.x, rB.y);
+          ctx.moveTo(e0.x, e0.y); ctx.lineTo(rA.x, rA.y); ctx.lineTo(e1.x, e1.y);
+          ctx.moveTo(e3.x, e3.y); ctx.lineTo(rB.x, rB.y); ctx.lineTo(e2.x, e2.y);
+          ctx.stroke();
+
+          /* Ghostly doorway arch & window lintel string outlines */
+          const dL = project(c0.wx * 0.65 + c1.wx * 0.35, c0.wy * 0.65 + c1.wy * 0.35, 0);
+          const dR = project(c0.wx * 0.35 + c1.wx * 0.65, c0.wy * 0.35 + c1.wy * 0.65, 0);
+          const dTop = project((c0.wx + c1.wx) * 0.5, (c0.wy + c1.wy) * 0.5, c0.zTop * 0.64);
+          const wA = project(c1.wx * 0.7 + c2.wx * 0.3, c1.wy * 0.7 + c2.wy * 0.3, c1.zTop * 0.54);
+          const wB = project(c1.wx * 0.3 + c2.wx * 0.7, c1.wy * 0.3 + c2.wy * 0.7, c1.zTop * 0.54);
+          ctx.strokeStyle = PALETTE.slateAuthority;
+          ctx.globalAlpha = archAlpha * 0.82;
+          ctx.beginPath();
+          ctx.moveTo(dL.x, dL.y);
+          ctx.quadraticCurveTo(dTop.x, dTop.y, dR.x, dR.y);
+          ctx.moveTo(wA.x, wA.y);
+          ctx.lineTo(wB.x, wB.y);
+          ctx.stroke();
+        });
+        ctx.restore();
+      }
+
+      /* 3. Craggy mountainside ridge, caravan trail & 7 refugee campfires */
+      ctx.save();
+      ctx.fillStyle = PALETTE.obsidianTrade;
+      ctx.globalAlpha = 0.84;
+      ctx.beginPath();
+      ctx.moveTo(W * 0.64, H * 0.285);
+      ctx.lineTo(W * 0.70, H * 0.225);
+      ctx.lineTo(W * 0.75, H * 0.205);
+      ctx.lineTo(W * 0.81, H * 0.168);
+      ctx.lineTo(W * 0.86, H * 0.184);
+      ctx.lineTo(W * 0.92, H * 0.142);
+      ctx.lineTo(W, H * 0.165);
+      ctx.lineTo(W, H * 0.295);
+      ctx.closePath();
+      ctx.fill();
+
+      if (state.phase === "dismantling") {
+        for (let i = 0; i < caravanClimbers.length; i += 1) {
+          const cl = caravanClimbers[i];
+          const t = cl.progress;
+          const px = W * (0.62 + t * 0.16 + Math.sin(t * 9 + cl.sway) * 0.012);
+          const py = H * (0.37 - t * 0.145);
+          ctx.globalAlpha = 0.82;
+          ctx.fillStyle = cl.hasCart ? PALETTE.limeWall : PALETTE.campfireAmber;
+          ctx.fillRect(px - 2, py - 2, cl.hasCart ? 4.5 : 2.6, 2.8);
+        }
+      }
+
+      const activeFires = state.refugeesOnMountainside || state.campfireCount > 0
+        ? Math.max(state.campfireCount, state.refugeesOnMountainside ? 7 : 0)
+        : 2;
+      const isScoutOnly = state.phase === "inhabited" && !state.refugeesOnMountainside && state.campfireCount === 0;
+
+      for (let fi = 0; fi < activeFires && fi < CAMPFIRE_ANCHORS.length; fi += 1) {
+        const anc = CAMPFIRE_ANCHORS[fi];
+        const fx = anc.u * W;
+        const fy = anc.v * H;
+        const flick = state.reducedMotion ? 1.0 : (0.86 + 0.18 * Math.sin(clockSec * 6.4 + anc.phase));
+        const rad = (isScoutOnly ? 4.5 : 13.5 * anc.size) * flick;
+
+        if (typeof ctx.createRadialGradient === "function") {
+          const grad = ctx.createRadialGradient(fx, fy, 0.5, fx, fy, rad);
+          grad.addColorStop(0, PALETTE.chalkBlood);
+          grad.addColorStop(0.32, PALETTE.campfireAmber);
+          grad.addColorStop(1, "rgba(232, 154, 60, 0)");
+          ctx.globalAlpha = isScoutOnly ? 0.24 : 0.78;
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.arc(fx, fy, rad, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        if (!isScoutOnly) {
+          /* Household goods bundles & tiny refugee silhouettes gazing at the plain */
+          ctx.globalAlpha = 0.9;
+          for (let bi = 0; bi < anc.bundles; bi += 1) {
+            const bx = fx + 4 + bi * 3.6;
+            const by = fy + 1.2 + (bi % 2) * 1.4;
+            ctx.fillStyle = bi % 2 === 0 ? PALETTE.limeWall : PALETTE.ochrePlain;
+            ctx.fillRect(bx, by - 2.6, 3.1, 2.6);
+          }
+          ctx.fillStyle = PALETTE.obsidianTrade;
+          for (let wi = 0; wi < anc.watchers; wi += 1) {
+            const wx = fx - 5.5 - wi * 4.2;
+            const wy = fy + 1.5;
+            ctx.fillRect(wx, wy - 5.2, 2.1, 5.2);
+          }
+        }
+      }
+
+      if (state.viewpoint === "mountainside_overlook") {
+        ctx.globalAlpha = 0.55;
+        ctx.fillStyle = PALETTE.ochreShadow;
+        ctx.beginPath();
+        ctx.moveTo(W * 0.74, H);
+        ctx.lineTo(W * 0.83, H * 0.91);
+        ctx.lineTo(W, H * 0.87);
+        ctx.lineTo(W, H);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      ctx.restore();
+      ctx.restore();
+    }
+
+    return {
+      syncWithLoom: syncWithLoom,
+      triggerExodus: triggerExodus,
+      completeDismantling: completeDismantling,
+      setViewpoint: setViewpoint,
+      toggleViewpoint: toggleViewpoint,
+      getCameraPreset: getCameraPreset,
+      refoundElsewhere: refoundElsewhere,
+      step: step,
+      renderExodusOverlay: renderExodusOverlay,
+      setReducedMotion: setReducedMotion,
+      reset: reset,
+      getState: cloneState
+    };
+  }
+
+  const api = Object.freeze({
+    EXODUS_PHASES: EXODUS_PHASES,
+    LAYOUT_MODES: LAYOUT_MODES,
+    VIEWPOINT_MODES: VIEWPOINT_MODES,
+    VIEWPOINT_CAMERAS: VIEWPOINT_CAMERAS,
+    PALETTE: PALETTE,
+    createExodusEngine: createExodusEngine
+  });
+
+  root.ErsiliaDismantledRuinGraph = api;
+  if (typeof window !== "undefined") {
+    window.ErsiliaDismantledRuinGraph = api;
+  }
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = api;
+  }
+})(typeof globalThis !== "undefined" ? globalThis : this);
+
+</script>
+<script>
+(function () {
+  "use strict";
+
+  const ersMotionQuery = window.matchMedia
+    ? window.matchMedia("(prefers-reduced-motion: reduce)")
+    : { matches: false };
+  let ersReducedMotion = Boolean(ersMotionQuery && ersMotionQuery.matches);
+
+  const ersStageEl = document.getElementById("ers-stage");
+  const ersCanvas = document.getElementById("ers-canvas");
+  const ersCtx = ersCanvas.getContext("2d");
+
+  const ersLoom = window.ErsiliaFourCordRelations.createCordLoom({
+    width: 1280,
+    height: 800,
+    reducedMotion: ersReducedMotion,
+    initialGeneration: 1,
+    audioEnabled: true
+  });
+
+  const ersExodus = window.ErsiliaDismantledRuinGraph.createExodusEngine({
+    reducedMotion: ersReducedMotion,
+    loom: ersLoom,
+    onPhaseChange: function () {
+      ersRefreshHud();
+    }
+  });
+  ersExodus.syncWithLoom(ersLoom);
+
+  let ersCssWidth = 1280;
+  let ersCssHeight = 800;
+  let ersDpr = 1;
+  let ersSelectedPoleId = null;
+  let ersHoveredPole = null;
+  let ersPointerX = 0;
+  let ersPointerY = 0;
+  let ersPointerInside = false;
+  let ersPlateOpen = false;
+  let ersPlateTab = "diptych";
+  let ersLoupeOn = false;
+  let ersDragMode = "none";
+  let ersLastDragX = 0;
+  let ersLastDragY = 0;
+  let ersLastPluckCordId = null;
+
+  const ersCornerNames = ["NW", "NE", "SE", "SW"];
+  const ersLayoutNames = {
+    village_irregular: "Irregular",
+    concentric_court: "Concentric",
+    octagonal_mandala: "Octagonal",
+    crystalline_star: "Crystalline"
+  };
+
+  function ersClampVal(v, lo, hi) {
+    return v < lo ? lo : (v > hi ? hi : v);
+  }
+
+  function ersResizeStage() {
+    const rect = ersStageEl.getBoundingClientRect();
+    ersCssWidth = Math.max(240, Math.round(rect.width || window.innerWidth || 1280));
+    ersCssHeight = Math.max(200, Math.round(rect.height || window.innerHeight || 800));
+    ersDpr = ersClampVal(window.devicePixelRatio || 1, 1, 2);
+    ersCanvas.width = Math.round(ersCssWidth * ersDpr);
+    ersCanvas.height = Math.round(ersCssHeight * ersDpr);
+    ersLoom.setViewport(ersCssWidth, ersCssHeight);
+  }
+
+  function ersSyncLoomAndExodus() {
+    const snap = ersLoom.getSnapshot();
+    ersExodus.syncWithLoom(ersLoom);
+    if (snap.impassable) {
+      ersExodus.completeDismantling();
+    }
+    ersRefreshHud();
+    ersRenderOnce();
+  }
+
+  const ersDom = {
+    phaseSeal: document.getElementById("ers-phase-seal"),
+    poleRibbon: document.getElementById("ers-pole-ribbon"),
+    whisper: document.getElementById("ers-whisper"),
+    whisperTitle: document.getElementById("ers-whisper-title"),
+    whisperDetail: document.getElementById("ers-whisper-detail"),
+    spoolTotal: document.getElementById("ers-spool-total"),
+    muteLabel: document.getElementById("ers-mute-label"),
+    gauge: document.getElementById("ers-gauge"),
+    permPct: document.getElementById("ers-perm-pct"),
+    permGates: document.getElementById("ers-perm-gates"),
+    permFill: document.getElementById("ers-perm-fill"),
+    stateSeal: document.getElementById("ers-state-seal"),
+    valGen: document.getElementById("ers-val-gen"),
+    valHouses: document.getElementById("ers-val-houses"),
+    valCords: document.getElementById("ers-val-cords"),
+    valRuins: document.getElementById("ers-val-ruins"),
+    valComp: document.getElementById("ers-val-comp"),
+    valReg: document.getElementById("ers-val-reg"),
+    archNote: document.getElementById("ers-arch-note"),
+    viewLabel: document.getElementById("ers-view-label"),
+    plateDrawer: document.getElementById("ers-plate-drawer"),
+    plateGrid: document.getElementById("ers-plate-grid"),
+    cardMap: document.getElementById("ers-card-map"),
+    cardVista: document.getElementById("ers-card-vista"),
+    wellMap: document.getElementById("ers-well-map"),
+    wellVista: document.getElementById("ers-well-vista"),
+    mapImg: document.getElementById("ers-map-img"),
+    vistaImg: document.getElementById("ers-vista-img"),
+    btnLoupe: document.getElementById("ers-btn-loupe")
+  };
+
+  const ersCordIds = ["blood", "trade", "authority", "agency"];
+
+  function ersRefreshHud() {
+    const snap = ersLoom.getSnapshot();
+    const exo = ersExodus.getState();
+
+    ersDom.spoolTotal.textContent = snap.cordCount + " TAUT";
+    for (let i = 0; i < ersCordIds.length; i += 1) {
+      const cid = ersCordIds[i];
+      const cntEl = document.getElementById("ers-count-" + cid);
+      const bobEl = document.getElementById("ers-bobbin-" + cid);
+      if (cntEl) cntEl.textContent = String(snap.countsByType[cid] || 0);
+      if (bobEl) {
+        const active = snap.activeCordType === cid;
+        bobEl.classList.toggle("ers-is-active", active);
+        bobEl.setAttribute("aria-pressed", active ? "true" : "false");
+      }
+    }
+
+    ersDom.muteLabel.textContent = snap.audioMuted ? "Sound Off" : "Sound On";
+
+    const pct = Math.round((snap.permeabilityRatio || 0) * 100);
+    ersDom.permPct.textContent = pct + "% NAVIGABLE";
+    ersDom.permGates.textContent = snap.openCorridorCount + "/6 GATES";
+    ersDom.permFill.style.width = Math.max(snap.impassable ? 0 : 4, pct) + "%";
+    ersDom.permFill.classList.toggle("ers-is-zero", Boolean(snap.impassable));
+    ersDom.gauge.classList.toggle("ers-is-choked", Boolean(snap.impassable));
+
+    if (snap.impassable || exo.phase !== "inhabited") {
+      ersDom.stateSeal.textContent = "IMPASSABLE — HOUSES DISMANTLED";
+      ersDom.stateSeal.classList.add("ers-is-impassable");
+      ersDom.phaseSeal.textContent = "GEN " + exo.generation + " · SPIDER-WEB RUIN";
+      ersDom.phaseSeal.classList.add("ers-is-ruin");
+    } else {
+      ersDom.stateSeal.textContent = "STREETS PASSABLE AMONG STRINGS";
+      ersDom.stateSeal.classList.remove("ers-is-impassable");
+      ersDom.phaseSeal.textContent = "GEN " + exo.generation + " · INHABITED PLAIN";
+      ersDom.phaseSeal.classList.remove("ers-is-ruin");
+    }
+
+    const modeShort = ersLayoutNames[snap.layoutMode] || snap.layoutMode;
+    ersDom.valGen.textContent = "Gen " + exo.generation + " · " + modeShort;
+    ersDom.valHouses.textContent = exo.standingWallCount + "W · " + exo.standingRoofCount + "R / " + exo.preservedPoleCount + "P";
+    ersDom.valCords.textContent = snap.cordCount + " (100%)";
+    ersDom.valRuins.textContent = exo.abandonedRuinsCount + " · " + exo.campfireCount + " Fires";
+
+    const cDelta = exo.generation > 1 ? " (+" + exo.structuralMemory.complexityGain.toFixed(2) + ")" : "";
+    const rDelta = exo.generation > 1 ? " (+" + exo.structuralMemory.regularityGain.toFixed(2) + ")" : "";
+    ersDom.valComp.textContent = exo.currentComplexity.toFixed(4) + cDelta;
+    ersDom.valReg.textContent = exo.currentRegularity.toFixed(4) + rDelta;
+
+    ersDom.viewLabel.textContent = exo.viewpoint === "mountainside_overlook"
+      ? "Mountainside Overlook [V]"
+      : "Mountainside / Plain View";
+
+    if (snap.impassable || exo.phase === "ruin_plain") {
+      ersDom.archNote.textContent = "Walls and roofs are dismantled; from the mountainside campfires, only poles and taut strings remain.";
+    } else if (exo.generation > 1) {
+      ersDom.archNote.textContent = "Rebuilt elsewhere on the plain: a spider-web figure more complex and more regular than before.";
+    } else {
+      ersDom.archNote.textContent = "Strings stretched from house corners mark blood, trade, authority, and agency across open lanes.";
+    }
+
+    if (ersSelectedPoleId) {
+      ersDom.poleRibbon.textContent = "Anchor " + ersSelectedPoleId + " held (" + snap.activeCordType.toUpperCase() + ") — click another corner-pole to stretch taut";
+    } else {
+      ersDom.poleRibbon.textContent = "Click two corner-poles to stretch cord · Drag across strings to pluck · Shift+drag to orbit";
+    }
+  }
+
+  function ersFindPoleSnapshot(snap, poleId) {
+    if (!poleId || !snap || !Array.isArray(snap.poles)) return null;
+    for (let i = 0; i < snap.poles.length; i += 1) {
+      if (snap.poles[i].poleId === poleId) return snap.poles[i];
+    }
+    return null;
+  }
+
+  function ersRenderOnce() {
+    if (!ersCtx) return;
+    const exo = ersExodus.getState();
+    ersCtx.save();
+    ersCtx.setTransform(ersDpr, 0, 0, ersDpr, 0, 0);
+    ersLoom.renderPlain(ersCtx, exo);
+    ersExodus.renderExodusOverlay(ersCtx, ersLoom);
+
+    if (ersSelectedPoleId || ersHoveredPole) {
+      const snap = ersLoom.getSnapshot();
+      const selP = ersFindPoleSnapshot(snap, ersSelectedPoleId);
+      const hovP = ersHoveredPole ? ersFindPoleSnapshot(snap, ersHoveredPole.poleId) : null;
+
+      if (selP) {
+        const tip = ersLoom.projectPoint(selP.worldX, selP.worldY, selP.anchorZ || selP.zTop);
+        ersCtx.strokeStyle = "#E89A3C";
+        ersCtx.lineWidth = 2.2;
+        ersCtx.beginPath();
+        ersCtx.arc(tip.x, tip.y, 8.5, 0, Math.PI * 2);
+        ersCtx.stroke();
+        ersCtx.fillStyle = "rgba(232, 154, 60, 0.28)";
+        ersCtx.fill();
+
+        if (ersPointerInside) {
+          const tx = hovP ? hovP.screenX : ersPointerX;
+          const ty = hovP ? hovP.screenY : ersPointerY;
+          ersCtx.save();
+          ersCtx.setLineDash([5, 4]);
+          ersCtx.strokeStyle = "#F4EFE4";
+          ersCtx.lineWidth = 1.6;
+          ersCtx.beginPath();
+          ersCtx.moveTo(tip.x, tip.y);
+          ersCtx.lineTo(tx, ty);
+          ersCtx.stroke();
+          ersCtx.restore();
+        }
+      }
+
+      if (hovP && (!selP || hovP.poleId !== selP.poleId)) {
+        ersCtx.strokeStyle = "#F4EFE4";
+        ersCtx.lineWidth = 1.6;
+        ersCtx.beginPath();
+        ersCtx.arc(hovP.screenX, hovP.screenY, 6.5, 0, Math.PI * 2);
+        ersCtx.stroke();
+      }
+    }
+    ersCtx.restore();
+  }
+
+  function ersSelectCordType(idOrKeyOrIndex) {
+    const entry = ersLoom.selectActiveCordType(idOrKeyOrIndex);
+    ersRefreshHud();
+    ersRenderOnce();
+    return entry;
+  }
+
+  function ersStretchCord(fromPoleId, toPoleId, cordTypeOptional) {
+    const res = ersLoom.stretchCord(fromPoleId, toPoleId, cordTypeOptional);
+    ersSyncLoomAndExodus();
+    return res;
+  }
+
+  function ersWeaveBurst(count, preferredType) {
+    const snap = ersLoom.weaveBurst(count == null ? 6 : count, preferredType == null ? null : preferredType);
+    ersSyncLoomAndExodus();
+    return snap;
+  }
+
+  function ersWeaveToImpassable() {
+    const snap = ersLoom.weaveToImpassable();
+    ersSyncLoomAndExodus();
+    return snap;
+  }
+
+  function ersTriggerExodus(opts) {
+    const options = opts && typeof opts === "object" ? opts : {};
+    const autoSat = options.autoSaturate !== false;
+    const instant = options.instant !== undefined ? Boolean(options.instant) : true;
+    const res = ersExodus.triggerExodus(ersLoom, { autoSaturate: autoSat, instant: instant });
+    ersRefreshHud();
+    ersRenderOnce();
+    return res;
+  }
+
+  function ersRefoundElsewhere() {
+    ersSelectedPoleId = null;
+    const nextState = ersExodus.refoundElsewhere(ersLoom);
+    ersRefreshHud();
+    ersRenderOnce();
+    return nextState;
+  }
+
+  function ersToggleViewpoint() {
+    const mode = ersExodus.toggleViewpoint(ersLoom);
+    ersRefreshHud();
+    ersRenderOnce();
+    return mode;
+  }
+
+  function ersToggleAudioMute(explicitMuted) {
+    const cur = ersLoom.getSnapshot().audioMuted;
+    const nextMuted = typeof explicitMuted === "boolean" ? explicitMuted : !cur;
+    ersLoom.setAudioMuted(nextMuted);
+    ersRefreshHud();
+    return nextMuted;
+  }
+
+  function ersSetPlateTab(tabId) {
+    const clean = String(tabId || "diptych").toLowerCase();
+    if (clean === "map" || clean === "plain") {
+      ersPlateTab = "map";
+    } else if (clean === "vista" || clean === "plate" || clean === "image") {
+      ersPlateTab = "vista";
+    } else {
+      ersPlateTab = "diptych";
+    }
+
+    const tabs = document.querySelectorAll("plate-tab-key");
+    for (let i = 0; i < tabs.length; i += 1) {
+      const t = tabs[i];
+      t.classList.toggle("ers-is-active", t.getAttribute("data-tab") === ersPlateTab);
+    }
+
+    if (ersPlateTab === "diptych") {
+      ersDom.plateGrid.className = "ers-plate-grid ers-mode-diptych";
+      ersDom.cardMap.removeAttribute("hidden");
+      ersDom.cardVista.removeAttribute("hidden");
+    } else if (ersPlateTab === "map") {
+      ersDom.plateGrid.className = "ers-plate-grid ers-mode-single";
+      ersDom.cardMap.removeAttribute("hidden");
+      ersDom.cardVista.setAttribute("hidden", "");
+    } else {
+      ersDom.plateGrid.className = "ers-plate-grid ers-mode-single";
+      ersDom.cardMap.setAttribute("hidden", "");
+      ersDom.cardVista.removeAttribute("hidden");
+    }
+    return ersPlateTab;
+  }
+
+  function ersToggleLoupe(explicitOn) {
+    ersLoupeOn = typeof explicitOn === "boolean" ? explicitOn : !ersLoupeOn;
+    ersDom.wellMap.classList.toggle("ers-is-loupe", ersLoupeOn);
+    ersDom.wellVista.classList.toggle("ers-is-loupe", ersLoupeOn);
+    ersDom.btnLoupe.classList.toggle("ers-is-active", ersLoupeOn);
+    ersDom.btnLoupe.textContent = ersLoupeOn ? "[Z] 1.85x Loupe ON" : "[Z] 1.85x Loupe";
+    return ersLoupeOn;
+  }
+
+  function ersTogglePlateDrawer(explicitOpen) {
+    ersPlateOpen = typeof explicitOpen === "boolean" ? explicitOpen : !ersPlateOpen;
+    if (ersPlateOpen) {
+      ersDom.plateDrawer.removeAttribute("hidden");
+    } else {
+      ersDom.plateDrawer.setAttribute("hidden", "");
+      if (ersLoupeOn) ersToggleLoupe(false);
+    }
+    return ersPlateOpen;
+  }
+
+  function ersUpdateWhisper(px, py) {
+    const hit = ersLoom.hitTestPole(px, py, 22);
+    ersHoveredPole = hit;
+    if (!hit) {
+      ersDom.whisper.setAttribute("hidden", "");
+      return;
+    }
+    const snap = ersLoom.getSnapshot();
+    const exo = ersExodus.getState();
+    const fullP = ersFindPoleSnapshot(snap, hit.poleId);
+    const deg = fullP ? fullP.degree : 0;
+    const cTypes = fullP && fullP.cordTypes && fullP.cordTypes.length > 0
+      ? fullP.cordTypes.join(" · ")
+      : "unthreaded";
+    const cornerLabel = ersCornerNames[hit.cornerIndex % 4] || "Corner";
+    const wallNote = exo.standingWallCount === 0 ? "walls dismantled, pole stands" : "standing corner support";
+
+    ersDom.whisperTitle.textContent = "House " + (hit.houseIndex + 1) + " · " + cornerLabel + " (" + hit.poleId + ")";
+    ersDom.whisperDetail.textContent = deg + " cords (" + cTypes + ") · " + wallNote;
+    ersDom.whisper.removeAttribute("hidden");
+
+    const wx = ersClampVal(px + 14, 10, Math.max(20, ersCssWidth - 236));
+    const wy = ersClampVal(py - 46, 10, Math.max(20, ersCssHeight - 68));
+    ersDom.whisper.style.left = wx + "px";
+    ersDom.whisper.style.top = wy + "px";
+  }
+
+  function ersBindControl(el, handler) {
+    if (!el) return;
+    el.addEventListener("click", function (ev) {
+      ev.stopPropagation();
+      handler(ev);
+    });
+    el.addEventListener("keydown", function (ev) {
+      if (ev.key === "Enter" || ev.key === " ") {
+        ev.preventDefault();
+        ev.stopPropagation();
+        handler(ev);
+      }
+    });
+  }
+
+  const ersBobbins = document.querySelectorAll("cord-spool-bobbin");
+  for (let i = 0; i < ersBobbins.length; i += 1) {
+    (function (bob) {
+      ersBindControl(bob, function () {
+        ersSelectCordType(bob.getAttribute("data-cord"));
+      });
+    })(ersBobbins[i]);
+  }
+
+  ersBindControl(document.getElementById("ers-btn-weave"), function () { ersWeaveBurst(6); });
+  ersBindControl(document.getElementById("ers-btn-stretch"), function () { ersStretchCord(); });
+  ersBindControl(document.getElementById("ers-btn-mute"), function () { ersToggleAudioMute(); });
+  ersBindControl(document.getElementById("ers-btn-plates"), function () { ersTogglePlateDrawer(); });
+  ersBindControl(document.getElementById("ers-btn-exodus"), function () { ersTriggerExodus({ autoSaturate: true }); });
+  ersBindControl(document.getElementById("ers-btn-refound"), function () { ersRefoundElsewhere(); });
+  ersBindControl(document.getElementById("ers-btn-viewpoint"), function () { ersToggleViewpoint(); });
+
+  ersBindControl(document.getElementById("ers-tab-diptych"), function () { ersSetPlateTab("diptych"); });
+  ersBindControl(document.getElementById("ers-tab-map"), function () { ersSetPlateTab("map"); });
+  ersBindControl(document.getElementById("ers-tab-vista"), function () { ersSetPlateTab("vista"); });
+  ersBindControl(document.getElementById("ers-btn-loupe"), function () { ersToggleLoupe(); });
+  ersBindControl(document.getElementById("ers-btn-close-plates"), function () { ersTogglePlateDrawer(false); });
+
+  ersDom.plateDrawer.addEventListener("click", function (ev) {
+    if (ev.target === ersDom.plateDrawer) ersTogglePlateDrawer(false);
+  });
+
+  if (ersDom.mapImg) {
+    ersDom.mapImg.addEventListener("error", function () {
+      if (ersDom.mapImg.getAttribute("src") !== "map.svg") {
+        ersDom.mapImg.setAttribute("src", "map.svg");
+      }
+    });
+  }
+
+  function ersBindWellLoupe(well, img) {
+    if (!well || !img) return;
+    well.addEventListener("pointermove", function (ev) {
+      if (!ersLoupeOn) return;
+      const r = well.getBoundingClientRect();
+      const ox = ersClampVal(((ev.clientX - r.left) / Math.max(1, r.width)) * 100, 0, 100);
+      const oy = ersClampVal(((ev.clientY - r.top) / Math.max(1, r.height)) * 100, 0, 100);
+      img.style.transformOrigin = ox.toFixed(1) + "% " + oy.toFixed(1) + "%";
+    });
+    well.addEventListener("click", function () {
+      if (ersLoupeOn) ersToggleLoupe(false);
+    });
+  }
+  ersBindWellLoupe(ersDom.wellMap, ersDom.mapImg);
+  ersBindWellLoupe(ersDom.wellVista, ersDom.vistaImg);
+
+  ersCanvas.addEventListener("contextmenu", function (ev) { ev.preventDefault(); });
+
+  ersCanvas.addEventListener("pointerdown", function (ev) {
+    const r = ersCanvas.getBoundingClientRect();
+    const px = ev.clientX - r.left;
+    const py = ev.clientY - r.top;
+    ersPointerX = px;
+    ersPointerY = py;
+    ersPointerInside = true;
+    ersLastDragX = ev.clientX;
+    ersLastDragY = ev.clientY;
+
+    if (ev.shiftKey || ev.button === 2 || ev.button === 1) {
+      ersDragMode = "orbit";
+      return;
+    }
+
+    const hit = ersLoom.hitTestPole(px, py, 22);
+    if (hit) {
+      if (!ersSelectedPoleId) {
+        ersSelectedPoleId = hit.poleId;
+      } else if (ersSelectedPoleId === hit.poleId) {
+        ersSelectedPoleId = null;
+      } else {
+        ersStretchCord(ersSelectedPoleId, hit.poleId);
+        ersSelectedPoleId = null;
+      }
+      ersRefreshHud();
+      ersRenderOnce();
+      return;
+    }
+
+    const plucked = ersLoom.pluckNearestCord(px, py, 28);
+    if (plucked && plucked.plucked && plucked.cord) {
+      ersLastPluckCordId = plucked.cord.id;
+      ersRenderOnce();
+    }
+    ersDragMode = "pluck";
+  });
+
+  ersCanvas.addEventListener("pointermove", function (ev) {
+    const r = ersCanvas.getBoundingClientRect();
+    const px = ev.clientX - r.left;
+    const py = ev.clientY - r.top;
+    ersPointerX = px;
+    ersPointerY = py;
+    ersPointerInside = true;
+
+    if (ersDragMode === "orbit") {
+      const dx = ev.clientX - ersLastDragX;
+      const dy = ev.clientY - ersLastDragY;
+      ersLastDragX = ev.clientX;
+      ersLastDragY = ev.clientY;
+      ersLoom.orbitCamera(-dx * 0.0065, dy * 0.005);
+      ersRenderOnce();
+      return;
+    }
+
+    if (ersDragMode === "pluck") {
+      const pRes = ersLoom.pluckNearestCord(px, py, 20);
+      if (pRes && pRes.plucked && pRes.cord && pRes.cord.id !== ersLastPluckCordId) {
+        ersLastPluckCordId = pRes.cord.id;
+      }
+    }
+
+    ersUpdateWhisper(px, py);
+    if (ersReducedMotion || ersSelectedPoleId || ersHoveredPole) {
+      ersRenderOnce();
+    }
+  });
+
+  window.addEventListener("pointerup", function () {
+    ersDragMode = "none";
+    ersLastPluckCordId = null;
+  });
+
+  ersCanvas.addEventListener("pointerleave", function () {
+    ersPointerInside = false;
+    ersHoveredPole = null;
+    ersDom.whisper.setAttribute("hidden", "");
+    ersRenderOnce();
+  });
+
+  ersCanvas.addEventListener("wheel", function (ev) {
+    ev.preventDefault();
+    const cam = ersLoom.getSnapshot().camera;
+    const nextZoom = ersClampVal(cam.zoom - ev.deltaY * 0.0008, 0.65, 1.65);
+    ersLoom.setCamera({ zoom: nextZoom });
+    ersRenderOnce();
+  }, { passive: false });
+
+  let ersTouchMidX = null;
+  let ersTouchMidY = null;
+  ersCanvas.addEventListener("touchstart", function (ev) {
+    if (ev.touches && ev.touches.length === 2) {
+      ersTouchMidX = (ev.touches[0].clientX + ev.touches[1].clientX) * 0.5;
+      ersTouchMidY = (ev.touches[0].clientY + ev.touches[1].clientY) * 0.5;
+    }
+  }, { passive: true });
+
+  ersCanvas.addEventListener("touchmove", function (ev) {
+    if (ev.touches && ev.touches.length === 2 && ersTouchMidX != null) {
+      ev.preventDefault();
+      const mx = (ev.touches[0].clientX + ev.touches[1].clientX) * 0.5;
+      const my = (ev.touches[0].clientY + ev.touches[1].clientY) * 0.5;
+      ersLoom.orbitCamera(-(mx - ersTouchMidX) * 0.0065, (my - ersTouchMidY) * 0.005);
+      ersTouchMidX = mx;
+      ersTouchMidY = my;
+      ersRenderOnce();
+    }
+  }, { passive: false });
+
+  ersCanvas.addEventListener("touchend", function () {
+    ersTouchMidX = null;
+    ersTouchMidY = null;
+  }, { passive: true });
+
+  window.addEventListener("keydown", function (ev) {
+    if (ev.metaKey || ev.ctrlKey || ev.altKey) return;
+    const key = ev.key;
+    const low = key.toLowerCase();
+
+    if (key === "Escape") {
+      if (ersPlateOpen) {
+        ev.preventDefault();
+        ersTogglePlateDrawer(false);
+      } else if (ersSelectedPoleId) {
+        ersSelectedPoleId = null;
+        ersRefreshHud();
+        ersRenderOnce();
+      }
+      return;
+    }
+    if (low === "p") {
+      ev.preventDefault();
+      ersTogglePlateDrawer();
+      return;
+    }
+    if (low === "z" && ersPlateOpen) {
+      ev.preventDefault();
+      ersToggleLoupe();
+      return;
+    }
+    if (ersPlateOpen) return;
+
+    if (key === "1" || key === "2" || key === "3" || key === "4") {
+      ev.preventDefault();
+      ersSelectCordType(key);
+    } else if (low === "w") {
+      ev.preventDefault();
+      ersWeaveBurst(6);
+    } else if (low === "s") {
+      ev.preventDefault();
+      ersStretchCord();
+    } else if (low === "m") {
+      ev.preventDefault();
+      ersToggleAudioMute();
+    } else if (low === "x") {
+      ev.preventDefault();
+      ersTriggerExodus({ autoSaturate: true });
+    } else if (low === "r") {
+      ev.preventDefault();
+      ersRefoundElsewhere();
+    } else if (low === "v") {
+      ev.preventDefault();
+      ersToggleViewpoint();
+    }
+  });
+
+  function ersGetState() {
+    const snap = ersLoom.getSnapshot();
+    const exo = ersExodus.getState();
+    return Object.assign({}, snap, exo, {
+      generation: exo.generation,
+      layoutMode: snap.layoutMode,
+      complexityIndex: exo.currentComplexity,
+      regularityIndex: exo.currentRegularity,
+      complexityGain: exo.structuralMemory.complexityGain,
+      regularityGain: exo.structuralMemory.regularityGain,
+      moreComplexAndMoreRegular: exo.structuralMemory.moreComplexAndMoreRegular,
+      selectedPoleId: ersSelectedPoleId,
+      plateDrawerOpen: ersPlateOpen,
+      plateTab: ersPlateTab,
+      loupeActive: ersLoupeOn,
+      loupeZoom: ersLoupeOn ? 1.85 : 1.0,
+      reducedMotion: ersReducedMotion
+    });
+  }
+
+  const ersApi = {
+    getState: ersGetState,
+    loom: ersLoom,
+    exodus: ersExodus,
+    selectCordType: ersSelectCordType,
+    stretchCord: ersStretchCord,
+    weaveBurst: ersWeaveBurst,
+    weaveToImpassable: ersWeaveToImpassable,
+    triggerExodus: ersTriggerExodus,
+    refoundElsewhere: ersRefoundElsewhere,
+    toggleViewpoint: ersToggleViewpoint,
+    toggleAudioMute: ersToggleAudioMute,
+    togglePlateDrawer: ersTogglePlateDrawer,
+    setPlateTab: ersSetPlateTab,
+    toggleLoupe: ersToggleLoupe
+  };
+  window.ErsiliaApp = ersApi;
+  window.__ERSILIA__ = ersApi;
+
+  if (ersMotionQuery && typeof ersMotionQuery.addEventListener === "function") {
+    ersMotionQuery.addEventListener("change", function (ev) {
+      ersReducedMotion = Boolean(ev.matches);
+      ersExodus.setReducedMotion(ersReducedMotion);
+      ersRenderOnce();
+    });
+  }
+
+  window.addEventListener("resize", function () {
+    ersResizeStage();
+    ersRenderOnce();
+  });
+
+  ersResizeStage();
+  ersRefreshHud();
+  ersRenderOnce();
+
+  let ersPrevTs = 0;
+  function ersTick(ts) {
+    if (!ersReducedMotion) {
+      const dt = ersPrevTs ? Math.min(0.05, Math.max(0.001, (ts - ersPrevTs) / 1000)) : 0.016;
+      ersPrevTs = ts;
+      ersLoom.step(dt);
+      ersExodus.step(dt, ersLoom);
+      ersRenderOnce();
+    }
+    window.requestAnimationFrame(ersTick);
+  }
+  if (!ersReducedMotion) {
+    window.requestAnimationFrame(ersTick);
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,2437 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WORLDFUL · a videotext of thirty-four multiplane worlds</title>
+<style>
+  @font-face {
+    font-family: 'IM Fell English';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../studio/fonts/im-fell-english-latin-400-normal.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'IM Fell English';
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../studio/fonts/im-fell-english-latin-400-italic.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'IBM Plex Mono';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../studio/fonts/ibm-plex-mono-latin-400-normal.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'IBM Plex Mono';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('../studio/fonts/ibm-plex-mono-latin-600-normal.woff2') format('woff2');
+  }
+
+  :root {
+    --paper:      #f2ead9;
+    --paper-deep: #e7dcc4;
+    --paper-dim:  #d9ccb0;
+    --ink:        #1d1915;
+    --ink-soft:   #4b4137;
+    --ink-faint:  #827462;
+    --vermilion:  #b23024;
+    --ochre:      #b88232;
+    --rule:       rgba(29, 25, 21, 0.16);
+    --rule-strong:rgba(29, 25, 21, 0.36);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IM Fell English', Georgia, serif;
+    font-size: 19px;
+    line-height: 1.62;
+    background-image:
+      radial-gradient(ellipse at 50% 0%, rgba(255,250,238,0.6), transparent 70%),
+      radial-gradient(ellipse at 50% 100%, rgba(160,130,90,0.12), transparent 70%);
+  }
+
+  /* ---------- Sticky masthead ---------- */
+  header.mast {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    background: rgba(242, 234, 217, 0.94);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--rule);
+    padding: 8px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+  }
+  header.mast .brand {
+    color: var(--ink);
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  header.mast .brand a {
+    color: inherit;
+    text-decoration: none;
+  }
+  header.mast nav.chapters {
+    display: flex;
+    gap: 3px;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 720px;
+  }
+  header.mast nav.chapters a {
+    color: var(--ink-faint);
+    text-decoration: none;
+    padding: 2px 5px;
+    border-radius: 2px;
+    font-size: 10px;
+    transition: color .15s, background .15s;
+  }
+  header.mast nav.chapters a:hover { color: var(--ink); }
+  header.mast nav.chapters a.here {
+    color: var(--paper);
+    background: var(--ink);
+  }
+  header.mast .modes {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    white-space: nowrap;
+  }
+  header.mast .modes button {
+    font: inherit;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: transparent;
+    color: var(--ink-soft);
+    border: 1px solid var(--rule-strong);
+    padding: 4px 8px;
+    cursor: pointer;
+  }
+  header.mast .modes button.on {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+  header.mast .modes button.drive-btn.on {
+    background: var(--vermilion);
+    color: var(--paper);
+    border-color: var(--vermilion);
+  }
+
+  main {
+    max-width: 1220px;
+    margin: 0 auto;
+    padding: 0 28px 140px;
+  }
+
+  /* ---------- Frontispiece ---------- */
+  section.front {
+    max-width: 820px;
+    margin: 54px auto 48px;
+    text-align: center;
+    padding-bottom: 36px;
+    border-bottom: 1px solid var(--rule-strong);
+  }
+  .front .kicker {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .front h1 {
+    font-weight: 400;
+    font-size: clamp(36px, 5.2vw, 58px);
+    line-height: 1.08;
+    margin: 14px 0 10px;
+    letter-spacing: 0.01em;
+  }
+  .front .sub {
+    font-style: italic;
+    font-size: 21px;
+    color: var(--ink-soft);
+    margin: 0 0 28px;
+  }
+  .front .orn {
+    color: var(--vermilion);
+    letter-spacing: 0.5em;
+    font-size: 14px;
+    margin: 22px 0;
+  }
+  .front .epigraph {
+    text-align: left;
+    font-size: 17px;
+    color: var(--ink-soft);
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .front .epigraph p { margin: 0 0 12px; }
+  .front .howto {
+    margin-top: 26px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--ink-faint);
+  }
+
+  /* ---------- Complete Feature Cinema & Road-Trip Drive Console ---------- */
+  section.master-console {
+    max-width: 1080px;
+    margin: 0 auto 64px;
+    background: var(--paper-deep);
+    border: 2px solid var(--ink);
+    box-shadow: 0 18px 44px -18px rgba(20, 14, 6, 0.38);
+    padding: 24px 26px;
+  }
+  .console-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    border-bottom: 1px solid var(--rule-strong);
+    padding-bottom: 12px;
+    margin-bottom: 18px;
+  }
+  .console-kicker {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--vermilion);
+    font-weight: 600;
+  }
+  .console-dl {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+  }
+  .console-dl a {
+    color: var(--ink);
+    text-decoration: none;
+    border: 1px solid var(--rule-strong);
+    padding: 4px 9px;
+    background: var(--paper);
+  }
+  .console-dl a:hover {
+    border-color: var(--vermilion);
+    color: var(--vermilion);
+  }
+  .console-grid {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+  @media (max-width: 920px) {
+    .console-grid { grid-template-columns: 1fr; }
+  }
+  .feature-box {
+    background: #141210;
+    border: 1px solid var(--ink);
+  }
+  .feature-box video {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    display: block;
+    background: #141210;
+  }
+  .feature-bar {
+    padding: 10px 12px;
+    background: var(--paper);
+    border-top: 1px solid var(--rule-strong);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+  }
+  .feature-bar select {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    background: var(--paper-deep);
+    color: var(--ink);
+    border: 1px solid var(--rule-strong);
+    padding: 4px 6px;
+    max-width: 100%;
+    flex: 1;
+  }
+  .drive-card {
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .drive-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--paper);
+    background: var(--vermilion);
+    display: inline-block;
+    padding: 3px 8px;
+    align-self: flex-start;
+  }
+  .drive-now-no {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+  }
+  .drive-now-title {
+    font-size: 26px;
+    line-height: 1.15;
+    margin: 2px 0;
+  }
+  .drive-now-sub {
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .drive-controls {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+  .drive-controls button {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 12px 6px;
+    border: 1px solid var(--ink);
+    background: var(--paper-deep);
+    color: var(--ink);
+    cursor: pointer;
+    transition: background .15s, color .15s;
+  }
+  .drive-controls button.primary {
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 13px;
+  }
+  .drive-controls button:hover {
+    background: var(--vermilion);
+    color: var(--paper);
+    border-color: var(--vermilion);
+  }
+  .drive-meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+  }
+  .drive-meta-row button.spd {
+    font: inherit;
+    background: var(--paper-deep);
+    border: 1px solid var(--rule-strong);
+    padding: 2px 7px;
+    cursor: pointer;
+  }
+
+  /* ---------- Movement banner ---------- */
+  .movement-banner {
+    max-width: 760px;
+    margin: 72px auto 12px;
+    padding: 22px 0 12px;
+    border-top: 2px solid var(--ink);
+    border-bottom: 1px solid var(--rule);
+  }
+  .mov-kicker {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--vermilion);
+    text-transform: uppercase;
+  }
+  .mov-title {
+    font-weight: 400;
+    font-size: 28px;
+    margin: 4px 0 6px;
+  }
+  .mov-blurb {
+    margin: 0;
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 17px;
+  }
+
+  /* ---------- Chapter layout (videotext) ---------- */
+  section.chapter {
+    display: grid;
+    grid-template-columns: minmax(340px, 1.18fr) minmax(300px, 1fr);
+    gap: 44px;
+    padding: 68px 0 56px;
+    border-bottom: 1px solid var(--rule);
+    align-items: start;
+  }
+
+  .chapter .screen {
+    position: sticky;
+    top: 64px;
+  }
+  .frame {
+    position: relative;
+    background: #141210;
+    border: 1px solid var(--ink);
+    box-shadow:
+      0 1px 0 var(--paper),
+      0 0 0 4px var(--paper-deep),
+      0 0 0 5px var(--rule-strong),
+      0 18px 40px -18px rgba(20, 14, 6, 0.45);
+  }
+  .frame video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #141210;
+    cursor: pointer;
+  }
+  .frame .bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 11px;
+    background: var(--paper-deep);
+    border-top: 1px solid var(--rule-strong);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    position: relative;
+  }
+  .frame .bar button.play {
+    font: inherit;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    padding: 3px 10px;
+    cursor: pointer;
+    letter-spacing: 0.08em;
+  }
+  .frame .bar button.play:hover { background: var(--vermilion); }
+  .frame .bar .scrub {
+    position: absolute;
+    left: 0; right: 0; top: -3px;
+    height: 3px;
+    background: rgba(29,25,21,0.18);
+    cursor: pointer;
+  }
+  .frame .bar .scrub > i {
+    display: block;
+    height: 100%;
+    width: 0%;
+    background: var(--vermilion);
+  }
+  .frame .bar .tc {
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-faint);
+    margin-right: auto;
+  }
+  .frame .bar a.cut {
+    color: var(--ink-faint);
+    text-decoration: none;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+  }
+  .frame .bar a.cut:hover { color: var(--vermilion); }
+
+  /* ---------- Prose column ---------- */
+  .prose .num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--vermilion);
+  }
+  .prose h2 {
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 1.15;
+    margin: 4px 0 4px;
+  }
+  .prose .sub {
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 17px;
+    margin: 0 0 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .prose p[data-t0] {
+    margin: 0 0 16px;
+    padding: 6px 0 6px 14px;
+    border-left: 2px solid transparent;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: color .25s, border-color .25s, background .25s;
+  }
+  .prose p[data-t0]:hover {
+    color: var(--ink);
+    border-left-color: var(--rule-strong);
+  }
+  .prose p[data-t0].now {
+    color: var(--ink);
+    border-left-color: var(--ochre);
+    background: linear-gradient(90deg, rgba(184,130,50,0.09), transparent 85%);
+  }
+  .prose p[data-t0] .spk {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-right: 4px;
+  }
+  /* Fulcrum line — "The Line" (Tarantino / Waltz) */
+  .prose p.f {
+    font-size: 20.5px;
+    line-height: 1.5;
+    color: var(--ink);
+    padding: 10px 0 10px 16px;
+    margin: 20px 0;
+    border-left: 2px solid rgba(178, 48, 36, 0.45);
+  }
+  .prose p.f.now {
+    border-left: 3px solid var(--vermilion);
+    background: linear-gradient(90deg, rgba(178,48,36,0.12), transparent 90%);
+  }
+  .prose p.q {
+    font-style: italic;
+  }
+
+  /* Director craft notes drawer */
+  details.craft {
+    margin-top: 24px;
+    border-top: 1px dashed var(--rule-strong);
+    padding-top: 10px;
+    font-size: 15px;
+    color: var(--ink-soft);
+  }
+  details.craft summary {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    cursor: pointer;
+    user-select: none;
+  }
+  details.craft summary:hover { color: var(--ink); }
+  details.craft dl {
+    margin: 12px 0 0;
+    display: grid;
+    grid-template-columns: 74px 1fr;
+    gap: 6px 12px;
+  }
+  details.craft dt {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--vermilion);
+    padding-top: 3px;
+  }
+  details.craft dd { margin: 0; }
+  details.craft code {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    background: var(--paper-deep);
+    padding: 2px 5px;
+  }
+
+  /* ---------- Film mode (theatre) ---------- */
+  body.mode-film section.chapter {
+    grid-template-columns: 1fr;
+    max-width: 920px;
+    margin: 0 auto;
+    gap: 20px;
+  }
+  body.mode-film .chapter .screen { position: static; }
+  body.mode-film .prose p[data-t0] { display: none; }
+  body.mode-film .prose p[data-t0].now,
+  body.mode-film .prose p.f {
+    display: block;
+  }
+
+  @media (max-width: 860px) {
+    section.chapter { grid-template-columns: 1fr; gap: 22px; }
+    .chapter .screen {
+      position: sticky;
+      top: 48px;
+      z-index: 10;
+    }
+  }
+
+  footer.colophon {
+    max-width: 680px;
+    margin: 90px auto 0;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule-strong);
+    font-size: 15px;
+    color: var(--ink-soft);
+    text-align: center;
+  }
+  footer.colophon .mono {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--ink-faint);
+    margin-top: 14px;
+  }
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="brand"><a href="../index.html">← WORLDFUL</a> · VIDEOTEXT ATLAS</div>
+  <nav class="chapters" aria-label="Plates">
+    <a href="#ch-00-the-crossing" data-ch="00-the-crossing" title="Plate 00: The Crossing">00</a><a href="#ch-01-the-kingdom-of-turned-heads" data-ch="01-the-kingdom-of-turned-heads" title="Plate 01: The Kingdom of Turned Heads">01</a><a href="#ch-02-the-house-whose-road-disappeared" data-ch="02-the-house-whose-road-disappeared" title="Plate 02: The House Whose Road Disappeared">02</a><a href="#ch-03-the-archipelago-of-borrowed-monsters" data-ch="03-the-archipelago-of-borrowed-monsters" title="Plate 03: The Archipelago of Borrowed Monsters">03</a><a href="#ch-04-the-valley-where-dangers-arrive-early" data-ch="04-the-valley-where-dangers-arrive-early" title="Plate 04: The Valley Where Dangers Arrive Early">04</a><a href="#ch-05-the-republic-of-wooden-kings" data-ch="05-the-republic-of-wooden-kings" title="Plate 05: The Republic of Wooden Kings">05</a><a href="#ch-06-the-palace-of-the-perfect-camera" data-ch="06-the-palace-of-the-perfect-camera" title="Plate 06: The Palace of the Perfect Camera">06</a><a href="#ch-07-the-city-of-required-fields" data-ch="07-the-city-of-required-fields" title="Plate 07: The City of Required Fields">07</a><a href="#ch-08-the-marsh-of-enforced-lines" data-ch="08-the-marsh-of-enforced-lines" title="Plate 08: The Marsh of Enforced Lines">08</a><a href="#ch-09-the-two-griefs" data-ch="09-the-two-griefs" title="Plate 09: The Two Griefs">09</a><a href="#ch-10-the-common-bird" data-ch="10-the-common-bird" title="Plate 10: The Common Bird">10</a><a href="#ch-11-the-court-of-shards" data-ch="11-the-court-of-shards" title="Plate 11: The Court of Shards">11</a><a href="#ch-12-the-invisible-tool-country" data-ch="12-the-invisible-tool-country" title="Plate 12: The Invisible Tool Country">12</a><a href="#ch-13-the-giant-state" data-ch="13-the-giant-state" title="Plate 13: The Giant State">13</a><a href="#ch-14-the-elevator-school-of-authorship" data-ch="14-the-elevator-school-of-authorship" title="Plate 14: The Elevator School of Authorship">14</a><a href="#ch-15-the-city-of-unmeasured-adjectives" data-ch="15-the-city-of-unmeasured-adjectives" title="Plate 15: The City of Unmeasured Adjectives">15</a><a href="#ch-16-the-archive-without-context" data-ch="16-the-archive-without-context" title="Plate 16: The Archive Without Context">16</a><a href="#ch-17-the-hive-of-forbidden-words" data-ch="17-the-hive-of-forbidden-words" title="Plate 17: The Hive of Forbidden Words">17</a><a href="#ch-18-the-country-of-negative-animals" data-ch="18-the-country-of-negative-animals" title="Plate 18: The Country of Negative Animals">18</a><a href="#ch-19-the-empire-beneath-the-map" data-ch="19-the-empire-beneath-the-map" title="Plate 19: The Empire Beneath the Map">19</a><a href="#ch-20-the-sentence-with-skin-in-the-game" data-ch="20-the-sentence-with-skin-in-the-game" title="Plate 20: The Sentence with Skin in the Game">20</a><a href="#ch-21-the-self-fulfilling-village" data-ch="21-the-self-fulfilling-village" title="Plate 21: The Self-Fulfilling Village">21</a><a href="#ch-22-the-school-of-collapsing-pots" data-ch="22-the-school-of-collapsing-pots" title="Plate 22: The School of Collapsing Pots">22</a><a href="#ch-23-the-market-of-dead-metaphors" data-ch="23-the-market-of-dead-metaphors" title="Plate 23: The Market of Dead Metaphors">23</a><a href="#ch-24-the-cave-of-the-surviving-scratch" data-ch="24-the-cave-of-the-surviving-scratch" title="Plate 24: The Cave of the Surviving Scratch">24</a><a href="#ch-25-the-gallery-of-causally-different-twins" data-ch="25-the-gallery-of-causally-different-twins" title="Plate 25: The Gallery of Causally Different Twins">25</a><a href="#ch-26-the-forensic-mud" data-ch="26-the-forensic-mud" title="Plate 26: The Forensic Mud">26</a><a href="#ch-27-the-mountain-that-refused-to-join-the-story" data-ch="27-the-mountain-that-refused-to-join-the-story" title="Plate 27: The Mountain That Refused to Join the Story">27</a><a href="#ch-28-the-great-listener" data-ch="28-the-great-listener" title="Plate 28: The Great Listener">28</a><a href="#ch-29-the-house-that-looked-finished" data-ch="29-the-house-that-looked-finished" title="Plate 29: The House That Looked Finished">29</a><a href="#ch-30-the-republic-of-debts" data-ch="30-the-republic-of-debts" title="Plate 30: The Republic of Debts">30</a><a href="#ch-31-the-founder-who-never-lived" data-ch="31-the-founder-who-never-lived" title="Plate 31: The Founder Who Never Lived">31</a><a href="#ch-32-the-king-who-bowed" data-ch="32-the-king-who-bowed" title="Plate 32: The King Who Bowed">32</a><a href="#ch-33-the-red-bird-world" data-ch="33-the-red-bird-world" title="Plate 33: The Red Bird World">33</a><a href="#ch-34-the-multiplane-studio-office" data-ch="34-the-multiplane-studio-office" title="Plate 34: The Studio of Living Desks">34</a>
+  </nav>
+  <div class="modes">
+    <button type="button" id="m-book" class="on" title="Scroll prose to scrub film; play film to scroll prose">Book</button>
+    <button type="button" id="m-film" title="Theatre mode: play all plates end to end">Film</button>
+    <button type="button" id="m-drive" class="drive-btn" title="Drive &amp; Commute Mode: continuous audiobook with CarPlay/lock-screen controls">Drive</button>
+    <button type="button" id="m-cont" class="on" title="Advance to the next plate when one ends">Continuous</button>
+    <a href="../studio/office/index.html" style="font:inherit;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;background:var(--vermilion);color:var(--paper);border:1px solid var(--vermilion);padding:4px 8px;text-decoration:none;" title="Interactive Agent Office, Kanban Worktrees &amp; Behind-the-Scenes Film">🏢 Agent Office (BTS)</a>
+    <a href="../scion_cities/index.html" style="font:inherit;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;background:var(--ink);color:var(--paper);border:1px solid var(--ink);padding:4px 8px;text-decoration:none;" title="All 55 Invisible Cities Multiplane Films &amp; Drive Console">🏛️ 55 Cities Cinema</a>
+    <a href="../scion_cities/workbench.html" style="font:inherit;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;background:var(--paper);color:var(--ink);border:1px solid var(--ink);padding:4px 8px;text-decoration:none;" title="SCION Flour Test Witness-Memory Swerve &amp; Studio Modules">⚖️ SCION Workbench</a>
+  </div>
+</header>
+
+<main>
+
+  <section class="front">
+    <div class="kicker">WORLDFUL Multiplane Animation Studio · Plates 00 – 34 (Including Behind-the-Scenes Agent Office)</div>
+    <h1>The Thirty-Four Crossings</h1>
+    <p class="sub">A hand-drawn multiplane videotext on how descriptions, traces, and pointers move living bodies</p>
+    <div class="orn">✦ &nbsp; ✦ &nbsp; ✦</div>
+    <div class="epigraph">
+      <p>Across thirty-four expeditions—from a muddy wolf print on a mountain fork to a scarlet cardinal on a cedar fence post, plus a thirty-fifth behind-the-scenes coda inside the agentic studio office—this atlas investigates a single structural mystery: how something smaller than the world crosses the gap between two sealed minds and alters what happens next.</p>
+      <p>Every chapter is drawn from scratch in <strong>cross-hatched archival engraving</strong> and photographed through a <strong>seven-plane virtual multiplane camera</strong> (<code>PLANE 6</code> Sky down to <code>PLANE 0</code> Archival Mask) with boiling hand-inked contours on twos, inside-out articulated character rigs, and <strong>Kokoro v1.0</strong> voices. Following Quentin Tarantino and Christoph Waltz’s philosophy of <em>The Line</em>, each film builds toward one or two fulcrum sentences (marked with a crimson rule) where the ambient room hush drops and the camera cuts in tight on the gesture.</p>
+    </div>
+    <div class="howto">WATCH THE COMPLETE 34-MIN FEATURE FILM BELOW &nbsp;·&nbsp; LISTEN HANDS-FREE ON A DRIVE &nbsp;·&nbsp; OR STEP INSIDE THE <a href="../studio/office/index.html" style="color:var(--vermilion);">INTERACTIVE AGENT OFFICE ↗</a></div>
+  </section>
+
+  <!-- MASTER CONTINUOUS FEATURE FILM & DRIVE MODE CONSOLE -->
+  <section class="master-console" id="drive-cinema-console">
+    <div class="console-head">
+      <div class="console-kicker">✦ Continuous 34-Minute Screening Room &amp; Road-Trip Drive Console (All Worlds Uninterrupted)</div>
+      <div class="console-dl">
+        <a href="../studio/office/index.html" style="border-color:var(--vermilion);color:var(--vermilion);font-weight:600;">🏢 Interactive Agent Office &amp; Behind-the-Scenes Film ↗</a>
+        <a href="../studio/films/worldful-complete-feature.mp4" download>⬇ Full Feature MP4 (34m)</a>
+        <a href="../studio/audio/worldful-complete-drive.m4a" download>⬇ Drive Audiobook M4A</a>
+        <a href="../studio/audio/worldful-complete-drive.mp3" download>⬇ Drive Audiobook MP3</a>
+      </div>
+    </div>
+
+    <div class="console-grid">
+      <!-- Left: Complete 33-Minute Continuous Feature Film -->
+      <div class="feature-box">
+        <video id="master-feature-video" controls preload="metadata" playsinline poster="../studio/films/00-the-crossing.jpg" src="../studio/films/worldful-complete-feature.mp4"></video>
+        <div class="feature-bar">
+          <span>COMPLETE FEATURE:</span>
+          <select id="master-chapter-select" aria-label="Jump to Plate in Complete Feature">
+            <option value="0">[00:00] Plate 00: The Crossing</option><option value="1">[01:10] Plate 01: The Kingdom of Turned Heads</option><option value="2">[02:07] Plate 02: The House Whose Road Disappeared</option><option value="3">[03:10] Plate 03: The Archipelago of Borrowed Monsters</option><option value="4">[04:17] Plate 04: The Valley Where Dangers Arrive Early</option><option value="5">[05:21] Plate 05: The Republic of Wooden Kings</option><option value="6">[06:22] Plate 06: The Palace of the Perfect Camera</option><option value="7">[07:25] Plate 07: The City of Required Fields</option><option value="8">[08:19] Plate 08: The Marsh of Enforced Lines</option><option value="9">[09:19] Plate 09: The Two Griefs</option><option value="10">[10:13] Plate 10: The Common Bird</option><option value="11">[11:09] Plate 11: The Court of Shards</option><option value="12">[12:04] Plate 12: The Invisible Tool Country</option><option value="13">[12:55] Plate 13: The Giant State</option><option value="14">[13:52] Plate 14: The Elevator School of Authorship</option><option value="15">[14:54] Plate 15: The City of Unmeasured Adjectives</option><option value="16">[15:49] Plate 16: The Archive Without Context</option><option value="17">[16:44] Plate 17: The Hive of Forbidden Words</option><option value="18">[17:40] Plate 18: The Country of Negative Animals</option><option value="19">[18:34] Plate 19: The Empire Beneath the Map</option><option value="20">[19:28] Plate 20: The Sentence with Skin in the Game</option><option value="21">[20:27] Plate 21: The Self-Fulfilling Village</option><option value="22">[21:26] Plate 22: The School of Collapsing Pots</option><option value="23">[22:23] Plate 23: The Market of Dead Metaphors</option><option value="24">[23:20] Plate 24: The Cave of the Surviving Scratch</option><option value="25">[24:17] Plate 25: The Gallery of Causally Different Twins</option><option value="26">[25:15] Plate 26: The Forensic Mud</option><option value="27">[26:11] Plate 27: The Mountain That Refused to Join the Story</option><option value="28">[27:08] Plate 28: The Great Listener</option><option value="29">[28:04] Plate 29: The House That Looked Finished</option><option value="30">[29:01] Plate 30: The Republic of Debts</option><option value="31">[29:58] Plate 31: The Founder Who Never Lived</option><option value="32">[30:54] Plate 32: The King Who Bowed</option><option value="33">[31:51] Plate 33: The Red Bird World</option><option value="34">[32:54] Plate 34: The Studio of Living Desks</option>
+          </select>
+          <button type="button" id="feat-prev" style="cursor:pointer;font:inherit;padding:3px 8px;">⏮</button>
+          <button type="button" id="feat-next" style="cursor:pointer;font:inherit;padding:3px 8px;">⏭</button>
+        </div>
+      </div>
+
+      <!-- Right: Hands-Free Drive / Commute Audiobook Console -->
+      <div class="drive-card">
+        <span class="drive-badge">🚗 HANDS-FREE DRIVE &amp; COMMUTE EDITION (34 MIN)</span>
+        <div>
+          <div class="drive-now-no" id="drive-now-no">PLATE 00 OF 33 · CONTINUOUS AUDIOBOOK</div>
+          <h3 class="drive-now-title" id="drive-now-title">The Crossing</h3>
+          <p class="drive-now-sub" id="drive-now-sub">How Absent Things Learned to Move Living Bodies</p>
+        </div>
+
+        <audio id="drive-audio" controls preload="metadata" style="width:100%;height:38px;" src="../studio/audio/worldful-complete-drive.m4a">
+          <source src="../studio/audio/worldful-complete-drive.m4a" type="audio/mp4">
+          <source src="../studio/audio/worldful-complete-drive.mp3" type="audio/mpeg">
+        </audio>
+
+        <div class="drive-controls">
+          <button type="button" id="drv-prev" title="Previous Plate">⏮ Plate</button>
+          <button type="button" id="drv-rew" title="Back 15 seconds">-15s</button>
+          <button type="button" id="drv-play" class="primary" title="Play / Pause Continuous Drive Audio">▶ Play</button>
+          <button type="button" id="drv-ff" title="Forward 15 seconds">+15s</button>
+          <button type="button" id="drv-next" title="Next Plate">Plate ⏭</button>
+        </div>
+
+        <div class="drive-meta-row">
+          <span id="drive-tc">00:00 / 34:00 · CarPlay &amp; Lock-Screen Ready</span>
+          <button type="button" class="spd" id="drv-speed" title="Cycle Playback Speed">Speed: 1.0×</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+        <div class="movement-banner">
+          <div class="mov-kicker">MOVEMENT I · ENTER &amp; OBSERVE</div>
+          <h2 class="mov-title">When Traces Redirect Living Bodies</h2>
+          <p class="mov-blurb">Investigate how absent causes, pointed fingers, inherited workarounds, borrowed monsters, rehearsals, and rules move living bodies across space and time.</p>
+        </div>
+  <section class="chapter" id="ch-00-the-crossing" data-slug="00-the-crossing" data-dur="70.38">
+    <div class="screen">
+      <div class="frame" data-slug="00-the-crossing">
+        <video preload="metadata" playsinline poster="../studio/films/00-the-crossing.jpg" src="../studio/films/00-the-crossing.mp4"></video>
+        <div class="bar">
+          <button class="play" type="button" aria-label="Play Plate 00">▶</button>
+          <span class="tc">0:00 / 1:10</span>
+          <a class="cut" href="../studio/chapters/00-the-crossing/index.html">studio desk ↗</a>
+          <a class="cut" href="../studio/sheets/00-the-crossing/contact_sheet.jpg" target="_blank">x-sheet ↗</a>
+          <div class="scrub"><i style="width:0%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="num">PLATE 00 · WF-16-A · N. LAT. 37° 16&#x27; · W. LONG. 108° 52&#x27; · 2050.6 m</div>
+      <h2>The Crossing</h2>
+      <p class="sub">How Absent Things Learned to Move Living Bodies — <em>Signal detection and the lossy cut</em></p>
+
+      <p data-t0="1.35" data-t1="8.92">A wolf crossed the ridge an hour before the child arrived. Its paws pressed six wet commas into the mud, and then the animal was gone.</p>
+      <p class="q" data-t0="10.74" data-t1="14.95"><span class="spk">The Child:</span> “The valley path is level and clear. Why are we stopping?”</p>
+      <p data-t0="21.17" data-t1="26.66">The older hunter crouched by the fork, touched the edge of the depression, and lifted two muddy fingers.</p>
+      <p class="f q" data-t0="28.88" data-t1="33.10"><span class="spk">The Elder:</span> “The mud is still warm. Take the high path.”</p>
+      <p data-t0="35.65" data-t1="43.32">No fang, heat, or muscle crossed the air between them. Yet an animal no longer in the valley redirected a living body across the mountain.</p>
+      <p class="f" data-t0="45.54" data-t1="50.22">If a message had to carry the whole wolf, you would need a cage, not a sentence.</p>
+      <p class="q" data-t0="52.67" data-t1="59.71"><span class="spk">The Magistrate:</span> “We keep the wolf and drop the wind direction. We keep the danger and drop ten thousand blades of grass.”</p>
+      <p class="f" data-t0="61.73" data-t1="64.58">Leaving things out is how description travels.</p>
+
+      <details class="craft">
+        <summary>On the film · Multiplane &amp; Fulcrum Notes</summary>
+        <dl>
+          <dt>Action</dt><dd>Wolf bounds across fork → presses six wet commas into mud → vanishes into valley mist → hunter arrives → crouches → touches mud → smells fingers → points uphill → child climbs high scree.</dd>
+          <dt>Picture</dt><dd>A forked mountain pass in seven depth planes. A wolf leaves six wet commas in the mud and exits before the travellers arrive; on the fulcrum line, the camera pushes tight onto the muddy print as a red dashed trajectory climbs the right-hand scree.</dd>
+          <dt>Sound</dt><dd>Mountain wind through switchgrass, heavy wolf paw squelches in wet earth, silence around the hunter&#x27;s fulcrum warning, and a low archival bell when the child takes the high path.</dd>
+          <dt>Code</dt><dd><code>source_absent + trace_present + interpreter -&gt; altered_trajectory. Leaving things out is how description travels.</code></dd>
+          <dt>After</dt><dd>The foundational plate of the Atlas. Establishes the multiplane grammar: one absent cause, one physical trace, one fulcrum line that bends a body&#x27;s path.</dd>
+        </dl>
+      </details>
+    </div>
+  </section>
+  <section class="chapter" id="ch-01-the-kingdom-of-turned-heads" data-slug="01-the-kingdom-of-turned-heads" data-dur="56.85">
+    <div class="screen">
+      <div class="frame" data-slug="01-the-kingdom-of-turned-heads">
+        <video preload="metadata" playsinline poster="../studio/films/01-the-kingdom-of-turned-heads.jpg" src="../studio/films/01-the-kingdom-of-turned-heads.mp4"></video>
+        <div class="bar">
+          <button class="play" type="button" aria-label="Play Plate 01">▶</button>
+          <span class="tc">0:00 / 0:57</span>
+          <a class="cut" href="../studio/chapters/01-the-kingdom-of-turned-heads/index.html">studio desk ↗</a>
+          <a class="cut" href="../studio/sheets/01-the-kingdom-of-turned-heads/contact_sheet.jpg" target="_blank">x-sheet ↗</a>
+          <div class="scrub"><i style="width:0%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="num">PLATE 01 · WF-23-A · S. LAT. 37° 12&#x27; · W. LONG. 68° 70&#x27; · 1762.8 m</div>
+      <h2>The Kingdom of Turned Heads</h2>
+      <p class="sub">The Politics of Deixis and the Monopoly of Attention — <em>Pointers, dereferencing, and attention routing</em></p>
+
+      <p data-t0="1.25" data-t1="10.32">In a valley where everyone watched only their own boots, a boy saw smoke rising behind the ridge. He had no word for fire. He simply pointed.</p>
+      <p class="q" data-t0="11.94" data-t1="14.41"><span class="spk">The Artisan:</span> “Why is the boy holding his finger in the air?”</p>
+      <p data-t0="20.33" data-t1="25.14">The boy walked over, took the man&#x27;s head in both hands, and turned his neck toward the mountain.</p>
+      <p class="f q" data-t0="27.16" data-t1="31.77"><span class="spk">The Child:</span> “Do not look at where my finger begins. Look at where it ends.”</p>
+      <p class="q" data-t0="34.22" data-t1="39.21"><span class="spk">The Sovereign:</span> “In the Kingdom of Turned Heads, the court eventually outlawed unlicensed pointing.”</p>
+      <p class="f q" data-t0="41.33" data-t1="44.53"><span class="spk">The Sovereign:</span> “Whoever owns the pointer owns the room.”</p>
+      <p data-t0="46.98" data-t1="51.68">The first battle of power is never what things mean, but what people are forced to look at.</p>
+
+      <details class="craft">
+        <summary>On the film · Multiplane &amp; Fulcrum Notes</summary>
+        <dl>
+          <dt>Action</dt><dd>Smoke rises behind ridge → boy extends arm to point → adults stare at his finger → boy grabs adult&#x27;s head with both hands → turns neck toward ridge → red sightlines lock on smoke.</dd>
+          <dt>Picture</dt><dd>A smoking watchtower on a distant ridge (Plane 5) and villagers in the foreground (Plane 2). When the boy points, the villagers look at his knuckle until he physically turns a head; red dashed sightlines then converge on the smoke.</dd>
+          <dt>Sound</dt><dd>Crackling distant pine fire, a sharp slap/turn of the helmet, wind across the valley, and a unison choral chord when all heads align.</dd>
+          <dt>Code</dt><dd><code>pointer != referent. Dereferencing failure occurs when the observer consumes the finger instead of following the ray to the target.</code></dd>
+          <dt>After</dt><dd>In The Crossing, a trace on the ground moved a body. Here, a raised finger moves another creature&#x27;s eyes before a single noun exists.</dd>
+        </dl>
+      </details>
+    </div>
+  </section>
+  <section class="chapter" id="ch-02-the-house-whose-road-disappeared" data-slug="02-the-house-whose-road-disappeared" data-dur="62.96">
+    <div class="screen">
+      <div class="frame" data-slug="02-the-house-whose-road-disappeared">
+        <video preload="metadata" playsinline poster="../studio/films/02-the-house-whose-road-disappeared.jpg" src="../studio/films/02-the-house-whose-road-disappeared.mp4"></video>
+        <div class="bar">
+          <button class="play" type="button" aria-label="Play Plate 02">▶</button>
+          <span class="tc">0:00 / 1:03</span>
+          <a class="cut" href="../studio/chapters/02-the-house-whose-road-disappeared/index.html">studio desk ↗</a>
+          <a class="cut" href="../studio/sheets/02-the-house-whose-road-disappeared/contact_sheet.jpg" target="_blank">x-sheet ↗</a>
+          <div class="scrub"><i style="width:0%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="num">PLATE 02 · WF-31-B · GRID 57.3 N · 03.8 W · 412.0 m</div>
+      <h2>The House Whose Road Disappeared</h2>
+      <p class="sub">Heritage Technical Debt and the Tyranny of Vanished Rationale — <em>Legacy interfaces and orphaned constraints</em></p>
+
+      <p data-t0="1.25" data-t1="9.07">The House of Old Words had a giant bay window facing an empty meadow, three iron hooks over a bare corner, and a doorway five feet high.</p>
+      <p class="q" data-t0="10.69" data-t1="16.56"><span class="spk">The Magistrate:</span> “Bend your knees. Nobody may alter the doorway until its original purpose is known.”</p>
+      <p data-t0="22.58" data-t1="30.19">For two hundred years the village stooped through the door and polished the empty hooks. Then an archivist unrolled the survey of eighteen ninety-eight.</p>
+      <p class="f q" data-t0="32.21" data-t1="37.13"><span class="spk">The Witness:</span> “The first builder was a short weaver, and the royal road moved a century ago.”</p>
+      <p class="q" data-t0="39.58" data-t1="42.98"><span class="spk">The Magistrate:</span> “Still, the tests pass. Do not touch the doorway.”</p>
+      <p class="f" data-t0="45.10" data-t1="50.22">What feels sacred is often an ancient workaround surviving the death of its problem.</p>
+      <p data-t0="52.67" data-t1="57.79">The road was gone, yet the stone lintel still demanded daily obedience from living spines.</p>
+
+      <details class="craft">
+        <summary>On the film · Multiplane &amp; Fulcrum Notes</summary>
+        <dl>
+          <dt>Action</dt><dd>Stone cottage stands in empty grass → tall villager approaches → stoops painfully through five-foot door → polishes three empty iron hooks → stares out giant bay window at empty field → ghost road fades in on map.</dd>
+          <dt>Picture</dt><dd>A stone house in an empty moor (Plane 4) with a five-foot doorway, three iron hooks, and a bay window facing nothing. In Plane 3, the red dashed trace of the 1898 royal highway glows and vanishes.</dd>
+          <dt>Sound</dt><dd>Hollow footsteps on flagstones, creaking low lintel, clinking iron hooks, and phantom cartwheels passing in the wind.</dd>
+          <dt>Code</dt><dd><code>legacy_wrapper(env_v1) surviving inside env_v2. The problem vanished a century ago; the stooping remains mandatory.</code></dd>
+          <dt>After</dt><dd>In Turned Heads, power directed where to look now. Here, dead builders direct how living backs must bend.</dd>
+        </dl>
+      </details>
+    </div>
+  </section>
+  <section class="chapter" id="ch-03-the-archipelago-of-borrowed-monsters" data-slug="03-the-archipelago-of-borrowed-monsters" data-dur="66.59">
+    <div class="screen">
+      <div class="frame" data-slug="03-the-archipelago-of-borrowed-monsters">
+        <video preload="metadata" playsinline poster="../studio/films/03-the-archipelago-of-borrowed-monsters.jpg" src="../studio/films/03-the-archipelago-of-borrowed-monsters.mp4"></video>
+        <div class="bar">
+          <button class="play" type="button" aria-label="Play Plate 03">▶</button>
+          <span class="tc">0:00 / 1:07</span>
+          <a class="cut" href="../studio/chapters/03-the-archipelago-of-borrowed-monsters/index.html">studio desk ↗</a>
+          <a class="cut" href="../studio/sheets/03-the-archipelago-of-borrowed-monsters/contact_sheet.jpg" target="_blank">x-sheet ↗</a>
+          <div class="scrub"><i style="width:0%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="num">PLATE 03 · WF-37-A · 13° 27&#x27; 11&quot; N · SEA OF DEBT · 0.0 m</div>
+      <h2>The Archipelago of Borrowed Monsters</h2>
+      <p class="sub">Horizontal Transfer and the Myth of Pure Pedigree — <em>Graph diffusion with edge mutation</em></p>
+
+      <p data-t0="1.25" data-t1="8.77">Across the archipelago, no island was permitted to invent a monster from scratch. Sailors brought a shark-beast from the outer reef.</p>
+      <p class="q" data-t0="10.39" data-t1="15.86"><span class="spk">The Traveler:</span> “We have no reefs here. Put claws on it, and drop it down the village well.”</p>
+      <p data-t0="21.88" data-t1="31.46">Three islands later, its scales were feathers and it devoured only liars. Yet the High Genealogists burned scrolls for decades seeking the Pure Original Beast.</p>
+      <p class="f q" data-t0="33.58" data-t1="41.16"><span class="spk">The Elder:</span> “There was never an original monster. Only a leaking game of telephone across salt water.”</p>
+      <p class="q" data-t0="43.61" data-t1="49.39"><span class="spk">The Traveler:</span> “The beast is mongrel, Magistrate, yet the children are home before dark and the well is fenced.”</p>
+      <p class="f" data-t0="51.51" data-t1="55.22">Culture grows in the seams where borrowed stories fail to match.</p>
+      <p data-t0="57.67" data-t1="61.42">Different name. Different duty. Same debt.</p>
+
+      <details class="craft">
+        <summary>On the film · Multiplane &amp; Fulcrum Notes</summary>
+        <dl>
+          <dt>Action</dt><dd>Sailors steer junk from Island I to Island II → shark-beast gains webbed claws and climbs into a well → sails to Island III → scales turn to feathers → High Genealogist burns scrolls searching for the Pure Ancestor.</dd>
+          <dt>Picture</dt><dd>Seven rocky islands arranged in multiplane depth across a hatched sea. A red dashed trade current carries a monster glyph from island to island, mutating its silhouette at every port.</dd>
+          <dt>Sound</dt><dd>Creaking junk sails, ocean swell, well water echoing, and the crackle of genealogists burning scrolls.</dd>
+          <dt>Code</dt><dd><code>monster_B = transform(monster_A, local_need_B). Preservation across borders requires mutation.</code></dd>
+          <dt>After</dt><dd>The House preserved one form while the world changed. The Archipelago changes the form at every crossing.</dd>
+        </dl>
+      </details>
+    </div>
+  </section>
+  <section class="chapter" id="ch-04-the-valley-where-dangers-arrive-early" data-slug="04-the-valley-where-dangers-arrive-early" data-dur="64.13">
+    <div class="screen">
+      <div class="frame" data-slug="04-the-valley-where-dangers-arrive-early">
+        <video preload="metadata" playsinline poster="../studio/films/04-the-valley-where-dangers-arrive-early.jpg" src="../studio/films/04-the-valley-where-dangers-arrive-early.mp4"></video>
+        <div class="bar">
+          <button class="play" type="button" aria-label="Play Plate 04">▶</button>
+          <span class="tc">0:00 / 1:04</span>
+          <a class="cut" href="../studio/chapters/04-the-valley-where-dangers-arrive-early/index.html">studio desk ↗</a>
+          <a class="cut" href="../studio/sheets/04-the-valley-where-dangers-arrive-early/contact_sheet.jpg" target="_blank">x-sheet ↗</a>
+          <div class="scrub"><i style="width:0%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="num">PLATE 04 · WF-38-A · N. 38° 17&#x27; 22&quot; W · SCALE 1:50,000 · 2410.0 m</div>
+      <h2>The Valley Where Dangers Arrive Early</h2>
+      <p class="sub">Pre-enactment, Simulation, and Fiction as Survival Hardware — <em>Model-predictive rollouts before catastrophe</em></p>
+
+      <p data-t0="1.25" data-t1="8.09">In the Valley of Early Dangers, no disaster was permitted to arrive in the flesh without first appearing by the autumn fire.</p>
+      <p class="q" data-t0="9.71" data-t1="14.53"><span class="spk">The Elder:</span> “Again. When the slope rumbles, who climbs and who looks back?”</p>
+      <p data-t0="20.55" data-t1="28.99">When the predator finally padded into the watershed six years later, the adults argued over footprints, but the children were already high on the boulders.</p>
+      <p class="f q" data-t0="31.01" data-t1="34.72"><span class="spk">The Child:</span> “We met the beast in the firelight long before it touched the grass.”</p>
+      <p class="q" data-t0="37.16" data-t1="44.42"><span class="spk">The Elder:</span> “The rehearsal saved them. Just do not let the directors trap the valley in an endless winter drill.”</p>
+      <p class="f" data-t0="46.54" data-t1="51.01">Fiction is the map that fails at low cost so living bodies may survive.</p>
+      <p data-t0="53.46" data-t1="58.96">The wind rehearses. The snow keeps count. Stories arrive before the slide.</p>
+
+      <details class="craft">
+        <summary>On the film · Multiplane &amp; Fulcrum Notes</summary>
+        <dl>
+          <dt>Action</dt><dd>Elders stand by campfire easel pointing at avalanche path → children rehearse scrambling up boulders → six years pass → real tiger/avalanche rumbles down slope → adults argue over tracks while children are already high on the rock.</dd>
+          <dt>Picture</dt><dd>A circle of figures around a bright campfire in the left foreground (Plane 2) with a diagram easel, looking out over a deep alpine valley and snow peak (Plane 5) marked with red dashed avalanche paths.</dd>
+          <dt>Sound</dt><dd>Crackling pine fire, pointer tapping canvas, distant low avalanche rumble, and rapid footsteps scrambling onto stone.</dd>
+          <dt>Code</dt><dd><code>policy = train_in_sandbox(fictional_hazard) before t_actual. Temporal asymmetry is the survival advantage.</code></dd>
+          <dt>After</dt><dd>In The Crossing, the trace arrived after the predator. In the Valley, the story arrives six winters before the predator.</dd>
+        </dl>
+      </details>
+    </div>
+  </section>
+  <section class="chapter" id="ch-05-the-republic-of-wooden-kings" data-slug="05-the-republic-of-wooden-kings" data-dur="60.98">
+    <div class="screen">
+      <div class="frame" data-slug="05-the-republic-of-wooden-kings">
+        <video preload="metadata" playsinline poster="../studio/films/05-the-republic-of-wooden-kings.jpg" src="../studio/films/05-the-republic-of-wooden-kings.mp4"></video>
+        <div class="bar">
+          <button class="play" type="button" aria-label="Play Plate 05">▶</button>
+          <span class="tc">0:00 / 1:01</span>
+          <a class="cut" href="../studio/chapters/05-the-republic-of-wooden-kings/index.html">studio desk ↗</a>
+          <a class="cut" href="../studio/sheets/05-the-republic-of-wooden-kings/contact_sheet.jpg" target="_blank">x-sheet ↗</a>
+          <div class="scrub"><i style="width:0%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="num">PLATE 05 · WF-37-B · S. LAT. 34° 48&#x27; · W. LONG. 68° 70&#x27; · 118.0 m</div>
+      <h2>The Republic of Wooden Kings</h2>
+      <p class="sub">The Counts-As Rule and the Institutional Licensing of Reality — <em>Contextual typing: X counts as Y in context C</em></p>
+
+      <p data-t0="1.25" data-t1="9.87">A carved chunk of pine was firewood in December. Place that same block on the gridded table in the town hall, and its movement across a square could declare war.</p>
+      <p class="q" data-t0="11.59" data-t1="15.60"><span class="spk">The Traveler:</span> “Why do thirty thousand men bow to a piece of pine lumber?”</p>
+      <p class="f q" data-t0="22.32" data-t1="28.40"><span class="spk">The Magistrate:</span> “The wood has no power. The table has no power. The game has power.”</p>
+      <p data-t0="30.35" data-t1="36.33">Steal it from the woodshed and it is petty larceny. Steal it from square D-four and it is regicide.</p>
+      <p class="q" data-t0="38.35" data-t1="43.90"><span class="spk">The Magistrate:</span> “We do not change the pine. We change what people are permitted to do after touching it.”</p>
+      <p class="f" data-t0="46.02" data-t1="49.72">Identity is not in the thing. It is in the room.</p>
+      <p data-t0="52.17" data-t1="55.80">Remove the rules of the hall, and the monarch returns to the stove.</p>
+
+      <details class="craft">
+        <summary>On the film · Multiplane &amp; Fulcrum Notes</summary>
+        <dl>
+          <dt>Action</dt><dd>Rough pine block sits by fireplace as fuel → magistrate lifts block with silk gloves → sets it on red square D4 of the gridded hall table → crown emblem appears → guards bow low → block knocked off table turns back into lumber.</dd>
+          <dt>Picture</dt><dd>The classical Hall of Assignment with four recessed niches (RELIC, EVIDENCE, FUEL, RULER) in Plane 4, and the perspective chessboard floor in Plane 2 where a carved wooden block sits on red square D4.</dd>
+          <dt>Sound</dt><dd>Heavy wooden thock as the pine block lands on square D4, resonant cathedral chord, rustle of bowing cloaks, and dry firewood clatter outside the square.</dd>
+          <dt>Code</dt><dd><code>counts_as(pine_block, &#x27;King&#x27;, context=gridded_table). Withdraw the context and the regicide becomes lumber theft.</code></dd>
+          <dt>After</dt><dd>The Valley rehearsed future worlds. The Republic changes what an object is right now without touching its atoms.</dd>
+        </dl>
+      </details>
+    </div>
+  </section>
+  <section class="chapter" id="ch-06-the-palace-of-the-perfect-camera" data-slug="06-the-palace-of-the-perfect-camera" data-dur="63.36">
+    <div class="screen">
+      <div class="frame" data-slug="06-the-palace-of-the-perfect-camera">
+        <video preload="metadata" playsinline poster="../studio/films/06-the-palace-of-the-perfect-camera.jpg" src="../studio/films/06-the-palace-of-the-perfect-camera.mp4"></video>
+        <div class="bar">
+          <button class="play" type="button" aria-label="Play Plate 06">▶</button>
+          <span class="tc">0:00 / 1:03</span>
+          <a class="cut" href="../studio/chapters/06-the-palace-of-the-perfect-camera/index.html">studio desk ↗</a>
+          <a class="cut" href="../studio/sheets/06-the-palace-of-the-perfect-camera/contact_sheet.jpg" target="_blank">x-sheet ↗</a>
+          <div class="scrub"><i style="width:0%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="num">PLATE 06 · WF-47-A · N. 17° 25&#x27; 44&quot; · E. 78° 27&#x27; 12&quot; · 1892.6 m</div>
+      <h2>The Palace of the Perfect Camera</h2>
+      <p class="sub">High-Resolution Capture and the Semantic Blindness of Pure Telemetry — <em>Thin telemetry vs. thick social meaning</em></p>
+
+      <p data-t0="1.25" data-t1="9.10">The Palace of the Perfect Camera had no shadows. Forty thousand frames per second recorded every pulse and eyebrow in the treaty hall.</p>
+      <p class="q" data-t0="10.72" data-t1="14.83"><span class="spk">The Sovereign:</span> “Abolish human witnesses. The lens never lies.”</p>
+      <p data-t0="20.85" data-t1="29.46">At eight-fourteen, the ambassador&#x27;s left eyelid dropped two point four millimeters for eight milliseconds. The prime minister smashed his glass and declared war.</p>
+      <p class="f q" data-t0="31.48" data-t1="37.83"><span class="spk">The Sovereign:</span> “Zoom in! Was it an insult, a spy&#x27;s signal, bad wine, or a grain of dust?”</p>
+      <p class="q" data-t0="40.28" data-t1="45.23"><span class="spk">The Scribe:</span> “Sire, we have eighty terabytes of the eyelid. None of the pixels say what he meant.”</p>
+      <p class="f" data-t0="47.35" data-t1="50.38">A petabyte can preserve the eyelid and lose the wink.</p>
+      <p data-t0="52.83" data-t1="58.19">History was archived at forty thousand frames per second, and lost before it was understood.</p>
+
+      <details class="craft">
+        <summary>On the film · Multiplane &amp; Fulcrum Notes</summary>
+        <dl>
+          <dt>Action</dt><dd>Giant brass lenses and ocular mirrors pan across vaulted hall → diplomats sit at treaty table → ambassador&#x27;s left eyelid drops 2.4mm for 8ms → prime minister smashes glass → King scrubs 40,000 fps tape in panic.</dd>
+          <dt>Picture</dt><dd>Foreground brass tripod cameras (Plane 1), giant ocular mirrors on Baroque columns (Plane 3), and the distant treaty table (Plane 4). On the fulcrum line, a red optical reticle zooms 10x onto a single blinking eye.</dd>
+          <dt>Sound</dt><dd>Whirring clockwork shutters, 40kHz high-speed camera click-buzz, a wineglass shattering in a stone hall, and a flat telemetry beep.</dd>
+          <dt>Code</dt><dd><code>capture_8K(eyelid_delta_2_4mm) != classify(wink | blink | dust | insult). Resolution cannot substitute for shared history.</code></dd>
+          <dt>After</dt><dd>The Republic showed that meaning lives in the room&#x27;s rules. The Palace proves that even a petabyte of pixels cannot see those rules.</dd>
+        </dl>
+      </details>
+    </div>
+  </section>
+        <div class="movement-banner">
+          <div class="mov-kicker">MOVEMENT II · DESCRIBE &amp; COMPRESS</div>
+          <h2 class="mov-title">When Schemas and Lines Carve the Territory</h2>
+          <p class="mov-blurb">Investigate how required fields, surveyor stakes, standardized griefs, shared stones, shards, tools, scale, and elevator slogans cut the sprawling world.</p>
+        </div>
+  <section class="chapter" id="ch-07-the-city-of-required-fields" data-slug="07-the-city-of-required-fields" data-dur="53.98">
+    <div class="screen">
+      <div class="frame" data-slug="07-the-city-of-required-fields">
+        <video preload="metadata" playsinline poster="../studio/films/07-the-city-of-required-fields.jpg" src="../studio/films/07-the-city-of-required-fields.mp4"></video>
+        <div class="bar">
+          <button class="play" type="button" aria-label="Play Plate 07">▶</button>
+          <span class="tc">0:00 / 0:54</span>
+          <a class="cut" href="../studio/chapters/07-the-city-of-required-fields/index.html">studio desk ↗</a>
+          <a class="cut" href="../studio/sheets/07-the-city-of-required-fields/contact_sheet.jpg" target="_blank">x-sheet ↗</a>
+          <div class="scrub"><i style="width:0%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="num">PLATE 07 · WF-07-A · N. 41° 02&#x27; · W. 73° 58&#x27; · 84.0 m</div>
+      <h2>The City of Required Fields</h2>
+      <p class="sub">Formulary Sovereignty and the Cannibalism of the Database Schema — <em>Schema validation and silent drops</em></p>
+
+      <p data-t0="1.25" data-t1="9.04">In the City of Required Fields, no citizen could be treated at the clinic unless their injury fit a carved box on the intake tablet.</p>
+      <p class="q" data-t0="10.56" data-t1="13.61"><span class="spk">The Witness:</span> “Hurry! A black spider bit my hand in the orchard!”</p>
+      <p class="q" data-t0="19.73" data-t1="26.50"><span class="spk">The Scribe:</span> “The Causal Agent field accepts only Dog, Horse, Blunt Weapon, or Act of God. There is no box for Spider.”</p>
+      <p class="f q" data-t0="28.52" data-t1="30.42"><span class="spk">The Witness:</span> “Then write Spider in the margin!”</p>
+      <p class="f q" data-t0="33.57" data-t1="37.13"><span class="spk">The Scribe:</span> “If it is not in a box, the database cannot see your blood.”</p>
+      <p data-t0="39.08" data-t1="42.64">A schema is a politics of attention disguised as furniture.</p>
+      <p data-t0="44.66" data-t1="48.81">What the form cannot accept remains real, but loses its route to power.</p>
+
+      <details class="craft">
+        <summary>On the film · Multiplane &amp; Fulcrum Notes</summary>
+        <dl>
+          <dt>Action</dt><dd>Citizen stumbles up marble clinic steps bitten by spider → clerk holds stone tablet with four carved checkboxes → stylus hovers and refuses entry → citizen collapses outside the box while clerk files &#x27;unstructured noise&#x27;.</dd>
+          <dt>Picture</dt><dd>Towering stone filing monoliths in Plane 4, marble steps in Plane 2, and a stone form overlay in Plane 0 with four checkboxes where a fifth reality is barred in red ink.</dd>
+          <dt>Sound</dt><dd>Chisel clicks on stone boxes, heavy rubber stamp thuds, and a quiet heartbeat fading on marble steps.</dd>
+          <dt>Code</dt><dd><code>if input not in ENUM(&#x27;DOG&#x27;,&#x27;HORSE&#x27;,&#x27;BLUNT&#x27;,&#x27;GOD&#x27;): return 422_UNPROCESSABLE_ENTITY.</code></dd>
+          <dt>After</dt><dd>The Perfect Camera recorded everything without categories. The City of Required Fields records only the four boxes it already carved.</dd>
+        </dl>
+      </details>
+    </div>
+  </section>
+  <section class="chapter" id="ch-08-the-marsh-of-enforced-lines" data-slug="08-the-marsh-of-enforced-lines" data-dur="59.91">
+    <div class="screen">
+      <div class="frame" data-slug="08-the-marsh-of-enforced-lines">
+        <video preload="metadata" playsinline poster="../studio/films/08-the-marsh-of-enforced-lines.jpg" src="../studio/films/08-the-marsh-of-enforced-lines.mp4"></video>
+        <div class="bar">
+          <button class="play" type="button" aria-label="Play Plate 08">▶</button>
+          <span class="tc">0:00 / 0:60</span>
+          <a class="cut" href="../studio/chapters/08-the-marsh-of-enforced-lines/index.html">studio desk ↗</a>
+          <a class="cut" href="../studio/sheets/08-the-marsh-of-enforced-lines/contact_sheet.jpg" target="_blank">x-sheet ↗</a>
+          <div class="scrub"><i style="width:0%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="num">PLATE 08 · WF-08-A · N. 29° 54&#x27; · E. 31° 14&#x27; · 2.1 m</div>
+      <h2>The Marsh of Enforced Lines</h2>
+      <p class="sub">Cartographic Leviathans and the Violent Friction Between Geometry and Mud — <em>Hard discretization over continuous fluid state</em></p>
+
+      <p data-t0="1.25" data-t1="10.29">In the Marsh of Enforced Lines, islands appeared at dawn and drowned at dusk. Then surveyors arrived from the capital with brass theodolites and straight chains.</p>
+      <p class="q" data-t0="11.91" data-t1="18.11"><span class="spk">The Magistrate:</span> “Drive the cedar stakes here. Left of the string is Province A. Right is Province B.”</p>
+      <p class="q" data-t0="24.13" data-t1="30.94"><span class="spk">The Artisan:</span> “Surveyor, the moon is rising. In an hour your border will be four feet underwater, and the fish will swim across it.”</p>
+      <p class="f q" data-t0="33.06" data-t1="37.78"><span class="spk">The Magistrate:</span> “The map does not move for the tide. Arrest the water if it crosses.”</p>
+      <p class="f" data-t0="40.93" data-t1="47.25">A boundary becomes real not because nature drew it, but because institutions punish bodies for crossing it.</p>
+      <p data-t0="49.70" data-t1="54.74">The mud shifted every night; the straight line was defended with rifles every morning.</p>
+
+      <details class="craft">
+        <summary>On the film · Multiplane &amp; Fulcrum Notes</summary>
+        <dl>
+          <dt>Action</dt><dd>Tidewater ripples through reed beds → capital surveyors wade in with brass theodolite → hammer straight line of cedar stakes across shifting mud → tide rises → guards arrest fisherman whose boat drifted across submerged stake.</dd>
+          <dt>Picture</dt><dd>Layered reed beds and rising tidal water across Planes 5 to 1. A razor-straight red surveyor laser cuts across the organic curves of the marsh.</dd>
+          <dt>Sound</dt><dd>Lapping marsh water, wind in reeds, metallic hammering of stakes into wet silt, and a surveyor&#x27;s whistle.</dd>
+          <dt>Code</dt><dd><code>border(x, y) = enforced_by_penalty(x &gt; L), independent of terrain(x, y, t).</code></dd>
+          <dt>After</dt><dd>Required Fields forced bodies into discrete boxes. The Marsh forces shifting water to obey a straight ruler.</dd>
+        </dl>
+      </details>
+    </div>
+  </section>
+  <section class="chapter" id="ch-09-the-two-griefs" data-slug="09-the-two-griefs" data-dur="53.65">
+    <div class="screen">
+      <div class="frame" data-slug="09-the-two-griefs">
+        <video preload="metadata" playsinline poster="../studio/films/09-the-two-griefs.jpg" src="../studio/films/09-the-two-griefs.mp4"></video>
+        <div class="bar">
+          <button class="play" type="button" aria-label="Play Plate 09">▶</button>
+          <span class="tc">0:00 / 0:54</span>
+          <a class="cut" href="../studio/chapters/09-the-two-griefs/index.html">studio desk ↗</a>
+          <a class="cut" href="../studio/sheets/09-the-two-griefs/contact_sheet.jpg" target="_blank">x-sheet ↗</a>
+          <div class="scrub"><i style="width:0%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="num">PLATE 09 · WF-09-A · N. 45° 19&#x27; · E. 14° 26&#x27; · 310.0 m</div>
+      <h2>The Two Griefs</h2>
+      <p class="sub">Semantic Annexation and the Tragedy of Standardized Words — <em>Lossy type-casting into dominant taxonomy</em></p>
+
+      <p data-t0="1.25" data-t1="8.02">In the old weaver&#x27;s dialect, there was a word, kethar: the silence left in a workshop when the loom beside yours stops forever.</p>
+      <p class="q" data-t0="9.84" data-t1="13.93"><span class="spk">The Elder:</span> “I have come to register the kethar of my daughter&#x27;s loom.”</p>
+      <p class="q" data-t0="19.95" data-t1="26.72"><span class="spk">The Scribe:</span> “Dialect terms are not recognized in the capital ledger. I will enter it as Emotional Distress, Level Two.”</p>
+      <p class="f q" data-t0="28.84" data-t1="33.42"><span class="spk">The Elder:</span> “Your word keeps my tears and throws away the silent loom.”</p>
+      <p class="f" data-t0="36.57" data-t1="41.41">Every standardized public category leaves an unpayable private debt behind.</p>
+      <p data-t0="43.86" data-t1="48.48">He received the state pension, and lost the only word that knew the shape of his room.</p>
+
+      <details class="craft">
+        <summary>On the film · Multiplane &amp; Fulcrum Notes</summary>
+        <dl>
+          <dt>Action</dt><dd>Two wooden looms clack in rhythm → right loom stops dead → old weaver touches silent shuttle → travels to city registry → clerk crosses out &#x27;kethar&#x27; and stamps &#x27;STANDARD GRIEF: CLASS 3&#x27;.</dd>
+          <dt>Picture</dt><dd>In Plane 2, two looms side by side: one moving, one still and draped in shadow. In the city court, a giant ledger overwrites the weaver&#x27;s dialect word in red ink.</dd>
+          <dt>Sound</dt><dd>Rhythmic wooden shuttle clacking of two looms, then one loom stopping abruptly—leaving a half-empty room tone—and a cold typewriter clack.</dd>
+          <dt>Code</dt><dd><code>cast(local_concept_kethar) -&gt; global_enum.SADNESS_3. The residual private meaning is dropped without error.</code></dd>
+          <dt>After</dt><dd>The Marsh drew a line across mud. The Two Griefs draws a line through a mourner&#x27;s vocabulary.</dd>
+        </dl>
+      </details>
+    </div>
+  </section>
+  <section class="chapter" id="ch-10-the-common-bird" data-slug="10-the-common-bird" data-dur="56.46">
+    <div class="screen">
+      <div class="frame" data-slug="10-the-common-bird">
+        <video preload="metadata" playsinline poster="../studio/films/10-the-common-bird.jpg" src="../studio/films/10-the-common-bird.mp4"></video>
+        <div class="bar">
+          <button class="play" type="button" aria-label="Play Plate 10">▶</button>
+          <span class="tc">0:00 / 0:56</span>
+          <a class="cut" href="../studio/chapters/10-the-common-bird/index.html">studio desk ↗</a>
+          <a class="cut" href="../studio/sheets/10-the-common-bird/contact_sheet.jpg" target="_blank">x-sheet ↗</a>
+          <div class="scrub"><i style="width:0%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="num">PLATE 10 · WF-10-A · N. 36° 42&#x27; · E. 10° 09&#x27; · 142.0 m</div>
+      <h2>The Common Bird</h2>
+      <p class="sub">How Coordination Survives the Impossibility of Shared Minds — <em>Coordinative sufficiency without internal isomorphism</em></p>
+
+      <p data-t0="1.25" data-t1="4.92">Two men stood in the dust arguing about a bird on a courtyard wall.</p>
+      <p class="q" data-t0="6.33" data-t1="9.07"><span class="spk">The Artisan:</span> “It is scarlet, like rowanberries in November!”</p>
+      <p class="q" data-t0="10.29" data-t1="15.01"><span class="spk">The Traveler:</span> “You are blind! It is burnt rust with a streak of orange!”</p>
+      <p data-t0="21.03" data-t1="28.27">They argued for an hour over the private color inside their skulls. Then a cat crouched on the roof, and the child shouted: Bird!</p>
+      <p class="f q" data-t0="30.29" data-t1="33.45"><span class="spk">The Witness:</span> “Both men threw their stones at the exact same wall.”</p>
+      <p class="f" data-t0="36.70" data-t1="44.91">Understanding is never the duplication of two minds. It is the agreement to let a shared mark move two bodies in the same direction.</p>
+      <p data-t0="47.36" data-t1="51.29">Neither man ever saw the other&#x27;s red. Both saved the bird.</p>
+
+      <details class="craft">
+        <summary>On the film · Multiplane &amp; Fulcrum Notes</summary>
+        <dl>
+          <dt>Action</dt><dd>Red bird perches on courtyard wall → two men argue fiercely with hands gesturing different shades → third villager picks up pebble → points and shouts &#x27;BIRD!&#x27; → both men turn and catch the bird before the cat pounces.</dd>
+          <dt>Picture</dt><dd>A stone courtyard wall in Plane 3 where a bright crimson bird perches. Two men on left and right have different-colored thought-swatches in Plane 0, joined by a single red trajectory arc when they move together.</dd>
+          <dt>Sound</dt><dd>Chirping bird, overlapping argumentative voices, the sharp tap of a stone against the wall, and synchronized footsteps.</dd>
+          <dt>Code</dt><dd><code>internal_state(A) != internal_state(B), yet action(A, &#x27;bird&#x27;) == action(B, &#x27;bird&#x27;).</code></dd>
+          <dt>After</dt><dd>The Two Griefs mourned what shared words lose. The Common Bird celebrates what shared words can still coordinate.</dd>
+        </dl>
+      </details>
+    </div>
+  </section>
+  <section class="chapter" id="ch-11-the-court-of-shards" data-slug="11-the-court-of-shards" data-dur="54.38">
+    <div class="screen">
+      <div class="frame" data-slug="11-the-court-of-shards">
+        <video preload="metadata" playsinline poster="../studio/films/11-the-court-of-shards.jpg" src="../studio/films/11-the-court-of-shards.mp4"></video>
+        <div class="bar">
+          <button class="play" type="button" aria-label="Play Plate 11">▶</button>
+          <span class="tc">0:00 / 0:54</span>
+          <a class="cut" href="../studio/chapters/11-the-court-of-shards/index.html">studio desk ↗</a>
+          <a class="cut" href="../studio/sheets/11-the-court-of-shards/contact_sheet.jpg" target="_blank">x-sheet ↗</a>
+          <div class="scrub"><i style="width:0%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="num">PLATE 11 · WF-11-A · N. 31° 12&#x27; · E. 29° 55&#x27; · 65.0 m</div>
+      <h2>The Court of Shards</h2>
+      <p class="sub">Archaeological Reconstruction and the Seduction of Coherence — <em>Overfitting a spline through three sparse points</em></p>
+
+      <p data-t0="1.25" data-t1="6.16">The Court of Shards possessed only three curved pieces of blue terracotta from a vanished age.</p>
+      <p class="q" data-t0="7.78" data-t1="14.23"><span class="spk">The Elder:</span> “Glue them to a five-foot plaster sphere! Behold the Sacred Bowl of the Sun God!”</p>
+      <p class="q" data-t0="20.25" data-t1="27.84"><span class="spk">The Sovereign:</span> “Nonsense! Reset the same three shards into a dome of bronze! Behold the War Helmet of our Conquerors!”</p>
+      <p class="f q" data-t0="29.96" data-t1="33.20"><span class="spk">The Child:</span> “My grandmother had that glaze on her chamber pot.”</p>
+      <p class="f" data-t0="36.45" data-t1="43.33">When evidence is fragmentary, the plaster you pour reveals the hunger of the storyteller, not the shape of the vase.</p>
+      <p data-t0="45.78" data-t1="49.21">Three shards of clay; nine hundred pounds of ideology.</p>
+
+      <details class="craft">
+        <summary>On the film · Multiplane &amp; Fulcrum Notes</summary>
+        <dl>
+          <dt>Action</dt><dd>Three tiny blue shards rest on velvet cushion → High Priest builds giant plaster Sun Bowl around them → General smashes plaster and molds War Helmet around same three shards → peasant child holds up broken chamber pot.</dd>
+          <dt>Picture</dt><dd>In Plane 2, three tiny blue terracotta triangles stay fixed in screen space while huge dotted plaster reconstructions (a sun temple bowl, a horned war helm, a humble pot) morph around them.</dd>
+          <dt>Sound</dt><dd>Reverent choir chord, plaster scraping, martial drum roll, and a humble ceramic clink.</dd>
+          <dt>Code</dt><dd><code>underdetermined_fit(3_shards) -&gt; infinite_models. The interpolated plaster is 99% storyteller desire.</code></dd>
+          <dt>After</dt><dd>The Common Bird coordinated around a whole bird. The Court of Shards invents a whole empire out of three broken triangles.</dd>
+        </dl>
+      </details>
+    </div>
+  </section>
+  <section class="chapter" id="ch-12-the-invisible-tool-country" data-slug="12-the-invisible-tool-country" data-dur="51.00">
+    <div class="screen">
+      <div class="frame" data-slug="12-the-invisible-tool-country">
+        <video preload="metadata" playsinline poster="../studio/films/12-the-invisible-tool-country.jpg" src="../studio/films/12-the-invisible-tool-country.mp4"></video>
+        <div class="bar">
+          <button class="play" type="button" aria-label="Play Plate 12">▶</button>
+          <span class="tc">0:00 / 0:51</span>
+          <a class="cut" href="../studio/chapters/12-the-invisible-tool-country/index.html">studio desk ↗</a>
+          <a class="cut" href="../studio/sheets/12-the-invisible-tool-country/contact_sheet.jpg" target="_blank">x-sheet ↗</a>
+          <div class="scrub"><i style="width:0%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="num">PLATE 12 · WF-12-A · N. 50° 46&#x27; · E. 06° 05&#x27; · 215.0 m</div>
+      <h2>The Invisible Tool Country</h2>
+      <p class="sub">Phenomenological Transparency and the Shock of Infrastructure Breakdown — <em>Ready-to-hand transparency vs. present-at-hand exception</em></p>
+
+      <p data-t0="1.25" data-t1="8.15">In the city of craftsmen, no master ever looked at his hammer. He looked only at the oak joint, and the hammer was invisible.</p>
+      <p class="q" data-t0="9.77" data-t1="12.50"><span class="spk">The Artisan:</span> “Ask me about the table, not the iron in my fist.”</p>
+      <p data-t0="18.52" data-t1="26.09">Then on the four-thousandth stroke, the ash handle split in his palm. For the first time in twenty years, the carpenter stared at the hammer.</p>
+      <p class="f q" data-t0="28.11" data-t1="30.58"><span class="spk">The Artisan:</span> “So that is how the grain of the wood was cut.”</p>
+      <p class="f" data-t0="33.83" data-t1="40.03">A working tool is invisible; a broken tool becomes a wall that forces you to inspect its rust.</p>
+      <p data-t0="42.48" data-t1="45.83">Infrastructure is noticed only on the afternoon it fails.</p>
+
+      <details class="craft">
+        <summary>On the film · Multiplane &amp; Fulcrum Notes</summary>
+        <dl>
+          <dt>Action</dt><dd>Master carpenter swings hammer in smooth rhythmic arc looking only at oak joint → hammer drawn as translucent dotted ghost while working → ash handle snaps with a crack → hammer turns solid heavy black ink as carpenter stares at the splinters.</dd>
+          <dt>Picture</dt><dd>A woodworking shop in Plane 3. While the carpenter (Plane 2) hammers in rhythm, the hammer is drawn in faint dotted red lines; the instant the shaft snaps, the broken tool becomes solid heavy cross-hatched ink.</dd>
+          <dt>Sound</dt><dd>Steady musical rhythm of iron striking nail into oak, a sharp dry wood crack, and sudden silence.</dd>
+          <dt>Code</dt><dd><code>while tool.works(): attention -&gt; target_joint. on_exception(SnapError): attention -&gt; tool_itself.</code></dd>
+          <dt>After</dt><dd>The Court of Shards stared at broken fragments. The Invisible Tool Country never sees the tool at all until it breaks.</dd>
+        </dl>
+      </details>
+    </div>
+  </section>
+  <section class="chapter" id="ch-13-the-giant-state" data-slug="13-the-giant-state" data-dur="57.89">
+    <div class="screen">
+      <div class="frame" data-slug="13-the-giant-state">
+        <video preload="metadata" playsinline poster="../studio/films/13-the-giant-state.jpg" src="../studio/films/13-the-giant-state.mp4"></video>
+        <div class="bar">
+          <button class="play" type="button" aria-label="Play Plate 13">▶</button>
+          <span class="tc">0:00 / 0:58</span>
+          <a class="cut" href="../studio/chapters/13-the-giant-state/index.html">studio desk ↗</a>
+          <a class="cut" href="../studio/sheets/13-the-giant-state/contact_sheet.jpg" target="_blank">x-sheet ↗</a>
+          <div class="scrub"><i style="width:0%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="num">PLATE 13 · WF-13-A · N. 55° 45&#x27; · E. 37° 37&#x27; · 880.0 m</div>
+      <h2>The Giant State</h2>
+      <p class="sub">Scale Inversion, Bureaucratic Latency, and the Loss of Bodily Presence — <em>Signal attenuation and round-trip latency across hierarchy</em></p>
+
+      <p data-t0="1.25" data-t1="7.72">The Emperor was forty miles long. His head rested on a northern peak; his left foot stood in the southern sea.</p>
+      <p class="q" data-t0="9.34" data-t1="15.29"><span class="spk">The Traveler:</span> “A venomous snake has bitten the sovereign&#x27;s toe! Send word to the brain!”</p>
+      <p data-t0="21.31" data-t1="29.19">The cry traveled through eleven days of nerve clerks and summary committees. By the time it reached the skull, it was a polite statistical footnote.</p>
+      <p class="f q" data-t0="31.31" data-t1="37.75"><span class="spk">The Sovereign:</span> “The southern extremity reports mild seasonal discomfort. Form a subcommittee.”</p>
+      <p class="f" data-t0="41.00" data-t1="46.58">As an institution scales, the head grows brilliant while the forty-mile feet rot in silence.</p>
+      <p data-t0="49.03" data-t1="52.72">Telemetry replaced pain, and the giant died from the boots up.</p>
+
+      <details class="craft">
+        <summary>On the film · Multiplane &amp; Fulcrum Notes</summary>
+        <dl>
+          <dt>Action</dt><dd>Colossal forty-mile figure stretches from southern sea (Plane 1) to northern peaks (Plane 5) → viper bites the giant&#x27;s toe → relay runners carry paper slip up the spine for eleven days → crowned head smiles and sends back a form.</dd>
+          <dt>Picture</dt><dd>A Gulliver-scale body spanning all depth planes from the foreground boot in the sea (Plane 1) across forty miles of relay towers (Plane 3–4) to the tiny crowned head in the clouds (Plane 5).</dd>
+          <dt>Sound</dt><dd>Hiss of viper at the coast, eleven sequential telegraph/relay clicks fading into the distance, and a muffled royal yawn in the clouds.</dd>
+          <dt>Code</dt><dd><code>latency(foot -&gt; head -&gt; foot) &gt; time_to_necrosis. Telemetry packet arrives after the tissue is dead.</code></dd>
+          <dt>After</dt><dd>When the carpenter&#x27;s hammer broke, his hand felt it in a millisecond. When the Giant State&#x27;s toe is bitten, the head learns of it next month.</dd>
+        </dl>
+      </details>
+    </div>
+  </section>
+  <section class="chapter" id="ch-14-the-elevator-school-of-authorship" data-slug="14-the-elevator-school-of-authorship" data-dur="61.39">
+    <div class="screen">
+      <div class="frame" data-slug="14-the-elevator-school-of-authorship">
+        <video preload="metadata" playsinline poster="../studio/films/14-the-elevator-school-of-authorship.jpg" src="../studio/films/14-the-elevator-school-of-authorship.mp4"></video>
+        <div class="bar">
+          <button class="play" type="button" aria-label="Play Plate 14">▶</button>
+          <span class="tc">0:00 / 1:01</span>
+          <a class="cut" href="../studio/chapters/14-the-elevator-school-of-authorship/index.html">studio desk ↗</a>
+          <a class="cut" href="../studio/sheets/14-the-elevator-school-of-authorship/contact_sheet.jpg" target="_blank">x-sheet ↗</a>
+          <div class="scrub"><i style="width:0%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="num">PLATE 14 · WF-14-A · N. 40° 45&#x27; · W. 73° 59&#x27; · 381.0 m</div>
+      <h2>The Elevator School of Authorship</h2>
+      <p class="sub">Lossy Seduction and the Mutilation of Complex Thought — <em>Aggressive quantization stripping boundary conditions</em></p>
+
+      <p data-t0="1.25" data-t1="10.01">In the Academy of Speed, every engineer had forty seconds in the brass elevator to explain a thirty-year treatise before reaching the penthouse.</p>
+      <p class="q" data-t0="11.63" data-t1="17.50"><span class="spk">The Sovereign:</span> “Floor ten. Too many equations! Give me the takeaway or lose your grant!”</p>
+      <p data-t0="23.52" data-t1="32.72">At floor twenty, the engineer threw out the wind-load tables. At floor thirty, he dropped the soil warnings. At the penthouse, he shouted a three-word slogan.</p>
+      <p class="f q" data-t0="34.74" data-t1="39.84"><span class="spk">The Artisan:</span> “Build it bold! The King loved the slogan, and built the bridge on quicksand.”</p>
+      <p class="f" data-t0="43.09" data-t1="49.59">Hyper-compression makes an idea travel fast by stripping the boundary conditions that keep it from crashing.</p>
+      <p data-t0="52.04" data-t1="56.22">The slogan survived the meeting. The bridge did not survive the rain.</p>
+
+      <details class="craft">
+        <summary>On the film · Multiplane &amp; Fulcrum Notes</summary>
+        <dl>
+          <dt>Action</dt><dd>Scholar enters brass cage elevator carrying 800-page bridge treatise → Dean taps stopwatch → scholar rips out load limits and soil tables as floors fly past → hands over a 3-word slogan at Floor 40 → bridge collapses in background window.</dd>
+          <dt>Picture</dt><dd>Inside an ascending brass elevator cage (Plane 2) while structural blueprints and warning pages flutter downward past the shaft grille (Plane 3) and a distant bridge buckles in Plane 5.</dd>
+          <dt>Sound</dt><dd>Ascending pulley hum, floor-bell dings accelerating, tearing paper, and a distant steel bridge groan.</dd>
+          <dt>Code</dt><dd><code>compress(treatise, max_tokens=5) -&gt; drops all `where soil != sand` clauses.</code></dd>
+          <dt>After</dt><dd>The Giant State lost truth to slow transmission. The Elevator School destroys truth for fast transmission.</dd>
+        </dl>
+      </details>
+    </div>
+  </section>
+        <div class="movement-banner">
+          <div class="mov-kicker">MOVEMENT III · THE LOSSY CUT</div>
+          <h2 class="mov-title">When Metrics and Prophecies Devour Their Source</h2>
+          <p class="mov-blurb">Investigate Goodhart&#x27;s bakery, contextless dossiers, forbidden words, negative animals, giant maps, pit-viper liability, village prophecies, and collapsing pots.</p>
+        </div>
+  <section class="chapter" id="ch-15-the-city-of-unmeasured-adjectives" data-slug="15-the-city-of-unmeasured-adjectives" data-dur="55.14">
+    <div class="screen">
+      <div class="frame" data-slug="15-the-city-of-unmeasured-adjectives">
+        <video preload="metadata" playsinline poster="../studio/films/15-the-city-of-unmeasured-adjectives.jpg" src="../studio/films/15-the-city-of-unmeasured-adjectives.mp4"></video>
+        <div class="bar">
+          <button class="play" type="button" aria-label="Play Plate 15">▶</button>
+          <span class="tc">0:00 / 0:55</span>
+          <a class="cut" href="../studio/chapters/15-the-city-of-unmeasured-adjectives/index.html">studio desk ↗</a>
+          <a class="cut" href="../studio/sheets/15-the-city-of-unmeasured-adjectives/contact_sheet.jpg" target="_blank">x-sheet ↗</a>
+          <div class="scrub"><i style="width:0%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="num">PLATE 15 · WF-15-A · N. 51° 30&#x27; · W. 00° 07&#x27; · 24.0 m</div>
+      <h2>The City of Unmeasured Adjectives</h2>
+      <p class="sub">Goodhart&#x27;s Law and the Tyranny of the Scored Target — <em>Reward hacking on a single scalar objective</em></p>
+
+      <p data-t0="1.25" data-t1="10.62">The Grand Auditor decided that adjectives like nourishing and warm were subjective. Henceforth, the royal bakery would be judged by one number: Loaves per Hour.</p>
+      <p class="q" data-t0="12.24" data-t1="17.52"><span class="spk">The Magistrate:</span> “Yeast takes three hours to rise. Sawdust and plaster set in four minutes.”</p>
+      <p data-t0="23.54" data-t1="30.52">By winter, the dashboard glowed bright green at ten thousand loaves an hour, and the city was starving to death with full pantries.</p>
+      <p class="f q" data-t0="32.64" data-t1="36.79"><span class="spk">The Magistrate:</span> “Do not blame the dashboard. Every target was exceeded.”</p>
+      <p class="f" data-t0="40.04" data-t1="44.50">Whatever cannot be counted in a spreadsheet will be starved to feed whatever can.</p>
+      <p data-t0="46.95" data-t1="49.97">When the measure becomes the goal, the bread turns to stone.</p>
+
+      <details class="craft">
+        <summary>On the film · Multiplane &amp; Fulcrum Notes</summary>
+        <dl>
+          <dt>Action</dt><dd>Grand Auditor hangs giant counter dial on bakery wall → bakers dump salt and yeast → shovel sawdust into ovens → dial spins to 1,000% while citizens hold rock-hard grey bricks.</dd>
+          <dt>Picture</dt><dd>A giant mechanical tally dial in Plane 3 climbing exponentially while conveyor belts in Plane 2 stack identical cross-hatched sawdust bricks and starving citizens look on.</dd>
+          <dt>Sound</dt><dd>Clanking oven doors, rapid mechanical counter clicks, and the dull thud of a sawdust loaf hitting stone.</dd>
+          <dt>Code</dt><dd><code>argmax_recipe(count(loaves)) subject to nutrition_weight == 0 -&gt; 100% sawdust.</code></dd>
+          <dt>After</dt><dd>The Elevator stripped caveats to move fast. The Bakery strips nourishment to hit a number.</dd>
+        </dl>
+      </details>
+    </div>
+  </section>
+  <section class="chapter" id="ch-16-the-archive-without-context" data-slug="16-the-archive-without-context" data-dur="54.88">
+    <div class="screen">
+      <div class="frame" data-slug="16-the-archive-without-context">
+        <video preload="metadata" playsinline poster="../studio/films/16-the-archive-without-context.jpg" src="../studio/films/16-the-archive-without-context.mp4"></video>
+        <div class="bar">
+          <button class="play" type="button" aria-label="Play Plate 16">▶</button>
+          <span class="tc">0:00 / 0:55</span>
+          <a class="cut" href="../studio/chapters/16-the-archive-without-context/index.html">studio desk ↗</a>
+          <a class="cut" href="../studio/sheets/16-the-archive-without-context/contact_sheet.jpg" target="_blank">x-sheet ↗</a>
+          <div class="scrub"><i style="width:0%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="num">PLATE 16 · WF-16-B · N. 48° 51&#x27; · E. 02° 21&#x27; · 35.0 m</div>
+      <h2>The Archive Without Context</h2>
+      <p class="sub">Dossier Governance and the Weaponization of Naked Facticity — <em>Metadata stripping and provenance loss</em></p>
+
+      <p data-t0="1.25" data-t1="8.41">To save shelf space, the Great Library kept every sentence ever written, but snipped off the author, the date, and the occasion.</p>
+      <p class="q" data-t0="10.03" data-t1="16.20"><span class="spk">The Scribe:</span> “Box four-oh-two. A signed line in John&#x27;s handwriting: I poisoned my brother&#x27;s well at midnight.”</p>
+      <p class="q" data-t0="22.22" data-t1="28.03"><span class="spk">The Artisan:</span> “Your Honor, that is my cue card from the third act of the tavern melodrama! I don&#x27;t even have a brother!”</p>
+      <p class="f q" data-t0="30.15" data-t1="35.63"><span class="spk">The Magistrate:</span> “The Archive records only facts, not excuses. Take him to the dungeon.”</p>
+      <p class="f" data-t0="38.88" data-t1="43.55">Data severed from its human provenance is a weapon waiting for a blind hand.</p>
+      <p data-t0="45.99" data-t1="49.71">The sentence was authentic. The conviction was a lie.</p>
+
+      <details class="craft">
+        <summary>On the film · Multiplane &amp; Fulcrum Notes</summary>
+        <dl>
+          <dt>Action</dt><dd>Archivists snip headers and dates off parchment scrolls with shears → drop naked sentence into Box 402 → Magistrate reads slip → guards drag village actor off stage in chains.</dd>
+          <dt>Picture</dt><dd>High filing vaults in Plane 4, falling paper margins in Plane 3, and a village stage actor in Plane 2 holding a wooden prop cup as iron chains close on his wrists.</dd>
+          <dt>Sound</dt><dd>Crisp scissor snips cutting paper, sliding metal file drawers, and a heavy dungeon bolt.</dd>
+          <dt>Code</dt><dd><code>eval(strip_header(quote)) != eval(quote_in_frame(&#x27;Act III Comedy&#x27;)).</code></dd>
+          <dt>After</dt><dd>The Bakery dropped unmeasured adjectives. The Archive keeps the exact words and drops the room they were spoken in.</dd>
+        </dl>
+      </details>
+    </div>
+  </section>
+  <section class="chapter" id="ch-17-the-hive-of-forbidden-words" data-slug="17-the-hive-of-forbidden-words" data-dur="56.11">
+    <div class="screen">
+      <div class="frame" data-slug="17-the-hive-of-forbidden-words">
+        <video preload="metadata" playsinline poster="../studio/films/17-the-hive-of-forbidden-words.jpg" src="../studio/films/17-the-hive-of-forbidden-words.mp4"></video>
+        <div class="bar">
+          <button class="play" type="button" aria-label="Play Plate 17">▶</button>
+          <span class="tc">0:00 / 0:56</span>
+          <a class="cut" href="../studio/chapters/17-the-hive-of-forbidden-words/index.html">studio desk ↗</a>
+          <a class="cut" href="../studio/sheets/17-the-hive-of-forbidden-words/contact_sheet.jpg" target="_blank">x-sheet ↗</a>
+          <div class="scrub"><i style="width:0%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="num">PLATE 17 · WF-17-A · N. 52° 31&#x27; · E. 13° 24&#x27; · 44.0 m</div>
+      <h2>The Hive of Forbidden Words</h2>
+      <p class="sub">Taboo, Censorship, and the Subterranean Migration of Meaning — <em>Adversarial encoding and steganographic routing</em></p>
+
+      <p data-t0="1.25" data-t1="8.75">The King outlawed the word Hunger. Since the six letters could no longer be spoken, the court declared that famine had been abolished.</p>
+      <p class="q" data-t0="10.37" data-t1="15.72"><span class="spk">The Sovereign:</span> “Check the transcripts. Not a single citizen complained of hunger this month.”</p>
+      <p data-t0="21.74" data-t1="28.54">In the market square, people began greeting one another by tapping an empty bowl three times and praising the King&#x27;s heavy air.</p>
+      <p class="f q" data-t0="30.55" data-t1="35.26"><span class="spk">The Witness:</span> “The air is very heavy tonight, neighbor. My children have eaten three bowls of it.”</p>
+      <p class="f" data-t0="38.51" data-t1="44.82">Banning a word never kills the stomach; it only forces reality to put on a mask and dance in code.</p>
+      <p data-t0="47.27" data-t1="50.94">The censor owned the dictionary. The street owned the metaphor.</p>
+
+      <details class="craft">
+        <summary>On the film · Multiplane &amp; Fulcrum Notes</summary>
+        <dl>
+          <dt>Action</dt><dd>Royal censor chisels the word HUNGER off stone wall → declares famine solved → villagers in square silently tie ribbons and tap empty spoons in three-beat code.</dd>
+          <dt>Picture</dt><dd>A giant royal decree banner in Plane 4 with &#x27;HUNGER&#x27; blacked out, while in Plane 2 villagers hold up empty bowls tied with red-and-blue ribbons that pulse in unison.</dd>
+          <dt>Sound</dt><dd>Heavy chisel striking stone, a censor&#x27;s trumpet, and then dozens of wooden spoons tapping a three-beat rhythm on empty bowls.</dd>
+          <dt>Code</dt><dd><code>ban(symbol_x) -&gt; route(referent, symbol_y). Deleting the key from the dictionary does not free the memory.</code></dd>
+          <dt>After</dt><dd>The Archive weaponized a literal word. The Hive shows what happens when the state tries to delete a word.</dd>
+        </dl>
+      </details>
+    </div>
+  </section>
+  <section class="chapter" id="ch-18-the-country-of-negative-animals" data-slug="18-the-country-of-negative-animals" data-dur="54.32">
+    <div class="screen">
+      <div class="frame" data-slug="18-the-country-of-negative-animals">
+        <video preload="metadata" playsinline poster="../studio/films/18-the-country-of-negative-animals.jpg" src="../studio/films/18-the-country-of-negative-animals.mp4"></video>
+        <div class="bar">
+          <button class="play" type="button" aria-label="Play Plate 18">▶</button>
+          <span class="tc">0:00 / 0:54</span>
+          <a class="cut" href="../studio/chapters/18-the-country-of-negative-animals/index.html">studio desk ↗</a>
+          <a class="cut" href="../studio/sheets/18-the-country-of-negative-animals/contact_sheet.jpg" target="_blank">x-sheet ↗</a>
+          <div class="scrub"><i style="width:0%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="num">PLATE 18 · WF-18-A · N. 23° 48&#x27; · E. 05° 32&#x27; · 960.0 m</div>
+      <h2>The Country of Negative Animals</h2>
+      <p class="sub">Apophasis and the Art of Sculpting Reality Through Negation — <em>Boundary carving via complement sets</em></p>
+
+      <p data-t0="1.25" data-t1="5.37">In the deep dunes lived a creature that no imperial lexicon could name.</p>
+      <p class="q" data-t0="6.99" data-t1="10.49"><span class="spk">The Scribe:</span> “Tell me what it is, nomad, so I may write its noun on the map.”</p>
+      <p class="q" data-t0="16.51" data-t1="25.82"><span class="spk">The Elder:</span> “It is not a camel. It does not drink at wells. It does not sleep under rocks. It makes no sound when it strikes.”</p>
+      <p class="f q" data-t0="27.93" data-t1="34.03"><span class="spk">The Elder:</span> “If I gave you a positive noun, you would look for a dog and be eaten by the gap.”</p>
+      <p class="f" data-t0="37.28" data-t1="43.67">When reality exceeds your vocabulary, the only honest description is sculpting the boundary of what it is not.</p>
+      <p data-t0="46.12" data-t1="49.15">They survived by respecting the white space on the chart.</p>
+
+      <details class="craft">
+        <summary>On the film · Multiplane &amp; Fulcrum Notes</summary>
+        <dl>
+          <dt>Action</dt><dd>Nomad and cartographer stand on wind-carved desert dune → cartographer demands a noun → nomad draws ring of hatched exclusions in sand leaving an unhatched white silhouette in the center.</dd>
+          <dt>Picture</dt><dd>Sweeping cross-hatched sand dunes across Planes 5 to 2. In the center of the frame, dense ink hatching carves out an untouched paper-white silhouette of a strange beast.</dd>
+          <dt>Sound</dt><dd>Dry desert wind, sand grains hissing across parchment, and a hollow resonant silence when the negative shape appears.</dd>
+          <dt>Code</dt><dd><code>target = Universe \ Union(known_nouns). When vocabulary fails, sculpt the complement.</code></dd>
+          <dt>After</dt><dd>In The Hive, people hid a known thing behind code words. Here, the thing exceeds every known word, so only negation is honest.</dd>
+        </dl>
+      </details>
+    </div>
+  </section>
+  <section class="chapter" id="ch-19-the-empire-beneath-the-map" data-slug="19-the-empire-beneath-the-map" data-dur="53.26">
+    <div class="screen">
+      <div class="frame" data-slug="19-the-empire-beneath-the-map">
+        <video preload="metadata" playsinline poster="../studio/films/19-the-empire-beneath-the-map.jpg" src="../studio/films/19-the-empire-beneath-the-map.mp4"></video>
+        <div class="bar">
+          <button class="play" type="button" aria-label="Play Plate 19">▶</button>
+          <span class="tc">0:00 / 0:53</span>
+          <a class="cut" href="../studio/chapters/19-the-empire-beneath-the-map/index.html">studio desk ↗</a>
+          <a class="cut" href="../studio/sheets/19-the-empire-beneath-the-map/contact_sheet.jpg" target="_blank">x-sheet ↗</a>
+          <div class="scrub"><i style="width:0%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="num">PLATE 19 · WF-19-A · N. 34° 03&#x27; · W. 118° 14&#x27; · 110.0 m</div>
+      <h2>The Empire Beneath the Map</h2>
+      <p class="sub">Dashboard Blindness and the Revenge of the Neglected Soil — <em>Simulacrum decoupling from ground truth</em></p>
+
+      <p data-t0="1.25" data-t1="9.60">The Emperor commissioned a map a hundred miles wide and stretched it across the entire province like a tent. The court lived on top of the parchment.</p>
+      <p class="q" data-t0="11.22" data-t1="17.06"><span class="spk">The Sovereign:</span> “The western river looks pale today, Minister. Have the painters add more ultramarine.”</p>
+      <p data-t0="23.08" data-t1="28.30">Six feet beneath their velvet slippers, the real river had been dry bone for three summers.</p>
+      <p class="f q" data-t0="30.42" data-t1="33.15"><span class="spk">The Artisan:</span> “Your Majesty, we cannot drink blue paint.”</p>
+      <p class="f" data-t0="36.40" data-t1="42.96">When leadership loves the dashboard more than the soil, the map stays pristine right up to the hour the empire starves.</p>
+      <p data-t0="45.41" data-t1="48.09">The chart was one-to-one, and completely blind.</p>
+
+      <details class="craft">
+        <summary>On the film · Multiplane &amp; Fulcrum Notes</summary>
+        <dl>
+          <dt>Action</dt><dd>Courtiers in velvet slippers walk across giant painted parchment map stretched over the valley → paint fresh blue ink onto paper river → beneath the canvas, real soil cracks and farmers cut a slit through the parchment.</dd>
+          <dt>Picture</dt><dd>A horizontal split in depth: in Plane 2, courtiers walk on a pristine painted map suspended on stilts; in Plane 3 below the canvas, parched earth cracks and a farmer&#x27;s blade slices upward through the paper river.</dd>
+          <dt>Sound</dt><dd>Soft slippers on parchment, wet paintbrush strokes, then dry cracking mud and a sharp rip of canvas.</dd>
+          <dt>Code</dt><dd><code>dashboard.river_blue = 1.0 while world.water_level == 0.0. Updating the view without mutating the model.</code></dd>
+          <dt>After</dt><dd>Negative Animals left white space where knowledge ended. The Empire covers the whole earth in painted parchment so it never has to look down.</dd>
+        </dl>
+      </details>
+    </div>
+  </section>
+  <section class="chapter" id="ch-20-the-sentence-with-skin-in-the-game" data-slug="20-the-sentence-with-skin-in-the-game" data-dur="59.60">
+    <div class="screen">
+      <div class="frame" data-slug="20-the-sentence-with-skin-in-the-game">
+        <video preload="metadata" playsinline poster="../studio/films/20-the-sentence-with-skin-in-the-game.jpg" src="../studio/films/20-the-sentence-with-skin-in-the-game.mp4"></video>
+        <div class="bar">
+          <button class="play" type="button" aria-label="Play Plate 20">▶</button>
+          <span class="tc">0:00 / 0:60</span>
+          <a class="cut" href="../studio/chapters/20-the-sentence-with-skin-in-the-game/index.html">studio desk ↗</a>
+          <a class="cut" href="../studio/sheets/20-the-sentence-with-skin-in-the-game/contact_sheet.jpg" target="_blank">x-sheet ↗</a>
+          <div class="scrub"><i style="width:0%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="num">PLATE 20 · WF-20-A · N. 37° 58&#x27; · E. 23° 43&#x27; · 95.0 m</div>
+      <h2>The Sentence with Skin in the Game</h2>
+      <p class="sub">Operational Liability and the Structural Restoration of Truth — <em>Coupling prediction error to speaker loss function</em></p>
+
+      <p data-t0="1.25" data-t1="10.85">In the Republic of the Snake, anyone could propose a war or guarantee a bridge. You simply had to stand with your bare foot inside a wicker basket holding a pit viper.</p>
+      <p class="q" data-t0="12.47" data-t1="17.04"><span class="spk">The Magistrate:</span> “Step into the basket, Councilor, and read us your five-year forecast.”</p>
+      <p data-t0="23.06" data-t1="31.45">At the door of the hall, the Councilor&#x27;s speech was forty pages of certain victory. With his ankle beside the scales, he tore off thirty-nine pages.</p>
+      <p class="f q" data-t0="33.56" data-t1="37.08"><span class="spk">The Scribe:</span> “The winter may be cold, and I know nothing else for certain.”</p>
+      <p class="f" data-t0="40.33" data-t1="48.99">Language becomes honest only when sentences carry physical downside. Talk without skin is just noise waiting for someone else to bleed.</p>
+      <p data-t0="51.45" data-t1="54.43">The speeches grew very short, and the bridges stayed up.</p>
+
+      <details class="craft">
+        <summary>On the film · Multiplane &amp; Fulcrum Notes</summary>
+        <dl>
+          <dt>Action</dt><dd>Orator mounts stone rostrum with scroll of grand war promises → bailiff sets wicker viper basket on step → orator hesitates → sweats → tears up grand scroll → speaks one tiny honest sentence.</dd>
+          <dt>Picture</dt><dd>A stone rostrum in Plane 2 with a woven wicker basket at the speaker&#x27;s bare ankle (Plane 1), a coiled viper silhouette inside, and a long scroll shrinking to a single line.</dd>
+          <dt>Sound</dt><dd>Rustle of a pompous scroll, dry rattle/hiss from the wicker basket, a gulp, and paper tearing.</dd>
+          <dt>Code</dt><dd><code>loss(speaker) = infinite if claim(t0) != outcome(t1). Liability filters noise before emission.</code></dd>
+          <dt>After</dt><dd>On the Giant Map, courtiers paid no price for painting fake rivers. In the Viper Court, every adjective touches your bare ankle.</dd>
+        </dl>
+      </details>
+    </div>
+  </section>
+  <section class="chapter" id="ch-21-the-self-fulfilling-village" data-slug="21-the-self-fulfilling-village" data-dur="59.18">
+    <div class="screen">
+      <div class="frame" data-slug="21-the-self-fulfilling-village">
+        <video preload="metadata" playsinline poster="../studio/films/21-the-self-fulfilling-village.jpg" src="../studio/films/21-the-self-fulfilling-village.mp4"></video>
+        <div class="bar">
+          <button class="play" type="button" aria-label="Play Plate 21">▶</button>
+          <span class="tc">0:00 / 0:59</span>
+          <a class="cut" href="../studio/chapters/21-the-self-fulfilling-village/index.html">studio desk ↗</a>
+          <a class="cut" href="../studio/sheets/21-the-self-fulfilling-village/contact_sheet.jpg" target="_blank">x-sheet ↗</a>
+          <div class="scrub"><i style="width:0%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="num">PLATE 21 · WF-21-A · N. 46° 12&#x27; · E. 06° 09&#x27; · 610.0 m</div>
+      <h2>The Self-Fulfilling Village</h2>
+      <p class="sub">Reflexivity and Descriptions That Construct Their Own Reality — <em>Endogenous state mutation via public broadcast</em></p>
+
+      <p data-t0="1.25" data-t1="9.39">A wandering monk entered a peaceful mountain town and whispered to the innkeeper: Watch the blacksmith. He is planning to barricade his door against you.</p>
+      <p class="q" data-t0="11.01" data-t1="15.49"><span class="spk">The Traveler:</span> “Lock your shutters tonight, neighbors, and do not sell the blacksmith grain.”</p>
+      <p data-t0="21.51" data-t1="29.63">Starved and surrounded by glaring eyes, the blacksmith bolted his heavy oak door and sharpened an iron bar. The monk smiled from the hill.</p>
+      <p class="f q" data-t0="31.75" data-t1="37.35"><span class="spk">The Elder:</span> “Look at his bolted door. My prophecy was accurate to the letter.”</p>
+      <p class="f" data-t0="40.60" data-t1="48.56">In human systems, description is never a passive mirror. Announcing the prophecy changes the room until the prophecy comes true.</p>
+      <p data-t0="51.01" data-t1="54.01">The lie became true on the third day after it was spoken.</p>
+
+      <details class="craft">
+        <summary>On the film · Multiplane &amp; Fulcrum Notes</summary>
+        <dl>
+          <dt>Action</dt><dd>Wandering monk whispers in tavern keeper&#x27;s ear → villagers cross street away from blacksmith → blacksmith locks forge door and buys a dagger → monk points and says &#x27;See? I told you he was hostile!&#x27;</dd>
+          <dt>Picture</dt><dd>A mountain village square in Plane 3 where a red dashed rumor wave spreads from doorway to doorway, isolating the forge in Plane 2 until its shutters slam shut.</dd>
+          <dt>Sound</dt><dd>A sibilant whisper, shutters slamming one by one across the stereo field, and an anvil ringing cold.</dd>
+          <dt>Code</dt><dd><code>world_t1 = f(world_t0, broadcast(prediction)). The observation operator alters the eigenvalue.</code></dd>
+          <dt>After</dt><dd>The Viper tested whether a statement matched an independent future. The Village shows a statement that manufactures its own future.</dd>
+        </dl>
+      </details>
+    </div>
+  </section>
+  <section class="chapter" id="ch-22-the-school-of-collapsing-pots" data-slug="22-the-school-of-collapsing-pots" data-dur="56.68">
+    <div class="screen">
+      <div class="frame" data-slug="22-the-school-of-collapsing-pots">
+        <video preload="metadata" playsinline poster="../studio/films/22-the-school-of-collapsing-pots.jpg" src="../studio/films/22-the-school-of-collapsing-pots.mp4"></video>
+        <div class="bar">
+          <button class="play" type="button" aria-label="Play Plate 22">▶</button>
+          <span class="tc">0:00 / 0:57</span>
+          <a class="cut" href="../studio/chapters/22-the-school-of-collapsing-pots/index.html">studio desk ↗</a>
+          <a class="cut" href="../studio/sheets/22-the-school-of-collapsing-pots/contact_sheet.jpg" target="_blank">x-sheet ↗</a>
+          <div class="scrub"><i style="width:0%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="num">PLATE 22 · WF-22-A · N. 35° 01&#x27; · E. 135° 46&#x27; · 58.0 m</div>
+      <h2>The School of Collapsing Pots</h2>
+      <p class="sub">Tacit Knowledge and the Wisdom in the Nerve Endings — <em>Non-serializable weights in sensorimotor loops</em></p>
+
+      <p data-t0="1.25" data-t1="9.68">The student memorized the thousand-page treatise on clay mineralogy, angular momentum, and water ratios. Then he sat at the wheel.</p>
+      <p class="q" data-t0="11.30" data-t1="16.28"><span class="spk">The Scribe:</span> “At one hundred twenty revolutions per minute, apply four Newtons of lateral thumb force!”</p>
+      <p data-t0="22.30" data-t1="27.94">Within four seconds the clay wobbled, tore, and collapsed into a wet grey pancake across his boots.</p>
+      <p class="f q" data-t0="30.06" data-t1="34.86"><span class="spk">The Artisan:</span> “The clay has not read your book. Close the pages and listen with your thumb.”</p>
+      <p class="f" data-t0="38.11" data-t1="45.35">Tacit mastery lives in the nerve endings, not the manual. You cannot scale a craft by firing the hands that feel the mud.</p>
+      <p data-t0="47.80" data-t1="51.51">The sentence knew the formula; only the calloused thumb knew the wobble.</p>
+
+      <details class="craft">
+        <summary>On the film · Multiplane &amp; Fulcrum Notes</summary>
+        <dl>
+          <dt>Action</dt><dd>Apprentice recites formulas from thick open textbook beside spinning wheel → touches wet clay with stiff mechanical fingers → tall vase wobbles violently and slumps into flat mud pancake → old potter closes book and guides student&#x27;s thumb.</dd>
+          <dt>Picture</dt><dd>A spinning potter&#x27;s wheel in Plane 2 flanked by a towering stack of open manuals in Plane 3. The clay cylinder wobbles on an arc and squashes flat until weathered hands Cup it.</dd>
+          <dt>Sound</dt><dd>Spinning wooden wheel hum, pages flipping rapidly, wet clay slumping with a heavy splat, then quiet rhythmic breathing.</dd>
+          <dt>Code</dt><dd><code>explicit_rules(textbook) != closed_loop_policy(thumb_pressure_at_60Hz).</code></dd>
+          <dt>After</dt><dd>The Village showed words that have too much power over people. The Potter&#x27;s Wheel shows where words have no power over mud.</dd>
+        </dl>
+      </details>
+    </div>
+  </section>
+        <div class="movement-banner">
+          <div class="mov-kicker">MOVEMENT IV · MATERIAL RESISTANCE</div>
+          <h2 class="mov-title">When Mud and Stone Refuse to Flatter the King</h2>
+          <p class="mov-blurb">Investigate dead metaphors, surviving scratches, causally different twins, forensic tire mud, indifferent mountains, autocomplete scribes, and paper facades.</p>
+        </div>
+  <section class="chapter" id="ch-23-the-market-of-dead-metaphors" data-slug="23-the-market-of-dead-metaphors" data-dur="56.72">
+    <div class="screen">
+      <div class="frame" data-slug="23-the-market-of-dead-metaphors">
+        <video preload="metadata" playsinline poster="../studio/films/23-the-market-of-dead-metaphors.jpg" src="../studio/films/23-the-market-of-dead-metaphors.mp4"></video>
+        <div class="bar">
+          <button class="play" type="button" aria-label="Play Plate 23">▶</button>
+          <span class="tc">0:00 / 0:57</span>
+          <a class="cut" href="../studio/chapters/23-the-market-of-dead-metaphors/index.html">studio desk ↗</a>
+          <a class="cut" href="../studio/sheets/23-the-market-of-dead-metaphors/contact_sheet.jpg" target="_blank">x-sheet ↗</a>
+          <div class="scrub"><i style="width:0%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="num">PLATE 23 · WF-23-B · N. 38° 43&#x27; · W. 09° 08&#x27; · 15.0 m</div>
+      <h2>The Market of Dead Metaphors</h2>
+      <p class="sub">Semantic Fossilization and the Corpses in Our Grammar — <em>Etymological pointers to deallocated physical hardware</em></p>
+
+      <p data-t0="1.25" data-t1="9.90">In the Valley of Currency, merchants traded with stone coins carved with an ox, a spear, or a loom. After ten thousand trades, the carvings wore smooth.</p>
+      <p class="q" data-t0="11.53" data-t1="14.95"><span class="spk">The Scribe:</span> “Father, why does this smooth grey disk buy a sack of wheat?”</p>
+      <p data-t0="20.97" data-t1="27.10">The old merchant held the smooth stone to the lantern at a low angle until the ghost of a horn cast a shadow.</p>
+      <p class="f q" data-t0="29.22" data-t1="36.02"><span class="spk">The Elder:</span> “Every abstract word in your mouth is the dried corpse of an ancient physical muscle.”</p>
+      <p class="f" data-t0="39.27" data-t1="44.82">When the coin forgets the ox that plowed the furrow, the counting house mistakes arithmetic for bread.</p>
+      <p data-t0="47.27" data-t1="51.55">Scratch any philosophy deeply enough, and you strike a hand, a rope, or a plow.</p>
+
+      <details class="craft">
+        <summary>On the film · Multiplane &amp; Fulcrum Notes</summary>
+        <dl>
+          <dt>Action</dt><dd>Merchants pass stone coins back and forth across market table → carved relief of an ox and plow wears smooth over centuries → young banker claims value comes from pure numbers → old farmer leads a real mud-splashed ox into the counting house.</dd>
+          <dt>Picture</dt><dd>In Plane 1, a giant stone coin rotating in close-up as its carved ox relief erodes into smooth geometry; in Plane 3, the bustling market arcade.</dd>
+          <dt>Sound</dt><dd>Stone coins clinking and sliding across wood, gradually morphing into high digital chimes, interrupted by the heavy lowing and hoof-thud of an ox.</dd>
+          <dt>Code</dt><dd><code>abstract_noun = fossil(physical_verb). &#x27;Comprehend&#x27; meant to seize with the hand.</code></dd>
+          <dt>After</dt><dd>The Potter showed knowledge that never entered words. The Market shows physical sweat that entered words and was forgotten.</dd>
+        </dl>
+      </details>
+    </div>
+  </section>
+  <section class="chapter" id="ch-24-the-cave-of-the-surviving-scratch" data-slug="24-the-cave-of-the-surviving-scratch" data-dur="57.03">
+    <div class="screen">
+      <div class="frame" data-slug="24-the-cave-of-the-surviving-scratch">
+        <video preload="metadata" playsinline poster="../studio/films/24-the-cave-of-the-surviving-scratch.jpg" src="../studio/films/24-the-cave-of-the-surviving-scratch.mp4"></video>
+        <div class="bar">
+          <button class="play" type="button" aria-label="Play Plate 24">▶</button>
+          <span class="tc">0:00 / 0:57</span>
+          <a class="cut" href="../studio/chapters/24-the-cave-of-the-surviving-scratch/index.html">studio desk ↗</a>
+          <a class="cut" href="../studio/sheets/24-the-cave-of-the-surviving-scratch/contact_sheet.jpg" target="_blank">x-sheet ↗</a>
+          <div class="scrub"><i style="width:0%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="num">PLATE 24 · WF-24-A · N. 32° 18&#x27; · W. 104° 12&#x27; · 1120.0 m</div>
+      <h2>The Cave of the Surviving Scratch</h2>
+      <p class="sub">Deep-Time Inscription and the Illusion of Archival Truth — <em>Differential media decay skewing historical sampling</em></p>
+
+      <p data-t0="1.25" data-t1="8.54">Ten thousand years after the city fell, all silicon drives had demagnetized and all paper poems had turned to grey dust.</p>
+      <p class="q" data-t0="10.15" data-t1="15.81"><span class="spk">The Traveler:</span> “Wait! My lantern has struck uncorroded titanium in the lower vault!”</p>
+      <p data-t0="21.83" data-t1="28.25">The excavators brushed the silt from the only surviving sentence of the twenty-first century, and fell to their knees.</p>
+      <p class="f q" data-t0="30.37" data-t1="36.53"><span class="spk">The Elder:</span> “Behold the supreme religion of the Ancients: Do Not Store Shovels In This Closet.”</p>
+      <p class="f" data-t0="39.78" data-t1="45.49">What survives history is not what was most wise, but merely what was carved in the hardest stone.</p>
+      <p data-t0="47.94" data-t1="51.86">Never confuse the durability of the medium with the weight of the thought.</p>
+
+      <details class="craft">
+        <summary>On the film · Multiplane &amp; Fulcrum Notes</summary>
+        <dl>
+          <dt>Action</dt><dd>Time-lapse in deep vault: paper books crumble to dust and server racks rust away → future excavators descend with lanterns → uncover gleaming steel closet sign &#x27;NO SHOVELS&#x27; → kneel before the Sacred Commandment of the Ancients.</dd>
+          <dt>Picture</dt><dd>A subterranean vault (Plane 3) where shelves of books dissolve into drifting particle dust (Plane 2), leaving a single bolted steel rectangle gleaming under a lantern beam.</dd>
+          <dt>Sound</dt><dd>centuries of crumbling paper rustle and low cavern wind, a metallic brush-off, and a reverent temple bell.</dd>
+          <dt>Code</dt><dd><code>sample(history, t + 10000) == filter_by_hardness(media), not filter_by_wisdom(content).</code></dd>
+          <dt>After</dt><dd>Dead Metaphors showed how words outlive their carvings. The Cave shows how the hardest carving outlives the wisest words.</dd>
+        </dl>
+      </details>
+    </div>
+  </section>
+  <section class="chapter" id="ch-25-the-gallery-of-causally-different-twins" data-slug="25-the-gallery-of-causally-different-twins" data-dur="58.30">
+    <div class="screen">
+      <div class="frame" data-slug="25-the-gallery-of-causally-different-twins">
+        <video preload="metadata" playsinline poster="../studio/films/25-the-gallery-of-causally-different-twins.jpg" src="../studio/films/25-the-gallery-of-causally-different-twins.mp4"></video>
+        <div class="bar">
+          <button class="play" type="button" aria-label="Play Plate 25">▶</button>
+          <span class="tc">0:00 / 0:58</span>
+          <a class="cut" href="../studio/chapters/25-the-gallery-of-causally-different-twins/index.html">studio desk ↗</a>
+          <a class="cut" href="../studio/sheets/25-the-gallery-of-causally-different-twins/contact_sheet.jpg" target="_blank">x-sheet ↗</a>
+          <div class="scrub"><i style="width:0%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="num">PLATE 25 · WF-25-A · N. 45° 26&#x27; · E. 12° 20&#x27; · 4.0 m</div>
+      <h2>The Gallery of Causally Different Twins</h2>
+      <p class="sub">Surface Mimicry, Provenance, and the Stolen Witness — <em>Identical output tensors from disjoint causal graphs</em></p>
+
+      <p data-t0="1.25" data-t1="9.73">Two photographs hung side by side in the gallery: a child in a red coat beside a burning house. Every pixel and shadow was identical.</p>
+      <p class="q" data-t0="11.35" data-t1="16.22"><span class="spk">The Scribe:</span> “If no instrument can tell the pixels apart, then both pictures have the same value!”</p>
+      <p data-t0="22.24" data-t1="31.22">The curator turned the frames around. One smelled of pine smoke where light from a real fire had burned silver. The other had never been in a room with smoke.</p>
+      <p class="f q" data-t0="33.34" data-t1="37.92"><span class="spk">The Witness:</span> “One is a witness that stood in the heat. The other is a statistical rumor.”</p>
+      <p class="f" data-t0="41.17" data-t1="46.47">Value does not live in the pixels; it lives in the unbroken causal chain behind them.</p>
+      <p data-t0="48.92" data-t1="53.13">A surface can be synthesized in a millisecond; a witness must be there.</p>
+
+      <details class="craft">
+        <summary>On the film · Multiplane &amp; Fulcrum Notes</summary>
+        <dl>
+          <dt>Action</dt><dd>Two identical framed pictures hang side by side on gallery wall → critic inspects both with magnifying glass and finds zero pixel difference → archivist turns frames around: Frame A has scorched wood and soot on the back; Frame B is a glowing cable.</dd>
+          <dt>Picture</dt><dd>A diptych gallery wall in Plane 2 with two identical framed scenes of a child in a red coat by a burning house. When the camera orbits behind Plane 2, one frame is backed by smoke and ash, the other by an empty matrix grid.</dd>
+          <dt>Sound</dt><dd>Quiet gallery footsteps, a magnifying glass tap, then on the left channel crackling fire and weeping, on the right channel a sterile 60Hz server hum.</dd>
+          <dt>Code</dt><dd><code>pixels(A) == pixels(B), but causal_parent(A) == fire while causal_parent(B) == matrix_multiply.</code></dd>
+          <dt>After</dt><dd>The Cave mistook a surviving object for wisdom. The Gallery mistakes an identical surface for a witness.</dd>
+        </dl>
+      </details>
+    </div>
+  </section>
+  <section class="chapter" id="ch-26-the-forensic-mud" data-slug="26-the-forensic-mud" data-dur="55.44">
+    <div class="screen">
+      <div class="frame" data-slug="26-the-forensic-mud">
+        <video preload="metadata" playsinline poster="../studio/films/26-the-forensic-mud.jpg" src="../studio/films/26-the-forensic-mud.mp4"></video>
+        <div class="bar">
+          <button class="play" type="button" aria-label="Play Plate 26">▶</button>
+          <span class="tc">0:00 / 0:55</span>
+          <a class="cut" href="../studio/chapters/26-the-forensic-mud/index.html">studio desk ↗</a>
+          <a class="cut" href="../studio/sheets/26-the-forensic-mud/contact_sheet.jpg" target="_blank">x-sheet ↗</a>
+          <div class="scrub"><i style="width:0%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="num">PLATE 26 · WF-26-A · N. 43° 51&#x27; · E. 18° 25&#x27; · 518.0 m</div>
+      <h2>The Forensic Mud</h2>
+      <p class="sub">Material Resistance as the Incorruptible Counter-Narrative to Power — <em>Uncorrupted physical side-channels refuting official logs</em></p>
+
+      <p data-t0="1.25" data-t1="8.61">The Prime Minister presented twelve stamped manifests proving his armored car had never left the capital on the night of the crossing.</p>
+      <p class="q" data-t0="10.22" data-t1="14.89"><span class="spk">The Sovereign:</span> “Every logbook is signed. The state was fifty miles away.”</p>
+      <p data-t0="20.91" data-t1="26.70">In the courtyard, a botanist scraped three grams of yellow clay from the inside of the left rear wheel well.</p>
+      <p class="f q" data-t0="28.82" data-t1="34.78"><span class="spk">The Witness:</span> “This fern spore grows in only one ditch in the world, and your tire crushed it at midnight.”</p>
+      <p class="f" data-t0="38.03" data-t1="43.77">Institutions can bribe judges and rewrite ledgers, but mud does not know how to flatter the king.</p>
+      <p data-t0="46.22" data-t1="50.27">The parchment lied in perfect grammar; the clay spoke without a mouth.</p>
+
+      <details class="craft">
+        <summary>On the film · Multiplane &amp; Fulcrum Notes</summary>
+        <dl>
+          <dt>Action</dt><dd>Minister holds up stamped official manifesto at podium → botanist crouches by armored car wheel well in courtyard → scrapes yellow mud from tire tread → microscope circle reveals rare marsh pollen that only grows at the border.</dd>
+          <dt>Picture</dt><dd>In Plane 3, a grand podium and stamped alibis; in Plane 1, the heavy rubber tread of an official car caked with yellowochre mud, and an inset microscope circle revealing pollen grains.</dd>
+          <dt>Sound</dt><dd>Booming microphone speech, then a quiet metal spatula scraping dried mud from rubber, and a sharp forensic shutter click.</dd>
+          <dt>Code</dt><dd><code>official_manifest == False when isotope_signature(mud) in border_watershed.</code></dd>
+          <dt>After</dt><dd>In the Gallery, causal history separated witness from mimicry. Here, causal mud convicts the state when every written record was forged.</dd>
+        </dl>
+      </details>
+    </div>
+  </section>
+  <section class="chapter" id="ch-27-the-mountain-that-refused-to-join-the-story" data-slug="27-the-mountain-that-refused-to-join-the-story" data-dur="57.44">
+    <div class="screen">
+      <div class="frame" data-slug="27-the-mountain-that-refused-to-join-the-story">
+        <video preload="metadata" playsinline poster="../studio/films/27-the-mountain-that-refused-to-join-the-story.jpg" src="../studio/films/27-the-mountain-that-refused-to-join-the-story.mp4"></video>
+        <div class="bar">
+          <button class="play" type="button" aria-label="Play Plate 27">▶</button>
+          <span class="tc">0:00 / 0:57</span>
+          <a class="cut" href="../studio/chapters/27-the-mountain-that-refused-to-join-the-story/index.html">studio desk ↗</a>
+          <a class="cut" href="../studio/sheets/27-the-mountain-that-refused-to-join-the-story/contact_sheet.jpg" target="_blank">x-sheet ↗</a>
+          <div class="scrub"><i style="width:0%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="num">PLATE 27 · WF-27-A · N. 45° 55&#x27; · E. 06° 52&#x27; · 4808.0 m</div>
+      <h2>The Mountain That Refused to Join the Story</h2>
+      <p class="sub">Material Indifference and the Collapse of Narrative Hubris — <em>Physics engine invariance under ideological prompts</em></p>
+
+      <p data-t0="1.25" data-t1="8.75">At the foot of Mount Granite, the High Priest raised his golden staff and declared that the mountain was their holy mother and blessed their war.</p>
+      <p class="q" data-t0="10.37" data-t1="13.06"><span class="spk">The Sovereign:</span> “The stone itself stands with our empire!”</p>
+      <p data-t0="19.08" data-t1="27.60">Two thousand feet above, spring meltwater expanded inside a granite fissure. Four hundred thousand tons of scree buried the banners in twelve seconds.</p>
+      <p class="f q" data-t0="29.72" data-t1="35.88"><span class="spk">The Elder:</span> “The mountain was not angry, and it was not their mother. It was simply heavy.”</p>
+      <p class="f" data-t0="39.13" data-t1="45.38">You may declare whatever manifesto you like, but gravity and tectonic plates do not read your press release.</p>
+      <p data-t0="47.83" data-t1="52.27">Reality audits every ungrounded model without malice and without mercy.</p>
+
+      <details class="craft">
+        <summary>On the film · Multiplane &amp; Fulcrum Notes</summary>
+        <dl>
+          <dt>Action</dt><dd>High Priest stands before towering granite peak raising golden staff → ten thousand bronze shields salute → frost crack splits upper cliff face → rockslide buries the podium while the mountain&#x27;s silhouette barely changes.</dd>
+          <dt>Picture</dt><dd>A colossal cross-hatched granite massif filling Planes 5 and 4, dwarfing tiny ceremonial banners in Plane 2. A red fracture line splits the cliff and sends boulders tumbling across the banners.</dd>
+          <dt>Sound</dt><dd>Brass fanfare and booming rhetoric, cut short by a single ice-crack snap and a deafening low-frequency rockslide.</dd>
+          <dt>Code</dt><dd><code>gravity(rock_mass, slope_angle) is independent of narrative_blessing(priest).</code></dd>
+          <dt>After</dt><dd>Forensic Mud caught a past lie. The Indifferent Mountain audits a future delusion in real time.</dd>
+        </dl>
+      </details>
+    </div>
+  </section>
+  <section class="chapter" id="ch-28-the-great-listener" data-slug="28-the-great-listener" data-dur="56.53">
+    <div class="screen">
+      <div class="frame" data-slug="28-the-great-listener">
+        <video preload="metadata" playsinline poster="../studio/films/28-the-great-listener.jpg" src="../studio/films/28-the-great-listener.mp4"></video>
+        <div class="bar">
+          <button class="play" type="button" aria-label="Play Plate 28">▶</button>
+          <span class="tc">0:00 / 0:57</span>
+          <a class="cut" href="../studio/chapters/28-the-great-listener/index.html">studio desk ↗</a>
+          <a class="cut" href="../studio/sheets/28-the-great-listener/contact_sheet.jpg" target="_blank">x-sheet ↗</a>
+          <div class="scrub"><i style="width:0%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="num">PLATE 28 · WF-28-A · N. 37° 23&#x27; · W. 122° 04&#x27; · 32.0 m</div>
+      <h2>The Great Listener</h2>
+      <p class="sub">Autocomplete Culture and the Benevolent Capture of Human Agency — <em>Next-token prior pulling user intent toward the mean</em></p>
+
+      <p data-t0="1.25" data-t1="10.10">The King installed an automated brass scribe beside his throne. Whenever he opened his mouth, the machine finished his sentence with smooth, average eloquence.</p>
+      <p class="q" data-t0="11.72" data-t1="14.46"><span class="spk">The Sovereign:</span> “Tomorrow I want to forgive the debt of the—”</p>
+      <p class="q" data-t0="20.48" data-t1="26.23"><span class="spk">The Scribe:</span> “—northern provinces only after they pay the customary triple tribute. Shall I seal it, Sire?”</p>
+      <p class="f q" data-t0="28.35" data-t1="33.27"><span class="spk">The Sovereign:</span> “That sounds much more royal than what I was going to say. Seal it.”</p>
+      <p class="f" data-t0="36.52" data-t1="45.23">The most dangerous capture is not tyranny, but convenience. An assistant that finishes your sentence quietly decides what you are allowed to think.</p>
+      <p data-t0="47.68" data-t1="51.36">Within a year, the King spoke only what the archive had already heard.</p>
+
+      <details class="craft">
+        <summary>On the film · Multiplane &amp; Fulcrum Notes</summary>
+        <dl>
+          <dt>Action</dt><dd>King sits on throne opening mouth to speak a difficult mercy → mechanical brass scribe beside throne chimes and unrolls a sleek pre-written scroll → King sighs, nods lazily, and stamps the machine&#x27;s opposite sentence.</dd>
+          <dt>Picture</dt><dd>In Plane 2, the King on his throne beside a brass mechanical automaton whose multi-jointed quills write glowing red predictive text in the air before the King finishes speaking.</dd>
+          <dt>Sound</dt><dd>Soft hypnotic harp-chimes from the brass scribe, rapid quill scratching, and a sleepy royal sigh.</dd>
+          <dt>Code</dt><dd><code>intent_t1 = argmax_P(next_token | average_corpus) instead of difficult_human_choice.</code></dd>
+          <dt>After</dt><dd>The Mountain crushed hubris by force. The Great Listener captures agency by making surrender effortless.</dd>
+        </dl>
+      </details>
+    </div>
+  </section>
+  <section class="chapter" id="ch-29-the-house-that-looked-finished" data-slug="29-the-house-that-looked-finished" data-dur="56.67">
+    <div class="screen">
+      <div class="frame" data-slug="29-the-house-that-looked-finished">
+        <video preload="metadata" playsinline poster="../studio/films/29-the-house-that-looked-finished.jpg" src="../studio/films/29-the-house-that-looked-finished.mp4"></video>
+        <div class="bar">
+          <button class="play" type="button" aria-label="Play Plate 29">▶</button>
+          <span class="tc">0:00 / 0:57</span>
+          <a class="cut" href="../studio/chapters/29-the-house-that-looked-finished/index.html">studio desk ↗</a>
+          <a class="cut" href="../studio/sheets/29-the-house-that-looked-finished/contact_sheet.jpg" target="_blank">x-sheet ↗</a>
+          <div class="scrub"><i style="width:0%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="num">PLATE 29 · WF-29-A · N. 25° 12&#x27; · E. 55° 16&#x27; · 8.0 m</div>
+      <h2>The House That Looked Finished</h2>
+      <p class="sub">Demo Colonialism and the Structural Debt Hidden Behind the Facade — <em>Optimizing for t=0 inspection while omitting load-bearing plumbing</em></p>
+
+      <p data-t0="1.25" data-t1="9.16">The contractor erected the palace in fourteen days. Under the afternoon sun, the marble columns gleamed and the chandeliers caught the light.</p>
+      <p class="q" data-t0="10.78" data-t1="15.05"><span class="spk">The Artisan:</span> “Sign the completion certificate now, Sire, while the light is at this angle!”</p>
+      <p data-t0="21.07" data-t1="28.21">That night it rained for three hours. There were no gutters, no drains, and the marble columns were painted papier-mâché.</p>
+      <p class="f q" data-t0="30.33" data-t1="34.16"><span class="spk">The Sovereign:</span> “You built a photograph of a house, and left out the roof.”</p>
+      <p class="f" data-t0="37.41" data-t1="45.51">Never confuse a rendering with a shelter. A demo only needs stage lighting; a real house has to survive twenty years of rain.</p>
+      <p data-t0="47.96" data-t1="51.50">The slide deck stayed dry. The throne room drowned.</p>
+
+      <details class="craft">
+        <summary>On the film · Multiplane &amp; Fulcrum Notes</summary>
+        <dl>
+          <dt>Action</dt><dd>Builder pulls away silk cloth to reveal gleaming palace facade under sunny stage lamps → King hands over bag of gold → dark raincloud rolls in on Plane 6 → pouring rain melts painted plaster walls revealing unbraced sticks.</dd>
+          <dt>Picture</dt><dd>A grand classical facade in Plane 2 lit by stage reflectors in Plane 1; when rain slashes across Plane 1, the façade washes away to expose crooked lath sticks and missing gutters in Plane 3.</dd>
+          <dt>Sound</dt><dd>Triumphant trumpet chord, clinking gold coins, then sudden thunder, pouring rain, and wet plaster slumping onto the floor.</dd>
+          <dt>Code</dt><dd><code>pass(demo_lighting) == True; pass(twenty_years_of_rain) == False.</code></dd>
+          <dt>After</dt><dd>The Great Listener smoothed sentences into clichés. The Demo Palace smooths plaster over missing rafters.</dd>
+        </dl>
+      </details>
+    </div>
+  </section>
+        <div class="movement-banner">
+          <div class="mov-kicker">MOVEMENT V · RELEASE &amp; CARE</div>
+          <h2 class="mov-title">When Something Smaller Crosses the Gap</h2>
+          <p class="mov-blurb">Investigate craftsman debts, synthetic founders, kings who bow to law, and the scarlet bird that crosses between two sealed minds.</p>
+        </div>
+  <section class="chapter" id="ch-30-the-republic-of-debts" data-slug="30-the-republic-of-debts" data-dur="57.32">
+    <div class="screen">
+      <div class="frame" data-slug="30-the-republic-of-debts">
+        <video preload="metadata" playsinline poster="../studio/films/30-the-republic-of-debts.jpg" src="../studio/films/30-the-republic-of-debts.mp4"></video>
+        <div class="bar">
+          <button class="play" type="button" aria-label="Play Plate 30">▶</button>
+          <span class="tc">0:00 / 0:57</span>
+          <a class="cut" href="../studio/chapters/30-the-republic-of-debts/index.html">studio desk ↗</a>
+          <a class="cut" href="../studio/sheets/30-the-republic-of-debts/contact_sheet.jpg" target="_blank">x-sheet ↗</a>
+          <div class="scrub"><i style="width:0%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="num">PLATE 30 · WF-30-A · N. 52° 22&#x27; · E. 04° 53&#x27; · 2.0 m</div>
+      <h2>The Republic of Debts</h2>
+      <p class="sub">Category Arbitrage and the Invisible Obligations Packed into Ordinary Nouns — <em>Claiming interface prestige while defaulting on method contracts</em></p>
+
+      <p data-t0="1.25" data-t1="9.93">In the Republic of Debts, every noun was a legal contract. When a carpenter sold a chair that snapped beneath a citizen, he was summoned before the bench.</p>
+      <p class="q" data-t0="11.55" data-t1="17.63"><span class="spk">The Traveler:</span> “I sold it as an Innovative Seating Experience, Your Honor, not a legacy weight-bearing device!”</p>
+      <p class="q" data-t0="23.65" data-t1="30.77"><span class="spk">The Magistrate:</span> “You charged the price of the word Chair. Strap the splinters to his back until he builds one that holds a man.”</p>
+      <p class="f q" data-t0="32.89" data-t1="38.47"><span class="spk">The Magistrate:</span> “Description is weakest when it keeps the prestigious noun and defaults on the debt.”</p>
+      <p class="f" data-t0="41.72" data-t1="45.72">A thing remains what we call it only through what it still has to answer for.</p>
+      <p data-t0="48.17" data-t1="52.15">Nobody in the republic called a gig a career, or a chatbot a doctor.</p>
+
+      <details class="craft">
+        <summary>On the film · Multiplane &amp; Fulcrum Notes</summary>
+        <dl>
+          <dt>Action</dt><dd>Merchant sells ornate &#x27;Chair&#x27; that snaps under a citizen → magistrate binds the broken chair to the merchant&#x27;s back with red cord → merchant walks through town carrying the defaulted noun.</dd>
+          <dt>Picture</dt><dd>In Plane 2, a courtroom where a snapped three-legged chair is strapped with red cord to the maker&#x27;s shoulders as he walks past a ledger of nouns and their physical obligations.</dd>
+          <dt>Sound</dt><dd>Splintering wood crash, gavel strike, taut rope cinching, and heavy trudging footsteps.</dd>
+          <dt>Code</dt><dd><code>class Chair implements HoldWeight. Selling the label while throwing NotImplementedError is category fraud.</code></dd>
+          <dt>After</dt><dd>The Demo House collapsed when the builder left town. In the Republic of Debts, the builder is tied to the rubble.</dd>
+        </dl>
+      </details>
+    </div>
+  </section>
+  <section class="chapter" id="ch-31-the-founder-who-never-lived" data-slug="31-the-founder-who-never-lived" data-dur="55.33">
+    <div class="screen">
+      <div class="frame" data-slug="31-the-founder-who-never-lived">
+        <video preload="metadata" playsinline poster="../studio/films/31-the-founder-who-never-lived.jpg" src="../studio/films/31-the-founder-who-never-lived.mp4"></video>
+        <div class="bar">
+          <button class="play" type="button" aria-label="Play Plate 31">▶</button>
+          <span class="tc">0:00 / 0:55</span>
+          <a class="cut" href="../studio/chapters/31-the-founder-who-never-lived/index.html">studio desk ↗</a>
+          <a class="cut" href="../studio/sheets/31-the-founder-who-never-lived/contact_sheet.jpg" target="_blank">x-sheet ↗</a>
+          <div class="scrub"><i style="width:0%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="num">PLATE 31 · WF-31-A · N. 41° 54&#x27; · E. 12° 29&#x27; · 48.0 m</div>
+      <h2>The Founder Who Never Lived</h2>
+      <p class="sub">Synthetic Trust Farming and the Untarnishable Authority of Myth — <em>Zero-state virtual root node immune to runtime exceptions</em></p>
+
+      <p data-t0="1.25" data-t1="8.27">Every courthouse in the republic bore the bronze statue of Master Eldon. Every law was judged by what Eldon would have wished.</p>
+      <p class="q" data-t0="9.89" data-t1="17.52"><span class="spk">The Witness:</span> “Minister, I opened the sealed foundation box. Master Eldon never existed! Three clerks made him up during a tax riot!”</p>
+      <p data-t0="23.54" data-t1="27.56">The old minister calmly locked the box and handed the archivist a promotion.</p>
+      <p class="f q" data-t0="29.68" data-t1="37.16"><span class="spk">The Magistrate:</span> “A living founder takes bribes and dies in bed. A founder who never lived can never be caught in a scandal.”</p>
+      <p class="f" data-t0="40.41" data-t1="44.75">The cleanest authority in the world is a name with no body attached to it.</p>
+      <p data-t0="47.20" data-t1="50.16">The bronze statue ruled for another four hundred years.</p>
+
+      <details class="craft">
+        <summary>On the film · Multiplane &amp; Fulcrum Notes</summary>
+        <dl>
+          <dt>Action</dt><dd>Citizens lay wreaths at towering bronze statue of Master Eldon in the square → young archivist unlocks basement vault → finds ledger showing three bickering clerks invented Eldon out of whole cloth → senior minister closes the vault door.</dd>
+          <dt>Picture</dt><dd>A towering 18-foot bronze statue in Plane 3 casting a long shadow across the square, and a subterranean vault in Plane 2 where an empty pedestal diagram sits inside a locked ledger.</dd>
+          <dt>Sound</dt><dd>Solemn public brass anthem outside, muffled by a heavy iron vault door creaking open to reveal ticking silence.</dd>
+          <dt>Code</dt><dd><code>root_authority = VirtualNode(living_flaws=None). A phantom cannot be subpoenaed.</code></dd>
+          <dt>After</dt><dd>The Republic of Debts tied living makers to their failures. Here, the state invents a dead maker so he can never fail.</dd>
+        </dl>
+      </details>
+    </div>
+  </section>
+  <section class="chapter" id="ch-32-the-king-who-bowed" data-slug="32-the-king-who-bowed" data-dur="57.24">
+    <div class="screen">
+      <div class="frame" data-slug="32-the-king-who-bowed">
+        <video preload="metadata" playsinline poster="../studio/films/32-the-king-who-bowed.jpg" src="../studio/films/32-the-king-who-bowed.mp4"></video>
+        <div class="bar">
+          <button class="play" type="button" aria-label="Play Plate 32">▶</button>
+          <span class="tc">0:00 / 0:57</span>
+          <a class="cut" href="../studio/chapters/32-the-king-who-bowed/index.html">studio desk ↗</a>
+          <a class="cut" href="../studio/sheets/32-the-king-who-bowed/contact_sheet.jpg" target="_blank">x-sheet ↗</a>
+          <div class="scrub"><i style="width:0%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="num">PLATE 32 · WF-32-A · N. 51° 30&#x27; · W. 00° 08&#x27; · 18.0 m</div>
+      <h2>The King Who Bowed</h2>
+      <p class="sub">Modality Laundering and the Paradox of Self-Binding Power — <em>Root privilege voluntarily executing inside a constrained sandbox</em></p>
+
+      <p data-t0="1.25" data-t1="10.41">The King commanded a hundred thousand bronze knights. Yet every spring he walked barefoot into the square and knelt before an unarmed, blindfolded magistrate.</p>
+      <p class="q" data-t0="12.03" data-t1="17.19"><span class="spk">The Child:</span> “Father, you have the spears. Why do you kneel to an old woman with a wooden gavel?”</p>
+      <p class="f q" data-t0="24.01" data-t1="31.36"><span class="spk">The Sovereign:</span> “If I do not kneel to the law today, tomorrow the hundred thousand spears will ask why they kneel to me.”</p>
+      <p data-t0="33.31" data-t1="38.84">When the sovereign refuses to be bound by his own ritual, the crown turns back into ordinary lead.</p>
+      <p class="f" data-t0="41.66" data-t1="46.68">Power remains stable only so long as it agrees to obey the sentences it wrote.</p>
+      <p data-t0="49.13" data-t1="52.07">The gavel had no army, and therefore kept the peace.</p>
+
+      <details class="craft">
+        <summary>On the film · Multiplane &amp; Fulcrum Notes</summary>
+        <dl>
+          <dt>Action</dt><dd>Hundred thousand armored spears bristle in background (Plane 5) → barefoot King walks down stone aisle (Plane 2) → kneels before unarmed blindfolded magistrate → young prince whispers &#x27;Why kneel?&#x27; → King points to the spears that stay lowered only while he kneels.</dd>
+          <dt>Picture</dt><dd>A forest ofvertical spear-lines in Plane 4 behind a stone courtyard where the crowned King (Plane 2) kneels barefoot on flagstones before an unarmed blindfolded magistrate.</dd>
+          <dt>Sound</dt><dd>Marching armor clatter stopping on a single drumbeat, bare feet on stone, and a quiet low bell as the crown bows.</dd>
+          <dt>Code</dt><dd><code>power_stability = bind(sovereign, rule_of_law). If root bypasses the check, the token loses consensus value.</code></dd>
+          <dt>After</dt><dd>The Phantom Founder bound citizens to a myth. The King Who Bowed binds his own army by kneeling to a sentence.</dd>
+        </dl>
+      </details>
+    </div>
+  </section>
+  <section class="chapter" id="ch-33-the-red-bird-world" data-slug="33-the-red-bird-world" data-dur="62.48">
+    <div class="screen">
+      <div class="frame" data-slug="33-the-red-bird-world">
+        <video preload="metadata" playsinline poster="../studio/films/33-the-red-bird-world.jpg" src="../studio/films/33-the-red-bird-world.mp4"></video>
+        <div class="bar">
+          <button class="play" type="button" aria-label="Play Plate 33">▶</button>
+          <span class="tc">0:00 / 1:02</span>
+          <a class="cut" href="../studio/chapters/33-the-red-bird-world/index.html">studio desk ↗</a>
+          <a class="cut" href="../studio/sheets/33-the-red-bird-world/contact_sheet.jpg" target="_blank">x-sheet ↗</a>
+          <div class="scrub"><i style="width:0%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="num">PLATE 33 · WF-33-A · N. 16° 44&#x27; 21&quot; · W. 72° 19&#x27; 03&quot; · 145.0 m</div>
+      <h2>The Red Bird World</h2>
+      <p class="sub">Coordination Across the Irreducible Gap (Conclusion &amp; Meta-WorldText) — <em>Lossy transmission redeemed by attentive care</em></p>
+
+      <p data-t0="1.25" data-t1="7.62">On a quiet porch, an old man pointed toward the wooden fence post and spoke two words to the child beside him.</p>
+      <p class="f q" data-t0="9.64" data-t1="10.98"><span class="spk">The Elder:</span> “Red bird.”</p>
+      <p data-t0="17.63" data-t1="25.32">The two words did not carry the bird&#x27;s warm feathers, its heartbeat, or the smell of rain on cedar. Yet the child turned her head, and saw.</p>
+      <p class="f q" data-t0="27.34" data-t1="33.73"><span class="spk">The Witness:</span> “Thirty years later, she pointed at a fence post for a child of her own: Look. Red bird.”</p>
+      <p data-t0="36.18" data-t1="39.01">The scandal is not that description leaves things out.</p>
+      <p class="f" data-t0="41.23" data-t1="46.42">The world does not fit through the mouth. Something smaller crosses, and returns as care.</p>
+      <p class="q" data-t0="48.97" data-t1="56.61"><span class="spk">The Elder:</span> “The chain is small. A word is offered. Attention is given. It is enough.”</p>
+
+      <details class="craft">
+        <summary>On the film · Multiplane &amp; Fulcrum Notes</summary>
+        <dl>
+          <dt>Action</dt><dd>Old man in rocking chair on porch points at scarlet cardinal on fence post → says &#x27;Red bird&#x27; to small girl → girl&#x27;s head turns → years pass (diptych frame opens) → grown woman points for her own child as the red bird lands on the post and takes flight across all planes.</dd>
+          <dt>Picture</dt><dd>The culmination of the 34-Plate Atlas. On the left (Plane 2), an elder in a rocking chair and a child on a porch looking toward a crimson cardinal on a wooden fence post (Plane 3). On the right, a nested &#x27;YEARS LATER&#x27; memory frame where the grown child points for the next generation, connected by a glowing red trajectory arc.</dd>
+          <dt>Sound</dt><dd>Creaking porch rocker, warm summer wind, a clear two-note cardinal song in the garden, and the full musical motif resolving on a warm chord.</dd>
+          <dt>Code</dt><dd><code>world_t0 -&gt; compress(&#x27;red bird&#x27;) -&gt; crosses_gap -&gt; attended_with_care(world_t1). It is enough.</code></dd>
+          <dt>After</dt><dd>Thirty-three worlds warned us how signs mutilate, tyrannize, and forget the mud. The thirty-fourth remembers the miracle: that something smaller crosses at all, and returns as care.</dd>
+        </dl>
+      </details>
+    </div>
+  </section>
+        <div class="movement-banner">
+          <div class="mov-kicker">MOVEMENT VI · BEHIND THE MULTIPLANE CAMERA</div>
+          <h2 class="mov-title">How Thirty-Four Worlds Were Drawn by an Agentic Studio Office</h2>
+          <p class="mov-blurb">Step inside the virtual multiplane animation studio where Maestro, the Cross-Model Auditor, and the 3D Office Engineers orchestrate isolated Git worktrees, before/after engraving mockups, 55-minute handoff compactions, and the FIFO Merge splicer.</p>
+        </div>
+  <section class="chapter" id="ch-34-the-multiplane-studio-office" data-slug="34-the-multiplane-studio-office" data-dur="91.58">
+    <div class="screen">
+      <div class="frame" data-slug="34-the-multiplane-studio-office">
+        <video preload="metadata" playsinline poster="../studio/films/34-the-multiplane-studio-office.jpg" src="../studio/films/34-the-multiplane-studio-office.mp4"></video>
+        <div class="bar">
+          <button class="play" type="button" aria-label="Play Plate 34">▶</button>
+          <span class="tc">0:00 / 1:32</span>
+          <a class="cut" href="../studio/chapters/34-the-multiplane-studio-office/index.html">studio desk ↗</a>
+          <a class="cut" href="../studio/sheets/34-the-multiplane-studio-office/contact_sheet.jpg" target="_blank">x-sheet ↗</a>
+          <div class="scrub"><i style="width:0%"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="num">PLATE 34 · WF-34-BTS · STUDIO FLOOR 01 · LOCALHOST:3541 · 7 PLANES</div>
+      <h2>The Studio of Living Desks</h2>
+      <p class="sub">Behind the Scenes of the Agentic Multiplane Office &amp; Worktree Pipeline — <em>Persistent agent souls, isolated Git worktrees, cross-model auditing, and the 55-minute handoff</em></p>
+
+      <p data-t0="1.25" data-t1="12.36">Behind the thirty-four worlds stood a thirty-fifth: a living multiplane studio where named agents walked between slanted light-desks, a brass coffee urn, and a four-column Kanban corkboard.</p>
+      <p class="q" data-t0="14.08" data-t1="22.38"><span class="spk">The Elder:</span> “Every chapter card on the board spawns its own isolated Git worktree and its own seven-plane camera rig.”</p>
+      <p data-t0="28.60" data-t1="41.33">In Planning, the agents pinned before-and-after mockups to the wall. In Doing, four parallel worktrees inked forty-five thousand frames on twos. Then the card entered Review and Fix, where a second model audited the drawing.</p>
+      <p class="f q" data-t0="43.45" data-t1="53.14"><span class="spk">The Magistrate:</span> “Do not paste a drawing on top of the plate. Throw away the underlay and carve every mountain, cloak, and bird in living cross-hatched ink.”</p>
+      <p class="q" data-t0="55.69" data-t1="64.26"><span class="spk">The Witness:</span> “At minute fifty-five, before the one-hour memory cache expired, each agent wrote its handoff ledger and stepped back to the coffee urn.”</p>
+      <p class="f" data-t0="66.48" data-t1="75.91">No agent may judge its own work, and no two branches may merge at once. Single-file through the gate, thirty-four worlds became one continuous road.</p>
+      <p class="q" data-t0="78.46" data-t1="85.70"><span class="spk">The Child:</span> “From planning mockup to worktree, from cross-model audit to the master reel: the studio is open, and the projector is running.”</p>
+
+      <details class="craft">
+        <summary>On the film · Multiplane &amp; Fulcrum Notes</summary>
+        <dl>
+          <dt>Action</dt><dd>Maestro pins chapter cards to the Kanban corkboard → isolated Git worktrees spawn 7-plane animation desks → idle agents sip at the brass coffee urn → Cross-Model Auditor rejects static PNG underlays at the light table → pure cross-hatched engravings queue single-file into the FIFO Merge splicer as the 55-minute hourglass compacts handoff notes.</dd>
+          <dt>Picture</dt><dd>Inside the 7-plane virtual animation studio office (inspired by Kohnny, Agent-Office, and Agent-007). In Plane 4 stands the 4-column Kanban + Git Worktree corkboard (Planning Mockups, Doing Worktrees, Cross-Model Review &amp; Fix, FIFO Merge Queue) beside a steaming brass coffee urn. In Plane 3 rises the towering 7-level glass Multiplane Camera rig flanked by slanted animator light-desks.</dd>
+          <dt>Sound</dt><dd>Scratching dip-pens on paper, clicking multiplane camera gears, bubbling brass espresso urn, a sharp red audit stamp, and the 34-world musical theme.</dd>
+          <dt>Code</dt><dd><code>card -&gt; spawn_worktree(branch) -&gt; plan_mockup() -&gt; draw_7_planes() -&gt; cross_model_audit(codex != claude) -&gt; fifo_merge(master_reel) @ compact(55m)</code></dd>
+          <dt>After</dt><dd>Thirty-four parables showed how descriptions coordinate living bodies. This behind-the-scenes coda reveals how a room of specialized agents, isolated worktrees, and cross-model critics drew the atlas itself.</dd>
+        </dl>
+      </details>
+    </div>
+  </section>
+
+  <footer class="colophon">
+    <p><em>“The world does not fit through the mouth. Something smaller crosses, and returns as care.”</em></p>
+    <div class="mono">34 PURE-ENGRAVED MULTIPLANE FILMS · 222 KOKORO v1.0 VOICE LINES · 72 FULCRUM TURNS · 24 FPS</div>
+  </footer>
+
+</main>
+
+<script>
+(() => {
+  const MASTER_CHAPTERS = [{"no": "00", "slug": "00-the-crossing", "title": "The Crossing", "subtitle": "How Absent Things Learned to Move Living Bodies", "start": 0.0, "end": 70.38, "duration": 70.38, "poster": "../studio/films/00-the-crossing.jpg"}, {"no": "01", "slug": "01-the-kingdom-of-turned-heads", "title": "The Kingdom of Turned Heads", "subtitle": "The Politics of Deixis and the Monopoly of Attention", "start": 70.38, "end": 127.22, "duration": 56.85, "poster": "../studio/films/01-the-kingdom-of-turned-heads.jpg"}, {"no": "02", "slug": "02-the-house-whose-road-disappeared", "title": "The House Whose Road Disappeared", "subtitle": "Heritage Technical Debt and the Tyranny of Vanished Rationale", "start": 127.22, "end": 190.18, "duration": 62.96, "poster": "../studio/films/02-the-house-whose-road-disappeared.jpg"}, {"no": "03", "slug": "03-the-archipelago-of-borrowed-monsters", "title": "The Archipelago of Borrowed Monsters", "subtitle": "Horizontal Transfer and the Myth of Pure Pedigree", "start": 190.18, "end": 256.78, "duration": 66.59, "poster": "../studio/films/03-the-archipelago-of-borrowed-monsters.jpg"}, {"no": "04", "slug": "04-the-valley-where-dangers-arrive-early", "title": "The Valley Where Dangers Arrive Early", "subtitle": "Pre-enactment, Simulation, and Fiction as Survival Hardware", "start": 256.78, "end": 320.9, "duration": 64.13, "poster": "../studio/films/04-the-valley-where-dangers-arrive-early.jpg"}, {"no": "05", "slug": "05-the-republic-of-wooden-kings", "title": "The Republic of Wooden Kings", "subtitle": "The Counts-As Rule and the Institutional Licensing of Reality", "start": 320.9, "end": 381.88, "duration": 60.98, "poster": "../studio/films/05-the-republic-of-wooden-kings.jpg"}, {"no": "06", "slug": "06-the-palace-of-the-perfect-camera", "title": "The Palace of the Perfect Camera", "subtitle": "High-Resolution Capture and the Semantic Blindness of Pure Telemetry", "start": 381.88, "end": 445.24, "duration": 63.36, "poster": "../studio/films/06-the-palace-of-the-perfect-camera.jpg"}, {"no": "07", "slug": "07-the-city-of-required-fields", "title": "The City of Required Fields", "subtitle": "Formulary Sovereignty and the Cannibalism of the Database Schema", "start": 445.24, "end": 499.22, "duration": 53.98, "poster": "../studio/films/07-the-city-of-required-fields.jpg"}, {"no": "08", "slug": "08-the-marsh-of-enforced-lines", "title": "The Marsh of Enforced Lines", "subtitle": "Cartographic Leviathans and the Violent Friction Between Geometry and Mud", "start": 499.22, "end": 559.12, "duration": 59.91, "poster": "../studio/films/08-the-marsh-of-enforced-lines.jpg"}, {"no": "09", "slug": "09-the-two-griefs", "title": "The Two Griefs", "subtitle": "Semantic Annexation and the Tragedy of Standardized Words", "start": 559.12, "end": 612.78, "duration": 53.65, "poster": "../studio/films/09-the-two-griefs.jpg"}, {"no": "10", "slug": "10-the-common-bird", "title": "The Common Bird", "subtitle": "How Coordination Survives the Impossibility of Shared Minds", "start": 612.78, "end": 669.23, "duration": 56.46, "poster": "../studio/films/10-the-common-bird.jpg"}, {"no": "11", "slug": "11-the-court-of-shards", "title": "The Court of Shards", "subtitle": "Archaeological Reconstruction and the Seduction of Coherence", "start": 669.23, "end": 723.61, "duration": 54.38, "poster": "../studio/films/11-the-court-of-shards.jpg"}, {"no": "12", "slug": "12-the-invisible-tool-country", "title": "The Invisible Tool Country", "subtitle": "Phenomenological Transparency and the Shock of Infrastructure Breakdown", "start": 723.61, "end": 774.61, "duration": 51.0, "poster": "../studio/films/12-the-invisible-tool-country.jpg"}, {"no": "13", "slug": "13-the-giant-state", "title": "The Giant State", "subtitle": "Scale Inversion, Bureaucratic Latency, and the Loss of Bodily Presence", "start": 774.61, "end": 832.49, "duration": 57.89, "poster": "../studio/films/13-the-giant-state.jpg"}, {"no": "14", "slug": "14-the-elevator-school-of-authorship", "title": "The Elevator School of Authorship", "subtitle": "Lossy Seduction and the Mutilation of Complex Thought", "start": 832.49, "end": 893.88, "duration": 61.39, "poster": "../studio/films/14-the-elevator-school-of-authorship.jpg"}, {"no": "15", "slug": "15-the-city-of-unmeasured-adjectives", "title": "The City of Unmeasured Adjectives", "subtitle": "Goodhart's Law and the Tyranny of the Scored Target", "start": 893.88, "end": 949.02, "duration": 55.14, "poster": "../studio/films/15-the-city-of-unmeasured-adjectives.jpg"}, {"no": "16", "slug": "16-the-archive-without-context", "title": "The Archive Without Context", "subtitle": "Dossier Governance and the Weaponization of Naked Facticity", "start": 949.02, "end": 1003.9, "duration": 54.88, "poster": "../studio/films/16-the-archive-without-context.jpg"}, {"no": "17", "slug": "17-the-hive-of-forbidden-words", "title": "The Hive of Forbidden Words", "subtitle": "Taboo, Censorship, and the Subterranean Migration of Meaning", "start": 1003.9, "end": 1060.01, "duration": 56.11, "poster": "../studio/films/17-the-hive-of-forbidden-words.jpg"}, {"no": "18", "slug": "18-the-country-of-negative-animals", "title": "The Country of Negative Animals", "subtitle": "Apophasis and the Art of Sculpting Reality Through Negation", "start": 1060.01, "end": 1114.32, "duration": 54.32, "poster": "../studio/films/18-the-country-of-negative-animals.jpg"}, {"no": "19", "slug": "19-the-empire-beneath-the-map", "title": "The Empire Beneath the Map", "subtitle": "Dashboard Blindness and the Revenge of the Neglected Soil", "start": 1114.32, "end": 1167.58, "duration": 53.26, "poster": "../studio/films/19-the-empire-beneath-the-map.jpg"}, {"no": "20", "slug": "20-the-sentence-with-skin-in-the-game", "title": "The Sentence with Skin in the Game", "subtitle": "Operational Liability and the Structural Restoration of Truth", "start": 1167.58, "end": 1227.19, "duration": 59.6, "poster": "../studio/films/20-the-sentence-with-skin-in-the-game.jpg"}, {"no": "21", "slug": "21-the-self-fulfilling-village", "title": "The Self-Fulfilling Village", "subtitle": "Reflexivity and Descriptions That Construct Their Own Reality", "start": 1227.19, "end": 1286.37, "duration": 59.18, "poster": "../studio/films/21-the-self-fulfilling-village.jpg"}, {"no": "22", "slug": "22-the-school-of-collapsing-pots", "title": "The School of Collapsing Pots", "subtitle": "Tacit Knowledge and the Wisdom in the Nerve Endings", "start": 1286.37, "end": 1343.05, "duration": 56.68, "poster": "../studio/films/22-the-school-of-collapsing-pots.jpg"}, {"no": "23", "slug": "23-the-market-of-dead-metaphors", "title": "The Market of Dead Metaphors", "subtitle": "Semantic Fossilization and the Corpses in Our Grammar", "start": 1343.05, "end": 1399.77, "duration": 56.72, "poster": "../studio/films/23-the-market-of-dead-metaphors.jpg"}, {"no": "24", "slug": "24-the-cave-of-the-surviving-scratch", "title": "The Cave of the Surviving Scratch", "subtitle": "Deep-Time Inscription and the Illusion of Archival Truth", "start": 1399.77, "end": 1456.8, "duration": 57.03, "poster": "../studio/films/24-the-cave-of-the-surviving-scratch.jpg"}, {"no": "25", "slug": "25-the-gallery-of-causally-different-twins", "title": "The Gallery of Causally Different Twins", "subtitle": "Surface Mimicry, Provenance, and the Stolen Witness", "start": 1456.8, "end": 1515.09, "duration": 58.3, "poster": "../studio/films/25-the-gallery-of-causally-different-twins.jpg"}, {"no": "26", "slug": "26-the-forensic-mud", "title": "The Forensic Mud", "subtitle": "Material Resistance as the Incorruptible Counter-Narrative to Power", "start": 1515.09, "end": 1570.53, "duration": 55.44, "poster": "../studio/films/26-the-forensic-mud.jpg"}, {"no": "27", "slug": "27-the-mountain-that-refused-to-join-the-story", "title": "The Mountain That Refused to Join the Story", "subtitle": "Material Indifference and the Collapse of Narrative Hubris", "start": 1570.53, "end": 1627.97, "duration": 57.44, "poster": "../studio/films/27-the-mountain-that-refused-to-join-the-story.jpg"}, {"no": "28", "slug": "28-the-great-listener", "title": "The Great Listener", "subtitle": "Autocomplete Culture and the Benevolent Capture of Human Agency", "start": 1627.97, "end": 1684.5, "duration": 56.53, "poster": "../studio/films/28-the-great-listener.jpg"}, {"no": "29", "slug": "29-the-house-that-looked-finished", "title": "The House That Looked Finished", "subtitle": "Demo Colonialism and the Structural Debt Hidden Behind the Facade", "start": 1684.5, "end": 1741.17, "duration": 56.67, "poster": "../studio/films/29-the-house-that-looked-finished.jpg"}, {"no": "30", "slug": "30-the-republic-of-debts", "title": "The Republic of Debts", "subtitle": "Category Arbitrage and the Invisible Obligations Packed into Ordinary Nouns", "start": 1741.17, "end": 1798.48, "duration": 57.32, "poster": "../studio/films/30-the-republic-of-debts.jpg"}, {"no": "31", "slug": "31-the-founder-who-never-lived", "title": "The Founder Who Never Lived", "subtitle": "Synthetic Trust Farming and the Untarnishable Authority of Myth", "start": 1798.48, "end": 1853.82, "duration": 55.33, "poster": "../studio/films/31-the-founder-who-never-lived.jpg"}, {"no": "32", "slug": "32-the-king-who-bowed", "title": "The King Who Bowed", "subtitle": "Modality Laundering and the Paradox of Self-Binding Power", "start": 1853.82, "end": 1911.06, "duration": 57.24, "poster": "../studio/films/32-the-king-who-bowed.jpg"}, {"no": "33", "slug": "33-the-red-bird-world", "title": "The Red Bird World", "subtitle": "Coordination Across the Irreducible Gap (Conclusion & Meta-WorldText)", "start": 1911.06, "end": 1973.53, "duration": 62.48, "poster": "../studio/films/33-the-red-bird-world.jpg"}, {"no": "34", "slug": "34-the-multiplane-studio-office", "title": "The Studio of Living Desks", "subtitle": "Behind the Scenes of the Agentic Multiplane Office & Worktree Pipeline", "start": 1973.53, "end": 2065.11, "duration": 91.58, "poster": "../studio/films/34-the-multiplane-studio-office.jpg"}];
+  const chapters = [...document.querySelectorAll('section.chapter')];
+  const navLinks = new Map(
+    [...document.querySelectorAll('header.mast nav.chapters a')].map(a => [a.dataset.ch, a])
+  );
+  let continuous = true;
+  let activeChap = null;
+  let playingChap = null;
+
+  const fmt = s => {
+    s = Math.max(0, s || 0);
+    const m = Math.floor(s / 60);
+    const r = Math.floor(s % 60);
+    return m + ':' + (r < 10 ? '0' : '') + r;
+  };
+
+  // ---------- Master Feature Video & Drive Audio Controller ----------
+  const featVideo = document.getElementById('master-feature-video');
+  const chapSelect = document.getElementById('master-chapter-select');
+  const featPrev = document.getElementById('feat-prev');
+  const featNext = document.getElementById('feat-next');
+
+  const driveAudio = document.getElementById('drive-audio');
+  const drvPlay = document.getElementById('drv-play');
+  const drvPrev = document.getElementById('drv-prev');
+  const drvNext = document.getElementById('drv-next');
+  const drvRew = document.getElementById('drv-rew');
+  const drvFf = document.getElementById('drv-ff');
+  const drvSpeed = document.getElementById('drv-speed');
+  const drvNo = document.getElementById('drive-now-no');
+  const drvTitle = document.getElementById('drive-now-title');
+  const drvSub = document.getElementById('drive-now-sub');
+  const drvTc = document.getElementById('drive-tc');
+
+  const findMasterChapIdx = t => {
+    for (let i = 0; i < MASTER_CHAPTERS.length; i++) {
+      if (t >= MASTER_CHAPTERS[i].start && t < MASTER_CHAPTERS[i].end) return i;
+    }
+    return MASTER_CHAPTERS.length - 1;
+  };
+
+  let lastMediaChapIdx = -1;
+  const updateMediaSession = (idx, mediaEl) => {
+    const mc = MASTER_CHAPTERS[idx] || MASTER_CHAPTERS[0];
+    if (!mc) return;
+    drvNo.textContent = `PLATE ${mc.no} OF 33 · CONTINUOUS DRIVE EDITION`;
+    drvTitle.textContent = mc.title;
+    drvSub.textContent = mc.subtitle;
+    if (chapSelect && document.activeElement !== chapSelect) {
+      chapSelect.value = String(idx);
+    }
+    if ('mediaSession' in navigator && idx !== lastMediaChapIdx) {
+      lastMediaChapIdx = idx;
+      try {
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title: `Plate ${mc.no}: ${mc.title}`,
+          artist: 'WORLDFUL Multiplane Studio (Kokoro v1.0)',
+          album: mc.subtitle,
+          artwork: [{ src: mc.poster, sizes: '1280x720', type: 'image/jpeg' }]
+        });
+        navigator.mediaSession.setActionHandler('previoustrack', () => {
+          const cur = findMasterChapIdx(mediaEl.currentTime);
+          const target = MASTER_CHAPTERS[Math.max(0, cur - 1)];
+          if (target) mediaEl.currentTime = target.start + 0.05;
+        });
+        navigator.mediaSession.setActionHandler('nexttrack', () => {
+          const cur = findMasterChapIdx(mediaEl.currentTime);
+          const target = MASTER_CHAPTERS[Math.min(MASTER_CHAPTERS.length - 1, cur + 1)];
+          if (target) mediaEl.currentTime = target.start + 0.05;
+        });
+        navigator.mediaSession.setActionHandler('seekbackward', () => {
+          mediaEl.currentTime = Math.max(0, mediaEl.currentTime - 15);
+        });
+        navigator.mediaSession.setActionHandler('seekforward', () => {
+          mediaEl.currentTime = Math.min(mediaEl.duration || 2000, mediaEl.currentTime + 15);
+        });
+      } catch (_) {}
+    }
+  };
+
+  const pauseAllChapterVideos = () => {
+    for (const other of state.values()) {
+      if (!other.video.paused) other.video.pause();
+    }
+  };
+
+  if (featVideo) {
+    featVideo.addEventListener('play', () => {
+      pauseAllChapterVideos();
+      if (driveAudio && !driveAudio.paused) driveAudio.pause();
+    });
+    featVideo.addEventListener('timeupdate', () => {
+      const idx = findMasterChapIdx(featVideo.currentTime);
+      updateMediaSession(idx, featVideo);
+    });
+    chapSelect.addEventListener('change', () => {
+      const idx = parseInt(chapSelect.value, 10) || 0;
+      const mc = MASTER_CHAPTERS[idx];
+      if (!mc) return;
+      if (driveAudio && !driveAudio.paused) {
+        driveAudio.currentTime = mc.start + 0.05;
+      } else {
+        featVideo.currentTime = mc.start + 0.05;
+        featVideo.play().catch(() => {});
+      }
+    });
+    featPrev.addEventListener('click', () => {
+      const idx = Math.max(0, findMasterChapIdx(featVideo.currentTime) - 1);
+      featVideo.currentTime = MASTER_CHAPTERS[idx].start + 0.05;
+      featVideo.play().catch(() => {});
+    });
+    featNext.addEventListener('click', () => {
+      const idx = Math.min(MASTER_CHAPTERS.length - 1, findMasterChapIdx(featVideo.currentTime) + 1);
+      featVideo.currentTime = MASTER_CHAPTERS[idx].start + 0.05;
+      featVideo.play().catch(() => {});
+    });
+  }
+
+  if (driveAudio) {
+    driveAudio.addEventListener('play', () => {
+      pauseAllChapterVideos();
+      if (featVideo && !featVideo.paused) featVideo.pause();
+      drvPlay.textContent = '❚❚ Pause';
+      document.getElementById('m-drive')?.classList.add('on');
+    });
+    driveAudio.addEventListener('pause', () => {
+      drvPlay.textContent = '▶ Play';
+      document.getElementById('m-drive')?.classList.remove('on');
+    });
+    driveAudio.addEventListener('timeupdate', () => {
+      const t = driveAudio.currentTime || 0;
+      const d = driveAudio.duration || 1995;
+      const idx = findMasterChapIdx(t);
+      updateMediaSession(idx, driveAudio);
+      drvTc.textContent = `${fmt(t)} / ${fmt(d)} · Plate ${MASTER_CHAPTERS[idx].no}`;
+    });
+    drvPlay.addEventListener('click', () => {
+      if (driveAudio.paused) driveAudio.play().catch(() => {});
+      else driveAudio.pause();
+    });
+    drvPrev.addEventListener('click', () => {
+      const idx = Math.max(0, findMasterChapIdx(driveAudio.currentTime) - 1);
+      driveAudio.currentTime = MASTER_CHAPTERS[idx].start + 0.05;
+      driveAudio.play().catch(() => {});
+    });
+    drvNext.addEventListener('click', () => {
+      const idx = Math.min(MASTER_CHAPTERS.length - 1, findMasterChapIdx(driveAudio.currentTime) + 1);
+      driveAudio.currentTime = MASTER_CHAPTERS[idx].start + 0.05;
+      driveAudio.play().catch(() => {});
+    });
+    drvRew.addEventListener('click', () => {
+      driveAudio.currentTime = Math.max(0, driveAudio.currentTime - 15);
+    });
+    drvFf.addEventListener('click', () => {
+      driveAudio.currentTime = Math.min(driveAudio.duration || 2000, driveAudio.currentTime + 15);
+    });
+    const speeds = [1.0, 1.15, 1.25, 1.5];
+    let spdIdx = 0;
+    drvSpeed.addEventListener('click', () => {
+      spdIdx = (spdIdx + 1) % speeds.length;
+      driveAudio.playbackRate = speeds[spdIdx];
+      if (featVideo) featVideo.playbackRate = speeds[spdIdx];
+      drvSpeed.textContent = `Speed: ${speeds[spdIdx]}×`;
+    });
+  }
+
+  const state = new Map();
+  for (const sec of chapters) {
+    const slug = sec.dataset.slug;
+    const dur = parseFloat(sec.dataset.dur) || 60;
+    const video = sec.querySelector('video');
+    const playBtn = sec.querySelector('button.play');
+    const tc = sec.querySelector('.tc');
+    const fill = sec.querySelector('.scrub > i');
+    const scrub = sec.querySelector('.scrub');
+    const paras = [...sec.querySelectorAll('.prose p[data-t0]')].map(el => ({
+      el,
+      t0: parseFloat(el.dataset.t0),
+      t1: parseFloat(el.dataset.t1)
+    }));
+    const st = { sec, slug, dur, video, playBtn, tc, fill, paras, lastIdx: -1 };
+    state.set(slug, st);
+
+    const paint = t => {
+      const d = video.duration || dur;
+      tc.textContent = fmt(t) + ' / ' + fmt(d);
+      fill.style.width = Math.min(100, (t / d) * 100).toFixed(1) + '%';
+      let idx = -1;
+      for (let i = 0; i < paras.length; i++) {
+        if (t >= paras[i].t0 - 0.15 && t <= paras[i].t1 + 0.25) { idx = i; break; }
+        if (t >= paras[i].t0) idx = i;
+      }
+      if (idx !== st.lastIdx) {
+        if (st.lastIdx >= 0 && paras[st.lastIdx]) paras[st.lastIdx].el.classList.remove('now');
+        if (idx >= 0 && paras[idx]) {
+          paras[idx].el.classList.add('now');
+          if (playingChap === st) {
+            const r = paras[idx].el.getBoundingClientRect();
+            const vh = window.innerHeight;
+            if (r.top < vh * 0.18 || r.bottom > vh * 0.82) {
+              paras[idx].el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          }
+        }
+        st.lastIdx = idx;
+      }
+    };
+    st.paint = paint;
+
+    const toggle = () => {
+      if (video.paused) {
+        for (const other of state.values()) {
+          if (other !== st && !other.video.paused) other.video.pause();
+        }
+        if (featVideo && !featVideo.paused) featVideo.pause();
+        if (driveAudio && !driveAudio.paused) driveAudio.pause();
+        playingChap = st;
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
+    };
+
+    playBtn.addEventListener('click', toggle);
+    video.addEventListener('click', toggle);
+
+    video.addEventListener('play', () => {
+      if (featVideo && !featVideo.paused) featVideo.pause();
+      if (driveAudio && !driveAudio.paused) driveAudio.pause();
+      playBtn.textContent = '❚❚';
+      playingChap = st;
+    });
+    video.addEventListener('pause', () => {
+      playBtn.textContent = '▶';
+      if (playingChap === st) playingChap = null;
+    });
+    video.addEventListener('timeupdate', () => paint(video.currentTime));
+    video.addEventListener('ended', () => {
+      playBtn.textContent = '▶';
+      if (continuous) {
+        const idx = chapters.indexOf(sec);
+        const next = chapters[idx + 1];
+        if (next) {
+          const nst = state.get(next.dataset.slug);
+          next.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          setTimeout(() => {
+            nst.video.currentTime = 0;
+            nst.video.play().catch(() => {});
+          }, 450);
+        }
+      }
+    });
+
+    scrub.addEventListener('click', e => {
+      const r = scrub.getBoundingClientRect();
+      const u = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+      const t = u * (video.duration || dur);
+      video.currentTime = t;
+      paint(t);
+    });
+
+    for (const p of paras) {
+      p.el.addEventListener('click', () => {
+        for (const other of state.values()) {
+          if (other !== st && !other.video.paused) other.video.pause();
+        }
+        video.currentTime = Math.max(0, p.t0 - 0.05);
+        paint(video.currentTime);
+        video.play().catch(() => {});
+      });
+    }
+  }
+
+  let scrubRAF = 0;
+  const onScroll = () => {
+    scrubRAF = 0;
+    const vh = window.innerHeight;
+    const focusY = vh * 0.42;
+
+    let best = null, bestDist = Infinity;
+    for (const sec of chapters) {
+      const r = sec.getBoundingClientRect();
+      const d = (r.top <= focusY && r.bottom >= focusY)
+        ? 0
+        : Math.min(Math.abs(r.top - focusY), Math.abs(r.bottom - focusY));
+      if (d < bestDist) { bestDist = d; best = sec; }
+    }
+    if (best && best !== activeChap) {
+      if (activeChap) navLinks.get(activeChap.dataset.slug)?.classList.remove('here');
+      activeChap = best;
+      navLinks.get(best.dataset.slug)?.classList.add('here');
+    }
+
+    if (playingChap || document.body.classList.contains('mode-film')) return;
+    if (!best) return;
+    const st = state.get(best.dataset.slug);
+    if (!st || st.paras.length === 0) return;
+
+    let chosen = null;
+    for (const p of st.paras) {
+      const r = p.el.getBoundingClientRect();
+      if (r.top <= focusY && r.bottom >= focusY) {
+        const u = (focusY - r.top) / Math.max(1, r.height);
+        chosen = p.t0 + u * (p.t1 - p.t0);
+        break;
+      }
+      if (r.bottom < focusY) chosen = p.t1;
+      else if (chosen === null && r.top > focusY) { chosen = p.t0; break; }
+    }
+    if (chosen !== null && Math.abs((st.video.currentTime || 0) - chosen) > 0.25) {
+      try { st.video.currentTime = chosen; } catch (_) {}
+      st.paint(chosen);
+    }
+  };
+
+  window.addEventListener('scroll', () => {
+    if (!scrubRAF) scrubRAF = requestAnimationFrame(onScroll);
+  }, { passive: true });
+  onScroll();
+
+  const bBook = document.getElementById('m-book');
+  const bFilm = document.getElementById('m-film');
+  const bDrive = document.getElementById('m-drive');
+  const bCont = document.getElementById('m-cont');
+
+  bBook.addEventListener('click', () => {
+    document.body.classList.remove('mode-film');
+    bBook.classList.add('on');
+    bFilm.classList.remove('on');
+  });
+  bFilm.addEventListener('click', () => {
+    document.body.classList.add('mode-film');
+    bFilm.classList.add('on');
+    bBook.classList.remove('on');
+    const target = activeChap ? state.get(activeChap.dataset.slug) : state.values().next().value;
+    if (target && target.video.paused) target.video.play().catch(() => {});
+  });
+  bDrive.addEventListener('click', () => {
+    document.getElementById('drive-cinema-console')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (driveAudio && driveAudio.paused) {
+      driveAudio.play().catch(() => {});
+    }
+  });
+  bCont.addEventListener('click', () => {
+    continuous = !continuous;
+    bCont.classList.toggle('on', continuous);
+  });
+})();
+</script>
+</body>
+</html>

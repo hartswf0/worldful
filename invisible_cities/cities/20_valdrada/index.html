@@ -1,0 +1,4051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Valdrada — Cities &amp; Eyes 1</title>
+<style>
+[hidden] { display: none !important; }
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --vld-obsidian-water: #070B10;
+  --vld-abyss-trench: #0D151F;
+  --vld-cold-limpid-slate: #2A3D4F;
+  --vld-chilled-mirror-cyan: #9BD1E5;
+  --vld-silverpoint-ice: #DCEFF7;
+  --vld-veranda-ivory: #EDE6D6;
+  --vld-travertine-warm: #D6C7AE;
+  --vld-amber-room-glow: #E3A857;
+  --vld-parapet-iron: #1A232D;
+  --vld-crimson-vein: #8E1B28;
+  --vld-clotted-tendon-black: #2E070D;
+  --vld-serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --vld-mono: "SF Mono", Menlo, Monaco, Consolas, monospace;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--vld-obsidian-water);
+  color: var(--vld-veranda-ivory);
+  font-family: var(--vld-serif);
+  -webkit-font-smoothing: antialiased;
+}
+
+valdrada-catoptric-codex.vld-codex-shell {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 8px;
+  padding: 8px 10px;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(227, 168, 87, 0.08), transparent 52%),
+    radial-gradient(ellipse at 50% 100%, rgba(155, 209, 229, 0.07), transparent 55%),
+    linear-gradient(180deg, #101720 0%, #0A1018 50%, #070B10 100%);
+}
+
+parapet-gaze-rubric.vld-rubric-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px 12px;
+  background: linear-gradient(90deg, rgba(26, 35, 45, 0.94), rgba(13, 21, 31, 0.95));
+  border: 1px solid rgba(155, 209, 229, 0.22);
+  border-top-color: rgba(214, 199, 174, 0.34);
+  border-radius: 4px;
+  min-height: 0;
+}
+
+lakeshore-crown-masthead.vld-masthead {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+codex-series-crest.vld-series-crest {
+  font-family: var(--vld-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--vld-chilled-mirror-cyan);
+  white-space: nowrap;
+}
+
+codex-city-title.vld-city-title {
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--vld-veranda-ivory);
+  text-transform: uppercase;
+}
+
+codex-epigraph-line.vld-epigraph-line {
+  font-size: 12px;
+  font-style: italic;
+  color: var(--vld-travertine-warm);
+  opacity: 0.9;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 370px;
+}
+
+catoptric-command-bar.vld-command-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: flex-end;
+}
+
+catoptric-action-switch.vld-cmd-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 8px;
+  border-radius: 3px;
+  border: 1px solid rgba(214, 199, 174, 0.25);
+  background: rgba(13, 21, 31, 0.85);
+  color: var(--vld-veranda-ivory);
+  font-family: var(--vld-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  user-select: none;
+  transition: border-color 140ms ease, background 140ms ease, color 140ms ease;
+}
+
+catoptric-action-switch.vld-cmd-switch:hover,
+catoptric-action-switch.vld-cmd-switch:focus-visible {
+  border-color: var(--vld-chilled-mirror-cyan);
+  background: rgba(42, 61, 79, 0.62);
+  outline: none;
+}
+
+catoptric-action-switch.vld-cmd-switch.vld-switch-lit {
+  border-color: var(--vld-amber-room-glow);
+  color: var(--vld-silverpoint-ice);
+  background: rgba(42, 61, 79, 0.72);
+}
+
+catoptric-key-glyph.vld-key-glyph {
+  display: inline-block;
+  padding: 1px 4px;
+  border-radius: 2px;
+  background: rgba(155, 209, 229, 0.14);
+  border: 1px solid rgba(155, 209, 229, 0.32);
+  color: var(--vld-silverpoint-ice);
+  font-family: var(--vld-mono);
+  font-size: 9.5px;
+  line-height: 1.15;
+}
+
+catoptric-diptych-workbench.vld-workbench-grid {
+  display: grid;
+  grid-template-columns: 238px minmax(0, 1fr) 304px;
+  gap: 8px;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+veranda-act-rail.vld-act-rail {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+veranda-stone-trigger.vld-stone-btn {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 8px;
+  flex: 1 1 0;
+  min-height: 0;
+  background: linear-gradient(135deg, rgba(26, 35, 45, 0.88), rgba(13, 21, 31, 0.92));
+  border: 1px solid rgba(214, 199, 174, 0.18);
+  border-left: 3px solid rgba(227, 168, 87, 0.42);
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+  transition: border-color 140ms ease, background 140ms ease;
+}
+
+veranda-stone-trigger.vld-stone-btn:hover,
+veranda-stone-trigger.vld-stone-btn:focus-visible {
+  border-color: var(--vld-chilled-mirror-cyan);
+  background: rgba(42, 61, 79, 0.56);
+  outline: none;
+}
+
+veranda-stone-trigger.vld-stone-btn.vld-is-active {
+  border-color: var(--vld-silverpoint-ice);
+  border-left-color: var(--vld-amber-room-glow);
+  background: linear-gradient(135deg, rgba(42, 61, 79, 0.82), rgba(22, 34, 46, 0.95));
+  box-shadow: inset 0 0 14px rgba(155, 209, 229, 0.12);
+}
+
+stone-index-numeral.vld-stone-idx {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 3px;
+  background: rgba(227, 168, 87, 0.15);
+  border: 1px solid rgba(227, 168, 87, 0.45);
+  color: var(--vld-veranda-ivory);
+  font-family: var(--vld-mono);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+stone-trigger-caption.vld-stone-caption {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+stone-title-line.vld-stone-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--vld-veranda-ivory);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+stone-gesture-sub.vld-stone-sub {
+  font-size: 10.5px;
+  color: var(--vld-travertine-warm);
+  opacity: 0.84;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+stone-polarity-tag.vld-stone-pol {
+  font-family: var(--vld-mono);
+  font-size: 9.5px;
+  padding: 2px 5px;
+  border-radius: 2px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+stone-polarity-tag.vld-pol-increased {
+  color: var(--vld-silverpoint-ice);
+  background: rgba(155, 209, 229, 0.16);
+  border: 1px solid rgba(155, 209, 229, 0.42);
+}
+
+stone-polarity-tag.vld-pol-denied {
+  color: #E2A3AC;
+  background: rgba(142, 27, 40, 0.24);
+  border: 1px solid rgba(142, 27, 40, 0.55);
+}
+
+catoptric-stage-frame.vld-stage-frame {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  min-width: 0;
+  min-height: 0;
+  border-radius: 4px;
+  border: 1px solid rgba(155, 209, 229, 0.28);
+  background: var(--vld-obsidian-water);
+  overflow: hidden;
+}
+
+erect-veranda-tier.vld-erect-band,
+inverted-abyss-tier.vld-inverted-band {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 4px 10px;
+  font-family: var(--vld-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  min-width: 0;
+}
+
+erect-veranda-tier.vld-erect-band {
+  background: linear-gradient(90deg, rgba(38, 33, 28, 0.95), rgba(26, 35, 45, 0.92));
+  color: var(--vld-travertine-warm);
+  border-bottom: 1px solid rgba(227, 168, 87, 0.28);
+}
+
+inverted-abyss-tier.vld-inverted-band {
+  background: linear-gradient(90deg, rgba(10, 17, 25, 0.96), rgba(18, 30, 42, 0.95));
+  color: var(--vld-chilled-mirror-cyan);
+  border-top: 1px solid rgba(155, 209, 229, 0.28);
+}
+
+tier-realm-label.vld-realm-label,
+interlocked-eye-reticle.vld-eye-reticle,
+wardrobe-catoptric-badge.vld-wardrobe-badge {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+wardrobe-catoptric-badge.vld-wardrobe-badge {
+  padding: 1px 6px;
+  border-radius: 2px;
+  background: rgba(155, 209, 229, 0.16);
+  border: 1px solid rgba(155, 209, 229, 0.45);
+  color: var(--vld-silverpoint-ice);
+}
+
+catoptric-canvas-well.vld-canvas-well {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--vld-obsidian-water);
+}
+
+canvas.vld-stage-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+valdrada-waterline.vld-waterline-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 8px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+waterline-axiom-pill.vld-waterline-pill {
+  padding: 1px 7px;
+  border-radius: 2px;
+  background: rgba(7, 11, 16, 0.82);
+  border: 1px solid rgba(220, 239, 247, 0.42);
+  color: var(--vld-silverpoint-ice);
+  font-family: var(--vld-mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+asymmetric-value-ledger.vld-ledger-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 9px 10px;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(24, 33, 43, 0.94) 0%, rgba(11, 18, 26, 0.96) 100%);
+  border: 1px solid rgba(155, 209, 229, 0.24);
+  border-radius: 4px;
+}
+
+ledger-chamber-heading.vld-ledger-head {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid rgba(214, 199, 174, 0.16);
+}
+
+ledger-kicker-row.vld-ledger-kicker {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--vld-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--vld-chilled-mirror-cyan);
+}
+
+ledger-active-title.vld-ledger-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--vld-veranda-ivory);
+  line-height: 1.2;
+}
+
+ledger-cards-pair.vld-cards-pair {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
+}
+
+ledger-half-card.vld-half-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 7px 8px;
+  border-radius: 3px;
+  border: 1px solid rgba(214, 199, 174, 0.18);
+  background: rgba(7, 11, 16, 0.58);
+}
+
+ledger-half-card.vld-half-erect {
+  border-left: 3px solid var(--vld-amber-room-glow);
+}
+
+ledger-half-card.vld-half-inverted {
+  border-left: 3px solid var(--vld-chilled-mirror-cyan);
+}
+
+half-card-header.vld-half-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+half-card-realm.vld-half-realm {
+  font-family: var(--vld-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--vld-travertine-warm);
+}
+
+half-card-score.vld-half-score {
+  font-family: var(--vld-mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--vld-silverpoint-ice);
+}
+
+weight-bar-track.vld-bar-track {
+  display: block;
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(42, 61, 79, 0.45);
+  overflow: hidden;
+}
+
+weight-bar-fill.vld-bar-fill {
+  display: block;
+  height: 100%;
+  border-radius: 3px;
+  transition: width 220ms ease;
+}
+
+weight-bar-fill.vld-fill-erect {
+  background: linear-gradient(90deg, #B87D32, var(--vld-amber-room-glow));
+}
+
+weight-bar-fill.vld-fill-inverted {
+  background: linear-gradient(90deg, #4B8BA8, var(--vld-silverpoint-ice));
+}
+
+weight-bar-fill.vld-fill-denied {
+  background: linear-gradient(90deg, #5E1822, #B93848);
+}
+
+half-card-role.vld-half-role {
+  font-size: 11px;
+  line-height: 1.3;
+  color: var(--vld-veranda-ivory);
+  opacity: 0.9;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+verdict-seal-chip.vld-verdict-chip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 6px 9px;
+  border-radius: 3px;
+  font-family: var(--vld-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+verdict-seal-chip.vld-verdict-increased {
+  background: rgba(155, 209, 229, 0.16);
+  border: 1px solid rgba(155, 209, 229, 0.55);
+  color: var(--vld-silverpoint-ice);
+}
+
+verdict-seal-chip.vld-verdict-denied {
+  background: rgba(142, 27, 40, 0.28);
+  border: 1px solid rgba(196, 40, 56, 0.65);
+  color: #F4C2C8;
+}
+
+ledger-stone-excerpt.vld-stone-excerpt {
+  padding: 6px 8px;
+  border-radius: 3px;
+  background: rgba(13, 21, 31, 0.72);
+  border: 1px solid rgba(214, 199, 174, 0.15);
+  font-size: 11.5px;
+  font-style: italic;
+  line-height: 1.34;
+  color: var(--vld-travertine-warm);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+ledger-causal-proof.vld-causal-proof {
+  padding: 5px 8px;
+  border-radius: 3px;
+  background: rgba(26, 35, 45, 0.72);
+  border: 1px solid rgba(155, 209, 229, 0.24);
+  font-family: var(--vld-mono);
+  font-size: 10px;
+  line-height: 1.3;
+  color: var(--vld-silverpoint-ice);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+loveless-tension-readout.vld-tension-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 4px;
+}
+
+tension-metric-cell.vld-metric-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 4px 5px;
+  border-radius: 3px;
+  background: rgba(7, 11, 16, 0.76);
+  border: 1px solid rgba(155, 209, 229, 0.18);
+  text-align: center;
+}
+
+tension-metric-label.vld-metric-label {
+  font-family: var(--vld-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--vld-travertine-warm);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+tension-metric-val.vld-metric-val {
+  font-family: var(--vld-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--vld-silverpoint-ice);
+}
+
+valdrada-plate-drawer.vld-plate-drawer {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(4, 8, 12, 0.88);
+  backdrop-filter: blur(6px);
+}
+
+plate-folio-sheet.vld-plate-sheet {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 10px;
+  width: min(1220px, 96vw);
+  height: min(740px, 92vh);
+  padding: 12px 14px;
+  border-radius: 5px;
+  background: linear-gradient(180deg, #131D28 0%, #091017 100%);
+  border: 1px solid rgba(155, 209, 229, 0.42);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.72);
+  overflow: hidden;
+}
+
+plate-drawer-toolbar.vld-plate-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(214, 199, 174, 0.2);
+}
+
+plate-mode-tabs.vld-plate-tabs,
+plate-drawer-actions.vld-plate-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+plate-tab-trigger.vld-plate-tab,
+plate-loupe-toggle.vld-plate-btn,
+plate-close-trigger.vld-plate-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 3px;
+  border: 1px solid rgba(155, 209, 229, 0.28);
+  background: rgba(7, 11, 16, 0.82);
+  color: var(--vld-veranda-ivory);
+  font-family: var(--vld-mono);
+  font-size: 11px;
+  cursor: pointer;
+  user-select: none;
+}
+
+plate-tab-trigger.vld-plate-tab.vld-is-active,
+plate-loupe-toggle.vld-plate-btn.vld-is-active {
+  border-color: var(--vld-amber-room-glow);
+  background: rgba(42, 61, 79, 0.78);
+  color: var(--vld-silverpoint-ice);
+}
+
+plate-loupe-viewport.vld-plate-viewport {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+plate-loupe-viewport.vld-plate-viewport.vld-mode-single {
+  grid-template-columns: 1fr;
+}
+
+plate-figure-card.vld-plate-card {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 6px;
+  min-height: 0;
+  min-width: 0;
+  padding: 8px;
+  border-radius: 4px;
+  background: rgba(7, 11, 16, 0.85);
+  border: 1px solid rgba(214, 199, 174, 0.22);
+  overflow: hidden;
+}
+
+plate-image-frame.vld-plate-img-frame {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+img.vld-plate-img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 2px;
+  transition: transform 180ms ease;
+}
+
+plate-loupe-viewport.vld-loupe-2x img.vld-plate-img {
+  transform: scale(2);
+  cursor: zoom-out;
+}
+
+plate-figure-caption.vld-plate-caption {
+  font-family: var(--vld-mono);
+  font-size: 10px;
+  color: var(--vld-travertine-warm);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+plate-missing-plaque.vld-missing-plaque {
+  padding: 12px;
+  border: 1px solid var(--vld-crimson-vein);
+  background: rgba(46, 7, 13, 0.86);
+  color: var(--vld-veranda-ivory);
+  font-family: var(--vld-mono);
+  font-size: 11px;
+  text-align: center;
+}
+
+@media (max-width: 960px) {
+  valdrada-catoptric-codex.vld-codex-shell {
+    padding: 5px 6px;
+    gap: 4px;
+  }
+  parapet-gaze-rubric.vld-rubric-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    padding: 4px 7px;
+  }
+  codex-city-title.vld-city-title { font-size: 14px; letter-spacing: 0.12em; }
+  codex-epigraph-line.vld-epigraph-line { display: none; }
+  catoptric-command-bar.vld-command-bar { justify-content: flex-start; gap: 3px; }
+  catoptric-action-switch.vld-cmd-switch { padding: 2px 5px; font-size: 9px; gap: 3px; }
+  catoptric-key-glyph.vld-key-glyph { font-size: 8.5px; padding: 0 3px; }
+  catoptric-diptych-workbench.vld-workbench-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    gap: 4px;
+  }
+  veranda-act-rail.vld-act-rail {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 3px;
+  }
+  veranda-stone-trigger.vld-stone-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    padding: 3px 2px;
+    border-left-width: 1px;
+  }
+  stone-index-numeral.vld-stone-idx { width: 17px; height: 17px; font-size: 9.5px; }
+  stone-title-line.vld-stone-title { font-size: 8.5px; text-align: center; max-width: 48px; }
+  stone-gesture-sub.vld-stone-sub, stone-polarity-tag.vld-stone-pol { display: none; }
+  erect-veranda-tier.vld-erect-band, inverted-abyss-tier.vld-inverted-band { padding: 2px 6px; font-size: 8.5px; }
+  waterline-axiom-pill.vld-waterline-pill { font-size: 8px; padding: 1px 4px; }
+  asymmetric-value-ledger.vld-ledger-panel { padding: 5px 7px; gap: 4px; }
+  ledger-chamber-heading.vld-ledger-head { padding-bottom: 2px; gap: 1px; }
+  ledger-active-title.vld-ledger-title { font-size: 11.5px; }
+  ledger-cards-pair.vld-cards-pair { grid-template-columns: 1fr 1fr; gap: 4px; }
+  ledger-half-card.vld-half-card { padding: 4px 6px; gap: 2px; }
+  half-card-score.vld-half-score { font-size: 11px; }
+  half-card-role.vld-half-role { font-size: 9.5px; -webkit-line-clamp: 2; }
+  verdict-seal-chip.vld-verdict-chip { padding: 3px 6px; font-size: 9px; }
+  ledger-stone-excerpt.vld-stone-excerpt { padding: 3px 6px; font-size: 9.5px; -webkit-line-clamp: 2; }
+  ledger-causal-proof.vld-causal-proof { padding: 3px 6px; font-size: 8.5px; }
+  tension-metric-cell.vld-metric-cell { padding: 2px 3px; }
+  tension-metric-val.vld-metric-val { font-size: 9.5px; }
+  plate-loupe-viewport.vld-plate-viewport { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.001ms !important;
+    animation-duration: 0.001ms !important;
+  }
+}
+</style>
+</head>
+
+<body>
+<valdrada-catoptric-codex class="vld-codex-shell" id="vld-codex-root">
+  <parapet-gaze-rubric class="vld-rubric-bar">
+    <lakeshore-crown-masthead class="vld-masthead">
+      <codex-series-crest class="vld-series-crest">Chapter III • Cities &amp; Eyes 1</codex-series-crest>
+      <codex-city-title class="vld-city-title">Valdrada</codex-city-title>
+      <codex-epigraph-line class="vld-epigraph-line">Built on an ancient lakeshore: one city erect above the water, one inverted point-by-point below.</codex-epigraph-line>
+    </lakeshore-crown-masthead>
+    <catoptric-command-bar class="vld-command-bar" role="toolbar" aria-label="Catoptric Controls">
+      <catoptric-action-switch class="vld-cmd-switch" id="vld-cmd-chance" role="button" tabindex="0" data-vld-cmd="chance" title="Attempt unguarded gesture">
+        <catoptric-key-glyph class="vld-key-glyph">C</catoptric-key-glyph>Test Forgetfulness
+      </catoptric-action-switch>
+      <catoptric-action-switch class="vld-cmd-switch" id="vld-cmd-warmth" role="button" tabindex="0" data-vld-cmd="warmth" title="Seek mutual love between twin cities">
+        <catoptric-key-glyph class="vld-key-glyph">W</catoptric-key-glyph>Seek Mutual Love
+      </catoptric-action-switch>
+      <catoptric-action-switch class="vld-cmd-switch" id="vld-cmd-limpidity" role="button" tabindex="0" data-vld-cmd="limpidity" title="Cycle lake specular limpidity">
+        <catoptric-key-glyph class="vld-key-glyph">L</catoptric-key-glyph><command-state-text class="vld-cmd-text" id="vld-limpidity-label">Limpidity 0.94</command-state-text>
+      </catoptric-action-switch>
+      <catoptric-action-switch class="vld-cmd-switch vld-switch-lit" id="vld-cmd-mute" role="button" tabindex="0" data-vld-cmd="mute" title="Toggle phase-inverted WebAudio canon">
+        <catoptric-key-glyph class="vld-key-glyph">M</catoptric-key-glyph><command-state-text class="vld-cmd-text" id="vld-mute-label">Canon On</command-state-text>
+      </catoptric-action-switch>
+      <catoptric-action-switch class="vld-cmd-switch" id="vld-cmd-motion" role="button" tabindex="0" data-vld-cmd="motion" title="Toggle reduced motion">
+        <catoptric-key-glyph class="vld-key-glyph">V</catoptric-key-glyph><command-state-text class="vld-cmd-text" id="vld-motion-label">Motion Full</command-state-text>
+      </catoptric-action-switch>
+      <catoptric-action-switch class="vld-cmd-switch" id="vld-cmd-reset" role="button" tabindex="0" data-vld-cmd="reset" title="Reset catoptric state">
+        <catoptric-key-glyph class="vld-key-glyph">R</catoptric-key-glyph>Reset
+      </catoptric-action-switch>
+      <catoptric-action-switch class="vld-cmd-switch" id="vld-cmd-plates" role="button" tabindex="0" data-vld-cmd="plates" title="Open archival copperplates">
+        <catoptric-key-glyph class="vld-key-glyph">P</catoptric-key-glyph>Plates
+      </catoptric-action-switch>
+    </catoptric-command-bar>
+  </parapet-gaze-rubric>
+
+  <catoptric-diptych-workbench class="vld-workbench-grid">
+    <veranda-act-rail class="vld-act-rail" id="vld-act-rail" role="navigation" aria-label="Seven Veranda Chambers">
+      <veranda-stone-trigger class="vld-stone-btn vld-is-active" role="button" tabindex="0" data-chamber-idx="0" data-chamber-id="traveler_parapet">
+        <stone-index-numeral class="vld-stone-idx">1</stone-index-numeral>
+        <stone-trigger-caption class="vld-stone-caption">
+          <stone-title-line class="vld-stone-title">Parapet</stone-title-line>
+          <stone-gesture-sub class="vld-stone-sub">Railed high-street overlook</stone-gesture-sub>
+        </stone-trigger-caption>
+        <stone-polarity-tag class="vld-stone-pol vld-pol-denied">DENIED</stone-polarity-tag>
+      </veranda-stone-trigger>
+      <veranda-stone-trigger class="vld-stone-btn" role="button" tabindex="0" data-chamber-idx="1" data-chamber-id="hallway_perspective">
+        <stone-index-numeral class="vld-stone-idx">2</stone-index-numeral>
+        <stone-trigger-caption class="vld-stone-caption">
+          <stone-title-line class="vld-stone-title">Hallway</stone-title-line>
+          <stone-gesture-sub class="vld-stone-sub">Coffered ceiling &amp; tiled floor</stone-gesture-sub>
+        </stone-trigger-caption>
+        <stone-polarity-tag class="vld-stone-pol vld-pol-increased">INCR</stone-polarity-tag>
+      </veranda-stone-trigger>
+      <veranda-stone-trigger class="vld-stone-btn" role="button" tabindex="0" data-chamber-idx="2" data-chamber-id="wardrobe_chamber">
+        <stone-index-numeral class="vld-stone-idx">3</stone-index-numeral>
+        <stone-trigger-caption class="vld-stone-caption">
+          <stone-title-line class="vld-stone-title">Wardrobe</stone-title-line>
+          <stone-gesture-sub class="vld-stone-sub">Beveled wardrobe mirror cone</stone-gesture-sub>
+        </stone-trigger-caption>
+        <stone-polarity-tag class="vld-stone-pol vld-pol-increased">INCR</stone-polarity-tag>
+      </veranda-stone-trigger>
+      <veranda-stone-trigger class="vld-stone-btn" role="button" tabindex="0" data-chamber-idx="3" data-chamber-id="merchant_scale_loggia">
+        <stone-index-numeral class="vld-stone-idx">4</stone-index-numeral>
+        <stone-trigger-caption class="vld-stone-caption">
+          <stone-title-line class="vld-stone-title">Scales</stone-title-line>
+          <stone-gesture-sub class="vld-stone-sub">Stacked arcaded loggia</stone-gesture-sub>
+        </stone-trigger-caption>
+        <stone-polarity-tag class="vld-stone-pol vld-pol-denied">DENIED</stone-polarity-tag>
+      </veranda-stone-trigger>
+      <veranda-stone-trigger class="vld-stone-btn" role="button" tabindex="0" data-chamber-idx="4" data-chamber-id="fleeting_glance_balcony">
+        <stone-index-numeral class="vld-stone-idx">5</stone-index-numeral>
+        <stone-trigger-caption class="vld-stone-caption">
+          <stone-title-line class="vld-stone-title">Cliffshore</stone-title-line>
+          <stone-gesture-sub class="vld-stone-sub">Ancient limestone footing</stone-gesture-sub>
+        </stone-trigger-caption>
+        <stone-polarity-tag class="vld-stone-pol vld-pol-increased">INCR</stone-polarity-tag>
+      </veranda-stone-trigger>
+      <veranda-stone-trigger class="vld-stone-btn" role="button" tabindex="0" data-chamber-idx="5" data-chamber-id="lovers_alcove">
+        <stone-index-numeral class="vld-stone-idx">6</stone-index-numeral>
+        <stone-trigger-caption class="vld-stone-caption">
+          <stone-title-line class="vld-stone-title">Lovers</stone-title-line>
+          <stone-gesture-sub class="vld-stone-sub">Amber-gilded twining contours</stone-gesture-sub>
+        </stone-trigger-caption>
+        <stone-polarity-tag class="vld-stone-pol vld-pol-increased">INCR</stone-polarity-tag>
+      </veranda-stone-trigger>
+      <veranda-stone-trigger class="vld-stone-btn" role="button" tabindex="0" data-chamber-idx="6" data-chamber-id="crimson_vein_corridor">
+        <stone-index-numeral class="vld-stone-idx">7</stone-index-numeral>
+        <stone-trigger-caption class="vld-stone-caption">
+          <stone-title-line class="vld-stone-title">Knife Vein</stone-title-line>
+          <stone-gesture-sub class="vld-stone-sub">Blade in black neck tendons</stone-gesture-sub>
+        </stone-trigger-caption>
+        <stone-polarity-tag class="vld-stone-pol vld-pol-increased">INCR</stone-polarity-tag>
+      </veranda-stone-trigger>
+    </veranda-act-rail>
+
+    <catoptric-stage-frame class="vld-stage-frame" id="vld-stage-frame">
+      <erect-veranda-tier class="vld-erect-band" id="vld-erect-band">
+        <tier-realm-label class="vld-realm-label">ERECT CLIFFSIDE • 4 STACKED VERANDA TIERS ABOVE WATERLINE</tier-realm-label>
+        <wardrobe-catoptric-badge class="vld-wardrobe-badge" id="vld-wardrobe-badge" hidden>RECURSIVE WARDROBE MIRROR × LAKE</wardrobe-catoptric-badge>
+        <interlocked-eye-reticle class="vld-eye-reticle" id="vld-hover-erect">Sightline locked on lake surface</interlocked-eye-reticle>
+      </erect-veranda-tier>
+      <catoptric-canvas-well class="vld-canvas-well" id="vld-canvas-well">
+        <canvas class="vld-stage-canvas" id="vld-catoptric-canvas" aria-label="Split catoptric elevation of erect cliffside verandas above and inverted obsidian lake reflection below"></canvas>
+        <valdrada-waterline class="vld-waterline-bar" id="vld-waterline">
+          <waterline-axiom-pill class="vld-waterline-pill" id="vld-waterline-pill">EYES INTERLOCKED • MUTUAL LOVE: 0.00 • SYMMETRY: FALSE</waterline-axiom-pill>
+        </valdrada-waterline>
+      </catoptric-canvas-well>
+      <inverted-abyss-tier class="vld-inverted-band" id="vld-inverted-band">
+        <tier-realm-label class="vld-realm-label">INVERTED ABYSS • CHILLED SPECULAR TWIN BELOW WATERLINE</tier-realm-label>
+        <interlocked-eye-reticle class="vld-eye-reticle" id="vld-hover-inverted">Canon Axis D4 (293.66 Hz) • Phase -1</interlocked-eye-reticle>
+      </inverted-abyss-tier>
+    </catoptric-stage-frame>
+
+    <asymmetric-value-ledger class="vld-ledger-panel" id="vld-value-ledger">
+      <ledger-chamber-heading class="vld-ledger-head">
+        <ledger-kicker-row class="vld-ledger-kicker">
+          <ledger-stone-code class="vld-stone-code" id="vld-ledger-stone-id">STONE I • RAILED PARAPETS</ledger-stone-code>
+          <ledger-tier-badge class="vld-tier-badge" id="vld-ledger-tier">TIER II</ledger-tier-badge>
+        </ledger-kicker-row>
+        <ledger-active-title class="vld-ledger-title" id="vld-ledger-title">Arriving Traveler's High-Street Parapet</ledger-active-title>
+      </ledger-chamber-heading>
+
+      <ledger-cards-pair class="vld-cards-pair">
+        <ledger-half-card class="vld-half-card vld-half-erect">
+          <half-card-header class="vld-half-head">
+            <half-card-realm class="vld-half-realm">Erect Veranda Weight</half-card-realm>
+            <half-card-score class="vld-half-score" id="vld-erect-weight">0.84</half-card-score>
+          </half-card-header>
+          <weight-bar-track class="vld-bar-track">
+            <weight-bar-fill class="vld-bar-fill vld-fill-erect" id="vld-erect-bar" style="width: 84%;"></weight-bar-fill>
+          </weight-bar-track>
+          <half-card-role class="vld-half-role" id="vld-erect-role">Cantilevered high-street walkways with wrought-iron railed parapets where the arriving traveler leans over the water.</half-card-role>
+        </ledger-half-card>
+
+        <ledger-half-card class="vld-half-card vld-half-inverted">
+          <half-card-header class="vld-half-head">
+            <half-card-realm class="vld-half-realm">Inverted Lake Weight</half-card-realm>
+            <half-card-score class="vld-half-score" id="vld-inverted-weight">0.19</half-card-score>
+          </half-card-header>
+          <weight-bar-track class="vld-bar-track">
+            <weight-bar-fill class="vld-bar-fill vld-fill-denied" id="vld-inverted-bar" style="width: 19%;"></weight-bar-fill>
+          </weight-bar-track>
+          <half-card-role class="vld-half-role" id="vld-inverted-role">Inverted iron balustrades answering point-by-point below while stripping away the traveler's proud certainty.</half-card-role>
+        </ledger-half-card>
+      </ledger-cards-pair>
+
+      <verdict-seal-chip class="vld-verdict-chip vld-verdict-denied" id="vld-verdict-chip">
+        <verdict-seal-label class="vld-verdict-label" id="vld-verdict-label">MIRROR VERDICT: DENIED</verdict-seal-label>
+        <verdict-seal-delta class="vld-verdict-delta" id="vld-verdict-delta">Δ -0.65 • SYMMETRY: FALSE</verdict-seal-delta>
+      </verdict-seal-chip>
+
+      <ledger-stone-excerpt class="vld-stone-excerpt" id="vld-stone-excerpt">At times the mirror increases a thing's value, at times denies it. Nothing happens in the one city without being repeated in the other.</ledger-stone-excerpt>
+
+      <ledger-causal-proof class="vld-causal-proof" id="vld-causal-proof">Zero chance or forgetfulness • Click chamber or press [1-7, C, W, L, P]</ledger-causal-proof>
+
+      <loveless-tension-readout class="vld-tension-grid" id="vld-tension-readout">
+        <tension-metric-cell class="vld-metric-cell">
+          <tension-metric-label class="vld-metric-label">Chance</tension-metric-label>
+          <tension-metric-val class="vld-metric-val" id="vld-metric-chance">0</tension-metric-val>
+        </tension-metric-cell>
+        <tension-metric-cell class="vld-metric-cell">
+          <tension-metric-label class="vld-metric-label">Love</tension-metric-label>
+          <tension-metric-val class="vld-metric-val" id="vld-metric-love">0.00</tension-metric-val>
+        </tension-metric-cell>
+        <tension-metric-cell class="vld-metric-cell">
+          <tension-metric-label class="vld-metric-label">Intercept</tension-metric-label>
+          <tension-metric-val class="vld-metric-val" id="vld-metric-intercept">0</tension-metric-val>
+        </tension-metric-cell>
+        <tension-metric-cell class="vld-metric-cell">
+          <tension-metric-label class="vld-metric-label">Eye Lock</tension-metric-label>
+          <tension-metric-val class="vld-metric-val" id="vld-metric-eyelock">0.96</tension-metric-val>
+        </tension-metric-cell>
+      </loveless-tension-readout>
+    </asymmetric-value-ledger>
+  </catoptric-diptych-workbench>
+
+  <valdrada-plate-drawer class="vld-plate-drawer" id="vld-plate-drawer" role="dialog" aria-modal="true" aria-label="Archival Plates of Valdrada" hidden>
+    <plate-folio-sheet class="vld-plate-sheet">
+      <plate-drawer-toolbar class="vld-plate-toolbar">
+        <plate-mode-tabs class="vld-plate-tabs" role="tablist">
+          <plate-tab-trigger class="vld-plate-tab vld-is-active" role="tab" tabindex="0" data-plate-mode="diptych">Diptych Folio</plate-tab-trigger>
+          <plate-tab-trigger class="vld-plate-tab" role="tab" tabindex="0" data-plate-mode="map">Survey Map (1600×1200)</plate-tab-trigger>
+          <plate-tab-trigger class="vld-plate-tab" role="tab" tabindex="0" data-plate-mode="elevation">City Elevation (1600×1000)</plate-tab-trigger>
+        </plate-mode-tabs>
+        <plate-drawer-actions class="vld-plate-actions">
+          <plate-loupe-toggle class="vld-plate-btn" id="vld-loupe-btn" role="button" tabindex="0">
+            <catoptric-key-glyph class="vld-key-glyph">Z</catoptric-key-glyph><command-state-text class="vld-cmd-text" id="vld-loupe-label">Loupe 1x</command-state-text>
+          </plate-loupe-toggle>
+          <plate-close-trigger class="vld-plate-btn" id="vld-plate-close" role="button" tabindex="0">
+            <catoptric-key-glyph class="vld-key-glyph">ESC</catoptric-key-glyph>Close
+          </plate-close-trigger>
+        </plate-drawer-actions>
+      </plate-drawer-toolbar>
+
+      <plate-loupe-viewport class="vld-plate-viewport" id="vld-plate-viewport">
+        <plate-figure-card class="vld-plate-card" id="vld-map-card">
+          <plate-image-frame class="vld-plate-img-frame">
+            <img class="vld-plate-img" id="vld-map-img" src="map.png" alt="Valdrada Survey Map">
+          </plate-image-frame>
+          <plate-figure-caption class="vld-plate-caption">Survey Map — Stepped Ancient Lakeshore Cliff, Stacked Veranda Tiers &amp; Obsidian Trench</plate-figure-caption>
+        </plate-figure-card>
+        <plate-figure-card class="vld-plate-card" id="vld-city-card">
+          <plate-image-frame class="vld-plate-img-frame">
+            <img class="vld-plate-img" id="vld-city-img" src="image.png" alt="Valdrada Catoptric Elevation">
+          </plate-image-frame>
+          <plate-figure-caption class="vld-plate-caption">Catoptric Elevation — Erect Cliffside Verandas Above &amp; Point-by-Point Inverted Lake Twin Below</plate-figure-caption>
+        </plate-figure-card>
+      </plate-loupe-viewport>
+
+      <plate-missing-plaque class="vld-missing-plaque" id="vld-missing-plaque" hidden>Archival copperplate file could not be decoded from disk.</plate-missing-plaque>
+    </plate-folio-sheet>
+  </valdrada-plate-drawer>
+</valdrada-catoptric-codex>
+
+<script id="vld-layer-stacked-verandas">
+/* City 20: Valdrada - Erect Cliffside Stacked Verandas Layer (above waterlineY) */
+(function (root) {
+  "use strict";
+
+  var PALETTE = Object.freeze({
+    obsidian_water: "#070B10",
+    abyss_trench: "#0D151F",
+    cold_limpid_slate: "#2A3D4F",
+    chilled_mirror_cyan: "#9BD1E5",
+    silverpoint_ice: "#DCEFF7",
+    veranda_ivory: "#EDE6D6",
+    travertine_warm: "#D6C7AE",
+    amber_room_glow: "#E3A857",
+    parapet_iron: "#1A232D",
+    crimson_vein: "#8E1B28",
+    clotted_tendon_black: "#2E070D",
+    obsidianWater: "#070B10",
+    abyssTrench: "#0D151F",
+    coldLimpidSlate: "#2A3D4F",
+    chilledMirrorCyan: "#9BD1E5",
+    silverpointIce: "#DCEFF7",
+    verandaIvory: "#EDE6D6",
+    travertineWarm: "#D6C7AE",
+    amberRoomGlow: "#E3A857",
+    parapetIron: "#1A232D",
+    crimsonVein: "#8E1B28",
+    clottedTendonBlack: "#2E070D"
+  });
+
+  var CANONICAL_STONES = Object.freeze([
+    Object.freeze({
+      id: "ancient_lakeshore_foundation",
+      stone: "built by the ancients on the shores of a lake",
+      erectRole: "Stepped ancient limestone-and-slate cliff footings anchored directly at the horizontal waterline datum."
+    }),
+    Object.freeze({
+      id: "stacked_veranda_houses",
+      stone: "houses all verandas one above the other",
+      erectRole: "Four tiered open-arcaded veranda stories stacked step-over-step up the cliffside with zero blind facades."
+    }),
+    Object.freeze({
+      id: "railed_parapet_high_streets",
+      stone: "high streets whose railed parapets look out over the water so the traveler arriving sees two cities: one erect above the lake, one reflected upside-down",
+      erectRole: "Cantilevered high-street walkways with wrought-iron railed parapets where the arriving traveler leans over the abyss."
+    }),
+    Object.freeze({
+      id: "illuminated_cutaway_interiors",
+      stone: "insides of illuminated rooms: ceilings and floors, the perspective of hallways",
+      erectRole: "Architectural section-cutaways exposing oil-lit coffered ceilings, tessellated floors, and receding one-point hallway perspectives."
+    }),
+    Object.freeze({
+      id: "wardrobe_catoptric_mirrors",
+      stone: "the mirrors of wardrobes",
+      erectRole: "Hinged beveled wardrobe mirror inside an upper dressing veranda angled toward the open loggia."
+    }),
+    Object.freeze({
+      id: "twining_naked_lovers",
+      stone: "lovers twist their naked bodies skin-to-skin, seeking positions that yield to the eye the most pleasing forms and contours, or where light best gilds the skin",
+      erectRole: "Upper alcove silhouettes twining beneath warm amber light, modulating posture self-consciously for the mirror's eye."
+    }),
+    Object.freeze({
+      id: "dagger_black_neck_veins",
+      stone: "murderers push the knife into the black veins of the neck, and more clotted blood pours out the more the blade presses in that slip between the tendons",
+      erectRole: "Stark chiaroscuro inner corridor where a blade presses between neck tendons and clotted crimson-black blood spills across stone."
+    })
+  ]);
+
+  var CHAMBER_SPECS = Object.freeze([
+    Object.freeze({
+      index: 0,
+      id: "traveler_parapet",
+      tierIndex: 1,
+      stoneId: "railed_parapet_high_streets",
+      erectWeight: 0.84,
+      polarityHint: "DENIED",
+      title: "Arriving Traveler's High-Street Parapet",
+      gestureLabel: "Lean over wrought-iron rail to behold both cities",
+      hasWardrobeMirror: false,
+      hallwayDepth: 0.44,
+      slotLeft: 0.04,
+      slotWidth: 0.43,
+      gazeU: 0.34,
+      note: "Arriving traveler leans across the cantilevered wrought-iron rail above the lake, beholding erect verandas and chilled twin at once."
+    }),
+    Object.freeze({
+      index: 1,
+      id: "hallway_perspective",
+      tierIndex: 0,
+      stoneId: "illuminated_cutaway_interiors",
+      erectWeight: 0.34,
+      polarityHint: "INCREASED",
+      title: "Coffered Hallway Perspective",
+      gestureLabel: "Pace oil-lit tessellated corridor without forgetfulness",
+      hasWardrobeMirror: false,
+      hallwayDepth: 0.90,
+      slotLeft: 0.05,
+      slotWidth: 0.44,
+      gazeU: 0.50,
+      note: "Oil-lit section-cutaway exposing coffered ceiling ribs, tessellated floor tiles, and receding hallway perspective paced without forgetfulness."
+    }),
+    Object.freeze({
+      index: 2,
+      id: "wardrobe_chamber",
+      tierIndex: 2,
+      stoneId: "wardrobe_catoptric_mirrors",
+      erectWeight: 0.31,
+      polarityHint: "INCREASED",
+      title: "Chamber of the Hinged Wardrobe Mirror",
+      gestureLabel: "Angle beveled wardrobe mirror toward the open loggia",
+      hasWardrobeMirror: true,
+      hallwayDepth: 0.62,
+      slotLeft: 0.22,
+      slotWidth: 0.56,
+      gazeU: 0.60,
+      note: "Beveled hinged wardrobe mirror angled toward the open loggia casts a catoptric reflection cone down toward the lake surface."
+    }),
+    Object.freeze({
+      index: 3,
+      id: "merchant_scale_loggia",
+      tierIndex: 1,
+      stoneId: "stacked_veranda_houses",
+      erectWeight: 0.91,
+      polarityHint: "DENIED",
+      title: "Magistrate's Golden Scale Veranda",
+      gestureLabel: "Raise ceremonial scales in proud civic display",
+      hasWardrobeMirror: false,
+      hallwayDepth: 0.54,
+      slotLeft: 0.53,
+      slotWidth: 0.43,
+      gazeU: 0.52,
+      note: "Open-arcaded civic veranda where a robed magistrate raises golden balance scales in calculated display before the lake."
+    }),
+    Object.freeze({
+      index: 4,
+      id: "fleeting_glance_balcony",
+      tierIndex: 0,
+      stoneId: "ancient_lakeshore_foundation",
+      erectWeight: 0.18,
+      polarityHint: "INCREASED",
+      title: "Ancient Cliffshore Column Balcony",
+      gestureLabel: "Brush cold lakeshore limestone in a fleeting pause",
+      hasWardrobeMirror: false,
+      hallwayDepth: 0.48,
+      slotLeft: 0.54,
+      slotWidth: 0.41,
+      gazeU: 0.62,
+      note: "Low lakeshore loggia socketed into stepped ancient limestone footings where fingertips graze weathered stone."
+    }),
+    Object.freeze({
+      index: 5,
+      id: "lovers_alcove",
+      tierIndex: 3,
+      stoneId: "twining_naked_lovers",
+      erectWeight: 0.44,
+      polarityHint: "INCREASED",
+      title: "Alcove of Twining Naked Lovers",
+      gestureLabel: "Shift skin-to-skin pose where amber light gilds contour",
+      hasWardrobeMirror: false,
+      hallwayDepth: 0.64,
+      slotLeft: 0.06,
+      slotWidth: 0.42,
+      gazeU: 0.48,
+      note: "Upper amber-lit alcove where naked silhouettes twine skin-to-skin, modulating posture where light best gilds contour for the mirror."
+    }),
+    Object.freeze({
+      index: 6,
+      id: "crimson_vein_corridor",
+      tierIndex: 3,
+      stoneId: "dagger_black_neck_veins",
+      erectWeight: 0.52,
+      polarityHint: "INCREASED",
+      title: "Corridor of the Knife & Black Neck Veins",
+      gestureLabel: "Press blade into the tendon slip of black neck veins",
+      hasWardrobeMirror: false,
+      hallwayDepth: 0.78,
+      slotLeft: 0.52,
+      slotWidth: 0.42,
+      gazeU: 0.56,
+      note: "Chiaroscuro inner gallery where a knife presses into the tendon slip of black neck veins and clotted crimson spills across stone."
+    })
+  ]);
+
+  var TIER_SPECS = Object.freeze([
+    Object.freeze({ index: 0, label: "Tier I - Ancient Lakeshore Arcade", inset: 0.00, archCount: 7, cantileverRatio: 0.025 }),
+    Object.freeze({ index: 1, label: "Tier II - Railed High-Street Promenade", inset: 0.015, archCount: 7, cantileverRatio: 0.042 }),
+    Object.freeze({ index: 2, label: "Tier III - Catoptric Dressing Loggias", inset: 0.038, archCount: 6, cantileverRatio: 0.030 }),
+    Object.freeze({ index: 3, label: "Tier IV - Upper Alcove & Chiaroscuro Crown", inset: 0.062, archCount: 6, cantileverRatio: 0.024 })
+  ]);
+
+  function clamp(v, lo, hi) {
+    return v < lo ? lo : v > hi ? hi : v;
+  }
+
+  function round2(v) {
+    return Math.round(v * 100) / 100;
+  }
+
+  function createVerandas(opts) {
+    var cfg = opts || {};
+    var width = Math.max(240, Math.round(Number(cfg.width) || 1280));
+    var height = Math.max(200, Math.round(Number(cfg.height) || 800));
+    var waterlineRatio = typeof cfg.waterlineRatio === "number" && cfg.waterlineRatio > 0.15 && cfg.waterlineRatio < 0.85
+      ? cfg.waterlineRatio
+      : 0.5;
+    var waterlineY = Math.round(height * waterlineRatio);
+    var reducedMotion = Boolean(cfg.reducedMotion);
+    var destroyed = false;
+
+    var activeChamberId = typeof cfg.initialChamberId === "string" ? cfg.initialChamberId : "traveler_parapet";
+    var actCount = 0;
+    var interceptCount = 0;
+    var clockSec = 0;
+    var globalCorrectionFlash = 0;
+    var lastAct = null;
+
+    var runtimeChambers = CHAMBER_SPECS.map(function (spec, idx) {
+      return {
+        id: spec.id,
+        index: idx,
+        tierIndex: spec.tierIndex,
+        stoneId: spec.stoneId,
+        title: spec.title,
+        gestureLabel: spec.gestureLabel,
+        x: 0,
+        y: 0,
+        w: 0,
+        h: 0,
+        distFromWaterPx: 0,
+        ceilingCoffered: true,
+        floorTiled: true,
+        hallwayDepth: spec.hallwayDepth,
+        hasWardrobeMirror: Boolean(spec.hasWardrobeMirror),
+        wardrobeAngle: spec.hasWardrobeMirror ? 0.48 : 0,
+        poseStep: 0,
+        actIntensity: spec.id === activeChamberId ? 0.52 : 0.28,
+        erectWeight: spec.erectWeight,
+        polarityHint: spec.polarityHint,
+        crimsonFlow: spec.id === "crimson_vein_corridor" ? 0.42 : 0,
+        gazeX: 0,
+        gazeY: 0,
+        note: spec.note,
+        correctionFlash: 0
+      };
+    });
+
+    var cliffProfile = [];
+    var tiers = [];
+
+    function computeLayout() {
+      waterlineY = Math.max(96, Math.round(height * waterlineRatio));
+      var sideMargin = width < 560 ? Math.round(width * 0.045) : Math.round(width * 0.085);
+      var spanW = Math.max(180, width - sideMargin * 2);
+      var skyHeadroom = Math.max(16, Math.round(waterlineY * 0.11));
+      var cliffFootH = Math.max(14, Math.round(waterlineY * 0.115));
+      var usableStackH = Math.max(64, waterlineY - skyHeadroom - cliffFootH);
+      var tierH = Math.max(16, Math.floor(usableStackH / 4));
+
+      var stepRatios = [
+        [0.00, 0.08, 0.36],
+        [0.08, 0.22, 0.72],
+        [0.22, 0.46, 1.00],
+        [0.46, 0.56, 0.84],
+        [0.56, 0.80, 1.00],
+        [0.80, 0.92, 0.68],
+        [0.92, 1.00, 0.34]
+      ];
+      var cliffLeft = Math.max(4, sideMargin - Math.round(spanW * 0.04));
+      var cliffSpan = Math.min(width - cliffLeft * 2, spanW + Math.round(spanW * 0.08));
+      cliffProfile = [{ x: cliffLeft, y: waterlineY, w: 0, h: 0, distFromWaterPx: 0, stoneId: "ancient_lakeshore_foundation" }];
+      for (var s = 0; s < stepRatios.length; s++) {
+        var r = stepRatios[s];
+        var sx0 = Math.round(cliffLeft + cliffSpan * r[0]);
+        var sx1 = Math.round(cliffLeft + cliffSpan * r[1]);
+        var sh = Math.max(4, Math.round(cliffFootH * r[2]));
+        var sy = waterlineY - sh;
+        cliffProfile.push({ x: sx0, y: sy, w: Math.max(1, sx1 - sx0), h: sh, distFromWaterPx: 0, stoneId: "ancient_lakeshore_foundation" });
+        cliffProfile.push({ x: sx1, y: sy, w: 0, h: sh, distFromWaterPx: 0, stoneId: "ancient_lakeshore_foundation" });
+      }
+      cliffProfile.push({ x: cliffLeft + cliffSpan, y: waterlineY, w: 0, h: 0, distFromWaterPx: 0, stoneId: "ancient_lakeshore_foundation" });
+
+      var stackBottomY = waterlineY - cliffFootH;
+      tiers = TIER_SPECS.map(function (ts, tIdx) {
+        var insetPx = Math.round(spanW * ts.inset);
+        var cantileverPx = Math.max(4, Math.round(spanW * ts.cantileverRatio));
+        var tx = sideMargin + insetPx;
+        var tw = Math.max(120, spanW - insetPx * 2);
+        var ty = Math.max(4, stackBottomY - (tIdx + 1) * tierH);
+        var parapetH = Math.max(5, Math.round(tierH * 0.20));
+        return {
+          index: tIdx,
+          tierIndex: tIdx,
+          id: "veranda_tier_" + tIdx,
+          label: ts.label,
+          stoneId: "stacked_veranda_houses",
+          parapetStoneId: "railed_parapet_high_streets",
+          x: tx,
+          y: ty,
+          w: tw,
+          h: tierH,
+          archCount: ts.archCount,
+          parapetY: ty + tierH - parapetH,
+          parapetH: parapetH,
+          walkwayY: ty + tierH,
+          cantileverPx: cantileverPx,
+          distFromWaterPx: Math.max(0, waterlineY - (ty + tierH))
+        };
+      });
+
+      for (var i = 0; i < runtimeChambers.length; i++) {
+        var ch = runtimeChambers[i];
+        var spec = CHAMBER_SPECS[i];
+        var tier = tiers[spec.tierIndex];
+        var padY = Math.max(2, Math.round(tier.h * 0.08));
+        ch.x = Math.round(tier.x + tier.w * spec.slotLeft);
+        ch.w = Math.max(36, Math.round(tier.w * spec.slotWidth));
+        ch.y = tier.y + padY;
+        ch.h = Math.max(12, tier.h - padY - 2);
+        if (ch.y + ch.h > waterlineY - 2) {
+          ch.h = Math.max(10, waterlineY - 2 - ch.y);
+        }
+        ch.distFromWaterPx = Math.max(0, Math.round(waterlineY - (ch.y + ch.h)));
+        var poseShift = ((ch.poseStep % 4) - 1.5) * 0.028;
+        var u = clamp(spec.gazeU + poseShift, 0.16, 0.84);
+        ch.gazeX = Math.round(ch.x + ch.w * u);
+        ch.gazeY = Math.min(waterlineY - 3, Math.round(ch.y + ch.h * (ch.id === "traveler_parapet" ? 0.62 : 0.56)));
+      }
+    }
+
+    function findChamber(target) {
+      if (typeof target === "number" && target >= 0 && target < runtimeChambers.length) {
+        return runtimeChambers[Math.floor(target)];
+      }
+      var key = target && typeof target === "object" ? (target.chamberId || target.id) : target;
+      if (typeof key === "string") {
+        for (var i = 0; i < runtimeChambers.length; i++) {
+          if (runtimeChambers[i].id === key || runtimeChambers[i].stoneId === key) {
+            return runtimeChambers[i];
+          }
+        }
+      }
+      for (var j = 0; j < runtimeChambers.length; j++) {
+        if (runtimeChambers[j].id === activeChamberId) {
+          return runtimeChambers[j];
+        }
+      }
+      return runtimeChambers[0];
+    }
+
+    function snapshotChamber(ch) {
+      return {
+        id: ch.id,
+        index: ch.index,
+        tierIndex: ch.tierIndex,
+        stoneId: ch.stoneId,
+        title: ch.title,
+        gestureLabel: ch.gestureLabel,
+        x: ch.x,
+        y: ch.y,
+        w: ch.w,
+        h: ch.h,
+        distFromWaterPx: ch.distFromWaterPx,
+        ceilingCoffered: true,
+        floorTiled: true,
+        hallwayDepth: round2(ch.hallwayDepth),
+        hasWardrobeMirror: ch.hasWardrobeMirror,
+        wardrobeAngle: round2(ch.wardrobeAngle),
+        poseStep: ch.poseStep,
+        actIntensity: round2(ch.actIntensity),
+        erectWeight: ch.erectWeight,
+        polarityHint: ch.polarityHint,
+        crimsonFlow: round2(ch.crimsonFlow),
+        gazeX: ch.gazeX,
+        gazeY: ch.gazeY,
+        note: ch.note
+      };
+    }
+
+    function getMirrorPacket() {
+      return {
+        width: width,
+        height: height,
+        waterlineY: waterlineY,
+        activeChamberId: activeChamberId,
+        actCount: actCount,
+        chanceMomentsOccurred: 0,
+        interceptCount: interceptCount,
+        selfConsciousness: 1.0,
+        cliffProfile: cliffProfile.map(function (pt) {
+          return { x: pt.x, y: pt.y, w: pt.w, h: pt.h, distFromWaterPx: pt.distFromWaterPx, stoneId: pt.stoneId };
+        }),
+        tiers: tiers.map(function (t) {
+          return Object.assign({}, t);
+        }),
+        chambers: runtimeChambers.map(snapshotChamber),
+        lastAct: lastAct ? Object.assign({}, lastAct) : null
+      };
+    }
+
+    function triggerAct(target) {
+      if (destroyed) {
+        return lastAct;
+      }
+      var ch = findChamber(target);
+      activeChamberId = ch.id;
+      actCount += 1;
+      ch.poseStep += 1;
+      ch.actIntensity = 1.0;
+
+      for (var i = 0; i < runtimeChambers.length; i++) {
+        if (runtimeChambers[i].id !== ch.id && runtimeChambers[i].actIntensity > 0.34) {
+          runtimeChambers[i].actIntensity = Math.max(0.28, runtimeChambers[i].actIntensity * 0.78);
+        }
+      }
+
+      if (ch.hasWardrobeMirror) {
+        ch.wardrobeAngle = 0.36 + 0.11 * (ch.poseStep % 4);
+      }
+      if (ch.id === "crimson_vein_corridor") {
+        ch.crimsonFlow = clamp(0.84 + 0.05 * (ch.poseStep % 4), 0, 1);
+      }
+      if (ch.id === "hallway_perspective") {
+        ch.hallwayDepth = 0.88 + 0.03 * (ch.poseStep % 3);
+      }
+
+      computeLayout();
+
+      lastAct = {
+        actNumber: actCount,
+        chamberId: ch.id,
+        id: ch.id,
+        index: ch.index,
+        tierIndex: ch.tierIndex,
+        stoneId: ch.stoneId,
+        title: ch.title,
+        gestureLabel: ch.gestureLabel,
+        erectWeight: ch.erectWeight,
+        polarityHint: ch.polarityHint,
+        poseStep: ch.poseStep,
+        actIntensity: round2(ch.actIntensity),
+        wardrobeAngle: round2(ch.wardrobeAngle),
+        crimsonFlow: round2(ch.crimsonFlow),
+        gazeX: ch.gazeX,
+        gazeY: ch.gazeY,
+        distFromWaterPx: ch.distFromWaterPx,
+        chanceMomentsOccurred: 0,
+        selfConsciousness: 1.0
+      };
+
+      if (typeof cfg.onAct === "function") {
+        cfg.onAct(Object.assign({}, lastAct), getMirrorPacket());
+      }
+      return Object.assign({}, lastAct);
+    }
+
+    function attemptChanceMoment(targetOpt) {
+      var ch = findChamber(targetOpt);
+      activeChamberId = ch.id;
+      interceptCount += 1;
+      ch.correctionFlash = 1.0;
+      ch.actIntensity = Math.max(ch.actIntensity, 0.88);
+      globalCorrectionFlash = 1.0;
+      var outcome = {
+        allowed: false,
+        chanceMomentsOccurred: 0,
+        interceptCount: interceptCount,
+        selfConsciousness: 1.0,
+        chamberId: ch.id,
+        reason: "Awareness of the lake mirror intercepts the unguarded gesture immediately; zero chance or forgetfulness occurs."
+      };
+      if (typeof cfg.onIntercept === "function") {
+        cfg.onIntercept(Object.assign({}, outcome), getMirrorPacket());
+      }
+      return outcome;
+    }
+
+    function inspectAt(px, py) {
+      if (typeof px !== "number" || typeof py !== "number" || py < 0 || py > waterlineY) {
+        return null;
+      }
+      for (var i = 0; i < runtimeChambers.length; i++) {
+        var ch = runtimeChambers[i];
+        if (px >= ch.x - 3 && px <= ch.x + ch.w + 3 && py >= ch.y - 2 && py <= ch.y + ch.h + 4) {
+          var snap = snapshotChamber(ch);
+          snap.hit = true;
+          snap.kind = "chamber";
+          snap.region = "erect";
+          snap.chamberId = ch.id;
+          return snap;
+        }
+      }
+      for (var t = 0; t < tiers.length; t++) {
+        var tr = tiers[t];
+        if (px >= tr.x - tr.cantileverPx && px <= tr.x + tr.w + tr.cantileverPx && py >= tr.y && py <= tr.y + tr.h) {
+          var fallbackCh = runtimeChambers[0];
+          for (var k = 0; k < runtimeChambers.length; k++) {
+            if (runtimeChambers[k].tierIndex === tr.index) {
+              fallbackCh = runtimeChambers[k];
+              if (Math.abs(( fallbackCh.x + fallbackCh.w * 0.5 ) - px) < tr.w * 0.28) {
+                break;
+              }
+            }
+          }
+          return {
+            hit: true,
+            kind: "tier",
+            region: "erect",
+            tierIndex: tr.index,
+            id: tr.id,
+            chamberId: fallbackCh.id,
+            stoneId: py >= tr.parapetY ? "railed_parapet_high_streets" : "stacked_veranda_houses",
+            title: tr.label,
+            x: tr.x,
+            y: tr.y,
+            w: tr.w,
+            h: tr.h
+          };
+        }
+      }
+      for (var c = 0; c < cliffProfile.length; c++) {
+        var cp = cliffProfile[c];
+        if (cp.w > 0 && px >= cp.x && px <= cp.x + cp.w && py >= cp.y && py <= waterlineY) {
+          return {
+            hit: true,
+            kind: "cliff",
+            region: "erect",
+            chamberId: "fleeting_glance_balcony",
+            stoneId: "ancient_lakeshore_foundation",
+            title: "Stepped Ancient Lakeshore Cliff",
+            x: cp.x,
+            y: cp.y,
+            w: cp.w,
+            h: cp.h
+          };
+        }
+      }
+      return null;
+    }
+
+    function step(dt) {
+      if (destroyed) {
+        return getMirrorPacket();
+      }
+      var raw = typeof dt === "number" && isFinite(dt) ? dt : 0.016;
+      var dtSec = raw > 1.5 ? clamp(raw / 1000, 0, 0.1) : clamp(raw, 0, 0.1);
+      if (!reducedMotion) {
+        clockSec += dtSec;
+      }
+      globalCorrectionFlash = Math.max(0, globalCorrectionFlash - dtSec * 1.85);
+      for (var i = 0; i < runtimeChambers.length; i++) {
+        var ch = runtimeChambers[i];
+        var floorVal = ch.id === activeChamberId ? 0.44 : 0.26;
+        if (ch.actIntensity > floorVal) {
+          ch.actIntensity = Math.max(floorVal, ch.actIntensity - dtSec * 0.42);
+        }
+        if (ch.correctionFlash > 0) {
+          ch.correctionFlash = Math.max(0, ch.correctionFlash - dtSec * 1.85);
+        }
+        if (ch.id === "crimson_vein_corridor" && ch.crimsonFlow > 0.44) {
+          ch.crimsonFlow = Math.max(0.44, ch.crimsonFlow - dtSec * 0.22);
+        }
+      }
+      return getMirrorPacket();
+    }
+
+    function setViewport(nextW, nextH, nextRatio) {
+      width = Math.max(240, Math.round(Number(nextW) || width));
+      height = Math.max(200, Math.round(Number(nextH) || height));
+      if (typeof nextRatio === "number" && nextRatio > 0.15 && nextRatio < 0.85) {
+        waterlineRatio = nextRatio;
+      }
+      computeLayout();
+      return { width: width, height: height, waterlineY: waterlineY };
+    }
+
+    function setReducedMotion(flag) {
+      reducedMotion = Boolean(flag);
+      return reducedMotion;
+    }
+
+    function reset() {
+      activeChamberId = typeof cfg.initialChamberId === "string" ? cfg.initialChamberId : "traveler_parapet";
+      actCount = 0;
+      interceptCount = 0;
+      clockSec = 0;
+      globalCorrectionFlash = 0;
+      lastAct = null;
+      for (var i = 0; i < runtimeChambers.length; i++) {
+        var ch = runtimeChambers[i];
+        var spec = CHAMBER_SPECS[i];
+        ch.poseStep = 0;
+        ch.actIntensity = spec.id === activeChamberId ? 0.52 : 0.28;
+        ch.wardrobeAngle = spec.hasWardrobeMirror ? 0.48 : 0;
+        ch.crimsonFlow = spec.id === "crimson_vein_corridor" ? 0.42 : 0;
+        ch.hallwayDepth = spec.hallwayDepth;
+        ch.correctionFlash = 0;
+      }
+      computeLayout();
+      return getMirrorPacket();
+    }
+
+    function getState() {
+      var pkt = getMirrorPacket();
+      pkt.reducedMotion = reducedMotion;
+      pkt.waterlineRatio = waterlineRatio;
+      pkt.chamberCount = runtimeChambers.length;
+      pkt.tierCount = tiers.length;
+      pkt.zeroForgetfulness = true;
+      pkt.activeChamber = snapshotChamber(findChamber(activeChamberId));
+      return pkt;
+    }
+
+    function destroy() {
+      destroyed = true;
+    }
+
+    function drawSkyAndCliff(ctx) {
+      var skyGrad = ctx.createLinearGradient(0, 0, 0, waterlineY);
+      skyGrad.addColorStop(0, "#121C26");
+      skyGrad.addColorStop(0.52, PALETTE.cold_limpid_slate);
+      skyGrad.addColorStop(1, "#41596D");
+      ctx.fillStyle = skyGrad;
+      ctx.fillRect(0, 0, width, waterlineY);
+
+      /* Distant alpine lake-basin ridges */
+      ctx.fillStyle = "rgba(19, 29, 40, 0.62)";
+      ctx.beginPath();
+      ctx.moveTo(0, waterlineY);
+      ctx.lineTo(0, Math.round(waterlineY * 0.64));
+      ctx.lineTo(Math.round(width * 0.14), Math.round(waterlineY * 0.46));
+      ctx.lineTo(Math.round(width * 0.28), Math.round(waterlineY * 0.58));
+      ctx.lineTo(Math.round(width * 0.74), Math.round(waterlineY * 0.55));
+      ctx.lineTo(Math.round(width * 0.88), Math.round(waterlineY * 0.43));
+      ctx.lineTo(width, Math.round(waterlineY * 0.61));
+      ctx.lineTo(width, waterlineY);
+      ctx.closePath();
+      ctx.fill();
+
+      /* Rear stratified limestone-and-slate cliff escarpment behind stacked verandas */
+      if (tiers.length > 0) {
+        var baseT = tiers[0];
+        var topT = tiers[tiers.length - 1];
+        ctx.fillStyle = "#22313F";
+        ctx.beginPath();
+        ctx.moveTo(Math.max(0, baseT.x - 18), waterlineY);
+        ctx.lineTo(Math.max(0, baseT.x - 10), baseT.y + Math.round(baseT.h * 0.35));
+        ctx.lineTo(Math.max(0, topT.x - 8), topT.y - 8);
+        ctx.lineTo(Math.round(width * 0.36), Math.max(4, topT.y - 16));
+        ctx.lineTo(Math.round(width * 0.66), Math.max(4, topT.y - 14));
+        ctx.lineTo(Math.min(width, topT.x + topT.w + 8), topT.y - 8);
+        ctx.lineTo(Math.min(width, baseT.x + baseT.w + 10), baseT.y + Math.round(baseT.h * 0.35));
+        ctx.lineTo(Math.min(width, baseT.x + baseT.w + 18), waterlineY);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      /* Stepped ancient lakeshore foundation anchored directly at waterlineY */
+      for (var i = 0; i < cliffProfile.length; i++) {
+        var stepBlk = cliffProfile[i];
+        if (stepBlk.w <= 0 || stepBlk.h <= 0) {
+          continue;
+        }
+        ctx.fillStyle = i % 4 === 1 ? "#59626A" : "#6D7275";
+        ctx.fillRect(stepBlk.x, stepBlk.y, stepBlk.w, stepBlk.h);
+        ctx.fillStyle = "#B8AE9E";
+        ctx.fillRect(stepBlk.x, stepBlk.y, stepBlk.w, Math.min(3, stepBlk.h));
+        ctx.strokeStyle = PALETTE.parapet_iron;
+        ctx.lineWidth = 1;
+        ctx.strokeRect(stepBlk.x + 0.5, stepBlk.y + 0.5, Math.max(1, stepBlk.w - 1), Math.max(1, stepBlk.h - 1));
+
+        /* Dressed ancient ashlar course joints */
+        var courseY = stepBlk.y + Math.round(stepBlk.h * 0.52);
+        if (stepBlk.h >= 10) {
+          ctx.beginPath();
+          ctx.moveTo(stepBlk.x, courseY);
+          ctx.lineTo(stepBlk.x + stepBlk.w, courseY);
+          ctx.strokeStyle = "rgba(26, 35, 45, 0.55)";
+          ctx.stroke();
+        }
+      }
+    }
+
+    function drawIronParapet(ctx, x, y, w, h) {
+      ctx.fillStyle = PALETTE.travertine_warm;
+      ctx.fillRect(x, y + h - 2, w, 2);
+      ctx.strokeStyle = PALETTE.parapet_iron;
+      ctx.lineWidth = 1.3;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x + w, y);
+      ctx.moveTo(x, y + h - 2);
+      ctx.lineTo(x + w, y + h - 2);
+      var balusterStep = Math.max(5, Math.round(w / Math.max(8, Math.floor(w / 7))));
+      for (var bx = x + 2; bx <= x + w - 2; bx += balusterStep) {
+        ctx.moveTo(bx, y);
+        ctx.lineTo(bx, y + h - 2);
+      }
+      ctx.stroke();
+    }
+
+    function drawVerandaTiers(ctx) {
+      for (var t = 0; t < tiers.length; t++) {
+        var tr = tiers[t];
+        /* Main travertine veranda story facade & cornice */
+        ctx.fillStyle = t % 2 === 0 ? PALETTE.travertine_warm : PALETTE.veranda_ivory;
+        ctx.fillRect(tr.x, tr.y, tr.w, tr.h);
+
+        ctx.fillStyle = PALETTE.veranda_ivory;
+        ctx.fillRect(tr.x - 3, tr.y, tr.w + 6, Math.max(3, Math.round(tr.h * 0.08)));
+
+        /* Open colonnade arches across the full veranda tier */
+        var bayW = tr.w / tr.archCount;
+        for (var a = 0; a < tr.archCount; a++) {
+          var ax = tr.x + a * bayW + bayW * 0.14;
+          var aw = bayW * 0.72;
+          var ay = tr.y + tr.h * 0.14;
+          var ah = tr.h * 0.78;
+          var archR = Math.min(aw * 0.5, ah * 0.38);
+
+          ctx.fillStyle = "rgba(26, 35, 45, 0.74)";
+          ctx.beginPath();
+          ctx.moveTo(ax, ay + ah);
+          ctx.lineTo(ax, ay + archR);
+          ctx.arc(ax + aw * 0.5, ay + archR, aw * 0.5, Math.PI, 0, false);
+          ctx.lineTo(ax + aw, ay + ah);
+          ctx.closePath();
+          ctx.fill();
+        }
+
+        /* Cantilevered high-street walkway slab & corbels overhanging the lake */
+        var walkX = tr.x - tr.cantileverPx;
+        var walkW = tr.w + tr.cantileverPx * 2;
+        ctx.fillStyle = "#B8A88F";
+        ctx.fillRect(walkX, tr.walkwayY - 3, walkW, 3);
+        ctx.fillStyle = "#8C7D69";
+        var corbelCount = Math.max(6, tr.archCount + 2);
+        for (var c = 0; c <= corbelCount; c++) {
+          var cx = Math.round(walkX + (walkW * c) / corbelCount);
+          ctx.fillRect(cx - 2, tr.walkwayY, 4, 3);
+        }
+
+        /* Wrought-iron railed high-street parapet */
+        drawIronParapet(ctx, walkX, tr.parapetY, walkW, tr.parapetH);
+      }
+    }
+
+    function drawChamberCutawayShell(ctx, ch, isActive) {
+      var shimmer = reducedMotion ? 0 : Math.sin(clockSec * 2.4 + ch.index * 1.1) * 0.04;
+      var glowAlpha = clamp(0.32 + ch.actIntensity * 0.48 + shimmer, 0.22, 0.92);
+      var isCrimson = ch.id === "crimson_vein_corridor";
+
+      /* Interior shell base */
+      ctx.fillStyle = isCrimson ? "#1B1318" : "#2D2219";
+      ctx.fillRect(ch.x, ch.y, ch.w, ch.h);
+
+      var roomGrad = ctx.createLinearGradient(ch.x, ch.y, ch.x, ch.y + ch.h);
+      if (isCrimson) {
+        roomGrad.addColorStop(0, "rgba(46, 7, 13, 0.88)");
+        roomGrad.addColorStop(0.55, "rgba(142, 27, 40, " + round2(0.24 + ch.crimsonFlow * 0.34) + ")");
+        roomGrad.addColorStop(1, "rgba(227, 168, 87, 0.22)");
+      } else {
+        roomGrad.addColorStop(0, "rgba(227, 168, 87, " + round2(glowAlpha * 0.75) + ")");
+        roomGrad.addColorStop(0.6, "rgba(237, 230, 214, " + round2(glowAlpha * 0.42) + ")");
+        roomGrad.addColorStop(1, "rgba(214, 199, 174, " + round2(glowAlpha * 0.58) + ")");
+      }
+      ctx.fillStyle = roomGrad;
+      ctx.fillRect(ch.x + 1, ch.y + 1, Math.max(2, ch.w - 2), Math.max(2, ch.h - 2));
+
+      var depthScale = clamp(0.26 + ch.hallwayDepth * 0.34, 0.30, 0.62);
+      var innerW = ch.w * (1 - depthScale);
+      var innerH = ch.h * (1 - depthScale * 0.78);
+      var ix = ch.x + (ch.w - innerW) * 0.5;
+      var iy = ch.y + (ch.h - innerH) * 0.46;
+
+      /* Coffered ceiling ribs & recessed panels (ceilingCoffered: true) */
+      var ribCount = 5;
+      ctx.strokeStyle = isCrimson ? "rgba(214, 199, 174, 0.42)" : "rgba(120, 82, 40, 0.72)";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      for (var r = 0; r <= ribCount; r++) {
+        var u = r / ribCount;
+        ctx.moveTo(ch.x + ch.w * u, ch.y);
+        ctx.lineTo(ix + innerW * u, iy);
+      }
+      ctx.moveTo(ch.x + ch.w * 0.08, (ch.y + iy) * 0.5);
+      ctx.lineTo(ch.x + ch.w * 0.92, (ch.y + iy) * 0.5);
+      ctx.stroke();
+
+      /* Tessellated perspective floor tiles (floorTiled: true) */
+      var tileCols = 6;
+      ctx.strokeStyle = isCrimson ? "rgba(237, 230, 214, 0.34)" : "rgba(42, 61, 79, 0.58)";
+      ctx.beginPath();
+      for (var tc = 0; tc <= tileCols; tc++) {
+        var tu = tc / tileCols;
+        ctx.moveTo(ix + innerW * tu, iy + innerH);
+        ctx.lineTo(ch.x + ch.w * tu, ch.y + ch.h);
+      }
+      var midFloorY = iy + innerH + (ch.y + ch.h - (iy + innerH)) * 0.48;
+      ctx.moveTo(ch.x + ch.w * 0.06, midFloorY);
+      ctx.lineTo(ch.x + ch.w * 0.94, midFloorY);
+      ctx.stroke();
+
+      /* Rear perspective wall frame */
+      ctx.strokeStyle = isActive ? PALETTE.amber_room_glow : "rgba(237, 230, 214, 0.52)";
+      ctx.strokeRect(ix, iy, innerW, innerH);
+    }
+
+    function drawChamberEnactment(ctx, ch, isActive) {
+      var cx = ch.gazeX;
+      var floorY = ch.y + ch.h - 3;
+      var figH = Math.max(10, ch.h * 0.54);
+      var headR = Math.max(2.2, figH * 0.13);
+
+      if (ch.id === "traveler_parapet") {
+        /* Cloaked arriving traveler leaning forward over wrought-iron rail */
+        var lean = 3 + (ch.poseStep % 3) * 1.6;
+        ctx.fillStyle = PALETTE.parapet_iron;
+        ctx.beginPath();
+        ctx.moveTo(cx - 5, floorY);
+        ctx.lineTo(cx - 2 + lean * 0.5, floorY - figH * 0.72);
+        ctx.lineTo(cx + 4 + lean, floorY - figH * 0.58);
+        ctx.lineTo(cx + 2, floorY);
+        ctx.closePath();
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(cx + lean, floorY - figH * 0.82, headR, 0, Math.PI * 2);
+        ctx.fill();
+      } else if (ch.id === "hallway_perspective") {
+        /* Deep nested corridor arches, hanging oil lamp & pacing figure */
+        for (var d = 1; d <= 3; d++) {
+          var s = 1 - d * 0.19;
+          var pw = ch.w * s;
+          var ph = ch.h * (1 - d * 0.15);
+          ctx.strokeStyle = "rgba(227, 168, 87, " + round2(0.55 - d * 0.1) + ")";
+          ctx.strokeRect(ch.x + (ch.w - pw) * 0.5, ch.y + (ch.h - ph) * 0.45, pw, ph);
+        }
+        ctx.fillStyle = PALETTE.amber_room_glow;
+        ctx.beginPath();
+        ctx.arc(ch.x + ch.w * 0.5, ch.y + ch.h * 0.24, Math.max(2, ch.h * 0.06), 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = PALETTE.parapet_iron;
+        ctx.fillRect(cx - 2, floorY - figH * 0.68, 4, figH * 0.68);
+        ctx.beginPath();
+        ctx.arc(cx, floorY - figH * 0.78, headR, 0, Math.PI * 2);
+        ctx.fill();
+      } else if (ch.id === "wardrobe_chamber") {
+        /* Carved wardrobe with beveled hinged mirror & catoptric cone to waterline */
+        var wx = ch.x + ch.w * 0.20;
+        var wy = ch.y + ch.h * 0.18;
+        var ww = Math.max(10, ch.w * 0.16);
+        var wh = ch.h * 0.74;
+        ctx.fillStyle = "#3B281B";
+        ctx.fillRect(wx, wy, ww, wh);
+        var leafDx = Math.cos(ch.wardrobeAngle) * ww * 0.85;
+        var leafDy = Math.sin(ch.wardrobeAngle) * wh * 0.16;
+        ctx.fillStyle = PALETTE.silverpoint_ice;
+        ctx.strokeStyle = PALETTE.chilled_mirror_cyan;
+        ctx.beginPath();
+        ctx.moveTo(wx + ww, wy + 2);
+        ctx.lineTo(wx + ww + leafDx, wy + 2 + leafDy);
+        ctx.lineTo(wx + ww + leafDx, wy + wh - 2 + leafDy);
+        ctx.lineTo(wx + ww, wy + wh - 2);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        /* Catoptric beveled mirror cone angled out through the open loggia */
+        ctx.fillStyle = "rgba(155, 209, 229, " + round2(0.18 + ch.actIntensity * 0.22) + ")";
+        ctx.beginPath();
+        ctx.moveTo(wx + ww + leafDx * 0.6, wy + wh * 0.3);
+        ctx.lineTo(cx + 8, floorY);
+        ctx.lineTo(cx - 10, floorY);
+        ctx.closePath();
+        ctx.fill();
+
+        /* Citizen silhouette whose dorsal profile faces the wardrobe mirror */
+        ctx.fillStyle = PALETTE.parapet_iron;
+        ctx.fillRect(cx - 2.5, floorY - figH * 0.70, 5, figH * 0.70);
+        ctx.beginPath();
+        ctx.arc(cx, floorY - figH * 0.80, headR, 0, Math.PI * 2);
+        ctx.fill();
+      } else if (ch.id === "merchant_scale_loggia") {
+        /* Magistrate raising ceremonial golden balance scales */
+        ctx.fillStyle = PALETTE.parapet_iron;
+        ctx.fillRect(cx - 3, floorY - figH * 0.72, 6, figH * 0.72);
+        ctx.beginPath();
+        ctx.arc(cx, floorY - figH * 0.82, headR, 0, Math.PI * 2);
+        ctx.fill();
+        var beamY = floorY - figH * (0.76 + (ch.poseStep % 3) * 0.05);
+        var tilt = ((ch.poseStep % 3) - 1) * 2.2;
+        ctx.strokeStyle = PALETTE.amber_room_glow;
+        ctx.lineWidth = 1.6;
+        ctx.beginPath();
+        ctx.moveTo(cx - 10, beamY - tilt);
+        ctx.lineTo(cx + 10, beamY + tilt);
+        ctx.stroke();
+        ctx.fillStyle = "#F6D488";
+        ctx.beginPath();
+        ctx.arc(cx - 10, beamY - tilt + 5, 3, 0, Math.PI, false);
+        ctx.arc(cx + 10, beamY + tilt + 5, 3, 0, Math.PI, false);
+        ctx.fill();
+      } else if (ch.id === "fleeting_glance_balcony") {
+        /* Ancient limestone column shaft & citizen brushing cold stone */
+        var colX = ch.x + ch.w * 0.74;
+        ctx.fillStyle = "#B8AE9E";
+        ctx.fillRect(colX - 3, ch.y + 3, 6, ch.h - 5);
+        ctx.fillStyle = PALETTE.parapet_iron;
+        ctx.fillRect(cx - 2.5, floorY - figH * 0.68, 5, figH * 0.68);
+        ctx.beginPath();
+        ctx.arc(cx, floorY - figH * 0.78, headR, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = PALETTE.parapet_iron;
+        ctx.lineWidth = 1.4;
+        ctx.beginPath();
+        ctx.moveTo(cx + 2, floorY - figH * 0.52);
+        ctx.lineTo(colX - 2, floorY - figH * 0.50);
+        ctx.stroke();
+      } else if (ch.id === "lovers_alcove") {
+        /* Amber-gilded twining silhouettes seeking contours for the mirror */
+        var sway = ((ch.poseStep % 4) - 1.5) * 2.2;
+        ctx.strokeStyle = PALETTE.amber_room_glow;
+        ctx.lineWidth = 2.6;
+        ctx.beginPath();
+        ctx.moveTo(cx - 6, floorY);
+        ctx.quadraticCurveTo(cx - 2 + sway, floorY - figH * 0.45, cx + 3, floorY - figH * 0.72);
+        ctx.moveTo(cx + 6, floorY);
+        ctx.quadraticCurveTo(cx + 2 - sway, floorY - figH * 0.48, cx - 3, floorY - figH * 0.70);
+        ctx.stroke();
+        ctx.fillStyle = "#E8B76B";
+        ctx.beginPath();
+        ctx.arc(cx - 2.5, floorY - figH * 0.76, headR, 0, Math.PI * 2);
+        ctx.arc(cx + 2.8, floorY - figH * 0.74, headR, 0, Math.PI * 2);
+        ctx.fill();
+      } else if (ch.id === "crimson_vein_corridor") {
+        /* Stark chiaroscuro dagger pressing into black neck veins & crimson ribbon */
+        ctx.fillStyle = PALETTE.clotted_tendon_black;
+        ctx.fillRect(cx - 8, floorY - figH * 0.74, 5, figH * 0.74);
+        ctx.fillRect(cx + 2, floorY - figH * 0.64, 5, figH * 0.64);
+        ctx.beginPath();
+        ctx.arc(cx - 5.5, floorY - figH * 0.82, headR, 0, Math.PI * 2);
+        ctx.arc(cx + 4.5, floorY - figH * 0.72, headR, 0, Math.PI * 2);
+        ctx.fill();
+
+        /* Steel dagger blade into neck tendon slip */
+        var neckX = cx + 3;
+        var neckY = floorY - figH * 0.64;
+        ctx.strokeStyle = PALETTE.silverpoint_ice;
+        ctx.lineWidth = 1.6;
+        ctx.beginPath();
+        ctx.moveTo(cx - 4, neckY - 3);
+        ctx.lineTo(neckX + 2, neckY + 1);
+        ctx.stroke();
+
+        /* Clotted crimson-vein ribbon pouring proportional to crimsonFlow */
+        var veinLen = Math.max(6, (waterlineY - neckY) * clamp(0.18 + ch.crimsonFlow * 0.28, 0.18, 0.46));
+        ctx.strokeStyle = PALETTE.crimson_vein;
+        ctx.lineWidth = 1.8 + ch.crimsonFlow * 1.6;
+        ctx.beginPath();
+        ctx.moveTo(neckX, neckY + 1);
+        ctx.quadraticCurveTo(neckX + 3, neckY + veinLen * 0.5, neckX + 1, Math.min(floorY + 2, neckY + veinLen));
+        ctx.stroke();
+      }
+
+      /* Open veranda framing arch, sill parapet & zero-chance posture reticle */
+      ctx.strokeStyle = isActive ? PALETTE.amber_room_glow : PALETTE.veranda_ivory;
+      ctx.lineWidth = isActive ? 1.8 : 1.1;
+      ctx.strokeRect(ch.x + 0.5, ch.y + 0.5, Math.max(2, ch.w - 1), Math.max(2, ch.h - 1));
+      drawIronParapet(ctx, ch.x + 2, ch.y + ch.h - Math.max(4, Math.round(ch.h * 0.18)), Math.max(4, ch.w - 4), Math.max(4, Math.round(ch.h * 0.18)));
+
+      if (ch.correctionFlash > 0.02 || globalCorrectionFlash > 0.02) {
+        var fAlpha = round2(Math.max(ch.correctionFlash, globalCorrectionFlash * 0.65));
+        ctx.strokeStyle = "rgba(220, 239, 247, " + fAlpha + ")";
+        ctx.lineWidth = 2;
+        ctx.strokeRect(ch.x - 2, ch.y - 2, ch.w + 4, ch.h + 4);
+      }
+
+      /* Downward interlocked citizen sightline aimed at waterlineY */
+      ctx.save();
+      if (typeof ctx.setLineDash === "function") {
+        ctx.setLineDash([3, 3]);
+      }
+      ctx.strokeStyle = isActive
+        ? "rgba(227, 168, 87, 0.72)"
+        : "rgba(220, 239, 247, 0.28)";
+      ctx.lineWidth = isActive ? 1.3 : 0.9;
+      ctx.beginPath();
+      ctx.moveTo(ch.gazeX, ch.gazeY);
+      ctx.lineTo(ch.gazeX, waterlineY);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function render(ctx) {
+      if (!ctx || destroyed) {
+        return;
+      }
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(0, 0, width, waterlineY);
+      ctx.clip();
+
+      drawSkyAndCliff(ctx);
+      drawVerandaTiers(ctx);
+
+      for (var i = 0; i < runtimeChambers.length; i++) {
+        var ch = runtimeChambers[i];
+        var isActive = ch.id === activeChamberId;
+        drawChamberCutawayShell(ctx, ch, isActive);
+        drawChamberEnactment(ctx, ch, isActive);
+      }
+
+      /* Crisp ancient lakeshore stone datum edge directly at waterlineY */
+      ctx.fillStyle = PALETTE.veranda_ivory;
+      ctx.fillRect(0, waterlineY - 1, width, 1);
+      ctx.restore();
+    }
+
+    computeLayout();
+
+    return {
+      setViewport: setViewport,
+      step: step,
+      render: render,
+      triggerAct: triggerAct,
+      attemptChanceMoment: attemptChanceMoment,
+      inspectAt: inspectAt,
+      getMirrorPacket: getMirrorPacket,
+      getState: getState,
+      setReducedMotion: setReducedMotion,
+      reset: reset,
+      destroy: destroy
+    };
+  }
+
+  var api = Object.freeze({
+    PALETTE: PALETTE,
+    CANONICAL_STONES: CANONICAL_STONES,
+    CHAMBER_SPECS: CHAMBER_SPECS,
+    createVerandas: createVerandas
+  });
+
+  root.ValdradaStackedVerandas = api;
+})(typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : this);
+
+</script>
+<script id="vld-layer-mirror-lake-twin">
+(function (root) {
+  "use strict";
+
+  /*
+   * City 20: Valdrada (Cities & Eyes 1)
+   * Inverted Limpid Lake Twin & Asymmetric Ontological Value Ledger
+   * Standalone browser & headless runtime layer below waterlineY
+   */
+
+  var AXIS_PITCH_D4 = 293.66;
+
+  var PALETTE = Object.freeze({
+    obsidian_water: "#070B10",
+    abyss_trench: "#0D151F",
+    cold_limpid_slate: "#2A3D4F",
+    chilled_mirror_cyan: "#9BD1E5",
+    silverpoint_ice: "#DCEFF7",
+    veranda_ivory: "#EDE6D6",
+    travertine_warm: "#D6C7AE",
+    amber_room_glow: "#E3A857",
+    parapet_iron: "#1A232D",
+    crimson_vein: "#8E1B28",
+    crimson_bright: "#C42838",
+    clotted_tendon_black: "#2E070D",
+    obsidianWater: "#070B10",
+    abyssTrench: "#0D151F",
+    coldLimpidSlate: "#2A3D4F",
+    chilledMirrorCyan: "#9BD1E5",
+    silverpointIce: "#DCEFF7",
+    verandaIvory: "#EDE6D6",
+    travertineWarm: "#D6C7AE",
+    amberRoomGlow: "#E3A857",
+    parapetIron: "#1A232D",
+    crimsonVein: "#8E1B28",
+    crimsonBright: "#C42838",
+    clottedTendonBlack: "#2E070D"
+  });
+
+  var RAW_LEDGER_LIST = [
+    Object.freeze({
+      id: "traveler_parapet",
+      chamberId: "traveler_parapet",
+      index: 0,
+      key: "1",
+      tierIndex: 1,
+      stoneId: "railed_parapet_high_streets",
+      title: "Arriving Traveler's High-Street Parapet",
+      invertedTitle: "Abyssal Parapet of Stripped Certainty",
+      erectWeight: 0.84,
+      invertedWeight: 0.19,
+      asymmetryDelta: -0.65,
+      verdict: "DENIED",
+      isSymmetricalEqual: false,
+      mutualLove: 0,
+      hasDoubleCatoptricRay: false,
+      semitones: Object.freeze([4, 7]),
+      note: "Proud arrival vantage leaning over wrought-iron rail is stripped into spectral abyssal vertigo below."
+    }),
+    Object.freeze({
+      id: "hallway_perspective",
+      chamberId: "hallway_perspective",
+      index: 1,
+      key: "2",
+      tierIndex: 0,
+      stoneId: "illuminated_cutaway_interiors",
+      title: "Coffered Hallway Perspective",
+      invertedTitle: "Sunken Vault of Catoptric Geometry",
+      erectWeight: 0.34,
+      invertedWeight: 0.89,
+      asymmetryDelta: 0.55,
+      verdict: "INCREASED",
+      isSymmetricalEqual: false,
+      mutualLove: 0,
+      hasDoubleCatoptricRay: false,
+      semitones: Object.freeze([2, 5, 7]),
+      note: "Ordinary measured footsteps harden into inescapable catoptric geometry beneath suspended tiles and sunken vaults."
+    }),
+    Object.freeze({
+      id: "wardrobe_chamber",
+      chamberId: "wardrobe_chamber",
+      index: 2,
+      key: "3",
+      tierIndex: 2,
+      stoneId: "wardrobe_catoptric_mirrors",
+      title: "Chamber of the Hinged Wardrobe Mirror",
+      invertedTitle: "Double Catoptric Prism of the Unseen Back",
+      erectWeight: 0.31,
+      invertedWeight: 0.91,
+      asymmetryDelta: 0.60,
+      verdict: "INCREASED",
+      isSymmetricalEqual: false,
+      mutualLove: 0,
+      hasDoubleCatoptricRay: true,
+      semitones: Object.freeze([4, 9, 12]),
+      note: "Recursive mirror-within-mirror exposes the unseen dorsal profile in razor-clear cyan silverpoint."
+    }),
+    Object.freeze({
+      id: "merchant_scale_loggia",
+      chamberId: "merchant_scale_loggia",
+      index: 3,
+      key: "4",
+      tierIndex: 1,
+      stoneId: "stacked_veranda_houses",
+      title: "Magistrate's Golden Scale Veranda",
+      invertedTitle: "Hollowed Loggia of Spectral Vanity",
+      erectWeight: 0.91,
+      invertedWeight: 0.14,
+      asymmetryDelta: -0.77,
+      verdict: "DENIED",
+      isSymmetricalEqual: false,
+      mutualLove: 0,
+      hasDoubleCatoptricRay: false,
+      semitones: Object.freeze([5, 2]),
+      note: "Ceremonial gold scales and civic pomp are mocked as hollow, weightless spectral vanity in cold slate."
+    }),
+    Object.freeze({
+      id: "fleeting_glance_balcony",
+      chamberId: "fleeting_glance_balcony",
+      index: 4,
+      key: "5",
+      tierIndex: 0,
+      stoneId: "ancient_lakeshore_foundation",
+      title: "Ancient Cliffshore Column Balcony",
+      invertedTitle: "Submerged Escarpment of Grave Permanence",
+      erectWeight: 0.18,
+      invertedWeight: 0.94,
+      asymmetryDelta: 0.76,
+      verdict: "INCREASED",
+      isSymmetricalEqual: false,
+      mutualLove: 0,
+      hasDoubleCatoptricRay: false,
+      semitones: Object.freeze([2, 7]),
+      note: "An unheeded touch upon ancient lakeshore limestone freezes into monumental permanence in the abyss."
+    }),
+    Object.freeze({
+      id: "lovers_alcove",
+      chamberId: "lovers_alcove",
+      index: 5,
+      key: "6",
+      tierIndex: 3,
+      stoneId: "twining_naked_lovers",
+      title: "Alcove of Twining Naked Lovers",
+      invertedTitle: "Iconic Ice-Ivory Contour Alcove",
+      erectWeight: 0.44,
+      invertedWeight: 0.96,
+      asymmetryDelta: 0.52,
+      verdict: "INCREASED",
+      isSymmetricalEqual: false,
+      mutualLove: 0,
+      hasDoubleCatoptricRay: false,
+      semitones: Object.freeze([3, 7, 10]),
+      note: "Chilled sculptural dignity of twining ice-ivory contours eclipses warm carnal skin above."
+    }),
+    Object.freeze({
+      id: "crimson_vein_corridor",
+      chamberId: "crimson_vein_corridor",
+      index: 6,
+      key: "7",
+      tierIndex: 3,
+      stoneId: "dagger_black_neck_veins",
+      title: "Corridor of the Knife & Black Neck Veins",
+      invertedTitle: "Obsidian Incision of Chilled Crimson Veins",
+      erectWeight: 0.52,
+      invertedWeight: 0.98,
+      asymmetryDelta: 0.46,
+      verdict: "INCREASED",
+      isSymmetricalEqual: false,
+      mutualLove: 0,
+      hasDoubleCatoptricRay: false,
+      semitones: Object.freeze([1, 6, 9]),
+      note: "Razor-clear chilled crimson incision in obsidian water eclipses the hot spasm in the corridor above."
+    })
+  ];
+
+  var FROZEN_LEDGER_LIST = Object.freeze(RAW_LEDGER_LIST.slice());
+
+  var VALUE_LEDGER_RULES = (function () {
+    var dict = {};
+    for (var i = 0; i < FROZEN_LEDGER_LIST.length; i++) {
+      var r = FROZEN_LEDGER_LIST[i];
+      dict[r.id] = r;
+      Object.defineProperty(dict, i, { value: r, enumerable: false });
+    }
+    Object.defineProperty(dict, "length", { value: FROZEN_LEDGER_LIST.length, enumerable: false });
+    Object.defineProperty(dict, "list", { value: FROZEN_LEDGER_LIST, enumerable: false });
+    Object.defineProperty(dict, "forEach", { value: FROZEN_LEDGER_LIST.forEach.bind(FROZEN_LEDGER_LIST), enumerable: false });
+    Object.defineProperty(dict, "map", { value: FROZEN_LEDGER_LIST.map.bind(FROZEN_LEDGER_LIST), enumerable: false });
+    Object.defineProperty(dict, "find", { value: FROZEN_LEDGER_LIST.find.bind(FROZEN_LEDGER_LIST), enumerable: false });
+    Object.defineProperty(dict, "every", { value: FROZEN_LEDGER_LIST.every.bind(FROZEN_LEDGER_LIST), enumerable: false });
+    Object.defineProperty(dict, "filter", { value: FROZEN_LEDGER_LIST.filter.bind(FROZEN_LEDGER_LIST), enumerable: false });
+    if (typeof Symbol !== "undefined" && Symbol.iterator) {
+      Object.defineProperty(dict, Symbol.iterator, {
+        value: function () { return FROZEN_LEDGER_LIST[Symbol.iterator](); },
+        enumerable: false
+      });
+    }
+    return Object.freeze(dict);
+  })();
+
+  function clamp(v, lo, hi) {
+    var n = Number(v);
+    if (!Number.isFinite(n)) return lo;
+    return n < lo ? lo : n > hi ? hi : n;
+  }
+
+  function hexToRgba(hex, alpha) {
+    var clean = String(hex || "#9BD1E5").replace("#", "");
+    if (clean.length === 3) {
+      clean = clean[0] + clean[0] + clean[1] + clean[1] + clean[2] + clean[2];
+    }
+    var num = parseInt(clean, 16);
+    if (!Number.isFinite(num)) return "rgba(155, 209, 229, " + clamp(alpha, 0, 1) + ")";
+    var r = (num >> 16) & 255;
+    var g = (num >> 8) & 255;
+    var b = num & 255;
+    return "rgba(" + r + ", " + g + ", " + b + ", " + clamp(alpha, 0, 1).toFixed(3) + ")";
+  }
+
+  function resolveChamberRule(input) {
+    if (typeof input === "string") {
+      if (VALUE_LEDGER_RULES[input]) return VALUE_LEDGER_RULES[input];
+      var asKey = parseInt(input, 10);
+      if (Number.isFinite(asKey) && asKey >= 1 && asKey <= 7) {
+        return FROZEN_LEDGER_LIST[asKey - 1];
+      }
+    } else if (typeof input === "number" && Number.isFinite(input)) {
+      var idx = Math.round(input);
+      if (idx >= 0 && idx < FROZEN_LEDGER_LIST.length) return FROZEN_LEDGER_LIST[idx];
+      if (idx === 7) return FROZEN_LEDGER_LIST[6];
+    } else if (input && typeof input === "object") {
+      var cid = input.chamberId || input.id || input.activeChamberId;
+      if (cid && VALUE_LEDGER_RULES[cid]) return VALUE_LEDGER_RULES[cid];
+      if (typeof input.index === "number" && FROZEN_LEDGER_LIST[input.index]) {
+        return FROZEN_LEDGER_LIST[input.index];
+      }
+    }
+    return FROZEN_LEDGER_LIST[0];
+  }
+
+  function semitoneHz(semitones) {
+    return +(AXIS_PITCH_D4 * Math.pow(2, semitones / 12)).toFixed(3);
+  }
+
+  function synthesizeFallbackPacket(width, height, waterlineY, activeId) {
+    var w = Math.max(320, width || 1280);
+    var h = Math.max(320, height || 800);
+    var wl = clamp(waterlineY || Math.round(h * 0.5), 80, h - 80);
+    var skyBand = Math.max(64, wl - 18);
+    var tierH = Math.floor(skyBand / 4.35);
+    var baseLeft = Math.round(w * 0.11);
+    var baseW = Math.round(w * 0.78);
+    var tiers = [];
+    for (var ti = 0; ti < 4; ti++) {
+      var inset = ti * Math.round(w * 0.032);
+      var ty = wl - (ti + 1) * tierH - ti * 2;
+      tiers.push({
+        index: ti,
+        tierIndex: ti,
+        x: baseLeft + inset,
+        y: ty,
+        w: baseW - inset * 1.4,
+        h: tierH,
+        archCount: Math.max(5, 8 - ti)
+      });
+    }
+    var cliffProfile = [
+      { x: Math.round(w * 0.03), y: wl },
+      { x: Math.round(w * 0.06), y: wl - Math.round(skyBand * 0.28) },
+      { x: Math.round(w * 0.11), y: wl - Math.round(skyBand * 0.56) },
+      { x: Math.round(w * 0.18), y: wl - Math.round(skyBand * 0.86) },
+      { x: Math.round(w * 0.90), y: wl - Math.round(skyBand * 0.82) },
+      { x: Math.round(w * 0.95), y: wl }
+    ];
+    var tierCounts = [0, 0, 0, 0];
+    var tierTotals = [2, 2, 1, 2];
+    var chambers = FROZEN_LEDGER_LIST.map(function (rule, idx) {
+      var t = tiers[rule.tierIndex];
+      var slot = tierCounts[rule.tierIndex]++;
+      var tot = tierTotals[rule.tierIndex];
+      var pad = Math.max(8, Math.round(t.w * 0.05));
+      var usableW = t.w - pad * 2;
+      var cw = Math.floor(usableW / tot) - 8;
+      var cx = t.x + pad + slot * (cw + 12);
+      var chH = Math.max(24, t.h - 8);
+      var cy = t.y + 4;
+      return {
+        id: rule.id,
+        index: idx,
+        tierIndex: rule.tierIndex,
+        stoneId: rule.stoneId,
+        title: rule.title,
+        x: cx,
+        y: cy,
+        w: cw,
+        h: chH,
+        distFromWaterPx: wl - (cy + chH),
+        ceilingCoffered: true,
+        floorTiled: true,
+        hallwayDepth: 0.62,
+        hasWardrobeMirror: rule.id === "wardrobe_chamber",
+        wardrobeAngle: 0.48,
+        poseStep: 1,
+        actIntensity: rule.id === activeId ? 0.92 : 0.45,
+        erectWeight: rule.erectWeight,
+        polarityHint: rule.verdict,
+        crimsonFlow: rule.id === "crimson_vein_corridor" ? 0.86 : 0,
+        gazeX: Math.round(cx + cw * 0.5),
+        gazeY: Math.round(cy + chH * 0.58),
+        note: rule.note
+      };
+    });
+    return {
+      width: w,
+      height: h,
+      waterlineY: wl,
+      activeChamberId: activeId || "traveler_parapet",
+      cliffProfile: cliffProfile,
+      tiers: tiers,
+      chambers: chambers
+    };
+  }
+
+  function createCanonAudio(opts) {
+    var muted = Boolean(opts && opts.muted);
+    var ctx = null;
+    var lastStamp = 0;
+    var lastCid = "";
+
+    function ensureCtx() {
+      if (muted) return null;
+      if (!ctx) {
+        var Ctor = root && (root.AudioContext || root.webkitAudioContext);
+        if (typeof Ctor !== "function") return null;
+        try {
+          ctx = new Ctor();
+        } catch (_err) {
+          ctx = null;
+          return null;
+        }
+      }
+      if (ctx && ctx.state === "suspended" && typeof ctx.resume === "function") {
+        try { ctx.resume().catch(function () {}); } catch (_e) {}
+      }
+      return ctx;
+    }
+
+    function playInvertedCanon(chamberIdOrAct, forceFlag) {
+      var rule = resolveChamberRule(chamberIdOrAct);
+      var nowMs = Date.now();
+      var erectSemi = rule.semitones.slice();
+      var invSemi = erectSemi.map(function (k) { return -k; });
+      var voiceAFreqHz = erectSemi.map(semitoneHz);
+      var voiceBFreqHz = invSemi.map(semitoneHz);
+      var resonanceProfile = rule.verdict === "INCREASED" ? "cold_crystalline_boosted" : "phase_deadened_hollow";
+
+      var descriptor = {
+        played: false,
+        muted: muted,
+        chamberId: rule.id,
+        axisHz: AXIS_PITCH_D4,
+        delayMs: 90,
+        waveformPolarity: -1,
+        verdict: rule.verdict,
+        isSymmetricalEqual: false,
+        erectWeight: rule.erectWeight,
+        invertedWeight: rule.invertedWeight,
+        erectSemitones: erectSemi,
+        invertedSemitones: invSemi,
+        voiceAFreqHz: voiceAFreqHz,
+        voiceBFreqHz: voiceBFreqHz,
+        resonanceProfile: resonanceProfile
+      };
+
+      if (!forceFlag && lastCid === rule.id && nowMs - lastStamp < 38) {
+        return descriptor;
+      }
+      lastCid = rule.id;
+      lastStamp = nowMs;
+
+      var ac = ensureCtx();
+      if (!ac) return descriptor;
+
+      try {
+        var t0 = ac.currentTime + 0.008;
+        var stepDur = 0.105;
+
+        /* Voice A: warm upper veranda motif above D4 = 293.66 Hz */
+        var warmFilter = ac.createBiquadFilter();
+        warmFilter.type = "lowpass";
+        warmFilter.frequency.setValueAtTime(1650, t0);
+        warmFilter.Q.setValueAtTime(1.1, t0);
+        warmFilter.connect(ac.destination);
+
+        for (var i = 0; i < voiceAFreqHz.length; i++) {
+          var stA = t0 + i * stepDur;
+          var oscA = ac.createOscillator();
+          var gainA = ac.createGain();
+          oscA.type = "triangle";
+          oscA.frequency.setValueAtTime(voiceAFreqHz[i], stA);
+          var ampA = 0.045 + rule.erectWeight * 0.055;
+          gainA.gain.setValueAtTime(0.0001, stA);
+          gainA.gain.exponentialRampToValueAtTime(ampA, stA + 0.014);
+          gainA.gain.exponentialRampToValueAtTime(0.0001, stA + 0.22);
+          oscA.connect(gainA);
+          gainA.connect(warmFilter);
+          oscA.start(stA);
+          oscA.stop(stA + 0.24);
+        }
+
+        /* Voice B: ~90ms later, pitch-mirrored across D4 and polarity-inverted (-1) */
+        var polarityInverter = ac.createGain();
+        polarityInverter.gain.setValueAtTime(-1.0, t0);
+        var twinFilter = ac.createBiquadFilter();
+        if (rule.verdict === "INCREASED") {
+          twinFilter.type = "peaking";
+          twinFilter.frequency.setValueAtTime(2680, t0);
+          twinFilter.Q.setValueAtTime(3.6, t0);
+          twinFilter.gain.setValueAtTime(7.5, t0);
+        } else {
+          twinFilter.type = "bandpass";
+          twinFilter.frequency.setValueAtTime(470, t0);
+          twinFilter.Q.setValueAtTime(4.8, t0);
+        }
+        polarityInverter.connect(twinFilter);
+        twinFilter.connect(ac.destination);
+
+        for (var j = 0; j < voiceBFreqHz.length; j++) {
+          var stB = t0 + 0.090 + j * stepDur;
+          var oscB = ac.createOscillator();
+          var gainB = ac.createGain();
+          oscB.type = rule.id === "crimson_vein_corridor" ? "sawtooth" : "sine";
+          oscB.frequency.setValueAtTime(voiceBFreqHz[j], stB);
+          var ampB = rule.verdict === "INCREASED"
+            ? (0.055 + rule.invertedWeight * 0.085)
+            : (0.012 + rule.invertedWeight * 0.022);
+          var tailB = rule.verdict === "INCREASED" ? 0.38 : 0.14;
+          gainB.gain.setValueAtTime(0.0001, stB);
+          gainB.gain.exponentialRampToValueAtTime(ampB, stB + 0.012);
+          gainB.gain.exponentialRampToValueAtTime(0.0001, stB + tailB);
+          oscB.connect(gainB);
+          gainB.connect(polarityInverter);
+          oscB.start(stB);
+          oscB.stop(stB + tailB + 0.02);
+
+          if (rule.verdict === "INCREASED") {
+            var glass = ac.createOscillator();
+            var glassGain = ac.createGain();
+            glass.type = "triangle";
+            glass.frequency.setValueAtTime(voiceBFreqHz[j] * (rule.hasDoubleCatoptricRay ? 3 : 2), stB);
+            glassGain.gain.setValueAtTime(0.0001, stB);
+            glassGain.gain.exponentialRampToValueAtTime(ampB * 0.42, stB + 0.01);
+            glassGain.gain.exponentialRampToValueAtTime(0.0001, stB + tailB * 0.85);
+            glass.connect(glassGain);
+            glassGain.connect(polarityInverter);
+            glass.start(stB);
+            glass.stop(stB + tailB);
+          }
+        }
+        descriptor.played = true;
+      } catch (_audioErr) {
+        descriptor.played = false;
+      }
+      return descriptor;
+    }
+
+    function playLovelessLockDyad() {
+      var ac = ensureCtx();
+      if (!ac) return false;
+      try {
+        var t0 = ac.currentTime + 0.006;
+        var inv = ac.createGain();
+        inv.gain.setValueAtTime(-1.0, t0);
+        inv.connect(ac.destination);
+        var freqs = [AXIS_PITCH_D4, AXIS_PITCH_D4 * 0.5];
+        for (var k = 0; k < freqs.length; k++) {
+          var o = ac.createOscillator();
+          var g = ac.createGain();
+          o.type = "sine";
+          o.frequency.setValueAtTime(freqs[k], t0 + k * 0.045);
+          g.gain.setValueAtTime(0.0001, t0 + k * 0.045);
+          g.gain.exponentialRampToValueAtTime(0.05, t0 + k * 0.045 + 0.015);
+          g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.30);
+          o.connect(g);
+          g.connect(k === 0 ? ac.destination : inv);
+          o.start(t0 + k * 0.045);
+          o.stop(t0 + 0.32);
+        }
+        return true;
+      } catch (_e) {
+        return false;
+      }
+    }
+
+    return {
+      unlockAudio: function () { return Boolean(ensureCtx()); },
+      setMuted: function (b) { muted = Boolean(b); return muted; },
+      toggleMute: function () { muted = !muted; return muted; },
+      isMuted: function () { return muted; },
+      playInvertedCanon: playInvertedCanon,
+      playLovelessLockDyad: playLovelessLockDyad,
+      destroy: function () {
+        if (ctx && typeof ctx.close === "function") {
+          try { ctx.close().catch(function () {}); } catch (_e) {}
+        }
+        ctx = null;
+      }
+    };
+  }
+
+  function drawAbyssalWaterPlanes(ctx, w, h, wlY, limpidity, phase) {
+    var lakeH = Math.max(1, h - wlY);
+    var grad = ctx.createLinearGradient(0, wlY, 0, h);
+    grad.addColorStop(0, PALETTE.abyss_trench);
+    grad.addColorStop(0.38, PALETTE.obsidian_water);
+    grad.addColorStop(0.82, "#05080D");
+    grad.addColorStop(1, "#030508");
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, wlY, w, lakeH);
+
+    /* Crisp cold-limpid-slate depth planes (razor-sharp reflection strata, zero blur) */
+    var strataCount = 9;
+    for (var s = 0; s < strataCount; s++) {
+      var frac = (s + 0.6) / strataCount;
+      var sy = Math.round(wlY + Math.pow(frac, 1.15) * (lakeH - 6)) + 0.5;
+      var bandH = Math.max(2, Math.round((1 - frac) * 10 * limpidity));
+      ctx.fillStyle = hexToRgba(PALETTE.cold_limpid_slate, (0.16 - frac * 0.10) * limpidity);
+      ctx.fillRect(0, sy, w, bandH);
+      ctx.strokeStyle = hexToRgba(PALETTE.chilled_mirror_cyan, (0.20 - frac * 0.13) * limpidity);
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      var drift = Math.sin(phase * 0.8 + s * 1.3) * 6;
+      ctx.moveTo(Math.max(0, w * 0.04 + drift), sy);
+      ctx.lineTo(Math.min(w, w * 0.96 + drift), sy);
+      ctx.stroke();
+    }
+  }
+
+  function drawInvertedCliffAndTiers(ctx, packet, w, h, wlY, limpidity) {
+    var cliffRaw = packet && packet.cliffProfile;
+    var pts = [];
+    var stepRects = [];
+    if (Array.isArray(cliffRaw)) {
+      for (var i = 0; i < cliffRaw.length; i++) {
+        var cp = cliffRaw[i];
+        if (Array.isArray(cp) && cp.length >= 2) {
+          pts.push({ x: Number(cp[0]) || 0, y: Number(cp[1]) || wlY });
+        } else if (cp && typeof cp === "object") {
+          if (Number.isFinite(cp.w) && Number.isFinite(cp.h)) {
+            stepRects.push(cp);
+          } else if (Number.isFinite(cp.x) && Number.isFinite(cp.y)) {
+            pts.push({ x: cp.x, y: cp.y });
+          }
+        }
+      }
+    } else if (cliffRaw && typeof cliffRaw === "object") {
+      if (Array.isArray(cliffRaw.points)) pts = cliffRaw.points;
+      if (Array.isArray(cliffRaw.steps)) stepRects = cliffRaw.steps;
+    }
+
+    ctx.save();
+    if (pts.length >= 3) {
+      ctx.beginPath();
+      ctx.moveTo(pts[0].x, wlY);
+      for (var p = 0; p < pts.length; p++) {
+        var ry = 2 * wlY - pts[p].y;
+        ctx.lineTo(pts[p].x, ry);
+      }
+      ctx.lineTo(pts[pts.length - 1].x, wlY);
+      ctx.closePath();
+      ctx.fillStyle = hexToRgba(PALETTE.abyss_trench, 0.88 * limpidity);
+      ctx.fill();
+      ctx.strokeStyle = hexToRgba(PALETTE.cold_limpid_slate, 0.78 * limpidity);
+      ctx.lineWidth = 1.4;
+      ctx.stroke();
+    }
+    for (var sr = 0; sr < stepRects.length; sr++) {
+      var st = stepRects[sr];
+      var sty = 2 * wlY - (st.y + st.h);
+      ctx.fillStyle = hexToRgba(PALETTE.abyss_trench, 0.86 * limpidity);
+      ctx.fillRect(st.x, sty, st.w, st.h);
+      ctx.strokeStyle = hexToRgba(PALETTE.cold_limpid_slate, 0.72 * limpidity);
+      ctx.strokeRect(st.x + 0.5, sty + 0.5, Math.max(1, st.w - 1), Math.max(1, st.h - 1));
+    }
+
+    /* Upside-down stacked arcaded veranda tiers & hanging wrought-iron parapets */
+    var tiers = (packet && Array.isArray(packet.tiers)) ? packet.tiers : [];
+    for (var ti = 0; ti < tiers.length; ti++) {
+      var t = tiers[ti];
+      var tx = Number.isFinite(t.x) ? t.x : w * 0.12;
+      var ty = Number.isFinite(t.y) ? t.y : (wlY - (ti + 1) * 60);
+      var tw = Number.isFinite(t.w) ? t.w : (Number.isFinite(t.width) ? t.width : w * 0.76);
+      var th = Number.isFinite(t.h) ? t.h : (Number.isFinite(t.height) ? t.height : 56);
+      var yTwin = 2 * wlY - (ty + th);
+
+      ctx.fillStyle = hexToRgba(PALETTE.obsidian_water, 0.72 * limpidity);
+      ctx.fillRect(tx, yTwin, tw, th);
+      ctx.strokeStyle = hexToRgba(PALETTE.cold_limpid_slate, 0.75 * limpidity);
+      ctx.lineWidth = 1.2;
+      ctx.strokeRect(tx + 0.5, yTwin + 0.5, Math.max(1, tw - 1), Math.max(1, th - 1));
+
+      /* Overhead inverted street slab at yTwin & upside-down iron parapet rail hanging from yTwin */
+      ctx.fillStyle = hexToRgba(PALETTE.cold_limpid_slate, 0.55 * limpidity);
+      ctx.fillRect(tx - 6, yTwin, tw + 12, 3);
+      var railH = Math.min(11, Math.max(6, Math.round(th * 0.18)));
+      var railTop = yTwin - railH;
+      ctx.strokeStyle = hexToRgba(PALETTE.chilled_mirror_cyan, 0.42 * limpidity);
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(tx - 6, railTop);
+      ctx.lineTo(tx + tw + 6, railTop);
+      var picketStep = Math.max(7, Math.round(tw / 42));
+      for (var px = tx - 4; px <= tx + tw + 4; px += picketStep) {
+        ctx.moveTo(px + 0.5, yTwin);
+        ctx.lineTo(px + 0.5, railTop);
+      }
+      ctx.stroke();
+
+      /* Inverted arcade: piers hang down from yTwin, semicircular vault crowns curve at yTwin + th */
+      var archCount = Math.max(4, Number(t.archCount) || Math.round(tw / 68));
+      var bayW = tw / archCount;
+      ctx.strokeStyle = hexToRgba(PALETTE.cold_limpid_slate, 0.52 * limpidity);
+      ctx.beginPath();
+      for (var a = 0; a < archCount; a++) {
+        var bx = tx + a * bayW;
+        var archR = Math.min(bayW * 0.44, th * 0.36);
+        ctx.moveTo(bx + bayW * 0.06, yTwin + 3);
+        ctx.lineTo(bx + bayW * 0.06, yTwin + th - archR);
+        ctx.arc(bx + bayW * 0.5, yTwin + th - archR, archR, Math.PI, 0, true);
+        ctx.lineTo(bx + bayW * 0.94, yTwin + 3);
+      }
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function drawInvertedChamber(ctx, twin, limpidity, phase, isActive, isHovered, pulse) {
+    var x = twin.x;
+    var y = twin.y;
+    var w = Math.max(18, twin.w);
+    var h = Math.max(16, twin.h);
+    var cx = x + w * 0.5;
+    var isDenied = twin.verdict === "DENIED";
+    var baseAlpha = isDenied
+      ? clamp(0.28 + (isActive ? 0.08 : 0) + (isHovered ? 0.06 : 0), 0.22, 0.44)
+      : clamp((0.86 + (isActive ? 0.12 : 0)) * limpidity, 0.64, 0.99);
+
+    ctx.save();
+    if (isDenied) {
+      ctx.fillStyle = hexToRgba(PALETTE.abyss_trench, baseAlpha * 0.75);
+      ctx.fillRect(x, y, w, h);
+      ctx.setLineDash([5, 4]);
+      ctx.strokeStyle = hexToRgba(PALETTE.cold_limpid_slate, baseAlpha * 1.15);
+      ctx.lineWidth = isActive ? 1.5 : 1;
+      ctx.strokeRect(x + 0.5, y + 0.5, w - 1, h - 1);
+      ctx.setLineDash([]);
+    } else {
+      var bg = ctx.createLinearGradient(x, y, x, y + h);
+      bg.addColorStop(0, hexToRgba(PALETTE.cold_limpid_slate, 0.38 * baseAlpha));
+      bg.addColorStop(0.5, hexToRgba(PALETTE.obsidian_water, 0.86 * baseAlpha));
+      bg.addColorStop(1, hexToRgba(twin.id === "crimson_vein_corridor" ? PALETTE.clotted_tendon_black : PALETTE.abyss_trench, 0.94 * baseAlpha));
+      ctx.fillStyle = bg;
+      ctx.fillRect(x, y, w, h);
+      ctx.strokeStyle = hexToRgba(isActive ? PALETTE.silverpoint_ice : PALETTE.chilled_mirror_cyan, baseAlpha);
+      ctx.lineWidth = isActive ? 1.8 + pulse * 0.6 : 1.25;
+      ctx.strokeRect(x + 0.5, y + 0.5, w - 1, h - 1);
+    }
+
+    /* 1. Tiled floor hanging overhead (y .. y + h * 0.23) */
+    var floorBand = h * 0.23;
+    var vpY = y + h * 0.47;
+    ctx.strokeStyle = isDenied
+      ? hexToRgba(PALETTE.cold_limpid_slate, baseAlpha * 0.85)
+      : hexToRgba(PALETTE.chilled_mirror_cyan, baseAlpha * 0.52);
+    ctx.lineWidth = 0.85;
+    ctx.beginPath();
+    ctx.moveTo(x + 2, y + floorBand);
+    ctx.lineTo(x + w - 2, y + floorBand);
+    ctx.moveTo(x + 2, y + floorBand * 0.5);
+    ctx.lineTo(x + w - 2, y + floorBand * 0.5);
+    for (var ti = 1; ti <= 5; ti++) {
+      var tx = x + (w * ti) / 6;
+      ctx.moveTo(tx, y);
+      ctx.lineTo(cx + (tx - cx) * 0.52, y + floorBand);
+    }
+    ctx.stroke();
+
+    /* 2. Sunken coffered ceiling vault below (y + h * 0.75 .. y + h) */
+    var vaultTop = y + h * 0.75;
+    ctx.strokeStyle = isDenied
+      ? hexToRgba(PALETTE.cold_limpid_slate, baseAlpha * 0.8)
+      : hexToRgba(PALETTE.silverpoint_ice, baseAlpha * 0.56);
+    ctx.beginPath();
+    ctx.moveTo(x + 2, vaultTop);
+    ctx.lineTo(x + w - 2, vaultTop);
+    var coffers = 4;
+    var cw = (w - 6) / coffers;
+    for (var c = 0; c < coffers; c++) {
+      ctx.rect(x + 3 + c * cw + 1.5, vaultTop + 2, Math.max(2, cw - 3), Math.max(2, h - (vaultTop - y) - 4));
+    }
+    ctx.stroke();
+
+    /* 3. Chamber-specific point-by-point inverted iconography */
+    var midY = y + h * 0.5;
+    if (twin.id === "traveler_parapet") {
+      /* DENIED: fractured upside-down iron parapet & hollowed vertigo ghost */
+      ctx.strokeStyle = hexToRgba(PALETTE.chilled_mirror_cyan, baseAlpha);
+      ctx.beginPath();
+      ctx.moveTo(x + w * 0.14, y + h * 0.84);
+      ctx.lineTo(x + w * 0.86, y + h * 0.18);
+      ctx.moveTo(cx - 8, y + h * 0.25);
+      ctx.lineTo(cx, y + h * 0.62);
+      ctx.lineTo(cx + 8, y + h * 0.25);
+      ctx.arc(cx, y + h * 0.68, 4, 0, Math.PI * 2);
+      ctx.stroke();
+    } else if (twin.id === "merchant_scale_loggia") {
+      /* DENIED: hollow unstrung spectral scales hanging upside-down */
+      ctx.strokeStyle = hexToRgba(PALETTE.chilled_mirror_cyan, baseAlpha);
+      ctx.beginPath();
+      ctx.moveTo(cx, y + h * 0.74);
+      ctx.lineTo(cx, y + h * 0.36);
+      ctx.moveTo(cx - w * 0.24, y + h * 0.42);
+      ctx.lineTo(cx + w * 0.24, y + h * 0.32);
+      ctx.arc(cx - w * 0.24, y + h * 0.26, 5, 0, Math.PI, true);
+      ctx.moveTo(cx + w * 0.29, y + h * 0.20);
+      ctx.arc(cx + w * 0.24, y + h * 0.20, 5, 0, Math.PI, true);
+      ctx.stroke();
+    } else if (twin.id === "hallway_perspective") {
+      /* INCREASED: inescapable catoptric perspective tunnel + crystalline footstep nodes */
+      var hw = w * 0.22;
+      var hh = h * 0.22;
+      ctx.strokeStyle = hexToRgba(PALETTE.silverpoint_ice, baseAlpha * 0.92);
+      ctx.strokeRect(cx - hw * 0.5, vpY - hh * 0.5, hw, hh);
+      ctx.beginPath();
+      ctx.moveTo(x + 3, y + floorBand); ctx.lineTo(cx - hw * 0.5, vpY - hh * 0.5);
+      ctx.moveTo(x + w - 3, y + floorBand); ctx.lineTo(cx + hw * 0.5, vpY - hh * 0.5);
+      ctx.moveTo(x + 3, vaultTop); ctx.lineTo(cx - hw * 0.5, vpY + hh * 0.5);
+      ctx.moveTo(x + w - 3, vaultTop); ctx.lineTo(cx + hw * 0.5, vpY + hh * 0.5);
+      ctx.stroke();
+      for (var fn = 0; fn < 3; fn++) {
+        var fy = y + floorBand * 0.4 + fn * (h * 0.11);
+        ctx.fillStyle = PALETTE.silverpoint_ice;
+        ctx.fillRect(cx - 5 + fn * 4, fy, 3, 2);
+      }
+    } else if (twin.id === "wardrobe_chamber") {
+      /* INCREASED: recursive wardrobe mirror casting DOUBLE catoptric prism ray onto unseen dorsal profile */
+      var mirX = x + w * 0.24;
+      var mirTop = y + h * 0.26;
+      var mirBot = y + h * 0.70;
+      var tilt = Math.sin((twin.wardrobeAngle || 0.48) + phase * 0.2) * 5;
+      ctx.strokeStyle = PALETTE.silverpoint_ice;
+      ctx.lineWidth = 1.8;
+      ctx.beginPath();
+      ctx.moveTo(mirX - tilt, mirTop);
+      ctx.lineTo(mirX + tilt, mirBot);
+      ctx.stroke();
+
+      var backX = x + w * 0.68;
+      var backY = midY;
+      /* Ray 1 (lake to beveled wardrobe glass) + Ray 2 (catoptric prism fan exposing dorsal spine) */
+      ctx.fillStyle = hexToRgba(PALETTE.chilled_mirror_cyan, 0.26 * baseAlpha);
+      ctx.beginPath();
+      ctx.moveTo(mirX, midY);
+      ctx.lineTo(backX + 7, backY - h * 0.20);
+      ctx.lineTo(backX + 7, backY + h * 0.20);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.strokeStyle = PALETTE.silverpoint_ice;
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(twin.gazeX, y);
+      ctx.lineTo(mirX, midY);
+      ctx.lineTo(backX, backY - h * 0.14);
+      ctx.moveTo(mirX, midY);
+      ctx.lineTo(backX, backY + h * 0.14);
+      /* Unseen dorsal profile & spine contour (upside-down head below, shoulders above) */
+      ctx.moveTo(backX, backY - h * 0.18);
+      ctx.lineTo(backX, backY + h * 0.14);
+      ctx.moveTo(backX - 6, backY - h * 0.04);
+      ctx.lineTo(backX + 6, backY - h * 0.04);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(backX, backY + h * 0.19, 3.8, 0, Math.PI * 2);
+      ctx.stroke();
+    } else if (twin.id === "fleeting_glance_balcony") {
+      /* INCREASED: ancient submerged column & monumental silverpoint permanence rings */
+      var colX = cx - w * 0.14;
+      ctx.fillStyle = hexToRgba(PALETTE.chilled_mirror_cyan, 0.34 * baseAlpha);
+      ctx.fillRect(colX - 5, y + floorBand, 10, vaultTop - (y + floorBand));
+      ctx.strokeStyle = PALETTE.silverpoint_ice;
+      ctx.strokeRect(colX - 5, y + floorBand, 10, vaultTop - (y + floorBand));
+      for (var rg = 1; rg <= 3; rg++) {
+        ctx.strokeStyle = hexToRgba(PALETTE.silverpoint_ice, (0.92 - rg * 0.22) * baseAlpha);
+        ctx.beginPath();
+        ctx.arc(colX + 5, midY, rg * 5.5, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+    } else if (twin.id === "lovers_alcove") {
+      /* INCREASED: sculpted ice-ivory twining lover silhouettes upside-down */
+      var shift = ((twin.poseStep || 1) % 3 - 1) * 2.5;
+      ctx.strokeStyle = PALETTE.silverpoint_ice;
+      ctx.fillStyle = hexToRgba(PALETTE.veranda_ivory, 0.28 * baseAlpha);
+      ctx.lineWidth = 1.6;
+      ctx.beginPath();
+      ctx.moveTo(cx - 11, y + floorBand + 2);
+      ctx.bezierCurveTo(cx - 3 + shift, midY - 4, cx + 6, midY + 4, cx - 5, vaultTop - 5);
+      ctx.bezierCurveTo(cx + 12, midY + 3, cx + 4 - shift, midY - 5, cx + 11, y + floorBand + 2);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(cx - 4, vaultTop - 4, 3.3, 0, Math.PI * 2);
+      ctx.arc(cx + 5, vaultTop - 5, 3.3, 0, Math.PI * 2);
+      ctx.stroke();
+    } else if (twin.id === "crimson_vein_corridor") {
+      /* INCREASED: razor-etched silverpoint knife & chilled crimson-vein tendrils in obsidian water */
+      var flow = clamp(Number.isFinite(twin.crimsonFlow) ? twin.crimsonFlow : 0.88, 0.45, 1.0);
+      ctx.strokeStyle = PALETTE.silverpoint_ice;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(cx - w * 0.20, midY - h * 0.14);
+      ctx.lineTo(cx + 3, midY + 2);
+      ctx.stroke();
+
+      var tendrils = [
+        [-0.04, -0.26, 0.08, -0.34],
+        [0.06, -0.18, 0.22, -0.30],
+        [0.05, 0.16, 0.19, 0.28],
+        [-0.06, 0.14, -0.16, 0.29]
+      ];
+      for (var td = 0; td < tendrils.length; td++) {
+        var tr = tendrils[td];
+        ctx.strokeStyle = td % 2 === 0 ? PALETTE.crimson_bright : PALETTE.crimson_vein;
+        ctx.lineWidth = td === 0 ? 1.9 : 1.35;
+        ctx.beginPath();
+        ctx.moveTo(cx + 2, midY + 2);
+        ctx.quadraticCurveTo(
+          cx + w * tr[0] * flow,
+          midY + h * tr[1] * flow,
+          cx + w * tr[2] * flow,
+          midY + h * tr[3] * flow
+        );
+        ctx.stroke();
+      }
+    }
+    ctx.restore();
+  }
+
+  function drawEyeFilamentsAndDatum(ctx, twinChambers, w, h, wlY, st) {
+    var limpidity = st.limpidity;
+    var flash = st.reconcileFlash;
+    ctx.save();
+
+    for (var i = 0; i < twinChambers.length; i++) {
+      var tc = twinChambers[i];
+      var isAct = tc.id === st.activeChamberId;
+      var gx = clamp(tc.gazeX, 4, w - 4);
+      var gyTwin = clamp(tc.gazeTwinY, wlY + 8, h - 6);
+      var alpha = clamp(
+        (isAct ? 0.88 : 0.36) * limpidity * st.eyeLockStrength + flash * 0.35,
+        0.20,
+        0.99
+      );
+
+      /* Vertical Interlocked Loveless Eye Filament from waterlineY down to gazeTwinY */
+      ctx.strokeStyle = hexToRgba(isAct || flash > 0.1 ? PALETTE.silverpoint_ice : PALETTE.chilled_mirror_cyan, alpha);
+      ctx.lineWidth = isAct ? 1.5 : 0.95;
+      if (!isAct && flash <= 0.05) ctx.setLineDash([3, 4]);
+      ctx.beginPath();
+      ctx.moveTo(gx, wlY);
+      ctx.lineTo(gx, gyTwin);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      if (isAct || flash > 0.1) {
+        ctx.strokeStyle = hexToRgba(PALETTE.chilled_mirror_cyan, alpha * 0.55);
+        ctx.lineWidth = 0.8;
+        ctx.beginPath();
+        ctx.moveTo(gx - 2.5, wlY + 2);
+        ctx.lineTo(gx - 2.5, gyTwin - 4);
+        ctx.moveTo(gx + 2.5, wlY + 2);
+        ctx.lineTo(gx + 2.5, gyTwin - 4);
+        ctx.stroke();
+      }
+
+      /* Waterline refraction lock tick at (gazeX, waterlineY) */
+      ctx.fillStyle = hexToRgba(PALETTE.silverpoint_ice, alpha);
+      ctx.fillRect(gx - 2.5, wlY, 5, 2.5);
+
+      /* Inverted eye oculus at (gazeX, 2 * waterlineY - gazeY) staring coldly upward */
+      var ew = isAct ? 6.5 : 4.5;
+      var eh = isAct ? 3.4 : 2.4;
+      ctx.fillStyle = PALETTE.obsidian_water;
+      ctx.strokeStyle = hexToRgba(PALETTE.silverpoint_ice, alpha);
+      ctx.lineWidth = isAct ? 1.3 : 1.0;
+      ctx.beginPath();
+      ctx.moveTo(gx - ew, gyTwin);
+      ctx.quadraticCurveTo(gx, gyTwin - eh * 1.4, gx + ew, gyTwin);
+      ctx.quadraticCurveTo(gx, gyTwin + eh * 1.4, gx - ew, gyTwin);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = tc.id === "crimson_vein_corridor" ? PALETTE.crimson_bright : PALETTE.chilled_mirror_cyan;
+      ctx.beginPath();
+      ctx.arc(gx, gyTwin - 0.4, isAct ? 1.8 : 1.2, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    /* Crisp silverpoint-slate waterline datum right at waterlineY inside clip */
+    ctx.fillStyle = hexToRgba(PALETTE.silverpoint_ice, 0.92 * limpidity);
+    ctx.fillRect(0, wlY, w, 1.5);
+    ctx.fillStyle = hexToRgba(PALETTE.chilled_mirror_cyan, 0.55 * limpidity);
+    ctx.fillRect(0, wlY + 1.5, w, 1.2);
+    ctx.fillStyle = hexToRgba(PALETTE.cold_limpid_slate, 0.72);
+    ctx.fillRect(0, wlY + 2.7, w, 1.5);
+
+    var tickStep = Math.max(28, Math.round(w / 32));
+    ctx.fillStyle = hexToRgba(PALETTE.silverpoint_ice, 0.55 * limpidity);
+    for (var tx = tickStep; tx < w; tx += tickStep) {
+      ctx.fillRect(tx, wlY + 1.5, 1, 3.5);
+    }
+
+    ctx.restore();
+  }
+
+  function buildTwinChambersFromPacket(packet, w, h, wlY) {
+    var srcList = (packet && Array.isArray(packet.chambers) && packet.chambers.length > 0)
+      ? packet.chambers
+      : synthesizeFallbackPacket(w, h, wlY, packet && packet.activeChamberId).chambers;
+
+    var out = [];
+    for (var i = 0; i < FROZEN_LEDGER_LIST.length; i++) {
+      var rule = FROZEN_LEDGER_LIST[i];
+      var found = null;
+      for (var j = 0; j < srcList.length; j++) {
+        if (srcList[j] && (srcList[j].id === rule.id || srcList[j].index === i)) {
+          found = srcList[j];
+          break;
+        }
+      }
+      if (!found) {
+        found = synthesizeFallbackPacket(w, h, wlY, rule.id).chambers[i];
+      }
+      var ex = Number.isFinite(found.x) ? found.x : 40 + i * 90;
+      var ey = Number.isFinite(found.y) ? found.y : wlY - 70;
+      var ew = Math.max(16, Number.isFinite(found.w) ? found.w : 84);
+      var eh = Math.max(14, Number.isFinite(found.h) ? found.h : 48);
+      var yTwin = 2 * wlY - (ey + eh);
+      var gx = Number.isFinite(found.gazeX) ? found.gazeX : ex + ew * 0.5;
+      var gy = Number.isFinite(found.gazeY) ? found.gazeY : ey + eh * 0.58;
+      var gyTwin = 2 * wlY - gy;
+
+      out.push({
+        id: rule.id,
+        chamberId: rule.id,
+        index: rule.index,
+        key: rule.key,
+        tierIndex: Number.isFinite(found.tierIndex) ? found.tierIndex : rule.tierIndex,
+        stoneId: rule.stoneId,
+        title: found.title || rule.title,
+        invertedTitle: rule.invertedTitle,
+        gestureLabel: found.gestureLabel || "",
+        x: ex,
+        y: yTwin,
+        w: ew,
+        h: eh,
+        erectRect: { x: ex, y: ey, w: ew, h: eh },
+        twinRect: { x: ex, y: yTwin, w: ew, h: eh },
+        ceilingCoffered: true,
+        floorTiled: true,
+         ceilingInvertedToSunkenVault: true,
+        floorInvertedToSuspendedOverhead: true,
+        hasWardrobeMirror: Boolean(found.hasWardrobeMirror || rule.hasDoubleCatoptricRay),
+        hasDoubleCatoptricRay: rule.hasDoubleCatoptricRay,
+        wardrobeAngle: Number.isFinite(found.wardrobeAngle) ? -found.wardrobeAngle : -0.48,
+        poseStep: Number.isFinite(found.poseStep) ? found.poseStep : 1,
+        actIntensity: Number.isFinite(found.actIntensity) ? found.actIntensity : 0.5,
+        crimsonFlow: Number.isFinite(found.crimsonFlow) ? found.crimsonFlow : (rule.id === "crimson_vein_corridor" ? 0.88 : 0),
+        erectWeight: rule.erectWeight,
+        invertedWeight: rule.invertedWeight,
+        asymmetryDelta: rule.asymmetryDelta,
+        verdict: rule.verdict,
+        isSymmetricalEqual: false,
+        mutualLove: 0,
+        gazeX: gx,
+        gazeY: gy,
+        gazeTwinY: gyTwin,
+        note: rule.note
+      });
+    }
+    return out;
+  }
+
+  function createMirrorTwin(opts) {
+    var options = opts || {};
+    var waterlineRatio = clamp(options.waterlineRatio || 0.5, 0.25, 0.75);
+    var audio = createCanonAudio({ muted: Boolean(options.muted) });
+    var playOnIngest = options.playOnIngest !== false;
+
+    var st = {
+      width: Math.max(320, Number(options.width) || 1280),
+      height: Math.max(320, Number(options.height) || 800),
+      waterlineY: 0,
+      limpidity: clamp(options.limpidity !== undefined ? options.limpidity : 0.94, 0.70, 1.0),
+      activeChamberId: "traveler_parapet",
+      hoveredChamberId: null,
+      eyeLockStrength: 0.96,
+      lovelessTension: 0.94,
+      mutualLove: 0,
+      reconciliationAttempts: 0,
+      ingestedActCount: 0,
+      phase: 0,
+      twinPulse: 0,
+      reconcileFlash: 0,
+      reducedMotion: Boolean(options.reducedMotion),
+      lastPacket: null,
+      lastCanon: null,
+      twinChambers: []
+    };
+    st.waterlineY = Number.isFinite(options.waterlineY)
+      ? Math.round(options.waterlineY)
+      : Math.round(st.height * waterlineRatio);
+    st.twinChambers = buildTwinChambersFromPacket(null, st.width, st.height, st.waterlineY);
+
+    function syncPacketGeometry(packet) {
+      if (!packet || typeof packet !== "object") return;
+      st.lastPacket = packet;
+      if (Number.isFinite(packet.width) && packet.width > 0) st.width = Math.round(packet.width);
+      if (Number.isFinite(packet.height) && packet.height > 0) st.height = Math.round(packet.height);
+      if (Number.isFinite(packet.waterlineY) && packet.waterlineY > 0) {
+        st.waterlineY = Math.round(packet.waterlineY);
+      }
+      if (packet.activeChamberId && VALUE_LEDGER_RULES[packet.activeChamberId]) {
+        st.activeChamberId = packet.activeChamberId;
+      }
+      st.twinChambers = buildTwinChambersFromPacket(packet, st.width, st.height, st.waterlineY);
+    }
+
+    function setViewport(width, height, waterlineYOrObj) {
+      if (width && typeof width === "object") {
+        var vo = width;
+        if (Number.isFinite(vo.width) && vo.width > 0) st.width = Math.round(vo.width);
+        if (Number.isFinite(vo.height) && vo.height > 0) st.height = Math.round(vo.height);
+        st.waterlineY = Number.isFinite(vo.waterlineY)
+          ? Math.round(vo.waterlineY)
+          : Math.round(st.height * waterlineRatio);
+      } else {
+        if (Number.isFinite(width) && width > 0) st.width = Math.round(width);
+        if (Number.isFinite(height) && height > 0) st.height = Math.round(height);
+        st.waterlineY = Number.isFinite(waterlineYOrObj)
+          ? Math.round(waterlineYOrObj)
+          : Math.round(st.height * waterlineRatio);
+      }
+      st.twinChambers = buildTwinChambersFromPacket(st.lastPacket, st.width, st.height, st.waterlineY);
+      return { width: st.width, height: st.height, waterlineY: st.waterlineY };
+    }
+
+    function getLedgerState(chamberId) {
+      var rule = resolveChamberRule(chamberId || st.activeChamberId);
+      var byChamberId = {};
+      var entries = st.twinChambers.map(function (tc) {
+        var item = {
+          id: tc.id,
+          chamberId: tc.id,
+          index: tc.index,
+          key: tc.key,
+          stoneId: tc.stoneId,
+          title: tc.title,
+          invertedTitle: tc.invertedTitle,
+          erectWeight: tc.erectWeight,
+          invertedWeight: tc.invertedWeight,
+          asymmetryDelta: tc.asymmetryDelta,
+          verdict: tc.verdict,
+          isSymmetricalEqual: false,
+          mutualLove: 0,
+          hasDoubleCatoptricRay: tc.hasDoubleCatoptricRay,
+          note: tc.note
+        };
+        byChamberId[tc.id] = item;
+        return item;
+      });
+      var activeEntry = byChamberId[rule.id] || entries[0];
+      return {
+        activeChamberId: rule.id,
+        chamberId: activeEntry.id,
+        index: activeEntry.index,
+        stoneId: activeEntry.stoneId,
+        title: activeEntry.title,
+        invertedTitle: activeEntry.invertedTitle,
+        erectWeight: activeEntry.erectWeight,
+        invertedWeight: activeEntry.invertedWeight,
+        asymmetryDelta: activeEntry.asymmetryDelta,
+        verdict: activeEntry.verdict,
+        isSymmetricalEqual: false,
+        allAsymmetric: true,
+        deniedCount: 2,
+        increasedCount: 5,
+        mutualLove: 0,
+        eyeLockStrength: st.eyeLockStrength,
+        lovelessTension: st.lovelessTension,
+        limpidity: st.limpidity,
+        chanceMomentsOccurred: 0,
+        reconciliationAttempts: st.reconciliationAttempts,
+        ingestedActCount: st.ingestedActCount,
+        note: activeEntry.note,
+        innerArchNote: "The two Valdradas live for each other, their eyes interlocked; but there is no love between them.",
+        activeEntry: activeEntry,
+        chambers: entries,
+        entries: entries,
+        byChamberId: byChamberId
+      };
+    }
+
+    function ingestAct(actOrPacket, maybePacket) {
+      if (maybePacket && typeof maybePacket === "object") {
+        syncPacketGeometry(maybePacket);
+      } else if (actOrPacket && typeof actOrPacket === "object" && Array.isArray(actOrPacket.chambers)) {
+        syncPacketGeometry(actOrPacket);
+      }
+      var rule = resolveChamberRule(
+        actOrPacket && actOrPacket.lastAct ? actOrPacket.lastAct : actOrPacket
+      );
+      st.activeChamberId = rule.id;
+      st.ingestedActCount += 1;
+      st.twinPulse = st.reducedMotion ? 0.35 : 1.0;
+      var silent = Boolean(actOrPacket && typeof actOrPacket === "object" && actOrPacket.silent);
+      if (playOnIngest && !silent) {
+        st.lastCanon = audio.playInvertedCanon(rule.id, false);
+      }
+      return getLedgerState(rule.id);
+    }
+
+    function step(dt, mirrorPacket) {
+      var realPacket = mirrorPacket;
+      var numDt = dt;
+      if (dt && typeof dt === "object") {
+        realPacket = dt;
+        numDt = 0.016;
+      }
+      if (realPacket) syncPacketGeometry(realPacket);
+      var sec = Number.isFinite(numDt) ? (numDt > 2 ? numDt / 1000 : numDt) : 0.016;
+      sec = clamp(sec, 0, 0.1);
+      if (!st.reducedMotion) {
+        st.phase += sec * 1.35;
+      }
+      st.twinPulse = Math.max(0, st.twinPulse - sec * 2.1);
+      st.reconcileFlash = Math.max(0, st.reconcileFlash - sec * 1.5);
+    }
+
+    function render(ctx, mirrorPacket) {
+      if (!ctx) return;
+      if (mirrorPacket) syncPacketGeometry(mirrorPacket);
+      var w = st.width;
+      var h = st.height;
+      var wlY = clamp(st.waterlineY, 1, h - 1);
+      var packet = st.lastPacket || synthesizeFallbackPacket(w, h, wlY, st.activeChamberId);
+      if (!st.lastPacket) {
+        st.twinChambers = buildTwinChambersFromPacket(packet, w, h, wlY);
+      }
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(0, wlY, w, Math.max(1, h - wlY));
+      ctx.clip();
+
+      drawAbyssalWaterPlanes(ctx, w, h, wlY, st.limpidity, st.phase);
+      drawInvertedCliffAndTiers(ctx, packet, w, h, wlY, st.limpidity);
+
+      for (var i = 0; i < st.twinChambers.length; i++) {
+        var tc = st.twinChambers[i];
+        drawInvertedChamber(
+          ctx,
+          tc,
+          st.limpidity,
+          st.phase,
+          tc.id === st.activeChamberId,
+          tc.id === st.hoveredChamberId,
+          st.twinPulse
+        );
+      }
+
+      drawEyeFilamentsAndDatum(ctx, st.twinChambers, w, h, wlY, st);
+      ctx.restore();
+    }
+
+    function inspectAt(x, y, mirrorPacket) {
+      if (mirrorPacket) syncPacketGeometry(mirrorPacket);
+      if (!Number.isFinite(x) || !Number.isFinite(y) || y < st.waterlineY || y > st.height) {
+        st.hoveredChamberId = null;
+        return null;
+      }
+      for (var i = st.twinChambers.length - 1; i >= 0; i--) {
+        var tc = st.twinChambers[i];
+        if (x >= tc.x && x <= tc.x + tc.w && y >= tc.y && y <= tc.y + tc.h) {
+          st.hoveredChamberId = tc.id;
+          return {
+            hit: true,
+            region: "inverted_chamber",
+            id: tc.id,
+            chamberId: tc.id,
+            index: tc.index,
+            stoneId: tc.stoneId,
+            title: tc.title,
+            invertedTitle: tc.invertedTitle,
+            erectWeight: tc.erectWeight,
+            invertedWeight: tc.invertedWeight,
+            asymmetryDelta: tc.asymmetryDelta,
+            verdict: tc.verdict,
+            isSymmetricalEqual: false,
+            mutualLove: 0,
+            eyeLockStrength: st.eyeLockStrength,
+            lovelessTension: st.lovelessTension,
+            hasDoubleCatoptricRay: tc.hasDoubleCatoptricRay,
+            note: tc.note,
+            rect: { x: tc.x, y: tc.y, w: tc.w, h: tc.h },
+            erectRect: tc.erectRect,
+            gazeX: tc.gazeX,
+            gazeY: tc.gazeY,
+            gazeTwinY: tc.gazeTwinY
+          };
+        }
+      }
+      for (var k = 0; k < st.twinChambers.length; k++) {
+        var fc = st.twinChambers[k];
+        if (Math.abs(x - fc.gazeX) <= 7 && y >= st.waterlineY && y <= fc.gazeTwinY + 6) {
+          st.hoveredChamberId = fc.id;
+          return {
+            hit: true,
+            region: "interlocked_eye_filament",
+            id: fc.id,
+            chamberId: fc.id,
+            index: fc.index,
+            stoneId: fc.stoneId,
+            title: fc.title,
+            invertedTitle: fc.invertedTitle,
+            erectWeight: fc.erectWeight,
+            invertedWeight: fc.invertedWeight,
+            asymmetryDelta: fc.asymmetryDelta,
+            verdict: fc.verdict,
+            isSymmetricalEqual: false,
+            mutualLove: 0,
+            eyeLockStrength: st.eyeLockStrength,
+            lovelessTension: st.lovelessTension,
+            note: "The two Valdradas live for each other, their eyes interlocked; but there is no love between them.",
+            rect: { x: fc.x, y: fc.y, w: fc.w, h: fc.h }
+          };
+        }
+      }
+      st.hoveredChamberId = null;
+      return null;
+    }
+
+    function setLimpidity(val) {
+      st.limpidity = +clamp(val, 0.70, 1.0).toFixed(3);
+      return st.limpidity;
+    }
+
+    function getLimpidity() {
+      return st.limpidity;
+    }
+
+    function attemptWarmthReconciliation() {
+      st.reconciliationAttempts += 1;
+      st.mutualLove = 0;
+      st.eyeLockStrength = 1.0;
+      st.lovelessTension = 0.97;
+      st.reconcileFlash = st.reducedMotion ? 0.4 : 1.0;
+      audio.playLovelessLockDyad();
+      return {
+        reconciled: false,
+        mutualLove: 0,
+        eyeLockStrength: 1.0,
+        lovelessTension: 0.97,
+        note: "The two Valdradas live for each other, their eyes interlocked; but there is no love between them."
+      };
+    }
+
+    function playInvertedCanon(chamberIdOrAct) {
+      var res = audio.playInvertedCanon(chamberIdOrAct || st.activeChamberId, true);
+      st.lastCanon = res;
+      return res;
+    }
+
+    function setReducedMotion(bool) {
+      st.reducedMotion = Boolean(bool);
+      if (st.reducedMotion) {
+        st.twinPulse = 0;
+        st.reconcileFlash = 0;
+      }
+      return st.reducedMotion;
+    }
+
+    function getState() {
+      var ledger = getLedgerState(st.activeChamberId);
+      return {
+        width: st.width,
+        height: st.height,
+        waterlineY: st.waterlineY,
+        limpidity: st.limpidity,
+        muted: audio.isMuted(),
+        reducedMotion: st.reducedMotion,
+        activeChamberId: st.activeChamberId,
+        hoveredChamberId: st.hoveredChamberId,
+        isSymmetricalEqual: false,
+        mutualLove: 0,
+        eyeLockStrength: st.eyeLockStrength,
+        lovelessTension: st.lovelessTension,
+        reconciliationAttempts: st.reconciliationAttempts,
+        ingestedActCount: st.ingestedActCount,
+        chanceMomentsOccurred: 0,
+        lastCanon: st.lastCanon,
+        twinChambers: st.twinChambers.slice(),
+        ledger: ledger
+      };
+    }
+
+    function reset() {
+      st.limpidity = 0.94;
+      st.activeChamberId = "traveler_parapet";
+      st.hoveredChamberId = null;
+      st.eyeLockStrength = 0.96;
+      st.lovelessTension = 0.94;
+      st.mutualLove = 0;
+      st.reconciliationAttempts = 0;
+      st.ingestedActCount = 0;
+      st.phase = 0;
+      st.twinPulse = 0;
+      st.reconcileFlash = 0;
+      st.lastCanon = null;
+      st.twinChambers = buildTwinChambersFromPacket(st.lastPacket, st.width, st.height, st.waterlineY);
+      return getState();
+    }
+
+    function destroy() {
+      audio.destroy();
+      st.lastPacket = null;
+      st.twinChambers = [];
+    }
+
+    return {
+      setViewport: setViewport,
+      ingestAct: ingestAct,
+      step: step,
+      render: render,
+      inspectAt: inspectAt,
+      getLedgerState: getLedgerState,
+      setLimpidity: setLimpidity,
+      getLimpidity: getLimpidity,
+      attemptWarmthReconciliation: attemptWarmthReconciliation,
+      unlockAudio: audio.unlockAudio,
+      setMuted: audio.setMuted,
+      toggleMute: audio.toggleMute,
+      isMuted: audio.isMuted,
+      playInvertedCanon: playInvertedCanon,
+      setReducedMotion: setReducedMotion,
+      getState: getState,
+      reset: reset,
+      destroy: destroy
+    };
+  }
+
+  var publicApi = Object.freeze({
+    PALETTE: PALETTE,
+    VALUE_LEDGER_RULES: VALUE_LEDGER_RULES,
+    createMirrorTwin: createMirrorTwin
+  });
+
+  if (root) {
+    root.ValdradaMirrorLakeTwin = publicApi;
+  }
+  if (typeof globalThis !== "undefined") {
+    globalThis.ValdradaMirrorLakeTwin = publicApi;
+  }
+})(typeof globalThis !== "undefined" ? globalThis : (typeof window !== "undefined" ? window : this));
+
+</script>
+<script id="vld-catoptric-controller">
+(function () {
+  "use strict";
+
+  var STONE_LEXICON = {
+    railed_parapet_high_streets: {
+      code: "STONE III • RAILED PARAPETS",
+      quote: "High streets whose railed parapets look out over the water so the traveler arriving sees two cities: one erect above the lake, one reflected upside-down.",
+      erectRole: "Cantilevered high-street walkways with wrought-iron railed parapets where the arriving traveler leans over the water.",
+      invertedRole: "Inverted iron balustrades answering point-by-point below while stripping away the traveler's proud certainty (0.84 above to 0.19 below, DENIED)."
+    },
+    illuminated_cutaway_interiors: {
+      code: "STONE IV • ILLUMINATED INTERIORS",
+      quote: "The insides of illuminated rooms: ceilings and floors, the perspective of hallways, paced without a single moment of chance or forgetfulness.",
+      erectRole: "Section-cutaways exposing oil-lit coffered ceilings, tessellated floors, and receding one-point hallway perspectives.",
+      invertedRole: "Sunken coffered vaults and suspended tile floors where every measured footstep rings in chilled phase-inverted canon (0.34 to 0.89, INCREASED)."
+    },
+    wardrobe_catoptric_mirrors: {
+      code: "STONE V • WARDROBE MIRRORS",
+      quote: "Even the mirrors of wardrobes inside upper verandas are repeated in the limpid abyss below.",
+      erectRole: "Hinged beveled wardrobe mirror inside an upper dressing veranda angled toward the open loggia.",
+      invertedRole: "Recursive catoptric reflection (mirror inside room reflected again in the lake) exposing the unseen dorsal profile in cyan silverpoint (0.31 to 0.91, INCREASED)."
+    },
+    stacked_veranda_houses: {
+      code: "STONE II • STACKED VERANDAS",
+      quote: "Houses all verandas one above the other, rising step-over-step up the cliffside with zero blind facades.",
+      erectRole: "Open-arcaded veranda loggia where ceremonial golden scales are raised in calculated civic display.",
+      invertedRole: "Upside-down arcaded tiers hanging in chilled clarity, mocking civic pomp as hollow spectral vanity (0.91 to 0.14, DENIED)."
+    },
+    ancient_lakeshore_foundation: {
+      code: "STONE I • ANCIENT LAKESHORE",
+      quote: "Built by the ancients on the shores of a lake, anchored directly upon stepped limestone footings at the water's edge.",
+      erectRole: "Low cliffshore balcony socketed into stepped ancient limestone-and-slate footings where a hand brushes weathered stone.",
+      invertedRole: "Plunges into the obsidian abyss as a sheer escarpment; a fleeting touch above (0.18) freezes into monumental permanence below (0.94, INCREASED)."
+    },
+    twining_naked_lovers: {
+      code: "STONE VI • TWINING LOVERS",
+      quote: "Lovers twist their naked bodies skin-to-skin, seeking positions that yield to the eye the most pleasing forms and contours, or where light best gilds the skin.",
+      erectRole: "Upper alcove silhouettes twining beneath warm amber light, modulating posture self-consciously for the mirror's eye.",
+      invertedRole: "Chilled sculptural twin contours possessing the special dignity of images (0.44 carnal warmth to 0.96 cold iconic permanence, INCREASED)."
+    },
+    dagger_black_neck_veins: {
+      code: "STONE VII • BLACK NECK VEINS",
+      quote: "Murderers push the knife into the black veins of the neck, and more clotted blood pours out the more the blade presses in that slip between the tendons.",
+      erectRole: "Stark chiaroscuro inner corridor where a steel blade presses between neck tendons and clotted blood spills across stone.",
+      invertedRole: "What matters is not the hot spasm above (0.52) but the clear, chilled, razor-etched murder in the obsidian mirror below (0.98, INCREASED)."
+    }
+  };
+
+  var TIER_ROMAN = ["TIER I • LAKESHORE", "TIER II • PARAPET", "TIER III • LOGGIA", "TIER IV • CROWN"];
+  var LIMPIDITY_CYCLE = [0.96, 0.84, 1.00];
+  var limpidityIdx = -1;
+
+  var codexRoot = document.getElementById("vld-codex-root");
+  var canvasWell = document.getElementById("vld-canvas-well");
+  var canvas = document.getElementById("vld-catoptric-canvas");
+  var ctx = canvas.getContext("2d");
+  var waterlineEl = document.getElementById("vld-waterline");
+  var waterlinePill = document.getElementById("vld-waterline-pill");
+  var wardrobeBadge = document.getElementById("vld-wardrobe-badge");
+  var hoverErectEl = document.getElementById("vld-hover-erect");
+  var hoverInvertedEl = document.getElementById("vld-hover-inverted");
+
+  var ledgerStoneIdEl = document.getElementById("vld-ledger-stone-id");
+  var ledgerTierEl = document.getElementById("vld-ledger-tier");
+  var ledgerTitleEl = document.getElementById("vld-ledger-title");
+  var erectWeightEl = document.getElementById("vld-erect-weight");
+  var erectBarEl = document.getElementById("vld-erect-bar");
+  var erectRoleEl = document.getElementById("vld-erect-role");
+  var invertedWeightEl = document.getElementById("vld-inverted-weight");
+  var invertedBarEl = document.getElementById("vld-inverted-bar");
+  var invertedRoleEl = document.getElementById("vld-inverted-role");
+  var verdictChipEl = document.getElementById("vld-verdict-chip");
+  var verdictLabelEl = document.getElementById("vld-verdict-label");
+  var verdictDeltaEl = document.getElementById("vld-verdict-delta");
+  var stoneExcerptEl = document.getElementById("vld-stone-excerpt");
+  var causalProofEl = document.getElementById("vld-causal-proof");
+
+  var metricChanceEl = document.getElementById("vld-metric-chance");
+  var metricLoveEl = document.getElementById("vld-metric-love");
+  var metricInterceptEl = document.getElementById("vld-metric-intercept");
+  var metricEyeLockEl = document.getElementById("vld-metric-eyelock");
+
+  var limpidityLabelEl = document.getElementById("vld-limpidity-label");
+  var muteSwitchEl = document.getElementById("vld-cmd-mute");
+  var muteLabelEl = document.getElementById("vld-mute-label");
+  var motionSwitchEl = document.getElementById("vld-cmd-motion");
+  var motionLabelEl = document.getElementById("vld-motion-label");
+
+  var plateDrawer = document.getElementById("vld-plate-drawer");
+  var plateViewport = document.getElementById("vld-plate-viewport");
+  var mapCard = document.getElementById("vld-map-card");
+  var cityCard = document.getElementById("vld-city-card");
+  var mapImg = document.getElementById("vld-map-img");
+  var cityImg = document.getElementById("vld-city-img");
+  var missingPlaque = document.getElementById("vld-missing-plaque");
+  var loupeBtn = document.getElementById("vld-loupe-btn");
+  var loupeLabel = document.getElementById("vld-loupe-label");
+
+  var stoneButtons = Array.prototype.slice.call(document.querySelectorAll("veranda-stone-trigger[data-chamber-id]"));
+  var plateTabs = Array.prototype.slice.call(document.querySelectorAll("plate-tab-trigger[data-plate-mode]"));
+  var cmdSwitches = Array.prototype.slice.call(document.querySelectorAll("catoptric-action-switch[data-vld-cmd]"));
+
+  var mqlReduced = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
+  var initialReduced = Boolean(mqlReduced && mqlReduced.matches);
+
+  var cssWidth = 720;
+  var cssHeight = 640;
+  var dpr = 1;
+  var platesOpen = false;
+  var plateMode = "diptych";
+  var loupeZoom = 1;
+  var lastChanceProof = null;
+  var lastWarmthProof = null;
+
+  var verandas = globalThis.ValdradaStackedVerandas.createVerandas({
+    width: cssWidth,
+    height: cssHeight,
+    waterlineRatio: 0.5,
+    reducedMotion: initialReduced,
+    initialChamberId: "traveler_parapet"
+  });
+
+  var mirrorTwin = globalThis.ValdradaMirrorLakeTwin.createMirrorTwin({
+    width: cssWidth,
+    height: cssHeight,
+    waterlineRatio: 0.5,
+    reducedMotion: initialReduced
+  });
+
+  function resolveChamberId(target) {
+    var specs = globalThis.ValdradaStackedVerandas.CHAMBER_SPECS;
+    if (typeof target === "string") {
+      var trimmed = target.trim();
+      for (var i = 0; i < specs.length; i++) {
+        if (specs[i].id === trimmed || specs[i].stoneId === trimmed) {
+          return specs[i].id;
+        }
+      }
+      var parsed = parseInt(trimmed, 10);
+      if (isFinite(parsed) && parsed >= 1 && parsed <= 7) {
+        return specs[parsed - 1].id;
+      }
+    } else if (typeof target === "number" && isFinite(target)) {
+      var idx = Math.round(target);
+      if (idx >= 0 && idx < specs.length) {
+        return specs[idx].id;
+      }
+      if (idx === 7) {
+        return specs[6].id;
+      }
+    } else if (target && typeof target === "object") {
+      if (target.chamberId || target.id) {
+        return resolveChamberId(target.chamberId || target.id);
+      }
+    }
+    return verandas.getState().activeChamberId || "traveler_parapet";
+  }
+
+  function syncViewport() {
+    var rect = canvasWell.getBoundingClientRect();
+    cssWidth = Math.max(240, Math.floor(rect.width || 720));
+    cssHeight = Math.max(200, Math.floor(rect.height || 520));
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var targetW = Math.round(cssWidth * dpr);
+    var targetH = Math.round(cssHeight * dpr);
+    if (canvas.width !== targetW || canvas.height !== targetH) {
+      canvas.width = targetW;
+      canvas.height = targetH;
+    }
+    var vp = verandas.setViewport(cssWidth, cssHeight, 0.5);
+    mirrorTwin.setViewport(cssWidth, cssHeight, vp.waterlineY);
+    waterlineEl.style.top = vp.waterlineY + "px";
+  }
+
+  function renderFrame() {
+    if (!ctx) {
+      return;
+    }
+    ctx.save();
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, cssWidth, cssHeight);
+    var packet = verandas.getMirrorPacket();
+    verandas.render(ctx);
+    mirrorTwin.render(ctx, packet);
+    ctx.restore();
+  }
+
+  function syncLedgerDom() {
+    var vState = verandas.getState();
+    var activeId = vState.activeChamberId;
+    var ledger = mirrorTwin.getLedgerState(activeId);
+    var mState = mirrorTwin.getState();
+    var activeCh = vState.activeChamber || vState.chambers[0];
+    var stoneMeta = STONE_LEXICON[ledger.stoneId] || STONE_LEXICON.railed_parapet_high_streets;
+
+    for (var i = 0; i < stoneButtons.length; i++) {
+      var btn = stoneButtons[i];
+      var isAct = btn.getAttribute("data-chamber-id") === activeId;
+      btn.classList.toggle("vld-is-active", isAct);
+      btn.setAttribute("aria-pressed", isAct ? "true" : "false");
+    }
+
+    ledgerStoneIdEl.textContent = stoneMeta.code;
+    ledgerTierEl.textContent = TIER_ROMAN[activeCh.tierIndex] || "TIER I";
+    ledgerTitleEl.textContent = ledger.title;
+
+    erectWeightEl.textContent = ledger.erectWeight.toFixed(2);
+    erectBarEl.style.width = Math.round(ledger.erectWeight * 100) + "%";
+    erectRoleEl.textContent = stoneMeta.erectRole;
+
+    invertedWeightEl.textContent = ledger.invertedWeight.toFixed(2);
+    invertedBarEl.style.width = Math.round(ledger.invertedWeight * 100) + "%";
+    invertedBarEl.classList.toggle("vld-fill-inverted", ledger.verdict === "INCREASED");
+    invertedBarEl.classList.toggle("vld-fill-denied", ledger.verdict === "DENIED");
+    invertedRoleEl.textContent = stoneMeta.invertedRole;
+
+    var isInc = ledger.verdict === "INCREASED";
+    verdictChipEl.classList.toggle("vld-verdict-increased", isInc);
+    verdictChipEl.classList.toggle("vld-verdict-denied", !isInc);
+    verdictLabelEl.textContent = "MIRROR VERDICT: " + ledger.verdict;
+    var sign = ledger.asymmetryDelta >= 0 ? "+" : "";
+    verdictDeltaEl.textContent = "Δ " + sign + ledger.asymmetryDelta.toFixed(2) + " • SYMMETRY: FALSE";
+
+    stoneExcerptEl.textContent = stoneMeta.quote;
+
+    var showWardrobe = activeId === "wardrobe_chamber";
+    wardrobeBadge.hidden = !showWardrobe;
+    if (showWardrobe) {
+      wardrobeBadge.removeAttribute("hidden");
+    } else {
+      wardrobeBadge.setAttribute("hidden", "");
+    }
+
+    metricChanceEl.textContent = String(vState.chanceMomentsOccurred);
+    metricLoveEl.textContent = Number(mState.mutualLove).toFixed(2);
+    metricInterceptEl.textContent = String(vState.interceptCount);
+    metricEyeLockEl.textContent = Number(mState.eyeLockStrength).toFixed(2);
+
+    waterlinePill.textContent =
+      "EYES INTERLOCKED • MUTUAL LOVE: " +
+      Number(mState.mutualLove).toFixed(2) +
+      " • SYMMETRY: FALSE";
+
+    limpidityLabelEl.textContent = "Limpidity " + Number(mState.limpidity).toFixed(2);
+    var isMuted = mirrorTwin.isMuted();
+    muteLabelEl.textContent = isMuted ? "Canon Muted" : "Canon On";
+    muteSwitchEl.classList.toggle("vld-switch-lit", !isMuted);
+
+    var isRed = Boolean(vState.reducedMotion);
+    motionLabelEl.textContent = isRed ? "Motion Still" : "Motion Full";
+    motionSwitchEl.classList.toggle("vld-switch-lit", isRed);
+    codexRoot.setAttribute("data-reduced-motion", isRed ? "true" : "false");
+  }
+
+  function triggerAct(target, fromUserGesture) {
+    if (fromUserGesture) {
+      mirrorTwin.unlockAudio();
+    }
+    var cid = resolveChamberId(target);
+    var act = verandas.triggerAct(cid);
+    var pkt = verandas.getMirrorPacket();
+    var ledger = mirrorTwin.ingestAct(act, pkt);
+    causalProofEl.textContent =
+      "Enacted [" + (act.index + 1) + "] " + act.gestureLabel +
+      " -> Twin " + ledger.verdict + " (" + ledger.erectWeight.toFixed(2) + " -> " + ledger.invertedWeight.toFixed(2) + ")";
+    syncLedgerDom();
+    renderFrame();
+    return ledger;
+  }
+
+  function attemptChanceMoment() {
+    mirrorTwin.unlockAudio();
+    var res = verandas.attemptChanceMoment();
+    lastChanceProof = res;
+    causalProofEl.textContent =
+      "INTERCEPTED (#" + res.interceptCount + "): chanceMomentsOccurred = " +
+      res.chanceMomentsOccurred + " • Self-consciousness = 1.00";
+    syncLedgerDom();
+    renderFrame();
+    return res;
+  }
+
+  function attemptWarmthReconciliation() {
+    mirrorTwin.unlockAudio();
+    var res = mirrorTwin.attemptWarmthReconciliation();
+    lastWarmthProof = res;
+    causalProofEl.textContent =
+      "RECONCILIATION DENIED: mutualLove = 0.00 • eyeLock = " +
+      res.eyeLockStrength.toFixed(2) + " • No love between them";
+    syncLedgerDom();
+    renderFrame();
+    return res;
+  }
+
+  function setLimpidity(val) {
+    var nextVal = val;
+    if (typeof nextVal !== "number" || !isFinite(nextVal)) {
+      limpidityIdx = (limpidityIdx + 1) % LIMPIDITY_CYCLE.length;
+      nextVal = LIMPIDITY_CYCLE[limpidityIdx];
+    }
+    var applied = mirrorTwin.setLimpidity(nextVal);
+    causalProofEl.textContent = "Lake specular limpidity set to " + applied.toFixed(2) + " • Chilled reflection razor-clear";
+    syncLedgerDom();
+    renderFrame();
+    return applied;
+  }
+
+  function setPlateMode(mode) {
+    plateMode = (mode === "map" || mode === "elevation") ? mode : "diptych";
+    for (var i = 0; i < plateTabs.length; i++) {
+      var tab = plateTabs[i];
+      var active = tab.getAttribute("data-plate-mode") === plateMode;
+      tab.classList.toggle("vld-is-active", active);
+      tab.setAttribute("aria-selected", active ? "true" : "false");
+    }
+    var single = plateMode !== "diptych";
+    plateViewport.classList.toggle("vld-mode-single", single);
+    mapCard.hidden = plateMode === "elevation";
+    cityCard.hidden = plateMode === "map";
+    if (mapCard.hidden) { mapCard.setAttribute("hidden", ""); } else { mapCard.removeAttribute("hidden"); }
+    if (cityCard.hidden) { cityCard.setAttribute("hidden", ""); } else { cityCard.removeAttribute("hidden"); }
+    return plateMode;
+  }
+
+  function openPlates(modeOpt) {
+    platesOpen = true;
+    if (typeof modeOpt === "string") {
+      setPlateMode(modeOpt);
+    }
+    plateDrawer.hidden = false;
+    plateDrawer.removeAttribute("hidden");
+    return getState();
+  }
+
+  function closePlates() {
+    platesOpen = false;
+    plateDrawer.hidden = true;
+    plateDrawer.setAttribute("hidden", "");
+    return getState();
+  }
+
+  function togglePlates() {
+    return platesOpen ? closePlates() : openPlates();
+  }
+
+  function toggleLoupe(forceBool) {
+    if (typeof forceBool === "boolean") {
+      loupeZoom = forceBool ? 2 : 1;
+    } else {
+      loupeZoom = loupeZoom === 2 ? 1 : 2;
+    }
+    var is2x = loupeZoom === 2;
+    plateViewport.classList.toggle("vld-loupe-2x", is2x);
+    loupeBtn.classList.toggle("vld-is-active", is2x);
+    loupeLabel.textContent = is2x ? "Loupe 2x" : "Loupe 1x";
+    return loupeZoom;
+  }
+
+  function toggleMute() {
+    mirrorTwin.unlockAudio();
+    var muted = mirrorTwin.toggleMute();
+    syncLedgerDom();
+    return muted;
+  }
+
+  function setReducedMotion(flag) {
+    var next = Boolean(flag);
+    verandas.setReducedMotion(next);
+    mirrorTwin.setReducedMotion(next);
+    syncLedgerDom();
+    renderFrame();
+    return next;
+  }
+
+  function reset() {
+    limpidityIdx = -1;
+    lastChanceProof = null;
+    lastWarmthProof = null;
+    var pkt = verandas.reset();
+    mirrorTwin.reset();
+    mirrorTwin.ingestAct({ id: pkt.activeChamberId, silent: true }, pkt);
+    hoverErectEl.textContent = "Sightline locked on lake surface";
+    hoverInvertedEl.textContent = "Canon Axis D4 (293.66 Hz) • Phase -1";
+    causalProofEl.textContent = "Zero chance or forgetfulness • Click chamber or press [1-7, C, W, L, P]";
+    syncLedgerDom();
+    renderFrame();
+    return getState();
+  }
+
+  function getState() {
+    var vState = verandas.getState();
+    var mState = mirrorTwin.getState();
+    var ledger = mirrorTwin.getLedgerState(vState.activeChamberId);
+    var mergedChambers = vState.chambers.map(function (ch) {
+      var rule = ledger.byChamberId[ch.id] || {};
+      return Object.assign({}, ch, {
+        invertedTitle: rule.invertedTitle || "",
+        invertedWeight: rule.invertedWeight,
+        asymmetryDelta: rule.asymmetryDelta,
+        verdict: rule.verdict,
+        isSymmetricalEqual: false,
+        mutualLove: 0
+      });
+    });
+    return {
+      cityId: "20_valdrada",
+      activeChamberId: vState.activeChamberId,
+      activeChamberIndex: ledger.index,
+      width: cssWidth,
+      height: cssHeight,
+      waterlineY: vState.waterlineY,
+      waterlineRatio: 0.5,
+      erectWeight: ledger.erectWeight,
+      invertedWeight: ledger.invertedWeight,
+      asymmetryDelta: ledger.asymmetryDelta,
+      verdict: ledger.verdict,
+      isSymmetricalEqual: false,
+      allAsymmetric: true,
+      chanceMomentsOccurred: 0,
+      interceptCount: vState.interceptCount,
+      selfConsciousness: 1.0,
+      mutualLove: 0,
+      eyesInterlocked: true,
+      eyeLockStrength: mState.eyeLockStrength,
+      lovelessTension: mState.lovelessTension,
+      limpidity: mState.limpidity,
+      muted: mState.muted,
+      reducedMotion: vState.reducedMotion,
+      platesOpen: platesOpen,
+      plateMode: plateMode,
+      loupeZoom: loupeZoom,
+      chambers: mergedChambers,
+      ledgerState: ledger,
+      verandaState: vState,
+      mirrorState: mState,
+      lastChanceProof: lastChanceProof,
+      lastWarmthProof: lastWarmthProof
+    };
+  }
+
+  function bindButton(el, fn) {
+    if (!el) {
+      return;
+    }
+    el.addEventListener("click", function (ev) {
+      ev.preventDefault();
+      fn(ev);
+    });
+    el.addEventListener("keydown", function (ev) {
+      if (ev.key === "Enter" || ev.key === " ") {
+        ev.preventDefault();
+        fn(ev);
+      }
+    });
+  }
+
+  for (var b = 0; b < stoneButtons.length; b++) {
+    (function (btn) {
+      bindButton(btn, function () {
+        triggerAct(btn.getAttribute("data-chamber-id"), true);
+      });
+    })(stoneButtons[b]);
+  }
+
+  for (var c = 0; c < cmdSwitches.length; c++) {
+    (function (sw) {
+      bindButton(sw, function () {
+        var cmd = sw.getAttribute("data-vld-cmd");
+        if (cmd === "chance") { attemptChanceMoment(); }
+        else if (cmd === "warmth") { attemptWarmthReconciliation(); }
+        else if (cmd === "limpidity") { setLimpidity(); }
+        else if (cmd === "mute") { toggleMute(); }
+        else if (cmd === "motion") { setReducedMotion(!verandas.getState().reducedMotion); }
+        else if (cmd === "reset") { reset(); }
+        else if (cmd === "plates") { togglePlates(); }
+      });
+    })(cmdSwitches[c]);
+  }
+
+  for (var t = 0; t < plateTabs.length; t++) {
+    (function (tab) {
+      bindButton(tab, function () {
+        setPlateMode(tab.getAttribute("data-plate-mode"));
+      });
+    })(plateTabs[t]);
+  }
+
+  bindButton(loupeBtn, function () { toggleLoupe(); });
+  bindButton(document.getElementById("vld-plate-close"), function () { closePlates(); });
+  plateDrawer.addEventListener("click", function (ev) {
+    if (ev.target === plateDrawer) {
+      closePlates();
+    }
+  });
+
+  plateViewport.addEventListener("pointermove", function (ev) {
+    if (loupeZoom !== 2) {
+      return;
+    }
+    var r = plateViewport.getBoundingClientRect();
+    var ox = Math.max(0, Math.min(100, ((ev.clientX - r.left) / Math.max(1, r.width)) * 100));
+    var oy = Math.max(0, Math.min(100, ((ev.clientY - r.top) / Math.max(1, r.height)) * 100));
+    mapImg.style.transformOrigin = ox.toFixed(1) + "% " + oy.toFixed(1) + "%";
+    cityImg.style.transformOrigin = ox.toFixed(1) + "% " + oy.toFixed(1) + "%";
+  });
+
+  var mapTriedSvg = false;
+  mapImg.addEventListener("error", function () {
+    if (!mapTriedSvg) {
+      mapTriedSvg = true;
+      mapImg.src = "map.svg";
+      return;
+    }
+    missingPlaque.hidden = false;
+    missingPlaque.removeAttribute("hidden");
+  });
+  cityImg.addEventListener("error", function () {
+    missingPlaque.hidden = false;
+    missingPlaque.removeAttribute("hidden");
+  });
+
+  function canvasCoords(ev) {
+    var r = canvas.getBoundingClientRect();
+    return {
+      x: (ev.clientX - r.left) * (cssWidth / Math.max(1, r.width)),
+      y: (ev.clientY - r.top) * (cssHeight / Math.max(1, r.height))
+    };
+  }
+
+  canvas.addEventListener("pointermove", function (ev) {
+    var pt = canvasCoords(ev);
+    var pkt = verandas.getMirrorPacket();
+    if (pt.y <= pkt.waterlineY) {
+      mirrorTwin.inspectAt(-1, -1, pkt);
+      var hitUp = verandas.inspectAt(pt.x, pt.y);
+      hoverErectEl.textContent = hitUp ? ("Inspect: " + hitUp.title) : "Sightline locked on lake surface";
+    } else {
+      var hitDown = mirrorTwin.inspectAt(pt.x, pt.y, pkt);
+      hoverInvertedEl.textContent = hitDown
+        ? (hitDown.invertedTitle + " (" + hitDown.verdict + ")")
+        : "Canon Axis D4 (293.66 Hz) • Phase -1";
+    }
+    if (verandas.getState().reducedMotion) {
+      renderFrame();
+    }
+  });
+
+  canvas.addEventListener("pointerdown", function (ev) {
+    var pt = canvasCoords(ev);
+    var pkt = verandas.getMirrorPacket();
+    var hit = pt.y <= pkt.waterlineY
+      ? verandas.inspectAt(pt.x, pt.y)
+      : mirrorTwin.inspectAt(pt.x, pt.y, pkt);
+    if (hit && (hit.chamberId || hit.id)) {
+      triggerAct(hit.chamberId || hit.id, true);
+    }
+  });
+
+  window.addEventListener("keydown", function (ev) {
+    if (ev.metaKey || ev.ctrlKey || ev.altKey) {
+      return;
+    }
+    var k = ev.key;
+    if (k === "Escape") {
+      if (platesOpen) { ev.preventDefault(); closePlates(); }
+      return;
+    }
+    if (k >= "1" && k <= "7") {
+      ev.preventDefault();
+      triggerAct(parseInt(k, 10) - 1, true);
+      return;
+    }
+    var low = k.toLowerCase();
+    if (low === "c") { ev.preventDefault(); attemptChanceMoment(); }
+    else if (low === "w") { ev.preventDefault(); attemptWarmthReconciliation(); }
+    else if (low === "l") { ev.preventDefault(); setLimpidity(); }
+    else if (low === "m") { ev.preventDefault(); toggleMute(); }
+    else if (low === "v") { ev.preventDefault(); setReducedMotion(!verandas.getState().reducedMotion); }
+    else if (low === "r") { ev.preventDefault(); reset(); }
+    else if (low === "p") { ev.preventDefault(); togglePlates(); }
+    else if (low === "z") { ev.preventDefault(); toggleLoupe(); }
+  });
+
+  if (mqlReduced && typeof mqlReduced.addEventListener === "function") {
+    mqlReduced.addEventListener("change", function (ev) {
+      setReducedMotion(Boolean(ev.matches));
+    });
+  }
+
+  window.addEventListener("resize", function () {
+    syncViewport();
+    var pkt = verandas.getMirrorPacket();
+    mirrorTwin.ingestAct({ id: pkt.activeChamberId, silent: true }, pkt);
+    renderFrame();
+  });
+
+  syncViewport();
+  var bootPkt = verandas.getMirrorPacket();
+  mirrorTwin.ingestAct({ id: bootPkt.activeChamberId, silent: true }, bootPkt);
+  syncLedgerDom();
+  renderFrame();
+
+  var prevTs = performance.now();
+  function tick(ts) {
+    var dt = Math.min(0.05, Math.max(0.001, (ts - prevTs) / 1000));
+    prevTs = ts;
+    var pkt = verandas.step(dt);
+    mirrorTwin.step(dt, pkt);
+    if (!verandas.getState().reducedMotion) {
+      renderFrame();
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+
+  window.__VALDRADA__ = {
+    verandas: verandas,
+    mirrorTwin: mirrorTwin,
+    getState: getState,
+    triggerAct: function (target) { return triggerAct(target, false); },
+    attemptChanceMoment: attemptChanceMoment,
+    attemptWarmthReconciliation: attemptWarmthReconciliation,
+    setLimpidity: setLimpidity,
+    openPlates: openPlates,
+    closePlates: closePlates,
+    setPlateMode: setPlateMode,
+    toggleLoupe: toggleLoupe,
+    toggleMute: toggleMute,
+    setReducedMotion: setReducedMotion,
+    reset: reset
+  };
+})();
+</script>
+</body>
+</html>

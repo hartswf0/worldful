@@ -1,0 +1,3149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AGLAURA — Palimpsest of the Spoken &amp; Ground Cities</title>
+<style>
+[hidden] { display: none !important; }
+
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+  --agl-void: #171514;
+  --agl-gall: #252220;
+  --agl-fog: #7d8082;
+  --agl-plaster: #c8c6be;
+  --agl-parchment: #ebe5d5;
+  --agl-rubric: #8f3d2e;
+  --agl-gold: #d8a648;
+  --agl-flare: #f6de92;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--agl-void);
+  color: var(--agl-parchment);
+  font-family: Georgia, "Times New Roman", serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+aglaura-palimpsest, aglaura-rubric-masthead, ontological-solidity-scales,
+ground-glimpse-aperture, hour-dial-ribbon, ground-chalk-canvas-well,
+street-opening-index, epiphany-silence-meter, proverbial-discourse-cage,
+spoken-lattice-stage, proverb-canon-tablet, inversion-gloss-ledger,
+word-imprisonment-lock, utterance-trial-desk, imprisoned-syllable-clamp,
+lost-recollection-colophon, aglaura-plate-drawer, plate-tab-strip,
+plate-loupe-stage, plate-pending-plaque, palimpsest-diptych-grid,
+spoken-stratum-column, codex-title-seal, codex-rubric-heading,
+codex-epigraph-line, solidity-scale-gauge, solidity-meter-bar,
+solidity-meter-fill, masthead-command-rack, stratum-banner-strip,
+silence-dwell-track, silence-dwell-fill, epiphany-prose-line,
+inversion-gloss-row, gloss-prose-body, recollection-scar-entry,
+plate-drawer-frame, plate-drawer-topbar, plate-figure-card,
+plate-caption-line {
+  display: block;
+}
+
+solidity-stat-chip, rubric-command-key, keycap-glyph, stratum-title-mark,
+stratum-badge-seal, hour-dial-pill, aperture-pill, aperture-num-mark,
+aperture-name-text, aperture-state-tag, canon-seal-pill, gloss-epoch-tag,
+utterance-clamp-trigger, token-clamp-chip, plate-tab-pill {
+  display: inline-flex;
+  align-items: center;
+}
+
+.agl-palimpsest {
+  width: 100%;
+  height: 100vh;
+  max-height: 100dvh;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 6px;
+  padding: 6px 10px;
+  background: radial-gradient(circle at 75% 24%, #2a2420 0%, var(--agl-void) 72%);
+  overflow: hidden;
+}
+
+.agl-masthead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px 10px;
+  background: var(--agl-gall);
+  border: 1px solid rgba(200, 198, 190, 0.28);
+  border-bottom: 2px solid var(--agl-rubric);
+}
+
+.agl-title-seal {
+  min-width: 0;
+  flex: 0 1 auto;
+}
+
+.agl-rubric-heading {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--agl-parchment);
+  line-height: 1.15;
+}
+
+.agl-epigraph-line {
+  font-size: 11px;
+  color: var(--agl-plaster);
+  font-style: italic;
+  line-height: 1.2;
+}
+
+.agl-scales {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.agl-scale-gauge {
+  min-width: 126px;
+  padding: 3px 7px;
+  background: var(--agl-void);
+  border: 1px solid rgba(200, 198, 190, 0.24);
+}
+
+.agl-scale-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+  font-size: 10.5px;
+  color: var(--agl-parchment);
+  margin-bottom: 2px;
+}
+
+.agl-meter-bar {
+  width: 100%;
+  height: 5px;
+  background: rgba(125, 128, 130, 0.28);
+  overflow: hidden;
+}
+
+.agl-meter-fill {
+  height: 100%;
+  transition: width 180ms ease;
+}
+
+.agl-meter-spoken { background: var(--agl-rubric); }
+.agl-meter-ground { background: var(--agl-fog); }
+.agl-meter-epiphany { background: var(--agl-gold); }
+
+.agl-stat-chip {
+  padding: 4px 7px;
+  font-size: 11px;
+  background: var(--agl-void);
+  border: 1px solid rgba(200, 198, 190, 0.24);
+  color: var(--agl-parchment);
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.agl-command-rack {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.agl-cmd-key {
+  padding: 4px 8px;
+  font-size: 11px;
+  line-height: 1.2;
+  color: var(--agl-parchment);
+  background: #2f2a27;
+  border: 1px solid rgba(200, 198, 190, 0.36);
+  cursor: pointer;
+  user-select: none;
+  gap: 4px;
+}
+
+.agl-cmd-key:hover, .agl-cmd-key:focus-visible {
+  border-color: var(--agl-gold);
+  background: #3a322c;
+  outline: none;
+}
+
+.agl-cmd-rubric {
+  background: rgba(143, 61, 46, 0.36);
+  border-color: var(--agl-rubric);
+}
+
+.agl-keycap {
+  padding: 1px 4px;
+  font-size: 9.5px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: var(--agl-void);
+  color: var(--agl-flare);
+  border: 1px solid rgba(216, 166, 72, 0.45);
+}
+.agl-diptych {
+  display: grid;
+  grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+  gap: 8px;
+  min-height: 0;
+  min-width: 0;
+}
+
+.agl-ground-pane {
+  display: grid;
+  grid-template-rows: auto auto minmax(150px, 1fr) auto auto auto;
+  gap: 5px;
+  padding: 7px 9px;
+  background: var(--agl-gall);
+  border: 1px solid rgba(200, 198, 190, 0.28);
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.agl-spoken-col {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 6px;
+  min-height: 0;
+  min-width: 0;
+}
+
+.agl-cage-pane {
+  display: grid;
+  grid-template-rows: auto minmax(135px, 1fr) auto auto;
+  gap: 5px;
+  padding: 7px 9px;
+  background: var(--agl-gall);
+  border: 1px solid rgba(143, 61, 46, 0.52);
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.agl-stratum-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.agl-stratum-title {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--agl-parchment);
+}
+
+.agl-stratum-badge {
+  padding: 2px 6px;
+  font-size: 10.5px;
+  background: var(--agl-void);
+  border: 1px solid rgba(200, 198, 190, 0.28);
+  color: var(--agl-flare);
+}
+
+.agl-hour-ribbon {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.agl-hour-pill {
+  justify-content: center;
+  padding: 4px 3px;
+  font-size: 10.5px;
+  background: var(--agl-void);
+  border: 1px solid rgba(200, 198, 190, 0.25);
+  color: var(--agl-plaster);
+  cursor: pointer;
+  user-select: none;
+  text-align: center;
+}
+
+.agl-hour-pill[data-certain="true"] {
+  border-color: rgba(216, 166, 72, 0.45);
+  color: var(--agl-parchment);
+}
+
+.agl-hour-pill[data-active="true"] {
+  background: #382f26;
+  border-color: var(--agl-gold);
+  color: var(--agl-flare);
+  font-weight: 700;
+}
+
+.agl-canvas-well, .agl-lattice-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 140px;
+  background: var(--agl-void);
+  border: 1px solid rgba(200, 198, 190, 0.28);
+  overflow: hidden;
+}
+
+.agl-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.agl-aperture-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.agl-aperture-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2px;
+  padding: 4px 6px;
+  background: var(--agl-void);
+  border: 1px solid rgba(200, 198, 190, 0.24);
+  cursor: pointer;
+  user-select: none;
+  min-width: 0;
+}
+
+.agl-aperture-pill[data-active="true"] {
+  border-color: var(--agl-gold);
+  background: #2f2822;
+}
+
+.agl-aperture-pill[data-status="lost_for_lack_of_words"] {
+  border-color: var(--agl-rubric);
+  background: #241917;
+}
+
+.agl-aperture-top {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  font-size: 10.5px;
+  color: var(--agl-parchment);
+  line-height: 1.2;
+}
+
+.agl-aperture-num {
+  padding: 0 4px;
+  font-size: 9.5px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: #2c2724;
+  color: var(--agl-flare);
+  border: 1px solid rgba(216, 166, 72, 0.35);
+  flex-shrink: 0;
+}
+
+.agl-aperture-name {
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.agl-aperture-tag {
+  font-size: 9.5px;
+  padding: 1px 4px;
+  color: var(--agl-plaster);
+  background: rgba(125, 128, 130, 0.18);
+}
+
+.agl-aperture-pill[data-status="witnessed_silently"] .agl-aperture-tag {
+  color: var(--agl-flare);
+  background: rgba(216, 166, 72, 0.24);
+}
+
+.agl-aperture-pill[data-status="lost_for_lack_of_words"] .agl-aperture-tag {
+  color: #f3c4ba;
+  background: rgba(143, 61, 46, 0.44);
+}
+.agl-silence-meter {
+  padding: 5px 7px;
+  background: var(--agl-void);
+  border: 1px solid rgba(200, 198, 190, 0.24);
+}
+
+.agl-dwell-track {
+  width: 100%;
+  height: 5px;
+  background: rgba(125, 128, 130, 0.24);
+  margin-bottom: 4px;
+  overflow: hidden;
+}
+
+.agl-dwell-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--agl-gold), var(--agl-flare));
+  transition: width 140ms linear;
+}
+
+.agl-epiphany-prose {
+  font-size: 11px;
+  line-height: 1.3;
+  color: var(--agl-parchment);
+}
+
+.agl-colophon {
+  padding: 4px 7px;
+  background: #1c1817;
+  border: 1px solid rgba(143, 61, 46, 0.45);
+  max-height: 58px;
+  overflow-y: auto;
+  font-size: 10.5px;
+  line-height: 1.28;
+  color: var(--agl-plaster);
+}
+
+.agl-scar-entry {
+  padding: 1px 0;
+  color: #ebd2cb;
+}
+
+.agl-canon-tablet {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.agl-canon-pill {
+  justify-content: center;
+  padding: 4px 2px;
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--agl-void);
+  border: 1px solid rgba(143, 61, 46, 0.55);
+  color: var(--agl-parchment);
+  cursor: pointer;
+  user-select: none;
+}
+
+.agl-canon-pill[data-active="true"] {
+  background: var(--agl-rubric);
+  border-color: var(--agl-flare);
+  color: var(--agl-flare);
+}
+
+.agl-gloss-ledger {
+  padding: 6px 8px;
+  background: var(--agl-parchment);
+  color: var(--agl-void);
+  border: 1px solid var(--agl-rubric);
+  display: grid;
+  gap: 4px;
+}
+
+.agl-gloss-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  flex-wrap: wrap;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--agl-rubric);
+}
+
+.agl-gloss-proverb {
+  font-size: 11.5px;
+  font-style: italic;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--agl-void);
+}
+
+.agl-gloss-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.agl-gloss-row {
+  padding: 4px 6px;
+  background: rgba(23, 21, 20, 0.06);
+  border-left: 2px solid var(--agl-rubric);
+  font-size: 10.5px;
+  line-height: 1.25;
+}
+
+.agl-epoch-tag {
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--agl-rubric);
+  margin-bottom: 1px;
+}
+
+.agl-gloss-body {
+  color: var(--agl-void);
+}
+
+.agl-lock-pane {
+  padding: 7px 9px;
+  background: #1f1a18;
+  border: 1px solid var(--agl-rubric);
+  display: grid;
+  gap: 5px;
+}
+
+.agl-trial-desk {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+}
+
+.agl-utterance-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 5px 8px;
+  font-family: Georgia, serif;
+  font-size: 12px;
+  background: var(--agl-void);
+  color: var(--agl-parchment);
+  border: 1px solid rgba(200, 198, 190, 0.38);
+}
+
+.agl-utterance-input:focus {
+  outline: none;
+  border-color: var(--agl-gold);
+}
+
+.agl-clamp-trigger {
+  padding: 5px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--agl-rubric);
+  color: var(--agl-parchment);
+  border: 1px solid var(--agl-flare);
+  cursor: pointer;
+  user-select: none;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.agl-clamp-tray {
+  padding: 5px 7px;
+  background: var(--agl-void);
+  border: 1px solid rgba(200, 198, 190, 0.24);
+  min-height: 46px;
+  max-height: 68px;
+  overflow-y: auto;
+  font-size: 10.5px;
+  line-height: 1.3;
+}
+
+.agl-token-chip {
+  padding: 1px 5px;
+  margin: 1px 3px 1px 0;
+  font-size: 10px;
+  background: #2b2220;
+  border: 1px solid rgba(143, 61, 46, 0.7);
+  color: var(--agl-flare);
+}
+.agl-plate-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background: rgba(23, 21, 20, 0.94);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.agl-drawer-frame {
+  width: 100%;
+  max-width: 1220px;
+  height: 100%;
+  max-height: 760px;
+  background: var(--agl-gall);
+  border: 2px solid var(--agl-rubric);
+  padding: 10px 12px;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 8px;
+}
+
+.agl-drawer-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.agl-plate-tabs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.agl-plate-tab {
+  padding: 5px 10px;
+  font-size: 11.5px;
+  background: var(--agl-void);
+  border: 1px solid rgba(200, 198, 190, 0.34);
+  color: var(--agl-parchment);
+  cursor: pointer;
+  user-select: none;
+  gap: 5px;
+}
+
+.agl-plate-tab[data-active="true"] {
+  background: var(--agl-rubric);
+  border-color: var(--agl-flare);
+  color: var(--agl-flare);
+  font-weight: 700;
+}
+
+.agl-loupe-stage {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  min-height: 0;
+  overflow: auto;
+  padding: 4px;
+  background: var(--agl-void);
+  border: 1px solid rgba(200, 198, 190, 0.24);
+}
+
+.agl-loupe-stage[data-mode="single"] {
+  grid-template-columns: 1fr;
+}
+
+.agl-plate-figure {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 5px;
+  min-height: 0;
+  overflow: hidden;
+  padding: 6px;
+  background: #1d1a18;
+  border: 1px solid rgba(200, 198, 190, 0.22);
+}
+
+.agl-plate-viewport {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 200px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--agl-void);
+}
+
+.agl-plate-img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  transform-origin: var(--agl-lx, 50%) var(--agl-ly, 50%);
+  transition: transform 160ms ease;
+}
+
+.agl-loupe-stage[data-loupe="true"] .agl-plate-img {
+  transform: scale(1.8);
+  cursor: crosshair;
+}
+
+.agl-plate-caption {
+  font-size: 11px;
+  color: var(--agl-plaster);
+  text-align: center;
+}
+
+.agl-pending-plaque {
+  padding: 16px;
+  border: 1px dashed var(--agl-rubric);
+  color: var(--agl-parchment);
+  font-size: 12px;
+  text-align: center;
+}
+
+@media (max-width: 920px) {
+  .agl-palimpsest {
+    height: auto;
+    max-height: none;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    overflow-y: visible;
+    padding: 6px;
+  }
+  .agl-masthead { flex-direction: column; align-items: stretch; gap: 6px; padding: 6px 8px; }
+  .agl-scales { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+  .agl-scale-gauge { min-width: 0; }
+  .agl-stat-chip { white-space: normal; font-size: 10.5px; }
+  .agl-command-rack { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; }
+  .agl-cmd-key { justify-content: center; padding: 5px 4px; font-size: 10.5px; text-align: center; }
+  .agl-diptych { grid-template-columns: minmax(0, 1fr); }
+  .agl-ground-pane { grid-template-rows: auto auto 210px auto auto auto; }
+  .agl-cage-pane { grid-template-rows: auto 210px auto auto; }
+  .agl-aperture-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .agl-gloss-columns { grid-template-columns: 1fr; }
+  .agl-trial-desk { flex-direction: column; }
+  .agl-clamp-trigger { justify-content: center; }
+  .agl-loupe-stage { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .agl-meter-fill, .agl-dwell-fill, .agl-plate-img { transition: none !important; }
+}
+</style>
+</head>
+<body>
+<aglaura-palimpsest class="agl-palimpsest" id="agl-palimpsest">
+  <aglaura-rubric-masthead class="agl-masthead">
+    <codex-title-seal class="agl-title-seal">
+      <codex-rubric-heading class="agl-rubric-heading">AGLAURA</codex-rubric-heading>
+      <codex-epigraph-line class="agl-epigraph-line">The Compact Spoken Canon &amp; the Colorless City on the Ground</codex-epigraph-line>
+    </codex-title-seal>
+    <ontological-solidity-scales class="agl-scales" id="agl-scales">
+      <solidity-scale-gauge class="agl-scale-gauge">
+        <codex-epigraph-line class="agl-scale-label" id="agl-spoken-solidity-lbl">Spoken Solidity: 92%</codex-epigraph-line>
+        <solidity-meter-bar class="agl-meter-bar"><solidity-meter-fill class="agl-meter-fill agl-meter-spoken" id="agl-spoken-bar" style="width:92%"></solidity-meter-fill></solidity-meter-bar>
+      </solidity-scale-gauge>
+      <solidity-scale-gauge class="agl-scale-gauge">
+        <codex-epigraph-line class="agl-scale-label" id="agl-ground-substance-lbl">Ground Substance: 24%</codex-epigraph-line>
+        <solidity-meter-bar class="agl-meter-bar"><solidity-meter-fill class="agl-meter-fill agl-meter-ground" id="agl-ground-bar" style="width:24%"></solidity-meter-fill></solidity-meter-bar>
+      </solidity-scale-gauge>
+      <solidity-stat-chip class="agl-stat-chip" id="agl-silent-chip">Silent Glimpses: 0</solidity-stat-chip>
+      <solidity-stat-chip class="agl-stat-chip" id="agl-lost-chip">Lost Recollections: 0</solidity-stat-chip>
+    </ontological-solidity-scales>
+    <masthead-command-rack class="agl-command-rack">
+      <rubric-command-key class="agl-cmd-key" id="agl-btn-hour" role="button" tabindex="0" aria-label="Seek next Certain Hour">Certain Hour <keycap-glyph class="agl-keycap">H</keycap-glyph></rubric-command-key>
+      <rubric-command-key class="agl-cmd-key" id="agl-btn-gaze" role="button" tabindex="0" aria-label="Hold Silent Gaze">Silent Gaze <keycap-glyph class="agl-keycap">G</keycap-glyph></rubric-command-key>
+      <rubric-command-key class="agl-cmd-key" id="agl-btn-audio" role="button" tabindex="0" aria-label="Toggle Audio">Audio: On <keycap-glyph class="agl-keycap">A</keycap-glyph></rubric-command-key>
+      <rubric-command-key class="agl-cmd-key" id="agl-btn-reset" role="button" tabindex="0" aria-label="Reset Palimpsest">Reset <keycap-glyph class="agl-keycap">R</keycap-glyph></rubric-command-key>
+      <rubric-command-key class="agl-cmd-key agl-cmd-rubric" id="agl-btn-plates" role="button" tabindex="0" aria-label="Open Royal Plates">Royal Plates <keycap-glyph class="agl-keycap">P</keycap-glyph></rubric-command-key>
+    </masthead-command-rack>
+  </aglaura-rubric-masthead>
+  <palimpsest-diptych-grid class="agl-diptych">
+    <ground-glimpse-aperture class="agl-ground-pane" id="agl-ground-pane">
+      <stratum-banner-strip class="agl-stratum-banner">
+        <stratum-title-mark class="agl-stratum-title">I. Ground Aglaura — Colorless &amp; Planted at Random</stratum-title-mark>
+        <stratum-badge-seal class="agl-stratum-badge" id="agl-hour-badge">XII · Chalk Midday</stratum-badge-seal>
+      </stratum-banner-strip>
+      <hour-dial-ribbon class="agl-hour-ribbon" id="agl-hour-ribbon" role="group" aria-label="Hours of Ground Observation"></hour-dial-ribbon>
+      <ground-chalk-canvas-well class="agl-canvas-well" id="agl-ground-well">
+        <canvas class="agl-canvas" id="agl-ground-canvas" aria-label="Colorless ground sheds and six street openings of Aglaura"></canvas>
+      </ground-chalk-canvas-well>
+      <street-opening-index class="agl-aperture-grid" id="agl-aperture-index" role="group" aria-label="Six Street Openings"></street-opening-index>
+      <epiphany-silence-meter class="agl-silence-meter" id="agl-silence-meter">
+        <silence-dwell-track class="agl-dwell-track"><silence-dwell-fill class="agl-dwell-fill" id="agl-dwell-fill" style="width:0%"></silence-dwell-fill></silence-dwell-track>
+        <epiphany-prose-line class="agl-epiphany-prose" id="agl-epiphany-prose">At midday, unplanned lime sheds stand colorless and characterless; seek a Certain Hour ★ and hold silent gaze.</epiphany-prose-line>
+      </epiphany-silence-meter>
+      <lost-recollection-colophon class="agl-colophon" id="agl-colophon">
+        <recollection-scar-entry class="agl-scar-entry">Unworded Recollection Ledger — 0 street openings erased by speech.</recollection-scar-entry>
+      </lost-recollection-colophon>
+    </ground-glimpse-aperture>
+
+    <spoken-stratum-column class="agl-spoken-col">
+      <proverbial-discourse-cage class="agl-cage-pane" id="agl-cage-pane">
+        <stratum-banner-strip class="agl-stratum-banner">
+          <stratum-title-mark class="agl-stratum-title">II. Spoken Aglaura — Compact &amp; Untrue Ancient Canon</stratum-title-mark>
+          <stratum-badge-seal class="agl-stratum-badge" id="agl-chorus-badge">8 Proverbs · 12 Unison Voices</stratum-badge-seal>
+        </stratum-banner-strip>
+        <spoken-lattice-stage class="agl-lattice-stage" id="agl-lattice-stage">
+          <canvas class="agl-canvas" id="agl-cage-canvas" aria-label="Spoken calligraphic monolith and eight wax seals of Aglaura"></canvas>
+        </spoken-lattice-stage>
+        <proverb-canon-tablet class="agl-canon-tablet" id="agl-canon-tablet" role="group" aria-label="Eight Proverbial Accounts"></proverb-canon-tablet>
+        <inversion-gloss-ledger class="agl-gloss-ledger" id="agl-gloss-ledger"></inversion-gloss-ledger>
+      </proverbial-discourse-cage>
+
+      <word-imprisonment-lock class="agl-lock-pane" id="agl-word-lock">
+        <stratum-banner-strip class="agl-stratum-banner">
+          <stratum-title-mark class="agl-stratum-title">III. Word-Imprisonment Lock</stratum-title-mark>
+          <stratum-badge-seal class="agl-stratum-badge" id="agl-clamp-badge">Imprisoned: 0 · Free Words Survived: 0</stratum-badge-seal>
+        </stratum-banner-strip>
+        <utterance-trial-desk class="agl-trial-desk">
+          <input class="agl-utterance-input" id="agl-utterance-input" type="text" maxlength="140" autocomplete="off" spellcheck="false" placeholder="Attempt to describe what you saw in the street opening…" aria-label="Attempt to describe a ground glimpse in words">
+          <utterance-clamp-trigger class="agl-clamp-trigger" id="agl-btn-speak" role="button" tabindex="0" aria-label="Try to Say It">Try to Say It <keycap-glyph class="agl-keycap">S / Enter</keycap-glyph></utterance-clamp-trigger>
+        </utterance-trial-desk>
+        <imprisoned-syllable-clamp class="agl-clamp-tray" id="agl-clamp-tray">
+          Every word spoken of Aglaura is already held captive by the ancient proverbial city; trying to name a silent vista obliges repetition and erases the recollection.
+        </imprisoned-syllable-clamp>
+      </word-imprisonment-lock>
+    </spoken-stratum-column>
+  </palimpsest-diptych-grid>
+</aglaura-palimpsest>
+
+<aglaura-plate-drawer class="agl-plate-drawer" id="agl-plate-drawer" role="dialog" aria-modal="true" aria-label="Royal Archival Plates of Aglaura" hidden>
+  <plate-drawer-frame class="agl-drawer-frame">
+    <plate-drawer-topbar class="agl-drawer-topbar">
+      <plate-tab-strip class="agl-plate-tabs" id="agl-plate-tabs" role="tablist" aria-label="Plate Views">
+        <plate-tab-pill class="agl-plate-tab" id="agl-tab-diptych" data-tab="diptych" data-active="true" role="tab" tabindex="0" aria-selected="true">Diptych</plate-tab-pill>
+        <plate-tab-pill class="agl-plate-tab" id="agl-tab-map" data-tab="map" data-active="false" role="tab" tabindex="0" aria-selected="false">Survey Map</plate-tab-pill>
+        <plate-tab-pill class="agl-plate-tab" id="agl-tab-image" data-tab="image" data-active="false" role="tab" tabindex="0" aria-selected="false">City Vista</plate-tab-pill>
+      </plate-tab-strip>
+      <masthead-command-rack class="agl-command-rack">
+        <rubric-command-key class="agl-cmd-key" id="agl-btn-loupe" role="button" tabindex="0" aria-label="Toggle Plate Loupe Zoom">Loupe: 1x <keycap-glyph class="agl-keycap">Z</keycap-glyph></rubric-command-key>
+        <rubric-command-key class="agl-cmd-key agl-cmd-rubric" id="agl-btn-drawer-close" role="button" tabindex="0" aria-label="Close Royal Plates">Close <keycap-glyph class="agl-keycap">Esc</keycap-glyph></rubric-command-key>
+      </masthead-command-rack>
+    </plate-drawer-topbar>
+    <plate-loupe-stage class="agl-loupe-stage" id="agl-loupe-stage" data-mode="diptych" data-loupe="false">
+      <plate-figure-card class="agl-plate-figure" id="agl-card-map">
+        <plate-loupe-frame class="agl-plate-viewport" id="agl-vp-map">
+          <img class="agl-plate-img" id="agl-map-img" src="map.png" alt="Cartographic survey plate of Aglaura">
+          <plate-pending-plaque class="agl-pending-plaque" id="agl-map-pending" hidden>Cartographic Survey Plate Pending Archival Strike</plate-pending-plaque>
+        </plate-loupe-frame>
+        <plate-caption-line class="agl-plate-caption">Survey Map — Compact Spoken Enceinte &amp; Six Colorless Ground Openings</plate-caption-line>
+      </plate-figure-card>
+      <plate-figure-card class="agl-plate-figure" id="agl-card-image">
+        <plate-loupe-frame class="agl-plate-viewport" id="agl-vp-image">
+          <img class="agl-plate-img" id="agl-vista-img" src="image.png" alt="Architectural twilight vista of Aglaura">
+          <plate-pending-plaque class="agl-pending-plaque" id="agl-vista-pending" hidden>Architectural Vista Plate Pending Archival Strike</plate-pending-plaque>
+        </plate-loupe-frame>
+        <plate-caption-line class="agl-plate-caption">City Vista — Unworded Liminal Aperture Beneath Calligraphic Ramparts</plate-caption-line>
+      </plate-figure-card>
+    </plate-loupe-stage>
+  </plate-drawer-frame>
+</aglaura-plate-drawer>
+
+<script>
+/*
+ * Spoken Proverbial Architecture — Layer Module
+ * Monumental calligraphic monolith of the spoken city, eight canonical proverbs
+ * with historical inversions, deterministic word-imprisonment clamp, and WebAudio.
+ */
+(function (root) {
+  "use strict";
+
+  const PALETTE = Object.freeze({
+    ironGallVoid: "#171514",
+    gallStone: "#252220",
+    colorlessFog: "#7d8082",
+    chalkPlaster: "#c8c6be",
+    parchmentChalk: "#ebe5d5",
+    rubricOxide: "#8f3d2e",
+    epiphanyGold: "#d8a648",
+    epiphanyFlare: "#f6de92"
+  });
+
+  const CATEGORY_LABELS = Object.freeze({
+    proverbial_virtue: "Proverbial Virtue",
+    proverbial_fault: "Proverbial Fault",
+    eccentricity: "Ancient Eccentricity",
+    punctilious_rule: "Punctilious Rule"
+  });
+
+  const INVERSION_LABELS = Object.freeze({
+    virtue_lost_merit: "Virtue Emptied of Merit",
+    fault_lost_dishonor: "Fault Emptied of Dishonor",
+    bizarre_became_usual: "Bizarre Turned Ordinary",
+    normal_became_extravagance: "Plain Act Turned Extravagance"
+  });
+
+  const PROVERBIAL_CANON = Object.freeze([
+    Object.freeze({
+      id: "canon_1",
+      index: 0,
+      roman: "I",
+      title: "Unlocked Granaries & Thrice-Weighed Grain",
+      category: "proverbial_virtue",
+      inversionKind: "virtue_lost_merit",
+      categoryLabel: CATEGORY_LABELS.proverbial_virtue,
+      inversionLabel: INVERSION_LABELS.virtue_lost_merit,
+      ancientProverb: "In Aglaura no citizen locks a granary door, yet every grain of barley is weighed thrice before sundown.",
+      ancientAttribution: "Ancient observers extolled an incorruptible civic honesty where open storehouses stood beside scrupulous triple-balanced scales at dusk.",
+      presentInversion: "The timber granaries stand long empty while clerks weigh dry pocket-dust three times before closing—an antique virtue repeated by rote, devoid of merit.",
+      keywords: ["grain", "barley", "door", "lock", "weigh", "sundown", "dusk", "dust", "gold", "golden", "shaft", "store"],
+      sealCoord: Object.freeze({ nx: 0.16, ny: 0.27 }),
+      chantRootHz: 146.83
+    }),
+    Object.freeze({
+      id: "canon_2",
+      index: 1,
+      roman: "II",
+      title: "Proud Magistrates Turned Away",
+      category: "proverbial_fault",
+      inversionKind: "fault_lost_dishonor",
+      categoryLabel: CATEGORY_LABELS.proverbial_fault,
+      inversionLabel: INVERSION_LABELS.fault_lost_dishonor,
+      ancientProverb: "Beware Aglaura's proud magistrates, who turn their backs upon strangers until the third moon.",
+      ancientAttribution: "Early chroniclers denounced the haughty municipal bench whose ceremonial disdain denied every newcomer greeting across three lunations.",
+      presentInversion: "Minor registry clerks now stare distractedly sideways at blank plaster while stamping anyone's pass—ancestral pride flattened into torpor devoid of dishonor.",
+      keywords: ["magistrate", "proud", "stranger", "moon", "back", "turn", "shadow", "night", "face", "gaze", "eye"],
+      sealCoord: Object.freeze({ nx: 0.38, ny: 0.21 }),
+      chantRootHz: 164.81
+    }),
+    Object.freeze({
+      id: "canon_3",
+      index: 2,
+      roman: "III",
+      title: "Oiled Paper Lanterns at High Noon",
+      category: "eccentricity",
+      inversionKind: "bizarre_became_usual",
+      categoryLabel: CATEGORY_LABELS.eccentricity,
+      inversionLabel: INVERSION_LABELS.bizarre_became_usual,
+      ancientProverb: "Only in Aglaura do householders carry oiled paper lanterns at high noon to honour the eclipsed founders.",
+      ancientAttribution: "Travelers once marveled at a bizarre solar-zenith procession bearing translucent oiled-paper spheres beneath blinding midday skies.",
+      presentInversion: "Unlit stamped-tin lantern frames now hang by the dozen on every coat-hook and hallway peg as ordinary domestic clutter—the bizarre turned wholly usual.",
+      keywords: ["lantern", "noon", "light", "sun", "ray", "gleam", "flare", "lamp", "glow", "amber", "paper", "bright"],
+      sealCoord: Object.freeze({ nx: 0.62, ny: 0.21 }),
+      chantRootHz: 174.61
+    }),
+    Object.freeze({
+      id: "canon_4",
+      index: 3,
+      roman: "IV",
+      title: "Seven Ancestors & Chalked Heels",
+      category: "punctilious_rule",
+      inversionKind: "normal_became_extravagance",
+      categoryLabel: CATEGORY_LABELS.punctilious_rule,
+      inversionLabel: INVERSION_LABELS.normal_became_extravagance,
+      ancientProverb: "Whoever crosses an Aglauran threshold must first name seven ancestors and wipe chalk from both heels.",
+      ancientAttribution: "Punctilious gate-decrees bound every threshold crossing to a liturgical roll of seven forebears and the brushing of street-lime from both boots.",
+      presentInversion: "Mumbling seven slurred syllables on a mat is unthinking reflex, while stepping plainly indoors in silence is gawked at as scandalous extravagance.",
+      keywords: ["threshold", "chalk", "heel", "step", "stair", "wall", "alley", "street", "opening", "arch", "stone", "cross"],
+      sealCoord: Object.freeze({ nx: 0.84, ny: 0.27 }),
+      chantRootHz: 196.00
+    }),
+    Object.freeze({
+      id: "canon_5",
+      index: 4,
+      roman: "V",
+      title: "Seven Winters of Silent Linen",
+      category: "proverbial_virtue",
+      inversionKind: "virtue_lost_merit",
+      categoryLabel: CATEGORY_LABELS.proverbial_virtue,
+      inversionLabel: INVERSION_LABELS.virtue_lost_merit,
+      ancientProverb: "Aglaura's brides weave silent linen for seven winters so no quarrel may echo beneath the rafters.",
+      ancientAttribution: "Envoys praised the austere domestic concord of households vowed to patient, wordless shuttle-craft through seven consecutive frosts.",
+      presentInversion: "Automated basement looms clatter on timers while households bicker upstairs solely in stock proverbs—praised concord emptied of living merit.",
+      keywords: ["weave", "silent", "silence", "linen", "winter", "rafter", "thread", "cloth", "hush", "still", "pale", "quiet"],
+      sealCoord: Object.freeze({ nx: 0.18, ny: 0.71 }),
+      chantRootHz: 220.00
+    }),
+    Object.freeze({
+      id: "canon_6",
+      index: 5,
+      roman: "VI",
+      title: "Feasting Debtor & Fasting Creditor",
+      category: "proverbial_fault",
+      inversionKind: "fault_lost_dishonor",
+      categoryLabel: CATEGORY_LABELS.proverbial_fault,
+      inversionLabel: INVERSION_LABELS.fault_lost_dishonor,
+      ancientProverb: "An Aglauran debtor feasts on salted quails while his creditor fasts upon the porch.",
+      ancientAttribution: "Moralists denounced a scandalous inversion of obligation that banqueted insolvents indoors while starving lenders on cold porch flagstones.",
+      presentInversion: "Debtors and creditors sit side by side trading identical dry salt-biscuits over grey ledgers without shame—the notorious fault stripped of dishonor.",
+      keywords: ["debtor", "creditor", "feast", "fast", "porch", "quail", "salt", "court", "terrace", "table", "bread"],
+      sealCoord: Object.freeze({ nx: 0.39, ny: 0.77 }),
+      chantRootHz: 246.94
+    }),
+    Object.freeze({
+      id: "canon_7",
+      index: 6,
+      roman: "VII",
+      title: "Tethered Storks of Roof Law",
+      category: "eccentricity",
+      inversionKind: "bizarre_became_usual",
+      categoryLabel: CATEGORY_LABELS.eccentricity,
+      inversionLabel: INVERSION_LABELS.bizarre_became_usual,
+      ancientProverb: "Along Aglaura's roofs, tethered storks arbitrate boundary disputes by the fall of a single feather.",
+      ancientAttribution: "Foreign legates recorded with wonder the eccentric rooftop augury whereby a drifting white plume adjudicated contested eaves and yards.",
+      presentInversion: "Rusted tin stork weathervanes creak routinely above corrugated sheds and laundry lines—the once-bizarre oracle dulled into unremarkable habit.",
+      keywords: ["roof", "stork", "feather", "sky", "spire", "dome", "wind", "air", "cloud", "vista", "horizon", "wing"],
+      sealCoord: Object.freeze({ nx: 0.61, ny: 0.77 }),
+      chantRootHz: 261.63
+    }),
+    Object.freeze({
+      id: "canon_8",
+      index: 7,
+      roman: "VIII",
+      title: "Even Bell-Strokes & Tallied Words",
+      category: "punctilious_rule",
+      inversionKind: "normal_became_extravagance",
+      categoryLabel: CATEGORY_LABELS.punctilious_rule,
+      inversionLabel: INVERSION_LABELS.normal_became_extravagance,
+      ancientProverb: "No bell in Aglaura may ring an odd number of strokes, lest an uncounted word escape the walls.",
+      ancientAttribution: "Belfry rubrics commanded strictly paired bronze chimes so every syllable uttered inside the ramparts stayed numbered and enclosed.",
+      presentInversion: "Paired shop-buzzers click out of dull habit, whereas any spontaneous uncounted exclamation in an alley is condemned as reckless extravagance.",
+      keywords: ["bell", "ring", "odd", "stroke", "word", "voice", "speak", "say", "name", "echo", "tower", "sound"],
+      sealCoord: Object.freeze({ nx: 0.82, ny: 0.71 }),
+      chantRootHz: 293.66
+    })
+  ]);
+
+  function hashPhrase(str) {
+    let h = 2166136261 >>> 0;
+    const s = String(str || "");
+    for (let i = 0; i < s.length; i++) {
+      h ^= s.charCodeAt(i);
+      h = Math.imul(h, 16777619) >>> 0;
+    }
+    return h >>> 0;
+  }
+
+  function tokenizeAttempt(text) {
+    const cleaned = String(text || "").trim();
+    const matches = cleaned.match(/[A-Za-z0-9'\u00C0-\u024F]+/g);
+    if (matches && matches.length > 0) {
+      return matches.slice(0, 32);
+    }
+    return [cleaned.slice(0, 24) || "gleam"];
+  }
+
+  function extractCanonLexicon(proverb) {
+    const raw = String(proverb || "").match(/[A-Za-z']+/g) || ["Aglaura"];
+    const filtered = raw.filter(function (w) {
+      return w.length >= 4;
+    });
+    return filtered.length > 0 ? filtered : raw;
+  }
+
+  function matchCanonForUtterance(effectiveText, context) {
+    const tokens = tokenizeAttempt(effectiveText).map(function (t) {
+      return t.toLowerCase();
+    });
+    const hashSeed = hashPhrase(
+      effectiveText.toLowerCase() + "|" + String((context && context.apertureId) || "")
+    );
+    let bestIdx = hashSeed % PROVERBIAL_CANON.length;
+    let bestScore = 0;
+
+    for (let i = 0; i < PROVERBIAL_CANON.length; i++) {
+      const entry = PROVERBIAL_CANON[i];
+      let score = 0;
+      for (let t = 0; t < tokens.length; t++) {
+        const tok = tokens[t];
+        for (let k = 0; k < entry.keywords.length; k++) {
+          const kw = entry.keywords[k];
+          if (tok === kw || (tok.length >= 4 && (tok.indexOf(kw) === 0 || kw.indexOf(tok) === 0))) {
+            score += tok === kw ? 3 : 2;
+          }
+        }
+      }
+      if (score > bestScore || (score > 0 && score === bestScore && ((hashSeed + i) % 2 === 0))) {
+        bestScore = score;
+        bestIdx = i;
+      }
+    }
+    return PROVERBIAL_CANON[bestIdx];
+  }
+
+  function resolveCanonLookup(idOrIndex) {
+    if (typeof idOrIndex === "number" && Number.isFinite(idOrIndex)) {
+      const n = Math.trunc(idOrIndex);
+      if (n >= 0 && n < PROVERBIAL_CANON.length) return PROVERBIAL_CANON[n];
+      if (n === 8) return PROVERBIAL_CANON[7];
+      return PROVERBIAL_CANON[((n % 8) + 8) % 8];
+    }
+    if (typeof idOrIndex === "string") {
+      const s = idOrIndex.trim();
+      const byId = PROVERBIAL_CANON.find(function (c) {
+        return c.id.toLowerCase() === s.toLowerCase() || c.roman.toLowerCase() === s.toLowerCase();
+      });
+      if (byId) return byId;
+      if (/^[1-8]$/.test(s)) return PROVERBIAL_CANON[ parseInt(s, 10) - 1 ];
+      if (s === "0") return PROVERBIAL_CANON[0];
+    }
+    return PROVERBIAL_CANON[0];
+  }
+
+  function wrapCanvasLines(ctx, text, maxWidth) {
+    const words = String(text || "").split(/\s+/).filter(Boolean);
+    const lines = [];
+    let current = "";
+    for (let i = 0; i < words.length; i++) {
+      const candidate = current ? current + " " + words[i] : words[i];
+      if (ctx.measureText(candidate).width <= maxWidth || !current) {
+        current = candidate;
+      } else {
+        lines.push(current);
+        current = words[i];
+      }
+    }
+    if (current) lines.push(current);
+    return lines;
+  }
+
+  function createSpokenCageAudio() {
+    let audioCtx = null;
+    let noiseBuf = null;
+    let muted = false;
+
+    function ensureCtx() {
+      if (muted) return null;
+      try {
+        const Ctor = root.AudioContext || root.webkitAudioContext;
+        if (!Ctor) return null;
+        if (!audioCtx) audioCtx = new Ctor();
+        if (audioCtx.state === "suspended" && typeof audioCtx.resume === "function") {
+          audioCtx.resume().catch(function () {});
+        }
+        if (!noiseBuf && audioCtx) {
+          const len = Math.max(1024, Math.floor(audioCtx.sampleRate * 0.16));
+          noiseBuf = audioCtx.createBuffer(1, len, audioCtx.sampleRate);
+          const data = noiseBuf.getChannelData(0);
+          for (let i = 0; i < len; i++) {
+            data[i] = ((Math.sin(i * 12.9898) * 43758.5453) % 1) * 2 - 1;
+          }
+        }
+        return audioCtx;
+      } catch (_) {
+        return null;
+      }
+    }
+
+    function playChoralSnap(canonIndex) {
+      const entry = resolveCanonLookup(typeof canonIndex === "number" ? canonIndex : 0);
+      const rootHz = entry.chantRootHz || 164.81;
+      const ctx = ensureCtx();
+      if (!ctx) return { played: false, rootHz: rootHz };
+      try {
+        const now = ctx.currentTime;
+        const master = ctx.createGain();
+        master.gain.setValueAtTime(0.0001, now);
+        master.gain.exponentialRampToValueAtTime(0.16, now + 0.05);
+        master.gain.exponentialRampToValueAtTime(0.09, now + 0.36);
+        master.gain.exponentialRampToValueAtTime(0.0001, now + 0.92);
+        master.connect(ctx.destination);
+
+        const f1 = ctx.createBiquadFilter();
+        f1.type = "bandpass";
+        f1.frequency.setValueAtTime(530, now);
+        f1.Q.setValueAtTime(4.2, now);
+        f1.connect(master);
+
+        const f2 = ctx.createBiquadFilter();
+        f2.type = "bandpass";
+        f2.frequency.setValueAtTime(1090, now);
+        f2.Q.setValueAtTime(5.0, now);
+        f2.connect(master);
+
+        const ratios = [0.5, 1.0, 1.004, 1.498];
+        for (let i = 0; i < ratios.length; i++) {
+          const osc = ctx.createOscillator();
+          osc.type = i === 0 ? "triangle" : "sawtooth";
+          osc.frequency.setValueAtTime(rootHz * ratios[i], now);
+          osc.connect(f1);
+          osc.connect(f2);
+          osc.start(now);
+          osc.stop(now + 0.95);
+        }
+
+        const latchOsc = ctx.createOscillator();
+        const latchGain = ctx.createGain();
+        latchOsc.type = "square";
+        latchOsc.frequency.setValueAtTime(920, now + 0.01);
+        latchOsc.frequency.exponentialRampToValueAtTime(280, now + 0.065);
+        latchGain.gain.setValueAtTime(0.07, now + 0.01);
+        latchGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.07);
+        latchOsc.connect(latchGain);
+        latchGain.connect(ctx.destination);
+        latchOsc.start(now + 0.01);
+        latchOsc.stop(now + 0.075);
+
+        const thudOsc = ctx.createOscillator();
+        const thudGain = ctx.createGain();
+        thudOsc.type = "sine";
+        thudOsc.frequency.setValueAtTime(132, now + 0.055);
+        thudOsc.frequency.exponentialRampToValueAtTime(44, now + 0.21);
+        thudGain.gain.setValueAtTime(0.14, now + 0.055);
+        thudGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.22);
+        thudOsc.connect(thudGain);
+        thudGain.connect(ctx.destination);
+        thudOsc.start(now + 0.055);
+        thudOsc.stop(now + 0.23);
+        return { played: true, rootHz: rootHz };
+      } catch (_) {
+        return { played: false, rootHz: rootHz };
+      }
+    }
+
+    function playIronGallSeal() {
+      const ctx = ensureCtx();
+      if (!ctx) return { played: false };
+      try {
+        const now = ctx.currentTime;
+        if (noiseBuf) {
+          const quill = ctx.createBufferSource();
+          quill.buffer = noiseBuf;
+          const bp = ctx.createBiquadFilter();
+          bp.type = "bandpass";
+          bp.frequency.setValueAtTime(2250, now);
+          bp.Q.setValueAtTime(3.2, now);
+          const qGain = ctx.createGain();
+          qGain.gain.setValueAtTime(0.06, now);
+          qGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.055);
+          quill.connect(bp);
+          bp.connect(qGain);
+          qGain.connect(ctx.destination);
+          quill.start(now);
+          quill.stop(now + 0.06);
+
+          const vellum = ctx.createBufferSource();
+          vellum.buffer = noiseBuf;
+          const vFilter = ctx.createBiquadFilter();
+          vFilter.type = "bandpass";
+          vFilter.frequency.setValueAtTime(690, now + 0.02);
+          vFilter.Q.setValueAtTime(1.8, now + 0.02);
+          const vGain = ctx.createGain();
+          vGain.gain.setValueAtTime(0.045, now + 0.02);
+          vGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.11);
+          vellum.connect(vFilter);
+          vFilter.connect(vGain);
+          vGain.connect(ctx.destination);
+          vellum.start(now + 0.02);
+          vellum.stop(now + 0.12);
+        }
+        return { played: true };
+      } catch (_) {
+        return { played: false };
+      }
+    }
+
+    function playTwilightGlimpseShimmer(intensity) {
+      const ctx = ensureCtx();
+      if (!ctx) return { played: false };
+      try {
+        const now = ctx.currentTime;
+        const amp = Math.max(0.08, Math.min(1.0, Number(intensity) || 0.7)) * 0.055;
+        const freqs = [880.0, 1318.51, 1760.0];
+        for (let i = 0; i < freqs.length; i++) {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(freqs[i], now + i * 0.035);
+          gain.gain.setValueAtTime(0.0001, now + i * 0.035);
+          gain.gain.exponentialRampToValueAtTime(amp / (i + 1), now + 0.11 + i * 0.035);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.85 + i * 0.05);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now + i * 0.035);
+          osc.stop(now + 0.92 + i * 0.05);
+        }
+        return { played: true };
+      } catch (_) {
+        return { played: false };
+      }
+    }
+
+    return {
+      unlock: function () {
+        return Boolean(ensureCtx());
+      },
+      setMuted: function (flag) {
+        muted = Boolean(flag);
+        return muted;
+      },
+      toggleMute: function () {
+        muted = !muted;
+        if (!muted) ensureCtx();
+        return muted;
+      },
+      isMuted: function () {
+        return muted;
+      },
+      playChoralSnap: playChoralSnap,
+      playIronGallSeal: playIronGallSeal,
+      playTwilightGlimpseShimmer: playTwilightGlimpseShimmer
+    };
+  }
+
+  function drawMonolithBackdrop(ctx, w, h, state) {
+    const grad = ctx.createLinearGradient(0, 0, 0, h);
+    grad.addColorStop(0, PALETTE.ironGallVoid);
+    grad.addColorStop(0.52, PALETTE.gallStone);
+    grad.addColorStop(1, PALETTE.ironGallVoid);
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, w, h);
+
+    const pad = Math.max(8, Math.round(Math.min(w, h) * 0.026));
+    ctx.strokeStyle = PALETTE.chalkPlaster;
+    ctx.globalAlpha = 0.28;
+    ctx.lineWidth = 1;
+    ctx.strokeRect(pad, pad, w - pad * 2, h - pad * 2);
+    ctx.strokeStyle = PALETTE.rubricOxide;
+    ctx.globalAlpha = 0.55;
+    ctx.strokeRect(pad + 4, pad + 4, w - (pad + 4) * 2, h - (pad + 4) * 2);
+    ctx.globalAlpha = 1;
+
+    const cx = w * 0.5;
+    const cy = h * 0.49;
+    const minDim = Math.min(w, h);
+    const voices = state.repetitionChorusVoices;
+    for (let r = 0; r < 3; r++) {
+      const radius = minDim * (0.29 + r * 0.075);
+      ctx.beginPath();
+      ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+      ctx.strokeStyle = r === 1 ? PALETTE.rubricOxide : PALETTE.colorlessFog;
+      ctx.globalAlpha = 0.16 + state.clampAnim * 0.14;
+      ctx.lineWidth = r === 1 ? 1.4 : 0.9;
+      ctx.stroke();
+    }
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(state.scrollPhase * 0.18);
+    ctx.strokeStyle = PALETTE.parchmentChalk;
+    ctx.globalAlpha = 0.13 + Math.min(0.14, state.imprisonedCount * 0.015);
+    ctx.lineWidth = 1;
+    for (let v = 0; v < voices; v++) {
+      const ang = (v / voices) * Math.PI * 2;
+      const r0 = minDim * 0.25;
+      const r1 = minDim * 0.44;
+      ctx.beginPath();
+      ctx.moveTo(Math.cos(ang) * r0, Math.sin(ang) * r0);
+      ctx.lineTo(Math.cos(ang) * r1, Math.sin(ang) * r1);
+      ctx.stroke();
+    }
+    ctx.restore();
+    ctx.globalAlpha = 1;
+  }
+
+  function drawProverbialMonolith(ctx, w, h, state) {
+    const mLeft = w * 0.10;
+    const mWidth = w * 0.80;
+    const courses = 8;
+    const topY = h * 0.10;
+    const totalH = h * 0.80;
+    const courseH = totalH / courses;
+
+    const towers = [0.16, 0.31, 0.50, 0.69, 0.84];
+    for (let t = 0; t < towers.length; t++) {
+      const tx = w * towers[t];
+      const tw = w * (t === 2 ? 0.15 : 0.09);
+      const th = h * (t === 2 ? 0.09 : 0.06);
+      ctx.fillStyle = PALETTE.gallStone;
+      ctx.strokeStyle = PALETTE.chalkPlaster;
+      ctx.lineWidth = 1;
+      ctx.fillRect(tx - tw * 0.5, topY - th * 0.45, tw, th);
+      ctx.globalAlpha = 0.35;
+      ctx.strokeRect(tx - tw * 0.5, topY - th * 0.45, tw, th);
+      ctx.beginPath();
+      ctx.arc(tx, topY - th * 0.45, tw * 0.36, Math.PI, 0);
+      ctx.fillStyle = PALETTE.ironGallVoid;
+      ctx.globalAlpha = 0.92;
+      ctx.fill();
+      ctx.strokeStyle = PALETTE.rubricOxide;
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(mLeft, topY, mWidth, totalH);
+    ctx.clip();
+
+    const fontPx = Math.max(9, Math.round(Math.min(w, h) * 0.024));
+    ctx.font = "600 " + fontPx + "px Georgia, 'Times New Roman', serif";
+    ctx.textBaseline = "middle";
+
+    for (let c = 0; c < courses; c++) {
+      const cy = topY + c * courseH;
+      const inset = (c === 0 || c === courses - 1) ? w * 0.03 : 0;
+      const rowX = mLeft + inset;
+      const rowW = mWidth - inset * 2;
+      const isSelectedCourse = PROVERBIAL_CANON[c].id === state.selectedCanonId;
+
+      ctx.fillStyle = isSelectedCourse ? "#302823" : (c % 2 === 0 ? PALETTE.gallStone : "#1e1b19");
+      ctx.fillRect(rowX, cy + 1, rowW, courseH - 2);
+      ctx.strokeStyle = isSelectedCourse ? PALETTE.epiphanyGold : PALETTE.chalkPlaster;
+      ctx.globalAlpha = isSelectedCourse ? 0.65 : 0.24;
+      ctx.lineWidth = isSelectedCourse ? 1.4 : 0.9;
+      ctx.strokeRect(rowX, cy + 1, rowW, courseH - 2);
+
+      const archCount = c % 2 === 0 ? 5 : 4;
+      const archW = rowW / archCount;
+      for (let a = 0; a < archCount; a++) {
+        const ax = rowX + a * archW + archW * 0.5;
+        ctx.beginPath();
+        ctx.arc(ax, cy + courseH - 2, Math.min(archW * 0.34, courseH * 0.44), Math.PI, 0);
+        ctx.fillStyle = PALETTE.ironGallVoid;
+        ctx.globalAlpha = 0.68;
+        ctx.fill();
+        ctx.strokeStyle = PALETTE.rubricOxide;
+        ctx.globalAlpha = 0.34;
+        ctx.stroke();
+      }
+
+      const chantStrip = PROVERBIAL_CANON[c].roman + " · " + PROVERBIAL_CANON[c].ancientProverb + "   ";
+      const dir = c % 2 === 0 ? -1 : 1;
+      const shift = ((state.scrollPhase * 28 * dir + c * 47) % 260);
+      ctx.fillStyle = isSelectedCourse ? PALETTE.parchmentChalk : PALETTE.chalkPlaster;
+      ctx.globalAlpha = isSelectedCourse ? 0.88 : 0.42;
+      ctx.fillText(chantStrip + chantStrip, rowX - 130 + shift, cy + courseH * 0.34);
+    }
+    ctx.restore();
+    ctx.globalAlpha = 1;
+  }
+
+  function drawCentralScrollAndPortcullis(ctx, w, h, selectedCanon, state) {
+    const sx = w * 0.15;
+    const sy = h * 0.37;
+    const sw = w * 0.70;
+    const sh = h * 0.24;
+    const cx = w * 0.5;
+    const cy = sy + sh * 0.5;
+
+    for (let i = 0; i < PROVERBIAL_CANON.length; i++) {
+      const c = PROVERBIAL_CANON[i];
+      const active = c.id === selectedCanon.id;
+      ctx.beginPath();
+      ctx.moveTo(c.sealCoord.nx * w, c.sealCoord.ny * h);
+      ctx.lineTo(cx + (c.sealCoord.nx - 0.5) * sw * 0.55, cy + (c.sealCoord.ny < 0.5 ? -sh * 0.48 : sh * 0.48));
+      ctx.strokeStyle = active ? PALETTE.epiphanyGold : PALETTE.rubricOxide;
+      ctx.globalAlpha = active ? 0.85 : 0.32;
+      ctx.lineWidth = active ? 1.8 : 1.0;
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+
+    ctx.fillStyle = PALETTE.parchmentChalk;
+    ctx.fillRect(sx, sy, sw, sh);
+    ctx.fillStyle = PALETTE.chalkPlaster;
+    ctx.fillRect(sx - 6, sy - 4, 8, sh + 8);
+    ctx.fillRect(sx + sw - 2, sy - 4, 8, sh + 8);
+    ctx.strokeStyle = PALETTE.rubricOxide;
+    ctx.lineWidth = 2;
+    ctx.strokeRect(sx, sy, sw, sh);
+    ctx.strokeStyle = PALETTE.ironGallVoid;
+    ctx.lineWidth = 1;
+    ctx.strokeRect(sx + 4, sy + 4, sw - 8, sh - 8);
+
+    const headPx = Math.max(9, Math.round(Math.min(w, h) * 0.024));
+    ctx.font = "700 " + headPx + "px Georgia, 'Times New Roman', serif";
+    ctx.fillStyle = PALETTE.rubricOxide;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "top";
+    const rubricHeader = "CANON " + selectedCanon.roman + " · " + selectedCanon.categoryLabel.toUpperCase() +
+      " · SOLIDITY " + Math.round(state.spokenSolidity * 100) + "%";
+    ctx.fillText(rubricHeader, cx, sy + 8);
+
+    const bodyPx = Math.max(10, Math.round(Math.min(w, h) * 0.029));
+    ctx.font = "italic " + bodyPx + "px Georgia, 'Times New Roman', serif";
+    ctx.fillStyle = PALETTE.ironGallVoid;
+    const lines = wrapCanvasLines(ctx, "\u201C" + selectedCanon.ancientProverb + "\u201D", sw - 28).slice(0, 3);
+    const lineH = bodyPx * 1.28;
+    const startY = sy + sh * 0.50 - ((lines.length - 1) * lineH) * 0.5;
+    for (let l = 0; l < lines.length; l++) {
+      ctx.fillText(lines[l], cx, startY + l * lineH - bodyPx * 0.35);
+    }
+
+    ctx.font = "600 " + Math.max(8, headPx - 1) + "px Georgia, serif";
+    ctx.fillStyle = PALETTE.gallStone;
+    ctx.globalAlpha = 0.78;
+    ctx.fillText(selectedCanon.inversionLabel.toUpperCase() + " · CHORUS " + state.repetitionChorusVoices + " VOICES", cx, sy + sh - headPx - 7);
+    ctx.globalAlpha = 1;
+
+    if (state.clampAnim > 0.01) {
+      const slam = Math.min(1, state.clampAnim * 1.35);
+      const dropH = sh * slam;
+      const barCount = 9;
+      ctx.save();
+      ctx.fillStyle = PALETTE.ironGallVoid;
+      ctx.strokeStyle = PALETTE.rubricOxide;
+      ctx.globalAlpha = 0.84 * Math.min(1, state.clampAnim + 0.25);
+      for (let b = 0; b < barCount; b++) {
+        const bx = sx + 14 + (b / (barCount - 1)) * (sw - 28);
+        ctx.fillRect(bx - 2, sy, 4, dropH);
+      }
+      ctx.fillStyle = PALETTE.rubricOxide;
+      ctx.fillRect(sx + 6, sy + dropH * 0.45, sw - 12, 3.5);
+      ctx.fillRect(sx + 6, sy + Math.max(4, dropH - 6), sw - 12, 4);
+      if (state.lastImprisonment && state.lastImprisonment.wordTokensMapped.length > 0) {
+        const sample = state.lastImprisonment.wordTokensMapped.slice(0, 4).map(function (m) {
+          return m.freeWord + " \u2192 " + m.clampedTo;
+        }).join("  |  ");
+        ctx.fillStyle = PALETTE.ironGallVoid;
+        ctx.fillRect(sx + 16, cy - 11, sw - 32, 22);
+        ctx.strokeStyle = PALETTE.epiphanyGold;
+        ctx.strokeRect(sx + 16, cy - 11, sw - 32, 22);
+        ctx.fillStyle = PALETTE.epiphanyFlare;
+        ctx.font = "700 " + Math.max(9, headPx) + "px Georgia, serif";
+        ctx.fillText(sample, cx, cy - headPx * 0.48);
+      }
+      ctx.restore();
+    }
+  }
+
+  function drawRubricWaxSeals(ctx, w, h, state, viewOpts) {
+    const baseR = Math.max(13, Math.min(w, h) * 0.052);
+    const hoveredId = viewOpts && viewOpts.hoveredCanonId;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    for (let i = 0; i < PROVERBIAL_CANON.length; i++) {
+      const c = PROVERBIAL_CANON[i];
+      const x = c.sealCoord.nx * w;
+      const y = c.sealCoord.ny * h;
+      const isSel = c.id === state.selectedCanonId;
+      const isHov = c.id === hoveredId;
+      const r = baseR * (isSel ? 1.14 : (isHov ? 1.07 : 1.0));
+
+      if (isSel) {
+        ctx.beginPath();
+        ctx.arc(x, y, r + 5 + state.clampAnim * 4, 0, Math.PI * 2);
+        ctx.fillStyle = PALETTE.epiphanyGold;
+        ctx.globalAlpha = 0.24 + state.clampAnim * 0.25;
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      }
+
+      ctx.beginPath();
+      const lobes = 12;
+      for (let k = 0; k <= lobes; k++) {
+        const a = (k / lobes) * Math.PI * 2;
+        const rr = r * (k % 2 === 0 ? 1.04 : 0.92);
+        const px = x + Math.cos(a) * rr;
+        const py = y + Math.sin(a) * rr;
+        if (k === 0) ctx.moveTo(px, py);
+        else ctx.lineTo(px, py);
+      }
+      ctx.closePath();
+      ctx.fillStyle = isSel ? PALETTE.rubricOxide : "#6d2d22";
+      ctx.fill();
+      ctx.lineWidth = isSel ? 2.0 : 1.2;
+      ctx.strokeStyle = isSel ? PALETTE.epiphanyFlare : PALETTE.chalkPlaster;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(x, y, r * 0.72, 0, Math.PI * 2);
+      ctx.strokeStyle = isSel ? PALETTE.epiphanyGold : PALETTE.parchmentChalk;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      ctx.fillStyle = isSel ? PALETTE.epiphanyFlare : PALETTE.parchmentChalk;
+      ctx.font = "700 " + Math.max(10, Math.round(r * 0.68)) + "px Georgia, 'Times New Roman', serif";
+      ctx.fillText(c.roman, x, y + 0.5);
+    }
+  }
+
+  function createCageEngine(opts) {
+    const config = opts || {};
+    const audio = createSpokenCageAudio();
+
+    let spokenSolidity = 0.92;
+    let haphazardOpinionSubstance = 0.19;
+    let truthOnGround = 0.0;
+    let nothingSaidIsTrueYetCompact = true;
+    let selectedCanonId = "canon_1";
+    let imprisonedCount = 0;
+    let repetitionChorusVoices = 12;
+    let clampAnim = 0;
+    let lastImprisonment = null;
+    let utteranceLedger = [];
+    let scrollPhase = 0;
+    let reducedMotion = Boolean(config.reducedMotion);
+
+    function getSelectedCanon() {
+      return resolveCanonLookup(selectedCanonId);
+    }
+
+    function getState() {
+      return {
+        spokenSolidity: spokenSolidity,
+        haphazardOpinionSubstance: haphazardOpinionSubstance,
+        truthOnGround: truthOnGround,
+        nothingSaidIsTrueYetCompact: nothingSaidIsTrueYetCompact,
+        selectedCanonId: selectedCanonId,
+        selectedCanon: getSelectedCanon(),
+        canonCount: 8,
+        canon: PROVERBIAL_CANON,
+        imprisonedCount: imprisonedCount,
+        repetitionChorusVoices: repetitionChorusVoices,
+        lastImprisonment: lastImprisonment,
+        utteranceLedger: utteranceLedger.slice(),
+        clampAnim: clampAnim,
+        muted: audio.isMuted(),
+        reducedMotion: reducedMotion
+      };
+    }
+
+    function imprisonUtterance(rawText, context) {
+      const ctxInfo = context || {};
+      const trimmed = typeof rawText === "string" ? rawText.trim() : "";
+      const fallbackSeed = String(ctxInfo.unwordableDraftSeed || "a rare gleam opening between colorless walls");
+      const effectiveText = trimmed.length > 0 ? trimmed : fallbackSeed;
+
+      const matchedCanon = matchCanonForUtterance(effectiveText, ctxInfo);
+      const freeTokens = tokenizeAttempt(effectiveText);
+      const canonWords = extractCanonLexicon(matchedCanon.ancientProverb);
+      const wordTokensMapped = freeTokens.map(function (freeWord, idx) {
+        return {
+          freeWord: freeWord,
+          clampedTo: canonWords[idx % canonWords.length]
+        };
+      });
+
+      imprisonedCount += 1;
+      spokenSolidity = Math.min(0.99, +(0.92 + imprisonedCount * 0.012).toFixed(3));
+      repetitionChorusVoices += 2;
+      selectedCanonId = matchedCanon.id;
+      clampAnim = 1.0;
+
+      const record = {
+        id: "imprisonment_" + imprisonedCount,
+        order: imprisonedCount,
+        attemptedText: effectiveText,
+        wasSeededFromSilence: trimmed.length === 0,
+        apertureId: ctxInfo.apertureId || null,
+        canonId: matchedCanon.id,
+        canonIndex: matchedCanon.index,
+        canonRoman: matchedCanon.roman,
+        canonTitle: matchedCanon.title,
+        category: matchedCanon.category,
+        inversionKind: matchedCanon.inversionKind,
+        canonicalOutput: matchedCanon.ancientProverb,
+        ancientProverb: matchedCanon.ancientProverb,
+        ancientAttribution: matchedCanon.ancientAttribution,
+        presentInversion: matchedCanon.presentInversion,
+        wordTokensMapped: wordTokensMapped,
+        freeWordsSurvived: 0,
+        obligedToRepeat: true,
+        isVerbatimProverb: true,
+        spokenSolidityAfter: spokenSolidity,
+        repetitionChorusVoicesAfter: repetitionChorusVoices
+      };
+
+      lastImprisonment = record;
+      utteranceLedger = [record].concat(utteranceLedger).slice(0, 24);
+      audio.playChoralSnap(matchedCanon.index);
+
+      if (typeof config.onWordsImprisoned === "function") {
+        config.onWordsImprisoned(record, getState());
+      }
+      return record;
+    }
+
+    function selectCanon(idOrIndex) {
+      const entry = resolveCanonLookup(idOrIndex);
+      selectedCanonId = entry.id;
+      audio.playIronGallSeal();
+      if (typeof config.onCanonSelected === "function") {
+        config.onCanonSelected(entry, getState());
+      }
+      return entry;
+    }
+
+    function tick(dtSec) {
+      const dt = Math.max(0, Math.min(0.25, Number(dtSec) || 0));
+      if (reducedMotion) {
+        clampAnim = Math.max(0, +(clampAnim - dt * 2.2).toFixed(4));
+      } else {
+        scrollPhase = (scrollPhase + dt * 0.36) % 1000;
+        clampAnim = Math.max(0, +(clampAnim - dt * 0.68).toFixed(4));
+      }
+      return { scrollPhase: scrollPhase, clampAnim: clampAnim };
+    }
+
+    function renderLattice(ctx, width, height, viewOpts) {
+      if (!ctx || !(width > 0) || !(height > 0)) return;
+      const vOpts = viewOpts || {};
+      const renderState = {
+        spokenSolidity: spokenSolidity,
+        selectedCanonId: selectedCanonId,
+        imprisonedCount: imprisonedCount,
+        repetitionChorusVoices: repetitionChorusVoices,
+        clampAnim: clampAnim,
+        lastImprisonment: lastImprisonment,
+        scrollPhase: reducedMotion || vOpts.reducedMotion ? 0 : scrollPhase
+      };
+      ctx.save();
+      drawMonolithBackdrop(ctx, width, height, renderState);
+      drawProverbialMonolith(ctx, width, height, renderState);
+      drawCentralScrollAndPortcullis(ctx, width, height, getSelectedCanon(), renderState);
+      drawRubricWaxSeals(ctx, width, height, renderState, vOpts);
+      ctx.restore();
+    }
+
+    function hitTest(normX, normY) {
+      const nx = Number(normX);
+      const ny = Number(normY);
+      if (Number.isFinite(nx) && Number.isFinite(ny)) {
+        let nearest = null;
+        let bestDist = 0.085;
+        for (let i = 0; i < PROVERBIAL_CANON.length; i++) {
+          const c = PROVERBIAL_CANON[i];
+          const d = Math.hypot(nx - c.sealCoord.nx, ny - c.sealCoord.ny);
+          if (d <= bestDist) {
+            bestDist = d;
+            nearest = c;
+          }
+        }
+        if (nearest) {
+          return {
+            kind: "canon_seal",
+            canonId: nearest.id,
+            index: nearest.index,
+            roman: nearest.roman,
+            title: nearest.title,
+            category: nearest.category,
+            inversionKind: nearest.inversionKind,
+            ancientProverb: nearest.ancientProverb,
+            ancientAttribution: nearest.ancientAttribution,
+            presentInversion: nearest.presentInversion
+          };
+        }
+      }
+      return { kind: "spoken_monolith" };
+    }
+
+    function setReducedMotion(flag) {
+      reducedMotion = Boolean(flag);
+      return reducedMotion;
+    }
+
+    function reset() {
+      spokenSolidity = 0.92;
+      haphazardOpinionSubstance = 0.19;
+      truthOnGround = 0.0;
+      nothingSaidIsTrueYetCompact = true;
+      selectedCanonId = "canon_1";
+      imprisonedCount = 0;
+      repetitionChorusVoices = 12;
+      clampAnim = 0;
+      lastImprisonment = null;
+      utteranceLedger = [];
+      scrollPhase = 0;
+      return getState();
+    }
+
+    return {
+      imprisonUtterance: imprisonUtterance,
+      selectCanon: selectCanon,
+      tick: tick,
+      renderLattice: renderLattice,
+      hitTest: hitTest,
+      audio: audio,
+      setReducedMotion: setReducedMotion,
+      reset: reset,
+      getState: getState
+    };
+  }
+
+  const AglauraSpokenCage = Object.freeze({
+    PALETTE: PALETTE,
+    CATEGORY_LABELS: CATEGORY_LABELS,
+    INVERSION_LABELS: INVERSION_LABELS,
+    PROVERBIAL_CANON: PROVERBIAL_CANON,
+    createCageEngine: createCageEngine
+  });
+
+  root.AglauraSpokenCage = AglauraSpokenCage;
+  if (typeof window !== "undefined") {
+    window.AglauraSpokenCage = AglauraSpokenCage;
+  }
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = AglauraSpokenCage;
+  }
+})(typeof globalThis !== "undefined" ? globalThis : (typeof window !== "undefined" ? window : this));
+
+/**
+ * Ground Aglaura — Colorless Street Openings & Unworded Liminal Epiphanies
+ * Standalone ES6 IIFE module exposing globalThis.AglauraGroundEpiphanies
+ */
+(function (root) {
+  "use strict";
+
+  const PALETTE = Object.freeze({
+    ironGallVoid: "#171514",
+    gallStone: "#252220",
+    colorlessFog: "#7d8082",
+    chalkPlaster: "#c8c6be",
+    parchmentChalk: "#ebe5d5",
+    rubricOxide: "#8f3d2e",
+    epiphanyGold: "#d8a648",
+    epiphanyFlare: "#f6de92"
+  });
+
+  const CERTAIN_HOURS = Object.freeze([
+    Object.freeze({
+      id: "leaden_forenoon",
+      index: 0,
+      romanHour: "IX",
+      hourLabel: "IX · Leaden Forenoon",
+      isLiminalWindow: false,
+      fogDensity: 0.88,
+      skyTone: "#8b8d8e",
+      groundNote: "Flat chalk overcast; unplanned sheds stand mute and characterless."
+    }),
+    Object.freeze({
+      id: "chalk_midday",
+      index: 1,
+      romanHour: "XII",
+      hourLabel: "XII · Chalk Midday",
+      isLiminalWindow: false,
+      fogDensity: 0.92,
+      skyTone: "#9a9b98",
+      groundNote: "Colorless, characterless Aglaura planted at random beneath vertical glare."
+    }),
+    Object.freeze({
+      id: "oblique_vespers",
+      index: 2,
+      romanHour: "XVI",
+      hourLabel: "XVI · Oblique Vespers",
+      isLiminalWindow: true,
+      fogDensity: 0.30,
+      skyTone: "#524c46",
+      groundNote: "Certain Hour I — low slant rays part the lime haze along quiet corners."
+    }),
+    Object.freeze({
+      id: "suspended_gloaming",
+      index: 3,
+      romanHour: "XVIII",
+      hourLabel: "XVIII · Suspended Gloaming",
+      isLiminalWindow: true,
+      fogDensity: 0.24,
+      skyTone: "#3c3733",
+      groundNote: "Certain Hour II — breathless twilight holds an unmistakable golden suspicion."
+    }),
+    Object.freeze({
+      id: "ash_dusk",
+      index: 4,
+      romanHour: "XX",
+      hourLabel: "XX · Ash Dusk",
+      isLiminalWindow: false,
+      fogDensity: 0.86,
+      skyTone: "#4e4f50",
+      groundNote: "Ashen murk returns the random plaster walls to ordinary obscurity."
+    }),
+    Object.freeze({
+      id: "pale_daybreak",
+      index: 5,
+      romanHour: "V",
+      hourLabel: "V · Pale Daybreak Cleft",
+      isLiminalWindow: true,
+      fogDensity: 0.28,
+      skyTone: "#4b4642",
+      groundNote: "Certain Hour III — pale amber cleft before habitual speech awakens."
+    })
+  ]);
+
+  const STREET_OPENINGS = Object.freeze([
+    Object.freeze({
+      id: "aperture_chalk_alley",
+      index: 0,
+      name: "Slanted Chalk Alley",
+      ordinaryAppearance: "Random lime shed walls leaning without plan beside a rutted chalk gutter.",
+      epiphanyHintVisual: "Cathedral-narrow honeyed blade of light with revolving astrolabe dust-motes.",
+      unwordableDraftSeed: "honeyed blade of light and revolving dust-motes between the chalk walls",
+      coords: Object.freeze({ nx: 0.14, ny: 0.56 })
+    }),
+    Object.freeze({
+      id: "aperture_cistern_arch",
+      index: 1,
+      name: "Sunken Cistern Archway",
+      ordinaryAppearance: "Cracked plaster culvert beside grey weeds and stagnant kerbside runoff.",
+      epiphanyHintVisual: "Twin inverted arches mirrored in still rainwater opening a subterranean pale-gold colonnade.",
+      unwordableDraftSeed: "twin inverted arches opening a pale-gold colonnade beneath still rainwater",
+      coords: Object.freeze({ nx: 0.29, ny: 0.65 })
+    }),
+    Object.freeze({
+      id: "aperture_gable_cleft",
+      index: 2,
+      name: "Unmapped Gable Cleft",
+      ordinaryAppearance: "Haphazard timber eaves colliding at awkward angles above a blind passage.",
+      epiphanyHintVisual: "Airborne stair of gilded terrace-shadow ascending between blind gables.",
+      unwordableDraftSeed: "airborne stair of gilded terrace-shadow ascending between blind gables",
+      coords: Object.freeze({ nx: 0.44, ny: 0.46 })
+    }),
+    Object.freeze({
+      id: "aperture_windless_court",
+      index: 3,
+      name: "Windless Plaster Court",
+      ordinaryAppearance: "Drab trapezium of flaking stucco, patched mortar, and random drainpipes.",
+      epiphanyHintVisual: "Pomegranate bough and quiet linen held in breathless amber equilibrium.",
+      unwordableDraftSeed: "pomegranate bough and quiet linen held in breathless amber equilibrium",
+      coords: Object.freeze({ nx: 0.59, ny: 0.63 })
+    }),
+    Object.freeze({
+      id: "aperture_stairwell_bend",
+      index: 4,
+      name: "Crooked Stairwell Bend",
+      ordinaryAppearance: "Uneven limestone risers ending abruptly at a blank mortar party wall.",
+      epiphanyHintVisual: "Oblique twilight prism turning worn steps into translucent alabaster poised above a hidden garden.",
+      unwordableDraftSeed: "worn steps turned into translucent alabaster poised above a hidden garden",
+      coords: Object.freeze({ nx: 0.74, ny: 0.54 })
+    }),
+    Object.freeze({
+      id: "aperture_roofline_gap",
+      index: 5,
+      name: "Westward Roofline Gap",
+      ordinaryAppearance: "Colorless chimney pots scattered at random against a flat overcast.",
+      epiphanyHintVisual: "Rare horizon fissure where distant domes of pure light briefly hover before words touch them.",
+      unwordableDraftSeed: "distant domes of pure light hovering inside a westward horizon fissure",
+      coords: Object.freeze({ nx: 0.88, ny: 0.40 })
+    })
+  ]);
+
+  const RANDOM_SHEDS = Object.freeze(
+    Array.from({ length: 20 }, (_, i) => {
+      const seed = (i * 73 + 19) % 97;
+      return Object.freeze({
+        nx: (i / 20) * 0.96 + 0.01,
+        nw: 0.048 + (seed % 7) * 0.008,
+        nh: 0.22 + ((seed * 3) % 11) * 0.026,
+        baseY: 0.76 + (i % 3) * 0.04,
+        roofSkew: ((seed % 9) - 4) * 0.009,
+        shade: i % 3 === 0 ? "#b8b6ae" : i % 3 === 1 ? "#919394" : "#6c6e70",
+        hasPipe: seed % 2 === 0,
+        flueOffset: (seed % 5) * 0.16 + 0.15
+      });
+    })
+  );
+
+  function clamp(v, lo, hi) {
+    return v < lo ? lo : v > hi ? hi : v;
+  }
+
+  function round3(v) {
+    return +Number(v).toFixed(3);
+  }
+
+  function rgba(hex, alpha) {
+    const clean = hex.replace("#", "");
+    const r = parseInt(clean.slice(0, 2), 16);
+    const g = parseInt(clean.slice(2, 4), 16);
+    const b = parseInt(clean.slice(4, 6), 16);
+    return "rgba(" + r + "," + g + "," + b + "," + clamp(alpha, 0, 1).toFixed(3) + ")";
+  }
+
+  function cloneAperture(ap) {
+    return {
+      id: ap.id,
+      index: ap.index,
+      name: ap.name,
+      ordinaryAppearance: ap.ordinaryAppearance,
+      epiphanyHintVisual: ap.epiphanyHintVisual,
+      unwordableDraftSeed: ap.unwordableDraftSeed,
+      coords: { nx: ap.coords.nx, ny: ap.coords.ny },
+      status: ap.status,
+      peakLuminance: ap.peakLuminance,
+      overwrittenByProverb: ap.overwrittenByProverb
+    };
+  }
+
+  function makeInitialApertures() {
+    return STREET_OPENINGS.map((opening) => ({
+      id: opening.id,
+      index: opening.index,
+      name: opening.name,
+      ordinaryAppearance: opening.ordinaryAppearance,
+      epiphanyHintVisual: opening.epiphanyHintVisual,
+      unwordableDraftSeed: opening.unwordableDraftSeed,
+      coords: { nx: opening.coords.nx, ny: opening.coords.ny },
+      status: "unseen",
+      peakLuminance: 0,
+      overwrittenByProverb: null
+    }));
+  }
+
+  function createGroundEngine(opts = {}) {
+    let hourIndex = 1;
+    let selectedApertureId = "aperture_chalk_alley";
+    let silentDwellSec = 0;
+    let epiphanyIntensity = 0;
+    let silentWitnessedCount = 0;
+    let lostRecollectionsCount = 0;
+    let groundSubstance = 0.24;
+    let erasureFlash = 0;
+    let reducedMotion = Boolean(opts.reducedMotion);
+    let ambientPhase = 0;
+    let apertures = makeInitialApertures();
+
+    function getActiveAperture() {
+      return apertures.find((a) => a.id === selectedApertureId) || apertures[0];
+    }
+
+    function recount() {
+      silentWitnessedCount = apertures.filter((a) => a.status === "witnessed_silently").length;
+      lostRecollectionsCount = apertures.filter((a) => a.status === "lost_for_lack_of_words").length;
+      groundSubstance = Math.max(0.08, round3(0.24 - lostRecollectionsCount * 0.025));
+    }
+
+    function getState() {
+      const currentHour = CERTAIN_HOURS[hourIndex];
+      const active = getActiveAperture();
+      return {
+        hourIndex,
+        currentHour,
+        isCertainHour: currentHour.isLiminalWindow,
+        hours: CERTAIN_HOURS,
+        selectedApertureId,
+        selectedAperture: cloneAperture(active),
+        apertures: apertures.map(cloneAperture),
+        silentDwellSec,
+        epiphanyIntensity,
+        hasMagnificentSuspicion: epiphanyIntensity >= 0.65,
+        silentWitnessedCount,
+        lostRecollectionsCount,
+        groundSubstance,
+        erasureFlash,
+        reducedMotion,
+        colorlessAndRandomAtOrdinaryHours: true,
+        canSpeakOnlyOfSpokenAglaura: true
+      };
+    }
+
+    function setHour(indexOrId) {
+      let target = null;
+      if (typeof indexOrId === "number" && Number.isInteger(indexOrId)) {
+        target = CERTAIN_HOURS[clamp(indexOrId, 0, CERTAIN_HOURS.length - 1)];
+      } else if (typeof indexOrId === "string") {
+        const trimmed = indexOrId.trim();
+        if (/^[0-5]$/.test(trimmed)) {
+          target = CERTAIN_HOURS[Number(trimmed)];
+        } else {
+          const upper = trimmed.toUpperCase();
+          target = CERTAIN_HOURS.find((h) => h.id === trimmed || h.romanHour === upper) || null;
+        }
+      }
+      if (target) {
+        hourIndex = target.index;
+      }
+      const currentHour = CERTAIN_HOURS[hourIndex];
+      const active = getActiveAperture();
+      if (!currentHour.isLiminalWindow || active.status === "lost_for_lack_of_words") {
+        epiphanyIntensity = 0;
+        silentDwellSec = 0;
+      }
+      return getState();
+    }
+
+    function seekCertainHour() {
+      if (hourIndex < 2) {
+        hourIndex = 2;
+      } else if (hourIndex === 2) {
+        hourIndex = 3;
+      } else if (hourIndex === 3 || hourIndex === 4) {
+        hourIndex = 5;
+      } else {
+        hourIndex = 2;
+      }
+      let active = getActiveAperture();
+      if (active.status === "lost_for_lack_of_words") {
+        for (let step = 1; step <= apertures.length; step++) {
+          const candidate = apertures[(active.index + step) % apertures.length];
+          if (candidate.status !== "lost_for_lack_of_words") {
+            selectedApertureId = candidate.id;
+            silentDwellSec = 0;
+            epiphanyIntensity = 0;
+            active = candidate;
+            break;
+          }
+        }
+      }
+      if (active.status !== "lost_for_lack_of_words") {
+        silentDwellSec = round3(Math.max(silentDwellSec, 0.45));
+        epiphanyIntensity = round3(Math.min(1.0, silentDwellSec / 2.0));
+        active.peakLuminance = round3(Math.max(active.peakLuminance, epiphanyIntensity));
+        if (epiphanyIntensity >= 0.65 && active.status !== "witnessed_silently") {
+          active.status = "witnessed_silently";
+          recount();
+        }
+      } else {
+        silentDwellSec = 0;
+        epiphanyIntensity = 0;
+      }
+      return {
+        currentHour: CERTAIN_HOURS[hourIndex],
+        selectedAperture: cloneAperture(active)
+      };
+    }
+
+    function selectAperture(idOrIndex) {
+      let target = null;
+      if (typeof idOrIndex === "number" && Number.isInteger(idOrIndex)) {
+        target = apertures[clamp(idOrIndex, 0, apertures.length - 1)];
+      } else if (typeof idOrIndex === "string") {
+        const trimmed = idOrIndex.trim();
+        if (/^[0-5]$/.test(trimmed)) {
+          target = apertures[Number(trimmed)];
+        } else {
+          target = apertures.find((a) => a.id === trimmed) || null;
+        }
+      }
+      if (!target) return getState();
+      if (!(target.id === selectedApertureId && epiphanyIntensity > 0)) {
+        selectedApertureId = target.id;
+        silentDwellSec = 0;
+        epiphanyIntensity = 0;
+      }
+      return getState();
+    }
+
+    function dwellSilently(seconds = 1.6, dwellOpts = {}) {
+      const sec = Math.max(0, Number.isFinite(seconds) ? seconds : 1.6);
+      if (!CERTAIN_HOURS[hourIndex].isLiminalWindow) {
+        if (dwellOpts && dwellOpts.autoSeekHour === true) {
+          seekCertainHour();
+        } else {
+          epiphanyIntensity = 0;
+          silentDwellSec = 0;
+          return getState();
+        }
+      }
+      const active = getActiveAperture();
+      if (active.status === "lost_for_lack_of_words") {
+        epiphanyIntensity = 0;
+        silentDwellSec = 0;
+        return getState();
+      }
+      const prevIntensity = epiphanyIntensity;
+      silentDwellSec = round3(Math.min(8.0, silentDwellSec + sec));
+      epiphanyIntensity = round3(Math.min(1.0, silentDwellSec / 2.0));
+      active.peakLuminance = round3(Math.max(active.peakLuminance, epiphanyIntensity));
+      if (epiphanyIntensity >= 0.65) {
+        active.status = "witnessed_silently";
+        recount();
+        const shouldNotify = prevIntensity < 0.65 || !(dwellOpts && dwellOpts.fromTick);
+        if (shouldNotify && typeof opts.onEpiphanyBloom === "function") {
+          opts.onEpiphanyBloom(cloneAperture(active), getState());
+        }
+      }
+      return getState();
+    }
+
+    function disturbWithPendingWords() {
+      silentDwellSec = round3(silentDwellSec * 0.45);
+      epiphanyIntensity = round3(epiphanyIntensity * 0.45);
+      if (epiphanyIntensity < 0.004) {
+        epiphanyIntensity = 0;
+        silentDwellSec = 0;
+      }
+      return getState();
+    }
+
+    function overwriteGlimpseWithSpeech(imprisonmentRecord) {
+      const proverbText =
+        typeof imprisonmentRecord === "string"
+          ? imprisonmentRecord
+          : (imprisonmentRecord &&
+              (imprisonmentRecord.canonicalOutput || imprisonmentRecord.ancientProverb)) ||
+            "In Aglaura nothing said of the city is true, yet only spoken Aglaura endures.";
+      const active = getActiveAperture();
+      let target = active;
+      if (active.status === "lost_for_lack_of_words") {
+        target =
+          apertures.find((a) => a.status === "witnessed_silently") ||
+          apertures.find((a) => a.status === "unseen") ||
+          active;
+      }
+      const previousStatus = target.status;
+      const erasedLuminance = round3(Math.max(epiphanyIntensity, target.peakLuminance));
+      selectedApertureId = target.id;
+      epiphanyIntensity = 0;
+      silentDwellSec = 0;
+      erasureFlash = 1.0;
+      target.status = "lost_for_lack_of_words";
+      target.overwrittenByProverb = proverbText;
+      recount();
+
+      const event = {
+        apertureId: target.id,
+        apertureIndex: target.index,
+        apertureName: target.name,
+        previousStatus,
+        status: target.status,
+        erasedVisualMemory: target.epiphanyHintVisual,
+        overwrittenByProverb: proverbText,
+        erasedLuminance,
+        silentWitnessedCount,
+        lostRecollectionsCount,
+        groundSubstance
+      };
+      if (typeof opts.onMemoryErasedBySpeech === "function") {
+        opts.onMemoryErasedBySpeech(event, getState());
+      }
+      return event;
+    }
+
+    function tick(dtSec, inputState = {}) {
+      const dt = clamp(Number.isFinite(dtSec) ? dtSec : 0.016, 0, 0.25);
+      if (!reducedMotion) {
+        ambientPhase = (ambientPhase + dt) % 3600;
+      }
+      if (erasureFlash > 0) {
+        erasureFlash = Math.max(0, round3(erasureFlash - dt * (reducedMotion ? 3.2 : 1.35)));
+      }
+      if (
+        CERTAIN_HOURS[hourIndex].isLiminalWindow &&
+        !inputState.isTyping &&
+        !inputState.pointerMovingFast
+      ) {
+        dwellSilently(dt * 0.52, { fromTick: true });
+      }
+      return getState();
+    }
+
+    function hitTest(normX, normY, width, height) {
+      if (!Number.isFinite(normX) || !Number.isFinite(normY)) return null;
+      const nx = width && width > 1 && normX > 1 ? normX / width : normX;
+      const ny = height && height > 1 && normY > 1 ? normY / height : normY;
+      let best = null;
+      let bestDist = 0.145;
+      for (let i = 0; i < apertures.length; i++) {
+        const ap = apertures[i];
+        const d = Math.hypot(nx - ap.coords.nx, (ny - ap.coords.ny) * 0.82);
+        if (d <= bestDist) {
+          bestDist = d;
+          best = ap;
+        }
+      }
+      return best ? cloneAperture(best) : null;
+    }
+
+    function setReducedMotion(flag) {
+      reducedMotion = Boolean(flag);
+      if (reducedMotion && erasureFlash > 0.35) erasureFlash = 0.35;
+      return reducedMotion;
+    }
+
+    function reset() {
+      hourIndex = 1;
+      selectedApertureId = "aperture_chalk_alley";
+      silentDwellSec = 0;
+      epiphanyIntensity = 0;
+      silentWitnessedCount = 0;
+      lostRecollectionsCount = 0;
+      groundSubstance = 0.24;
+      erasureFlash = 0;
+      apertures = makeInitialApertures();
+      return getState();
+    }
+
+    function renderGround(ctx, width, height, viewOpts = {}) {
+      paintGroundScene(
+        ctx,
+        width,
+        height,
+        {
+          currentHour: CERTAIN_HOURS[hourIndex],
+          selectedApertureId,
+          apertures,
+          epiphanyIntensity,
+          erasureFlash,
+          reducedMotion,
+          ambientPhase
+        },
+        viewOpts
+      );
+    }
+
+    return {
+      setHour,
+      seekCertainHour,
+      selectAperture,
+      dwellSilently,
+      disturbWithPendingWords,
+      overwriteGlimpseWithSpeech,
+      tick,
+      renderGround,
+      render: renderGround,
+      hitTest,
+      setReducedMotion,
+      reset,
+      getState
+    };
+  }
+
+  function drawEpiphanyVista(ctx, cx, cy, pw, ph, apIndex, intensity, phase, reducedMotion) {
+    const x0 = cx - pw * 0.5;
+    const y0 = cy - ph * 0.5;
+    const sway = reducedMotion ? 0 : Math.sin(phase * 1.4) * 0.04;
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(x0, y0, pw, ph);
+    ctx.clip();
+
+    const bg = ctx.createLinearGradient(cx, y0, cx, y0 + ph);
+    bg.addColorStop(0, rgba(PALETTE.epiphanyFlare, 0.35 + intensity * 0.55));
+    bg.addColorStop(0.55, rgba(PALETTE.epiphanyGold, 0.3 + intensity * 0.52));
+    bg.addColorStop(1, rgba(PALETTE.gallStone, 0.88));
+    ctx.fillStyle = bg;
+    ctx.fillRect(x0, y0, pw, ph);
+
+    ctx.strokeStyle = rgba(PALETTE.epiphanyFlare, 0.55 + intensity * 0.42);
+    ctx.fillStyle = rgba(PALETTE.epiphanyFlare, 0.48 + intensity * 0.45);
+    ctx.lineWidth = Math.max(1, pw * 0.022);
+
+    if (apIndex === 0) {
+      ctx.fillStyle = rgba(PALETTE.gallStone, 0.78);
+      ctx.fillRect(x0, y0, pw * 0.26, ph);
+      ctx.fillRect(x0 + pw * 0.74, y0, pw * 0.26, ph);
+      ctx.fillStyle = rgba(PALETTE.epiphanyFlare, 0.32 + intensity * 0.55);
+      ctx.beginPath();
+      ctx.moveTo(cx - pw * 0.14, y0);
+      ctx.lineTo(cx + pw * 0.18, y0);
+      ctx.lineTo(cx + pw * 0.26, y0 + ph);
+      ctx.lineTo(cx - pw * 0.24, y0 + ph);
+      ctx.closePath();
+      ctx.fill();
+      const rot = reducedMotion ? 0.4 : phase * 0.75;
+      ctx.beginPath();
+      ctx.arc(cx, cy - ph * 0.05, pw * 0.2, 0, Math.PI * 2);
+      ctx.stroke();
+      for (let m = 0; m < 5; m++) {
+        const a = rot + m * 1.256;
+        ctx.fillRect(cx + Math.cos(a) * pw * 0.16 - 1.5, cy + Math.sin(a) * ph * 0.16 - 1.5, 3, 3);
+      }
+    } else if (apIndex === 1) {
+      const wy = cy + ph * 0.04;
+      for (let s = -1; s <= 1; s += 2) {
+        for (let k = 0; k < 2; k++) {
+          const ax = cx + (k === 0 ? -pw * 0.2 : pw * 0.2);
+          ctx.beginPath();
+          ctx.arc(ax, wy, pw * 0.16, s < 0 ? Math.PI : 0, s < 0 ? 0 : Math.PI);
+          ctx.stroke();
+        }
+      }
+      ctx.strokeStyle = rgba(PALETTE.parchmentChalk, 0.75 * intensity);
+      ctx.beginPath();
+      ctx.moveTo(x0 + 4, wy);
+      ctx.lineTo(x0 + pw - 4, wy);
+      ctx.stroke();
+    } else if (apIndex === 2) {
+      ctx.fillStyle = rgba(PALETTE.gallStone, 0.76);
+      ctx.beginPath();
+      ctx.moveTo(x0, y0 + ph);
+      ctx.lineTo(x0, y0 + ph * 0.18);
+      ctx.lineTo(cx - pw * 0.08, y0 + ph);
+      ctx.fill();
+      ctx.fillStyle = rgba(PALETTE.epiphanyFlare, 0.5 + intensity * 0.45);
+      for (let st = 0; st < 6; st++) {
+        const sx = x0 + pw * (0.2 + st * 0.1);
+        const sy = y0 + ph * (0.82 - st * 0.11);
+        ctx.fillRect(sx, sy, pw * 0.24, Math.max(2, ph * 0.035));
+      }
+    } else if (apIndex === 3) {
+      ctx.fillStyle = rgba(PALETTE.parchmentChalk, 0.42 + intensity * 0.45);
+      ctx.fillRect(cx - pw * 0.26, cy - ph * 0.22, pw * (0.28 + sway), ph * 0.46);
+      ctx.strokeStyle = rgba(PALETTE.epiphanyGold, 0.85);
+      ctx.beginPath();
+      ctx.moveTo(x0 + pw, cy - ph * 0.28);
+      ctx.quadraticCurveTo(cx + pw * 0.05, cy - ph * 0.12, cx + pw * 0.02, cy + ph * 0.08);
+      ctx.stroke();
+      ctx.fillStyle = rgba(PALETTE.rubricOxide, 0.55 + intensity * 0.4);
+      ctx.beginPath();
+      ctx.arc(cx + pw * 0.05, cy + ph * 0.1, Math.max(3, pw * 0.075), 0, Math.PI * 2);
+      ctx.fill();
+    } else if (apIndex === 4) {
+      for (let r = 0; r < 5; r++) {
+        ctx.fillStyle = rgba(PALETTE.parchmentChalk, (0.35 + r * 0.1) * intensity);
+        ctx.fillRect(x0 + pw * (0.14 + r * 0.08), y0 + ph * (0.78 - r * 0.1), pw * 0.44, ph * 0.06);
+      }
+      ctx.fillStyle = rgba(PALETTE.epiphanyFlare, 0.28 * intensity);
+      ctx.beginPath();
+      ctx.moveTo(x0 + pw, y0);
+      ctx.lineTo(x0 + pw * 0.12, y0 + ph);
+      ctx.lineTo(x0 + pw * 0.52, y0 + ph);
+      ctx.closePath();
+      ctx.fill();
+    } else {
+      for (let d = 0; d < 3; d++) {
+        const dx = cx + (d - 1) * pw * 0.25;
+        const dy = cy + ph * (0.12 - (d === 1 ? 0.08 : 0));
+        const rad = pw * (d === 1 ? 0.16 : 0.11);
+        ctx.beginPath();
+        ctx.arc(dx, dy, rad, Math.PI, 0);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(dx, dy - rad);
+        ctx.lineTo(dx, dy - rad - ph * 0.12);
+        ctx.stroke();
+      }
+    }
+    ctx.restore();
+  }
+
+  function paintGroundScene(ctx, width, height, snap, viewOpts = {}) {
+    if (!ctx || !(width > 0) || !(height > 0)) return;
+    const hour = (snap && snap.currentHour) || CERTAIN_HOURS[1];
+    const apertures = (snap && snap.apertures) || makeInitialApertures();
+    const selectedId = (snap && snap.selectedApertureId) || apertures[0].id;
+    const intensity = clamp((snap && snap.epiphanyIntensity) || 0, 0, 1);
+    const flash = clamp((snap && snap.erasureFlash) || 0, 0, 1);
+    const reduced = Boolean((snap && snap.reducedMotion) || viewOpts.reducedMotion);
+    const phase = (snap && snap.ambientPhase) || 0;
+
+    ctx.save();
+    const sky = ctx.createLinearGradient(0, 0, 0, height);
+    sky.addColorStop(0, hour.isLiminalWindow ? PALETTE.gallStone : PALETTE.colorlessFog);
+    sky.addColorStop(0.58, hour.isLiminalWindow ? "#5f584e" : PALETTE.chalkPlaster);
+    sky.addColorStop(1, PALETTE.gallStone);
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, width, height);
+
+    for (let i = 0; i < RANDOM_SHEDS.length; i++) {
+      const sh = RANDOM_SHEDS[i];
+      const sx = sh.nx * width;
+      const sw = sh.nw * width;
+      const sy = (sh.baseY - sh.nh) * height;
+      const shH = sh.nh * height;
+      ctx.fillStyle = sh.shade;
+      ctx.beginPath();
+      ctx.moveTo(sx, sy + sh.roofSkew * height);
+      ctx.lineTo(sx + sw, sy - sh.roofSkew * height);
+      ctx.lineTo(sx + sw, sy + shH);
+      ctx.lineTo(sx, sy + shH);
+      ctx.closePath();
+      ctx.fill();
+      if (sh.hasPipe) {
+        ctx.strokeStyle = PALETTE.gallStone;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(sx + sw * sh.flueOffset, sy - 7);
+        ctx.lineTo(sx + sw * sh.flueOffset, sy + shH * 0.75);
+        ctx.stroke();
+      }
+    }
+
+    ctx.fillStyle = rgba(PALETTE.colorlessFog, hour.fogDensity * (1 - intensity * 0.52));
+    ctx.fillRect(0, 0, width, height);
+
+    const activeAp = apertures.find((a) => a.id === selectedId) || apertures[0];
+    if (intensity > 0 && activeAp.status !== "lost_for_lack_of_words") {
+      const gx = activeAp.coords.nx * width;
+      const gy = activeAp.coords.ny * height;
+      const halo = ctx.createRadialGradient(gx, gy, 4, gx, gy, Math.max(width, height) * 0.42);
+      halo.addColorStop(0, rgba(PALETTE.epiphanyFlare, 0.46 * intensity));
+      halo.addColorStop(0.45, rgba(PALETTE.epiphanyGold, 0.22 * intensity));
+      halo.addColorStop(1, rgba(PALETTE.epiphanyGold, 0));
+      ctx.fillStyle = halo;
+      ctx.fillRect(0, 0, width, height);
+    }
+
+    const pw = clamp(width * 0.108, 38, 96);
+    const ph = clamp(height * 0.29, 54, 132);
+
+    for (let i = 0; i < apertures.length; i++) {
+      const ap = apertures[i];
+      const cx = ap.coords.nx * width;
+      const cy = ap.coords.ny * height;
+      const x0 = cx - pw * 0.5;
+      const y0 = cy - ph * 0.5;
+      const isSel = ap.id === selectedId;
+
+      ctx.fillStyle = PALETTE.chalkPlaster;
+      ctx.fillRect(x0 - 3, y0 - 3, pw + 6, ph + 6);
+      ctx.fillStyle = ap.status === "lost_for_lack_of_words" ? PALETTE.ironGallVoid : "#696b6c";
+      ctx.fillRect(x0, y0, pw, ph);
+
+      if (ap.status === "lost_for_lack_of_words") {
+        ctx.fillStyle = PALETTE.rubricOxide;
+        for (let b = 0; b < 3; b++) {
+          ctx.fillRect(x0 + 2, y0 + ph * (0.2 + b * 0.26), pw - 4, Math.max(5, ph * 0.1));
+        }
+        ctx.strokeStyle = rgba(PALETTE.parchmentChalk, 0.55);
+        ctx.beginPath();
+        ctx.moveTo(x0 + 3, y0 + 3);
+        ctx.lineTo(x0 + pw - 3, y0 + ph - 3);
+        ctx.stroke();
+      } else if (isSel && intensity > 0) {
+        drawEpiphanyVista(ctx, cx, cy, pw, ph, ap.index, intensity, phase, reduced);
+      } else {
+        ctx.strokeStyle = rgba(PALETTE.gallStone, 0.5);
+        ctx.beginPath();
+        ctx.moveTo(x0 + pw * 0.2, y0 + ph * 0.35);
+        ctx.lineTo(x0 + pw * 0.82, y0 + ph * 0.42);
+        ctx.moveTo(x0 + pw * 0.48, y0 + 4);
+        ctx.lineTo(x0 + pw * 0.44, y0 + ph - 4);
+        ctx.stroke();
+      }
+
+      ctx.lineWidth = isSel ? 2.2 : 1.1;
+      ctx.strokeStyle =
+        ap.status === "lost_for_lack_of_words"
+          ? PALETTE.rubricOxide
+          : isSel && intensity > 0
+            ? PALETTE.epiphanyFlare
+            : ap.status === "witnessed_silently"
+              ? PALETTE.epiphanyGold
+              : PALETTE.gallStone;
+      ctx.strokeRect(x0 - 2, y0 - 2, pw + 4, ph + 4);
+
+      ctx.fillStyle = PALETTE.ironGallVoid;
+      ctx.fillRect(cx - 10, y0 + ph + 4, 20, 14);
+      ctx.fillStyle = isSel ? PALETTE.epiphanyFlare : PALETTE.parchmentChalk;
+      ctx.font = "600 10px Georgia, serif";
+      ctx.textAlign = "center";
+      ctx.fillText(String(i + 1), cx, y0 + ph + 14);
+    }
+
+    if (flash > 0) {
+      ctx.fillStyle = rgba(PALETTE.rubricOxide, flash * 0.36);
+      ctx.fillRect(0, 0, width, height);
+    }
+    ctx.restore();
+  }
+
+  const AglauraGroundEpiphanies = Object.freeze({
+    PALETTE,
+    CERTAIN_HOURS,
+    STREET_OPENINGS,
+    createGroundEngine,
+    renderGround(ctx, width, height, engineOrState, viewOpts = {}) {
+      if (engineOrState && typeof engineOrState.renderGround === "function") {
+        engineOrState.renderGround(ctx, width, height, viewOpts);
+      } else {
+        paintGroundScene(ctx, width, height, engineOrState || null, viewOpts);
+      }
+    }
+  });
+
+  root.AglauraGroundEpiphanies = AglauraGroundEpiphanies;
+  if (typeof window !== "undefined") {
+    window.AglauraGroundEpiphanies = AglauraGroundEpiphanies;
+  }
+})(typeof globalThis !== "undefined" ? globalThis : this);
+
+(function () {
+  "use strict";
+
+  const palimpsestEl = document.getElementById("agl-palimpsest");
+  const spokenLbl = document.getElementById("agl-spoken-solidity-lbl");
+  const spokenBar = document.getElementById("agl-spoken-bar");
+  const groundLbl = document.getElementById("agl-ground-substance-lbl");
+  const groundBar = document.getElementById("agl-ground-bar");
+  const silentChip = document.getElementById("agl-silent-chip");
+  const lostChip = document.getElementById("agl-lost-chip");
+
+  const btnHour = document.getElementById("agl-btn-hour");
+  const btnGaze = document.getElementById("agl-btn-gaze");
+  const btnAudio = document.getElementById("agl-btn-audio");
+  const btnReset = document.getElementById("agl-btn-reset");
+  const btnPlates = document.getElementById("agl-btn-plates");
+
+  const hourBadge = document.getElementById("agl-hour-badge");
+  const hourRibbon = document.getElementById("agl-hour-ribbon");
+  const groundWell = document.getElementById("agl-ground-well");
+  const groundCanvas = document.getElementById("agl-ground-canvas");
+  const apertureIndexEl = document.getElementById("agl-aperture-index");
+  const dwellFill = document.getElementById("agl-dwell-fill");
+  const epiphanyProse = document.getElementById("agl-epiphany-prose");
+  const colophonEl = document.getElementById("agl-colophon");
+
+  const chorusBadge = document.getElementById("agl-chorus-badge");
+  const latticeStage = document.getElementById("agl-lattice-stage");
+  const cageCanvas = document.getElementById("agl-cage-canvas");
+  const canonTablet = document.getElementById("agl-canon-tablet");
+  const glossLedger = document.getElementById("agl-gloss-ledger");
+
+  const clampBadge = document.getElementById("agl-clamp-badge");
+  const utteranceInput = document.getElementById("agl-utterance-input");
+  const btnSpeak = document.getElementById("agl-btn-speak");
+  const clampTray = document.getElementById("agl-clamp-tray");
+
+  const plateDrawer = document.getElementById("agl-plate-drawer");
+  const loupeStage = document.getElementById("agl-loupe-stage");
+  const btnLoupe = document.getElementById("agl-btn-loupe");
+  const btnDrawerClose = document.getElementById("agl-btn-drawer-close");
+  const cardMap = document.getElementById("agl-card-map");
+  const cardImage = document.getElementById("agl-card-image");
+  const mapImg = document.getElementById("agl-map-img");
+  const vistaImg = document.getElementById("agl-vista-img");
+  const mapPending = document.getElementById("agl-map-pending");
+  const vistaPending = document.getElementById("agl-vista-pending");
+  const tabEls = Array.from(document.querySelectorAll(".agl-plate-tab"));
+
+  const mqlReduced = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
+  let reducedMotion = Boolean(mqlReduced && mqlReduced.matches);
+  palimpsestEl.setAttribute("data-reduced-motion", String(reducedMotion));
+
+  let erasedLedger = [];
+  let hoveredCanonId = null;
+  let isTyping = false;
+  let typingTimer = null;
+  let pointerMovingFast = false;
+  let pointerMoveTimer = null;
+  let plateDrawerOpen = false;
+  let activePlateTab = "diptych";
+  let loupeActive = false;
+
+  const cageEngine = window.AglauraSpokenCage.createCageEngine({
+    reducedMotion: reducedMotion
+  });
+
+  const groundEngine = window.AglauraGroundEpiphanies.createGroundEngine({
+    reducedMotion: reducedMotion,
+    onEpiphanyBloom: function (_ap, gState) {
+      cageEngine.audio.playTwilightGlimpseShimmer(gState.epiphanyIntensity);
+    },
+    onMemoryErasedBySpeech: function (evt) {
+      erasedLedger = [evt].concat(erasedLedger).slice(0, 12);
+    }
+  });
+
+  function bindButtonKey(el, fn) {
+    if (!el) return;
+    el.addEventListener("click", function (ev) {
+      ev.preventDefault();
+      cageEngine.audio.unlock();
+      fn();
+    });
+    el.addEventListener("keydown", function (ev) {
+      if (ev.key === "Enter" || ev.key === " ") {
+        ev.preventDefault();
+        cageEngine.audio.unlock();
+        fn();
+      }
+    });
+  }
+
+  function escHtml(str) {
+    return String(str || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  const hourPillEls = window.AglauraGroundEpiphanies.CERTAIN_HOURS.map(function (h) {
+    const pill = document.createElement("hour-dial-pill");
+    pill.className = "agl-hour-pill";
+    pill.setAttribute("role", "button");
+    pill.setAttribute("tabindex", "0");
+    pill.dataset.certain = String(h.isLiminalWindow);
+    pill.textContent = h.romanHour + (h.isLiminalWindow ? " \u2605" : "");
+    pill.setAttribute("aria-label", h.hourLabel);
+    bindButtonKey(pill, function () { setHour(h.index); });
+    hourRibbon.appendChild(pill);
+    return pill;
+  });
+
+  const aperturePillEls = window.AglauraGroundEpiphanies.STREET_OPENINGS.map(function (ap) {
+    const pill = document.createElement("aperture-pill");
+    pill.className = "agl-aperture-pill";
+    pill.setAttribute("role", "button");
+    pill.setAttribute("tabindex", "0");
+    pill.innerHTML =
+      '<codex-epigraph-line class="agl-aperture-top">' +
+      '<aperture-num-mark class="agl-aperture-num">' + (ap.index + 1) + '</aperture-num-mark>' +
+      '<aperture-name-text class="agl-aperture-name">' + escHtml(ap.name) + '</aperture-name-text>' +
+      '</codex-epigraph-line>' +
+      '<aperture-state-tag class="agl-aperture-tag">Colorless</aperture-state-tag>';
+    bindButtonKey(pill, function () { selectAperture(ap.index); });
+    apertureIndexEl.appendChild(pill);
+    return { root: pill, tag: pill.querySelector(".agl-aperture-tag") };
+  });
+
+  const canonPillEls = window.AglauraSpokenCage.PROVERBIAL_CANON.map(function (c) {
+    const pill = document.createElement("canon-seal-pill");
+    pill.className = "agl-canon-pill";
+    pill.setAttribute("role", "button");
+    pill.setAttribute("tabindex", "0");
+    pill.textContent = c.roman;
+    pill.setAttribute("aria-label", "Canon " + c.roman + ": " + c.title);
+    bindButtonKey(pill, function () { selectCanon(c.id); });
+    canonTablet.appendChild(pill);
+    return pill;
+  });
+  const gCtx = groundCanvas.getContext("2d");
+  const cCtx = cageCanvas.getContext("2d");
+  let gCssW = 600;
+  let gCssH = 320;
+  let cCssW = 580;
+  let cCssH = 260;
+
+  function resizeAndRenderCanvases() {
+    const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+    const gRect = groundWell.getBoundingClientRect();
+    if (gRect.width > 8 && gRect.height > 8) {
+      gCssW = Math.round(gRect.width);
+      gCssH = Math.round(gRect.height);
+    }
+    const targetGW = Math.round(gCssW * dpr);
+    const targetGH = Math.round(gCssH * dpr);
+    if (groundCanvas.width !== targetGW || groundCanvas.height !== targetGH) {
+      groundCanvas.width = targetGW;
+      groundCanvas.height = targetGH;
+    }
+    gCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    groundEngine.renderGround(gCtx, gCssW, gCssH, { reducedMotion: reducedMotion });
+
+    const cRect = latticeStage.getBoundingClientRect();
+    if (cRect.width > 8 && cRect.height > 8) {
+      cCssW = Math.round(cRect.width);
+      cCssH = Math.round(cRect.height);
+    }
+    const targetCW = Math.round(cCssW * dpr);
+    const targetCH = Math.round(cCssH * dpr);
+    if (cageCanvas.width !== targetCW || cageCanvas.height !== targetCH) {
+      cageCanvas.width = targetCW;
+      cageCanvas.height = targetCH;
+    }
+    cCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cageEngine.renderLattice(cCtx, cCssW, cCssH, {
+      reducedMotion: reducedMotion,
+      hoveredCanonId: hoveredCanonId
+    });
+  }
+
+  function statusBadgeLabel(status) {
+    if (status === "witnessed_silently") return "Silent Glimpse";
+    if (status === "lost_for_lack_of_words") return "Lost to Proverbs";
+    return "Colorless";
+  }
+
+  function syncDOM() {
+    const gState = groundEngine.getState();
+    const cState = cageEngine.getState();
+
+    const spPct = Math.round(cState.spokenSolidity * 100);
+    const grPct = Math.round(gState.groundSubstance * 100);
+    spokenLbl.textContent = "Spoken Solidity: " + spPct + "%";
+    spokenBar.style.width = spPct + "%";
+    groundLbl.textContent = "Ground Substance: " + grPct + "%";
+    groundBar.style.width = grPct + "%";
+    silentChip.textContent = "Silent Glimpses: " + gState.silentWitnessedCount;
+    lostChip.textContent = "Lost Recollections: " + gState.lostRecollectionsCount;
+
+    btnAudio.innerHTML =
+      "Audio: " + (cState.muted ? "Off" : "On") + ' <keycap-glyph class="agl-keycap">A</keycap-glyph>';
+    hourBadge.textContent =
+      gState.currentHour.hourLabel + (gState.isCertainHour ? " \u2605" : "");
+
+    for (let i = 0; i < hourPillEls.length; i++) {
+      hourPillEls[i].dataset.active = String(i === gState.hourIndex);
+    }
+
+    for (let i = 0; i < aperturePillEls.length; i++) {
+      const ap = gState.apertures[i];
+      const item = aperturePillEls[i];
+      item.root.dataset.active = String(ap.id === gState.selectedApertureId);
+      item.root.dataset.status = ap.status;
+      item.tag.textContent = statusBadgeLabel(ap.status);
+    }
+
+    const epPct = Math.round(gState.epiphanyIntensity * 100);
+    dwellFill.style.width = epPct + "%";
+    const selAp = gState.selectedAperture;
+    if (selAp.status === "lost_for_lack_of_words") {
+      epiphanyProse.textContent =
+        "Memory erased at " + selAp.name + " \u2014 speech replaced the unworded vista with: \u201C" +
+        selAp.overwrittenByProverb + "\u201D";
+    } else if (gState.epiphanyIntensity >= 0.65) {
+      epiphanyProse.textContent =
+        "Silent Glimpse (" + epPct + "%) at " + selAp.name + ": " + selAp.epiphanyHintVisual +
+        " \u2014 remain silent; attempting to say it imprisons every word.";
+    } else if (gState.isCertainHour) {
+      epiphanyProse.textContent =
+        gState.currentHour.hourLabel + " \u2605 at " + selAp.name + " (" + epPct +
+        "%): hold still or press [G] so the colorless lime fog parts.";
+    } else {
+      epiphanyProse.textContent =
+        gState.currentHour.hourLabel + " at " + selAp.name + ": " + selAp.ordinaryAppearance +
+        " Press [H] or [G] for a Certain Hour \u2605.";
+    }
+
+    if (erasedLedger.length === 0) {
+      colophonEl.innerHTML =
+        '<recollection-scar-entry class="agl-scar-entry">Unworded Recollection Ledger \u2014 0 street openings erased for lack of free words.</recollection-scar-entry>';
+    } else {
+      colophonEl.innerHTML = erasedLedger.map(function (ev, idx) {
+        return (
+          '<recollection-scar-entry class="agl-scar-entry">[' + (erasedLedger.length - idx) + "] " +
+          escHtml(ev.apertureName) + " lost \u2014 unworded vista erased by \u201C" +
+          escHtml(ev.overwrittenByProverb) + "\u201D</recollection-scar-entry>"
+        );
+      }).join("");
+    }
+
+    chorusBadge.textContent =
+      cState.canonCount + " Proverbs \u00B7 " + cState.repetitionChorusVoices + " Unison Voices";
+    for (let i = 0; i < canonPillEls.length; i++) {
+      canonPillEls[i].dataset.active = String(cState.canon[i].id === cState.selectedCanonId);
+    }
+
+    const selCanon = cState.selectedCanon;
+    glossLedger.innerHTML =
+      '<codex-epigraph-line class="agl-gloss-head">' +
+      '<stratum-title-mark>Canon ' + escHtml(selCanon.roman) + " \u2014 " + escHtml(selCanon.title) + "</stratum-title-mark>" +
+      "<gloss-epoch-tag>" + escHtml(selCanon.categoryLabel) + " \u00B7 " + escHtml(selCanon.inversionLabel) + "</gloss-epoch-tag>" +
+      "</codex-epigraph-line>" +
+      '<codex-epigraph-line class="agl-gloss-proverb">\u201C' + escHtml(selCanon.ancientProverb) + "\u201D</codex-epigraph-line>" +
+      '<codex-epigraph-line class="agl-gloss-columns">' +
+      '<inversion-gloss-row class="agl-gloss-row"><gloss-epoch-tag class="agl-epoch-tag">Ancient Attribution</gloss-epoch-tag><gloss-prose-body class="agl-gloss-body">' + escHtml(selCanon.ancientAttribution) + "</gloss-prose-body></inversion-gloss-row>" +
+      '<inversion-gloss-row class="agl-gloss-row"><gloss-epoch-tag class="agl-epoch-tag">Present Inversion</gloss-epoch-tag><gloss-prose-body class="agl-gloss-body">' + escHtml(selCanon.presentInversion) + "</gloss-prose-body></inversion-gloss-row>" +
+      "</codex-epigraph-line>";
+
+    clampBadge.textContent =
+      "Imprisoned: " + cState.imprisonedCount + " \u00B7 Free Words Survived: 0";
+    if (!cState.lastImprisonment) {
+      clampTray.innerHTML =
+        '<token-clamp-chip class="agl-token-chip">free word \u2192 ancient proverb</token-clamp-chip> ' +
+        "Every spoken syllable is captured by the compact proverbial city, erasing what was glimpsed in silence.";
+    } else {
+      const rec = cState.lastImprisonment;
+      const chips = rec.wordTokensMapped.slice(0, 12).map(function (m) {
+        return '<token-clamp-chip class="agl-token-chip">' + escHtml(m.freeWord) + " \u2192 " + escHtml(m.clampedTo) + "</token-clamp-chip>";
+      }).join("");
+      clampTray.innerHTML =
+        chips + ' <codex-epigraph-line>Obliged to repeat Canon ' + escHtml(rec.canonRoman) +
+        ": \u201C" + escHtml(rec.canonicalOutput) + "\u201D</codex-epigraph-line>";
+    }
+  }
+  function getState() {
+    const gState = groundEngine.getState();
+    const cState = cageEngine.getState();
+    return {
+      hourIndex: gState.hourIndex,
+      currentHour: gState.currentHour,
+      isCertainHour: gState.isCertainHour,
+      hours: gState.hours,
+      selectedApertureId: gState.selectedApertureId,
+      selectedAperture: gState.selectedAperture,
+      apertures: gState.apertures,
+      silentDwellSec: gState.silentDwellSec,
+      epiphanyIntensity: gState.epiphanyIntensity,
+      hasMagnificentSuspicion: gState.hasMagnificentSuspicion,
+      silentWitnessedCount: gState.silentWitnessedCount,
+      lostRecollectionsCount: gState.lostRecollectionsCount,
+      groundSubstance: gState.groundSubstance,
+      erasureFlash: gState.erasureFlash,
+      colorlessAndRandomAtOrdinaryHours: gState.colorlessAndRandomAtOrdinaryHours,
+      canSpeakOnlyOfSpokenAglaura: gState.canSpeakOnlyOfSpokenAglaura,
+      spokenSolidity: cState.spokenSolidity,
+      haphazardOpinionSubstance: cState.haphazardOpinionSubstance,
+      truthOnGround: cState.truthOnGround,
+      nothingSaidIsTrueYetCompact: cState.nothingSaidIsTrueYetCompact,
+      selectedCanonId: cState.selectedCanonId,
+      selectedCanon: cState.selectedCanon,
+      canonCount: cState.canonCount,
+      canon: cState.canon,
+      imprisonedCount: cState.imprisonedCount,
+      repetitionChorusVoices: cState.repetitionChorusVoices,
+      lastImprisonment: cState.lastImprisonment,
+      utteranceLedger: cState.utteranceLedger,
+      freeWordsSurvived: cState.lastImprisonment ? cState.lastImprisonment.freeWordsSurvived : 0,
+      obligedToRepeat: cState.lastImprisonment ? cState.lastImprisonment.obligedToRepeat : true,
+      muted: cState.muted,
+      reducedMotion: reducedMotion,
+      plateDrawerOpen: plateDrawerOpen,
+      activePlateTab: activePlateTab,
+      loupeActive: loupeActive,
+      loupeZoom: loupeActive ? 1.8 : 1.0,
+      erasedRecollections: erasedLedger.slice(),
+      ground: gState,
+      spoken: cState
+    };
+  }
+
+  function refreshAll() {
+    syncDOM();
+    resizeAndRenderCanvases();
+    return getState();
+  }
+
+  function setHour(indexOrId) {
+    groundEngine.setHour(indexOrId);
+    return refreshAll();
+  }
+
+  function seekCertainHour() {
+    groundEngine.seekCertainHour();
+    return refreshAll();
+  }
+
+  function selectAperture(idOrIndex) {
+    groundEngine.selectAperture(idOrIndex);
+    return refreshAll();
+  }
+
+  function dwellSilently(seconds, opts) {
+    const dur = typeof seconds === "number" && Number.isFinite(seconds) ? seconds : 1.6;
+    const resolvedOpts = Object.assign({ autoSeekHour: true }, opts || {});
+    groundEngine.dwellSilently(dur, resolvedOpts);
+    return refreshAll();
+  }
+
+  function attemptUtterance(rawText) {
+    const candidate = typeof rawText === "string" ? rawText : utteranceInput.value;
+    const gBefore = groundEngine.getState();
+    const activeAp = gBefore.selectedAperture;
+    const record = cageEngine.imprisonUtterance(candidate, {
+      apertureId: activeAp.id,
+      unwordableDraftSeed: activeAp.unwordableDraftSeed
+    });
+    const erasure = groundEngine.overwriteGlimpseWithSpeech(record);
+    utteranceInput.value = "";
+    isTyping = false;
+    const snapshot = refreshAll();
+    return Object.assign({}, record, { erasure: erasure, state: snapshot });
+  }
+
+  function selectCanon(idOrIndex) {
+    cageEngine.selectCanon(idOrIndex);
+    return refreshAll();
+  }
+
+  function togglePlateDrawer(forceOpen) {
+    plateDrawerOpen = typeof forceOpen === "boolean" ? forceOpen : !plateDrawerOpen;
+    plateDrawer.hidden = !plateDrawerOpen;
+    btnPlates.setAttribute("aria-expanded", String(plateDrawerOpen));
+    return getState();
+  }
+
+  function setPlateTab(tabId) {
+    const valid = tabId === "map" || tabId === "image" ? tabId : "diptych";
+    activePlateTab = valid;
+    loupeStage.dataset.mode = valid === "diptych" ? "diptych" : "single";
+    cardMap.hidden = valid === "image";
+    cardImage.hidden = valid === "map";
+    for (let i = 0; i < tabEls.length; i++) {
+      const isAct = tabEls[i].dataset.tab === valid;
+      tabEls[i].dataset.active = String(isAct);
+      tabEls[i].setAttribute("aria-selected", String(isAct));
+    }
+    return getState();
+  }
+
+  function toggleLoupe(forceState) {
+    loupeActive = typeof forceState === "boolean" ? forceState : !loupeActive;
+    loupeStage.dataset.loupe = String(loupeActive);
+    btnLoupe.innerHTML =
+      "Loupe: " + (loupeActive ? "1.8x" : "1x") + ' <keycap-glyph class="agl-keycap">Z</keycap-glyph>';
+    return getState();
+  }
+
+  function toggleAudioMute(forceMuted) {
+    if (typeof forceMuted === "boolean") {
+      cageEngine.audio.setMuted(forceMuted);
+    } else {
+      cageEngine.audio.toggleMute();
+    }
+    return refreshAll();
+  }
+
+  function reset() {
+    groundEngine.reset();
+    cageEngine.reset();
+    erasedLedger = [];
+    utteranceInput.value = "";
+    isTyping = false;
+    toggleLoupe(false);
+    setPlateTab("diptych");
+    togglePlateDrawer(false);
+    return refreshAll();
+  }
+  bindButtonKey(btnHour, seekCertainHour);
+  bindButtonKey(btnGaze, function () { dwellSilently(1.6, { autoSeekHour: true }); });
+  bindButtonKey(btnAudio, function () { toggleAudioMute(); });
+  bindButtonKey(btnReset, reset);
+  bindButtonKey(btnPlates, function () { togglePlateDrawer(); });
+  bindButtonKey(btnSpeak, function () { attemptUtterance(utteranceInput.value); });
+  bindButtonKey(btnLoupe, function () { toggleLoupe(); });
+  bindButtonKey(btnDrawerClose, function () { togglePlateDrawer(false); });
+
+  for (let i = 0; i < tabEls.length; i++) {
+    (function (tabEl) {
+      bindButtonKey(tabEl, function () { setPlateTab(tabEl.dataset.tab); });
+    })(tabEls[i]);
+  }
+
+  plateDrawer.addEventListener("click", function (ev) {
+    if (ev.target === plateDrawer) togglePlateDrawer(false);
+  });
+
+  function updateLoupeOrigin(ev, vpEl) {
+    if (!loupeActive) return;
+    const rect = vpEl.getBoundingClientRect();
+    if (rect.width <= 0 || rect.height <= 0) return;
+    const px = Math.max(0, Math.min(100, ((ev.clientX - rect.left) / rect.width) * 100));
+    const py = Math.max(0, Math.min(100, ((ev.clientY - rect.top) / rect.height) * 100));
+    vpEl.style.setProperty("--agl-lx", px.toFixed(1) + "%");
+    vpEl.style.setProperty("--agl-ly", py.toFixed(1) + "%");
+  }
+
+  document.getElementById("agl-vp-map").addEventListener("pointermove", function (ev) {
+    updateLoupeOrigin(ev, this);
+  });
+  document.getElementById("agl-vp-image").addEventListener("pointermove", function (ev) {
+    updateLoupeOrigin(ev, this);
+  });
+
+  function handleMapError() {
+    if (!mapImg.dataset.svgTried) {
+      mapImg.dataset.svgTried = "1";
+      mapImg.src = "map.svg";
+    } else {
+      mapImg.hidden = true;
+      mapPending.hidden = false;
+    }
+  }
+
+  function handleVistaError() {
+    vistaImg.hidden = true;
+    vistaPending.hidden = false;
+  }
+
+  mapImg.addEventListener("error", handleMapError);
+  vistaImg.addEventListener("error", handleVistaError);
+  if (mapImg.complete && mapImg.naturalWidth === 0) handleMapError();
+  if (vistaImg.complete && vistaImg.naturalWidth === 0) handleVistaError();
+
+  groundCanvas.addEventListener("click", function (ev) {
+    cageEngine.audio.unlock();
+    const rect = groundCanvas.getBoundingClientRect();
+    if (rect.width <= 0 || rect.height <= 0) return;
+    const nx = (ev.clientX - rect.left) / rect.width;
+    const ny = (ev.clientY - rect.top) / rect.height;
+    const hit = groundEngine.hitTest(nx, ny);
+    if (hit) {
+      selectAperture(hit.id);
+    } else if (groundEngine.getState().isCertainHour) {
+      dwellSilently(1.6, { autoSeekHour: true });
+    }
+  });
+
+  groundCanvas.addEventListener("pointermove", function (ev) {
+    const speed = Math.hypot(ev.movementX || 0, ev.movementY || 0);
+    if (speed > 14) {
+      pointerMovingFast = true;
+      clearTimeout(pointerMoveTimer);
+      pointerMoveTimer = setTimeout(function () { pointerMovingFast = false; }, 180);
+    }
+  });
+
+  cageCanvas.addEventListener("pointermove", function (ev) {
+    const rect = cageCanvas.getBoundingClientRect();
+    if (rect.width <= 0 || rect.height <= 0) return;
+    const hit = cageEngine.hitTest((ev.clientX - rect.left) / rect.width, (ev.clientY - rect.top) / rect.height);
+    hoveredCanonId = hit && hit.kind === "canon_seal" ? hit.canonId : null;
+  });
+
+  cageCanvas.addEventListener("click", function (ev) {
+    cageEngine.audio.unlock();
+    const rect = cageCanvas.getBoundingClientRect();
+    if (rect.width <= 0 || rect.height <= 0) return;
+    const hit = cageEngine.hitTest((ev.clientX - rect.left) / rect.width, (ev.clientY - rect.top) / rect.height);
+    if (hit && hit.kind === "canon_seal") {
+      selectCanon(hit.canonId);
+    }
+  });
+
+  utteranceInput.addEventListener("input", function () {
+    isTyping = true;
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(function () { isTyping = false; }, 450);
+    groundEngine.disturbWithPendingWords();
+    refreshAll();
+  });
+
+  utteranceInput.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") {
+      ev.preventDefault();
+      cageEngine.audio.unlock();
+      attemptUtterance(utteranceInput.value);
+    } else if (ev.key === "Escape") {
+      ev.preventDefault();
+      utteranceInput.blur();
+      if (plateDrawerOpen) togglePlateDrawer(false);
+    }
+  });
+
+  window.addEventListener("keydown", function (ev) {
+    if (ev.metaKey || ev.ctrlKey || ev.altKey) return;
+    if (document.activeElement === utteranceInput) return;
+    const k = ev.key;
+    if (k === "Escape") {
+      if (plateDrawerOpen) {
+        ev.preventDefault();
+        togglePlateDrawer(false);
+      }
+      return;
+    }
+    const lower = k.toLowerCase();
+    if (/^[1-6]$/.test(k)) {
+      ev.preventDefault();
+      cageEngine.audio.unlock();
+      selectAperture(Number(k) - 1);
+    } else if (lower === "h") {
+      ev.preventDefault();
+      cageEngine.audio.unlock();
+      seekCertainHour();
+    } else if (lower === "g") {
+      ev.preventDefault();
+      cageEngine.audio.unlock();
+      dwellSilently(1.6, { autoSeekHour: true });
+    } else if (lower === "s") {
+      ev.preventDefault();
+      cageEngine.audio.unlock();
+      attemptUtterance(utteranceInput.value);
+    } else if (lower === "p") {
+      ev.preventDefault();
+      togglePlateDrawer();
+    } else if (lower === "z") {
+      ev.preventDefault();
+      toggleLoupe();
+    } else if (lower === "a" || lower === "m") {
+      ev.preventDefault();
+      toggleAudioMute();
+    } else if (lower === "r") {
+      ev.preventDefault();
+      reset();
+    }
+  });
+
+  if (mqlReduced && typeof mqlReduced.addEventListener === "function") {
+    mqlReduced.addEventListener("change", function (ev) {
+      reducedMotion = Boolean(ev.matches);
+      palimpsestEl.setAttribute("data-reduced-motion", String(reducedMotion));
+      groundEngine.setReducedMotion(reducedMotion);
+      cageEngine.setReducedMotion(reducedMotion);
+      refreshAll();
+    });
+  }
+
+  if (typeof ResizeObserver === "function") {
+    const ro = new ResizeObserver(function () { resizeAndRenderCanvases(); });
+    ro.observe(groundWell);
+    ro.observe(latticeStage);
+  }
+  window.addEventListener("resize", resizeAndRenderCanvases);
+
+  let lastTs = performance.now();
+  function frame(now) {
+    const dt = Math.min(0.1, Math.max(0.001, (now - lastTs) / 1000));
+    lastTs = now;
+    const prevIntensity = groundEngine.getState().epiphanyIntensity;
+    const prevWitnessed = groundEngine.getState().silentWitnessedCount;
+    groundEngine.tick(dt, { isTyping: isTyping, pointerMovingFast: pointerMovingFast });
+    cageEngine.tick(dt);
+    const nextG = groundEngine.getState();
+    if (Math.abs(nextG.epiphanyIntensity - prevIntensity) >= 0.01 || nextG.silentWitnessedCount !== prevWitnessed) {
+      syncDOM();
+    }
+    resizeAndRenderCanvases();
+    window.requestAnimationFrame(frame);
+  }
+
+  window.AglauraApp = Object.freeze({
+    getState: getState,
+    setHour: setHour,
+    seekCertainHour: seekCertainHour,
+    selectAperture: selectAperture,
+    dwellSilently: dwellSilently,
+    attemptUtterance: attemptUtterance,
+    selectCanon: selectCanon,
+    togglePlateDrawer: togglePlateDrawer,
+    setPlateTab: setPlateTab,
+    toggleLoupe: toggleLoupe,
+    toggleAudioMute: toggleAudioMute,
+    reset: reset
+  });
+  window.__AGLAURA_STATE__ = function () { return window.AglauraApp.getState(); };
+
+  refreshAll();
+  window.requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,2733 @@
+<!DOCTYPE html>
+<html lang="en" class="zem-html">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Zemrude — The City Shaped by the Inclination of the Eye</title>
+<style>
+.zem-html, .zem-body {
+  margin: 0; padding: 0; width: 100%; height: 100%;
+  background: #0f1418; color: #e8eef2;
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  -webkit-text-size-adjust: 100%;
+}
+.zem-body { overflow: hidden; }
+.zem-body *[hidden], zemrude-plate-drawer[hidden] { display: none !important; }
+.zem-body zemrude-inclination, .zem-body zemrude-inclination * { box-sizing: border-box; }
+zemrude-inclination {
+  display: grid; position: relative;
+  grid-template-columns: minmax(0, 1fr) 296px;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  grid-template-areas: "zen ratchet" "aperture ratchet" "nadir ratchet";
+  width: 100vw; height: 100vh; height: 100dvh; overflow: hidden;
+  background: linear-gradient(180deg, #e8eef2 0%, #c9d6de 34%, #39434c 58%, #0b1014 100%);
+}
+zenith-sill-stratum {
+  grid-area: zen; display: flex; flex-direction: column; gap: 6px;
+  padding: 10px 16px 9px; color: #22303a;
+  background: linear-gradient(180deg, #f4f7f9 0%, #dfe8ee 100%);
+  border-bottom: 1px solid #9e927f;
+}
+zenith-title-row, nadir-title-row, habit-title-row { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+zenith-title { display: block; font-size: 21px; letter-spacing: 0.06em; font-variant: small-caps; color: #1d2a33; }
+zenith-subtitle { display: block; font-size: 12.5px; font-style: italic; color: #5c6a74; }
+zenith-beholder-mode {
+  display: flex; align-items: center; gap: 8px; margin-left: auto;
+  padding: 3px 10px; border-radius: 12px; font-size: 12.5px;
+  background: #fffaf0; border: 1px solid #d6a75c; color: #6a4c1c;
+}
+zenith-beholder-mode.zem-sunk { background: #1b232a; color: #d6a75c; border-color: #5f6b75; }
+zenith-mode-glyph { display: block; width: 10px; height: 10px; border-radius: 50%; background: #f2c76a; box-shadow: 0 0 6px #f2c76a; }
+zenith-beholder-mode.zem-sunk zenith-mode-glyph { background: transparent; border: 1px solid #d6a75c; box-shadow: none; }
+zenith-pill-row, nadir-pill-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+zenith-pill, nadir-pill, habit-pill, zemrude-plate-tab, zemrude-plate-action {
+  display: inline-flex; align-items: center; gap: 6px; cursor: pointer; user-select: none;
+  padding: 4px 10px; border-radius: 3px; font-size: 12.5px; line-height: 1.25;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  outline-offset: 2px;
+}
+zenith-pill { background: #fbfcfd; color: #2b3a44; border: 1px solid #b9c7d1; }
+zenith-pill:hover, zenith-pill:focus-visible { background: #fff6e2; border-color: #d6a75c; }
+zenith-pill.zem-whistle { background: #8bb8d6; color: #0f2431; border-color: #5e8fb1; font-weight: 600; }
+zenith-pill.zem-whistle:hover, zenith-pill.zem-whistle:focus-visible { background: #a9cde4; }
+zenith-pill.zem-dim { opacity: 0.62; font-style: italic; }
+zemrude-key {
+  display: inline-block; min-width: 1.5em; padding: 0 4px; text-align: center;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 11px;
+  border-radius: 3px; border: 1px solid currentColor; opacity: 0.8;
+}
+zenith-memory-line { display: block; font-size: 11.5px; color: #5c6a74; }
+zemrude-gaze-aperture {
+  grid-area: aperture; display: block; position: relative; min-height: 0; overflow: hidden;
+  background: #0b1014; touch-action: none; cursor: ns-resize;
+}
+.zem-canvas { display: block; width: 100%; height: 100%; }
+zemrude-horizon-tag {
+  display: block; position: absolute; right: 12px; top: 10px; pointer-events: none;
+  font: 11px ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: 0.04em;
+  color: #e8eef2; background: rgba(11,16,20,0.55); padding: 3px 8px; border-radius: 3px;
+}
+zemrude-drag-hint {
+  display: block; position: absolute; left: 12px; top: 10px; pointer-events: none;
+  font-size: 11.5px; font-style: italic; color: #f4f7f9; background: rgba(11,16,20,0.42);
+  padding: 3px 8px; border-radius: 3px;
+}
+zemrude-stone-placard {
+  display: block; position: absolute; left: 12px; bottom: 12px; max-width: min(460px, calc(100% - 24px));
+  padding: 10px 14px 10px; border-radius: 4px; pointer-events: auto;
+  background: rgba(244,240,230,0.94); color: #2a2620; border-left: 4px solid #d6a75c;
+  box-shadow: 0 6px 22px rgba(0,0,0,0.35); font-size: 12.5px; line-height: 1.4;
+}
+zemrude-stone-placard.zem-lower { background: rgba(20,27,33,0.94); color: #dfe6ea; border-left-color: #8ab0ba; }
+zemrude-stone-placard.zem-testimony { background: rgba(14,18,22,0.94); color: #e6cf9f; border-left-color: #d6a75c; font-style: italic; }
+zemrude-placard-kicker { display: block; font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.72; }
+zemrude-placard-title { display: block; font-size: 15px; font-weight: 600; margin: 2px 0 4px; font-style: normal; }
+zemrude-placard-detail, zemrude-placard-echo { display: block; }
+zemrude-placard-echo { margin-top: 5px; font-style: italic; opacity: 0.86; }
+zemrude-placard-close { display: inline-block; position: absolute; right: 8px; top: 6px; cursor: pointer; font-size: 14px; opacity: 0.6; }
+habit-gravity-ratchet {
+  grid-area: ratchet; display: flex; flex-direction: column; gap: 9px; min-height: 0; overflow: hidden;
+  padding: 12px 14px; background: linear-gradient(180deg, #1a2127 0%, #10161b 100%);
+  border-left: 1px solid #3b434c; color: #dfe6ea;
+}
+habit-heading { display: block; font-size: 15px; font-variant: small-caps; letter-spacing: 0.07em; color: #f0e2c4; }
+habit-caption { display: block; font-size: 11px; font-style: italic; color: #93a0aa; line-height: 1.35; }
+habit-plumb-gauge { display: grid; grid-template-columns: 58px 1fr; gap: 10px; align-items: stretch; height: 178px; }
+habit-plumb-track {
+  display: block; position: relative; border-radius: 3px; border: 1px solid #4b5660;
+  background:
+    repeating-linear-gradient(180deg, transparent 0 13px, rgba(232,238,242,0.18) 13px 14px),
+    linear-gradient(180deg, #8bb8d6 0%, #dfd3be 38%, #5f6b75 42%, #232a31 62%, #354a3c 78%, #0b1014 100%);
+}
+habit-plumb-zero { display: block; position: absolute; left: -4px; right: -4px; height: 2px; background: #d6a75c; }
+habit-plumb-line { display: block; position: absolute; left: 50%; top: 0; width: 1px; background: #f4f7f9; transform: translateX(-0.5px); }
+habit-plumb-bob {
+  display: block; position: absolute; left: 50%; width: 16px; height: 16px; margin: -8px 0 0 -8px;
+  background: radial-gradient(circle at 35% 30%, #fff1cc, #d6a75c 55%, #6a4c1c);
+  clip-path: polygon(50% 100%, 0 30%, 18% 0, 82% 0, 100% 30%);
+  transition: top 0.25s ease;
+}
+habit-plumb-scale { display: flex; flex-direction: column; justify-content: space-between; font: 10.5px ui-monospace, "SF Mono", Menlo, monospace; color: #9aa7b1; }
+habit-plumb-scale-mark { display: block; }
+habit-plumb-scale-mark.zem-live { color: #f0e2c4; font-size: 15px; font-weight: 600; }
+habit-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+habit-stat { display: flex; flex-direction: column; padding: 5px 8px; border: 1px solid #333d46; border-radius: 3px; background: rgba(255,255,255,0.03); }
+habit-stat-label { display: block; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: #8c99a3; }
+habit-stat-value { display: block; font: 600 17px ui-monospace, "SF Mono", Menlo, monospace; color: #f4f7f9; }
+habit-meter { display: flex; flex-direction: column; gap: 3px; }
+habit-meter-head { display: flex; justify-content: space-between; font-size: 11px; color: #b6c1c9; }
+habit-meter-track { display: block; height: 7px; border-radius: 4px; background: #262f37; overflow: hidden; }
+habit-meter-fill { display: block; height: 100%; width: 10%; border-radius: 4px; transition: width 0.3s ease; }
+habit-meter-fill.zem-ill { background: linear-gradient(90deg, #3c473b, #6f7d4b, #9c8a4a); }
+habit-meter-fill.zem-lift { background: linear-gradient(90deg, #5f6b75, #8a7b9c, #b26a5a); }
+habit-action-stack { display: flex; flex-direction: column; gap: 5px; }
+habit-pill { justify-content: space-between; background: #232c34; color: #e8eef2; border: 1px solid #3f4a54; }
+habit-pill:hover, habit-pill:focus-visible { background: #2e3a44; border-color: #8ab0ba; }
+habit-pill.zem-primary { background: #3b434c; border-color: #8ab0ba; font-weight: 600; }
+habit-pill.zem-grave { background: #2a2420; border-color: #6a5440; color: #e9d8bf; }
+habit-pill.zem-up { background: #213443; border-color: #5e8fb1; color: #d8eef8; }
+habit-pill.zem-on { box-shadow: inset 3px 0 0 #d6a75c; }
+habit-toggle-row { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+habit-toggle-row habit-pill { font-size: 11.5px; padding: 4px 7px; }
+nadir-gutter-stratum {
+  grid-area: nadir; display: flex; flex-direction: column; gap: 6px; padding: 9px 16px 10px;
+  background: linear-gradient(180deg, #1e242b 0%, #0b1014 100%); color: #c9d3da;
+  border-top: 1px solid #3b434c;
+}
+nadir-title { display: block; font-size: 15px; font-variant: small-caps; letter-spacing: 0.07em; color: #c4d3d8; }
+nadir-depth-readout { display: block; margin-left: auto; font: 11.5px ui-monospace, "SF Mono", Menlo, monospace; color: #8ab0ba; }
+nadir-pill { background: #232a31; color: #d5dee4; border: 1px solid #3b434c; }
+nadir-pill:hover, nadir-pill:focus-visible { background: #2d363f; border-color: #8ab0ba; }
+nadir-pill.zem-deep { background: #1a241e; border-color: #354a3c; color: #bcd0c2; }
+nadir-pill.zem-dig { background: #354a3c; border-color: #6f8f78; color: #eef5ef; font-weight: 600; }
+nadir-pill.zem-reached { box-shadow: inset 0 -2px 0 #d6a75c; }
+nadir-divider { display: block; width: 1px; height: 18px; background: #3b434c; margin: 0 2px; }
+nadir-colophon { display: block; font-size: 11px; font-style: italic; color: #8796a0; line-height: 1.4; }
+nadir-colophon-flag { display: inline; font-style: normal; font-family: ui-monospace, "SF Mono", Menlo, monospace; color: #d6a75c; }
+zemrude-announcer { display: block; position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+zemrude-plate-drawer {
+  display: flex; flex-direction: column; position: fixed; inset: 3vh 3vw; z-index: 40;
+  background: #f1ead9; color: #2a2620; border: 1px solid #9e927f; border-radius: 5px;
+  box-shadow: 0 18px 60px rgba(0,0,0,0.6); overflow: hidden;
+}
+zemrude-plate-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding: 10px 14px; border-bottom: 1px solid #cdbf9f; background: #e8dfc8; }
+zemrude-plate-heading { display: block; font-size: 16px; font-variant: small-caps; letter-spacing: 0.07em; margin-right: auto; }
+zemrude-plate-tab, zemrude-plate-action { background: #f7f2e6; border: 1px solid #b9a988; color: #3a3226; }
+zemrude-plate-tab:hover, zemrude-plate-tab:focus-visible, zemrude-plate-action:hover, zemrude-plate-action:focus-visible { background: #fff; border-color: #6a4c1c; }
+zemrude-plate-tab.zem-active { background: #3a3226; color: #f1ead9; border-color: #3a3226; }
+zemrude-plate-action.zem-on { background: #d6a75c; border-color: #6a4c1c; }
+zemrude-plate-stage { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; flex: 1 1 auto; min-height: 0; padding: 12px; overflow: auto; }
+zemrude-plate-stage.zem-single { grid-template-columns: 1fr; }
+zemrude-plate-frame { display: flex; flex-direction: column; gap: 6px; min-height: 0; min-width: 0; overflow: auto; background: #e4dac2; border: 1px solid #cdbf9f; padding: 8px; }
+zemrude-plate-caption { display: block; font-size: 11.5px; font-style: italic; color: #5d5240; }
+.zem-plate-img { display: block; width: 100%; height: auto; max-height: 100%; object-fit: contain; transform-origin: 50% 0; transition: transform 0.25s ease; background: #d9cdb1; }
+.zem-plate-fallback { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; background: #e9dfc6; }
+zemrude-plate-stage.zem-loupe .zem-plate-img, zemrude-plate-stage.zem-loupe .zem-plate-fallback { transform: scale(1.8); cursor: zoom-out; }
+zemrude-plate-scrim { display: block; position: fixed; inset: 0; z-index: 39; background: rgba(5,8,10,0.62); }
+@media (max-height: 760px) and (min-width: 761px) {
+  zenith-title { font-size: 18px; }
+  habit-plumb-gauge { height: 132px; }
+  habit-caption { display: none; }
+  habit-gravity-ratchet { gap: 6px; padding: 9px 12px; }
+}
+@media (max-width: 760px) {
+  .zem-body { overflow-x: hidden; overflow-y: auto; height: auto; }
+  .zem-html { height: auto; overflow-x: hidden; }
+  zemrude-inclination {
+    display: flex; flex-direction: column; width: 100%; max-width: 100vw;
+    height: auto; min-height: 100dvh; overflow: visible;
+  }
+  zenith-sill-stratum { padding: 10px 12px; }
+  zenith-title { font-size: 18px; }
+  zenith-beholder-mode { margin-left: 0; }
+  zemrude-gaze-aperture { height: 52vh; height: 52dvh; min-height: 300px; flex: 0 0 auto; }
+  zemrude-stone-placard { font-size: 11.5px; max-width: calc(100% - 16px); left: 8px; bottom: 8px; }
+  zemrude-drag-hint { display: none; }
+  habit-gravity-ratchet { border-left: 0; border-top: 1px solid #3b434c; overflow: visible; }
+  habit-plumb-gauge { height: 150px; }
+  nadir-gutter-stratum { padding: 10px 12px 18px; }
+  zemrude-plate-drawer { inset: 0; border-radius: 0; }
+  zemrude-plate-stage { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  habit-plumb-bob, habit-meter-fill, .zem-plate-img, zenith-pill, nadir-pill, habit-pill { transition: none; }
+}
+</style>
+</head>
+<body class="zem-body">
+<zemrude-inclination role="application" aria-label="Instrument of gaze inclination: the same streets seen whistling upward or with head hung low">
+  <zenith-sill-stratum aria-label="Upper register of sills, curtains and fountains">
+    <zenith-title-row>
+      <zenith-title role="heading" aria-level="1">Zemrude — City of the Inclined Eye</zenith-title>
+      <zenith-subtitle>It is the mood of the one who looks that gives the city its form.</zenith-subtitle>
+      <zenith-beholder-mode id="zem-mode" aria-live="polite"><zenith-mode-glyph></zenith-mode-glyph><zenith-mode-text id="zem-mode-text">Direct Sunlit Sight</zenith-mode-text></zenith-beholder-mode>
+    </zenith-title-row>
+    <zenith-pill-row>
+      <zenith-pill tabindex="0" role="button" data-zem-act="inspect" data-zem-arg="window_sills" title="Look up at the carved window sills"><zemrude-key>1</zemrude-key>Window Sills (6)</zenith-pill>
+      <zenith-pill tabindex="0" role="button" data-zem-act="inspect" data-zem-arg="flapping_curtains" title="Look up at the curtains flapping in the wind"><zemrude-key>2</zemrude-key>Flapping Curtains (6)</zenith-pill>
+      <zenith-pill tabindex="0" role="button" data-zem-act="inspect" data-zem-arg="fountains" title="Look up at the rooftop fountains"><zemrude-key>3</zemrude-key>Rooftop Fountains (4)</zenith-pill>
+      <zenith-pill tabindex="0" role="button" class="zem-whistle" data-zem-act="whistle" title="Whistle, nose tilted up"><zemrude-key>W</zemrude-key>Whistle Nose-Up</zenith-pill>
+      <zenith-memory-line id="zem-memory-line">3 of 16 upper stones held in memory · clarity 92%</zenith-memory-line>
+    </zenith-pill-row>
+  </zenith-sill-stratum>
+
+  <zemrude-gaze-aperture id="zem-aperture" aria-label="Gaze aperture: drag vertically or scroll to tilt the eye, click a stone to inspect it">
+    <canvas class="zem-canvas" id="zem-canvas" role="img" aria-label="Section of the street from rooftops to the deepest wells, framed by the inclination of the gaze"></canvas>
+    <zemrude-drag-hint>Drag up or down to tilt the eye · click a stone to inspect</zemrude-drag-hint>
+    <zemrude-horizon-tag id="zem-horizon-tag">+35.8° · zenith</zemrude-horizon-tag>
+    <zemrude-stone-placard id="zem-placard" hidden aria-live="polite">
+      <zemrude-placard-close tabindex="0" role="button" aria-label="Close placard" data-zem-act="closePlacard">×</zemrude-placard-close>
+      <zemrude-placard-kicker id="zem-placard-kicker">Upper stone</zemrude-placard-kicker>
+      <zemrude-placard-title id="zem-placard-title">—</zemrude-placard-title>
+      <zemrude-placard-detail id="zem-placard-detail"></zemrude-placard-detail>
+      <zemrude-placard-echo id="zem-placard-echo"></zemrude-placard-echo>
+    </zemrude-stone-placard>
+  </zemrude-gaze-aperture>
+
+  <habit-gravity-ratchet aria-label="Habit gravity ratchet">
+    <habit-heading role="heading" aria-level="2">Habit-Gravity Ratchet</habit-heading>
+    <habit-caption>Each day on the same streets leaves yesterday's ill-humor caked at the foot of the walls; the eye slides down the drainpipes and will not easily lift.</habit-caption>
+    <habit-plumb-gauge aria-label="Inclination plumb gauge">
+      <habit-plumb-track>
+        <habit-plumb-zero id="zem-plumb-zero"></habit-plumb-zero>
+        <habit-plumb-line id="zem-plumb-line"></habit-plumb-line>
+        <habit-plumb-bob id="zem-plumb-bob"></habit-plumb-bob>
+      </habit-plumb-track>
+      <habit-plumb-scale>
+        <habit-plumb-scale-mark>+65° Zenith</habit-plumb-scale-mark>
+        <habit-plumb-scale-mark class="zem-live" id="zem-incl-deg">+35.8°</habit-plumb-scale-mark>
+        <habit-plumb-scale-mark id="zem-stratum-name">stratum: zenith</habit-plumb-scale-mark>
+        <habit-plumb-scale-mark>0° Drainpipes</habit-plumb-scale-mark>
+        <habit-plumb-scale-mark>−90° Wells</habit-plumb-scale-mark>
+      </habit-plumb-scale>
+    </habit-plumb-gauge>
+    <habit-stat-grid>
+      <habit-stat><habit-stat-label>Same street</habit-stat-label><habit-stat-value id="zem-day">Day 1</habit-stat-value></habit-stat>
+      <habit-stat><habit-stat-label>Rare reversals</habit-stat-label><habit-stat-value id="zem-reversals">0</habit-stat-value></habit-stat>
+    </habit-stat-grid>
+    <habit-meter>
+      <habit-meter-head><habit-meter-label>Encrusted Ill-Humor</habit-meter-label><habit-meter-num id="zem-ill-num">8%</habit-meter-num></habit-meter-head>
+      <habit-meter-track><habit-meter-fill class="zem-ill" id="zem-ill-fill"></habit-meter-fill></habit-meter-track>
+    </habit-meter>
+    <habit-meter>
+      <habit-meter-head><habit-meter-label>Upward Lift Resistance</habit-meter-label><habit-meter-num id="zem-lift-num">14%</habit-meter-num></habit-meter-head>
+      <habit-meter-track><habit-meter-fill class="zem-lift" id="zem-lift-fill"></habit-meter-fill></habit-meter-track>
+    </habit-meter>
+    <habit-action-stack>
+      <habit-pill tabindex="0" role="button" class="zem-primary" data-zem-act="day"><habit-pill-text>Walk Same Street (+1 Day)</habit-pill-text><zemrude-key>Space / N</zemrude-key></habit-pill>
+      <habit-pill tabindex="0" role="button" class="zem-grave" data-zem-act="hang"><habit-pill-text>Hang Head &amp; Clench Palms</habit-pill-text><zemrude-key>G</zemrude-key></habit-pill>
+      <habit-pill tabindex="0" role="button" class="zem-up" data-zem-act="whistle"><habit-pill-text>Whistle Upward</habit-pill-text><zemrude-key>W</zemrude-key></habit-pill>
+    </habit-action-stack>
+    <habit-toggle-row>
+      <habit-pill tabindex="0" role="button" id="zem-drift-pill" aria-pressed="true" class="zem-on" data-zem-act="drift"><habit-pill-text>Auto-Habit Drift</habit-pill-text><zemrude-key>H</zemrude-key></habit-pill>
+      <habit-pill tabindex="0" role="button" id="zem-sound-pill" aria-pressed="true" class="zem-on" data-zem-act="sound"><habit-pill-text id="zem-sound-text">Sound On</habit-pill-text><zemrude-key>A</zemrude-key></habit-pill>
+      <habit-pill tabindex="0" role="button" data-zem-act="reset"><habit-pill-text>Reset</habit-pill-text><zemrude-key>R</zemrude-key></habit-pill>
+      <habit-pill tabindex="0" role="button" data-zem-act="plates"><habit-pill-text>Royal Plates</habit-pill-text><zemrude-key>P</zemrude-key></habit-pill>
+    </habit-toggle-row>
+  </habit-gravity-ratchet>
+
+  <nadir-gutter-stratum aria-label="Lower register of gutters, grilles and subterranean strata">
+    <nadir-title-row>
+      <nadir-title role="heading" aria-level="2">Lower Register — Paving, Cellars, Wells</nadir-title>
+      <nadir-depth-readout id="zem-depth">deepest reached: zenith</nadir-depth-readout>
+    </nadir-title-row>
+    <nadir-pill-row>
+      <nadir-pill tabindex="0" role="button" data-zem-act="inspect" data-zem-arg="gutters"><zemrude-key>4</zemrude-key>Gutters</nadir-pill>
+      <nadir-pill tabindex="0" role="button" data-zem-act="inspect" data-zem-arg="manhole_grilles"><zemrude-key>5</zemrude-key>Manhole Grilles</nadir-pill>
+      <nadir-pill tabindex="0" role="button" data-zem-act="inspect" data-zem-arg="fish_scales"><zemrude-key>6</zemrude-key>Fish Scales</nadir-pill>
+      <nadir-pill tabindex="0" role="button" data-zem-act="inspect" data-zem-arg="wastepaper"><zemrude-key>7</zemrude-key>Wastepaper</nadir-pill>
+      <nadir-divider></nadir-divider>
+      <nadir-pill tabindex="0" role="button" class="zem-deep" data-zem-stratum="cellars" data-zem-act="inspect" data-zem-arg="cellars"><zemrude-key>8</zemrude-key>Cellars</nadir-pill>
+      <nadir-pill tabindex="0" role="button" class="zem-deep" data-zem-stratum="foundations" data-zem-act="inspect" data-zem-arg="foundations"><zemrude-key>9</zemrude-key>Foundations</nadir-pill>
+      <nadir-pill tabindex="0" role="button" class="zem-deep" data-zem-stratum="wells" data-zem-act="inspect" data-zem-arg="wells"><zemrude-key>0</zemrude-key>Deep Wells</nadir-pill>
+      <nadir-pill tabindex="0" role="button" class="zem-dig" data-zem-act="dig"><zemrude-key>D</zemrude-key>Dig Deeper</nadir-pill>
+    </nadir-pill-row>
+    <nadir-colophon>Neither of the two cities is truer than the other <nadir-colophon-flag>oneAspectTruer = false</nadir-colophon-flag>; yet the upper city is heard of chiefly from those who, sunk below, remember it.</nadir-colophon>
+  </nadir-gutter-stratum>
+
+  <zemrude-announcer id="zem-announcer" aria-live="polite"></zemrude-announcer>
+</zemrude-inclination>
+
+<zemrude-plate-scrim id="zem-plate-scrim" hidden data-zem-act="plates"></zemrude-plate-scrim>
+<zemrude-plate-drawer class="zem-plate-drawer" id="zem-plate-drawer" hidden role="dialog" aria-modal="true" aria-label="Royal plates of the inclined city">
+  <zemrude-plate-head>
+    <zemrude-plate-heading role="heading" aria-level="2">Royal Plates</zemrude-plate-heading>
+    <zemrude-plate-tab tabindex="0" role="tab" data-zem-act="tab" data-zem-arg="diptych" class="zem-active">Diptych</zemrude-plate-tab>
+    <zemrude-plate-tab tabindex="0" role="tab" data-zem-act="tab" data-zem-arg="map">Cartographic Map</zemrude-plate-tab>
+    <zemrude-plate-tab tabindex="0" role="tab" data-zem-act="tab" data-zem-arg="vista">Architectural Vista</zemrude-plate-tab>
+    <zemrude-plate-action tabindex="0" role="button" id="zem-loupe-pill" aria-pressed="false" data-zem-act="loupe"><zemrude-key>Z</zemrude-key>Loupe 1.8×</zemrude-plate-action>
+    <zemrude-plate-action tabindex="0" role="button" data-zem-act="plates"><zemrude-key>Esc</zemrude-key>Close</zemrude-plate-action>
+  </zemrude-plate-head>
+  <zemrude-plate-stage id="zem-plate-stage">
+    <zemrude-plate-frame id="zem-map-frame">
+      <zemrude-plate-caption>Cartographic plate — the upper and the lower city on one sheet.</zemrude-plate-caption>
+      <img class="zem-plate-img" id="zem-map-img" src="map.png" alt="Cartographic plate of Zemrude" onerror="this.setAttribute('data-zem-failed','1');if(window.__zemPlateFail){window.__zemPlateFail(this);}">
+      <canvas class="zem-plate-fallback" id="zem-map-fallback" width="800" height="600" hidden aria-label="Procedural copperplate stand-in while the cartographic plate lands"></canvas>
+    </zemrude-plate-frame>
+    <zemrude-plate-frame id="zem-vista-frame">
+      <zemrude-plate-caption>Architectural vista — sills aloft, gutters underfoot.</zemrude-plate-caption>
+      <img class="zem-plate-img" id="zem-vista-img" src="image.png" alt="Architectural vista of Zemrude" onerror="this.setAttribute('data-zem-failed','1');if(window.__zemPlateFail){window.__zemPlateFail(this);}">
+      <canvas class="zem-plate-fallback" id="zem-vista-fallback" width="800" height="500" hidden aria-label="Procedural copperplate stand-in while the vista plate lands"></canvas>
+    </zemrude-plate-frame>
+  </zemrude-plate-stage>
+</zemrude-plate-drawer>
+
+<script>
+(function () {
+  'use strict';
+
+  const PALETTE = Object.freeze({
+    linenSky: '#e8eef2',
+    ceruleanVault: '#8bb8d6',
+    sunlitLimestone: '#dfd3be',
+    sillShadow: '#9e927f',
+    curtainBleach: '#f7f9fb',
+    fountainSilver: '#d8eef8',
+    sprayPrism: '#ffffff',
+    memoryAmber: '#d6a75c'
+  });
+
+  function clamp(v, lo, hi) {
+    return v < lo ? lo : v > hi ? hi : v;
+  }
+
+  function lerp(a, b, t) {
+    return a + (b - a) * t;
+  }
+
+  function hexToRgba(hex, alpha) {
+    const clean = String(hex || '#ffffff').replace('#', '');
+    const n = parseInt(clean.length === 3
+      ? clean.split('').map(function (c) { return c + c; }).join('')
+      : clean, 16);
+    const r = (n >> 16) & 255;
+    const g = (n >> 8) & 255;
+    const b = n & 255;
+    return 'rgba(' + r + ',' + g + ',' + b + ',' + clamp(alpha, 0, 1).toFixed(3) + ')';
+  }
+
+  function safeLinearGrad(ctx, x0, y0, x1, y1, stops, fallback) {
+    if (ctx && typeof ctx.createLinearGradient === 'function') {
+      const g = ctx.createLinearGradient(x0, y0, x1, y1);
+      if (g && typeof g.addColorStop === 'function') {
+        for (let i = 0; i < stops.length; i++) {
+          g.addColorStop(stops[i][0], stops[i][1]);
+        }
+        return g;
+      }
+    }
+    return fallback;
+  }
+
+  function computeHorizonNorm(gazeElevation) {
+    const g = clamp(typeof gazeElevation === 'number' ? gazeElevation : 0.55, -1, 1);
+    return 0.18 + (g + 1) * 0.37;
+  }
+
+  // Reference horizon at initial gazeElevation = 0.55 is 0.7535.
+  // At gazeElevation = 0.55, projected (normX, normY) matches stone.(normX, normY) exactly.
+  // As gazeElevation sinks below 0, Upper Zemrude recedes upward above the top of the frame.
+  function projectUpperStone(stone, gazeElevation) {
+    const g = clamp(typeof gazeElevation === 'number' ? gazeElevation : 0.55, -1, 1);
+    const horizonNorm = computeHorizonNorm(g);
+    const refHorizon = 0.7535;
+    const heightAboveHorizon = refHorizon - stone.normY;
+    const recedeBoost = g < 0.05 ? (0.05 - g) * 0.82 : 0;
+    const converge = 1 - (g - 0.55) * 0.08;
+    const px = 0.5 + (stone.normX - 0.5) * converge;
+    const py = horizonNorm - heightAboveHorizon - recedeBoost;
+    return { normX: px, normY: py, horizonNorm: horizonNorm };
+  }
+
+  const ZENITH_STONES = Object.freeze([
+    Object.freeze({
+      id: 'sill_1', category: 'window_sills', stratum: 'zenith', side: 'left', normX: 0.22, normY: 0.58,
+      label: 'Acanthus-Corbelled Limestone Sill',
+      detail: 'Seen steeply from below with nose tilted up: a cantilevered limestone soffit scored by sun and chisel, cradling a glazed basil pot.',
+      echoText: 'Someone recalls how noon gilded the undersides of acanthus corbels high above the shadowed street.'
+    }),
+    Object.freeze({
+      id: 'sill_2', category: 'window_sills', stratum: 'zenith', side: 'right', normX: 0.78, normY: 0.56,
+      label: 'Sun-Warmed Terracotta Ledge',
+      detail: 'A chamfered upper drip-moulding casting warm ochre reflected light upward across mud-cup swallow nests.',
+      echoText: 'In dark puddles a warm amber line still traces the chamfered terracotta ledge and its nested eaves.'
+    }),
+    Object.freeze({
+      id: 'sill_3', category: 'window_sills', stratum: 'zenith', side: 'left', normX: 0.28, normY: 0.43,
+      label: 'Fluted Belvedere Sill',
+      detail: 'Twin volute brackets thrusting into the sky canyon, bearing an unglazed pitcher whose wet rim catches cerulean light.',
+      echoText: 'Faint in memory: twin stone volutes jutting into open air where a water pitcher gleamed at midday.'
+    }),
+    Object.freeze({
+      id: 'sill_4', category: 'window_sills', stratum: 'zenith', side: 'right', normX: 0.72, normY: 0.41,
+      label: 'Swallow-Eave Casement Sill',
+      detail: 'Deeply undercut ogee limestone lip from which swallows launch across the bright gulf between cornices.',
+      echoText: 'Those who look down only hear tell of the high ogee sill where swallows wheeled at a whistled note.'
+    }),
+    Object.freeze({
+      id: 'sill_5', category: 'window_sills', stratum: 'zenith', side: 'left', normX: 0.16, normY: 0.66,
+      label: 'Carved Rope-Mould Sill',
+      detail: 'Braided limestone sill warm with sky-glare, iron shutter-dogs hooked open to welcome the whistling walker.',
+      echoText: 'A braided stone profile shimmers briefly in gutter water like a half-forgotten upward glance.'
+    }),
+    Object.freeze({
+      id: 'sill_6', category: 'window_sills', stratum: 'zenith', side: 'right', normX: 0.84, normY: 0.64,
+      label: 'Citron-Pot Corner Corbel',
+      detail: 'Projecting corner sill catching cross-breezes through glossy citron leaves silhouetted against pale linen sky.',
+      echoText: 'Remembered from below: a corner corbel and bright leaves leaning out into unobstructed wind.'
+    }),
+    Object.freeze({
+      id: 'curtain_1', category: 'flapping_curtains', stratum: 'zenith', side: 'left', normX: 0.25, normY: 0.50,
+      label: 'Sun-Bleached Linen Casement Curtain',
+      detail: 'Sheer ivory flax billowing outward from an open casement like a small sail filled by an upward whistle.',
+      echoText: 'A white curve ripples on black water—ghost of a linen curtain bellied out into sunlit air.'
+    }),
+    Object.freeze({
+      id: 'curtain_2', category: 'flapping_curtains', stratum: 'zenith', side: 'right', normX: 0.75, normY: 0.48,
+      label: 'Cerulean-Ticked Mullion Drape',
+      detail: 'Fine sky-striped cotton snapping gently over the upper sill, luminous and weightless against the vault.',
+      echoText: 'Old walkers speak of striped mullion drapes that once snapped like pennants overhead.'
+    }),
+    Object.freeze({
+      id: 'curtain_3', category: 'flapping_curtains', stratum: 'zenith', side: 'left', normX: 0.32, normY: 0.35,
+      label: 'High Loggia Voile Curtain',
+      detail: 'Translucent bleached gauze lifted nearly horizontal by warm updraughts rising toward the rooftops.',
+      echoText: 'Like mist across a well-shaft, the remembered voile still lifts toward an unseen sky.'
+    }),
+    Object.freeze({
+      id: 'curtain_4', category: 'flapping_curtains', stratum: 'zenith', side: 'right', normX: 0.68, normY: 0.34,
+      label: 'Fringed Piano-Nobile Curtain',
+      detail: 'Twin bleached panels parting at a high arched window as cool room-air meets the noon breeze.',
+      echoText: 'A parted pair of pale curtains survives now chiefly in the testimony of sunken eyes.'
+    }),
+    Object.freeze({
+      id: 'curtain_5', category: 'flapping_curtains', stratum: 'zenith', side: 'left', normX: 0.19, normY: 0.62,
+      label: 'Laundress Sheer Valance',
+      detail: 'Freshly spun linen catching golden sun along its rippling hem as wind gusts up the facade.',
+      echoText: 'Even down among wet stones, a pale rippling hem recalls the wind-flapped upper casements.'
+    }),
+    Object.freeze({
+      id: 'curtain_6', category: 'flapping_curtains', stratum: 'zenith', side: 'right', normX: 0.81, normY: 0.60,
+      label: 'Breeze-Lifted Shutter Veil',
+      detail: 'Delicate muslin streaming past open timber louvres, answering every cadence of a light-hearted whistle.',
+      echoText: 'The muslin veil that answered a whistled tune lingers as a faint amber fold below.'
+    }),
+    Object.freeze({
+      id: 'fountain_1', category: 'fountains', stratum: 'zenith', side: 'left', normX: 0.38, normY: 0.24,
+      label: 'Loggia Shell-Basin Fountain',
+      detail: 'Elevated marble shell basin flinging a silver parabolic water arc high against the cerulean vault.',
+      echoText: 'Deep wells mirror an inverted silver parabola—echo of the loggia fountain overhead.'
+    }),
+    Object.freeze({
+      id: 'fountain_2', category: 'fountains', stratum: 'zenith', side: 'right', normX: 0.62, normY: 0.25,
+      label: 'Belvedere Lion-Spout Basin',
+      detail: 'Rooftop parapet basin whose bright jet shatters into sunlit prism mist before falling back to stone.',
+      echoText: 'Every drop dripping in cellars recalls by contrast the sunlit spray of the belvedere jet.'
+    }),
+    Object.freeze({
+      id: 'fountain_3', category: 'fountains', stratum: 'zenith', side: 'left', normX: 0.46, normY: 0.16,
+      label: 'Terrace Crown Water-Jet',
+      detail: 'Highest rooftop plume cresting in open sky, scattering silver droplets across the beholder’s upward gaze.',
+      echoText: 'Remembered from the abyss: a crown of bright water breaking into pure sky.'
+    }),
+    Object.freeze({
+      id: 'fountain_4', category: 'fountains', stratum: 'zenith', side: 'right', normX: 0.55, normY: 0.30,
+      label: 'Archway Spillway Fountain',
+      detail: 'Bridged roof-terrace basin pouring twin translucent arcs that chime like spun glass in the wind.',
+      echoText: 'Twin silver arcs shimmer inverted in dark water, heard of now only through memory.'
+    })
+  ]);
+
+  function createZenithAudio(initialMuted) {
+    let muted = Boolean(initialMuted);
+    let ctx = null;
+    let noiseBuffer = null;
+
+    function ensureContext() {
+      if (muted) return null;
+      try {
+        if (!ctx) {
+          const AC = (typeof window !== 'undefined' && (window.AudioContext || window.webkitAudioContext)) ||
+            globalThis.AudioContext || globalThis.webkitAudioContext;
+          if (!AC) return null;
+          ctx = new AC();
+        }
+        if (ctx && ctx.state === 'suspended' && typeof ctx.resume === 'function') {
+          ctx.resume().catch(function () {});
+        }
+        return ctx;
+      } catch (_err) {
+        return null;
+      }
+    }
+
+    function getNoiseBuffer(ac) {
+      if (noiseBuffer) return noiseBuffer;
+      try {
+        const len = Math.floor(ac.sampleRate * 0.45);
+        const buf = ac.createBuffer(1, len, ac.sampleRate);
+        const ch = buf.getChannelData(0);
+        let prev = 0;
+        for (let i = 0; i < len; i++) {
+          const white = Math.random() * 2 - 1;
+          prev = (prev + 0.06 * white) / 1.06;
+          ch[i] = white * 0.6 + prev * 0.4;
+        }
+        noiseBuffer = buf;
+        return buf;
+      } catch (_err) {
+        return null;
+      }
+    }
+
+    function unlock() {
+      try {
+        const ac = ensureContext();
+        return Boolean(ac && ac.state === 'running');
+      } catch (_err) {
+        return false;
+      }
+    }
+
+    function setMuted(val) {
+      muted = Boolean(val);
+      return muted;
+    }
+
+    function toggleMute() {
+      muted = !muted;
+      if (!muted) unlock();
+      return muted;
+    }
+
+    function isMuted() {
+      return muted;
+    }
+
+    function playWhistlePhrase(energy) {
+      if (muted) return;
+      try {
+        const ac = ensureContext();
+        if (!ac) return;
+        const e = clamp(typeof energy === 'number' ? energy : 0.65, 0.2, 1);
+        const now = ac.currentTime;
+        const notes = [587.33, 739.99, 880.0, 987.77 + e * 120];
+        const osc = ac.createOscillator();
+        const gain = ac.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(notes[0], now);
+        osc.frequency.exponentialRampToValueAtTime(notes[1], now + 0.11);
+        osc.frequency.exponentialRampToValueAtTime(notes[2], now + 0.23);
+        osc.frequency.exponentialRampToValueAtTime(notes[3], now + 0.39);
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.exponentialRampToValueAtTime(0.045 + e * 0.025, now + 0.05);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.48);
+        osc.connect(gain);
+        gain.connect(ac.destination);
+        osc.start(now);
+        osc.stop(now + 0.50);
+
+        const nb = getNoiseBuffer(ac);
+        if (nb) {
+          const src = ac.createBufferSource();
+          const bp = ac.createBiquadFilter();
+          const ng = ac.createGain();
+          src.buffer = nb;
+          bp.type = 'bandpass';
+          bp.frequency.setValueAtTime(1750, now);
+          bp.Q.setValueAtTime(6.0, now);
+          ng.gain.setValueAtTime(0.0001, now);
+          ng.gain.linearRampToValueAtTime(0.016, now + 0.04);
+          ng.gain.exponentialRampToValueAtTime(0.0001, now + 0.38);
+          src.connect(bp);
+          bp.connect(ng);
+          ng.connect(ac.destination);
+          src.start(now);
+          src.stop(now + 0.40);
+        }
+      } catch (_err) {}
+    }
+
+    function playSillResonance() {
+      if (muted) return;
+      try {
+        const ac = ensureContext();
+        if (!ac) return;
+        const now = ac.currentTime;
+        const freqs = [523.25, 783.99];
+        for (let i = 0; i < freqs.length; i++) {
+          const osc = ac.createOscillator();
+          const g = ac.createGain();
+          osc.type = i === 0 ? 'triangle' : 'sine';
+          osc.frequency.setValueAtTime(freqs[i], now);
+          g.gain.setValueAtTime(0.0001, now);
+          g.gain.exponentialRampToValueAtTime(i === 0 ? 0.04 : 0.022, now + 0.012);
+          g.gain.exponentialRampToValueAtTime(0.0001, now + 0.34);
+          osc.connect(g);
+          g.connect(ac.destination);
+          osc.start(now);
+          osc.stop(now + 0.36);
+        }
+      } catch (_err) {}
+    }
+
+    function playCurtainFlap() {
+      if (muted) return;
+      try {
+        const ac = ensureContext();
+        if (!ac) return;
+        const nb = getNoiseBuffer(ac);
+        if (!nb) return;
+        const now = ac.currentTime;
+        const src = ac.createBufferSource();
+        const filt = ac.createBiquadFilter();
+        const g = ac.createGain();
+        src.buffer = nb;
+        filt.type = 'bandpass';
+        filt.frequency.setValueAtTime(420, now);
+        filt.frequency.exponentialRampToValueAtTime(980, now + 0.14);
+        filt.Q.setValueAtTime(1.8, now);
+        g.gain.setValueAtTime(0.0001, now);
+        g.gain.linearRampToValueAtTime(0.038, now + 0.05);
+        g.gain.exponentialRampToValueAtTime(0.0001, now + 0.30);
+        src.connect(filt);
+        filt.connect(g);
+        g.connect(ac.destination);
+        src.start(now);
+        src.stop(now + 0.32);
+      } catch (_err) {}
+    }
+
+    function playFountainSplash() {
+      if (muted) return;
+      try {
+        const ac = ensureContext();
+        if (!ac) return;
+        const now = ac.currentTime;
+        const nb = getNoiseBuffer(ac);
+        if (nb) {
+          const src = ac.createBufferSource();
+          const hp = ac.createBiquadFilter();
+          const g = ac.createGain();
+          src.buffer = nb;
+          hp.type = 'bandpass';
+          hp.frequency.setValueAtTime(2400, now);
+          hp.Q.setValueAtTime(2.5, now);
+          g.gain.setValueAtTime(0.0001, now);
+          g.gain.linearRampToValueAtTime(0.028, now + 0.03);
+          g.gain.exponentialRampToValueAtTime(0.0001, now + 0.28);
+          src.connect(hp);
+          hp.connect(g);
+          g.connect(ac.destination);
+          src.start(now);
+          src.stop(now + 0.30);
+        }
+        const drop = ac.createOscillator();
+        const dg = ac.createGain();
+        drop.type = 'sine';
+        drop.frequency.setValueAtTime(1174.66, now + 0.03);
+        drop.frequency.exponentialRampToValueAtTime(1567.98, now + 0.16);
+        dg.gain.setValueAtTime(0.0001, now + 0.03);
+        dg.gain.exponentialRampToValueAtTime(0.022, now + 0.05);
+        dg.gain.exponentialRampToValueAtTime(0.0001, now + 0.24);
+        drop.connect(dg);
+        dg.connect(ac.destination);
+        drop.start(now + 0.03);
+        drop.stop(now + 0.25);
+      } catch (_err) {}
+    }
+
+    function playRareAscentChord() {
+      if (muted) return;
+      try {
+        const ac = ensureContext();
+        if (!ac) return;
+        const now = ac.currentTime;
+        const chord = [587.33, 739.99, 880.0, 1174.66, 1318.51];
+        for (let i = 0; i < chord.length; i++) {
+          const osc = ac.createOscillator();
+          const g = ac.createGain();
+          const t0 = now + i * 0.055;
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(chord[i], t0);
+          g.gain.setValueAtTime(0.0001, t0);
+          g.gain.exponentialRampToValueAtTime(0.026, t0 + 0.06);
+          g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.75);
+          osc.connect(g);
+          g.connect(ac.destination);
+          osc.start(t0);
+          osc.stop(t0 + 0.78);
+        }
+      } catch (_err) {}
+    }
+
+    return {
+      unlock: unlock,
+      setMuted: setMuted,
+      toggleMute: toggleMute,
+      isMuted: isMuted,
+      playWhistlePhrase: playWhistlePhrase,
+      playSillResonance: playSillResonance,
+      playCurtainFlap: playCurtainFlap,
+      playFountainSplash: playFountainSplash,
+      playRareAscentChord: playRareAscentChord
+    };
+  }
+
+  const DISCOVERY_ORDER = [
+    'sill_1', 'curtain_1', 'fountain_1',
+    'sill_2', 'curtain_2', 'fountain_2',
+    'sill_3', 'curtain_3', 'fountain_3',
+    'sill_4', 'curtain_4', 'fountain_4',
+    'sill_5', 'curtain_5', 'sill_6', 'curtain_6'
+  ];
+
+  const CATEGORY_ALIASES = {
+    window_sills: 'window_sills',
+    sill: 'window_sills',
+    sills: 'window_sills',
+    flapping_curtains: 'flapping_curtains',
+    curtain: 'flapping_curtains',
+    curtains: 'flapping_curtains',
+    fountains: 'fountains',
+    fountain: 'fountains'
+  };
+
+  function findStoneById(id) {
+    for (let i = 0; i < ZENITH_STONES.length; i++) {
+      if (ZENITH_STONES[i].id === id) return ZENITH_STONES[i];
+    }
+    return null;
+  }
+
+  function createZenithEngine(opts) {
+    const options = opts || {};
+    const audio = createZenithAudio(Boolean(options.muted));
+
+    let whistleEnergy = 0.48;
+    let windGust = 0.55;
+    let whistleCount = 1;
+    let timeSec = 0;
+    let curtainPhase = 0;
+    let whistleRipple = 0;
+    let lastGazeElevation = 0.55;
+    let lastInspectedId = 'sill_1';
+    let refreshCursor = 0;
+    let categoryCursors = { window_sills: 0, flapping_curtains: 0, fountains: 0 };
+    let imprintedMemories = [];
+    let droplets = [];
+
+    function makeMemoryEntry(stone, clarity, day) {
+      return {
+        id: stone.id,
+        category: stone.category,
+        label: stone.label,
+        detail: stone.detail,
+        echoText: stone.echoText,
+        normX: stone.normX,
+        normY: stone.normY,
+        side: stone.side || 'center',
+        clarity: Number(clamp(clarity, 0.18, 1).toFixed(4)),
+        dayImprinted: day
+      };
+    }
+
+    function seedInitialMemories() {
+      const initialIds = ['sill_1', 'curtain_1', 'fountain_1'];
+      imprintedMemories = [];
+      for (let i = 0; i < initialIds.length; i++) {
+        const s = findStoneById(initialIds[i]);
+        if (s) imprintedMemories.push(makeMemoryEntry(s, 0.92, 1));
+      }
+    }
+
+    function seedDroplets() {
+      droplets = [];
+      const fountains = ZENITH_STONES.filter(function (s) { return s.category === 'fountains'; });
+      for (let f = 0; f < fountains.length; f++) {
+        for (let k = 0; k < 9; k++) {
+          droplets.push({
+            fountainId: fountains[f].id,
+            fountainIdx: f,
+            t: (k / 9 + f * 0.17) % 1,
+            speed: 0.42 + (k % 3) * 0.11,
+            spread: (k % 2 === 0 ? 1 : -1) * (0.018 + (k % 4) * 0.009),
+            apex: 0.055 + (k % 3) * 0.018,
+            radius: 1.3 + (k % 3) * 0.65
+          });
+        }
+      }
+    }
+
+    seedInitialMemories();
+    seedDroplets();
+
+    function getAverageClarity() {
+      if (!imprintedMemories.length) return 0;
+      let sum = 0;
+      for (let i = 0; i < imprintedMemories.length; i++) {
+        sum += imprintedMemories[i].clarity;
+      }
+      return Number((sum / imprintedMemories.length).toFixed(4));
+    }
+
+    function upsertMemory(stone, clarity, day) {
+      for (let i = 0; i < imprintedMemories.length; i++) {
+        if (imprintedMemories[i].id === stone.id) {
+          imprintedMemories[i].clarity = Number(clamp(clarity, 0.18, 1).toFixed(4));
+          imprintedMemories[i].dayImprinted = day;
+          return imprintedMemories[i];
+        }
+      }
+      const entry = makeMemoryEntry(stone, clarity, day);
+      imprintedMemories.push(entry);
+      return entry;
+    }
+
+    function pickNextWhistleStone() {
+      for (let i = 0; i < DISCOVERY_ORDER.length; i++) {
+        const id = DISCOVERY_ORDER[i];
+        let exists = false;
+        for (let j = 0; j < imprintedMemories.length; j++) {
+          if (imprintedMemories[j].id === id) {
+            exists = true;
+            break;
+          }
+        }
+        if (!exists) return findStoneById(id);
+      }
+      let lowestIdx = 0;
+      for (let i = 1; i < imprintedMemories.length; i++) {
+        if (imprintedMemories[i].clarity < imprintedMemories[lowestIdx].clarity) {
+          lowestIdx = i;
+        }
+      }
+      const chosenId = imprintedMemories[lowestIdx]
+        ? imprintedMemories[lowestIdx].id
+        : DISCOVERY_ORDER[refreshCursor++ % DISCOVERY_ORDER.length];
+      return findStoneById(chosenId) || ZENITH_STONES[0];
+    }
+
+    function whistle(intensity, currentDay) {
+      const lift = typeof intensity === 'number' && !isNaN(intensity) ? clamp(intensity, 0.04, 1) : 0.36;
+      const day = typeof currentDay === 'number' && currentDay >= 1 ? Math.floor(currentDay) : 1;
+      whistleCount += 1;
+      whistleEnergy = Number(Math.min(1, whistleEnergy + lift).toFixed(4));
+      windGust = Number(Math.min(1, Math.max(windGust, 0.52) + lift * 0.65).toFixed(4));
+      whistleRipple = 1;
+      const stone = pickNextWhistleStone();
+      if (stone) {
+        upsertMemory(stone, 1.0, day);
+        lastInspectedId = stone.id;
+      }
+      audio.playWhistlePhrase(whistleEnergy);
+      audio.playFountainSplash();
+      return {
+        liftImpulse: lift,
+        whistleEnergy: whistleEnergy,
+        whistleCount: whistleCount,
+        imprintedCount: imprintedMemories.length
+      };
+    }
+
+    function inspectUpperStone(idOrCategory, currentDay) {
+      const day = typeof currentDay === 'number' && currentDay >= 1 ? Math.floor(currentDay) : 1;
+      let stone = typeof idOrCategory === 'string' ? findStoneById(idOrCategory) : null;
+      if (!stone) {
+        const cat = CATEGORY_ALIASES[String(idOrCategory || '')] || 'window_sills';
+        const pool = ZENITH_STONES.filter(function (s) { return s.category === cat; });
+        const idx = (categoryCursors[cat] || 0) % pool.length;
+        categoryCursors[cat] = idx + 1;
+        stone = pool[idx] || ZENITH_STONES[0];
+      }
+      const memory = upsertMemory(stone, 1.0, day);
+      lastInspectedId = stone.id;
+      if (stone.category === 'window_sills') {
+        audio.playSillResonance();
+      } else if (stone.category === 'flapping_curtains') {
+        windGust = Number(Math.min(1, windGust + 0.18).toFixed(4));
+        audio.playCurtainFlap();
+      } else {
+        whistleRipple = Math.max(whistleRipple, 0.65);
+        audio.playFountainSplash();
+      }
+      return {
+        stone: Object.assign({}, stone),
+        memory: Object.assign({}, memory),
+        imprintedCount: imprintedMemories.length
+      };
+    }
+
+    function decayMemoriesOnSunkenDay(decayAmount) {
+      const dec = typeof decayAmount === 'number' && !isNaN(decayAmount) ? Math.max(0, decayAmount) : 0.11;
+      for (let i = 0; i < imprintedMemories.length; i++) {
+        imprintedMemories[i].clarity = Number(Math.max(0.18, imprintedMemories[i].clarity - dec).toFixed(4));
+      }
+      return {
+        imprintedCount: imprintedMemories.length,
+        averageMemoryClarity: getAverageClarity()
+      };
+    }
+
+    function step(dtSec, env) {
+      const dt = clamp(typeof dtSec === 'number' && !isNaN(dtSec) ? dtSec : 0.016, 0, 0.12);
+      const e = env || {};
+      const gaze = typeof e.gazeElevation === 'number' ? clamp(e.gazeElevation, -1, 1) : lastGazeElevation;
+      const illHumor = typeof e.encrustedIllHumor === 'number' ? clamp(e.encrustedIllHumor, 0, 1) : 0.08;
+      const reduced = Boolean(e.reducedMotion);
+      lastGazeElevation = gaze;
+
+      const motionScale = reduced ? 0.14 : 1.0;
+      timeSec += dt * motionScale;
+      curtainPhase += dt * motionScale * (1.5 + windGust * 2.4);
+      whistleRipple = Math.max(0, whistleRipple - dt * 0.85);
+
+      const targetEnergy = gaze > 0.12 ? clamp(0.42 - illHumor * 0.16, 0.22, 0.52) : 0.18;
+      whistleEnergy = Number(lerp(whistleEnergy, targetEnergy, Math.min(1, dt * 0.55)).toFixed(4));
+
+      const breezeWave = 0.44 + 0.14 * Math.sin(timeSec * 0.9) + (gaze > 0 ? 0.08 : -0.08);
+      windGust = Number(lerp(windGust, clamp(breezeWave + whistleEnergy * 0.22, 0.2, 0.95), Math.min(1, dt * 0.9)).toFixed(4));
+
+      for (let i = 0; i < droplets.length; i++) {
+        const d = droplets[i];
+        d.t = (d.t + dt * motionScale * d.speed * (0.75 + whistleEnergy * 0.65)) % 1;
+      }
+
+      if (gaze > 0.22) {
+        const refreshRate = dt * (0.08 + Math.max(0, gaze - 0.22) * 0.12);
+        for (let i = 0; i < imprintedMemories.length; i++) {
+          imprintedMemories[i].clarity = Number(Math.min(1, imprintedMemories[i].clarity + refreshRate).toFixed(4));
+        }
+      }
+    }
+
+    function renderZenith(ctx, width, height, view) {
+      if (!ctx || width <= 0 || height <= 0) return;
+      const v = view || {};
+      const gaze = clamp(typeof v.gazeElevation === 'number' ? v.gazeElevation : lastGazeElevation, -1, 1);
+      const illHumor = clamp(typeof v.encrustedIllHumor === 'number' ? v.encrustedIllHumor : 0.08, 0, 1);
+      const t = typeof v.timeSec === 'number' ? v.timeSec : timeSec;
+      const anim = v.reducedMotion ? 0.12 : 1.0;
+      const horizonY = height * (0.18 + (gaze + 1) * 0.37);
+      if (horizonY <= 1) return;
+
+      const upperAlpha = clamp((gaze + 0.22) / 0.36, 0, 1);
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(0, 0, width, Math.min(height, horizonY + 3));
+      ctx.clip();
+
+      const skyGrad = safeLinearGrad(ctx, 0, 0, 0, horizonY, [
+        [0, PALETTE.ceruleanVault],
+        [0.58, PALETTE.linenSky],
+        [1, illHumor > 0.45 ? '#cfd6dc' : '#f2f5f7']
+      ], PALETTE.linenSky);
+      ctx.fillStyle = skyGrad;
+      ctx.fillRect(0, 0, width, horizonY + 3);
+
+      // Sunlit zenith shaft & whistle breath rings
+      ctx.fillStyle = hexToRgba(PALETTE.sprayPrism, 0.22 * upperAlpha);
+      ctx.beginPath();
+      ctx.moveTo(width * 0.36, 0);
+      ctx.lineTo(width * 0.68, 0);
+      ctx.lineTo(width * 0.56, horizonY);
+      ctx.lineTo(width * 0.24, horizonY);
+      ctx.closePath();
+      ctx.fill();
+
+      if (upperAlpha > 0.05 && (whistleEnergy > 0.45 || whistleRipple > 0.02)) {
+        const cx = width * 0.5;
+        const cy = horizonY * 0.24;
+        for (let r = 0; r < 3; r++) {
+          const rad = (22 + r * 28 + ((t * 24 * anim) % 28)) * (0.8 + whistleEnergy * 0.5);
+          ctx.strokeStyle = hexToRgba(PALETTE.sprayPrism, (0.24 - r * 0.06) * upperAlpha);
+          ctx.lineWidth = 1.2;
+          ctx.beginPath();
+          ctx.arc(cx, cy, rad, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+      }
+
+      // Worm's-eye foreshortened limestone palazzo walls converging toward zenith sky
+      if (upperAlpha > 0.02) {
+        const roofY = Math.max(-height * 0.35, horizonY - height * (0.66 + gaze * 0.18));
+        const baseInset = 0.29 - gaze * 0.03;
+        const roofInset = 0.41 + gaze * 0.02;
+
+        for (let sideIdx = 0; sideIdx < 2; sideIdx++) {
+          const isLeft = sideIdx === 0;
+          const xEdge = isLeft ? 0 : width;
+          const xBase = width * (isLeft ? baseInset : 1 - baseInset);
+          const xRoof = width * (isLeft ? roofInset : 1 - roofInset);
+
+          ctx.fillStyle = safeLinearGrad(ctx, xEdge, horizonY, xRoof, roofY, [
+            [0, hexToRgba(PALETTE.sillShadow, 0.92 * upperAlpha)],
+            [0.45, hexToRgba(PALETTE.sunlitLimestone, 0.96 * upperAlpha)],
+            [1, hexToRgba('#ece3d2', 0.98 * upperAlpha)]
+          ], PALETTE.sunlitLimestone);
+          ctx.beginPath();
+          ctx.moveTo(xEdge, horizonY + 3);
+          ctx.lineTo(xBase, horizonY + 3);
+          ctx.lineTo(xRoof, roofY);
+          ctx.lineTo(xEdge, roofY);
+          ctx.closePath();
+          ctx.fill();
+
+          // Projecting cornice soffit & foreshortened ashlar courses
+          ctx.strokeStyle = hexToRgba(PALETTE.sillShadow, 0.55 * upperAlpha);
+          ctx.lineWidth = 1.4;
+          for (let c = 1; c <= 5; c++) {
+            const u = c / 6;
+            const cy = lerp(horizonY, roofY, u);
+            const cxIn = lerp(xBase, xRoof, u);
+            ctx.beginPath();
+            ctx.moveTo(xEdge, cy);
+            ctx.lineTo(cxIn, cy + (horizonY - roofY) * 0.035);
+            ctx.stroke();
+          }
+          ctx.lineWidth = 3.2;
+          ctx.strokeStyle = hexToRgba(PALETTE.sillShadow, 0.78 * upperAlpha);
+          ctx.beginPath();
+          ctx.moveTo(xBase, horizonY + 3);
+          ctx.lineTo(xRoof, roofY);
+          ctx.stroke();
+        }
+      }
+
+      // Inspectable Upper Zemrude stones: sills, curtains, fountains
+      for (let i = 0; i < ZENITH_STONES.length && upperAlpha > 0.03; i++) {
+        const s = ZENITH_STONES[i];
+        const proj = projectUpperStone(s, gaze);
+        const sx = proj.normX * width;
+        const sy = proj.normY * height;
+        if (sy < -60 || sy > horizonY + 26) continue;
+        const active = v.hoveredId === s.id || v.selectedId === s.id || lastInspectedId === s.id;
+        const dir = s.side === 'right' ? -1 : 1;
+        const sc = clamp(width / 1100, 0.62, 1.18);
+
+        if (s.category === 'window_sills') {
+          const w = 44 * sc;
+          const h = 11 * sc;
+          ctx.fillStyle = hexToRgba('#46505a', 0.68 * upperAlpha);
+          ctx.fillRect(sx - w * 0.38, sy - 26 * sc, w * 0.76, 24 * sc);
+          ctx.fillStyle = hexToRgba(PALETTE.sillShadow, 0.94 * upperAlpha);
+          ctx.fillRect(sx - w * 0.5, sy, w, h * 0.65);
+          ctx.fillStyle = hexToRgba(PALETTE.sunlitLimestone, 0.98 * upperAlpha);
+          ctx.fillRect(sx - w * 0.54, sy - h * 0.45, w * 1.08, h * 0.55);
+          // Carved corbels + terracotta pot & swallow silhouette
+          ctx.fillStyle = hexToRgba(PALETTE.sillShadow, 0.88 * upperAlpha);
+          ctx.fillRect(sx - w * 0.36, sy + h * 0.5, 6 * sc, 9 * sc);
+          ctx.fillRect(sx + w * 0.24, sy + h * 0.5, 6 * sc, 9 * sc);
+          ctx.fillStyle = hexToRgba('#b56c49', 0.9 * upperAlpha);
+          ctx.beginPath();
+          ctx.moveTo(sx - 6 * sc, sy - h * 0.45);
+          ctx.lineTo(sx + 6 * sc, sy - h * 0.45);
+          ctx.lineTo(sx + 8 * sc, sy - 14 * sc);
+          ctx.lineTo(sx - 8 * sc, sy - 14 * sc);
+          ctx.closePath();
+          ctx.fill();
+        } else if (s.category === 'flapping_curtains') {
+          const billow = (14 + windGust * 22 + Math.sin(curtainPhase + i * 1.3) * 8 * anim) * sc * dir;
+          ctx.fillStyle = hexToRgba('#3d4954', 0.62 * upperAlpha);
+          ctx.fillRect(sx - 12 * sc, sy - 22 * sc, 24 * sc, 34 * sc);
+          ctx.fillStyle = hexToRgba(PALETTE.curtainBleach, 0.86 * upperAlpha);
+          ctx.strokeStyle = hexToRgba(PALETTE.ceruleanVault, 0.62 * upperAlpha);
+          ctx.lineWidth = 1.2;
+          ctx.beginPath();
+          ctx.moveTo(sx - 8 * sc * dir, sy - 20 * sc);
+          ctx.quadraticCurveTo(sx + billow, sy - 4 * sc, sx + billow * 0.85, sy + 16 * sc);
+          ctx.quadraticCurveTo(sx + billow * 0.3, sy + 20 * sc, sx - 6 * sc * dir, sy + 12 * sc);
+          ctx.closePath();
+          ctx.fill();
+          ctx.stroke();
+        } else {
+          // Elevated rooftop & loggia marble fountain + parabolic silver water arcs
+          const bw = 34 * sc;
+          ctx.fillStyle = hexToRgba(PALETTE.sunlitLimestone, 0.94 * upperAlpha);
+          ctx.beginPath();
+          ctx.arc(sx, sy + 4 * sc, bw * 0.48, 0, Math.PI, false);
+          ctx.fill();
+          const arcSpan = (30 + whistleEnergy * 22) * sc * (i % 2 === 0 ? 1 : -1);
+          const arcApex = (32 + whistleEnergy * 24) * sc;
+          ctx.strokeStyle = hexToRgba(PALETTE.fountainSilver, 0.92 * upperAlpha);
+          ctx.lineWidth = 2.1 * sc;
+          ctx.beginPath();
+          ctx.moveTo(sx, sy);
+          ctx.quadraticCurveTo(sx + arcSpan * 0.5, sy - arcApex, sx + arcSpan, sy + 8 * sc);
+          ctx.stroke();
+          for (let d = 0; d < droplets.length; d++) {
+            const dr = droplets[d];
+            if (dr.fountainId !== s.id) continue;
+            const u = dr.t;
+            const dx = sx + arcSpan * u + dr.spread * width * 0.15;
+            const dy = sy - 4 * u * (1 - u) * arcApex + u * 8 * sc;
+            ctx.fillStyle = hexToRgba(PALETTE.sprayPrism, (1 - u * 0.55) * upperAlpha);
+            ctx.beginPath();
+            ctx.arc(dx, dy, dr.radius * sc, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+
+        if (active) {
+          ctx.strokeStyle = hexToRgba(PALETTE.memoryAmber, 0.9 * upperAlpha);
+          ctx.lineWidth = 1.8;
+          ctx.beginPath();
+          ctx.arc(sx, sy, 22 * sc, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+      }
+
+      ctx.restore();
+    }
+
+    function renderMemoryEchoes(ctx, width, height, view) {
+      if (!ctx || width <= 0 || height <= 0) return;
+      const v = view || {};
+      const gaze = clamp(typeof v.gazeElevation === 'number' ? v.gazeElevation : lastGazeElevation, -1, 1);
+      if (gaze >= -0.05 || !imprintedMemories.length) return;
+
+      const t = typeof v.timeSec === 'number' ? v.timeSec : timeSec;
+      const anim = v.reducedMotion ? 0.12 : 1.0;
+      const horizonY = height * (0.18 + (gaze + 1) * 0.37);
+      const lowerSpan = Math.max(40, height - horizonY);
+      const depthGain = clamp((-0.05 - gaze) / 0.48, 0.08, 1);
+      const avgClarity = getAverageClarity();
+      const baseAlpha = clamp((0.12 + 0.52 * avgClarity) * depthGain, 0.04, 0.72);
+      const sc = clamp(width / 1100, 0.62, 1.15);
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(0, Math.max(0, horizonY), width, lowerSpan);
+      ctx.clip();
+
+      // Subterranean well / puddle mirror sheen scaled by averageMemoryClarity
+      const poolCenterY = horizonY + lowerSpan * (gaze <= -0.65 ? 0.72 : 0.54);
+      ctx.strokeStyle = hexToRgba(PALETTE.memoryAmber, baseAlpha * 0.55);
+      ctx.lineWidth = 1.1;
+      for (let r = 0; r < 3; r++) {
+        const rx = (88 + r * 54) * sc;
+        ctx.beginPath();
+        ctx.moveTo(width * 0.5 - rx, poolCenterY + r * 14 * sc);
+        ctx.quadraticCurveTo(width * 0.5, poolCenterY + (r * 14 + 7) * sc, width * 0.5 + rx, poolCenterY + r * 14 * sc);
+        ctx.stroke();
+      }
+
+      for (let i = 0; i < imprintedMemories.length; i++) {
+        const m = imprintedMemories[i];
+        const mAlpha = clamp(baseAlpha * (0.45 + 0.55 * m.clarity), 0.04, 0.76);
+        const shimmer = Math.sin(t * 1.6 * anim + i * 1.7) * 4 * sc;
+        const ex = width * (0.20 + m.normX * 0.60) + shimmer;
+        const ey = horizonY + lowerSpan * (0.28 + (1 - m.normY) * 0.54);
+
+        if (m.category === 'window_sills') {
+          // Inverted amber corbel & sill outline reflected in dark gutter/well water
+          ctx.strokeStyle = hexToRgba(PALETTE.memoryAmber, mAlpha);
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.moveTo(ex - 20 * sc, ey);
+          ctx.lineTo(ex + 20 * sc, ey);
+          ctx.moveTo(ex - 13 * sc, ey);
+          ctx.lineTo(ex - 10 * sc, ey - 8 * sc);
+          ctx.moveTo(ex + 13 * sc, ey);
+          ctx.lineTo(ex + 10 * sc, ey - 8 * sc);
+          ctx.stroke();
+        } else if (m.category === 'flapping_curtains') {
+          // Ghostly remembered curtain curve rippling on dark water
+          const dir = m.side === 'right' ? -1 : 1;
+          ctx.strokeStyle = hexToRgba(PALETTE.memoryAmber, mAlpha * 0.92);
+          ctx.fillStyle = hexToRgba(PALETTE.fountainSilver, mAlpha * 0.24);
+          ctx.lineWidth = 1.3;
+          ctx.beginPath();
+          ctx.moveTo(ex, ey + 14 * sc);
+          ctx.quadraticCurveTo(ex + 18 * sc * dir + shimmer * 0.5, ey, ex + 12 * sc * dir, ey - 14 * sc);
+          ctx.quadraticCurveTo(ex + 3 * sc * dir, ey - 6 * sc, ex, ey + 14 * sc);
+          ctx.fill();
+          ctx.stroke();
+        } else {
+          // Inverted fountain silver parabola mirrored in well abyss
+          const span = (26 + (i % 2) * 10) * sc * (i % 2 === 0 ? 1 : -1);
+          ctx.strokeStyle = hexToRgba(PALETTE.fountainSilver, mAlpha);
+          ctx.lineWidth = 1.7;
+          ctx.beginPath();
+          ctx.moveTo(ex - span * 0.5, ey - 6 * sc);
+          ctx.quadraticCurveTo(ex, ey + 22 * sc, ex + span * 0.5, ey - 4 * sc);
+          ctx.stroke();
+        }
+      }
+
+      ctx.restore();
+    }
+
+    function hitTest(normX, normY, gazeElevation) {
+      if (typeof normX !== 'number' || typeof normY !== 'number') return null;
+      const gaze = typeof gazeElevation === 'number' ? clamp(gazeElevation, -1, 1) : lastGazeElevation;
+      if (gaze <= -0.10) return null;
+      const horizonNorm = computeHorizonNorm(gaze);
+      if (normY > horizonNorm + 0.03) return null;
+
+      let best = null;
+      let bestDist = 0.068;
+      for (let i = 0; i < ZENITH_STONES.length; i++) {
+        const s = ZENITH_STONES[i];
+        const proj = projectUpperStone(s, gaze);
+        if (proj.normY < -0.04 || proj.normY > horizonNorm + 0.03) continue;
+        const dx = normX - proj.normX;
+        const dy = normY - proj.normY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist <= bestDist) {
+          bestDist = dist;
+          best = s;
+        }
+      }
+      if (!best) return null;
+      return {
+        kind: 'zenith_stone',
+        id: best.id,
+        category: best.category,
+        label: best.label,
+        detail: best.detail,
+        echoText: best.echoText
+      };
+    }
+
+    function getState() {
+      return {
+        whistleEnergy: whistleEnergy,
+        windGust: windGust,
+        whistleCount: whistleCount,
+        totalUpperStones: 16,
+        countsByCategory: {
+          window_sills: 6,
+          flapping_curtains: 6,
+          fountains: 4
+        },
+        imprintedMemories: imprintedMemories.map(function (m) { return Object.assign({}, m); }),
+        imprintedCount: imprintedMemories.length,
+        averageMemoryClarity: getAverageClarity(),
+        muted: audio.isMuted()
+      };
+    }
+
+    function reset() {
+      whistleEnergy = 0.48;
+      windGust = 0.55;
+      whistleCount = 1;
+      timeSec = 0;
+      curtainPhase = 0;
+      whistleRipple = 0;
+      lastGazeElevation = 0.55;
+      lastInspectedId = 'sill_1';
+      refreshCursor = 0;
+      categoryCursors = { window_sills: 0, flapping_curtains: 0, fountains: 0 };
+      seedInitialMemories();
+      seedDroplets();
+      return getState();
+    }
+
+    return {
+      PALETTE: PALETTE,
+      ZENITH_STONES: ZENITH_STONES,
+      whistle: whistle,
+      inspectUpperStone: inspectUpperStone,
+      decayMemoriesOnSunkenDay: decayMemoriesOnSunkenDay,
+      step: step,
+      renderZenith: renderZenith,
+      renderMemoryEchoes: renderMemoryEchoes,
+      hitTest: hitTest,
+      audio: audio,
+      reset: reset,
+      getState: getState
+    };
+  }
+
+  const api = Object.freeze({
+    PALETTE: PALETTE,
+    ZENITH_STONES: ZENITH_STONES,
+    createZenithEngine: createZenithEngine
+  });
+
+  globalThis.ZemrudeWhistlingZenith = api;
+  if (typeof window !== 'undefined') {
+    window.ZemrudeWhistlingZenith = api;
+  }
+})();
+
+</script>
+<script>
+(function () {
+  'use strict';
+
+  const PALETTE = {
+    drainpipeLead: '#5f6b75',
+    cobblestoneWet: '#2d353d',
+    gutterSlate: '#1e242b',
+    ironGrille: '#3b434c',
+    scaleIridescence: '#8ab0ba',
+    wastepaperSodden: '#9ca19a',
+    encrustedWallFoot: '#3c473b',
+    cellarMoss: '#354a3c',
+    foundationBasalt: '#192026',
+    wellAbyss: '#0b1014'
+  };
+
+  const STRATA_ORDER = ['zenith', 'threshold', 'pavement', 'cellars', 'foundations', 'wells'];
+
+  const DIG_TARGETS = {
+    threshold: 0.0,
+    pavement: -0.30,
+    cellars: -0.56,
+    foundations: -0.75,
+    wells: -0.93
+  };
+
+  const LOWER_STONES = [
+    // Threshold (4): 2 drainpipes + 2 wall_foot_encrustation
+    { id: 'drainpipe_1', category: 'drainpipes', stratum: 'threshold', side: 'left', normX: 0.085, bandT: -0.14, hitR: 0.065,
+      label: 'Western Lead Drainpipe', detail: 'Fluted vertical lead pipe clamped with iron collars, drawing the eye inexorably down from the eaves into the kerb channel.', echoText: 'The eye slides down wet lead seams and forgets how to detach from the stones.' },
+    { id: 'drainpipe_2', category: 'drainpipes', stratum: 'threshold', side: 'right', normX: 0.915, bandT: -0.14, hitR: 0.065,
+      label: 'Eastern Lead Drainpipe', detail: 'Soldered rainwater conduit whose curved cast shoe spills roof-water across darkened flagstones.', echoText: 'Every drop descending the pipe rehearses the habit of looking down.' },
+    { id: 'encrustation_1', category: 'wall_foot_encrustation', stratum: 'threshold', side: 'left', normX: 0.16, bandT: -0.02, hitR: 0.068,
+      label: 'Saltpetre & Soot Plinth Crust', detail: 'Yesterday’s ill-humor encrusted at the damp foot of the western wall in a stubborn rind of street-splash and lichen.', echoText: 'Each repeated morning thickens the sour mineral crust along the base of the walls.' },
+    { id: 'encrustation_2', category: 'wall_foot_encrustation', stratum: 'threshold', side: 'right', normX: 0.84, bandT: -0.02, hitR: 0.068,
+      label: 'Mire-Stained Ashlar Base', detail: 'Darkened mortar joints where the heaviness of the day before clings to the lower courses of stone.', echoText: 'What seemed a passing mood yesterday hardens today at ankle height.' },
+
+    // Surface Pavement (13): 3 gutters + 3 manhole_grilles + 4 fish_scales + 3 wastepaper
+    { id: 'gutter_1', category: 'gutters', stratum: 'pavement', side: 'left', normX: 0.19, bandT: 0.34, hitR: 0.065,
+      label: 'Western Kerb Gutter', detail: 'Grooved porphyry channel carrying grey wash-water and street grit along the sunken kerb.', echoText: 'Grey rills thread between worn cobbles toward the iron grates.' },
+    { id: 'gutter_2', category: 'gutters', stratum: 'pavement', side: 'center', normX: 0.50, bandT: 0.52, hitR: 0.065,
+      label: 'Central Crown Spillway', detail: 'Transverse slate depression where wheel-ruts pool cold rainwater across the middle of the lane.', echoText: 'Standing water holds only leaden sky and the shadow of a bowed head.' },
+    { id: 'gutter_3', category: 'gutters', stratum: 'pavement', side: 'right', normX: 0.81, bandT: 0.36, hitR: 0.065,
+      label: 'Eastern Runoff Trough', detail: 'Slick basalt gutter worn concave by decades of iron-shod heels and sweeping brooms.', echoText: 'Nothing hurries here except thin trickles seeking the lowest stone.' },
+    { id: 'grille_1', category: 'manhole_grilles', stratum: 'pavement', side: 'left', normX: 0.25, bandT: 0.64, hitR: 0.066,
+      label: 'Barred Sewer Grille', detail: 'Heavy cast-iron grating choked at the corners with wet grit, breathing cold air up from the drain.', echoText: 'Between iron bars, darkness answers the downward stare.' },
+    { id: 'grille_2', category: 'manhole_grilles', stratum: 'pavement', side: 'center', normX: 0.52, bandT: 0.78, hitR: 0.068,
+      label: 'Sunken Inspection Manhole', detail: 'Cross-hatched iron cover bruised shiny at its rivets by passing carts and lowered boots.', echoText: 'Under the barred iron lid, hollow water murmurs out of sight.' },
+    { id: 'grille_3', category: 'manhole_grilles', stratum: 'pavement', side: 'right', normX: 0.76, bandT: 0.62, hitR: 0.066,
+      label: 'Curbside Catch-Basin Grate', detail: 'Slotted iron mouth swallowing gutter suds and stray street sweepings into subterranean conduits.', echoText: 'A metallic ring lingers whenever a heel strikes the wet bars.' },
+    { id: 'scale_1', category: 'fish_scales', stratum: 'pavement', side: 'left', normX: 0.33, bandT: 0.44, hitR: 0.058,
+      label: 'Mullet Scale in Mortar Seam', detail: 'Discarded mother-of-pearl fish scale wedged upright between two wet cobbles, flashing cold teal.', echoText: 'Even in the mire, a stray scale catches an oblique nacreous glint.' },
+    { id: 'scale_2', category: 'fish_scales', stratum: 'pavement', side: 'center', normX: 0.44, bandT: 0.67, hitR: 0.058,
+      label: 'Cluster of Sardine Scales', detail: 'Four translucent silver-slate discs left from a morning basket, stuck like wet coins to dark stone.', echoText: 'Small cold mirrors scattered where fishmongers turned the corner.' },
+    { id: 'scale_3', category: 'fish_scales', stratum: 'pavement', side: 'right', normX: 0.64, bandT: 0.48, hitR: 0.058,
+      label: 'Brine- filmed Bream Scale', detail: 'Curled opalescent flake shimmering pale green and pewter beside the runoff seam.', echoText: 'A salt-stiffened speck of sea-light stranded in gutter slate.' },
+    { id: 'scale_4', category: 'fish_scales', stratum: 'pavement', side: 'right', normX: 0.70, bandT: 0.82, hitR: 0.058,
+      label: 'Iridescent Gill-Flake', detail: 'Faint rose-and-lead glimmer half-submerged in a film of rainwater near the eastern grate.', echoText: 'The lowered eye counts tiny cold gleams between the flags.' },
+    { id: 'wastepaper_1', category: 'wastepaper', stratum: 'pavement', side: 'left', normX: 0.15, bandT: 0.74, hitR: 0.062,
+      label: 'Sodden Wrapping Scrap', detail: 'Crumpled grey-white paper pulp flattened against the kerbstone, its ink bled into illegible clouds.', echoText: 'Yesterday’s news softens into grey fibre along the kerb.' },
+    { id: 'wastepaper_2', category: 'wastepaper', stratum: 'pavement', side: 'center', normX: 0.59, bandT: 0.33, hitR: 0.062,
+      label: 'Torn Ledger Leaf', detail: 'Folded corner of rag paper snagged on rough basalt, trembling gently in the trickle.', echoText: 'Sums and names dissolve alike once trampled into wet stone.' },
+    { id: 'wastepaper_3', category: 'wastepaper', stratum: 'pavement', side: 'right', normX: 0.85, bandT: 0.70, hitR: 0.062,
+      label: 'Pulped Handbill at Grate', detail: 'Waterlogged sheet pressed against the cast-iron bars like a pale sodden moth.', echoText: 'Caught at the grille, the sodden sheet dams a thread of runoff.' },
+
+    // Subterranean (9): 3 cellars + 3 foundations + 3 wells
+    { id: 'cellar_1', category: 'cellars', stratum: 'cellars', side: 'left', normX: 0.22, bandT: 0.50, hitR: 0.072,
+      label: 'Moss-Vaulted Wine Cellar', detail: 'Low Roman-brick barrel vault furred with velvet green moss and weeping beads of cold nitre.', echoText: 'Once the gaze pierces the flags, damp brick vaults open beneath every step.' },
+    { id: 'cellar_2', category: 'cellars', stratum: 'cellars', side: 'center', normX: 0.50, bandT: 0.54, hitR: 0.072,
+      label: 'Cistern Under-Crypt', detail: 'Blind brick arcade beneath the thoroughfare where seepage ticks steadily onto sunken tiles.', echoText: 'In the airless vault, nobody speaks of curtains save by hearsay.' },
+    { id: 'cellar_3', category: 'cellars', stratum: 'cellars', side: 'right', normX: 0.78, bandT: 0.50, hitR: 0.072,
+      label: 'Salt-Cured Storage Vault', detail: 'Sweating masonry chamber banded with iron straps and pale mineral efflorescence.', echoText: 'The street overhead sounds only as muffled iron rims and heels.' },
+    { id: 'foundation_1', category: 'foundations', stratum: 'foundations', side: 'left', normX: 0.23, bandT: 0.52, hitR: 0.074,
+      label: 'Western Cyclopean Piling', detail: 'Immense unmortared basalt blocks wedged into black clay, bearing the silent weight of five storeys.', echoText: 'Down among the pilings, every airy sill above becomes sheer compressive load.' },
+    { id: 'foundation_2', category: 'foundations', stratum: 'foundations', side: 'center', normX: 0.50, bandT: 0.55, hitR: 0.074,
+      label: 'Keystone Plinth Pier', detail: 'Rusticated dark stone footing pinned with corroded iron cramps beneath the street axis.', echoText: 'The deeper the eye digs, the heavier the upper city presses down.' },
+    { id: 'foundation_3', category: 'foundations', stratum: 'foundations', side: 'right', normX: 0.77, bandT: 0.52, hitR: 0.074,
+      label: 'Eastern Basalt Footing', detail: 'Squared subterranean monoliths slick with groundwater seeping toward the lower water-table.', echoText: 'Cold basalt remembers neither breeze nor sunlit casement.' },
+    { id: 'well_1', category: 'wells', stratum: 'wells', side: 'left', normX: 0.22, bandT: 0.56, hitR: 0.076,
+      label: 'Western Phreatic Well-Shaft', detail: 'Cylindrical black masonry shaft dropping to still water where a ghostly memory of sky trembles.', echoText: 'At the bottom of the well, upper sunlit sills return only as a rumour on black water.' },
+    { id: 'well_2', category: 'wells', stratum: 'wells', side: 'center', normX: 0.50, bandT: 0.60, hitR: 0.080,
+      label: 'Abyssal Cistern Well', detail: 'Deepest subterranean water-mirror; those who stare here hear of fountains above chiefly from fellow rememberers.', echoText: 'Still black water holds the faintest amber ghost of a window no one lifts their head to verify.' },
+    { id: 'well_3', category: 'wells', stratum: 'wells', side: 'right', normX: 0.78, bandT: 0.56, hitR: 0.076,
+      label: 'Eastern Echoing Well', detail: 'Narrow stone throat plunging into the water-table, answering every drop with a long hollow ring.', echoText: 'From the well-bottom, upward reversal seems rare as water climbing stone.' }
+  ];
+
+  function clamp(v, lo, hi) {
+    return v < lo ? lo : v > hi ? hi : v;
+  }
+
+  function computeHorizonRatio(gazeElevation) {
+    return 0.18 + (clamp(gazeElevation, -1, 1) + 1) * 0.37;
+  }
+
+  function computeSectionLayout(gazeElevation) {
+    const g = clamp(gazeElevation, -1, 1);
+    const horizon = computeHorizonRatio(g);
+    const lowerSpan = Math.max(0.06, 1 - horizon);
+    if (g >= -0.35) {
+      return {
+        horizon,
+        pavementBottom: 1.0,
+        cellarsBottom: 1.0,
+        foundationsBottom: 1.0,
+        wellsBottom: 1.0,
+        subAlpha: 0,
+        cellarsAlpha: 0,
+        foundationsAlpha: 0,
+        wellsAlpha: 0
+      };
+    }
+    const subT = clamp((-0.35 - g) / 0.65, 0, 1);
+    const paveShare = 1 - 0.76 * subT;
+    const pavementBottom = horizon + lowerSpan * paveShare;
+    const rem = Math.max(0.001, 1 - pavementBottom);
+    const cWeight = 1.0;
+    const fWeight = clamp((-0.48 - g) / 0.24, 0, 1) * 1.08;
+    const wWeight = clamp((-0.68 - g) / 0.24, 0, 1) * 1.32;
+    const wSum = cWeight + fWeight + wWeight;
+    const cellarsBottom = pavementBottom + rem * (cWeight / wSum);
+    const foundationsBottom = cellarsBottom + rem * (fWeight / wSum);
+    return {
+      horizon,
+      pavementBottom,
+      cellarsBottom,
+      foundationsBottom,
+      wellsBottom: 1.0,
+      subAlpha: clamp(subT * 1.5, 0, 1),
+      cellarsAlpha: clamp((-0.35 - g) / 0.14, 0, 1),
+      foundationsAlpha: clamp((-0.48 - g) / 0.16, 0, 1),
+      wellsAlpha: clamp((-0.68 - g) / 0.16, 0, 1)
+    };
+  }
+
+  function projectStoneNorm(stone, gazeElevation, illHumor) {
+    const lay = computeSectionLayout(gazeElevation);
+    const crustLift = 0.015 + clamp(illHumor || 0.08, 0, 1) * 0.045;
+    if (stone.stratum === 'threshold') {
+      const ny = stone.category === 'drainpipes'
+        ? clamp(lay.horizon - 0.09, 0.08, 0.94)
+        : clamp(lay.horizon - crustLift * 0.55, 0.10, 0.96);
+      return { normX: stone.normX, normY: ny, visible: true };
+    }
+    if (stone.stratum === 'pavement') {
+      const span = Math.max(0.04, lay.pavementBottom - lay.horizon);
+      return { normX: stone.normX, normY: lay.horizon + span * stone.bandT, visible: lay.horizon < 0.96 };
+    }
+    if (stone.stratum === 'cellars') {
+      const span = lay.cellarsBottom - lay.pavementBottom;
+      return { normX: stone.normX, normY: lay.pavementBottom + span * stone.bandT, visible: lay.cellarsAlpha > 0.12 && span > 0.04 };
+    }
+    if (stone.stratum === 'foundations') {
+      const span = lay.foundationsBottom - lay.cellarsBottom;
+      return { normX: stone.normX, normY: lay.cellarsBottom + span * stone.bandT, visible: lay.foundationsAlpha > 0.12 && span > 0.04 };
+    }
+    const span = lay.wellsBottom - lay.foundationsBottom;
+    return { normX: stone.normX, normY: lay.foundationsBottom + span * stone.bandT, visible: lay.wellsAlpha > 0.12 && span > 0.04 };
+  }
+
+  function createGutterAudio() {
+    let ctx = null;
+    let muted = false;
+    let noiseBuf = null;
+
+    function ensureContext() {
+      if (muted) return null;
+      try {
+        if (!ctx) {
+          const AC = globalThis.AudioContext || globalThis.webkitAudioContext;
+          if (!AC) return null;
+          ctx = new AC();
+        }
+        if (ctx.state === 'suspended') {
+          const p = ctx.resume();
+          if (p && typeof p.catch === 'function') p.catch(function () {});
+        }
+        if (!noiseBuf && ctx) {
+          const len = Math.max(2048, Math.floor(ctx.sampleRate * 0.35));
+          noiseBuf = ctx.createBuffer(1, len, ctx.sampleRate);
+          const data = noiseBuf.getChannelData(0);
+          for (let i = 0; i < len; i += 1) {
+            data[i] = (Math.random() * 2 - 1) * (1 - i / len);
+          }
+        }
+        return ctx;
+      } catch (_err) {
+        return null;
+      }
+    }
+
+    function unlock() {
+      try {
+        const c = ensureContext();
+        return Boolean(c);
+      } catch (_err) {
+        return false;
+      }
+    }
+
+    function setMuted(flag) {
+      muted = Boolean(flag);
+      return muted;
+    }
+
+    function toggleMute() {
+      muted = !muted;
+      return muted;
+    }
+
+    function isMuted() {
+      return muted;
+    }
+
+    function playCobbleStep() {
+      try {
+        const c = ensureContext();
+        if (!c) return;
+        const now = c.currentTime;
+        const osc = c.createOscillator();
+        const gain = c.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(108, now);
+        osc.frequency.exponentialRampToValueAtTime(46, now + 0.13);
+        gain.gain.setValueAtTime(0.001, now);
+        gain.gain.linearRampToValueAtTime(0.11, now + 0.012);
+        gain.gain.exponentialRampToValueAtTime(0.0008, now + 0.16);
+        osc.connect(gain);
+        gain.connect(c.destination);
+        osc.start(now);
+        osc.stop(now + 0.17);
+
+        if (noiseBuf) {
+          const src = c.createBufferSource();
+          const bp = c.createBiquadFilter();
+          const ng = c.createGain();
+          src.buffer = noiseBuf;
+          bp.type = 'bandpass';
+          bp.frequency.setValueAtTime(620, now);
+          bp.Q.setValueAtTime(1.8, now);
+          ng.gain.setValueAtTime(0.045, now);
+          ng.gain.exponentialRampToValueAtTime(0.0008, now + 0.09);
+          src.connect(bp);
+          bp.connect(ng);
+          ng.connect(c.destination);
+          src.start(now);
+          src.stop(now + 0.10);
+        }
+      } catch (_err) {}
+    }
+
+    function playGutterTrickle() {
+      try {
+        const c = ensureContext();
+        if (!c) return;
+        const now = c.currentTime;
+        const freqs = [920, 1180, 790];
+        for (let i = 0; i < freqs.length; i += 1) {
+          const t0 = now + i * 0.055;
+          const osc = c.createOscillator();
+          const g = c.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freqs[i], t0);
+          osc.frequency.exponentialRampToValueAtTime(freqs[i] * 1.24, t0 + 0.06);
+          g.gain.setValueAtTime(0.0008, t0);
+          g.gain.linearRampToValueAtTime(0.036, t0 + 0.008);
+          g.gain.exponentialRampToValueAtTime(0.0007, t0 + 0.075);
+          osc.connect(g);
+          g.connect(c.destination);
+          osc.start(t0);
+          osc.stop(t0 + 0.08);
+        }
+      } catch (_err) {}
+    }
+
+    function playManholeGrate() {
+      try {
+        const c = ensureContext();
+        if (!c) return;
+        const now = c.currentTime;
+        const partials = [164, 249, 386];
+        for (let i = 0; i < partials.length; i += 1) {
+          const osc = c.createOscillator();
+          const g = c.createGain();
+          osc.type = i === 0 ? 'triangle' : 'sine';
+          osc.frequency.setValueAtTime(partials[i], now);
+          osc.frequency.exponentialRampToValueAtTime(partials[i] * 0.91, now + 0.24);
+          g.gain.setValueAtTime(0.001, now);
+          g.gain.linearRampToValueAtTime(0.055 / (i + 1), now + 0.01);
+          g.gain.exponentialRampToValueAtTime(0.0007, now + 0.26);
+          osc.connect(g);
+          g.connect(c.destination);
+          osc.start(now);
+          osc.stop(now + 0.28);
+        }
+      } catch (_err) {}
+    }
+
+    function playCellarDrip() {
+      try {
+        const c = ensureContext();
+        if (!c) return;
+        const now = c.currentTime;
+        const delays = [0, 0.14];
+        for (let i = 0; i < delays.length; i += 1) {
+          const t0 = now + delays[i];
+          const amp = i === 0 ? 0.065 : 0.024;
+          const osc = c.createOscillator();
+          const g = c.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(640, t0);
+          osc.frequency.exponentialRampToValueAtTime(1090, t0 + 0.065);
+          g.gain.setValueAtTime(0.0008, t0);
+          g.gain.linearRampToValueAtTime(amp, t0 + 0.008);
+          g.gain.exponentialRampToValueAtTime(0.0007, t0 + 0.12);
+          osc.connect(g);
+          g.connect(c.destination);
+          osc.start(t0);
+          osc.stop(t0 + 0.13);
+        }
+      } catch (_err) {}
+    }
+
+    function playWellEcho() {
+      try {
+        const c = ensureContext();
+        if (!c) return;
+        const now = c.currentTime;
+        const tones = [65.4, 98.0, 293.7];
+        for (let i = 0; i < tones.length; i += 1) {
+          const osc = c.createOscillator();
+          const g = c.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(tones[i], now + i * 0.03);
+          osc.frequency.exponentialRampToValueAtTime(tones[i] * 0.985, now + 0.52);
+          g.gain.setValueAtTime(0.0008, now + i * 0.03);
+          g.gain.linearRampToValueAtTime(i === 2 ? 0.022 : 0.052, now + i * 0.03 + 0.04);
+          g.gain.exponentialRampToValueAtTime(0.0007, now + 0.56);
+          osc.connect(g);
+          g.connect(c.destination);
+          osc.start(now + i * 0.03);
+          osc.stop(now + 0.58);
+        }
+      } catch (_err) {}
+    }
+
+    return {
+      unlock,
+      setMuted,
+      toggleMute,
+      isMuted,
+      playCobbleStep,
+      playGutterTrickle,
+      playManholeGrate,
+      playCellarDrip,
+      playWellEcho
+    };
+  }
+
+  const COUNTS_BY_CATEGORY = LOWER_STONES.reduce(function (acc, st) {
+    acc[st.category] = (acc[st.category] || 0) + 1;
+    return acc;
+  }, {});
+
+  function createGutterEngine(opts) {
+    const options = opts || {};
+    const audio = createGutterAudio();
+
+    let consecutiveDays = 1;
+    let gazeElevation = 0.55;
+    let beholderPosture = 'whistling_upward';
+    let currentStratum = 'zenith';
+    let nailsDugIntoPalms = false;
+    let encrustedIllHumor = 0.08;
+    let liftResistance = 0.14;
+    let autoHabitDrift = true;
+    let rareReversalsCount = 0;
+    let wasSunkInLower = false;
+    let deepestStratumReached = 'zenith';
+    let reducedMotion = Boolean(options.reducedMotion);
+    let lastInspectedStoneId = null;
+    let animTime = 0;
+
+    const categoryCursors = {};
+    const gutterRills = [
+      { lane: 0.19, t: 0.08, speed: 0.24 },
+      { lane: 0.19, t: 0.58, speed: 0.24 },
+      { lane: 0.50, t: 0.31, speed: 0.18 },
+      { lane: 0.81, t: 0.20, speed: 0.26 },
+      { lane: 0.81, t: 0.72, speed: 0.26 }
+    ];
+    const nitreDrips = [
+      { x: 0.22, fall: 0.12, rate: 0.42 },
+      { x: 0.50, fall: 0.55, rate: 0.36 },
+      { x: 0.78, fall: 0.81, rate: 0.46 }
+    ];
+    const wellRipples = [
+      { x: 0.22, phase: 0.10, rate: 0.30 },
+      { x: 0.50, phase: 0.48, rate: 0.25 },
+      { x: 0.78, phase: 0.77, rate: 0.33 }
+    ];
+
+    function deriveStratumAndPosture(g) {
+      if (g > 0.10) return { stratum: 'zenith', posture: 'whistling_upward' };
+      if (g >= -0.10) return { stratum: 'threshold', posture: 'drainpipe_descent' };
+      if (g > -0.45) return { stratum: 'pavement', posture: 'palms_clenched_gutter' };
+      if (g > -0.65) return { stratum: 'cellars', posture: 'subterranean_digging' };
+      if (g > -0.84) return { stratum: 'foundations', posture: 'subterranean_digging' };
+      return { stratum: 'wells', posture: 'subterranean_digging' };
+    }
+
+    function getState() {
+      const inclinationDeg = gazeElevation >= 0
+        ? Math.round(gazeElevation * 650) / 10
+        : Math.round(gazeElevation * 900) / 10;
+      return {
+        consecutiveDays: consecutiveDays,
+        gazeElevation: Math.round(gazeElevation * 10000) / 10000,
+        inclinationDeg: inclinationDeg,
+        beholderPosture: beholderPosture,
+        currentStratum: currentStratum,
+        deepestStratumReached: deepestStratumReached,
+        nailsDugIntoPalms: nailsDugIntoPalms,
+        encrustedIllHumor: Math.round(encrustedIllHumor * 10000) / 10000,
+        liftResistance: Math.round(liftResistance * 10000) / 10000,
+        autoHabitDrift: autoHabitDrift,
+        rareReversalsCount: rareReversalsCount,
+        oneAspectTruer: false,
+        bothFormsValid: true,
+        upperHeardChieflyFromRememberersBelow: gazeElevation < -0.10,
+        countsByCategory: Object.assign({}, COUNTS_BY_CATEGORY),
+        stonesCount: LOWER_STONES.length,
+        muted: audio.isMuted()
+      };
+    }
+
+    function updateElevation(nextGaze, notify) {
+      const prevStratum = currentStratum;
+      gazeElevation = clamp(Number(nextGaze) || 0, -1.0, 1.0);
+      const derived = deriveStratumAndPosture(gazeElevation);
+      currentStratum = derived.stratum;
+      beholderPosture = derived.posture;
+
+      if (STRATA_ORDER.indexOf(currentStratum) > STRATA_ORDER.indexOf(deepestStratumReached)) {
+        deepestStratumReached = currentStratum;
+      }
+
+      let rareAscentFired = false;
+      if (gazeElevation <= -0.18) {
+        wasSunkInLower = true;
+        nailsDugIntoPalms = true;
+      } else if (wasSunkInLower === true && gazeElevation >= 0.22) {
+        rareReversalsCount += 1;
+        wasSunkInLower = false;
+        nailsDugIntoPalms = false;
+        encrustedIllHumor = Math.max(0.05, encrustedIllHumor - 0.08);
+        liftResistance = Math.min(0.78, 0.14 + encrustedIllHumor * 0.66);
+        rareAscentFired = true;
+      }
+
+      if (notify) {
+        if (currentStratum !== prevStratum && typeof options.onStratumChanged === 'function') {
+          options.onStratumChanged(getState());
+        }
+        if (rareAscentFired && typeof options.onRareAscent === 'function') {
+          options.onRareAscent(getState());
+        }
+      }
+    }
+
+    function playStoneSound(categoryOrStratum) {
+      if (categoryOrStratum === 'wells') audio.playWellEcho();
+      else if (categoryOrStratum === 'cellars') audio.playCellarDrip();
+      else if (categoryOrStratum === 'manhole_grilles' || categoryOrStratum === 'foundations' || categoryOrStratum === 'pavement') audio.playManholeGrate();
+      else if (categoryOrStratum === 'wall_foot_encrustation') audio.playCobbleStep();
+      else audio.playGutterTrickle();
+    }
+
+    function tiltGaze(deltaElevation) {
+      const d = Number(deltaElevation) || 0;
+      let scaled = d;
+      if (d > 0 && gazeElevation < 0.05) {
+        scaled = d * (1 - liftResistance * 0.68);
+      } else if (d < 0) {
+        scaled = d * (1 + encrustedIllHumor * 0.40);
+      }
+      updateElevation(gazeElevation + scaled, true);
+      return getState();
+    }
+
+    function setGazeDirect(targetElevation) {
+      updateElevation(targetElevation, true);
+      return getState();
+    }
+
+    function applyWhistleImpulse(impulse) {
+      const imp = typeof impulse === 'number' ? impulse : 0.36;
+      const gain = Math.max(0.14, imp * (1 - liftResistance * 0.60));
+      updateElevation(gazeElevation + gain, true);
+      return getState();
+    }
+
+    function clenchPalmsAndHangHead() {
+      nailsDugIntoPalms = true;
+      encrustedIllHumor = Math.min(0.95, encrustedIllHumor + 0.10);
+      liftResistance = Math.min(0.78, 0.14 + encrustedIllHumor * 0.66);
+      const nextG = gazeElevation > -0.30 ? -0.32 : gazeElevation - 0.22;
+      updateElevation(nextG, true);
+      audio.playManholeGrate();
+      return getState();
+    }
+
+    function advanceSameStreetDay(days) {
+      const d = Math.max(1, Number(days) || 1);
+      consecutiveDays += d;
+      encrustedIllHumor = Math.min(0.95, encrustedIllHumor + 0.15 * d);
+      liftResistance = Math.min(0.78, 0.14 + encrustedIllHumor * 0.66);
+      updateElevation(gazeElevation - 0.26 * d, true);
+      audio.playCobbleStep();
+      if (typeof options.onDayAdvanced === 'function') {
+        options.onDayAdvanced(getState());
+      }
+      return getState();
+    }
+
+    function digSubterranean(targetStratum) {
+      let key = targetStratum;
+      if (!key || typeof DIG_TARGETS[key] !== 'number') {
+        const idx = STRATA_ORDER.indexOf(currentStratum);
+        key = STRATA_ORDER[Math.min(STRATA_ORDER.length - 1, Math.max(1, idx + 1))];
+      }
+      const targetG = DIG_TARGETS[key];
+      updateElevation(targetG, true);
+      playStoneSound(key);
+      return getState();
+    }
+
+    function inspectLowerStone(idOrCategory) {
+      let stone = LOWER_STONES.find(function (s) { return s.id === idOrCategory; });
+      if (!stone) {
+        const pool = LOWER_STONES.filter(function (s) {
+          return s.category === idOrCategory || s.stratum === idOrCategory;
+        });
+        const list = pool.length ? pool : LOWER_STONES;
+        const k = String(idOrCategory || 'all');
+        const idx = categoryCursors[k] || 0;
+        stone = list[idx % list.length];
+        categoryCursors[k] = idx + 1;
+      }
+      lastInspectedStoneId = stone.id;
+      const ceilings = { threshold: 0.06, pavement: -0.20, cellars: -0.50, foundations: -0.70, wells: -0.86 };
+      if (gazeElevation > ceilings[stone.stratum]) {
+        updateElevation(DIG_TARGETS[stone.stratum], true);
+      }
+      playStoneSound(stone.category);
+      return { stone: Object.assign({}, stone), state: getState() };
+    }
+
+    function setAutoHabitDrift(flag) {
+      autoHabitDrift = Boolean(flag);
+      return getState();
+    }
+
+    function reset() {
+      consecutiveDays = 1;
+      gazeElevation = 0.55;
+      beholderPosture = 'whistling_upward';
+      currentStratum = 'zenith';
+      nailsDugIntoPalms = false;
+      encrustedIllHumor = 0.08;
+      liftResistance = 0.14;
+      autoHabitDrift = true;
+      rareReversalsCount = 0;
+      wasSunkInLower = false;
+      deepestStratumReached = 'zenith';
+      lastInspectedStoneId = null;
+      Object.keys(categoryCursors).forEach(function (k) { delete categoryCursors[k]; });
+      return getState();
+    }
+
+    function step(dtSec, env) {
+      const dt = clamp(Number(dtSec) || 0, 0, 0.25);
+      const e = env || {};
+      if (typeof e.reducedMotion === 'boolean') reducedMotion = e.reducedMotion;
+      if (autoHabitDrift && (Number(e.idleSec) || 0) > 1.8) {
+        const pull = -0.025 * (1 + encrustedIllHumor * 1.4) * dt;
+        updateElevation(gazeElevation + pull, true);
+      }
+      if (!reducedMotion && dt > 0) {
+        animTime += dt;
+        for (let i = 0; i < gutterRills.length; i += 1) {
+          gutterRills[i].t = (gutterRills[i].t + gutterRills[i].speed * dt) % 1;
+        }
+        for (let i = 0; i < nitreDrips.length; i += 1) {
+          nitreDrips[i].fall = (nitreDrips[i].fall + nitreDrips[i].rate * dt) % 1;
+        }
+        for (let i = 0; i < wellRipples.length; i += 1) {
+          wellRipples[i].phase = (wellRipples[i].phase + wellRipples[i].rate * dt) % 1;
+        }
+      }
+      return getState();
+    }
+
+    function hitTest(normX, normY, gazeElevationOverride) {
+      const g = typeof gazeElevationOverride === 'number' ? gazeElevationOverride : gazeElevation;
+      const nx = Number(normX);
+      const ny = Number(normY);
+      if (!Number.isFinite(nx) || !Number.isFinite(ny)) return null;
+      let best = null;
+      let bestDist = Infinity;
+      let bestProj = null;
+      for (let i = 0; i < LOWER_STONES.length; i += 1) {
+        const st = LOWER_STONES[i];
+        const proj = projectStoneNorm(st, g, encrustedIllHumor);
+        if (!proj.visible) continue;
+        const d = Math.hypot(nx - proj.normX, ny - proj.normY);
+        if (d <= st.hitR && d < bestDist) {
+          best = st;
+          bestDist = d;
+          bestProj = proj;
+        }
+      }
+      return best ? Object.assign({}, best, { normX: bestProj.normX, normY: bestProj.normY }) : null;
+    }
+
+    function renderLower(ctx, width, height, view) {
+      if (!ctx || width <= 0 || height <= 0) return;
+      const v = view || {};
+      const g = clamp(typeof v.gazeElevation === 'number' ? v.gazeElevation : gazeElevation, -1, 1);
+      const ill = clamp(typeof v.encrustedIllHumor === 'number' ? v.encrustedIllHumor : encrustedIllHumor, 0, 1);
+      const tSec = typeof v.timeSec === 'number' ? v.timeSec : animTime;
+      const rm = typeof v.reducedMotion === 'boolean' ? v.reducedMotion : reducedMotion;
+      const hoveredId = v.hoveredId || null;
+      const selectedId = v.selectedId || lastInspectedStoneId;
+
+      const horizonY = height * (0.18 + (g + 1) * 0.37);
+      const lay = computeSectionLayout(g);
+      const paveBotY = height * lay.pavementBottom;
+      const cellBotY = height * lay.cellarsBottom;
+      const foundBotY = height * lay.foundationsBottom;
+      const paveSpan = Math.max(8, paveBotY - horizonY);
+
+      ctx.save();
+      if (lay.subAlpha > 0.01) {
+        ctx.fillStyle = 'rgba(11,16,20,' + (lay.subAlpha * 0.48).toFixed(3) + ')';
+        ctx.fillRect(0, 0, width, horizonY);
+      }
+
+      // Street surface & wet cobblestones
+      const paveGrad = ctx.createLinearGradient(0, horizonY, 0, paveBotY);
+      paveGrad.addColorStop(0, PALETTE.cobblestoneWet);
+      paveGrad.addColorStop(0.55, PALETTE.gutterSlate);
+      paveGrad.addColorStop(1, '#151a20');
+      ctx.fillStyle = paveGrad;
+      ctx.fillRect(0, horizonY, width, paveSpan + 1);
+
+      const vpX = width * 0.5;
+      const vpY = horizonY - height * 0.08;
+      ctx.strokeStyle = 'rgba(14,18,23,0.68)';
+      ctx.lineWidth = 1;
+      for (let r = 1; r <= 8; r += 1) {
+        const rt = Math.pow(r / 8, 1.38);
+        const ry = horizonY + paveSpan * rt;
+        ctx.beginPath();
+        ctx.moveTo(0, ry);
+        ctx.lineTo(width, ry);
+        ctx.stroke();
+      }
+      for (let c = -5; c <= 5; c += 1) {
+        const bx = vpX + (c / 5) * width * 0.62;
+        const tx = vpX + (c / 5) * width * 0.34;
+        ctx.beginPath();
+        ctx.moveTo(tx, horizonY);
+        ctx.lineTo(bx, paveBotY);
+        ctx.stroke();
+      }
+
+      // Wall-foot encrustation & vertical lead drainpipes
+      const crustH = height * (0.016 + ill * 0.056);
+      ctx.fillStyle = PALETTE.encrustedWallFoot;
+      ctx.globalAlpha = 0.58 + ill * 0.38;
+      for (let side = 0; side < 2; side += 1) {
+        const isL = side === 0;
+        const wx = isL ? 0 : width * 0.70;
+        const ww = width * 0.30;
+        ctx.beginPath();
+        ctx.moveTo(wx, horizonY + 4);
+        for (let s = 0; s <= 8; s += 1) {
+          const sx = wx + (s / 8) * ww;
+          const jag = Math.sin(s * 2.1 + side) * crustH * 0.25;
+          const taper = isL ? (1 - s / 9) : (0.1 + s / 9);
+          ctx.lineTo(sx, horizonY - crustH * taper + jag);
+        }
+        ctx.lineTo(wx + ww, horizonY + 4);
+        ctx.closePath();
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+
+      const pipeW = Math.max(7, width * 0.013);
+      const pipeXs = [width * 0.085, width * 0.915];
+      for (let p = 0; p < 2; p += 1) {
+        const px = pipeXs[p] - pipeW * 0.5;
+        const shoeDir = p === 0 ? 1 : -1;
+        ctx.fillStyle = PALETTE.drainpipeLead;
+        ctx.fillRect(px, 0, pipeW, horizonY + paveSpan * 0.08);
+        ctx.fillStyle = 'rgba(216,238,248,0.24)';
+        ctx.fillRect(px + pipeW * 0.2, 0, pipeW * 0.22, horizonY + paveSpan * 0.06);
+        ctx.fillStyle = PALETTE.ironGrille;
+        for (let cy = 28; cy < horizonY; cy += 56) {
+          ctx.fillRect(px - 3, cy, pipeW + 6, 4);
+        }
+        ctx.beginPath();
+        ctx.moveTo(px, horizonY + paveSpan * 0.07);
+        ctx.lineTo(px + pipeW + shoeDir * pipeW * 1.1, horizonY + paveSpan * 0.13);
+        ctx.lineTo(px + shoeDir * pipeW * 0.9, horizonY + paveSpan * 0.15);
+        ctx.closePath();
+        ctx.fillStyle = PALETTE.drainpipeLead;
+        ctx.fill();
+      }
+
+      // Gutters, runoff rills, manhole grilles, fish scales & wastepaper
+      const lanes = [0.19, 0.50, 0.81];
+      for (let i = 0; i < lanes.length; i += 1) {
+        const gxTop = vpX + (lanes[i] - 0.5) * width * 0.68;
+        const gxBot = width * lanes[i];
+        ctx.strokeStyle = '#12171d';
+        ctx.lineWidth = Math.max(6, width * 0.022);
+        ctx.beginPath();
+        ctx.moveTo(gxTop, horizonY);
+        ctx.lineTo(gxBot, paveBotY);
+        ctx.stroke();
+      }
+      ctx.strokeStyle = 'rgba(138,176,186,0.42)';
+      ctx.lineWidth = 1.6;
+      for (let i = 0; i < gutterRills.length; i += 1) {
+        const rill = gutterRills[i];
+        const t0 = rill.t;
+        const t1 = Math.min(1, t0 + 0.16);
+        const x0 = (vpX + (rill.lane - 0.5) * width * 0.68) * (1 - t0) + (width * rill.lane) * t0;
+        const x1 = (vpX + (rill.lane - 0.5) * width * 0.68) * (1 - t1) + (width * rill.lane) * t1;
+        ctx.beginPath();
+        ctx.moveTo(x0, horizonY + paveSpan * t0);
+        ctx.lineTo(x1, horizonY + paveSpan * t1);
+        ctx.stroke();
+      }
+
+      for (let i = 0; i < LOWER_STONES.length; i += 1) {
+        const st = LOWER_STONES[i];
+        if (st.stratum !== 'pavement') continue;
+        const pr = projectStoneNorm(st, g, ill);
+        const sx = pr.normX * width;
+        const sy = pr.normY * height;
+        if (st.category === 'manhole_grilles') {
+          const gw = Math.max(26, width * 0.056);
+          const gh = Math.max(10, paveSpan * 0.085);
+          ctx.fillStyle = PALETTE.wellAbyss;
+          ctx.fillRect(sx - gw * 0.5, sy - gh * 0.5, gw, gh);
+          ctx.strokeStyle = PALETTE.ironGrille;
+          ctx.lineWidth = 2;
+          ctx.strokeRect(sx - gw * 0.5, sy - gh * 0.5, gw, gh);
+          for (let b = 1; b < 6; b += 1) {
+            const bx = sx - gw * 0.5 + (b / 6) * gw;
+            ctx.beginPath();
+            ctx.moveTo(bx, sy - gh * 0.5);
+            ctx.lineTo(bx, sy + gh * 0.5);
+            ctx.stroke();
+          }
+        } else if (st.category === 'fish_scales') {
+          const glint = rm ? 0.75 : 0.52 + 0.42 * Math.sin(tSec * 2.7 + i * 1.9);
+          ctx.fillStyle = PALETTE.scaleIridescence;
+          ctx.globalAlpha = glint;
+          for (let k = -1; k <= 1; k += 1) {
+            ctx.beginPath();
+            ctx.ellipse(sx + k * 6, sy + (k % 2) * 3, 4.2, 2.5, k * 0.4, 0, Math.PI * 2);
+            ctx.fill();
+          }
+          ctx.globalAlpha = 1;
+        } else if (st.category === 'wastepaper') {
+          ctx.fillStyle = PALETTE.wastepaperSodden;
+          ctx.globalAlpha = 0.82;
+          ctx.beginPath();
+          ctx.moveTo(sx - 10, sy - 2);
+          ctx.lineTo(sx + 2, sy - 6);
+          ctx.lineTo(sx + 11, sy + 1);
+          ctx.lineTo(sx - 3, sy + 6);
+          ctx.closePath();
+          ctx.fill();
+          ctx.globalAlpha = 1;
+        }
+      }
+
+      // Subterranean cutaway: Cellars, Foundations, Deep Wells
+      if (lay.cellarsAlpha > 0.02 && cellBotY > paveBotY + 2) {
+        const ch = cellBotY - paveBotY;
+        ctx.fillStyle = '#171f1b';
+        ctx.fillRect(0, paveBotY, width, ch + 1);
+        const centers = [0.22, 0.50, 0.78];
+        for (let vIdx = 0; vIdx < 3; vIdx += 1) {
+          const cx = width * centers[vIdx];
+          const vw = width * 0.22;
+          ctx.fillStyle = '#0e1412';
+          ctx.beginPath();
+          ctx.moveTo(cx - vw * 0.5, cellBotY);
+          ctx.lineTo(cx - vw * 0.5, paveBotY + ch * 0.42);
+          ctx.quadraticCurveTo(cx, paveBotY + ch * 0.04, cx + vw * 0.5, paveBotY + ch * 0.42);
+          ctx.lineTo(cx + vw * 0.5, cellBotY);
+          ctx.closePath();
+          ctx.fill();
+          ctx.strokeStyle = PALETTE.cellarMoss;
+          ctx.lineWidth = 3;
+          ctx.stroke();
+        }
+        ctx.fillStyle = '#9ec4ca';
+        for (let d = 0; d < nitreDrips.length; d += 1) {
+          const dr = nitreDrips[d];
+          ctx.beginPath();
+          ctx.arc(width * dr.x, paveBotY + ch * (0.20 + dr.fall * 0.74), 2.1, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      if (lay.foundationsAlpha > 0.02 && foundBotY > cellBotY + 2) {
+        const fh = foundBotY - cellBotY;
+        ctx.fillStyle = PALETTE.foundationBasalt;
+        ctx.fillRect(0, cellBotY, width, fh + 1);
+        ctx.strokeStyle = '#2b3640';
+        ctx.lineWidth = 1.4;
+        for (let row = 0; row < 3; row += 1) {
+          const ry = cellBotY + (row / 3) * fh;
+          const bh = fh / 3;
+          for (let col = 0; col < 7; col += 1) {
+            const ox = ((row % 2) * 0.07 + col * 0.15) * width;
+            ctx.strokeRect(ox, ry + 1, width * 0.145, bh - 2);
+          }
+        }
+      }
+
+      if (lay.wellsAlpha > 0.02 && height > foundBotY + 2) {
+        const wh = height - foundBotY;
+        ctx.fillStyle = PALETTE.wellAbyss;
+        ctx.fillRect(0, foundBotY, width, wh);
+        const wxs = [0.22, 0.50, 0.78];
+        for (let w = 0; w < 3; w += 1) {
+          const wx = width * wxs[w];
+          const sw = width * 0.13;
+          const waterY = foundBotY + wh * 0.72;
+          ctx.strokeStyle = '#25303a';
+          ctx.lineWidth = 2;
+          ctx.strokeRect(wx - sw * 0.5, foundBotY, sw, wh * 0.88);
+          ctx.fillStyle = 'rgba(139,184,214,0.12)';
+          ctx.beginPath();
+          ctx.ellipse(wx, waterY, sw * 0.44, Math.max(5, wh * 0.11), 0, 0, Math.PI * 2);
+          ctx.fill();
+          const rp = wellRipples[w].phase;
+          ctx.strokeStyle = 'rgba(214,167,92,' + (0.42 * (1 - rp)).toFixed(3) + ')';
+          ctx.lineWidth = 1.3;
+          ctx.beginPath();
+          ctx.ellipse(wx, waterY, sw * (0.12 + rp * 0.30), Math.max(2, wh * 0.03 + rp * wh * 0.07), 0, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+      }
+
+      // Active / hovered stone marker
+      for (let i = 0; i < LOWER_STONES.length; i += 1) {
+        const st = LOWER_STONES[i];
+        if (st.id !== hoveredId && st.id !== selectedId) continue;
+        const pr = projectStoneNorm(st, g, ill);
+        if (!pr.visible) continue;
+        ctx.strokeStyle = st.id === hoveredId ? '#d8eef8' : '#d6a75c';
+        ctx.lineWidth = 1.8;
+        ctx.beginPath();
+        ctx.arc(pr.normX * width, pr.normY * height, 13, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    return {
+      getState: getState,
+      tiltGaze: tiltGaze,
+      setGazeDirect: setGazeDirect,
+      applyWhistleImpulse: applyWhistleImpulse,
+      clenchPalmsAndHangHead: clenchPalmsAndHangHead,
+      advanceSameStreetDay: advanceSameStreetDay,
+      digSubterranean: digSubterranean,
+      inspectLowerStone: inspectLowerStone,
+      step: step,
+      renderLower: renderLower,
+      hitTest: hitTest,
+      setAutoHabitDrift: setAutoHabitDrift,
+      reset: reset,
+      audio: audio
+    };
+  }
+
+  const api = {
+    PALETTE: PALETTE,
+    LOWER_STONES: LOWER_STONES,
+    createGutterEngine: createGutterEngine
+  };
+
+  globalThis.ZemrudeSunkenGutters = api;
+  if (typeof window !== 'undefined') {
+    window.ZemrudeSunkenGutters = api;
+  }
+})();
+
+</script>
+<script>
+(function () {
+  'use strict';
+  var Z = window.ZemrudeWhistlingZenith;
+  var S = window.ZemrudeSunkenGutters;
+  var $ = function (id) { return document.getElementById(id); };
+  var reducedMotion = false;
+  try { reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+
+  var ui = {
+    canvas: $('zem-canvas'), aperture: $('zem-aperture'), mode: $('zem-mode'), modeText: $('zem-mode-text'),
+    memLine: $('zem-memory-line'), horizon: $('zem-horizon-tag'), placard: $('zem-placard'),
+    pKicker: $('zem-placard-kicker'), pTitle: $('zem-placard-title'), pDetail: $('zem-placard-detail'), pEcho: $('zem-placard-echo'),
+    bob: $('zem-plumb-bob'), line: $('zem-plumb-line'), zero: $('zem-plumb-zero'), deg: $('zem-incl-deg'), stratum: $('zem-stratum-name'),
+    day: $('zem-day'), rev: $('zem-reversals'), illNum: $('zem-ill-num'), illFill: $('zem-ill-fill'),
+    liftNum: $('zem-lift-num'), liftFill: $('zem-lift-fill'), drift: $('zem-drift-pill'), sound: $('zem-sound-pill'), soundText: $('zem-sound-text'),
+    depth: $('zem-depth'), announcer: $('zem-announcer'), drawer: $('zem-plate-drawer'), scrim: $('zem-plate-scrim'),
+    stage: $('zem-plate-stage'), loupe: $('zem-loupe-pill'), mapFrame: $('zem-map-frame'), vistaFrame: $('zem-vista-frame'),
+    mapImg: $('zem-map-img'), vistaImg: $('zem-vista-img'), mapFb: $('zem-map-fallback'), vistaFb: $('zem-vista-fallback')
+  };
+
+  var app = {
+    userMuted: false, gestureUnlocked: false, plateOpen: false, plateTab: 'diptych', loupe: false,
+    selected: null, hoveredId: null, lastInteraction: performance.now(), lastAnnounce: '', plateChecks: 0,
+    lastRareAt: -1e9, flash: 0
+  };
+
+  var zenith = Z.createZenithEngine({ muted: true });
+  var gutter = S.createGutterEngine({
+    reducedMotion: reducedMotion,
+    onDayAdvanced: function (st) {
+      if (st.gazeElevation < -0.05) zenith.decayMemoriesOnSunkenDay(0.11);
+    },
+    onStratumChanged: function (st) {
+      announce('Gaze now rests on the ' + st.currentStratum + ' (' + fmtDeg(st.inclinationDeg) + ').');
+    },
+    onRareAscent: function (st) {
+      app.lastRareAt = performance.now(); app.flash = 1;
+      zenith.audio.playRareAscentChord();
+      announce('A rare reversal: the eye lifts again to sills and curtains. Reversals so far: ' + st.rareReversalsCount + '.');
+    }
+  });
+  gutter.audio.setMuted(true);
+
+  function applyMute() {
+    var m = app.userMuted || !app.gestureUnlocked;
+    zenith.audio.setMuted(m); gutter.audio.setMuted(m);
+    if (!m) { zenith.audio.unlock(); gutter.audio.unlock(); }
+  }
+  function onGesture() {
+    app.lastInteraction = performance.now();
+    if (!app.gestureUnlocked) { app.gestureUnlocked = true; applyMute(); }
+  }
+  function fmtDeg(d) { return (d > 0 ? '+' : d < 0 ? '−' : '') + Math.abs(d).toFixed(1) + '°'; }
+  function announce(msg) {
+    if (!msg || msg === app.lastAnnounce) return;
+    app.lastAnnounce = msg; ui.announcer.textContent = msg;
+  }
+  function pct(v) { return Math.round(v * 100) + '%'; }
+
+  var UPPER_CATS = { window_sills: 'window_sills', sill: 'window_sills', sills: 'window_sills', flapping_curtains: 'flapping_curtains',
+    curtain: 'flapping_curtains', curtains: 'flapping_curtains', fountains: 'fountains', fountain: 'fountains' };
+  var CAT_LABEL = { window_sills: 'window sills', flapping_curtains: 'flapping curtains', fountains: 'rooftop fountains',
+    drainpipes: 'drainpipes', wall_foot_encrustation: 'wall-foot crust', gutters: 'gutters', manhole_grilles: 'manhole grilles',
+    fish_scales: 'fish scales', wastepaper: 'wastepaper', cellars: 'cellars', foundations: 'foundations', wells: 'deep wells' };
+  var STRATA = ['zenith', 'threshold', 'pavement', 'cellars', 'foundations', 'wells'];
+  var testimonyCursor = {};
+
+  function findUpper(id) {
+    for (var i = 0; i < Z.ZENITH_STONES.length; i++) { if (Z.ZENITH_STONES[i].id === id) return Z.ZENITH_STONES[i]; }
+    return null;
+  }
+  function isUpperKey(k) { return !!UPPER_CATS[k] || /^(sill|curtain|fountain)_\d+$/.test(String(k || '')); }
+
+  function getState() {
+    var g = gutter.getState();
+    var z = zenith.getState();
+    var direct = g.gazeElevation >= -0.05;
+    var counts = {};
+    Object.keys(z.countsByCategory).forEach(function (k) { counts[k] = z.countsByCategory[k]; });
+    Object.keys(g.countsByCategory).forEach(function (k) { counts[k] = g.countsByCategory[k]; });
+    return {
+      city: 'zemrude',
+      gazeElevation: g.gazeElevation,
+      inclinationDeg: g.inclinationDeg,
+      beholderMode: direct ? 'Direct Sunlit Sight' : 'Remembered Testimony from Below',
+      upperVisibleDirectly: direct,
+      beholderPosture: g.beholderPosture,
+      currentStratum: g.currentStratum,
+      deepestStratumReached: g.deepestStratumReached,
+      consecutiveDays: g.consecutiveDays,
+      day: g.consecutiveDays,
+      encrustedIllHumor: g.encrustedIllHumor,
+      liftResistance: g.liftResistance,
+      rareReversalsCount: g.rareReversalsCount,
+      nailsDugIntoPalms: g.nailsDugIntoPalms,
+      autoHabitDrift: g.autoHabitDrift,
+      oneAspectTruer: false,
+      bothFormsValid: true,
+      upperHeardChieflyFromRememberersBelow: g.upperHeardChieflyFromRememberersBelow,
+      whistleCount: z.whistleCount,
+      whistleEnergy: z.whistleEnergy,
+      windGust: z.windGust,
+      imprintedCount: z.imprintedCount,
+      averageMemoryClarity: z.averageMemoryClarity,
+      memoryClarityPct: Math.round(z.averageMemoryClarity * 100),
+      imprintedMemories: z.imprintedMemories,
+      totalUpperStones: z.totalUpperStones,
+      totalLowerStones: g.stonesCount,
+      upperCountsByCategory: z.countsByCategory,
+      lowerCountsByCategory: g.countsByCategory,
+      countsByCategory: counts,
+      selectedStone: app.selected ? { id: app.selected.id, category: app.selected.category, mode: app.selected.mode, label: app.selected.label } : null,
+      muted: app.userMuted,
+      audioUnlocked: app.gestureUnlocked,
+      plateDrawerOpen: app.plateOpen,
+      plateTab: app.plateTab,
+      loupe: app.loupe,
+      loupeScale: app.loupe ? 1.8 : 1,
+      plates: { map: plateStatus(ui.mapImg), vista: plateStatus(ui.vistaImg), mapSrc: ui.mapImg.getAttribute('src'), vistaSrc: ui.vistaImg.getAttribute('src') },
+      reducedMotion: reducedMotion
+    };
+  }
+
+  function touch() { app.lastInteraction = performance.now(); }
+  function after() { sync(); render(); return getState(); }
+
+  function whistleUp() {
+    touch();
+    var g = gutter.getState();
+    gutter.applyWhistleImpulse(0.50 + g.liftResistance * 0.11);
+    var r = zenith.whistle(0.36, g.consecutiveDays);
+    announce('You whistle, nose tilted up. ' + r.imprintedCount + ' upper stones held in memory.');
+    return after();
+  }
+  function hangHeadClenchPalms() {
+    touch();
+    gutter.clenchPalmsAndHangHead();
+    announce('Head hanging, nails dug into palms: the eye drops to the paving.');
+    return after();
+  }
+  function advanceDay(n) {
+    touch();
+    var d = Math.max(1, Math.floor(Number(n) || 1));
+    for (var i = 0; i < d; i++) gutter.advanceSameStreetDay(1);
+    var s = gutter.getState();
+    announce('Day ' + s.consecutiveDays + ' on the same street. Ill-humor ' + pct(s.encrustedIllHumor) + ', lift resistance ' + pct(s.liftResistance) + '.');
+    return after();
+  }
+  function tiltGaze(delta) { touch(); gutter.tiltGaze(Number(delta) || 0); return after(); }
+  function setGazeDirect(v) { touch(); gutter.setGazeDirect(Number(v) || 0); return after(); }
+  function digStratum(key) {
+    touch();
+    gutter.digSubterranean(key);
+    announce('Digging: the gaze sinks to the ' + gutter.getState().currentStratum + '.');
+    return after();
+  }
+
+  function pickTestimony(key) {
+    var stone = findUpper(key);
+    if (stone) return stone;
+    var cat = UPPER_CATS[key] || 'window_sills';
+    var mems = zenith.getState().imprintedMemories.filter(function (m) { return m.category === cat; });
+    var pool = mems.length ? mems.map(function (m) { return findUpper(m.id); }) : Z.ZENITH_STONES.filter(function (s) { return s.category === cat; });
+    var idx = (testimonyCursor[cat] || 0) % pool.length;
+    testimonyCursor[cat] = idx + 1;
+    return pool[idx];
+  }
+
+  function showPlacard(mode, stone, memory) {
+    app.selected = { id: stone.id, category: stone.category, mode: mode, label: stone.label };
+    ui.placard.hidden = false;
+    ui.placard.classList.toggle('zem-lower', mode === 'lower');
+    ui.placard.classList.toggle('zem-testimony', mode === 'testimony');
+    var cat = CAT_LABEL[stone.category] || stone.category;
+    ui.pTitle.textContent = stone.label;
+    if (mode === 'upper') {
+      ui.pKicker.textContent = 'Upper stone · direct sunlit sight · ' + cat;
+      ui.pDetail.textContent = stone.detail;
+      ui.pEcho.textContent = 'Imprinted in memory at clarity ' + pct(memory ? memory.clarity : 1) + ' — later, below, it may be all that remains of it.';
+    } else if (mode === 'testimony') {
+      ui.pKicker.textContent = 'Remembered testimony from below · ' + cat;
+      ui.pDetail.textContent = memory ? stone.echoText : 'No one down here remembers this one clearly; it reaches you only as hearsay.';
+      ui.pEcho.textContent = memory ? 'Memory clarity ' + pct(memory.clarity) + ' — heard of, not seen. Lift the eye to verify it.' : 'Never imprinted. Whistle upward to see it for yourself.';
+    } else {
+      ui.pKicker.textContent = 'Lower stone · ' + stone.stratum + ' · ' + cat;
+      ui.pDetail.textContent = stone.detail;
+      ui.pEcho.textContent = stone.echoText;
+    }
+  }
+
+  function inspectStone(key) {
+    touch();
+    var k = String(key || 'window_sills');
+    var res;
+    if (isUpperKey(k)) {
+      var g = gutter.getState();
+      if (g.gazeElevation >= -0.05) {
+        var r = zenith.inspectUpperStone(k, g.consecutiveDays);
+        showPlacard('upper', r.stone, r.memory);
+        res = { mode: 'upper', stone: r.stone, memory: r.memory };
+      } else {
+        var st = pickTestimony(k);
+        var mem = zenith.getState().imprintedMemories.filter(function (m) { return m.id === st.id; })[0] || null;
+        showPlacard('testimony', st, mem);
+        res = { mode: 'testimony', stone: Object.assign({}, st), memory: mem };
+      }
+    } else {
+      var lr = gutter.inspectLowerStone(k);
+      showPlacard('lower', lr.stone, null);
+      res = { mode: 'lower', stone: lr.stone };
+    }
+    announce(ui.pKicker.textContent + ': ' + res.stone.label + '.');
+    res.state = after();
+    return res;
+  }
+
+  function toggleHabitDrift(force) {
+    touch();
+    var on = typeof force === 'boolean' ? force : !gutter.getState().autoHabitDrift;
+    gutter.setAutoHabitDrift(on);
+    announce('Auto-habit drift ' + (on ? 'on: idle eyes sink of their own accord.' : 'off.'));
+    return after();
+  }
+  function toggleAudioMute(force) {
+    app.userMuted = typeof force === 'boolean' ? force : !app.userMuted;
+    applyMute();
+    return after();
+  }
+  function reset() {
+    touch();
+    gutter.reset(); zenith.reset();
+    app.selected = null; app.hoveredId = null; app.flash = 0; testimonyCursor = {};
+    ui.placard.hidden = true;
+    announce('Reset: day one, whistling, nose up.');
+    return after();
+  }
+
+  function sync() {
+    var s = getState();
+    var direct = s.upperVisibleDirectly;
+    ui.mode.classList.toggle('zem-sunk', !direct);
+    ui.modeText.textContent = direct ? 'Direct Sunlit Sight' : 'Remembered Testimony from Below · memory clarity ' + s.memoryClarityPct + '%';
+    ui.memLine.textContent = s.imprintedCount + ' of 16 upper stones held in memory · clarity ' + s.memoryClarityPct + '%' +
+      (s.upperHeardChieflyFromRememberersBelow ? ' · heard of chiefly from rememberers below' : '');
+    var zp = document.querySelectorAll('zenith-pill[data-zem-act="inspect"]');
+    for (var i = 0; i < zp.length; i++) zp[i].classList.toggle('zem-dim', !direct);
+    ui.horizon.textContent = fmtDeg(s.inclinationDeg) + ' · ' + s.currentStratum;
+    var t = Math.max(0, Math.min(1, (65 - s.inclinationDeg) / 155));
+    ui.bob.style.top = (t * 100).toFixed(2) + '%';
+    ui.line.style.height = (t * 100).toFixed(2) + '%';
+    ui.deg.textContent = fmtDeg(s.inclinationDeg);
+    ui.stratum.textContent = 'stratum: ' + s.currentStratum;
+    ui.day.textContent = 'Day ' + s.consecutiveDays;
+    ui.rev.textContent = String(s.rareReversalsCount);
+    ui.illNum.textContent = pct(s.encrustedIllHumor);
+    ui.illFill.style.width = (Math.min(1, s.encrustedIllHumor / 0.95) * 100).toFixed(1) + '%';
+    ui.liftNum.textContent = pct(s.liftResistance);
+    ui.liftFill.style.width = (Math.min(1, s.liftResistance / 0.78) * 100).toFixed(1) + '%';
+    ui.drift.classList.toggle('zem-on', s.autoHabitDrift);
+    ui.drift.setAttribute('aria-pressed', String(s.autoHabitDrift));
+    ui.sound.classList.toggle('zem-on', !s.muted);
+    ui.sound.setAttribute('aria-pressed', String(!s.muted));
+    ui.soundText.textContent = s.muted ? 'Sound Off' : 'Sound On';
+    ui.depth.textContent = 'now: ' + s.currentStratum + ' · deepest reached: ' + s.deepestStratumReached;
+    var di = STRATA.indexOf(s.deepestStratumReached);
+    var np = document.querySelectorAll('nadir-pill[data-zem-stratum]');
+    for (var j = 0; j < np.length; j++) np[j].classList.toggle('zem-reached', STRATA.indexOf(np[j].getAttribute('data-zem-stratum')) <= di);
+  }
+
+  var ctx = ui.canvas.getContext('2d');
+  var cw = 1, ch = 1, dpr = 1;
+  function resize() {
+    var r = ui.aperture.getBoundingClientRect();
+    dpr = Math.min(2.5, window.devicePixelRatio || 1);
+    cw = Math.max(1, Math.round(r.width)); ch = Math.max(1, Math.round(r.height));
+    ui.canvas.width = Math.round(cw * dpr); ui.canvas.height = Math.round(ch * dpr);
+    render();
+  }
+  function render() {
+    if (!ctx) return;
+    var g = gutter.getState();
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.fillStyle = '#0b1014';
+    ctx.fillRect(0, 0, cw, ch);
+    var view = { gazeElevation: g.gazeElevation, encrustedIllHumor: g.encrustedIllHumor, reducedMotion: reducedMotion,
+      hoveredId: app.hoveredId, selectedId: app.selected ? app.selected.id : null };
+    zenith.renderZenith(ctx, cw, ch, view);
+    gutter.renderLower(ctx, cw, ch, view);
+    zenith.renderMemoryEchoes(ctx, cw, ch, view);
+    var hy = ch * (0.18 + (g.gazeElevation + 1) * 0.37);
+    ctx.save();
+    ctx.setLineDash([6, 6]);
+    ctx.strokeStyle = 'rgba(214,167,92,0.55)';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(0, hy); ctx.lineTo(cw, hy); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = 'rgba(214,167,92,0.85)';
+    ctx.font = '11px ui-monospace, Menlo, monospace';
+    ctx.fillText('eye-line ' + fmtDeg(g.inclinationDeg), 12, Math.max(14, hy - 6));
+    if (app.flash > 0.01) {
+      var rg = ctx.createRadialGradient(cw * 0.5, ch * 0.25, 10, cw * 0.5, ch * 0.25, Math.max(cw, ch) * 0.7);
+      rg.addColorStop(0, 'rgba(255,240,200,' + (0.55 * app.flash).toFixed(3) + ')');
+      rg.addColorStop(1, 'rgba(255,240,200,0)');
+      ctx.fillStyle = rg; ctx.fillRect(0, 0, cw, ch);
+    }
+    ctx.restore();
+  }
+
+  var last = performance.now(), lastSync = 0;
+  function frame(now) {
+    var dt = Math.min(0.1, Math.max(0, (now - last) / 1000));
+    last = now;
+    var g0 = gutter.getState();
+    var idle = (app.plateOpen || g0.gazeElevation <= -0.56) ? 0 : (now - app.lastInteraction) / 1000;
+    gutter.step(dt, { reducedMotion: reducedMotion, idleSec: idle });
+    var g = gutter.getState();
+    zenith.step(dt, { gazeElevation: g.gazeElevation, encrustedIllHumor: g.encrustedIllHumor, reducedMotion: reducedMotion });
+    app.flash = Math.max(0, app.flash - dt * 0.8);
+    render();
+    if (now - lastSync > 150) { sync(); lastSync = now; }
+    window.requestAnimationFrame(frame);
+  }
+
+  function hitAt(clientX, clientY) {
+    var r = ui.canvas.getBoundingClientRect();
+    if (r.width <= 0 || r.height <= 0) return null;
+    var nx = (clientX - r.left) / r.width, ny = (clientY - r.top) / r.height;
+    var gz = gutter.getState().gazeElevation;
+    return zenith.hitTest(nx, ny, gz) || gutter.hitTest(nx, ny, gz);
+  }
+  var drag = null;
+  ui.aperture.addEventListener('pointerdown', function (e) {
+    if (e.target !== ui.canvas) return;
+    onGesture();
+    drag = { id: e.pointerId, y: e.clientY, moved: 0 };
+    try { ui.canvas.setPointerCapture(e.pointerId); } catch (err) {}
+  });
+  ui.aperture.addEventListener('pointermove', function (e) {
+    if (drag && drag.id === e.pointerId) {
+      var dy = e.clientY - drag.y;
+      drag.y = e.clientY; drag.moved += Math.abs(dy);
+      if (drag.moved > 5 && dy !== 0) { touch(); gutter.tiltGaze(-dy / ch * 1.8); }
+      return;
+    }
+    if (e.target !== ui.canvas) return;
+    var h = hitAt(e.clientX, e.clientY);
+    app.hoveredId = h ? h.id : null;
+    ui.canvas.style.cursor = h ? 'pointer' : '';
+  });
+  function endDrag(e) {
+    if (!drag || drag.id !== e.pointerId) return;
+    var wasClick = drag.moved <= 5;
+    drag = null;
+    if (wasClick && e.type === 'pointerup') {
+      var h = hitAt(e.clientX, e.clientY);
+      if (h) inspectStone(h.id);
+    }
+    sync();
+  }
+  ui.aperture.addEventListener('pointerup', endDrag);
+  ui.aperture.addEventListener('pointercancel', endDrag);
+  ui.aperture.addEventListener('wheel', function (e) {
+    e.preventDefault(); onGesture();
+    gutter.tiltGaze(-e.deltaY * 0.0011);
+    sync();
+  }, { passive: false });
+
+  function plateStatus(img) {
+    if (!img) return 'missing';
+    if (img.getAttribute('data-zem-failed') === '1' || img.hidden) return 'fallback';
+    if (img.complete && img.naturalWidth > 0) return 'loaded';
+    return img.complete ? 'fallback' : 'loading';
+  }
+  function drawCopperplate(cv, isMap) {
+    var c = cv.getContext('2d');
+    if (!c) return;
+    var w = cv.width, h = cv.height;
+    c.fillStyle = '#e9dfc6'; c.fillRect(0, 0, w, h);
+    c.strokeStyle = 'rgba(58,50,38,0.22)'; c.lineWidth = 1;
+    for (var x = -h; x < w; x += 7) { c.beginPath(); c.moveTo(x, 0); c.lineTo(x + h, h); c.stroke(); }
+    c.strokeStyle = '#3a3226'; c.lineWidth = 3; c.strokeRect(14, 14, w - 28, h - 28);
+    var hy = h * 0.48;
+    c.fillStyle = '#d8eef8'; c.fillRect(30, 30, w - 60, hy - 30);
+    c.fillStyle = '#232a31'; c.fillRect(30, hy, w - 60, h - hy - 30);
+    c.strokeStyle = '#d6a75c'; c.setLineDash([8, 6]); c.beginPath(); c.moveTo(30, hy); c.lineTo(w - 30, hy); c.stroke(); c.setLineDash([]);
+    c.fillStyle = '#dfd3be';
+    for (var i = 0; i < 6; i++) { c.fillRect(50 + i * (w - 120) / 6, hy - 40 - (i % 3) * 38, 54, 10); }
+    c.fillStyle = '#5f6b75'; c.fillRect(44, 30, 9, h - 60); c.fillRect(w - 53, 30, 9, h - 60);
+    c.strokeStyle = '#8ab0ba';
+    for (var k = 0; k < 3; k++) { c.beginPath(); c.ellipse(w * (0.25 + k * 0.25), h - 70, 40, 12, 0, 0, Math.PI * 2); c.stroke(); }
+    c.fillStyle = '#3a3226'; c.font = 'italic 20px Georgia, serif'; c.textAlign = 'center';
+    c.fillText(isMap ? 'Copperplate stand-in — the cartographic plate is still landing' : 'Copperplate stand-in — the vista plate is still landing', w / 2, h - 22);
+  }
+  window.__zemPlateFail = function (img) {
+    var isMap = img.id === 'zem-map-img';
+    var src = img.getAttribute('src') || '';
+    if (isMap && src.indexOf('map.png') === 0) { img.removeAttribute('data-zem-failed'); img.setAttribute('src', 'map.svg'); return; }
+    img.hidden = true;
+    var fb = isMap ? ui.mapFb : ui.vistaFb;
+    fb.hidden = false; drawCopperplate(fb, isMap);
+  };
+  function wirePlate(img, fb) {
+    img.addEventListener('load', function () { if (img.naturalWidth > 0) { img.hidden = false; fb.hidden = true; } });
+    if (img.getAttribute('data-zem-failed') === '1' || (img.complete && img.naturalWidth === 0 && img.getAttribute('src'))) window.__zemPlateFail(img);
+  }
+  function recheckPlates() {
+    [[ui.mapImg, 'map.png'], [ui.vistaImg, 'image.png']].forEach(function (pair) {
+      var img = pair[0];
+      if (plateStatus(img) === 'fallback' || (img === ui.mapImg && (img.getAttribute('src') || '').indexOf('map.svg') === 0)) {
+        app.plateChecks += 1;
+        img.removeAttribute('data-zem-failed');
+        img.setAttribute('src', pair[1] + '?recheck=' + app.plateChecks);
+      }
+    });
+  }
+  function togglePlateDrawer(force) {
+    var open = typeof force === 'boolean' ? force : !app.plateOpen;
+    if (open && !app.plateOpen) app.returnFocus = document.activeElement;
+    app.plateOpen = open;
+    ui.drawer.hidden = !open; ui.scrim.hidden = !open;
+    if (open) {
+      recheckPlates(); setPlateTab(app.plateTab);
+      var tab = ui.drawer.querySelector('zemrude-plate-tab.zem-active');
+      if (tab) tab.focus();
+    } else if (app.returnFocus && app.returnFocus.focus) {
+      try { app.returnFocus.focus(); } catch (e) {}
+    }
+    return after();
+  }
+  function setPlateTab(tab) {
+    var t = String(tab || 'diptych').toLowerCase();
+    if (t === 'image' || t === 'architectural' || t === 'architectural_vista') t = 'vista';
+    if (t === 'cartographic' || t === 'cartographic_map') t = 'map';
+    if (t !== 'map' && t !== 'vista') t = 'diptych';
+    app.plateTab = t;
+    var tabs = ui.drawer.querySelectorAll('zemrude-plate-tab');
+    for (var i = 0; i < tabs.length; i++) {
+      var on = tabs[i].getAttribute('data-zem-arg') === t;
+      tabs[i].classList.toggle('zem-active', on); tabs[i].setAttribute('aria-selected', String(on));
+    }
+    ui.mapFrame.hidden = t === 'vista'; ui.vistaFrame.hidden = t === 'map';
+    ui.stage.classList.toggle('zem-single', t !== 'diptych');
+    return getState();
+  }
+  function toggleLoupe(force) {
+    app.loupe = typeof force === 'boolean' ? force : !app.loupe;
+    ui.stage.classList.toggle('zem-loupe', app.loupe);
+    ui.loupe.classList.toggle('zem-on', app.loupe);
+    ui.loupe.setAttribute('aria-pressed', String(app.loupe));
+    return getState();
+  }
+
+  function run(act, arg) {
+    switch (act) {
+      case 'whistle': return whistleUp();
+      case 'hang': return hangHeadClenchPalms();
+      case 'day': return advanceDay(1);
+      case 'dig': return digStratum();
+      case 'inspect': return inspectStone(arg);
+      case 'drift': return toggleHabitDrift();
+      case 'sound': return toggleAudioMute();
+      case 'reset': return reset();
+      case 'plates': return togglePlateDrawer();
+      case 'tab': return setPlateTab(arg);
+      case 'loupe': return toggleLoupe();
+      case 'closePlacard': ui.placard.hidden = true; app.selected = null; return after();
+    }
+    return null;
+  }
+  document.addEventListener('click', function (e) {
+    var el = e.target && e.target.closest ? e.target.closest('[data-zem-act]') : null;
+    if (!el) return;
+    onGesture();
+    run(el.getAttribute('data-zem-act'), el.getAttribute('data-zem-arg'));
+  });
+  var DIGIT_MAP = { '1': 'window_sills', '2': 'flapping_curtains', '3': 'fountains', '4': 'gutters', '5': 'manhole_grilles',
+    '6': 'fish_scales', '7': 'wastepaper', '8': 'cellars', '9': 'foundations', '0': 'wells' };
+  document.addEventListener('keydown', function (e) {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var k = e.key;
+    var focusAct = document.activeElement && document.activeElement.getAttribute ? document.activeElement.getAttribute('data-zem-act') : null;
+    if ((k === 'Enter' || k === ' ' || k === 'Spacebar') && focusAct) {
+      e.preventDefault(); onGesture();
+      run(focusAct, document.activeElement.getAttribute('data-zem-arg'));
+      return;
+    }
+    var lk = k.length === 1 ? k.toLowerCase() : k;
+    var handled = true;
+    onGesture();
+    if (lk === 'Escape') {
+      if (app.plateOpen) togglePlateDrawer(false);
+      else { ui.placard.hidden = true; app.selected = null; sync(); }
+    } else if (lk === 'w') whistleUp();
+    else if (lk === 'g') hangHeadClenchPalms();
+    else if (lk === ' ' || lk === 'Spacebar' || lk === 'n') advanceDay(1);
+    else if (lk === 'd') digStratum();
+    else if (DIGIT_MAP[lk]) inspectStone(DIGIT_MAP[lk]);
+    else if (lk === 'h') toggleHabitDrift();
+    else if (lk === 'a') toggleAudioMute();
+    else if (lk === 'r') reset();
+    else if (lk === 'p') togglePlateDrawer();
+    else if (lk === 'z') toggleLoupe();
+    else if (lk === 'ArrowUp') tiltGaze(0.06);
+    else if (lk === 'ArrowDown') tiltGaze(-0.06);
+    else handled = false;
+    if (handled) e.preventDefault();
+  });
+
+  window.ZemrudeApp = {
+    getState: getState, whistleUp: whistleUp, hangHeadClenchPalms: hangHeadClenchPalms, advanceDay: advanceDay,
+    tiltGaze: tiltGaze, setGazeDirect: setGazeDirect, digStratum: digStratum, inspectStone: inspectStone,
+    toggleHabitDrift: toggleHabitDrift, toggleAudioMute: toggleAudioMute, togglePlateDrawer: togglePlateDrawer,
+    setPlateTab: setPlateTab, toggleLoupe: toggleLoupe, reset: reset
+  };
+  window.__ZEMRUDE_STATE__ = function () { return window.ZemrudeApp.getState(); };
+
+  wirePlate(ui.mapImg, ui.mapFb);
+  wirePlate(ui.vistaImg, ui.vistaFb);
+  ui.zero.style.top = (65 / 155 * 100).toFixed(2) + '%';
+  if (typeof ResizeObserver === 'function') new ResizeObserver(resize).observe(ui.aperture);
+  window.addEventListener('resize', resize);
+  resize(); sync();
+  window.requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

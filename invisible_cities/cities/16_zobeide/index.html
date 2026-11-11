@@ -1,0 +1,2976 @@
+<!DOCTYPE html>
+<html lang="en" class="zob-html">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zobeide — Moonlit Skein &amp; Masonry Calcifier</title>
+<style>
+.zob-html {
+  --zob-abyss: #090d18;
+  --zob-indigo: #12192c;
+  --zob-indigo-hi: #1a243e;
+  --zob-chalk: #eef2f7;
+  --zob-silver: #cbd7e6;
+  --zob-lead: #5a6270;
+  --zob-slag: #363b45;
+  --zob-gold: #e8c266;
+  --zob-ochre: #9e8c6c;
+  --zob-border: rgba(203, 215, 230, 0.18);
+  --zob-border-strong: rgba(232, 194, 102, 0.45);
+  background: var(--zob-abyss);
+  color: var(--zob-chalk);
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  font-size: 13px;
+  line-height: 1.35;
+  -webkit-font-smoothing: antialiased;
+}
+.zob-html, .zob-body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: radial-gradient(circle at 34% 18%, #16203a 0%, var(--zob-indigo) 42%, var(--zob-abyss) 100%);
+}
+.zob-root, .zob-root *, .zob-root *::before, .zob-root *::after {
+  box-sizing: border-box;
+}
+zobeide-skein [hidden], zobeide-plate-drawer[hidden] {
+  display: none !important;
+}
+zobeide-skein, skein-crown-bar, moonlit-pursuit-canvas, vanishing-corner-strip,
+wall-trap-ledger, founder-mason-token, amnesia-calcifier, calcification-gauge-rail,
+zobeide-plate-drawer, plate-loupe-well, crown-rubric-cluster, crown-action-rack,
+skein-canvas-frame, pursuit-whisper-band, ledger-heading-bar, ledger-token-stack,
+calcifier-meters-rack, calcifier-meter-item, calcifier-meter-row, calcifier-gauge-fill,
+calcifier-stat-grid, calcifier-stat-cell, calcifier-lived-chronicle, calcifier-key-glossary,
+plate-drawer-sheet, plate-drawer-bar, plate-tab-group, plate-figure-card, plate-caption-line,
+founder-token-top, founder-ledger-gloss {
+  display: block;
+}
+crown-city-mark, crown-cadence-note, crown-phase-seal, skein-mode-latch, skein-action-key,
+skein-corner-pill, corner-pill-num, corner-pill-name, corner-pill-state, ledger-title-mark,
+founder-nation-tag, founder-mod-badge, founder-corner-ref, calcifier-sighting-seal,
+calcifier-zero-num, calcifier-meter-label, calcifier-meter-val, calcifier-stat-k, calcifier-stat-v {
+  display: inline-block;
+}
+.zob-root {
+  width: 100%;
+  height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
+  padding: 8px 10px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.46fr) minmax(284px, 0.88fr) minmax(258px, 0.78fr);
+  grid-template-rows: 46px minmax(0, 1fr);
+  gap: 8px;
+  overflow: hidden;
+  transition: background-color 0.45s ease;
+}
+.zob-root[data-phase="trap"] {
+  background: linear-gradient(180deg, rgba(34, 38, 46, 0.55), rgba(9, 13, 24, 0.92));
+}
+.zob-crown {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 5px 10px;
+  background: rgba(18, 25, 44, 0.86);
+  border: 1px solid var(--zob-border);
+  border-radius: 6px;
+  min-width: 0;
+}
+.zob-rubric {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.zob-city-mark {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--zob-chalk);
+}
+.zob-cadence {
+  font-size: 11.5px;
+  font-style: italic;
+  color: var(--zob-silver);
+  opacity: 0.88;
+}
+.zob-phase-badge {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 10.5px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgba(232, 194, 102, 0.13);
+  border: 1px solid rgba(232, 194, 102, 0.4);
+  color: var(--zob-gold);
+  letter-spacing: 0.03em;
+}
+.zob-root[data-phase="trap"] .zob-phase-badge {
+  background: rgba(90, 98, 112, 0.3);
+  border-color: rgba(158, 140, 108, 0.45);
+  color: var(--zob-silver);
+}
+.zob-actions {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: nowrap;
+}
+.zob-btn {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 10.5px;
+  line-height: 1.2;
+  padding: 5px 7px;
+  border-radius: 4px;
+  background: rgba(26, 36, 62, 0.9);
+  border: 1px solid var(--zob-border);
+  color: var(--zob-chalk);
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  transition: border-color 0.16s ease, background 0.16s ease, color 0.16s ease;
+}
+.zob-btn:hover, .zob-btn:focus-visible {
+  border-color: var(--zob-gold);
+  background: rgba(42, 54, 86, 0.95);
+  outline: none;
+}
+.zob-btn-gold, .zob-mode-btn[data-mode="pursue"] {
+  border-color: rgba(232, 194, 102, 0.52);
+  color: var(--zob-gold);
+}
+.zob-mode-btn[data-mode="wall"] {
+  background: rgba(90, 98, 112, 0.42);
+  border-color: var(--zob-ochre);
+  color: #f3dfb6;
+}
+.zob-btn-plate {
+  background: rgba(203, 215, 230, 0.12);
+  border-color: rgba(203, 215, 230, 0.36);
+}
+.zob-stage, .zob-ledger, .zob-calcifier {
+  background: rgba(14, 20, 36, 0.84);
+  border: 1px solid var(--zob-border);
+  border-radius: 6px;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+.zob-stage {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 6px;
+  padding: 6px;
+}
+.zob-canvas-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 220px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--zob-abyss);
+  border: 1px solid rgba(203, 215, 230, 0.14);
+}
+.zob-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+}
+.zob-whisper {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 7px;
+  padding: 4px 9px;
+  border-radius: 4px;
+  background: rgba(9, 13, 24, 0.86);
+  border: 1px solid rgba(203, 215, 230, 0.22);
+  font-size: 11.5px;
+  color: var(--zob-chalk);
+  pointer-events: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.zob-corner-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 4px;
+}
+.zob-corner-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  padding: 4px 6px;
+  border-radius: 4px;
+  background: rgba(20, 29, 52, 0.88);
+  border: 1px solid rgba(203, 215, 230, 0.22);
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 10px;
+  color: var(--zob-chalk);
+  cursor: pointer;
+  min-width: 0;
+}
+.zob-corner-pill:hover, .zob-corner-pill:focus-visible {
+  border-color: var(--zob-gold);
+  outline: none;
+}
+.zob-corner-pill.zob-is-active {
+  border-color: var(--zob-gold);
+  box-shadow: inset 0 0 0 1px rgba(232, 194, 102, 0.35);
+}
+.zob-corner-pill.zob-is-sealed {
+  background: rgba(54, 59, 69, 0.72);
+  border-color: rgba(158, 140, 108, 0.42);
+  color: #aeb6c2;
+}
+.zob-pill-num { color: var(--zob-gold); font-weight: 700; }
+.zob-corner-pill.zob-is-sealed .zob-pill-num { color: var(--zob-ochre); }
+.zob-pill-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.zob-pill-state { font-size: 9px; opacity: 0.85; }
+.zob-ledger {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  padding: 7px 8px;
+  gap: 6px;
+}
+.zob-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--zob-border);
+  min-width: 0;
+}
+.zob-panel-title {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--zob-silver);
+}
+.zob-btn-compact { font-size: 10px; padding: 3px 6px; }
+.zob-token-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  overflow-y: auto;
+  min-height: 0;
+  padding-right: 2px;
+}
+.zob-founder-token {
+  padding: 5px 7px;
+  border-radius: 4px;
+  background: rgba(20, 28, 49, 0.82);
+  border: 1px solid rgba(203, 215, 230, 0.17);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.zob-founder-token:hover, .zob-founder-token:focus-visible {
+  border-color: var(--zob-gold);
+  background: rgba(29, 40, 68, 0.92);
+  outline: none;
+}
+.zob-founder-token.zob-is-sealed {
+  background: rgba(54, 59, 69, 0.78);
+  border-color: rgba(158, 140, 108, 0.55);
+}
+.zob-token-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 10px;
+}
+.zob-nation-tag { font-weight: 700; color: var(--zob-chalk); }
+.zob-founder-token[data-role="new_arrival"] .zob-nation-tag { color: var(--zob-gold); }
+.zob-mod-badge {
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: rgba(9, 13, 24, 0.65);
+  border: 1px solid rgba(203, 215, 230, 0.2);
+  color: var(--zob-silver);
+  font-size: 9.5px;
+}
+.zob-token-gloss {
+  margin-top: 2px;
+  font-size: 10.5px;
+  color: rgba(238, 242, 247, 0.82);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.zob-calcifier {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 7px 9px;
+  gap: 7px;
+}
+.zob-sighting-seal {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 10px;
+  color: var(--zob-silver);
+}
+.zob-zero-val { color: var(--zob-gold); font-weight: 700; }
+.zob-meters-rack { display: flex; flex-direction: column; gap: 7px; }
+.zob-meter-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 10.5px;
+  margin-bottom: 3px;
+}
+.zob-meter-label { color: var(--zob-silver); }
+.zob-meter-val { color: var(--zob-chalk); font-weight: 700; }
+.zob-gauge-rail {
+  width: 100%;
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(9, 13, 24, 0.85);
+  border: 1px solid rgba(203, 215, 230, 0.16);
+  overflow: hidden;
+}
+.zob-gauge-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.25s ease;
+}
+.zob-fill-moon { background: linear-gradient(90deg, #9fb4d1, var(--zob-chalk)); }
+.zob-fill-trap { background: linear-gradient(90deg, var(--zob-lead), var(--zob-ochre)); }
+.zob-fill-dream { background: linear-gradient(90deg, #a6823a, var(--zob-gold)); }
+.zob-fill-slag { background: linear-gradient(90deg, var(--zob-slag), #7e7463); }
+.zob-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5px;
+}
+.zob-stat-cell {
+  padding: 5px 7px;
+  border-radius: 4px;
+  background: rgba(9, 13, 24, 0.65);
+  border: 1px solid rgba(203, 215, 230, 0.14);
+}
+.zob-stat-k { display: block; font-size: 9.5px; color: var(--zob-silver); opacity: 0.85; }
+.zob-stat-v {
+  display: block;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--zob-chalk);
+}
+.zob-chronicle {
+  padding: 8px 9px;
+  border-radius: 5px;
+  background: rgba(9, 13, 24, 0.78);
+  border-left: 3px solid var(--zob-gold);
+  font-size: 12px;
+  line-height: 1.42;
+  color: var(--zob-chalk);
+}
+.zob-root[data-phase="trap"] .zob-chronicle { border-left-color: var(--zob-lead); color: var(--zob-silver); }
+.zob-key-hint {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 9.5px;
+  color: var(--zob-silver);
+  opacity: 0.8;
+  line-height: 1.35;
+}
+.zob-plate-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background: rgba(6, 9, 18, 0.9);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.zob-plate-sheet {
+  width: min(1220px, 100%);
+  height: min(748px, 100%);
+  background: #0d1323;
+  border: 1px solid rgba(232, 194, 102, 0.42);
+  border-radius: 8px;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  padding: 10px 12px;
+  gap: 8px;
+  overflow: hidden;
+}
+.zob-plate-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.zob-plate-tabs { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+.zob-btn.zob-is-on { border-color: var(--zob-gold); color: var(--zob-gold); background: rgba(232, 194, 102, 0.16); }
+.zob-loupe-well {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  overflow: auto;
+  min-height: 0;
+  padding: 4px;
+}
+.zob-loupe-well[data-tab="map"] #zob-card-city,
+.zob-loupe-well[data-tab="city"] #zob-card-map { display: none; }
+.zob-loupe-well[data-tab="map"], .zob-loupe-well[data-tab="city"] { grid-template-columns: minmax(0, 1fr); }
+.zob-plate-card {
+  background: rgba(9, 13, 24, 0.85);
+  border: 1px solid var(--zob-border);
+  border-radius: 6px;
+  padding: 6px;
+  overflow: auto;
+}
+.zob-plate-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 600px;
+  object-fit: contain;
+  border-radius: 3px;
+  transform-origin: top left;
+  transition: width 0.2s ease;
+}
+.zob-loupe-well.zob-is-zoomed .zob-plate-img {
+  width: 175%;
+  max-width: none;
+  max-height: none;
+}
+.zob-plate-cap {
+  margin-top: 5px;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 10.5px;
+  color: var(--zob-silver);
+}
+@media (max-width: 960px) {
+  .zob-html, .zob-body { height: auto; min-height: 100%; overflow-x: hidden; overflow-y: auto; }
+  .zob-root {
+    height: auto;
+    max-height: none;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 6px;
+    gap: 6px;
+    overflow-x: hidden;
+  }
+  .zob-crown { flex-direction: column; align-items: stretch; gap: 5px; padding: 6px; }
+  .zob-rubric, .zob-actions { flex-wrap: wrap; white-space: normal; }
+  .zob-btn { font-size: 10px; padding: 4px 6px; }
+  .zob-canvas-wrap { height: 270px; min-height: 270px; }
+  .zob-whisper { font-size: 10.5px; }
+  .zob-token-stack { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); max-height: none; overflow: visible; }
+  .zob-loupe-well { grid-template-columns: minmax(0, 1fr); }
+  .zob-plate-drawer { padding: 6px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .zob-root, .zob-btn, .zob-founder-token, .zob-gauge-fill, .zob-plate-img { transition: none !important; }
+}
+</style>
+</head>
+<body class="zob-body">
+<zobeide-skein class="zob-root" id="zob-root" data-phase="open">
+  <skein-crown-bar class="zob-crown">
+    <crown-rubric-cluster class="zob-rubric">
+      <crown-city-mark class="zob-city-mark">ZOBEIDE</crown-city-mark>
+      <crown-cadence-note class="zob-cadence">Six days &amp; seven nights</crown-cadence-note>
+      <crown-phase-seal class="zob-phase-badge" id="zob-phase-badge">Open Moonlit Dream</crown-phase-seal>
+    </crown-rubric-cluster>
+    <crown-action-rack class="zob-actions">
+      <skein-mode-latch class="zob-btn zob-mode-btn" id="zob-btn-mode" data-mode="pursue" role="button" tabindex="0">[B] Mode: Pursue</skein-mode-latch>
+      <skein-action-key class="zob-btn zob-btn-gold" id="zob-btn-dream" role="button" tabindex="0">[D] Dream Pursuit</skein-action-key>
+      <skein-action-key class="zob-btn" id="zob-btn-arrival" role="button" tabindex="0">[N] New Arrival Wall</skein-action-key>
+      <skein-action-key class="zob-btn" id="zob-btn-seal" role="button" tabindex="0">[S] Seal All</skein-action-key>
+      <skein-action-key class="zob-btn" id="zob-btn-mute" role="button" tabindex="0">[M] Sound: On</skein-action-key>
+      <skein-action-key class="zob-btn" id="zob-btn-reset" role="button" tabindex="0">[R] Reset</skein-action-key>
+      <skein-action-key class="zob-btn zob-btn-plate" id="zob-btn-plates" role="button" tabindex="0">[P] Royal Plates</skein-action-key>
+    </crown-action-rack>
+  </skein-crown-bar>
+
+  <moonlit-pursuit-canvas class="zob-stage" id="zob-stage">
+    <skein-canvas-frame class="zob-canvas-wrap" id="zob-canvas-wrap">
+      <canvas class="zob-canvas" id="zob-canvas" aria-label="Coiled moonlit street skein of Zobeide"></canvas>
+      <pursuit-whisper-band class="zob-whisper" id="zob-whisper">Chalk-white streets wind in a skein under full moonlight — pursue turns [1]–[8] or invoke a founder wall.</pursuit-whisper-band>
+    </skein-canvas-frame>
+    <vanishing-corner-strip class="zob-corner-strip" id="zob-corner-strip"></vanishing-corner-strip>
+  </moonlit-pursuit-canvas>
+
+  <wall-trap-ledger class="zob-ledger" id="zob-ledger">
+    <ledger-heading-bar class="zob-panel-head">
+      <ledger-title-mark class="zob-panel-title">Multi-Nation Wall Ledger</ledger-title-mark>
+      <skein-action-key class="zob-btn zob-btn-compact" id="zob-ledger-arrival" role="button" tabindex="0">Summon New Arrival [+Wall]</skein-action-key>
+    </ledger-heading-bar>
+    <ledger-token-stack class="zob-token-stack" id="zob-token-stack"></ledger-token-stack>
+  </wall-trap-ledger>
+
+  <amnesia-calcifier class="zob-calcifier" id="zob-calcifier">
+    <ledger-heading-bar class="zob-panel-head">
+      <ledger-title-mark class="zob-panel-title">Amnesia Calcifier</ledger-title-mark>
+      <calcifier-sighting-seal class="zob-sighting-seal">Sightings Since Founding: <calcifier-zero-num class="zob-zero-val" id="zob-sightings">0</calcifier-zero-num></calcifier-sighting-seal>
+    </ledger-heading-bar>
+    <calcifier-meters-rack class="zob-meters-rack">
+      <calcifier-meter-item class="zob-meter-item">
+        <calcifier-meter-row class="zob-meter-row"><calcifier-meter-label class="zob-meter-label">Moonlight Exposure</calcifier-meter-label><calcifier-meter-val class="zob-meter-val" id="zob-val-moon">100%</calcifier-meter-val></calcifier-meter-row>
+        <calcification-gauge-rail class="zob-gauge-rail"><calcifier-gauge-fill class="zob-gauge-fill zob-fill-moon" id="zob-bar-moon" style="width:100%"></calcifier-gauge-fill></calcification-gauge-rail>
+      </calcifier-meter-item>
+      <calcifier-meter-item class="zob-meter-item">
+        <calcifier-meter-row class="zob-meter-row"><calcifier-meter-label class="zob-meter-label">Trap Enclosure</calcifier-meter-label><calcifier-meter-val class="zob-meter-val" id="zob-val-trap">0/8 (0%)</calcifier-meter-val></calcifier-meter-row>
+        <calcification-gauge-rail class="zob-gauge-rail"><calcifier-gauge-fill class="zob-gauge-fill zob-fill-trap" id="zob-bar-trap" style="width:0%"></calcifier-gauge-fill></calcification-gauge-rail>
+      </calcifier-meter-item>
+      <calcifier-meter-item class="zob-meter-item">
+        <calcifier-meter-row class="zob-meter-row"><calcifier-meter-label class="zob-meter-label">Dream-Memory</calcifier-meter-label><calcifier-meter-val class="zob-meter-val" id="zob-val-dream">100%</calcifier-meter-val></calcifier-meter-row>
+        <calcification-gauge-rail class="zob-gauge-rail"><calcifier-gauge-fill class="zob-gauge-fill zob-fill-dream" id="zob-bar-dream" style="width:100%"></calcifier-gauge-fill></calcification-gauge-rail>
+      </calcifier-meter-item>
+      <calcifier-meter-item class="zob-meter-item">
+        <calcifier-meter-row class="zob-meter-row"><calcifier-meter-label class="zob-meter-label">Workaday Calcification</calcifier-meter-label><calcifier-meter-val class="zob-meter-val" id="zob-val-slag">0%</calcifier-meter-val></calcifier-meter-row>
+        <calcification-gauge-rail class="zob-gauge-rail"><calcifier-gauge-fill class="zob-gauge-fill zob-fill-slag" id="zob-bar-slag" style="width:0%"></calcifier-gauge-fill></calcification-gauge-rail>
+      </calcifier-meter-item>
+    </calcifier-meters-rack>
+    <calcifier-stat-grid class="zob-stat-grid">
+      <calcifier-stat-cell class="zob-stat-cell"><calcifier-stat-k class="zob-stat-k">Open Escape Turns</calcifier-stat-k><calcifier-stat-v class="zob-stat-v" id="zob-stat-open">8 / 8</calcifier-stat-v></calcifier-stat-cell>
+      <calcifier-stat-cell class="zob-stat-cell"><calcifier-stat-k class="zob-stat-k">Vanished Pursuits</calcifier-stat-k><calcifier-stat-v class="zob-stat-v" id="zob-stat-vanish">1</calcifier-stat-v></calcifier-stat-cell>
+      <calcifier-stat-cell class="zob-stat-cell"><calcifier-stat-k class="zob-stat-k">New-Arrival Walls</calcifier-stat-k><calcifier-stat-v class="zob-stat-v" id="zob-stat-arrivals">0</calcifier-stat-v></calcifier-stat-cell>
+      <calcifier-stat-cell class="zob-stat-cell"><calcifier-stat-k class="zob-stat-k">Extra Dead-Ends</calcifier-stat-k><calcifier-stat-v class="zob-stat-v" id="zob-stat-deadends">0</calcifier-stat-v></calcifier-stat-cell>
+    </calcifier-stat-grid>
+    <calcifier-lived-chronicle class="zob-chronicle" id="zob-chronicle">White streets coiled in moonlight: men of distant nations follow the same nocturnal runner—long golden hair seen only from behind—vanishing around eight open turns.</calcifier-lived-chronicle>
+    <calcifier-key-glossary class="zob-key-hint">[1–8] Pursue · Shift+[1–8] Wall · [B] Click Mode · [D] Dream · [N] +Wall · [S] Seal · [Z] Loupe · [P] Plates · [R] Reset</calcifier-key-glossary>
+  </amnesia-calcifier>
+
+  <zobeide-plate-drawer class="zob-plate-drawer" id="zob-plate-drawer" hidden>
+    <plate-drawer-sheet class="zob-plate-sheet">
+      <plate-drawer-bar class="zob-plate-bar">
+        <ledger-title-mark class="zob-panel-title">Royal Plates of Zobeide — Survey &amp; Nocturnal Vista</ledger-title-mark>
+        <plate-tab-group class="zob-plate-tabs">
+          <skein-action-key class="zob-btn zob-is-on" id="zob-tab-diptych" role="button" tabindex="0">Diptych</skein-action-key>
+          <skein-action-key class="zob-btn" id="zob-tab-map" role="button" tabindex="0">Cartographic Map</skein-action-key>
+          <skein-action-key class="zob-btn" id="zob-tab-city" role="button" tabindex="0">City Plate</skein-action-key>
+          <skein-action-key class="zob-btn" id="zob-btn-loupe" role="button" tabindex="0">[Z] Loupe 1.75×</skein-action-key>
+          <skein-action-key class="zob-btn" id="zob-btn-close-plates" role="button" tabindex="0">[Esc] Close</skein-action-key>
+        </plate-tab-group>
+      </plate-drawer-bar>
+      <plate-loupe-well class="zob-loupe-well" id="zob-loupe-well" data-tab="diptych">
+        <plate-figure-card class="zob-plate-card" id="zob-card-map">
+          <img class="zob-plate-img" id="zob-map-img" src="map.png" alt="Cartographic survey of Zobeide">
+          <plate-caption-line class="zob-plate-cap" id="zob-map-cap">Survey Plate — Coiled Three-Ring Skein &amp; Eight Rearranged Turns (1600×1200)</plate-caption-line>
+        </plate-figure-card>
+        <plate-figure-card class="zob-plate-card" id="zob-card-city">
+          <img class="zob-plate-img" id="zob-city-img" src="image.png" alt="Moonlit vista of Zobeide">
+          <plate-caption-line class="zob-plate-cap" id="zob-city-cap">City Plate — Chalk Moonlight Occluded by Lead-Mortar Walls (1600×1000)</plate-caption-line>
+        </plate-figure-card>
+      </plate-loupe-well>
+    </plate-drawer-sheet>
+  </zobeide-plate-drawer>
+</zobeide-skein>
+<script>
+(function initZobeideDreamTrace(root) {
+  'use strict';
+
+  const PALETTE = Object.freeze({
+    abyssNight: '#090d18',
+    indigoShadow: '#12192c',
+    chalkMoonlight: '#eef2f7',
+    lunarSilver: '#cbd7e6',
+    leadMortar: '#5a6270',
+    calcifiedSlag: '#363b45',
+    fugitiveGold: '#e8c266',
+    mortarOchre: '#9e8c6c'
+  });
+
+  const SKEIN_CORNERS = Object.freeze([
+    Object.freeze({
+      id: 'turn_west_postern',
+      index: 0,
+      label: 'Moonlit West Postern Turn',
+      normX: 0.24,
+      normY: 0.44,
+      escapeAngle: -2.4,
+      dreamFragment: 'She turned past the chalk postern into silver sea-wind.'
+    }),
+    Object.freeze({
+      id: 'turn_lime_stair',
+      index: 1,
+      label: 'Winding Lime-Wash Stairway',
+      normX: 0.37,
+      normY: 0.26,
+      escapeAngle: -1.3,
+      dreamFragment: 'Long hair flashed above the steep whitewashed risers.'
+    }),
+    Object.freeze({
+      id: 'turn_well_arcade',
+      index: 2,
+      label: 'Double-Shadowed Well Arcade',
+      normX: 0.64,
+      normY: 0.25,
+      escapeAngle: -0.5,
+      dreamFragment: 'Her bare heel vanished between twin moonlit arches.'
+    }),
+    Object.freeze({
+      id: 'turn_cistern_bend',
+      index: 3,
+      label: 'White Cistern Hairpin',
+      normX: 0.77,
+      normY: 0.45,
+      escapeAngle: 0.35,
+      dreamFragment: 'Rippled moonlight caught her shoulder before the bend.'
+    }),
+    Object.freeze({
+      id: 'turn_cypress_terrace',
+      index: 4,
+      label: 'Sloped Moon-Terrace Arch',
+      normX: 0.71,
+      normY: 0.71,
+      escapeAngle: 1.15,
+      dreamFragment: 'A streaming golden-amber ribbon slipped beneath the parapet.'
+    }),
+    Object.freeze({
+      id: 'turn_skein_narrows',
+      index: 5,
+      label: 'Inner Skein Bottleneck',
+      normX: 0.43,
+      normY: 0.74,
+      escapeAngle: 2.2,
+      dreamFragment: 'Twisting streets coiled tight; at the turn, only night air remained.'
+    }),
+    Object.freeze({
+      id: 'turn_gable_culdesac',
+      index: 6,
+      label: 'Chalk Gable Switchback',
+      normX: 0.36,
+      normY: 0.53,
+      escapeAngle: 2.9,
+      dreamFragment: 'Shadow swallowed the streaming hair-trace around the inner gable.'
+    }),
+    Object.freeze({
+      id: 'turn_zenith_passage',
+      index: 7,
+      label: 'Lunar Zenith Passage',
+      normX: 0.56,
+      normY: 0.47,
+      escapeAngle: -0.9,
+      dreamFragment: 'At the heart of the coiled white skein she slipped away unseen.'
+    })
+  ]);
+
+  // Coiled three-ring street skein around (0.50, 0.52): primary spiral 0..7 + cross-yarn coils
+  const SKEIN_SEGMENTS = [
+    { from: 0, to: 1, ring: 0, widthMul: 1.08, c1: [0.22, 0.31], c2: [0.29, 0.24], feature: 'stairs' },
+    { from: 1, to: 2, ring: 0, widthMul: 1.05, c1: [0.46, 0.19], c2: [0.56, 0.19], feature: 'arcade' },
+    { from: 2, to: 3, ring: 0, widthMul: 1.04, c1: [0.73, 0.27], c2: [0.79, 0.35], feature: 'cistern' },
+    { from: 3, to: 4, ring: 0, widthMul: 1.04, c1: [0.80, 0.56], c2: [0.78, 0.65], feature: 'stairs' },
+    { from: 4, to: 5, ring: 0, widthMul: 1.02, c1: [0.62, 0.80], c2: [0.51, 0.81], feature: 'skein' },
+    { from: 5, to: 6, ring: 1, widthMul: 0.94, c1: [0.35, 0.70], c2: [0.31, 0.61], feature: 'gable' },
+    { from: 6, to: 7, ring: 2, widthMul: 0.88, c1: [0.41, 0.44], c2: [0.49, 0.42], feature: 'zenith' },
+    { from: 7, to: 2, ring: 1, widthMul: 0.84, c1: [0.62, 0.41], c2: [0.60, 0.32], feature: 'arcade' },
+    { from: 5, to: 0, ring: 0, widthMul: 0.96, c1: [0.30, 0.72], c2: [0.19, 0.58], feature: 'postern' },
+    { from: 6, to: 1, ring: 1, widthMul: 0.82, c1: [0.33, 0.41], c2: [0.34, 0.33], feature: 'stairs' },
+    { from: 3, to: 7, ring: 1, widthMul: 0.80, c1: [0.70, 0.49], c2: [0.63, 0.51], feature: 'skein' },
+    { from: 7, to: 4, ring: 1, widthMul: 0.80, c1: [0.59, 0.57], c2: [0.66, 0.64], feature: 'terrace' },
+    { from: 7, to: 5, ring: 2, widthMul: 0.78, c1: [0.52, 0.58], c2: [0.47, 0.66], feature: 'skein' }
+  ];
+
+  // Terraced white limestone roof clusters nestled between coiled lanes around (0.50, 0.52)
+  const ROOF_TERRACES = [
+    { cx: 0.30, cy: 0.36, rx: 0.046, ry: 0.032, rot: -0.42, cornerIdx: 0, well: false },
+    { cx: 0.49, cy: 0.25, rx: 0.056, ry: 0.028, rot: 0.08, cornerIdx: 1, well: true },
+    { cx: 0.69, cy: 0.34, rx: 0.048, ry: 0.033, rot: 0.52, cornerIdx: 2, well: true },
+    { cx: 0.73, cy: 0.58, rx: 0.045, ry: 0.036, rot: 1.18, cornerIdx: 3, well: false },
+    { cx: 0.58, cy: 0.73, rx: 0.058, ry: 0.030, rot: -0.22, cornerIdx: 4, well: true },
+    { cx: 0.33, cy: 0.64, rx: 0.047, ry: 0.032, rot: 0.64, cornerIdx: 5, well: false },
+    { cx: 0.44, cy: 0.36, rx: 0.042, ry: 0.027, rot: -0.28, cornerIdx: 6, well: false },
+    { cx: 0.64, cy: 0.54, rx: 0.041, ry: 0.028, rot: 0.35, cornerIdx: 7, well: true },
+    { cx: 0.47, cy: 0.57, rx: 0.038, ry: 0.026, rot: -0.50, cornerIdx: 6, well: true },
+    { cx: 0.52, cy: 0.46, rx: 0.032, ry: 0.022, rot: 0.18, cornerIdx: 7, well: false },
+    { cx: 0.19, cy: 0.51, rx: 0.036, ry: 0.028, rot: -0.75, cornerIdx: 0, well: false },
+    { cx: 0.82, cy: 0.49, rx: 0.034, ry: 0.028, rot: 0.82, cornerIdx: 3, well: false }
+  ];
+
+  function clamp(v, lo, hi) {
+    return v < lo ? lo : v > hi ? hi : v;
+  }
+
+  function lerp(a, b, t) {
+    return a + (b - a) * t;
+  }
+
+  function evalCubic(p0x, p0y, p1x, p1y, p2x, p2y, p3x, p3y, t) {
+    const u = 1 - t;
+    const tt = t * t;
+    const uu = u * u;
+    const uuu = uu * u;
+    const ttt = tt * t;
+    return {
+      x: uuu * p0x + 3 * uu * t * p1x + 3 * u * tt * p2x + ttt * p3x,
+      y: uuu * p0y + 3 * uu * t * p1y + 3 * u * tt * p2y + ttt * p3y
+    };
+  }
+
+  function evalCubicTangent(p0x, p0y, p1x, p1y, p2x, p2y, p3x, p3y, t) {
+    const u = 1 - t;
+    const dx = 3 * u * u * (p1x - p0x) + 6 * u * t * (p2x - p1x) + 3 * t * t * (p3x - p2x);
+    const dy = 3 * u * u * (p1y - p0y) + 6 * u * t * (p2y - p1y) + 3 * t * t * (p3y - p2y);
+    return Math.atan2(dy, dx);
+  }
+
+  function hexToRgb(hex) {
+    const clean = String(hex || '#000000').replace('#', '');
+    const n = parseInt(clean, 16) || 0;
+    return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+  }
+
+  function mixRgba(hexA, hexB, t, alpha) {
+    const a = hexToRgb(hexA);
+    const b = hexToRgb(hexB);
+    const k = clamp(t, 0, 1);
+    const r = Math.round(lerp(a.r, b.r, k));
+    const g = Math.round(lerp(a.g, b.g, k));
+    const bl = Math.round(lerp(a.b, b.b, k));
+    return 'rgba(' + r + ',' + g + ',' + bl + ',' + clamp(alpha, 0, 1).toFixed(3) + ')';
+  }
+
+  function createStars() {
+    const pts = [];
+    for (let i = 0; i < 42; i++) {
+      const s1 = Math.sin(i * 12.9898 + 1.7) * 43758.5453;
+      const s2 = Math.sin(i * 78.233 + 4.3) * 19341.7219;
+      const nx = s1 - Math.floor(s1);
+      const ny = (s2 - Math.floor(s2)) * 0.42;
+      pts.push({
+        nx: 0.03 + nx * 0.94,
+        ny: 0.03 + ny * 0.88,
+        r: 0.7 + (i % 3) * 0.45,
+        phase: i * 0.83
+      });
+    }
+    return pts;
+  }
+
+  function createDreamTrace(opts) {
+    const cfg = opts || {};
+    let viewW = Math.max(1, Number(cfg.width) || 960);
+    let viewH = Math.max(1, Number(cfg.height) || 640);
+    let viewDpr = Math.max(1, Number(cfg.dpr) || 1);
+
+    const cornerState = SKEIN_CORNERS.map(function mapCorner(c) {
+      return {
+        id: c.id,
+        index: c.index,
+        label: c.label,
+        normX: c.normX,
+        normY: c.normY,
+        x: +(c.normX * viewW).toFixed(2),
+        y: +(c.normY * viewH).toFixed(2),
+        escapeAngle: c.escapeAngle,
+        dreamFragment: c.dreamFragment,
+        isBlocked: false,
+        modificationType: null,
+        approachPts: [],
+        bendPts: []
+      };
+    });
+
+    const stars = createStars();
+    let skeinThreads = [];
+    let terracePolys = [];
+    let blockedCount = 0;
+    let openEscapeRoutes = 8;
+    let moonExposure = 1.0;
+    let fugitiveVisibility = 1.0;
+    let vanishCount = 1;
+    let deadEndHits = 0;
+    let activeCornerId = SKEIN_CORNERS[0].id;
+
+    const shadowShutters = new Float64Array(8);
+    const afterimages = [];
+    const wallImpacts = [];
+    let echoPulse = 0;
+    let moonPhaseTime = 0;
+    const ambientRunner = { segIdx: 0, t: 0.34, hairPhase: 0 };
+
+    function resolveCorner(cornerIdOrIndex) {
+      if (typeof cornerIdOrIndex === 'number' && Number.isFinite(cornerIdOrIndex)) {
+        const idx = Math.trunc(cornerIdOrIndex);
+        if (idx >= 0 && idx < cornerState.length) return cornerState[idx];
+      }
+      if (typeof cornerIdOrIndex === 'string') {
+        const trimmed = cornerIdOrIndex.trim();
+        if (/^[0-7]$/.test(trimmed)) return cornerState[Number(trimmed)];
+        for (let i = 0; i < cornerState.length; i++) {
+          if (cornerState[i].id === trimmed) return cornerState[i];
+        }
+      }
+      return null;
+    }
+
+    function publicCornerDescriptor(c) {
+      return {
+        id: c.id,
+        index: c.index,
+        label: c.label,
+        normX: c.normX,
+        normY: c.normY,
+        x: c.x,
+        y: c.y,
+        escapeAngle: c.escapeAngle,
+        dreamFragment: c.dreamFragment,
+        isBlocked: Boolean(c.isBlocked),
+        modificationType: c.modificationType || null
+      };
+    }
+
+    function recomputeMetrics() {
+      let count = 0;
+      for (let i = 0; i < cornerState.length; i++) {
+        if (cornerState[i].isBlocked) count++;
+      }
+      blockedCount = count;
+      openEscapeRoutes = 8 - blockedCount;
+      moonExposure = blockedCount === 0
+        ? 1.0
+        : +(Math.max(0.06, 1.0 - blockedCount * 0.1175)).toFixed(4);
+      fugitiveVisibility = blockedCount === 0
+        ? 1.0
+        : (blockedCount >= 8 ? 0.0 : +(Math.pow((8 - blockedCount) / 8, 1.2)).toFixed(4));
+      if (blockedCount >= 8) {
+        afterimages.length = 0;
+        echoPulse = 0;
+      } else {
+        for (let i = afterimages.length - 1; i >= 0; i--) {
+          if (cornerState[afterimages[i].cornerIndex].isBlocked) {
+            afterimages.splice(i, 1);
+          }
+        }
+      }
+    }
+
+    function resize(width, height, dpr) {
+      viewW = Math.max(1, Number(width) || viewW || 960);
+      viewH = Math.max(1, Number(height) || viewH || 640);
+      if (dpr !== undefined && Number(dpr) > 0) viewDpr = Number(dpr);
+      const minDim = Math.min(viewW, viewH);
+
+      for (let i = 0; i < cornerState.length; i++) {
+        const c = cornerState[i];
+        c.x = +(c.normX * viewW).toFixed(2);
+        c.y = +(c.normY * viewH).toFixed(2);
+      }
+
+      skeinThreads = SKEIN_SEGMENTS.map(function buildSeg(seg, idx) {
+        const a = cornerState[seg.from];
+        const b = cornerState[seg.to];
+        const p1x = seg.c1[0] * viewW;
+        const p1y = seg.c1[1] * viewH;
+        const p2x = seg.c2[0] * viewW;
+        const p2y = seg.c2[1] * viewH;
+        const pts = [];
+        const steps = 26;
+        for (let s = 0; s <= steps; s++) {
+          const t = s / steps;
+          const pt = evalCubic(a.x, a.y, p1x, p1y, p2x, p2y, b.x, b.y, t);
+          const ang = evalCubicTangent(a.x, a.y, p1x, p1y, p2x, p2y, b.x, b.y, t);
+          pts.push({ x: pt.x, y: pt.y, angle: ang, t: t });
+        }
+        return {
+          index: idx,
+          from: seg.from,
+          to: seg.to,
+          ring: seg.ring,
+          feature: seg.feature,
+          laneWidth: Math.max(8, minDim * 0.025 * seg.widthMul),
+          p0x: a.x, p0y: a.y, p1x: p1x, p1y: p1y, p2x: p2x, p2y: p2y, p3x: b.x, p3y: b.y,
+          pts: pts
+        };
+      });
+
+      // Build smooth approach + vanishing corner bend trajectory for each of the 8 turns
+      for (let i = 0; i < cornerState.length; i++) {
+        const c = cornerState[i];
+        const incomingIdx = i === 0 ? 8 : i - 1;
+        const inSeg = skeinThreads[incomingIdx] || skeinThreads[0];
+        const reach = Math.max(26, minDim * 0.072);
+        const esc = c.escapeAngle;
+        const bendCtrlX = c.x + Math.cos(esc - 0.55) * reach * 0.58;
+        const bendCtrlY = c.y + Math.sin(esc - 0.55) * reach * 0.58;
+        const bendEndX = c.x + Math.cos(esc) * reach;
+        const bendEndY = c.y + Math.sin(esc) * reach;
+        const curve = [];
+        for (let s = 0; s <= 12; s++) {
+          const st = 0.48 + (s / 12) * 0.52;
+          const p = evalCubic(inSeg.p0x, inSeg.p0y, inSeg.p1x, inSeg.p1y, inSeg.p2x, inSeg.p2y, inSeg.p3x, inSeg.p3y, st);
+          const ang = evalCubicTangent(inSeg.p0x, inSeg.p0y, inSeg.p1x, inSeg.p1y, inSeg.p2x, inSeg.p2y, inSeg.p3x, inSeg.p3y, st);
+          curve.push({ x: p.x, y: p.y, angle: ang, vanishFade: 1.0 });
+        }
+        for (let s = 1; s <= 10; s++) {
+          const bt = s / 10;
+          const p = evalCubic(c.x, c.y, bendCtrlX, bendCtrlY, lerp(bendCtrlX, bendEndX, 0.6), lerp(bendCtrlY, bendEndY, 0.6), bendEndX, bendEndY, bt);
+          const ang = evalCubicTangent(c.x, c.y, bendCtrlX, bendCtrlY, lerp(bendCtrlX, bendEndX, 0.6), lerp(bendCtrlY, bendEndY, 0.6), bendEndX, bendEndY, bt);
+          curve.push({ x: p.x, y: p.y, angle: ang, vanishFade: Math.max(0, 1 - bt * 1.15) });
+        }
+        c.bendPts = curve;
+      }
+
+      terracePolys = ROOF_TERRACES.map(function buildRoof(r) {
+        return {
+          cx: r.cx * viewW,
+          cy: r.cy * viewH,
+          rx: r.rx * viewW,
+          ry: r.ry * viewH,
+          rot: r.rot,
+          cornerIdx: r.cornerIdx,
+          well: r.well
+        };
+      });
+
+      return cornerState.map(publicCornerDescriptor);
+    }
+
+    resize(viewW, viewH, viewDpr);
+
+    function getCorners(width, height) {
+      if (typeof width === 'number' && width > 0 && typeof height === 'number' && height > 0) {
+        if (Math.abs(width - viewW) > 0.5 || Math.abs(height - viewH) > 0.5) {
+          resize(width, height, viewDpr);
+        }
+      }
+      return cornerState.map(publicCornerDescriptor);
+    }
+
+    function syncTrapWalls(blockedMapOrArray) {
+      for (let i = 0; i < cornerState.length; i++) {
+        cornerState[i].isBlocked = false;
+        cornerState[i].modificationType = null;
+      }
+      const src = (blockedMapOrArray && Array.isArray(blockedMapOrArray.blockedRecords))
+        ? blockedMapOrArray.blockedRecords
+        : blockedMapOrArray;
+
+      if (Array.isArray(src)) {
+        for (let i = 0; i < src.length; i++) {
+          const item = src[i];
+          if (item === null || item === undefined) continue;
+          if (typeof item === 'string' || typeof item === 'number') {
+            const c = resolveCorner(item);
+            if (c) { c.isBlocked = true; c.modificationType = 'dead_end_wall'; }
+          } else if (typeof item === 'object' && item.isBlocked !== false) {
+            const key = item.cornerId !== undefined ? item.cornerId : (item.id !== undefined ? item.id : item.index);
+            const c = resolveCorner(key);
+            if (c) {
+              c.isBlocked = true;
+              c.modificationType = item.modificationType || item.modType || 'dead_end_wall';
+            }
+          }
+        }
+      } else if (src && typeof src === 'object') {
+        const keys = Object.keys(src);
+        for (let i = 0; i < keys.length; i++) {
+          const val = src[keys[i]];
+          if (!val || (typeof val === 'object' && val.isBlocked === false)) continue;
+          const c = resolveCorner(keys[i]);
+          if (c) {
+            c.isBlocked = true;
+            c.modificationType = typeof val === 'string' ? val : (val.modificationType || val.modType || 'dead_end_wall');
+          }
+        }
+      }
+      recomputeMetrics();
+      return getState();
+    }
+
+    function pursueCorner(cornerIdOrIndex) {
+      const c = resolveCorner(cornerIdOrIndex) || cornerState[0];
+      activeCornerId = c.id;
+      if (!c.isBlocked) {
+        vanishCount += 1;
+        afterimages.push({ cornerIndex: c.index, progress: 0.32, life: 1.0, phase: vanishCount * 1.31 });
+        if (afterimages.length > 4) afterimages.shift();
+        return {
+          cornerId: c.id,
+          index: c.index,
+          label: c.label,
+          dreamFragment: c.dreamFragment,
+          vanished: true,
+          blockedByWall: false,
+          womanCaptured: false
+        };
+      }
+      deadEndHits += 1;
+      wallImpacts.push({ cornerIndex: c.index, life: 1.0 });
+      if (wallImpacts.length > 4) wallImpacts.shift();
+      return {
+        cornerId: c.id,
+        index: c.index,
+        label: c.label,
+        modificationType: c.modificationType,
+        vanished: false,
+        blockedByWall: true,
+        womanCaptured: false
+      };
+    }
+
+    function triggerDreamEcho(dreamMemory) {
+      const mem = typeof dreamMemory === 'number' ? clamp(dreamMemory, 0, 1) : fugitiveVisibility;
+      if (mem <= 0.01 || blockedCount >= 8) {
+        echoPulse = 0;
+        return { triggered: false, echoStrength: 0, womanCaptured: false };
+      }
+      echoPulse = Math.max(echoPulse, mem);
+      let target = resolveCorner(activeCornerId);
+      if (!target || target.isBlocked) {
+        target = null;
+        for (let i = 0; i < cornerState.length; i++) {
+          if (!cornerState[i].isBlocked) { target = cornerState[i]; break; }
+        }
+      }
+      if (target) {
+        activeCornerId = target.id;
+        afterimages.push({ cornerIndex: target.index, progress: 0.36, life: 0.9 * mem, phase: moonPhaseTime + 0.9 });
+        if (afterimages.length > 4) afterimages.shift();
+      }
+      return { triggered: true, echoStrength: +mem.toFixed(4), activeCornerId: activeCornerId, womanCaptured: false };
+    }
+
+    function hitTestCorner(normX, normY) {
+      let nx = Number(normX);
+      let ny = Number(normY);
+      if (!Number.isFinite(nx) || !Number.isFinite(ny)) return null;
+      if (nx > 1.5 || ny > 1.5) { nx /= viewW; ny /= viewH; }
+      let best = null;
+      let bestDist = 0.075;
+      for (let i = 0; i < cornerState.length; i++) {
+        const d = Math.hypot(nx - cornerState[i].normX, ny - cornerState[i].normY);
+        if (d <= bestDist) { bestDist = d; best = cornerState[i]; }
+      }
+      return best ? publicCornerDescriptor(best) : null;
+    }
+
+    function step(dtSec, env) {
+      const dt = clamp(Number(dtSec) || 0.016, 0, 0.1);
+      const reduced = Boolean(env && env.reducedMotion);
+      const enc = (env && typeof env.enclosureRatio === 'number') ? env.enclosureRatio : (blockedCount / 8);
+      const mem = (env && typeof env.dreamMemory === 'number') ? env.dreamMemory : fugitiveVisibility;
+      for (let i = 0; i < 8; i++) {
+        const tgt = cornerState[i].isBlocked ? 1 : 0;
+        shadowShutters[i] = reduced ? tgt : lerp(shadowShutters[i], tgt, clamp(dt * 7.5, 0, 1));
+      }
+      for (let i = wallImpacts.length - 1; i >= 0; i--) {
+        wallImpacts[i].life -= dt * (reduced ? 3.0 : 1.7);
+        if (wallImpacts[i].life <= 0) wallImpacts.splice(i, 1);
+      }
+      if (enc >= 1.0 || mem <= 0.01 || blockedCount >= 8) {
+        afterimages.length = 0;
+        echoPulse = 0;
+        return;
+      }
+      if (reduced) return;
+      moonPhaseTime += dt;
+      echoPulse = Math.max(0, echoPulse - dt * 0.75);
+      for (let i = afterimages.length - 1; i >= 0; i--) {
+        afterimages[i].progress = Math.min(1, afterimages[i].progress + dt * 0.95);
+        afterimages[i].life -= dt * 0.65;
+        if (afterimages[i].life <= 0) afterimages.splice(i, 1);
+      }
+      ambientRunner.hairPhase += dt * 5.4;
+      ambientRunner.t += dt * (0.28 + 0.14 * mem);
+      if (ambientRunner.t >= 1) {
+        ambientRunner.t = 0;
+        for (let stepTry = 1; stepTry <= 8; stepTry++) {
+          const cand = (ambientRunner.segIdx + stepTry) % 8;
+          const destIdx = SKEIN_SEGMENTS[cand].to;
+          if (!cornerState[destIdx].isBlocked) { ambientRunner.segIdx = cand; break; }
+        }
+      }
+    }
+
+    function drawFugitiveFromBehind(ctx, px, py, heading, alpha, scale, hairPhase) {
+      if (alpha <= 0.01) return;
+      ctx.save();
+      ctx.translate(px, py);
+      ctx.rotate(heading);
+      // Footstep ripple behind receding bare heel
+      ctx.strokeStyle = mixRgba(PALETTE.lunarSilver, PALETTE.chalkMoonlight, 0.5, alpha * 0.48);
+      ctx.lineWidth = Math.max(1, 1.1 * scale);
+      ctx.beginPath();
+      ctx.ellipse(-7.5 * scale, 0, 4.2 * scale, 2.1 * scale, 0, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Receding bare back, shoulders & lifted heel (seen strictly FROM BEHIND fleeing toward +X)
+      ctx.fillStyle = mixRgba(PALETTE.chalkMoonlight, PALETTE.lunarSilver, 0.25, alpha * 0.92);
+      ctx.beginPath();
+      ctx.ellipse(-2.8 * scale, 1.4 * scale, 3.1 * scale, 1.2 * scale, -0.35, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.moveTo(4.2 * scale, 0);
+      ctx.bezierCurveTo(3.4 * scale, -3.4 * scale, -1.2 * scale, -3.1 * scale, -4.5 * scale, -1.4 * scale);
+      ctx.lineTo(-4.5 * scale, 1.4 * scale);
+      ctx.bezierCurveTo(-1.2 * scale, 3.1 * scale, 3.4 * scale, 3.4 * scale, 4.2 * scale, 0);
+      ctx.closePath();
+      ctx.fill();
+      // Subtle spinal moonlight shadow proving rear-view orientation
+      ctx.strokeStyle = mixRgba(PALETTE.indigoShadow, PALETTE.leadMortar, 0.3, alpha * 0.55);
+      ctx.lineWidth = Math.max(0.8, 0.9 * scale);
+      ctx.beginPath();
+      ctx.moveTo(2.2 * scale, 0);
+      ctx.lineTo(-3.6 * scale, 0);
+      ctx.stroke();
+
+      // Long streaming golden hair (#e8c266) trailing backward from crown in 5 sinuous strands
+      for (let s = -2; s <= 2; s++) {
+        const waveA = Math.sin(hairPhase + s * 0.85) * 2.8 * scale;
+        const waveB = Math.cos(hairPhase * 1.15 + s * 1.1) * 4.6 * scale;
+        const len = (16 + (2 - Math.abs(s)) * 3.5) * scale;
+        ctx.strokeStyle = s === 0
+          ? mixRgba(PALETTE.fugitiveGold, PALETTE.chalkMoonlight, 0.28, alpha * 0.96)
+          : mixRgba(PALETTE.fugitiveGold, PALETTE.mortarOchre, Math.abs(s) * 0.14, alpha * 0.84);
+        ctx.lineWidth = (s === 0 ? 1.9 : 1.35) * scale;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(3.6 * scale, s * 0.85 * scale);
+        ctx.bezierCurveTo(
+          -len * 0.32, (s * 1.6 * scale) + waveA,
+          -len * 0.68, (s * 2.2 * scale) - waveB,
+          -len, (s * 2.6 * scale) + waveA * 0.9
+        );
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    function renderSkeinAndPursuit(ctx, width, height, env) {
+      if (!ctx) return;
+      const w = Math.max(1, Number(width) || viewW);
+      const h = Math.max(1, Number(height) || viewH);
+      if (Math.abs(w - viewW) > 0.5 || Math.abs(h - viewH) > 0.5) resize(w, h, viewDpr);
+      const enc = (env && typeof env.enclosureRatio === 'number') ? clamp(env.enclosureRatio, 0, 1) : (blockedCount / 8);
+      const mem = (env && typeof env.dreamMemory === 'number') ? clamp(env.dreamMemory, 0, 1) : fugitiveVisibility;
+      const reduced = Boolean(env && env.reducedMotion);
+      const minDim = Math.min(w, h);
+      const figScale = clamp(minDim / 540, 0.72, 1.45);
+
+      ctx.save();
+      // 1. Deep desert night sky (#090d18)
+      const skyGrad = ctx.createLinearGradient(0, 0, 0, h);
+      skyGrad.addColorStop(0, PALETTE.abyssNight);
+      skyGrad.addColorStop(0.62, mixRgba(PALETTE.indigoShadow, PALETTE.abyssNight, 0.52, 1));
+      skyGrad.addColorStop(1, PALETTE.abyssNight);
+      ctx.fillStyle = skyGrad;
+      ctx.fillRect(0, 0, w, h);
+
+      for (let i = 0; i < stars.length; i++) {
+        const st = stars[i];
+        const tw = reduced ? 0.65 : (0.5 + 0.5 * Math.sin(moonPhaseTime * 1.4 + st.phase));
+        const stAlpha = (0.12 + 0.55 * moonExposure) * tw;
+        ctx.fillStyle = mixRgba(PALETTE.chalkMoonlight, PALETTE.lunarSilver, 0.4, stAlpha);
+        ctx.beginPath();
+        ctx.arc(st.nx * w, st.ny * h, st.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // 2. High moon & angled chalk-silver moonbeams
+      const moonX = w * 0.145;
+      const moonY = h * 0.135;
+      const moonR = Math.max(15, minDim * 0.036);
+      const haloR = moonR * (2.6 + 3.6 * moonExposure);
+      const halo = ctx.createRadialGradient(moonX, moonY, moonR * 0.4, moonX, moonY, haloR);
+      halo.addColorStop(0, mixRgba(PALETTE.chalkMoonlight, PALETTE.lunarSilver, 0.2, 0.42 * moonExposure + 0.06));
+      halo.addColorStop(0.45, mixRgba(PALETTE.lunarSilver, PALETTE.indigoShadow, 0.45, 0.18 * moonExposure));
+      halo.addColorStop(1, 'rgba(9,13,24,0)');
+      ctx.fillStyle = halo;
+      ctx.beginPath();
+      ctx.arc(moonX, moonY, haloR, 0, Math.PI * 2);
+      ctx.fill();
+
+      for (let i = 0; i < cornerState.length; i++) {
+        const c = cornerState[i];
+        const shut = Math.max(shadowShutters[i], c.isBlocked ? 0.94 : 0);
+        const beamOpen = (1 - shut) * moonExposure;
+        if (beamOpen > 0.03) {
+          const spread = minDim * 0.045;
+          const beamGrad = ctx.createLinearGradient(moonX, moonY, c.x, c.y);
+          beamGrad.addColorStop(0, mixRgba(PALETTE.chalkMoonlight, PALETTE.lunarSilver, 0.3, 0.09 * beamOpen));
+          beamGrad.addColorStop(1, mixRgba(PALETTE.lunarSilver, PALETTE.indigoShadow, 0.6, 0.02 * beamOpen));
+          ctx.fillStyle = beamGrad;
+          ctx.beginPath();
+          ctx.moveTo(moonX, moonY);
+          ctx.lineTo(c.x - spread, c.y + spread * 0.5);
+          ctx.lineTo(c.x + spread, c.y - spread * 0.5);
+          ctx.closePath();
+          ctx.fill();
+        }
+      }
+
+      ctx.fillStyle = mixRgba(PALETTE.chalkMoonlight, PALETTE.leadMortar, (1 - moonExposure) * 0.62, 0.96);
+      ctx.beginPath();
+      ctx.arc(moonX, moonY, moonR, 0, Math.PI * 2);
+      ctx.fill();
+      if (blockedCount > 0) {
+        ctx.fillStyle = mixRgba(PALETTE.indigoShadow, PALETTE.abyssNight, 0.45, (1 - moonExposure) * 0.86);
+        ctx.beginPath();
+        ctx.arc(moonX + moonR * (1 - blockedCount / 9.2), moonY + moonR * 0.12, moonR * 1.02, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // 3. Terraced white limestone roofs nestled between coiled streets
+      for (let i = 0; i < terracePolys.length; i++) {
+        const rf = terracePolys[i];
+        const localBlocked = cornerState[rf.cornerIdx].isBlocked ? 1 : shadowShutters[rf.cornerIdx];
+        const chalkLit = clamp(moonExposure * (1 - localBlocked * 0.65), 0.06, 1);
+        ctx.save();
+        ctx.translate(rf.cx, rf.cy);
+        ctx.rotate(rf.rot);
+        ctx.fillStyle = PALETTE.indigoShadow;
+        ctx.fillRect(-rf.rx + 4, -rf.ry + 5, rf.rx * 2, rf.ry * 2);
+        ctx.fillStyle = mixRgba(PALETTE.calcifiedSlag, PALETTE.chalkMoonlight, chalkLit * 0.86, 0.92);
+        ctx.strokeStyle = mixRgba(PALETTE.leadMortar, PALETTE.lunarSilver, chalkLit, 0.72);
+        ctx.lineWidth = 1.1;
+        ctx.fillRect(-rf.rx, -rf.ry, rf.rx * 2, rf.ry * 2);
+        ctx.strokeRect(-rf.rx, -rf.ry, rf.rx * 2, rf.ry * 2);
+        if (rf.well) {
+          ctx.fillStyle = PALETTE.indigoShadow;
+          ctx.fillRect(-rf.rx * 0.34, -rf.ry * 0.36, rf.rx * 0.68, rf.ry * 0.72);
+        }
+        ctx.restore();
+      }
+
+      // 4. Coiled three-ring white yarn street skein
+      for (let i = 0; i < skeinThreads.length; i++) {
+        const th = skeinThreads[i];
+        const aShut = Math.max(shadowShutters[th.from], cornerState[th.from].isBlocked ? 0.94 : 0);
+        const bShut = Math.max(shadowShutters[th.to], cornerState[th.to].isBlocked ? 0.94 : 0);
+        const segLit = clamp(moonExposure * (1 - (aShut + bShut) * 0.42), 0.06, 1);
+
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.beginPath();
+        ctx.moveTo(th.p0x, th.p0y);
+        ctx.bezierCurveTo(th.p1x, th.p1y, th.p2x, th.p2y, th.p3x, th.p3y);
+        ctx.strokeStyle = PALETTE.indigoShadow;
+        ctx.lineWidth = th.laneWidth + 6.5;
+        ctx.stroke();
+
+        ctx.strokeStyle = mixRgba(PALETTE.calcifiedSlag, PALETTE.chalkMoonlight, segLit, 0.94);
+        ctx.lineWidth = th.laneWidth;
+        ctx.stroke();
+
+        ctx.strokeStyle = mixRgba(PALETTE.indigoShadow, PALETTE.lunarSilver, segLit, 0.55);
+        ctx.lineWidth = 1.25;
+        ctx.stroke();
+
+        if (th.feature === 'stairs' || th.feature === 'arcade') {
+          ctx.strokeStyle = mixRgba(PALETTE.indigoShadow, PALETTE.chalkMoonlight, segLit * 0.75, 0.52);
+          ctx.lineWidth = 1.3;
+          for (let s = 4; s <= 22; s += 3) {
+            const p = th.pts[s];
+            const nx = -Math.sin(p.angle) * th.laneWidth * 0.44;
+            const ny = Math.cos(p.angle) * th.laneWidth * 0.44;
+            ctx.beginPath();
+            ctx.moveTo(p.x - nx, p.y - ny);
+            ctx.lineTo(p.x + nx, p.y + ny);
+            ctx.stroke();
+          }
+        }
+      }
+
+      // 5. Indigo occlusion shadows (#12192c) slicing off moonlight at blocked turns
+      for (let i = 0; i < cornerState.length; i++) {
+        const c = cornerState[i];
+        const shut = Math.max(shadowShutters[i], c.isBlocked ? 0.95 : 0);
+        if (shut > 0.02) {
+          const shR = minDim * (0.07 + 0.045 * shut);
+          const shGrad = ctx.createRadialGradient(c.x, c.y, 2, c.x, c.y, shR);
+          shGrad.addColorStop(0, mixRgba(PALETTE.indigoShadow, PALETTE.abyssNight, 0.45, 0.86 * shut));
+          shGrad.addColorStop(0.68, mixRgba(PALETTE.indigoShadow, PALETTE.abyssNight, 0.25, 0.52 * shut));
+          shGrad.addColorStop(1, 'rgba(18,25,44,0)');
+          ctx.fillStyle = shGrad;
+          ctx.beginPath();
+          ctx.arc(c.x, c.y, shR, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      // 6. Fleeting nocturnal woman from behind & golden-hair traces (strict 0 at 100% enclosure or 0 memory)
+      const canShowFugitive = enc < 1.0 && mem > 0.01 && fugitiveVisibility > 0 && blockedCount < 8;
+      if (canShowFugitive) {
+        const vis = clamp(fugitiveVisibility * mem + echoPulse * 0.25, 0, 1);
+        const seg = skeinThreads[ambientRunner.segIdx];
+        if (!reduced && seg && !cornerState[seg.to].isBlocked) {
+          const idx = Math.min(seg.pts.length - 1, Math.floor(ambientRunner.t * (seg.pts.length - 1)));
+          const rp = seg.pts[idx];
+          const turnVanish = Math.sin(ambientRunner.t * Math.PI);
+          drawFugitiveFromBehind(ctx, rp.x, rp.y, rp.angle, vis * turnVanish * 0.78, figScale * 0.92, ambientRunner.hairPhase);
+        }
+
+        for (let i = 0; i < afterimages.length; i++) {
+          const ai = afterimages[i];
+          const c = cornerState[ai.cornerIndex];
+          if (c.isBlocked || !c.bendPts.length) continue;
+          const headIdx = clamp(Math.floor(ai.progress * (c.bendPts.length - 1)), 2, c.bendPts.length - 1);
+          const tailIdx = Math.max(0, headIdx - 8);
+          ctx.strokeStyle = mixRgba(PALETTE.fugitiveGold, PALETTE.chalkMoonlight, 0.2, ai.life * vis * 0.85);
+          ctx.lineWidth = 2.4 * figScale;
+          ctx.lineCap = 'round';
+          ctx.beginPath();
+          ctx.moveTo(c.bendPts[tailIdx].x, c.bendPts[tailIdx].y);
+          for (let k = tailIdx + 1; k <= headIdx; k++) ctx.lineTo(c.bendPts[k].x, c.bendPts[k].y);
+          ctx.stroke();
+          const hp = c.bendPts[headIdx];
+          drawFugitiveFromBehind(ctx, hp.x, hp.y, hp.angle, ai.life * vis * hp.vanishFade, figScale * 1.05, ai.phase + moonPhaseTime * 6);
+        }
+      }
+
+      // 7. Vanishing corner rings & dead-end collision pulses
+      for (let i = 0; i < cornerState.length; i++) {
+        const c = cornerState[i];
+        const isActive = c.id === activeCornerId;
+        const r = (isActive ? 11.5 : 9.2) * figScale;
+        ctx.beginPath();
+        ctx.arc(c.x, c.y, r, 0, Math.PI * 2);
+        ctx.fillStyle = c.isBlocked
+          ? mixRgba(PALETTE.indigoShadow, PALETTE.calcifiedSlag, 0.5, 0.9)
+          : mixRgba(PALETTE.indigoShadow, PALETTE.lunarSilver, 0.18, 0.74);
+        ctx.fill();
+        ctx.lineWidth = isActive ? 2.0 : 1.3;
+        ctx.strokeStyle = c.isBlocked
+          ? PALETTE.leadMortar
+          : (isActive && canShowFugitive ? PALETTE.fugitiveGold : PALETTE.lunarSilver);
+        ctx.stroke();
+
+        ctx.fillStyle = c.isBlocked ? PALETTE.leadMortar : PALETTE.chalkMoonlight;
+        ctx.font = '600 ' + Math.round(9.5 * figScale) + 'px ui-monospace, SFMono-Regular, Menlo, monospace';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(String(i + 1), c.x, c.y + 0.5);
+      }
+
+      for (let i = 0; i < wallImpacts.length; i++) {
+        const imp = wallImpacts[i];
+        const c = cornerState[imp.cornerIndex];
+        ctx.strokeStyle = mixRgba(PALETTE.leadMortar, PALETTE.chalkMoonlight, 0.25, imp.life * 0.8);
+        ctx.lineWidth = 2.0;
+        ctx.beginPath();
+        ctx.arc(c.x, c.y, (12 + (1 - imp.life) * 18) * figScale, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    function getState() {
+      return {
+        corners: cornerState.map(publicCornerDescriptor),
+        blockedCount: blockedCount,
+        totalCorners: 8,
+        openEscapeRoutes: openEscapeRoutes,
+        moonExposure: moonExposure,
+        fugitiveVisibility: fugitiveVisibility,
+        vanishCount: vanishCount,
+        deadEndHits: deadEndHits,
+        womanEverCaptured: false,
+        sightingsSinceFounding: 0,
+        activeCornerId: activeCornerId
+      };
+    }
+
+    function reset() {
+      for (let i = 0; i < cornerState.length; i++) {
+        cornerState[i].isBlocked = false;
+        cornerState[i].modificationType = null;
+        shadowShutters[i] = 0;
+      }
+      blockedCount = 0;
+      openEscapeRoutes = 8;
+      moonExposure = 1.0;
+      fugitiveVisibility = 1.0;
+      vanishCount = 1;
+      deadEndHits = 0;
+      activeCornerId = SKEIN_CORNERS[0].id;
+      afterimages.length = 0;
+      wallImpacts.length = 0;
+      echoPulse = 0;
+      ambientRunner.segIdx = 0;
+      ambientRunner.t = 0.34;
+      return getState();
+    }
+
+    return {
+      resize: resize,
+      getCorners: getCorners,
+      syncTrapWalls: syncTrapWalls,
+      pursueCorner: pursueCorner,
+      triggerDreamEcho: triggerDreamEcho,
+      hitTestCorner: hitTestCorner,
+      step: step,
+      renderSkeinAndPursuit: renderSkeinAndPursuit,
+      getState: getState,
+      reset: reset
+    };
+  }
+
+  const api = Object.freeze({
+    SKEIN_CORNERS: SKEIN_CORNERS,
+    PALETTE: PALETTE,
+    createDreamTrace: createDreamTrace
+  });
+
+  root.ZobeideDreamTrace = api;
+  if (typeof window !== 'undefined') {
+    window.ZobeideDreamTrace = api;
+  }
+})(typeof globalThis !== 'undefined' ? globalThis : (typeof window !== 'undefined' ? window : this));
+
+(function () {
+  'use strict';
+
+  var PALETTE = Object.freeze({
+    abyssNight: '#090d18',
+    indigoShadow: '#12192c',
+    chalkMoonlight: '#eef2f7',
+    lunarSilver: '#cbd7e6',
+    leadMortar: '#5a6270',
+    calcifiedSlag: '#363b45',
+    fugitiveGold: '#e8c266',
+    mortarOchre: '#9e8c6c'
+  });
+
+  var MODIFICATION_TYPES = Object.freeze([
+    'dead_end_wall',
+    'arcade_shifted',
+    'stairway_reversed'
+  ]);
+
+  var CORNER_DEFAULTS = Object.freeze([
+    Object.freeze({ id: 'turn_west_postern', index: 0, normX: 0.24, normY: 0.44, escapeAngle: -2.4 }),
+    Object.freeze({ id: 'turn_lime_stair', index: 1, normX: 0.37, normY: 0.26, escapeAngle: -1.3 }),
+    Object.freeze({ id: 'turn_well_arcade', index: 2, normX: 0.64, normY: 0.25, escapeAngle: -0.5 }),
+    Object.freeze({ id: 'turn_cistern_bend', index: 3, normX: 0.77, normY: 0.45, escapeAngle: 0.35 }),
+    Object.freeze({ id: 'turn_cypress_terrace', index: 4, normX: 0.71, normY: 0.71, escapeAngle: 1.15 }),
+    Object.freeze({ id: 'turn_skein_narrows', index: 5, normX: 0.43, normY: 0.74, escapeAngle: 2.2 }),
+    Object.freeze({ id: 'turn_gable_culdesac', index: 6, normX: 0.36, normY: 0.53, escapeAngle: 2.9 }),
+    Object.freeze({ id: 'turn_zenith_passage', index: 7, normX: 0.56, normY: 0.47, escapeAngle: -0.9 })
+  ]);
+
+  var FOUNDER_NATIONS = Object.freeze([
+    Object.freeze({
+      id: 'tyrian_pilot',
+      index: 0,
+      nation: 'Tyrian Coast',
+      role: 'founder',
+      cornerId: 'turn_west_postern',
+      modificationType: 'dead_end_wall',
+      title: 'Transverse Limestone Blind Wall',
+      ledgerNote: 'Rearranged the postern turn into a sheer wall so she could not slip seaward.'
+    }),
+    Object.freeze({
+      id: 'persian_astrolabist',
+      index: 1,
+      nation: 'Isfahan Plateau',
+      role: 'founder',
+      cornerId: 'turn_lime_stair',
+      modificationType: 'stairway_reversed',
+      title: 'Reversed Dogleg Chalk Stair',
+      ledgerNote: 'Inverted the ascending stairway to pitch back into an enclosed well-court.'
+    }),
+    Object.freeze({
+      id: 'venetian_glassmaker',
+      index: 2,
+      nation: 'Lagoon Republic',
+      role: 'founder',
+      cornerId: 'turn_well_arcade',
+      modificationType: 'arcade_shifted',
+      title: 'Mortared Twin-Arch Arcade',
+      ledgerNote: 'Bricked five moonlit arches shut with lead-gray ashlar blocks.'
+    }),
+    Object.freeze({
+      id: 'maghrebi_geometer',
+      index: 3,
+      nation: 'Atlas Foothills',
+      role: 'founder',
+      cornerId: 'turn_cistern_bend',
+      modificationType: 'dead_end_wall',
+      title: 'Coiled Cistern Cul-de-Sac',
+      ledgerNote: 'Bent the cistern lane inward upon itself with no outlet.'
+    }),
+    Object.freeze({
+      id: 'anatolian_quarryman',
+      index: 4,
+      nation: 'Cappadocian Ridge',
+      role: 'founder',
+      cornerId: 'turn_cypress_terrace',
+      modificationType: 'stairway_reversed',
+      title: 'Sealed Terrace Lintel Stair',
+      ledgerNote: 'Dropped heavy basalt-lead lintels across the upper terrace flight.'
+    }),
+    Object.freeze({
+      id: 'iberian_horologist',
+      index: 5,
+      nation: 'Cordoban Watchtower',
+      role: 'founder',
+      cornerId: 'turn_skein_narrows',
+      modificationType: 'arcade_shifted',
+      title: 'Offset Colonnade Baffle',
+      ledgerNote: 'Shifted the inner arcade pillars into an inescapable chicane.'
+    }),
+    Object.freeze({
+      id: 'steppe_newcomers',
+      index: 6,
+      nation: 'Steppe New Arrivals',
+      role: 'new_arrival',
+      cornerId: 'turn_gable_culdesac',
+      modificationType: 'arcade_shifted',
+      title: 'Newcomer Shifted Gable Arcade',
+      ledgerNote: 'Recognized something of the dream streets; shifted arcades to close the switchback.'
+    }),
+    Object.freeze({
+      id: 'outland_latecomers',
+      index: 7,
+      nation: 'Outland Latecomers',
+      role: 'new_arrival',
+      cornerId: 'turn_zenith_passage',
+      modificationType: 'dead_end_wall',
+      title: 'Final Zenith Dead-End Wall',
+      ledgerNote: 'Added a blank workaday wall at the last turn; nobody remembers the dream.'
+    })
+  ]);
+
+  var NEW_ARRIVAL_PRIORITY = [6, 7, 0, 1, 2, 3, 4, 5];
+
+  var LATECOMER_COHORTS = [
+    { nation: 'Steppe New Arrivals', title: 'Interior Chicane Blind Wall' },
+    { nation: 'Outland Latecomers', title: 'Workaday Cul-de-Sac Partition' },
+    { nation: 'Caspian Masons', title: 'Bricked Cross-Alley Baffle' },
+    { nation: 'Levantine Quarrymen', title: 'Sunken Stairwell Bulkhead' }
+  ];
+
+  function clamp01(v) {
+    var n = Number(v);
+    if (!Number.isFinite(n)) return 0;
+    return n < 0 ? 0 : (n > 1 ? 1 : n);
+  }
+
+  function hashUnit(seed) {
+    var x = Math.sin(seed * 127.1 + 311.7) * 43758.5453123;
+    return x - Math.floor(x);
+  }
+
+  function createMasonryAudio(initialMuted) {
+    var muted = Boolean(initialMuted);
+    var ctx = null;
+    var masterGain = null;
+    var droneGain = null;
+    var droneFilter = null;
+    var noiseBuf = null;
+    var lastEnclosure = 0;
+    var lastCalc = 0;
+
+    function buildNoiseBuffer(audioCtx) {
+      var len = Math.max(1, Math.floor(audioCtx.sampleRate * 0.35));
+      var buf = audioCtx.createBuffer(1, len, audioCtx.sampleRate);
+      var data = buf.getChannelData(0);
+      var s = 19731;
+      for (var i = 0; i < len; i++) {
+        s = (s * 16807) % 2147483647;
+        data[i] = ((s / 2147483647) * 2 - 1) * Math.exp(-i / (len * 0.55));
+      }
+      return buf;
+    }
+
+    function initContext() {
+      if (ctx) return ctx;
+      try {
+        var AC = globalThis.AudioContext || globalThis.webkitAudioContext;
+        if (!AC) return null;
+        ctx = new AC();
+        masterGain = ctx.createGain();
+        masterGain.gain.value = muted ? 0 : 0.85;
+        masterGain.connect(ctx.destination);
+
+        noiseBuf = buildNoiseBuffer(ctx);
+
+        droneFilter = ctx.createBiquadFilter();
+        droneFilter.type = 'lowpass';
+        droneFilter.frequency.value = 140;
+        droneFilter.Q.value = 1.2;
+
+        droneGain = ctx.createGain();
+        droneGain.gain.value = 0.0001;
+        droneFilter.connect(droneGain);
+        droneGain.connect(masterGain);
+
+        var oscLow = ctx.createOscillator();
+        oscLow.type = 'triangle';
+        oscLow.frequency.value = 55.0;
+        oscLow.connect(droneFilter);
+        oscLow.start();
+
+        var oscFifth = ctx.createOscillator();
+        oscFifth.type = 'sawtooth';
+        oscFifth.frequency.value = 82.5;
+        var fifthTrim = ctx.createGain();
+        fifthTrim.gain.value = 0.38;
+        oscFifth.connect(fifthTrim);
+        fifthTrim.connect(droneFilter);
+        oscFifth.start();
+
+        applyDroneLevel(lastEnclosure, lastCalc);
+      } catch (_) {
+        ctx = null;
+      }
+      return ctx;
+    }
+
+    function ensureReady(forceUnlock) {
+      try {
+        if (!ctx) {
+          var canAuto = forceUnlock;
+          if (!canAuto && typeof navigator !== 'undefined' && navigator.userActivation) {
+            canAuto = Boolean(navigator.userActivation.hasBeenActive);
+          }
+          if (!canAuto) return null;
+          initContext();
+        }
+        if (ctx && ctx.state === 'suspended') {
+          var p = ctx.resume();
+          if (p && typeof p.catch === 'function') p.catch(function () {});
+        }
+      } catch (_) {}
+      return ctx;
+    }
+
+    function applyDroneLevel(enclosure, calc) {
+      lastEnclosure = clamp01(enclosure);
+      lastCalc = clamp01(calc !== undefined ? calc : lastEnclosure);
+      if (!ctx || !droneGain || !droneFilter) return;
+      try {
+        var now = ctx.currentTime;
+        var target = (!muted && lastEnclosure > 0.01)
+          ? (0.008 + lastEnclosure * 0.036 + lastCalc * 0.016)
+          : 0.0001;
+        droneGain.gain.setTargetAtTime(target, now, 0.18);
+        droneFilter.frequency.setTargetAtTime(125 + lastEnclosure * 125, now, 0.22);
+      } catch (_) {}
+    }
+
+    function triggerFootstepEcho(dreamMemoryArg) {
+      if (muted) return;
+      var ac = ensureReady(false);
+      if (!ac || !masterGain) return;
+      try {
+        var dm = clamp01(dreamMemoryArg !== undefined ? dreamMemoryArg : 1);
+        var now = ac.currentTime;
+        var taps = dm > 0.25 ? [0, 0.115, 0.24] : [0, 0.13];
+        for (var i = 0; i < taps.length; i++) {
+          var t0 = now + taps[i];
+          var fade = i === 2 ? dm * 0.42 : (i === 1 ? 0.78 : 1.0);
+          var stepOsc = ac.createOscillator();
+          var stepGain = ac.createGain();
+          stepOsc.type = dm > 0.3 ? 'sine' : 'triangle';
+          var baseHz = 185 + dm * 390 - i * 32;
+          stepOsc.frequency.setValueAtTime(baseHz, t0);
+          stepOsc.frequency.exponentialRampToValueAtTime(Math.max(72, baseHz * 0.46), t0 + 0.045 + dm * 0.05);
+          stepGain.gain.setValueAtTime(0.0001, t0);
+          stepGain.gain.linearRampToValueAtTime(0.065 * fade, t0 + 0.005);
+          stepGain.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.042 + dm * 0.085);
+          stepOsc.connect(stepGain);
+          stepGain.connect(masterGain);
+          stepOsc.start(t0);
+          stepOsc.stop(t0 + 0.15);
+        }
+
+        if (dm > 0.02) {
+          var shimA = ac.createOscillator();
+          var shimB = ac.createOscillator();
+          var shimGain = ac.createGain();
+          shimA.type = 'sine';
+          shimB.type = 'sine';
+          shimA.frequency.setValueAtTime(587.33, now + 0.01);
+          shimB.frequency.setValueAtTime(880.0, now + 0.02);
+          shimB.frequency.linearRampToValueAtTime(896.0, now + 0.34);
+          shimGain.gain.setValueAtTime(0.0001, now + 0.01);
+          shimGain.gain.linearRampToValueAtTime(0.036 * dm, now + 0.06);
+          shimGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.36);
+          shimA.connect(shimGain);
+          shimB.connect(shimGain);
+          shimGain.connect(masterGain);
+          shimA.start(now + 0.01);
+          shimB.start(now + 0.02);
+          shimA.stop(now + 0.38);
+          shimB.stop(now + 0.38);
+        }
+      } catch (_) {}
+    }
+
+    function triggerMasonryStrike(enclosureArg, modType) {
+      var er = clamp01(enclosureArg);
+      applyDroneLevel(er, er);
+      if (muted) return;
+      var ac = ensureReady(false);
+      if (!ac || !masterGain) return;
+      try {
+        var now = ac.currentTime;
+        var thud = ac.createOscillator();
+        var thudGain = ac.createGain();
+        thud.type = 'triangle';
+        var startHz = modType === 'stairway_reversed' ? 132 : (modType === 'arcade_shifted' ? 118 : 104);
+        thud.frequency.setValueAtTime(startHz - er * 18, now);
+        thud.frequency.exponentialRampToValueAtTime(42, now + 0.17);
+        thudGain.gain.setValueAtTime(0.0001, now);
+        thudGain.gain.linearRampToValueAtTime(0.14, now + 0.008);
+        thudGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.19);
+        thud.connect(thudGain);
+        thudGain.connect(masterGain);
+        thud.start(now);
+        thud.stop(now + 0.21);
+
+        if (noiseBuf) {
+          var src = ac.createBufferSource();
+          src.buffer = noiseBuf;
+          var bp = ac.createBiquadFilter();
+          bp.type = 'bandpass';
+          bp.frequency.setValueAtTime(modType === 'arcade_shifted' ? 1240 : 920, now);
+          bp.frequency.exponentialRampToValueAtTime(520, now + 0.14);
+          bp.Q.value = 2.4;
+          var scGain = ac.createGain();
+          scGain.gain.setValueAtTime(0.0001, now + 0.012);
+          scGain.gain.linearRampToValueAtTime(0.085, now + 0.025);
+          scGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.15);
+          src.connect(bp);
+          bp.connect(scGain);
+          scGain.connect(masterGain);
+          src.start(now + 0.01);
+          src.stop(now + 0.17);
+        }
+      } catch (_) {}
+    }
+
+    return {
+      unlockAudio: function () {
+        var ac = ensureReady(true);
+        applyDroneLevel(lastEnclosure, lastCalc);
+        return Boolean(ac);
+      },
+      setMuted: function (m) {
+        muted = Boolean(m);
+        if (ctx && masterGain) {
+          try {
+            masterGain.gain.setTargetAtTime(muted ? 0 : 0.85, ctx.currentTime, 0.05);
+          } catch (_) {}
+        }
+        applyDroneLevel(lastEnclosure, lastCalc);
+        return muted;
+      },
+      toggleMute: function () {
+        return this.setMuted(!muted);
+      },
+      isMuted: function () {
+        return muted;
+      },
+      triggerFootstepEcho: triggerFootstepEcho,
+      triggerMasonryStrike: triggerMasonryStrike,
+      syncWorkadayDrone: applyDroneLevel,
+      destroy: function () {
+        if (ctx) {
+          try { ctx.close(); } catch (_) {}
+          ctx = null;
+        }
+      }
+    };
+  }
+
+  function createTrapEngine(opts) {
+    var options = opts && typeof opts === 'object' ? opts : {};
+    var onWallsChanged = typeof options.onWallsChanged === 'function' ? options.onWallsChanged : null;
+    var reducedMotion = Boolean(options.reducedMotion);
+    var audio = createMasonryAudio(Boolean(options.muted));
+
+    var blockedMap = new Map();
+    var extraBaffles = [];
+    var dustPuffs = [];
+    var clock = 0;
+    var builtCounter = 0;
+    var extraDeadEnds = 0;
+    var newArrivalWallsCount = 0;
+    var masonryOpsCount = 0;
+    var blockedCount = 0;
+    var enclosureRatio = 0;
+    var dreamMemory = 1;
+    var workadayCalcification = 0;
+    var phaseLabel = 'Open Moonlit Dream';
+    var notifying = false;
+
+    function resolveCorner(cornerIdOrIndex) {
+      if (cornerIdOrIndex === null || cornerIdOrIndex === undefined) return null;
+      if (typeof cornerIdOrIndex === 'object') {
+        if (typeof cornerIdOrIndex.cornerId === 'string') return resolveCorner(cornerIdOrIndex.cornerId);
+        if (typeof cornerIdOrIndex.id === 'string') return resolveCorner(cornerIdOrIndex.id);
+        if (Number.isInteger(cornerIdOrIndex.index)) return resolveCorner(cornerIdOrIndex.index);
+      }
+      if (typeof cornerIdOrIndex === 'number' || (typeof cornerIdOrIndex === 'string' && /^[0-7]$/.test(cornerIdOrIndex))) {
+        var idx = Number(cornerIdOrIndex);
+        return CORNER_DEFAULTS[idx] || null;
+      }
+      if (typeof cornerIdOrIndex === 'string') {
+        for (var i = 0; i < CORNER_DEFAULTS.length; i++) {
+          if (CORNER_DEFAULTS[i].id === cornerIdOrIndex) return CORNER_DEFAULTS[i];
+        }
+      }
+      return null;
+    }
+
+    function resolveFounder(founderIdOrIndex) {
+      if (founderIdOrIndex === null || founderIdOrIndex === undefined) return null;
+      if (typeof founderIdOrIndex === 'object' && founderIdOrIndex.nation) return founderIdOrIndex;
+      if (typeof founderIdOrIndex === 'number' || (typeof founderIdOrIndex === 'string' && /^[0-7]$/.test(founderIdOrIndex))) {
+        return FOUNDER_NATIONS[Number(founderIdOrIndex)] || null;
+      }
+      if (typeof founderIdOrIndex === 'string') {
+        for (var i = 0; i < FOUNDER_NATIONS.length; i++) {
+          if (FOUNDER_NATIONS[i].id === founderIdOrIndex || FOUNDER_NATIONS[i].cornerId === founderIdOrIndex) {
+            return FOUNDER_NATIONS[i];
+          }
+        }
+      }
+      return null;
+    }
+
+    function recomputeMetrics() {
+      blockedCount = blockedMap.size;
+      enclosureRatio = +(blockedCount / 8).toFixed(4);
+      dreamMemory = blockedCount >= 8 ? 0 : +(Math.pow(1 - enclosureRatio, 1.35)).toFixed(4);
+      workadayCalcification = +(Math.min(
+        1,
+        enclosureRatio * 0.88 + Math.min(0.12, extraDeadEnds * 0.04) + (blockedCount === 8 ? 0.12 : 0)
+      )).toFixed(4);
+      if (blockedCount <= 0) {
+        phaseLabel = 'Open Moonlit Dream';
+      } else if (blockedCount <= 5) {
+        phaseLabel = 'Founders Rearranging Walls';
+      } else if (blockedCount <= 7) {
+        phaseLabel = 'Calcifying Workspace';
+      } else {
+        phaseLabel = 'Ugly Workaday Trap \u2014 Total Amnesia';
+      }
+    }
+
+    function spawnMortarDust(normX, normY, count) {
+      if (reducedMotion) return;
+      var n = count || 7;
+      for (var i = 0; i < n && dustPuffs.length < 64; i++) {
+        var seed = builtCounter * 17 + extraDeadEnds * 31 + i * 7;
+        var ang = hashUnit(seed) * Math.PI * 2;
+        var spd = 0.014 + hashUnit(seed + 1) * 0.028;
+        dustPuffs.push({
+          normX: normX + (hashUnit(seed + 2) - 0.5) * 0.02,
+          normY: normY + (hashUnit(seed + 3) - 0.5) * 0.02,
+          vx: Math.cos(ang) * spd,
+          vy: Math.sin(ang) * spd - 0.008,
+          radiusNorm: 0.004 + hashUnit(seed + 4) * 0.007,
+          alpha: 0.62
+        });
+      }
+    }
+
+    function addInteriorBaffle(modType, nation) {
+      var seq = extraBaffles.length;
+      var goldenAngle = seq * 2.399963 + 0.65;
+      var ringRadius = 0.075 + ((seq * 0.043) % 0.175);
+      var nx = +(0.5 + Math.cos(goldenAngle) * ringRadius * 1.12).toFixed(4);
+      var ny = +(0.52 + Math.sin(goldenAngle) * ringRadius * 0.94).toFixed(4);
+      if (extraBaffles.length < 28) {
+        extraBaffles.push({
+          id: 'baffle_' + (seq + 1),
+          normX: nx,
+          normY: ny,
+          angle: goldenAngle + Math.PI * 0.5,
+          modificationType: modType || 'dead_end_wall',
+          nation: nation || 'Outland Latecomers',
+          thickness: 1 + Math.floor(seq / 6),
+          dropProgress: reducedMotion ? 1 : 0
+        });
+      }
+      spawnMortarDust(nx, ny, 6);
+    }
+
+    function getBlockedRecords() {
+      var list = [];
+      for (var i = 0; i < CORNER_DEFAULTS.length; i++) {
+        var rec = blockedMap.get(CORNER_DEFAULTS[i].id);
+        if (rec) {
+          list.push({
+            cornerId: rec.cornerId,
+            index: rec.index,
+            founderId: rec.founderId,
+            modificationType: rec.modificationType,
+            nation: rec.nation,
+            role: rec.role,
+            title: rec.title,
+            ledgerNote: rec.ledgerNote,
+            thickness: rec.thickness
+          });
+        }
+      }
+      return list;
+    }
+
+    function getState() {
+      var records = getBlockedRecords();
+      return {
+        founders: FOUNDER_NATIONS.slice(),
+        blockedRecords: records,
+        blockedCornerIds: records.map(function (r) { return r.cornerId; }),
+        blockedCount: blockedCount,
+        totalCorners: 8,
+        enclosureRatio: enclosureRatio,
+        dreamMemory: dreamMemory,
+        workadayCalcification: workadayCalcification,
+        extraDeadEnds: extraDeadEnds,
+        newArrivalWallsCount: newArrivalWallsCount,
+        masonryOpsCount: masonryOpsCount,
+        phaseLabel: phaseLabel,
+        firstFoundersBaffled: enclosureRatio >= 0.75,
+        womanEverSeenAgain: false,
+        muted: audio.isMuted()
+      };
+    }
+
+    function notifyChanged() {
+      if (!onWallsChanged || notifying) return;
+      notifying = true;
+      try {
+        onWallsChanged(getState(), getBlockedRecords());
+      } finally {
+        notifying = false;
+      }
+    }
+
+    function rearrangeCorner(cornerIdOrIndex, modTypeOptional, actorOptional) {
+      var corner = resolveCorner(cornerIdOrIndex);
+      if (!corner) return getState();
+      var actor = resolveFounder(actorOptional) || FOUNDER_NATIONS[corner.index];
+      var existing = blockedMap.get(corner.id);
+
+      if (!existing) {
+        var mod = MODIFICATION_TYPES.indexOf(modTypeOptional) >= 0 ? modTypeOptional : actor.modificationType;
+        blockedMap.set(corner.id, {
+          cornerId: corner.id,
+          index: corner.index,
+          founderId: actor.id,
+          nation: actor.nation,
+          role: actor.role,
+          modificationType: mod,
+          title: actor.title,
+          ledgerNote: actor.ledgerNote,
+          thickness: 1,
+          dropProgress: reducedMotion ? 1 : 0,
+          builtOrder: ++builtCounter
+        });
+        if (actor.role === 'new_arrival') newArrivalWallsCount += 1;
+        spawnMortarDust(corner.normX, corner.normY, 8);
+      } else {
+        existing.thickness += 1;
+        existing.dropProgress = reducedMotion ? 1 : 0.35;
+        if (MODIFICATION_TYPES.indexOf(modTypeOptional) >= 0) {
+          existing.modificationType = modTypeOptional;
+        } else {
+          var nextIdx = (MODIFICATION_TYPES.indexOf(existing.modificationType) + 1) % MODIFICATION_TYPES.length;
+          existing.modificationType = MODIFICATION_TYPES[nextIdx];
+        }
+        extraDeadEnds += 1;
+        if (actor && actor.role === 'new_arrival') newArrivalWallsCount += 1;
+        addInteriorBaffle(existing.modificationType, actor.nation);
+        spawnMortarDust(corner.normX, corner.normY, 6);
+      }
+
+      masonryOpsCount += 1;
+      recomputeMetrics();
+      var activeRec = blockedMap.get(corner.id);
+      audio.triggerMasonryStrike(enclosureRatio, activeRec ? activeRec.modificationType : 'dead_end_wall');
+      audio.syncWorkadayDrone(enclosureRatio, workadayCalcification);
+      notifyChanged();
+      return getState();
+    }
+
+    function invokeFounder(founderIdOrIndex) {
+      var founder = resolveFounder(founderIdOrIndex) || FOUNDER_NATIONS[0];
+      return rearrangeCorner(founder.cornerId, founder.modificationType, founder);
+    }
+
+    function summonNewArrivalWave() {
+      var targetIdx = -1;
+      for (var i = 0; i < NEW_ARRIVAL_PRIORITY.length; i++) {
+        var cand = NEW_ARRIVAL_PRIORITY[i];
+        if (!blockedMap.has(CORNER_DEFAULTS[cand].id)) {
+          targetIdx = cand;
+          break;
+        }
+      }
+      if (targetIdx >= 0) {
+        if (targetIdx === 6 || targetIdx === 7) return invokeFounder(targetIdx);
+        var cohort = LATECOMER_COHORTS[newArrivalWallsCount % LATECOMER_COHORTS.length];
+        var waveMod = MODIFICATION_TYPES[newArrivalWallsCount % MODIFICATION_TYPES.length];
+        return rearrangeCorner(targetIdx, waveMod, {
+          id: 'latecomer_wave_' + (newArrivalWallsCount + 1),
+          index: targetIdx,
+          nation: cohort.nation,
+          role: 'new_arrival',
+          cornerId: CORNER_DEFAULTS[targetIdx].id,
+          modificationType: waveMod,
+          title: cohort.title,
+          ledgerNote: 'New arrivals recognized the dream streets and walled off another turn.'
+        });
+      }
+
+      var overCohort = LATECOMER_COHORTS[newArrivalWallsCount % LATECOMER_COHORTS.length];
+      var overMod = MODIFICATION_TYPES[extraDeadEnds % MODIFICATION_TYPES.length];
+      extraDeadEnds += 1;
+      newArrivalWallsCount += 1;
+      masonryOpsCount += 1;
+      var reinforceCorner = CORNER_DEFAULTS[(extraDeadEnds - 1) % CORNER_DEFAULTS.length];
+      var rRec = blockedMap.get(reinforceCorner.id);
+      if (rRec) rRec.thickness += 1;
+      addInteriorBaffle(overMod, overCohort.nation);
+      recomputeMetrics();
+      audio.triggerMasonryStrike(enclosureRatio, overMod);
+      audio.syncWorkadayDrone(enclosureRatio, workadayCalcification);
+      notifyChanged();
+      return getState();
+    }
+
+    function sealAllCorners() {
+      for (var i = 0; i < CORNER_DEFAULTS.length; i++) {
+        var c = CORNER_DEFAULTS[i];
+        if (!blockedMap.has(c.id)) {
+          var f = FOUNDER_NATIONS[i];
+          blockedMap.set(c.id, {
+            cornerId: c.id,
+            index: i,
+            founderId: f.id,
+            nation: f.nation,
+            role: f.role,
+            modificationType: f.modificationType,
+            title: f.title,
+            ledgerNote: f.ledgerNote,
+            thickness: 1,
+            dropProgress: reducedMotion ? 1 : 0,
+            builtOrder: ++builtCounter
+          });
+          if (f.role === 'new_arrival') newArrivalWallsCount += 1;
+          masonryOpsCount += 1;
+          spawnMortarDust(c.normX, c.normY, 5);
+        }
+      }
+      recomputeMetrics();
+      audio.triggerMasonryStrike(1, 'dead_end_wall');
+      audio.syncWorkadayDrone(1, workadayCalcification);
+      notifyChanged();
+      return getState();
+    }
+
+    function reset() {
+      blockedMap.clear();
+      extraBaffles.length = 0;
+      dustPuffs.length = 0;
+      clock = 0;
+      builtCounter = 0;
+      extraDeadEnds = 0;
+      newArrivalWallsCount = 0;
+      masonryOpsCount = 0;
+      recomputeMetrics();
+      audio.syncWorkadayDrone(0, 0);
+      notifyChanged();
+      return getState();
+    }
+
+    function step(dtSec, reducedMotionArg) {
+      var rm = typeof reducedMotionArg === 'object' && reducedMotionArg !== null
+        ? Boolean(reducedMotionArg.reducedMotion)
+        : (reducedMotionArg !== undefined ? Boolean(reducedMotionArg) : reducedMotion);
+      var dt = Math.max(0, Math.min(0.1, Number(dtSec) || 0.016));
+      if (rm) {
+        dustPuffs.length = 0;
+        blockedMap.forEach(function (rec) { rec.dropProgress = 1; });
+        for (var b = 0; b < extraBaffles.length; b++) extraBaffles[b].dropProgress = 1;
+        return;
+      }
+      clock += dt;
+      blockedMap.forEach(function (rec) {
+        if (rec.dropProgress < 1) rec.dropProgress = Math.min(1, rec.dropProgress + dt * 3.4);
+      });
+      for (var j = 0; j < extraBaffles.length; j++) {
+        if (extraBaffles[j].dropProgress < 1) {
+          extraBaffles[j].dropProgress = Math.min(1, extraBaffles[j].dropProgress + dt * 3.2);
+        }
+      }
+      for (var k = dustPuffs.length - 1; k >= 0; k--) {
+        var p = dustPuffs[k];
+        p.normX += p.vx * dt;
+        p.normY += p.vy * dt;
+        p.alpha -= dt * 0.88;
+        if (p.alpha <= 0.01) dustPuffs.splice(k, 1);
+      }
+    }
+
+    function resolveCornerCoords(width, height, cornersWithPixelXY) {
+      var byId = {};
+      if (Array.isArray(cornersWithPixelXY)) {
+        for (var i = 0; i < cornersWithPixelXY.length; i++) {
+          var item = cornersWithPixelXY[i];
+          if (item && (item.id || item.cornerId)) byId[item.id || item.cornerId] = item;
+        }
+      }
+      var out = [];
+      for (var j = 0; j < CORNER_DEFAULTS.length; j++) {
+        var def = CORNER_DEFAULTS[j];
+        var src = byId[def.id];
+        var px = src && Number.isFinite(src.x) ? src.x : (src && Number.isFinite(src.normX) ? src.normX * width : def.normX * width);
+        var py = src && Number.isFinite(src.y) ? src.y : (src && Number.isFinite(src.normY) ? src.normY * height : def.normY * height);
+        var ang = src && Number.isFinite(src.escapeAngle) ? src.escapeAngle : def.escapeAngle;
+        out.push({ id: def.id, index: j, x: px, y: py, escapeAngle: ang });
+      }
+      return out;
+    }
+
+    function drawMasonryGlyph(ctx, modType, u, thickness) {
+      var extra = Math.min(3, Math.max(0, (thickness || 1) - 1));
+      var w = u * (1.75 + extra * 0.16);
+      var h = u * (0.72 + extra * 0.18);
+
+      ctx.fillStyle = PALETTE.abyssNight;
+      ctx.globalAlpha = 0.66;
+      ctx.beginPath();
+      ctx.moveTo(-w * 0.52, 0);
+      ctx.lineTo(w * 0.52, 0);
+      ctx.lineTo(w * 0.78, u * 1.45);
+      ctx.lineTo(-w * 0.78, u * 1.45);
+      ctx.closePath();
+      ctx.fill();
+      ctx.globalAlpha = 1;
+
+      if (modType === 'arcade_shifted') {
+        ctx.fillStyle = PALETTE.calcifiedSlag;
+        ctx.fillRect(-w * 0.52, -h * 0.55, w * 1.04, h * 0.95);
+        for (var a = -1; a <= 1; a++) {
+          var ax = a * (w * 0.31);
+          ctx.fillStyle = PALETTE.abyssNight;
+          ctx.beginPath();
+          ctx.arc(ax, -h * 0.05, u * 0.2, Math.PI, 0, false);
+          ctx.lineTo(ax + u * 0.2, h * 0.36);
+          ctx.lineTo(ax - u * 0.2, h * 0.36);
+          ctx.closePath();
+          ctx.fill();
+          ctx.fillStyle = PALETTE.leadMortar;
+          ctx.fillRect(ax - u * 0.17, -h * 0.06, u * 0.34, h * 0.38);
+          ctx.strokeStyle = PALETTE.mortarOchre;
+          ctx.lineWidth = 1;
+          ctx.strokeRect(ax - u * 0.17, -h * 0.06, u * 0.34, h * 0.38);
+        }
+        ctx.fillStyle = PALETTE.leadMortar;
+        ctx.fillRect(-w * 0.46, h * 0.32, w * 0.68, h * 0.34);
+        ctx.strokeStyle = PALETTE.mortarOchre;
+        ctx.strokeRect(-w * 0.52, -h * 0.55, w * 1.04, h * 0.95);
+      } else if (modType === 'stairway_reversed') {
+        ctx.fillStyle = PALETTE.abyssNight;
+        ctx.fillRect(-w * 0.48, -h * 0.62, w * 0.96, h * 1.24);
+        var steps = 5;
+        for (var s = 0; s < steps; s++) {
+          var sy = -h * 0.54 + (s / steps) * (h * 1.02);
+          ctx.fillStyle = s % 2 === 0 ? PALETTE.leadMortar : PALETTE.calcifiedSlag;
+          ctx.fillRect(-w * 0.42 + s * 1.2, sy, w * 0.84 - s * 2.4, (h * 0.96) / steps);
+        }
+        ctx.fillStyle = PALETTE.calcifiedSlag;
+        ctx.fillRect(-w * 0.54, -h * 0.68, w * 1.08, h * 0.28);
+        ctx.strokeStyle = PALETTE.mortarOchre;
+        ctx.lineWidth = 1.25;
+        ctx.strokeRect(-w * 0.48, -h * 0.62, w * 0.96, h * 1.24);
+        ctx.beginPath();
+        ctx.moveTo(0, h * 0.42);
+        ctx.lineTo(0, -h * 0.26);
+        ctx.moveTo(-u * 0.18, -h * 0.06);
+        ctx.lineTo(0, -h * 0.28);
+        ctx.lineTo(u * 0.18, -h * 0.06);
+        ctx.stroke();
+      } else {
+        ctx.fillStyle = PALETTE.calcifiedSlag;
+        ctx.fillRect(-w * 0.52, -h * 0.52, w * 1.04, h * 1.04);
+        var rows = 3 + Math.min(2, extra);
+        var rowH = (h * 1.04) / rows;
+        ctx.strokeStyle = PALETTE.mortarOchre;
+        ctx.lineWidth = 1;
+        for (var r = 0; r < rows; r++) {
+          var ry = -h * 0.52 + r * rowH;
+          ctx.fillStyle = r % 2 === 0 ? PALETTE.leadMortar : PALETTE.calcifiedSlag;
+          ctx.fillRect(-w * 0.5, ry + 0.8, w, rowH - 1.6);
+          var joints = r % 2 === 0 ? [-0.18, 0.22] : [-0.32, 0.04, 0.34];
+          for (var m = 0; m < joints.length; m++) {
+            ctx.beginPath();
+            ctx.moveTo(w * joints[m], ry);
+            ctx.lineTo(w * joints[m], ry + rowH);
+            ctx.stroke();
+          }
+        }
+        ctx.strokeRect(-w * 0.52, -h * 0.52, w * 1.04, h * 1.04);
+      }
+    }
+
+    function renderTrapMasonry(ctx, width, height, cornersWithPixelXY, env) {
+      if (!ctx || !(width > 0) || !(height > 0)) return;
+      if (blockedCount === 0 && extraBaffles.length === 0 && dustPuffs.length === 0) return;
+
+      var e = env && typeof env === 'object' ? env : {};
+      var er = e.enclosureRatio !== undefined ? clamp01(e.enclosureRatio) : enclosureRatio;
+      var calc = e.workadayCalcification !== undefined ? clamp01(e.workadayCalcification) : workadayCalcification;
+      var rm = e.reducedMotion !== undefined ? Boolean(e.reducedMotion) : reducedMotion;
+      var coords = resolveCornerCoords(width, height, cornersWithPixelXY);
+      var u = Math.max(11, Math.min(23, Math.min(width, height) * 0.029));
+
+      ctx.save();
+      if (calc > 0.02) {
+        ctx.fillStyle = PALETTE.calcifiedSlag;
+        ctx.globalAlpha = 0.05 + calc * 0.22;
+        ctx.fillRect(0, 0, width, height);
+        ctx.globalAlpha = 1;
+      }
+
+      var sealedPts = [];
+      for (var i = 0; i < coords.length; i++) {
+        if (blockedMap.has(coords[i].id)) sealedPts.push(coords[i]);
+      }
+
+      if (sealedPts.length >= 2) {
+        ctx.save();
+        ctx.strokeStyle = PALETTE.mortarOchre;
+        ctx.globalAlpha = 0.16 + er * 0.24;
+        ctx.lineWidth = 1.1;
+        ctx.setLineDash([4, 5]);
+        ctx.beginPath();
+        for (var p = 0; p < sealedPts.length; p++) {
+          var aPt = sealedPts[p];
+          var bPt = sealedPts[(p + 1) % sealedPts.length];
+          ctx.moveTo(aPt.x, aPt.y);
+          ctx.lineTo(bPt.x, bPt.y);
+        }
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        for (var cIdx = 0; cIdx < sealedPts.length; cIdx++) {
+          var p0 = sealedPts[cIdx];
+          var p1 = sealedPts[(cIdx + 1) % sealedPts.length];
+          var rawPhase = rm ? 0.5 : ((clock * 0.28 + cIdx * 0.31) % 2);
+          var t = rawPhase <= 1 ? rawPhase : (2 - rawPhase);
+          var cx = p0.x + (p1.x - p0.x) * t;
+          var cy = p0.y + (p1.y - p0.y) * t;
+          ctx.fillStyle = PALETTE.mortarOchre;
+          ctx.globalAlpha = 0.28 + calc * 0.42;
+          ctx.fillRect(cx - 2.2, cy - 2.2, 4.4, 4.4);
+        }
+        ctx.restore();
+      }
+
+      for (var b = 0; b < extraBaffles.length; b++) {
+        var baf = extraBaffles[b];
+        ctx.save();
+        var dropB = (1 - (baf.dropProgress !== undefined ? baf.dropProgress : 1)) * -7;
+        ctx.translate(baf.normX * width, baf.normY * height + dropB);
+        ctx.rotate(baf.angle);
+        drawMasonryGlyph(ctx, baf.modificationType, u * 0.76, baf.thickness);
+        ctx.restore();
+      }
+
+      for (var m = 0; m < coords.length; m++) {
+        var c = coords[m];
+        var rec = blockedMap.get(c.id);
+        if (!rec) continue;
+        ctx.save();
+        var dropY = (1 - (rec.dropProgress !== undefined ? rec.dropProgress : 1)) * -9;
+        ctx.translate(c.x, c.y + dropY);
+        ctx.save();
+        ctx.rotate(c.escapeAngle - Math.PI * 0.5);
+        drawMasonryGlyph(ctx, rec.modificationType, u, rec.thickness);
+        ctx.restore();
+
+        ctx.strokeStyle = PALETTE.mortarOchre;
+        ctx.globalAlpha = 0.72;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(0, u * 0.48);
+        ctx.lineTo(0, u * 1.02);
+        ctx.stroke();
+        ctx.fillStyle = PALETTE.mortarOchre;
+        ctx.beginPath();
+        ctx.arc(0, u * 1.08, 2.2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      if (!rm && dustPuffs.length > 0) {
+        var minDim = Math.min(width, height);
+        for (var d = 0; d < dustPuffs.length; d++) {
+          var puff = dustPuffs[d];
+          ctx.fillStyle = PALETTE.mortarOchre;
+          ctx.globalAlpha = Math.max(0, puff.alpha * 0.55);
+          ctx.beginPath();
+          ctx.arc(puff.normX * width, puff.normY * height, puff.radiusNorm * minDim, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+      ctx.restore();
+    }
+
+    return {
+      rearrangeCorner: rearrangeCorner,
+      invokeFounder: invokeFounder,
+      summonNewArrivalWave: summonNewArrivalWave,
+      sealAllCorners: sealAllCorners,
+      getBlockedRecords: getBlockedRecords,
+      step: step,
+      renderTrapMasonry: renderTrapMasonry,
+      unlockAudio: audio.unlockAudio,
+      setMuted: audio.setMuted,
+      toggleMute: audio.toggleMute,
+      isMuted: audio.isMuted,
+      triggerFootstepEcho: audio.triggerFootstepEcho,
+      triggerMasonryStrike: audio.triggerMasonryStrike,
+      syncWorkadayDrone: audio.syncWorkadayDrone,
+      setReducedMotion: function (rm) { reducedMotion = Boolean(rm); },
+      getState: getState,
+      reset: reset,
+      destroy: function () { audio.destroy(); }
+    };
+  }
+
+  var API = Object.freeze({
+    PALETTE: PALETTE,
+    FOUNDER_NATIONS: FOUNDER_NATIONS,
+    MODIFICATION_TYPES: MODIFICATION_TYPES,
+    CORNER_DEFAULTS: CORNER_DEFAULTS,
+    createTrapEngine: createTrapEngine
+  });
+
+  globalThis.ZobeideTrapCalcification = API;
+  if (typeof window !== 'undefined') {
+    window.ZobeideTrapCalcification = API;
+  }
+})();
+
+(function () {
+  'use strict';
+
+  var DreamMod = globalThis.ZobeideDreamTrace;
+  var TrapMod = globalThis.ZobeideTrapCalcification;
+  var mqReduced = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+  var reducedMotion = Boolean(mqReduced && mqReduced.matches);
+
+  var rootEl = document.getElementById('zob-root');
+  var phaseBadgeEl = document.getElementById('zob-phase-badge');
+  var whisperEl = document.getElementById('zob-whisper');
+  var chronicleEl = document.getElementById('zob-chronicle');
+  var cornerStripEl = document.getElementById('zob-corner-strip');
+  var tokenStackEl = document.getElementById('zob-token-stack');
+  var canvasWrapEl = document.getElementById('zob-canvas-wrap');
+  var canvasEl = document.getElementById('zob-canvas');
+  var ctx = canvasEl.getContext('2d');
+
+  var btnMode = document.getElementById('zob-btn-mode');
+  var btnDream = document.getElementById('zob-btn-dream');
+  var btnArrival = document.getElementById('zob-btn-arrival');
+  var btnLedgerArrival = document.getElementById('zob-ledger-arrival');
+  var btnSeal = document.getElementById('zob-btn-seal');
+  var btnMute = document.getElementById('zob-btn-mute');
+  var btnReset = document.getElementById('zob-btn-reset');
+  var btnPlates = document.getElementById('zob-btn-plates');
+
+  var plateDrawerEl = document.getElementById('zob-plate-drawer');
+  var loupeWellEl = document.getElementById('zob-loupe-well');
+  var tabDiptych = document.getElementById('zob-tab-diptych');
+  var tabMap = document.getElementById('zob-tab-map');
+  var tabCity = document.getElementById('zob-tab-city');
+  var btnLoupe = document.getElementById('zob-btn-loupe');
+  var btnClosePlates = document.getElementById('zob-btn-close-plates');
+  var mapImgEl = document.getElementById('zob-map-img');
+  var cityImgEl = document.getElementById('zob-city-img');
+
+  var valMoon = document.getElementById('zob-val-moon');
+  var barMoon = document.getElementById('zob-bar-moon');
+  var valTrap = document.getElementById('zob-val-trap');
+  var barTrap = document.getElementById('zob-bar-trap');
+  var valDream = document.getElementById('zob-val-dream');
+  var barDream = document.getElementById('zob-bar-dream');
+  var valSlag = document.getElementById('zob-val-slag');
+  var barSlag = document.getElementById('zob-bar-slag');
+  var sightingsEl = document.getElementById('zob-sightings');
+  var statOpen = document.getElementById('zob-stat-open');
+  var statVanish = document.getElementById('zob-stat-vanish');
+  var statArrivals = document.getElementById('zob-stat-arrivals');
+  var statDeadends = document.getElementById('zob-stat-deadends');
+
+  var interactionMode = 'pursue';
+  var plateDrawerOpen = false;
+  var plateTab = 'diptych';
+  var loupeActive = false;
+  var viewW = 640;
+  var viewH = 480;
+  var viewDpr = Math.min(2, window.devicePixelRatio || 1);
+  var lastPursuitNote = '';
+  var lastPursuedIndex = -1;
+
+  var dreamTrace = DreamMod.createDreamTrace({ reducedMotion: reducedMotion });
+  var trapEngine = TrapMod.createTrapEngine({
+    reducedMotion: reducedMotion,
+    onWallsChanged: function () { syncLayers(); }
+  });
+
+  function syncLayers() {
+    dreamTrace.syncTrapWalls(trapEngine.getBlockedRecords());
+  }
+
+  function unlockGestureAudio() {
+    if (trapEngine && trapEngine.unlockAudio) trapEngine.unlockAudio();
+  }
+
+  var pillEls = [];
+  var tokenEls = [];
+
+  function shortTurnName(label) {
+    return String(label || '').replace(/^Moonlit\s+|^Winding\s+|^Double-Shadowed\s+|^White\s+|^Sloped\s+|^Inner\s+|^Chalk\s+|^Lunar\s+/i, '');
+  }
+
+  function buildStaticRoster() {
+    var corners = DreamMod.SKEIN_CORNERS || dreamTrace.getState().corners;
+    cornerStripEl.textContent = '';
+    pillEls = [];
+    for (var i = 0; i < corners.length; i++) {
+      (function (idx, c) {
+        var pill = document.createElement('skein-corner-pill');
+        pill.className = 'zob-corner-pill';
+        pill.setAttribute('role', 'button');
+        pill.setAttribute('tabindex', '0');
+        pill.setAttribute('data-index', String(idx));
+        var num = document.createElement('corner-pill-num');
+        num.className = 'zob-pill-num';
+        num.textContent = '[' + (idx + 1) + ']';
+        var nm = document.createElement('corner-pill-name');
+        nm.className = 'zob-pill-name';
+        nm.textContent = shortTurnName(c.label);
+        var st = document.createElement('corner-pill-state');
+        st.className = 'zob-pill-state';
+        st.textContent = 'OPEN';
+        pill.appendChild(num);
+        pill.appendChild(nm);
+        pill.appendChild(st);
+        bindActivate(pill, function (ev) {
+          unlockGestureAudio();
+          if (interactionMode === 'wall' || (ev && ev.shiftKey)) {
+            rearrangeCorner(idx);
+          } else {
+            pursueCorner(idx);
+          }
+        });
+        cornerStripEl.appendChild(pill);
+        pillEls.push({ root: pill, stateEl: st });
+      })(i, corners[i]);
+    }
+
+    var founders = TrapMod.FOUNDER_NATIONS || trapEngine.getState().founders;
+    tokenStackEl.textContent = '';
+    tokenEls = [];
+    for (var j = 0; j < founders.length; j++) {
+      (function (idx, f) {
+        var tok = document.createElement('founder-mason-token');
+        tok.className = 'zob-founder-token';
+        tok.setAttribute('role', 'button');
+        tok.setAttribute('tabindex', '0');
+        tok.setAttribute('data-index', String(idx));
+        tok.setAttribute('data-role', f.role);
+        var top = document.createElement('founder-token-top');
+        top.className = 'zob-token-top';
+        var nat = document.createElement('founder-nation-tag');
+        nat.className = 'zob-nation-tag';
+        nat.textContent = '[' + (idx + 1) + '] ' + f.nation;
+        var badge = document.createElement('founder-mod-badge');
+        badge.className = 'zob-mod-badge';
+        badge.textContent = f.modificationType;
+        top.appendChild(nat);
+        top.appendChild(badge);
+        var gloss = document.createElement('founder-ledger-gloss');
+        gloss.className = 'zob-token-gloss';
+        gloss.textContent = f.title + ' — ' + f.ledgerNote;
+        tok.appendChild(top);
+        tok.appendChild(gloss);
+        bindActivate(tok, function () {
+          unlockGestureAudio();
+          invokeFounder(idx);
+        });
+        tokenStackEl.appendChild(tok);
+        tokenEls.push({ root: tok, badge: badge, founder: f });
+      })(j, founders[j]);
+    }
+  }
+  function bindActivate(el, fn) {
+    if (!el) return;
+    el.addEventListener('click', function (ev) { fn(ev); });
+    el.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Enter' || ev.key === ' ') {
+        ev.preventDefault();
+        fn(ev);
+      }
+    });
+  }
+
+  function computeChronicle(ds, ts) {
+    if (ts.blockedCount === 0) {
+      return 'White streets coiled in moonlight: men of distant nations follow the same nocturnal figure—long golden hair seen strictly from behind—vanishing around eight open turns.';
+    }
+    if (ts.blockedCount < 6) {
+      return 'Where each pursuer lost her trace around a moonlit turn, founders of distant nations shift arcades, reverse stairs, and mortar limestone walls so she cannot slip away there again.';
+    }
+    if (ts.blockedCount < 8) {
+      return 'Lead-gray masonry slices across the white skein, walling out the moon. Neither sleeper nor waking watchman glimpses golden hair; the narrowed lanes harden into workaday stone.';
+    }
+    if (ts.extraDeadEnds > 0 || ts.newArrivalWallsCount > 2) {
+      return 'New arrivals from other lands still recognize something of these coiled lanes and mortar fresh dead-end baffles—while the first founders no longer recall what drew anyone to this ugly trap.';
+    }
+    return 'All eight turns are sealed. None of them, asleep or awake, ever saw her again; the nocturnal dream is wholly forgotten, and the coiled city serves only as an ugly workaday trap.';
+  }
+
+  function updateUI() {
+    var ds = dreamTrace.getState();
+    var ts = trapEngine.getState();
+    var moonPct = Math.round(ds.moonExposure * 100);
+    var trapPct = Math.round(ts.enclosureRatio * 100);
+    var dreamPct = Math.round(ts.dreamMemory * 100);
+    var slagPct = Math.round(ts.workadayCalcification * 100);
+
+    rootEl.setAttribute('data-phase', ts.blockedCount >= 6 ? 'trap' : 'open');
+    phaseBadgeEl.textContent = ts.phaseLabel;
+    btnMode.setAttribute('data-mode', interactionMode);
+    btnMode.textContent = interactionMode === 'wall' ? '[B] Mode: Build Wall' : '[B] Mode: Pursue';
+    btnMute.textContent = ts.muted ? '[M] Sound: Muted' : '[M] Sound: On';
+
+    valMoon.textContent = moonPct + '%';
+    barMoon.style.width = moonPct + '%';
+    valTrap.textContent = ts.blockedCount + '/8 (' + trapPct + '%)';
+    barTrap.style.width = trapPct + '%';
+    valDream.textContent = dreamPct === 0 ? '0% Forgotten' : (dreamPct + '%');
+    barDream.style.width = dreamPct + '%';
+    valSlag.textContent = slagPct + '%';
+    barSlag.style.width = slagPct + '%';
+
+    sightingsEl.textContent = '0';
+    statOpen.textContent = ds.openEscapeRoutes + ' / 8';
+    statVanish.textContent = String(ds.vanishCount);
+    statArrivals.textContent = String(ts.newArrivalWallsCount);
+    statDeadends.textContent = String(ts.extraDeadEnds);
+    chronicleEl.textContent = computeChronicle(ds, ts);
+    if (lastPursuitNote) whisperEl.textContent = lastPursuitNote;
+
+    var recByCorner = {};
+    for (var r = 0; r < ts.blockedRecords.length; r++) {
+      recByCorner[ts.blockedRecords[r].cornerId] = ts.blockedRecords[r];
+    }
+    for (var i = 0; i < pillEls.length; i++) {
+      var c = ds.corners[i];
+      var p = pillEls[i];
+      if (!c || !p) continue;
+      p.root.classList.toggle('zob-is-sealed', Boolean(c.isBlocked));
+      p.root.classList.toggle('zob-is-active', ds.activeCornerId === c.id);
+      p.stateEl.textContent = c.isBlocked ? 'WALLED' : 'OPEN';
+    }
+    for (var j = 0; j < tokenEls.length; j++) {
+      var t = tokenEls[j];
+      var rec = recByCorner[t.founder.cornerId];
+      t.root.classList.toggle('zob-is-sealed', Boolean(rec));
+      t.badge.textContent = rec
+        ? (rec.modificationType + (rec.thickness > 1 ? ' ×' + rec.thickness : ''))
+        : t.founder.modificationType;
+    }
+
+    if (plateDrawerOpen) {
+      plateDrawerEl.removeAttribute('hidden');
+    } else {
+      plateDrawerEl.setAttribute('hidden', '');
+    }
+    loupeWellEl.setAttribute('data-tab', plateTab);
+    loupeWellEl.classList.toggle('zob-is-zoomed', loupeActive);
+    tabDiptych.classList.toggle('zob-is-on', plateTab === 'diptych');
+    tabMap.classList.toggle('zob-is-on', plateTab === 'map');
+    tabCity.classList.toggle('zob-is-on', plateTab === 'city');
+    btnLoupe.classList.toggle('zob-is-on', loupeActive);
+  }
+
+  function resizeCanvas() {
+    var rect = canvasWrapEl.getBoundingClientRect();
+    viewW = Math.max(240, Math.floor(rect.width || 640));
+    viewH = Math.max(180, Math.floor(rect.height || 420));
+    viewDpr = Math.min(2, window.devicePixelRatio || 1);
+    canvasEl.width = Math.round(viewW * viewDpr);
+    canvasEl.height = Math.round(viewH * viewDpr);
+    ctx.setTransform(viewDpr, 0, 0, viewDpr, 0, 0);
+    dreamTrace.resize(viewW, viewH, viewDpr);
+    drawNow(0.016);
+  }
+
+  function drawNow(dtSec) {
+    var ts = trapEngine.getState();
+    var ds = dreamTrace.getState();
+    var env = {
+      dreamMemory: ts.dreamMemory,
+      enclosureRatio: ts.enclosureRatio,
+      moonExposure: ds.moonExposure,
+      workadayCalcification: ts.workadayCalcification,
+      extraDeadEnds: ts.extraDeadEnds,
+      newArrivalWallsCount: ts.newArrivalWallsCount,
+      reducedMotion: reducedMotion
+    };
+    dreamTrace.step(dtSec, env);
+    trapEngine.step(dtSec, reducedMotion);
+    ctx.save();
+    ctx.setTransform(viewDpr, 0, 0, viewDpr, 0, 0);
+    ctx.clearRect(0, 0, viewW, viewH);
+    dreamTrace.renderSkeinAndPursuit(ctx, viewW, viewH, env);
+    var corners = dreamTrace.getCorners(viewW, viewH);
+    trapEngine.renderTrapMasonry(ctx, viewW, viewH, corners, env);
+    ctx.restore();
+  }
+  function pursueCorner(cornerIdOrIndex) {
+    var res = dreamTrace.pursueCorner(cornerIdOrIndex);
+    var ts = trapEngine.getState();
+    var ds = dreamTrace.getState();
+    var cornerObj = null;
+    for (var i = 0; i < ds.corners.length; i++) {
+      if (ds.corners[i].id === res.cornerId || i === cornerIdOrIndex) {
+        cornerObj = ds.corners[i];
+        break;
+      }
+    }
+    if (cornerObj) lastPursuedIndex = cornerObj.index;
+    if (trapEngine.triggerFootstepEcho) trapEngine.triggerFootstepEcho(ts.dreamMemory);
+    if (res.vanished && cornerObj) {
+      lastPursuitNote = '[' + (cornerObj.index + 1) + '] ' + cornerObj.label + ' — ' + cornerObj.dreamFragment;
+    } else if (cornerObj) {
+      lastPursuitNote = '[' + (cornerObj.index + 1) + '] ' + cornerObj.label + ' — Mortar dead-end blocks the turn; only stone shadow answers.';
+    }
+    updateUI();
+    drawNow(0.016);
+    return res;
+  }
+
+  function rearrangeCorner(cornerIdOrIndex, modTypeOptional, actorOptional) {
+    trapEngine.rearrangeCorner(cornerIdOrIndex, modTypeOptional, actorOptional);
+    syncLayers();
+    var ds = dreamTrace.getState();
+    var ts = trapEngine.getState();
+    var idx = typeof cornerIdOrIndex === 'number' ? cornerIdOrIndex : 0;
+    for (var i = 0; i < ds.corners.length; i++) {
+      if (ds.corners[i].id === cornerIdOrIndex) { idx = i; break; }
+    }
+    var c = ds.corners[idx] || ds.corners[0];
+    lastPursuitNote = 'Rearranged [' + (c.index + 1) + '] ' + c.label + ' — Moonlight drops to ' + Math.round(ds.moonExposure * 100) + '%, Dream-Memory ' + Math.round(ts.dreamMemory * 100) + '%.';
+    updateUI();
+    drawNow(0.016);
+    return getState();
+  }
+
+  function invokeFounder(founderIdOrIndex) {
+    trapEngine.invokeFounder(founderIdOrIndex);
+    syncLayers();
+    var ts = trapEngine.getState();
+    var ds = dreamTrace.getState();
+    var f = TrapMod.FOUNDER_NATIONS[typeof founderIdOrIndex === 'number' ? founderIdOrIndex : 0] || TrapMod.FOUNDER_NATIONS[0];
+    for (var k = 0; k < TrapMod.FOUNDER_NATIONS.length; k++) {
+      if (TrapMod.FOUNDER_NATIONS[k].id === founderIdOrIndex) f = TrapMod.FOUNDER_NATIONS[k];
+    }
+    lastPursuitNote = f.nation + ' (' + f.modificationType + ') — ' + f.title + ' [Enclosure ' + ts.blockedCount + '/8, Moon ' + Math.round(ds.moonExposure * 100) + '%].';
+    updateUI();
+    drawNow(0.016);
+    return getState();
+  }
+
+  function summonNewArrivalWave() {
+    trapEngine.summonNewArrivalWave();
+    syncLayers();
+    var ts = trapEngine.getState();
+    lastPursuitNote = ts.blockedCount >= 8
+      ? 'Latecomers from distant lands mortar interior baffle #' + ts.extraDeadEnds + ' — first founders no longer recall the dream.'
+      : 'New arrivals recognize the coiled streets and wall off turn ' + ts.blockedCount + '/8.';
+    updateUI();
+    drawNow(0.016);
+    return getState();
+  }
+
+  function sealAllCorners() {
+    trapEngine.sealAllCorners();
+    syncLayers();
+    lastPursuitNote = 'All 8 turns mortared shut — moonlight walled to 6%, nocturnal dream 0% forgotten, woman never seen again.';
+    updateUI();
+    drawNow(0.016);
+    return getState();
+  }
+
+  function triggerDreamPursuit() {
+    var ts = trapEngine.getState();
+    var ds = dreamTrace.getState();
+    dreamTrace.triggerDreamEcho(ts.dreamMemory);
+    if (ds.openEscapeRoutes > 0) {
+      for (var step = 1; step <= 8; step++) {
+        var cand = (lastPursuedIndex + step + 8) % 8;
+        if (!ds.corners[cand].isBlocked) return pursueCorner(cand);
+      }
+    }
+    if (trapEngine.triggerFootstepEcho) trapEngine.triggerFootstepEcho(0);
+    lastPursuitNote = 'No avenue of escape or memory remains — only workaday stone echoes in the sealed trap.';
+    updateUI();
+    drawNow(0.016);
+    return getState();
+  }
+
+  function setInteractionMode(mode) {
+    if (mode === 'pursue' || mode === 'wall') {
+      interactionMode = mode;
+    } else {
+      interactionMode = interactionMode === 'pursue' ? 'wall' : 'pursue';
+    }
+    updateUI();
+    return interactionMode;
+  }
+
+  function openPlateDrawer(tabOptional) {
+    plateDrawerOpen = true;
+    if (tabOptional === 'diptych' || tabOptional === 'map' || tabOptional === 'city') plateTab = tabOptional;
+    updateUI();
+    return getState();
+  }
+  function closePlateDrawer() { plateDrawerOpen = false; updateUI(); return getState(); }
+  function togglePlateDrawer() { plateDrawerOpen = !plateDrawerOpen; updateUI(); return getState(); }
+  function setPlateTab(tab) {
+    if (tab === 'diptych' || tab === 'map' || tab === 'city') plateTab = tab;
+    plateDrawerOpen = true;
+    updateUI();
+    return getState();
+  }
+  function toggleLoupe(force) {
+    loupeActive = typeof force === 'boolean' ? force : !loupeActive;
+    updateUI();
+    return loupeActive;
+  }
+  function toggleMute(force) {
+    if (typeof force === 'boolean') trapEngine.setMuted(force);
+    else trapEngine.toggleMute();
+    updateUI();
+    return trapEngine.isMuted();
+  }
+
+  function reset() {
+    trapEngine.reset();
+    dreamTrace.reset();
+    syncLayers();
+    interactionMode = 'pursue';
+    lastPursuedIndex = -1;
+    lastPursuitNote = 'Moonlit white skein restored — all 8 turns open to the night sky.';
+    updateUI();
+    drawNow(0.016);
+    return getState();
+  }
+
+  function getState() {
+    var ds = dreamTrace.getState();
+    var ts = trapEngine.getState();
+    return {
+      city: 'Zobeide',
+      cityNumber: 16,
+      corners: ds.corners,
+      founders: ts.founders,
+      blockedRecords: ts.blockedRecords,
+      blockedCornerIds: ts.blockedCornerIds,
+      blockedCount: ts.blockedCount,
+      totalCorners: 8,
+      openEscapeRoutes: ds.openEscapeRoutes,
+      moonExposure: ds.moonExposure,
+      fugitiveVisibility: ds.fugitiveVisibility,
+      enclosureRatio: ts.enclosureRatio,
+      dreamMemory: ts.dreamMemory,
+      workadayCalcification: ts.workadayCalcification,
+      vanishCount: ds.vanishCount,
+      deadEndHits: ds.deadEndHits,
+      extraDeadEnds: ts.extraDeadEnds,
+      newArrivalWallsCount: ts.newArrivalWallsCount,
+      masonryOpsCount: ts.masonryOpsCount,
+      phaseLabel: ts.phaseLabel,
+      firstFoundersBaffled: Boolean(ts.firstFoundersBaffled),
+      womanEverCaptured: false,
+      womanEverSeenAgain: false,
+      sightingsSinceFounding: 0,
+      activeCornerId: ds.activeCornerId,
+      interactionMode: interactionMode,
+      plateDrawerOpen: plateDrawerOpen,
+      plateTab: plateTab,
+      loupeActive: loupeActive,
+      loupeZoom: loupeActive ? 1.75 : 1.0,
+      muted: Boolean(ts.muted),
+      reducedMotion: reducedMotion
+    };
+  }
+
+  function makeFallbackPlate(title) {
+    var c = document.createElement('canvas');
+    c.width = 800; c.height = 500;
+    var g = c.getContext('2d');
+    g.fillStyle = '#090d18'; g.fillRect(0, 0, 800, 500);
+    g.strokeStyle = '#eef2f7'; g.lineWidth = 2;
+    for (var r = 60; r <= 190; r += 42) { g.beginPath(); g.arc(400, 250, r, 0, Math.PI * 2); g.stroke(); }
+    g.fillStyle = '#e8c266'; g.font = '18px Georgia, serif'; g.fillText(title, 36, 42);
+    return c.toDataURL('image/png');
+  }
+  mapImgEl.addEventListener('error', function () {
+    if (!mapImgEl.getAttribute('data-svg-tried')) {
+      mapImgEl.setAttribute('data-svg-tried', '1');
+      mapImgEl.src = 'map.svg';
+    } else if (!mapImgEl.getAttribute('data-fb')) {
+      mapImgEl.setAttribute('data-fb', '1');
+      mapImgEl.src = makeFallbackPlate('Zobeide Survey Fallback');
+    }
+  });
+  cityImgEl.addEventListener('error', function () {
+    if (!cityImgEl.getAttribute('data-fb')) {
+      cityImgEl.setAttribute('data-fb', '1');
+      cityImgEl.src = makeFallbackPlate('Zobeide Moonlit Skein Fallback');
+    }
+  });
+
+  canvasEl.addEventListener('click', function (ev) {
+    unlockGestureAudio();
+    var rect = canvasEl.getBoundingClientRect();
+    var nx = (ev.clientX - rect.left) / Math.max(1, rect.width);
+    var ny = (ev.clientY - rect.top) / Math.max(1, rect.height);
+    var hit = dreamTrace.hitTestCorner(nx, ny);
+    if (!hit) {
+      var corners = dreamTrace.getState().corners;
+      var best = null, bestD = 0.14;
+      for (var i = 0; i < corners.length; i++) {
+        var d = Math.hypot(nx - corners[i].normX, ny - corners[i].normY);
+        if (d < bestD) { bestD = d; best = corners[i]; }
+      }
+      hit = best;
+    }
+    if (hit) {
+      if (interactionMode === 'wall' || ev.shiftKey) rearrangeCorner(hit.index);
+      else pursueCorner(hit.index);
+    } else {
+      triggerDreamPursuit();
+    }
+  });
+
+  bindActivate(btnMode, function () { unlockGestureAudio(); setInteractionMode(); });
+  bindActivate(btnDream, function () { unlockGestureAudio(); triggerDreamPursuit(); });
+  bindActivate(btnArrival, function () { unlockGestureAudio(); summonNewArrivalWave(); });
+  bindActivate(btnLedgerArrival, function () { unlockGestureAudio(); summonNewArrivalWave(); });
+  bindActivate(btnSeal, function () { unlockGestureAudio(); sealAllCorners(); });
+  bindActivate(btnMute, function () { unlockGestureAudio(); toggleMute(); });
+  bindActivate(btnReset, function () { unlockGestureAudio(); reset(); });
+  bindActivate(btnPlates, function () { togglePlateDrawer(); });
+  bindActivate(tabDiptych, function () { setPlateTab('diptych'); });
+  bindActivate(tabMap, function () { setPlateTab('map'); });
+  bindActivate(tabCity, function () { setPlateTab('city'); });
+  bindActivate(btnLoupe, function () { toggleLoupe(); });
+  bindActivate(btnClosePlates, function () { closePlateDrawer(); });
+  plateDrawerEl.addEventListener('click', function (ev) {
+    if (ev.target === plateDrawerEl) closePlateDrawer();
+  });
+
+  window.addEventListener('keydown', function (ev) {
+    if (ev.ctrlKey || ev.metaKey || ev.altKey) return;
+    if (ev.key === 'Escape') {
+      if (plateDrawerOpen) { ev.preventDefault(); closePlateDrawer(); }
+      return;
+    }
+    var digit = /^Digit([1-8])$/.exec(ev.code || '') || (!ev.shiftKey && /^([1-8])$/.exec(ev.key || ''));
+    if (digit) {
+      ev.preventDefault();
+      unlockGestureAudio();
+      var idx = parseInt(digit[1], 10) - 1;
+      if (ev.shiftKey || interactionMode === 'wall') rearrangeCorner(idx);
+      else pursueCorner(idx);
+      return;
+    }
+    var k = String(ev.key || '').toLowerCase();
+    if (k === 'b') { ev.preventDefault(); setInteractionMode(); }
+    else if (k === 'd') { ev.preventDefault(); unlockGestureAudio(); triggerDreamPursuit(); }
+    else if (k === 'n') { ev.preventDefault(); unlockGestureAudio(); summonNewArrivalWave(); }
+    else if (k === 's') { ev.preventDefault(); unlockGestureAudio(); sealAllCorners(); }
+    else if (k === 'p') { ev.preventDefault(); togglePlateDrawer(); }
+    else if (k === 'z') { ev.preventDefault(); toggleLoupe(); }
+    else if (k === 'm') { ev.preventDefault(); unlockGestureAudio(); toggleMute(); }
+    else if (k === 'r') { ev.preventDefault(); unlockGestureAudio(); reset(); }
+  });
+
+  if (mqReduced && mqReduced.addEventListener) {
+    mqReduced.addEventListener('change', function (e) {
+      reducedMotion = Boolean(e.matches);
+      if (trapEngine.setReducedMotion) trapEngine.setReducedMotion(reducedMotion);
+      updateUI();
+      drawNow(0.016);
+    });
+  }
+  window.addEventListener('resize', resizeCanvas);
+  if (typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(function () { resizeCanvas(); }).observe(canvasWrapEl);
+  }
+
+  buildStaticRoster();
+  syncLayers();
+  updateUI();
+  resizeCanvas();
+
+  var lastTs = performance.now();
+  function tick(now) {
+    var dt = Math.min(0.05, Math.max(0.004, (now - lastTs) / 1000));
+    lastTs = now;
+    if (!reducedMotion && !plateDrawerOpen) {
+      drawNow(dt);
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+
+  var appApi = {
+    getState: getState,
+    pursueCorner: pursueCorner,
+    rearrangeCorner: rearrangeCorner,
+    invokeFounder: invokeFounder,
+    summonNewArrivalWave: summonNewArrivalWave,
+    sealAllCorners: sealAllCorners,
+    setInteractionMode: setInteractionMode,
+    openPlateDrawer: openPlateDrawer,
+    closePlateDrawer: closePlateDrawer,
+    togglePlateDrawer: togglePlateDrawer,
+    setPlateTab: setPlateTab,
+    toggleLoupe: toggleLoupe,
+    toggleMute: toggleMute,
+    setMuted: function (m) { return toggleMute(Boolean(m)); },
+    triggerDreamEcho: triggerDreamPursuit,
+    reset: reset
+  };
+  window.ZobeideCityApp = appApi;
+  window.__ZOBEIDE_STATE__ = function () { return appApi.getState(); };
+})();
+</script>
+</body>
+</html>

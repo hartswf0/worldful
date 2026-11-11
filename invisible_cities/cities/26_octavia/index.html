@@ -1,0 +1,3364 @@
+<!DOCTYPE html>
+<html lang="en" class="oct-html">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Octavia — Spider-Web City Over the Chasm</title>
+<style>
+.oct-html {
+  --oct-abyss-void: #0b1017;
+  --oct-chasm-bed: #141d29;
+  --oct-granite-shadow: #1d232c;
+  --oct-granite-crest: #545d68;
+  --oct-granite-highlight: #86909c;
+  --oct-abyss-mist: #c9d6e3;
+  --oct-cloud-drift: #8fa4ba;
+  --oct-hemp-ochre: #c89b54;
+  --oct-hemp-taupe: #9e7334;
+  --oct-chain-iron: #3b434e;
+  --oct-lantern-amber: #f2b84b;
+  --oct-gas-glow: #ffd67c;
+  --oct-trailing-ivy: #5e8c61;
+  --oct-fray-crimson: #c9534a;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--oct-abyss-void);
+  color: var(--oct-abyss-mist);
+  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  -webkit-font-smoothing: antialiased;
+}
+.oct-body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--oct-abyss-void);
+}
+.oct-root,
+.oct-root *,
+.oct-root *::before,
+.oct-root *::after {
+  box-sizing: border-box;
+}
+octavia-chasm-net [hidden],
+octavia-plate-drawer[hidden] {
+  display: none !important;
+}
+octavia-chasm-net.oct-root {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) 298px;
+  grid-template-areas:
+    "crest crest"
+    "stage gauge";
+  background: var(--oct-abyss-void);
+}
+crest-anchor-span.oct-crest-bar {
+  grid-area: crest;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px 10px;
+  padding: 6px 12px;
+  background: linear-gradient(180deg, rgba(29, 35, 44, 0.97), rgba(12, 17, 25, 0.95));
+  border-bottom: 1px solid rgba(200, 155, 84, 0.36);
+  z-index: 20;
+}
+crest-mooring-badge.oct-mooring-badge {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 5px 9px;
+}
+octavia-rubric-title.oct-rubric-title {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--oct-lantern-amber);
+}
+octavia-rubric-sub.oct-rubric-sub {
+  display: inline-block;
+  font-size: 11px;
+  color: rgba(201, 214, 227, 0.78);
+}
+octavia-phase-pill.oct-phase-pill {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  letter-spacing: 0.03em;
+  background: rgba(200, 155, 84, 0.16);
+  border: 1px solid rgba(200, 155, 84, 0.44);
+  color: var(--oct-gas-glow);
+}
+octavia-phase-pill.oct-phase-pill.oct-is-danger {
+  background: rgba(201, 83, 74, 0.22);
+  border-color: rgba(201, 83, 74, 0.75);
+  color: #ffd0cc;
+}
+tie-walk-controls.oct-action-cluster {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+}
+rigging-action-key.oct-action-key {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 7px;
+  border-radius: 4px;
+  border: 1px solid rgba(200, 155, 84, 0.36);
+  background: rgba(29, 35, 44, 0.86);
+  color: var(--oct-abyss-mist);
+  font-size: 11px;
+  line-height: 1.2;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.14s ease, border-color 0.14s ease, color 0.14s ease;
+}
+rigging-action-key.oct-action-key:hover,
+rigging-action-key.oct-action-key:focus-visible {
+  background: rgba(200, 155, 84, 0.22);
+  border-color: var(--oct-lantern-amber);
+  color: #ffffff;
+  outline: none;
+}
+rigging-action-key.oct-action-key.oct-key-warn {
+  border-color: rgba(201, 83, 74, 0.55);
+  color: #f3c0bb;
+}
+rigging-action-key.oct-action-key.oct-is-active {
+  background: rgba(242, 184, 75, 0.24);
+  border-color: var(--oct-lantern-amber);
+  color: var(--oct-gas-glow);
+}
+octavia-key-glyph.oct-key-glyph {
+  display: inline-block;
+  padding: 0 4px;
+  border-radius: 3px;
+  background: rgba(11, 16, 23, 0.75);
+  border: 1px solid rgba(134, 144, 156, 0.35);
+  color: var(--oct-lantern-amber);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 9.5px;
+}
+octavia-key-text.oct-key-text {
+  display: inline-block;
+}
+gust-vernier-bar.oct-gust-bar {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px 4px;
+  border-radius: 4px;
+  background: rgba(14, 20, 29, 0.88);
+  border: 1px solid rgba(143, 164, 186, 0.28);
+}
+gust-step-pill.oct-gust-pill {
+  display: inline-block;
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: rgba(201, 214, 227, 0.72);
+  cursor: pointer;
+  user-select: none;
+}
+gust-step-pill.oct-gust-pill.oct-is-active {
+  background: rgba(143, 164, 186, 0.30);
+  color: #ffffff;
+  border: 1px solid rgba(201, 214, 227, 0.55);
+}
+suspended-abyss-stage.oct-abyss-stage {
+  grid-area: stage;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
+  background: var(--oct-abyss-void);
+}
+octavia-canvas-well.oct-stage-wrap {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
+  width: 100%;
+  overflow: hidden;
+}
+canvas.oct-stage-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  touch-action: none;
+}
+pendant-catalog-rail.oct-catalog-rail {
+  flex: 0 0 auto;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 4px;
+  padding: 5px 8px;
+  background: rgba(16, 22, 31, 0.96);
+  border-top: 1px solid rgba(200, 155, 84, 0.30);
+}
+pendant-stone-chip.oct-stone-chip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  padding: 3px 5px;
+  border-radius: 4px;
+  border: 1px solid rgba(134, 144, 156, 0.25);
+  background: rgba(29, 35, 44, 0.70);
+  color: rgba(201, 214, 227, 0.74);
+  font-size: 10px;
+  line-height: 1.15;
+  cursor: pointer;
+  user-select: none;
+  min-width: 0;
+  overflow: hidden;
+}
+pendant-stone-chip.oct-stone-chip:hover,
+pendant-stone-chip.oct-stone-chip:focus-visible {
+  border-color: var(--oct-hemp-ochre);
+  color: #ffffff;
+  outline: none;
+}
+pendant-stone-chip.oct-stone-chip.oct-is-hung {
+  border-color: rgba(242, 184, 75, 0.80);
+  background: linear-gradient(180deg, rgba(158, 115, 52, 0.36), rgba(24, 31, 41, 0.92));
+  color: #fff6e0;
+}
+octavia-chip-name.oct-chip-name {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+octavia-chip-mass.oct-chip-mass {
+  display: inline-block;
+  flex: 0 0 auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 9px;
+  color: var(--oct-hemp-ochre);
+}
+finite-serenity-gauge.oct-serenity-panel {
+  grid-area: gauge;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 8px 10px;
+  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+  background: linear-gradient(180deg, rgba(22, 29, 38, 0.98), rgba(11, 16, 23, 0.99));
+  border-left: 1px solid rgba(200, 155, 84, 0.32);
+  font-size: 11px;
+}
+serenity-metric-row.oct-metric-row {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 5px 7px;
+  border-radius: 5px;
+  background: rgba(29, 35, 44, 0.62);
+  border: 1px solid rgba(134, 144, 156, 0.20);
+}
+octavia-metric-head.oct-metric-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px;
+}
+octavia-metric-label.oct-metric-label {
+  display: inline-block;
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(201, 214, 227, 0.80);
+}
+octavia-metric-val.oct-metric-val {
+  display: inline-block;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--oct-gas-glow);
+}
+octavia-metric-sub.oct-metric-sub {
+  display: block;
+  font-size: 10px;
+  color: rgba(143, 164, 186, 0.88);
+  line-height: 1.25;
+}
+serenity-bar-track.oct-bar-track {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(11, 16, 23, 0.90);
+  border: 1px solid rgba(134, 144, 156, 0.24);
+  overflow: hidden;
+}
+serenity-bar-fill.oct-bar-fill {
+  display: block;
+  height: 100%;
+  width: 50%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--oct-hemp-taupe), var(--oct-lantern-amber));
+  transition: width 0.22s ease;
+}
+serenity-bar-fill.oct-bar-fill.oct-fill-serenity {
+  background: linear-gradient(90deg, var(--oct-trailing-ivy), var(--oct-gas-glow));
+}
+serenity-bar-fill.oct-bar-fill.oct-fill-uncertain {
+  background: linear-gradient(90deg, var(--oct-cloud-drift), var(--oct-fray-crimson));
+}
+serenity-bar-fill.oct-bar-fill.oct-fill-danger {
+  background: linear-gradient(90deg, var(--oct-fray-crimson), #ff857a);
+}
+octavia-other-marker.oct-other-marker {
+  position: absolute;
+  top: -1px;
+  bottom: -1px;
+  left: 78%;
+  width: 2px;
+  background: var(--oct-lantern-amber);
+}
+octavia-mini-actions.oct-mini-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 2px;
+}
+chasm-sightline-note.oct-sightline-note {
+  display: block;
+  margin-top: auto;
+  padding: 7px 8px;
+  border-radius: 5px;
+  background: rgba(14, 20, 29, 0.90);
+  border-left: 3px solid var(--oct-hemp-ochre);
+  color: rgba(235, 241, 248, 0.92);
+  font-size: 11px;
+  line-height: 1.35;
+}
+octavia-plate-drawer.oct-plate-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  background: rgba(8, 12, 18, 0.96);
+  padding: 12px 16px;
+  gap: 10px;
+  overflow: hidden;
+}
+plate-drawer-header.oct-plate-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(200, 155, 84, 0.38);
+}
+octavia-plate-tabs.oct-plate-tabs {
+  display: inline-flex;
+  gap: 5px;
+}
+plate-mode-tab.oct-plate-tab {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid rgba(134, 144, 156, 0.34);
+  background: rgba(29, 35, 44, 0.80);
+  color: var(--oct-abyss-mist);
+  font-size: 11.5px;
+  cursor: pointer;
+  user-select: none;
+}
+plate-mode-tab.oct-plate-tab.oct-is-active {
+  border-color: var(--oct-lantern-amber);
+  background: rgba(200, 155, 84, 0.24);
+  color: var(--oct-gas-glow);
+}
+plate-diptych-grid.oct-plate-grid {
+  flex: 1 1 0;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  overflow: hidden;
+}
+plate-diptych-grid.oct-plate-grid.oct-mode-single {
+  grid-template-columns: minmax(0, 1fr);
+}
+plate-folio-card.oct-plate-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  border-radius: 6px;
+  border: 1px solid rgba(200, 155, 84, 0.32);
+  background: rgba(18, 24, 33, 0.92);
+  overflow: hidden;
+}
+octavia-plate-viewport.oct-plate-viewport {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+  padding: 8px;
+  background: #090d13;
+}
+img.oct-plate-img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 3px;
+  transition: transform 0.2s ease;
+  transform-origin: center center;
+}
+octavia-plate-drawer.oct-plate-drawer.oct-is-zoomed img.oct-plate-img {
+  transform: scale(1.75);
+  cursor: zoom-out;
+}
+plate-caption-line.oct-plate-caption {
+  display: block;
+  padding: 6px 10px;
+  font-size: 11px;
+  color: rgba(201, 214, 227, 0.85);
+  border-top: 1px solid rgba(134, 144, 156, 0.22);
+  background: rgba(24, 31, 41, 0.92);
+}
+@media (max-width: 899px) {
+  octavia-chasm-net.oct-root {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+  }
+  crest-anchor-span.oct-crest-bar {
+    padding: 4px 6px;
+    gap: 4px 6px;
+  }
+  octavia-rubric-sub.oct-rubric-sub {
+    display: none;
+  }
+  rigging-action-key.oct-action-key {
+    padding: 2px 5px;
+    font-size: 10px;
+  }
+  suspended-abyss-stage.oct-abyss-stage {
+    flex: 1 1 0;
+    min-height: 210px;
+  }
+  pendant-catalog-rail.oct-catalog-rail {
+    display: flex;
+    overflow-x: auto;
+    gap: 4px;
+    padding: 4px 6px;
+  }
+  pendant-stone-chip.oct-stone-chip {
+    flex: 0 0 auto;
+    max-width: 140px;
+  }
+  finite-serenity-gauge.oct-serenity-panel {
+    flex: 0 0 auto;
+    max-height: 242px;
+    border-left: none;
+    border-top: 1px solid rgba(200, 155, 84, 0.32);
+    padding: 5px 8px;
+    gap: 4px;
+  }
+  plate-diptych-grid.oct-plate-grid {
+    grid-template-columns: minmax(0, 1fr);
+    overflow-y: auto;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .oct-root *,
+  img.oct-plate-img,
+  serenity-bar-fill.oct-bar-fill {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+</style>
+</head>
+<body class="oct-body">
+<octavia-chasm-net class="oct-root" id="oct-root">
+  <crest-anchor-span class="oct-crest-bar" id="oct-crest-bar">
+    <crest-mooring-badge class="oct-mooring-badge">
+      <octavia-rubric-title class="oct-rubric-title">OCTAVIA</octavia-rubric-title>
+      <octavia-rubric-sub class="oct-rubric-sub">Spider-Web Span Bound to Twin Crests · 840 ft Void</octavia-rubric-sub>
+      <octavia-phase-pill class="oct-phase-pill" id="oct-phase-pill">Measured Downward Settlement</octavia-phase-pill>
+    </crest-mooring-badge>
+    <tie-walk-controls class="oct-action-cluster">
+      <rigging-action-key class="oct-action-key" id="oct-btn-hang-next" role="button" tabindex="0" aria-label="Hang Next Downward Stone">
+        <octavia-key-glyph class="oct-key-glyph">H</octavia-key-glyph>
+        <octavia-key-text class="oct-key-text">Hang Next</octavia-key-text>
+      </rigging-action-key>
+      <rigging-action-key class="oct-action-key" id="oct-btn-hang-all" role="button" tabindex="0" aria-label="Hang All 14 Downward Stones">
+        <octavia-key-glyph class="oct-key-glyph">A</octavia-key-glyph>
+        <octavia-key-text class="oct-key-text">Hang All 14</octavia-key-text>
+      </rigging-action-key>
+      <rigging-action-key class="oct-action-key oct-key-warn" id="oct-btn-upward" role="button" tabindex="0" aria-label="Attempt Upward Build Above Net">
+        <octavia-key-glyph class="oct-key-glyph">U</octavia-key-glyph>
+        <octavia-key-text class="oct-key-text">Build Upward</octavia-key-text>
+      </rigging-action-key>
+      <rigging-action-key class="oct-action-key" id="oct-btn-walk" role="button" tabindex="0" aria-label="Walk Wooden Ties">
+        <octavia-key-glyph class="oct-key-glyph">W</octavia-key-glyph>
+        <octavia-key-text class="oct-key-text">Walk Ties</octavia-key-text>
+      </rigging-action-key>
+      <gust-vernier-bar class="oct-gust-bar" id="oct-gust-bar" aria-label="Chasm Gust Knots">
+        <octavia-key-glyph class="oct-key-glyph" id="oct-btn-gust-cycle" role="button" tabindex="0">G</octavia-key-glyph>
+        <gust-step-pill class="oct-gust-pill" data-knots="4" role="button" tabindex="0">4kt</gust-step-pill>
+        <gust-step-pill class="oct-gust-pill oct-is-active" data-knots="9" role="button" tabindex="0">9kt</gust-step-pill>
+        <gust-step-pill class="oct-gust-pill" data-knots="18" role="button" tabindex="0">18kt</gust-step-pill>
+        <gust-step-pill class="oct-gust-pill" data-knots="26" role="button" tabindex="0">26kt</gust-step-pill>
+      </gust-vernier-bar>
+      <rigging-action-key class="oct-action-key" id="oct-btn-wear" role="button" tabindex="0" aria-label="Advance Span Wear by 3 Years">
+        <octavia-key-glyph class="oct-key-glyph">Y</octavia-key-glyph>
+        <octavia-key-text class="oct-key-text">+3yr Wear</octavia-key-text>
+      </rigging-action-key>
+      <rigging-action-key class="oct-action-key" id="oct-btn-audio" role="button" tabindex="0" aria-label="Toggle Wind-Harp Audio">
+        <octavia-key-glyph class="oct-key-glyph">M</octavia-key-glyph>
+        <octavia-key-text class="oct-key-text" id="oct-audio-label">Harp Muted</octavia-key-text>
+      </rigging-action-key>
+      <rigging-action-key class="oct-action-key" id="oct-btn-reset" role="button" tabindex="0" aria-label="Reset Span">
+        <octavia-key-glyph class="oct-key-glyph">R</octavia-key-glyph>
+        <octavia-key-text class="oct-key-text">Reset</octavia-key-text>
+      </rigging-action-key>
+      <rigging-action-key class="oct-action-key" id="oct-btn-plates" role="button" tabindex="0" aria-label="Open Royal Plates">
+        <octavia-key-glyph class="oct-key-glyph">P</octavia-key-glyph>
+        <octavia-key-text class="oct-key-text">Royal Plates</octavia-key-text>
+      </rigging-action-key>
+    </tie-walk-controls>
+  </crest-anchor-span>
+
+  <suspended-abyss-stage class="oct-abyss-stage" id="oct-abyss-stage">
+    <octavia-canvas-well class="oct-stage-wrap" id="oct-stage-wrap">
+      <canvas class="oct-stage-canvas" id="oct-canvas"></canvas>
+    </octavia-canvas-well>
+    <pendant-catalog-rail class="oct-catalog-rail" id="oct-catalog-rail">
+      <pendant-stone-chip class="oct-stone-chip oct-is-hung" data-stone-index="0" role="button" tabindex="0"><octavia-chip-name class="oct-chip-name">1 · Rope Ladders</octavia-chip-name><octavia-chip-mass class="oct-chip-mass">18kg</octavia-chip-mass></pendant-stone-chip>
+      <pendant-stone-chip class="oct-stone-chip oct-is-hung" data-stone-index="1" role="button" tabindex="0"><octavia-chip-name class="oct-chip-name">2 · Sack-Hammocks</octavia-chip-name><octavia-chip-mass class="oct-chip-mass">64kg</octavia-chip-mass></pendant-stone-chip>
+      <pendant-stone-chip class="oct-stone-chip" data-stone-index="2" role="button" tabindex="0"><octavia-chip-name class="oct-chip-name">3 · Clothes Hangers</octavia-chip-name><octavia-chip-mass class="oct-chip-mass">12kg</octavia-chip-mass></pendant-stone-chip>
+      <pendant-stone-chip class="oct-stone-chip oct-is-hung" data-stone-index="3" role="button" tabindex="0"><octavia-chip-name class="oct-chip-name">4 · Gondola Terraces</octavia-chip-name><octavia-chip-mass class="oct-chip-mass">72kg</octavia-chip-mass></pendant-stone-chip>
+      <pendant-stone-chip class="oct-stone-chip" data-stone-index="4" role="button" tabindex="0"><octavia-chip-name class="oct-chip-name">5 · Water Skins</octavia-chip-name><octavia-chip-mass class="oct-chip-mass">34kg</octavia-chip-mass></pendant-stone-chip>
+      <pendant-stone-chip class="oct-stone-chip" data-stone-index="5" role="button" tabindex="0"><octavia-chip-name class="oct-chip-name">6 · Gas Jets</octavia-chip-name><octavia-chip-mass class="oct-chip-mass">19kg</octavia-chip-mass></pendant-stone-chip>
+      <pendant-stone-chip class="oct-stone-chip" data-stone-index="6" role="button" tabindex="0"><octavia-chip-name class="oct-chip-name">7 · Spits</octavia-chip-name><octavia-chip-mass class="oct-chip-mass">24kg</octavia-chip-mass></pendant-stone-chip>
+      <pendant-stone-chip class="oct-stone-chip" data-stone-index="7" role="button" tabindex="0"><octavia-chip-name class="oct-chip-name">8 · String Baskets</octavia-chip-name><octavia-chip-mass class="oct-chip-mass">15kg</octavia-chip-mass></pendant-stone-chip>
+      <pendant-stone-chip class="oct-stone-chip" data-stone-index="8" role="button" tabindex="0"><octavia-chip-name class="oct-chip-name">9 · Dumb-Waiters</octavia-chip-name><octavia-chip-mass class="oct-chip-mass">38kg</octavia-chip-mass></pendant-stone-chip>
+      <pendant-stone-chip class="oct-stone-chip" data-stone-index="9" role="button" tabindex="0"><octavia-chip-name class="oct-chip-name">0 · Showers</octavia-chip-name><octavia-chip-mass class="oct-chip-mass">28kg</octavia-chip-mass></pendant-stone-chip>
+      <pendant-stone-chip class="oct-stone-chip" data-stone-index="10" role="button" tabindex="0"><octavia-chip-name class="oct-chip-name">Trapezes &amp; Rings</octavia-chip-name><octavia-chip-mass class="oct-chip-mass">22kg</octavia-chip-mass></pendant-stone-chip>
+      <pendant-stone-chip class="oct-stone-chip" data-stone-index="11" role="button" tabindex="0"><octavia-chip-name class="oct-chip-name">Cable Cars</octavia-chip-name><octavia-chip-mass class="oct-chip-mass">58kg</octavia-chip-mass></pendant-stone-chip>
+      <pendant-stone-chip class="oct-stone-chip oct-is-hung" data-stone-index="12" role="button" tabindex="0"><octavia-chip-name class="oct-chip-name">Chandeliers</octavia-chip-name><octavia-chip-mass class="oct-chip-mass">30kg</octavia-chip-mass></pendant-stone-chip>
+      <pendant-stone-chip class="oct-stone-chip" data-stone-index="13" role="button" tabindex="0"><octavia-chip-name class="oct-chip-name">Trailing Plants</octavia-chip-name><octavia-chip-mass class="oct-chip-mass">20kg</octavia-chip-mass></pendant-stone-chip>
+    </pendant-catalog-rail>
+  </suspended-abyss-stage>
+  <finite-serenity-gauge class="oct-serenity-panel" id="oct-serenity-panel">
+    <serenity-metric-row class="oct-metric-row">
+      <octavia-metric-head class="oct-metric-head">
+        <octavia-metric-label class="oct-metric-label">Downward Hung</octavia-metric-label>
+        <octavia-metric-val class="oct-metric-val" id="oct-val-hung">4 / 14 · 184 / 540 kg</octavia-metric-val>
+      </octavia-metric-head>
+      <serenity-bar-track class="oct-bar-track">
+        <serenity-bar-fill class="oct-bar-fill" id="oct-bar-load"></serenity-bar-fill>
+      </serenity-bar-track>
+      <octavia-metric-sub class="oct-metric-sub" id="oct-sub-load">Suspended below catenary · center of gravity steady</octavia-metric-sub>
+    </serenity-metric-row>
+
+    <serenity-metric-row class="oct-metric-row">
+      <octavia-metric-head class="oct-metric-head">
+        <octavia-metric-label class="oct-metric-label">Known Net Lifespan</octavia-metric-label>
+        <octavia-metric-val class="oct-metric-val" id="oct-val-lifespan">39.8 yrs remaining</octavia-metric-val>
+      </octavia-metric-head>
+      <serenity-bar-track class="oct-bar-track">
+        <serenity-bar-fill class="oct-bar-fill" id="oct-bar-lifespan"></serenity-bar-fill>
+      </serenity-bar-track>
+      <octavia-metric-sub class="oct-metric-sub" id="oct-sub-lifespan">Measured hemp &amp; chain endurance · never infinite</octavia-metric-sub>
+    </serenity-metric-row>
+
+    <serenity-metric-row class="oct-metric-row">
+      <octavia-metric-head class="oct-metric-head">
+        <octavia-metric-label class="oct-metric-label">Civic Serenity</octavia-metric-label>
+        <octavia-metric-val class="oct-metric-val" id="oct-val-serenity">53%</octavia-metric-val>
+      </octavia-metric-head>
+      <serenity-bar-track class="oct-bar-track">
+        <serenity-bar-fill class="oct-bar-fill oct-fill-serenity" id="oct-bar-serenity"></serenity-bar-fill>
+      </serenity-bar-track>
+    </serenity-metric-row>
+
+    <serenity-metric-row class="oct-metric-row">
+      <octavia-metric-head class="oct-metric-head">
+        <octavia-metric-label class="oct-metric-label">Life Uncertainty</octavia-metric-label>
+        <octavia-metric-val class="oct-metric-val" id="oct-val-uncertain">47% vs 78% other cities</octavia-metric-val>
+      </octavia-metric-head>
+      <serenity-bar-track class="oct-bar-track" title="Gold tick: Other Cities 78% Uncertainty">
+        <serenity-bar-fill class="oct-bar-fill oct-fill-uncertain" id="oct-bar-uncertain"></serenity-bar-fill>
+        <octavia-other-marker class="oct-other-marker"></octavia-other-marker>
+      </serenity-bar-track>
+      <octavia-metric-sub class="oct-metric-sub" id="oct-sub-uncertain">Less uncertain — the net will last only so long</octavia-metric-sub>
+    </serenity-metric-row>
+
+    <serenity-metric-row class="oct-metric-row">
+      <octavia-metric-head class="oct-metric-head">
+        <octavia-metric-label class="oct-metric-label">Upward Hubris &amp; Ties</octavia-metric-label>
+        <octavia-metric-val class="oct-metric-val" id="oct-val-hubris">0 standing · 0 toppled</octavia-metric-val>
+      </octavia-metric-head>
+      <octavia-metric-sub class="oct-metric-sub" id="oct-sub-ties">44 wooden ties · Ankle-twist risk 18% · Cloud bed glimpse</octavia-metric-sub>
+      <octavia-mini-actions class="oct-mini-actions">
+        <rigging-action-key class="oct-action-key" id="oct-btn-renew" role="button" tabindex="0"><octavia-key-text class="oct-key-text">Renew Hemp</octavia-key-text></rigging-action-key>
+        <rigging-action-key class="oct-action-key" id="oct-btn-clear" role="button" tabindex="0"><octavia-key-text class="oct-key-text">Bare Span</octavia-key-text></rigging-action-key>
+      </octavia-mini-actions>
+    </serenity-metric-row>
+
+    <chasm-sightline-note class="oct-sightline-note" id="oct-sightline-note">
+      Suspended between two steep mountain crests over 840 feet of void: step carefully across the little wooden ties or hang all fourteen civic stones downward beneath the spider-web net.
+    </chasm-sightline-note>
+  </finite-serenity-gauge>
+
+  <octavia-plate-drawer class="oct-plate-drawer" id="oct-plate-drawer" hidden>
+    <plate-drawer-header class="oct-plate-header">
+      <crest-mooring-badge class="oct-mooring-badge">
+        <octavia-rubric-title class="oct-rubric-title">OCTAVIA · ROYAL PLATES</octavia-rubric-title>
+        <octavia-rubric-sub class="oct-rubric-sub">Archival Survey &amp; Suspended Chasm Elevation</octavia-rubric-sub>
+      </crest-mooring-badge>
+      <octavia-plate-tabs class="oct-plate-tabs">
+        <plate-mode-tab class="oct-plate-tab oct-is-active" data-plate-mode="diptych" role="button" tabindex="0">Diptych</plate-mode-tab>
+        <plate-mode-tab class="oct-plate-tab" data-plate-mode="map" role="button" tabindex="0">Spider-Web Map</plate-mode-tab>
+        <plate-mode-tab class="oct-plate-tab" data-plate-mode="city" role="button" tabindex="0">Chasm Painting</plate-mode-tab>
+      </octavia-plate-tabs>
+      <tie-walk-controls class="oct-action-cluster">
+        <rigging-action-key class="oct-action-key" id="oct-btn-zoom" role="button" tabindex="0">
+          <octavia-key-glyph class="oct-key-glyph">Z</octavia-key-glyph>
+          <octavia-key-text class="oct-key-text" id="oct-zoom-label">Loupe 1.75×</octavia-key-text>
+        </rigging-action-key>
+        <rigging-action-key class="oct-action-key" id="oct-btn-drawer-close" role="button" tabindex="0">
+          <octavia-key-glyph class="oct-key-glyph">Esc</octavia-key-glyph>
+          <octavia-key-text class="oct-key-text">Close</octavia-key-text>
+        </rigging-action-key>
+      </tie-walk-controls>
+    </plate-drawer-header>
+    <plate-diptych-grid class="oct-plate-grid" id="oct-plate-grid">
+      <plate-folio-card class="oct-plate-card" id="oct-card-map">
+        <octavia-plate-viewport class="oct-plate-viewport">
+          <img class="oct-plate-img" id="oct-map-img" src="map.png" alt="Copperplate spider-web survey of Octavia" onerror="if(!this.dataset.octFallback){this.dataset.octFallback='1';this.src='map.svg';}">
+        </octavia-plate-viewport>
+        <plate-caption-line class="oct-plate-caption">Plate I · Copperplate Survey of the Catenary Net, Twin Crests &amp; 14 Pendant Hooks (1600×1200)</plate-caption-line>
+      </plate-folio-card>
+      <plate-folio-card class="oct-plate-card" id="oct-card-city">
+        <octavia-plate-viewport class="oct-plate-viewport">
+          <img class="oct-plate-img" id="oct-city-img" src="image.png" alt="Alpine chasm painting of Octavia">
+        </octavia-plate-viewport>
+        <plate-caption-line class="oct-plate-caption">Plate II · Suspended Dwellings, Sack-Hammocks &amp; Lanterns Over the 840-Foot Void (1600×1000)</plate-caption-line>
+      </plate-folio-card>
+    </plate-diptych-grid>
+  </octavia-plate-drawer>
+</octavia-chasm-net>
+<script>
+(function () {
+  'use strict';
+
+  const PALETTE = Object.freeze({
+    abyssVoid: '#0b1017',
+    chasmBed: '#141d29',
+    graniteShadow: '#1d232c',
+    graniteCrest: '#545d68',
+    graniteHighlight: '#86909c',
+    abyssMist: '#c9d6e3',
+    cloudDrift: '#8fa4ba',
+    hempOchre: '#c89b54',
+    hempTaupe: '#9e7334',
+    chainIron: '#3b434e',
+    lanternAmber: '#f2b84b',
+    gasGlow: '#ffd67c',
+    trailingIvy: '#5e8c61',
+    frayCrimson: '#c9534a'
+  });
+
+  const HOOK_SPEC = Object.freeze([
+    Object.freeze({ hookIndex: 0, id: 'west_hemp_spur', label: 'West Hemp Spur', supportType: 'hemp_rope', normX: 0.17, tier: 2 }),
+    Object.freeze({ hookIndex: 1, id: 'west_catwalk_berth', label: 'West Catwalk Berth', supportType: 'wooden_tie_catwalk', normX: 0.22, tier: 1 }),
+    Object.freeze({ hookIndex: 2, id: 'windward_tie_spar', label: 'Windward Tie Spar', supportType: 'wooden_tie_catwalk', normX: 0.27, tier: 1 }),
+    Object.freeze({ hookIndex: 3, id: 'upper_west_chain', label: 'Upper West Chain Link', supportType: 'iron_chain', normX: 0.32, tier: 0 }),
+    Object.freeze({ hookIndex: 4, id: 'mist_belly_strand', label: 'Mist-Belly Hemp Strand', supportType: 'hemp_rope', normX: 0.37, tier: 2 }),
+    Object.freeze({ hookIndex: 5, id: 'midwest_tie_ring', label: 'Mid-West Tie Ring', supportType: 'wooden_tie_catwalk', normX: 0.42, tier: 1 }),
+    Object.freeze({ hookIndex: 6, id: 'nadir_iron_shackle', label: 'Central Iron Shackle', supportType: 'iron_chain', normX: 0.47, tier: 0 }),
+    Object.freeze({ hookIndex: 7, id: 'radial_web_knot', label: 'Radial Web Knot', supportType: 'hemp_rope', normX: 0.52, tier: 2 }),
+    Object.freeze({ hookIndex: 8, id: 'mideast_catwalk_hatch', label: 'Mid-East Catwalk Hatch', supportType: 'wooden_tie_catwalk', normX: 0.57, tier: 1 }),
+    Object.freeze({ hookIndex: 9, id: 'crown_chain_clevis', label: 'Crown Chain Clevis', supportType: 'iron_chain', normX: 0.62, tier: 0 }),
+    Object.freeze({ hookIndex: 10, id: 'outer_hemp_trapeze_eye', label: 'Outer Hemp Web Eye', supportType: 'hemp_rope', normX: 0.67, tier: 2 }),
+    Object.freeze({ hookIndex: 11, id: 'traverse_chain_lug', label: 'Traverse Chain Lug', supportType: 'iron_chain', normX: 0.725, tier: 0 }),
+    Object.freeze({ hookIndex: 12, id: 'east_catwalk_lantern_hook', label: 'East Catwalk Tie Hook', supportType: 'wooden_tie_catwalk', normX: 0.78, tier: 1 }),
+    Object.freeze({ hookIndex: 13, id: 'east_cliff_hemp_bight', label: 'East Cliff Hemp Bight', supportType: 'hemp_rope', normX: 0.83, tier: 2 })
+  ]);
+
+  const COSH_HALF = Math.cosh(1.15) - 1;
+
+  function clamp(v, lo, hi) {
+    return v < lo ? lo : v > hi ? hi : v;
+  }
+
+  function catenarySagProfile(u) {
+    const uc = clamp(u, 0, 1);
+    return 1 - (Math.cosh(2.3 * (uc - 0.5)) - 1) / COSH_HALF;
+  }
+
+  function distToSegment(px, py, x1, y1, x2, y2) {
+    const dx = x2 - x1;
+    const dy = y2 - y1;
+    const lenSq = dx * dx + dy * dy;
+    if (lenSq <= 1e-6) return Math.hypot(px - x1, py - y1);
+    const t = clamp(((px - x1) * dx + (py - y1) * dy) / lenSq, 0, 1);
+    return Math.hypot(px - (x1 + t * dx), py - (y1 + t * dy));
+  }
+
+  function createRiggingAudio(initialMuted) {
+    let muted = Boolean(initialMuted);
+    let ctx = null;
+    let droneGain = null;
+    let droneOscA = null;
+    let droneOscB = null;
+
+    function ensureContext() {
+      if (muted) return null;
+      if (ctx) {
+        if (ctx.state === 'suspended') {
+          try { ctx.resume(); } catch (_) {}
+        }
+        return ctx;
+      }
+      try {
+        const Ctor = (typeof globalThis !== 'undefined') &&
+          (globalThis.AudioContext || globalThis.webkitAudioContext);
+        if (!Ctor) return null;
+        ctx = new Ctor();
+        droneGain = ctx.createGain();
+        droneGain.gain.value = 0.0001;
+        const filter = ctx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.value = 340;
+        droneOscA = ctx.createOscillator();
+        droneOscB = ctx.createOscillator();
+        droneOscA.type = 'sine';
+        droneOscB.type = 'triangle';
+        droneOscA.frequency.value = 110;
+        droneOscB.frequency.value = 165;
+        droneOscA.connect(filter);
+        droneOscB.connect(filter);
+        filter.connect(droneGain);
+        droneGain.connect(ctx.destination);
+        droneOscA.start();
+        droneOscB.start();
+      } catch (_) {
+        ctx = null;
+      }
+      return ctx;
+    }
+
+    function syncDrone(windKnots, tensionRatio) {
+      if (!ctx || !droneGain) return;
+      try {
+        const now = ctx.currentTime;
+        const targetGain = muted ? 0.0001 : clamp(0.006 + (windKnots / 32) * 0.026, 0.004, 0.036);
+        const baseFreq = 98 + clamp(tensionRatio, 0.14, 1.25) * 44 + windKnots * 0.45;
+        droneGain.gain.setTargetAtTime(targetGain, now, 0.12);
+        droneOscA.frequency.setTargetAtTime(baseFreq, now, 0.15);
+        droneOscB.frequency.setTargetAtTime(baseFreq * 1.498, now, 0.15);
+      } catch (_) {}
+    }
+
+    function trigger(kind, intensity, tensionRatio) {
+      if (muted) return false;
+      const ac = ensureContext();
+      if (!ac) return false;
+      try {
+        const now = ac.currentTime;
+        const amp = clamp(Number(intensity) || 0.55, 0.08, 1.0);
+        const osc = ac.createOscillator();
+        const gain = ac.createGain();
+        const tRatio = clamp(Number(tensionRatio) || 0.4, 0.14, 1.25);
+        if (kind === 'wooden_tie') {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(195 + (Math.random() * 28), now);
+          osc.frequency.exponentialRampToValueAtTime(82, now + 0.075);
+          gain.gain.setValueAtTime(0.06 * amp, now);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.085);
+          osc.connect(gain); gain.connect(ac.destination);
+          osc.start(now); osc.stop(now + 0.09);
+        } else if (kind === 'upward_collapse') {
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(210, now);
+          osc.frequency.exponentialRampToValueAtTime(38, now + 0.48);
+          gain.gain.setValueAtTime(0.09 * amp, now);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.52);
+          osc.connect(gain); gain.connect(ac.destination);
+          osc.start(now); osc.stop(now + 0.54);
+        } else if (kind === 'pulley_chime') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(587.33, now);
+          osc.frequency.exponentialRampToValueAtTime(880, now + 0.18);
+          gain.gain.setValueAtTime(0.05 * amp, now);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.26);
+          osc.connect(gain); gain.connect(ac.destination);
+          osc.start(now); osc.stop(now + 0.28);
+        } else if (kind === 'wind_harp') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(220 + tRatio * 65, now);
+          osc.frequency.exponentialRampToValueAtTime(330 + tRatio * 95, now + 0.42);
+          gain.gain.setValueAtTime(0.045 * amp, now);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.46);
+          osc.connect(gain); gain.connect(ac.destination);
+          osc.start(now); osc.stop(now + 0.48);
+        } else {
+          osc.type = 'triangle';
+          const f0 = 155 + tRatio * 120;
+          osc.frequency.setValueAtTime(f0, now);
+          osc.frequency.exponentialRampToValueAtTime(f0 * 0.72, now + 0.24);
+          gain.gain.setValueAtTime(0.07 * amp, now);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.26);
+          osc.connect(gain); gain.connect(ac.destination);
+          osc.start(now); osc.stop(now + 0.28);
+        }
+        return true;
+      } catch (_) {
+        return false;
+      }
+    }
+
+    return {
+      unlock() { ensureContext(); },
+      setMuted(flag, windKnots, tensionRatio) {
+        muted = Boolean(flag);
+        if (!muted) ensureContext();
+        syncDrone(windKnots || 9, tensionRatio || 0.2);
+        return muted;
+      },
+      isMuted() { return muted; },
+      syncDrone,
+      trigger
+    };
+  }
+
+  function createCatenaryWeb(opts = {}) {
+    const WOODEN_TIE_COUNT = 44;
+    const CHAIN_SPAN_COUNT = 4;
+    const HEMP_STRAND_COUNT = 18;
+    const CHASM_DEPTH_FEET = 840;
+    const CLOUD_COUNT = 9;
+    const MAX_SAFE_LOAD_KG = 540;
+
+    let reducedMotion = Boolean(opts.reducedMotion);
+    const audio = createRiggingAudio(opts.muted !== undefined ? opts.muted : true);
+
+    let width = 1280;
+    let height = 800;
+    let dpr = 1;
+    let timeSec = 0;
+    let windKnots = 9;
+    let totalMassKg = 0;
+    let meanTensionRatio = 0.16;
+    let maxStrandTension = 0.21;
+    let meanSagPx = 5.4;
+    let ankleTwistRisk = 0.28;
+    let shockTrauma = 0;
+    let chasmBedVisibility = 0.42;
+
+    let walkerNormX = 0.26;
+    let walkerTargetNormX = 0.26;
+    let walkerAccumDist = 0;
+    let woodenTieSteps = 0;
+    let walkerClingingToHemp = false;
+
+    const westCrestPoly = [];
+    const eastCrestPoly = [];
+    const moorings = { westPitons: [], eastPitons: [], westBollards: [], eastBollards: [] };
+    const chainSpans = [];
+    const woodenTies = [];
+    const hempStrands = [];
+    const fallingFragments = [];
+
+    const clouds = Array.from({ length: CLOUD_COUNT }, (_, idx) => {
+      const layer = idx % 3;
+      return {
+        index: idx,
+        layer,
+        normX: (idx * 0.125 + layer * 0.07) % 1.16 - 0.08,
+        normY: layer === 0 ? 0.81 + (idx % 3) * 0.018 : (layer === 1 ? 0.71 + (idx % 3) * 0.022 : 0.625 + (idx % 3) * 0.022),
+        rxRatio: 0.11 + (idx % 4) * 0.028 + layer * 0.015,
+        ryRatio: 0.024 + layer * 0.006,
+        speedRatio: 0.0055 + layer * 0.0032 + (idx % 2) * 0.0014,
+        alpha: layer === 0 ? 0.24 : (layer === 1 ? 0.34 : 0.22),
+        seed: idx * 1.71 + 0.4
+      };
+    });
+
+    const hooks = HOOK_SPEC.map((spec) => ({
+      hookIndex: spec.hookIndex,
+      id: spec.id,
+      label: spec.label,
+      supportType: spec.supportType,
+      normX: spec.normX,
+      tier: spec.tier,
+      baseX: spec.normX * width,
+      baseY: 0.3 * height,
+      equilY: 0.3 * height + 5,
+      x: spec.normX * width,
+      y: 0.3 * height + 5,
+      vx: 0,
+      vy: 0,
+      targetSagPx: 5,
+      localSagPx: 5,
+      massKg: 0,
+      isHung: false,
+      tension: 0.18
+    }));
+
+    function tierBaseY(tier, normX) {
+      const xWest = 0.132;
+      const xEast = 0.868;
+      const u = clamp((normX - xWest) / (xEast - xWest), 0, 1);
+      const prof = catenarySagProfile(u);
+      const slightTilt = (u - 0.5) * 0.012 * height;
+      if (tier === 0) return height * 0.165 + prof * (height * 0.092) + slightTilt;
+      if (tier === 1) return height * 0.238 + prof * (height * 0.106) + slightTilt;
+      return height * 0.295 + prof * (height * 0.132) + slightTilt;
+    }
+
+    function hookDeflectionAtNormX(normX, tierWeight) {
+      let num = 0;
+      let den = 0;
+      for (let i = 0; i < hooks.length; i++) {
+        const h = hooks[i];
+        const dist = Math.abs(normX - h.normX);
+        const w = Math.exp(-dist * 11.5) * (tierWeight === undefined || h.tier === tierWeight ? 1.25 : 0.72);
+        num += (h.y - h.baseY) * w;
+        den += w;
+      }
+      const edgeFade = Math.sin(clamp((normX - 0.132) / (0.868 - 0.132), 0, 1) * Math.PI);
+      return (den > 0 ? num / den : 0) * Math.pow(Math.max(0, edgeFade), 0.65);
+    }
+
+    function recomputeCloudsVisibility() {
+      let centerCover = 0;
+      for (let i = 0; i < clouds.length; i++) {
+        const c = clouds[i];
+        const dist = Math.abs(c.normX - 0.5);
+        const span = c.rxRatio * 1.35;
+        if (dist < span) {
+          centerCover += (1 - dist / span) * (c.layer === 2 ? 0.22 : 0.36);
+        }
+      }
+      chasmBedVisibility = Number(clamp(0.68 - centerCover * 0.44, 0.22, 0.68).toFixed(3));
+    }
+
+    function recomputeMetrics() {
+      let sagSum = 0;
+      let maxT = 0.14;
+      const loadRatio = totalMassKg / MAX_SAFE_LOAD_KG;
+      const windRatio = windKnots / 32;
+      meanTensionRatio = Number(clamp(0.16 + loadRatio * 0.66 + windRatio * 0.16 + shockTrauma * 0.22, 0.14, 1.25).toFixed(3));
+
+      for (let i = 0; i < hooks.length; i++) {
+        const h = hooks[i];
+        h.localSagPx = Number(Math.max(0.5, h.y - h.baseY).toFixed(2));
+        sagSum += h.localSagPx;
+        const dynStrain = Math.min(0.24, Math.hypot(h.vx, h.vy) * 0.0045);
+        const localLoad = (h.isHung ? h.massKg : 0) / 85;
+        h.tension = Number(clamp(meanTensionRatio * 0.78 + localLoad * 0.28 + dynStrain + (h.tier === 0 ? 0.05 : 0), 0.14, 1.32).toFixed(3));
+        if (h.tension > maxT) maxT = h.tension;
+      }
+      meanSagPx = Number((sagSum / hooks.length).toFixed(2));
+      maxStrandTension = Number(clamp(maxT, 0.14, 1.35).toFixed(3));
+
+      let risk = 0.28;
+      if (totalMassKg > 0 && totalMassKg <= MAX_SAFE_LOAD_KG) {
+        const ballast = clamp(totalMassKg / 454, 0, 1);
+        risk = 0.28 - 0.215 * ballast;
+      } else if (totalMassKg > MAX_SAFE_LOAD_KG) {
+        risk = 0.35 + clamp((totalMassKg - MAX_SAFE_LOAD_KG) / 210, 0, 0.42);
+      }
+      if (windKnots <= 12) {
+        risk += (windKnots - 9) * 0.0025;
+      } else if (windKnots <= 22) {
+        risk += 0.008 + (windKnots - 12) * 0.014;
+      } else {
+        risk += 0.155 + (windKnots - 22) * 0.028;
+      }
+      risk += shockTrauma;
+      ankleTwistRisk = Number(clamp(risk, 0.05, 0.98).toFixed(3));
+      walkerClingingToHemp = Boolean(windKnots >= 16 || ankleTwistRisk > 0.30);
+      audio.syncDrone(windKnots, meanTensionRatio);
+    }
+
+    function rebuildStaticCrests() {
+      westCrestPoly.length = 0;
+      eastCrestPoly.length = 0;
+      const wProfile = [
+        [0, 0], [0.145, 0], [0.141, 0.09], [0.134, 0.17], [0.143, 0.25],
+        [0.131, 0.33], [0.139, 0.44], [0.124, 0.57], [0.136, 0.71],
+        [0.118, 0.85], [0.132, 1.0], [0, 1.0]
+      ];
+      const eProfile = [
+        [1, 0], [0.855, 0], [0.861, 0.08], [0.868, 0.17], [0.857, 0.25],
+        [0.869, 0.34], [0.860, 0.45], [0.875, 0.58], [0.863, 0.72],
+        [0.881, 0.86], [0.867, 1.0], [1, 1.0]
+      ];
+      for (let i = 0; i < wProfile.length; i++) {
+        westCrestPoly.push({ x: wProfile[i][0] * width, y: wProfile[i][1] * height });
+      }
+      for (let i = 0; i < eProfile.length; i++) {
+        eastCrestPoly.push({ x: eProfile[i][0] * width, y: eProfile[i][1] * height });
+      }
+      moorings.westPitons = [
+        { x: 0.132 * width, y: 0.135 * height },
+        { x: 0.134 * width, y: 0.168 * height }
+      ];
+      moorings.eastPitons = [
+        { x: 0.868 * width, y: 0.145 * height },
+        { x: 0.866 * width, y: 0.178 * height }
+      ];
+      moorings.westBollards = [
+        { x: 0.136 * width, y: 0.238 * height },
+        { x: 0.130 * width, y: 0.296 * height },
+        { x: 0.134 * width, y: 0.365 * height }
+      ];
+      moorings.eastBollards = [
+        { x: 0.862 * width, y: 0.246 * height },
+        { x: 0.869 * width, y: 0.304 * height },
+        { x: 0.864 * width, y: 0.372 * height }
+      ];
+    }
+
+    function sampleCatenaryPts(x1, y1, x2, y2, tierRef, sagBoost) {
+      const pts = [];
+      const steps = 16;
+      for (let s = 0; s <= steps; s++) {
+        const u = s / steps;
+        const x = x1 + (x2 - x1) * u;
+        const nx = x / width;
+        const sag = catenarySagProfile(u) * sagBoost + hookDeflectionAtNormX(nx, tierRef);
+        pts.push({ x, y: y1 + (y2 - y1) * u + sag });
+      }
+      return pts;
+    }
+
+    function rebuildLiveSpanGeometry() {
+      chainSpans.length = 0;
+      const wp0 = moorings.westPitons[0] || { x: 0.132 * width, y: 0.135 * height };
+      const wp1 = moorings.westPitons[1] || { x: 0.134 * width, y: 0.168 * height };
+      const ep0 = moorings.eastPitons[0] || { x: 0.868 * width, y: 0.145 * height };
+      const ep1 = moorings.eastPitons[1] || { x: 0.866 * width, y: 0.178 * height };
+      chainSpans.push({ id: 'upper_crown_chain', pts: sampleCatenaryPts(wp0.x, wp0.y, ep0.x, ep0.y, 0, height * 0.082) });
+      chainSpans.push({ id: 'main_anchor_chain', pts: sampleCatenaryPts(wp1.x, wp1.y, ep1.x, ep1.y, 0, height * 0.092) });
+      chainSpans.push({ id: 'west_stay_chain', pts: [{ x: wp0.x, y: wp0.y - height * 0.028 }, { x: hooks[3].x, y: hooks[3].y }] });
+      chainSpans.push({ id: 'east_stay_chain', pts: [{ x: ep0.x, y: ep0.y - height * 0.028 }, { x: hooks[11].x, y: hooks[11].y }] });
+
+      woodenTies.length = 0;
+      const swayPhase = reducedMotion ? 0 : Math.sin(timeSec * 2.1) * (windKnots / 32) * 0.08;
+      for (let i = 0; i < WOODEN_TIE_COUNT; i++) {
+        const u = i / (WOODEN_TIE_COUNT - 1);
+        const nx = 0.138 + u * (0.862 - 0.138);
+        const wDist = Math.abs(nx - walkerNormX);
+        const footDip = wDist < 0.035 ? (1 - wDist / 0.035) * 3.8 : 0;
+        const y = tierBaseY(1, nx) + hookDeflectionAtNormX(nx, 1) + footDip;
+        const shockTilt = shockTrauma * Math.sin(i * 1.4 + timeSec * 15) * 0.42;
+        woodenTies.push({
+          tieIndex: i,
+          normX: nx,
+          x: nx * width,
+          y,
+          tiltRad: swayPhase * Math.sin(u * Math.PI) + shockTilt
+        });
+      }
+
+      hempStrands.length = 0;
+      const wb = moorings.westBollards;
+      const eb = moorings.eastBollards;
+      if (wb.length >= 3 && eb.length >= 3) {
+        hempStrands.push({ id: 'catwalk_bearer_strand', pts: sampleCatenaryPts(wb[0].x, wb[0].y, eb[0].x, eb[0].y, 1, height * 0.104) });
+        hempStrands.push({ id: 'mid_belly_hemp', pts: sampleCatenaryPts(wb[1].x, wb[1].y, eb[1].x, eb[1].y, 2, height * 0.132) });
+        hempStrands.push({ id: 'deep_spider_arc', pts: sampleCatenaryPts(wb[2].x, wb[2].y, eb[2].x, eb[2].y, 2, height * 0.148) });
+        const hubX = 0.50 * width + (hooks[6].x - hooks[6].baseX + hooks[7].x - hooks[7].baseX) * 0.5;
+        const hubY = tierBaseY(1, 0.50) + hookDeflectionAtNormX(0.50, 1) + height * 0.018;
+        const radialTargets = [
+          wb[0], wb[2], eb[0], eb[2],
+          hooks[0], hooks[3], hooks[4], hooks[9], hooks[10], hooks[13]
+        ];
+        for (let r = 0; r < radialTargets.length; r++) {
+          const tgt = radialTargets[r];
+          const mx = (hubX + tgt.x) * 0.5;
+          const my = (hubY + tgt.y) * 0.5 + height * 0.012;
+          hempStrands.push({ id: 'radial_spoke_' + r, pts: [{ x: hubX, y: hubY }, { x: mx, y: my }, { x: tgt.x, y: tgt.y }] });
+        }
+        const ringPairs = [[0, 1], [3, 4], [6, 7], [8, 9], [10, 12]];
+        for (let p = 0; p < ringPairs.length; p++) {
+          const a = hooks[ringPairs[p][0]];
+          const b = hooks[ringPairs[p][1]];
+          hempStrands.push({ id: 'web_chord_' + p, pts: [{ x: a.x, y: a.y }, { x: (a.x + b.x) * 0.5, y: (a.y + b.y) * 0.5 + 5 }, { x: b.x, y: b.y }] });
+        }
+      }
+    }
+
+    function resize(newWidth, newHeight, newDpr = 1) {
+      width = Math.max(240, Number(newWidth) || 1280);
+      height = Math.max(240, Number(newHeight) || 800);
+      dpr = Math.max(1, Number(newDpr) || 1);
+      rebuildStaticCrests();
+      const hScale = height / 800;
+      for (let i = 0; i < hooks.length; i++) {
+        const h = hooks[i];
+        const prevSag = h.localSagPx || 5;
+        h.baseX = h.normX * width;
+        h.baseY = tierBaseY(h.tier, h.normX);
+        h.targetSagPx = Math.max(4 * hScale, h.targetSagPx);
+        h.equilY = h.baseY + h.targetSagPx;
+        h.x = h.baseX;
+        h.y = h.baseY + (reducedMotion ? h.targetSagPx : prevSag);
+      }
+      rebuildLiveSpanGeometry();
+      recomputeCloudsVisibility();
+      recomputeMetrics();
+    }
+
+    function setHookLoads(loadsArray) {
+      for (let i = 0; i < hooks.length; i++) {
+        hooks[i].massKg = 0;
+        hooks[i].isHung = false;
+      }
+      let extraMass = 0;
+      if (Array.isArray(loadsArray)) {
+        for (let i = 0; i < loadsArray.length; i++) {
+          const item = loadsArray[i];
+          if (!item) continue;
+          const idx = Number(item.hookIndex);
+          const active = item.isHung !== false && Number(item.massKg) > 0;
+          const m = active ? Math.max(0, Number(item.massKg) || 0) : 0;
+          if (Number.isInteger(idx) && idx >= 0 && idx < hooks.length) {
+            hooks[idx].massKg = m;
+            hooks[idx].isHung = active;
+          } else if (active) {
+            extraMass += m;
+          }
+        }
+      }
+      totalMassKg = extraMass;
+      for (let i = 0; i < hooks.length; i++) {
+        if (hooks[i].isHung) totalMassKg += hooks[i].massKg;
+      }
+      const hScale = height / 800;
+      for (let i = 0; i < hooks.length; i++) {
+        let coupledKg = 0;
+        for (let j = 0; j < hooks.length; j++) {
+          if (hooks[j].isHung) {
+            coupledKg += hooks[j].massKg * Math.exp(-Math.abs(i - j) / 2.4);
+          }
+        }
+        const spanMid = catenarySagProfile((hooks[i].normX - 0.132) / (0.868 - 0.132));
+        const tierFlex = hooks[i].tier === 0 ? 0.72 : (hooks[i].tier === 1 ? 1.0 : 1.24);
+        const prevEquil = hooks[i].equilY;
+        hooks[i].targetSagPx = (4.5 + coupledKg * 0.165 * tierFlex * (0.45 + 0.55 * spanMid)) * hScale;
+        hooks[i].equilY = hooks[i].baseY + hooks[i].targetSagPx;
+        if (reducedMotion) {
+          hooks[i].y = hooks[i].equilY;
+          hooks[i].vy = 0;
+        } else {
+          const delta = hooks[i].equilY - prevEquil;
+          hooks[i].y += delta * 0.74;
+          hooks[i].vy += delta * 1.8;
+        }
+      }
+      rebuildLiveSpanGeometry();
+      recomputeMetrics();
+    }
+
+    function applyImpulse(hookIndex, dyImpulse = 14, dxImpulse = 0) {
+      const idx = clamp(Math.round(Number(hookIndex) || 0), 0, hooks.length - 1);
+      const dy = Number(dyImpulse) || 0;
+      const dx = Number(dxImpulse) || 0;
+      if (!reducedMotion) {
+        for (let i = 0; i < hooks.length; i++) {
+          const falloff = Math.exp(-Math.abs(i - idx) / 2.1);
+          hooks[i].vy += dy * 6.5 * falloff;
+          hooks[i].vx += dx * 5.0 * falloff;
+          hooks[i].y += dy * 0.35 * falloff;
+        }
+        rebuildLiveSpanGeometry();
+      }
+      recomputeMetrics();
+      audio.trigger('pluck', clamp(Math.hypot(dx, dy) / 20, 0.25, 1.0), meanTensionRatio);
+    }
+
+    function triggerUpwardShock(hookIndex = 6) {
+      const idx = clamp(Math.round(Number(hookIndex) || 6), 0, hooks.length - 1);
+      shockTrauma = 0.68;
+      if (!reducedMotion) {
+        for (let i = 0; i < hooks.length; i++) {
+          const sign = i % 2 === 0 ? 1 : -1;
+          const falloff = Math.exp(-Math.abs(i - idx) / 3.4);
+          hooks[i].vy += sign * 95 * falloff;
+          hooks[i].vx += -sign * 42 * falloff;
+        }
+        const origin = hooks[idx];
+        for (let f = 0; f < 6; f++) {
+          fallingFragments.push({
+            x: origin.x + (f - 2.5) * 9,
+            y: origin.y - 16 - f * 4,
+            vx: (f - 2.5) * 22,
+            vy: -35 + f * 12,
+            rot: f * 0.7,
+            vRot: (f % 2 === 0 ? 1 : -1) * 4.8,
+            len: 14 + (f % 3) * 6,
+            alpha: 0.95
+          });
+        }
+      }
+      rebuildLiveSpanGeometry();
+      recomputeMetrics();
+      audio.trigger('upward_collapse', 0.95, meanTensionRatio);
+    }
+
+    let autoWalkDir = 1;
+
+    function nearestHookIndexAtX(px) {
+      let bestIdx = 0;
+      let bestDist = Infinity;
+      for (let i = 0; i < hooks.length; i++) {
+        const d = Math.abs(px - hooks[i].x);
+        if (d < bestDist) {
+          bestDist = d;
+          bestIdx = i;
+        }
+      }
+      return bestIdx;
+    }
+
+    function stepWalker(deltaNormX) {
+      let stepDelta = 0.055;
+      if (deltaNormX === undefined) {
+        if (walkerNormX >= 0.835) autoWalkDir = -1;
+        else if (walkerNormX <= 0.165) autoWalkDir = 1;
+        stepDelta = 0.055 * autoWalkDir;
+      } else {
+        stepDelta = Number(deltaNormX) || 0;
+      }
+      walkerNormX = Number(clamp(walkerNormX + stepDelta, 0.16, 0.84).toFixed(4));
+      walkerTargetNormX = walkerNormX;
+      woodenTieSteps += 1;
+      if (!reducedMotion) {
+        const nearIdx = nearestHookIndexAtX(walkerNormX * width);
+        hooks[nearIdx].vy += 18;
+      }
+      rebuildLiveSpanGeometry();
+      recomputeMetrics();
+      audio.trigger('wooden_tie', walkerClingingToHemp ? 0.82 : 0.55, meanTensionRatio);
+      return { walkerNormX, woodenTieSteps, walkerClingingToHemp, ankleTwistRisk };
+    }
+
+    function setWalkerTarget(normX) {
+      walkerTargetNormX = Number(clamp(Number(normX) || 0.5, 0.16, 0.84).toFixed(4));
+      if (reducedMotion) {
+        if (Math.abs(walkerTargetNormX - walkerNormX) > 0.004) woodenTieSteps += 1;
+        walkerNormX = walkerTargetNormX;
+        rebuildLiveSpanGeometry();
+        recomputeMetrics();
+      }
+    }
+
+    function setWindKnots(knots) {
+      windKnots = Number(clamp(Number(knots) || 0, 0, 32).toFixed(1));
+      rebuildLiveSpanGeometry();
+      recomputeMetrics();
+      if (windKnots >= 18) audio.trigger('wind_harp', clamp(windKnots / 32, 0.3, 0.9), meanTensionRatio);
+      return windKnots;
+    }
+
+    function serializeHook(h) {
+      return {
+        hookIndex: h.hookIndex,
+        id: h.id,
+        label: h.label,
+        supportType: h.supportType,
+        normX: h.normX,
+        tier: h.tier,
+        x: Number(h.x.toFixed(2)),
+        y: Number(h.y.toFixed(2)),
+        baseX: Number(h.baseX.toFixed(2)),
+        baseY: Number(h.baseY.toFixed(2)),
+        vx: Number(h.vx.toFixed(2)),
+        vy: Number(h.vy.toFixed(2)),
+        localSagPx: h.localSagPx,
+        tension: h.tension
+      };
+    }
+
+    function getHookPoint(hookIndex) {
+      const idx = clamp(Math.round(Number(hookIndex) || 0), 0, hooks.length - 1);
+      return serializeHook(hooks[idx]);
+    }
+
+    function getAllHookPoints() {
+      return hooks.map(serializeHook);
+    }
+
+    function hitTestNet(px, py) {
+      const x = Number(px);
+      const y = Number(py);
+      if (!Number.isFinite(x) || !Number.isFinite(y)) return null;
+      const HIT_R = 30;
+
+      let bestHook = null;
+      let bestHookD = HIT_R;
+      for (let i = 0; i < hooks.length; i++) {
+        const d = Math.hypot(x - hooks[i].x, y - hooks[i].y);
+        if (d <= bestHookD) {
+          bestHookD = d;
+          bestHook = hooks[i];
+        }
+      }
+      if (bestHook) {
+        return {
+          kind: 'hook',
+          hookIndex: bestHook.hookIndex,
+          label: bestHook.label,
+          detail: 'Rigging node #' + bestHook.hookIndex + ' (' + bestHook.supportType.replace(/_/g, ' ') + ') — sag ' + bestHook.localSagPx.toFixed(1) + 'px.',
+          x: bestHook.x,
+          y: bestHook.y,
+          tension: bestHook.tension
+        };
+      }
+
+      for (let i = 0; i < woodenTies.length; i++) {
+        const t = woodenTies[i];
+        if (Math.hypot(x - t.x, y - t.y) <= HIT_R * 0.85) {
+          return {
+            kind: 'wooden_tie',
+            hookIndex: nearestHookIndexAtX(t.x),
+            label: 'Little Wooden Tie #' + (t.tieIndex + 1),
+            detail: 'Step carefully between narrow timber ties; cling to hempen handrails in chasm gusts.',
+            x: t.x,
+            y: t.y,
+            tension: meanTensionRatio
+          };
+        }
+      }
+
+      for (let c = 0; c < chainSpans.length; c++) {
+        const pts = chainSpans[c].pts;
+        for (let s = 0; s < pts.length - 1; s++) {
+          if (distToSegment(x, y, pts[s].x, pts[s].y, pts[s + 1].x, pts[s + 1].y) <= HIT_R * 0.82) {
+            return {
+              kind: 'iron_chain',
+              hookIndex: nearestHookIndexAtX(x),
+              label: 'Upper Iron Anchor Chain',
+              detail: 'Forged iron links pinned into twin granite crests bear heavy terrace and spit loads.',
+              x,
+              y,
+              tension: maxStrandTension
+            };
+          }
+        }
+      }
+
+      for (let h = 0; h < hempStrands.length; h++) {
+        const pts = hempStrands[h].pts;
+        for (let s = 0; s < pts.length - 1; s++) {
+          if (distToSegment(x, y, pts[s].x, pts[s].y, pts[s + 1].x, pts[s + 1].y) <= HIT_R * 0.82) {
+            return {
+              kind: 'hempen_strand',
+              hookIndex: nearestHookIndexAtX(x),
+              label: 'Spider-Web Hempen Strand',
+              detail: 'Braided ochre hemp woven radially across the void; lasts a finite, known span of years.',
+              x,
+              y,
+              tension: meanTensionRatio
+            };
+          }
+        }
+      }
+
+      if (x <= width * 0.148 || x >= width * 0.852) {
+        const isWest = x < width * 0.5;
+        return {
+          kind: 'mountain_crest',
+          hookIndex: isWest ? 0 : 13,
+          label: isWest ? 'West Steep Mountain Crest' : 'East Steep Mountain Crest',
+          detail: 'Sheer granite precipice anchoring Octavia’s ropes, iron chains, and wooden-tie catwalks.',
+          x,
+          y,
+          tension: meanTensionRatio
+        };
+      }
+
+      if (y >= height * 0.86) {
+        return {
+          kind: 'chasm_bed',
+          hookIndex: 6,
+          label: 'Chasm Bed (' + CHASM_DEPTH_FEET + ' ft below)',
+          detail: 'Through parting abyssal clouds, the rocky canyon floor glimmers hundreds of feet beneath the net.',
+          x,
+          y,
+          tension: meanTensionRatio
+        };
+      }
+
+      return null;
+    }
+
+    function step(dtSec) {
+      const dt = clamp(Number(dtSec) || 0.016, 0.001, 0.08);
+      timeSec += dt;
+      shockTrauma = Math.max(0, shockTrauma - dt * 0.24);
+
+      if (reducedMotion) {
+        for (let i = 0; i < hooks.length; i++) {
+          hooks[i].x = hooks[i].baseX;
+          hooks[i].y = hooks[i].equilY;
+          hooks[i].vx = 0;
+          hooks[i].vy = 0;
+        }
+        walkerNormX = walkerTargetNormX;
+        fallingFragments.length = 0;
+        rebuildLiveSpanGeometry();
+        recomputeCloudsVisibility();
+        recomputeMetrics();
+        return;
+      }
+
+      const windRatio = windKnots / 32;
+      for (let i = 0; i < hooks.length; i++) {
+        const h = hooks[i];
+        const gustY = Math.sin(timeSec * 1.9 + i * 0.65) * windRatio * 14;
+        const gustX = Math.cos(timeSec * 1.45 + i * 0.5) * windRatio * 18 + windRatio * 4.5;
+        let coupleFy = 0;
+        if (i > 0) coupleFy += (hooks[i - 1].y - hooks[i - 1].equilY - (h.y - h.equilY)) * 18;
+        if (i < hooks.length - 1) coupleFy += (hooks[i + 1].y - hooks[i + 1].equilY - (h.y - h.equilY)) * 18;
+        const fy = (h.equilY + gustY * 0.28 - h.y) * 34 + coupleFy - h.vy * 4.6;
+        const fx = (h.baseX + gustX * 0.35 - h.x) * 30 - h.vx * 5.0;
+        h.vy += fy * dt;
+        h.vx += fx * dt;
+        h.y += h.vy * dt;
+        h.x += h.vx * dt;
+      }
+
+      for (let c = 0; c < clouds.length; c++) {
+        const cl = clouds[c];
+        cl.normX += cl.speedRatio * (0.45 + windRatio * 1.35) * dt;
+        if (cl.normX > 1.22) cl.normX = -0.22;
+      }
+      recomputeCloudsVisibility();
+
+      const walkDiff = walkerTargetNormX - walkerNormX;
+      if (Math.abs(walkDiff) > 0.0008) {
+        const stepMove = Math.sign(walkDiff) * Math.min(Math.abs(walkDiff), dt * 0.14);
+        walkerNormX = Number(clamp(walkerNormX + stepMove, 0.16, 0.84).toFixed(4));
+        walkerAccumDist += Math.abs(stepMove);
+        if (walkerAccumDist >= 0.018) {
+          walkerAccumDist = 0;
+          woodenTieSteps += 1;
+          audio.trigger('wooden_tie', 0.45, meanTensionRatio);
+        }
+      }
+
+      for (let f = fallingFragments.length - 1; f >= 0; f--) {
+        const frag = fallingFragments[f];
+        frag.vy += 390 * dt;
+        frag.x += (frag.vx + windKnots * 0.9) * dt;
+        frag.y += frag.vy * dt;
+        frag.rot += frag.vRot * dt;
+        frag.alpha -= dt * 0.34;
+        if (frag.y > height * 1.04 || frag.alpha <= 0.02) fallingFragments.splice(f, 1);
+      }
+
+      rebuildLiveSpanGeometry();
+      recomputeMetrics();
+    }
+
+    function drawCloudBank(ctx, cl, w, h, alphaScale) {
+      const cx = cl.normX * w;
+      const cy = cl.normY * h;
+      const rx = cl.rxRatio * w;
+      const ry = cl.ryRatio * h;
+      ctx.save();
+      ctx.globalAlpha = clamp(cl.alpha * alphaScale, 0.03, 0.65);
+      const grad = ctx.createRadialGradient(cx, cy - ry * 0.2, ry * 0.2, cx, cy, rx * 1.15);
+      grad.addColorStop(0, PALETTE.abyssMist);
+      grad.addColorStop(0.55, PALETTE.cloudDrift);
+      grad.addColorStop(1, 'rgba(11,16,23,0)');
+      ctx.fillStyle = grad;
+      for (let lobe = -1; lobe <= 1; lobe++) {
+        ctx.beginPath();
+        ctx.ellipse(cx + lobe * rx * 0.42, cy + Math.abs(lobe) * ry * 0.22, rx * (0.78 - Math.abs(lobe) * 0.14), ry * (1 - Math.abs(lobe) * 0.15), 0, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.restore();
+    }
+
+    function renderChasmAndWeb(ctx, renderW, renderH, view = {}) {
+      if (!ctx) return;
+      const w = Math.max(240, Number(renderW) || width);
+      const h = Math.max(240, Number(renderH) || height);
+      if (Math.abs(w - width) > 0.5 || Math.abs(h - height) > 0.5) resize(w, h, dpr);
+
+      ctx.save();
+      const skyGrad = ctx.createLinearGradient(0, 0, 0, h);
+      skyGrad.addColorStop(0, '#121b27');
+      skyGrad.addColorStop(0.52, PALETTE.abyssVoid);
+      skyGrad.addColorStop(1, PALETTE.chasmBed);
+      ctx.fillStyle = skyGrad;
+      ctx.fillRect(0, 0, w, h);
+
+      const bedTop = h * 0.872;
+      ctx.save();
+      ctx.globalAlpha = chasmBedVisibility;
+      ctx.fillStyle = PALETTE.chasmBed;
+      ctx.beginPath();
+      ctx.moveTo(w * 0.11, h);
+      ctx.lineTo(w * 0.12, bedTop + 14);
+      ctx.lineTo(w * 0.34, bedTop + 4);
+      ctx.lineTo(w * 0.51, bedTop + 11);
+      ctx.lineTo(w * 0.69, bedTop + 3);
+      ctx.lineTo(w * 0.88, bedTop + 15);
+      ctx.lineTo(w * 0.89, h);
+      ctx.closePath();
+      ctx.fill();
+      ctx.strokeStyle = PALETTE.cloudDrift;
+      ctx.lineWidth = 1.4;
+      ctx.beginPath();
+      ctx.moveTo(w * 0.46, bedTop + 8);
+      ctx.quadraticCurveTo(w * 0.53, bedTop + (h - bedTop) * 0.48, w * 0.48, h);
+      ctx.stroke();
+      ctx.restore();
+
+      for (let c = 0; c < clouds.length; c++) {
+        if (clouds[c].layer < 2) drawCloudBank(ctx, clouds[c], w, h, 1.0);
+      }
+
+      const drawCrest = (poly, isWest) => {
+        ctx.beginPath();
+        for (let i = 0; i < poly.length; i++) {
+          if (i === 0) ctx.moveTo(poly[i].x, poly[i].y);
+          else ctx.lineTo(poly[i].x, poly[i].y);
+        }
+        ctx.closePath();
+        const cg = ctx.createLinearGradient(isWest ? 0 : w, 0, isWest ? w * 0.155 : w * 0.845, 0);
+        cg.addColorStop(0, PALETTE.graniteShadow);
+        cg.addColorStop(0.75, PALETTE.graniteCrest);
+        cg.addColorStop(1, PALETTE.graniteHighlight);
+        ctx.fillStyle = cg;
+        ctx.fill();
+        ctx.strokeStyle = PALETTE.graniteHighlight;
+        ctx.lineWidth = 1.3;
+        ctx.beginPath();
+        for (let i = 1; i < poly.length - 1; i++) {
+          if (i === 1) ctx.moveTo(poly[i].x, poly[i].y);
+          else ctx.lineTo(poly[i].x, poly[i].y);
+        }
+        ctx.stroke();
+      };
+      drawCrest(westCrestPoly, true);
+      drawCrest(eastCrestPoly, false);
+
+      const ropeStroke = meanTensionRatio > 1.02 ? PALETTE.frayCrimson : PALETTE.hempTaupe;
+      for (let s = 0; s < hempStrands.length; s++) {
+        const pts = hempStrands[s].pts;
+        ctx.strokeStyle = s < 3 ? PALETTE.hempOchre : ropeStroke;
+        ctx.lineWidth = s === 0 ? 2.2 : (s < 3 ? 1.65 : 1.05);
+        ctx.globalAlpha = s < 3 ? 0.92 : 0.62;
+        ctx.beginPath();
+        ctx.moveTo(pts[0].x, pts[0].y);
+        for (let p = 1; p < pts.length; p++) ctx.lineTo(pts[p].x, pts[p].y);
+        ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+
+      for (let c = 0; c < chainSpans.length; c++) {
+        const pts = chainSpans[c].pts;
+        ctx.strokeStyle = PALETTE.chainIron;
+        ctx.lineWidth = 2.4;
+        ctx.beginPath();
+        ctx.moveTo(pts[0].x, pts[0].y);
+        for (let p = 1; p < pts.length; p++) ctx.lineTo(pts[p].x, pts[p].y);
+        ctx.stroke();
+        ctx.strokeStyle = PALETTE.graniteHighlight;
+        ctx.lineWidth = 1.1;
+        for (let p = 0; p < pts.length - 1; p++) {
+          const mx = (pts[p].x + pts[p + 1].x) * 0.5;
+          const my = (pts[p].y + pts[p + 1].y) * 0.5;
+          const ang = Math.atan2(pts[p + 1].y - pts[p].y, pts[p + 1].x - pts[p].x);
+          ctx.save();
+          ctx.translate(mx, my);
+          ctx.rotate(ang);
+          ctx.strokeRect(-4, -2, 8, 4);
+          ctx.restore();
+        }
+      }
+
+      const allPitons = moorings.westPitons.concat(moorings.eastPitons);
+      ctx.fillStyle = PALETTE.chainIron;
+      ctx.strokeStyle = PALETTE.graniteHighlight;
+      for (let i = 0; i < allPitons.length; i++) {
+        ctx.beginPath();
+        ctx.arc(allPitons[i].x, allPitons[i].y, 4.2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+      }
+      const allBollards = moorings.westBollards.concat(moorings.eastBollards);
+      ctx.fillStyle = PALETTE.hempOchre;
+      for (let i = 0; i < allBollards.length; i++) {
+        ctx.fillRect(allBollards[i].x - 3.5, allBollards[i].y - 5, 7, 10);
+      }
+
+      if (woodenTies.length > 1) {
+        ctx.strokeStyle = PALETTE.hempOchre;
+        ctx.lineWidth = 1.25;
+        ctx.beginPath();
+        for (let i = 0; i < woodenTies.length; i++) {
+          const rx = woodenTies[i].x;
+          const ry = woodenTies[i].y - 13;
+          if (i === 0) ctx.moveTo(rx, ry);
+          else ctx.lineTo(rx, ry);
+        }
+        ctx.stroke();
+        for (let i = 0; i < woodenTies.length; i++) {
+          const t = woodenTies[i];
+          if (i % 4 === 0) {
+            ctx.strokeStyle = PALETTE.hempTaupe;
+            ctx.lineWidth = 0.85;
+            ctx.beginPath();
+            ctx.moveTo(t.x, t.y);
+            ctx.lineTo(t.x, t.y - 13);
+            ctx.stroke();
+          }
+          ctx.save();
+          ctx.translate(t.x, t.y);
+          ctx.rotate(t.tiltRad);
+          ctx.fillStyle = i % 2 === 0 ? PALETTE.hempOchre : PALETTE.hempTaupe;
+          ctx.fillRect(-5.2, -1.8, 10.4, 3.6);
+          ctx.restore();
+        }
+      }
+
+      const wx = walkerNormX * w;
+      const wy = tierBaseY(1, walkerNormX) + hookDeflectionAtNormX(walkerNormX, 1);
+      ctx.save();
+      ctx.translate(wx, wy);
+      ctx.rotate(walkerClingingToHemp ? 0.14 : 0.03);
+      const glow = ctx.createRadialGradient(4, -9, 1, 4, -9, 18);
+      glow.addColorStop(0, 'rgba(242,184,75,0.55)');
+      glow.addColorStop(1, 'rgba(242,184,75,0)');
+      ctx.fillStyle = glow;
+      ctx.beginPath(); ctx.arc(4, -9, 18, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = PALETTE.abyssMist;
+      ctx.lineWidth = 1.8;
+      ctx.beginPath();
+      ctx.moveTo(-2, 0); ctx.lineTo(0, -10); ctx.lineTo(2.5, 0);
+      ctx.moveTo(0, -10); ctx.lineTo(0, -17);
+      if (walkerClingingToHemp) {
+        ctx.moveTo(0, -14); ctx.lineTo(-6, -13);
+        ctx.moveTo(0, -14); ctx.lineTo(6, -13);
+      } else {
+        ctx.moveTo(0, -14); ctx.lineTo(4, -9);
+      }
+      ctx.stroke();
+      ctx.fillStyle = PALETTE.lanternAmber;
+      ctx.beginPath(); ctx.arc(0, -20, 2.7, 0, Math.PI * 2); ctx.fill();
+      ctx.restore();
+
+      const activeHookIdx = view && Number.isInteger(view.selectedHookIndex) ? view.selectedHookIndex : -1;
+      for (let i = 0; i < hooks.length; i++) {
+        const hk = hooks[i];
+        ctx.fillStyle = hk.tension > 1.04 ? PALETTE.frayCrimson : (hk.tier === 0 ? PALETTE.graniteHighlight : PALETTE.hempOchre);
+        ctx.strokeStyle = PALETTE.abyssVoid;
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.arc(hk.x, hk.y, hk.isHung ? 4.2 : 3.2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        if (i === activeHookIdx) {
+          ctx.strokeStyle = PALETTE.lanternAmber;
+          ctx.lineWidth = 1.5;
+          ctx.beginPath(); ctx.arc(hk.x, hk.y, 8, 0, Math.PI * 2); ctx.stroke();
+        }
+      }
+
+      for (let f = 0; f < fallingFragments.length; f++) {
+        const frag = fallingFragments[f];
+        ctx.save();
+        ctx.globalAlpha = clamp(frag.alpha, 0, 1);
+        ctx.translate(frag.x, frag.y);
+        ctx.rotate(frag.rot);
+        ctx.strokeStyle = PALETTE.frayCrimson;
+        ctx.lineWidth = 2.2;
+        ctx.beginPath();
+        ctx.moveTo(-frag.len * 0.5, 0);
+        ctx.lineTo(frag.len * 0.5, 0);
+        ctx.stroke();
+        ctx.restore();
+      }
+      ctx.restore();
+    }
+
+    function renderForegroundMist(ctx, renderW, renderH) {
+      if (!ctx) return;
+      const w = Math.max(240, Number(renderW) || width);
+      const h = Math.max(240, Number(renderH) || height);
+      ctx.save();
+      for (let c = 0; c < clouds.length; c++) {
+        if (clouds[c].layer === 2) drawCloudBank(ctx, clouds[c], w, h, 0.85);
+      }
+      ctx.restore();
+    }
+
+    function toggleAudio(forceBool) {
+      const nextMuted = forceBool !== undefined ? !Boolean(forceBool) : !audio.isMuted();
+      audio.setMuted(nextMuted, windKnots, meanTensionRatio);
+      return !audio.isMuted();
+    }
+
+    function setMuted(flag) {
+      return audio.setMuted(Boolean(flag), windKnots, meanTensionRatio);
+    }
+
+    function isMuted() {
+      return audio.isMuted();
+    }
+
+    function unlockAudio() {
+      audio.unlock();
+    }
+
+    function triggerAcousticEvent(kind, intensity = 0.6) {
+      return audio.trigger(kind || 'pluck', intensity, meanTensionRatio);
+    }
+
+    function setReducedMotion(flag) {
+      reducedMotion = Boolean(flag);
+      if (reducedMotion) step(0.016);
+      return reducedMotion;
+    }
+
+    function reset() {
+      timeSec = 0;
+      windKnots = 9;
+      totalMassKg = 0;
+      shockTrauma = 0;
+      walkerNormX = 0.26;
+      walkerTargetNormX = 0.26;
+      walkerAccumDist = 0;
+      woodenTieSteps = 0;
+      autoWalkDir = 1;
+      fallingFragments.length = 0;
+      for (let i = 0; i < hooks.length; i++) {
+        hooks[i].massKg = 0;
+        hooks[i].isHung = false;
+        hooks[i].vx = 0;
+        hooks[i].vy = 0;
+        hooks[i].targetSagPx = 4.5 * (height / 800);
+        hooks[i].equilY = hooks[i].baseY + hooks[i].targetSagPx;
+        hooks[i].x = hooks[i].baseX;
+        hooks[i].y = hooks[i].equilY;
+      }
+      rebuildLiveSpanGeometry();
+      recomputeCloudsVisibility();
+      recomputeMetrics();
+      return getState();
+    }
+
+    function getState() {
+      return {
+        hookCount: 14,
+        woodenTieCount: WOODEN_TIE_COUNT,
+        chainSpanCount: CHAIN_SPAN_COUNT,
+        hempStrandCount: HEMP_STRAND_COUNT,
+        chasmDepthFeet: CHASM_DEPTH_FEET,
+        chasmBedVisibility,
+        cloudCount: CLOUD_COUNT,
+        windKnots,
+        meanTensionRatio,
+        maxStrandTension,
+        meanSagPx,
+        ankleTwistRisk,
+        walkerNormX,
+        walkerClingingToHemp,
+        woodenTieSteps,
+        muted: audio.isMuted(),
+        netIntact: true
+      };
+    }
+
+    resize(width, height, dpr);
+
+    return {
+      resize,
+      setHookLoads,
+      applyImpulse,
+      triggerUpwardShock,
+      stepWalker,
+      setWalkerTarget,
+      setWindKnots,
+      getHookPoint,
+      getAllHookPoints,
+      hitTestNet,
+      step,
+      renderChasmAndWeb,
+      renderForegroundMist,
+      toggleAudio,
+      setMuted,
+      isMuted,
+      unlockAudio,
+      triggerAcousticEvent,
+      getState,
+      setReducedMotion,
+      reset
+    };
+  }
+
+  const OctaviaCatenaryWeb = Object.freeze({
+    PALETTE,
+    HOOK_SPEC,
+    createCatenaryWeb
+  });
+
+  globalThis.OctaviaCatenaryWeb = OctaviaCatenaryWeb;
+  if (typeof window !== 'undefined') {
+    window.OctaviaCatenaryWeb = OctaviaCatenaryWeb;
+  }
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = OctaviaCatenaryWeb;
+  }
+})();
+
+(function () {
+  'use strict';
+
+  const PALETTE = Object.freeze({
+    abyssVoid: '#0b1017',
+    chasmBed: '#141d29',
+    graniteShadow: '#1d232c',
+    graniteCrest: '#545d68',
+    graniteHighlight: '#86909c',
+    abyssMist: '#c9d6e3',
+    cloudDrift: '#8fa4ba',
+    hempOchre: '#c89b54',
+    hempTaupe: '#9e7334',
+    chainIron: '#3b434e',
+    lanternAmber: '#f2b84b',
+    gasGlow: '#ffd67c',
+    trailingIvy: '#5e8c61',
+    frayCrimson: '#c9534a',
+    cedarHull: '#6d472b',
+    cedarWarm: '#93623d',
+    canvasSack: '#d2be96',
+    copperRose: '#b97548',
+    terracotta: '#b55d3d',
+    linenLight: '#e4dfd3'
+  });
+
+  const DOWNWARD_STONES = Object.freeze([
+    Object.freeze({
+      index: 0, id: 'rope_ladders', hookIndex: 0, name: 'Rope Ladders',
+      category: 'access', massKg: 18, cordLengthPx: 146, cordType: 'hemp',
+      stoneInscription: 'Knotted hemp rungs drop straight into the empty air toward lower sack-doors.'
+    }),
+    Object.freeze({
+      index: 1, id: 'sack_hammocks', hookIndex: 1, name: 'Hammock-Houses Like Sacks',
+      category: 'dwelling', massKg: 64, cordLengthPx: 96, cordType: 'hemp',
+      stoneInscription: 'Canvas-and-hemp dwellings stitched like sacks, cradling sleepers over 840 feet of void.'
+    }),
+    Object.freeze({
+      index: 2, id: 'clothes_hangers', hookIndex: 2, name: 'Suspended Clothes Hangers',
+      category: 'domestic', massKg: 12, cordLengthPx: 74, cordType: 'string',
+      stoneInscription: 'A timber spar where shirts and linen dry briskly in chasm updrafts.'
+    }),
+    Object.freeze({
+      index: 3, id: 'gondola_terraces', hookIndex: 3, name: 'Terraces Like Gondolas',
+      category: 'dwelling', massKg: 72, cordLengthPx: 112, cordType: 'chain',
+      stoneInscription: 'Curved cedar balconies slung like Venetian hulls beneath twin iron chains.'
+    }),
+    Object.freeze({
+      index: 4, id: 'water_skins', hookIndex: 4, name: 'Skins of Water',
+      category: 'provision', massKg: 34, cordLengthPx: 82, cordType: 'hemp',
+      stoneInscription: 'Tarred goatskin cisterns cool in the mountain mist beneath the catwalk.'
+    }),
+    Object.freeze({
+      index: 5, id: 'gas_jets', hookIndex: 5, name: 'Jets of Gas',
+      category: 'utility', massKg: 19, cordLengthPx: 68, cordType: 'cable',
+      stoneInscription: 'Flexible brass tubing feeds a steady blue-amber jet clear of hempen knots.'
+    }),
+    Object.freeze({
+      index: 6, id: 'roasting_spits', hookIndex: 6, name: 'Suspended Spits',
+      category: 'provision', massKg: 24, cordLengthPx: 88, cordType: 'chain',
+      stoneInscription: 'An iron turnspit and drip-brazier hung on chain links where grease cannot scorch rope.'
+    }),
+    Object.freeze({
+      index: 7, id: 'string_baskets', hookIndex: 7, name: 'Baskets on Strings',
+      category: 'exchange', massKg: 15, cordLengthPx: 132, cordType: 'string',
+      stoneInscription: 'Wicker parcels paid out on long twine from upper ties to lower hammocks.'
+    }),
+    Object.freeze({
+      index: 8, id: 'dumb_waiters', hookIndex: 8, name: 'Abyss Dumb-Waiters',
+      category: 'exchange', massKg: 38, cordLengthPx: 126, cordType: 'cable',
+      stoneInscription: 'Counterweighted wooden lift-boxes shuttling bread and oil vertically through open air.'
+    }),
+    Object.freeze({
+      index: 9, id: 'hanging_showers', hookIndex: 9, name: 'Suspended Showers',
+      category: 'domestic', massKg: 28, cordLengthPx: 102, cordType: 'chain',
+      stoneInscription: 'A perforated copper rose releasing silver droplets that fall hundreds of feet into cloud.'
+    }),
+    Object.freeze({
+      index: 10, id: 'trapezes_and_rings', hookIndex: 10, name: 'Trapezes & Children’s Rings',
+      category: 'play', massKg: 22, cordLengthPx: 118, cordType: 'hemp',
+      stoneInscription: 'Children swing arc-to-arc over unmeasured emptiness without vertigo.'
+    }),
+    Object.freeze({
+      index: 11, id: 'cable_cars', hookIndex: 11, name: 'Chasm Cable Cars',
+      category: 'transit', massKg: 58, cordLengthPx: 92, cordType: 'cable',
+      stoneInscription: 'A small timber gondola-car gliding along a taut traverse wire between spans.'
+    }),
+    Object.freeze({
+      index: 12, id: 'abyss_chandeliers', hookIndex: 12, name: 'Pendant Chandeliers',
+      category: 'illumination', massKg: 30, cordLengthPx: 108, cordType: 'chain',
+      stoneInscription: 'Tiered iron candle-crowns hung beneath the web so night travelers read the abyss.'
+    }),
+    Object.freeze({
+      index: 13, id: 'trailing_plant_pots', hookIndex: 13, name: 'Pots with Trailing Plants',
+      category: 'flora', massKg: 20, cordLengthPx: 98, cordType: 'hemp',
+      stoneInscription: 'Terracotta jars spilling long ivy runners downward toward drifting cloud.'
+    })
+  ]);
+
+  const STARTER_INDICES = Object.freeze([0, 1, 3, 12]);
+  const MAX_SAFE_LOAD_KG = 540;
+  const FULL_SPAN_LIFESPAN_YEARS = 42.0;
+  const OTHER_CITIES_UNCERTAINTY = 0.78;
+
+  function clamp(v, lo, hi) {
+    return v < lo ? lo : v > hi ? hi : v;
+  }
+
+  function resolveStoneIndex(idOrIndex) {
+    if (typeof idOrIndex === 'number' && Number.isInteger(idOrIndex)) {
+      return idOrIndex >= 0 && idOrIndex < DOWNWARD_STONES.length ? idOrIndex : -1;
+    }
+    if (typeof idOrIndex === 'string') {
+      const trimmed = idOrIndex.trim();
+      for (let i = 0; i < DOWNWARD_STONES.length; i += 1) {
+        if (DOWNWARD_STONES[i].id === trimmed) return i;
+      }
+      if (/^\d+$/.test(trimmed)) {
+        const parsed = Number(trimmed);
+        return parsed >= 0 && parsed < DOWNWARD_STONES.length ? parsed : -1;
+      }
+    }
+    return -1;
+  }
+
+  function pointToSegmentDist(px, py, x1, y1, x2, y2) {
+    const dx = x2 - x1;
+    const dy = y2 - y1;
+    const lenSq = dx * dx + dy * dy;
+    if (lenSq <= 0.0001) return Math.hypot(px - x1, py - y1);
+    const t = clamp(((px - x1) * dx + (py - y1) * dy) / lenSq, 0, 1);
+    return Math.hypot(px - (x1 + t * dx), py - (y1 + t * dy));
+  }
+
+  function resolveHookAnchor(hookIndex, hookPoints, width, height) {
+    if (Array.isArray(hookPoints) && hookPoints.length > 0) {
+      let hp = hookPoints[hookIndex];
+      if (!hp || hp.hookIndex !== hookIndex) {
+        for (let i = 0; i < hookPoints.length; i += 1) {
+          if (hookPoints[i] && hookPoints[i].hookIndex === hookIndex) {
+            hp = hookPoints[i];
+            break;
+          }
+        }
+      }
+      if (hp && Number.isFinite(hp.x) && Number.isFinite(hp.y)) {
+        return {
+          x: hp.x,
+          y: hp.y,
+          vx: Number.isFinite(hp.vx) ? hp.vx : 0,
+          vy: Number.isFinite(hp.vy) ? hp.vy : 0,
+          tension: Number.isFinite(hp.tension) ? hp.tension : 0.35
+        };
+      }
+    }
+    const w = width > 0 ? width : 1280;
+    const h = height > 0 ? height : 800;
+    const u = hookIndex / 13;
+    const normX = 0.17 + u * 0.66;
+    const tierBand = (hookIndex % 3) * 0.028;
+    const sag = Math.sin(Math.PI * u) * 0.085;
+    return {
+      x: normX * w,
+      y: (0.28 + tierBand + sag) * h,
+      vx: 0,
+      vy: 0,
+      tension: 0.35
+    };
+  }
+  function computeCordScale(width, height) {
+    const w = width > 0 ? width : 1280;
+    const h = height > 0 ? height : 800;
+    return clamp(Math.min(w / 1180, h / 740) * 0.42 + 0.60, 0.64, 1.06);
+  }
+
+  function createPendantSystem(opts = {}) {
+    let reducedMotion = Boolean(opts && opts.reducedMotion);
+    const onChange = opts && typeof opts.onChange === 'function' ? opts.onChange : null;
+    const onUpwardCollapse = opts && typeof opts.onUpwardCollapse === 'function' ? opts.onUpwardCollapse : null;
+
+    let lastWidth = 1280;
+    let lastHeight = 800;
+    let simTime = 0;
+    let elapsedYears = 0;
+    let extraBallastKg = 0;
+    let upwardAttemptsCount = 0;
+    let upwardToppledCount = 0;
+    let activeStoneId = 'gondola_terraces';
+    let cableCarT = 0.32;
+    let cableCarDir = 1;
+    let cableCarWorldX = 0;
+    let cableCarWorldY = 0;
+    let showerDrops = [];
+    let activeFallDebris = [];
+
+    const runtimeStones = DOWNWARD_STONES.map(function (spec, idx) {
+      return {
+        index: idx,
+        isHung: false,
+        theta: 0,
+        omega: 0,
+        prevVx: 0,
+        deployScale: 1,
+        anchorX: 0,
+        anchorY: 0,
+        x: 0,
+        y: 0,
+        phaseSeed: idx * 1.37 + 0.4
+      };
+    });
+
+    function syncStoneGeometry(hookPoints, width, height) {
+      const w = width > 0 ? width : lastWidth;
+      const h = height > 0 ? height : lastHeight;
+      const cScale = computeCordScale(w, h);
+      for (let i = 0; i < DOWNWARD_STONES.length; i += 1) {
+        const spec = DOWNWARD_STONES[i];
+        const st = runtimeStones[i];
+        const anc = resolveHookAnchor(spec.hookIndex, hookPoints, w, h);
+        st.anchorX = anc.x;
+        st.anchorY = anc.y;
+        const len = spec.cordLengthPx * cScale * st.deployScale;
+        st.x = anc.x + Math.sin(st.theta) * len;
+        st.y = Math.min(h - 30, anc.y + Math.cos(st.theta) * len);
+      }
+    }
+
+    function applyStarterDefaults() {
+      simTime = 0;
+      elapsedYears = 0;
+      extraBallastKg = 0;
+      upwardAttemptsCount = 0;
+      upwardToppledCount = 0;
+      activeStoneId = 'gondola_terraces';
+      cableCarT = 0.32;
+      cableCarDir = 1;
+      showerDrops = [];
+      activeFallDebris = [];
+      for (let i = 0; i < runtimeStones.length; i += 1) {
+        const st = runtimeStones[i];
+        st.isHung = STARTER_INDICES.indexOf(i) !== -1;
+        st.theta = 0;
+        st.omega = 0;
+        st.prevVx = 0;
+        st.deployScale = 1;
+      }
+      syncStoneGeometry(null, lastWidth, lastHeight);
+    }
+
+    applyStarterDefaults();
+
+    function getState() {
+      let hungCount = 0;
+      let stonesMassKg = 0;
+      const stonesSnapshot = new Array(DOWNWARD_STONES.length);
+      for (let i = 0; i < DOWNWARD_STONES.length; i += 1) {
+        const spec = DOWNWARD_STONES[i];
+        const st = runtimeStones[i];
+        if (st.isHung) {
+          hungCount += 1;
+          stonesMassKg += spec.massKg;
+        }
+        stonesSnapshot[i] = {
+          index: spec.index,
+          id: spec.id,
+          hookIndex: spec.hookIndex,
+          name: spec.name,
+          category: spec.category,
+          massKg: spec.massKg,
+          cordLengthPx: spec.cordLengthPx,
+          cordType: spec.cordType,
+          stoneInscription: spec.stoneInscription,
+          isHung: st.isHung,
+          swayDeg: +(st.theta * 180 / Math.PI).toFixed(2),
+          x: +st.x.toFixed(1),
+          y: +st.y.toFixed(1),
+          anchorX: +st.anchorX.toFixed(1),
+          anchorY: +st.anchorY.toFixed(1)
+        };
+      }
+      const totalMassKg = +(stonesMassKg + extraBallastKg).toFixed(2);
+      const netLoadRatio = +(totalMassKg / MAX_SAFE_LOAD_KG).toFixed(4);
+      const overloaded = totalMassKg > MAX_SAFE_LOAD_KG;
+      const knownSpanLifespanYears = +(Math.max(
+        1.5,
+        FULL_SPAN_LIFESPAN_YEARS - elapsedYears - netLoadRatio * 6.5
+      )).toFixed(1);
+
+      let civicSerenity;
+      if (!overloaded) {
+        civicSerenity = +(0.36 + (hungCount / 14) * 0.59).toFixed(4);
+      } else {
+        const excessRatio = (totalMassKg - MAX_SAFE_LOAD_KG) / MAX_SAFE_LOAD_KG;
+        civicSerenity = +(clamp(0.30 - excessRatio * 0.38, 0.10, 0.30)).toFixed(4);
+      }
+      const existentialUncertainty = +(1 - civicSerenity).toFixed(4);
+      const lessUncertainThanOtherCities = existentialUncertainty < OTHER_CITIES_UNCERTAINTY;
+
+      let phaseLabel;
+      if (overloaded) {
+        phaseLabel = 'Overloaded Hemp Warning';
+      } else if (hungCount === 0) {
+        phaseLabel = 'Bare Spider-Web Span';
+      } else if (hungCount <= 9) {
+        phaseLabel = 'Measured Downward Settlement';
+      } else {
+        phaseLabel = 'Full Pendant Equilibrium — Finite & Serene';
+      }
+
+      return {
+        stones: stonesSnapshot,
+        hungCount: hungCount,
+        totalStoneCatalog: 14,
+        totalMassKg: totalMassKg,
+        extraBallastKg: extraBallastKg,
+        maxSafeLoadKg: MAX_SAFE_LOAD_KG,
+        netLoadRatio: netLoadRatio,
+        overloaded: overloaded,
+        netFiniteLifespanKnown: true,
+        fullSpanLifespanYears: FULL_SPAN_LIFESPAN_YEARS,
+        knownSpanLifespanYears: knownSpanLifespanYears,
+        elapsedYears: +elapsedYears.toFixed(1),
+        civicSerenity: civicSerenity,
+        existentialUncertainty: existentialUncertainty,
+        otherCitiesUncertainty: OTHER_CITIES_UNCERTAINTY,
+        lessUncertainThanOtherCities: lessUncertainThanOtherCities,
+        upwardAttemptsCount: upwardAttemptsCount,
+        upwardToppledCount: upwardToppledCount,
+        standingUpwardStructures: 0,
+        activeFallDebrisCount: activeFallDebris.length,
+        activeStoneId: activeStoneId,
+        phaseLabel: phaseLabel
+      };
+    }
+
+    function emitChange(reason) {
+      const snapshot = getState();
+      if (onChange) onChange(snapshot, reason);
+      return snapshot;
+    }
+    function getHookLoads() {
+      let hungCount = 0;
+      for (let i = 0; i < runtimeStones.length; i += 1) {
+        if (runtimeStones[i].isHung) hungCount += 1;
+      }
+      const perHungExtra = hungCount > 0 ? extraBallastKg / hungCount : 0;
+      const perHookFallback = hungCount === 0 && extraBallastKg > 0 ? extraBallastKg / 14 : 0;
+      return DOWNWARD_STONES.map(function (spec, i) {
+        const isHung = runtimeStones[i].isHung;
+        const mass = isHung ? +(spec.massKg + perHungExtra).toFixed(2) : +perHookFallback.toFixed(2);
+        return {
+          hookIndex: spec.hookIndex,
+          stoneId: spec.id,
+          isHung: isHung,
+          massKg: mass
+        };
+      });
+    }
+
+    function hangStone(idOrIndex) {
+      let idx = -1;
+      if (idOrIndex === undefined || idOrIndex === null) {
+        for (let i = 0; i < runtimeStones.length; i += 1) {
+          if (!runtimeStones[i].isHung) {
+            idx = i;
+            break;
+          }
+        }
+      } else {
+        idx = resolveStoneIndex(idOrIndex);
+      }
+      if (idx < 0) return getState();
+      const st = runtimeStones[idx];
+      st.isHung = true;
+      st.deployScale = reducedMotion ? 1 : 0.42;
+      if (!reducedMotion) {
+        st.omega += (idx % 2 === 0 ? 1 : -1) * 0.42;
+      }
+      activeStoneId = DOWNWARD_STONES[idx].id;
+      syncStoneGeometry(null, lastWidth, lastHeight);
+      return emitChange('hangStone');
+    }
+
+    function unhangStone(idOrIndex) {
+      const idx = resolveStoneIndex(idOrIndex);
+      if (idx < 0) return getState();
+      const st = runtimeStones[idx];
+      st.isHung = false;
+      st.theta = 0;
+      st.omega = 0;
+      if (activeStoneId === DOWNWARD_STONES[idx].id) {
+        activeStoneId = null;
+        for (let i = 0; i < runtimeStones.length; i += 1) {
+          if (runtimeStones[i].isHung) {
+            activeStoneId = DOWNWARD_STONES[i].id;
+            break;
+          }
+        }
+      }
+      return emitChange('unhangStone');
+    }
+
+    function toggleStone(idOrIndex) {
+      const idx = resolveStoneIndex(idOrIndex);
+      if (idx < 0) return getState();
+      return runtimeStones[idx].isHung ? unhangStone(idx) : hangStone(idx);
+    }
+
+    function hangAllStones() {
+      extraBallastKg = 0;
+      for (let i = 0; i < runtimeStones.length; i += 1) {
+        const st = runtimeStones[i];
+        if (!st.isHung && !reducedMotion) {
+          st.deployScale = 0.55;
+          st.omega = (i % 2 === 0 ? 1 : -1) * 0.28;
+        }
+        st.isHung = true;
+      }
+      activeStoneId = 'abyss_chandeliers';
+      syncStoneGeometry(null, lastWidth, lastHeight);
+      return emitChange('hangAllStones');
+    }
+
+    function clearAllStones() {
+      extraBallastKg = 0;
+      showerDrops = [];
+      for (let i = 0; i < runtimeStones.length; i += 1) {
+        runtimeStones[i].isHung = false;
+        runtimeStones[i].theta = 0;
+        runtimeStones[i].omega = 0;
+      }
+      activeStoneId = null;
+      return emitChange('clearAllStones');
+    }
+
+    function attemptUpwardBuild(hookIndexOptional = 6) {
+      const parsed = Number.isInteger(hookIndexOptional) ? hookIndexOptional : 6;
+      const hIdx = clamp(parsed, 0, 13);
+      upwardAttemptsCount += 1;
+      upwardToppledCount += 1;
+      const anc = runtimeStones[hIdx];
+      const baseX = anc.anchorX || (0.17 + (hIdx / 13) * 0.66) * lastWidth;
+      const baseY = anc.anchorY || 0.34 * lastHeight;
+      const fallDir = (upwardAttemptsCount + hIdx) % 2 === 0 ? 1 : -1;
+
+      for (let b = 0; b < 7; b += 1) {
+        const courseOffset = 10 + b * 10.5;
+        activeFallDebris.push({
+          hookIndex: hIdx,
+          baseX: baseX,
+          baseY: baseY,
+          courseOffset: courseOffset,
+          x: baseX,
+          y: baseY - courseOffset,
+          vx: 0,
+          vy: 0,
+          rot: 0,
+          vRot: fallDir * (1.9 + b * 0.42),
+          tiltRad: 0.09 * fallDir,
+          tiltVel: 2.35 * fallDir,
+          fallDir: fallDir,
+          stage: 'tilting',
+          age: 0,
+          w: b === 6 ? 15 : 23 - b * 1.3,
+          h: b === 6 ? 12 : 9.5,
+          isTimber: b === 2 || b === 5
+        });
+      }
+
+      const result = {
+        accepted: false,
+        toppled: true,
+        hookIndex: hIdx,
+        reason: 'inverted_center_of_gravity_above_catenary',
+        upwardAttemptsCount: upwardAttemptsCount,
+        upwardToppledCount: upwardToppledCount,
+        standingUpwardStructures: 0
+      };
+      if (onUpwardCollapse) onUpwardCollapse(result);
+      emitChange('attemptUpwardBuild');
+      return result;
+    }
+
+    function advanceSpanWear(yearsDelta = 3) {
+      const d = Number.isFinite(Number(yearsDelta)) ? Math.max(0, Number(yearsDelta)) : 3;
+      elapsedYears = clamp(elapsedYears + d, 0, 40.5);
+      return emitChange('advanceSpanWear');
+    }
+
+    function renewHempStrands() {
+      elapsedYears = 0;
+      extraBallastKg = 0;
+      return emitChange('renewHempStrands');
+    }
+
+    function addOverloadBallast(extraKg = 140) {
+      const add = Number.isFinite(Number(extraKg)) ? Math.max(1, Number(extraKg)) : 140;
+      extraBallastKg = +(extraBallastKg + add).toFixed(1);
+      return emitChange('addOverloadBallast');
+    }
+
+    function shedOverloadBallast() {
+      extraBallastKg = 0;
+      return emitChange('shedOverloadBallast');
+    }
+
+    function setReducedMotion(flag) {
+      reducedMotion = Boolean(flag);
+      if (reducedMotion) {
+        for (let i = 0; i < runtimeStones.length; i += 1) {
+          runtimeStones[i].omega = 0;
+          runtimeStones[i].deployScale = 1;
+        }
+      }
+      return getState();
+    }
+
+    function reset() {
+      applyStarterDefaults();
+      return emitChange('reset');
+    }
+    function inspectAt(px, py, hookPoints) {
+      if (Array.isArray(hookPoints) && hookPoints.length > 0) {
+        syncStoneGeometry(hookPoints, lastWidth, lastHeight);
+      }
+      let bestIdx = -1;
+      let bestDist = 32.001;
+      for (let i = 0; i < runtimeStones.length; i += 1) {
+        const st = runtimeStones[i];
+        if (!st.isHung) continue;
+        let d = Math.hypot(px - st.x, py - st.y);
+        const cordD = pointToSegmentDist(px, py, st.anchorX, st.anchorY, st.x, st.y);
+        if (cordD <= 15 && cordD + 8 < d) d = cordD + 8;
+        if (i === 11 && cableCarWorldX > 0) {
+          const carD = Math.hypot(px - cableCarWorldX, py - cableCarWorldY);
+          if (carD < d) d = carD;
+        }
+        if (d <= 32 && d < bestDist) {
+          bestDist = d;
+          bestIdx = i;
+        }
+      }
+      if (bestIdx < 0) return null;
+      const spec = DOWNWARD_STONES[bestIdx];
+      const hit = runtimeStones[bestIdx];
+      return {
+        kind: 'pendant_stone', index: spec.index, id: spec.id, name: spec.name,
+        category: spec.category, isHung: hit.isHung, massKg: spec.massKg,
+        cordLengthPx: spec.cordLengthPx, swayDeg: +(hit.theta * 180 / Math.PI).toFixed(2),
+        stoneInscription: spec.stoneInscription, x: +hit.x.toFixed(1), y: +hit.y.toFixed(1)
+      };
+    }
+
+    function step(dtSec, hookPoints, env = {}) {
+      const dt = clamp(Number(dtSec) || 0.016, 0, 0.05);
+      const windKnots = Number.isFinite(env.windKnots) ? env.windKnots : 9;
+      const w = env.width > 0 ? env.width : lastWidth;
+      const h = env.height > 0 ? env.height : lastHeight;
+      lastWidth = w;
+      lastHeight = h;
+      if (!reducedMotion) simTime += dt;
+      const cScale = computeCordScale(w, h);
+
+      for (let i = 0; i < DOWNWARD_STONES.length; i += 1) {
+        const spec = DOWNWARD_STONES[i];
+        const st = runtimeStones[i];
+        const anc = resolveHookAnchor(spec.hookIndex, hookPoints, w, h);
+        const axAccel = dt > 0.0005 ? (anc.vx - st.prevVx) / dt : 0;
+        st.prevVx = anc.vx;
+        st.anchorX = anc.x;
+        st.anchorY = anc.y;
+        if (!st.isHung) continue;
+
+        if (reducedMotion) {
+          st.deployScale = 1;
+          st.omega = 0;
+          st.theta = clamp(windKnots * 0.0042 * (26 / (spec.massKg + 18)), -0.22, 0.22);
+        } else {
+          st.deployScale += (1 - st.deployScale) * Math.min(1, dt * 7.5);
+          const effLen = Math.max(48, spec.cordLengthPx * cScale);
+          const gust = Math.sin(simTime * 1.65 + st.phaseSeed) * 0.38 + Math.sin(simTime * 3.1 + i) * 0.16;
+          const windPush = (windKnots * 0.016 + gust * windKnots * 0.009) * (28 / (spec.massKg + 16));
+          const grav = -(320 / effLen) * Math.sin(st.theta);
+          const hookCouple = clamp(-axAccel * 0.0018, -1.8, 1.8) * Math.cos(st.theta);
+          st.omega += (grav + windPush + hookCouple) * dt;
+          st.omega *= Math.exp(-1.55 * dt);
+          st.theta = clamp(st.theta + st.omega * dt, -0.62, 0.62);
+        }
+        const len = spec.cordLengthPx * cScale * st.deployScale;
+        st.x = anc.x + Math.sin(st.theta) * len;
+        st.y = Math.min(h - 30, anc.y + Math.cos(st.theta) * len);
+      }
+
+      if (!reducedMotion && runtimeStones[11].isHung) {
+        cableCarT += cableCarDir * dt * 0.14;
+        if (cableCarT >= 0.92) { cableCarT = 0.92; cableCarDir = -1; }
+        if (cableCarT <= 0.08) { cableCarT = 0.08; cableCarDir = 1; }
+      }
+      if (runtimeStones[9].isHung && !reducedMotion) {
+        if (showerDrops.length < 22) {
+          showerDrops.push({
+            x: runtimeStones[9].x + ( (showerDrops.length % 5) - 2 ) * 3.2,
+            y: runtimeStones[9].y + 8,
+            vy: 68 + (showerDrops.length % 4) * 14,
+            age: 0
+          });
+        }
+        for (let k = showerDrops.length - 1; k >= 0; k -= 1) {
+          const dr = showerDrops[k];
+          dr.age += dt;
+          dr.y += dr.vy * dt;
+          dr.x += windKnots * 0.35 * dt;
+          if (dr.age > 1.25 || dr.y > h - 18) showerDrops.splice(k, 1);
+        }
+      } else if (!runtimeStones[9].isHung) {
+        showerDrops.length = 0;
+      }
+
+      for (let dIdx = activeFallDebris.length - 1; dIdx >= 0; dIdx -= 1) {
+        const d = activeFallDebris[dIdx];
+        d.age += dt;
+        if (d.stage === 'tilting') {
+          const liveAnc = resolveHookAnchor(d.hookIndex, hookPoints, w, h);
+          d.baseX = liveAnc.x;
+          d.baseY = liveAnc.y;
+          d.tiltVel += d.fallDir * 8.4 * Math.max(0.25, Math.abs(Math.sin(d.tiltRad))) * dt;
+          d.tiltRad += d.tiltVel * dt;
+          d.x = d.baseX + Math.sin(d.tiltRad) * d.courseOffset;
+          d.y = d.baseY - Math.cos(d.tiltRad) * d.courseOffset;
+          d.rot = d.tiltRad;
+          if (Math.abs(d.tiltRad) >= 1.62) {
+            d.stage = 'plummeting';
+            d.vx = d.fallDir * (26 + d.courseOffset * 0.55);
+            d.vy = 48 + d.courseOffset * 0.65;
+          }
+        } else {
+          d.vy += 590 * dt;
+          d.x += d.vx * dt;
+          d.y += d.vy * dt;
+          if (!reducedMotion) d.rot += d.vRot * dt;
+        }
+        if (d.y > h + 90 || d.age > 3.6) activeFallDebris.splice(dIdx, 1);
+      }
+    }
+
+    function drawCord(ctx, ax, ay, bx, by, cordType, overloaded) {
+      ctx.save();
+      ctx.beginPath();
+      if (cordType === 'chain') {
+        const steps = Math.max(5, Math.floor(Math.hypot(bx - ax, by - ay) / 9));
+        ctx.strokeStyle = overloaded ? PALETTE.frayCrimson : PALETTE.chainIron;
+        ctx.lineWidth = 2.1;
+        for (let s = 0; s < steps; s += 1) {
+          const mx = ax + (bx - ax) * ((s + 0.5) / steps);
+          const my = ay + (by - ay) * ((s + 0.5) / steps);
+          ctx.moveTo(mx + 2.2, my);
+          ctx.arc(mx, my, 2.2, 0, Math.PI * 2);
+        }
+        ctx.stroke();
+      } else {
+        ctx.strokeStyle = overloaded ? PALETTE.frayCrimson :
+          (cordType === 'cable' ? PALETTE.graniteHighlight :
+          (cordType === 'string' ? PALETTE.linenLight : PALETTE.hempOchre));
+        ctx.lineWidth = cordType === 'string' ? 1.1 : (cordType === 'cable' ? 1.6 : 2.2);
+        ctx.moveTo(ax, ay);
+        ctx.lineTo(bx, by);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+    function drawStoneBody(ctx, idx, st) {
+      const p = simTime + st.phaseSeed;
+      ctx.save();
+      ctx.translate(st.x, st.y);
+      ctx.rotate(st.theta * 0.65);
+
+      if (idx === 0) {
+        const tailSway = reducedMotion ? 2 : Math.sin(p * 2.1) * 6;
+        ctx.strokeStyle = PALETTE.hempOchre;
+        ctx.lineWidth = 1.8;
+        ctx.beginPath();
+        ctx.moveTo(-6, -4); ctx.quadraticCurveTo(-6 + tailSway * 0.4, 24, -6 + tailSway, 52);
+        ctx.moveTo(6, -4); ctx.quadraticCurveTo(6 + tailSway * 0.4, 24, 6 + tailSway, 52);
+        for (let r = 0; r < 7; r += 1) {
+          const ry = r * 7.5;
+          const rx = tailSway * (r / 7) * 0.85;
+          ctx.moveTo(-6 + rx, ry); ctx.lineTo(6 + rx, ry);
+        }
+        ctx.stroke();
+      } else if (idx === 1) {
+        ctx.fillStyle = PALETTE.canvasSack;
+        ctx.strokeStyle = PALETTE.hempTaupe;
+        ctx.lineWidth = 1.6;
+        ctx.beginPath();
+        ctx.moveTo(0, -14);
+        ctx.quadraticCurveTo(18, -2, 14, 16);
+        ctx.quadraticCurveTo(0, 26, -14, 16);
+        ctx.quadraticCurveTo(-18, -2, 0, -14);
+        ctx.closePath();
+        ctx.fill(); ctx.stroke();
+        ctx.fillStyle = PALETTE.lanternAmber;
+        ctx.fillRect(-5, 1, 10, 6);
+      } else if (idx === 2) {
+        ctx.strokeStyle = PALETTE.cedarWarm;
+        ctx.lineWidth = 2.6;
+        ctx.beginPath(); ctx.moveTo(-20, 0); ctx.lineTo(20, 0); ctx.stroke();
+        const tints = [PALETTE.linenLight, PALETTE.hempOchre, PALETTE.abyssMist, PALETTE.terracotta];
+        for (let c = 0; c < 4; c += 1) {
+          const cx = -14 + c * 9;
+          const flap = reducedMotion ? 2 : Math.sin(p * 3.4 + c) * 4.5;
+          ctx.fillStyle = tints[c];
+          ctx.beginPath();
+          ctx.moveTo(cx - 3, 1); ctx.lineTo(cx + 3, 1);
+          ctx.lineTo(cx + 4 + flap, 16); ctx.lineTo(cx - 3 + flap, 15);
+          ctx.closePath(); ctx.fill();
+        }
+      } else if (idx === 3) {
+        ctx.fillStyle = PALETTE.cedarHull;
+        ctx.strokeStyle = PALETTE.hempOchre;
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(-24, -4); ctx.quadraticCurveTo(0, 14, 24, -4);
+        ctx.lineTo(18, 4); ctx.quadraticCurveTo(0, 18, -18, 4);
+        ctx.closePath(); ctx.fill(); ctx.stroke();
+        ctx.strokeStyle = PALETTE.cedarWarm;
+        ctx.beginPath();
+        ctx.moveTo(-18, -4); ctx.lineTo(-18, -11); ctx.lineTo(18, -11); ctx.lineTo(18, -4);
+        ctx.stroke();
+        ctx.fillStyle = PALETTE.lanternAmber;
+        ctx.beginPath(); ctx.arc(21, -7, 2.8, 0, Math.PI * 2); ctx.fill();
+      } else if (idx === 4) {
+        const offsets = [-8, 0, 8];
+        for (let k = 0; k < 3; k += 1) {
+          ctx.fillStyle = k === 1 ? PALETTE.cedarHull : PALETTE.graniteShadow;
+          ctx.strokeStyle = PALETTE.hempOchre;
+          ctx.lineWidth = 1.2;
+          ctx.beginPath();
+          ctx.arc(offsets[k], 8 + (k % 2) * 4, 6.5, 0, Math.PI * 2);
+          ctx.fill(); ctx.stroke();
+        }
+      } else if (idx === 5) {
+        const flick = reducedMotion ? 1 : 0.85 + Math.sin(p * 9.5) * 0.22;
+        ctx.strokeStyle = PALETTE.hempOchre;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(0, -8); ctx.lineTo(0, 4);
+        ctx.moveTo(-9, 4); ctx.lineTo(9, 4);
+        ctx.stroke();
+        ctx.fillStyle = PALETTE.gasGlow;
+        ctx.beginPath();
+        ctx.arc(-9, -1, 4.2 * flick, 0, Math.PI * 2);
+        ctx.arc(9, -1, 4.2 * flick, 0, Math.PI * 2);
+        ctx.fill();
+      } else if (idx === 6) {
+        ctx.fillStyle = PALETTE.chainIron;
+        ctx.beginPath(); ctx.arc(0, 8, 12, 0, Math.PI); ctx.fill();
+        ctx.fillStyle = PALETTE.frayCrimson;
+        ctx.fillRect(-8, 6, 16, 3);
+        ctx.strokeStyle = PALETTE.graniteHighlight;
+        ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.moveTo(-13, 0); ctx.lineTo(13, 0); ctx.stroke();
+        ctx.fillStyle = PALETTE.cedarWarm;
+        ctx.beginPath(); ctx.arc(0, 0, 4.5, 0, Math.PI * 2); ctx.fill();
+      } else if (idx === 7) {
+        const payOut = reducedMotion ? 12 : 12 + Math.sin(p * 1.9) * 10;
+        ctx.strokeStyle = PALETTE.linenLight;
+        ctx.lineWidth = 1.1;
+        ctx.beginPath(); ctx.moveTo(0, -4); ctx.lineTo(0, payOut); ctx.stroke();
+        ctx.fillStyle = PALETTE.hempOchre;
+        ctx.fillRect(-7, payOut, 14, 10);
+        ctx.fillStyle = PALETTE.linenLight;
+        ctx.fillRect(-5, payOut - 3, 10, 3);
+      } else if (idx === 8) {
+        const shutY = reducedMotion ? 6 : Math.sin(p * 1.5) * 15;
+        ctx.strokeStyle = PALETTE.graniteHighlight;
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.moveTo(-8, -18); ctx.lineTo(-8, 24);
+        ctx.moveTo(8, -18); ctx.lineTo(8, 24);
+        ctx.stroke();
+        ctx.fillStyle = PALETTE.cedarWarm;
+        ctx.fillRect(-7, shutY - 7, 11, 14);
+        ctx.fillStyle = PALETTE.chainIron;
+        ctx.fillRect(5, -shutY - 5, 4, 10);
+      } else if (idx === 9) {
+        ctx.fillStyle = PALETTE.copperRose;
+        ctx.beginPath();
+        ctx.moveTo(0, -6); ctx.lineTo(10, 4); ctx.lineTo(-10, 4);
+        ctx.closePath(); ctx.fill();
+        if (reducedMotion) {
+          ctx.fillStyle = PALETTE.abyssMist;
+          for (let d = 1; d <= 4; d += 1) {
+            ctx.fillRect(-5 + (d % 3) * 5, 6 + d * 8, 1.8, 4);
+          }
+        }
+      } else if (idx === 10) {
+        const sw = reducedMotion ? 0.18 : Math.sin(p * 2.5) * 0.44;
+        ctx.strokeStyle = PALETTE.cedarWarm;
+        ctx.lineWidth = 2.4;
+        ctx.beginPath(); ctx.moveTo(-14, 0); ctx.lineTo(14, 0); ctx.stroke();
+        ctx.strokeStyle = PALETTE.hempOchre;
+        ctx.lineWidth = 1.4;
+        const rx = Math.sin(sw) * 18;
+        const ry = Math.cos(sw) * 18;
+        ctx.beginPath();
+        ctx.moveTo(-7, 0); ctx.lineTo(-7 + rx, ry);
+        ctx.moveTo(7, 0); ctx.lineTo(7 + rx, ry);
+        ctx.arc(-7 + rx, ry + 3, 3, 0, Math.PI * 2);
+        ctx.arc(7 + rx, ry + 3, 3, 0, Math.PI * 2);
+        ctx.stroke();
+      } else if (idx === 11) {
+        ctx.fillStyle = PALETTE.chainIron;
+        ctx.beginPath(); ctx.arc(0, 0, 5.5, 0, Math.PI * 2); ctx.fill();
+      } else if (idx === 12) {
+        ctx.strokeStyle = PALETTE.chainIron;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(-16, 4); ctx.lineTo(16, 4);
+        ctx.moveTo(-10, 12); ctx.lineTo(10, 12);
+        ctx.stroke();
+        ctx.fillStyle = PALETTE.gasGlow;
+        for (let c = -2; c <= 2; c += 1) {
+          ctx.beginPath(); ctx.arc(c * 7, 1, 2.4, 0, Math.PI * 2); ctx.fill();
+        }
+      } else if (idx === 13) {
+        ctx.fillStyle = PALETTE.terracotta;
+        ctx.beginPath();
+        ctx.moveTo(-9, -3); ctx.lineTo(9, -3); ctx.lineTo(6, 10); ctx.lineTo(-6, 10);
+        ctx.closePath(); ctx.fill();
+        ctx.strokeStyle = PALETTE.trailingIvy;
+        ctx.lineWidth = 1.8;
+        ctx.beginPath();
+        for (let v = -2; v <= 2; v += 1) {
+          const sway = reducedMotion ? v * 1.5 : Math.sin(p * 2.0 + v) * 5;
+          ctx.moveTo(v * 3, 8);
+          ctx.quadraticCurveTo(v * 4 + sway, 24, v * 3 - sway * 0.6, 42 + Math.abs(v) * 4);
+        }
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+    function renderPendants(ctx, width, height, hookPoints, env = {}) {
+      if (!ctx) return;
+      const w = width > 0 ? width : lastWidth;
+      const h = height > 0 ? height : lastHeight;
+      lastWidth = w;
+      lastHeight = h;
+      syncStoneGeometry(hookPoints, w, h);
+
+      let hungMass = 0;
+      let sumMx = 0;
+      let sumMy = 0;
+      let sumAy = 0;
+      let hungN = 0;
+      for (let i = 0; i < DOWNWARD_STONES.length; i += 1) {
+        if (runtimeStones[i].isHung) {
+          const m = DOWNWARD_STONES[i].massKg;
+          hungMass += m;
+          sumMx += runtimeStones[i].x * m;
+          sumMy += runtimeStones[i].y * m;
+          sumAy += runtimeStones[i].anchorY;
+          hungN += 1;
+        }
+      }
+      const overloaded = hungMass + extraBallastKg > MAX_SAFE_LOAD_KG;
+
+      if (hungN > 0 && hungMass > 0) {
+        const cgX = sumMx / hungMass;
+        const cgY = sumMy / hungMass;
+        const topY = sumAy / hungN;
+        ctx.save();
+        ctx.strokeStyle = overloaded ? PALETTE.frayCrimson : 'rgba(242, 184, 75, 0.34)';
+        ctx.fillStyle = overloaded ? PALETTE.frayCrimson : 'rgba(242, 184, 75, 0.62)';
+        ctx.lineWidth = 1;
+        if (ctx.setLineDash) ctx.setLineDash([3, 4]);
+        ctx.beginPath();
+        ctx.moveTo(cgX, topY);
+        ctx.lineTo(cgX, cgY + 14);
+        ctx.stroke();
+        if (ctx.setLineDash) ctx.setLineDash([]);
+        ctx.beginPath();
+        ctx.moveTo(cgX, cgY + 9);
+        ctx.lineTo(cgX + 4.5, cgY + 15);
+        ctx.lineTo(cgX, cgY + 21);
+        ctx.lineTo(cgX - 4.5, cgY + 15);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+      }
+
+      if (runtimeStones[11].isHung) {
+        const p3 = runtimeStones[3].isHung
+          ? { x: runtimeStones[3].x, y: runtimeStones[3].y - 10 }
+          : resolveHookAnchor(3, hookPoints, w, h);
+        const p11 = { x: runtimeStones[11].x, y: runtimeStones[11].y };
+        const midX = (p3.x + p11.x) * 0.5;
+        const midY = (p3.y + p11.y) * 0.5 + 22;
+        const t = cableCarT;
+        const omt = 1 - t;
+        cableCarWorldX = omt * omt * p3.x + 2 * omt * t * midX + t * t * p11.x;
+        cableCarWorldY = omt * omt * p3.y + 2 * omt * t * midY + t * t * p11.y;
+
+        ctx.save();
+        ctx.strokeStyle = PALETTE.graniteHighlight;
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(p3.x, p3.y);
+        ctx.quadraticCurveTo(midX, midY, p11.x, p11.y);
+        ctx.stroke();
+
+        ctx.translate(cableCarWorldX, cableCarWorldY);
+        ctx.fillStyle = PALETTE.chainIron;
+        ctx.beginPath(); ctx.arc(0, -1, 3, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = PALETTE.hempOchre;
+        ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(0, 8); ctx.stroke();
+        ctx.fillStyle = PALETTE.cedarWarm;
+        ctx.fillRect(-11, 8, 22, 13);
+        ctx.fillStyle = PALETTE.lanternAmber;
+        ctx.fillRect(-7, 10, 5, 5);
+        ctx.fillRect(2, 10, 5, 5);
+        ctx.restore();
+      } else {
+        cableCarWorldX = 0;
+        cableCarWorldY = 0;
+      }
+
+      for (let i = 0; i < DOWNWARD_STONES.length; i += 1) {
+        const spec = DOWNWARD_STONES[i];
+        const st = runtimeStones[i];
+        if (!st.isHung) continue;
+        drawCord(ctx, st.anchorX, st.anchorY, st.x, st.y, spec.cordType, overloaded);
+        if (spec.id === activeStoneId) {
+          ctx.save();
+          ctx.strokeStyle = 'rgba(242, 184, 75, 0.55)';
+          ctx.lineWidth = 1.4;
+          ctx.beginPath();
+          ctx.arc(st.x, st.y + 6, 22, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.restore();
+        }
+        drawStoneBody(ctx, i, st);
+      }
+
+      if (showerDrops.length > 0) {
+        ctx.save();
+        ctx.fillStyle = PALETTE.abyssMist;
+        for (let k = 0; k < showerDrops.length; k += 1) {
+          const dr = showerDrops[k];
+          ctx.fillRect(dr.x - 0.8, dr.y, 1.6, 4.2);
+        }
+        ctx.restore();
+      }
+
+      if (activeFallDebris.length > 0) {
+        ctx.save();
+        for (let dIdx = 0; dIdx < activeFallDebris.length; dIdx += 1) {
+          const d = activeFallDebris[dIdx];
+          ctx.save();
+          ctx.translate(d.x, d.y);
+          ctx.rotate(d.rot);
+          ctx.fillStyle = d.isTimber ? PALETTE.cedarWarm : PALETTE.graniteCrest;
+          ctx.strokeStyle = d.stage === 'tilting' ? PALETTE.frayCrimson : PALETTE.graniteHighlight;
+          ctx.lineWidth = 1.2;
+          ctx.beginPath();
+          ctx.rect(-d.w * 0.5, -d.h * 0.5, d.w, d.h);
+          ctx.fill();
+          ctx.stroke();
+          ctx.restore();
+        }
+        ctx.restore();
+      }
+    }
+
+    return {
+      DOWNWARD_STONES: DOWNWARD_STONES,
+      hangStone: hangStone,
+      hangNextStone: function () { return hangStone(); },
+      unhangStone: unhangStone,
+      toggleStone: toggleStone,
+      hangAllStones: hangAllStones,
+      clearAllStones: clearAllStones,
+      attemptUpwardBuild: attemptUpwardBuild,
+      advanceSpanWear: advanceSpanWear,
+      renewHempStrands: renewHempStrands,
+      addOverloadBallast: addOverloadBallast,
+      shedOverloadBallast: shedOverloadBallast,
+      getHookLoads: getHookLoads,
+      inspectAt: inspectAt,
+      step: step,
+      renderPendants: renderPendants,
+      getState: getState,
+      setReducedMotion: setReducedMotion,
+      reset: reset
+    };
+  }
+
+  const OctaviaPendantLife = Object.freeze({
+    PALETTE: PALETTE,
+    DOWNWARD_STONES: DOWNWARD_STONES,
+    createPendantSystem: createPendantSystem
+  });
+
+  globalThis.OctaviaPendantLife = OctaviaPendantLife;
+  if (typeof window !== 'undefined') {
+    window.OctaviaPendantLife = OctaviaPendantLife;
+  }
+  if (typeof module === 'object' && module && module.exports) {
+    module.exports = OctaviaPendantLife;
+  }
+})();
+
+(function () {
+  'use strict';
+
+  const GUST_PRESETS = [4, 9, 18, 26];
+  const mqReduced = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+  let reducedMotion = Boolean(mqReduced && mqReduced.matches);
+  let drawerOpen = false;
+  let plateZoomed = false;
+  let plateMode = 'diptych';
+  let selectedHookIndex = 3;
+  let sightlineText = 'Suspended between two steep mountain crests over 840 feet of void: step carefully across the little wooden ties or hang all fourteen civic stones downward beneath the spider-web net.';
+
+  const canvas = document.getElementById('oct-canvas');
+  const stageWrap = document.getElementById('oct-stage-wrap');
+  const ctx = canvas.getContext('2d');
+  let stageW = 960;
+  let stageH = 640;
+  let stageDpr = 1;
+
+  const elPhasePill = document.getElementById('oct-phase-pill');
+  const elValHung = document.getElementById('oct-val-hung');
+  const elBarLoad = document.getElementById('oct-bar-load');
+  const elSubLoad = document.getElementById('oct-sub-load');
+  const elValLifespan = document.getElementById('oct-val-lifespan');
+  const elBarLifespan = document.getElementById('oct-bar-lifespan');
+  const elSubLifespan = document.getElementById('oct-sub-lifespan');
+  const elValSerenity = document.getElementById('oct-val-serenity');
+  const elBarSerenity = document.getElementById('oct-bar-serenity');
+  const elValUncertain = document.getElementById('oct-val-uncertain');
+  const elBarUncertain = document.getElementById('oct-bar-uncertain');
+  const elSubUncertain = document.getElementById('oct-sub-uncertain');
+  const elValHubris = document.getElementById('oct-val-hubris');
+  const elSubTies = document.getElementById('oct-sub-ties');
+  const elSightline = document.getElementById('oct-sightline-note');
+  const elAudioBtn = document.getElementById('oct-btn-audio');
+  const elAudioLabel = document.getElementById('oct-audio-label');
+  const elDrawer = document.getElementById('oct-plate-drawer');
+  const elPlateGrid = document.getElementById('oct-plate-grid');
+  const elCardMap = document.getElementById('oct-card-map');
+  const elCardCity = document.getElementById('oct-card-city');
+  const elZoomBtn = document.getElementById('oct-btn-zoom');
+  const elZoomLabel = document.getElementById('oct-zoom-label');
+  const stoneChips = Array.prototype.slice.call(document.querySelectorAll('.oct-stone-chip'));
+  const gustPills = Array.prototype.slice.call(document.querySelectorAll('.oct-gust-pill'));
+  const plateTabs = Array.prototype.slice.call(document.querySelectorAll('.oct-plate-tab'));
+
+  const catenaryWeb = window.OctaviaCatenaryWeb.createCatenaryWeb({
+    reducedMotion: reducedMotion,
+    muted: true
+  });
+
+  const pendantLife = window.OctaviaPendantLife.createPendantSystem({
+    reducedMotion: reducedMotion,
+    onChange: function () {
+      catenaryWeb.setHookLoads(pendantLife.getHookLoads());
+      updateUI();
+    },
+    onUpwardCollapse: function (res) {
+      catenaryWeb.triggerUpwardShock(res.hookIndex);
+      sightlineText = 'Upward build rejected at hook #' + (res.hookIndex + 1) + ': rigid masonry above the flexible catenary net inverts the center of gravity, tilts past vertical, and plummets 840 feet into cloud (0 standing upward structures).';
+      updateUI();
+    }
+  });
+
+  function syncCanvasSize() {
+    const rect = stageWrap.getBoundingClientRect();
+    stageW = Math.max(240, Math.floor(rect.width || window.innerWidth));
+    stageH = Math.max(200, Math.floor(rect.height || 480));
+    stageDpr = Math.min(2, Math.max(1, window.devicePixelRatio || 1));
+    canvas.width = Math.round(stageW * stageDpr);
+    canvas.height = Math.round(stageH * stageDpr);
+    ctx.setTransform(stageDpr, 0, 0, stageDpr, 0, 0);
+    catenaryWeb.resize(stageW, stageH, stageDpr);
+  }
+
+  function renderFrame() {
+    ctx.save();
+    ctx.setTransform(stageDpr, 0, 0, stageDpr, 0, 0);
+    const webState = catenaryWeb.getState();
+    catenaryWeb.renderChasmAndWeb(ctx, stageW, stageH, { selectedHookIndex: selectedHookIndex });
+    const hookPoints = catenaryWeb.getAllHookPoints();
+    pendantLife.renderPendants(ctx, stageW, stageH, hookPoints, {
+      windKnots: webState.windKnots,
+      width: stageW,
+      height: stageH
+    });
+    catenaryWeb.renderForegroundMist(ctx, stageW, stageH);
+    ctx.restore();
+  }
+
+  function updateDynamicTiesLine() {
+    const ws = catenaryWeb.getState();
+    const riskPct = Math.round(ws.ankleTwistRisk * 100);
+    const bedPct = Math.round(ws.chasmBedVisibility * 100);
+    const clingTxt = ws.walkerClingingToHemp ? 'Clinging to hemp' : 'Steady step';
+    elSubTies.textContent = ws.woodenTieCount + ' wooden ties · Ankle risk ' + riskPct + '% (' + clingTxt + ') · Chasm bed ' + bedPct + '%';
+  }
+
+  function updateUI() {
+    const ps = pendantLife.getState();
+    const ws = catenaryWeb.getState();
+
+    elPhasePill.textContent = ps.phaseLabel;
+    elPhasePill.classList.toggle('oct-is-danger', Boolean(ps.overloaded));
+
+    elValHung.textContent = ps.hungCount + ' / ' + ps.totalStoneCatalog + ' · ' + Math.round(ps.totalMassKg) + ' / ' + ps.maxSafeLoadKg + ' kg';
+    const loadPct = Math.min(100, Math.round(ps.netLoadRatio * 100));
+    elBarLoad.style.width = loadPct + '%';
+    elBarLoad.classList.toggle('oct-fill-danger', Boolean(ps.overloaded));
+    elSubLoad.textContent = ps.overloaded
+      ? 'Overload warning: shed ballast to restore safe hemp tension'
+      : 'Suspended below catenary · mean sag ' + ws.meanSagPx.toFixed(1) + 'px stabilizes sway';
+
+    elValLifespan.textContent = ps.knownSpanLifespanYears.toFixed(1) + ' yrs remaining';
+    const lifePct = Math.max(4, Math.min(100, Math.round((ps.knownSpanLifespanYears / 42) * 100)));
+    elBarLifespan.style.width = lifePct + '%';
+    elSubLifespan.textContent = 'Elapsed ' + ps.elapsedYears.toFixed(1) + ' yrs of 42 yr hemp & chain limit (never infinite)';
+
+    const serPct = Math.round(ps.civicSerenity * 100);
+    const uncPct = Math.round(ps.existentialUncertainty * 100);
+    elValSerenity.textContent = serPct + '%';
+    elBarSerenity.style.width = serPct + '%';
+    elValUncertain.textContent = uncPct + '% vs 78% other cities';
+    elBarUncertain.style.width = uncPct + '%';
+    elSubUncertain.textContent = ps.lessUncertainThanOtherCities
+      ? 'Less uncertain — inhabitants know the net will last only so long'
+      : 'Overloaded strands heighten chasm dread';
+
+    elValHubris.textContent = ps.standingUpwardStructures + ' standing · ' + ps.upwardToppledCount + ' toppled';
+    updateDynamicTiesLine();
+    elSightline.textContent = sightlineText;
+
+    for (let i = 0; i < stoneChips.length; i += 1) {
+      const st = ps.stones[i];
+      if (st) {
+        stoneChips[i].classList.toggle('oct-is-hung', Boolean(st.isHung));
+        stoneChips[i].setAttribute('aria-pressed', st.isHung ? 'true' : 'false');
+      }
+    }
+    for (let g = 0; g < gustPills.length; g += 1) {
+      const k = Number(gustPills[g].getAttribute('data-knots'));
+      gustPills[g].classList.toggle('oct-is-active', Math.abs(ws.windKnots - k) < 1.5);
+    }
+    elAudioBtn.classList.toggle('oct-is-active', !ws.muted);
+    elAudioLabel.textContent = ws.muted ? 'Harp Muted' : 'Harp Live';
+  }
+  function applyPlateMode(mode) {
+    plateMode = mode === 'map' || mode === 'city' ? mode : 'diptych';
+    elPlateGrid.classList.toggle('oct-mode-single', plateMode !== 'diptych');
+    elCardMap.hidden = plateMode === 'city';
+    elCardCity.hidden = plateMode === 'map';
+    for (let i = 0; i < plateTabs.length; i += 1) {
+      const m = plateTabs[i].getAttribute('data-plate-mode');
+      plateTabs[i].classList.toggle('oct-is-active', m === plateMode);
+    }
+  }
+
+  function togglePlateDrawer(forceState) {
+    drawerOpen = typeof forceState === 'boolean' ? forceState : !drawerOpen;
+    elDrawer.hidden = !drawerOpen;
+    if (!drawerOpen && plateZoomed) {
+      plateZoomed = false;
+      elDrawer.classList.remove('oct-is-zoomed');
+      elZoomBtn.classList.remove('oct-is-active');
+      elZoomLabel.textContent = 'Loupe 1.75×';
+    }
+    return drawerOpen;
+  }
+
+  function toggleZoom(forceState) {
+    plateZoomed = typeof forceState === 'boolean' ? forceState : !plateZoomed;
+    elDrawer.classList.toggle('oct-is-zoomed', plateZoomed);
+    elZoomBtn.classList.toggle('oct-is-active', plateZoomed);
+    elZoomLabel.textContent = plateZoomed ? 'Loupe On (1.75×)' : 'Loupe 1.75×';
+    return plateZoomed;
+  }
+
+  function toggleAudio(forceBool) {
+    catenaryWeb.unlockAudio();
+    const live = catenaryWeb.toggleAudio(forceBool);
+    updateUI();
+    return live;
+  }
+
+  function bindKeyButton(el, fn) {
+    if (!el) return;
+    el.addEventListener('click', function (ev) {
+      ev.preventDefault();
+      catenaryWeb.unlockAudio();
+      fn();
+      renderFrame();
+    });
+    el.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Enter' || ev.key === ' ') {
+        ev.preventDefault();
+        catenaryWeb.unlockAudio();
+        fn();
+        renderFrame();
+      }
+    });
+  }
+
+  function hangNextStoneAction() {
+    const res = pendantLife.hangStone();
+    const st = res.stones.find(function (s) { return s.id === res.activeStoneId; });
+    if (st) {
+      selectedHookIndex = st.index;
+      catenaryWeb.applyImpulse(st.index, 11, 0);
+      sightlineText = st.name + ' (' + st.massKg + ' kg) hung downward: ' + st.stoneInscription;
+    } else {
+      sightlineText = 'All 14 downward stones already hang steadily beneath Octavia’s spider-web net.';
+    }
+    updateUI();
+    return res;
+  }
+
+  function toggleStoneAction(idxOrId) {
+    const res = pendantLife.toggleStone(idxOrId);
+    const list = res.stones;
+    let found = null;
+    for (let i = 0; i < list.length; i += 1) {
+      if (list[i].index === idxOrId || list[i].id === idxOrId) {
+        found = list[i];
+        break;
+      }
+    }
+    if (found) {
+      selectedHookIndex = found.index;
+      catenaryWeb.applyImpulse(found.index, found.isHung ? 11 : -8, 0);
+      sightlineText = found.isHung
+        ? found.name + ' (' + found.massKg + ' kg) hung beneath hook #' + (found.index + 1) + ': ' + found.stoneInscription
+        : found.name + ' hoisted clear of hook #' + (found.index + 1) + '.';
+    }
+    updateUI();
+    return res;
+  }
+
+  function cycleGust() {
+    const cur = catenaryWeb.getState().windKnots;
+    let nextIdx = 0;
+    for (let i = 0; i < GUST_PRESETS.length; i += 1) {
+      if (Math.abs(cur - GUST_PRESETS[i]) < 1.5) {
+        nextIdx = (i + 1) % GUST_PRESETS.length;
+        break;
+      }
+    }
+    const kt = GUST_PRESETS[nextIdx];
+    catenaryWeb.setWindKnots(kt);
+    sightlineText = 'Chasm updraft set to ' + kt + ' knots through the twin mountain crests; clouds drift across the 840-foot void.';
+    updateUI();
+    return kt;
+  }
+
+  bindKeyButton(document.getElementById('oct-btn-hang-next'), hangNextStoneAction);
+  bindKeyButton(document.getElementById('oct-btn-hang-all'), function () {
+    pendantLife.hangAllStones();
+    catenaryWeb.triggerAcousticEvent('pulley_chime', 0.7);
+    sightlineText = 'All 14 downward stones suspended (454 / 540 kg): life in Octavia is less uncertain, for inhabitants know the net will last only so long.';
+    updateUI();
+  });
+  bindKeyButton(document.getElementById('oct-btn-upward'), function () {
+    pendantLife.attemptUpwardBuild(selectedHookIndex >= 0 ? selectedHookIndex : 6);
+  });
+  bindKeyButton(document.getElementById('oct-btn-walk'), function () {
+    const wRes = catenaryWeb.stepWalker();
+    sightlineText = 'Cautious footstep #' + wRes.woodenTieSteps + ' across the 44 little wooden ties (walker at ' + Math.round(wRes.walkerNormX * 100) + '% span' + (wRes.walkerClingingToHemp ? ', clinging to hempen strands' : '') + ').';
+    updateUI();
+  });
+  bindKeyButton(document.getElementById('oct-btn-gust-cycle'), cycleGust);
+  bindKeyButton(document.getElementById('oct-btn-wear'), function () {
+    const st = pendantLife.advanceSpanWear(3);
+    sightlineText = 'Three years of mountain weather weather the hemp: ' + st.knownSpanLifespanYears.toFixed(1) + ' measured years of net endurance remain.';
+    updateUI();
+  });
+  bindKeyButton(document.getElementById('oct-btn-renew'), function () {
+    const st = pendantLife.renewHempStrands();
+    sightlineText = 'Braided hemp & iron pitons renewed across both crests: ' + st.knownSpanLifespanYears.toFixed(1) + ' finite years measured.';
+    updateUI();
+  });
+  bindKeyButton(document.getElementById('oct-btn-clear'), function () {
+    pendantLife.clearAllStones();
+    sightlineText = 'All pendant cords drawn up, leaving the bare spider-web passage between the two crests.';
+    updateUI();
+  });
+  bindKeyButton(elAudioBtn, function () { toggleAudio(); });
+  bindKeyButton(document.getElementById('oct-btn-reset'), function () { resetAll(); });
+  bindKeyButton(document.getElementById('oct-btn-plates'), function () { togglePlateDrawer(); });
+  bindKeyButton(elZoomBtn, function () { toggleZoom(); });
+  bindKeyButton(document.getElementById('oct-btn-drawer-close'), function () { togglePlateDrawer(false); });
+  for (let i = 0; i < stoneChips.length; i += 1) {
+    (function (chip) {
+      const idx = Number(chip.getAttribute('data-stone-index'));
+      bindKeyButton(chip, function () { toggleStoneAction(idx); });
+    })(stoneChips[i]);
+  }
+  for (let g = 0; g < gustPills.length; g += 1) {
+    (function (pill) {
+      const kt = Number(pill.getAttribute('data-knots'));
+      bindKeyButton(pill, function () {
+        catenaryWeb.setWindKnots(kt);
+        sightlineText = 'Chasm gust set to ' + kt + ' knots across the twin mountain crests.';
+        updateUI();
+      });
+    })(gustPills[g]);
+  }
+  for (let t = 0; t < plateTabs.length; t += 1) {
+    (function (tab) {
+      const mode = tab.getAttribute('data-plate-mode');
+      bindKeyButton(tab, function () { applyPlateMode(mode); });
+    })(plateTabs[t]);
+  }
+
+  let dragActive = false;
+  let lastPtrX = 0;
+  let lastPtrY = 0;
+  let movedPx = 0;
+
+  function canvasCoords(ev) {
+    const r = canvas.getBoundingClientRect();
+    return { x: ev.clientX - r.left, y: ev.clientY - r.top };
+  }
+
+  canvas.addEventListener('pointerdown', function (ev) {
+    catenaryWeb.unlockAudio();
+    const pt = canvasCoords(ev);
+    dragActive = true;
+    lastPtrX = pt.x;
+    lastPtrY = pt.y;
+    movedPx = 0;
+    if (canvas.setPointerCapture && ev.pointerId !== undefined) {
+      try { canvas.setPointerCapture(ev.pointerId); } catch (_e) {}
+    }
+  });
+
+  canvas.addEventListener('pointermove', function (ev) {
+    if (!dragActive) return;
+    const pt = canvasCoords(ev);
+    const dx = pt.x - lastPtrX;
+    const dy = pt.y - lastPtrY;
+    const stepD = Math.hypot(dx, dy);
+    movedPx += stepD;
+    if (stepD > 9) {
+      const hit = catenaryWeb.hitTestNet(pt.x, pt.y);
+      const hk = hit && Number.isInteger(hit.hookIndex) ? hit.hookIndex : Math.max(0, Math.min(13, Math.round((pt.x / Math.max(1, stageW)) * 13)));
+      catenaryWeb.applyImpulse(hk, Math.max(-22, Math.min(22, dy * 0.65)), Math.max(-18, Math.min(18, dx * 0.45)));
+      lastPtrX = pt.x;
+      lastPtrY = pt.y;
+      updateUI();
+      renderFrame();
+    }
+  });
+
+  canvas.addEventListener('pointerup', function (ev) {
+    if (!dragActive) return;
+    dragActive = false;
+    const pt = canvasCoords(ev);
+    if (movedPx > 14) return;
+    const hooks = catenaryWeb.getAllHookPoints();
+    const pHit = pendantLife.inspectAt(pt.x, pt.y, hooks);
+    if (pHit) {
+      selectedHookIndex = pHit.index;
+      catenaryWeb.applyImpulse(pHit.index, 9, 0);
+      sightlineText = pHit.name + ' (' + pHit.massKg + ' kg · ' + pHit.category + ') — ' + pHit.stoneInscription;
+      updateUI();
+      renderFrame();
+      return;
+    }
+    const nHit = catenaryWeb.hitTestNet(pt.x, pt.y);
+    if (nHit) {
+      if (nHit.kind === 'hook') {
+        toggleStoneAction(nHit.hookIndex);
+      } else if (nHit.kind === 'wooden_tie') {
+        catenaryWeb.setWalkerTarget(pt.x / Math.max(1, stageW));
+        catenaryWeb.stepWalker(pt.x / Math.max(1, stageW) >= catenaryWeb.getState().walkerNormX ? 0.045 : -0.045);
+        sightlineText = nHit.label + ': ' + nHit.detail;
+        updateUI();
+      } else {
+        selectedHookIndex = nHit.hookIndex;
+        catenaryWeb.applyImpulse(nHit.hookIndex, 10, 0);
+        sightlineText = nHit.label + ': ' + nHit.detail;
+        updateUI();
+      }
+      renderFrame();
+    }
+  });
+
+  function resetAll() {
+    catenaryWeb.reset();
+    pendantLife.reset();
+    catenaryWeb.setHookLoads(pendantLife.getHookLoads());
+    selectedHookIndex = 3;
+    sightlineText = 'Span restored: four starter dwellings hang steady beneath the spider-web net over 840 feet of chasm void.';
+    updateUI();
+    renderFrame();
+    return getMergedState();
+  }
+
+  window.addEventListener('keydown', function (ev) {
+    if (ev.metaKey || ev.ctrlKey || ev.altKey) return;
+    const k = ev.key;
+    if (k === 'Escape' && drawerOpen) { ev.preventDefault(); togglePlateDrawer(false); return; }
+    if (k === 'p' || k === 'P') { ev.preventDefault(); togglePlateDrawer(); return; }
+    if (k === 'z' || k === 'Z') { ev.preventDefault(); toggleZoom(); return; }
+    if (drawerOpen) return;
+    catenaryWeb.unlockAudio();
+    if (k >= '1' && k <= '9') { ev.preventDefault(); toggleStoneAction(Number(k) - 1); renderFrame(); }
+    else if (k === '0') { ev.preventDefault(); toggleStoneAction(9); renderFrame(); }
+    else if (k === 'h' || k === 'H') { ev.preventDefault(); hangNextStoneAction(); renderFrame(); }
+    else if (k === 'a' || k === 'A') { ev.preventDefault(); pendantLife.hangAllStones(); sightlineText = 'All 14 downward stones suspended (454 / 540 kg): life in Octavia is less uncertain, for the net lasts a known span.'; updateUI(); renderFrame(); }
+    else if (k === 'u' || k === 'U') { ev.preventDefault(); pendantLife.attemptUpwardBuild(selectedHookIndex >= 0 ? selectedHookIndex : 6); renderFrame(); }
+    else if (k === 'w' || k === 'W') { ev.preventDefault(); catenaryWeb.stepWalker(); updateUI(); renderFrame(); }
+    else if (k === 'ArrowLeft') { ev.preventDefault(); catenaryWeb.stepWalker(-0.055); updateUI(); renderFrame(); }
+    else if (k === 'ArrowRight') { ev.preventDefault(); catenaryWeb.stepWalker(0.055); updateUI(); renderFrame(); }
+    else if (k === 'g' || k === 'G') { ev.preventDefault(); cycleGust(); renderFrame(); }
+    else if (k === 'y' || k === 'Y') { ev.preventDefault(); pendantLife.advanceSpanWear(3); updateUI(); renderFrame(); }
+    else if (k === 'm' || k === 'M') { ev.preventDefault(); toggleAudio(); }
+    else if (k === 'r' || k === 'R') { ev.preventDefault(); resetAll(); }
+  });
+
+  if (mqReduced && mqReduced.addEventListener) {
+    mqReduced.addEventListener('change', function (e) {
+      reducedMotion = Boolean(e.matches);
+      catenaryWeb.setReducedMotion(reducedMotion);
+      pendantLife.setReducedMotion(reducedMotion);
+      renderFrame();
+    });
+  }
+  window.addEventListener('resize', function () {
+    syncCanvasSize();
+    catenaryWeb.setHookLoads(pendantLife.getHookLoads());
+    renderFrame();
+  });
+
+  function getMergedState() {
+    return Object.assign({}, catenaryWeb.getState(), pendantLife.getState(), {
+      drawerOpen: drawerOpen,
+      plateZoomed: plateZoomed,
+      plateMode: plateMode,
+      reducedMotion: reducedMotion
+    });
+  }
+
+  window.OctaviaCityApp = {
+    getState: getMergedState,
+    hangStone: function (idOrIdx) { const r = idOrIdx === undefined ? hangNextStoneAction() : pendantLife.hangStone(idOrIdx); renderFrame(); return r; },
+    unhangStone: function (idOrIdx) { const r = pendantLife.unhangStone(idOrIdx); renderFrame(); return r; },
+    toggleStone: function (idOrIdx) { const r = toggleStoneAction(idOrIdx); renderFrame(); return r; },
+    hangAllStones: function () { const r = pendantLife.hangAllStones(); updateUI(); renderFrame(); return r; },
+    clearAllStones: function () { const r = pendantLife.clearAllStones(); updateUI(); renderFrame(); return r; },
+    attemptUpwardBuild: function (hookIdx) { const r = pendantLife.attemptUpwardBuild(hookIdx); renderFrame(); return r; },
+    stepWalker: function (delta) { const r = catenaryWeb.stepWalker(delta); updateUI(); renderFrame(); return r; },
+    setWindKnots: function (kt) { const r = catenaryWeb.setWindKnots(kt); updateUI(); renderFrame(); return r; },
+    advanceSpanWear: function (yrs) { const r = pendantLife.advanceSpanWear(yrs); updateUI(); renderFrame(); return r; },
+    renewHempStrands: function () { const r = pendantLife.renewHempStrands(); updateUI(); renderFrame(); return r; },
+    addOverloadBallast: function (kg) { const r = pendantLife.addOverloadBallast(kg); updateUI(); renderFrame(); return r; },
+    shedOverloadBallast: function () { const r = pendantLife.shedOverloadBallast(); updateUI(); renderFrame(); return r; },
+    togglePlateDrawer: togglePlateDrawer,
+    toggleZoom: toggleZoom,
+    toggleAudio: toggleAudio,
+    reset: resetAll,
+    catenaryWeb: catenaryWeb,
+    pendantLife: pendantLife
+  };
+
+  syncCanvasSize();
+  catenaryWeb.setHookLoads(pendantLife.getHookLoads());
+  pendantLife.step(0.016, catenaryWeb.getAllHookPoints(), { windKnots: catenaryWeb.getState().windKnots, width: stageW, height: stageH });
+  updateUI();
+  renderFrame();
+
+  let lastTs = performance.now();
+  let uiTick = 0;
+  function tick(now) {
+    const dt = Math.min(0.05, Math.max(0.004, (now - lastTs) / 1000));
+    lastTs = now;
+    if (!drawerOpen) {
+      if (!reducedMotion) {
+        catenaryWeb.step(dt);
+        pendantLife.step(dt, catenaryWeb.getAllHookPoints(), {
+          windKnots: catenaryWeb.getState().windKnots,
+          width: stageW,
+          height: stageH
+        });
+        uiTick += dt;
+        if (uiTick >= 0.25) {
+          uiTick = 0;
+          updateDynamicTiesLine();
+        }
+      }
+      renderFrame();
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>

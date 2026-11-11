@@ -1,0 +1,3433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eutropia — The Seven-Plateau Chessboard of Mercury</title>
+<style>
+html:has(eutropia-plateau),
+body:has(eutropia-plateau) {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #1b1712;
+  color: #ece7da;
+  font-family: "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+eutropia-plateau {
+  --eutropia-night: #1b1712;
+  --eutropia-shadow: #2c241b;
+  --eutropia-panel: #231d16;
+  --eutropia-panel-raised: #2f271e;
+  --eutropia-ochre: #c69d63;
+  --eutropia-grass: #8e8958;
+  --eutropia-chalk: #dfd5be;
+  --eutropia-lime: #ece7da;
+  --eutropia-mortar: #a8a090;
+  --eutropia-terracotta: #c85232;
+  --eutropia-glow: #e47b47;
+  --eutropia-mercury: #cdd6df;
+  --eutropia-cyan: #8fb4c9;
+  --eutropia-lead: #7a6e5d;
+  --eutropia-mono: "SFMono-Regular", Menlo, Consolas, monospace;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1.75fr) minmax(350px, 436px);
+  grid-template-rows: minmax(0, 1fr);
+  gap: 8px;
+  padding: 8px;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: radial-gradient(circle at 34% 38%, #2c241b 0%, #1b1712 78%);
+  color: var(--eutropia-lime);
+  user-select: none;
+}
+
+eutropia-plateau,
+eutropia-plateau *,
+eutropia-plateau *::before,
+eutropia-plateau *::after {
+  box-sizing: border-box;
+}
+
+eutropia-plateau [hidden],
+eutropia-plate-drawer[hidden] {
+  display: none !important;
+}
+
+eutropia-left-wing,
+eutropia-masthead,
+eutropia-title-block,
+eutropia-header-tools,
+sister-city-ring,
+eutropia-stage-frame,
+eutropia-stage-caption,
+mercury-invariance-gauge,
+eutropia-weariness-row,
+eutropia-weariness-track,
+eutropia-weariness-fill,
+eutropia-burden-strip,
+eutropia-action-cluster,
+eutropia-proof-grid,
+eutropia-proof-leaf,
+role-swap-register,
+eutropia-register-head,
+eutropia-citizen-tabs,
+eutropia-citizen-card,
+eutropia-card-grid,
+eutropia-field-row,
+eutropia-speech-box,
+eutropia-job-cycle-bar,
+eutropia-scene-strip,
+eutropia-scene-head,
+eutropia-scene-list,
+eutropia-scene-row,
+eutropia-plate-drawer,
+eutropia-plate-sheet,
+eutropia-plate-bar,
+eutropia-plate-tabs,
+eutropia-plate-gallery,
+eutropia-plate-card,
+eutropia-plate-viewport,
+eutropia-plate-caption {
+  display: block;
+}
+
+.eutropia-left-wing {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  gap: 6px;
+  min-width: 0;
+  max-width: 100%;
+  min-height: 0;
+}
+
+.eutropia-masthead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 5px 10px;
+  min-width: 0;
+  max-width: 100%;
+  background: linear-gradient(180deg, rgba(47, 39, 30, 0.95), rgba(35, 29, 22, 0.95));
+  border: 1px solid rgba(198, 157, 99, 0.34);
+  border-radius: 6px;
+}
+
+.eutropia-title-block {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex: 1 1 0%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.eutropia-city-title {
+  display: inline-block;
+  flex-shrink: 0;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--eutropia-ochre);
+  white-space: nowrap;
+}
+
+.eutropia-city-sub {
+  display: inline-block;
+  flex: 1 1 0%;
+  min-width: 0;
+  font-size: 11.5px;
+  color: var(--eutropia-chalk);
+  opacity: 0.88;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.eutropia-header-tools {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.eutropia-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 4px 8px;
+  font-family: var(--eutropia-mono);
+  font-size: 10.5px;
+  line-height: 1.1;
+  color: var(--eutropia-lime);
+  background: rgba(44, 36, 27, 0.92);
+  border: 1px solid rgba(198, 157, 99, 0.38);
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 120ms ease, border-color 120ms ease, transform 90ms ease;
+}
+
+.eutropia-pill:hover,
+.eutropia-pill:focus-visible {
+  background: rgba(198, 157, 99, 0.24);
+  border-color: var(--eutropia-ochre);
+  outline: none;
+}
+
+.eutropia-pill.eutropia-active {
+  background: rgba(143, 180, 201, 0.22);
+  border-color: var(--eutropia-cyan);
+  color: #ffffff;
+}
+
+.eutropia-pill-primary {
+  background: linear-gradient(180deg, #d35c3a, #b34224);
+  border-color: var(--eutropia-glow);
+  color: #fff9f2;
+  font-weight: 700;
+}
+
+.eutropia-pill-primary:hover,
+.eutropia-pill-primary:focus-visible {
+  background: linear-gradient(180deg, #e47b47, #c85232);
+  border-color: #ffd5bd;
+}
+.eutropia-sister-ring {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 5px;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.eutropia-mesa-chip {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4px 6px;
+  border-radius: 5px;
+  background: rgba(236, 231, 218, 0.08);
+  border: 1px solid rgba(168, 160, 144, 0.42);
+  color: var(--eutropia-lime);
+  cursor: pointer;
+  min-width: 0;
+  transition: background 140ms ease, border-color 140ms ease;
+}
+
+.eutropia-mesa-chip:hover,
+.eutropia-mesa-chip:focus-visible {
+  border-color: var(--eutropia-ochre);
+  background: rgba(198, 157, 99, 0.18);
+  outline: none;
+}
+
+.eutropia-mesa-chip.eutropia-inhabited {
+  background: linear-gradient(180deg, rgba(200, 82, 50, 0.44), rgba(145, 52, 28, 0.52));
+  border-color: var(--eutropia-glow);
+  box-shadow: 0 0 10px rgba(228, 123, 71, 0.25);
+}
+
+.eutropia-chip-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3px;
+  font-family: var(--eutropia-mono);
+  font-size: 10px;
+  font-weight: 700;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.eutropia-chip-num {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.eutropia-chip-state {
+  display: inline-block;
+  font-family: var(--eutropia-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.05em;
+  color: var(--eutropia-mortar);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.eutropia-mesa-chip.eutropia-inhabited .eutropia-chip-state {
+  color: #ffd7c2;
+}
+
+.eutropia-stage-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 260px;
+  border-radius: 7px;
+  overflow: hidden;
+  border: 1px solid rgba(198, 157, 99, 0.42);
+  background: #1b1712;
+}
+
+.eutropia-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.eutropia-stage-caption {
+  position: absolute;
+  left: 8px;
+  bottom: 7px;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(27, 23, 18, 0.78);
+  border: 1px solid rgba(198, 157, 99, 0.32);
+  font-size: 10.5px;
+  color: var(--eutropia-chalk);
+  pointer-events: none;
+}
+
+.eutropia-caption-text {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.eutropia-gauge {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  gap: 6px;
+  padding: 7px 9px;
+  min-width: 0;
+  max-width: 100%;
+  background: linear-gradient(180deg, rgba(43, 35, 27, 0.96), rgba(31, 25, 19, 0.96));
+  border: 1px solid rgba(198, 157, 99, 0.36);
+  border-radius: 6px;
+}
+
+.eutropia-weariness-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.eutropia-weariness-meter {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1 1 150px;
+  min-width: 120px;
+}
+
+.eutropia-meter-label {
+  display: inline-block;
+  font-family: var(--eutropia-mono);
+  font-size: 10px;
+  color: var(--eutropia-ochre);
+  white-space: nowrap;
+}
+
+.eutropia-weariness-track {
+  position: relative;
+  flex: 1;
+  height: 9px;
+  background: rgba(18, 15, 11, 0.9);
+  border: 1px solid rgba(168, 160, 144, 0.4);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.eutropia-weariness-fill {
+  height: 100%;
+  width: 18%;
+  background: linear-gradient(90deg, #8e8958 0%, #c69d63 55%, #c85232 100%);
+  transition: width 140ms ease;
+}
+
+.eutropia-burden-strip {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.eutropia-burden-pip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 5px;
+  border-radius: 3px;
+  font-family: var(--eutropia-mono);
+  font-size: 9.5px;
+  background: rgba(236, 231, 218, 0.07);
+  border: 1px solid rgba(168, 160, 144, 0.32);
+  color: var(--eutropia-chalk);
+  cursor: pointer;
+}
+
+.eutropia-burden-pip:hover,
+.eutropia-burden-pip:focus-visible {
+  border-color: var(--eutropia-ochre);
+  background: rgba(198, 157, 99, 0.2);
+  outline: none;
+}
+
+.eutropia-burden-pip.eutropia-saturated {
+  border-color: var(--eutropia-glow);
+  color: #ffd7c2;
+  background: rgba(200, 82, 50, 0.28);
+}
+
+.eutropia-action-cluster {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.eutropia-proof-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.eutropia-proof-leaf {
+  padding: 4px 7px;
+  border-radius: 4px;
+  background: rgba(20, 17, 13, 0.72);
+  border: 1px solid rgba(205, 214, 223, 0.24);
+  font-family: var(--eutropia-mono);
+  font-size: 9.8px;
+  line-height: 1.3;
+}
+
+.eutropia-proof-title {
+  display: block;
+  color: var(--eutropia-cyan);
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.eutropia-proof-val {
+  display: block;
+  color: var(--eutropia-lime);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.eutropia-register {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 9px;
+  background: linear-gradient(180deg, rgba(43, 35, 27, 0.97), rgba(27, 22, 17, 0.98));
+  border: 1px solid rgba(198, 157, 99, 0.38);
+  border-radius: 7px;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.eutropia-register-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.eutropia-register-title {
+  display: inline-block;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--eutropia-ochre);
+}
+
+.eutropia-epoch-badge {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: var(--eutropia-mono);
+  font-size: 9.5px;
+  background: rgba(205, 214, 223, 0.12);
+  border: 1px solid rgba(205, 214, 223, 0.3);
+  color: var(--eutropia-mercury);
+}
+
+.eutropia-citizen-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.eutropia-citizen-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 6px;
+  border-radius: 4px;
+  background: rgba(236, 231, 218, 0.06);
+  border: 1px solid rgba(168, 160, 144, 0.34);
+  font-family: var(--eutropia-mono);
+  font-size: 10px;
+  color: var(--eutropia-chalk);
+  cursor: pointer;
+}
+
+.eutropia-citizen-pill:hover,
+.eutropia-citizen-pill:focus-visible {
+  border-color: var(--eutropia-ochre);
+  background: rgba(198, 157, 99, 0.2);
+  outline: none;
+}
+
+.eutropia-citizen-pill.eutropia-selected {
+  background: rgba(200, 82, 50, 0.34);
+  border-color: var(--eutropia-glow);
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.eutropia-citizen-card {
+  padding: 7px 8px;
+  border-radius: 6px;
+  background: rgba(20, 16, 12, 0.76);
+  border: 1px solid rgba(198, 157, 99, 0.34);
+  outline: none;
+}
+
+.eutropia-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 5px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(198, 157, 99, 0.2);
+}
+
+.eutropia-citizen-name {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--eutropia-lime);
+}
+
+.eutropia-swap-delta {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: var(--eutropia-mono);
+  font-size: 9.5px;
+  background: rgba(143, 180, 201, 0.16);
+  border: 1px solid rgba(143, 180, 201, 0.42);
+  color: var(--eutropia-mercury);
+}
+
+.eutropia-card-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3px;
+}
+
+.eutropia-field-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px;
+  font-size: 11px;
+  line-height: 1.28;
+}
+
+.eutropia-field-key {
+  display: inline-block;
+  font-family: var(--eutropia-mono);
+  font-size: 9.5px;
+  text-transform: uppercase;
+  color: var(--eutropia-ochre);
+  flex-shrink: 0;
+}
+
+.eutropia-field-val {
+  display: inline-block;
+  color: var(--eutropia-lime);
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.eutropia-speech-box {
+  margin-top: 5px;
+  padding: 5px 7px;
+  border-radius: 4px;
+  background: rgba(44, 36, 27, 0.65);
+  border-left: 2px solid var(--eutropia-ochre);
+  font-size: 11px;
+  line-height: 1.3;
+  color: var(--eutropia-chalk);
+}
+
+.eutropia-scene-strip {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.eutropia-scene-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  font-family: var(--eutropia-mono);
+  font-size: 9.8px;
+  color: var(--eutropia-cyan);
+}
+
+.eutropia-scene-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.eutropia-scene-row {
+  padding: 5px 7px;
+  border-radius: 5px;
+  background: rgba(23, 19, 14, 0.78);
+  border: 1px solid rgba(205, 214, 223, 0.2);
+  font-size: 10.5px;
+  line-height: 1.28;
+}
+
+.eutropia-scene-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  font-weight: 700;
+  color: var(--eutropia-ochre);
+}
+
+.eutropia-yawn-tag {
+  display: inline-block;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-family: var(--eutropia-mono);
+  font-size: 9px;
+  background: rgba(205, 214, 223, 0.16);
+  border: 1px solid rgba(205, 214, 223, 0.38);
+  color: var(--eutropia-mercury);
+}
+
+.eutropia-scene-actors {
+  display: block;
+  font-family: var(--eutropia-mono);
+  font-size: 9.5px;
+  color: var(--eutropia-mercury);
+  margin: 2px 0;
+}
+
+.eutropia-scene-line {
+  display: block;
+  color: var(--eutropia-chalk);
+  font-style: italic;
+}
+
+.eutropia-plate-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+  background: rgba(15, 12, 9, 0.88);
+  backdrop-filter: blur(4px);
+}
+
+.eutropia-plate-sheet {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: min(1180px, 100%);
+  height: min(740px, 100%);
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #221c15;
+  border: 1px solid var(--eutropia-ochre);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.65);
+}
+
+.eutropia-plate-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.eutropia-plate-tabs {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.eutropia-plate-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  flex: 1;
+  min-height: 0;
+}
+
+.eutropia-plate-gallery.eutropia-single-plate {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.eutropia-plate-card {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-height: 0;
+  background: #17130e;
+  border: 1px solid rgba(198, 157, 99, 0.35);
+  border-radius: 6px;
+  padding: 6px;
+}
+
+.eutropia-plate-card.eutropia-tab-hidden {
+  display: none;
+}
+
+.eutropia-plate-viewport {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #120e0a;
+  border-radius: 4px;
+}
+
+.eutropia-plate-img,
+.eutropia-plate-fallback {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  transform-origin: center center;
+  transition: transform 160ms ease;
+}
+
+.eutropia-plate-drawer.eutropia-zoomed .eutropia-plate-img,
+.eutropia-plate-drawer.eutropia-zoomed .eutropia-plate-fallback {
+  transform: scale(1.75);
+}
+
+.eutropia-plate-caption {
+  font-family: var(--eutropia-mono);
+  font-size: 10px;
+  color: var(--eutropia-chalk);
+  text-align: center;
+}
+
+@media (max-width: 899px) {
+  eutropia-plateau {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 4px;
+    padding: 5px;
+  }
+  .eutropia-left-wing {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto 43.5dvh auto;
+    gap: 4px;
+    min-width: 0;
+    max-width: 100%;
+  }
+  .eutropia-city-title {
+    font-size: 11px;
+    letter-spacing: 0.06em;
+  }
+  .eutropia-city-sub {
+    display: none;
+  }
+  .eutropia-masthead {
+    padding: 4px 5px;
+    gap: 4px;
+    flex-wrap: wrap;
+    min-width: 0;
+  }
+  .eutropia-header-tools {
+    gap: 3px;
+    flex-wrap: wrap;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+  .eutropia-pill {
+    padding: 3px 4px;
+    font-size: 8.8px;
+  }
+  .eutropia-sister-ring {
+    gap: 2px;
+    min-width: 0;
+  }
+  .eutropia-mesa-chip {
+    padding: 2px 2px;
+  }
+  .eutropia-chip-top {
+    font-size: 7.2px;
+  }
+  .eutropia-chip-num {
+    white-space: normal;
+    word-break: keep-all;
+    overflow: visible;
+    text-overflow: clip;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+  }
+  .eutropia-chip-state {
+    font-size: 6.8px;
+  }
+  .eutropia-stage-frame {
+    min-height: 0;
+    height: 100%;
+    min-width: 0;
+  }
+  .eutropia-gauge {
+    padding: 4px 5px;
+    gap: 4px;
+    min-width: 0;
+  }
+  .eutropia-weariness-row {
+    gap: 4px;
+  }
+  .eutropia-weariness-meter {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+  .eutropia-burden-strip {
+    flex-wrap: wrap;
+    gap: 2px;
+    min-width: 0;
+  }
+  .eutropia-burden-pip {
+    padding: 2px 3px;
+    font-size: 8px;
+  }
+  .eutropia-action-cluster {
+    margin-left: 0;
+    width: 100%;
+    justify-content: space-between;
+    gap: 3px;
+  }
+  .eutropia-proof-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 3px;
+  }
+  .eutropia-proof-leaf {
+    padding: 3px 5px;
+    font-size: 8.5px;
+    min-width: 0;
+  }
+  .eutropia-plate-gallery {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  eutropia-plateau *,
+  eutropia-plateau *::before,
+  eutropia-plateau *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+<eutropia-plateau class="eutropia-plateau" id="eutropia-root">
+  <eutropia-left-wing class="eutropia-left-wing">
+    <eutropia-masthead class="eutropia-masthead">
+      <eutropia-title-block class="eutropia-title-block">
+        <eutropia-city-title class="eutropia-city-title">Eutropia ☿</eutropia-city-title>
+        <eutropia-city-sub class="eutropia-city-sub" id="eutropia-masthead-sub">One Inhabited Terracotta Mesa · Six Scrubbed Quicklime Sisters Waiting</eutropia-city-sub>
+      </eutropia-title-block>
+      <eutropia-header-tools class="eutropia-header-tools">
+        <eutropia-tool-pill class="eutropia-pill eutropia-active" id="eutropia-btn-vista" data-action="toggle-vista" role="button" tabindex="0" title="Toggle Casement Window Vista Inset [V]">[V] Vista</eutropia-tool-pill>
+        <eutropia-tool-pill class="eutropia-pill" id="eutropia-btn-yawn" data-action="yawn-pulse" role="button" tabindex="0" title="Sound the Three Rotated Wide-Open Yawns [Y]">[Y] Yawn</eutropia-tool-pill>
+        <eutropia-tool-pill class="eutropia-pill" id="eutropia-btn-sound" data-action="toggle-sound" role="button" tabindex="0" title="Toggle 4-Voice Musical-Chair Canon Audio [M]">[M] Canon: Off</eutropia-tool-pill>
+        <eutropia-tool-pill class="eutropia-pill" id="eutropia-btn-plates" data-action="toggle-plates" role="button" tabindex="0" title="Open Royal Copperplate Folio [P]">[P] Plates</eutropia-tool-pill>
+        <eutropia-tool-pill class="eutropia-pill" id="eutropia-btn-reset" data-action="reset" role="button" tabindex="0" title="Reset Plateau to Epoch 0 [R]">[R]</eutropia-tool-pill>
+      </eutropia-header-tools>
+    </eutropia-masthead>
+
+    <sister-city-ring class="eutropia-sister-ring" id="eutropia-sister-ring" role="group" aria-label="Seven Sister Cities of the Plateau">
+      <eutropia-mesa-chip class="eutropia-mesa-chip eutropia-inhabited" data-mesa="0" role="button" tabindex="0"><eutropia-chip-top class="eutropia-chip-top"><eutropia-chip-num class="eutropia-chip-num">[1] Meridies</eutropia-chip-num></eutropia-chip-top><eutropia-chip-state class="eutropia-chip-state">ACTIVE</eutropia-chip-state></eutropia-mesa-chip>
+      <eutropia-mesa-chip class="eutropia-mesa-chip" data-mesa="1" role="button" tabindex="0"><eutropia-chip-top class="eutropia-chip-top"><eutropia-chip-num class="eutropia-chip-num">[2] Vespera</eutropia-chip-num></eutropia-chip-top><eutropia-chip-state class="eutropia-chip-state">EMPTY</eutropia-chip-state></eutropia-mesa-chip>
+      <eutropia-mesa-chip class="eutropia-mesa-chip" data-mesa="2" role="button" tabindex="0"><eutropia-chip-top class="eutropia-chip-top"><eutropia-chip-num class="eutropia-chip-num">[3] Caurus</eutropia-chip-num></eutropia-chip-top><eutropia-chip-state class="eutropia-chip-state">EMPTY</eutropia-chip-state></eutropia-mesa-chip>
+      <eutropia-mesa-chip class="eutropia-mesa-chip" data-mesa="3" role="button" tabindex="0"><eutropia-chip-top class="eutropia-chip-top"><eutropia-chip-num class="eutropia-chip-num">[4] Caducea</eutropia-chip-num></eutropia-chip-top><eutropia-chip-state class="eutropia-chip-state">EMPTY</eutropia-chip-state></eutropia-mesa-chip>
+      <eutropia-mesa-chip class="eutropia-mesa-chip" data-mesa="4" role="button" tabindex="0"><eutropia-chip-top class="eutropia-chip-top"><eutropia-chip-num class="eutropia-chip-num">[5] Boreas</eutropia-chip-num></eutropia-chip-top><eutropia-chip-state class="eutropia-chip-state">EMPTY</eutropia-chip-state></eutropia-mesa-chip>
+      <eutropia-mesa-chip class="eutropia-mesa-chip" data-mesa="5" role="button" tabindex="0"><eutropia-chip-top class="eutropia-chip-top"><eutropia-chip-num class="eutropia-chip-num">[6] Aurora</eutropia-chip-num></eutropia-chip-top><eutropia-chip-state class="eutropia-chip-state">EMPTY</eutropia-chip-state></eutropia-mesa-chip>
+      <eutropia-mesa-chip class="eutropia-mesa-chip" data-mesa="6" role="button" tabindex="0"><eutropia-chip-top class="eutropia-chip-top"><eutropia-chip-num class="eutropia-chip-num">[7] Eurus</eutropia-chip-num></eutropia-chip-top><eutropia-chip-state class="eutropia-chip-state">EMPTY</eutropia-chip-state></eutropia-mesa-chip>
+    </sister-city-ring>
+
+    <eutropia-stage-frame class="eutropia-stage-frame" id="eutropia-stage-frame">
+      <canvas class="eutropia-canvas" id="eutropia-canvas" aria-label="Panorama of the Seven Plateau Sister Cities of Eutropia"></canvas>
+      <eutropia-stage-caption class="eutropia-stage-caption">
+        <eutropia-caption-text class="eutropia-caption-text" id="eutropia-stage-status">Inhabited: Eutropia-Meridies (1 Active · 6 Scrubbed Empty)</eutropia-caption-text>
+        <eutropia-caption-text class="eutropia-caption-text" id="eutropia-vista-status">Casement Vista: Red Escarpment Rim &amp; Winding Valley Gorge</eutropia-caption-text>
+      </eutropia-stage-caption>
+    </eutropia-stage-frame>
+
+    <mercury-invariance-gauge class="eutropia-gauge" id="eutropia-gauge">
+      <eutropia-weariness-row class="eutropia-weariness-row">
+        <eutropia-weariness-meter class="eutropia-weariness-meter">
+          <eutropia-meter-label class="eutropia-meter-label" id="eutropia-weariness-pct">Weariness: 18%</eutropia-meter-label>
+          <eutropia-weariness-track class="eutropia-weariness-track">
+            <eutropia-weariness-fill class="eutropia-weariness-fill" id="eutropia-weariness-fill"></eutropia-weariness-fill>
+          </eutropia-weariness-track>
+        </eutropia-weariness-meter>
+        <eutropia-burden-strip class="eutropia-burden-strip" id="eutropia-burden-strip">
+          <eutropia-burden-pip class="eutropia-burden-pip" data-burden="job" role="button" tabindex="0" title="Endure Job Weariness">Job 20%</eutropia-burden-pip>
+          <eutropia-burden-pip class="eutropia-burden-pip" data-burden="relatives" role="button" tabindex="0" title="Endure Relatives Weariness">Relatives 16%</eutropia-burden-pip>
+          <eutropia-burden-pip class="eutropia-burden-pip" data-burden="house" role="button" tabindex="0" title="Endure House &amp; Street-View Weariness">House 19%</eutropia-burden-pip>
+          <eutropia-burden-pip class="eutropia-burden-pip" data-burden="debts" role="button" tabindex="0" title="Endure Debts Weariness">Debts 17%</eutropia-burden-pip>
+          <eutropia-burden-pip class="eutropia-burden-pip" data-burden="greetings" role="button" tabindex="0" title="Endure Daily Greetings Weariness">Greetings 18%</eutropia-burden-pip>
+        </eutropia-burden-strip>
+        <eutropia-action-cluster class="eutropia-action-cluster">
+          <eutropia-tool-pill class="eutropia-pill" id="eutropia-btn-weary" data-action="add-weariness" role="button" tabindex="0" title="Endure Daily Routine (+Weariness) [W]">[W] +Weariness</eutropia-tool-pill>
+          <eutropia-tool-pill class="eutropia-pill eutropia-pill-primary" id="eutropia-btn-exodus" data-action="proclaim-exodus" role="button" tabindex="0" title="Proclaim Civic Exodus to Next Empty Sister City [E / Space]">[E] Proclaim Exodus</eutropia-tool-pill>
+          <eutropia-tool-pill class="eutropia-pill" id="eutropia-btn-auto" data-action="toggle-auto" role="button" tabindex="0" title="Auto-Migrate When Weariness Reaches 100% [A]">[A] Auto: Off</eutropia-tool-pill>
+        </eutropia-action-cluster>
+      </eutropia-weariness-row>
+
+      <eutropia-proof-grid class="eutropia-proof-grid">
+        <eutropia-proof-leaf class="eutropia-proof-leaf">
+          <eutropia-proof-title class="eutropia-proof-title" id="eutropia-proof-left-title">☿ Individual Reassignment: Origin Settlement (Epoch 0)</eutropia-proof-title>
+          <eutropia-proof-val class="eutropia-proof-val" id="eutropia-proof-left-val">0 Fixed Points on Exodus · Wealth Gini: 0.000 (24g Stipend · Net 0g)</eutropia-proof-val>
+        </eutropia-proof-leaf>
+        <eutropia-proof-leaf class="eutropia-proof-leaf">
+          <eutropia-proof-title class="eutropia-proof-title" id="eutropia-proof-right-title">☿ Global Scene-Graph &amp; Yawns: 100.0% Invariant</eutropia-proof-title>
+          <eutropia-proof-val class="eutropia-proof-val" id="eutropia-proof-right-val">SCENES:4 | JOBS:8 | DEBTS:8x12g | YAWNS:3 (in:1x8|out:1x8)</eutropia-proof-val>
+        </eutropia-proof-leaf>
+      </eutropia-proof-grid>
+    </mercury-invariance-gauge>
+  </eutropia-left-wing>
+
+  <role-swap-register class="eutropia-register" id="eutropia-register">
+    <eutropia-register-head class="eutropia-register-head">
+      <eutropia-register-title class="eutropia-register-title">Role-Swap Permutation Ledger</eutropia-register-title>
+      <eutropia-epoch-badge class="eutropia-epoch-badge" id="eutropia-epoch-badge">Epoch 0 · Day 1</eutropia-epoch-badge>
+    </eutropia-register-head>
+
+    <eutropia-citizen-tabs class="eutropia-citizen-tabs" id="eutropia-citizen-tabs" role="tablist" aria-label="Eight Citizens of Eutropia"></eutropia-citizen-tabs>
+
+    <eutropia-citizen-card class="eutropia-citizen-card" id="eutropia-citizen-card" tabindex="0" aria-label="Focused Citizen Role Dossier"></eutropia-citizen-card>
+
+    <eutropia-scene-strip class="eutropia-scene-strip" id="eutropia-scene-strip">
+      <eutropia-scene-head class="eutropia-scene-head">
+        <eutropia-scene-label class="eutropia-scene-label">4 Canonical Piazza Scenes · 3 Rotated Wide-Open Yawns</eutropia-scene-label>
+        <eutropia-scene-count class="eutropia-scene-count" id="eutropia-yawn-summary">Yawns: 3/3</eutropia-scene-count>
+      </eutropia-scene-head>
+      <eutropia-scene-list class="eutropia-scene-list" id="eutropia-scene-list"></eutropia-scene-list>
+    </eutropia-scene-strip>
+  </role-swap-register>
+
+  <eutropia-plate-drawer class="eutropia-plate-drawer" id="eutropia-plate-drawer" hidden aria-label="Eutropia Archival Plates Drawer">
+    <eutropia-plate-sheet class="eutropia-plate-sheet">
+      <eutropia-plate-bar class="eutropia-plate-bar">
+        <eutropia-plate-tabs class="eutropia-plate-tabs">
+          <eutropia-tool-pill class="eutropia-pill eutropia-active" data-plate-tab="diptych" role="button" tabindex="0">Diptych</eutropia-tool-pill>
+          <eutropia-tool-pill class="eutropia-pill" data-plate-tab="map" role="button" tabindex="0">Plateau Map (map.png)</eutropia-tool-pill>
+          <eutropia-tool-pill class="eutropia-pill" data-plate-tab="vista" role="button" tabindex="0">Exodus Vista (image.png)</eutropia-tool-pill>
+        </eutropia-plate-tabs>
+        <eutropia-plate-tabs class="eutropia-plate-tabs">
+          <eutropia-tool-pill class="eutropia-pill" id="eutropia-btn-zoom" data-action="toggle-zoom" role="button" tabindex="0">[Z] 1.75x Loupe</eutropia-tool-pill>
+          <eutropia-tool-pill class="eutropia-pill eutropia-pill-primary" data-action="close-plates" role="button" tabindex="0">[Esc] Close</eutropia-tool-pill>
+        </eutropia-plate-tabs>
+      </eutropia-plate-bar>
+      <eutropia-plate-gallery class="eutropia-plate-gallery" id="eutropia-plate-gallery">
+        <eutropia-plate-card class="eutropia-plate-card" id="eutropia-card-map">
+          <eutropia-plate-viewport class="eutropia-plate-viewport">
+            <img class="eutropia-plate-img" id="eutropia-map-img" src="map.png" alt="Copperplate Map of the Seven Plateau Sister Cities of Eutropia">
+            <canvas class="eutropia-plate-fallback" id="eutropia-map-fallback" width="800" height="600" hidden></canvas>
+          </eutropia-plate-viewport>
+          <eutropia-plate-caption class="eutropia-plate-caption">Plate I — Copperplate Cartography of the Seven Plateau Sister Cities (1600×1200)</eutropia-plate-caption>
+        </eutropia-plate-card>
+        <eutropia-plate-card class="eutropia-plate-card" id="eutropia-card-vista">
+          <eutropia-plate-viewport class="eutropia-plate-viewport">
+            <img class="eutropia-plate-img" id="eutropia-vista-img" src="image.png" alt="Civic Exodus Across the Rolling Plateau of Eutropia">
+            <canvas class="eutropia-plate-fallback" id="eutropia-vista-fallback" width="800" height="500" hidden></canvas>
+          </eutropia-plate-viewport>
+          <eutropia-plate-caption class="eutropia-plate-caption">Plate II — Civic Exodus Caravan Across the Rolling Plateau of Eutropia (1600×1000)</eutropia-plate-caption>
+        </eutropia-plate-card>
+      </eutropia-plate-gallery>
+    </eutropia-plate-sheet>
+  </eutropia-plate-drawer>
+</eutropia-plateau>
+
+<script>
+(function () {
+  "use strict";
+
+  const PALETTE = Object.freeze({
+    plateauNightGround: "#1b1712",
+    mesaShadow: "#2c241b",
+    ochreMesa: "#c69d63",
+    plateauGrass: "#8e8958",
+    chalkRoad: "#dfd5be",
+    scrubbedLime: "#ece7da",
+    scrubbedMortar: "#a8a090",
+    terracottaActive: "#c85232",
+    terracottaGlow: "#e47b47",
+    mercuryQuicksilver: "#cdd6df",
+    mercuryCyan: "#8fb4c9",
+    wearinessLead: "#7a6e5d"
+  });
+
+  const SISTER_CITIES = Object.freeze([
+    Object.freeze({
+      index: 0,
+      id: "mesa_meridies",
+      name: "Eutropia-Meridies",
+      cardinal: "South Cliff",
+      nx: 0.50,
+      ny: 0.76,
+      windowVista: "Red Escarpment Rim & Winding Valley Gorge",
+      vistaKind: "gorge",
+      bellHz: 293.66
+    }),
+    Object.freeze({
+      index: 1,
+      id: "mesa_vespera",
+      name: "Eutropia-Vespera",
+      cardinal: "Southwest Bluff",
+      nx: 0.20,
+      ny: 0.55,
+      windowVista: "Sunken Viaduct Saddle & Olive Terraces",
+      vistaKind: "viaduct",
+      bellHz: 329.63
+    }),
+    Object.freeze({
+      index: 2,
+      id: "mesa_caurus",
+      name: "Eutropia-Caurus",
+      cardinal: "Northwest Crag",
+      nx: 0.26,
+      ny: 0.27,
+      windowVista: "Windward Salt Steppe & Distant Chalk Buttes",
+      vistaKind: "steppe",
+      bellHz: 369.99
+    }),
+    Object.freeze({
+      index: 3,
+      id: "mesa_caducea",
+      name: "Eutropia-Caducea",
+      cardinal: "Central Hub Mesa",
+      nx: 0.50,
+      ny: 0.46,
+      windowVista: "Six-Road Crossroads & Quicksilver Cistern",
+      vistaKind: "crossroads",
+      bellHz: 392.00
+    }),
+    Object.freeze({
+      index: 4,
+      id: "mesa_boreas",
+      name: "Eutropia-Boreas",
+      cardinal: "High North Table",
+      nx: 0.53,
+      ny: 0.17,
+      windowVista: "Northern Chalk Ravine & Cloud-Grazed Ridge",
+      vistaKind: "ravine",
+      bellHz: 440.00
+    }),
+    Object.freeze({
+      index: 5,
+      id: "mesa_aurora",
+      name: "Eutropia-Aurora",
+      cardinal: "Northeast Spur",
+      nx: 0.78,
+      ny: 0.28,
+      windowVista: "Twin Cypress Mesas & Morning Mist Basin",
+      vistaKind: "cypress",
+      bellHz: 493.88
+    }),
+    Object.freeze({
+      index: 6,
+      id: "mesa_eurus",
+      name: "Eutropia-Eurus",
+      cardinal: "Southeast Promontory",
+      nx: 0.79,
+      ny: 0.56,
+      windowVista: "Terraced Olive Gorge & Sunlit Quarry Slope",
+      vistaKind: "quarry",
+      bellHz: 587.33
+    })
+  ]);
+
+  const RAW_ROAD_SPECS = [
+    [0, 1, -0.14],
+    [0, 3, 0.11],
+    [0, 6, 0.15],
+    [1, 2, -0.16],
+    [1, 3, -0.10],
+    [2, 3, 0.12],
+    [2, 4, -0.15],
+    [3, 4, -0.09],
+    [3, 5, 0.11],
+    [3, 6, -0.12],
+    [4, 5, -0.14],
+    [5, 6, 0.16]
+  ];
+
+  const ROAD_LOOKUP = new Map();
+  const ROAD_ADJ = Array.from({ length: 7 }, () => []);
+
+  const PLATEAU_ROADS = Object.freeze(
+    RAW_ROAD_SPECS.map(function (spec) {
+      const a = spec[0];
+      const b = spec[1];
+      const bend = spec[2];
+      const pair = [a, b];
+      pair.from = a;
+      pair.to = b;
+      pair.bend = bend;
+      ROAD_ADJ[a].push(b);
+      ROAD_ADJ[b].push(a);
+      ROAD_LOOKUP.set(a + ":" + b, pair);
+      ROAD_LOOKUP.set(b + ":" + a, pair);
+      return Object.freeze(pair);
+    })
+  );
+
+  const CANON_MOTIF_HZ = Object.freeze([293.66, 440.00, 369.99, 329.63]);
+  const VOICE_TIMBRES = Object.freeze([
+    "plucked_lute",
+    "breathy_flute",
+    "dulcimer_chime",
+    "warm_reed"
+  ]);
+
+  function clamp(val, lo, hi) {
+    return val < lo ? lo : val > hi ? hi : val;
+  }
+
+  function findShortestRoadRoute(fromIdx, toIdx) {
+    const start = clamp(Math.floor(fromIdx || 0), 0, 6);
+    const goal = clamp(Math.floor(toIdx || 0), 0, 6);
+    if (start === goal) {
+      return [start];
+    }
+    const queue = [[start]];
+    const visited = new Set([start]);
+    while (queue.length > 0) {
+      const path = queue.shift();
+      const tail = path[path.length - 1];
+      const neighbors = ROAD_ADJ[tail];
+      for (let i = 0; i < neighbors.length; i += 1) {
+        const next = neighbors[i];
+        if (next === goal) {
+          return path.concat([next]);
+        }
+        if (!visited.has(next)) {
+          visited.add(next);
+          queue.push(path.concat([next]));
+        }
+      }
+    }
+    return [start, goal];
+  }
+
+  /* ---------- geometry & colour helpers ---------- */
+  function hexToRgb(hex) {
+    const n = parseInt(hex.slice(1), 16);
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  }
+  function mixColor(a, b, t) {
+    const A = hexToRgb(a);
+    const B = hexToRgb(b);
+    const k = clamp(t, 0, 1);
+    return "rgb(" + Math.round(A[0] + (B[0] - A[0]) * k) + "," +
+      Math.round(A[1] + (B[1] - A[1]) * k) + "," + Math.round(A[2] + (B[2] - A[2]) * k) + ")";
+  }
+  function rgba(hex, alpha) {
+    const c = hexToRgb(hex);
+    return "rgba(" + c[0] + "," + c[1] + "," + c[2] + "," + alpha + ")";
+  }
+  function seeded(seed) {
+    let s = seed >>> 0;
+    return function () {
+      s = (s * 1664525 + 1013904223) >>> 0;
+      return s / 4294967296;
+    };
+  }
+  function computeLayout(width, height) {
+    const w = Math.max(1, width || 1);
+    const h = Math.max(1, height || 1);
+    const portrait = h > w * 1.15;
+    const r = Math.max(14, Math.min(w * 0.058, h * 0.074, 66));
+    const pts = SISTER_CITIES.map(function (c) { return { x: c.nx * w, y: c.ny * h }; });
+    return { w: w, h: h, r: r, portrait: portrait, pts: pts, squash: 0.68 };
+  }
+  function roadControl(L, a, b, bend) {
+    const A = L.pts[a];
+    const B = L.pts[b];
+    const dx = B.x - A.x;
+    const dy = B.y - A.y;
+    const sign = a < b ? 1 : -1;
+    return { x: (A.x + B.x) / 2 - dy * bend * sign, y: (A.y + B.y) / 2 + dx * bend * sign };
+  }
+  function quadPoint(A, C, B, t) {
+    const u = 1 - t;
+    return { x: u * u * A.x + 2 * u * t * C.x + t * t * B.x, y: u * u * A.y + 2 * u * t * C.y + t * t * B.y };
+  }
+  function sampleRoute(L, route, s) {
+    if (!route || route.length < 2) {
+      const p = L.pts[route && route.length ? route[0] : 0];
+      return { x: p.x, y: p.y, angle: 0 };
+    }
+    const segs = route.length - 1;
+    const f = clamp(s, 0, 1) * segs;
+    const i = Math.min(segs - 1, Math.floor(f));
+    const t = f - i;
+    const a = route[i];
+    const b = route[i + 1];
+    const road = ROAD_LOOKUP.get(a + ":" + b);
+    const bend = road ? road.bend : 0;
+    const C = roadControl(L, Math.min(a, b), Math.max(a, b), bend);
+    const A = L.pts[a];
+    const B = L.pts[b];
+    const p = quadPoint(A, C, B, t);
+    const q = quadPoint(A, C, B, Math.min(1, t + 0.02));
+    return { x: p.x, y: p.y, angle: Math.atan2(q.y - p.y, q.x - p.x) };
+  }
+  function averageWeariness(society) {
+    if (!society) return 0;
+    const w = society.weariness;
+    if (typeof w === "number") return clamp(w, 0, 1);
+    if (w && typeof w === "object") {
+      const vals = Object.keys(w).map(function (k) { return Number(w[k]) || 0; });
+      return vals.length ? clamp(vals.reduce(function (s, v) { return s + v; }, 0) / vals.length, 0, 1) : 0;
+    }
+    if (typeof society.wearinessMean === "number") return clamp(society.wearinessMean, 0, 1);
+    return 0;
+  }
+
+  /* ---------- musical-chair canon WebAudio ---------- */
+  let audioCtx = null;
+  let masterGain = null;
+  function getAudio() {
+    if (audioCtx) return audioCtx;
+    try {
+      const root = typeof window !== "undefined" ? window : null;
+      const AC = root && (root.AudioContext || root.webkitAudioContext);
+      if (!AC) return null;
+      audioCtx = new AC();
+      masterGain = audioCtx.createGain();
+      masterGain.gain.value = 0.32;
+      masterGain.connect(audioCtx.destination);
+    } catch (err) {
+      audioCtx = null;
+    }
+    return audioCtx;
+  }
+  function envGain(ac, t0, attack, peak, decay) {
+    const g = ac.createGain();
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.exponentialRampToValueAtTime(peak, t0 + attack);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + attack + decay);
+    g.connect(masterGain);
+    return g;
+  }
+  function playVoice(ac, timbre, hz, t0, dur) {
+    const end = t0 + dur + 1.2;
+    if (timbre === "plucked_lute") {
+      const o = ac.createOscillator();
+      o.type = "triangle";
+      o.frequency.setValueAtTime(hz, t0);
+      o.connect(envGain(ac, t0, 0.006, 0.34, dur + 0.5));
+      o.start(t0); o.stop(end);
+    } else if (timbre === "breathy_flute") {
+      const o = ac.createOscillator();
+      const lfo = ac.createOscillator();
+      const lfoG = ac.createGain();
+      const f = ac.createBiquadFilter();
+      o.type = "sine"; o.frequency.setValueAtTime(hz * 2, t0);
+      lfo.frequency.value = 5.2; lfoG.gain.value = hz * 0.012;
+      lfo.connect(lfoG); lfoG.connect(o.frequency);
+      f.type = "lowpass"; f.frequency.value = hz * 4; f.Q.value = 0.7;
+      o.connect(f); f.connect(envGain(ac, t0, 0.09, 0.2, dur + 0.25));
+      o.start(t0); lfo.start(t0); o.stop(end); lfo.stop(end);
+    } else if (timbre === "dulcimer_chime") {
+      [1, 2.76, 5.4].forEach(function (ratio, k) {
+        const o = ac.createOscillator();
+        o.type = "sine"; o.frequency.setValueAtTime(hz * ratio, t0);
+        o.connect(envGain(ac, t0, 0.003, 0.22 / (k + 1), 0.9 - k * 0.2));
+        o.start(t0); o.stop(end);
+      });
+    } else {
+      const o = ac.createOscillator();
+      const f = ac.createBiquadFilter();
+      o.type = "sawtooth"; o.frequency.setValueAtTime(hz / 2, t0);
+      f.type = "lowpass"; f.frequency.value = 1150; f.Q.value = 2.4;
+      o.connect(f); f.connect(envGain(ac, t0, 0.05, 0.14, dur + 0.2));
+      o.start(t0); o.stop(end);
+    }
+  }
+  function voiceAssignment(epoch) {
+    const e = Math.max(0, Math.floor(epoch || 0));
+    return [0, 1, 2, 3].map(function (v) { return VOICE_TIMBRES[(v + e) % 4]; });
+  }
+  function playYawnSighRaw(epoch, delay) {
+    const ac = getAudio();
+    const result = { formants: [[720, 480], [1180, 880]], glideHz: [220, 138], epoch: epoch || 0 };
+    if (!ac) return result;
+    try {
+      const t0 = ac.currentTime + (delay || 0);
+      const src = ac.createOscillator();
+      src.type = "sawtooth";
+      src.frequency.setValueAtTime(220, t0);
+      src.frequency.exponentialRampToValueAtTime(138, t0 + 1.5);
+      const out = envGain(ac, t0, 0.35, 0.16, 1.3);
+      result.formants.forEach(function (fm) {
+        const bp = ac.createBiquadFilter();
+        bp.type = "bandpass"; bp.Q.value = 6;
+        bp.frequency.setValueAtTime(fm[0], t0);
+        bp.frequency.linearRampToValueAtTime(fm[1], t0 + 1.5);
+        src.connect(bp); bp.connect(out);
+      });
+      src.start(t0); src.stop(t0 + 1.9);
+    } catch (err) { /* silent fallback */ }
+    return result;
+  }
+
+  /* ---------- plateau drawing ---------- */
+  function drawGround(ctx, L, t, wear) {
+    const g = ctx.createLinearGradient(0, 0, 0, L.h);
+    g.addColorStop(0, PALETTE.plateauNightGround);
+    g.addColorStop(0.55, mixColor(PALETTE.mesaShadow, PALETTE.wearinessLead, wear * 0.35));
+    g.addColorStop(1, PALETTE.plateauNightGround);
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, L.w, L.h);
+    ctx.lineWidth = 1;
+    for (let k = 0; k < 16; k += 1) {
+      const baseY = (k + 0.5) * (L.h / 16);
+      ctx.strokeStyle = rgba(PALETTE.ochreMesa, 0.07 + (k % 4 === 0 ? 0.06 : 0));
+      ctx.beginPath();
+      for (let x = 0; x <= L.w; x += 12) {
+        const y = baseY + Math.sin(x * 0.007 + k * 1.3) * L.h * 0.018 + Math.sin(x * 0.019 + k) * 4;
+        if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    }
+    for (let c = 0; c < 3; c += 1) {
+      const cx = ((t * 0.012 + c * 0.37) % 1.4 - 0.2) * L.w;
+      const cy = L.h * (0.25 + c * 0.25);
+      const rad = Math.max(L.w, L.h) * 0.22;
+      const cg = ctx.createRadialGradient(cx, cy, 0, cx, cy, rad);
+      cg.addColorStop(0, "rgba(10,8,6,0.22)");
+      cg.addColorStop(1, "rgba(10,8,6,0)");
+      ctx.fillStyle = cg;
+      ctx.fillRect(cx - rad, cy - rad, rad * 2, rad * 2);
+    }
+  }
+  function drawGroves(ctx, L) {
+    const rnd = seeded(2323);
+    for (let i = 0; i < 90; i += 1) {
+      const x = rnd() * L.w;
+      const y = rnd() * L.h;
+      const near = L.pts.some(function (p) { return Math.hypot(p.x - x, (p.y - y) * 1.3) < L.r * 1.7; });
+      if (near) continue;
+      const s = L.r * (0.05 + rnd() * 0.05);
+      if (rnd() < 0.35) {
+        ctx.fillStyle = rgba("#2f3a22", 0.85);
+        ctx.beginPath();
+        ctx.moveTo(x, y - s * 3.2); ctx.lineTo(x + s * 0.8, y); ctx.lineTo(x - s * 0.8, y);
+        ctx.closePath(); ctx.fill();
+      } else {
+        ctx.fillStyle = rgba(PALETTE.plateauGrass, 0.55);
+        ctx.beginPath(); ctx.arc(x, y, s * 1.3, 0, Math.PI * 2); ctx.fill();
+      }
+    }
+  }
+  function drawMercuryBoard(ctx, L, t) {
+    const cell = Math.max(28, Math.min(L.w, L.h) / 9);
+    ctx.save();
+    ctx.strokeStyle = rgba(PALETTE.mercuryCyan, 0.1 + 0.03 * Math.sin(t * 0.8));
+    ctx.lineWidth = 0.8;
+    ctx.setLineDash([2, 5]);
+    for (let x = -L.h; x < L.w + L.h; x += cell) {
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x + L.h * 0.6, L.h); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x - L.h * 0.6, L.h); ctx.stroke();
+    }
+    ctx.restore();
+  }
+  function drawRoads(ctx, L, exodus) {
+    PLATEAU_ROADS.forEach(function (road) {
+      const A = L.pts[road.from];
+      const B = L.pts[road.to];
+      const C = roadControl(L, road.from, road.to, road.bend);
+      let onRoute = false;
+      if (exodus.inProgress) {
+        for (let i = 0; i < exodus.routeIndices.length - 1; i += 1) {
+          const a = exodus.routeIndices[i];
+          const b = exodus.routeIndices[i + 1];
+          if ((a === road.from && b === road.to) || (a === road.to && b === road.from)) onRoute = true;
+        }
+      }
+      ctx.beginPath(); ctx.moveTo(A.x, A.y); ctx.quadraticCurveTo(C.x, C.y, B.x, B.y);
+      ctx.strokeStyle = rgba(PALETTE.mesaShadow, 0.9);
+      ctx.lineWidth = Math.max(3, L.r * 0.16);
+      ctx.stroke();
+      ctx.setLineDash([L.r * 0.12, L.r * 0.08]);
+      ctx.strokeStyle = onRoute ? rgba(PALETTE.terracottaGlow, 0.85) : rgba(PALETTE.chalkRoad, 0.42);
+      ctx.lineWidth = Math.max(1.2, L.r * 0.06);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    });
+  }
+  function hexPath(ctx, cx, cy, r, sq) {
+    ctx.beginPath();
+    for (let k = 0; k < 6; k += 1) {
+      const a = Math.PI / 6 + k * Math.PI / 3;
+      const x = cx + Math.cos(a) * r;
+      const y = cy + Math.sin(a) * r * sq;
+      if (k === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+  }
+  function drawMesaBase(ctx, L, p, hovered) {
+    const r = L.r;
+    const depth = r * 0.42;
+    ctx.fillStyle = PALETTE.mesaShadow;
+    ctx.beginPath();
+    ctx.ellipse(p.x, p.y + depth, r * 1.18, r * 1.18 * L.squash, 0, 0, Math.PI);
+    ctx.lineTo(p.x - r * 1.18, p.y);
+    ctx.ellipse(p.x, p.y, r * 1.18, r * 1.18 * L.squash, 0, Math.PI, 0, true);
+    ctx.closePath(); ctx.fill();
+    ctx.strokeStyle = rgba(PALETTE.ochreMesa, 0.35);
+    ctx.lineWidth = 0.8;
+    for (let k = -10; k <= 10; k += 1) {
+      const x = p.x + (k / 10) * r * 1.12;
+      const top = p.y + Math.sqrt(Math.max(0, 1 - (k / 10.5) * (k / 10.5))) * r * 1.18 * L.squash;
+      ctx.beginPath(); ctx.moveTo(x, top); ctx.lineTo(x + 1.5, top + depth * (0.5 + 0.4 * ((k * 7) % 3) / 2)); ctx.stroke();
+    }
+    ctx.fillStyle = mixColor(PALETTE.ochreMesa, PALETTE.plateauGrass, 0.35);
+    ctx.beginPath(); ctx.ellipse(p.x, p.y, r * 1.18, r * 1.18 * L.squash, 0, 0, Math.PI * 2); ctx.fill();
+    if (hovered) {
+      ctx.strokeStyle = rgba(PALETTE.mercuryQuicksilver, 0.9);
+      ctx.lineWidth = 2;
+      ctx.setLineDash([4, 3]);
+      ctx.beginPath(); ctx.ellipse(p.x, p.y, r * 1.3, r * 1.3 * L.squash, 0, 0, Math.PI * 2); ctx.stroke();
+      ctx.setLineDash([]);
+    }
+  }
+  function roofSlots(r, sq) {
+    const rnd = seeded(77);
+    const out = [];
+    for (let i = 0; i < 12; i += 1) {
+      const a = (i / 12) * Math.PI * 2 + rnd() * 0.3;
+      const d = r * (0.36 + (i % 2) * 0.2);
+      out.push({ dx: Math.cos(a) * d, dy: Math.sin(a) * d * sq, s: r * (0.1 + rnd() * 0.05) });
+    }
+    return out;
+  }
+
+  /* ---------- hexagonal walled sister city ---------- */
+  function drawCity(ctx, L, idx, warmth, inhabited, t, epoch, hovered) {
+    const p = L.pts[idx];
+    const r = L.r;
+    const sq = L.squash;
+    const wallFill = mixColor(PALETTE.scrubbedLime, PALETTE.terracottaGlow, warmth);
+    const wallLine = mixColor(PALETTE.scrubbedMortar, "#7d2f1a", warmth);
+    const roofFill = mixColor("#f4f0e6", PALETTE.terracottaActive, warmth);
+    drawMesaBase(ctx, L, p, hovered);
+    hexPath(ctx, p.x, p.y, r * 0.86, sq);
+    ctx.fillStyle = mixColor("#d9d2c2", "#5a3322", warmth);
+    ctx.fill();
+    ctx.lineWidth = Math.max(2, r * 0.09);
+    ctx.strokeStyle = wallFill;
+    ctx.stroke();
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = wallLine;
+    ctx.stroke();
+    const roofs = roofSlots(r * 0.86, sq);
+    roofs.forEach(function (rf) {
+      const x = p.x + rf.dx;
+      const y = p.y + rf.dy;
+      ctx.fillStyle = roofFill;
+      ctx.beginPath();
+      ctx.moveTo(x - rf.s, y); ctx.lineTo(x, y - rf.s * 0.8); ctx.lineTo(x + rf.s, y);
+      ctx.lineTo(x + rf.s, y + rf.s * 0.6); ctx.lineTo(x - rf.s, y + rf.s * 0.6);
+      ctx.closePath(); ctx.fill();
+      ctx.strokeStyle = wallLine; ctx.lineWidth = 0.6; ctx.stroke();
+    });
+    ctx.fillStyle = mixColor("#efe9dc", "#d9a86a", warmth);
+    ctx.beginPath(); ctx.ellipse(p.x, p.y + r * 0.05, r * 0.2, r * 0.2 * sq, 0, 0, Math.PI * 2); ctx.fill();
+    if (warmth > 0.4) {
+      const awn = ["#e0b13a", "#3f7f8c", "#b13d5a", "#6f8f3a"];
+      for (let k = 0; k < 4; k += 1) {
+        const a = k * Math.PI / 2 + 0.4;
+        const ax = p.x + Math.cos(a) * r * 0.2;
+        const ay = p.y + r * 0.05 + Math.sin(a) * r * 0.2 * sq;
+        ctx.fillStyle = awn[k];
+        ctx.globalAlpha = warmth;
+        ctx.beginPath(); ctx.moveTo(ax - r * 0.06, ay); ctx.lineTo(ax + r * 0.06, ay); ctx.lineTo(ax, ay - r * 0.07);
+        ctx.closePath(); ctx.fill();
+        ctx.globalAlpha = 1;
+      }
+      for (let f = 0; f < 6; f += 1) {
+        const ang = t * (0.6 + f * 0.13) + f;
+        ctx.fillStyle = rgba("#2a1a10", 0.9 * warmth);
+        ctx.fillRect(p.x + Math.cos(ang) * r * 0.13 - 1, p.y + r * 0.05 + Math.sin(ang) * r * 0.08 - 2, 2, 3);
+      }
+    }
+    for (let k = 0; k < 6; k += 1) {
+      const a = Math.PI / 6 + k * Math.PI / 3;
+      const tx = p.x + Math.cos(a) * r * 0.86;
+      const ty = p.y + Math.sin(a) * r * 0.86 * sq;
+      ctx.fillStyle = wallFill;
+      ctx.fillRect(tx - r * 0.07, ty - r * 0.2, r * 0.14, r * 0.2);
+      ctx.strokeStyle = wallLine; ctx.lineWidth = 0.8;
+      ctx.strokeRect(tx - r * 0.07, ty - r * 0.2, r * 0.14, r * 0.2);
+    }
+    const gx = p.x;
+    const gy = p.y + r * 0.86 * sq;
+    ctx.fillStyle = wallFill;
+    ctx.fillRect(gx - r * 0.14, gy - r * 0.18, r * 0.28, r * 0.2);
+    ctx.fillStyle = PALETTE.mesaShadow;
+    ctx.beginPath(); ctx.arc(gx, gy - r * 0.02, r * 0.07, Math.PI, 0); ctx.lineTo(gx + r * 0.07, gy + r * 0.02);
+    ctx.lineTo(gx - r * 0.07, gy + r * 0.02); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = wallFill;
+    ctx.fillRect(p.x - r * 0.05, p.y - r * 0.5, r * 0.1, r * 0.42);
+    ctx.fillStyle = roofFill;
+    ctx.beginPath(); ctx.moveTo(p.x - r * 0.08, p.y - r * 0.5); ctx.lineTo(p.x, p.y - r * 0.78);
+    ctx.lineTo(p.x + r * 0.08, p.y - r * 0.5); ctx.closePath(); ctx.fill();
+    ctx.strokeStyle = wallLine; ctx.stroke();
+    if (warmth > 0.15) drawSmoke(ctx, p, r, roofs, t, warmth);
+    if (inhabited && warmth > 0.9) drawYawnRings(ctx, p, r, roofs, t, epoch);
+    const fs = Math.max(9, Math.round(r * 0.22));
+    ctx.textAlign = "center";
+    ctx.font = "600 " + fs + "px Georgia, serif";
+    ctx.fillStyle = inhabited ? PALETTE.terracottaGlow : PALETTE.scrubbedLime;
+    ctx.fillText(SISTER_CITIES[idx].name, p.x, p.y + r * 1.18 * sq + r * 0.42 + fs);
+    ctx.font = Math.max(8, fs - 2) + "px Georgia, serif";
+    ctx.fillStyle = inhabited ? rgba(PALETTE.terracottaGlow, 0.85) : rgba(PALETTE.scrubbedMortar, 0.9);
+    ctx.fillText(inhabited ? "INHABITED · WEARY" : "EMPTY · SCRUBBED", p.x, p.y + r * 1.18 * sq + r * 0.42 + fs * 2.1);
+  }
+  function drawSmoke(ctx, p, r, roofs, t, warmth) {
+    for (let c = 0; c < 4; c += 1) {
+      const rf = roofs[c * 3];
+      const bx = p.x + rf.dx;
+      const by = p.y + rf.dy - rf.s;
+      for (let k = 0; k < 6; k += 1) {
+        const ph = (t * 0.32 + k / 6 + c * 0.17) % 1;
+        const x = bx + Math.sin(ph * 6 + c + t * 0.7) * r * 0.12 * ph;
+        const y = by - ph * r * 0.95;
+        ctx.fillStyle = "rgba(205,198,186," + (0.32 * (1 - ph) * warmth).toFixed(3) + ")";
+        ctx.beginPath(); ctx.arc(x, y, r * (0.03 + ph * 0.09), 0, Math.PI * 2); ctx.fill();
+      }
+    }
+  }
+  function drawYawnRings(ctx, p, r, roofs, t, epoch) {
+    const ph = (t * 0.45) % 1;
+    for (let k = 0; k < 3; k += 1) {
+      const rf = roofs[(epoch * 5 + k * 4) % roofs.length];
+      const x = p.x + rf.dx;
+      const y = p.y + rf.dy - r * 0.3 - ph * r * 0.25;
+      for (let ring = 0; ring < 2; ring += 1) {
+        const rr = r * (0.08 + ((ph + ring * 0.5) % 1) * 0.22);
+        ctx.strokeStyle = ring ? rgba("#e5c46a", 0.6 * (1 - ph)) : rgba(PALETTE.mercuryQuicksilver, 0.75 * (1 - ph));
+        ctx.lineWidth = 1.2;
+        ctx.beginPath(); ctx.ellipse(x, y, rr, rr * 0.75, 0, 0, Math.PI * 2); ctx.stroke();
+      }
+      ctx.fillStyle = rgba(PALETTE.mercuryQuicksilver, 0.95);
+      ctx.font = Math.max(9, Math.round(r * 0.2)) + "px serif";
+      ctx.textAlign = "center";
+      ctx.fillText("\u263F", x, y + r * 0.06);
+    }
+  }
+
+  /* ---------- civic exodus caravan ---------- */
+  function drawCaravan(ctx, L, exodus, t) {
+    const N = 12;
+    const sz = Math.max(4, L.r * 0.13);
+    for (let k = 0; k < N; k += 1) {
+      const s = clamp(exodus.progress * 1.35 - k * 0.032, 0, 1);
+      const pt = sampleRoute(L, exodus.routeIndices, s);
+      const bob = Math.sin(t * 9 + k) * sz * 0.12;
+      ctx.save();
+      ctx.translate(pt.x, pt.y + bob);
+      ctx.rotate(pt.angle);
+      const kind = k % 4;
+      if (kind === 0) {
+        ctx.fillStyle = "#6b4a2c"; ctx.fillRect(-sz, -sz * 0.5, sz * 1.4, sz * 0.8);
+        ctx.fillStyle = PALETTE.chalkRoad; ctx.fillRect(-sz * 0.9, -sz * 0.9, sz * 1.2, sz * 0.45);
+        ctx.fillStyle = "#2a1d12";
+        ctx.beginPath(); ctx.arc(-sz * 0.6, sz * 0.35, sz * 0.25, 0, Math.PI * 2); ctx.arc(sz * 0.2, sz * 0.35, sz * 0.25, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = "#8a6a48"; ctx.beginPath(); ctx.ellipse(sz * 0.95, 0, sz * 0.45, sz * 0.28, 0, 0, Math.PI * 2); ctx.fill();
+      } else if (kind === 1) {
+        ctx.fillStyle = "#5c4a3a"; ctx.beginPath(); ctx.ellipse(0, 0, sz * 0.55, sz * 0.3, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = PALETTE.terracottaActive; ctx.fillRect(-sz * 0.35, -sz * 0.55, sz * 0.28, sz * 0.32);
+        ctx.fillStyle = PALETTE.ochreMesa; ctx.fillRect(sz * 0.05, -sz * 0.55, sz * 0.28, sz * 0.32);
+      } else if (kind === 2) {
+        ctx.strokeStyle = "#3a2a1a"; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(0, sz * 0.4); ctx.lineTo(0, -sz * 1.3); ctx.stroke();
+        ctx.fillStyle = k % 8 === 2 ? PALETTE.terracottaGlow : PALETTE.mercuryCyan;
+        ctx.beginPath(); ctx.moveTo(0, -sz * 1.3); ctx.lineTo(-sz * 0.9, -sz * 1.05 + Math.sin(t * 6 + k) * 2); ctx.lineTo(0, -sz * 0.8);
+        ctx.closePath(); ctx.fill();
+      } else {
+        ctx.fillStyle = "#2a1a10";
+        ctx.beginPath(); ctx.arc(0, -sz * 0.55, sz * 0.18, 0, Math.PI * 2); ctx.fill();
+        ctx.fillRect(-sz * 0.12, -sz * 0.4, sz * 0.24, sz * 0.6);
+        ctx.fillRect(sz * 0.3, -sz * 0.35, sz * 0.18, sz * 0.5);
+      }
+      ctx.restore();
+    }
+  }
+
+  /* ---------- casement window vista inset ---------- */
+  function drawVista(ctx, kind, x, y, w, h, t) {
+    const sky = ctx.createLinearGradient(0, y, 0, y + h);
+    sky.addColorStop(0, kind === "cypress" ? "#d8c9b4" : "#e9c48e");
+    sky.addColorStop(1, "#f3e3c4");
+    ctx.fillStyle = sky; ctx.fillRect(x, y, w, h);
+    const hz = y + h * 0.55;
+    function poly(color, pts) {
+      ctx.fillStyle = color; ctx.beginPath();
+      pts.forEach(function (q, i) { if (i === 0) ctx.moveTo(x + q[0] * w, y + q[1] * h); else ctx.lineTo(x + q[0] * w, y + q[1] * h); });
+      ctx.closePath(); ctx.fill();
+    }
+    if (kind === "gorge") {
+      poly("#a2462a", [[0, 0.3], [0.38, 0.42], [0.42, 1], [0, 1]]);
+      poly("#8b3a22", [[1, 0.25], [0.6, 0.4], [0.56, 1], [1, 1]]);
+      ctx.strokeStyle = PALETTE.mercuryCyan; ctx.lineWidth = 2; ctx.beginPath();
+      ctx.moveTo(x + w * 0.5, y + h * 0.45);
+      ctx.quadraticCurveTo(x + w * 0.42, y + h * 0.7, x + w * 0.52, y + h); ctx.stroke();
+    } else if (kind === "viaduct") {
+      poly("#9a8a5e", [[0, 0.6], [0.5, 0.52], [1, 0.6], [1, 1], [0, 1]]);
+      ctx.fillStyle = "#cdbb94";
+      ctx.fillRect(x, hz - h * 0.08, w, h * 0.05);
+      ctx.fillStyle = "#e9d9b8";
+      for (let i = 0; i < 7; i += 1) {
+        ctx.beginPath(); ctx.arc(x + (i + 0.5) * w / 7, hz + h * 0.02, w / 18, Math.PI, 0); ctx.fill();
+      }
+      ctx.fillStyle = PALETTE.plateauGrass;
+      for (let i = 0; i < 14; i += 1) { ctx.beginPath(); ctx.arc(x + (i % 7 + 0.3) * w / 7, y + h * (0.78 + Math.floor(i / 7) * 0.12), 2.2, 0, Math.PI * 2); ctx.fill(); }
+    } else if (kind === "steppe") {
+      poly("#efeae0", [[0, 0.62], [1, 0.58], [1, 1], [0, 1]]);
+      poly("#d8cdb4", [[0.12, 0.62], [0.17, 0.46], [0.27, 0.46], [0.32, 0.61]]);
+      poly("#cfc3a8", [[0.62, 0.59], [0.66, 0.5], [0.73, 0.5], [0.77, 0.59]]);
+      ctx.strokeStyle = "rgba(120,110,90,0.4)"; ctx.lineWidth = 1;
+      for (let i = 0; i < 4; i += 1) { ctx.beginPath(); ctx.moveTo(x + ((t * 0.05 + i * 0.27) % 1) * w, y + h * (0.2 + i * 0.07)); ctx.lineTo(x + ((t * 0.05 + i * 0.27) % 1) * w + w * 0.15, y + h * (0.2 + i * 0.07)); ctx.stroke(); }
+    } else if (kind === "crossroads") {
+      poly(PALETTE.plateauGrass, [[0, 0.5], [1, 0.5], [1, 1], [0, 1]]);
+      ctx.strokeStyle = PALETTE.chalkRoad; ctx.lineWidth = 1.6;
+      for (let i = 0; i < 6; i += 1) {
+        const a = Math.PI * (0.05 + i * 0.18);
+        ctx.beginPath(); ctx.moveTo(x + w * 0.5, y + h * 0.66);
+        ctx.lineTo(x + w * 0.5 + Math.cos(a) * w * 0.7, y + h * 0.66 + Math.sin(a) * h * 0.5 - h * 0.05); ctx.stroke();
+      }
+      ctx.fillStyle = PALETTE.mercuryQuicksilver;
+      ctx.beginPath(); ctx.ellipse(x + w * 0.5, y + h * 0.66, w * 0.09, h * 0.05, 0, 0, Math.PI * 2); ctx.fill();
+    } else if (kind === "ravine") {
+      poly("#e2d8c2", [[0, 0.35], [0.46, 1], [0, 1]]);
+      poly("#d4c8ac", [[1, 0.3], [0.54, 1], [1, 1]]);
+      poly("#9c9078", [[0.46, 1], [0.5, 0.62], [0.54, 1]]);
+      ctx.fillStyle = "rgba(255,255,255,0.75)";
+      for (let i = 0; i < 3; i += 1) { ctx.beginPath(); ctx.ellipse(x + ((t * 0.03 + i * 0.35) % 1.2) * w, y + h * (0.15 + i * 0.08), w * 0.1, h * 0.04, 0, 0, Math.PI * 2); ctx.fill(); }
+    } else if (kind === "cypress") {
+      poly("#a88a5c", [[0.05, 0.62], [0.12, 0.42], [0.36, 0.42], [0.43, 0.62]]);
+      poly("#9c7e52", [[0.57, 0.62], [0.64, 0.4], [0.88, 0.4], [0.95, 0.62]]);
+      poly("#6f7a52", [[0, 0.62], [1, 0.62], [1, 1], [0, 1]]);
+      ctx.fillStyle = "#2f3a22";
+      [0.2, 0.28, 0.7, 0.8].forEach(function (cx, i) { ctx.beginPath(); ctx.moveTo(x + cx * w, y + h * (i < 2 ? 0.22 : 0.2)); ctx.lineTo(x + cx * w + 3, y + h * 0.42); ctx.lineTo(x + cx * w - 3, y + h * 0.42); ctx.closePath(); ctx.fill(); });
+      ctx.fillStyle = "rgba(240,236,228," + (0.45 + 0.15 * Math.sin(t)).toFixed(3) + ")";
+      ctx.fillRect(x, y + h * 0.6, w, h * 0.12);
+    } else {
+      ctx.fillStyle = "#f1cf72"; ctx.beginPath(); ctx.arc(x + w * 0.8, y + h * 0.2, h * 0.1, 0, Math.PI * 2); ctx.fill();
+      for (let i = 0; i < 5; i += 1) {
+        poly(i % 2 ? "#c8b48a" : "#b39a6c", [[0, 0.45 + i * 0.11], [1 - i * 0.08, 0.4 + i * 0.11], [1, 0.5 + i * 0.11], [1, 1], [0, 1]]);
+      }
+      ctx.fillStyle = PALETTE.plateauGrass;
+      for (let i = 0; i < 8; i += 1) { ctx.beginPath(); ctx.arc(x + (0.08 + i * 0.1) * w, y + h * (0.52 + (i % 4) * 0.11), 2.2, 0, Math.PI * 2); ctx.fill(); }
+    }
+  }
+
+  function drawWindowInset(ctx, L, city, t) {
+    const iw = clamp(L.w * (L.portrait ? 0.34 : 0.17), 112, 230);
+    const ih = iw * 0.6;
+    const shutter = iw * 0.16;
+    const x = 10 + shutter;
+    const y = 10;
+    ctx.save();
+    ctx.fillStyle = "rgba(15,11,8,0.55)";
+    ctx.fillRect(x - 4, y - 4, iw + 8, ih + 24);
+    ctx.beginPath(); ctx.rect(x, y, iw, ih); ctx.clip();
+    drawVista(ctx, city.vistaKind, x, y, iw, ih, t);
+    ctx.restore();
+    ctx.strokeStyle = "#5a3f28"; ctx.lineWidth = 4; ctx.strokeRect(x, y, iw, ih);
+    ctx.strokeStyle = "#8a6440"; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(x + iw / 2, y); ctx.lineTo(x + iw / 2, y + ih * 0.12); ctx.stroke();
+    [[x, -1], [x + iw, 1]].forEach(function (s) {
+      ctx.fillStyle = "#6e4b2e";
+      ctx.beginPath();
+      ctx.moveTo(s[0], y); ctx.lineTo(s[0] + s[1] * shutter, y + ih * 0.08);
+      ctx.lineTo(s[0] + s[1] * shutter, y + ih * 0.92); ctx.lineTo(s[0], y + ih); ctx.closePath(); ctx.fill();
+      ctx.strokeStyle = "#3e2a19"; ctx.lineWidth = 0.8;
+      for (let k = 1; k < 6; k += 1) {
+        ctx.beginPath(); ctx.moveTo(s[0], y + ih * k / 6); ctx.lineTo(s[0] + s[1] * shutter, y + ih * (0.08 + 0.84 * k / 6)); ctx.stroke();
+      }
+    });
+    ctx.fillStyle = PALETTE.chalkRoad;
+    ctx.font = Math.max(8, Math.round(iw * 0.058)) + "px Georgia, serif";
+    ctx.textAlign = "left";
+    const label = city.windowVista.length > 44 && iw < 150 ? city.windowVista.split(" & ")[0] : city.windowVista;
+    ctx.fillText(label, x, y + ih + 14, iw);
+  }
+
+  /* ---------- engine ---------- */
+  function createPlateauEngine(opts) {
+    const options = opts || {};
+    let reducedMotion = !!options.reducedMotion;
+    let activeCityIndex = 0;
+    let migrationEpoch = 0;
+    let hoveredCityIndex = -1;
+    let mercuryOverlay = true;
+    let windowInsetOpen = true;
+    let soundEnabled = false;
+    let exodusState = { inProgress: false, fromIndex: 0, toIndex: 0, progress: 0, routeIndices: [0] };
+    let clock = 0;
+    const EXODUS_DURATION = 1.65;
+
+    function getState() {
+      return {
+        activeCityIndex: activeCityIndex,
+        activeCity: SISTER_CITIES[activeCityIndex],
+        inhabitedCount: 1,
+        emptyCount: 6,
+        sisterCities: SISTER_CITIES.map(function (c) {
+          return Object.assign({}, c, { isInhabited: c.index === activeCityIndex });
+        }),
+        exodusState: Object.assign({}, exodusState, { routeIndices: exodusState.routeIndices.slice() }),
+        migrationEpoch: migrationEpoch,
+        mercuryOverlay: mercuryOverlay,
+        windowInsetOpen: windowInsetOpen,
+        soundEnabled: soundEnabled,
+        hoveredCityIndex: hoveredCityIndex,
+        reducedMotion: reducedMotion
+      };
+    }
+    function completeExodusNow() {
+      if (exodusState.inProgress) {
+        activeCityIndex = exodusState.toIndex;
+        migrationEpoch += 1;
+        exodusState.inProgress = false;
+        exodusState.progress = 1;
+        if (options.onMigrationComplete) {
+          try {
+            options.onMigrationComplete({
+              fromIndex: exodusState.fromIndex,
+              toIndex: activeCityIndex,
+              migrationEpoch: migrationEpoch,
+              activeCity: SISTER_CITIES[activeCityIndex]
+            });
+          } catch (err) { /* consumer errors must not break the plateau */ }
+        }
+      }
+      return getState();
+    }
+    function playExodusCanon(fromIdx, toIdx, epoch) {
+      const assignment = voiceAssignment(epoch);
+      const result = { motif: CANON_MOTIF_HZ.slice(), voiceTimbres: assignment, fromIndex: fromIdx, toIndex: toIdx, epoch: epoch || 0 };
+      const ac = getAudio();
+      if (!ac) return result;
+      try {
+        if (ac.state === "suspended" && ac.resume) ac.resume();
+        const t0 = ac.currentTime + 0.05;
+        const noteDur = 0.34;
+        for (let v = 0; v < 4; v += 1) {
+          for (let n = 0; n < CANON_MOTIF_HZ.length; n += 1) {
+            playVoice(ac, assignment[v], CANON_MOTIF_HZ[n], t0 + v * 0.42 + n * noteDur, noteDur);
+          }
+        }
+        playYawnSighRaw(epoch, 0.05 + 3 * 0.42 + 4 * noteDur + 0.1);
+      } catch (err) { /* silent fallback */ }
+      return result;
+    }
+    function playYawnSigh(epoch) {
+      return playYawnSighRaw(epoch === undefined ? migrationEpoch : epoch, 0.02);
+    }
+    function playRoutineTick(weariness) {
+      const w = clamp(Number(weariness) || 0, 0, 1);
+      const ac = getAudio();
+      if (!ac || !soundEnabled) return { weariness: w };
+      try {
+        const t0 = ac.currentTime + 0.01;
+        const o = ac.createOscillator();
+        o.type = "triangle";
+        o.frequency.setValueAtTime(880 - w * 420, t0);
+        o.connect(envGain(ac, t0, 0.004, 0.08 + w * 0.06, 0.12));
+        o.start(t0); o.stop(t0 + 0.25);
+      } catch (err) { /* silent */ }
+      return { weariness: w };
+    }
+    function startExodus(targetIndex) {
+      if (exodusState.inProgress) completeExodusNow();
+      let toIndex = targetIndex;
+      if (typeof targetIndex !== "number" || !isFinite(targetIndex) || targetIndex < 0 || targetIndex > 6 || Math.floor(targetIndex) === activeCityIndex) {
+        toIndex = (activeCityIndex + 1) % 7;
+      }
+      toIndex = Math.floor(toIndex);
+      const routeIndices = findShortestRoadRoute(activeCityIndex, toIndex);
+      exodusState = { inProgress: true, fromIndex: activeCityIndex, toIndex: toIndex, progress: 0, routeIndices: routeIndices };
+      if (soundEnabled) playExodusCanon(activeCityIndex, toIndex, migrationEpoch + 1);
+      if (reducedMotion) return completeExodusNow();
+      return getState();
+    }
+    function step(dtSec, societyState) {
+      const dt = clamp(Number(dtSec) || 0, 0, 0.25);
+      clock += reducedMotion ? dt * 0.25 : dt;
+      if (exodusState.inProgress) {
+        exodusState.progress = Math.min(1, exodusState.progress + dt / EXODUS_DURATION);
+        if (exodusState.progress >= 1) completeExodusNow();
+      }
+      return getState();
+    }
+    function warmthOf(i) {
+      if (exodusState.inProgress) {
+        const p = exodusState.progress;
+        if (i === exodusState.fromIndex) return 1 - p;
+        if (i === exodusState.toIndex) return p;
+        return 0;
+      }
+      return i === activeCityIndex ? 1 : 0;
+    }
+    function render(ctx, width, height, societyState) {
+      if (!ctx) return;
+      const L = computeLayout(width, height);
+      const wear = averageWeariness(societyState);
+      ctx.save();
+      drawGround(ctx, L, clock, wear);
+      drawGroves(ctx, L);
+      if (mercuryOverlay) drawMercuryBoard(ctx, L, clock);
+      drawRoads(ctx, L, exodusState);
+      const order = SISTER_CITIES.map(function (c) { return c.index; })
+        .sort(function (a, b) { return SISTER_CITIES[a].ny - SISTER_CITIES[b].ny; });
+      order.forEach(function (i) {
+        drawCity(ctx, L, i, warmthOf(i), i === activeCityIndex, clock, migrationEpoch, i === hoveredCityIndex);
+      });
+      if (exodusState.inProgress) drawCaravan(ctx, L, exodusState, clock);
+      if (windowInsetOpen) drawWindowInset(ctx, L, SISTER_CITIES[activeCityIndex], clock);
+      ctx.restore();
+    }
+    function hitTest(normX, normY, width, height) {
+      const L = computeLayout(width, height);
+      const px = (Number(normX) || 0) * L.w;
+      const py = (Number(normY) || 0) * L.h;
+      let best = null;
+      let bestD = Infinity;
+      for (let i = 0; i < 7; i += 1) {
+        const p = L.pts[i];
+        const d = Math.hypot(px - p.x, (py - p.y) / 0.85);
+        if (d < L.r * 1.3 && d < bestD) { bestD = d; best = i; }
+      }
+      if (best === null) return null;
+      return { kind: "mesa", cityIndex: best, city: SISTER_CITIES[best], isInhabited: best === activeCityIndex };
+    }
+    function unlockAudio() {
+      const ac = getAudio();
+      if (ac && ac.state === "suspended" && ac.resume) {
+        try { ac.resume(); } catch (err) { /* ignore */ }
+      }
+      return !!ac;
+    }
+    function setSoundEnabled(on) {
+      soundEnabled = !!on;
+      if (soundEnabled) unlockAudio();
+      return getState();
+    }
+    function setHoveredCity(idx) {
+      hoveredCityIndex = typeof idx === "number" && idx >= 0 && idx <= 6 ? Math.floor(idx) : -1;
+      return getState();
+    }
+    function setMercuryOverlay(on) { mercuryOverlay = !!on; return getState(); }
+    function setWindowInsetOpen(on) { windowInsetOpen = !!on; return getState(); }
+    function setReducedMotion(on) {
+      reducedMotion = !!on;
+      if (reducedMotion && exodusState.inProgress) completeExodusNow();
+      return getState();
+    }
+    function reset() {
+      activeCityIndex = 0;
+      migrationEpoch = 0;
+      hoveredCityIndex = -1;
+      mercuryOverlay = true;
+      windowInsetOpen = true;
+      exodusState = { inProgress: false, fromIndex: 0, toIndex: 0, progress: 0, routeIndices: [0] };
+      clock = 0;
+      return getState();
+    }
+
+    return {
+      startExodus: startExodus,
+      completeExodusNow: completeExodusNow,
+      step: step,
+      render: render,
+      hitTest: hitTest,
+      unlockAudio: unlockAudio,
+      setSoundEnabled: setSoundEnabled,
+      playExodusCanon: playExodusCanon,
+      playYawnSigh: playYawnSigh,
+      playRoutineTick: playRoutineTick,
+      setHoveredCity: setHoveredCity,
+      setMercuryOverlay: setMercuryOverlay,
+      setWindowInsetOpen: setWindowInsetOpen,
+      setReducedMotion: setReducedMotion,
+      reset: reset,
+      getState: getState
+    };
+  }
+
+  const api = Object.freeze({
+    PALETTE: PALETTE,
+    SISTER_CITIES: SISTER_CITIES,
+    PLATEAU_ROADS: PLATEAU_ROADS,
+    CANON_MOTIF_HZ: CANON_MOTIF_HZ,
+    VOICE_TIMBRES: VOICE_TIMBRES,
+    findShortestRoadRoute: findShortestRoadRoute,
+    voiceAssignment: voiceAssignment,
+    createPlateauEngine: createPlateauEngine
+  });
+  globalThis.EutropiaPlateauCities = api;
+  if (typeof window !== "undefined") window.EutropiaPlateauCities = api;
+})();
+
+/*
+ * City 23: Eutropia (Chapter IV - Trading Cities 3)
+ * Layer: Isomorphic Society, Weariness Accumulator & Mercury Derangement Proof
+ * Standalone browser script attaching globalThis.EutropiaIsomorphicSociety.
+ */
+(function (root) {
+  "use strict";
+
+  const CITIZENS = Object.freeze([
+    Object.freeze({ index: 0, id: "zeno", name: "Zeno", accent: "Nasal Cliff-Drawl" }),
+    Object.freeze({ index: 1, id: "tullio", name: "Tullio", accent: "Brisk Cistern-Clip" }),
+    Object.freeze({ index: 2, id: "cosimo", name: "Cosimo", accent: "Singsong Quarry-Lilt" }),
+    Object.freeze({ index: 3, id: "fabio", name: "Fabio", accent: "Husky Olive-Brogue" }),
+    Object.freeze({ index: 4, id: "saverio", name: "Saverio", accent: "Gravelly Gate-Cadence" }),
+    Object.freeze({ index: 5, id: "nerio", name: "Nerio", accent: "Soft Steppe-Murmur" }),
+    Object.freeze({ index: 6, id: "lauro", name: "Lauro", accent: "Crisp Notary-Staccato" }),
+    Object.freeze({ index: 7, id: "aldo", name: "Aldo", accent: "Round Bell-Baritone" })
+  ]);
+
+  const JOBS = Object.freeze([
+    "Olive-Press Weigher",
+    "Quicklime Wall-Scrubber",
+    "Mule-Pack Saddler",
+    "Bridge-Toll Clerk",
+    "Copper-Kettle Tinker",
+    "Saffron & Wool Dyer",
+    "Cistern Sluice-Keeper",
+    "Notary of Promissory Slips"
+  ]);
+
+  const WIVES = Object.freeze([
+    "Lucia of the Loom",
+    "Marta of the Figs",
+    "Silvia of the Salt-Pan",
+    "Agata of the Lanterns",
+    "Nerina of the Dove-Cote",
+    "Violante of the Spindles",
+    "Camilla of the Herbs",
+    "Ortensia of the Keys"
+  ]);
+
+  const HOUSES = Object.freeze([
+    "Corner Arcade #1 (North Casement)",
+    "Bell-Shadow Loft #2 (East Loggia)",
+    "Cistern Court #3 (West Arch)",
+    "Gatehouse Terrace #4 (South Sill)",
+    "Granary Eaves #5 (Mesa Rim)",
+    "Dyer's Pergola #6 (Piazza Balcony)",
+    "Fountain Steps #7 (Clock Gable)",
+    "Rampart Walk #8 (Watch Casement)"
+  ]);
+
+  const DEBT_LEDGER_KINDS = Object.freeze([
+    "12 grossi for pressed lamp-oil",
+    "12 grossi for slaked quicklime",
+    "12 grossi for stitched pack-saddle",
+    "12 grossi for cart-axle toll",
+    "12 grossi for soldered kettle",
+    "12 grossi for madder-dyed bolt",
+    "12 grossi for cistern water-share",
+    "12 grossi for stamped tally-slip"
+  ]);
+
+  const PASTIMES_AND_GOSSIP = Object.freeze([
+    Object.freeze({
+      pastime: "Morra under the arch",
+      phrase: "Seven fingers! Rain before the third market, mark my measure!",
+      friendSlot: 3
+    }),
+    Object.freeze({
+      pastime: "Bocce in the dry ditch",
+      phrase: "That pack-mule knows the plateau trail better than the syndic!",
+      friendSlot: 5
+    }),
+    Object.freeze({
+      pastime: "Lute bench at sundown",
+      phrase: "My new shutter catches the cross-breeze—life begins anew!",
+      friendSlot: 6
+    }),
+    Object.freeze({
+      pastime: "Dominoes at the wine-cask",
+      phrase: "Twelve grossi lent is twelve grossi owed; the beam stays level.",
+      friendSlot: 0
+    }),
+    Object.freeze({
+      pastime: "Briscola by the wellhead",
+      phrase: "Did you hear who hung their kettle in the corner arcade?",
+      friendSlot: 7
+    }),
+    Object.freeze({
+      pastime: "Iron quoits by the gate",
+      phrase: "Fresh quicklime smells sweeter than yesterday's promissory ink!",
+      friendSlot: 1
+    }),
+    Object.freeze({
+      pastime: "Checkers on the steps",
+      phrase: "Same salt in the pottage, fresh hook over the hearth!",
+      friendSlot: 2
+    }),
+    Object.freeze({
+      pastime: "Starling-whistling on the parapet",
+      phrase: "Ah—another day weighed, folded, and tucked under Mercury's wing!",
+      friendSlot: 4
+    })
+  ]);
+
+  const WEARINESS_BURDENS = Object.freeze([
+    "job",
+    "relatives",
+    "house",
+    "debts",
+    "greetings"
+  ]);
+
+  const CANONICAL_SIGNATURE = "SCENES:4|JOBS:8|DEBTS:8x12g|YAWNS:3";
+
+  const FALLBACK_MESA_VISTAS = Object.freeze([
+    "Chalk-Rim Ravine & Juniper Windbreak",
+    "Red-Clay Salt Hollow & Dry Aqueduct",
+    "West Quarry Terraces & Thistle Steppe",
+    "Twin Cypress Ridge & Mule Switchbacks",
+    "Limestone Sinkhole & Cloud-Shadow Plain",
+    "Saffron Terrace Scarp & Distant Watch-Cairn",
+    "Basalt Spur & Shepherd's Cistern Horizon"
+  ]);
+
+  const FALLBACK_MESA_NAMES = Object.freeze([
+    "Eutropia-Prima",
+    "Eutropia-Secunda",
+    "Eutropia-Tertia",
+    "Eutropia-Quarta",
+    "Eutropia-Quinta",
+    "Eutropia-Sexta",
+    "Eutropia-Septima"
+  ]);
+
+  const INITIAL_VECTORS = Object.freeze({
+    job: 0.21,
+    relatives: 0.16,
+    house: 0.19,
+    debts: 0.17,
+    greetings: 0.17
+  });
+
+  const FRESH_EXODUS_VECTORS = Object.freeze({
+    job: 0.05,
+    relatives: 0.03,
+    house: 0.04,
+    debts: 0.04,
+    greetings: 0.04
+  });
+
+  const BURDEN_RATES = Object.freeze({
+    job: 1.12,
+    relatives: 1.02,
+    house: 1.08,
+    debts: 1.04,
+    greetings: 1.10
+  });
+
+  const DEBT_CYCLE_SHIFTS = Object.freeze([1, 3, 5, 7]);
+  const FRIEND_CYCLE_SHIFTS = Object.freeze([2, 5, 3, 6, 1, 4, 7]);
+
+  function clamp01(value) {
+    const num = Number(value);
+    if (!Number.isFinite(num)) {
+      return 0;
+    }
+    return num < 0 ? 0 : num > 1 ? 1 : num;
+  }
+
+  function mod(n, m) {
+    return ((n % m) + m) % m;
+  }
+
+  function resolveWindowVista(cityIndex, cityMeta) {
+    if (typeof cityMeta === "string" && cityMeta.trim().length > 0) {
+      return cityMeta.trim();
+    }
+    if (cityMeta && typeof cityMeta === "object") {
+      const raw = cityMeta.windowVista || cityMeta.vista || cityMeta.landscape;
+      if (typeof raw === "string" && raw.trim().length > 0) {
+        return raw.trim();
+      }
+      if (raw && typeof raw === "object") {
+        const nested = raw.label || raw.title || raw.description || raw.name;
+        if (typeof nested === "string" && nested.trim().length > 0) {
+          return nested.trim();
+        }
+      }
+    }
+    return FALLBACK_MESA_VISTAS[mod(Number(cityIndex) || 0, FALLBACK_MESA_VISTAS.length)];
+  }
+
+  function resolveCityName(cityIndex, cityMeta) {
+    if (cityMeta && typeof cityMeta === "object") {
+      const candidate = cityMeta.name || cityMeta.cityName || cityMeta.title || cityMeta.label;
+      if (typeof candidate === "string" && candidate.trim().length > 0) {
+        return candidate.trim();
+      }
+    }
+    return FALLBACK_MESA_NAMES[mod(Number(cityIndex) || 0, FALLBACK_MESA_NAMES.length)];
+  }
+
+  function computeGiniCoefficient(values) {
+    const n = Array.isArray(values) ? values.length : 0;
+    if (n === 0) {
+      return 0;
+    }
+    let sum = 0;
+    for (let i = 0; i < n; i += 1) {
+      sum += Number(values[i]) || 0;
+    }
+    if (sum <= 0) {
+      return 0;
+    }
+    let diffAcc = 0;
+    for (let i = 0; i < n; i += 1) {
+      for (let j = 0; j < n; j += 1) {
+        diffAcc += Math.abs((Number(values[i]) || 0) - (Number(values[j]) || 0));
+      }
+    }
+    const rawGini = diffAcc / (2 * n * sum);
+    return Math.abs(rawGini) < 1e-12 ? 0 : rawGini;
+  }
+
+  function buildActorRef(assignment, roleLabel) {
+    return {
+      citizenIndex: assignment.citizenIndex,
+      index: assignment.citizenIndex,
+      id: assignment.id,
+      name: assignment.name,
+      accent: assignment.accent,
+      roleLabel: roleLabel,
+      job: assignment.job,
+      house: assignment.house
+    };
+  }
+
+  function buildCitizenAssignments(epochK, windowVista, jobHistorySets, jobHistoryLists, previousAssignments) {
+    const debtShift = DEBT_CYCLE_SHIFTS[mod(epochK, DEBT_CYCLE_SHIFTS.length)];
+    const friendShift = FRIEND_CYCLE_SHIFTS[mod(epochK, FRIEND_CYCLE_SHIFTS.length)];
+    const list = [];
+
+    for (let i = 0; i < CITIZENS.length; i += 1) {
+      const citizen = CITIZENS[i];
+      const jobIndex = mod(i + epochK, 8);
+      const wifeIndex = mod(i + 3 * epochK, 8);
+      const houseIndex = mod(i + 5 * epochK, 8);
+      const debtSlotIndex = mod(i + 7 * epochK, 8);
+      const creditorCitizenIndex = mod(i + debtShift, 8);
+      const debtorCitizenIndex = mod(i - debtShift, 8);
+      const gossipIndex = mod(i + 2 + epochK, 8);
+      const friendCitizenIndex = mod(i + friendShift, 8);
+
+      jobHistorySets[i].add(jobIndex);
+      jobHistoryLists[i].push(JOBS[jobIndex]);
+
+      const gossipEntry = PASTIMES_AND_GOSSIP[gossipIndex];
+      const creditor = CITIZENS[creditorCitizenIndex];
+      const debtor = CITIZENS[debtorCitizenIndex];
+      const friend = CITIZENS[friendCitizenIndex];
+      const prev = previousAssignments && previousAssignments[i] ? previousAssignments[i] : null;
+
+      const jobChanged = prev ? prev.jobIndex !== jobIndex : false;
+      const wifeChanged = prev ? prev.wifeIndex !== wifeIndex : false;
+      const houseChanged = prev ? prev.houseIndex !== houseIndex : false;
+      const creditorChanged = prev ? prev.creditorCitizenIndex !== creditorCitizenIndex : false;
+      const gossipChanged = prev ? prev.gossipIndex !== gossipIndex : false;
+      const changedFromPrevious = Boolean(
+        prev && jobChanged && wifeChanged && houseChanged && creditorChanged && gossipChanged
+      );
+
+      list.push({
+        citizenIndex: i,
+        index: i,
+        id: citizen.id,
+        name: citizen.name,
+        accent: citizen.accent,
+        jobIndex: jobIndex,
+        job: JOBS[jobIndex],
+        stipend: 24,
+        authorityRank: 1,
+        wifeIndex: wifeIndex,
+        wife: WIVES[wifeIndex],
+        houseIndex: houseIndex,
+        house: HOUSES[houseIndex],
+        windowVista: windowVista,
+        debtSlotIndex: debtSlotIndex,
+        debtKind: DEBT_LEDGER_KINDS[debtSlotIndex],
+        creditorCitizenIndex: creditorCitizenIndex,
+        creditorId: creditor.id,
+        creditorName: creditor.name,
+        debtorCitizenIndex: debtorCitizenIndex,
+        debtorId: debtor.id,
+        debtorName: debtor.name,
+        debtEdgeLabel: "Owes " + creditor.name + " (" + DEBT_LEDGER_KINDS[debtSlotIndex] + ")",
+        credit: 12,
+        debt: 12,
+        creditGrossi: 12,
+        debtGrossi: 12,
+        netWealth: 0,
+        inDegree: 1,
+        outDegree: 1,
+        gossipIndex: gossipIndex,
+        pastime: gossipEntry.pastime,
+        phrase: gossipEntry.phrase,
+        friendSlot: gossipEntry.friendSlot,
+        friendCitizenIndex: friendCitizenIndex,
+        friendId: friend.id,
+        friendName: friend.name,
+        lifetimeUniqueJobsVisited: jobHistorySets[i].size,
+        lifetimeJobsRatioLabel: jobHistorySets[i].size + "/8",
+        visitedJobIndices: Array.from(jobHistorySets[i]),
+        jobHistory: jobHistoryLists[i].slice(),
+        changedFromPrevious: changedFromPrevious,
+        slotChanges: {
+          job: jobChanged,
+          wife: wifeChanged,
+          house: houseChanged,
+          creditor: creditorChanged,
+          gossip: gossipChanged
+        },
+        previous: prev
+          ? {
+              jobIndex: prev.jobIndex,
+              job: prev.job,
+              wifeIndex: prev.wifeIndex,
+              wife: prev.wife,
+              houseIndex: prev.houseIndex,
+              house: prev.house,
+              debtSlotIndex: prev.debtSlotIndex,
+              debtKind: prev.debtKind,
+              creditorCitizenIndex: prev.creditorCitizenIndex,
+              creditorName: prev.creditorName,
+              gossipIndex: prev.gossipIndex,
+              pastime: prev.pastime,
+              phrase: prev.phrase,
+              windowVista: prev.windowVista
+            }
+          : null
+      });
+    }
+
+    return list;
+  }
+
+  function findAssignmentByJob(assignments, jobTitle) {
+    for (let i = 0; i < assignments.length; i += 1) {
+      if (assignments[i].job === jobTitle) {
+        return assignments[i];
+      }
+    }
+    return assignments[0];
+  }
+
+  function findAssignmentByHousePrefix(assignments, prefix) {
+    for (let i = 0; i < assignments.length; i += 1) {
+      if (assignments[i].house.indexOf(prefix) === 0) {
+        return assignments[i];
+      }
+    }
+    return assignments[0];
+  }
+
+  function computeYawnAperture(phase, pulse, indexOffset) {
+    const wave = 0.5 + 0.5 * Math.sin(phase - indexOffset * 1.05);
+    return clamp01(0.35 + 0.45 * wave + 0.55 * pulse);
+  }
+
+  function buildCanonicalScenesAndYawns(assignments, previousScenes, yawnWavePhase, yawnPulse) {
+    const sluiceKeeper = findAssignmentByJob(assignments, "Cistern Sluice-Keeper");
+    const wallScrubber = findAssignmentByJob(assignments, "Quicklime Wall-Scrubber");
+    const oliveWeigher = findAssignmentByJob(assignments, "Olive-Press Weigher");
+    const notaryClerk = findAssignmentByJob(assignments, "Notary of Promissory Slips");
+    const cornerResident = findAssignmentByHousePrefix(assignments, "Corner Arcade #1");
+    const pergolaResident = findAssignmentByHousePrefix(assignments, "Dyer's Pergola #6");
+    const packSaddler = findAssignmentByJob(assignments, "Mule-Pack Saddler");
+    const tollClerk = findAssignmentByJob(assignments, "Bridge-Toll Clerk");
+
+    const rawSpecs = [
+      {
+        index: 0,
+        id: "wellhead_greeting",
+        title: "Wellhead Morning Greeting",
+        locus: "Cistern Wellhead",
+        slotA: "Cistern Sluice-Keeper",
+        slotB: "Quicklime Wall-Scrubber",
+        assignA: sluiceKeeper,
+        assignB: wallScrubber,
+        speech: "Same water climbs the cistern rim; good measure to your lime-brush, neighbor.",
+        reply: "And steady sluice-pins to your wrist—the bucket knows the rope.",
+        yawnNumber: 1,
+        yawnOwnerSide: "actorA"
+      },
+      {
+        index: 1,
+        id: "twelve_grossi_scale",
+        title: "Twelve-Grossi Level Beam",
+        locus: "Market Weigh-Beam",
+        slotA: "Olive-Press Weigher",
+        slotB: "Notary of Promissory Slips",
+        assignA: oliveWeigher,
+        assignB: notaryClerk,
+        speech: "Twelve silver grossi in the bronze pan, twelve on the waxed tally-slip: the tongue stands plumb.",
+        reply: "Neither creditor above nor debtor below—stamp the seal and clear the bench.",
+        yawnNumber: null,
+        yawnOwnerSide: null
+      },
+      {
+        index: 2,
+        id: "casement_gossip",
+        title: "Casement Shutter Proverb",
+        locus: "Corner Arcade to Piazza Balcony",
+        slotA: "Corner Arcade #1",
+        slotB: "Dyer's Pergola #6",
+        assignA: cornerResident,
+        assignB: pergolaResident,
+        speech: "New shutter-hook, new ridge across the plain, yet the kettle sings the old refrain!",
+        reply: "Wait till the shadow touches the sundial—every alley tells the same tale.",
+        yawnNumber: 2,
+        yawnOwnerSide: "actorB"
+      },
+      {
+        index: 3,
+        id: "mercury_morra_dusk",
+        title: "Mercury Shrine Morra at Dusk",
+        locus: "Arch of Mercury",
+        slotA: "Mule-Pack Saddler",
+        slotB: "Bridge-Toll Clerk",
+        assignA: packSaddler,
+        assignB: tollClerk,
+        speech: "Seven fingers under Mercury's caduceus! Tomorrow's pack-train pays today's exact toll.",
+        reply: "Throw again or fold the apron—the god of the fickle keeps an even board.",
+        yawnNumber: 3,
+        yawnOwnerSide: "actorA"
+      }
+    ];
+
+    const canonicalScenes = [];
+    const wideOpenYawns = [];
+
+    for (let s = 0; s < rawSpecs.length; s += 1) {
+      const spec = rawSpecs[s];
+      const actorA = buildActorRef(spec.assignA, spec.slotA);
+      const actorB = buildActorRef(spec.assignB, spec.slotB);
+      const prevScene = previousScenes && previousScenes[s] ? previousScenes[s] : null;
+      const actorsRotated = Boolean(
+        prevScene &&
+          prevScene.actorA.citizenIndex !== actorA.citizenIndex &&
+          prevScene.actorB.citizenIndex !== actorB.citizenIndex
+      );
+
+      const hasYawn = spec.yawnNumber !== null;
+      const yawnerActor =
+        spec.yawnOwnerSide === "actorA" ? actorA : spec.yawnOwnerSide === "actorB" ? actorB : null;
+      const aperture = hasYawn
+        ? computeYawnAperture(yawnWavePhase, yawnPulse, spec.yawnNumber - 1)
+        : 0;
+      const prevYawnerIdx =
+        prevScene && prevScene.yawner ? prevScene.yawner.citizenIndex : null;
+      const yawnMouthRotated = Boolean(
+        hasYawn && prevYawnerIdx !== null && prevYawnerIdx !== yawnerActor.citizenIndex
+      );
+
+      const yawnerObj = hasYawn
+        ? {
+            yawnNumber: spec.yawnNumber,
+            citizenIndex: yawnerActor.citizenIndex,
+            id: yawnerActor.id,
+            name: yawnerActor.name,
+            accent: yawnerActor.accent,
+            roleLabel: yawnerActor.roleLabel,
+            aperture: aperture,
+            rotatedMouthFromPrevious: yawnMouthRotated
+          }
+        : null;
+
+      if (yawnerObj) {
+        wideOpenYawns.push({
+          index: wideOpenYawns.length,
+          yawnNumber: spec.yawnNumber,
+          sceneId: spec.id,
+          sceneTitle: spec.title,
+          citizenIndex: yawnerActor.citizenIndex,
+          id: yawnerActor.id,
+          citizenId: yawnerActor.id,
+          name: yawnerActor.name,
+          citizenName: yawnerActor.name,
+          accent: yawnerActor.accent,
+          roleLabel: yawnerActor.roleLabel,
+          aperture: aperture,
+          rotatedMouthFromPrevious: yawnMouthRotated
+        });
+      }
+
+      canonicalScenes.push({
+        index: spec.index,
+        id: spec.id,
+        title: spec.title,
+        locus: spec.locus,
+        slotA: spec.slotA,
+        slotB: spec.slotB,
+        actorA: actorA,
+        actorB: actorB,
+        speech: spec.speech,
+        canonicalScript: spec.speech,
+        line: spec.speech,
+        reply: spec.reply,
+        hasWideOpenYawn: hasYawn,
+        hasYawn: hasYawn,
+        yawnNumber: spec.yawnNumber,
+        yawnOwnerSide: spec.yawnOwnerSide,
+        yawner: yawnerObj,
+        yawnAperture: aperture,
+        actorsRotatedFromPrevious: actorsRotated,
+        invariantKey:
+          spec.id + "|" + spec.slotA + "|" + spec.slotB + "|" + spec.speech + "|YAWN:" + String(spec.yawnNumber)
+      });
+    }
+
+    return {
+      canonicalScenes: canonicalScenes,
+      wideOpenYawns: wideOpenYawns
+    };
+  }
+
+  function computeInvarianceProof(
+    assignments,
+    previousAssignments,
+    canonicalScenes,
+    wideOpenYawns,
+    permutationCount,
+    originBaseline
+  ) {
+    const n = assignments.length;
+    let citizensChangedCount = 0;
+    let fixedPoints = 0;
+
+    if (previousAssignments && permutationCount > 0) {
+      for (let i = 0; i < n; i += 1) {
+        const cur = assignments[i];
+        const prev = previousAssignments[i];
+        let unchanged = 0;
+        if (cur.jobIndex === prev.jobIndex) unchanged += 1;
+        if (cur.wifeIndex === prev.wifeIndex) unchanged += 1;
+        if (cur.houseIndex === prev.houseIndex) unchanged += 1;
+        if (cur.creditorCitizenIndex === prev.creditorCitizenIndex) unchanged += 1;
+        if (cur.gossipIndex === prev.gossipIndex) unchanged += 1;
+        fixedPoints += unchanged;
+        if (unchanged === 0) {
+          citizensChangedCount += 1;
+        }
+      }
+    }
+
+    const individualChangeRatio = permutationCount === 0 ? 0 : citizensChangedCount / n;
+    const standings = assignments.map(function (a) {
+      return a.stipend + a.creditGrossi - a.debtGrossi;
+    });
+    const wealthGini = computeGiniCoefficient(standings);
+
+    const inDeg = new Array(n).fill(0);
+    const outDeg = new Array(n).fill(0);
+    let twelveGrossiEdges = 0;
+    let selfLoops = 0;
+
+    for (let i = 0; i < n; i += 1) {
+      const a = assignments[i];
+      outDeg[a.citizenIndex] += 1;
+      inDeg[a.creditorCitizenIndex] += 1;
+      if (a.debtGrossi === 12 && a.creditGrossi === 12) {
+        twelveGrossiEdges += 1;
+      }
+      if (a.creditorCitizenIndex === a.citizenIndex) {
+        selfLoops += 1;
+      }
+    }
+
+    const inOnes = inDeg.filter(function (d) { return d === 1; }).length;
+    const outOnes = outDeg.filter(function (d) { return d === 1; }).length;
+    const debtDegreeSequence =
+      inOnes === n && outOnes === n
+        ? "in:1x" + n + "|out:1x" + n
+        : "in:" + inDeg.join(",") + "|out:" + outDeg.join(",");
+
+    const visitedInCycle = new Set();
+    let cursor = 0;
+    while (!visitedInCycle.has(cursor) && visitedInCycle.size <= n) {
+      visitedInCycle.add(cursor);
+      cursor = assignments[cursor].creditorCitizenIndex;
+    }
+    const debtCycleLength = cursor === 0 ? visitedInCycle.size : 0;
+    const isSingleDebtCycle =
+      debtCycleLength === n && selfLoops === 0 && inOnes === n && outOnes === n;
+
+    const uniqueJobsCount = new Set(assignments.map(function (a) { return a.job; })).size;
+    const uniqueWivesCount = new Set(assignments.map(function (a) { return a.wife; })).size;
+    const uniqueHousesCount = new Set(assignments.map(function (a) { return a.house; })).size;
+    const uniqueGossipCount = new Set(assignments.map(function (a) { return a.phrase; })).size;
+    const wideOpenYawnCount = canonicalScenes.filter(function (s) { return s.hasWideOpenYawn; }).length;
+    const distinctYawnMouthsCount = new Set(
+      wideOpenYawns.map(function (y) { return y.citizenIndex; })
+    ).size;
+    const sceneActorsRotatedCount = canonicalScenes.filter(function (s) {
+      return s.actorsRotatedFromPrevious;
+    }).length;
+    const yawnMouthsRotatedCount = wideOpenYawns.filter(function (y) {
+      return y.rotatedMouthFromPrevious;
+    }).length;
+
+    const canonicalSignature =
+      "SCENES:" +
+      canonicalScenes.length +
+      "|JOBS:" +
+      uniqueJobsCount +
+      "|DEBTS:" +
+      twelveGrossiEdges +
+      "x12g|YAWNS:" +
+      wideOpenYawnCount;
+
+    const sceneStructureDigest = canonicalScenes
+      .map(function (s) { return s.invariantKey; })
+      .join("||");
+
+    const targetSignature = originBaseline ? originBaseline.canonicalSignature : CANONICAL_SIGNATURE;
+    const targetDigest = originBaseline ? originBaseline.sceneStructureDigest : sceneStructureDigest;
+
+    const checks = [
+      canonicalSignature === targetSignature,
+      sceneStructureDigest === targetDigest,
+      uniqueJobsCount === 8 && uniqueWivesCount === 8 && uniqueHousesCount === 8 && uniqueGossipCount === 8,
+      debtDegreeSequence === "in:1x8|out:1x8" && isSingleDebtCycle && twelveGrossiEdges === 8,
+      wealthGini === 0,
+      wideOpenYawnCount === 3 && distinctYawnMouthsCount === 3
+    ];
+    const passedCount = checks.filter(Boolean).length;
+    const isIsomorphicToOrigin = passedCount === checks.length;
+    const invarianceScore = isIsomorphicToOrigin ? 1.0 : passedCount / checks.length;
+
+    return {
+      citizensChangedCount: citizensChangedCount,
+      fixedPoints: fixedPoints,
+      individualChangeRatio: individualChangeRatio,
+      wealthGini: wealthGini,
+      debtDegreeSequence: debtDegreeSequence,
+      debtCycleLength: debtCycleLength,
+      isSingleDebtCycle: isSingleDebtCycle,
+      activeUniqueJobsCount: uniqueJobsCount,
+      wideOpenYawnCount: wideOpenYawnCount,
+      distinctYawnMouthsCount: distinctYawnMouthsCount,
+      sceneActorsRotatedCount: sceneActorsRotatedCount,
+      yawnMouthsRotatedCount: yawnMouthsRotatedCount,
+      canonicalSignature: canonicalSignature,
+      sceneStructureDigest: sceneStructureDigest,
+      isIsomorphicToOrigin: isIsomorphicToOrigin,
+      invarianceScore: invarianceScore
+    };
+  }
+
+  function createHistoryContainers() {
+    const sets = [];
+    const lists = [];
+    for (let i = 0; i < CITIZENS.length; i += 1) {
+      sets.push(new Set());
+      lists.push([]);
+    }
+    return { sets: sets, lists: lists };
+  }
+
+  function createSocietyEngine(opts) {
+    const options = opts && typeof opts === "object" ? opts : {};
+    const onWearinessThreshold =
+      typeof options.onWearinessThreshold === "function" ? options.onWearinessThreshold : null;
+
+    let cityIndex = 0;
+    let cityName = "";
+    let windowVista = "";
+    let permutationCount = 0;
+    let daysInCurrentCity = 1;
+    let daySecondsAcc = 0;
+    let weariness = 0.18;
+    let wearinessVectors = Object.assign({}, INITIAL_VECTORS);
+    let isWearyForExodus = false;
+    let selectedCitizenIndex = 0;
+    let yawnWavePhase = 0;
+    let yawnPulse = 0;
+    let totalYawnChoirs = 0;
+    let history = createHistoryContainers();
+    let previousAssignments = null;
+    let previousScenes = null;
+    let assignments = [];
+    let sceneBundle = { canonicalScenes: [], wideOpenYawns: [] };
+    let originBaseline = null;
+    let invarianceProof = null;
+
+    function initEpochZero() {
+      cityIndex = mod(Number(options.initialCityIndex) || 0, 7);
+      cityName = resolveCityName(cityIndex, options.initialCityMeta);
+      windowVista = resolveWindowVista(cityIndex, options.initialCityMeta);
+      permutationCount = 0;
+      daysInCurrentCity = 1;
+      daySecondsAcc = 0;
+      weariness = 0.18;
+      wearinessVectors = Object.assign({}, INITIAL_VECTORS);
+      isWearyForExodus = false;
+      selectedCitizenIndex = 0;
+      yawnWavePhase = 0;
+      yawnPulse = 0;
+      totalYawnChoirs = 0;
+      history = createHistoryContainers();
+      previousAssignments = null;
+      previousScenes = null;
+
+      assignments = buildCitizenAssignments(0, windowVista, history.sets, history.lists, null);
+      sceneBundle = buildCanonicalScenesAndYawns(assignments, null, yawnWavePhase, yawnPulse);
+      const initialProof = computeInvarianceProof(
+        assignments,
+        null,
+        sceneBundle.canonicalScenes,
+        sceneBundle.wideOpenYawns,
+        0,
+        null
+      );
+      originBaseline = {
+        canonicalSignature: initialProof.canonicalSignature,
+        sceneStructureDigest: initialProof.sceneStructureDigest
+      };
+      invarianceProof = computeInvarianceProof(
+        assignments,
+        null,
+        sceneBundle.canonicalScenes,
+        sceneBundle.wideOpenYawns,
+        0,
+        originBaseline
+      );
+    }
+
+    function getState() {
+      return {
+        cityIndex: cityIndex,
+        cityName: cityName,
+        windowVista: windowVista,
+        permutationCount: permutationCount,
+        daysInCurrentCity: daysInCurrentCity,
+        weariness: weariness,
+        wearinessVectors: Object.assign({}, wearinessVectors),
+        isWearyForExodus: isWearyForExodus,
+        selectedCitizenIndex: selectedCitizenIndex,
+        selectedCitizen: assignments[selectedCitizenIndex],
+        assignments: assignments.slice(),
+        previousAssignments: previousAssignments ? previousAssignments.slice() : null,
+        canonicalScenes: sceneBundle.canonicalScenes.slice(),
+        wideOpenYawns: sceneBundle.wideOpenYawns.slice(),
+        wideOpenYawnCount: invarianceProof.wideOpenYawnCount,
+        yawnWavePhase: yawnWavePhase,
+        yawnPulse: yawnPulse,
+        totalYawnChoirs: totalYawnChoirs,
+        invarianceProof: Object.assign({}, invarianceProof),
+        citizensChangedCount: invarianceProof.citizensChangedCount,
+        fixedPoints: invarianceProof.fixedPoints,
+        individualChangeRatio: invarianceProof.individualChangeRatio,
+        wealthGini: invarianceProof.wealthGini,
+        debtDegreeSequence: invarianceProof.debtDegreeSequence,
+        canonicalSignature: invarianceProof.canonicalSignature,
+        isIsomorphicToOrigin: invarianceProof.isIsomorphicToOrigin,
+        invarianceScore: invarianceProof.invarianceScore
+      };
+    }
+
+    function advanceWearinessInternal(delta, focusBurden) {
+      const d = Math.max(0, Number(delta) || 0);
+      if (d <= 0) {
+        return;
+      }
+      const wasWeary = isWearyForExodus;
+      weariness = clamp01(weariness + d);
+      for (let i = 0; i < WEARINESS_BURDENS.length; i += 1) {
+        const burden = WEARINESS_BURDENS[i];
+        const focusBoost = focusBurden === burden ? 1.38 : 1.0;
+        wearinessVectors[burden] = clamp01(
+          wearinessVectors[burden] + d * BURDEN_RATES[burden] * focusBoost
+        );
+        if (weariness >= 1.0) {
+          wearinessVectors[burden] = clamp01(Math.max(wearinessVectors[burden], 0.98));
+        }
+      }
+      if (weariness >= 1.0) {
+        isWearyForExodus = true;
+        if (!wasWeary && onWearinessThreshold) {
+          onWearinessThreshold(getState());
+        }
+      }
+    }
+
+    function addWeariness(delta, focusBurden) {
+      const stepDelta = delta === undefined ? 0.22 : Number(delta);
+      advanceWearinessInternal(stepDelta, focusBurden || null);
+      return getState();
+    }
+
+    function step(dtSec, isExodusInProgress) {
+      const dt = Math.max(0, Math.min(0.25, Number(dtSec) || 0));
+      yawnWavePhase = (yawnWavePhase + dt * 1.65) % (Math.PI * 200);
+      yawnPulse = Math.max(0, yawnPulse - dt * 0.85);
+      sceneBundle = buildCanonicalScenesAndYawns(
+        assignments,
+        previousScenes,
+        yawnWavePhase,
+        yawnPulse
+      );
+      if (!isExodusInProgress && dt > 0) {
+        daySecondsAcc += dt;
+        daysInCurrentCity = 1 + Math.floor(daySecondsAcc / 2.4);
+        advanceWearinessInternal(dt * 0.022, null);
+      }
+      return getState();
+    }
+
+    function permuteForNewCity(newCityIndex, newCityMeta) {
+      previousAssignments = assignments.slice();
+      previousScenes = sceneBundle.canonicalScenes.slice();
+      permutationCount += 1;
+      const nextIdx =
+        newCityIndex === undefined || !Number.isFinite(Number(newCityIndex))
+          ? cityIndex + 1
+          : Number(newCityIndex);
+      cityIndex = mod(Math.trunc(nextIdx), 7);
+      cityName = resolveCityName(cityIndex, newCityMeta);
+      windowVista = resolveWindowVista(cityIndex, newCityMeta);
+      weariness = 0.04;
+      wearinessVectors = Object.assign({}, FRESH_EXODUS_VECTORS);
+      isWearyForExodus = false;
+      daysInCurrentCity = 1;
+      daySecondsAcc = 0;
+
+      assignments = buildCitizenAssignments(
+        permutationCount,
+        windowVista,
+        history.sets,
+        history.lists,
+        previousAssignments
+      );
+      sceneBundle = buildCanonicalScenesAndYawns(
+        assignments,
+        previousScenes,
+        yawnWavePhase,
+        yawnPulse
+      );
+      invarianceProof = computeInvarianceProof(
+        assignments,
+        previousAssignments,
+        sceneBundle.canonicalScenes,
+        sceneBundle.wideOpenYawns,
+        permutationCount,
+        originBaseline
+      );
+      return getState();
+    }
+
+    function selectCitizen(indexOrId) {
+      if (typeof indexOrId === "string") {
+        const key = indexOrId.trim().toLowerCase();
+        for (let i = 0; i < CITIZENS.length; i += 1) {
+          if (CITIZENS[i].id === key || CITIZENS[i].name.toLowerCase() === key) {
+            selectedCitizenIndex = i;
+            return getState();
+          }
+        }
+        const parsed = Number(key);
+        if (Number.isFinite(parsed)) {
+          selectedCitizenIndex = mod(Math.trunc(parsed), CITIZENS.length);
+        }
+      } else if (typeof indexOrId === "number" && Number.isFinite(indexOrId)) {
+        selectedCitizenIndex = mod(Math.trunc(indexOrId), CITIZENS.length);
+      }
+      return getState();
+    }
+
+    function triggerYawnPulse() {
+      yawnPulse = 1.0;
+      totalYawnChoirs += 1;
+      yawnWavePhase = (yawnWavePhase + 0.65) % (Math.PI * 200);
+      sceneBundle = buildCanonicalScenesAndYawns(
+        assignments,
+        previousScenes,
+        yawnWavePhase,
+        yawnPulse
+      );
+      return getState();
+    }
+
+    function reset() {
+      initEpochZero();
+      return getState();
+    }
+
+    initEpochZero();
+
+    return {
+      getState: getState,
+      addWeariness: addWeariness,
+      step: step,
+      permuteForNewCity: permuteForNewCity,
+      selectCitizen: selectCitizen,
+      triggerYawnPulse: triggerYawnPulse,
+      reset: reset
+    };
+  }
+
+  const EutropiaIsomorphicSociety = Object.freeze({
+    CITIZENS: CITIZENS,
+    JOBS: JOBS,
+    WIVES: WIVES,
+    HOUSES: HOUSES,
+    DEBT_LEDGER_KINDS: DEBT_LEDGER_KINDS,
+    PASTIMES_AND_GOSSIP: PASTIMES_AND_GOSSIP,
+    WEARINESS_BURDENS: WEARINESS_BURDENS,
+    CANONICAL_SIGNATURE: CANONICAL_SIGNATURE,
+    createSocietyEngine: createSocietyEngine
+  });
+
+  root.EutropiaIsomorphicSociety = EutropiaIsomorphicSociety;
+  if (typeof window !== "undefined") {
+    window.EutropiaIsomorphicSociety = EutropiaIsomorphicSociety;
+  }
+})(typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : this);
+
+(function () {
+  "use strict";
+
+  const mql = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
+  let reducedMotion = Boolean(mql && mql.matches);
+  let autoMigrate = false;
+  let plateDrawerOpen = false;
+  let plateZoomed = false;
+  let activePlateTab = "diptych";
+
+  const rootEl = document.getElementById("eutropia-root");
+  const canvas = document.getElementById("eutropia-canvas");
+  const ctx = canvas.getContext("2d");
+  const stageFrame = document.getElementById("eutropia-stage-frame");
+  const mastheadSub = document.getElementById("eutropia-masthead-sub");
+  const stageStatus = document.getElementById("eutropia-stage-status");
+  const vistaStatus = document.getElementById("eutropia-vista-status");
+  const wearinessPct = document.getElementById("eutropia-weariness-pct");
+  const wearinessFill = document.getElementById("eutropia-weariness-fill");
+  const proofLeftTitle = document.getElementById("eutropia-proof-left-title");
+  const proofLeftVal = document.getElementById("eutropia-proof-left-val");
+  const proofRightTitle = document.getElementById("eutropia-proof-right-title");
+  const proofRightVal = document.getElementById("eutropia-proof-right-val");
+  const epochBadge = document.getElementById("eutropia-epoch-badge");
+  const citizenTabsEl = document.getElementById("eutropia-citizen-tabs");
+  const citizenCardEl = document.getElementById("eutropia-citizen-card");
+  const sceneListEl = document.getElementById("eutropia-scene-list");
+  const yawnSummaryEl = document.getElementById("eutropia-yawn-summary");
+  const btnVista = document.getElementById("eutropia-btn-vista");
+  const btnSound = document.getElementById("eutropia-btn-sound");
+  const btnAuto = document.getElementById("eutropia-btn-auto");
+  const btnExodus = document.getElementById("eutropia-btn-exodus");
+  const btnZoom = document.getElementById("eutropia-btn-zoom");
+  const plateDrawer = document.getElementById("eutropia-plate-drawer");
+  const plateGallery = document.getElementById("eutropia-plate-gallery");
+  const cardMap = document.getElementById("eutropia-card-map");
+  const cardVista = document.getElementById("eutropia-card-vista");
+  const mapImg = document.getElementById("eutropia-map-img");
+  const vistaImg = document.getElementById("eutropia-vista-img");
+  const mapFallback = document.getElementById("eutropia-map-fallback");
+  const vistaFallback = document.getElementById("eutropia-vista-fallback");
+
+  const mesaChips = Array.prototype.slice.call(document.querySelectorAll("[data-mesa]"));
+  const burdenPips = Array.prototype.slice.call(document.querySelectorAll("[data-burden]"));
+  const plateTabBtns = Array.prototype.slice.call(document.querySelectorAll("[data-plate-tab]"));
+
+  let society = null;
+  const plateau = window.EutropiaPlateauCities.createPlateauEngine({
+    reducedMotion: reducedMotion,
+    onMigrationComplete: function (ev) {
+      if (society) {
+        society.permuteForNewCity(ev.toIndex, ev.activeCity);
+        plateau.playYawnSigh(society.getState().permutationCount);
+      }
+      syncUI(true);
+    }
+  });
+
+  society = window.EutropiaIsomorphicSociety.createSocietyEngine({
+    initialCityIndex: 0,
+    initialCityMeta: plateau.getState().activeCity,
+    onWearinessThreshold: function () {
+      if (autoMigrate && !plateau.getState().exodusState.inProgress) {
+        plateau.startExodus();
+      }
+      syncUI(true);
+    }
+  });
+
+  function escHtml(str) {
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  let citizenPills = [];
+  function initCitizenPills() {
+    const citizens = window.EutropiaIsomorphicSociety.CITIZENS;
+    let html = "";
+    for (let i = 0; i < citizens.length; i += 1) {
+      const c = citizens[i];
+      html +=
+        '<eutropia-citizen-pill class="eutropia-citizen-pill" data-citizen="' +
+        i +
+        '" role="tab" tabindex="0">' +
+        escHtml(c.name) +
+        "</eutropia-citizen-pill>";
+    }
+    citizenTabsEl.innerHTML = html;
+    citizenPills = Array.prototype.slice.call(citizenTabsEl.querySelectorAll("[data-citizen]"));
+  }
+  initCitizenPills();
+
+  let lastCardKey = "";
+  function renderCitizenCard(sState, pState) {
+    const c = sState.selectedCitizen || sState.assignments[0];
+    const key =
+      sState.permutationCount + ":" + c.citizenIndex + ":" + pState.activeCityIndex;
+    if (key === lastCardKey) return;
+    lastCardKey = key;
+
+    const deltaLabel =
+      sState.permutationCount === 0
+        ? "Origin Role · Epoch 0"
+        : c.changedFromPrevious
+          ? "Swapped! · 0 Fixed Points"
+          : "Reassigned";
+    const prevJobNote = c.previous ? " (was " + c.previous.job + ")" : "";
+    const prevWifeNote = c.previous ? " (was " + c.previous.wife + ")" : "";
+
+    citizenCardEl.innerHTML =
+      '<eutropia-card-top class="eutropia-card-top">' +
+        '<eutropia-citizen-name class="eutropia-citizen-name">' +
+          escHtml(c.name) + " · " + escHtml(c.accent) +
+        "</eutropia-citizen-name>" +
+        '<eutropia-swap-delta class="eutropia-swap-delta">' +
+          escHtml(deltaLabel) +
+        "</eutropia-swap-delta>" +
+      "</eutropia-card-top>" +
+      '<eutropia-card-grid class="eutropia-card-grid">' +
+        '<eutropia-field-row class="eutropia-field-row"><eutropia-field-key class="eutropia-field-key">Current Job</eutropia-field-key><eutropia-field-val class="eutropia-field-val" title="' + escHtml(c.job + prevJobNote) + '">' + escHtml(c.job + prevJobNote) + "</eutropia-field-val></eutropia-field-row>" +
+        '<eutropia-field-row class="eutropia-field-row"><eutropia-field-key class="eutropia-field-key">Wife / Hearth</eutropia-field-key><eutropia-field-val class="eutropia-field-val" title="' + escHtml(c.wife + prevWifeNote) + '">' + escHtml(c.wife) + "</eutropia-field-val></eutropia-field-row>" +
+        '<eutropia-field-row class="eutropia-field-row"><eutropia-field-key class="eutropia-field-key">House &amp; Shutter</eutropia-field-key><eutropia-field-val class="eutropia-field-val">' + escHtml(c.house) + "</eutropia-field-val></eutropia-field-row>" +
+        '<eutropia-field-row class="eutropia-field-row"><eutropia-field-key class="eutropia-field-key">Window Vista</eutropia-field-key><eutropia-field-val class="eutropia-field-val">' + escHtml(pState.activeCity.windowVista) + "</eutropia-field-val></eutropia-field-row>" +
+        '<eutropia-field-row class="eutropia-field-row"><eutropia-field-key class="eutropia-field-key">12g Debt Cycle</eutropia-field-key><eutropia-field-val class="eutropia-field-val" title="' + escHtml(c.debtEdgeLabel) + '">Owes ' + escHtml(c.creditorName) + " · Owed by " + escHtml(c.debtorName) + " (Net 0g)</eutropia-field-val></eutropia-field-row>" +
+        '<eutropia-field-row class="eutropia-field-row"><eutropia-field-key class="eutropia-field-key">Unique Jobs</eutropia-field-key><eutropia-field-val class="eutropia-field-val">' + escHtml(c.lifetimeJobsRatioLabel) + " Lifetime Trades Visited · Pastime: " + escHtml(c.pastime) + "</eutropia-field-val></eutropia-field-row>" +
+      "</eutropia-card-grid>" +
+      '<eutropia-speech-box class="eutropia-speech-box">“' +
+        escHtml(c.phrase) +
+      '” — spoken with ' + escHtml(c.friendName) + "</eutropia-speech-box>";
+  }
+  let lastSceneKey = "";
+  function renderScenes(sState) {
+    const key = sState.permutationCount + ":" + sState.totalYawnChoirs;
+    if (key === lastSceneKey) return;
+    lastSceneKey = key;
+
+    const scenes = sState.canonicalScenes || [];
+    let html = "";
+    for (let i = 0; i < scenes.length; i += 1) {
+      const sc = scenes[i];
+      const yawnBadge = sc.hasWideOpenYawn && sc.yawner
+        ? '<eutropia-yawn-tag class="eutropia-yawn-tag">☿ Yawn #' + sc.yawnNumber + ": " + escHtml(sc.yawner.name) + "</eutropia-yawn-tag>"
+        : '<eutropia-yawn-tag class="eutropia-yawn-tag">12g Level Scale</eutropia-yawn-tag>';
+      html +=
+        '<eutropia-scene-row class="eutropia-scene-row">' +
+          '<eutropia-scene-top class="eutropia-scene-top">' +
+            '<eutropia-scene-name class="eutropia-scene-name">' + (i + 1) + ". " + escHtml(sc.title) + "</eutropia-scene-name>" +
+            yawnBadge +
+          "</eutropia-scene-top>" +
+          '<eutropia-scene-actors class="eutropia-scene-actors">' +
+            escHtml(sc.actorA.name) + " (" + escHtml(sc.actorA.accent) + ") ↔ " +
+            escHtml(sc.actorB.name) + " (" + escHtml(sc.actorB.accent) + ")" +
+          "</eutropia-scene-actors>" +
+          '<eutropia-scene-line class="eutropia-scene-line">“' + escHtml(sc.speech) + '”</eutropia-scene-line>' +
+        "</eutropia-scene-row>";
+    }
+    sceneListEl.innerHTML = html;
+    const yawnNames = (sState.wideOpenYawns || []).map(function (y) { return y.name; }).join(", ");
+    yawnSummaryEl.textContent = "Yawns: " + sState.wideOpenYawnCount + "/3 (" + yawnNames + ")";
+  }
+
+  const burdenLabels = {
+    job: "Job",
+    relatives: "Relatives",
+    house: "House",
+    debts: "Debts",
+    greetings: "Greetings"
+  };
+
+  function syncUI(forceRebuild) {
+    if (forceRebuild) {
+      lastCardKey = "";
+      lastSceneKey = "";
+    }
+    const pState = plateau.getState();
+    const sState = society.getState();
+    const shortNames = ["Meridies", "Vespera", "Caurus", "Caducea", "Boreas", "Aurora", "Eurus"];
+
+    for (let i = 0; i < mesaChips.length; i += 1) {
+      const chip = mesaChips[i];
+      const isInhabited = i === pState.activeCityIndex;
+      chip.classList.toggle("eutropia-inhabited", isInhabited);
+      const stateEl = chip.querySelector(".eutropia-chip-state");
+      if (stateEl) {
+        if (pState.exodusState.inProgress && i === pState.exodusState.toIndex) {
+          stateEl.textContent = "BOUND ➔";
+        } else {
+          stateEl.textContent = isInhabited ? "ACTIVE" : "EMPTY";
+        }
+      }
+      const numEl = chip.querySelector(".eutropia-chip-num");
+      if (numEl) numEl.textContent = "[" + (i + 1) + "] " + shortNames[i];
+    }
+
+    if (pState.exodusState.inProgress) {
+      const pctEx = Math.round(pState.exodusState.progress * 100);
+      stageStatus.textContent =
+        "Civic Exodus Caravan (" + pctEx + "%) → " + pState.sisterCities[pState.exodusState.toIndex].name;
+    } else {
+      stageStatus.textContent =
+        "Inhabited: " + pState.activeCity.name + " (" + pState.inhabitedCount + " Active · " + pState.emptyCount + " Scrubbed Empty)";
+    }
+    vistaStatus.textContent = "Vista: " + pState.activeCity.windowVista;
+    mastheadSub.textContent =
+      pState.activeCity.name + " · " + pState.activeCity.cardinal + " · Six Sisters Scrubbed in Quicklime";
+
+    const wPct = Math.round(sState.weariness * 100);
+    wearinessPct.textContent = "Weariness: " + wPct + "%";
+    wearinessFill.style.width = wPct + "%";
+
+    for (let b = 0; b < burdenPips.length; b += 1) {
+      const pip = burdenPips[b];
+      const bKey = pip.getAttribute("data-burden");
+      const bVal = Math.round((sState.wearinessVectors[bKey] || 0) * 100);
+      pip.textContent = burdenLabels[bKey] + " " + bVal + "%";
+      pip.classList.toggle("eutropia-saturated", bVal >= 95);
+    }
+
+    btnVista.classList.toggle("eutropia-active", pState.windowInsetOpen);
+    btnSound.classList.toggle("eutropia-active", pState.soundEnabled);
+    btnSound.textContent = pState.soundEnabled ? "[M] Canon: On" : "[M] Canon: Off";
+    btnAuto.classList.toggle("eutropia-active", autoMigrate);
+    btnAuto.textContent = autoMigrate ? "[A] Auto: On" : "[A] Auto: Off";
+    btnExodus.textContent = sState.isWearyForExodus ? "[E] Exodus Ready!" : "[E] Proclaim Exodus";
+
+    const chgPct = Math.round(sState.individualChangeRatio * 100);
+    proofLeftTitle.textContent =
+      sState.permutationCount === 0
+        ? "☿ Individual Reassignment: Origin Settlement (8 Citizens)"
+        : "☿ Individual Reassignment: " + chgPct + "% (" + sState.citizensChangedCount + "/8 · " + sState.fixedPoints + " Fixed Pts)";
+    proofLeftVal.textContent =
+      "Wealth Gini: " + sState.wealthGini.toFixed(3) + " · Equal 24g Stipend · 0 Authority Rank";
+    proofRightTitle.textContent =
+      "☿ Global Scene-Graph & Yawns: " + (sState.invarianceScore * 100).toFixed(1) + "% Invariant";
+    proofRightVal.textContent =
+      sState.canonicalSignature + " (" + sState.debtDegreeSequence + ")";
+
+    epochBadge.textContent =
+      "Migration #" + sState.permutationCount + " · Day " + sState.daysInCurrentCity;
+
+    for (let c = 0; c < citizenPills.length; c += 1) {
+      citizenPills[c].classList.toggle("eutropia-selected", c === sState.selectedCitizenIndex);
+    }
+
+    renderCitizenCard(sState, pState);
+    renderScenes(sState);
+  }
+  function drawPlateFallback(targetCanvas, label) {
+    const fctx = targetCanvas.getContext("2d");
+    if (!fctx) return;
+    plateau.render(fctx, targetCanvas.width, targetCanvas.height, society.getState());
+    fctx.fillStyle = "rgba(27, 23, 18, 0.78)";
+    fctx.fillRect(16, 16, 360, 32);
+    fctx.fillStyle = "#ece7da";
+    fctx.font = "bold 14px Georgia, serif";
+    fctx.fillText(label, 26, 37);
+  }
+
+  let mapTriedSvg = false;
+  mapImg.addEventListener("error", function () {
+    if (!mapTriedSvg) {
+      mapTriedSvg = true;
+      mapImg.src = "map.svg";
+    } else {
+      mapImg.hidden = true;
+      mapFallback.hidden = false;
+      drawPlateFallback(mapFallback, "Eutropia — Seven Sister Mesas");
+    }
+  });
+
+  vistaImg.addEventListener("error", function () {
+    vistaImg.hidden = true;
+    vistaFallback.hidden = false;
+    drawPlateFallback(vistaFallback, "Eutropia — Civic Exodus Vista");
+  });
+
+  function setPlateTab(tab) {
+    activePlateTab = tab || "diptych";
+    for (let i = 0; i < plateTabBtns.length; i += 1) {
+      const b = plateTabBtns[i];
+      b.classList.toggle("eutropia-active", b.getAttribute("data-plate-tab") === activePlateTab);
+    }
+    const isSingle = activePlateTab !== "diptych";
+    plateGallery.classList.toggle("eutropia-single-plate", isSingle);
+    cardMap.classList.toggle("eutropia-tab-hidden", activePlateTab === "vista");
+    cardVista.classList.toggle("eutropia-tab-hidden", activePlateTab === "map");
+  }
+
+  function togglePlates(forceOpen) {
+    plateDrawerOpen = typeof forceOpen === "boolean" ? forceOpen : !plateDrawerOpen;
+    plateDrawer.hidden = !plateDrawerOpen;
+    if (!plateDrawerOpen) {
+      plateZoomed = false;
+      plateDrawer.classList.remove("eutropia-zoomed");
+      btnZoom.classList.remove("eutropia-active");
+    }
+    return plateDrawerOpen;
+  }
+
+  function toggleZoom(forceZoom) {
+    plateZoomed = typeof forceZoom === "boolean" ? forceZoom : !plateZoomed;
+    plateDrawer.classList.toggle("eutropia-zoomed", plateZoomed);
+    btnZoom.classList.toggle("eutropia-active", plateZoomed);
+    return plateZoomed;
+  }
+
+  function migrateTo(targetIndex) {
+    const res = plateau.startExodus(targetIndex);
+    syncUI(true);
+    return res;
+  }
+
+  function completeExodusNow() {
+    const res = plateau.completeExodusNow();
+    syncUI(true);
+    return res;
+  }
+
+  function addWeariness(delta, burden) {
+    const s = society.addWeariness(delta, burden);
+    plateau.playRoutineTick(s.weariness);
+    syncUI(false);
+    return s;
+  }
+
+  function selectCitizen(indexOrId) {
+    const s = society.selectCitizen(indexOrId);
+    syncUI(true);
+    return s;
+  }
+
+  function triggerYawnPulse() {
+    const s = society.triggerYawnPulse();
+    plateau.playYawnSigh(s.permutationCount);
+    syncUI(true);
+    return s;
+  }
+
+  function setAutoMigrate(flag) {
+    autoMigrate = Boolean(flag);
+    if (autoMigrate && society.getState().isWearyForExodus && !plateau.getState().exodusState.inProgress) {
+      plateau.startExodus();
+    }
+    syncUI(false);
+    return autoMigrate;
+  }
+
+  function resetAll() {
+    autoMigrate = false;
+    plateau.reset();
+    society.reset();
+    syncUI(true);
+    return { plateau: plateau.getState(), society: society.getState() };
+  }
+
+  function handleElementActivate(target) {
+    const mesaEl = target.closest("[data-mesa]");
+    if (mesaEl) {
+      plateau.unlockAudio();
+      const idx = Number(mesaEl.getAttribute("data-mesa"));
+      if (idx !== plateau.getState().activeCityIndex) {
+        migrateTo(idx);
+      } else {
+        plateau.setWindowInsetOpen(true);
+        syncUI(false);
+      }
+      return;
+    }
+    const citEl = target.closest("[data-citizen]");
+    if (citEl) {
+      selectCitizen(Number(citEl.getAttribute("data-citizen")));
+      return;
+    }
+    const burdEl = target.closest("[data-burden]");
+    if (burdEl) {
+      plateau.unlockAudio();
+      addWeariness(0.20, burdEl.getAttribute("data-burden"));
+      return;
+    }
+    const tabEl = target.closest("[data-plate-tab]");
+    if (tabEl) {
+      setPlateTab(tabEl.getAttribute("data-plate-tab"));
+      return;
+    }
+    const actEl = target.closest("[data-action]");
+    if (!actEl) return;
+    plateau.unlockAudio();
+    const act = actEl.getAttribute("data-action");
+    if (act === "proclaim-exodus") migrateTo();
+    else if (act === "add-weariness") addWeariness(0.22);
+    else if (act === "toggle-auto") setAutoMigrate(!autoMigrate);
+    else if (act === "toggle-vista") {
+      plateau.setWindowInsetOpen(!plateau.getState().windowInsetOpen);
+      syncUI(false);
+    } else if (act === "yawn-pulse") triggerYawnPulse();
+    else if (act === "toggle-sound") {
+      const nextSound = !plateau.getState().soundEnabled;
+      plateau.setSoundEnabled(nextSound);
+      if (nextSound) plateau.playExodusCanon(0, 1, society.getState().permutationCount);
+      syncUI(false);
+    } else if (act === "toggle-plates") togglePlates();
+    else if (act === "close-plates") togglePlates(false);
+    else if (act === "toggle-zoom") toggleZoom();
+    else if (act === "reset") resetAll();
+  }
+
+  rootEl.addEventListener("click", function (ev) {
+    if (ev.target === plateDrawer) {
+      togglePlates(false);
+      return;
+    }
+    handleElementActivate(ev.target);
+  });
+
+  rootEl.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter" || ev.key === " ") {
+      const interactive = ev.target.closest("[role='button'], [role='tab']");
+      if (interactive) {
+        ev.preventDefault();
+        handleElementActivate(interactive);
+      }
+    }
+  });
+
+  let cssW = 800;
+  let cssH = 520;
+  function resizeCanvas() {
+    const rect = stageFrame.getBoundingClientRect();
+    cssW = Math.max(200, Math.floor(rect.width));
+    cssH = Math.max(180, Math.floor(rect.height));
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    canvas.width = Math.floor(cssW * dpr);
+    canvas.height = Math.floor(cssH * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    plateau.render(ctx, cssW, cssH, society.getState());
+  }
+
+  canvas.addEventListener("pointermove", function (ev) {
+    const rect = canvas.getBoundingClientRect();
+    if (!rect.width || !rect.height) return;
+    const nx = (ev.clientX - rect.left) / rect.width;
+    const ny = (ev.clientY - rect.top) / rect.height;
+    const hit = plateau.hitTest(nx, ny, cssW, cssH);
+    plateau.setHoveredCity(hit ? hit.cityIndex : -1);
+  });
+
+  canvas.addEventListener("pointerleave", function () {
+    plateau.setHoveredCity(-1);
+  });
+
+  canvas.addEventListener("click", function (ev) {
+    plateau.unlockAudio();
+    const rect = canvas.getBoundingClientRect();
+    if (!rect.width || !rect.height) return;
+    const nx = (ev.clientX - rect.left) / rect.width;
+    const ny = (ev.clientY - rect.top) / rect.height;
+    const hit = plateau.hitTest(nx, ny, cssW, cssH);
+    if (hit) {
+      if (!hit.isInhabited) migrateTo(hit.cityIndex);
+      else triggerYawnPulse();
+    }
+  });
+
+  window.addEventListener("keydown", function (ev) {
+    if (ev.metaKey || ev.ctrlKey || ev.altKey) return;
+    const k = ev.key;
+    if (k === "Escape") {
+      if (plateDrawerOpen) {
+        ev.preventDefault();
+        togglePlates(false);
+      }
+      return;
+    }
+    const low = k.toLowerCase();
+    if (low === "p") { ev.preventDefault(); togglePlates(); return; }
+    if (low === "z" && plateDrawerOpen) { ev.preventDefault(); toggleZoom(); return; }
+    if (plateDrawerOpen) return;
+
+    if (k >= "1" && k <= "7") {
+      ev.preventDefault();
+      plateau.unlockAudio();
+      migrateTo(Number(k) - 1);
+    } else if (low === "e" || (k === " " && !ev.target.closest("[role='button'], [role='tab']"))) {
+      ev.preventDefault();
+      plateau.unlockAudio();
+      migrateTo();
+    } else if (low === "w") {
+      ev.preventDefault();
+      addWeariness(0.22);
+    } else if (low === "y") {
+      ev.preventDefault();
+      triggerYawnPulse();
+    } else if (low === "v") {
+      ev.preventDefault();
+      plateau.setWindowInsetOpen(!plateau.getState().windowInsetOpen);
+      syncUI(false);
+    } else if (low === "a") {
+      ev.preventDefault();
+      setAutoMigrate(!autoMigrate);
+    } else if (low === "m") {
+      ev.preventDefault();
+      const nextS = !plateau.getState().soundEnabled;
+      plateau.setSoundEnabled(nextS);
+      if (nextS) plateau.playExodusCanon(0, 1, society.getState().permutationCount);
+      syncUI(false);
+    } else if (low === "r") {
+      ev.preventDefault();
+      resetAll();
+    }
+  });
+
+  if (mql && mql.addEventListener) {
+    mql.addEventListener("change", function (e) {
+      reducedMotion = Boolean(e.matches);
+      plateau.setReducedMotion(reducedMotion);
+    });
+  }
+
+  if (typeof ResizeObserver !== "undefined") {
+    new ResizeObserver(resizeCanvas).observe(stageFrame);
+  }
+  window.addEventListener("resize", resizeCanvas);
+
+  let lastTs = performance.now();
+  let uiAcc = 0;
+  function tick(now) {
+    const dt = Math.min(0.1, Math.max(0, (now - lastTs) / 1000));
+    lastTs = now;
+    const stepDt = reducedMotion ? 0 : dt;
+    const pBefore = plateau.getState();
+    const sState = society.step(stepDt, pBefore.exodusState.inProgress);
+    plateau.step(dt, sState);
+    plateau.render(ctx, cssW, cssH, society.getState());
+    uiAcc += dt;
+    if (uiAcc >= 0.12) {
+      uiAcc = 0;
+      syncUI(false);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  syncUI(true);
+  resizeCanvas();
+  requestAnimationFrame(tick);
+
+  window.__EUTROPIA_DEBUG__ = {
+    getPlateauState: function () { return plateau.getState(); },
+    getSocietyState: function () { return society.getState(); },
+    addWeariness: addWeariness,
+    migrateTo: migrateTo,
+    completeExodusNow: completeExodusNow,
+    selectCitizen: selectCitizen,
+    triggerYawnPulse: triggerYawnPulse,
+    togglePlates: togglePlates,
+    setAutoMigrate: setAutoMigrate,
+    reset: resetAll
+  };
+})();
+</script>
+</body>
+</html>
